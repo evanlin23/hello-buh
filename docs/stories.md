@@ -542,6 +542,12 @@ STANDARDS.md in the same commit.
   the cast, an action or a camera push) in the first 0.5 s; never a static or empty establishing frame.
 - **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
   stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
+- **Owner, 2026-11-11: "keep the producer off. We should be doing the stories more manually just for now until our
+  process is good... try and get the premises first. I want good premises. And then good premises can turn into good
+  scripts and good stories. And then once we audit those... we can start writing the scripts for them. One session
+  per script."** The daily story producer stays off. New stories go in owner-audited stages: a premise shortlist first
+  (the owner picks), then one session per picked premise writes its script (the writers' room, critic, cold read),
+  and the owner audits the scripts before any voice or build.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

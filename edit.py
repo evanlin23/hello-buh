@@ -1365,6 +1365,55 @@ def cut_times(args):
     return [w.out(a) - args.start for a, b, f in (w.spans if w else []) if f == math.inf]
 
 
+SFX_SHARE_DB = 4.0   # the edit's sfx may lift the game track's integrated loudness by at most this much (busy
+#                      tracks measured +1.2 to +3.3 dB: tnt, tnt_1000, villager_fired; a quiet one + an impact +10 dB)
+
+
+def cap_share(game, fx, measure, share_db=SFX_SHARE_DB):
+    """The gain (<= 1) for the sfx track `fx` so that game + gain * fx measures at most `share_db` dB louder than the game
+    alone (measure: a stereo float array -> LUFS). Every later level (the -18 / -15 stem gains, the master) is an
+    integrated loudness of the premixed track: an impact much louder than a quiet game track sets it, and the whole
+    game went ~28 dB down to make room for one boom (mislabel_grandma, 2026-11-11). Busy tracks are left alone."""
+    base = measure(game)
+    n = min(len(game), len(fx))
+
+    def lift(k):
+        x = game.copy()
+        x[:n] += fx[:n] * k
+        return measure(x) - base
+    if base <= -69 or lift(1.0) <= share_db:
+        return 1.0
+    lo, hi = 0.0, 1.0   # bisect the sfx gain: lift(lo) <= share_db < lift(hi)
+    for _ in range(12):
+        mid = (lo + hi) / 2
+        if lift(mid) <= share_db:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def cap_sfx_share(game_wav, sfx_wav, out_wav, share_db=SFX_SHARE_DB):
+    """game_wav + sfx_wav -> out_wav with the sfx turned down by cap_share (prints when it does)."""
+    import numpy as np
+    import loud
+    import sfx
+    game, fx = sfx.read_audio(game_wav), sfx.read_audio(sfx_wav)
+
+    def measure(x):
+        sfx.write_wav(pathlib.Path(out_wav), x)
+        return loud.measure(out_wav)
+    k = cap_share(game, fx, measure, share_db)
+    if k < 1.0:
+        print(f"sfx: turned down {20 * math.log10(max(k, 1e-6)):.1f} dB so the game track keeps its level (at most +{share_db:g} dB from the sfx)")
+    n = max(len(game), len(fx))
+    mix = np.zeros((n, 2), np.float32)
+    mix[:len(game)] += game
+    mix[:len(fx)] += fx * k
+    sfx.write_wav(pathlib.Path(out_wav), mix)
+    return k
+
+
 def premix_sfx(args, dur, tmp):
     """edit.sfx (scripts/sfx.py) premixed into the game audio, in Short time -> (audio path, its start offset)."""
     import loud
@@ -1374,9 +1423,10 @@ def premix_sfx(args, dur, tmp):
     sfx_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
     track = sfx.build_track(args.sfx, sfx_tl, args.start, dur, tmp / "sfx.wav", args.cards, args.counter)
     if track and args.audio:
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
-                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)}{sfx.duck_filter(sfx.game_dips(args.sfx, sfx_tl, args.start), 0.03)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
-                        "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-filter_complex",
+                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)}{sfx.duck_filter(sfx.game_dips(args.sfx, sfx_tl, args.start), 0.03)},aresample={sfx.SR},aformat=channel_layouts=stereo[g]",
+                        "-map", "[g]", "-c:a", "pcm_f32le", "-ar", str(sfx.SR), str(tmp / "game_stem.wav")], check=True)
+        cap_sfx_share(tmp / "game_stem.wav", track, tmp / "game_sfx.wav")
         return str(tmp / "game_sfx.wav"), 0.0
     if track:
         return str(track), 0.0

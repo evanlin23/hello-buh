@@ -142,6 +142,8 @@ module.exports = makeStunt({
   name: 'lapse_house',
   recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
   endAfter: 'big_done:0.5',
+  bigCuts: [6, 0.6, 57],
+  botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 3 tries on a busy box   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
   caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
@@ -152,29 +154,21 @@ module.exports = makeStunt({
     hold: 'quartz_block', slot: 5,
     // ticks each stage gets: pool + road, floors 1-3 (short, each its own camera move), wings + garden,
     // roof + penthouse, the rooftop pool, the helipad, the wall round the grounds, the crown
-    stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 390, 5: 180, 6: 110, 7: 80, 8: 150, 9: 50 },
-    // [tick of the build, camera, look-at], local to the mansion centre (y from the ground)
-    keys: [
-      [0, [-2, 13, 27], [0, -1, 15]],        // the pool fills the frame from the cut (stills-checked)
-      [70, [-6, 11, 27], [0, 0, 14]],        // (stays close: a pull-back here left a small pool in an empty field)
-      [140, [-26, 5, 22], [-6, 4, 8]],       // floor 1: low along the facade
-      [210, [4, 9, 22], [0, 7, 8]],          // floor 2: across the front, close
-      [315, [22, 22, 24], [0, 12, 0]],       // floor 3: up and looking down on it
-      [420, [30, 18, 28], [12, 10, 0]],
-      [630, [40, 16, 22], [22, 6, 0]],       // the east wing
-      [780, [-30, 16, 40], [-15, 3, 20]],    // the west wing and the garden
-      [960, [16, 30, 24], [0, 17, -1]],      // roof and penthouse
-      [1080, [-30, 30, 20], [-12, 15, 0]],   // the rooftop pool filling
-      [1115, [4, 42, 34], [8, 14, 0]],       // up and over the front (crossing the roof low read as a wall of dark planks)
-      [1150, [32, 30, 18], [24, 11, 0]],     // the helipad, from above
-      [1270, [-62, 36, 66], [0, 2, 8]],      // the wall going round the grounds, wide
-      [1358, [-2, 11, 70], [0, 10, 0]],      // the pull-back through the gates, the crown going on
-      [1388, [0, 10, 64], [0, 10, 0]]
-    ],
-    // [ticks after the build, camera, look-at]: a push-in after 60:00 (the Short ends 0.5 s in)
-    reveal: [
-      [8, [-3, 11, 59], [0, 10, 0]],
-      [16, [-7, 12, 54], [-1, 10, 0]]
+    stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 390, 5: 180, 6: 110, 7: 100, 8: 200, 9: 70 },   // (30 s: helipad, wall, crown longer; the faster 1-minute round came in at 28.7 s)
+    // several clearly different steady angles joined by hard cuts (owner r:r66efa4, 2026-11-11: "we should have more
+    // angles when we're showing the last thing"), each one slow and straight so its own jump cuts carry it on
+    // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
+    // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the mansion
+    angles: [
+      [0, [[-2, 13, 27], [0, -1, 15]], [[-4, 13, 28], [0, -1, 14]], 'down on the pool'],          // the pool fills the frame
+      [126, [[-29, 6, 39], [0, 5, 2]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3
+      [372, [[46, 12, 10], [0, 7, 0]], [[44, 16, 2], [0, 9, 0]], 'side'],                          // floor 3, the wings
+      [612, [[0, 4, 33], [0, 7, 10]], [[0, 5, 28], [0, 7, 10]], 'down the road to the door'],       // the garden, the facade
+      [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
+      // the showcase: the finished mansion from three angles, the helipad, the wall and the crown going on
+      [1092, [[55, 12, 30], [8, 14, 0]], [[52, 13, 32], [8, 14, 0]], 'low right'],
+      [1210, [[50, 34, -38], [0, 6, 4]], [[47, 35, -34], [0, 6, 4]], 'high from the back corner'],
+      [1330, [[-2, 11, 72], [0, 10, 0]], [[-4, 11.5, 62], [0, 10, 0]], 'the hero wide, through the gates']
     ]
   }
 })

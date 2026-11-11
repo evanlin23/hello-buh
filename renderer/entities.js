@@ -615,7 +615,10 @@ function poseWolf (r, s, walkPos, walkSpeed, tick = 0) {
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
   r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
   B.head.rotation.set(-(s.pitch || 0), net, 0)
-  const tail = x.tame ? 0.55 * Math.PI : Math.PI / 5
+  // extra.tail: the tail's angle (rad) when a scene sets it. Vanilla lowers a tamed wolf's tail with its health
+  // ((0.55 - (20 - hp) * 0.02) pi): Good Boy's opening holds it low, a sad dog watching him go (held high toward a camera
+  // behind it, it read as a 'long flat head')
+  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? 0.55 * Math.PI : Math.PI / 5
   // extra.wag: a happy wag (fast side to side), whatever the walk does
   B.tail.rotation.set(tail, x.angry ? 0 : x.wag ? Math.sin(tick * 1.6) * 0.7 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
   if (x.sitting) {

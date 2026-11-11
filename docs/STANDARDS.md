@@ -177,6 +177,12 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 2. **Cast move only through the kit** (`K.actor`: every tick, at mob speed), placed before the shot mark so the new
    shot's first frame already has them in place; never a stunt's own `/tp @e` loop (dog_hill's hop read as a teleport).
    Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
+   **Nothing on screen jumps while the camera holds**: no entity, the narrator included (a wolf narrator is the
+   recording bot), moves over 0.6 block in a tick in the frame unless the camera itself cuts on that tick; a teleport
+   that is the story (K.blink, `teleport_ok`) still lands on the cut (`K.cutShot(name, moves, { self })` moves the
+   narrator with it; the shot mark waits for the landing, and render.js draws every move of a cutShot, cast and
+   narrator, at its old spot until the cut tick: cutHolds). Check: owner (glitch: visible jump, in the frame BLOCK, just
+   out of it WARN; lib/hb/motion.js visibleJumps on the track as render.js draws it). r:rfa229d
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
    (eye-trace: jump <= 15 % of the frame; > 20 % WARN, > 33 % BLOCK), and the cut lands in the pause 33-150 ms before
    the line's first word, never after it nor off the line's voice. Built in: render.js `eyeTrace` re-aims each camera
@@ -241,7 +247,9 @@ hit, and **no music after the payoff**. **No whooshes** on cuts; the riser soft 
 has its vanilla sound (mob voices, steps, splashes included) and every shot its ambience; nothing but the voice
 covers a word (the clarity guard). Any owner note on a track or level overrides it.
 Check: `python3 scripts/audio_measure.py out/<name>.mp4`; `python3 scripts/onscreen_sfx.py <rec> --strict` (visible
-actions left silent). Every sound is one the picture leads the viewer to expect, and none jumps out over the voice;
+actions left silent). Every sound a stunt plays is audible: play volume x its sounds.json file volume >= 0.04 (the raid horn's file
+volume is 0.01: `ctx.vanillaSound` plays it at the game's 64). Check: `python3 scripts/sound_levels.py <rec>` (BLOCK in
+rec_check). Every sound is one the picture leads the viewer to expect, and none jumps out over the voice;
 a sound that makes the owner stop is a blocker. Check: review (listen). r:rc85ccc r:r36632d r:rf484cb
 Stunt Shorts (NCS bed): a sound the game hinges on (edit `keySounds`, e.g. guess the mob's call) is **>= 8 dB over
 the music** (owner, 2026-11-11, guess_sound: "had super loud music"); the song ducks to -24 dB under it at publish.
@@ -289,7 +297,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
-  on. Check: owner. r:r77977b
+  on. New stories are made by hand in owner-audited stages: premise shortlist (owner picks), then one session per
+  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f
 - **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
   swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
   Check: owner. r:r1f2a80

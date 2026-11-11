@@ -44,8 +44,9 @@ adds songs.
 - **Gate the final mix, not the no-song render**: `./hb mixcheck <name>` builds the exact NCS mix publish makes and
   runs the publish gate's `./hb pace` on it (`./hb review` runs it too, as a blocker). Under the music, game sounds
   stop counting as hits: a payoff with no hit and a stretch carried only by game sounds both BLOCK at publish. Fixes:
-  the drop on the payoff, a 0.4 s dip (+ an impact only on a busy game track: on a quiet stunt it drags the whole game
-  track ~28 dB down, mislabel_grandma), a picture or caption beat in any quiet stretch; re-run ./hb check after. (lessons 2026-11-11)
+  the drop on the payoff, a 0.4 s dip + an impact (edit.py caps the edit sfx at +4 dB of the game track's loudness, so an
+  impact can no longer drag a quiet game track ~28 dB down as on mislabel_grandma), a picture or caption beat in any quiet
+  stretch; re-run ./hb check after. (lessons 2026-11-11)
 - Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
   anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
 
