@@ -7315,7 +7315,7 @@
     "python3 audio.py work/lapse_rocket.rec.json work/lapse_rocket.wav",
     "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
   ],
-  "status": "ready",
-  "notes": "1 s vs 1 min vs 1 h rocket time-lapse (badlands launch complex); 4 rounds; frame review + retention + minecraft audit ready (r4) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +17.2 -> +17.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture",
+  "status": "needs-fix",
+  "notes": "1 s vs 1 min vs 1 h rocket time-lapse (badlands launch complex); 4 rounds; frame review + retention + minecraft audit ready (r4) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +17.2 -> +17.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: 3.37 s and 3.12 s with nothing new (20.58-27.07 s), no picture change on the payoff (31.53 s). Fix: speed up / cut that stretch + a flash or punch on the payoff (edit-only), then add_song.",
   "published_at": "2026-11-07T14:15:11.286Z"
 }

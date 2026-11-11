@@ -1,9 +1,9 @@
 {
   "name": "worse_tnt",
-  "caption": "every 5 seconds it gets worse 😰",
+  "caption": "every 5 seconds it gets worse \ud83d\ude30",
   "youtube": {
-    "title": "every 5 seconds the TNT doubles 😰 #minecraft #shorts",
-    "description": "every 5 seconds the TNT doubles 😰\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "every 5 seconds the TNT doubles \ud83d\ude30 #minecraft #shorts",
+    "description": "every 5 seconds the TNT doubles \ud83d\ude30\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -33,7 +33,7 @@
     "sha256": "d7eb6e3a7eff909f559828e3a7c29d9d8484317044206a59efc49076aacf3227"
   },
   "edit": {
-    "caption": "every 5 seconds it gets worse 😰",
+    "caption": "every 5 seconds it gets worse \ud83d\ude30",
     "red": "worse",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "boom7",
@@ -114,7 +114,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "every 5 seconds it gets worse 😰",
+      "every 5 seconds it gets worse \ud83d\ude30",
       "--red",
       "worse",
       "--countdown",
@@ -7136,9 +7136,9 @@
     "gunzip -c shorts/worse_tnt/recording.json.gz > work/worse_tnt.rec.json",
     "node render.js work/worse_tnt.rec.json work/worse_tnt.frames 60 1080 1011",
     "python3 audio.py work/worse_tnt.rec.json work/worse_tnt.wav",
-    "python3 edit.py --frames work/worse_tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/worse_tnt.rec.json --audio work/worse_tnt.wav --caption \"every 5 seconds it gets worse 😰\" --red worse --countdown go:boom7:SURVIVE --punch [\"boom5\",\"boom6\",\"boom7\"] --counter {\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7} --cards \"[[\\\"l1\\\",\\\"1 TNT\\\",0.9,\\\"white\\\"],[\\\"l2\\\",\\\"2 TNT\\\",0.9,\\\"white\\\"],[\\\"l3\\\",\\\"4 TNT\\\",0.9,\\\"white\\\"],[\\\"l4\\\",\\\"8 TNT\\\",0.9,\\\"yellow\\\"],[\\\"l5\\\",\\\"16 TNT\\\",0.9,\\\"yellow\\\"],[\\\"l6\\\",\\\"32 TNT\\\",0.9,\\\"red\\\"],[\\\"l7\\\",\\\"64 TNT\\\",0.9,\\\"red\\\"],[\\\"boom7\\\",\\\"SURVIVED\\\",1,\\\"green\\\"]]\" --shake [\"boom6\",\"boom7\"] --death_screen death --start_at go:0 --end_after boom7:1.0 --out out/worse_tnt.mp4"
+    "python3 edit.py --frames work/worse_tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/worse_tnt.rec.json --audio work/worse_tnt.wav --caption \"every 5 seconds it gets worse \ud83d\ude30\" --red worse --countdown go:boom7:SURVIVE --punch [\"boom5\",\"boom6\",\"boom7\"] --counter {\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7} --cards \"[[\\\"l1\\\",\\\"1 TNT\\\",0.9,\\\"white\\\"],[\\\"l2\\\",\\\"2 TNT\\\",0.9,\\\"white\\\"],[\\\"l3\\\",\\\"4 TNT\\\",0.9,\\\"white\\\"],[\\\"l4\\\",\\\"8 TNT\\\",0.9,\\\"yellow\\\"],[\\\"l5\\\",\\\"16 TNT\\\",0.9,\\\"yellow\\\"],[\\\"l6\\\",\\\"32 TNT\\\",0.9,\\\"red\\\"],[\\\"l7\\\",\\\"64 TNT\\\",0.9,\\\"red\\\"],[\\\"boom7\\\",\\\"SURVIVED\\\",1,\\\"green\\\"]]\" --shake [\"boom6\",\"boom7\"] --death_screen death --start_at go:0 --end_after boom7:1.0 --out out/worse_tnt.mp4"
   ],
-  "status": "ready",
-  "notes": "worker 18: every 5 seconds it gets worse #3 (the TNT doubles 1 to 64; pillar escape, survives at 0.00); 7 independent review rounds, round 7 ready on frame/retention/minecraft",
+  "status": "needs-fix",
+  "notes": "worker 18: every 5 seconds it gets worse #3 (the TNT doubles 1 to 64; pillar escape, survives at 0.00); 7 independent review rounds, round 7 ready on frame/retention/minecraft | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: no sound hit on the payoff (35.05 s); ./hb check BLOCK: lint nobody moves in every round's wait (1.4-2.6 s each, 1.6-29.2 s scene time); not remixed at -16 LUFS yet. Fix: a song dip before the payoff + speed up the waits (edit-only), then add_song.",
   "published_at": "2026-11-07T19:39:31.928Z"
 }
