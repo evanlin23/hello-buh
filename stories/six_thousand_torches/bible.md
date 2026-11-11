@@ -35,7 +35,7 @@ ending is Jonah setting his own torch down by our door, waving and walking away,
 | A. this morning | L01-L04 | today, dawn | S01 23000, S02 23060, S03 23120, S04 23185 | before sunrise, torches and bloom strongest |
 | B. Jonah (flashback) | L05-L07 | any evening before (the habit) | S05 11600, S06 12000, S07 12050 | golden hour to dusk. **None of the story's torches.** His cottage stands. Two villagers walk in S05 |
 | C. the chest, the window, the plot | L08-L10 | today, after A | S08 23250, S09 23296, S10 23328 | dawn brightening |
-| D. the row and the door | L11-L14 | minutes later | S11 23450; ~7 s skip at the cut; S12 23652, S13 23688, S14 23720 (continuous) | first gold; S13 and S14 look west-ish, the sun behind the camera |
+| D. the row and the door | L11-L14 | minutes later | S11 23450; ~7 s skip at the cut; S12 23670, S13 23700, S14 23770 (continuous; the stunt takes the starts from the voiced durations) | first gold; S13 and S14 look west-ish, the sun behind the camera |
 
 Inside A, C and D time only moves forward. B reads as a flashback: gold light, people on the street, no torches.
 Weather clear, summer, `look.fog: false`.
@@ -67,8 +67,8 @@ Coordinates: the village bell is (0,0); +x east, +z south. Real numbers come fro
 ## Cast and costume
 | who | model / skin | held | name tag | where | state changes |
 |---|---|---|---|---|---|
-| me (narrator) | baby villager, plains, no profession, `stunt.self` | nothing; no HUD, no hand | none | A: in the village (POV S04). B: walking home beside Jonah (S06, S07, from outside). C: POV inside (S08, on the bed S09), at the plot (S10, off frame). D: POV at the strip (S11), running (S12), on the path frame right (S13), POV from that spot (S14) | none |
-| Jonah | player actor `Jonah`, default skin **not Steve** (proposed `kai`; owner to confirm) | S05 empty. S06-S07 a torch (his walk-home torch, held light). S11 unseen. S12 out of frame. S13 crouched, **exactly one torch**, placed right after 'LAST torch', then empty. S14 empty | player name (dim while sneaking) | B: at his gate, walking us home, at our door. D: unseen round the corner, our doorstep, walking west away | never quits on screen |
+| me (narrator) | baby villager, plains, no profession, `stunt.self` | nothing; no HUD, no hand | none | A: in the village (POV S04). B: walking home beside Jonah (S06, S07, from outside). C: POV inside (S08, on the bed S09), at the plot (S10, off frame). D: POV at the strip (S11), running (S12), at (-24, 8), frame left beyond the door spot (S13), POV from that spot (S14) | none |
+| Jonah | player actor `Jonah`, default skin **not Steve** (proposed `kai`; owner to confirm) | S05 empty. S06-S07 a torch (his walk-home torch, held light). S11 unseen. S12 crouched at the doorstep, small at 9 blocks, name dimmed. S13 crouched, **exactly one torch**, placed right after 'LAST torch', then empty. S14 empty | player name (dim while sneaking) | B: at his gate, walking us home, at our door. D: unseen round the corner, our doorstep, walking west away | never quits on screen |
 | iron golem | the village's | | none | S03 | none |
 | villagers | the village's, frozen in beds in A/C/D | | none | two walking in S05 only | none |
 
@@ -80,18 +80,19 @@ Coordinates: the village bell is (0,0); +x east, +z south. Real numbers come fro
 | our chest | L08, S08 | diamond sword, iron helmet, chestplate, leggings, boots, red bed, shield, filled map, fishing rod, 16 bread, bucket | our room, west wall | none |
 | Jonah's cottage | L05, S05 | standing, lit | jonah_house | S07 bg (lit windows); gone in C (S10) |
 | the plot's torch square | L10, S10 | 81 torches on coarse dirt | jonah_plot | none |
-| the growing row | L11, S11 | grows round the corner in S11; one short of the door spot in S12 | strip, house front, across the street | S12, S13 |
+| the growing row | L11, S11 | the strip (-19, 11..18) placed before S11; (-19, 10) and (-19, 9) appear in S11; (-23..-20, 9) placed in the skip; one short of the door spot in S12 | strip, house front, across the street | S12, S13 |
 
 ## Positions and screen direction
 - Our door faces south onto the street. S06 (from about (-15, 9)) and S13 (from about (-18, 9)) look west-north-west at
   it on one axis from the street (a camera due south would be inside the house across the street, continuity r1). The
   kid stands at (-24, 8) in S06, S13 and S14 (his POV). S07 is the MS of S06's moment.
-- S06: Jonah and the kid walk in from frame left along the path to the door.
+- S06: Jonah and the kid walk toward the lens down the street from the west to the door (west is into depth in
+  S06, S07 and S14).
 - S14: from the kid's spot (-24, 8), the POV turns west down the main street: Jonah walks away from the lens toward
   his bare plot, empty-handed, the sunrise behind the camera. It rhymes with S07, where he walks home west with his
   torch to a house that exists.
-- S11 looks north up the strip; S12 turns left (west) round the corner with the kid, our door ahead; Jonah is out of
-  frame until S13 (crouched behind the house-front corner).
+- S11 looks north up the strip; S12 turns left (west) round the corner with the kid, our door ahead, Jonah
+  small and crouched at the doorstep (named in S13's closer shot; no pop between them).
 - S05 and S10 share an angle (east of Jonah's plot, looking west).
 
 ## Who knows what

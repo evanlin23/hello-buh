@@ -31,7 +31,7 @@
  "look": {
   "time": "dawn",
   "ticks": {
-   "today": "23000 rising to 23720 across L01-L04 and L08-L14, never backwards inside a scene",
+   "today": "23000 rising to ~23770 across L01-L04 and L08-L14, never backwards inside a scene; the stunt takes each shot's start from the voiced durations (S12 23670, S13 23700, S14 23770 are the plan)",
    "flashback": "11600-12050 (S05-S07)"
   },
   "fog": false,
@@ -463,7 +463,7 @@
    "place": "our_door",
    "size": "wide",
    "camera": "at: 1.5 up in the street east of our door, about (-15, 9), looking west-north-west at the door (the establishing wide of our_door; S13 repeats the axis closer); still",
-   "frame": "FLASHBACK (the nightly habit, every night before). The whole house front, its roof and a lamp post in frame. subject: Jonah walking up the path beside the kid (baby villager, on the lens side), a torch in his hand lighting them both (held light), arriving at our door on 'HOME'; they stop at the doorstep, the kid at (-24, 8) in Jonah's torchlight. bg: our house front, the window lit. Sunset into dusk (12000), no sun in frame.",
+   "frame": "FLASHBACK (the nightly habit, every night before). The whole house front, its roof and a lamp post in frame. subject: Jonah walking toward the lens down the street from the west beside the kid (baby villager, on the lens side), a torch in his hand lighting them both (held light), arriving at our door on 'HOME'; they stop at the doorstep, the kid at (-24, 8) in Jonah's torchlight. bg: our house front, the window lit. Sunset into dusk (12000), no sun in frame.",
    "look": {
     "fog": false,
     "time": 12000
@@ -503,7 +503,7 @@
    "place": "jonah_plot",
    "size": "wide",
    "camera": "at: the same angle as S05 (east of the plot, looking west), 5 up, a slow descending push; FOV 50",
-   "frame": "subject: where Jonah's cottage stood: a bare 9 x 9 footprint of coarse dirt, a torch on every block; fg: the street fence, a torch on every post; bg: the west hills, S05's skyline, now at dawn. The S05/S12 match makes 'GONE' instant. Dawn (23328)."
+   "frame": "subject: where Jonah's cottage stood: a bare 9 x 9 footprint of coarse dirt, a torch on every block; fg: the street fence, a torch on every post; bg: the west hills, S05's skyline, now at dawn. The S05/S10 match makes 'GONE' instant. Dawn (23328)."
   },
   {
    "id": "S11",
@@ -519,7 +519,7 @@
    "place": "our_street",
    "size": "wide",
    "camera": "follow: behind the kid at 6 blocks, 1.6 up, lag 0.3, as he runs up the strip and turns left round the corner; FOV 55",
-   "frame": "opens: the kid small, running; at the corner the camera turns with him: the row runs along the house front, then north across the street (no torch on the dirt path) toward our doorstep; on 'MY door' our door centred 9 blocks ahead, the row ending one block short of the door spot. Jonah is NOT in frame (he is crouched just behind the house-front corner on frame left, out of shot): S13 shows him on 'JONAH'. Dawn (23652: ~7 s of game time pass at the S11 cut; S12-S14 are one continuous moment)."
+   "frame": "opens: the kid small, running; at the corner the camera turns with him: the row runs along the house front, then north across the street (no torch on the dirt path) toward our doorstep; on 'MY door' our door centred 9 blocks ahead, the row ending one block short of the door spot, and Jonah crouched at the doorstep beside the gap, small, his name dimmed (sneaking): there, not yet named (S13's closer shot lands 'JONAH'). Dawn (23670: ~7 s of game time pass at the S11 cut while he finishes the row; S12-S14 are one continuous moment)."
   },
   {
    "id": "S13",
@@ -527,7 +527,7 @@
    "place": "our_door",
    "size": "full",
    "camera": "at: 1 block up in the street, about (-18, 9), the S06 axis closer (looking west-north-west at the door), FOV 50, still",
-   "frame": "fg: the kid at (-24, 8) on the path, at frame left of the door spot from this side, back three-quarters to us; subject: Jonah head to foot crouched (sneak; name dimmed but readable) at the doorstep, his own torch in his hand, exactly one; right after 'LAST torch' he places it on the door spot (-23, 7), closing the row, his hand now empty; on 'DARK' the kid is in its light; he stands, turns to the kid and swings his arm twice (the S07 wave). bg: our house front, torch-lit roofs behind, gold sunlight from behind the camera (east). Sunrise (23688)."
+   "frame": "the kid at (-24, 8) on the path, frame left, just beyond the door spot from this side, facing Jonah; subject: Jonah head to foot crouched (sneak; name dimmed but readable) at the doorstep, his own torch in his hand, exactly one; right after 'LAST torch' he places it on the door spot (-23, 7), closing the row, his hand now empty; on 'DARK' the kid is in its light; he stands, turns to the kid and swings his arm twice (the S07 wave). bg: our house front, torch-lit roofs behind, gold sunlight from behind the camera (east). Sunrise (23700)."
   },
   {
    "id": "S14",
@@ -535,13 +535,13 @@
    "place": "our_street",
    "size": "wide",
    "camera": "pov (kid's eye, 0.81) from the kid's S13 spot at (-24, 8), turning to look west down the main street; still once turned; FOV 50",
-   "frame": "subject: Jonah, back to us, walking away west down the torch-lit street at a player's walk, empty-handed (his torch is at our door now), about 2 blocks out at the line's start and ~10-14 at 'TOMORROW', his name over him; he walks toward where his house stood (the bare torch square at the street's end); he never looks back and says nothing; the chat is empty; bg: the street of torches, the plot's torch square, the west hills lit gold by the sunrise behind the camera (no sun in frame). Sunrise (23720). It rhymes with S07, where he walked home west to a house that existed. Cut within 0.3-0.6 s of 'TOMORROW', Jonah still walking."
+   "frame": "subject: Jonah, back to us, stepping round the kid and walking away west down the torch-lit street at a player's walk, empty-handed (his torch is at our door now), about 2 blocks out at the line's start and ~10-14 at 'TOMORROW', his name over him; he walks toward where his house stood (the bare torch square at the street's end); he never looks back and says nothing; the chat is empty; bg: the street of torches, the plot's torch square, the west hills lit gold by the sunrise behind the camera (no sun in frame). Sunrise (23770). It rhymes with S07, where he walked home west to a house that existed. Cut within 0.3-0.6 s of 'TOMORROW', Jonah still walking."
   }
  ],
  "props": {
   "torches": {
    "block": "torch",
-   "count": "6,000-6,300 in a box of about 90 x 90 blocks round the bell that includes Jonah's plot (one torch per column from `sets.dress.torches`: the 78 x 78 box gives only ~4-5k, continuity r1); log the count. Skip list: the growing row's cells (-19, 10..18), (-23..-19, 9), (-23, 8 is path) and the door spot (-23, 7)",
+   "count": "6,000-6,300 in a box of about 90 x 90 blocks round the bell that includes Jonah's plot (one torch per column from `sets.dress.torches`: the 78 x 78 box gives only ~4-5k, continuity r1); log the count. Skip list: the growing row's cells (-19, 10..18), (-23..-19, 9), (-23, 8 is path) and the door spot (-23, 7). The stunt places the strip (-19, 11..18) before S11 and (-23..-20, 9) during the ~7 s skip at the S11 cut; the plot (-38, 4) must lie inside the box",
    "at": [
     0,
     0,
