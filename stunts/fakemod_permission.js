@@ -12,7 +12,7 @@
 const { plateau } = require('../lib/plateau')
 const FM = require('../lib/fakemod')
 
-const CAPTION = 'this mod makes mobs ask permission 💀'
+const CAPTION = 'why is every mob asking me for permission 💀'   // a reaction, not a label (r:r0f3da0)
 
 module.exports = {
   name: 'fakemod_permission',
@@ -20,15 +20,18 @@ module.exports = {
   time: 12950,     // sunset: undead don't burn (the sky is too dark for it) and the sky goes orange
   caption: CAPTION,
   edit: {
-    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'boom:1.5',   // settle-ok: the smoke clears ~0.95 s after the blast (boom:1.0 ended on it: pace), the screen is still after that (r1 2.8 s, r2 0.75 s): ~0.5 s of still text
+    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'boom:0.8',   // settle-ok: fast cuts (owner r:r188b46): end 0.5-0.8 s after the payoff's result; smoke never holds the end
+    // straight to the next beat once each kill reads (r:r188b46): cut when the dying mob is gone (r:r24d99a still holds
+    // a cut for a mob mid-death) to the next mob already framed under the popup
+    speed: [['cut1a', 'cut1b', 'cut'], ['cut2a', 'cut2b', 'cut']],
     dropAt: 'boom',
     sfx: [['air', 'first', 'boom', { gain: 0.4 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }],
       ['pop', 'fm1_open'], ['pop', 'fm2_open'], ['pop', 'fm3_open'],   // a hit as each popup opens (mixcheck: under the NCS bed the toast sound wasn't one)
       ['riser', 'fm3_click', 'fm3_result', { gain: 0.35 }]],          // the roll builds (pace: the last third sagged); it ends 1.6 s before the dip
     popup: [
-      FM.popup({ k: 1, mob: 'zombie', text: ['A ', ['Zombie', 'red'], ' is asking for permission to attack you.'], pick: 'Deny', done: ['Request ', ['DENIED', 'red'], '.'], y: 0.03 }),
-      FM.popup({ k: 2, mob: 'skeleton', text: ['A ', ['Skeleton', 'red'], ' is asking for permission to shoot you.'], pick: 'Deny', hover: ['Allow', 'Deny'], done: ['Request ', ['DENIED', 'red'], '.'], y: 0.03 }),
-      FM.popup({ k: 3, mob: 'creeper', text: ['A ', ['Creeper', 'red'], ' is asking for permission to explode.'], hover: ['Deny', 'Roll'], roll: 'Allow', done: ['The dice say: ', ['ALLOW', 'green']], y: 0.03 })
+      FM.popup({ k: 1, mob: 'zombie', text: ['A ', ['Zombie', 'red'], ' is asking for permission to attack you.'], pick: 'Deny', done: ['Request ', ['DENIED', 'red'], '.'] }),
+      FM.popup({ k: 2, mob: 'skeleton', text: ['A ', ['Skeleton', 'red'], ' is asking for permission to shoot you.'], pick: 'Deny', hover: ['Allow', 'Deny'], done: ['Request ', ['DENIED', 'red'], '.'] }),
+      FM.popup({ k: 3, mob: 'creeper', text: ['A ', ['Creeper', 'red'], ' is asking for permission to explode.'], hover: ['Deny', 'Roll'], roll: 'Allow', done: ['The dice say: ', ['ALLOW', 'green']] })
     ]
   },
   expectDeath: true,
@@ -97,23 +100,26 @@ module.exports = {
       for (let i = 0; i < 30 && e.isValid !== false; i++) await bot.waitForTicks(1)
     }
 
-    // 1. the zombie: already walking at me (the hook moves from frame 0)
-    await ctx.cmd(`/summon zombie ${x - 3.5} ${F} ${z + 0.5} {Tags:["fm_zombie"],PersistenceRequired:1b,Rotation:[-90f,0f]}`)
+    // 1. the zombie: walking at me from frame 0 (r:r0f3da0: the subject in motion by 0.5 s; the Short starts once it
+    // moves: a fresh zombie stands ~1 s before it targets me)
+    await ctx.cmd(`/summon zombie ${x - 6.5} ${F} ${z + 0.5} {Tags:["fm_zombie"],PersistenceRequired:1b,Rotation:[-90f,0f]}`)
     const zb = await grab('fm_zombie', 'zombie')
+    const z0 = zb.position.clone()
     // the skeleton waits off to the right (north), frozen until its turn (it would shoot me in the back)
     await ctx.cmd(`/summon skeleton ${x - 2.5} ${F} ${z - 6.0} {Tags:["fm_skel"],PersistenceRequired:1b,NoAI:1b,Rotation:[0f,0f],equipment:{mainhand:{id:"minecraft:bow",count:1}}}`)
     const sk = await grab('fm_skel', 'skeleton')
+    for (let i = 0; i < 60 && zb.position.distanceTo(z0) < 0.25; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }
     ctx.mark('first')
-    for (let i = 0; i < 10 && dist(zb) > 2.7; i++) { A.view(zb.position.offset(0, 2.6, 0)); await bot.waitForTicks(1) }   // eyes over its head: it sits under the popup
+    for (let i = 0; i < 40 && dist(zb) > 3.4; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // framed under the centred popup
     ctx.log('zombie at', dist(zb).toFixed(2), 'burning', burning(zb))
-    await FM.ask(ctx, { k: 1, tag: 'fm_zombie', hover: ['Deny'] })
+    await FM.ask(ctx, { k: 1, tag: 'fm_zombie', hover: ['Deny'], entity: zb, A })
     await kill(zb)
     ctx.mark('zombie_dead', { gone: zb.isValid === false })
+    await bot.waitForTicks(3); ctx.mark('cut1a'); await bot.waitForTicks(3)   // the cut's edges on a still view (whip: an edit cut mid-turn snaps)
 
-    // 2. the skeleton: it wakes, I turn to it, it raises the bow... and asks
-    await FM.freeze(ctx, 'fm_skel', false)
-    await A.turnTo(sk.position.offset(0, 2.2, 0), { max: 40 })
-    await bot.waitForTicks(4)
+    // 2. the skeleton (cut to it, framed under the popup): it asks
+    await A.turnTo(FM.framePoint(ctx, sk), { max: 40, hold: 4 })
+    ctx.mark('cut1b')
     ctx.log('skeleton at', dist(sk).toFixed(2), 'burning', burning(sk))
     await FM.ask(ctx, { k: 2, tag: 'fm_skel', hover: ['Allow', 'Deny'] })
     // walk up to it and kill it (sprinting, the view on it)
@@ -128,9 +134,11 @@ module.exports = {
     const cr = await grab('fm_creeper', 'creeper')
     await kill(sk)
     ctx.mark('skeleton_dead', { gone: sk.isValid === false })
+    await bot.waitForTicks(3); ctx.mark('cut2a'); await bot.waitForTicks(3)   // the cut's edges on a still view (whip: an edit cut mid-turn snaps)
 
-    // 3. turn left: the creeper, right there, waiting. It asks. Deny... no: Roll.
-    await A.turnTo(cr.position.offset(0, 2.5, 0), { max: 50, hold: 4 })
+    // 3. cut to my left: the creeper, right there, waiting. It asks. Deny... no: Roll.
+    await A.turnTo(FM.framePoint(ctx, cr), { max: 50, hold: 4 })
+    ctx.mark('cut2b')
     ctx.log('creeper at', dist(cr).toFixed(2))
     await FM.ask(ctx, { k: 3, tag: 'fm_creeper', hover: ['Deny', 'Roll'], roll: 'Allow' })
     // allowed: it lights (vanilla's ignited flag: the 30-tick fuse), swells, goes off. The fuse runs in Creeper.tick,
