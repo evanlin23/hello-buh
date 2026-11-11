@@ -9,12 +9,12 @@ top. No site search and no clearing (STANDARDS 3.5).
 | every sheep in the village is blue, sixty of them | L01 | S01: count 60 sheep, all `Color:11`; no white or other wool anywhere in any shot except the S02 stray and the S06 red one |
 | Dad won't let a white one through the gate | L02 | S02: the stray is white until 'GATE', then blue, then through the gate |
 | sheep (can't see that good) | L04 | S04: one blue sheep, full figure, staring at the lens |
-| he counts them every night | L05 | S05 is at nightfall (13000), the flock filing past him |
+| he counts them every night | L05 | S05 is at nightfall (13000), Dad walking among the flock |
 | one came back from the woods red | L06 | S06: one red sheep, the birch treeline visible behind it |
 | Dad sat at the gate with his crossbow | L07 | S07: the crossbow, in his hand on the camera's side, reads at 300 px past his body |
 | the trees went snap x3 | L08 | three fang snaps in the mix, nothing seen |
 | I forgot to shut the gate, my lamb got out | L09 | S09: the gate open in frame, the lamb outside it |
-| Dad says never go in the woods | L10 | S10: Dad and the woods both in frame |
+| Dad says never go in the woods | L10 | S10: Dad (13 blocks out, in the field) and the woods both in frame |
 | (went in) | L11 | S11: birch trunks all round, the lamb ahead |
 
 ## Pieces
@@ -24,13 +24,13 @@ top. No site search and no clearing (STANDARDS 3.5).
 - **The flock:** 60 sheep summoned with `Color:11`. S02: one more with `Color:0` (white), dyed in shot. S06: one with
   `Color:14` (red). The lamb: a baby sheep (`Age:-24000`, refreshed so it never grows), `Color:11`,
   `PersistenceRequired`.
-- **The woods:** the birch past the ford at +40; the clearing at +45..+54 (S11-S13).
+- **The woods:** the birch past the ford at +40; the clearing at +45..+56 (S11-S13).
 - **The evoker:** summoned for S13 only, behind a trunk out of S11/S12's frustum, `mobGriefing` true. Prefer the real
   spell: summon it with AI where the lamb is its only blue sheep in range and the camera player is hidden from it
   until the cast begins. If AI can't be cued on time, `NoAI` + pose and set the lamb's colour with `/data` at the
   cue, with the sounds and particles placed by hand on vanilla's timing (bible "The mechanic").
-- **The birch:** check the seed has birch at +45..+54 next to the tower's slope (+44, +40); stamp birch trunks there if not.
-- **The order matters:** the colour spell only fires while the evoker has NO target, and the kid at 10.4 blocks in view would be targeted first. Either keep her out of its sight until the cast starts (the trunk; `/team` or a later spawn of the camera player), or script it: `NoAI` + the raised-arms pose, the lamb's colour set with `/data` on the cast tick, the sounds placed on vanilla's timing.
+- **The birch:** check the seed has birch at +45..+56 next to the tower's slope (+44, +40); stamp birch trunks there if not.
+- **The order matters:** the colour spell only fires while the evoker has NO target, and the kid at 9.6 blocks in view would be targeted first. Either keep her out of its sight until the cast starts (the trunk; `/team` or a later spawn of the camera player), or script it: `NoAI` + the raised-arms pose, the lamb's colour set with `/data` on the cast tick, the sounds placed on vanilla's timing.
 - **No fangs and no vexes on screen:** the shot cuts at +1.3 s. Real AI would summon vexes next; if real AI is used, the cut lands before they appear.
 
 ## Engine checks before building (see the engine gaps in reviews/r3-engine.md)

@@ -49,8 +49,8 @@
 ## Cast and costume
 - **The kid (narrator):** a player, `alex` skin, never named. POV in S09, S11, S12; small from behind, crossing the ford, in S10; her shoulder in S13. Hearts full,
   no armour, the lead selected (held: she means to bring the lamb back), the same 9-slot bar in every POV shot (story.json `hotbar`).
-- **Dad:** a player actor, `kai` skin. Blue dye in hand S02-S03; crossbow S06 (legs and crossbow only) and S07; a
-  lantern on the post in S05 (not in his hand); empty-handed, mending the fence in S10.
+- **Dad:** a player actor, `kai` skin. Blue dye in hand S02-S03; crossbow S06 (legs and crossbow only) and S07 (in his off hand, on the camera's side); a
+  lantern on the post in S05 (not in his hand); empty-handed, mending the field fence outside the palisade in S10 (13 blocks from the lens, facing south).
 - **The lamb:** a baby sheep, `Color:11` blue from S01 (unsingled) to S12; red only from S13 +0.3 s. `PersistenceRequired`.
 - **The flock:** 60 sheep, all blue in every shot (no white, no other colour) except the stray in S02 (white until
   'GATE') and the one red sheep in S06.
@@ -72,9 +72,9 @@
 - The woods are east; gate shots look east (S01, S06, S07, S08, S09), except S05 (looks at the gate from inside) and
   S10 (the high wide over the pasture gate, east-north-east).
 - S12-S13, clearing-relative (K = the kid's stop point, facing east): the lamb stops at (1.5, 0, 0) and turns north-east;
-  the evoker at (8.5, 0, -6), off the kid-lamb line: 8.5 blocks from the lamb (inside the 16-block spell range) and
-  10.4 from the kid (inside its 12-block follow range), level (spell box ±4). A trunk hides it from K (S12); S13's camera
-  at (-1.5, 1.6, 1.5), behind and right of the kid, sees past the trunk. Not summoned before S12 (S01, S08 and S10 look
+  the evoker at (7.5, 0, -6), off the kid-lamb line: 8.5 blocks from the lamb (inside the 16-block spell range) and
+  9.6 from the kid (inside its 12-block follow range), level (spell box ±4). A birch log column at x 1..2, z -2..-1 hides it from K (S12);
+  S13's camera at (-1.5, 1.8, 2.5), behind and right of the kid, clears it by about 0.6 blocks. Not summoned before S12 (S01, S08 and S10 look
   at this treeline).
   At the cut its head has turned to the lens (to her).
 
@@ -88,5 +88,5 @@
 - 60 sheep, all blue (S01); 1 white stray (S02); 1 red sheep (S06); 3 snaps (S08); 1 lamb.
 
 ## The narrator
-The kid, first person, Pip's voice (cast `narrator`), past tense from L05. The narrator's sex is never said aloud; "she" in
+The kid, first person, Pip's voice (cast `narrator`), past tense from L06. The narrator's sex is never said aloud; "she" in
 the lines is the lamb (the bible calls the kid "she" for short; the `alex` skin).
