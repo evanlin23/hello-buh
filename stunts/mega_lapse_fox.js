@@ -197,9 +197,9 @@ module.exports = L.makeLapse({
   }],
   endAfter: 1.6,
   edit: {
-    // the payoff's hit on the final mix (mixcheck): the drop on the reveal with a dip and an impact; a second dip
-    // under the snore on the pass, and the punchline card there
-    sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5]],
+    // the payoff's hit on the final mix (mixcheck): the drop on the reveal with a dip and an impact; on the pass a
+    // second dip and impact under the snore (the snore alone is no hit: pace r1), and the punchline card
+    sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5], ['impact', 'pass', { gain: 1.0 }]],
     cards: [['pass', 'SMALL', 1.6, 'yellow', 0, null, { y: 0.24 }]]
   },
   shots: {
