@@ -292,6 +292,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing YalkyGM's "Who tf is doing this" (one fixed top-down shot of two houses either side
+  of a road: a dirt shortcut keeps wearing across the grass, the "town" answers with a crosswalk, a bush, a tree,
+  railway tracks, walls, barriers, a boulder, a pond, then lava, and the path comes back around every one): "desire
+  paths format".** HelloBuh adds a desire-paths format (family `desire`): one locked camera, an escalating back-and-forth
+  between an unseen walker's shortcut and ever more absurd obstacles, each round a beat; the path always wins.
 - **Owner, 2026-11-11, sharing "Every Time I Snap" (caption "Why does my house always end up like this?", 11 s: from
   inside a stone chimney past the campfire into a cosy wooden room, out the door, and the house outside is a small,
   plain box that can't hold what was inside): "this one lends to replays, since its short and the inside differs from

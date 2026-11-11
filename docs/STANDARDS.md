@@ -315,6 +315,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:r934ea4
 - **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
   hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+- **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
+  round a beat, the path always wins. Check: owner. r:r2e0a32
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

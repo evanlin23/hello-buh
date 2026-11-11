@@ -25,6 +25,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `love` | "Send This To Someone You Love Most 😍💗" | A heart laid out in redstone and lamps in a cherry grove; night falls, it lights up, fireworks ring it; made to be sent to someone | "its like a heart and its cute and lovey" | r:rf91fef | idea |
 | `lucky` | an "aura" Short ("Bro just used all the luck left in his life") | Digging straight down: diamonds, then lava saved by a water bucket, then emeralds, then right into the end portal room; every block luckier than the last | "fake super lucky" | r:r934ea4 | idea |
 | `inside` | "Every Time I Snap" ("Why does my house always end up like this?") | One walk from a detailed interior out the door to a small plain house that cannot hold it; the cut is hidden, it is 11 s long, and the mismatch makes people replay to find the trick | "this one lends to replays, since its short and the inside differs from the outside so its confusing and the cut is not obvious" | r:r9a54b2 | idea |
+| `desire` | YalkyGM: "Who tf is doing this" | One locked top-down shot: a dirt shortcut keeps appearing between two houses across a road; the town answers with a crosswalk, bush, tree, railway, walls, a boulder, a pond, lava, and the path always comes back | "desire paths format" | r:r2e0a32 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -39,4 +40,6 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   stage a different trick (sticky-piston stairs, a lava parkour, a hidden lever).
 - **love**: a heart of lamps that lights at night, a pixel-art "for you" made of flowers, two sheep in a heart pen,
   a heart-shaped firework show.
+- **desire**: a shortcut through a farm, across a moat, over a lava trench, through a mansion; each obstacle
+  absurder than the last, the path reappearing every time.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.
