@@ -1,9 +1,10 @@
 {
   "name": "skull_art",
+  "channel": "hellobuh",
   "caption": "why is he building THIS \ud83d\ude28",
   "youtube": {
     "title": "why is he building THIS \ud83d\ude28 #minecraft #shorts",
-    "description": "why is he building THIS \ud83d\ude28\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "why is he building THIS \ud83d\ude28\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,26 +14,49 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "fearless_funk.mp3",
-    "title": "Fearless Funk",
-    "artist": "DR M\u00d8B, Chris Linton",
+    "file": "mortals_funk_remix.mp3",
+    "title": "Mortals Funk Remix",
+    "artist": "Warriyo, LXNGVX",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 29.5,
-    "drop_in_short_s": 29.55,
-    "song_start_s": 0.0
+    "drop_in_song_s": 113.75,
+    "drop_in_short_s": 32.3,
+    "song_start_s": 81.45
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.45,
+    "duration_s": 33.2,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 34158113,
-    "sha256": "44eebfddd3e67c1045ca3e32b4d10dae61e083947850f992ac67e30d052c2d2f"
+    "bytes": 37698825,
+    "sha256": "9111d6faafecc9d755fc1367bd23fd32ee5d52720140473ca7be88ae08a2aaed"
   },
   "edit": {
+    "punch": [
+      [
+        "complete",
+        0,
+        1.12
+      ]
+    ],
+    "sfx": [
+      [
+        "impact",
+        "complete",
+        {
+          "gain": 0.8
+        }
+      ]
+    ],
+    "flash": [
+      [
+        "complete",
+        0,
+        0.45
+      ]
+    ],
     "caption": "why is he building THIS \ud83d\ude28",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
@@ -41,10 +65,20 @@
     "args": [
       "--caption",
       "why is he building THIS \ud83d\ude28",
+      "--punch",
+      "[[\"complete\",0,1.12]]",
+      "--flash",
+      "[[\"complete\",0,0.45]]",
+      "--sfx",
+      "[[\"impact\",\"complete\",{\"gain\":0.8}]]",
       "--start_at",
       "stage:-0.2",
       "--end_after",
-      "complete:0.9"
+      "complete:0.9",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "complete"
     ]
   },
   "recording": {
@@ -55,49 +89,41 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 383,
-      "y": 72,
-      "z": -42
+      "x": 359,
+      "y": 65,
+      "z": -55
     },
     "biome": "minecraft:plains",
-    "ticks": 635,
-    "seconds": 31.75,
+    "ticks": 703,
+    "seconds": 35.15,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0,
+        "t": 0.8,
         "event": "stage"
       },
       {
-        "t": 0.2,
+        "t": 0.8,
+        "event": "build0"
+      },
+      {
+        "t": 0.9,
         "event": "swing"
       },
       {
-        "t": 0.6,
+        "t": 1.15,
         "event": "swing"
       },
       {
-        "t": 0.75,
+        "t": 1.4,
         "event": "swing"
       },
       {
-        "t": 1,
-        "event": "swing"
-      },
-      {
-        "t": 1.25,
-        "event": "swing"
-      },
-      {
-        "t": 1.5,
-        "event": "swing"
-      },
-      {
-        "t": 1.75,
+        "t": 1.65,
         "event": "swing"
       },
       {
@@ -105,51 +131,55 @@
         "event": "swing"
       },
       {
-        "t": 2.05,
+        "t": 2.15,
         "event": "swing"
       },
       {
-        "t": 2.3,
+        "t": 2.4,
         "event": "swing"
       },
       {
-        "t": 2.55,
-        "event": "swing"
-      },
-      {
-        "t": 2.8,
+        "t": 2.65,
         "event": "swing"
       },
       {
         "t": 2.9,
+        "event": "swing"
+      },
+      {
+        "t": 3.15,
+        "event": "swing"
+      },
+      {
+        "t": 3.25,
+        "event": "built0"
+      },
+      {
+        "t": 3.25,
         "event": "reveal"
       },
       {
-        "t": 4,
+        "t": 4.3,
         "event": "stage"
       },
       {
-        "t": 4.05,
+        "t": 4.3,
+        "event": "build1"
+      },
+      {
+        "t": 4.35,
         "event": "swing"
       },
       {
-        "t": 4.25,
+        "t": 4.55,
         "event": "swing"
       },
       {
-        "t": 4.45,
+        "t": 4.8,
         "event": "swing"
       },
       {
-        "t": 4.65,
-        "event": "swing"
-      },
-      {
-        "t": 4.85,
-        "event": "swing"
-      },
-      {
-        "t": 5.05,
+        "t": 5,
         "event": "swing"
       },
       {
@@ -157,23 +187,23 @@
         "event": "swing"
       },
       {
-        "t": 5.45,
+        "t": 5.4,
         "event": "swing"
       },
       {
-        "t": 5.65,
+        "t": 5.6,
         "event": "swing"
       },
       {
-        "t": 5.85,
+        "t": 5.8,
         "event": "swing"
       },
       {
-        "t": 6.05,
+        "t": 6,
         "event": "swing"
       },
       {
-        "t": 6.25,
+        "t": 6.2,
         "event": "swing"
       },
       {
@@ -262,34 +292,42 @@
       },
       {
         "t": 10.6,
+        "event": "swing"
+      },
+      {
+        "t": 10.8,
+        "event": "swing"
+      },
+      {
+        "t": 11,
+        "event": "built1"
+      },
+      {
+        "t": 11,
         "event": "reveal"
       },
       {
-        "t": 11.65,
+        "t": 12.05,
         "event": "stage"
       },
       {
-        "t": 11.7,
-        "event": "swing"
-      },
-      {
-        "t": 11.85,
-        "event": "swing"
-      },
-      {
         "t": 12.05,
+        "event": "build2"
+      },
+      {
+        "t": 12.1,
         "event": "swing"
       },
       {
-        "t": 12.25,
+        "t": 12.3,
         "event": "swing"
       },
       {
-        "t": 12.4,
+        "t": 12.45,
         "event": "swing"
       },
       {
-        "t": 12.55,
+        "t": 12.6,
         "event": "swing"
       },
       {
@@ -305,35 +343,31 @@
         "event": "swing"
       },
       {
-        "t": 13.25,
+        "t": 13.2,
         "event": "swing"
       },
       {
-        "t": 13.4,
+        "t": 13.45,
         "event": "swing"
       },
       {
-        "t": 13.55,
+        "t": 13.6,
         "event": "swing"
       },
       {
-        "t": 13.75,
+        "t": 13.85,
         "event": "swing"
       },
       {
-        "t": 13.9,
+        "t": 14,
         "event": "swing"
       },
       {
-        "t": 14.05,
+        "t": 14.15,
         "event": "swing"
       },
       {
-        "t": 14.25,
-        "event": "swing"
-      },
-      {
-        "t": 14.4,
+        "t": 14.3,
         "event": "swing"
       },
       {
@@ -341,39 +375,43 @@
         "event": "swing"
       },
       {
-        "t": 14.75,
+        "t": 14.7,
         "event": "swing"
       },
       {
-        "t": 14.9,
+        "t": 14.85,
         "event": "swing"
       },
       {
-        "t": 15.05,
+        "t": 15,
         "event": "swing"
       },
       {
-        "t": 15.25,
+        "t": 15.15,
         "event": "swing"
       },
       {
-        "t": 15.4,
+        "t": 15.3,
         "event": "swing"
       },
       {
-        "t": 15.55,
+        "t": 15.5,
         "event": "swing"
       },
       {
-        "t": 15.75,
+        "t": 15.65,
         "event": "swing"
       },
       {
-        "t": 15.9,
+        "t": 15.8,
         "event": "swing"
       },
       {
-        "t": 16.05,
+        "t": 15.95,
+        "event": "swing"
+      },
+      {
+        "t": 16.1,
         "event": "swing"
       },
       {
@@ -389,11 +427,11 @@
         "event": "swing"
       },
       {
-        "t": 16.75,
+        "t": 16.7,
         "event": "swing"
       },
       {
-        "t": 16.9,
+        "t": 16.85,
         "event": "swing"
       },
       {
@@ -401,27 +439,27 @@
         "event": "swing"
       },
       {
-        "t": 17.25,
+        "t": 17.2,
         "event": "swing"
       },
       {
-        "t": 17.4,
+        "t": 17.45,
         "event": "swing"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "swing"
       },
       {
-        "t": 17.75,
+        "t": 17.8,
         "event": "swing"
       },
       {
-        "t": 17.9,
+        "t": 17.95,
         "event": "swing"
       },
       {
-        "t": 18.05,
+        "t": 18.1,
         "event": "swing"
       },
       {
@@ -449,44 +487,84 @@
         "event": "swing"
       },
       {
-        "t": 19.25,
+        "t": 19.2,
         "event": "swing"
       },
       {
-        "t": 19.4,
+        "t": 19.35,
         "event": "swing"
       },
       {
-        "t": 19.55,
+        "t": 19.5,
         "event": "swing"
       },
       {
-        "t": 19.75,
+        "t": 19.65,
         "event": "swing"
       },
       {
-        "t": 19.9,
+        "t": 19.8,
         "event": "swing"
       },
       {
-        "t": 20.05,
+        "t": 19.95,
         "event": "swing"
       },
       {
-        "t": 20.25,
+        "t": 20.1,
         "event": "swing"
       },
       {
-        "t": 20.4,
+        "t": 20.3,
         "event": "swing"
       },
       {
-        "t": 20.55,
+        "t": 20.45,
         "event": "swing"
       },
       {
         "t": 20.6,
-        "event": "glance"
+        "event": "swing"
+      },
+      {
+        "t": 20.75,
+        "event": "swing"
+      },
+      {
+        "t": 20.9,
+        "event": "swing"
+      },
+      {
+        "t": 21.05,
+        "event": "swing"
+      },
+      {
+        "t": 21.2,
+        "event": "swing"
+      },
+      {
+        "t": 21.35,
+        "event": "swing"
+      },
+      {
+        "t": 21.5,
+        "event": "swing"
+      },
+      {
+        "t": 21.55,
+        "event": "backup"
+      },
+      {
+        "t": 21.65,
+        "event": "swing"
+      },
+      {
+        "t": 21.85,
+        "event": "swing"
+      },
+      {
+        "t": 22,
+        "event": "swing"
       },
       {
         "t": 22.15,
@@ -497,27 +575,31 @@
         "event": "swing"
       },
       {
-        "t": 22.5,
+        "t": 22.45,
         "event": "swing"
       },
       {
-        "t": 22.65,
+        "t": 22.6,
         "event": "swing"
       },
       {
-        "t": 22.8,
+        "t": 22.75,
         "event": "swing"
       },
       {
-        "t": 23,
+        "t": 22.9,
         "event": "swing"
       },
       {
-        "t": 23.15,
+        "t": 23.05,
         "event": "swing"
       },
       {
-        "t": 23.35,
+        "t": 23.2,
+        "event": "swing"
+      },
+      {
+        "t": 23.4,
         "event": "swing"
       },
       {
@@ -545,39 +627,43 @@
         "event": "swing"
       },
       {
-        "t": 24.55,
+        "t": 24.5,
         "event": "swing"
       },
       {
-        "t": 24.7,
+        "t": 24.65,
         "event": "swing"
       },
       {
-        "t": 24.85,
+        "t": 24.8,
         "event": "swing"
       },
       {
-        "t": 25.05,
+        "t": 25,
         "event": "swing"
       },
       {
-        "t": 25.2,
+        "t": 25.15,
         "event": "swing"
       },
       {
-        "t": 25.35,
+        "t": 25.3,
         "event": "swing"
       },
       {
-        "t": 25.55,
+        "t": 25.45,
         "event": "swing"
       },
       {
-        "t": 25.7,
+        "t": 25.6,
         "event": "swing"
       },
       {
-        "t": 25.85,
+        "t": 25.75,
+        "event": "swing"
+      },
+      {
+        "t": 25.9,
         "event": "swing"
       },
       {
@@ -587,10 +673,6 @@
       {
         "t": 26.2,
         "event": "swing"
-      },
-      {
-        "t": 26.25,
-        "event": "backup"
       },
       {
         "t": 26.35,
@@ -609,51 +691,55 @@
         "event": "swing"
       },
       {
-        "t": 27.05,
+        "t": 27,
         "event": "swing"
       },
       {
-        "t": 27.2,
+        "t": 27.15,
         "event": "swing"
       },
       {
-        "t": 27.35,
+        "t": 27.3,
         "event": "swing"
       },
       {
-        "t": 27.55,
+        "t": 27.45,
         "event": "swing"
       },
       {
-        "t": 27.7,
+        "t": 27.6,
         "event": "swing"
       },
       {
-        "t": 27.85,
+        "t": 27.75,
         "event": "swing"
       },
       {
-        "t": 28.05,
+        "t": 27.9,
         "event": "swing"
       },
       {
-        "t": 28.2,
+        "t": 28.15,
         "event": "swing"
       },
       {
-        "t": 28.35,
+        "t": 28.3,
         "event": "swing"
       },
       {
-        "t": 28.55,
+        "t": 28.45,
         "event": "swing"
       },
       {
-        "t": 28.7,
+        "t": 28.6,
         "event": "swing"
       },
       {
-        "t": 28.85,
+        "t": 28.75,
+        "event": "swing"
+      },
+      {
+        "t": 28.9,
         "event": "swing"
       },
       {
@@ -669,21 +755,111 @@
         "event": "swing"
       },
       {
-        "t": 29.55,
+        "t": 29.5,
+        "event": "swing"
+      },
+      {
+        "t": 29.7,
+        "event": "swing"
+      },
+      {
+        "t": 29.85,
+        "event": "swing"
+      },
+      {
+        "t": 30,
+        "event": "swing"
+      },
+      {
+        "t": 30.15,
+        "event": "swing"
+      },
+      {
+        "t": 30.3,
+        "event": "swing"
+      },
+      {
+        "t": 30.45,
+        "event": "swing"
+      },
+      {
+        "t": 30.6,
+        "event": "swing"
+      },
+      {
+        "t": 30.75,
+        "event": "swing"
+      },
+      {
+        "t": 30.9,
+        "event": "swing"
+      },
+      {
+        "t": 31.05,
+        "event": "swing"
+      },
+      {
+        "t": 31.35,
+        "event": "swing"
+      },
+      {
+        "t": 31.5,
+        "event": "swing"
+      },
+      {
+        "t": 31.65,
+        "event": "swing"
+      },
+      {
+        "t": 31.8,
+        "event": "swing"
+      },
+      {
+        "t": 31.95,
+        "event": "swing"
+      },
+      {
+        "t": 32.1,
+        "event": "swing"
+      },
+      {
+        "t": 32.25,
+        "event": "swing"
+      },
+      {
+        "t": 32.4,
+        "event": "swing"
+      },
+      {
+        "t": 32.55,
+        "event": "swing"
+      },
+      {
+        "t": 32.7,
+        "event": "swing"
+      },
+      {
+        "t": 32.9,
+        "event": "built2"
+      },
+      {
+        "t": 32.9,
         "event": "complete"
       },
       {
-        "t": 31.75,
+        "t": 35.15,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "c02f2a86e278bff110de51d6f25785bf9879eb4e",
-    "rendered_at": "2026-11-07T00:43:24.247Z",
-    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
+    "branch": "render/skull_art",
+    "commit": "7ff82738aa0dc1bb6d4ef2fcc88454233e333d87",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42968574499",
+    "rendered_at": "2026-11-11T06:02:39.976Z",
+    "head_at_publish": "ae457fa4c807a18bcf6927e39e125155d84061ed",
     "stunt": "stunts/skull_art.js",
     "source_snapshot": [
       "source/skull_art.js",
@@ -691,13 +867,13 @@
     ]
   },
   "rebuild": [
-    "git checkout c02f2a86e278",
+    "git checkout 7ff82738aa0d",
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
-    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS \ud83d\ude28\" --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
+    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS \ud83d\ude28\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
-  "published_at": "2026-11-07T06:09:40.337Z"
+  "status": "ready",
+  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium picture peeks in at the left edge during the big build's backup; short hold on the medium reveal",
+  "published_at": "2026-11-11T06:20:27.677Z"
 }
