@@ -46,12 +46,14 @@
   },
   "Tomas": {
    "role": "character",
-   "ref": "elder",
    "name": "Tomas",
    "color": "#F0A845",
    "model": "gemini-3.8-flash-tts",
    "profile": "[An old man in his seventies, slow and low, kind but closed]",
-   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S04, by the patched block) and L12 (S09). Voice: cast `elder` (Charon), old and slow, far from Pip"
+   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S04, by the patched block) and L12 (S09). Voice: to audition, Sadaltager or Rasalgethi (voice_note), old and slow, far from Pip",
+   "voice": "Sadaltager",
+   "voice_alt": "Rasalgethi",
+   "voice_note": "To audition (owner, STANDARDS 7a: one voice per character; `elder`/Charon is Ravenford's Grandpa). Candidates, both male and in neither voices/cast.json nor the planned characters (Iapetus and Alnilam are taken): 1) Sadaltager ('knowledgeable': a deeper, measured man; heard near Charon in docs/voice_search.md, so it should read old); 2) Rasalgethi ('informative': a mature, even man). Same bracket for both. Pick by ear against Pip on L06 and L12, then add a `tomas` row to voices/cast.json and docs/world/canon.md."
   },
   "Player": {
    "role": "character",
@@ -93,7 +95,9 @@
     "L06",
     "L12"
    ],
-   "direction": "[An old man in his seventies, slow and low, kind but closed]"
+   "direction": "[An old man in his seventies, slow and low, kind but closed]",
+   "voice": "Sadaltager",
+   "voice_alt": "Rasalgethi"
   }
  ],
  "sfx": [
