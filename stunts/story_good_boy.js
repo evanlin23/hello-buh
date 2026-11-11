@@ -259,13 +259,13 @@ module.exports = {
       const walking = k < at(1)
       if (walking) { walkG(buh, -0.2, 0); buh.pitch = 5; autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 10, buh.y + 0.6, -4.3)) }
       else { buh.yaw += (yawTo(buh.x, buh.z, 18.5, -6.4) - buh.yaw) * 0.2; buh.pitch = 25; K.base = K.aim(P(18.5, gy(18.5, -6.4) + 0.4, -6.4)) }
-      K.go(walking)
+      K.go(walking && bot.entity.position.x - X > 20.5)
       look(k)
     })
-    K.go(true)
+    K.go(bot.entity.position.x - X > 20.5)
     await line('L05', async (k) => {
-      if (buh.x > 16.8) { walkG(buh, -0.1, 0); buh.pitch = 5 } else { buh.yaw += (yawTo(buh.x, buh.z, 18.5, -6.4) - buh.yaw) * 0.1 }   // walks on, slowly: stays in frame
-      K.go(bot.entity.position.x - X > 17.5); autoJump()
+      if (buh.x > 16.8) { walkG(buh, -0.1, 0); buh.pitch = 5 } else { buh.yaw += (yawTo(buh.x, buh.z, 18.5, -6.4) + Math.sin(k / 9) * 35 - buh.yaw) * 0.12; buh.pitch = 15 + Math.sin(k / 7) * 8 }   // walks on, slowly: stays in frame; then looks between the other dog and his own (the voiced L05 is 3.75 s: standing still read as 'nobody moves')
+      K.go(bot.entity.position.x - X > 20.5); autoJump()   // the wolf stops east of the other dog, behind it from the camera (it stopped in front of its face: lint, voiced dry run)
       K.base = K.aim(P(bot.entity.position.x - X - 10, buh.y + 0.6, -4.3)); look(k)
     })
     K.stop()
