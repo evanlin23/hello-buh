@@ -305,8 +305,9 @@ module.exports = {
     ctx.mark('go')
     focus = W(-0.44, 1.5, 2); steer = W(0, 0, 0.3)      // the button's face (it sits on the west edge)
     await bot.waitForTicks(14); k = 0.35; await bot.waitForTicks(8); k = 0.16
-    bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 4, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm()
+    // the press through lib/act.js (r:rffba12): the stunt's own look is already on the button's face, so it goes out
+    // on this tick; off it, it waits for that look (turn: false) and marks off_aim if it never lands
+    await require('../lib/act')(ctx).click(B(0, 1, 2), 4, [0.1, 0.5, 0.5], { target: { block: B(0, 1, 2) }, turn: false, max: 20, swing: true })
     ctx.sound('block.stone_button.click_on', 1, 0.6)   // the presser's own client plays it (the server sends it to others)
     ctx.mark('press')
     focus = W(1.5, 1.4, 6)                              // the arrow crosses
