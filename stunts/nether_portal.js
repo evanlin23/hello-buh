@@ -5,7 +5,7 @@
 //   2. a fire charge                                                                  3/10
 //   3. TNT in front of it: explosions don't make fire, the frame just sits there      0/10
 //   4. redstone: a button on a dispenser loaded with flint and steel, behind the frame 5/10
-//   5. lava: pour a bucket into a basin in front, planks behind; lava sets fire to air next to
+//   5. lava: pour a bucket into a pit in front, planks behind; lava sets fire to air next to
 //      something flammable (LavaFluid.randomTick)                                     8/10
 //   6. the respawn anchor in the Overworld: charge it with glowstone, try to set the spawn... it blows
 //      up, and its fire (an explosion that makes fire) lands in the frame: lit (blast protection IV
@@ -81,10 +81,9 @@ module.exports = {
         await ctx.cmd(`/setblock ${t.x0 + 1} ${y0 + 2} ${pz - 1} stone_button[face=floor]`)
       }
       if (t.id === 'lava') {
-        // a one-block basin in front of the left bottom cell (obsidian rim) and planks behind the opening
-        await ctx.cmd(`/setblock ${t.x0} ${y0} ${pz + 1} obsidian`)
-        await ctx.cmd(`/setblock ${t.x0 + 2} ${y0} ${pz + 1} obsidian`)
-        await ctx.cmd(`/setblock ${t.x0 + 1} ${y0} ${pz + 2} obsidian`)
+        // a one-block pit in front of the left bottom cell and planks behind the opening (a raised basin's rim was
+        // what the bucket's ray hit: the lava went on top of it and ran out under my feet)
+        await ctx.cmd(`/setblock ${t.x0 + 1} ${floor} ${pz + 1} air`)
         await ctx.cmd(`/fill ${t.x0 + 1} ${y0 + 1} ${pz - 1} ${t.x1 - 1} ${y0 + 1} ${pz - 1} oak_planks`)
       }
       if (t.id === 'anchor') await ctx.cmd(`/setblock ${Math.floor(t.xc)} ${y0} ${pz + 2} respawn_anchor[charges=0]`)
@@ -227,11 +226,13 @@ module.exports = {
         await ctx.easeLookAt(bottom.offset(0, 0.4, 0), 200)
       } else if (t.id === 'lava') {
         ctx.select(SLOT.lava)
-        await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 - 0.1, t.pz + 1.5), 350)
+        await ctx.easeLookAt(new Vec3(t.x0 + 1.5, floor + 0.5, t.pz + 1.02), 350)   // the pit's back wall (under the frame): the lava goes in the pit
         bot.activateItem(); bot.swingArm()             // a bucket is a use_item (its own ray from the eye), not a use-on-block
         ctx.sound('item.bucket.empty_lava', 1)
         ctx.mark('poured')
         await bot.waitForTicks(6)
+        const pit = bot.blockAt(new Vec3(t.x0 + 1, floor, t.pz + 1))
+        if (!pit || pit.name !== 'lava') { ctx.log('the lava missed the pit:', pit && pit.name); return false }
         // lava lights air next to something flammable: the planks behind the opening
         await ctx.cmd('/gamerule random_tick_speed 500')
         const ok = await waitFor(t, () => portalIn(t), 900, 'lava_a', 'lava_b', new Vec3(t.xc, t.y0 + 1.2, t.pz + 0.5))
