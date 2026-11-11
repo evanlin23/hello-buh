@@ -12,7 +12,8 @@ module.exports = {
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
     speed: [['lit:0.5', 'boom:-0.4', 1.5], ['boom:2.4', 'crater:-1.0', 4], ['crater:-1.0', 'crater:-0.1', 2]],   // r:r188b46: the wait after the chain's last blast (smoke only) at x4, the look-down into the crater at x2 (its turn peaks at 105 deg/s: x2 keeps it under the whip cap)
     // (mixcheck r1: 2.95 s after the boom with no new hit under the NCS bed: a second blast of the chain at +1.4 s)
-    sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['boom', 'boom:1.4', { gain: 0.8 }], ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.4 }]],
+    sfx: [['pop', 'start', { gain: 0.9 }], ['air', 'start', 'crater', { gain: 0.6 }],   // (a pop on frame 0 with the caption: the opening's hit, r:r0f3da0)
+      ['riser', 'lit', 'boom'], ['boom', 'boom'], ['boom', 'boom:1.4', { gain: 0.8 }], ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.4 }]],
     flash: [['boom', 0, 0.5], ['crater', 0, 0.35]],   // pace r2: the crater reveal needs a picture change on the mark (the look-down is still easing)
     shake: [['boom', 0, 10]], punch: [['crater', 0, 1.08]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 

@@ -14,7 +14,7 @@ module.exports = P.makeStunt({
     startAt: 'open:0', endAfter: 'land:0.65',   /* r:r188b46: was 0.9 */ dropAt: 'land',
     // a pop on frame 1 under the fire's crackle (the audio hook); the payoff is the landing on the bed: the song dips
     // 0.4 s before it, then an impact and a punch-in
-    sfx: [['pop', 'open', { gain: 0.35 }], ['dip', 'land', 0.4], ['impact', 'land']],
+    sfx: [['pop', 'open', { gain: 0.8 }],   /* r:r0f3da0: 0.35 sat 7.4 dB under the peak */ ['dip', 'land', 0.4], ['impact', 'land']],
     punch: [['land', 0, 0.6]]
   }
 })
