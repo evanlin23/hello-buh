@@ -8,13 +8,14 @@ top. No site search and no clearing (STANDARDS 3.5).
 |---|---|---|
 | every sheep in the village is blue, sixty of them | L01 | S01: count 60 sheep, all `Color:11`; no white or other wool anywhere in any shot except the S02 stray and the S06 red one |
 | Dad won't let a white one through the gate | L02 | S02: the stray is white until 'GATE', then blue, then through the gate |
-| he counts them every night | L04 | S05 is at nightfall (13000), the flock filing past him |
-| one came back from the woods red | L05 | S06: one red sheep, the birch treeline visible behind it |
-| Dad sat at the gate with his crossbow | L06 | S07: the crossbow reads at 300 px on his knees |
-| the trees went snap x3 | L07 | three fang snaps in the mix, nothing seen |
-| I left the gate open, my lamb got out | L08 | S09: the gate open in frame, the lamb outside it |
-| I didn't tell Dad | L09 | S10: Dad in frame, back turned |
-| into the woods | L10 | S11: birch trunks all round |
+| sheep (can't see that good) | L04 | S04: one blue sheep, full figure, staring at the lens |
+| he counts them every night | L05 | S05 is at nightfall (13000), the flock filing past him |
+| one came back from the woods red | L06 | S06: one red sheep, the birch treeline visible behind it |
+| Dad sat at the gate with his crossbow | L07 | S07: the crossbow reads at 300 px on his knees |
+| the trees went snap x3 | L08 | three fang snaps in the mix, nothing seen |
+| I forgot to shut the gate, my lamb got out | L09 | S09: the gate open in frame, the lamb outside it |
+| Dad says never go in the woods | L10 | S10: Dad and the woods both in frame |
+| (went in) | L11 | S11: birch trunks all round, the lamb ahead |
 
 ## Pieces
 - **The pasture:** the canonical palisade, plus an oak-fence pasture inside the south wall (~40 x 30) with its gate in
