@@ -9,6 +9,6 @@ module.exports = makeRace({
   caption: 'Grass vs Mycelium. Pick one 👇',
   red: 'Pick',
   colors: 'grass=green,mycelium=purple',
-  tickSpeed: 300,
+  tickSpeed: 270,   // 300 ran 85-97 s of game time; one take came out at 29 s on screen
   speed: 3
 })
