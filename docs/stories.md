@@ -571,6 +571,11 @@ STANDARDS.md in the same commit.
   - Red Sheep: "new kid is fine"; ending on the evoker's look with no fangs: "sure".
   Every speaking character is tracked in one place, docs/world/canon.md "Recurring characters" (who, look, cast id
   and voice, stories), and a new character's voice is auditioned against Pip before it's cast.
+- **Owner, 2026-11-11, on Dog on the Hill (already OK'd): "maybe we can have buh say 'i just wanted to see you again,
+  but I need to go already' or smth bc its kinda jarring to join then immediately leave".** A player who appears and
+  leaves at once needs a word on why: Buh says why he came and that he can't stay before "Sit, BOY. Be right BACK."
+  (L15 "Hey, BUDDY! I just wanted to SEE you again." L17 "But I gotta GO already. Sit, BOY. Be right BACK."). The
+  OK'd package goes back to held until the owner re-OKs it.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
