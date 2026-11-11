@@ -1,0 +1,14 @@
+story_dog_hill: CHECK FAILED: 2 blockers
+ok   motion lint: clean
+ok   story hotbar: full (9 slots or 7+ filled, every id a real item)
+ok   voice stamp: recorded to the current voice (88faa8150aec)
+ok   script drift: story.json is the latest script
+ok   rec_check: no blockers
+FAIL lint: PROBLEMS
+ok   continuity: 0 problem(s), 10 warning(s), 9 note(s)
+ok   framing: 3 warning(s) over 18 shots
+ok   owner: 0 blocker(s), 5 warning(s)
+ok   cuts: 0 blocker(s), 4 warning(s) over 17 cuts
+FAIL caption sync: 1 blocker(s): captions off the voice (re-run align.py)
+ok   on-screen sound: every visible action has its sound
+ok   pace: skipped: no rendered Short yet (runs after ./hb render --fetch)
