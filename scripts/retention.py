@@ -475,7 +475,7 @@ def score_at(pts, t):
 
 _score_cache = {}
 def score_img(sp, pa, pb):
-    """The race's live score at the top of the game view: A's label and share on the left, B's on the right, and a
+    """pa, pb in tenths of a percent (503 = 50.3 %). The race's live score at the top of the game view: A's label and share on the left, B's on the right, and a
     bar between them that fills from both ends in their colours (the untaken part dark), like the field itself."""
     (la, ca), (lb, cb) = sp["a"], sp["b"]
     ca, cb = COLORS.get(ca, COLORS["white"]), COLORS.get(cb, COLORS["white"])
@@ -483,20 +483,27 @@ def score_img(sp, pa, pb):
     d = ImageDraw.Draw(img)
     x0, x1, y0 = 40, W - 40, BAND + 22
     d.rounded_rectangle((x0 - 14, y0 - 10, x1 + 14, y0 + 168), 26, fill=(0, 0, 0, 165))
+    # one size for the whole row that fits both labels and the widest numbers ("100.0%") with a gap between the sides
+    fk = ("size", la, lb)
+    if fk not in _score_cache:
+        need = sum(rich_text(x, 64, (255, 255, 255)).width for x in (la, lb, "100.0%", "100.0%")) + 12 + 40
+        _score_cache[fk] = max(36, min(64, int(64 * (x1 - x0) / need)))
+    fs = _score_cache[fk]
     def txt(k, s, col):
-        if (k, s) not in _score_cache:
-            _score_cache[(k, s)] = rich_text(s, 64, col)
-        return _score_cache[(k, s)]
+        if (k, s, fs) not in _score_cache:
+            _score_cache[(k, s, fs)] = rich_text(s, fs, col)
+        return _score_cache[(k, s, fs)]
     ta, tb = txt("la", la, ca), txt("lb", lb, cb)
-    na, nb = txt("na", f"{pa}%", ca), txt("nb", f"{pb}%", cb)
+    na, nb = txt("na", f"{pa / 10:.1f}%", ca), txt("nb", f"{pb / 10:.1f}%", cb)
+    y0 += (64 - fs) // 2
     img.alpha_composite(ta, (x0, y0))
     img.alpha_composite(na, (x0 + ta.width + 6, y0))
     img.alpha_composite(tb, (x1 - tb.width, y0))
     img.alpha_composite(nb, (x1 - tb.width - 6 - nb.width, y0))
-    by0, by1 = y0 + 96, y0 + 146
+    by0, by1 = BAND + 22 + 96, BAND + 22 + 146
     d.rounded_rectangle((x0, by0, x1, by1), 14, fill=(70, 50, 35, 255), outline=(0, 0, 0, 255), width=5)
     span = x1 - x0 - 10
-    wa, wb = int(round(span * pa / 100)), int(round(span * pb / 100))
+    wa, wb = int(round(span * pa / 1000)), int(round(span * pb / 1000))
     if wa > 0:
         d.rectangle((x0 + 5, by0 + 5, x0 + 5 + wa, by1 - 5), fill=tuple(ca) + (255,))
     if wb > 0:
@@ -643,11 +650,11 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         if typed_now is not None or fbs:
             chk = (typed_now, (int(t / 0.3) % 2 == 0) if typed_now is not None else False, tuple(fbs[-10:]))
         sk = None
-        if scp:                              # the race's live score (whole percents: a new image only when one changes)
-            sa, sb = score_at(scp, t)
-            sk = (int(math.floor(sa * 100 + 1e-6)), int(math.floor(sb * 100 + 1e-6)))
-            if sa + sb >= 0.9999:            # all taken: the shares are whole and add to 100 (the winner rounds up)
-                ra = int(round(sa * 100)); sk = (ra, 100 - ra)
+        if scp:                              # the race's live score, in tenths of a percent: a close finish (50.3 vs
+            sa, sb = score_at(scp, t)        # 49.7) read as a 50-50 tie under the winner's card in whole percents (review r2)
+            sk = (int(math.floor(sa * 1000 + 1e-6)), int(math.floor(sb * 1000 + 1e-6)))
+            if sa + sb >= 0.9999:            # all taken: the two add to 100.0
+                ra = int(round(sa * 1000)); sk = (ra, 1000 - ra)
         key = (ck, cc, fk, cwk, rk, tk, chk, sk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
