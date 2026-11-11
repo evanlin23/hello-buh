@@ -292,6 +292,16 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, Review Room notes on the ready Shorts: "still says hellobuh" / "all of these still say hellobuh
+  instead of 56e" (cave_reveal, creeper, half_heart, lava_crossing, tnt_1000, which_door); pickaxe_race: "why is there a
+  cut when we are using the wooden pick?" "actually theres a cut for all." "Also, we should have like a timer...";
+  guess_sound_2: "when we look over at the mob, we arent looking directly at it."; fortune: "The items are all
+  upsidedown?? Also we should have more drop."; mega_sponge: "the cuts are too jarring, it looks like we get stuck";
+  tnt_1000: "the title could be like vs SECRET or smth idk bc i wouldve swiped after 1000".** Every Short shows the player
+  as 56e (death messages, chat, command feedback), re-renders of older recordings included. No cut in the middle of an
+  action (a dig, a place, a use): cut between actions. When the view turns to a mob or thing, it lands centred on it.
+  Dropped items render the right way up (an engine bug). Cuts never look like the player got stuck. A title promises
+  something past the obvious end point, so the viewer stays for it.
 - **Owner, 2026-11-11: "make everything, then put all of it into a review folder. dont let anything go to youtube
   anymore without an OK from me"; "the \"review folder\" is the review artifact"; "show what i need to review there,
   then archive the rest (still available)".** Nothing uploads without the owner's OK for that exact cut:
