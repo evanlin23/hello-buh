@@ -7,8 +7,8 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'first:0', deathScreen: true, endAfter: 'death:0.8',   // r:r188b46: the end lands 0.8 s after the blast (the death screen is up; smoke no longer holds the end). Was settle:0.1 (2.2 s after the blast). Was settle:0.6: owner 2026-11-11 (r:r52f94c) "we can cut a little earlier"; still after the debris rests (r:r24d99a)
-    sfx: [['air', 'start', 'death', { gain: 0.5 }], ['heart', 'first'], ['dip', 'hurt', 0.4], ['impact', 'hurt', { gain: 1.4 }]] },   // mixcheck r2: under the NCS bed the blast wasn't a hit: dip + impact on it   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'death', startAt: 'first:0', deathScreen: true, endAfter: 'death:0.8',   // r:r188b46: the end lands 0.8 s after the blast (the death screen is up; smoke no longer holds the end). Was settle:0.1 (2.2 s after the blast). Was settle:0.6: owner 2026-11-11 (r:r52f94c) "we can cut a little earlier"; still after the debris rests (r:r24d99a)
+    sfx: [['air', 'start', 'death', { gain: 0.5 }], ['heart', 'first', { gain: 1.6 }], ['dip', 'hurt', 0.4], ['impact', 'hurt', { gain: 1.4 }]] },   // mixcheck r2: under the NCS bed the blast wasn't a hit: dip + impact on it   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
   async setup (ctx) {
