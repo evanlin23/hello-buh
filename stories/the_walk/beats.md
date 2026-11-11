@@ -22,7 +22,7 @@ Grandma standing in it. Cut.
 | worse | L02 N "The librarian holds up a BOOK. He reads it. Breaks the lectern AGAIN." | S02 the glinting book, its name never shown | he's after one book |
 | the plant | L03 Grandpa "Not THAT one." | S03 | there is a "that one" |
 | misread 1 | L03b N "I think he just really HATES that LIBRARIAN." | S03 holds | the kid: a grudge |
-| stakes | L04 N "Grandma lives on the ISLAND across the bay. Her window's lit every NIGHT. I think she's scared of the DARK." | S04 long lens: Grandma in her lit window, 60 blocks out | the kid: a night light (it's left on for him) |
+| stakes | L04 N "Grandma lives on the ISLAND across the bay. Her window's lit every NIGHT. I think she's scared of the DARK." | S04 long lens: Grandma in her lit window, 92 blocks out | the kid: a night light (it's left on for him) |
 | **midpoint** | L05 N "He won't take a BOAT. Won't build a BRIDGE. Ten YEARS. He's SO stubborn." | S05 the empty boat; Grandpa walks past it | the kid: stubborn. Viewer: a book that gets him to her? which? (not sure) |
 | the key | L06 N "When she LEFT, she told him:" | S06 flashback: Grandma rowing away | |
 | the key | L07 Grandma "Come BACK when the SEA FREEZES." | S07 Grandma in the boat | the condition, in her voice |

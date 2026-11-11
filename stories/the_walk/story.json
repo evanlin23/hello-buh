@@ -349,7 +349,7 @@
       "place": "dock",
       "size": "wide",
       "camera": "at: (2, 3.5, 20) looking at Grandma's window (0, 3, -92), still, FOV 11 (a long lens: 92 blocks keeps the window ~140 x 95 px)",
-      "frame": "fg: Grandpa at (1.0, 0, 0.5) at the dock's end, his back to us, lower left below the window (about 670 px); subject: the island 92 blocks out, a small house, its 3-wide x 2-high window lit warm, the sill at floor level, Grandma standing in it head to toe (about 160 px); bg: the sea to the horizon. Dusk 13000.",
+      "frame": "fg: Grandpa at (1.0, 0, 0.5) at the dock's end, his back to us, lower left below the window (head and shoulders, about 340 px; feet out of frame); subject: the island 92 blocks out, a small house, its 3-wide x 2-high window lit warm, the sill at floor level, Grandma standing in it head to toe (about 85 px); bg: the sea to the horizon. Dusk 13000.",
       "look": {
         "time": 13000,
         "fov": 11
@@ -360,7 +360,7 @@
       "line": "L05",
       "place": "dock",
       "size": "full",
-      "camera": "at: (1.5, 1.6, -1) at the dock's end looking back inland (+z), slow push",
+      "camera": "at: (1.5, 2.5, -1) at the dock's end looking back inland at (3.8, 1, 10), slow push (the boat about 6 degrees right of centre, Leo's House about 19 degrees left: keep both in through the push)",
       "frame": "subject: the oak boat floating empty beside the dock at (2, 0, 4); Grandpa walks inland away from the camera, past it without a look; bg: Gullwick's low headland and, across the lagoon about 100 blocks east, Leo's stone cottage on the far shore (geography, never named). Dusk 13000.",
       "look": {
         "time": 13000
@@ -372,7 +372,7 @@
       "place": "dock",
       "size": "wide",
       "camera": "at: (6, 3, 8) off the dock's side looking at (0, 1, -5), still. The flashback, graded warm and soft",
-      "frame": "subject: Grandpa standing at the dock's end, Grandma in an oak boat 4-5 blocks out, rowing away, then turning back to him; bg: the island 60 blocks out, its window dark; no boat tied at the dock. Sunset 12000.",
+      "frame": "subject: Grandpa standing at the dock's end, Grandma in an oak boat 4-5 blocks out, rowing away, then turning back to him; bg: the island 92 blocks out, its window dark; no boat tied at the dock. Sunset 12000.",
       "look": {
         "time": 12000,
         "grade": "flashback"
@@ -396,11 +396,11 @@
       "line": "L08",
       "place": "dock",
       "size": "full",
-      "camera": "at: (-3, 1.6, 21) on the shore looking past Mom down the dock to the sea (0, 2, -92), still, FOV 21",
+      "camera": "at: (-3, 1.9, 21) on the shore looking past Mom down the dock to the sea (0, 2, -92), still, FOV 24",
       "frame": "subject: Mom at (-2.5, 0, 14.5), head to toe, frame right, shaking her head as Grandpa walks past her up the shore (out of frame left by the end); the kid small beside her; the empty dock running away from us; the bay open and unfrozen, no ice anywhere; bg: the island 92 blocks from the dock's end, Grandma's lit window. Dusk 13000.",
       "look": {
         "time": 13000,
-        "fov": 21
+        "fov": 24
       }
     },
     {
@@ -433,7 +433,7 @@
       "line": "L10",
       "place": "dock",
       "size": "wide",
-      "camera": "at: (0, 5, 14) behind Grandpa looking down the dock to the window (0, 3, -92), FOV 28, still. Opens on Grandpa at the dock's end in new leather boots, glinting; his first step off the end makes the first ice; the water freezes into a white disc under each step (frosted ice); cut 1.0 s after the first ice, on his third step",
+      "camera": "at: (0, 5, 14) behind Grandpa looking down the dock at (0, 1, -20), FOV 28, still (the window sits about 5.6 degrees above centre, the first ice in frame). Opens on Grandpa at the dock's end in new leather boots, glinting; his first step off the end makes the first ice; the water freezes into a white disc under each step (frosted ice); cut 1.0 s after the first ice, on his third step",
       "frame": "subject: Grandpa on the sea, a short trail of white frosted-ice discs under and behind him, three steps' worth (vanilla: it melts after a few seconds, after the cut; the first ice anywhere in the Short: the sea freezing); bg: the island and Grandma's lit window, her figure in it (the window reads; she is small), at the end of his line of travel. Dawn 23500.",
       "look": {
         "time": 23500,
