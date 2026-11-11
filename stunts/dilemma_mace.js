@@ -50,7 +50,8 @@ module.exports = {
     // the dog: low and close in front of it, sitting at the pillar's foot, head up at you (a slow push in)
     dog: { path: [[0, 2.2, 1.55, -1.3], [0.3, 1.9, 1.5, -1.6]], look: [0.5, 1.5, -3.1], fov: 52, subject: [[0.5, 1.45, -3.1]] },
     // wide from the side: the pillar's full height, you on its face, the dog at its foot
-    wide: { path: [[0, 14, 9, -8], [0.25, 13.4, 8.6, -7.6]], look: { of: 'self', offset: [0, -2, 0] }, fov: 62, dof: false, subject: ['self'] },
+    // (render 1: from 16 blocks it was all sky and no dog; now far enough for the pillar's foot and the dog too)
+    wide: { path: [[0, 21, 12, -14], [0.25, 20.2, 11.6, -13.4]], look: [0.5, 9, -2], fov: 62, dof: false, eyeTrace: false, subject: ['self', [0.5, 1.4, -3.1]] },
     // above and behind you, looking down past your shoulder: the ground and the dog coming up at you
     top: { follow: 'self', offset: [1.4, 2.6, 1.2], lag: 0, look: { of: 'self', offset: [0, -12, -1.6] }, fov: 64, subject: [[0.5, 1.4, -3.1]] },
     // the reveal: low on the boots as you stand up from the landing, the dog behind
@@ -61,7 +62,7 @@ module.exports = {
     caption: 'hit your dog 🐕 or lose hardcore?',
     red: 'hardcore',
     colors: 'dog=yellow',
-    start: 'drop:-0.25',
+    start: 'drop:0',   // (render 1 opened 0.25 s early on the pillar's top block, which hid the dog)
     choices: [['HIT THE DOG = LIVE', 'green'], ["DON'T = HARDCORE OVER", 'red']],
     land: 'land',
     reveal: 'reveal',
