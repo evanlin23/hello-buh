@@ -5,7 +5,7 @@ module.exports = {
   name: 'anvil_rain',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'minecraft but it rains anvils 💀',
-  edit: { caption: 'minecraft but it rains anvils 💀', red: 'anvils', song: 'songs/funk_abnormal.mp3', dropAt: 'rain', deathScreen: true , startAt: 'rain:0.2', endAfter: 'death:1.8'},
+  edit: { caption: 'minecraft but it rains anvils 💀', red: 'anvils', song: 'songs/funk_abnormal.mp3', dropAt: 'rain', deathScreen: true , startAt: 'rain:0.2', endAfter: 'death:1.8' },
   expectDeath: true,
 
   async setup (ctx) {
