@@ -6,7 +6,8 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/ncs/intranet_crush.mp3', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8' },
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/ncs/intranet_crush.mp3', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8',
+    sfx: [['air', 'start', 'death', { gain: 0.5 }]] },   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
   async setup (ctx) {
