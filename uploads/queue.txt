@@ -32,3 +32,4 @@ speed_build
 tnt
 villager_crowd
 creeper_art
+sand_tower
