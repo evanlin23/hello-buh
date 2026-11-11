@@ -5,6 +5,8 @@
 //   1. a diamond ore in the grass at spawn, mined after the netherite       "diamods (after netherite??)"
 //   2. an obsidian frame missing all 4 corners, lit with flint and steel    "portal (corners are optinal)"
 //   3. "the nether": a netherrack patch under a blue sky, a blaze, one hit  "nether (blaze rods: 1 of 6)"
+//      then an enderman, one hit ("ender perls x12 (1 enderman)"), and one eye of ender thrown (a real throw:
+//      it flies toward the world's real nearest stronghold) "throwed 1 eye (it knows)"
 //   4. the stronghold: a roofless room, every eye in, LAVA inside the ring  "end portel is lit" -> jumps in
 //   5. "the end": an end stone island in a blue sky, the dragon alive       "dragon kiled (trust)" -> NEW WORLD RECORD
 // The clock counts to 0:09.41 over the whole run (it runs slow: on purpose, more for the comments).
@@ -23,13 +25,15 @@ const LABELS = [
   ['0:00 spawned in ful netherite', 2.4],
   ['diamods (after netherite??)', 2.2],
   ['portal (corners are optinal)', 2.4],
-  ['nether (blaze rods: 1 of 6)', 2.4],
+  ['nether (blaze rods: 1 of 6)', 2.2],
+  ['ender perls x12 (1 enderman)', 2.2],
+  ['throwed 1 eye (it knows)', 1.8],
   ['found strongold 1st try', 1.8],
   ['end portel is lit', 1.6],
   ['THE END (looks diferent)', 1.8],
   ['dragon kiled (trust)', 1.6]
 ]
-const SLOT = { sword: 0, pick: 1, flint: 2 }
+const SLOT = { sword: 0, pick: 1, flint: 2, eye: 3 }
 
 module.exports = {
   name: 'fakerun_any',
@@ -212,6 +216,8 @@ module.exports = {
       onCut: async () => {
         ctx.select(SLOT.sword)
         await ctx.cmd(`/summon blaze ${X + N + 0.5} ${F + 1.6} ${Z - 2.1} {NoAI:1b,NoGravity:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_blaze"],Rotation:[0f,0f]}`)
+        // the enderman to the right (east), facing us, also 1 health
+        await ctx.cmd(`/summon enderman ${X + N + 2.6} ${F + 1} ${Z - 0.9} {NoAI:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_ender"],Rotation:[90f,0f]}`)
       },
       after: 8
     })
@@ -222,16 +228,39 @@ module.exports = {
     await A.hit(blaze)
     ctx.sound('entity.player.attack.strong', 1, 1); ctx.sound('entity.blaze.death', 1, 1)
     ctx.mark('blaze_hit', { id: blaze.id })
-    await still(34)    // its death tilt and puff are over before the cut (r:r24d99a)
+    await still(30)    // its death tilt and puff are over before the next beat (r:r24d99a)
+    const ender = Object.values(bot.entities).find(e => e.name === 'enderman')
+    if (!ender) throw new Error('no enderman')
+    await A.turnTo(ender.position.offset(0, 2.2, 0), { max: 30 })
+    R.label(ctx, 4)
+    await still(4)
+    await A.hit(ender)
+    ctx.sound('entity.player.attack.strong', 1, 1); ctx.sound('entity.enderman.death', 1, 1)
+    ctx.mark('ender_hit', { id: ender.id })
+    await still(30)
+    // one eye of ender, thrown up ahead: the camera follows it (a governed turn every tick)
+    ctx.select(SLOT.eye)
+    await A.turnTo({ yaw: bot.entity.yaw + 0.9, pitch: 0.35 }, { max: 24 })
+    await still(4)
+    bot.activateItem(); bot.swingArm('right')
+    ctx.sound('entity.ender_eye.launch', 1, 1)
+    R.label(ctx, 5)
+    let eye = null
+    for (let k = 0; k < 34; k++) {
+      eye = eye || Object.values(bot.entities).find(e => e.name === 'eye_of_ender')
+      if (eye && eye.isValid !== false) await A.view(eye.position); else await A.view({ yaw: bot.entity.yaw, pitch: bot.entity.pitch })
+      await still(1)
+    }
+    ctx.log('eye seen', !!eye)
 
     // ---- 4. the stronghold: lava in the end portal, and in we go
     const H = SX.hold
     await R.jump(ctx, 4, () => tp(H + 0.5, 1, 1.2, 180, 30))
-    R.label(ctx, 4)
+    R.label(ctx, 6)
     await drift(at(H - 0.6, 1.2, -6.5), 16)
     await drift(at(H + 1.4, 1.2, -6.5), 16)
     await still(2)
-    R.label(ctx, 5)
+    R.label(ctx, 7)
     await drift(at(H + 0.5, 1.0, -6.5), 10)
     await still(6)
     // walk up to the ring and jump onto / over the frame into the lava
@@ -253,10 +282,12 @@ module.exports = {
     // ---- 5. "the end": the island, the dragon (alive), the record
     const E = SX.end
     await R.jump(ctx, 5, async () => {
-      bot.physicsEnabled = false     // no tick in the lava before the teleport lands
-      await tp(E + 0.5, ISLE + 1, 1.5, 180, -12)
+      // hover where the jump is (inside the cut) so no tick reaches the lava before the teleport lands
+      // (physicsEnabled false also stops the ticks the harness records on: attempt 1 timed out)
+      const g = bot.physics.gravity
+      bot.physics.gravity = 0; bot.entity.velocity.set(0, 0, 0)
+      try { await tp(E + 0.5, ISLE + 1, 1.5, 180, -12) } finally { bot.physics.gravity = g }
       bot.entity.velocity.set(0, 0, 0)
-      bot.physicsEnabled = true
     }, {
       rest: 0,
       onCut: async () => {
@@ -265,11 +296,11 @@ module.exports = {
       },
       after: 10
     })
-    R.label(ctx, 6)
+    R.label(ctx, 8)
     ctx.sound('entity.enderman.teleport', 0.8, 1)
     await drift(at(E + 0.5, ISLE + 9, -16), 24)
     await still(4)
-    R.label(ctx, 7)
+    R.label(ctx, 9)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
     await still(30)
     R.finish(ctx)
