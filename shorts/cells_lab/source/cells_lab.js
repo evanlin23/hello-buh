@@ -11,6 +11,7 @@ module.exports = C.makeStunt({
   caption: 'nobody remembers who built this place',
   cells: ['cow_pingpong', 'chicken_eggs', 'sheep_shears', 'villager_squats', 'husk_snowballs', 'pig_launcher'],
   finale: 'golem_launcher',
+  openHall: true,   // owner 2026-11-11 (r:r52f94c note, @5.8 s): "the opening should look down the hallway, then go to the first."
   edit: {
     caption: 'nobody remembers who built this place', red: 'nobody',
     startAt: 'open:0', endAfter: 'slam:1.0', dropAt: 'slam',   // the song's drop lands with the slam (on 'finale' it hit 1.7 s early and buried the payoff under the bed)
