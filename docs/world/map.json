@@ -1527,6 +1527,29 @@
     "the_walk"
    ],
    "status": "claimed 2026-11-11 by the_walk"
+  },
+  "grandmas_island": {
+   "name": "Grandma's Island",
+   "kind": "homestead",
+   "region": "the_west_march",
+   "at": [
+    -2374,
+    62,
+    -630
+   ],
+   "footprint": [
+    -2381,
+    -639,
+    -2367,
+    -621
+   ],
+   "about": "A natural sand-and-grass islet (13 x 17, at sea level) in the cold ocean north-west of Gullwick's dock, 92 blocks out: Grandma's cottage (one lit window facing the dock) and her boat on its beach since about day 350. The nearest true island to the stronghold (55 blocks west of its pieces).",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "the_walk"
+   ],
+   "status": "claimed 2026-11-11 by the_walk"
   }
  },
  "stories": {
@@ -1725,7 +1748,8 @@
   "the_walk": {
    "day": 4000,
    "places": [
-    "gullwick"
+    "gullwick",
+    "grandmas_island"
    ],
    "cameos": [],
    "status": "claimed"
