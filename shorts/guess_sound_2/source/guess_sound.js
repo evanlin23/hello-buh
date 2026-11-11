@@ -39,7 +39,6 @@ module.exports = function guessSound (cfg) {
   const edit = {
     caption: cfg.caption,
     red: cfg.red,
-    song: 'songs/funk_abnormal.mp3',
     dropAt: 'final_reveal',   // the music drop on the twist
     keySounds: ['hear'],   // the mob's call is the game: the song ducks under it and the gate checks it (scripts/key_sounds.py)
     startAt: 'round:-0.05',
@@ -48,7 +47,10 @@ module.exports = function guessSound (cfg) {
     // a live 3-2-1 with a draining bar from the first listen to the turn (worker 10's countdowns), the
     // round's difficulty as its label
     countdowns: R.map((r, i) => ['cd3', 'turn', r.label, i, 0.5, 0.42]),
-    cards: R.map((r, i) => ['lit', r.answer, r.cardSeconds ?? (i === R.length - 1 ? (cfg.endAfter ?? 1.0) + 0.3 : 1.25), r.color || 'green', i]),   // the last card holds to the final frame
+    // the last card holds to the final frame. r.cardY / r.cardSize: the card higher or one smaller line, off the mob's head
+    // (the reveal now lands centred on the mob, r:r52f94c: a two-line card at the default 0.36 covered the parrot)
+    cards: R.map((r, i) => ['lit', r.answer, r.cardSeconds ?? (i === R.length - 1 ? (cfg.endAfter ?? 1.0) + 0.3 : 1.25), r.color || 'green', i, null,
+      ...(r.cardY !== undefined || r.cardSize ? [{ ...(r.cardY !== undefined ? { y: r.cardY } : {}), ...(r.cardSize ? { size: r.cardSize } : {}) }] : [])]),
     punch: R.map((_, i) => ['lit', i, 1.1]),
     // a short on-screen line for rounds that need one to read without sound (r.hint, on the 'hint' mark)
     subs: R.filter(r => r.hint).map((r, k) => ['hint', r.hint, r.hintSeconds ?? 1.6, k]),
@@ -148,7 +150,9 @@ module.exports = function guessSound (cfg) {
         await bot.waitForTicks(3)
         // the sound, twice (a second listen mid-countdown)
         const play = () => { for (const s of [].concat(r.sound)) ctx.sound(s, r.volume ?? 1, r.pitch ?? 1) }
-        play(); ctx.mark('hear', { n: i })
+        // (r.hearLead ticks: the mark waits for where the sound gets loud, a slow lead-in like the creeper's pitch-0.5 fuse:
+        // the key-sound duck finds the clip from its mark, scripts/key_sounds.py)
+        play(); if (r.hearLead) bot.waitForTicks(r.hearLead).then(() => ctx.mark('hear', { n: i })); else ctx.mark('hear', { n: i })
         await sway(3)
         // exactly 3.0 s from cd3 to the turn (a 3.15 s window drew a '4' on the live countdown)
         const t0 = ctx.tick
@@ -157,8 +161,11 @@ module.exports = function guessSound (cfg) {
         ctx.mark('cd2', { n: i }); if (!r.once) { play(); ctx.mark('hear', { n: i }) } await swayTo(t0 + 40)
         ctx.mark('cd1', { n: i }); await swayTo(t0 + 60)
         // time's up: turn round toward where the sound came from (still dark)...
-        const headY = mob.position.y + (r.lookY ?? 1.2)
-        const e = bot.entity.position.offset(0, 1.62, 0), d = new Vec3(mob.position.x, headY, mob.position.z).minus(e)
+        // the point the view lands on: the mob's eye height (r.lookY over its feet, else 0.85 of its height), live, so
+        // the turn ends with the crosshair on its head (owner 2026-11-11, r:r52f94c: "when we look over at the mob, we
+        // arent looking directly at it": the old turn aimed at a fixed direction 8-14 deg above the head)
+        const eyeOf = () => mob.position.offset(0, r.lookY ?? (mob.height || 1.8) * 0.85, 0)
+        const anglesTo = (p) => { const d = p.minus(bot.entity.position.offset(0, bot.getControlState('sneak') ? 1.27 : 1.62, 0)); return { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) } }
         ctx.mark('turn', { n: i })
         const tz = z + 1, tx = cx + (r.torchDx || 0)   // (torchDx: off to the side, for a mob that walks up to you)
         // ...looking down at the floor where the torch goes (you place on the face you target): the top face's
@@ -174,7 +181,8 @@ module.exports = function guessSound (cfg) {
         ctx.mark('reveal', { n: i, mob: r.mob })
         const revealTick = ctx.tick
         // ...and tilt up onto what the light shows (aim a little above the head: the mob sits below the answer card)
-        await A.turnTo({ yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) - (r.lookDown ?? -0.14) }, { tol: 0.03, max: 30 })
+        await A.turnTo(eyeOf(), { tol: 0.015, max: 40 })
+        ctx.mark('look_at', { id: mob.id, n: i })   // the landing: the aim check measures the mob's offset from centre here (lib/aim.js lookAts)
         let litTick = ctx.tick + 3
         bot.waitForTicks(3).then(() => { litTick = ctx.tick; ctx.mark('lit', { n: i }) })   // the relight lands a few ticks after the placement: the answer card waits for it
         if (i === last) ctx.mark('final_reveal')
@@ -188,11 +196,16 @@ module.exports = function guessSound (cfg) {
         // some reactions are the mob's own AI (the enderman's scream when looked at, the warden's roar, a
         // polar bear rearing up): it gets its AI back on the reveal, set up by r.ai(uuid) NBT
         if (r.ai) bot.chat(`/data merge entity @e[tag=m${i},limit=1] {NoAI:0b${r.ai === true ? '' : ',' + r.ai(uuidInts(bot.player.uuid), Number(bot.time.age))}}`)
-        // and a slow drift of the view while it reacts (a held stare read as a frozen frame)
+        // and a slow sway of the view while it reacts (a held stare read as a frozen frame), kept ON the mob: the old
+        // drift walked 0.23-0.5 deg a tick off it. A sway of about 2 deg about the mob's eye point (a 1.5 deg one held
+        // 0.63 s still on the witch: rec_check 'held')
         let drifting = true
         const drift = (async () => {
           for (let k = 0; drifting; k++) {
-            if (!ctx.died && !ctx.following && !bot.getControlState('back')) await bot.look(bot.entity.yaw + (i % 2 ? 1 : -1) * (i === last ? 0.009 : 0.004), bot.entity.pitch + Math.sin(k * 0.15) * 0.002, true)
+            if (!ctx.died && !ctx.following) {
+              const a = anglesTo(eyeOf()), amp = Math.min(1, k / 4) * 0.036
+              await bot.look(a.yaw + (i % 2 ? 1 : -1) * amp * Math.sin(k * 0.13), a.pitch + amp * 0.45 * Math.sin(k * 0.2), true)
+            }
             await bot.waitForTicks(1)
           }
         })()

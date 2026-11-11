@@ -1,10 +1,10 @@
 {
   "name": "guess_sound_2",
   "channel": "hellobuh",
-  "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
+  "caption": "guess the mob from its sound pt 2 🔊",
   "youtube": {
-    "title": "guess the mob from its sound pt 2 \ud83d\udd0a #minecraft #shorts",
-    "description": "guess the mob from its sound pt 2 \ud83d\udd0a\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "guess the mob from its sound pt 2 🔊 #minecraft #shorts",
+    "description": "guess the mob from its sound pt 2 🔊\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -20,41 +20,41 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "final_reveal",
     "drop_in_song_s": 39.75,
-    "drop_in_short_s": 35.4,
-    "song_start_s": 4.35
+    "drop_in_short_s": 34.77,
+    "song_start_s": 4.98
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 36.85,
+    "duration_s": 36.23,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20069466,
-    "sha256": "b9ee41727c77272113cfbe8b45fb92aa6b6a59ef8ed074457e2d77be967f1f74",
+    "bytes": 20197484,
+    "sha256": "0a9c3562d2b98a56559103985452f54d5bf7841a2f72e2a176ad6cbe1de32e64",
     "release": {
       "tag": "pkg-guess_sound_2",
-      "asset": "guess_sound_2.short.b9ee41727c772721.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.b9ee41727c772721.mp4",
-      "sha256": "b9ee41727c77272113cfbe8b45fb92aa6b6a59ef8ed074457e2d77be967f1f74",
-      "bytes": 20069466
+      "asset": "guess_sound_2.short.0a9c3562d2b98a56.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.0a9c3562d2b98a56.mp4",
+      "sha256": "0a9c3562d2b98a56559103985452f54d5bf7841a2f72e2a176ad6cbe1de32e64",
+      "bytes": 20197484
     },
     "nosong_release": {
       "tag": "pkg-guess_sound_2",
-      "asset": "guess_sound_2.short_nosong.3f4dd7c49d2fdee1.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short_nosong.3f4dd7c49d2fdee1.mp4",
-      "sha256": "3f4dd7c49d2fdee1442081bd336747d6092c65790ad5effc99e48e3580332aa8",
-      "bytes": 19662874
+      "asset": "guess_sound_2.short_nosong.d8b9bdeef5e5428f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short_nosong.d8b9bdeef5e5428f.mp4",
+      "sha256": "d8b9bdeef5e5428fbbb8fd8638f7527884f42d6f1b5bc44058d829dc4effcde5",
+      "bytes": 19782256
     }
   },
   "edit": {
-    "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
+    "caption": "guess the mob from its sound pt 2 🔊",
     "red": "sound",
     "dropAt": "final_reveal",
     "keySounds": [
       "hear"
     ],
-    "startAt": "round:-0.05",
+    "startAt": "cd3:-0.02",
     "endAfter": "final_reveal:1.45",
     "counter": {
       "at": [
@@ -141,42 +141,58 @@
         "PIG",
         1.25,
         "green",
-        0
+        0,
+        null
       ],
       [
         "lit",
         "ZOMBIE",
         1.25,
         "green",
-        1
+        1,
+        null
       ],
       [
         "lit",
         "SPIDER",
         1.25,
         "red",
-        2
+        2,
+        null
       ],
       [
         "lit",
         "WITCH",
         1.25,
         "blue",
-        3
+        3,
+        null,
+        {
+          "y": 0.3
+        }
       ],
       [
         "lit",
         "ALLAY",
         1.25,
         "blue",
-        4
+        4,
+        null,
+        {
+          "y": 0.3
+        }
       ],
       [
         "lit",
         "THE PARROT AGAIN",
         1.75,
         "red",
-        5
+        5,
+        null,
+        {
+          "y": 0.2,
+          "size": 92
+        }
       ]
     ],
     "punch": [
@@ -222,7 +238,9 @@
     "subsY": 0.77,
     "args": [
       "--caption",
-      "guess the mob from its sound pt 2 \ud83d\udd0a",
+      "guess the mob from its sound pt 2 🔊",
+      "--self_name",
+      "56e",
       "--red",
       "sound",
       "--subs",
@@ -234,11 +252,11 @@
       "--counter",
       "{\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6}",
       "--cards",
-      "[[\"lit\",\"PIG\",1.25,\"green\",0],[\"lit\",\"ZOMBIE\",1.25,\"green\",1],[\"lit\",\"SPIDER\",1.25,\"red\",2],[\"lit\",\"WITCH\",1.25,\"blue\",3],[\"lit\",\"ALLAY\",1.25,\"blue\",4],[\"lit\",\"THE PARROT AGAIN\",1.75,\"red\",5]]",
+      "[[\"lit\",\"PIG\",1.25,\"green\",0,null],[\"lit\",\"ZOMBIE\",1.25,\"green\",1,null],[\"lit\",\"SPIDER\",1.25,\"red\",2,null],[\"lit\",\"WITCH\",1.25,\"blue\",3,null,{\"y\":0.3}],[\"lit\",\"ALLAY\",1.25,\"blue\",4,null,{\"y\":0.3}],[\"lit\",\"THE PARROT AGAIN\",1.75,\"red\",5,null,{\"y\":0.2,\"size\":92}]]",
       "--countdowns",
       "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
       "--start_at",
-      "round:-0.05",
+      "cd3:-0.02",
       "--end_after",
       "final_reveal:1.45"
     ]
@@ -251,13 +269,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 390,
-      "y": 63,
-      "z": -56
+      "x": 369,
+      "y": 70,
+      "z": -38
     },
     "biome": "minecraft:plains",
-    "ticks": 779,
-    "seconds": 38.95,
+    "ticks": 774,
+    "seconds": 38.7,
     "deaths": 0,
     "events": [
       {
@@ -277,439 +295,651 @@
         "event": "hear"
       },
       {
-        "t": 1.2,
+        "t": 1.15,
         "event": "cd3"
       },
       {
-        "t": 2.2,
+        "t": 2.15,
         "event": "cd2"
       },
       {
-        "t": 2.2,
+        "t": 2.15,
         "event": "hear"
       },
       {
-        "t": 3.2,
+        "t": 3.15,
         "event": "cd1"
       },
       {
-        "t": 4.2,
+        "t": 4.15,
         "event": "turn"
       },
       {
-        "t": 5.1,
+        "t": 5.05,
         "event": "turned"
       },
       {
-        "t": 5.1,
+        "t": 5.05,
         "event": "place"
       },
       {
-        "t": 5.1,
+        "t": 5.05,
         "event": "swing"
       },
       {
-        "t": 5.1,
+        "t": 5.05,
         "event": "reveal"
       },
       {
-        "t": 5.4,
+        "t": 5.3,
+        "event": "look_at"
+      },
+      {
+        "t": 5.3,
         "event": "react"
       },
       {
-        "t": 5.4,
+        "t": 5.3,
         "event": "face_on"
       },
       {
-        "t": 5.55,
+        "t": 5.45,
         "event": "lit"
       },
       {
-        "t": 5.7,
+        "t": 5.6,
         "event": "again"
       },
       {
-        "t": 6.4,
+        "t": 6.3,
         "event": "face_off"
       },
       {
-        "t": 6.85,
+        "t": 6.75,
         "event": "cut"
       },
       {
-        "t": 6.85,
+        "t": 6.75,
         "event": "count"
       },
       {
-        "t": 6.9,
+        "t": 6.8,
         "event": "round"
       },
       {
-        "t": 7.05,
+        "t": 6.95,
         "event": "hear"
       },
       {
-        "t": 7.2,
+        "t": 7.1,
         "event": "cd3"
       },
       {
-        "t": 8.2,
+        "t": 8.1,
         "event": "cd2"
       },
       {
-        "t": 8.2,
+        "t": 8.1,
         "event": "hear"
       },
       {
-        "t": 9.2,
-        "event": "cd1"
-      },
-      {
-        "t": 10.2,
-        "event": "turn"
-      },
-      {
-        "t": 11.15,
-        "event": "turned"
-      },
-      {
-        "t": 11.15,
-        "event": "place"
-      },
-      {
-        "t": 11.15,
-        "event": "swing"
-      },
-      {
-        "t": 11.15,
-        "event": "reveal"
-      },
-      {
-        "t": 11.55,
-        "event": "react"
-      },
-      {
-        "t": 11.55,
-        "event": "face_on"
-      },
-      {
-        "t": 11.7,
-        "event": "lit"
-      },
-      {
-        "t": 11.85,
-        "event": "again"
-      },
-      {
-        "t": 12.85,
-        "event": "face_off"
-      },
-      {
-        "t": 13.05,
-        "event": "cut"
-      },
-      {
-        "t": 13.05,
-        "event": "count"
-      },
-      {
-        "t": 13.1,
-        "event": "round"
-      },
-      {
-        "t": 13.25,
-        "event": "hear"
-      },
-      {
-        "t": 13.4,
-        "event": "cd3"
-      },
-      {
-        "t": 14.4,
-        "event": "cd2"
-      },
-      {
-        "t": 14.4,
-        "event": "hear"
-      },
-      {
-        "t": 15.4,
-        "event": "cd1"
-      },
-      {
-        "t": 16.4,
-        "event": "turn"
-      },
-      {
-        "t": 17.05,
+        "t": 8.75,
         "event": "vel"
       },
       {
-        "t": 17.3,
-        "event": "turned"
+        "t": 9.1,
+        "event": "cd1"
       },
       {
-        "t": 17.3,
-        "event": "place"
-      },
-      {
-        "t": 17.3,
-        "event": "swing"
-      },
-      {
-        "t": 17.3,
-        "event": "reveal"
-      },
-      {
-        "t": 17.6,
-        "event": "react"
-      },
-      {
-        "t": 17.6,
-        "event": "face_on"
-      },
-      {
-        "t": 17.6,
-        "event": "vel"
-      },
-      {
-        "t": 17.75,
-        "event": "lit"
-      },
-      {
-        "t": 17.9,
-        "event": "again"
-      },
-      {
-        "t": 17.9,
+        "t": 9.25,
         "event": "collect"
       },
       {
-        "t": 18.9,
-        "event": "face_off"
-      },
-      {
-        "t": 19.1,
-        "event": "cut"
-      },
-      {
-        "t": 19.1,
-        "event": "count"
-      },
-      {
-        "t": 19.15,
-        "event": "round"
-      },
-      {
-        "t": 19.3,
-        "event": "hear"
-      },
-      {
-        "t": 19.45,
-        "event": "cd3"
-      },
-      {
-        "t": 20.45,
-        "event": "cd2"
-      },
-      {
-        "t": 20.45,
-        "event": "hear"
-      },
-      {
-        "t": 21.45,
-        "event": "cd1"
-      },
-      {
-        "t": 22.45,
+        "t": 10.1,
         "event": "turn"
       },
       {
-        "t": 23.35,
+        "t": 11,
         "event": "turned"
       },
       {
-        "t": 23.35,
+        "t": 11,
         "event": "place"
       },
       {
-        "t": 23.35,
+        "t": 11,
         "event": "swing"
       },
       {
-        "t": 23.35,
+        "t": 11,
         "event": "reveal"
       },
       {
-        "t": 23.75,
+        "t": 11.4,
+        "event": "look_at"
+      },
+      {
+        "t": 11.4,
         "event": "react"
       },
       {
-        "t": 23.75,
+        "t": 11.4,
         "event": "face_on"
       },
       {
-        "t": 23.9,
+        "t": 11.55,
         "event": "lit"
       },
       {
-        "t": 24.05,
+        "t": 11.7,
         "event": "again"
       },
       {
-        "t": 24.95,
+        "t": 12.7,
         "event": "face_off"
       },
       {
-        "t": 25.2,
+        "t": 12.9,
         "event": "cut"
       },
       {
-        "t": 25.2,
+        "t": 12.9,
         "event": "count"
+      },
+      {
+        "t": 12.95,
+        "event": "round"
+      },
+      {
+        "t": 13.1,
+        "event": "hear"
+      },
+      {
+        "t": 13.25,
+        "event": "cd3"
+      },
+      {
+        "t": 14.25,
+        "event": "cd2"
+      },
+      {
+        "t": 14.25,
+        "event": "hear"
+      },
+      {
+        "t": 15.25,
+        "event": "cd1"
+      },
+      {
+        "t": 16.25,
+        "event": "turn"
+      },
+      {
+        "t": 17.15,
+        "event": "turned"
+      },
+      {
+        "t": 17.15,
+        "event": "place"
+      },
+      {
+        "t": 17.15,
+        "event": "swing"
+      },
+      {
+        "t": 17.15,
+        "event": "reveal"
+      },
+      {
+        "t": 17.4,
+        "event": "look_at"
+      },
+      {
+        "t": 17.4,
+        "event": "react"
+      },
+      {
+        "t": 17.4,
+        "event": "face_on"
+      },
+      {
+        "t": 17.55,
+        "event": "lit"
+      },
+      {
+        "t": 17.7,
+        "event": "again"
+      },
+      {
+        "t": 18.7,
+        "event": "face_off"
+      },
+      {
+        "t": 18.9,
+        "event": "cut"
+      },
+      {
+        "t": 18.9,
+        "event": "count"
+      },
+      {
+        "t": 18.95,
+        "event": "round"
+      },
+      {
+        "t": 19.1,
+        "event": "hear"
+      },
+      {
+        "t": 19.25,
+        "event": "cd3"
+      },
+      {
+        "t": 20.25,
+        "event": "cd2"
+      },
+      {
+        "t": 20.25,
+        "event": "hear"
+      },
+      {
+        "t": 21.2,
+        "event": "vel"
+      },
+      {
+        "t": 21.25,
+        "event": "cd1"
+      },
+      {
+        "t": 21.25,
+        "event": "vel"
+      },
+      {
+        "t": 21.75,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "turn"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "turned"
+      },
+      {
+        "t": 23.15,
+        "event": "place"
+      },
+      {
+        "t": 23.15,
+        "event": "swing"
+      },
+      {
+        "t": 23.15,
+        "event": "reveal"
+      },
+      {
+        "t": 23.2,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.55,
+        "event": "look_at"
+      },
+      {
+        "t": 23.55,
+        "event": "react"
+      },
+      {
+        "t": 23.55,
+        "event": "face_on"
+      },
+      {
+        "t": 23.7,
+        "event": "lit"
+      },
+      {
+        "t": 23.85,
+        "event": "again"
+      },
+      {
+        "t": 24.15,
+        "event": "vel"
+      },
+      {
+        "t": 24.2,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "face_off"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "cut"
+      },
+      {
+        "t": 25.05,
+        "event": "count"
+      },
+      {
+        "t": 25.1,
+        "event": "round"
       },
       {
         "t": 25.25,
-        "event": "round"
+        "event": "hear"
+      },
+      {
+        "t": 25.25,
+        "event": "vel"
       },
       {
         "t": 25.4,
-        "event": "hear"
-      },
-      {
-        "t": 25.55,
         "event": "cd3"
       },
       {
-        "t": 26.55,
+        "t": 25.6,
+        "event": "vel"
+      },
+      {
+        "t": 26.2,
+        "event": "vel"
+      },
+      {
+        "t": 26.25,
+        "event": "vel"
+      },
+      {
+        "t": 26.4,
         "event": "cd2"
       },
       {
-        "t": 26.55,
+        "t": 26.4,
         "event": "hear"
       },
       {
-        "t": 27.55,
+        "t": 26.4,
+        "event": "vel"
+      },
+      {
+        "t": 26.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.2,
+        "event": "vel"
+      },
+      {
+        "t": 27.25,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
         "event": "cd1"
       },
       {
-        "t": 28.55,
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.2,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
         "event": "turn"
       },
       {
-        "t": 29.45,
+        "t": 28.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
         "event": "turned"
       },
       {
-        "t": 29.45,
+        "t": 29.3,
         "event": "place"
       },
       {
-        "t": 29.45,
+        "t": 29.3,
         "event": "swing"
       },
       {
-        "t": 29.45,
+        "t": 29.3,
         "event": "reveal"
       },
       {
-        "t": 29.8,
+        "t": 29.4,
+        "event": "vel"
+      },
+      {
+        "t": 29.6,
+        "event": "look_at"
+      },
+      {
+        "t": 29.6,
         "event": "react"
       },
       {
-        "t": 29.8,
+        "t": 29.6,
         "event": "face_on"
       },
       {
-        "t": 29.95,
+        "t": 29.75,
         "event": "lit"
       },
       {
-        "t": 30.1,
+        "t": 29.9,
         "event": "again"
       },
       {
-        "t": 31.3,
+        "t": 30.2,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.1,
         "event": "face_off"
       },
       {
-        "t": 31.5,
+        "t": 31.25,
+        "event": "vel"
+      },
+      {
+        "t": 31.3,
         "event": "cut"
       },
       {
-        "t": 31.5,
+        "t": 31.3,
         "event": "count"
       },
       {
-        "t": 31.55,
+        "t": 31.35,
         "event": "round"
       },
       {
-        "t": 31.7,
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
         "event": "hear"
       },
       {
-        "t": 31.85,
+        "t": 31.7,
         "event": "cd3"
       },
       {
-        "t": 32.85,
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
         "event": "cd2"
       },
       {
-        "t": 32.85,
+        "t": 32.7,
         "event": "hear"
       },
       {
-        "t": 33.85,
+        "t": 33.25,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
         "event": "cd1"
       },
       {
-        "t": 34.85,
+        "t": 34.25,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
         "event": "turn"
       },
       {
-        "t": 35.8,
+        "t": 35.25,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.6,
         "event": "turned"
       },
       {
-        "t": 35.8,
+        "t": 35.6,
         "event": "place"
       },
       {
-        "t": 35.8,
+        "t": 35.6,
         "event": "swing"
       },
       {
-        "t": 35.8,
+        "t": 35.6,
         "event": "reveal"
       },
       {
-        "t": 36.15,
+        "t": 35.9,
+        "event": "look_at"
+      },
+      {
+        "t": 35.9,
         "event": "final_reveal"
       },
       {
-        "t": 36.15,
+        "t": 35.9,
         "event": "react"
       },
       {
-        "t": 36.15,
+        "t": 35.9,
         "event": "face_on"
       },
       {
-        "t": 36.3,
+        "t": 36.05,
         "event": "lit"
       },
       {
-        "t": 36.4,
+        "t": 36.15,
         "event": "hint"
       },
       {
-        "t": 36.45,
+        "t": 36.2,
         "event": "again"
       },
       {
-        "t": 38.95,
+        "t": 36.2,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 37.25,
+        "event": "vel"
+      },
+      {
+        "t": 37.4,
+        "event": "vel"
+      },
+      {
+        "t": 38.25,
+        "event": "vel"
+      },
+      {
+        "t": 38.4,
+        "event": "vel"
+      },
+      {
+        "t": 38.7,
         "event": "end"
       }
     ]
@@ -717,11 +947,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/guess_sound_2",
-    "commit": "9027a73dab454a7016c522f74b40d4d5d61203d1",
+    "commit": "8035806194564dad86cdf2cf05ccd23aa707ec38",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43016864091",
-    "rendered_at": "2026-11-11T12:11:23.549Z",
-    "head_at_publish": "111abf1b7a9f10b8a58e5645bd40c0465c0f2cbf",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43114520004",
+    "rendered_at": "2026-11-11T22:55:27.135Z",
+    "head_at_publish": "818bdef552902b06c92a1b9676180775714c3d1a",
     "stunt": "stunts/guess_sound_2.js",
     "source_snapshot": [
       "source/guess_sound_2.js",
@@ -732,34 +962,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 9027a73dab45",
+    "git checkout 803580619456",
     "gunzip -c shorts/guess_sound_2/recording.json.gz > work/guess_sound_2.rec.json",
     "node render.js work/guess_sound_2.rec.json work/guess_sound_2.frames 60 1080 1011",
     "python3 audio.py work/guess_sound_2.rec.json work/guess_sound_2.wav",
-    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 \ud83d\udd0a\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
+    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1,null],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2,null],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5,null,{\\\"y\\\":0.2,\\\"size\\\":92}]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at cd3:-0.02 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "worker whip: a followable camera (r:r38374d): the turn round to the sound and the tilt onto the mob on lib/act.js's eased governor (<=220 deg/s, was ~700), the torch placed with the crosshair on the floor block; re-recorded, check clean (whip, aim 6/6), mixcheck OK; independent review round 1 READY",
-  "published_at": "2026-11-11T12:32:06.579Z",
+  "status": "ready",
+  "notes": "r:r52f94c owner note (@13.7 s 'when we look over at the mob, we arent looking directly at it'): the reveal turn lands on the mob's live eye point (lib/guess_sound.js A.turnTo, look_at mark) and the reaction sway stays on it; the aim check now blocks a look-at beat over 6 deg (all six here within 2.9). Answer cards moved off the mobs' heads; opens on the first countdown (r:r0f3da0). Independent review READY (round 2).",
+  "published_at": "2026-11-11T23:24:41.164Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:32:49+00:00",
+    "at": "2026-11-11T23:25:18+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 36.86 s vs the reviewed render 36.85 s"
+      "summary": "short.mp4 36.24 s vs the reviewed render 36.23 s"
     },
     "pace": {
-      "ok": true,
-      "blockers": 0,
+      "ok": false,
+      "blockers": 1,
       "warnings": 1,
-      "summary": "OK"
+      "summary": "dwell: the Short runs 1.46 s past the payoff's result (34.78 s): over 1.2 s (owner r:r188b46: the end lands 0.5-0.8 s after the"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:03:11.532Z",
+      "at": "2026-11-11T22:48:26.342Z",
       "report": "out/guess_sound_2.check.json"
     },
     "key_sounds": {
@@ -767,8 +997,7 @@
       "keys": [
         "hear"
       ],
-      "summary": "key sounds over the music: worst +12.6 dB over 12 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +11.4 dB over 11 clips (need >= 8 dB)"
     }
-  },
-  "needs_fix": "owner 2026-11-11 (@13.7s): \"when we look over at the mob, we arent looking directly at it.\""
+  }
 }
