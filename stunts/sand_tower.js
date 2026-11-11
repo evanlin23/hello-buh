@@ -128,12 +128,17 @@ module.exports = {
       const tb = ctx.tick
       if (mark) ctx.mark(mark)
       ctx.select(1)
-      // the torch into the gap, on the top face of the ground block the crosshair is already on, 5 ticks after the break
-      // the crosshair down onto the ground in the gap while the sand starts to fall, so the torch goes in at once at tb + 4
-      // (a torch in before the sand starts to fall holds it up; one after ~tb + 9 is too late: the sand has landed)
-      await A.aimAt(new Vec3(cx + 0.5, floor + 1.0, cz + 0.85), { on: new Vec3(cx, floor, cz), max: 4, strict: false })
+      // the crosshair down onto the ground in the gap while the sand starts to fall, on the FAR half of the cell's floor
+      // (A.place's own pick can sit on the near edge, where the ray grazes the ground in front first: rec_check sight),
+      // then the torch at tb + 4 (a torch in before the sand starts to fall holds it up; one after ~tb + 9 is too late)
+      const P = new Vec3(cx + 0.5, floor + 1.0, cz + 0.3)
+      const on = await A.aimAt(P, { on: new Vec3(cx, floor, cz), max: 6, strict: false })
       while (ctx.tick < tb + 4) await bot.waitForTicks(1)
-      try { await A.place(new Vec3(cx, floor + 1, cz), { against: new Vec3(cx, floor, cz), block: 'torch', delay: 4, max: 6, sound: 'block.wood.place' }) } catch (e) { ctx.log('torch', cx, cz, e.message) }
+      if (on) {
+        ctx.mark('place_on', { x: cx, y: floor + 1, z: cz, ax: cx, ay: floor, az: cz })
+        bot._client.write('block_place', { hand: 0, location: { x: cx, y: floor, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.3, insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: aimed and checked by A.aimAt just above (the crosshair is on this face)
+        bot.swingArm('right'); ctx.sound('block.wood.place', 1, 0.8); A.lastUse = ctx.tick
+      } else ctx.log('torch', cx, cz, 'crosshair not on the gap')
       gov.cur = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }; gov.vel = { yaw: 0, pitch: 0 }
       aim = bottom(cx, cz)
       setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name), 500)
