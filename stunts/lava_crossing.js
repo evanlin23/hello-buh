@@ -222,7 +222,7 @@ module.exports = {
     // backdrop isn't a still frame (rec_check held; keep_inventory leaves no drops to move)
     const dp = bot.entity.position
     for (let k = 0; k < 40; k++) {
-      if (k % 6 === 0) { ctx.particles('lava', { x: dp.x + ((k * 7) % 5 - 2) * 0.6, y: floor + 0.95, z: dp.z - 1.5 - (k % 3) }, { count: 2, spread: 0.8 }); ctx.sound('block.lava.pop', 0.5, 0.9 + (k % 3) * 0.1) }
+      if (k % 6 === 0) { ctx.particles('lava', { x: dp.x + ((k * 7) % 5 - 2) * 0.6, y: floor + 0.95, z: dp.z - 2.5 - (k % 3) }, { count: 2, spread: 0.8 }); ctx.sound('block.lava.pop', 0.5, 0.9 + (k % 3) * 0.1) }
       await bot.waitForTicks(1)
     }
     return ctx.died
