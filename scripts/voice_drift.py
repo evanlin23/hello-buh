@@ -435,8 +435,27 @@ def story_lines(d):
     return out, chars
 
 
+def one_take_of(vj):
+    """{line id: take id} for lines voiced in ONE one_take request (tts.py story "one_take": its runs carry the same
+    `take`). Lines of one request are one voice by construction: the within-take WOBBLE and the OFFREF against a
+    provisional reference only measure the performance's own range there (the bubbly kid's 8.8 st), so they warn
+    instead of blocking (Buh Stories lead, 2026-11-11). Lines from different requests keep every rule."""
+    beats = vj.get("beats") or {}
+    return {lid: b["take"] for b in beats.values() if b.get("take") for lid in b.get("lines", [])}
+
+
+def one_take_flags(r, one_take):
+    """A line of a one_take request: its WOBBLE / OFFREF become warnings (one_take_of). Other flags stay."""
+    if r["id"] in one_take:
+        r["one_take"] = one_take[r["id"]]
+        r["flags"] = [f.lower() if f in ("WOBBLE", "OFFREF") else f for f in r["flags"]]
+    return r
+
+
 def check(d, only=None):
     lines, chars = story_lines(d)
+    vj = json.loads((d / "voice" / "voice.json").read_text())
+    one_take = one_take_of(vj)
     refs = {k: (None if k.startswith("kokoro:") else ref_for(cid, c, lib)) for k, (cid, c, lib) in chars.items()}
     rep = {"story": str(d), "lines": [], "characters": {}, "blockers": 0, "warnings": 0}
     prints = {}
@@ -494,6 +513,7 @@ def check(d, only=None):
                 r["flags"] += (["WOBBLE"] if run2 >= BLOCK_WIN else
                                ["wobble"] if run2 >= WARN_WIN or max(sc) >= WARN_ONE else [])
                 r["drift"] = max(r["drift"], run2 / BLOCK_WIN)
+            one_take_flags(r, one_take)
             r["drift"] = round(r["drift"], 2)
             rep["lines"].append(r)
         rep["characters"][key] = ch

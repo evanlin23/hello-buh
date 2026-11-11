@@ -27,8 +27,9 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 TNT vs 10 vs 100 vs 1000 💀',
   edit: {
-    caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'boom4',
-    startAt: 'tier1:-0.05', endAfter: 'death:1.4', deathScreen: true,
+    caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', dropAt: 'boom4',
+    startAt: 'tier1:-0.05', endAfter: 'settle:0.6',   // once the blast's debris settles (lib/settle.js, r:r24d99a)
+    deathScreen: true,
     // the song drops out 0.35 s before the death so the 1000-TNT blast lands as a hit (pace: no sound hit on the payoff,
     // the bed covered it)
     sfx: [['dip', 'death', 0.35]],
@@ -108,9 +109,11 @@ module.exports = {
       await bot.look(bot.entity.yaw + dy * f, bot.entity.pitch + (gp - bot.entity.pitch) * f, true)
       await bot.waitForTicks(1)
     }
-    const light = (bx, by, bz, dir, cur) => {
-      bot._client.write('block_place', { hand: 0, location: { x: bx, y: by, z: bz }, direction: dir, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    // flint and steel on a TNT, aimed by construction (lib/act.js, r:rffba12): the crosshair on the block as it's lit
+    const A = require('../lib/act')(ctx)
+    const light = async (bx, by, bz) => {
+      try { await A.use(new Vec3(bx, by, bz), { sound: 'item.flintandsteel.use' }) } catch (e) { ctx.log('light', e.message) }
+      ctx.sound('entity.tnt.primed', 1)
     }
     for (let i = 0; i < this.tiers.length; i++) {
       const t = this.tiers[i], n = i + 1
@@ -133,7 +136,7 @@ module.exports = {
         await ctx.easeLook(W - 0.1, -1.15, 450)
         const bx = t.cx + 4, by = floor + t.h, bz = t.zf - 5                // the edge block right behind the feet
         await ctx.easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 350)
-        light(bx, by, bz, 1, [0.5, 1, 0.5])
+        await light(bx, by, bz)
         ctx.mark(`lit${n}`)
         const litAt = ctx.tick
         await ctx.easeLook(bot.entity.yaw + 0.2, -1.2, 350)
@@ -171,7 +174,7 @@ module.exports = {
       if (t.h > 2) { await ctx.easeLook(-0.15, Math.min(1.15, Math.atan2(t.h - 0.6, 2.5)), 450); await ctx.easeLook(0.1, 0.15, 300) } else await ctx.easeLook(0.2, -0.25, 300)
       const target = new Vec3(t.cx, floor + 1, t.zf)
       await ctx.easeLookAt(target.offset(0.5, 0.5, 1), 250)
-      light(target.x, target.y, target.z, 3, [0.5, 0.5, 1])
+      await light(target.x, target.y, target.z)
       ctx.mark(`lit${n}`)
       await bot.waitForTicks(8)
       // cut to the vantage point with ~1.1 s of fuse left

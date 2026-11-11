@@ -7,7 +7,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'crater:1.0',   // (lead 2026-11-11: 8 s+ with a real beat: after the chain, walk to the rim and look into the crater)
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'crater:1.0',   // settle-ok: the crater look comes after the chain has settled. (lead 2026-11-11: 8 s+ with a real beat: after the chain, walk to the rim and look into the crater)
     // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
     speed: [['lit:0.5', 'boom:-0.4', 1.5]],
@@ -47,9 +47,9 @@ module.exports = {
     bot.setControlState('forward', false)
     ctx.select(1); await bot.waitForTicks(4)
     const target = new Vec3(x, floor + 1, pz + 2)
-    await ctx.easeLookAt(target.offset(0.5, 0.5, 1), 400)
-    bot._client.write('block_place', { hand: 0, location: { x: target.x, y: target.y, z: target.z }, direction: 3, cursorX: 0.5, cursorY: 0.5, cursorZ: 1, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    const A = require('../lib/act')(ctx)
+    await A.use(target)                                       // aimed by construction (lib/act.js): flint and steel on the TNT
+    ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     await bot.waitForTicks(6)
     // back away the whole fuse while FACING the flashing pile (turning to sprint off hid the TNT for

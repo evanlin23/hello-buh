@@ -25,7 +25,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'gone:1.0',
+    startAt: 'beat:-0.05', endAfter: 'settle:0.6',   // the blast and his death puff settled (lib/settle.js)
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -44,8 +44,8 @@ module.exports = {
     // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch and push-in on his
     // death puff, a song dip + impact on it, a pop on the opening (pace)
     speed: [['fuse_a', 'fuse_b', 'cut']],
-    flash: [['gone', 0, 0.4]], punch: [['gone', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'gone', 0.3], ['impact', 'gone']]
+    flash: [['ring_boom', 0, 0.5], ['gone', 0, 0.4]], punch: [['ring_boom', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
+    sfx: [['pop', 'beat'], ['dip', 'ring_boom', 0.3], ['impact', 'ring_boom'], ['pop', 'gone']]
   },
 
   async setup (ctx) {
@@ -87,9 +87,10 @@ module.exports = {
     await ctx.cmd('/execute as @e[type=villager] run attribute @s minecraft:knockback_resistance base set 1')
     // job site spots (13): both sides, the front corners and the back row
     const spots = []
-    // (none in the middle of the front row: there they hid his outfit from the camera)
-    for (const dz of [1, 2, 0, -1, -2]) { spots.push([x + 2, vz + dz]); spots.push([x - 2, vz + dz]) }
-    for (const dx of [-1, 0, 1]) spots.push([x + dx, vz - 2])
+    // (none in the middle of the front row: there they hid his outfit from the camera). Placed back to front, the
+    // outer column first: each spot's top face is in sight when its block goes down (lib/act.js aims at it; a placed
+    // block in front hid the one behind, and the old back row behind the pen was never in sight at all)
+    for (const [dx, dz] of [[2, -2], [-2, -2], [3, -1], [-3, -1], [2, -1], [-2, -1], [2, 0], [-2, 0], [3, 1], [2, 1], [-2, 1], [2, 2], [-2, 2]]) spots.push([x + dx, vz + dz])
     this.spots = spots
     // TNT in the ground under every spot, and a 3-block fuse line toward the player
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)

@@ -28,7 +28,9 @@ adds songs.
   If you find an engine bug, describe it with a reproduction in your final report instead.
 - One run at a time in your container (the server port is fixed). Never edit `run.sh` while it runs.
 - Copy the patterns of existing stunts: `tnt_scale.js`, `every_clutch.js`, `creeper.js`,
-  `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action, `subs`
+  `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action (a payoff that is a blast or
+  a fall ends on `endAfter: 'settle:0.6'`: 0.6 s after the harness's `settle` mark, once the TNT, debris and falling
+  blocks have stopped; lib/settle.js), `subs`
   for beat labels (no emoji in subs), `deathScreen` + `expectDeath` for deaths.
 - 1.21.11 game rules are snake_case (`immediate_respawn`, `spawn_mobs`...). `/fill` is capped
   at 32768 blocks. Check logs for `COMMAND ERROR:`. During set-up (before the recording starts) a command error

@@ -647,10 +647,11 @@ const dayTimeAt = (t) => { if (process.env.DAY_TIME) return Number(process.env.D
 const RAIN = [], THUNDER = []
 {
   const w0 = DIM !== 'overworld' ? 'clear' : (process.env.WEATHER || rec.weather || STUNT_MOD.weather || 'clear')
-  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather])
+  // a mark with `cut: true` lands the new weather at once (a montage cut to another day: not a 5 s fade on screen)
+  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather, !!e.cut])
   let r = w0 !== 'clear' ? 1 : 0, th = w0 === 'thunder' ? 1 : 0, w = w0, k = 0
   for (let i = 0; i <= P.length + 2; i++) {
-    while (k < marks.length && marks[k][0] <= i) w = marks[k++][1]
+    while (k < marks.length && marks[k][0] <= i) { w = marks[k][1]; if (marks[k][2]) { r = w !== 'clear' ? 1 : 0; th = w === 'thunder' ? 1 : 0 } k++ }
     if (i > 0) { r = Math.max(0, Math.min(1, r + (w !== 'clear' ? 0.01 : -0.01))); th = Math.max(0, Math.min(1, th + (w === 'thunder' ? 0.01 : -0.01))) }
     RAIN.push(r); THUNDER.push(th)
   }

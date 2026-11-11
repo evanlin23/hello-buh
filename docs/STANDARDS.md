@@ -205,7 +205,7 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
    their quote marks. (`"captions": "word"` gives one word at a time.) **Every spoken word is captioned**, narrator and
    characters: its line's caption is on screen while it's said, every caption word is shown, and the take says the
    caption text. Check: `scripts/caption_av_check.py` coverage (BLOCK; in `./hb check`, before the render with
-   `--events`). r:r61d371 (supersedes r:rbd7cb6)
+   `--events`; on the mp4 it also measures the caption holds from the frames and WARNs on any under 0.25 s). r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
@@ -314,9 +314,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "lucky"**: every next block impossibly luckier than the last, vanilla mechanics staged by the set.
   Check: owner. r:r934ea4
 - **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
-  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2 The walk never stops (no pause before the door); no jump or shift at the cut. r:r81cb9c
 - **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
-  round a beat, the path always wins. Check: owner. r:r2e0a32
+  round a beat, the path always wins. Check: owner. r:r2e0a32 The path breaks through each obstacle, never around it. r:r81cb9c
 - **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
   the caption plays it as a normal complaint. Check: owner. r:r047388
 - **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
@@ -343,6 +343,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
+- **Followable camera**: no whip pans; view turns eased and speed-capped, settling long enough to read. Check:
+  motion lint / lint (turn speed), review. r:r38374d
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

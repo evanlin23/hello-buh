@@ -96,7 +96,8 @@ def aim_report(sight_res: dict, keep) -> dict:
         w = max(over, key=lambda a: a["deg"])
         F.append(("WARN", w["tick"], f"{len(over)}/{len(acts)} actions over {AIM_MAX_DEG:g} deg off the crosshair (under the "
                   f"{AIM_SHARE_MAX * 100:.0f}% that blocks); worst {what(w)} {w['deg']:.1f} deg"))
-    fix = " (aim before the action: K.dig / K.place, or a look governor that settles on each target before it acts; STANDARDS r:rffba12)"
+    fix = (" (aim before the action: lib/act.js A.place / A.dig / A.use / A.useOn, or K.place / K.dig / K.use / K.useOn in a story;"
+           " a factory's own packet through A.click / A.breakStart / A.strike, gated on the crosshair; STANDARDS r:rffba12)")
     F = [(lvl, t, m + (fix if lvl == "BLOCK" else "")) for lvl, t, m in F]
     nb = sum(1 for f in F if f[0] == "BLOCK")
     summ = (f"{len(acts)} action(s): median {q(0.5):.1f} deg, p90 {q(0.9):.1f}, worst {D[-1]:.1f}, {len(over)} over {AIM_MAX_DEG:g} deg "

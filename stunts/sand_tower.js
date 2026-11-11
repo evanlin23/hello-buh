@@ -22,8 +22,8 @@ module.exports = {
     // opens on the first break (sound on frame 0: pace), a punch + shake as the 6x6 crashes (the payoff's picture change)
     // the end counts from the last block landing (r:r24d99a): a shake as the 4x4 crashes down, then the hit, a punch and
     // the song's dip on 'settled' (the payoff: pace wants a sound and a picture change on it), out 0.6 s later
-    startAt: 'walk0:0.45', endAfter: 'settled:0.6', shake: [['crash', 0, 8]], punch: [['settled', 0, 1.06]],
-    sfx: [['dip', 'settled', 0.35], ['impact', 'settled']]
+    startAt: 'walk0:0.45', endAfter: 'settle:0.6', shake: [['crash', 0, 8]], punch: [['settle', 0, 1.06]],
+    sfx: [['dip', 'settle', 0.35], ['impact', 'settle']]
   },
 
   async setup (ctx) {
@@ -78,7 +78,7 @@ module.exports = {
       if (!gov.target) return
       const r = MOTION.stepTurn(gov.cur, gov.vel, gov.target, LIM)
       gov.cur = r.cur; gov.vel = r.vel
-      bot.look(gov.cur.yaw, gov.cur.pitch, true)
+      bot.look(gov.cur.yaw, gov.cur.pitch, true)   // motion-ok: the follow-governor's own eased step (lib/motion stepTurn), for the walks and the watch
     }
     bot.on('physicsTick', govTick)
     const look = async (target, k = 0.3) => {
@@ -107,40 +107,32 @@ module.exports = {
     bot.on('physicsTick', steer)
     const arrived = () => goal && Math.hypot(goal.x - bot.entity.position.x, goal.z - bot.entity.position.z) <= 0.4
     const bottom = (cx, cz) => new Vec3(cx + 0.5, floor + 1.5, cz + 0.5)   // the crosshair on the block it breaks
-    let lastSwing = -99
-    const breakCol = async (cx, cz) => {
-      const blk = bot.blockAt(new Vec3(cx, floor + 1, cz))
-      try { await bot.dig(blk, 'ignore') } catch (e) { ctx.log('dig', cx, cz, e.message) }
-      ctx.sound('block.sand.break', 1); ctx.particles('block', new Vec3(cx, floor + 1, cz), { block: 'sand' })
-      if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
-      return ctx.tick
-    }
-    const torch = (cx, cz) => {
-      bot._client.write('block_place', { hand: 0, location: { x: cx, y: floor, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm()
-      ctx.sound('block.wood.place', 1)
-    }
-    // one column at a time, the crosshair on it the whole time (owner 2026-11-11, r:rffba12: "we need to look where we
-    // are placing/breaking ... right now it just looks like hacking"): aim at the bottom block, break it, switch to the
-    // torches while the aim stays, and the torch goes into the same gap 5 ticks after the break (sand falls 2 ticks
-    // after the update and lands ~9 ticks later: the torch is in before it does), then back to the shovel
+    // every break and torch through lib/act.js: the crosshair lands on the block before it acts (owner r:rffba12)
+    const A = require('../lib/act')(ctx)
     const sandLeft = (t) => {
       let n = 0
       for (let ix = 0; ix < t.w; ix++) for (let iz = 0; iz < t.w; iz++) for (let y = 1; y <= t.h; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, t.z0 + iz)).name === 'sand') n++
       return n
     }
     const falling = () => Object.values(bot.entities).filter(e => e.name === 'falling_block').length
+    // A.dig / A.place turn the view themselves: our follow-governor lets go of the view while they act, and picks it up
+    // again from wherever they left it
     const column = async (cx, cz, mark) => {
+      gov.target = null
       ctx.select(0)
-      await look(bottom(cx, cz), 1)
-      for (let i = 0; i < 10 && !settled(); i++) await bot.waitForTicks(1)
-      const tb = await breakCol(cx, cz)
+      const b = bot.blockAt(new Vec3(cx, floor + 1, cz))
+      if (b && b.name === 'sand') {
+        try { await A.dig(b, { instant: true, delay: 1, sound: 'block.sand.break' }) } catch (e) { ctx.log('dig', cx, cz, e.message) }
+        ctx.particles('block', new Vec3(cx, floor + 1, cz), { block: 'sand' })
+      }
+      const tb = ctx.tick
       if (mark) ctx.mark(mark)
-      await bot.waitForTicks(1)
       ctx.select(1)
-      while (ctx.tick < tb + 5) await bot.waitForTicks(1)
-      torch(cx, cz)
-      await bot.waitForTicks(1)
+      // the torch into the gap, on the top face of the ground block the crosshair is already on, 5 ticks after the break
+      while (ctx.tick < tb + 4) await bot.waitForTicks(1)   // (a torch in before the sand starts to fall holds it up)
+      try { await A.place(new Vec3(cx, floor + 1, cz), { against: new Vec3(cx, floor, cz), block: 'torch', delay: 4, sound: 'block.wood.place' }) } catch (e) { ctx.log('torch', cx, cz, e.message) }
+      gov.cur = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }; gov.vel = { yaw: 0, pitch: 0 }
+      aim = bottom(cx, cz)
       setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name), 500)
     }
 
