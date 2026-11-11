@@ -427,6 +427,7 @@ module.exports = {
     // Grandpa SMILES": he looks round at me and nods; "He must LOVE the RAIDS": he shoulders the crossbow
     await K.line('L09', async (k, at) => {
       const s = G[GB]
+      if (k === 2) { put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle'); M.pose(ctx, GA, 'sit') }   // S11's Grandpa on his bench (out of this shot)
       if (k === at(1) - 2) sound('event.raid.horn', 1.2, 1)
       if (k >= at(1) && k < at(2)) s.yaw = Math.max(gate.yaw, s.yaw - 10)
       if (k >= at(2) && k < at(3)) { s.yaw = Math.min(gate.yaw + 100, s.yaw + 12); s.pitch = Math.sin((k - at(2)) / 10 * Math.PI) * 10 }
@@ -437,10 +438,9 @@ module.exports = {
 
     // ---- L10 (S11): the final night, the yard: Grandpa slumped on his bench by the door, the bottle undrunk in his
     // slack hand; it leaves his hand on "to FIGHT"
-    put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle')
-    await bot.waitForTicks(3)
+    // (Grandpa is already on his bench: placed during L09, out of S09's view; a wait here put L10's mark 0.16 s behind
+    // its place in the continuous take, so L11's "So" had no caption)
     await shot('s11', -24, -4.5, P(-6, 2, -4.5), TIMES.S11)
-    M.pose(ctx, GA, 'sit')
     park(GB)
     await K.line('L10', async (k, at) => {
       if (k === at(1)) G[GA].pitch = 62   // "too TIRED"
@@ -452,10 +452,8 @@ module.exports = {
 
     // ---- L11 (S12): first person, at the open gate, the bottle in my hand: the drink on "drank"; "had to FIGHT"
     // over the empty hand. Then S13 (the hold): the horn, and they're coming up the road
-    await bot.waitForTicks(4)
-    K.shot('pov')
     const roadAim = P(44, 12, 40)   // up at the tower, where the bottles come from
-    await K.cut(0.5, 0.6, P(30, 5.5, 20), 1, { time: TIMES.S12 })
+    await K.cut(0.5, 0.6, P(30, 5.5, 20), 1, { time: TIMES.S12, shot: 'pov' })   // no wait before it (L11's mark ran 0.25 s late)
     // the raiders: a ravager with five pillagers in a loose wedge, walking down the road toward the gate
     const along = (d) => {   // the point d blocks along the road from the gate, and the road's direction there
       for (let i = 0; i + 1 < ROAD.length; i++) {

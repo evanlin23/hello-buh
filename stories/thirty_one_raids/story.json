@@ -8,7 +8,7 @@
   "question": "why tf do raids start every night grandpa comes home?",
   "premise": "Grandpa keeps a totem from every raid he has saved the village from: 31 on his wall, and one empty frame. Every raid started the night he came home; he says they follow him because he beats them. The villagers throw him bread when he walks by. He hunts at the old pillager tower on the hill and brings back grey bottles, a whole chest of them; he calls it his courage and drinks it at the gate, then tells the boy to lock the door. Since Grandma died, a raid is the only time anyone is glad to see him.",
   "twist": "The 'courage' is an ominous bottle: drinking it gives Bad Omen, and a player with it in a village starts a raid. Grandpa has been bringing every raid himself, so the village will need him. Tonight he comes home too tired to fight and leaves the bottle undrunk; the boy, sure a raid is coming anyway, drinks it so somebody can fight. The raid horn sounds, pillagers and a ravager come up the road, and Grandpa stands beside him loading his crossbow: 'Now they'll love you too, kid.'",
-  "key_color": "#E0B44C",
+  "key_color": "#FFD640",
   "cast": {
     "N": {
       "role": "narrator",
@@ -21,13 +21,14 @@
       "role": "character",
       "ref": "elder",
       "name": "Grandpa",
-      "color": "#E0B44C",
+      "color": "#8EC9FF",
       "on_screen": "a player actor with the default `zuri` skin (no default skin looks old, accepted: his age is in the voice, the slow walk and the crouched slump); one main-hand item at a time (the engine draws only the main hand): a totem (S01), the crossbow (S02, S05, S06, S09, S14), an ominous bottle (S07, S08, S11); in S10-S11 the crossbow hangs in an item frame by his door; speaks L08 in his own voice (elder, Charon)",
       "actors": [
         "Grandpa",
         "Gramps"
       ],
-      "actors_note": "two actor bots with the same skin take turns between shots (stunt header), so the next shot's Grandpa is in place before its first frame"
+      "actors_note": "two actor bots with the same skin take turns between shots (stunt header), so the next shot's Grandpa is in place before its first frame",
+      "color_why": "sky blue, apart from the Buh gold key colour (caption_av_check: an amber Grandpa read as the narrator's key words)"
     }
   },
   "sfx": [
