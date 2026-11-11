@@ -1,8 +1,9 @@
 {
   "_": "The publish gates' version (docs/lessons.md 'A new gate must re-check what is already ready'). Bump `version` and add a history row in the same commit whenever a gate is added or tightened: scripts/youtube_upload.py then skips every non-story 'ready' package gated at an older version until it is re-gated (./hb pace + ./hb check on the package, then publish.js again). Read by lib/hb/gates.js and scripts/gates.py.",
-  "version": 2,
+  "version": 3,
   "history": [
     { "version": 1, "date": "2026-11-10", "what": "./hb check on the recording (rec_check, lint, continuity, framing, owner, cuts, on-screen sound) + ./hb pace on the finished Short (hook, dead spots, build-up, payoff, length >= 25 s)" },
-    { "version": 2, "date": "2026-11-11", "what": "key sounds >= +8 dB over the music (scripts/key_sounds.py, in pace and add_song), the -16 LUFS stunt bed, the 1.5 s hook (Studio: the swipe comes at 1.3-1.5 s)" }
+    { "version": 2, "date": "2026-11-11", "what": "key sounds >= +8 dB over the music (scripts/key_sounds.py, in pace and add_song), the -16 LUFS stunt bed, the 1.5 s hook (Studio: the swipe comes at 1.3-1.5 s)" },
+    { "version": 3, "date": "2026-11-11", "what": "owner notes as checks in pace (scripts/owner_checks.py): aim on every place/break/use (r:rffba12: max 15 deg each, at most 10% over 6 deg) and the payoff's falling blocks/debris settled before the end, the 1 s tail counted from the settle (r:r24d99a)" }
   ]
 }

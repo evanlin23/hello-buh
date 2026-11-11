@@ -26,20 +26,35 @@ def static(path, target, ss=0.0, dur=None, max_gain=30.0):
     return f"volume={g:.2f}dB"
 
 
+def true_peak(path):
+    """The true peak (dBTP, ebur128 peak=true: 4x oversampled) of a file's audio as decoded (after the AAC encode)."""
+    err = subprocess.run(["ffmpeg", "-nostats", "-i", str(path), "-map", "0:a", "-af", "ebur128=peak=true", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    vals = re.findall(r"Peak:\s+(-?[\d.]+|-inf) dBFS", err)
+    return float(vals[-1]) if vals and vals[-1] != "-inf" else -70.0
+
+
 def master(path, target, limit_db=-1.0):
-    """Bring a finished file's audio to `target` LUFS: a static gain, then a true-peak limiter at
-    `limit_db`; re-measure and correct (the limiter eats some gain on loud payoffs). Video copied."""
+    """Bring a finished file's audio to `target` LUFS with its true peak at or under `limit_db` dBTP: a static gain,
+    then a limiter on the 4x-oversampled signal (inter-sample peaks), encoded, re-measured (loudness and the decoded
+    true peak: the AAC encode overshoots) and corrected. Video copied. 2026-11-11: the stunt masters (-10 LUFS) peaked
+    at +0.4 dBTP with a sample-peak limiter at -1, a clipping risk after YouTube's transcode."""
     gain = target - measure(path)
-    if abs(gain) < 0.3:
+    if abs(gain) < 0.3 and true_peak(path) <= limit_db:
         return
-    lim = 10 ** (limit_db / 20)
+    ceil = limit_db - 0.5   # the encode's overshoot, corrected below from the measured peak
     tmp = str(path) + ".gain.mp4"
-    for _ in range(4):
+    for _ in range(6):
+        lim = 10 ** (ceil / 20)
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(path), "-map", "0:v?", "-map", "0:a", "-c:v", "copy",
-                        "-af", f"volume={gain:.2f}dB,alimiter=limit={lim:.3f}:level=false,aresample=48000", "-c:a", "aac", "-b:a", "192k",
-                        "-movflags", "+faststart", tmp], check=True)
-        miss = target - measure(tmp)
-        if abs(miss) < 0.3:
+                        "-af", f"volume={gain:.2f}dB,aresample=192000,alimiter=limit={lim:.4f}:level=false:attack=1:release=50,aresample=48000",
+                        "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", tmp], check=True)
+        miss, over = target - measure(tmp), true_peak(tmp) - limit_db
+        if os.environ.get("LOUD_DEBUG"):
+            print(f"master: gain {gain:+.2f} dB, ceiling {ceil:.2f}: {target - miss:.2f} LUFS, {over + limit_db:+.2f} dBTP")
+        if abs(miss) < 0.3 and over <= 0:
             break
+        if over > 0:
+            ceil -= over + 0.1
         gain += miss
     os.replace(tmp, path)
