@@ -22,7 +22,9 @@ Stop and ask me if anything needs a password or a code. Make sure the channel sw
      - Average view duration (seconds) and average percentage viewed (can be over 100 %).
      - The audience-retention graph: hover it and read the % still watching at 0:01, 0:03, the middle and the last
        second. Also note any big dip or spike and at what second.
-     - Likes, dislikes if shown, comments, shares.
+     - Likes, dislikes if shown, comments, shares, subscribers lost.
+     - Comments: open the Short's comments (Studio → Comments, filter by this video) and copy the text of up to 10
+       top comments, word for word.
    - Reach tab: "Traffic source types" with the % of views from each (Shorts feed, YouTube search, Channel pages,
      Browse features, External, Other), and "Shown in feed" if Studio shows it.
    - Audience tab: % new vs returning viewers, % subscribed vs not, top 3 countries with %, top age group.
@@ -40,7 +42,7 @@ Stop and ask me if anything needs a password or a code. Make sure the channel sw
   "collected_at": "YYYY-MM-DDTHH:MM local, with the time zone",
   "channel": {
     "subscribers_total": 0,
-    "last_28d": {"views": 0, "watch_hours": 0, "subs_net": 0, "viewed_pct": 0, "views_by_day": {"YYYY-MM-DD": 0}},
+    "last_28d": {"views": 0, "watch_hours": 0, "subs_gained": 0, "subs_lost": 0, "subs_net": 0, "viewed_pct": 0, "likes": 0, "comments": 0, "shares": 0, "views_by_day": {"YYYY-MM-DD": 0}},
     "last_7d": {"views": 0, "watch_hours": 0, "subs_net": 0, "viewed_pct": 0},
     "traffic_pct": {"shorts_feed": 0, "search": 0, "channel_pages": 0, "browse": 0, "external": 0, "other": 0},
     "returning_viewers": 0, "unique_viewers": 0,
@@ -53,7 +55,8 @@ Stop and ask me if anything needs a password or a code. Make sure the channel sw
       "views": 0, "watch_hours": 0, "subs_gained": 0,
       "viewed_pct": 0, "avg_view_s": 0, "avg_pct_viewed": 0,
       "retention_pct": {"1s": 0, "3s": 0, "mid": 0, "end": 0}, "retention_notes": "dip at 4s to 40%",
-      "likes": 0, "comments": 0, "shares": 0,
+      "likes": 0, "comments": 0, "shares": 0, "subs_lost": 0,
+      "top_comments": ["..."],
       "traffic_pct": {"shorts_feed": 0, "search": 0, "channel_pages": 0, "browse": 0, "external": 0, "other": 0},
       "shown_in_feed": null,
       "new_viewers_pct": 0, "subscribed_pct": 0, "top_countries": {"US": 0}, "top_age": "18-24"
