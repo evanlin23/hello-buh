@@ -29,6 +29,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `herobrine` | Galaxscat: "Minecraft meme" ("I thougt he was just lagging") | A bridge fight over the void with a Steve-like player who stutters and rubber-bands like lag; his bridge breaks and he keeps standing on air, the white-eyed reveal, he drifts away | "secret herobrine" | r:r047388 | idea |
 | `friend` | Silly Willies: "We all have that one bro" ("That one friend when you start a new world") | A relatable multiplayer moment from your point of view, the friend exaggerated to the absurd (a tree gone in a blink, a full house already built); 10 s | "i think this is like hacking friend? like its a relatable beat, just exagerated" | r:ra64f79 | idea |
 | `mobpov` | Galaxscat: "Minecraft Baby Zombie Moment" ("POV: A baby zombie found you") | A blur-fast POV chase that tears through walls, mob pens and a house and down into the Nether; the annoying baby-zombie speed blown up to absurd | "whatever even is this" | r:r8048f1 | idea |
+| `underdog` | hazypapa: "The Most Bullied mob Ever in Minecraft" ("we can repair them but...") | A fast list of every mob you can heal or fix (wolf, cat, horse, camel, iron and copper golem, a cured zombie villager), then "...but what about him?": a lone snow golem melting in the sun, a soft sung track | "whatever this is" | r:r8dcdb4 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -47,4 +48,6 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   absurder than the last, the path reappearing every time.
 - **friend**: the friend who already has full diamond on day 1, who "borrows" your stuff, who builds a castle while
   you build a dirt hut, who is AFK in the worst place, who always dies first.
+- **underdog**: every mob can be tamed... but the phantom; every mob has a baby... but the ghast; every mob gets a
+  friend... but the lone wandering trader llama.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.

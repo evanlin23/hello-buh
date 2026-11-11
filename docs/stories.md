@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing hazypapa's "The Most Bullied mob Ever in Minecraft" (caption "we can repair them
+  but...": a quick list of every mob the player can heal or fix (a wolf with meat, a cat with fish, a horse with
+  hay, a camel with cactus, an iron golem with iron, a copper golem, a zombie villager cured), then the caption flips
+  to "...but what about him?" over a lone snow golem in the sun, with a soft sung track): "whatever this is".**
+  HelloBuh saves it as a but-what-about-him format (family `underdog`): a fast list where the game treats every mob
+  one way, then the one mob it forgot, played for sympathy and laughs.
 - **Owner, 2026-11-11, sharing Galaxscat's "Minecraft Baby Zombie Moment" (caption "POV: A baby zombie found you",
   31 s: a blur-fast chase that tears straight through stone walls, a pen of pigs and a row of mobs, through a village
   house, out the other side and down into the Nether; nothing slows it): "whatever even is this".** HelloBuh saves it as

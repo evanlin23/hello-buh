@@ -322,6 +322,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
   absurd; short. Check: owner. r:ra64f79
 - **Format "mobpov"**: an annoying mob trait blown up into an unstoppable, absurdly fast POV chase. Check: owner. r:r8048f1
+- **Format "underdog"**: a fast list of how the game treats every mob, then the one it forgot ("...but what about
+  him?"), for sympathy and laughs. Check: owner. r:r8dcdb4
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
