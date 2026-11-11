@@ -406,6 +406,13 @@ STANDARDS.md in the same commit.
   trees, water) instead of superflat, so the scale reads against real land.
 - **Owner, 2026-11-11, Review Room note on cooked_bedrock: "need to have the ominous music".** The `cooked` payoff
   plays an ominous, dread-building track on the drop (dark NCS or a low drone and hit), not an upbeat bed.
+- **Owner, 2026-11-11: "We should focus on making our opening phrase more eye-catching. And you do research on how
+  the other opening frames, like on big YouTubers ... Minecraft shorts specifically?" then, after the queue review,
+  "Fix everything, please."** Every Short's frame 0 shows the thing the video is about (the subject or the payoff's
+  setup: the creeper, the trap, the TNT, the build), already in motion by 0.5 s; never an empty field, plain grass, a
+  bare wall or a still room. The caption reads like a person reacting ("I hate this job 😭", "Am I cooked?", "bro
+  found dirt for ONCE 💀"), not a label ("ladder clutch"). Measured on the owner's 32 references: all show the subject
+  at frame 0, nearly all with a reaction-style caption in the top band.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

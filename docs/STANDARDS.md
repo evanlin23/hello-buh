@@ -387,6 +387,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   block found is treated as treasure; generated from our own block swap. Check: owner. r:r62f46d
 - **Format "trap"**: an irresistible bait, how it works, then the friend (a second bot, never the owner's name) walks
   into it; the trap really works in vanilla. Check: owner, minecraft-audit (the trap). r:refc733
+- **The opening (frame 0 to 1.5 s)**: frame 0 shows the Short's subject (the mob, trap, TNT, build or the payoff's
+  setup), in motion by 0.5 s; never an empty field, plain grass, a bare wall or a still room. The caption reads as a
+  person reacting, not a label. Check: the opening check (./hb check, frame 0 subject in view), review, owner. r:r0f3da0
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
