@@ -252,7 +252,6 @@ module.exports = {
 
     // L08: the villagers walk away when he comes (down the lane south of the well)
     await cutP(-4.5, 5.0, P(0.5, gy(0.5, 13) + 1.2, 13), () => { Object.assign(nS, { x: 0.5, z: 8.5, y: gy(0.5, 8.5), yaw: 0 }) })
-    await K.preroll(6, () => walk(nS, 0, 0.06))
     await line('L08', async (k, at) => {
       if (nS.z < 11.5) walk(nS, 0, 0.07)
       if (k >= at(2)) {
@@ -269,7 +268,6 @@ module.exports = {
     // lane east of the well and bends round him
     const golem = K.actor('golem', { x: 4.5, y: gy(4.5, 6.5), z: 6.5, yaw: 0 })
     await cutP(2.5, 23.5, K.face(P(4.5, gy(4.5, 4), 4), 'iron_golem'), () => { Object.assign(nS, { x: 4.0, z: 11.5, y: gy(4.0, 11.5), yaw: 180 }) })
-    await K.preroll(4, () => walk(golem, 0, 0.12))
     await line('L09', async (k) => {
       const nz = golem.z + 0.14
       const nx = 4.5 + 2.6 * Math.exp(-Math.pow((nz - nS.z) / 3.2, 2))
