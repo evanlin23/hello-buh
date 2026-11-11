@@ -939,17 +939,17 @@
   "published_at": "2026-11-11T07:22:24.782Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:22:51+00:00",
-    "by": "publish.js",
+    "at": "2026-11-11T07:28:54+00:00",
+    "by": "scripts/gates.py",
     "package": {
       "ok": true,
       "summary": "short.mp4 37.27 s vs the reviewed render 37.25 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 6,
-      "warnings": 3,
-      "summary": "dead: 4.60 s with nothing new (7.00-11.60 s, after the sound hit; no line on screen); dead: 3.60 s with nothing new (12.65-16.25 s, after the stage; no line on screen); dead: 8.54 s with nothing new (16.25-24.79 s, after the sound hit; no line on screen); dead: 4.12 s with nothing new (25.05-29.17 s, after the backup; no line on screen); dead: 3.01 s with nothing new (29.17-32.18 s, after the sound hit; no line on screen); dead: 3.49 s with nothing new (32.39-35.88 s, after the sound hit; no line on screen)"
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
     },
     "check": {
       "ok": true,

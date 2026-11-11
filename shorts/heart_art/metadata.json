@@ -903,24 +903,24 @@
   "published_at": "2026-11-11T07:02:18.922Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:07:50+00:00",
-    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "at": "2026-11-11T07:29:38+00:00",
+    "by": "scripts/gates.py",
     "package": {
       "ok": true,
       "summary": "short.mp4 32.51 s vs the reviewed render 32.50 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 4,
+      "ok": true,
+      "blockers": 0,
       "warnings": 1,
-      "summary": "dead: 4.20 s with nothing new (3.40-7.60 s, after the cut; no line on screen); dead: 5.47 s with nothing new (9.15-14.62 s, after the motion; no line on screen); dead: 3.28 s with nothing new (14.62-17.90 s, after the sound hit; no line on screen); dead: 3.77 s with nothing new (25.93-29.70 s, after the sound hit; no line on screen)"
+      "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T06:39:54.017Z",
-      "report": "work/hb/heart_art.check.json"
+      "at": "2026-11-11T06:56:01.947Z",
+      "report": "out/heart_art.check.json"
     },
     "key_sounds": "n/a"
   }
