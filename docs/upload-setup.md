@@ -71,14 +71,19 @@ Story Shorts go to their own channel, never @HelloBuh. Every package's `metadata
 `buhstories` for `story_*` Shorts, `hellobuh` for everything else; lib/channel.js, written by publish.js), and the
 uploader sends a Short only to that channel. Nothing goes up until **all** of this is done, and each story still needs
 the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner does, once:
-1. **Create the channel.** YouTube → your account → Settings → "Add or manage your channels" → Create a channel →
-   name "Buh Stories", handle @BuhStoriesMC. It is a Brand Account channel, so the same
-   Google login manages both.
+1. **Create the channel.** Done by the owner on 2026-11-11, on its **own Google account** (not a Brand Account under
+   the HelloBuh login): name "Buh Stories", handle @BuhStoriesMC. Use that account for everything below.
 2. **Branding.** Upload the kit in `brand/buh_stories/` (avatar.png, banner.jpg, watermark.png) and the description in
    docs/brand.md "Buh Stories channel" (YouTube Studio → Customization). Audience: "No, it's not made for kids".
-3. **A refresh token for the new channel** (same OAuth client as step 1 above; no new Google Cloud project): repeat
-   step 2 above, but on the channel chooser pick **Buh Stories**. Check with the `channels?mine=true` call that it shows
-   "Buh Stories", and note its UC... id. The HelloBuh token cannot upload there and vice versa.
+3. **A refresh token for the new channel** (the same OAuth client, so no new Google Cloud project). Because Buh
+   Stories is on a separate Google account:
+   - first add that account as a **test user** on the OAuth consent screen (Google Cloud → APIs & Services → OAuth
+     consent screen → Test users), unless the app is published;
+   - then repeat step 2 above signed in as the **Buh Stories account**.
+   While the app is in "Testing", Google expires its refresh tokens after 7 days. If HelloBuh's token survives, the
+   app is published and this one will too.
+   Check with the `channels?mine=true` call that it shows "Buh Stories", and note its UC... id. The HelloBuh token
+   cannot upload there, and vice versa.
 4. **GitHub** → Settings → Secrets and variables → Actions:
    - Secret `YT_REFRESH_TOKEN_BUHSTORIES` (the token from step 3). `YT_CLIENT_ID` / `YT_CLIENT_SECRET` are shared.
    - Variables `YT_CHANNEL_ID_BUHSTORIES` = the UC... id, `YT_ENABLED_BUHSTORIES` = `true`. Optional

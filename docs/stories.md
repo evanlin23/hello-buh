@@ -274,6 +274,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11: "Do we need the grandpa and grandma stories? That feels too specific. Maybe like if we start
   doign series these could be good."** One playlist ("All Buh Stories") at launch; a series playlist only once a family
   has 3+ stories.
+- **Owner, 2026-11-11: "channle is already created. I lwokey made a new google account fro this, si that fine?"** Buh
+  Stories is on its own Google account, not a Brand Account under HelloBuh's login. That's fine: uploads use a refresh
+  token from that account (docs/upload-setup.md "A second channel"); manual uploads for now.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
