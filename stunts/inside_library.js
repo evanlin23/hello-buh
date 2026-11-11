@@ -107,6 +107,7 @@ module.exports = inside.make({
   sway: [[-0.3, 0.75], [1.4, -0.45], [2.7, 0]],
   pitch: [[-0.3, 0.46], [1.4, 0.14], [2.7, 0.02]],
   // (the pop moves with the start: it is the first sound hit, louder than the 0.35 that pace didn't count)
-  edit: { startAt: 'beat:0.3', sfx: [['pop', 'beat:0.32', { gain: 0.7 }], ['dip', 'reveal', 0.35], ['impact', 'reveal']] },
+  // the end (owner r:r188b46, fast ends): 0.7 s after the turn lands on the hut
+  edit: { startAt: 'beat:0.3', endAfter: 'reveal:0.7', sfx: [['pop', 'beat:0.32', { gain: 0.7 }], ['dip', 'reveal', 0.35], ['impact', 'reveal']] },
   room
 })
