@@ -4,6 +4,7 @@
 // a time (break, break, break, then torch, torch, torch), sidestepping along the big ones, and backs
 // off as each comes down; it ends just after the 6x6 pours down. An Efficiency V shovel insta-breaks
 // sand (vanilla: speed 34 >= 30 x hardness 0.5), so each column is one click.
+const MOTION = require('../lib/motion')
 const D = 8                  // it backs off to this far in front of the towers
 const TOWERS = [
   { dx: -28, w: 1, h: 8, near: 4 },
@@ -65,12 +66,25 @@ module.exports = {
     const { bot, Vec3 } = ctx
     const { floor } = this
     const farZ = this.tz + 1 + D + 0.5
+    // every look is a target for the aim governor (lib/motion.js stepTurn: a hand on a mouse, top speed and
+    // acceleration, braking onto the target). Raw per-tick looks whipped at up to 620 deg/s and zig-zagged
+    // between columns (rec_check, 2026-11-11)
     let aim = null
+    const gov = { cur: { yaw: bot.entity.yaw, pitch: bot.entity.pitch }, vel: { yaw: 0, pitch: 0 }, target: null }
+    const LIM = { speed: 170 * MOTION.DEG / 20, accel: 800 * MOTION.DEG / 400 }
+    const govTick = () => {
+      if (!gov.target) return
+      const r = MOTION.stepTurn(gov.cur, gov.vel, gov.target, LIM)
+      gov.cur = r.cur; gov.vel = r.vel
+      bot.look(gov.cur.yaw, gov.cur.pitch, true)
+    }
+    bot.on('physicsTick', govTick)
     const look = async (target, k = 0.3) => {
       aim = aim ? aim.plus(target.minus(aim).scaled(k)) : target.clone()
       const eye = bot.entity.position.offset(0, 1.62, 0), d = aim.minus(eye)
-      await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+      gov.target = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
     }
+    const settled = () => !gov.target || (Math.abs(MOTION.wrap(gov.target.yaw - gov.cur.yaw)) < 0.05 && Math.abs(gov.target.pitch - gov.cur.pitch) < 0.05)
     // walk to a ground point whatever way it's looking (the controls are relative to the yaw); sprint
     // when it's heading forward
     let goal = null, run = false
@@ -111,15 +125,18 @@ module.exports = {
     const batch = async (cols, slot, first) => {
       const ticks = []
       ctx.select(0)
+      // one aim for the whole batch, the middle of its columns: aiming at each column in turn and back again for
+      // its torch zig-zagged the view (rec_check jitter); the batch is 2-3 neighbouring blocks, all in the crosshair's reach
+      const c = bottom(cols.reduce((a, q) => a + q[0], 0) / cols.length, cols.reduce((a, q) => a + q[1], 0) / cols.length)
+      aim = c.clone(); await look(c, 1)
+      for (let i = 0; i < 12 && !settled(); i++) await bot.waitForTicks(1)
       for (const [cx, cz] of cols) {
-        await look(bottom(cx, cz), 0.5)
         ticks.push(await breakCol(cx, cz))
         if (first && ticks.length === 1) ctx.mark('drop_final')
         await bot.waitForTicks(1)
       }
       ctx.select(slot)
       for (let i = 0; i < cols.length; i++) {
-        await look(bottom(cols[i][0], cols[i][1]), 0.5)
         while (ctx.tick < ticks[i] + 6) await bot.waitForTicks(1)
         if (ctx.tick > ticks[i] + 7) ctx.log('late torch', ctx.tick - ticks[i])
         torch(cols[i][0], cols[i][1])
@@ -174,7 +191,7 @@ module.exports = {
     }
     // a moment more on the pile as the rest of it pours down (the Short ends 0.8 s after 'crash')
     for (let i = 0; i < 40; i++) { await look(new Vec3(TOWERS[TOWERS.length - 1].x0 + 3, floor + 3, this.tz - 2), 0.08); await bot.waitForTicks(1) }
-    bot.removeListener('physicsTick', steer)
+    bot.removeListener('physicsTick', steer); bot.removeListener('physicsTick', govTick)
     for (const c of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(c, false)
     await bot.waitForTicks(30)
     let left = 0

@@ -7,6 +7,7 @@
 //
 // Lake cells lx 0..14, lz 0..L-1; lava at y = G-1, air above it at G (G = ground level). A full bucket
 // ignores fluids, so a pour clicks the rim block's inner face (first) or the top of obsidian.
+const MOTION = require('../lib/motion')
 const L = 21   // lake length (rows lz 0..L-1; 15 wide). 15 rows crossed in 3 pours and ran 26 s
 
 module.exports = {
@@ -58,6 +59,24 @@ module.exports = {
     const { bot, Vec3 } = ctx
     const { x0, z0, G } = this
     const cell = (lx, lz, dy = 0) => new Vec3(x0 + lx + 0.5, G + dy, z0 + lz + 0.5)
+    // the aim governor (lib/motion.js stepTurn, a hand on a mouse): every bot.look below (easeLook's steps, stepTo)
+    // is a target the camera turns toward at <= 120 deg/s with eased starts and stops (2x in a speed span is still
+    // under 240). Raw looks whipped at up to 850 deg/s (rec_check, 2026-11-11). settle() waits for the aim to land
+    // before a click, so the bucket still hits the block it looks at.
+    const rawLook = bot.look.bind(bot)
+    const gov = { cur: { yaw: bot.entity.yaw, pitch: bot.entity.pitch }, vel: { yaw: 0, pitch: 0 }, target: null }
+    const LIM = { speed: 120 * MOTION.DEG / 20, accel: 600 * MOTION.DEG / 400 }
+    bot.look = (yaw, pitch) => { gov.target = { yaw, pitch }; return Promise.resolve() }
+    const govTick = () => {
+      if (!gov.target) return
+      const r = MOTION.stepTurn(gov.cur, gov.vel, gov.target, LIM)
+      gov.cur = r.cur; gov.vel = r.vel
+      rawLook(gov.cur.yaw, gov.cur.pitch, true)
+    }
+    bot.on('physicsTick', govTick)
+    const settle = async (n = 30) => {
+      for (let i = 0; i < n && gov.target && (Math.abs(MOTION.wrap(gov.target.yaw - gov.cur.yaw)) > 0.02 || Math.abs(gov.target.pitch - gov.cur.pitch) > 0.02); i++) await bot.waitForTicks(1)
+    }
     const at = (lx, lz, y) => bot.blockAt(new Vec3(x0 + lx, y, z0 + lz))
 
     // fizz + steam on every lava -> obsidian the client sees (vanilla level event 1501), capped
@@ -76,6 +95,7 @@ module.exports = {
     let runs = 0
     const pourScoop = async (lx, lz, clickPt, flow, ms = 260) => {
       await ctx.easeLookAt(clickPt, ms)
+      await settle()
       bot.activateItem(); bot.swingArm()
       ctx.sound('item.bucket.empty', 1, 1)
       ctx.mark('pour', { lx, lz })
@@ -87,6 +107,7 @@ module.exports = {
       await bot.waitForTicks(flow)
       if (long) ctx.mark(`run${rn}b`)
       await ctx.easeLookAt(cell(lx, lz, 0.45), 150)        // the source (an empty bucket picks up fluids)
+      await settle()
       bot.activateItem(); bot.swingArm()
       ctx.sound('item.bucket.fill', 1, 1)
       ctx.mark('scoop', { lx, lz })
@@ -131,7 +152,7 @@ module.exports = {
     // across. Turn round and walk back down the path, pouring either side of it at each stop, each pour
     // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
     ctx.mark('finale')
-    await ctx.easeLook(Math.PI, -0.4, 450)               // facing back south (mineflayer yaw 0 = north) over the lake (-0.75: 0.8 s of solid black obsidian)
+    await ctx.easeLook(Math.PI, -0.4, 450); await settle()   // facing back south (mineflayer yaw 0 = north) over the lake (-0.75: 0.8 s of solid black obsidian)
     const stops = [4, 16]   // every corner within 6 flow steps (from 5/15 two corner cells survived)   // two stops, both sides, long runs: 6 stops of short pours were 4-5 s of walking apart, mostly off screen
     const flow = 34   // ~6.8 blocks of spread, the corners are 6 steps (40 left the strip under a water sheet for 2 s)
     const lavaLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (at(a, b, G - 1)?.name === 'lava') n++; return n }
@@ -147,7 +168,8 @@ module.exports = {
         const ny = bot.entity.yaw + dy * 0.3
         await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.3, true)
         const len = Math.hypot(dx, dz), wx = dx / len, wz = dz / len
-        const f = wx * -Math.sin(ny) + wz * -Math.cos(ny), rr = wx * Math.cos(ny) + wz * -Math.sin(ny)
+        const cy = bot.entity.yaw   // the keys go by the view as it is (the governor turns it toward ny)
+        const f = wx * -Math.sin(cy) + wz * -Math.cos(cy), rr = wx * Math.cos(cy) + wz * -Math.sin(cy)
         bot.setControlState('forward', f > 0.35); bot.setControlState('back', f < -0.35)
         bot.setControlState('right', rr > 0.35); bot.setControlState('left', rr < -0.35)
         await bot.waitForTicks(1)
@@ -228,7 +250,8 @@ module.exports = {
     ctx.mark('end_look')
     // a slow pan along the black field (no still hold on the reveal)
     await ctx.easeLook(bot.entity.yaw + 0.35, bot.entity.pitch + 0.05, 1000)
-    bot.removeListener('blockUpdate', onBlock)
+    await settle()
+    bot.removeListener('blockUpdate', onBlock); bot.removeListener('physicsTick', govTick); bot.look = rawLook
 
     let lava = 0, obs = 0
     for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) { const n = at(a, b, G - 1).name; if (n === 'lava') lava++; if (n === 'obsidian') obs++ }
