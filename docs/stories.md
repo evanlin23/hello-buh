@@ -282,6 +282,9 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
+  better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
+  story from now on.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
