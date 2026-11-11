@@ -28,7 +28,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
   edit: {
-    caption: CAPTION, red: 'dance floor', song: 'songs/ncs/feel_good_funk.mp3', dropAt: 'lit',
+    caption: CAPTION, red: 'dance floor', dropAt: 'lit',
     startAt: 'hook:-0.1', endAfter: 'lit:1.0',
     // the walk back keeps its start and end around a jump cut (all 3.8 s of it was a span with nothing new: pace)
     speed: [['intr_back:1.2', 'intr_resume:-1.0', 'cut']],
