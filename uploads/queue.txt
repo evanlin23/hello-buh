@@ -31,3 +31,4 @@ boat_clutch
 speed_build
 tnt
 villager_crowd
+creeper_art
