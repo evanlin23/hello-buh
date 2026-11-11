@@ -595,66 +595,10 @@
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 16.73,
-     "len": 0.62,
-     "why": "0.62 s pause between lines 4-5 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 19.87,
-     "len": 0.66,
-     "why": "0.66 s pause inside line 6 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 21.52,
-     "len": 0.9,
-     "why": "0.90 s pause between lines 6-7 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 26.06,
-     "len": 0.71,
-     "why": "0.71 s pause between lines 7-8 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.75,
-     "len": 0.69,
-     "why": "0.69 s pause between lines 7-8 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 32.84,
-     "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.55,
-     "len": 0.73,
-     "why": "0.73 s pause between lines 10-11 (limit 0.6 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.62 s pause between lines 4-5 (limit 0.6 s)",
-      "0.66 s pause inside line 6 (limit 0.6 s)",
-      "0.90 s pause between lines 6-7 (limit 0.6 s)",
-      "0.71 s pause between lines 7-8 (limit 0.6 s)",
-      "0.69 s pause between lines 7-8 (limit 0.6 s)",
-      "0.72 s pause between lines 9-10 (limit 0.6 s)",
-      "0.73 s pause between lines 10-11 (limit 0.6 s)"
-     ]
-    }
-   ],
+   "rejected": [],
    "take": "L01",
    "take_at": 0.0
   },
@@ -677,66 +621,10 @@
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 16.73,
-     "len": 0.62,
-     "why": "0.62 s pause between lines 4-5 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 19.87,
-     "len": 0.66,
-     "why": "0.66 s pause inside line 6 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 21.52,
-     "len": 0.9,
-     "why": "0.90 s pause between lines 6-7 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 26.06,
-     "len": 0.71,
-     "why": "0.71 s pause between lines 7-8 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.75,
-     "len": 0.69,
-     "why": "0.69 s pause between lines 7-8 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 32.84,
-     "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.55,
-     "len": 0.73,
-     "why": "0.73 s pause between lines 10-11 (limit 0.6 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.62 s pause between lines 4-5 (limit 0.6 s)",
-      "0.66 s pause inside line 6 (limit 0.6 s)",
-      "0.90 s pause between lines 6-7 (limit 0.6 s)",
-      "0.71 s pause between lines 7-8 (limit 0.6 s)",
-      "0.69 s pause between lines 7-8 (limit 0.6 s)",
-      "0.72 s pause between lines 9-10 (limit 0.6 s)",
-      "0.73 s pause between lines 10-11 (limit 0.6 s)"
-     ]
-    }
-   ],
+   "rejected": [],
    "take": "L01",
    "take_at": 31.05
   },
@@ -753,66 +641,10 @@
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 16.73,
-     "len": 0.62,
-     "why": "0.62 s pause between lines 4-5 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 19.87,
-     "len": 0.66,
-     "why": "0.66 s pause inside line 6 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 21.52,
-     "len": 0.9,
-     "why": "0.90 s pause between lines 6-7 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 26.06,
-     "len": 0.71,
-     "why": "0.71 s pause between lines 7-8 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.75,
-     "len": 0.69,
-     "why": "0.69 s pause between lines 7-8 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 32.84,
-     "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.55,
-     "len": 0.73,
-     "why": "0.73 s pause between lines 10-11 (limit 0.6 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.62 s pause between lines 4-5 (limit 0.6 s)",
-      "0.66 s pause inside line 6 (limit 0.6 s)",
-      "0.90 s pause between lines 6-7 (limit 0.6 s)",
-      "0.71 s pause between lines 7-8 (limit 0.6 s)",
-      "0.69 s pause between lines 7-8 (limit 0.6 s)",
-      "0.72 s pause between lines 9-10 (limit 0.6 s)",
-      "0.73 s pause between lines 10-11 (limit 0.6 s)"
-     ]
-    }
-   ],
+   "rejected": [],
    "take": "L01",
    "take_at": 41.645
   },
