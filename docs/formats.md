@@ -59,6 +59,14 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   a hidden staircase; each a real trick, demoed in a cosy build.
 - **quest**: a desert-pyramid secret chest, a jungle-temple vault, a stronghold library behind a bookshelf; each
   stage a different trick (sticky-piston stairs, a lava parkour, a hidden lever).
+  Built (lib/quest.js): an episode is a list of stage kinds on one straight course north (yaw 0, so the camera only
+  pitches through the jumps): `tunnel` (a dead end mined through, steps down), `parkour` (1x1 pillars over lava; gap 2
+  is easy, gap 3 and +1 are hard), `arrows` (real dispensers fired across the corridor, then a sprint between
+  volleys), `vault` (a creeper face whose eye is a button, a piston door, the ONE chest). The start is always the
+  dug blue terracotta, the drop into the 4-chest treasure room, and the hidden button. Lessons: a 1x1 hole only drops
+  you if you stop over it; a course ceiling must stay 3+ blocks under natural ground (an aquifer flooded parkour 2);
+  never put a button next to the block over a piston (quasi-connectivity kept it extended); sprint-jumps chain into
+  overshoots, so the air steering also brakes (back key); the yaw must aim at the next pillar (the sway drifted 0.35).
 - **love**: a heart of lamps that lights at night, a pixel-art "for you" made of flowers, two sheep in a heart pen,
   a heart-shaped firework show.
 - **desire**: a shortcut through a farm, across a moat, over a lava trench, through a mansion; each obstacle
