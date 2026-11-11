@@ -2243,6 +2243,13 @@ function camAtLive (t) {
       try { fs.mkdirSync(path.dirname(gl), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/misc/enchanted_glint_item.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), gl]) } catch (e) { console.error('no glint texture:', e.message) }
     }
   }
+  { // the HUD heart sprites (stunt.healthHearts: hearts over a mob; not in the asset build)
+    for (const n of ['full', 'half', 'container']) {
+      const f = path.join(ASSETS_DIR, 'env', 'gui', 'heart', `${n}.png`)
+      if (fs.existsSync(f)) continue
+      try { fs.mkdirSync(path.dirname(f), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/gui/sprites/hud/heart/${n}.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), f]) } catch (e) { console.error('no heart sprite:', e.message) }
+    }
+  }
   { // the vanilla font (sign text; not in the asset build)
     const fnt = path.join(ASSETS_DIR, 'env', 'font', 'ascii.png')
     if (!fs.existsSync(fnt)) {
@@ -3424,6 +3431,19 @@ else:
       // stunt.playerNames: a crouching player's plate sits on the 1.5-tall hitbox and its text is drawn at half alpha
       // (EntityRenderer.renderNameTag: isDiscrete -> 0x80FFFFFF, no see-through pass)
       if (STUNT_MOD.playerNames && e.nameTag && e.player) { const sn = !!e.extra.sneak; e.nameDim = sn; if (sn) e.nameY = 1.5 + 0.5 }
+    }
+    // overhead health (stunt.healthHearts, owner r:r337da9: the underdog format): a row of HUD hearts over each mob
+    // the recording gives a health for (stunt.mobHealth: extra.hp / mhp), full, half and empty, at most 10 (each worth
+    // mhp / count), 0.35 over its hitbox; not on a dying mob
+    if (STUNT_MOD.healthHearts) {
+      for (const e of ents) {
+        const x = e.extra
+        if (!x || !Number.isFinite(x.hp) || !x.mhp || x.hp <= 0 || MOB_DEATH.has(e.id) && t >= MOB_DEATH.get(e.id)) continue
+        // (over the drawn head, not the hitbox: a horse's raised head stands ~0.8 over its 1.6 box and hid the row;
+        // scaled up with the distance past 2.6 blocks so a far golem's row reads like a near wolf's)
+        e.hearts = [x.hp, x.mhp]; e.heartsY = ({ horse: 2.55, donkey: 2.4, mule: 2.5, llama: 2.2 }[e.name] || ENT_H[e.name] || 1.8) + 0.35
+        e.heartsScale = Math.min(2, Math.max(1, Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) / 2.6))
+      }
     }
     for (const e of ents) {
       const hs = MOB_HURT.get(e.id); if (hs && hs.some(h => t >= h && t < h + 10)) e.hurt = true

@@ -13,23 +13,23 @@ module.exports = makeStunt({
   red: 'every',
   twist: '...but who heals HIM?',
   beats: [
-    { id: 'wolf', card: 'WOLF + STEAK', mob: 'wolf', nbt: '{Owner:{owner},Sitting:1b,NoAI:1b,CollarColor:14b,Silent:1b,attributes:[{id:"minecraft:max_health",base:40}],Health:12f}', dist: 2.3, aimY: 0.6, yaw: 45,
+    { id: 'wolf', card: 'WOLF + STEAK', mob: 'wolf', nbt: '{Owner:{owner},Sitting:1b,NoAI:1b,CollarColor:14b,Silent:1b,attributes:[{id:"minecraft:max_health",base:40}],Health:30f}', dist: 2.3, aimY: 0.6, yaw: 45, untilFull: true, maxFeeds: 8, feedGap: 4,
       beatSound: ['entity.wolf.whine', 1, 1],
-      feeds: [['cooked_beef', ['entity.generic.eat', 1, 1]], ['cooked_beef', ['entity.generic.eat', 1, 1.1]]],
+      feeds: [['cooked_beef', ['entity.generic.eat', 1, 1]]],   // a steak at a time until its 10 hearts are full
       fixedSound: ['entity.wolf.pant', 1, 1] },
-    { id: 'cat', card: 'CAT + FISH', mob: 'cat', nbt: '{Owner:{owner},Sitting:1b,NoAI:1b,variant:"minecraft:tabby",CollarColor:3b,Silent:1b,Health:4f}', dist: 2.1, aimY: 0.6,
-      beatSound: ['entity.cat.stray_ambient', 1, 0.9],
-      feeds: [['cod', ['entity.cat.eat', 1, 1]], ['cod', ['entity.cat.eat', 1, 1.1]]],
+    { id: 'cat', card: 'CAT + FISH', mob: 'cat', nbt: '{Owner:{owner},Sitting:1b,NoAI:1b,variant:"minecraft:tabby",CollarColor:3b,Silent:1b,Health:7f}', dist: 2.1, aimY: 0.6, untilFull: true, maxFeeds: 8, feedGap: 4,
+      beatSound: ['entity.cat.ambient', 1, 0.9],
+      feeds: [['cod', ['entity.cat.eat', 1, 1]]],   // a cod at a time until its 5 hearts are full
       fixedSound: ['entity.cat.purreow', 1, 1] },
-    { id: 'horse', card: 'HORSE + HAY BALE', mob: 'horse', nbt: '{Tame:1b,Variant:3,NoAI:1b,Silent:1b,Health:8f}', dist: 3.6, aimY: 0.6,
+    { id: 'horse', card: 'HORSE + HAY BALE', mob: 'horse', nbt: '{Tame:1b,Variant:3,NoAI:1b,Silent:1b,attributes:[{id:"minecraft:max_health",base:30}],Health:10f}', dist: 3.6, aimY: 0.6,
       beatSound: ['entity.horse.breathe', 1, 0.8],
       feeds: [['hay_block', ['entity.horse.eat', 1, 1]]],
       fixedSound: ['entity.horse.ambient', 0.8, 1] },
-    { id: 'golem', card: 'IRON GOLEM + IRON', mob: 'iron_golem', nbt: '{NoAI:1b,PlayerCreated:1b,Silent:1b,Health:20f}', dist: 4.2, aimY: 0.55, color: 'yellow',
+    { id: 'golem', card: 'IRON GOLEM + IRON', mob: 'iron_golem', nbt: '{NoAI:1b,PlayerCreated:1b,Silent:1b,Health:25f}', dist: 4.2, aimY: 0.55, color: 'yellow',
       beatSound: ['entity.iron_golem.damage', 0.8, 1],
       feeds: [['iron_ingot', ['entity.iron_golem.repair', 1, 1]], ['iron_ingot', ['entity.iron_golem.repair', 1, 1.1]], ['iron_ingot', ['entity.iron_golem.repair', 1, 1.2]]] },
-    { id: 'zombie', card: 'ZOMBIE VILLAGER', cardY: 0.12, cardSize: 84, mob: 'zombie_villager', nbt: '{NoAI:1b,Silent:1b,VillagerData:{type:"minecraft:desert",profession:"minecraft:farmer",level:1}}',
-      dist: 3.4, aimY: 0.6, roof: true, cure: true, color: 'orange', later: '5 minutes later...' }
+    { id: 'zombie', card: 'ZOMBIE VILLAGER', cardY: 0.12, cardSize: 84, mob: 'zombie_villager', nbt: '{NoAI:1b,Silent:1b,Health:8f,VillagerData:{type:"minecraft:desert",profession:"minecraft:farmer",level:1}}',
+      dist: 3.4, aimY: 0.8, roof: true, cure: true, color: 'orange', later: '5 minutes later...' }
   ],
   forgotten: { mob: 'snow_golem', nbt: '{NoAI:1b,Pumpkin:0b}', dist: 3.4, tryItem: 'snow_block', calm: 20 }
 })
