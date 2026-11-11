@@ -26,6 +26,8 @@ module.exports = makeStunt({
   payoffSub: 'IT WORKS',
   hotbar: [[GOLD, 64], 'flint_and_steel', ['bread', 12], 'diamond_pickaxe', ['torch', 32]],
   select: 0,
+  // mixcheck r1: under the NCS bed the gold's place sounds stopped counting as hits in the hook: a pop on every 4th block
+  edit: { sfx: [0, 4, 8, 12].map(n => ['pop', 'gold', { nth: n, gain: 0.8 }]) },
   start: [0.5, 4, 2.4, 180, 45],
 
   async build (ctx, F) {
