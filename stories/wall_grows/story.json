@@ -2,7 +2,7 @@
  "name": "wall_grows",
  "stunt": "story_wall_grows",
  "version": 2,
- "revision": "r1 (2026-11-11): first script, from docs/pitches/batch2_premise_audit_2026-11-11.md #1 with its must-change notes",
+ "revision": "r2 (2026-11-11): the critic's r1 must-fixes (L01 split, S04 still dirt, S09 at the ladder foot, S12 long lens, the dirt/brick heights, Tomas in S07), the hall run deep, and STANDARDS 0a naivety: every clue has the kid's innocent misreading; the brown-plant beat moved after the midpoint (r2 cold reader read the pillar at 45 %); see reviews/",
  "caption": "why is our village wall 40 blocks high 🧱",
  "upload": {
   "title": "the wall around my village is 40 blocks high 🧱 #minecraft #shorts",
@@ -20,13 +20,13 @@
  "question": "why tf is the village wall forty blocks high with no gate?",
  "premise": "A plains village sits inside a stone-brick wall 40 blocks high with no gate. Every dawn a little dirt pokes over the rim from outside, and old Tomas, the mason, climbs up and builds one block higher above it. A block of the wall once vanished; Tomas patched it by noon. Tomas is the only one who has been outside: he came in an old minecart before the wall, and he hides when the kids push it. He says there's nothing out there 'we want to trade with'.",
  "family": "viewer_is_the_threat",
- "twist": "The thing outside is a player. The dirt is his pillar (he towers up every morning to look in), the vanished block is the one he mined to peek, the minecart is how players move villagers, and outside the wall is his trading hall: a hundred villagers, each boxed in a one-block cell. The kid reads it as another village where everybody gets their own room. The player at the door looks up at him. The wall was never for monsters; it's for us.",
+ "twist": "The thing outside is a player. The dirt is his pillar (he towers up every morning to look in), the vanished block is the one he mined to peek, the minecart is how players move villagers, and outside the wall is his trading hall: a hundred villagers, each boxed in a one-block cell. The kid reads every clue innocently (a brown plant, blocks that vanish, Tomas good at hide and seek) and climbs to see a monster; he finds 'another village' where everybody gets their own room, and the one person not in a room looks up. The wall was never for monsters; it's for us.",
  "key_color": "#FFD640",
  "mood": [
   "eerie",
   "tense"
  ],
- "payoff": "L14",
+ "payoff": "L15",
  "weather": "clear",
  "voice_takes": "beat",
  "one_take": [
@@ -42,7 +42,7 @@
    "ref": "narrator",
    "name": "me (a villager kid)",
    "color": "#FFFFFF",
-   "on_screen": "a baby villager (plains), seen in camera shots (S03, S09, S10, S11's foreground); no POV hand. Pip (cast `narrator`, Leda, one_take, plain_say); says every line but L06 and L11"
+   "on_screen": "a baby villager (plains), seen in camera shots (S03, S09, S10, S11's foreground); no POV hand. Pip (cast `narrator`, Leda, one_take, plain_say); says every line but L06 and L12"
   },
   "Tomas": {
    "role": "character",
@@ -51,7 +51,7 @@
    "color": "#F0A845",
    "model": "gemini-3.8-flash-tts",
    "profile": "[An old man in his seventies, slow and low, kind but closed]",
-   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S05) and L11 (S09). Voice: cast `elder` (Charon), old and slow, far from Pip"
+   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S04, his hand on the patched block) and L12 (S09). Voice: cast `elder` (Charon), old and slow, far from Pip"
   },
   "Player": {
    "role": "character",
@@ -76,9 +76,10 @@
     "L08",
     "L09",
     "L10",
-    "L12",
+    "L11",
     "L13",
-    "L14"
+    "L14",
+    "L15"
    ],
    "direction": "One continuous telling, start to finish: hit only the CAPITALISED words, keep the rest level and quick, no dramatic pauses."
   },
@@ -90,7 +91,7 @@
    "model": "gemini-3.8-flash-tts",
    "lines": [
     "L06",
-    "L11"
+    "L12"
    ],
    "direction": "[An old man in his seventies, slow and low, kind but closed]"
   }
@@ -126,27 +127,41 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "The WALL / around my village / is FORTY blocks high. / Old TOMAS adds / ONE more / every MORNING.",
-   "say": "The wall around my village is forty blocks HIGH. Old Tomas adds one more every MORNING.",
+   "text": "The WALL / around my village / is FORTY blocks high.",
+   "say": "The wall around my village is forty blocks HIGH.",
    "shot": "S01",
    "shows": [
     {
      "what": "stone_bricks",
      "word": "WALL"
-    },
-    {
-     "what": "villager",
-     "word": "TOMAS"
     }
    ],
    "punch": true,
-   "note": "one bright breath, proud of the wall like it's the biggest thing in the world"
+   "note": "one bright breath, proud, like it's the biggest thing in the world"
   },
   {
    "id": "L02",
    "who": "N",
-   "text": "A ZOMBIE / can't even jump / TWO blocks. / So what's it FOR?",
-   "say": "A zombie can't even jump two BLOCKS. So what's it FOR?",
+   "text": "Old TOMAS adds / ONE more / every MORNING.",
+   "say": "Old Tomas adds one more every MORNING.",
+   "shot": "S01",
+   "shows": [
+    {
+     "what": "villager",
+     "word": "TOMAS"
+    },
+    {
+     "what": "stone_bricks",
+     "word": "ONE"
+    }
+   ],
+   "note": "proud of Tomas"
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "A ZOMBIE / can't even jump / TWO blocks. / So we're SUPER safe!",
+   "say": "A zombie can't even jump two blocks. So we're super SAFE!",
    "shot": "S02",
    "shows": [
     {
@@ -154,75 +169,75 @@
      "word": "ZOMBIE"
     }
    ],
-   "note": "a kid doing the maths out loud, honestly puzzled on the last words"
-  },
-  {
-   "id": "L03",
-   "who": "N",
-   "text": "There's no GATE. / I've never SEEN / OUTSIDE.",
-   "say": "There's no GATE. I've never seen OUTSIDE.",
-   "shot": "S03",
-   "note": "matter-of-fact, a little wistful, still bright"
+   "note": "delighted, doing the maths, totally sure"
   },
   {
    "id": "L04",
    "who": "N",
-   "text": "But every MORNING, / something BROWN / peeks over / the TOP.",
-   "say": "But every morning, something brown peeks over the TOP.",
-   "shot": "S04",
-   "shows": [
-    {
-     "what": "dirt",
-     "word": "BROWN"
-    }
-   ],
-   "note": "leaning in, telling the strange part; the kid never says what it is (the picture shows dirt)"
+   "text": "There's no GATE. / Who NEEDS one? / Everything's IN here.",
+   "say": "There's no gate. Who needs one? Everything's in HERE.",
+   "shot": "S03",
+   "note": "cheerful, it's obvious"
   },
   {
    "id": "L05",
    "who": "N",
-   "text": "So Tomas CLIMBS up / and builds / one HIGHER.",
-   "say": "So Tomas climbs up and builds one HIGHER.",
-   "shot": "S05",
-   "shows": [
-    {
-     "what": "villager",
-     "word": "TOMAS"
-    },
-    {
-     "what": "stone_bricks",
-     "word": "HIGHER"
-    }
-   ],
-   "note": "quick, like it's the most normal chore in the world"
-  },
-  {
-   "id": "L06",
-   "who": "Tomas",
-   "text": "It's LOOKING / for us.",
-   "say": "It's looking for US.",
-   "shot": "S05",
-   "direction": "slow and low, not turning from the wall"
-  },
-  {
-   "id": "L07",
-   "who": "N",
-   "text": "Once, a BLOCK / of the wall / just VANISHED. / Tomas had it BACK / by NOON.",
-   "say": "Once, a block of the wall just VANISHED. Tomas had it back by NOON.",
-   "shot": "S06",
+   "text": "Once, a BLOCK / just VANISHED. / Blocks DO that, / I guess. / Tomas had it BACK / by NOON.",
+   "say": "Once, a block just vanished. Blocks do that, I guess. Tomas had it back by NOON.",
+   "shot": "S04",
    "shows": [
     {
      "what": "stone_bricks",
      "word": "BLOCK"
     }
    ],
-   "note": "amazed at the vanishing, then proud of Tomas"
+   "note": "a shrug on the middle part, then proud of Tomas"
+  },
+  {
+   "id": "L06",
+   "who": "Tomas",
+   "text": "It's LOOKING / for us.",
+   "say": "It's looking for US.",
+   "shot": "S04",
+   "direction": "slow and low, his hand still on the patched block"
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "Every MORNING, / something BROWN / grows over the TOP. / Like a little PLANT!",
+   "say": "Every morning, something brown grows over the top. Like a little PLANT!",
+   "shot": "S05",
+   "shows": [
+    {
+     "what": "dirt",
+     "word": "BROWN"
+    }
+   ],
+   "note": "charmed by it, a fun fact; the kid never says dirt (the picture shows it)"
   },
   {
    "id": "L08",
    "who": "N",
-   "text": "Tomas is the ONLY one / who's been OUTSIDE. / He came here / in that old MINECART.",
-   "say": "Tomas is the only one who's been OUTSIDE. He came here in that old MINECART.",
+   "text": "So old Tomas / climbs up / and builds one HIGHER. / He ALWAYS wins.",
+   "say": "So old Tomas climbs up and builds one higher. He always WINS.",
+   "shot": "S06",
+   "shows": [
+    {
+     "what": "villager",
+     "word": "Tomas"
+    },
+    {
+     "what": "stone_bricks",
+     "word": "HIGHER"
+    }
+   ],
+   "note": "proud, like it's a game Tomas plays with the plant"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "Tomas came here / in that old MINECART. / Like a KING!",
+   "say": "Tomas came here in that old minecart. Like a KING!",
    "shot": "S07",
    "shows": [
     {
@@ -230,17 +245,17 @@
      "word": "MINECART"
     },
     {
-     "what": "rail",
-     "word": "MINECART"
+     "what": "villager",
+     "word": "Tomas"
     }
    ],
-   "note": "a secret everybody knows; lean on the last word"
+   "note": "impressed, the coolest fact about him"
   },
   {
-   "id": "L09",
+   "id": "L10",
    "who": "N",
-   "text": "When the kids PUSH it, / Tomas RUNS / and HIDES. / I don't know WHY.",
-   "say": "When the kids push it, Tomas runs and HIDES. I don't know WHY.",
+   "text": "When the kids PUSH it, / Tomas runs and HIDES. / He's the BEST / at hide and SEEK.",
+   "say": "When the kids push it, Tomas runs and hides. He's the best at hide and SEEK.",
    "shot": "S08",
    "shows": [
     {
@@ -252,10 +267,10 @@
      "word": "Tomas"
     }
    ],
-   "note": "puzzled, not laughing; the hiding is the strange part"
+   "note": "admiring, not laughing at him"
   },
   {
-   "id": "L10",
+   "id": "L11",
    "who": "N",
    "text": "I ASKED him / what's OUT there.",
    "say": "I asked him what's out THERE.",
@@ -266,10 +281,10 @@
      "word": "him"
     }
    ],
-   "note": "quick, curious, a little brave"
+   "note": "quick, curious"
   },
   {
-   "id": "L11",
+   "id": "L12",
    "who": "Tomas",
    "text": "Nothing we want / to TRADE with.",
    "say": "Nothing we want to TRADE with.",
@@ -277,10 +292,10 @@
    "direction": "old and slow, closing the subject, kind but final"
   },
   {
-   "id": "L12",
+   "id": "L13",
    "who": "N",
-   "text": "So before the SUN came up, / I climbed / his LADDER. / All FORTY blocks.",
-   "say": "So before the sun came up, I climbed his ladder. All forty BLOCKS.",
+   "text": "So before the SUN came up, / I climbed his LADDER. / I wanted to SEE / a real MONSTER!",
+   "say": "So before the sun came up, I climbed his ladder. I wanted to see a real MONSTER!",
    "shot": "S10",
    "shows": [
     {
@@ -289,10 +304,10 @@
     }
    ],
    "punch": true,
-   "note": "sneaky and excited, speeding up as he climbs"
+   "note": "sneaky and thrilled, speeding up as he climbs; excited, never scared"
   },
   {
-   "id": "L13",
+   "id": "L14",
    "who": "N",
    "text": "Outside was / ANOTHER village! / A HUNDRED of us! / EVERYBODY gets / their own ROOM!",
    "say": "Outside was another VILLAGE! A hundred of US! Everybody gets their own ROOM!",
@@ -306,10 +321,10 @@
    "note": "pure delight, the happiest he's been; he thinks it's wonderful"
   },
   {
-   "id": "L14",
+   "id": "L15",
    "who": "N",
-   "text": "Then SOMEONE / by the DOOR / looked UP / at ME.",
-   "say": "Then someone by the door looked up at ME.",
+   "text": "Then SOMEONE / not in a ROOM / looked UP.",
+   "say": "Then someone not in a room looked UP.",
    "shot": "S12",
    "shows": [
     {
@@ -318,7 +333,7 @@
     }
    ],
    "punch": true,
-   "note": "the delight stops short; still full voice, a little smaller on the last word"
+   "note": "still bright and curious, a new person to meet; full voice to the end"
   }
  ],
  "shots": [
@@ -328,21 +343,21 @@
    "place": "village",
    "size": "ews",
    "camera": "at: the plaza, 2 blocks up, a slow tilt-and-push up the inner face of the north wall; FOV 70",
-   "frame": "fg: the bell and the well on the plaza, roofs either side; subject: the north wall, centred, filling the upper two-thirds, mossy and cracked stone bricks low down, cleaner rows near the top; on 'TOMAS' tiny Tomas (mason villager) on the rim, centred, placing one stone brick on 'ONE more'; bg: the morning sky above the rim. Morning (1000). The wall is in frame and moving from frame 1.",
+   "frame": "fg: the bell and the well on the plaza, roofs either side; subject: the north wall, centred, filling the upper two-thirds, mossy and cracked stone bricks low down, cleaner rows near the top; on 'TOMAS' tiny Tomas (mason villager) on the rim, centred, placing one stone brick on L02's 'ONE more'; bg: the morning sky above the rim. Morning (1000). The wall is in frame and moving from frame 1.",
    "subject": "the north wall's rim with Tomas"
   },
   {
    "id": "S02",
-   "line": "L02",
+   "line": "L03",
    "place": "village",
    "size": "wide",
    "camera": "at: from inside the kid's house window, looking out across the farm, still",
-   "frame": "fg: the window frame (dark oak); subject: a zombie in the moonlight bumping against the farm's 2-high cobblestone wall, unable to get over, centred; bg: the inner foot of the great wall, black against the stars. Night (18000).",
+   "frame": "fg: the window frame (dark oak); subject: a zombie in the moonlight bumping against the farm's 2-high wall of full cobblestone blocks, unable to get over, centred; bg: the dark farm and houses; the great wall kept out of frame (a zombie inside it would read as the wall failing). Night (18000).",
    "subject": "zombie"
   },
   {
    "id": "S03",
-   "line": "L03",
+   "line": "L04",
    "place": "village",
    "size": "full",
    "camera": "at: along the foot of the west wall, eye height of a baby villager, a slow track",
@@ -351,43 +366,43 @@
   },
   {
    "id": "S04",
-   "line": "L04",
-   "place": "rim",
-   "size": "ms",
-   "camera": "at: on the inside, 3 blocks below the rim and 4 blocks out from the wall (in the air over the village), looking up at the rim against the dawn sky; long lens FOV 40",
-   "frame": "subject: the rim's top edge in a clean line against the sky; on 'DIRT' one dirt block rises into view just beyond the rim from the outside, then a second one on top of it (a pillar topping out), brown against the pale sky, centred; nothing else. Dawn (23500).",
-   "subject": "the dirt block"
-  },
-  {
-   "id": "S05",
    "line": "L05",
-   "place": "rim",
-   "size": "full",
-   "camera": "at: on the rim's inner edge 6 blocks east of the dirt, at Tomas's height, still",
-   "frame": "fg: the rim's stone bricks; subject: Tomas full-figure climbing off the ladder's top onto the rim and placing a stone brick on the wall's top right in front of the dirt, so the new block stands higher than it (on 'HIGHER'); on L06 he stays facing outward, his back three-quarters to us; the dirt's top still visible past the new block; bg: the sky, no ground outside visible (the camera is too low to see over). Dawn (23500).",
-   "subject": "Tomas"
-  },
-  {
-   "id": "S06",
-   "line": "L07",
    "place": "village",
-   "size": "cu",
+   "size": "ms",
    "camera": "at: inside, at the foot of the north wall 10 blocks east of the ladder, 2 blocks from the wall, at a villager's eye height",
-   "frame": "subject: one missing stone brick in the wall at head height of a player (y+2 from the outside ground), daylight through the hole, centred, on 'VANISHED'; then a time cut: Tomas's hand places the stone brick back, the hole gone on 'NOON'. Morning (2000) then noon (6000).",
+   "frame": "subject: one missing stone brick in the north wall at a player's eye height from the outside (y0+2), daylight through the hole, centred, on 'VANISHED'; a time cut to noon: Tomas (mason) waist up places the stone brick back on 'BACK', the hole gone; on Tomas's line he stays facing the patched block, his hand on it. Morning (2000) then noon (6000).",
    "subject": "the hole"
   },
   {
-   "id": "S07",
+   "id": "S05",
+   "line": "L07",
+   "place": "rim",
+   "size": "cu",
+   "camera": "at: on the inside, 3 blocks below the rim and 4 blocks out from the wall (in the air over the village), looking up at the rim against the dawn sky; long lens FOV 20",
+   "frame": "subject: the rim's top edge in a clean line against the sky; one dirt block already sits just past the rim (outside, its top at y0+41), still, brown against the pale sky, centred; no rise, no second block (S12's 2-high stub pays it off). Dawn (23500).",
+   "subject": "the dirt block"
+  },
+  {
+   "id": "S06",
    "line": "L08",
+   "place": "rim",
+   "size": "full",
+   "camera": "at: on the rim's inner edge 6 blocks east of the dirt, at Tomas's height, still",
+   "frame": "fg: the rim's stone bricks; subject: Tomas full-figure climbing off the ladder's top onto the rim and placing a stone brick on the cap right in front of the dirt (new top y0+42, a block above the dirt's y0+41) on 'HIGHER'; bg: the sky, no ground outside visible (the camera is too low to see over). Dawn (23500).",
+   "subject": "Tomas"
+  },
+  {
+   "id": "S07",
+   "line": "L09",
    "place": "village",
    "size": "wide",
    "camera": "at: beside the farm, 3 blocks up, looking north at the north wall, slow push",
-   "frame": "fg: wheat rows; subject: an old rail line running from the farm straight into the foot of the north wall, cut off by the stone; an empty minecart sitting at the rail's end against the wall, centred; bg: the wall rising out of frame. Afternoon (9000).",
+   "frame": "fg: wheat rows; subject: an old rail line running from the farm straight into the foot of the north wall, cut off by the stone; an empty minecart sitting at the rail's end against the wall, centred; Tomas at the frame's right edge, standing still, looking at the cart; bg: the wall rising out of frame. Afternoon (9000).",
    "subject": "minecart"
   },
   {
    "id": "S08",
-   "line": "L09",
+   "line": "L10",
    "place": "village",
    "size": "full",
    "camera": "at: on the farm path, eye height, still",
@@ -396,38 +411,38 @@
   },
   {
    "id": "S09",
-   "line": "L10",
+   "line": "L11",
    "place": "rim",
    "size": "ms",
-   "camera": "at: on the rim, 3 blocks from Tomas, at a baby villager's eye height looking up at him (a reverse of the kid's view)",
-   "frame": "fg: the narrator's head at frame left (soft); subject: Tomas waist up, facing out over the rim, the narrator beside him; on L11 he doesn't turn; bg: the sky, the dirt block gone (capped). Late afternoon (11000).",
+   "camera": "at: the foot of Tomas's ladder inside the north wall, a baby villager's eye height, still",
+   "frame": "fg: the narrator (baby villager) at frame left, looking up; subject: Tomas waist up stepping off the ladder's bottom rung and walking past the kid on L12, not looking at him; bg: the ladder rising up the wall out of frame. Late afternoon (11000).",
    "subject": "Tomas"
   },
   {
    "id": "S10",
-   "line": "L12",
+   "line": "L13",
    "place": "wall",
    "size": "wide",
    "camera": "at: off the wall's inner face, 8 blocks out, a crane rising with the climber",
-   "frame": "fg: nothing (air); subject: the narrator (baby villager) on Tomas's ladder, climbing, the village shrinking below as the crane rises with him; on 'FORTY' he reaches the rim; bg: the dark roofs, a few lanterns. Before dawn (23000).",
+   "frame": "fg: nothing (air); subject: the narrator (baby villager) on Tomas's ladder, climbing, the village shrinking below as the crane rises with him; on 'MONSTER' he reaches the rim; bg: the dark roofs, a few lanterns. Before dawn (23000).",
    "subject": "the narrator"
   },
   {
    "id": "S11",
-   "line": "L13",
+   "line": "L14",
    "place": "outside",
    "size": "ews",
    "camera": "at: just behind the narrator's head on the rim, then over him, looking down and out at the hall 15 blocks beyond the wall's foot; a slow tilt down",
-   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, 15 blocks north of the wall's foot: a long building with a glass roof, four rows of 25 one-block cells, a villager in every cell with a workstation in front of it, all readable as a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); bg: plains to the fog. Dawn (23500).",
+   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, its south end 12 blocks north of the wall's foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells along its length, a villager in every cell with a workstation in front, a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); bg: plains to the fog. Dawn (23500).",
    "subject": "the trading hall"
   },
   {
    "id": "S12",
-   "line": "L14",
+   "line": "L15",
    "place": "outside",
    "size": "full",
-   "camera": "at: the narrator's eye on the rim, a long lens (FOV 25) looking 40 blocks down at the hall's door; still",
-   "frame": "subject: the player (Steve skin) full-figure beside the hall's door at the foot of the wall, a 2-high dirt pillar beside him (today's, just started), dirt in his hand; on 'looked UP' he turns his head up to the lens; the cut lands on the look; bg: the hall's glass front with boxed villagers. Dawn (23500).",
+   "camera": "at: the narrator's eye on the rim, a very long lens (FOV 10) looking 40 blocks down at the hall's door; still",
+   "frame": "subject: the player (Steve skin) full-figure, at least 25% of the frame height, beside the hall's south door, a 2-high dirt stub beside him, a dirt block in his hand; on 'UP' he turns his face up to the lens; the cut lands on the look; bg: the hall's glass front with boxed villagers. Dawn (23500).",
    "subject": "the player"
   }
  ],
