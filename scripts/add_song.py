@@ -145,6 +145,11 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         kstop = at if drop_at in ev else None   # the drop lands un-ducked
         kwin = key_sounds.windows(key_sounds.pcm(src), keys, kstop) if keys else []
         duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)) + kwin, key_sounds.DUCK)
+        # edit.bedBeforeDrop (dB, <= 0): the bed that much lower until the drop lands (a stunt whose quiet build-up sounds,
+        # digs or steps, sit far under the bed because its loud finale sets the game's level; pickaxe_race 2026-11-11)
+        pre = min(0.0, float(stunt.get("bedBeforeDrop") or 0.0))
+        if pre and drop_at in ev:
+            duck += f",volume=volume='if(lt(t,{at:.3f}),{10 ** (pre / 20):.4f},1)':eval=frame"
         import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
         graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, BED_LUFS, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
                  f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
