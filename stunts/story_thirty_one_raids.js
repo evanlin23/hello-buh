@@ -418,17 +418,22 @@ module.exports = {
     // ---- L08 (S09, Grandpa's own voice): closer; he turns his head back over his right shoulder on "Lock the DOOR",
     // a nod on "kid. They're COMING"
     await shot('s09', -4.2, 5.6, P(0, 2, 0))
+    // the horn (owner 2026-11-11, "fix the horn in raids"): a 0.9 s hold after "They're COMING." and the raid horn on
+    // its first tick, heard alone (no voice: no game duck, no clarity guard), then it blares on under "Then a HORN
+    // goes OFF". Inside L09 it sat under the narrator: -10 dB under the score, -18 under the voice (package 68936f0c)
+    const HORN_HOLD = 0.9, hornAt = Math.ceil((S.line('L08').end + 0.06) * 20)
     await K.line('L08', async (k, at) => {
-      if (G[GB].yaw < gate.yaw + 95) G[GB].yaw += 9
+      if (k < hornAt && G[GB].yaw < gate.yaw + 95) G[GB].yaw += 9
       if (k >= at(1) && k < at(1) + 12) G[GB].pitch = Math.sin((k - at(1)) / 12 * Math.PI) * 16
+      if (k === hornAt) { sound('event.raid.horn', 64, 1); ctx.mark('horn') }   // vanilla's raid volume (64 x the file's 0.01), the same as the reveal's
+      if (k >= hornAt + 2) G[GB].yaw = Math.max(gate.yaw, G[GB].yaw - 10)   // he turns back to the road on the horn
       look(k)
-    })
-    // ---- L09 (S09): "Then a HORN goes OFF" (the raid horn, far off up the road): he turns back to the road; "And
+    }, HORN_HOLD)
+    // ---- L09 (S09): "Then a HORN goes OFF" (the raid horn: it went off in L08's hold and blares on): he faces the road; "And
     // Grandpa SMILES": he looks round at me and nods; "He must LOVE the RAIDS": he shoulders the crossbow
     await K.line('L09', async (k, at) => {
       const s = G[GB]
       if (k === 2) { put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle'); M.pose(ctx, GA, 'sit') }   // S11's Grandpa on his bench (out of this shot)
-      if (k === at(1) - 2) { sound('event.raid.horn', 40, 1); ctx.mark('horn') }   // a raid horn off up the road (vanilla's file volume is 0.01: the game plays the horn at 64; 40 = farther off)
       if (k >= at(1) && k < at(2)) s.yaw = Math.max(gate.yaw, s.yaw - 10)
       if (k >= at(2) && k < at(3)) { s.yaw = Math.min(gate.yaw + 100, s.yaw + 12); s.pitch = Math.sin((k - at(2)) / 10 * Math.PI) * 10 }
       if (k === at(3) + 2) swing(GB)

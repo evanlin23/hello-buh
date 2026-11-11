@@ -76,6 +76,7 @@ if (e.still) out.push('--still', JSON.stringify(e.still))   // the view goes dar
 if (e.score) out.push('--score', JSON.stringify(e.score))   // a live two-sided score bar (format race: lib/race.js)
 if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
+if (e.keySounds && e.story) out.push('--key_sounds', JSON.stringify(e.keySounds))   // a story's mix ducks its score under these marks' sounds (scripts/story_audio.py; stunts: add_song.py at publish)
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
 if (e.fallen) out.push('--fallen', JSON.stringify(e.fallen))
 if (e.tally) out.push('--tally', JSON.stringify(e.tally))   // a live "blocks used" total (format mega: lib/mega_lapse.js)

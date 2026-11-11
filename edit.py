@@ -1566,7 +1566,8 @@ def story_sound(args, narration, audio, audio_ss, story_tl, dur, tmp):
     name = "story_" + pathlib.Path(args.story).name
     wav = story_audio.mix_story(narration, audio, audio_ss, args.story, story_tl, args.start, dur, tmp / "story_mix.wav",
                                 song=args.song, song_start=args.song_start, stunt_sfx=args.sfx, end_after=args.end_after,
-                                name=name, rec=rec, stems=os.environ.get("HB_STEMS") or None)
+                                name=name, rec=rec, stems=os.environ.get("HB_STEMS") or None,
+                                key_marks=json.loads(args.key_sounds) if getattr(args, "key_sounds", None) else None)
     meta = json.loads(pathlib.Path(str(wav) + ".json").read_text())
     # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
     # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
@@ -1651,6 +1652,7 @@ def main():
     ap.add_argument("--chat", help='JSON list of [EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?] vanilla chat input typed up to EVENT (Enter)')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
+    ap.add_argument("--key_sounds", help='JSON list of marks (edit.keySounds): a story\'s score ducks under each one\'s sound (scripts/story_audio.py)')
     ap.add_argument("--freeze", help='JSON list of [EVENT, SECONDS, TEXT?, COLOR?] freeze frames with a stamped text')
     ap.add_argument("--tally", help='JSON {"event": "blocks", "label": "blocks used", "done": EVENT}: a live running total from the marks\' n (format mega)')
     ap.add_argument("--fallen", help='JSON list of [EVENT_A, EVENT_B, LABEL?] live "blocks fallen" counters (from the poses)')
