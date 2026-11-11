@@ -1504,6 +1504,29 @@
     "wall_grows"
    ],
    "status": "claimed 2026-11-11 by wall_grows"
+  },
+  "gullwick": {
+   "name": "Gullwick",
+   "kind": "village",
+   "region": "the_west_march",
+   "at": [
+    -2301,
+    62,
+    -566
+   ],
+   "footprint": [
+    -2306,
+    -580,
+    -2262,
+    -546
+   ],
+   "about": "A shore hamlet on the low headland west of Leo's lagoon, over the world's only stronghold (never said): the library hut, and a dock (the origin is its end, flush at sea level) pointing north-west across 92 blocks of open cold ocean (never frozen) to Grandma's island. Leo's House is 100 blocks east across the lagoon.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "the_walk"
+   ],
+   "status": "claimed 2026-11-11 by the_walk"
   }
  },
  "stories": {
@@ -1695,6 +1718,14 @@
    "day": 3700,
    "places": [
     "highwall"
+   ],
+   "cameos": [],
+   "status": "claimed"
+  },
+  "the_walk": {
+   "day": 4000,
+   "places": [
+    "gullwick"
    ],
    "cameos": [],
    "status": "claimed"
