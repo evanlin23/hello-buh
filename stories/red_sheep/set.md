@@ -1,34 +1,48 @@
-# red_sheep: set plan (r1)
+# red_sheep: set plan (r3, 2026-11-11)
 
 Built with `world.build(ctx, { story: 'red_sheep' })` on Ravenford's canonical pieces, with these story-only stamps on
 top. No site search and no clearing (STANDARDS 3.5).
 
-## Pieces
-- **The pasture:** the canonical palisade, plus an oak-fence pasture inside the south wall (~40 x 30) with a gate on
-  its east side. Use the village's natural grass and slope; no flattening beyond the fence line.
-- **Lantern posts:** on the pasture gate post, and on the palisade every 8 blocks along the east side.
-- **The flock:** 60 sheep summoned with `Color:11` (blue). In S05, one more with `Color:14` (red). The lamb is a baby
-  sheep, `Color:11`, with `PersistenceRequired`.
-- **The woods:** the birch woods past the ford at +40. A small clearing at +45..+54
-  (S10-S11): the evoker summoned there with `NoAI` until its cue, then its spell. If AI can't be cued, pose it and
-  set the lamb's colour at the cue with `/data`. Spell particles: `minecraft:entity_effect` or `witch`. The fangs are
-  `evoker_fangs` entities in a line toward the camera, 1 per 2 ticks.
+## What the narration claims (check each on stills from every shot angle before recording)
+| claim | line | check |
+|---|---|---|
+| every sheep in the village is blue, sixty of them | L01 | S01: count 60 sheep, all `Color:11`; no white or other wool anywhere in any shot except the S02 stray and the S05 red one |
+| Dad won't let a white one through the gate | L02 | S02: the stray is white until 'GATE', then blue, then through the gate |
+| he counts them every night | L04 | S04 is at nightfall (13000), the flock filing past him |
+| one came back from the woods red | L05 | S05: one red sheep, the birch treeline visible behind it |
+| Dad sat at the gate with his crossbow | L06 | S06: the crossbow reads at 300 px on his knees |
+| the trees went snap x3 | L07 | three fang snaps in the mix, nothing seen |
+| I left the gate open, my lamb got out | L08 | S08: the gate open in frame, the lamb outside it |
+| I didn't tell Dad | L09 | S09: Dad in frame, back turned |
+| into the woods | L10 | S10: birch trunks all round |
 
-## Engine checks before building
-- **Sheep colour change mid-shot:** the renderer reads it per frame (critic r2). Verify on a shot sheet.
-- **The evoker's arms-up casting pose, and the spell particles:** check `renderer/entities.js` pose functions. If the
-  pose is missing, that's an engine feature (docs/engine_features.md), under 2 h.
-- **Evoker fangs:** they render (entity model).
+## Pieces
+- **The pasture:** the canonical palisade, plus an oak-fence pasture inside the south wall (~40 x 30) with its gate in
+  the east palisade at (0, 0, 15). Natural grass and slope; no flattening beyond the fence line.
+- **Dad's house:** a small spruce house west of the pasture gate (new stamp, `since: 1950`).
+- **Lanterns:** on the pasture gate post, and on the palisade every 8 blocks along the east side.
+- **The flock:** 60 sheep summoned with `Color:11`. S02: one more with `Color:0` (white), dyed in shot. S05: one with
+  `Color:14` (red). The lamb: a baby sheep (`Age:-24000`, refreshed so it never grows), `Color:11`,
+  `PersistenceRequired`.
+- **The woods:** the birch past the ford at +40; the clearing at +45..+54 (S10-S12).
+- **The evoker:** summoned for S12 only, behind a trunk out of S10/S11's frustum, `mobGriefing` true. Prefer the real
+  spell: summon it with AI where the lamb is its only blue sheep in range and the camera player is hidden from it
+  until the cast begins. If AI can't be cued on time, `NoAI` + pose and set the lamb's colour with `/data` at the
+  cue, with the sounds and particles placed by hand on vanilla's timing (bible "The mechanic").
+- **The fangs:** `evoker_fangs` in a line toward the camera, 1.25 blocks apart, `Warmup` 0, 1, 2, ... ticks.
+
+## Engine checks before building (see the engine gaps in reviews/r3-engine.md)
+- Sheep colour change mid-shot read per frame.
+- The evoker's raised spellcasting arms, the spell particles, the fangs' rise-and-bite animation.
 
 ## Scale
 - The pasture at full scale, 60 sheep in one EWS (S01).
-- The woods begin 40+ blocks from the gate. "Places far apart in the story are far apart on screen."
+- The woods begin 40+ blocks from the gate: "places far apart in the story are far apart on screen".
 
-## Pre-build checklist (from reviews/r1-continuity.md)
-1. Port Thirty-One Raids' palisade, east gate, Grandpa's house and totem wall from its stunt into map.json
-   `ravenford` pieces and stamps. Add the pasture and its east fence gate (`since: 1950`).
-2. Add `"red_sheep": {"day": 2100, "places": ["ravenford"], "status": "claimed", "cameos": ["totem_wall"]}` to
-   map.json `stories`, then run `node scripts/world.js check`.
-3. Engine features (docs/engine_features.md): the evoker's casting arms, its spell particles, the fangs' bite
-   animation.
-4. Shot sheet: the lamb's blue-to-red change must read at 300 px in S10-S11.
+## Pre-build checklist
+1. Port Thirty-One Raids' palisade and east gate into map.json `ravenford` pieces and stamps; add the pasture, its
+   gate and Dad's house (`since: 1950`).
+2. Add `"red_sheep": {"day": 2100, "places": ["ravenford"], "status": "claimed", "cameos": ["raven_tower"]}` to
+   map.json `stories`, then `node scripts/world.js check`.
+3. The engine features in reviews/r3-engine.md.
+4. Shot sheet: the lamb's blue and its red read at 300 px in S11-S12.

@@ -1,61 +1,54 @@
-# red_sheep: spine, beats, clue map (r1)
+# red_sheep: beat sheet (r3, 2026-11-11)
 
-## The ending first
-**The reveal frame** is one wide over Buh's shoulder in the dusk woods. His blue lamb stands in front of him and
-turns red in a puff of spell particles, as an evoker between the trunks lowers its arms. A line of fangs snaps up out
-of the ground toward us. Cut.
+**Ending first (the reveal frame, S12):** a low wide over the kid's shoulder in the birch woods. The blue lamb 2.5
+blocks ahead; 8 blocks beyond it an evoker with its arms raised, brown-orange particles at its hands. The lamb turns
+RED. The arms drop, it turns to us, a line of fangs snaps up out of the ground toward the camera. Cut.
 
-**The first frame it re-explains** is sixty blue sheep in Grandpa's pasture inside Ravenford's palisade.
+**Spine.** Every day Dad dyes every sheep blue and counts them every night. One spring a sheep came back from the
+woods red, and Dad guarded the gate for a week. Because of that the kid knows the woods are bad, but when she leaves
+the gate open and her lamb gets out, she follows it in alone so Dad won't know. Until finally the lamb stops, and turns
+red in front of her: the alarm goes off, with her standing next to it.
 
-## Spine
-- **Every day,** Grandpa won't let a white sheep through the gate (he dyes every stray blue) and counts the flock every night: "They're our EYES, kid."
-- **One day,** Buh leaves the pasture gate open and his lamb wanders into the Ridge woods.
-- **Because of that,** with Grandpa asleep, he follows it alone at dusk, past where last spring's sheep came back red.
-- **Until finally,** the lamb stops and stares into the trees. It turns red, and the evoker is there.
-
-## Beat sheet (85 words, ~30 s with the reveal)
-| t (s) | beat | line | picture | plants |
+| # | time | line | picture | clue it plants |
 |---|---|---|---|---|
-| 0-3 | **the question** | L01 "Every SHEEP in our village is BLUE. All SIXTY of them." | S01 EWS crane: sixty blue sheep | why blue? |
-| 3-6 | worse than you thought | L02 "Grandpa won't let a WHITE one through the GATE." | S02 a white stray turns blue on 'GATE' | it's deliberate; blue parents breed blue lambs, so only strays need it |
-| 6-8 | **the plant** | L03 Grandpa: "They're our EYES, kid." | S03 Grandpa, the totem wall behind | literally true; heard as sentiment |
-| 8-11 | rewatch line | L04 "He counts them every NIGHT. Blue. Blue. BLUE." | S04 dusk, the flock filing past | he isn't counting sheep, he's checking colours |
-| 11-14 | the clue | L05 "Last spring, ONE came back from the woods RED." | S05 one red sheep in the gate | red = something in the woods |
-| 14-17 | stakes | L06 "Grandpa sat at the GATE with his crossbow for a WEEK." | S06 Grandpa at the gate; the outpost far on the horizon | Grandpa knows what red means |
-| 17-20 | **bomb (~55 %)** | L07 "That night, something SNAPPED in the trees. Like TEETH." | S07 the treeline at night | evoker fangs (players); something with teeth (everyone) |
-| 20-23 | **the want and the cause** | L08 "Today I left the gate OPEN. My lamb got OUT." | S08 POV: the open gate, the lamb going | his mistake, a visible cause |
-| 23-25 | the choice | L09 "Grandpa was ASLEEP. I went ALONE." | S09 POV into the woods | why he's alone |
-| 25-28 | **the reveal** | L10 "She stopped. She was STARING into the TREES." | S10 POV the lamb stopped; S11 the evoker, the lamb turns red, the fangs | the game says it |
-| 28-29 | **cut** | | 1.0 s after the first fang | no line, no sting |
+| 1 | 0-4 s | L01 Every SHEEP in our village is BLUE. All SIXTY of them. | crane over 60 blue sheep | the question: why blue? |
+| 2 | 4-7 s | L02 Dad won't LET a WHITE one through the GATE. | Dad dyes a white stray blue at the gate | it must be BLUE, white won't do (only blue sheep turn red) |
+| 3 | 7-9 s | L03 Dad: They're our EYES, kid. | Dad in his doorway | the sheep are watchers / an alarm |
+| 4 | 9-13 s | L04 He COUNTS them every NIGHT. Blue, blue, BLUE. | the lantern count at the gate | he's checking for a colour change |
+| 5 | 13-16 s | L05 Last SPRING, one came BACK from the WOODS RED. | one red sheep in the gateway, the woods behind | the turn: red = something in the woods (midpoint) |
+| 6 | 16-20 s | L06 Dad SAT at the GATE with his CROSSBOW for a WEEK. | Dad's back, crossbow, facing the woods; outpost far off | red means a fight is coming; illagers nearby (the outpost) |
+| 7 | 20-23 s | L07 One NIGHT, the TREES went SNAP. SNAP. SNAP. | black treeline, nothing seen; fang sounds | the evoker-fangs sound (players may hear it) |
+| 8 | 23-26 s | L08 Today I LEFT the gate OPEN. My LAMB got OUT. | POV: the blue lamb trotting toward the woods | agency: her mistake |
+| 9 | 26-28 s | L09 I didn't tell DAD. | POV glance back: Dad's back, far, mending a fence | no help coming |
+| 10 | 28-31 s | L10 I FOLLOWED her into the WOODS. ALONE. | POV into the birches | |
+| 11 | 31-34 s | L11 Then she STOPPED. Like she SAW SOMETHING. | the lamb stopped, still blue; a faint "wololo" from the dark | the attentive player gets ahead here (the wololo sound) |
+| 12 | 34-37.5 s | (no line) | S12 the reveal; cut 1.0 s after the first fang | the answer to line 1 |
+
+**The second the attentive viewer gets ahead:** L05 (red came from the woods) for the guess "red means danger";
+L11's "wololo" for players who know the sound. Nobody can be sure what turns sheep red until S12.
 
 ## Clue map
-| clue | where | misread as | means after the twist |
+| clue | planted | misread as | after the twist |
 |---|---|---|---|
-| all sixty blue | L01, S01 | a quirky grandpa | an alarm system |
-| no white one through the gate | L02, S02 | a fussy grandpa | every sheep must be blue to work |
-| "They're our EYES, kid." | L03 | sentiment | literal: they see the evoker for us |
-| "Blue. Blue. BLUE." | L04 | counting | checking colours |
-| one came back red | L05, S05 (picture) | spooky | an evoker was within 16 blocks of it |
-| crossbow at the gate a week | L06, S06 | protective grandpa | he knew what red meant |
-| the outpost on the horizon | S06 (picture only) | scenery | where an illager can come from |
-| a snap like teeth | L07, S07 (sound) | a monster | evoker fangs |
-| the lamb staring into the trees | L10, S10 | the lamb's scared | it's beside the evoker |
+| all blue, never white | L01, L02 / S01, S02 (picture: the dyeing) | a weird village custom | the evoker's spell only works on BLUE sheep, so every sheep must be blue to be an alarm |
+| "They're our EYES" | L03 | a figure of speech | literal: they see the evoker for you |
+| the nightly count | L04 / S04 | Dad being fussy | he is checking the alarm |
+| the red sheep from the woods | L05 / S05 | a sick or bloody sheep, "danger" | it was in the evoker's range |
+| crossbow week, the outpost on the horizon | L06 / S06 | a wolf, a monster | illagers; Dad expected a raider |
+| SNAP x3 | L07 / S07 (sound) | something with teeth | the evoker's fangs (their real sound) |
+| "wololo" | L11 / S11 (sound) | a weird noise | the spell starting |
 
-## Twist checklist
-- [x] **Changes line 1:** "every sheep is blue" goes from quirk to alarm.
-- [x] **Fair:** red (L05), teeth (L07) and EYES (L03) all come before the reveal. The reveal adds the evoker, which
-  is the vanilla cause.
-- [x] **Planted twice, in the picture:** the red sheep (S05) and the outpost (S06).
-- [x] **Misread:** sentiment, counting, a protective grandpa.
-- [x] **Someone gets ahead:** players who know the meme call it at L05-L07; casual viewers are at 45 % (cold read).
-- [x] **The game says it:** the evoker's spell turns the lamb red, and the fangs.
-- [x] **One step:** "red means an evoker".
-- [x] **Readable at 300 px:** colour is the clue; the evoker is a quarter of the frame height in S11.
-- [x] **Visible causes:** he leaves the gate open (S08), and he chooses to go (L09).
-- [x] **Rewatch:** L03, L04 and L06 sound different the second time.
+## Easter egg
+The old watchtower on the Ridge (`raven_tower`) on S01's skyline. Never named.
 
-## Owner's mystery test
-- **Q** by 3 s: yes.
-- **Mid:** cold read 45 %.
-- **Cut** ≤1 s after the reveal: yes.
-- **Length** 25-40 s: ~29 s.
+## How it differs from Light Sleeper (same shape: a hidden mob shown at the end)
+- **What the reveal is.** Light Sleeper's reveal is the monster itself (the warden rising). Here the reveal is a
+  **visible rule**: the colour change happens on screen, cause and effect in one frame. The evoker confirms what the
+  red already said.
+- **Who's wrong.** In Light Sleeper the grown-up hides the truth ("it was a FOX") and the kid misreads. Here Dad says
+  it straight ("They're our EYES"); the kid believes him and goes anyway. The tension is a mistake, not a lie.
+- **The kid causes nothing.** Light Sleeper's kid wakes the warden with the music. Here the alarm just goes off with
+  her standing in it: she walked into the range.
+- **Look and sound.** Bright pastoral day and a blue/red colour key (not a carpeted night village, not a sound key).
+  The scare is outside in low sun, not underground in the dark.
+- **Release.** Keep them apart in the order (the audit's must-change 3).
