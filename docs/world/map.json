@@ -1458,6 +1458,29 @@
     "names_in_the_woods"
    ],
    "status": "claimed 2026-11-10 by names_in_the_woods"
+  },
+  "larkfield": {
+   "name": "Larkfield",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -360,
+    116,
+    -712
+   ],
+   "footprint": [
+    -405,
+    -757,
+    -316,
+    -668
+   ],
+   "about": "A plains-style village on the High Meadow's north-east top (meadow, y 116-119), built (not generated): Jonah's village. From day 4500 a torch stands on every sturdy top in the 90 x 90 box and Jonah's plot is a 9 x 9 square of torches. Every block is 181+ from Dog Hill's D and 185+ from Hushwell's well (outside Dog on the Hill's, Good Boy's and Light Sleeper's render distance); from D the north-east rim's roofs and torches show over the plateau's edge, south-west, 185-190 blocks out.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "six_thousand_torches"
+   ],
+   "status": "claimed 2026-11-11 by six_thousand_torches"
   }
  },
  "stories": {
@@ -1635,6 +1658,14 @@
    "cameos": [
     "empty_boat"
    ],
+   "status": "claimed"
+  },
+  "six_thousand_torches": {
+   "day": 4500,
+   "places": [
+    "larkfield"
+   ],
+   "cameos": [],
    "status": "claimed"
   }
  },
