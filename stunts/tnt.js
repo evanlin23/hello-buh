@@ -2,33 +2,34 @@
 // steel (a real use on the block), sprints away, turns round for the chain reaction, then walks
 // up to the edge of the crater and looks in. Explosions come from the server's explosion packets
 // (particles + sound), primed TNT is rendered flashing like TntRenderer.
+const { plateau } = require('../lib/plateau')
 module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:5.2' },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/ncs/mortals_funk_remix.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:1.0',
+    // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
+    // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
+    speed: [['lit:0.5', 'boom:-0.4', 1.5]],
+    sfx: [['air', 'start', 'boom', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom']],
+    flash: [['boom', 0, 0.5]], shake: [['boom', 0, 10]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 
   async setup (ctx) {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
     await ctx.defaultRules()
-    // a flat field (each /fill under the 32768-block cap)
-    // a big flat field, deep solid ground and no water anywhere near (a crater that reached the sea
-    // or groundwater flooded with seagrass): 61 x 81 blocks, filled in slabs under the /fill cap
-    for (let z0 = z - 64; z0 <= z + 16; z0 += 9) {
-      const z1 = Math.min(z + 16, z0 + 8)
-      await ctx.cmd(`/fill ${x - 30} ${floor + 1} ${z0} ${x + 30} ${floor + 14} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 30} ${floor - 14} ${z0} ${x + 30} ${floor - 1} ${z1} dirt`)
-      await ctx.cmd(`/fill ${x - 30} ${floor} ${z0} ${x + 30} ${floor} ${z1} grass_block`)
-    }
+    // a big field levelled at the terrain's high percentile (lib/plateau), deep dirt below (a crater that reached
+    // the sea or groundwater flooded): a box cleared down to the start height left cut walls in view
+    const floor = await plateau(ctx, { x0: x - 34, x1: x + 34, z0: z - 66, z1: z + 18, above: 30, below: 16, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    this.x = x; this.z = z; this.floor = floor
     this.pz = z - 24                                          // pile centre
     await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${this.pz - 2} ${x + 2} ${floor + 3} ${this.pz + 2} tnt`)
     await ctx.hotbar(['diamond_sword', 'flint_and_steel', ['tnt', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, floor + 1, this.pz + 6.5, 180, 10)
+    await ctx.cmd('/effect give @s instant_health 1 10 true')
     await ctx.cmd('/gamemode survival')
     ctx.select(2)
     await bot.waitForTicks(20)

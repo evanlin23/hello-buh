@@ -1124,7 +1124,11 @@ const MOON_PHASE = (() => {
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
-const LOOK_RAW = LOOKS.resolveLook(process.env.LOOK_JSON ? (/^\s*[{"]/.test(process.env.LOOK_JSON) ? JSON.parse(process.env.LOOK_JSON) : process.env.LOOK_JSON.trim()) : STUNT_MOD.look)
+// a stunt with no `look` gets 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "hello buh should use the bright grading as
+// well"; renderer/looks.js); `look: null` (or false) keeps it ungraded. Stories (story_*, or edit.story) are left as
+// their own look says: the old ones without one render as published (the Buh Stories lead owns their look)
+const STUNT_LOOK = LOOKS.stuntLook(STUNT_MOD, rec.stunt)
+const LOOK_RAW = LOOKS.resolveLook(process.env.LOOK_JSON ? (/^\s*[{"]/.test(process.env.LOOK_JSON) ? JSON.parse(process.env.LOOK_JSON) : process.env.LOOK_JSON.trim()) : STUNT_LOOK)
 const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : LOOK_RAW
 // Light in the shader (look.smoothLight: true, or SHADER_LIGHT=1; docs/engine_features.md): the world is meshed once
 // with each vertex's light level and the page lights it every frame, so a sunset is smooth (no DAY_LIGHT_STEP
@@ -1268,8 +1272,9 @@ function shotCamBase (sh, t, solidAt) {
   // the slow push-in: a fixed camera eases toward its subject, `push` blocks a second (default 0.2; push: 0 locks
   // it), at most a quarter of the way: dialogue shots read as frozen without it (reel 1 QA: stuck 1.6-2.4 s; 0.12
   // still read as frozen, review v2)
-  // look 'bright': punchier pushes, 0.4-0.6 blocks/s (owner 2026-11-10: "very bright, exagerated movements")
-  if (LOOK_RAW && LOOK_RAW.bright && (sh.push ?? 0.2) > 0 && !sh._brightPush) sh = { ...sh, push: Math.min(0.6, Math.max(0.4, (sh.push ?? 0.2) * 2)), _brightPush: true }
+  // look 'bright': punchier pushes, 0.4-0.6 blocks/s (owner 2026-11-10: "very bright, exagerated movements"); not
+  // 'bright_stunt' (pushes: false): the grade only
+  if (LOOK_RAW && LOOK_RAW.bright && LOOK_RAW.pushes !== false && (sh.push ?? 0.2) > 0 && !sh._brightPush) sh = { ...sh, push: Math.min(0.6, Math.max(0.4, (sh.push ?? 0.2) * 2)), _brightPush: true }
   if ((sh.at || auto) && lk && (sh.push ?? 0.2) > 0) {
     const dx = lk.x - pos.x, dy = lk.y - pos.y, dz = lk.z - pos.z, L = Math.hypot(dx, dy, dz)
     const e = Math.min((sh.push ?? 0.2) * u, L * 0.25) / Math.max(L, 1e-6)

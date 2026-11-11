@@ -245,3 +245,11 @@ class MinShow(unittest.TestCase):
         ev = [(1.0, 1.2, "too FAST", "L01"), (1.2, 2.0, "fine HERE", "L01")]
         self.assertEqual([e[2] for e in self.C.flashes(ev)], ["too FAST"])
         self.assertEqual(self.C.flashes([(1.0, 1.25, "just OK", "L01")]), [])
+
+
+class TooWide(unittest.TestCase):
+    """caption_sync.too_wide: a chunk that runs off the frame is a BLOCK (light_sleeper L16, 2026-11-11)"""
+    def test_fits_and_overflow(self):
+        import caption_sync
+        self.assertIsNone(caption_sync.too_wide("So I STEPPED"))
+        self.assertIsNotNone(caption_sync.too_wide("But I'd never DANCED before. So I stepped off the carpet onto the STONE."))

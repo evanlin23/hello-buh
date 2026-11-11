@@ -115,11 +115,50 @@ def videos_checkout(d: Path) -> Path:
     return d
 
 
-def fetch_short(vd: Path, name: str) -> Path:
+def download(url: str, dest: Path) -> None:
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent": "hello-buh-uploader"})
+    with urllib.request.urlopen(req, timeout=120) as r, open(dest, "wb") as out:
+        while True:
+            b = r.read(1 << 20)
+            if not b:
+                break
+            out.write(b)
+
+
+def sha256_of(p: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for b in iter(lambda: f.read(1 << 20), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def fetch_short(vd: Path, name: str, meta: dict | None = None) -> Path:
+    """The mp4 that goes up. A package published since r:rc5eaf0 names a GitHub Release asset in video.release
+    (scripts/release_assets.py): download it and check its sha256. An older package has short.mp4 on the branch."""
+    rel = ((meta or meta_of(vd, name) or {}).get("video") or {}).get("release") or {}
+    if rel.get("url"):
+        f = vd / "shorts" / name / "short.mp4"
+        f.parent.mkdir(parents=True, exist_ok=True)
+        for i in range(3):
+            try:
+                download(rel["url"], f)
+                break
+            except Exception as e:
+                if i == 2:
+                    sys.exit(f"{name}: could not download {rel['url']}: {e}")
+        got = sha256_of(f)
+        if got != rel.get("sha256"):
+            f.unlink()
+            sys.exit(f"{name}: the release asset's sha256 is {got}, metadata says {rel.get('sha256')}: refusing to upload it")
+        print(f"{name}: {rel['url']} ({f.stat().st_size / 1e6:.1f} MB, sha256 ok)", flush=True)
+        return f
     subprocess.run(["git", "-C", str(vd), "sparse-checkout", "add", f"/shorts/{name}/short.mp4"], check=True)
     f = vd / "shorts" / name / "short.mp4"
     if not f.exists() or f.stat().st_size < 1_000_000:
-        sys.exit(f"shorts/{name}/short.mp4 is missing on the videos branch")
+        sys.exit(f"shorts/{name}/short.mp4 is missing on the videos branch (and metadata.json has no video.release)")
     return f
 
 
@@ -505,7 +544,17 @@ def main() -> None:
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--scores", action="store_true", help="print the subscribers-per-1k-views ranking only")
     ap.add_argument("--short", default="", help="upload this Short now (still checks ready, mix and the daily limit)")
+    ap.add_argument("--verify", default="", help="download this Short's mp4 (release asset or branch) and check it; upload nothing")
     a = ap.parse_args()
+    if a.verify:   # resolve + verify only: no YouTube, no records (works without any secret)
+        with tempfile.TemporaryDirectory() as td:
+            vd = videos_checkout(Path(td) / "videos")
+            meta = meta_of(vd, a.verify)
+            if not meta:
+                sys.exit(f"{a.verify}: not on the videos branch")
+            f = fetch_short(vd, a.verify, meta)
+            print(f"verified {a.verify}: {f.stat().st_size} bytes, status {meta.get('status')}, channel {channel_of(meta)}")
+        return
     ok, missing = enabled()
     if not ok and not a.dry_run:
         print(f"uploads are off (missing: {missing}). Nothing done."); return
@@ -586,7 +635,7 @@ def main() -> None:
             if title in channel_titles(yt):
                 sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
                          "or record it in uploads/uploads.json if it was uploaded by hand")
-            f = fetch_short(vd, name)
+            f = fetch_short(vd, name, meta)
             body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
                                 "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
                     "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,
