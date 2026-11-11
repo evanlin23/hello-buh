@@ -234,8 +234,8 @@ actions left silent). r:rc85ccc r:r36632d
 - **Explore first, then double down**: early stories vary premise family, arc and outcome (never two in a row the
   same); a Short at 5x the channel median gets 2-3 standalone follow-ups in its family within 7 days. Check: owner,
   the weekly numbers. r:r1bebb1
-- **Stories go to the second channel, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**, never @HelloBuh; uploads wait for the owner to set that channel
-  up. Check: owner. r:r732bc0
+- **Stories go to the second channel by default, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**; uploads there wait for the owner to set that channel
+  up. Check: owner. r:r732bc0 r:rd63b43 (HelloBuh may also post stories as experiments, set per package with `channel: hellobuh`)
 - **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
   Check: owner. r:rca5363
 - **No series number**: no "BUH STORY #N" on the video or in the title; frame 1 shows only the story's hook.

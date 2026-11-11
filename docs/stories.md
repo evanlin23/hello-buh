@@ -282,6 +282,11 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11: "wait why cant hello buh still post these stories? we can use it sorta like experimentation?"**
+  @HelloBuh may post story Shorts too, as experiments: the older ready stories (chunk_next_door, nitwit, respawn_voice,
+  sheep_stares, sun_wont_set) stay on HelloBuh's queue (`channel: hellobuh`). A story package with no channel field
+  defaults to Buh Stories; the lead sets `channel` per story. Story subs per 1k views on HelloBuh are data for both
+  channels.
 - **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
   better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
   story from now on.

@@ -57,7 +57,10 @@ def env(key: str, default: str = "") -> str:
 
 
 def channel_of(meta: dict) -> str:
-    return (meta.get("channel") or "hellobuh").strip().lower()
+    """The package's channel; with none, the same default as lib/channel.js: story_* Shorts are Buh Stories (owner,
+    2026-11-10: stories never go to @HelloBuh), everything else HelloBuh. Older story packages carry no field."""
+    c = meta.get("channel") or ("buhstories" if str(meta.get("name", "")).startswith("story_") else "hellobuh")
+    return c.strip().lower()
 
 
 UP = ROOT / "uploads" if CHANNEL == "hellobuh" else ROOT / "uploads" / CHANNEL
