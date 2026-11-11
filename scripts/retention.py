@@ -10,7 +10,7 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
                                                    of footage) so it never reads as dead space.
   counter: {"at": [EVENT, ...], "total": N}        "3/5" beat counter in the top-left of the game
            or [EVENT, ...]                         view, popping up on each mark
-  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?, STYLE?, {y}?]]  big impact text popping on a mark ("10/10",
+  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?, STYLE?, {y, size}?]]  big impact text popping on a mark ("10/10",
                                                    "NO WAY"); COLOR: white|red|green|yellow|blue|gold;
                                                    {"y": 0.8}: its height in the game view (default 0.36)
   zoom:    [[START[:off], END[:off], SCALE]]       a held push-in on the crosshair (eases in 0.4 s,
@@ -612,7 +612,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             cds.append((t0, t0 + (float(cd[2]) if len(cd) > 2 and cd[2] else 1.0), cd[1],
                         COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
                         "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4),
-                        float(next((o for o in cd[5:] if isinstance(o, dict)), {}).get("y", 0.36))))   # (desire: off the obstacle)
+                        float(next((o for o in cd[5:] if isinstance(o, dict)), {}).get("y", 0.36)),   # (desire: off the obstacle)
+                        next((o for o in cd[5:] if isinstance(o, dict)), {}).get("size")))   # a text size (px) instead of 150/116: one line over a mob's head (underdog)
     cdw = countdown_windows(countdowns, timeline, start)
     rgw = ring_windows(rings, timeline, start)
     tgw = tag_windows(tags, timeline, start, dur)
@@ -639,9 +640,9 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         cc = None
         on = [cd for cd in cds if cd[0] <= t + 1e-6 < cd[1]]
         if on:
-            t0, t1, text, color, tilt, cy_frac = on[-1]
+            t0, t1, text, color, tilt, cy_frac, size = on[-1]
             fade = min(1.0, (t1 - t) / 0.12)
-            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1), cy_frac)
+            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1), cy_frac, size)
         fk = None
         for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
             if t0 <= t + 1e-6 < hold - 1e-6:
@@ -715,11 +716,11 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 cx, cy = 40 + imgs[("c", k)].width // 2, BAND + 26 + imgs[("c", k)].height // 2
                 img.alpha_composite(im, (cx - im.width // 2, cy - im.height // 2))
             if cc:
-                text, color, tilt, s, fade, cy_frac = cc
-                if ("t", text, color) not in imgs:
-                    imgs[("t", text, color)] = stamp_img(text, color) if tilt == "stamp" else \
-                        block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
-                im = imgs[("t", text, color)]
+                text, color, tilt, s, fade, cy_frac, size = cc
+                if ("t", text, color, size) not in imgs:
+                    imgs[("t", text, color, size)] = stamp_img(text, color) if tilt == "stamp" else \
+                        block_text(text, int(size) if size else 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
+                im = imgs[("t", text, color, size)]
                 s = min(s, W * 0.95 / im.width)   # the slam-in never clips the frame edges (the stamp did for 3 frames)
                 if s != 1.0:
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
