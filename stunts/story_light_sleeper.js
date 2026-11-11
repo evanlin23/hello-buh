@@ -34,8 +34,8 @@ module.exports = {
   wideMaster: true,
   idleLife: true,
   hideHand: false,
-  look: { mood: 'auto', shadows: true, dof: { aperture: 0.85 }, cloudNight: 0.42 },   // docs/look.md: the grade follows the clock
-  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'] },   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
+  look: 'bright',   // owner 2026-11-11: stories are bright and punchy (main e58c77d); night shots keep their shot moods under it
+  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'], punchStress: true },   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -602,5 +602,5 @@ module.exports.shots = {
   // L13: the reverse: 1 block east of him at his eye height, looking north at Mom in our doorway
   mom: { subject: ['actor:mom'], mood: 'eerie_night', grade: { exposure: 1.2 }, vignette: 0.45, at: [1.0, 2.7, -2.9], look: [0.5, 4.6, -7.35], fov: 42, push: 0.3, dof: { aperture: 0.8 } },   // the post clears her (F7)
   // S16: low behind him (2-3 blocks north-west), looking south past him at the burst carpet and the rising warden
-  s16: { subject: [[0.5, 3.8, 4.2]], mood: 'eerie_night', grade: { contrast: 0.22 }, vignette: 0.48, at: [-1.2, 3.0, -5.0], look: [0.5, 3.5, 4.5], fov: 40, push: 0.2, dof: false }   // B3: the warden ~45% of the frame, his shoulder at the right edge, the jukebox out of the line
+  s16: { subject: [[0.5, 3.8, 4.2]], mood: 'eerie_night', grade: { contrast: 0.22 }, vignette: 0.48, at: [2.0, 3.0, -5.0], look: [0.3, 3.5, 4.5], fov: 40, push: 0.2, dof: false }   // B3: the warden ~45% of the frame, his shoulder at the right edge, the jukebox out of the line
 }
