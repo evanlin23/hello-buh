@@ -38,13 +38,14 @@ module.exports = {
   caption: 'rating every way to light a nether portal 😳',
   edit: {
     subsY: 0.15, caption: 'rating every way to light a nether portal 😳',
-    armor: 20,   // the armour bar over the hearts: full netherite (review r1: surviving the anchor's blast with no armour on the HUD read as fake) red: 'every', dropAt: `lit${LAST}`,
-    startAt: 'st:-0.05', endAfter: `lit${LAST}:1.4`,   // settle-ok: the payoff is the lit portal and its card (a text payoff: 1.4 s to read it, pace r1); the anchor's blast is over by then
+    armor: 20,   // the armour bar over the hearts: full netherite (review r1: surviving the anchor's blast with no armour on the HUD read as fake)
+    red: 'every', dropAt: `lit${LAST}`,   // (these two had slipped into the comment above: the drop never landed on the payoff)
+    startAt: 'st:-0.05', endAfter: 'settle:0.6',   // the anchor's blast smoke drifts over the lit portal for 2.2 s (r:r24d99a): end 0.6 s after it settles, the 11/10 card up the whole time
     // pace r1: silent until 0.73 s: room tone from frame 1; the last light gets a dip + impact over the song (the publish gate)
     sfx: [['air', 'start', `lit${LAST}`, { gain: 0.5 }], ['dip', `lit${LAST}`, 0.4], ['impact', `lit${LAST}`, { gain: 1.4 }]],
     speed,
     subs: [...ST.map((s, i) => ['st', s.sub, 1.4, i]), ['lava_a', 'x6', 0.8, 0]],
-    cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 1.4 : 0.9, i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
+    cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 3.2 : 0.9, i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
     punch: ST.map((s, i) => [`lit${i}`, 0, i === LAST ? 1.12 : 1.06]),
     shake: [['boom', 0, 12], ['boom', 1, 20]],
     counter: { at: ST.map((s, i) => ['st', i]), total: ST.length }
@@ -136,19 +137,16 @@ module.exports = {
     // every click is aimed by construction (lib/act.js, owner r:rffba12): the crosshair lands on the exact point
     // on the block it clicks before the packet goes
     const A = require('../lib/act')(ctx)
+    // the lava's wait plays x6: its look-around turns at <= 30 deg/s here (180 on screen; owner r:r38374d whip cap)
+    const A6 = require('../lib/act')(ctx, { turnSpeed: 30, turnAccel: 150 })
+    const look = (p, o = {}) => A.turnTo(p, { tol: 0.03, max: 40, ...o })   // every look round is governed (<= 220 deg/s, eased)
     const place = async (loc, face, cur) => {
       await A.aimAt(new Vec3(loc.x + cur[0], loc.y + cur[1], loc.z + cur[2]), { on: loc, strict: false })
       bot._client.write('block_place', { hand: 0, location: loc, direction: face, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: aimed above (A.aimAt lands on this exact point; the face matters: fire on top)
       bot.swingArm()
     }
-    // one smooth aim step toward a point (callers loop it every tick)
-    const aimStep = async (p, f = 0.25) => {
-      const e = bot.entity.position.offset(0, 1.62, 0), d = p.minus(e)
-      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
-      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      await bot.look(bot.entity.yaw + dy * f, bot.entity.pitch + (pitch - bot.entity.pitch) * f, true)
-      await bot.waitForTicks(1)
-    }
+    // one governed aim step toward a point (callers loop it every tick): lib/act.js's turner, <= 220 deg/s, eased
+    const aimStep = async (p, gov = A) => { await gov.view(p); await bot.waitForTicks(1) }
     // after it lights: the swirl, a short step back with the eyes on it (no still hold)
     const admire = async (t, ticks = 26) => {
       lit.add(t); ctx.sound('block.portal.ambient', 0.5, 1)
@@ -161,12 +159,13 @@ module.exports = {
       bot.setControlState('back', false)
     }
     // a slow look around the opening while we wait (sped up on screen)
+    // (r:r38374d: the old look snapped 15% of the way a tick from the pour onto the orbit: 364 deg/s at x6. Now the view
+    // lands on the orbit's start before the sped-up span, and the orbit turns on the slow governor)
     const waitFor = async (t, cond, max, a, b, around) => {
+      const orbit = (k) => { const f = (k % 160) / 160; return around.offset(Math.sin(f * Math.PI * 2) * 0.7, Math.cos(f * Math.PI * 2) * 0.3, 0) }
+      await look(orbit(0), { max: 30 })
       ctx.mark(a)
-      for (let k = 0; k < max && !cond(); k++) {
-        const f = (k % 140) / 140
-        await aimStep(around.offset(Math.sin(f * Math.PI * 2) * 0.9, Math.cos(f * Math.PI * 2) * 0.4, 0), 0.15)
-      }
+      for (let k = 0; k < max && !cond(); k++) await aimStep(orbit(k), A6)
       ctx.mark(b)
       return cond()
     }
@@ -185,18 +184,18 @@ module.exports = {
 
       if (t.id === 'flint') {
         ctx.select(SLOT.flint)
-        await ctx.easeLookAt(new Vec3(t.xc - 0.3, t.y0 + 3.6, t.pz + 0.5), 300)
-        await ctx.easeLookAt(bottom.offset(0, 0.05, 0), 350)
+        await look(new Vec3(t.xc - 0.3, t.y0 + 3.6, t.pz + 0.5))
+        await look(bottom.offset(0, 0.05, 0))
         await lightBottom(SLOT.flint, 'item.flintandsteel.use')
       } else if (t.id === 'charge') {
         ctx.select(SLOT.charge)
-        await ctx.easeLookAt(new Vec3(t.xc + 0.3, t.y0 + 3.6, t.pz + 0.5), 300)
-        await ctx.easeLookAt(bottom.offset(0, 0.05, 0), 350)
+        await look(new Vec3(t.xc + 0.3, t.y0 + 3.6, t.pz + 0.5))
+        await look(bottom.offset(0, 0.05, 0))
         await lightBottom(SLOT.charge, 'item.firecharge.use')
       } else if (t.id === 'tnt') {
         // TNT right in front of the opening, lit, then back off and watch: the frame stands, nothing lights
         ctx.select(SLOT.tnt)
-        await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 - 0.05, t.pz + 1.5), 350)
+        await look(new Vec3(t.x0 + 1.5, t.y0 - 0.05, t.pz + 1.5))
         await place({ x: t.x0 + 1, y: floor, z: t.pz + 1 }, 1, [0.5, 1, 0.5]); ctx.sound('block.grass.place', 1)
         await bot.waitForTicks(5)
         ctx.select(SLOT.flint)
@@ -208,22 +207,22 @@ module.exports = {
         ctx.mark('fuse_a')
         await tp(t.xc, floor + 1, t.pz + 11.5, 180, 8)
         const c = new Vec3(t.xc, t.y0 + 1.8, t.pz + 0.5)
-        while (ctx.tick - litAt < 56) await aimStep(c, 0.3)
+        while (ctx.tick - litAt < 56) await aimStep(c)
         ctx.mark('fuse_b')
         const before = booms
-        for (let k = 0; k < 40 && booms === before; k++) await aimStep(c.offset(Math.sin(k / 4) * 0.3, 0, 0), 0.3)
+        for (let k = 0; k < 40 && booms === before; k++) await aimStep(c.offset(Math.sin(k / 4) * 0.3, 0, 0))
         // the smoke clears: the frame is still there... and still empty
-        for (let k = 0; k < 14; k++) await aimStep(c, 0.2)
+        for (let k = 0; k < 14; k++) await aimStep(c)
         ctx.mark(`lit${n}`)
         bot.setControlState('forward', true)
-        for (let k = 0; k < 18; k++) await aimStep(c.offset(0, -0.3, 0), 0.25)
+        for (let k = 0; k < 18; k++) await aimStep(c.offset(0, -0.3, 0))
         bot.setControlState('forward', false)
         if (portalIn(t)) { ctx.log('TNT lit it?'); return false }
         continue
       } else if (t.id === 'dispenser') {
         // the dispenser behind the frame, then the button on it
-        await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 + 1.5, t.pz - 0.5), 350)
-        await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 + 2.1, t.pz - 0.5), 250)
+        await look(new Vec3(t.x0 + 1.5, t.y0 + 1.5, t.pz - 0.5))
+        await look(new Vec3(t.x0 + 1.5, t.y0 + 2.1, t.pz - 0.5))
         ctx.select(SLOT.hand)
         await place({ x: t.x0 + 1, y: t.y0 + 2, z: t.pz - 1 }, 1, [0.5, 0.1, 0.5])
         ctx.sound('block.stone_button.click_on', 1)
@@ -232,7 +231,7 @@ module.exports = {
         ctx.sound('block.dispenser.dispense', 1)
         ctx.particles('smoke', { x: t.x0 + 1.5, y: t.y0 + 1.5, z: t.pz + 0.1 }, { count: 6 })
         ctx.sound('item.flintandsteel.use', 1)
-        await ctx.easeLookAt(bottom.offset(0, 0.4, 0), 200)
+        await look(bottom.offset(0, 0.4, 0))
       } else if (t.id === 'lava') {
         ctx.select(SLOT.lava)
         // the pit's back wall (under the frame): the bucket's own ray from the eye puts the lava in the pit
@@ -251,8 +250,8 @@ module.exports = {
       } else if (t.id === 'anchor') {
         const a = new Vec3(Math.floor(t.xc), t.y0, t.pz + 2)
         ctx.select(SLOT.glow)
-        await ctx.easeLookAt(new Vec3(t.xc, t.y0 + 3, t.pz + 0.5), 300)
-        await ctx.easeLookAt(a.offset(0.5, 1, 0.5), 300)
+        await look(new Vec3(t.xc, t.y0 + 3, t.pz + 0.5))
+        await look(a.offset(0.5, 1, 0.5))
         const use = () => place(a, 1, [0.5, 1, 0.5])   // async: awaited below
         for (let c = 0; c < 4; c++) {                   // four glowstone: fully charged
           await use(); ctx.sound('block.respawn_anchor.charge', 1, 1 + c * 0.05)
@@ -261,8 +260,8 @@ module.exports = {
         }
         // an empty hand: right-click sets the spawn... in the Overworld it explodes
         ctx.select(SLOT.hand)
-        await ctx.easeLookAt(new Vec3(t.xc, t.y0 + 1.4, t.pz + 0.5), 300)
-        await ctx.easeLookAt(a.offset(0.5, 1, 0.5), 200)
+        await look(new Vec3(t.xc, t.y0 + 1.4, t.pz + 0.5))
+        await look(a.offset(0.5, 1, 0.5))
         const before = booms
         await use()
         for (let k = 0; k < 20 && booms === before; k++) await bot.waitForTicks(1)
