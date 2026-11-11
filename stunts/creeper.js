@@ -8,7 +8,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
   edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/ncs/intranet_crush.mp3', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8',
-    sfx: [['air', 'start', 'death', { gain: 0.5 }]] },   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
+    sfx: [['air', 'start', 'death', { gain: 0.18 }]] },   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
   async setup (ctx) {
@@ -20,7 +20,7 @@ module.exports = {
     await ctx.defaultRules()
     // a field levelled at the terrain's high percentile (lib/plateau): the old 29-block box cleared down to the
     // start height left a cut dirt-and-stone wall right behind the creeper (frame review 2026-11-11)
-    const floor = await plateau(ctx, { x0: x - 32, x1: x + 32, z0: z - 32, z1: z + 32, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    const floor = await plateau(ctx, { x0: x - 48, x1: x + 48, z0: z - 48, z1: z + 48, biome: null, pct: 0.995, taper: 12, trees: 14 })   // (review r1: a ±32 field painted plains left a straight biome seam and a dirt face behind the creeper: wider, tapered, the biome left as it is)
     this.x = x; this.z = z; this.floor = floor
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
