@@ -292,6 +292,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "POV: the 3 stages of playing with friends",
+  with chapter titles: "1. Betrayal" (your friend knocks you into lava, you scrape out on half a heart), "2. Rise"
+  (a portal, the Nether, ancient debris, a netherite upgrade), "3. Revenge" (a TNT cannon flattens the friend's
+  mansion); 85 s): "and this too".** HelloBuh saves a chaptered "stages of" format (family `stages`): a relatable
+  arc told in 3 titled chapters, each fast and escalating, ending on a big payoff.
 - **Owner, 2026-11-11, sharing hazypapa's "The Most Bullied mob Ever in Minecraft" (caption "we can repair them
   but...": a quick list of every mob the player can heal or fix (a wolf with meat, a cat with fish, a horse with
   hay, a camel with cactus, an iron golem with iron, a copper golem, a zombie villager cured), then the caption flips

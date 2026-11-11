@@ -30,6 +30,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `friend` | Silly Willies: "We all have that one bro" ("That one friend when you start a new world") | A relatable multiplayer moment from your point of view, the friend exaggerated to the absurd (a tree gone in a blink, a full house already built); 10 s | "i think this is like hacking friend? like its a relatable beat, just exagerated" | r:ra64f79 | idea |
 | `mobpov` | Galaxscat: "Minecraft Baby Zombie Moment" ("POV: A baby zombie found you") | A blur-fast POV chase that tears through walls, mob pens and a house and down into the Nether; the annoying baby-zombie speed blown up to absurd | "whatever even is this" | r:r8048f1 | idea |
 | `underdog` | hazypapa: "The Most Bullied mob Ever in Minecraft" ("we can repair them but...") | A fast list of every mob you can heal or fix (wolf, cat, horse, camel, iron and copper golem, a cured zombie villager), then "...but what about him?": a lone snow golem melting in the sun, a soft sung track | "whatever this is" | r:r8dcdb4 | idea |
+| `stages` | NoschiTech: "#memeanimation" ("POV: the 3 stages of playing with friends") | Three titled chapters: "1. Betrayal" (pushed into lava), "2. Rise" (Nether, ancient debris, netherite), "3. Revenge" (a TNT cannon flattens the friend's mansion); fast and escalating, 85 s | "and this too" | r:redb7c0 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -50,4 +51,6 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   you build a dirt hut, who is AFK in the worst place, who always dies first.
 - **underdog**: every mob can be tamed... but the phantom; every mob has a baby... but the ghast; every mob gets a
   friend... but the lone wandering trader llama.
+- **stages**: the 3 stages of a new world (hope, hunger, hoarding), of finding diamonds, of a creeper encounter,
+  of an Ender Dragon fight; keep each chapter tight, the whole Short far under 85 s.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.
