@@ -68,7 +68,7 @@
    "voice": "Fenrir",
    "model": "gemini-3.8-flash-tts",
    "color": "#4FD8E6",
-   "on_screen": "a player actor (bot named Jonah), a default skin that is NOT Steve (proposed `kai`; Steve is Buh's), his vanilla name tag over his head; one voiced line (L07), on screen in S07 while he says it, waving. Voice: proposed cast `friend` (Fenrir, teenage boy) pending the owner's audition of the real line (STANDARDS 2.7): reads apart from Pip on age and sex. Never quits on screen: he walks away in S16",
+   "on_screen": "a player actor (bot named Jonah), a default skin that is NOT Steve (proposed `kai`; Steve is Buh's), his vanilla name tag over his head; one voiced line (L07), on screen in S07 while he says it, waving. Voice: proposed cast `friend` (Fenrir, teenage boy) pending the owner's audition of the real line against at least one other teen-boy candidate, since Fenrir is Max's recurring voice (STANDARDS 2.7): reads apart from Pip on age and sex. Never quits on screen: he walks away in S14",
    "skin": "kai"
   }
  },
@@ -121,7 +121,7 @@
    67
   ]
  ],
- "hotbar_note": "Jonah's bar (the only player). The POV in this story is the villager kid's (no HUD), so it never shows; kept for consistency if a player POV is ever added: the story's tools first (torches, coal, sticks, a crafting table, planks), then the ridiculous ones (a cake, a milk bucket, 67 eggs, owner). In S15 he holds exactly one torch (main hand) and the bar is otherwise as listed",
+ "hotbar_note": "Jonah's bar (the only player). The POV in this story is the villager kid's (no HUD), so it never shows; kept for consistency if a player POV is ever added: the story's tools first (torches, coal, sticks, a crafting table, planks), then the ridiculous ones (a cake, a milk bucket, 67 eggs, owner). In S13 he holds exactly one torch (main hand) and the bar is otherwise as listed",
  "sfx": [
   {
    "under": "S01",
@@ -129,17 +129,17 @@
    "note": "dawn; no music sting on frame 1, the score starts under it"
   },
   {
-   "under": "S13",
+   "under": "S11",
    "sound": "block.wood.place",
    "note": "each torch Jonah places round the corner, on 'GROWING' and a beat later"
   },
   {
-   "under": "S15",
+   "under": "S13",
    "sound": "block.wood.place",
-   "note": "the last torch on the door spot, right after 'LEFT'"
+   "note": "the last torch on the door spot, right after 'LAST torch'"
   },
   {
-   "under": "S16",
+   "under": "S14",
    "sound": "block.grass.step",
    "note": "Jonah's footsteps walking away down the street; the score drops out 0.45 s before 'TOMORROW', the payoff hit lands on it"
   }
@@ -403,12 +403,12 @@
  "reveal": {
   "at": "L14 'TOMORROW'",
   "picture": "S14: Jonah, empty-handed, walks away west down the torch-lit street toward where his house stood, his back to us; he says nothing",
-  "echo": "S06-S07 showed the ordinary night: Jonah walking the kid home with his torch, the wave, 'See you TOMORROW!' in his own voice. S15-S16 repeat the torch and the wave without the words, and he walks away without his torch",
+  "echo": "S06-S07 showed the ordinary night: Jonah walking the kid home with his torch, the wave, 'See you TOMORROW!' in his own voice. S13-S14 repeat the torch and the wave without the words, and he walks away without his torch",
   "chat": "none: no chat line, no quit, no 'left the game'",
   "hold": "cut within 0.3-0.6 s after 'TOMORROW'; nothing after it"
  },
  "ending": {
-  "after": "L16",
+  "after": "L14",
   "loop": "cause and effect: the goodbye is why line 1's village has six thousand torches 'last night'; 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
  },
  "shots": [
@@ -451,7 +451,7 @@
    "place": "jonah_house",
    "size": "full",
    "camera": "path: a short crane down from 8 blocks up to 2.5, ending 7 blocks east of Jonah, looking west into the low sun; FOV 50",
-   "frame": "FLASHBACK (yesterday and every evening before: none of the story's torches, only the village's own lamp posts; two villagers walking on the street, the cue that this is another time). subject: Jonah (Steve, name 'Jonah' over his head) head to foot at his gate, in front of his birch cottage, lit windows; bg: the west hills and the golden sky. Golden hour (11600).",
+   "frame": "FLASHBACK (yesterday and every evening before: none of the story's torches, only the village's own lamp posts; two villagers walking on the street, the cue that this is another time). subject: Jonah (the default `kai` skin, name 'Jonah' over his head) head to foot at his gate, in front of his birch cottage, lit windows; bg: the west hills and the golden sky. Golden hour (11600).",
    "look": {
     "fog": false,
     "time": 11600
@@ -519,7 +519,7 @@
    "place": "our_street",
    "size": "wide",
    "camera": "follow: behind the kid at 6 blocks, 1.6 up, lag 0.3, as he runs up the strip and turns left round the corner; FOV 55",
-   "frame": "opens: the kid small, running; at the corner the camera turns with him: the row runs along the house front, then north across the street (no torch on the dirt path) toward our doorstep; on 'MY door' our door centred 9 blocks ahead, the row ending one block short of the door spot. Jonah is NOT in frame (he is crouched just behind the house-front corner on frame left, out of shot): S15 shows him on 'JONAH'. Dawn (23652: ~7 s of game time pass at the S13 cut; S14-S16 are one continuous moment)."
+   "frame": "opens: the kid small, running; at the corner the camera turns with him: the row runs along the house front, then north across the street (no torch on the dirt path) toward our doorstep; on 'MY door' our door centred 9 blocks ahead, the row ending one block short of the door spot. Jonah is NOT in frame (he is crouched just behind the house-front corner on frame left, out of shot): S13 shows him on 'JONAH'. Dawn (23652: ~7 s of game time pass at the S11 cut; S12-S14 are one continuous moment)."
   },
   {
    "id": "S13",

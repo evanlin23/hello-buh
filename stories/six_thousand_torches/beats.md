@@ -17,7 +17,7 @@ gets the kid's innocent reading in his own words (a PARTY, PRESENTS, MOVING in w
 the DARK" moved from L06 to L13 (the r2 midpoint read was still 75% with it next to the 6,000).
 
 ## The ending first
-S16: from the path, Jonah walks away empty-handed down the torch-lit street toward the sunrise. He set his own torch
+S14: from the path, Jonah walks away empty-handed west down the torch-lit street toward his bare plot. He set his own torch
 down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "See you TOMORROW."" Cut on "TOMORROW".
 
 ## Spine
