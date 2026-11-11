@@ -7,7 +7,8 @@
 const { makeStunt } = require('../lib/herobrine')
 
 const SUBS = [
-  ['air', "why isn't he falling", 1.6, 0]
+  ['air', "why isn't he falling", 1.6, 0],
+  ['drift', 'bro??', 1.2, 0]
 ]
 
 module.exports = makeStunt({
@@ -18,6 +19,7 @@ module.exports = makeStunt({
   hotbar: ['stone_sword', 'shears', ['blue_wool', 48], ['golden_apple', 3]],
   select: 0,
   pitch: 8,
+  edit: { sfx: [['impact', 'payoff']] },   // the logout itself is silent in vanilla: the hit the final mix needs (pace)
   hisStart: { x: 0.5, y: 1, z: 4.6, yaw: 180, pitch: 4 },
 
   async perform (ctx, H) {
@@ -78,7 +80,8 @@ module.exports = makeStunt({
     await H.hold(14)
     // he drifts up and away over the void, still staring; the camera follows him
     const from = { x: hb.x, y: hb.y, z: hb.z }
-    const N = 40
+    ctx.mark('drift')
+    const N = 30
     for (let k = 1; k <= N; k++) {
       const t = k / N, e = t * t * (3 - 2 * t)
       hb.x = from.x + (0.5 - from.x) * e
@@ -88,7 +91,7 @@ module.exports = makeStunt({
       H.A.view(H.at(hb.x, hb.y + 1.6, hb.z))
       await bot.waitForTicks(1); H.K._clock++
     }
-    await H.hold(6)
+    await H.hold(2)
     await H.leave()
     // the camera sinks slowly back to the broken bridge where he stood
     await H.drift(0.5, 0.2, 3.5, 30)
