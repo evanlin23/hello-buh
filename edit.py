@@ -122,7 +122,13 @@ def split_emoji(tok):
     return out
 
 
-def caption_png(text, red_word, path, colors=None, bands="black"):
+def red_rgb_of(args):
+    """The key word's colour (--red_rgb RRGGBB; default HelloBuh red)."""
+    h = getattr(args, "red_rgb", None)
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) + (255,) if h else (235, 40, 40, 255)
+
+
+def caption_png(text, red_word, path, colors=None, bands="black", red_rgb=(235, 40, 40, 255)):
     """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red.
     bands="blur": the bands stay transparent (the blurred game shows through) under a soft dark wash."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -178,7 +184,7 @@ def caption_png(text, red_word, path, colors=None, bands="black"):
                 key = tok.strip("?!.,:").lower()
                 color = (255, 255, 255, 255)
                 if red_word and key in red_word.lower().split():   # one word or a phrase
-                    color = (235, 40, 40, 255)
+                    color = red_rgb
                 if colors and key in colors:
                     color = colors[key]
                 d.text((x, y), tok, font=font, fill=color)
@@ -1277,7 +1283,7 @@ def band_captions(args, tl_ev, dur, tmp, colors):
             if ct - 0.07 < t0 < ct:
                 t0 = ct
         png = tmp / f"caption_{k}.png"
-        caption_png(text, args.red, png, colors, bands=args.bands)
+        caption_png(text, args.red, png, colors, bands=args.bands, red_rgb=red_rgb_of(args))
         out.append([max(0.0, t0), png])
     out.sort(key=lambda x: x[0])
     return [(a, (out[i + 1][0] if i + 1 < len(out) else dur + 1.0), png) for i, (a, png) in enumerate(out) if a < dur]
@@ -1371,6 +1377,7 @@ def main():
     ap.add_argument("--out_fps", type=int, default=30)
     ap.add_argument("--caption", required=True)
     ap.add_argument("--red")
+    ap.add_argument("--red_rgb", help="the key word's colour as RRGGBB (default HelloBuh red EB2828; story Shorts: Buh gold FFD640)")
     ap.add_argument("--bands", choices=["blur", "black"], default="black", help="top/bottom bands: a blurred copy of the game (stories, owner 2026-11-10) or black")
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
@@ -1468,7 +1475,7 @@ def main():
         if "=" in pair:
             w, c = pair.split("=", 1)
             colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
-    caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands)
+    caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands, red_rgb=red_rgb_of(args))
     if args.audio_only:   # the finished picture is already cut to the edit: its length is the Short's
         dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.audio_only],
                                    capture_output=True, text=True).stdout)
