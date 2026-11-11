@@ -21,7 +21,7 @@
  },
  "weather": "clear",
  "world": {
-  "place": "saltmouth (canonical). Layout in local coordinates, origin = the square's ground under his window, his window in the house's north wall, facing north (-z): his eye at the open window (0, 5.6, 0) (upstairs floor y 4); the bell at block (0, 6, -3), double_wall-mounted between two oak-fence posts (x +-1, y 1-6), nothing above it; the skeleton's feet at (0, 10, -12) under the stamped oak on the north rise (10 high, since 1700), its eye (0, 11.7, -12), 13.7 blocks from his chest. The arrow's line (skeleton's eye to his chest (0, 5.0, 0)) crosses z -3 at y 6.7: through the bell's body (6.25-6.9). In S08 he stands on the porch roof two blocks east of the window, x +2: the line crosses z -3 at x 1.5, clear of the bell and the east post. One axis: oak, bell, window all on x = 0. If no rise lines up at Saltmouth, move the house (set.md).",
+  "place": "saltmouth (canonical). Convention: x and z are block centres, y is the block floor; origin = the square's ground block under his window, his window in the house's north wall facing north (-z). His window: 1 wide x 2 high (y 4-5) in the wall at z 0; he stands at feet (0, 4, 0.8), eye 5.62. The porch roof's walking surface at y 4 runs east of the window from z -1. The bell: block (0, 7, -3), attached on the x axis (double_wall) between two oak-log posts (x +-1, y 1-7, sturdy faces), nothing above it. The skeleton: feet (0, 9, -12) on the cliff top (a sheer stone face whose top edge is no further south than z -9.5), the oak's trunk off its block at (2, 9, -13), lowest leaves above the S08 sight line. Simulated vanilla arrow (eye -0.1, aimed at feet +0.6 with a lift of 0.2 x distance, 1.6 b/t, drag 0.99, gravity 0.05) crosses z -3 at y 7.46, inside the bell's ring zone (7.25-7.81); the eye-to-eye sight line crosses at 7.14, under the bell's lip, so it still sees him. In S08 he stands at (2, 4, -1) on the porch roof: clear of the bell and the east post. The live-AI gate in set.md decides the final numbers. The village bell: Saltmouth's generated meeting-point bell is re-hung on this belfry (one bell in the village, never two in a shot).",
   "day": 2000,
   "canon": "A Saltmouth family (not Buh's). The kid is a player; Mom is a villager. New canon fact: a skeleton lives under the oak on Saltmouth's north cliff from about day 1700 (the stamp: the oak and its shade).",
   "easter_egg": "saltmouth_portal (register as a cameo, since 0): Saltmouth's ruined portal at (-269, -366), framed in a daytime shot that looks south-east (S05)"
@@ -37,7 +37,7 @@
    "ref": "narrator",
    "name": "Pip",
    "color": "#FFFFFF",
-   "on_screen": "a Saltmouth kid, a player, default `alex` skin (NOT Steve: Steve reads as Buh); POV in S01, S03, S07; seen small from behind the skeleton in S08. Never named aloud."
+   "on_screen": "a Saltmouth kid, a player, default `alex` skin (NOT Steve: Steve reads as Buh); POV in S01 and S07; seen from behind at the shutters in S03; seen small on the porch roof in S08. Never named aloud."
   },
   "Mom": {
    "role": "character",
@@ -45,7 +45,7 @@
    "name": "Mom",
    "color": "#FFC2A8",
    "model": "gemini-3.8-flash-tts",
-   "on_screen": "plains villager (no profession outfit), unarmed, no name tag; on screen while she says L05 (S03); holds the arrow in S04"
+   "on_screen": "plains villager (no profession outfit), unarmed, no name tag; on screen in S03 only, where she says L06"
   }
  },
  "requests": [
@@ -101,7 +101,11 @@
     }
    ],
    "punch": true,
-   "direction": "delighted, like it's a magic trick; one quick breath"
+   "direction": "delighted, like it's a magic trick; one quick breath",
+   "look": {
+    "what": "prop:bell",
+    "word": "BELL"
+   }
   },
   {
    "id": "L02",
@@ -117,7 +121,11 @@
      "word": "VILLAGE"
     }
    ],
-   "direction": "giggly, fond of them"
+   "direction": "giggly, fond of them",
+   "look": {
+    "what": "entity:villager",
+    "word": "VILLAGE"
+   }
   },
   {
    "id": "L03",
@@ -134,7 +142,10 @@
      "word": "WINDOW"
     }
    ],
-   "direction": "proud"
+   "direction": "proud",
+   "look": {
+    "what": "prop:bell"
+   }
   },
   {
    "id": "L04",
@@ -150,7 +161,11 @@
      "word": "BELL"
     }
    ],
-   "direction": "sure of it, beaming"
+   "direction": "sure of it, beaming",
+   "look": {
+    "what": "prop:bell",
+    "word": "BELL"
+   }
   },
   {
    "id": "L05",
@@ -165,7 +180,11 @@
      ],
      "word": "MOM"
     }
-   ]
+   ],
+   "look": {
+    "what": "Mom",
+    "word": "MOM"
+   }
   },
   {
    "id": "L06",
@@ -181,7 +200,10 @@
      "word": "SHUTTERS"
     }
    ],
-   "direction": "warm and quick, firmer than she sounds"
+   "direction": "warm and quick, firmer than she sounds",
+   "look": {
+    "what": "Mom"
+   }
   },
   {
    "id": "L07",
@@ -189,7 +211,10 @@
    "text": "She thinks / I'll catch / a COLD.",
    "say": "She thinks I'll catch a COLD.",
    "shot": "S04",
-   "direction": "an eye-roll, cheerful"
+   "direction": "an eye-roll, cheerful",
+   "look": {
+    "what": "prop:window"
+   }
   },
   {
    "id": "L08",
@@ -213,7 +238,11 @@
     }
    ],
    "punch": true,
-   "direction": "chatty, a little sorry for him, never scared"
+   "direction": "chatty, a little sorry for him, never scared",
+   "look": {
+    "what": "prop:skeleton",
+    "word": "PALE"
+   }
   },
   {
    "id": "L09",
@@ -235,7 +264,11 @@
      "word": "BELL"
     }
    ],
-   "direction": "amazed, a tiny magic-trick lift on the last word"
+   "direction": "amazed, a tiny magic-trick lift on the last word",
+   "look": {
+    "what": "prop:arrow",
+    "word": "FEATHER"
+   }
   },
   {
    "id": "L10",
@@ -252,7 +285,11 @@
     }
    ],
    "punch": true,
-   "direction": "bright and friendly, the last word up; not scared"
+   "direction": "bright and friendly, the last word up; not scared",
+   "look": {
+    "what": "prop:bell",
+    "word": "PAST"
+   }
   }
  ],
  "shots": [
@@ -265,8 +302,8 @@
    ],
    "place": "bedroom",
    "size": "wide",
-   "camera": "pov at the window: the hand opens the spruce-trapdoor shutters on 'WINDOW'; a slow push toward the sill",
-   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) every villager in the dusky square below runs for a door, doors slam. bg: the dark cliff and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
+   "camera": "pov at the 1x2 window: the hand opens the spruce-trapdoor shutters on 'WINDOW'; on 'VILLAGE' the pov tilts down to the square",
+   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) the villagers in the square below (staged within ~15 deg of the bell axis) run for their doors, doors slam. bg: the dark cliff and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    }
@@ -276,8 +313,8 @@
    "line": "L03",
    "place": "square",
    "size": "ews",
-   "camera": "at: high behind his house (0, 16, 14) looking north along x = 0 at the bell (0, 6, -3), slow push",
-   "frame": "THE AXIS, the single wide: his lit open window lower-centre, the bell just beyond it still swinging, the dark cliff and the oak beyond that: three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at night). The empty square, every door shut. Dusk 12600 (sun down, sky deep blue).",
+   "camera": "at: high behind his house (0, 20, 14), over the roof ridge, looking north along x = 0 at the bell (0, 7, -3), slow push",
+   "frame": "THE AXIS, the single wide: his roof lower-centre with the warm light of his open window spilling onto the bell just beyond it, the bell still swinging, the dark stone cliff and the oak beyond that: three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at dusk). The empty square, every door shut. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -294,9 +331,9 @@
     "L06"
    ],
    "place": "bedroom",
-   "size": "wide",
-   "camera": "at: (2.5, 5.6, 2.5) inside the room looking at Mom at his door, still",
-   "frame": "subject: Mom full figure at his door (on screen from 'MOM'), nodding at the window; the kid at frame left, back to camera, at the open shutters (the bell's top visible through them); on 'SHUT' (L06) he swings them shut. The bed, a lantern. Dusk 12600 (sun down, sky deep blue).",
+   "size": "full",
+   "camera": "at: (-2, 5.6, 5.5) inside the room facing north-east, still",
+   "frame": "subject: Mom full figure at his door in the east wall (on screen from 'MOM'), just right of centre; the kid at frame left, back to camera, at the open shutters (the bell's top visible through them); on 'SHUT' (L06) he swings them shut. Mom stands still (villagers can't nod). The bed, a lantern. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    }
@@ -305,9 +342,9 @@
    "id": "S04",
    "line": "L07",
    "place": "square",
-   "size": "ews",
-   "camera": "at: (6, 3, -8) in the square looking south-west at his house and its neighbours, still",
-   "frame": "subject: the village by day, every window's shutters open but his (shut), the bell right in front of his; villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house. Day 6000.",
+   "size": "wide",
+   "camera": "at: in the square looking at his house and its neighbours (aim re-set once the house is placed, so Saltmouth's ruined portal at (-269, -366) is in frame), still",
+   "frame": "subject: the village by day, every window's spruce-trapdoor shutters open (stamped on the neighbours in frame: generated houses have bare glass panes) but his, shut, the bell right in front of his; villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house. Day 6000.",
    "look": {
     "time": 6000
    },
@@ -319,9 +356,9 @@
    "id": "S05",
    "line": "L08",
    "place": "cliff",
-   "size": "wide",
-   "camera": "at: (0, 2, -2) by the bell looking up north at the oak on the rise (0, 10, -12), slow push",
-   "frame": "subject: the oak on the cliff edge in full sun; in its dark shade a pale white figure standing still (the skeleton: a white shape at phone size, not yet readable as a skeleton, no bow visible). Day 6000.",
+   "size": "ews",
+   "camera": "at: (8, 14, 20) beyond the square, about 32 blocks from the oak, looking north up at it, slow push",
+   "frame": "subject: the oak on the edge of the stone cliff in full sun; in its dark shade a pale white figure standing still: a white speck about 4.5% of frame height (not readable as a skeleton, no bow visible); his house and the bell small in the foreground on the same line. Day 6000.",
    "look": {
     "time": 6000
    },
@@ -333,9 +370,9 @@
    "id": "S06",
    "line": "L09",
    "place": "bedroom",
-   "size": "ms",
-   "camera": "pov at the open window leaning to the east edge of the sill, still, a small push",
-   "frame": "subject: the bell 3 blocks out at his eye level, seen a little from the side: an arrow stuck in its north face, the shaft and fletching side-on, sticking out past the bell toward the dark cliff (the kid calls it a feather); on 'POOF' a jump cut a minute later: the arrow gone (vanilla: a stuck arrow despawns after a minute). Dusk 12600 (sun down, sky deep blue).",
+   "size": "full",
+   "camera": "at: (3, 7.5, -3.3) beside the bell facing west, still, a small push (not pov)",
+   "frame": "subject: the bell side-on, an arrow stuck in its north face: the shaft broadside, the fletching pointing to frame right, toward the cliff (the kid calls it a feather); on 'POOF' a jump cut a minute later: the arrow gone (vanilla: a stuck arrow despawns after a minute). bg: his lit window. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -347,8 +384,8 @@
    "id": "S07",
    "line": "L10",
    "place": "bedroom",
-   "size": "full",
-   "camera": "pov at the open window; on 'CLIMBED' the pov climbs over the sill onto the porch roof two blocks east (x +2, eye 5.6) and faces the cliff",
+   "size": "ms",
+   "camera": "pov at the open window; on 'CLIMBED' he steps out through the 1x2 window onto the porch roof and walks two blocks east to (2, 4, -1), facing the cliff",
    "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'CLIMBED' the pov climbs out over the sill onto the porch roof two blocks east; on 'PAST' the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
@@ -362,8 +399,8 @@
    "line": null,
    "place": "cliff",
    "size": "wide",
-   "camera": "at: over the skeleton's right shoulder under the oak (-0.6, 12.2, -13), about a block west of the axis so the stuck arrow's shaft reads side-on, looking down the axis at the window (0, 5, 0), FOV 30, still. The reveal, one shot, no line. Mark `draw` at full draw; cut 1.0 s after it",
-   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade (right third); mid the bell, swinging, centred on the axis, tonight's arrow stuck in its north face, its shaft and fletching angled toward the camera but seen a little from the side (the shield; check a 300 px still before locking the shot), the lit window behind it; the kid on the porch roof beside the bell, just clear of it, waving up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
+   "camera": "at: (0.6, 12.6, -15.5) behind the skeleton, over its left shoulder, looking down the axis at the window, FOV 30, still. The reveal, one shot, no line. Mark `draw` at full draw; cut 1.0 s after it",
+   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade, about 7.5 deg right of centre and 12.6 deg up; mid the bell, swinging, centred, tonight's arrow stuck in its north face toward the camera (check a 300 px still before locking: the shaft must read, not a dot); the lit window behind it; the kid on the porch roof beside the bell at about 7.7 deg left, clear of it, waving up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
    "look": {
     "time": 12600
    }
@@ -373,45 +410,38 @@
   "window": {
    "at": [
     0,
-    5,
+    4,
     0
    ]
   },
   "bell": {
    "at": [
     0,
-    6,
+    7,
     -3
    ],
-   "note": "the village belfry: double_wall between two oak-fence posts on a cobblestone base, nothing above it"
-  },
-  "post": {
-   "at": [
-    1,
-    3,
-    -3
-   ]
+   "note": "the village belfry: double_wall between two oak-log posts on a cobblestone base, nothing above it"
   },
   "arrow": {
    "at": [
     0,
-    6.5,
-    -3
+    7.5,
+    -3.2
    ],
-   "note": "stuck in the bell's north side"
+   "note": "stuck in the bell's north face, shaft and fletching north"
   },
   "oak": {
    "at": [
-    0,
-    10,
-    -12
+    2,
+    9,
+    -13
    ],
-   "note": "on the edge of a sheer stone cliff face, not a grassy bump"
+   "note": "on the edge of a sheer stone cliff face"
   },
   "skeleton": {
    "at": [
     0,
-    10,
+    9,
     -12
    ]
   },
@@ -421,6 +451,14 @@
     1,
     -8
    ]
+  },
+  "door": {
+   "at": [
+    3,
+    4,
+    2
+   ],
+   "note": "his bedroom door, east wall"
   }
  },
  "ending": {
