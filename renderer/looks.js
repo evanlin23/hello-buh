@@ -45,6 +45,25 @@ const MOODS = {
   }
 }
 
+// look 'bright' (owner, 2026-11-10, on the biggest Minecraft story channels: "very bright, exagerated movements";
+// opt-in, house rule 7952f67): 'auto' by time of day (and every shot mood), then each frame's grade pushed bright and
+// punchy: exposure up, saturation to ~1.3, more contrast, the white balance pulled toward a clean daylight, vignette
+// <= 0.1, nights lifted further so faces read. render.js also drops depth of field and speeds up camera pushes for it.
+function brighten (g) {
+  const night = g.exposure >= 1.25 && g.gain && g.gain[2] > g.gain[0]
+  const faded = g.sat < 0.8   // a flashback keeps its fade, only a little less
+  const clean = [1.04, 1.02, 0.98]
+  return {
+    ...g,
+    exposure: g.exposure * (night ? 1.25 : 1.15),
+    sat: faded ? g.sat * 1.25 : Math.max(1.3, g.sat * 1.2),
+    contrast: (g.contrast ?? 0.12) + 0.1,
+    gain: g.gain ? g.gain.map((v, i) => v + (clean[i] - v) * 0.6) : clean,
+    gamma: g.gamma ? g.gamma.map(v => night ? v * 1.06 : v) : g.gamma,
+    vignette: Math.min(0.1, g.vignette ?? 0.1)
+  }
+}
+
 // look 'auto' (or { mood: 'auto', ... }): the grade follows the time of day, frame by frame, so a story that cuts
 // between day and night needs no per-scene look. Keys on the game clock (ticks, 0-24000), linear between them; a cut
 // that changes the time changes the grade on its own frame, a time-lapse glides through them.
@@ -75,6 +94,7 @@ function gradeAt (L, dayTime, shotMood, shot) {
     g = moodGrade(shotMood)
   } else g = L && L.auto ? autoGrade(dayTime ?? 6000) : null
   if (g && shot && (shot.grade || shot.vignette != null)) g = { ...g, ...(shot.grade || {}), ...(shot.vignette != null ? { vignette: shot.vignette } : {}) }
+  if (L && L.bright) g = brighten(g || moodGrade('village_day'))
   return g
 }
 
@@ -82,9 +102,10 @@ function resolveLook (L) {
   if (!L) return L
   if (typeof L === 'string') L = { mood: L }
   if (!L.mood) return L
-  if (L.mood === 'auto') {
+  if (L.mood === 'auto' || L.mood === 'bright') {
     const { mood, ...rest } = L
-    return { grade: { ...MOODS.village_day.grade }, vignette: MOODS.village_day.vignette, cloudNight: 0.42, ...rest, auto: true }
+    const b = mood === 'bright' || rest.bright
+    return { grade: { ...MOODS.village_day.grade }, vignette: b ? 0.1 : MOODS.village_day.vignette, cloudNight: 0.42, ...rest, auto: true, ...(b ? { bright: true, dof: false } : {}) }
   }
   const m = MOODS[L.mood]
   if (!m) throw new Error(`look.mood '${L.mood}': not one of ${Object.keys(MOODS).join(', ')}`)
@@ -94,4 +115,4 @@ function resolveLook (L) {
   return out
 }
 
-module.exports = { MOODS, resolveLook, gradeAt, autoGrade }
+module.exports = { MOODS, resolveLook, gradeAt, autoGrade, brighten }

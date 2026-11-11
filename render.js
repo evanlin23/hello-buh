@@ -1268,6 +1268,8 @@ function shotCamBase (sh, t, solidAt) {
   // the slow push-in: a fixed camera eases toward its subject, `push` blocks a second (default 0.2; push: 0 locks
   // it), at most a quarter of the way: dialogue shots read as frozen without it (reel 1 QA: stuck 1.6-2.4 s; 0.12
   // still read as frozen, review v2)
+  // look 'bright': punchier pushes, 0.4-0.6 blocks/s (owner 2026-11-10: "very bright, exagerated movements")
+  if (LOOK_RAW && LOOK_RAW.bright && (sh.push ?? 0.2) > 0 && !sh._brightPush) sh = { ...sh, push: Math.min(0.6, Math.max(0.4, (sh.push ?? 0.2) * 2)), _brightPush: true }
   if ((sh.at || auto) && lk && (sh.push ?? 0.2) > 0) {
     const dx = lk.x - pos.x, dy = lk.y - pos.y, dz = lk.z - pos.z, L = Math.hypot(dx, dy, dz)
     const e = Math.min((sh.push ?? 0.2) * u, L * 0.25) / Math.max(L, 1e-6)
@@ -2674,7 +2676,7 @@ else:
       const LK = LOOK_RAW   // (LOOK_JSON='{...}': try a look on any recording)
       if (LK && !process.env.LOOK_OFF) {
         if (LK.letterbox && !process.env.NO_BARS) cam.bars = LK.letterbox   // (NO_BARS=1: a vertical Short from a movie scene)
-        const dof = shotNow.dof ?? LK.dof
+        const dof = LK.bright ? null : (shotNow.dof ?? LK.dof)   // look 'bright': no depth of field
         // (NO_DOF=1: a quick render without depth of field)
         if (dof && c && c.focusDist && !process.env.NO_DOF) { cam.focus = c.focusDist; cam.aperture = (typeof dof === 'object' && dof.aperture) || (typeof LK.dof === 'object' && LK.dof.aperture) || 1 }
       }
