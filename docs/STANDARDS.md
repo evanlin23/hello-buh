@@ -343,6 +343,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
+- **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
+  (the genre's look); every other turn keeps the followable-camera rule. Check: review. r:r258d1b
 - **A build never stalls on screen**: while a build is unfinished, new blocks appear every output second; no hold
   between stages or builds without a captioned beat. Check: pace (build stall: no placement for over 1 s of output
   time mid-build, from a build's X_start mark to its last block), review. r:r478786

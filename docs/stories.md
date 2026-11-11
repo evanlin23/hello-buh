@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, after the lead sent every Short it called ready (and asked whether the clutch Shorts' quick
+  look-down flick counts as a whip, and whether to hold four approved story Shorts the new whip check flags): "All
+  ok".** The Shorts sent today are approved as they are; the new formats (cells, dilemma, race, mislabel, hack, desire,
+  inside, interrupt, mega) go first in the queue. A clutch Short's single quick look-down at the landing is allowed
+  (the genre's look; boat_clutch, clutch_harder); every other turn keeps the followable-camera rule. The approved
+  story experiments (sun_wont_set, respawn_voice, chunk_next_door, sheep_stares) ship as they are.
 - **Owner, 2026-11-11, reviewing the ready Shorts by hand: "when we're building the statue, so I guess lapsed
   statue, we pause for some reason when we're building the second one. Like for like what seems like more than just a
   while."** A build never stalls on screen: while a build is unfinished, blocks keep going on (in a time-lapse, every
