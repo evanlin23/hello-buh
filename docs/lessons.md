@@ -494,6 +494,12 @@ How the work itself went wrong, and the rule now:
   pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
   the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
   `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
+- FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is not done.
+- FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
+- FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
+- VANILLA, not bugs (story_sheep_stares nitpicks): the death puffs are drawn in the world under the death screen (edit.py overlays the screen on the finished frame; the white text over light-grey puffs is just low contrast); the hearts blink for 20 ticks after the killing hit (Gui.renderHearts); a dropped item stands upright facing the camera (sprite items are still billboards rather than vanilla's spinning 1-pixel-thick model: open).
+- Engine (worker 3): no tool-break particles or sound (golem's sword); seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666; every_clutch's frozen lake); redstone ore shows no dust while being mined; bucket use shows no arm swing.
+- Engine (worker 18): no lightning bolt is drawn, so storms have thunder sound only.
 - Audio (orchestrator, long-form pilot): recordings made before the harness logged sounds (no `sound` or `hurt` events,
   e.g. boat_clutch) fall back to audio.py's water-clutch rebuild, which plays `item.bucket.empty` and a high-speed
   splash on the last `placed` mark. On boat_clutch that's a bucket and a splash on the final boat landing (in the
@@ -555,3 +561,8 @@ How the work itself went wrong, and the rule now:
   (L06, 19.9-20.45 s) was the cast's waiting room roof (stone at F+64 over a barrier floor, 66 blocks up and in frame
   on the low POV shot), lit by sky light 8 under itself at time 12300. Vanilla draws it too. Fix: `stunt.hideBoxes`
   (docs/engine_features.md); story_good_boy lists its waiting room.
+- VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
+  over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
+  pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
+  the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
+  `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
