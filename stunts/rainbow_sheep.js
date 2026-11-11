@@ -45,7 +45,7 @@ module.exports = {
     // left a cut dirt-and-stone wall behind the line (review 2026-11-11)
     const floor = await plateau(ctx, { x0: x - 56, x1: x + 56, z0: z - 30, z1: z + 24, above: 24, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
     this.floor = floor
-    await ctx.cmd('/kill @e[type=sheep]')
+    await ctx.cmd('/kill @e[type=!player]')   // a wandering villager from a village nearby walked through the shot (rec_check: stair-stepping cast)
     // sheep stand at x0 + i*STEP, z; a fence behind and posts between them, open at the front
     const x0 = x - Math.floor((N - 1) * STEP / 2)
     this.x0 = x0
