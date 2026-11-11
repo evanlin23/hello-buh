@@ -63,3 +63,4 @@ trap_free_diamonds  # first
 fakemod_permission  # first
 underdog_heal  # first
 lava_crossing
+fakeworld_diamond  # first
