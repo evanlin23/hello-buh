@@ -113,7 +113,7 @@ module.exports = {
   renderDistance: 6,   // the clearing's cut edge is past it (see setup)
   caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀',
   edit: {
-    caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
+    caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', dropAt: 'all_done',
     startAt: 'build_start:-0.15', endAfter: 'all_done:0.9',
     // the mansion's 13 s of wall-placing at 2x (no dead time; it's the "60 seconds" build)
     speed: [['b_mansion', 'e_mansion', 2]],

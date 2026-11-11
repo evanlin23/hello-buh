@@ -16,7 +16,10 @@
 # <branch>-render-<name>). The branch used is kept in work/<name>.render_branch for --fetch/--wait, which also look at
 # render/<name> and <prefix>/render-<name>. Commit other uncommitted changes (edit.py, render.js...) first: only those
 # three folders are carried over. The finished Short comes back on the render branch (renders/out/<name>.mp4 +
-# renders/result.json), so fetching needs only git; it's also the run's "short" artifact.
+# renders/result.json), so fetching needs only git (this box has no token for the run's "short" artifact). --fetch reads
+# the branch through a throwaway object store that borrows the shared .git's objects (alternates), like
+# release_assets.py: the mp4 (30-80 MB a render, ~1 GB of render/* mp4s by 2026-11-11) never lands in the shared .git,
+# and a plain `git fetch` skips render/* (a negative refspec in remote.origin.fetch, added here once).
 # Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH, REMOTE (origin),
 # PICTURE_KEY / REUSE_RUN (set by `hb render --reuse`: re-run only the edit on a finished run's frames), PREVIEW=1
 # (hb render --preview: queued over known check blockers). The run checks the recording too (./hb check, in parallel
@@ -34,26 +37,42 @@ candidates () {
     echo "render/$name"
     [ -n "$prefix" ] && [ "$prefix" != "$cur" ] && echo "$prefix/render-$name"; } | awk 'NF && !seen[$0]++'
 }
+# a plain `git fetch` (every worker runs one) must not pull every render branch's mp4 into the shared .git either
+if [ "$REMOTE" = origin ] && git remote get-url origin >/dev/null 2>&1 && ! git config --get-all remote.origin.fetch | grep -qxF '^refs/heads/render/*'; then
+  git config --add remote.origin.fetch '^refs/heads/render/*' || true
+fi
 fetch () {
-  local name=$1 branch="" b
+  # git commands on the fetched branch run in a throwaway object store (FG): see the header
+  local FG rc=0 objs
+  objs=$(cd "$(git rev-parse --git-common-dir)" && pwd)/objects
+  FG=$(mktemp -d "${TMPDIR:-/tmp}/hb-render-fetch.XXXXXX")
+  git init -q --bare "$FG" && echo "$objs" > "$FG/objects/info/alternates" || { rm -rf "$FG"; echo "could not make a temporary object store"; return 2; }
+  fetch_in "$FG" "$@" || rc=$?
+  rm -rf "$FG"
+  return $rc
+}
+fetch_in () {
+  local FG=$1 name=$2 branch="" b url
+  g () { GIT_DIR="$FG" git "$@"; }
   for b in $(candidates "$name"); do
     if git ls-remote --exit-code --heads "$REMOTE" "$b" >/dev/null 2>&1; then branch=$b; break; fi
   done
   [ -n "$branch" ] || { echo "no render branch for $name on $REMOTE (looked for: $(candidates "$name" | tr '\n' ' '))"; return 2; }
-  git fetch -q "$REMOTE" "$branch" || { echo "could not fetch $branch from $REMOTE"; return 2; }
+  url=$(git remote get-url "$REMOTE" 2>/dev/null || echo "$REMOTE")
+  g fetch -q "$url" "refs/heads/$branch" || { echo "could not fetch $branch from $REMOTE"; return 2; }
   local res
-  if ! res=$(git show FETCH_HEAD:renders/result.json 2>/dev/null); then echo "$branch: still rendering"; return 3; fi
+  if ! res=$(g show FETCH_HEAD:renders/result.json 2>/dev/null); then echo "$branch: still rendering"; return 3; fi
   # the result must be THIS job's: a working branch (or HEAD) that carried an older renders/result.json handed it to
   # every later queue, and --wait took the old Short as new. The run copies slices.json's "queued" stamp into its
   # result; the queue commit (the last one touching renders/slices.json) must be the one this box queued, if it did
   local job qc want
-  job=$(git show FETCH_HEAD:renders/slices.json 2>/dev/null || echo '{}')
+  job=$(g show FETCH_HEAD:renders/slices.json 2>/dev/null || echo '{}')
   if ! python3 -c "import json,sys;r,j=json.loads(sys.argv[1]),json.loads(sys.argv[2]);sys.exit(0 if r.get('queued') and r.get('queued')==j.get('queued') else 1)" "$res" "$job"; then
     echo "$branch: stale result (renders/result.json is from an older job than renders/slices.json: an inherited file): still rendering"; return 3
   fi
-  qc=$(git log -1 --format=%H FETCH_HEAD -- renders/slices.json)
+  qc=$(g log -1 --format=%H FETCH_HEAD -- renders/slices.json)
   want=$(cat "work/$name.render_queued" 2>/dev/null || true)
-  if [ -n "$want" ] && [ "$want" != "$qc" ] && git cat-file -e "$want" 2>/dev/null && ! git merge-base --is-ancestor "$want" FETCH_HEAD 2>/dev/null; then
+  if [ -n "$want" ] && [ "$want" != "$qc" ] && g cat-file -e "$want" 2>/dev/null && ! g merge-base --is-ancestor "$want" FETCH_HEAD 2>/dev/null; then
     echo "$branch: a result from another queue (job $qc, this box queued $want): still rendering"; return 3
   fi
   local status run
@@ -61,11 +80,11 @@ fetch () {
   run=$(python3 -c "import json,sys;print(json.loads(sys.argv[1]).get('run',''))" "$res")
   if [ "$status" != done ]; then echo "$branch: $status ($run)"; return 1; fi
   mkdir -p out
-  git show "FETCH_HEAD:renders/out/$name.mp4" > "out/$name.mp4"
+  g show "FETCH_HEAD:renders/out/$name.mp4" > "out/$name.mp4"
   # which code made it, for publish.js: the commit the run rendered (the last one that queued renders/slices.json),
   # with the stunt/lib/stories as recorded; it stays reachable on $branch
   local rc
-  rc=$(git log -1 --format=%H FETCH_HEAD -- renders/slices.json)
+  rc=$(g log -1 --format=%H FETCH_HEAD -- renders/slices.json)
   python3 - "out/$name.render.json" "$rc" "$branch" "$run" "out/$name.mp4" <<'EOF'
 import hashlib, json, sys
 p, commit, branch, run, mp4 = sys.argv[1:]
@@ -73,8 +92,8 @@ json.dump({"commit": commit, "branch": branch, "run": run, "sha256": hashlib.sha
 EOF
   # the run's ./hb check report (render-slices.yml "check" job): next to the mp4, and its verdict said out loud
   rm -f "out/$name.check.json" "out/$name.check.txt"
-  git show "FETCH_HEAD:renders/out/$name.check.json" > "out/$name.check.json" 2>/dev/null || rm -f "out/$name.check.json"
-  git show "FETCH_HEAD:renders/out/$name.check.txt" > "out/$name.check.txt" 2>/dev/null || rm -f "out/$name.check.txt"
+  g show "FETCH_HEAD:renders/out/$name.check.json" > "out/$name.check.json" 2>/dev/null || rm -f "out/$name.check.json"
+  g show "FETCH_HEAD:renders/out/$name.check.txt" > "out/$name.check.txt" 2>/dev/null || rm -f "out/$name.check.txt"
   echo "out/$name.mp4 ($(du -h "out/$name.mp4" | cut -f1)) from $run"
   if [ -f "out/$name.check.txt" ]; then head -1 "out/$name.check.txt"; else echo "$name: NO CHECK REPORT from the run (the check job did not finish): run ./hb check $name before showing it"; fi
 }

@@ -68,6 +68,22 @@ class ReleaseDownload(unittest.TestCase):
         self.assertEqual(f.name, "short.mp4")
 
 
+class PickSkipsAPackageWithNoVideo(unittest.TestCase):
+    def test_has_video(self):
+        yu = uploader()
+        with tempfile.TemporaryDirectory() as td:
+            vd = pathlib.Path(td)
+            git(vd, "init", "-q")
+            for n in ("old", "gone"):
+                (vd / "shorts" / n).mkdir(parents=True)
+                (vd / "shorts" / n / "metadata.json").write_text("{}")
+            (vd / "shorts" / "old" / "short.mp4").write_bytes(b"x")
+            git(vd, "add", "-A"); git(vd, "commit", "-q", "-m", "x")
+            self.assertTrue(yu.has_video(vd, "old", {}))
+            self.assertFalse(yu.has_video(vd, "gone", {}))
+            self.assertTrue(yu.has_video(vd, "gone", {"video": {"release": {"url": "u"}}}))
+
+
 class CommitOnlyThePackage(unittest.TestCase):
     def test_private_index(self):
         import release_assets as ra

@@ -11,5 +11,5 @@ module.exports = pixelArt({
   ],
   palette: { Y: 'yellow_wool', B: 'black_wool' },
   caption: 'Bro this looks wrong?',
-  edit: { caption: 'Bro this looks wrong?', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
+  edit: { caption: 'Bro this looks wrong?', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
 })

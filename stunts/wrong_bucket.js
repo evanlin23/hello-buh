@@ -7,7 +7,7 @@ module.exports = {
   ...clutch,
   name: 'wrong_bucket',
   caption: 'POV: you grabbed the wrong bucket 💀',
-  edit: { caption: 'POV: you grabbed the wrong bucket 💀', red: 'wrong', song: 'songs/funk_abnormal.mp3', dropAt: 'death', onFire: 'placed:death', deathScreen: true , startAt: 'jump:-0.4', endAfter: 'death:1.8'},
+  edit: { caption: 'POV: you grabbed the wrong bucket 💀', red: 'wrong', dropAt: 'death', onFire: 'placed:death', deathScreen: true , startAt: 'jump:-0.4', endAfter: 'death:1.8'},
   expectDeath: true,
 
   // 21 blocks: the landing costs 18 of 20 HP, so the lava kills ("tried to swim in lava"), not the
