@@ -110,6 +110,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 1112 | Digger's House | **Sheep Stares.** 412 days on, the Digger breaks the block, falls and dies to the same zombie. The hole stays open. |
 | 1300 | Cliff House | **Respawn Voice.** A first death, two voices. The Short leaves the question open (the intended answer is in the stunt file). |
 | 1300-1400 | Hushwell | Kid Buh builds his dirt hut on the hilltop. Hushwell finds the shrieker under its well and carpets everything, boxes the bell and lids the well (day 1400). |
+| 1500 | under Torch Hill | **The Singing Box Next Door** (planned, not canon until made). Two players have built beside the Digger's House; she mines down the old torch shaft to y -54. Her allay brings every diamond to the note block in a hole in the tunnel wall. The neighbor plays it from his secret room next door and wears all 31. |
 | 1500 | Hushwell | **Light Sleeper.** Buh (about 10) plays a music disc on the open well and the warden rises. "Buh was obliterated by a sonically-charged shriek." His dog sits by its doghouse on the north slope. |
 | ~1550 | | After the warden night Buh is sent across the White to Grandpa in Ravenford. |
 | 1800 | Stillwater | **The Chunk Next Door.** 700 nights after the Long Day ended, the neighbour looks Gary in the face. |
@@ -261,6 +262,16 @@ follow any Short.
 18. **Players leave** (the theme; on screen across Shorts). Buh logs out on the hill (Good Boy, Dog on the Hill), the
     grandson's grandpa walks into the portal (Gold for the Portal), Leo goes to the End (One More Eye), Jonah walks
     out of Larkfield (Six Thousand Torches), Grandma rows away (The Walk). Somebody who stays tells each one.
+
+
+### Planned characters (batch 3)
+| who | story (place, day) | look | voice | status |
+|---|---|---|---|---|
+| the allay | The Singing Box Next Door (under Torch Hill, 1500) | vanilla allay, holds the miner's one diamond | `narrator` (Leda, the house narrator voice) | cast |
+| the miner | The Singing Box Next Door (under Torch Hill, 1500) | player, default `noor` skin, iron pickaxe; never named | Aoede or Erinome (both unused), audition against Pip on L10 | audition |
+| the neighbor | The Singing Box Next Door (under Torch Hill, 1500) | player, default `efe` skin; full diamond armour in the reveal; never named | Algieba or Umbriel (both unused), audition against Pip on L11 | audition |
+
+`noor` and `efe` are the last unused default skins; conflicts 18 and 19 also recommend them (the hall player, The Walk's kid): the lead's and owner's call.
 
 ## Conflicts and how they're read (no published Short is re-rendered)
 
