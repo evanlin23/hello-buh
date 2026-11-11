@@ -297,7 +297,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
-  on. Check: owner. r:r77977b
+  on. New stories are made by hand in owner-audited stages: premise shortlist (owner picks), then one session per
+  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f
 - **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
   swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
   Check: owner. r:r1f2a80
