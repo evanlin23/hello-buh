@@ -83,18 +83,18 @@ def aim_report(sight_res: dict, keep) -> dict:
         return f"{verb} {a['what']}{at}"
     bad = [a for a in acts if not a["onScreen"] or a["deg"] > AIM_BLOCK_DEG]
     for a in bad[:AIM_LIST]:
-        F.append(("BLOCK", a["tick"], f"aim: {what(a)} " + (f"with the target off-screen ({a['deg']:.1f} deg off the crosshair)" if not a["onScreen"]
+        F.append(("BLOCK", a["tick"], f"{what(a)} " + (f"with the target off-screen ({a['deg']:.1f} deg off the crosshair)" if not a["onScreen"]
                   else f"{a['deg']:.1f} deg off the crosshair (max {AIM_BLOCK_DEG:g}): it reads as hacking")))
     if len(bad) > AIM_LIST:
-        F.append(("BLOCK", bad[AIM_LIST]["tick"], f"aim: {len(bad) - AIM_LIST} more action(s) over {AIM_BLOCK_DEG:g} deg or off-screen (python3 scripts/owner_checks.py <rec> lists them all)"))
+        F.append(("BLOCK", bad[AIM_LIST]["tick"], f"{len(bad) - AIM_LIST} more action(s) over {AIM_BLOCK_DEG:g} deg or off-screen (python3 scripts/owner_checks.py <rec> lists them all)"))
     if share > AIM_SHARE_MAX and len(acts) >= AIM_SHARE_MIN_N:
         worst = sorted(over, key=lambda a: -a["deg"])[:3]
-        F.append(("BLOCK", over[0]["tick"], f"aim: {len(over)}/{len(acts)} actions ({share * 100:.0f}%, max {AIM_SHARE_MAX * 100:.0f}%) land over "
+        F.append(("BLOCK", over[0]["tick"], f"{len(over)}/{len(acts)} actions ({share * 100:.0f}%, max {AIM_SHARE_MAX * 100:.0f}%) land over "
                   f"{AIM_MAX_DEG:g} deg off the crosshair (median {q(0.5):.1f}): the view doesn't track the action. Worst: "
                   + "; ".join(f"src {a['tick'] / 20:.2f}s {what(a)} {a['deg']:.1f} deg" for a in worst)))
     elif over and not bad:
         w = max(over, key=lambda a: a["deg"])
-        F.append(("WARN", w["tick"], f"aim: {len(over)}/{len(acts)} actions over {AIM_MAX_DEG:g} deg off the crosshair (under the "
+        F.append(("WARN", w["tick"], f"{len(over)}/{len(acts)} actions over {AIM_MAX_DEG:g} deg off the crosshair (under the "
                   f"{AIM_SHARE_MAX * 100:.0f}% that blocks); worst {what(w)} {w['deg']:.1f} deg"))
     fix = " (aim before the action: K.dig / K.place, or a look governor that settles on each target before it acts; STANDARDS r:rffba12)"
     F = [(lvl, t, m + (fix if lvl == "BLOCK" else "")) for lvl, t, m in F]
