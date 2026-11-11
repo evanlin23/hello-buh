@@ -50,7 +50,11 @@
    "who": "N",
    "beat": "a",
    "text": "The NITWIT / in my village / has said HMM / 4,096 TIMES.",
-   "say": "The nitwit in my village has said hmm four thousand and ninety-six TIMES."
+   "say": "The nitwit in my village has said hmm four thousand and ninety-six TIMES.",
+   "look": {
+    "what": "actor:nS",
+    "word": "NITWIT"
+   }
   },
   {
    "id": "L02",
@@ -64,7 +68,11 @@
    "who": "N",
    "beat": "a",
    "text": "He's ALWAYS / standing / somewhere / WEIRD.",
-   "say": "He's always standing somewhere WEIRD."
+   "say": "He's always standing somewhere WEIRD.",
+   "look": {
+    "what": "actor:nRoof",
+    "word": "WEIRD"
+   }
   },
   {
    "id": "L04",
@@ -106,7 +114,11 @@
    "who": "N",
    "beat": "a",
    "text": "Even the / IRON GOLEM / goes AROUND him.",
-   "say": "Even the iron golem goes AROUND him."
+   "say": "Even the iron golem goes AROUND him.",
+   "look": {
+    "what": "actor:golem",
+    "word": "IRON GOLEM"
+   }
   },
   {
    "id": "L10",
@@ -120,7 +132,11 @@
    "who": "N",
    "beat": "a",
    "text": "Past the / last torch / was ANOTHER / village.",
-   "say": "Past the last torch was ANOTHER village."
+   "say": "Past the last torch was ANOTHER village.",
+   "look": {
+    "what": "actor:nRuin",
+    "word": "ANOTHER"
+   }
   },
   {
    "id": "L12",
@@ -155,7 +171,11 @@
    "who": "N",
    "beat": "a",
    "text": "But a NITWIT / can only / say one word.",
-   "say": "But a NITWIT can only say one word."
+   "say": "But a NITWIT can only say one word.",
+   "look": {
+    "what": "actor:nS",
+    "word": "NITWIT"
+   }
   },
   {
    "id": "L17",

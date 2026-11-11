@@ -45,7 +45,7 @@ module.exports = {
     const { bot } = ctx
     const { c, A, mob, vil } = setKit(ctx, { X, Z, F })
     await ctx.defaultRules()
-    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing false', 'natural_health_regeneration false', 'do_insomnia false', 'do_mob_spawning false']) await c(`/gamerule ${g}`)
+    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing false', 'natural_health_regeneration false', 'spawn_mobs false']) await c(`/gamerule ${g}`)
     await c('/difficulty normal')
     await c(`/setworldspawn ${X} ${F + 1} ${Z}`)
     const W = await world.build(ctx, { story: 'sun_wont_set' })
