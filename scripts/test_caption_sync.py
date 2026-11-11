@@ -73,7 +73,8 @@ class Captions(unittest.TestCase):
         (d / "voice" / "voice.json").write_text(json.dumps({"lines": {"L01": {
             "who": "N", "text": "My grandma nine thousand gold ingots.", "dur": 4.0, "onset": 0.3, "end": 3.5,
             "chunks": [[0.3, 1.0], [1.5, 2.9], [2.9, 3.5]], "captions": caps}}}))
-        self.words = [["My", 0.3, 0.5], ["grandma", 0.55, 1.0], ["9", 1.5, 2.2], [",000", 2.2, 2.85], ["gold", 2.9, 3.1], ["ingots.", 3.15, 3.5]]
+        self.words = [["My", 0.3, 0.5], ["grandma", 0.62, 1.0],   # (0.32 s for "My": over story_track.MIN_SHOW)
+                      ["9", 1.5, 2.2], [",000", 2.2, 2.85], ["gold", 2.9, 3.1], ["ingots.", 3.22, 3.5]]
         (d / "voice" / "words.json").write_text(json.dumps({"L01": self.words}))
         import story_track
         self.st = story_track
@@ -87,11 +88,11 @@ class Captions(unittest.TestCase):
         ev = self.st.caption_events(self.d, tl, 0.0, 6.0)
         got = {w: round(t0 - 1.0 - self.st.CAPTION_LEAD * 0, 3) for t0, _, w in ev}
         lead = self.st.CAPTION_LEAD
-        self.assertAlmostEqual(got["grandma"], 0.55 - lead, places=3)
+        self.assertAlmostEqual(got["grandma"], 0.62 - lead, places=3)
         self.assertAlmostEqual(got["NINE"], 1.5 - lead, places=3)
         self.assertTrue(1.5 < got["THOUSAND"] + lead < 2.85)
         self.assertAlmostEqual(got["gold"], 2.9 - lead, places=3)     # by index it took ",000"'s 2.2
-        self.assertAlmostEqual(got["ingots."], 3.15 - lead, places=3)
+        self.assertAlmostEqual(got["ingots."], 3.22 - lead, places=3)
 
     def test_frame_of_floors(self):
         self.assertEqual(self.st.frame_of(1.0), 60)
@@ -209,3 +210,38 @@ class Coverage(unittest.TestCase):
         bad = {"L01": [(w, 0, 0) for w in "My village is covered in nine thousand carpets".split()]}
         self.assertEqual(self.C.take_word_fails(caps, good), {})
         self.assertIn("L01", self.C.take_word_fails(caps, bad))
+
+
+class MinShow(unittest.TestCase):
+    """story_track.min_show: no caption under 0.30 s (a merge within its line when it fits, else time borrowed from the
+    next caption, never an earlier start); caption_av_check.flashes BLOCKs anything under 0.25 s."""
+
+    def setUp(self):
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+        import story_track as T
+        import caption_av_check as C
+        self.T, self.C = T, C
+
+    def test_a_flash_merges_with_its_neighbour_when_it_fits(self):
+        ev = [(5.0, 5.1, "Kids THROW", "L03"), (5.1, 5.7, "STICKS for him.", "L03"), (5.7, 6.5, "He doesn't BLINK.", "L03")]
+        out = self.T.min_show(ev, fits=lambda t: True)
+        self.assertEqual(out[0], (5.0, 5.7, "Kids THROW STICKS for him.", "L03"))
+        self.assertEqual(len(out), 2)
+        self.assertTrue(all(e[1] - e[0] >= 0.30 for e in out))
+
+    def test_too_wide_to_merge_borrows_from_the_next_and_never_starts_early(self):
+        ev = [(5.0, 5.1, "Kids THROW", "L03"), (5.1, 5.9, "STICKS for him.", "L03")]
+        out = self.T.min_show(ev, fits=lambda t: False)
+        self.assertAlmostEqual(out[0][0], 5.0)          # its own start, never before its word
+        self.assertAlmostEqual(out[0][1], 5.3)
+        self.assertAlmostEqual(out[1][0], 5.3)
+        self.assertGreaterEqual(out[1][1] - out[1][0], 0.30)
+
+    def test_never_merges_across_lines(self):
+        ev = [(5.0, 5.1, "And then", "L12"), (5.1, 6.0, "Sit, BOY.", "L13")]
+        self.assertEqual(self.T.min_show(ev, fits=lambda t: True), ev)   # left for the check
+
+    def test_the_check_blocks_a_caption_under_quarter_second(self):
+        ev = [(1.0, 1.2, "too FAST", "L01"), (1.2, 2.0, "fine HERE", "L01")]
+        self.assertEqual([e[2] for e in self.C.flashes(ev)], ["too FAST"])
+        self.assertEqual(self.C.flashes([(1.0, 1.25, "just OK", "L01")]), [])

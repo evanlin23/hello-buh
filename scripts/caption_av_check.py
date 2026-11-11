@@ -19,7 +19,8 @@ Coverage (owner 2026-11-11: "should we have captions on all of the words, not ju
   every word of every line (narrator and characters, voice/words.json placed where the edit lays the line) has its
   line's caption on screen while it is spoken (its middle, +-40 ms); every caption word of the line (voice.json
   captions) appears in the caption events; and the take says the caption text (Whisper on each line's wav, the take
-  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words). Any miss is a BLOCK.
+  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words); and no caption is on screen
+  under 0.25 s (whole frames: a flash can't be read). Any miss is a BLOCK.
 
 BLOCK (exit 1) when |median offset| > 33 ms or over 10% of words are more than 100 ms off, or on any coverage miss. Prints the median,
 p10/p90, a per-line table (a constant offset, drift along the Short, or one bad line) and the worst words. Exit 2:
@@ -196,6 +197,12 @@ def caption_frames(mp4, events, s_video, track, story_dir, tmp):
 
 
 COVER_TOL = 0.04   # s: a word counts as captioned if its middle falls inside one of its line's captions, +-40 ms
+SHOW_MIN = 0.25    # s: a caption on screen for less than this can't be read (story_track.min_show aims for 0.30)
+
+
+def flashes(events, frame_of=lambda t: int(round(t * FPS)), min_s=SHOW_MIN):
+    """The captions on screen for less than min_s, measured in whole frames as the caption track draws them."""
+    return [(t0, t1, text, lid) for t0, t1, text, lid in events if (frame_of(t1) - frame_of(t0)) / FPS < min_s - 1e-9]
 
 
 def uncaptioned(spoken, events, tol=COVER_TOL):
@@ -267,7 +274,7 @@ def whisper_lines(wavs):
     return {k: [tuple(x) for x in v] for k, v in json.loads(r.stdout.strip().splitlines()[-1]).items()}
 
 
-def coverage(story_dir, vs, events, verbose=True, listen=True):
+def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t: int(round(t * FPS))):
     """The coverage BLOCK (module doc): every spoken word captioned, every caption word shown, the take says the
     captions. vs: {line id: where the edit lays the line's wav (s)}. -> {"block", "uncaptioned", "missing", "words"}."""
     sd = pathlib.Path(story_dir)
@@ -285,11 +292,15 @@ def coverage(story_dir, vs, events, verbose=True, listen=True):
         if heard is not None:
             listened = True
             wf = take_word_fails({lid: v.get("captions", []) for lid, v in lines.items()}, heard)
-    block = bool(unc or miss or wf or no_words)
+    fl = flashes(events, frame_of)
+    block = bool(unc or miss or wf or no_words or fl)
     if verbose:
         print(("BLOCK" if block else "OK") + f": caption coverage ({len(spoken)} spoken words in {len(lines)} lines: "
               f"{len(unc)} with no caption on screen, {sum(map(len, miss.values()))} caption words never shown, "
-              f"{len(wf)} line(s) whose take doesn't say its captions" + ("" if listened else "; the take's words not checked: no Whisper") + ")")
+              f"{len(wf)} line(s) whose take doesn't say its captions, {len(fl)} caption(s) on screen under {SHOW_MIN:.2f} s"
+              + ("" if listened else "; the take's words not checked: no Whisper") + ")")
+        for t0, t1, text, lid in fl[:10]:
+            print(f"  too short: {lid} {text!r} on screen {t1 - t0:.2f} s from {t0:.2f} s (story_track.min_show merges or lengthens these)")
         for lid, w, a, b in unc[:10]:
             print(f"  uncaptioned: {lid} {w!r} spoken {a:.2f}-{b:.2f} s")
         for lid in no_words:
@@ -301,7 +312,8 @@ def coverage(story_dir, vs, events, verbose=True, listen=True):
         if block:
             print(f"fix: re-align (scripts/align.py {story_dir}) and re-edit; a take that says other words than story.json is a re-take, "
                   "or change the line's text to what was said")
-    return {"block": block, "uncaptioned": [list(u) for u in unc], "no_words": no_words, "missing": miss, "words": wf, "listened": listened}
+    return {"block": block, "uncaptioned": [list(u) for u in unc], "no_words": no_words, "missing": miss, "words": wf,
+            "flashes": [list(f) for f in fl], "listened": listened}
 
 
 def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
@@ -313,7 +325,7 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
     try:
         heard, narr, vs = heard_words(track, story_dir, timeline, 0.0, dur, tmp)
         ev = track.caption_events(story_dir, timeline, 0.0, dur, who=True)
-        cov = coverage(story_dir, vs, ev, verbose)
+        cov = coverage(story_dir, vs, ev, verbose, frame_of=getattr(track, "frame_of", lambda t: int(round(t * FPS))))
         # each caption's words, in order per line: the first word's heard start is the caption's target
         used, rows = {}, []
         for k, (t0, t1, text, lid) in enumerate(ev):
