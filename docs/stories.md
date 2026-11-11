@@ -256,6 +256,10 @@ STANDARDS.md in the same commit.
   "told by someone/the kid who lived it" framing in the channel description or the promise.
 - **Owner, 2026-11-11: "BuhStoriesMC"** (after "Buh Stories is taken"). The second channel is named "Buh Stories", handle
   @BuhStoriesMC (names needn't be unique on YouTube, handles must).
+- **Owner, 2026-11-11: "I can do the uploads manually for the first few for buh stories, then we can set it up later."**
+  Buh Stories uploads are manual for now: when the owner OKs a story by name, the lead sends them the final mp4 plus a
+  ready-to-paste block (title, description, tags, pinned comment). The Buh Stories uploader stays off
+  (YT_ENABLED_BUHSTORIES unset) until the owner asks to automate it.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

@@ -234,6 +234,8 @@ actions left silent). r:rc85ccc r:r36632d
 - **No series number**: no "BUH STORY #N" on the video or in the title; frame 1 shows only the story's hook.
   Check: owner. r:rc0d90d
 - **No "told by someone who lived it"** in the channel description or promise. Check: owner. r:r808cba
+- **Buh Stories uploads are manual for now**: an OK'd story goes to the owner as the mp4 plus a paste-ready title,
+  description, tags and pinned comment; the Buh Stories uploader stays off. Check: owner. r:r09130c
 - **The channel says "stories"; the stories are mysteries**: the channel's name, tagline and description are general
   ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
