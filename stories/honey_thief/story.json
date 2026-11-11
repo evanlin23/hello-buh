@@ -2,7 +2,7 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
   "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
@@ -29,7 +29,7 @@
  ],
  "payoff": "top",
  "payoff_note": "`top`: the stunt mark when the rising camera settles straight down over the whole bee (S10); the Short ends <= 1.0 s after (owner: cut right on the reveal). No line after L11.",
- "punch_note": "hook L01, turn L08 (the flowers never end), the line into the reveal L11",
+ "punch_note": "hook L01, turn L08 (she sets off to find the edge), the line into the reveal L11",
  "look": {
   "time": 3000,
   "fog": false,
@@ -70,8 +70,8 @@
    "on_screen": "a player actor, `kai` skin (NOT Steve: Steve is Buh's), no name tag shown (the bees don't know his name); glass bottles, honey bottles and flowers in hand; one voiced line (L05), on screen in S05 while he says it.",
    "note": "In canon this is Jonah (Larkfield's one player, Six Thousand Torches): if the owner keeps that, the giant takes whatever voice Jonah's audition picks (Zubenelgenubi / Sadachbia / Fenrir), and `friend`/Fenrir is only the placeholder so the lint runs. If the owner wants a new player instead, audition the two unused voices below.",
    "audition": {
-    "line": "L05 \"You're my FAVORITE, you know.\"",
-    "bracket": "[warm and easy, smiling up at a tiny bee]",
+    "line": "L05 \"You're my FAVORITE, little guy.\"",
+    "bracket": "[A friendly young man, bright and goofy]",
     "candidates": [
      {
       "voice": "Umbriel",
@@ -115,7 +115,7 @@
    "lines": [
     "L05"
    ],
-   "direction": "[A friendly young man, warm and easy]"
+   "direction": "[A friendly young man, bright and goofy]"
   }
  ],
  "lines": [
@@ -155,8 +155,8 @@
   {
    "id": "L02",
    "who": "N",
-   "text": "First he / brings SMOKE. / It makes us / all SLEEPY / and NICE. / We HATE that.",
-   "say": "First he brings smoke. It makes us all sleepy and nice. We hate that.",
+   "text": "First, SMOKE. / We go all / SLEEPY / and NICE. / We HATE that.",
+   "say": "First, smoke. We go all sleepy and nice. We hate that.",
    "shot": "S02",
    "shows": [
     {
@@ -219,10 +219,10 @@
   {
    "id": "L05",
    "who": "Giant",
-   "text": "You're my FAVORITE, / you know.",
-   "say": "You're my FAVORITE, you know.",
+   "text": "You're my FAVORITE, / little GUY.",
+   "say": "You're my FAVORITE, little guy.",
    "shot": "S05",
-   "direction": "warm and easy, smiling up at a tiny bee",
+   "direction": "bright and goofy, grinning at a tiny bee",
    "look": {
     "what": "actor:Giant"
    }
@@ -277,8 +277,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "But the flowers / never END now. / We fly FARTHER / every DAY.",
-   "say": "But the flowers never end now. We fly farther every day.",
+   "text": "But the flowers / never END now. / So TODAY, / I went to find / the EDGE.",
+   "say": "But the flowers never end now. So today, I went to find the edge.",
    "shot": "S08",
    "shows": [
     {
@@ -290,7 +290,7 @@
     }
    ],
    "punch": true,
-   "direction": "the first little puzzle in it, still bright",
+   "direction": "determined and bright, off on an adventure",
    "look": {
     "what": "block:dandelion",
     "word": "FLOWERS"
@@ -299,8 +299,8 @@
   {
    "id": "L09",
    "who": "N",
-   "text": "Today I flew / SO far, / I couldn't / see HOME.",
-   "say": "Today I flew so far, I couldn't see home.",
+   "text": "I flew / SO far, / I couldn't / see HOME.",
+   "say": "I flew so far, I couldn't see home.",
    "shot": "S09",
    "direction": "surprised at herself, not scared",
    "look": {
@@ -310,26 +310,24 @@
   {
    "id": "L10",
    "who": "N",
-   "text": "Just FLOWERS, / every WAY. / And way out THERE, / the GIANT, / still PLANTING.",
-   "say": "Just flowers, every way. And way out there, the giant, still planting.",
+   "text": "And way out THERE, / the GIANT, / still PLANTING.",
+   "say": "And way out there, the giant, still planting.",
    "shot": "S10",
    "shows": [
-    {
-     "what": [
-      "oxeye_daisy",
-      "lily_of_the_valley",
-      "dandelion"
-     ],
-     "word": "FLOWERS"
-    },
     {
      "what": [
       "player"
      ],
      "word": "GIANT"
+    },
+    {
+     "what": [
+      "dandelion"
+     ],
+     "word": "PLANTING"
     }
    ],
-   "direction": "looking around, then a fond huff",
+   "direction": "a fond huff",
    "look": {
     "what": "actor:Giant",
     "word": "GIANT"
@@ -338,8 +336,8 @@
   {
    "id": "L11",
    "who": "N",
-   "text": "Somebody should / TELL him / we have ENOUGH.",
-   "say": "Somebody should tell him we have enough.",
+   "text": "So I'm gonna / go TELL him / we have ENOUGH.",
+   "say": "So I'm gonna go tell him we have enough.",
    "shot": "S10",
    "punch": true,
    "direction": "bossy and fond, the last word up",
@@ -358,7 +356,7 @@
    "place": "hive",
    "size": "ms",
    "camera": "bee pov hovering 1.5 blocks out from the hive's front face, eye at the hive's middle; a slow drift left-right (bee hover bob)",
-   "frame": "frame 1: the giant's head and arm big and centred, the glass bottle on the hive's face already moving (0.0 s); on 'HONEY' it fills to a honey bottle (the hive's honey drips stop); on 'FLOWERS' he turns and places one dandelion at his feet, under his crosshair, the pov tilting down after it. bg: bright noon sky, the meadow.",
+   "frame": "frame 1: the giant's head, arm and glass bottle big and centred on the hive's face, already moving (0.0 s), and behind him the flowers running yellow and white to the horizon (the picture asks the question too); on 'HONEY' the bottle fills to a honey bottle; on 'FLOWERS' he turns and places one dandelion at his feet, under his crosshair, the pov tilting after it. Bright noon sky.",
    "look": {
     "time": 3000
    }
@@ -455,8 +453,8 @@
    ],
    "place": "wing",
    "size": "ews",
-   "camera": "bee pov flying fast and low (1.5 blocks up) south-west over the field, the camera ahead of her",
-   "frame": "dandelions, then a podzol stripe flashing under, then white (oxeye daisies, lilies of the valley: the wing); flowers to the horizon; Larkfield's west roofs small on the east skyline (the easter egg, never named).",
+   "camera": "bee pov flying fast and low (1.5 blocks up) west over the field, the camera ahead of her: she's off to find the edge",
+   "frame": "dandelions, then a dark podzol stripe flashing under, then white (the wing); flowers to the horizon ahead; Larkfield's west roofs small on the east skyline behind as she sets off (the easter egg, never named).",
    "look": {
     "time": 3000
    }
@@ -470,7 +468,7 @@
    "place": "wing",
    "size": "ws",
    "camera": "bee pov hovering on the left wingtip, a slow 180-degree look round (eased, followable)",
-   "frame": "white flowers every way; the hive is hidden behind the meadow's rise (the wingtip is 28-30 blocks from it, the ground rising 2-3 blocks between); the campfire's smoke is already faded at that range.",
+   "frame": "white flowers every way at the left wingtip; the hive is hidden (it sits low in a 1-deep pit ring, behind the meadow's rise and the heart's 2-tall rose bushes); live gate: a still from this eye shows no hive and no smoke.",
    "look": {
     "time": 3000
    }
@@ -484,8 +482,8 @@
    ],
    "place": "bee_picture",
    "size": "ews",
-   "camera": "bee pov finds the giant far off (a small figure at the bottom edge of the field, planting); on 'ENOUGH' the camera lifts off the bee straight up, tilting to straight down, rising to ~55 blocks over the hive at a fast smooth ease, holding at the top",
-   "frame": "the reveal: from straight above, the meadow is one huge bee, 52 rows long, head north: dandelion body, bare podzol stripes, white wings, two dark antennae of podzol; where its heart would be, a red heart of poppies and rose bushes with the tiny hive in it. The giant is a speck at the tail, planting the 52nd row; our bee a yellow dot on the left wingtip. Payoff mark `top` when the camera settles; cut 1.0 s after. No line.",
+   "camera": "bee pov: she spots the giant far off at the head's crown (north), and flies at him; on 'TELL' the camera lifts off her straight up, tilting to straight down (or ~75 deg if the test still reads better), rising to ~90 blocks over the hive at a fast smooth ease, settling within ~1 s of 'ENOUGH'",
+   "frame": "the reveal: from straight above, the meadow is one huge bee, head north: dandelion body, three bare podzol stripes, white wings 61 wide (fit: 9:16 at vfov 70 from 90 up is ~71 wide), two podzol antennae; where its heart would be, a red heart of rose bushes and poppies with the tiny hive in it. The giant is a speck at the crown of the head, planting the last row (row 52); our bee a yellow dot flying toward him. Payoff mark `top` when the camera settles; cut 1.0 s after. No line.",
    "look": {
     "time": 3000
    },

@@ -1,4 +1,4 @@
-# honey_thief: continuity bible (r2, 2026-11-11)
+# honey_thief: continuity bible (r3, 2026-11-11)
 
 ## World
 - **Place:** `honey_meadow` (claimed on this branch), the High Meadow's top west of Larkfield; set.md has the plan.
@@ -21,8 +21,8 @@ S01-S07 at the hive and the field's south edge; S08-S10 out over the wing and up
 ## Props
 | prop | state | shots |
 |---|---|---|
-| beehive on oak fence post | O + (0,2,0), face south, honey dripping at level 5 in S01 then empty | S01, S02, S07, S10 |
-| campfire | lit, open, O | S02, S07, S10 (smoke) |
+| beehive on a 1-block oak fence post | O + (0,1,0) over the pit campfire at O + (0,-1,0), face south, honey dripping at level 5 in S01 then empty | S01, S02, S07, S10 |
+| campfire | lit, open, in a 1-deep pit at O + (0,-1,0) | S02, S07, S10 (smoke) |
 | glass bottle -> honey bottle | in his main hand; swaps on 'HONEY' (S01) | S01, S03, S06 |
 | dandelions | placed one per block, rows east-west | S01, S03, S04, S10 |
 | the heart | poppies + rose bushes round the post | S02, S07, S10 |
@@ -30,15 +30,15 @@ S01-S07 at the hive and the field's south edge; S08-S10 out over the wing and up
 | hotbar (his) | glass bottles, dandelions x64, poppies, oxeye daisies, rose bushes, campfire, milk bucket, 67 eggs, cake | his POV never shown; consistent if seen |
 
 ## Positions and screen direction
-- The hive faces south; the giant works the field's south edge (the tail) all morning: rows grow south.
-- S08 flies south-west (screen left to right is not used: forward travel); S09 she's on the LEFT wing (west).
-- S10 the giant is south of her, at row 52; the reveal is north-up (head at the top of the frame).
+- The hive faces south. In S01-S06 the giant works near the hive and the south edge; by S10 he is at the head's crown (north), planting row 52.
+- S08 she flies west, off to find the edge (forward travel); S09 she's on the LEFT wing (west).
+- S10 the giant is north-east of her at the crown; she flies at him; the reveal is north-up (head at the top of the frame).
 
 ## Numbers
-52 thefts = 52 rows = row 52 planted in S10. Four bees. Wings 30 out from the hive.
+52 thefts = 52 flower rows (+ 9 stripe rows) = row 52 (the crown) planted in S10. Four bees. Wings 30 out from the hive.
 
 ## Who knows what
-- The bee: thinks he's paying for honey, feels bad, means the honey, plants red so they find home. Never suspects
-  a picture; never sees the reveal (the camera leaves her).
+- The bee: thinks he's paying for honey, feels bad, means the honey, plants red so they find home; sets off to find
+  the edge and to tell him to stop. Never suspects a picture; never sees the reveal (the camera leaves her).
 - The giant: knows everything; says only L05.
 - The viewer: from L05 suspects he loves them; the bee shape lands only in S10.

@@ -25,12 +25,12 @@ the bee's heart would be. The giant is a speck at the tail planting the last row
 | 15-17 | his line | L05 | he looks at the bee and waves | "favorite" = the bees |
 | 17-19 | misread 2 | L06 | the honey bottle held up | she thinks: the honey (wrong) |
 | 19-24 | misread 3 | L07 | the red ring round the hive | red by the door = the heart |
-| 24-28 | turn | L08 | flying low over yellow, a dark stripe, then white | the field grows outward (wings) |
+| 24-28 | turn | L08 | she sets off to find the edge: low over yellow, a dark stripe, then white | the field grows outward (wings) |
 | 28-31 | lost | L09 | white flowers every way, no hive | she is on the wingtip |
-| 31-38 | into the reveal | L10, L11 | the giant far off, still planting; the camera lifts | "we have ENOUGH": it isn't food |
+| 31-38 | into the reveal | L10, L11 | the giant far off, still planting; she flies at him to tell him; the camera lifts on TELL | "we have ENOUGH": it isn't food |
 | 38-39 | REVEAL | (mark `top`) | top-down: the bee, the heart, the hive | |
 
-**Where the attentive viewer gets ahead:** L05-L07 (favorite; the red by the door): a shape seen from above.
+**Where the attentive viewer gets ahead:** L05-L07 (favorite; the red by the door): he loves them. r2 cold read guessed "he leaves" at 55 % (wrong); nobody guessed a bee.
 The cold read guessed "a heart or a message from above" at 45 %; nobody guessed it is a bee.
 
 ## Clue map
@@ -38,9 +38,9 @@ The cold read guessed "a heart or a message from above" at 45 %; nobody guessed 
 |---|---|---|---|
 | a row of flowers per bottle | L01, L03 / S01, S03 | he's paying us back | each bottle is one more row of the picture: 52 rows |
 | the smoke | L02 / S02 | a trick; we hate being nice | he takes care that nobody gets hurt (vanilla: no angry bees, none die stinging) |
-| "You're my FAVORITE" | L05 / S05 | he means the honey | he means the bees: he's drawing them |
+| "You're my FAVORITE, little guy" | L05 / S05 | he means the honey | he means the bees: he's drawing them |
 | red round the hive | L07 / S07 | so we can find home; "like we'd EVER get lost" | it's the bee's heart (and she does get lost, L09) |
 | yellow, a dark band, then white (picture only) | S03, S08 | (not said) | body, stripes, wings |
-| we fly farther every day | L08 / S08 | the flowers never end | the wings got wider |
+| the flowers never end | L08 / S08 | she'll find the edge | the wings got wider |
 | can't see home | L09 / S09 | she's lost | she's on the wingtip; home is the heart |
 | "we have ENOUGH" | L11 / S10 | it's food, and he's overdoing it | it was never about food |
