@@ -59,6 +59,10 @@ schedule stays as a backup; a second run on the same day does nothing).
 - **No repeats.** A title already on the channel is refused (series parts have their own titles). Nothing is
   ever deleted or re-uploaded.
 - **No same format twice in a row**, at most 1 pixel-art per 3 (`scripts/check_queue.py`).
+- **Gated on today's gates.** A non-story Short whose metadata `gates` are older than `lib/hb/gates.json`'s version,
+  or blocked without a reviewed waiver, is skipped with the reason in the run log (`scripts/gates.py`; re-gate with
+  `python3 scripts/gates.py stamp <name>`; `python3 scripts/gates.py stale` lists what would be skipped). story_*
+  Shorts are gated by the story pipeline and the owner's OK instead.
 - **Only original, reviewed Shorts.** Status "ready" means all three reviews passed. Only NCS or original music,
   credited. Made for kids: No. No synthetic-media flag (it's rendered gameplay, not realistic altered footage).
 - **Circuit breaker.** If the last 3+ auto uploads that have been public 24-96 h all have under 50 views (what the

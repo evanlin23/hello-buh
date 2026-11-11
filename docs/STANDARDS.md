@@ -62,7 +62,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    one single-speaker request "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing
    story; not whispery, breathy or soft]" + the lines in plain sentence case (`plain_say`: no CAPS, no ellipses);
    natural tempo, no speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
-   sentence breaks up to 0.6 s (cast `max_pause`), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
+   sentence breaks up to 0.95 s (cast `max_pause`; the owner's "This is fine" on a 0.62-0.91 s take, r:r867786), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
    earlier picks are `narrator_sleepover` (k4, rubberband 1.1x +1 st) and `narrator_roblox` (Orus x1.45), history only.
    Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c r:r754946
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
@@ -190,7 +190,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 
 ## 5. Look
 - **Bright and punchy is the story look** (the owner picked it over the cinematic grade): every story stunt sets
-  `look: 'bright'` and `edit.punchStress: true`. The zoom punches go on the **big moments only** (hook, turn,
+  `look: { mood: 'bright', rolloff: 0.8 }` (the roll-off keeps a daytime sky blue with its clouds; plain 'bright'
+  clips it cyan-white) and `edit.punchStress: true`. The zoom punches go on the **big moments only** (hook, turn,
   reveal: story.json `"punch": true` on those lines, at most 4; none marked = the first and last line), never one per
   sentence. Check: owner; review. r:rcae995 r:rd13834 r:r5aeaf2
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stories use `look: 'bright'` (above); other Shorts keep the cinematic default (`look: 'auto'`).
@@ -238,6 +239,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
 - **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
   **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
+- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: floor 8 s (lead decision 2026-11-11: the 25 s floor is the narration floor). Check: pace (length).
 
 ## 9. Review
 - An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
@@ -299,7 +301,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
   the same commit as its house rule. Check: owner. r:rc43770
 - **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
-  downloads each mp4 from its release (keeps the disk from filling). Check: owner. r:rc5eaf0
+  downloads each mp4 from its release, sha256-checked (keeps the disk from filling): release `pkg-<name>`,
+  metadata.json `video.release`, scripts/release_assets.py + .github/workflows/release-assets.yml. Check: owner. r:rc5eaf0
 - **Format "hack"**: one real, clever block trick per Short, a "POV: you realized..." caption, working on screen in
   the first 1.5 s. Check: owner, minecraft-audit (the trick must really work). r:rc15847
 - **Format "cooked"**: an impossible feat, then a flood of "X joined the game" as the consequences arrive, over a
@@ -312,6 +315,33 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:r934ea4
 - **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
   hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+- **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
+  round a beat, the path always wins. Check: owner. r:r2e0a32
+- **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
+  the caption plays it as a normal complaint. Check: owner. r:r047388
+- **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
+  absurd; short. Check: owner. r:ra64f79
+- **Format "mobpov"**: an annoying mob trait blown up into an unstoppable, absurdly fast POV chase. Check: owner. r:r8048f1
+- **Format "underdog"**: a fast list of how the game treats every mob, then the one it forgot ("...but what about
+  him?"), for sympathy and laughs. Check: owner. r:r8dcdb4
+- **Format "stages"**: a relatable arc in 3 titled chapters, each fast and escalating, a big payoff. Check: owner. r:redb7c0
+- **Format "dilemma"**: a life-or-death choice frozen mid-moment, stretched in slow motion from several angles,
+  then a true-vanilla twist that makes the choice moot. Check: owner, minecraft-audit (the twist). r:r9dcf73
+- **Format "psycho"**: a house tour, almost normal at the door, insanely dangerous inside, played straight.
+  Check: owner. r:rc40696
+- **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
+  track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
+  backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
+- **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
+  mob; fast is fine, off-aim reads as hacking. Check: the aim check (scripts/owner_checks.py + lib/aim.js, in
+  rec_check (`./hb check`) and pace (gates v3): BLOCK an action over 15 deg off its target or off-screen, or over 10%
+  of them past 6 deg; the numbers are in `./hb review`), review. r:rffba12
+- **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
+  end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
+  Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
+  frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
+  before it, gates v3). r:r24d99a
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

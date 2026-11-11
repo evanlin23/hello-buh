@@ -292,6 +292,74 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall before we
+  end/cut"; "our processes must cover all of these."** A Short never cuts or ends while its payoff is still moving:
+  every falling block has landed, the blast debris has settled, the mob's death puff is done. The payoff moment is when
+  the motion settles, and the 1 s end limit counts from there. Every owner note like these becomes an automatic check
+  in ./hb check / pace, not only a review note.
+- **Owner, 2026-11-11, on the newly published Shorts: "for the torch, we need to look where we are placing/breaking,
+  its fine to be fast but right now it just looks like hacking. also, the lava lake lowkey like ragebait but thats ok.
+  the rainbow sheep we are not looking at the right sheep when we dye..."** Every place, break, use and dye happens
+  under the crosshair, on every stunt: speed is fine, but the view must be on the block or mob being acted on when it
+  happens (no acting off-screen or off-aim; that reads as hacking). sand_tower's torch trick and rainbow_sheep's dyeing
+  get fixed to this; water_vs_lava's black-lake ending stays.
+- **Owner, 2026-11-11, on the re-made pixel-art Shorts: "here the creeper tracks where we're placing the blocks the
+  best, which I think is good, but it does this weird thing where it walks all the way back into like the other one,
+  and it's like halfway against the wall when it's like building the last one, which I think is a little bit
+  weird."** Pixel-art builds follow creeper_art's look: the view tracks where each block lands. The player never backs
+  into an earlier wall: the set leaves enough clear room behind every build position, and the camera is never pressed
+  against or inside another build.
+- **Owner, 2026-11-11, sharing Beazle's "BRO" (caption "Genuinely gotta check if everything is okay at home after ts",
+  subtitle "the type of house that your one actually psycho homie builds": a front door ringed by fire, a burning
+  wheat field, then inside a nether-brick mansion whose floors are open lava, a bed and furnaces perched on one-wide
+  walkways over it): "fake psycho house".** HelloBuh adds a psycho-house format (family `psycho`): a base tour that
+  looks almost normal from the door and turns out insanely dangerous inside (lava floors, fire, one-wide walkways),
+  played straight as a house tour.
+- **Owner, 2026-11-11, via the Buh Connects operator (forwarded at the owner's request): a "Fastest Speedrun Ever"
+  Short the owner called "obviously fake, badly made, with typos and everything".** (Music only, one banner, 67 s:
+  an impossible speedrun in jump cuts: a portal missing obsidian lit anyway, full netherite already on the way back,
+  an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
+  obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
+  (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
+- **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
+  they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
+  fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
+  HelloBuh adds a moral-dilemma format (family `dilemma`): a life-or-death choice frozen mid-moment (hardcore hearts,
+  a sacrifice that would save you), stretched out in slow motion from several angles to build the tension, then a
+  twist that makes the choice unnecessary. The twist must be true vanilla (minecraft-audit): e.g. the fall height is
+  chosen so Feather Falling IV really saves a full-health player.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "POV: the 3 stages of playing with friends",
+  with chapter titles: "1. Betrayal" (your friend knocks you into lava, you scrape out on half a heart), "2. Rise"
+  (a portal, the Nether, ancient debris, a netherite upgrade), "3. Revenge" (a TNT cannon flattens the friend's
+  mansion); 85 s): "and this too".** HelloBuh saves a chaptered "stages of" format (family `stages`): a relatable
+  arc told in 3 titled chapters, each fast and escalating, ending on a big payoff.
+- **Owner, 2026-11-11, sharing hazypapa's "The Most Bullied mob Ever in Minecraft" (caption "we can repair them
+  but...": a quick list of every mob the player can heal or fix (a wolf with meat, a cat with fish, a horse with
+  hay, a camel with cactus, an iron golem with iron, a copper golem, a zombie villager cured), then the caption flips
+  to "...but what about him?" over a lone snow golem in the sun, with a soft sung track): "whatever this is".**
+  HelloBuh saves it as a but-what-about-him format (family `underdog`): a fast list where the game treats every mob
+  one way, then the one mob it forgot, played for sympathy and laughs.
+- **Owner, 2026-11-11, sharing Galaxscat's "Minecraft Baby Zombie Moment" (caption "POV: A baby zombie found you",
+  31 s: a blur-fast chase that tears straight through stone walls, a pen of pigs and a row of mobs, through a village
+  house, out the other side and down into the Nether; nothing slows it): "whatever even is this".** HelloBuh saves it as
+  an exaggerated-mob-POV format (family `mobpov`): a mob players find annoying (the baby zombie's speed, the
+  creeper's sneak, the phantom's timing) blown up into an unstoppable, absurdly fast POV chase through everything.
+- **Owner, 2026-11-11, sharing Silly Willies' "We all have that one bro" (10 s, caption "That one friend when you
+  start a new world": you're still standing at the first tree while your friend strips it in a blink and a whole house
+  is already up behind you): "i think this is like hacking friend? like its a relatable beat, just exagerated".**
+  HelloBuh adds a that-one-friend format (family `friend`): a relatable multiplayer moment ("that one friend
+  who..."), shown from your point of view with the friend's part exaggerated to the absurd; short and punchy.
+- **Owner, 2026-11-11, sharing Galaxscat's "Minecraft meme" (caption "I thougt he was just lagging": a bridge fight
+  over the void with a Steve-looking player who stutters and rubber-bands like lag; his bridge breaks under him and
+  he just keeps standing on air, the white-eyed reveal, then he drifts off into the sky): "secret herobrine".**
+  HelloBuh adds a secret-Herobrine format (family `herobrine`): an ordinary-seeming player whose "lag" (stutters,
+  rubber-banding, standing on nothing) grows until the reveal that it was never lag; the caption plays it as a normal
+  complaint.
+- **Owner, 2026-11-11, sharing YalkyGM's "Who tf is doing this" (one fixed top-down shot of two houses either side
+  of a road: a dirt shortcut keeps wearing across the grass, the "town" answers with a crosswalk, a bush, a tree,
+  railway tracks, walls, barriers, a boulder, a pond, then lava, and the path comes back around every one): "desire
+  paths format".** HelloBuh adds a desire-paths format (family `desire`): one locked camera, an escalating back-and-forth
+  between an unseen walker's shortcut and ever more absurd obstacles, each round a beat; the path always wins.
 - **Owner, 2026-11-11, sharing "Every Time I Snap" (caption "Why does my house always end up like this?", 11 s: from
   inside a stone chimney past the campfire into a cosy wooden room, out the door, and the house outside is a small,
   plain box that can't hold what was inside): "this one lends to replays, since its short and the inside differs from
@@ -412,6 +480,11 @@ STANDARDS.md in the same commit.
   offered all / smaller / big moments only / none: "only the big ones i think".** `edit.punchStress` punches only the
   big moments: the hook, the turn and the reveal (story.json `"punch": true` on those lines, at most 4; none marked:
   the first and last line), one punch each on the line's stressed word. Supersedes one punch per sentence.
+- **Owner, 2026-11-11, after listening to Light Sleeper's raw Pip one_take (sentence breaks 0.62-0.91 s, rejected by
+  the 0.6 s gate; the v2 cut the voice was picked from measures 0.62-0.80 s inside its lines): "This is fine".** That
+  pacing is the voice the owner chose: the narrator's take gate allows sentence breaks up to 0.95 s (cast `narrator`
+  `max_pause.rest`). Takes are still never trimmed, and a longer pause, a breath or a wrong word is still re-taken. The
+  opening rule (no gap over 0.6 s in the first 5 s) is unchanged.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

@@ -12,5 +12,5 @@ module.exports = pixelArt({
   palette: { W: 'white_concrete', K: 'black_concrete' },
   wall: 'oak_planks',
   caption: 'why is he building THIS 😨',
-  edit: { caption: 'why is he building THIS 😨', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
+  edit: { caption: 'why is he building THIS 😨', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
 })

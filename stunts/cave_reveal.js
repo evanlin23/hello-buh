@@ -29,7 +29,7 @@ module.exports = {
   caption: 'never dig straight down 💀',
   expectDeath: true,
   edit: {
-    caption: 'never dig straight down 💀', red: 'never', song: 'songs/misery.mp3', dropAt: 'l3',
+    caption: 'never dig straight down 💀', red: 'never', dropAt: 'l3',
     onFire: 'in_lava:death', deathScreen: true, startAt: 'dig0:-0.3', endAfter: 'death:1.6',
     subs: [
       ['dig0', 'just digging down...', 3], ['l1', 'oh, a cave', 2.2], ['dig1', 'keep going', 2],
