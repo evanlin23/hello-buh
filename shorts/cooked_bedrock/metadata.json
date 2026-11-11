@@ -1,0 +1,528 @@
+{
+  "name": "cooked_bedrock",
+  "channel": "hellobuh",
+  "caption": "why did everyone just join my world?",
+  "youtube": {
+    "title": "why did everyone just join my world? #minecraft #shorts",
+    "description": "why did everyone just join my world?\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "flood",
+    "drop_in_song_s": 39.75,
+    "drop_in_short_s": 8.35,
+    "song_start_s": 31.4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 11.8,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 4642822,
+    "sha256": "4ae4dd23640f8939f52a39243e9c5395442a86ca8d40d06f703b9822fda28109",
+    "release": {
+      "tag": "pkg-cooked_bedrock",
+      "asset": "cooked_bedrock.short.4ae4dd23640f8939.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cooked_bedrock/cooked_bedrock.short.4ae4dd23640f8939.mp4",
+      "sha256": "4ae4dd23640f8939f52a39243e9c5395442a86ca8d40d06f703b9822fda28109",
+      "bytes": 4642822
+    },
+    "nosong_release": {
+      "tag": "pkg-cooked_bedrock",
+      "asset": "cooked_bedrock.short_nosong.1c251c42f69d4b3f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cooked_bedrock/cooked_bedrock.short_nosong.1c251c42f69d4b3f.mp4",
+      "sha256": "1c251c42f69d4b3f389b0a9557b4a383d8b2a703ea12111b84af7753a858e324",
+      "bytes": 4560906
+    }
+  },
+  "edit": {
+    "caption": "why did everyone just join my world?",
+    "red": "everyone",
+    "startAt": "go:-0.05",
+    "endAfter": "cooked:0.9",
+    "dropAt": "flood",
+    "ncs": "industry_kiss.mp3",
+    "still": {
+      "at": "flood",
+      "dark": "dark:0.35",
+      "meme": "war_soldier",
+      "punch": [
+        "cooked",
+        1.12
+      ],
+      "dim": 0.12,
+      "fade": 0.25
+    },
+    "chatScale": 4,
+    "subs": [
+      [
+        "bedrock",
+        "bedrock??",
+        1
+      ],
+      [
+        "crack",
+        "wait it's breaking",
+        1.3
+      ]
+    ],
+    "sfx": [
+      [
+        "dip",
+        "cooked",
+        0.4
+      ],
+      [
+        "impact",
+        "cooked"
+      ],
+      [
+        "pop",
+        "go",
+        {
+          "gain": 0.4
+        }
+      ],
+      [
+        "impact",
+        "dark"
+      ]
+    ],
+    "args": [
+      "--caption",
+      "why did everyone just join my world?",
+      "--self_name",
+      "56e",
+      "--red",
+      "everyone",
+      "--subs",
+      "[[\"bedrock\",\"bedrock??\",1],[\"crack\",\"wait it's breaking\",1.3]]",
+      "--still",
+      "{\"at\":\"flood\",\"dark\":\"dark:0.35\",\"meme\":\"war_soldier\",\"punch\":[\"cooked\",1.12],\"dim\":0.12,\"fade\":0.25}",
+      "--sfx",
+      "[[\"dip\",\"cooked\",0.4],[\"impact\",\"cooked\"],[\"pop\",\"go\",{\"gain\":0.4}],[\"impact\",\"dark\"]]",
+      "--chat_scale",
+      "4",
+      "--start_at",
+      "go:-0.05",
+      "--end_after",
+      "cooked:0.9"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 377.5,
+      "y": -40,
+      "z": -53.68
+    },
+    "biome": "minecraft:plains",
+    "ticks": 273,
+    "seconds": 13.65,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 0.8,
+        "event": "go"
+      },
+      {
+        "t": 0.8,
+        "event": "dig"
+      },
+      {
+        "t": 0.8,
+        "event": "swing"
+      },
+      {
+        "t": 1,
+        "event": "dig_end"
+      },
+      {
+        "t": 1,
+        "event": "vel"
+      },
+      {
+        "t": 1,
+        "event": "vel"
+      },
+      {
+        "t": 1,
+        "event": "vel"
+      },
+      {
+        "t": 1,
+        "event": "vel"
+      },
+      {
+        "t": 1,
+        "event": "collect"
+      },
+      {
+        "t": 1,
+        "event": "xp"
+      },
+      {
+        "t": 1.1,
+        "event": "collect"
+      },
+      {
+        "t": 1.1,
+        "event": "xp"
+      },
+      {
+        "t": 1.45,
+        "event": "collect"
+      },
+      {
+        "t": 1.5,
+        "event": "collect"
+      },
+      {
+        "t": 1.5,
+        "event": "xp"
+      },
+      {
+        "t": 1.65,
+        "event": "dig"
+      },
+      {
+        "t": 1.65,
+        "event": "swing"
+      },
+      {
+        "t": 1.8,
+        "event": "dig_end"
+      },
+      {
+        "t": 1.85,
+        "event": "vel"
+      },
+      {
+        "t": 1.85,
+        "event": "vel"
+      },
+      {
+        "t": 1.85,
+        "event": "vel"
+      },
+      {
+        "t": 1.85,
+        "event": "collect"
+      },
+      {
+        "t": 1.85,
+        "event": "xp"
+      },
+      {
+        "t": 1.95,
+        "event": "collect"
+      },
+      {
+        "t": 1.95,
+        "event": "xp"
+      },
+      {
+        "t": 2.3,
+        "event": "collect"
+      },
+      {
+        "t": 2.45,
+        "event": "dig"
+      },
+      {
+        "t": 2.45,
+        "event": "swing"
+      },
+      {
+        "t": 2.65,
+        "event": "dig_end"
+      },
+      {
+        "t": 2.65,
+        "event": "vel"
+      },
+      {
+        "t": 2.65,
+        "event": "vel"
+      },
+      {
+        "t": 2.65,
+        "event": "vel"
+      },
+      {
+        "t": 2.65,
+        "event": "collect"
+      },
+      {
+        "t": 2.65,
+        "event": "xp"
+      },
+      {
+        "t": 2.75,
+        "event": "collect"
+      },
+      {
+        "t": 2.75,
+        "event": "xp"
+      },
+      {
+        "t": 3.1,
+        "event": "collect"
+      },
+      {
+        "t": 3.3,
+        "event": "dig"
+      },
+      {
+        "t": 3.3,
+        "event": "swing"
+      },
+      {
+        "t": 3.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 3.45,
+        "event": "vel"
+      },
+      {
+        "t": 3.9,
+        "event": "collect"
+      },
+      {
+        "t": 4.1,
+        "event": "dig"
+      },
+      {
+        "t": 4.1,
+        "event": "swing"
+      },
+      {
+        "t": 4.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 4.2,
+        "event": "vel"
+      },
+      {
+        "t": 4.65,
+        "event": "collect"
+      },
+      {
+        "t": 4.85,
+        "event": "bedrock"
+      },
+      {
+        "t": 5.2,
+        "event": "try"
+      },
+      {
+        "t": 5.2,
+        "event": "dig"
+      },
+      {
+        "t": 5.2,
+        "event": "swing"
+      },
+      {
+        "t": 5.5,
+        "event": "swing"
+      },
+      {
+        "t": 5.85,
+        "event": "swing"
+      },
+      {
+        "t": 6.2,
+        "event": "crack"
+      },
+      {
+        "t": 6.2,
+        "event": "swing"
+      },
+      {
+        "t": 6.55,
+        "event": "swing"
+      },
+      {
+        "t": 6.9,
+        "event": "swing"
+      },
+      {
+        "t": 7.25,
+        "event": "swing"
+      },
+      {
+        "t": 7.35,
+        "event": "dark"
+      },
+      {
+        "t": 7.6,
+        "event": "dig_end"
+      },
+      {
+        "t": 9.1,
+        "event": "flood"
+      },
+      {
+        "t": 9.1,
+        "event": "syschat"
+      },
+      {
+        "t": 9.1,
+        "event": "join"
+      },
+      {
+        "t": 9.5,
+        "event": "syschat"
+      },
+      {
+        "t": 9.5,
+        "event": "join"
+      },
+      {
+        "t": 9.9,
+        "event": "syschat"
+      },
+      {
+        "t": 9.9,
+        "event": "join"
+      },
+      {
+        "t": 10.25,
+        "event": "syschat"
+      },
+      {
+        "t": 10.25,
+        "event": "join"
+      },
+      {
+        "t": 10.45,
+        "event": "syschat"
+      },
+      {
+        "t": 10.45,
+        "event": "join"
+      },
+      {
+        "t": 10.65,
+        "event": "syschat"
+      },
+      {
+        "t": 10.65,
+        "event": "join"
+      },
+      {
+        "t": 10.85,
+        "event": "syschat"
+      },
+      {
+        "t": 10.85,
+        "event": "join"
+      },
+      {
+        "t": 11.05,
+        "event": "syschat"
+      },
+      {
+        "t": 11.05,
+        "event": "join"
+      },
+      {
+        "t": 11.25,
+        "event": "syschat"
+      },
+      {
+        "t": 11.25,
+        "event": "join"
+      },
+      {
+        "t": 11.65,
+        "event": "syschat"
+      },
+      {
+        "t": 11.65,
+        "event": "join"
+      },
+      {
+        "t": 11.65,
+        "event": "cooked"
+      },
+      {
+        "t": 13.65,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "304dc3369c27e12bb9da99376536c9430838e419",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T21:06:09.235Z",
+    "head_at_publish": "1d318a724c6bb99e010e792822d0c040f8495520",
+    "stunt": "stunts/cooked_bedrock.js",
+    "source_snapshot": [
+      "source/cooked_bedrock.js",
+      "source/cooked.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 304dc3369c27",
+    "gunzip -c shorts/cooked_bedrock/recording.json.gz > work/cooked_bedrock.rec.json",
+    "node render.js work/cooked_bedrock.rec.json work/cooked_bedrock.frames 60 1080 1011",
+    "python3 audio.py work/cooked_bedrock.rec.json work/cooked_bedrock.wav",
+    "python3 edit.py --frames work/cooked_bedrock.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cooked_bedrock.rec.json --audio work/cooked_bedrock.wav --caption \"why did everyone just join my world?\" --self_name 56e --red everyone --subs \"[[\\\"bedrock\\\",\\\"bedrock??\\\",1],[\\\"crack\\\",\\\"wait it's breaking\\\",1.3]]\" --still {\"at\":\"flood\",\"dark\":\"dark:0.35\",\"meme\":\"war_soldier\",\"punch\":[\"cooked\",1.12],\"dim\":0.12,\"fade\":0.25} --sfx [[\"dip\",\"cooked\",0.4],[\"impact\",\"cooked\"],[\"pop\",\"go\",{\"gain\":0.4}],[\"impact\",\"dark\"]] --chat_scale 4 --start_at go:-0.05 --end_after cooked:0.9 --out out/cooked_bedrock.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker cooked: cooked #1 (lib/cooked.js), 2 review rounds (r1 bedrock break unreadable -> lit + crumbs + sound; r2 READY). NCS pinned industry_kiss. Still: Tom Lea 'That 2,000 Yard Stare', PD per Commons but disputed (Life staff artist 1944): owner's call. Nitpicks: mining taps quiet; chat band crosses the face",
+  "published_at": "2026-11-11T21:07:04.508Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T21:07:13+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 11.82 s vs the reviewed render 11.80 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 3,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T21:06:21.159Z",
+      "report": "work/hb/cooked_bedrock.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
