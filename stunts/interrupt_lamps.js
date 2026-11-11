@@ -10,7 +10,7 @@ const { plateau } = require('../lib/plateau')
 const I = require('../lib/interrupt')
 const act = require('../lib/act')
 
-const CAPTION = 'easy light-up dance floor in survival ✨'
+const CAPTION = 'this dance floor is gonna be so clean 😌'   // a person reacting, not a label (r:r0f3da0)
 const ROWS = [-8, -7, -6, -5, -4, -3, -2, -1]   // dz of each lamp row, the far one first
 const COLS = [-3, -2, -1, 0, 1, 2, 3]           // dx, west to east
 // the order along a row: from each end inward, so the lamp just placed never stands between the eye and the lamp
@@ -28,7 +28,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
   edit: {
-    caption: CAPTION, red: 'dance floor', dropAt: 'lit',
+    caption: CAPTION, red: 'so clean', dropAt: 'lit',
     startAt: 'hook:-0.1', endAfter: 'lit:1.0',
     // the walk back stays one continuous walk (owner: the jump cut there "looks weird"), a touch brisker (x1.3: the
     // whole 3 s of it uncut was a span with nothing new, pace)
