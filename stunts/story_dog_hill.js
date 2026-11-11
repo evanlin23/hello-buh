@@ -49,7 +49,7 @@ module.exports = {
     // L06: the one empty patch, flowers all round it (audit B6)
     patch: { subject: [[3.5, 1.0, 0.5]], path: [[0, 0.2, 3.2, 4.4], [4, 0.5, 3.0, 4.0]], look: [4.0, 1.4, -1.6], fov: 52 },   // high 3/4 down on the bare block in its flower ring, the hut behind it (a flat top-down failed the owner gate)
     // L07: the hut, wide, the dog small in the foreground
-    hut: { subject: [[5, 2, -5.5]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
+    hut: { subject: [[5, 2, -3.6]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
     beg: { subject: ['actor:pip'], path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
@@ -255,7 +255,7 @@ module.exports = {
     // he sits; off while he runs to Buh (L15) and until he sits again (L17). The lint's "nobody moves" counted only him
     // for the opener and the night (the narration is one long take)
     let dogIdle = true
-    K.every(() => { if (dogIdle) { dog.yaw = -90 + 7 * Math.sin(ctx.tick / 11); dog.pitch = 5 * Math.sin(ctx.tick / 17) } })
+    K.every(() => { if (dogIdle) { dog.yaw = -90 + 8 * Math.sin(ctx.tick / 8); dog.pitch = 5 * Math.sin(ctx.tick / 12) } })
 
     // ---- L01: the dog on the hill (sunrise)
     await cut('open')
@@ -276,17 +276,17 @@ module.exports = {
         cr = K.actor('cr', { x: 0.0, z: -3.8, yaw: 0 })
       }
       if (at1('creeper', k >= at.cut(2))) await cut('creeper', { weather: 'clear' })
-      if (cr && k > at(2)) { cr.z = -3.8 + Math.min(k - at(2), 30) * 0.06; if (at1('hiss', k >= at(2) + 3)) ctx.sound('entity.creeper.primed', 0.25, 1) }
+      if (cr && k > at(2) && k < at(3)) { cr.z = -3.8 + Math.min(k - at(2), 30) * 0.06; if (at1('hiss', k >= at(2) + 3)) ctx.sound('entity.creeper.primed', 0.25, 1) }
       if (at1('z+', k >= at.cut(3) - 2)) {
         for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
         z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }); z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
       }
-      if (at1('zombies', k >= at.cut(3))) { await cut('zombies', {}, () => { Object.assign(cr, OFF); K.warp('cr') }); K.park('cr'); say('/kill @e[tag=cr]'); cr = null }   // the creeper leaves with the cut (warped in the cut's moves: the cut waits until it has landed)
+      if (at1('zombies', k >= at.cut(3))) await cut('zombies')   // (the creeper stays, still behind him: it and the zombies leave inside the next cut)
       if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (at1('groan', k >= at(3) + 2)) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
     })
-    K.park('z1'); K.park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
     // ---- L03 (r-cast): kids throw sticks: Pip, beside the dog, throws one high past his nose on STICKS; he doesn't blink
-    await cut('bone', { time: 1000 }, () => place('pip', { x: -1.4, y: 1, z: 3.4, yaw: -150 }))
+    await cut('bone', { time: 1000 }, () => { place('pip', { x: -1.4, y: 1, z: 3.4, yaw: -150 }); for (const t of ['cr', 'z1', 'z2']) place(t, { ...OFF }) })   // the night's monsters leave inside the cut (it waits until they land)
+    for (const t of ['cr', 'z1', 'z2']) { K.park(t); say(`/kill @e[tag=${t}]`) }
     await line('L03', (k, at) => {
       Object.assign(pip, { yaw: k < at(1) ? -150 : -135, pitch: k < at(1) ? 10 : -10 })
       if (at1('stick', k >= at(1))) say(`/summon item ${X - 1.0} ${F + 1.9} ${Z + 3.0} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.2d,0.3d,-0.24d]}`)   // high past his nose, on STICKS
