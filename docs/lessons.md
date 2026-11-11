@@ -87,6 +87,19 @@ How the work itself went wrong, and the rule now:
 - **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
   they depend on.
 
+## Trap (lib/trap.js, trap_free_diamonds, 2026-11-11)
+- **A trapped chest opens a trapdoor beside the block it stands on, for real.** Opened, it strongly powers the block
+  under it, and that block powers the trapdoor next to it. No redstone dust, nothing hidden: the friend's own
+  right-click sets it off, and he falls because his own client's physics has nothing under him.
+- **You can stand on an open trapdoor's edge.** The open panel fills 3/16 of the cell on its hinge side, full height.
+  Take 1's friend stopped 0.17 past the middle, his 0.6-wide box over the panel, and he stayed standing on it. Stop him
+  on the far side of the cell's middle (z 0.6 with the hinge at z 0), with a crouched shuffle to land within 0.06.
+- **The kit aims K.place at the CENTRE of the block it goes against.** For a floor block a few blocks ahead, that ray
+  grazes in through the block in front of it (the trapdoor, the next grass block), so the turn never "landed" (40-tick
+  stalls) and rec_check's sight check blocked it. Build from closer, so every ray goes in through the top face.
+- **A friend who walks the whole way in** waits at his entrance (ep.park), where the camera never looks before he
+  joins. A /tp near the frame is a rec_check teleport warning. The turn into hiding goes round the side away from him.
+
 ## Love (lib/love.js, love_cherry_heart, 2026-11-11)
 - **Cherry leaves are untinted.** Their model carries tintindex 0 (the leaves parent), but vanilla's BlockColors never
   registers cherry_leaves, so they are drawn as the pink texture. The renderer tinted every `*leaves` with the biome's

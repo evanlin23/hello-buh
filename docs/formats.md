@@ -39,7 +39,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `sandart` | Technoblade: "Sand Art" | A giant pixel picture poured from the sky in concrete powder: the blocks fall and pile into pyramids, the camera rides down the slopes of colour, then the whole picture shows | "huge sand art" | r:r718ec5 | building (own session, 2026-11-11) |
 | `dropper` | (owner upload "fananimation") | A towering yellow dropper in first person, "Attempt #1, #3, #15" on screen, quick fails, the clean landing on the target far below | "Huge dropper?" | r:r304cb5 | building (own session, 2026-11-11) |
 | `fakeworld` | "Minecraft Dirt Moment" ("bro found dirt for ONCE") | A whole world made of one wrong block, played as normal survival; finding one patch of real dirt is the treasure | "fake world?" | r:r62f46d | building (own session, 2026-11-11) |
-| `trap` | NoschiTech: "#memeanimation" ("a diabolical trap that made my friend hate me...") | A glass-roofed "underwater base" as bait; the friend dives in, the base is a fake, a hidden drop ends in a glass cage | "trapping friend" | r:refc733 | building (own session, 2026-11-11) |
+| `trap` | NoschiTech: "#memeanimation" ("a diabolical trap that made my friend hate me...") | A glass-roofed "underwater base" as bait; the friend dives in, the base is a fake, a hidden drop ends in a glass cage | "trapping friend" | r:refc733 | building: `lib/trap.js` (a bait over a real vanilla trap, the friend a second player bot on his own physics), first Short `trap_free_diamonds` (a trapped chest opens the trapdoor he stands on) |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -84,3 +84,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   hall over the lava and each room kind (living_room, kitchen, bathroom, study) on its island; the finale bed_jump is
   a walking jump over a one-block lava gap onto the bed. Fire stays only on netherrack or on a flammable face
   (BaseFireBlock.onPlace drops fire over farmland at once; fire_spread_radius_around_player 0 stops the spread).
+- **trap**: a trapped chest over a trapdoor (free diamonds); a "nether portal" frame whose step is a pressure plate
+  that pulls the floor with sticky pistons; a fake bed in a hole (sleep = the drop); a tripwire across a diamond-ore
+  vein that drops sand on him; a fake end portal frame over a water drop into a glass cage. Every one a real vanilla
+  mechanism the friend sets off himself.
