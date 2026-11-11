@@ -54,7 +54,7 @@ module.exports = {
   botTimeout: 360,
   edit: {
     caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
-    startAt: 'press:-0.5', endAfter: 'giant_peak:0.8'
+    startAt: 'press:-0.5', endAfter: 'settle:0.3'   // (once the whole pile's blasts and smoke are done: lib/settle.js)
   },
 
   async setup (ctx) {
@@ -258,9 +258,10 @@ module.exports = {
     const at = (name) => w.done.get(name)
     const markOnce = (name) => { if (!at(name)) { w.done.set(name, ctx.tick); ctx.mark(name) } }
     // explosions: the cart, the line, the cubes and the pile
-    let booms = 0, giantBooms = 0
+    let booms = 0, giantBooms = 0, lastBoomTick = 0
     const onBoom = (p) => {
       booms++
+      lastBoomTick = ctx.tick
       const x = +(p.center || {}).x - X, z = Z - +(p.center || {}).z
       if (booms === 1) markOnce('cart_boom')
       if (z > nH - 3 && x > -2.5 && x < 2.5) markOnce('cube')
@@ -394,7 +395,12 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     focus = W(27, 5, nH + 3)
-    await bot.waitForTicks(24)
+    // keep watching (the eyes drifting over the pile) until the last cube has gone off and its smoke is thinning: the
+    // Short ends on the settle now (it ended at giant_peak + 0.8 s with 4.5% of the view still flying: r:r24d99a)
+    for (let i = 0; i < 240 && ctx.tick - lastBoomTick < 30; i++) {
+      focus = W(27 + 3 * Math.sin(i / 40), 5 + 0.8 * Math.sin(i / 23), nH + 3)
+      await bot.waitForTicks(1)
+    }
     steer = null
     await bot.waitForTicks(2)
     bot.removeListener('physicsTick', onTick)
