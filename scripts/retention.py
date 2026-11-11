@@ -585,7 +585,7 @@ def chat_img(typed, cursor, feedback, fb_alpha=1.0):
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None, tally=None):
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None, tally=None, popup=None):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -619,7 +619,13 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
     chw = chat_windows(chat, timeline, start)
     scp, scs = score_track(score, timeline, start)
     tlp, tls, tl_done = tally_track(tally, timeline, start)
-    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp and not tlp:
+    pops = []
+    if popup:                                        # the fake mod's permission popups (scripts/popup.py)
+        sys.path.insert(0, str(HERE / "scripts"))
+        import popup as POP
+        pops = POP.windows(_load(popup), lambda n: event_at(timeline, n), lambda n: event_times(timeline, n), start)
+        POP.register(pops)
+    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp and not tlp and not pops:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -689,7 +695,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         tak = None
         if tlp and t >= tlp[0][0] - 1e-6:    # the blocks-used total, ticking up; gold once the build is done
             tak = (tally_at(tlp, t), tl_done is not None and t >= tl_done - 1e-6)
-        key = (ck, cc, fk, cwk, rk, tk, chk, sk, tak)
+        pk = POP.frame_key(pops, t) if pops else None
+        key = (ck, cc, fk, cwk, rk, tk, chk, sk, tak, pk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if sk:
@@ -735,6 +742,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 x1 = W - 40
                 img.alpha_composite(num, (x1 - num.width, BAND + 22))
                 img.alpha_composite(lab, (x1 - lab.width, BAND + 22 + num.height - 14))
+            if pk:
+                img.alpha_composite(POP.frame_img(pk))
             if fk:
                 v, label, done = fk
                 num = rich_text(f"{v}", 92, COLORS["green"] if done else COLORS["white"])

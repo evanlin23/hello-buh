@@ -1607,6 +1607,7 @@ def main():
     ap.add_argument("--score", help='JSON {"event": "score", "a": [LABEL, COLOR], "b": [LABEL, COLOR]}: a live two-sided score bar from the marks\' a/b shares (format race)')
     ap.add_argument("--still", help='JSON {"at": EVENT, "dark": EVENT?, "meme": KEY, "punch": [EVENT, SCALE]?, "dim": 0..1?, "fade": S?}: the view goes dark, then a meme picture (lib/memes.json) fills it (format cooked)')
     ap.add_argument("--chat", help='JSON list of [EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?] vanilla chat input typed up to EVENT (Enter)')
+    ap.add_argument("--popup", help='JSON list of {at: [OPEN, CLICK, CLOSE], mob, text, buttons, pick, hover?, done?, roll?} fake mod permission popups (scripts/popup.py, format fakemod)')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
     ap.add_argument("--freeze", help='JSON list of [EVENT, SECONDS, TEXT?, COLOR?] freeze frames with a stamped text')
@@ -1970,9 +1971,9 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"chat{si}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sc{si}]")
                     last, n_in = f"sc{si}", n_in + 1
-    if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat or args.score or args.tally) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
+    if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat or args.score or args.tally or args.popup) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
-                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat, score=args.score, tally=args.tally,
+                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat, score=args.score, tally=args.tally, popup=args.popup,
                                   hide=[(death_start(a_, args), b_ - args.start) for a_, b_ in death_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.death_screen)]
                                   if args.death_screen else [], cuts=cut_times(args))
         if lst:
