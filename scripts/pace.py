@@ -554,7 +554,13 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             payoff += float(m.group(1))
     if payoff is None and edit.get("endAfter"):
         ev = str(edit["endAfter"]).split(":")[0]
-        if ev not in ("story_end", "end", "line"):
+        if ev == "settle":   # endAfter 'settle:0.6' (lib/settle.js): the payoff is where that last motion began (the
+            # blast, the fall, the death); the tail counts from the settle (the settle check below)
+            st_ = mark_time("settle")
+            starts = [m["out"] for m in marks if m["event"] == "motion_start" and st_ is not None and m["out"] is not None and m["out"] <= st_ + 1e-6]
+            if starts:
+                payoff, how = starts[-1], "the edit's endAfter 'settle': where the last payoff motion began"
+        elif ev not in ("story_end", "end", "line"):
             payoff, how = mark_time(ev), f"the edit's endAfter event '{ev}'"
     if payoff is None and story and story.get("twist") and lines:
         quotes = re.findall(r"['\"\u2018\u201c]([^'\"\u2019\u201d]{3,40})['\"\u2019\u201d]", story["twist"])

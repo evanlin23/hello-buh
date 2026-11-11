@@ -25,7 +25,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'gone:1.0',
+    startAt: 'beat:-0.05', endAfter: 'settle:0.6',   // the blast and his death puff settled (lib/settle.js)
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -44,8 +44,8 @@ module.exports = {
     // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch and push-in on his
     // death puff, a song dip + impact on it, a pop on the opening (pace)
     speed: [['fuse_a', 'fuse_b', 'cut']],
-    flash: [['gone', 0, 0.4]], punch: [['gone', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'gone', 0.3], ['impact', 'gone']]
+    flash: [['ring_boom', 0, 0.5], ['gone', 0, 0.4]], punch: [['ring_boom', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
+    sfx: [['pop', 'beat'], ['dip', 'ring_boom', 0.3], ['impact', 'ring_boom'], ['pop', 'gone']]
   },
 
   async setup (ctx) {
