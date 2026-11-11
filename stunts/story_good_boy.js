@@ -42,7 +42,7 @@ module.exports = {
   idleLife: true,
   look: 'bright',          // the owner's bright, punchy look for every story (main e58c77d; it replaced 'auto', which itself replaced the fixed warm look that turned nights magenta)
   shots: {},
-  edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', chatScale: 7, punchStress: true },   // "Buh left the game" readable at 300 px wide (vanilla GUI 3 was ~7 px tall there)
+  edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', chatScale: 7, chatY: 0.45, punchStress: true },   // the payoff chat centred (edit.chatAlign: story default) just above the sitting wolf (it fills 0.58-0.90 of the game area, lower left: hb still 23.5)   // "Buh left the game" readable at 300 px wide (vanilla GUI 3 was ~7 px tall there)
 
   async setup (ctx) {
     const { bot } = ctx
