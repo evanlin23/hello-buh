@@ -124,6 +124,7 @@ const SUBS = [
   ['reveal', 'secret room 1', 1.6, 0],
   ['lookback', 'banners have NO hitbox', 1.6, 0],
   ['reveal', 'secret room 2', 1.6, 1],
+  ['deeper', 'how deep does this go?', 1.8, 0],
   ['reveal', 'secret room 3', 1.6, 2],
   ['reveal', 'secret room 4', 1.4, 3],
   ['which', 'but which one is real?', 1.8, 0],
@@ -138,6 +139,7 @@ module.exports = makeStunt({
   red: 'hitbox',
   reveals: 6,
   subs: SUBS,
+  edit: { sfx: [['pop', 'deeper', { gain: 0.45 }]] },
   wall,
   pieces: { under },
   hotbar: ['diamond_pickaxe', ['white_banner', 16], ['red_banner', 16], ['lantern', 32], ['bookshelf', 64], ['torch', 64], ['cookie', 64], 'cake', ['oak_sign', 16]],
@@ -165,6 +167,7 @@ module.exports = makeStunt({
       await H.walk(pts, { ...o, during: async (k) => { if (!done && inBlock(bx, bz)) { done = true; o.payoff ? H.payoff() : H.reveal() } if (o.during) await o.during(k) } })
       if (!done) throw new Error(`hack_banner_door: never passed the banner at ${bx} ${bz}`)
     }
+    let deeper = false   // halfway down the stair: a caption beat (the final mix's NCS bed hides the footsteps)
     ctx.mark('go')
     // 1. the den: straight into the middle banner -> the stash
     await through([[6.5, 1, -2.4]], 6, 0)
@@ -179,7 +182,7 @@ module.exports = makeStunt({
     await H.hold(8)
     // 2. the blue banner on the stash's east wall -> the stair down
     await H.look(9.5, 1.8, -2.5, { max: 22 })
-    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.9, -7.6, -2.5], [22.4, -8, -2.5]], 9, -3, { pitch: -0.55 })
+    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.9, -7.6, -2.5], [22.4, -8, -2.5]], 9, -3, { pitch: -0.55, during: async () => { if (!deeper && bot.entity.position.x >= H.O.x + 16) { deeper = true; ctx.mark('deeper') } } })
     // 3. the lime banner at the bottom -> the farm
     await H.look(24.5, -6.6, -2.5, { max: 12 })
     await through([[24.4, -8, -2.5], [27.5, -8, -2.5]], 23, -3)
