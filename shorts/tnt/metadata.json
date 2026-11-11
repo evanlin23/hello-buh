@@ -7151,5 +7151,28 @@
   ],
   "status": "ready",
   "notes": "backlog worker A 2026-11-11: re-recorded on the current engine (plateau field, full health), short cut per the lead: walk up, light 75 TNT, back off through the fuse (x1.5, riser), ends 1 s into the chain: 5.3 s (pace's under-25 s length block ignored on the lead's word). The old 'ground dark' and 'bot stuck' are fixed. 1 review round (fresh-session reviewer), READY. Nitpicks: ~0.4 s at 0.75-1.2 s where the TNT texture fills the frame; the fuse bed is quiet (the song covers it); flat field to the horizon",
-  "published_at": "2026-11-11T06:04:42.794Z"
+  "published_at": "2026-11-11T06:04:42.794Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:05:17+00:00",
+    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "package": {
+      "ok": false,
+      "summary": "short.mp4 15.40 s vs the reviewed render 5.27 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 3,
+      "warnings": 4,
+      "summary": "payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash); payoff: the video runs 11.13 s past the payoff (owner: end as soon as it lands; max 1.0 s); length: 15.4 s: under the 25 s minimum"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T05:33:20.098Z",
+      "report": "work/hb/tnt.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }

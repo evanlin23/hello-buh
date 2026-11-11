@@ -889,5 +889,28 @@
   ],
   "status": "ready",
   "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium wall edge at left during the big build's backup; small reveal held briefly",
-  "published_at": "2026-11-11T06:19:19.044Z"
+  "published_at": "2026-11-11T06:19:19.044Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:04:40+00:00",
+    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "package": {
+      "ok": false,
+      "summary": "short.mp4 31.85 s vs the reviewed render 34.60 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 4,
+      "warnings": 5,
+      "summary": "dead: 4.00 s with nothing new (6.35-10.35 s, after the motion; no line on screen); dead: 3.65 s with nothing new (26.25-29.90 s, after the motion; no line on screen); payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T05:30:54.188Z",
+      "report": "work/hb/creeper_art.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }

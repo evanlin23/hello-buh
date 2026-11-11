@@ -38785,5 +38785,28 @@
   ],
   "status": "ready",
   "notes": "backlog worker D: re-recorded on the current engine (aim governor, no whips), 6 sand towers 1x1..6x6 with the torch trick, opens on the first break, punch+shake+flash on the crash; 35.5 s; pace 0 blockers; review READY (maker's review, no subagent tool). Republished 06:5x: the 06:29 package had the old 5.9 s cut (stale short_nosong; publish.js fixed). Nitpicks: the 6x6 phase ~10 s of 3-column batches; hand dips on slot switches (vanilla).",
-  "published_at": "2026-11-11T06:48:21.409Z"
+  "published_at": "2026-11-11T06:48:21.409Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:05:03+00:00",
+    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 35.46 s vs the reviewed render 35.45 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 2,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T06:05:10.452Z",
+      "report": "work/hb/sand_tower.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }

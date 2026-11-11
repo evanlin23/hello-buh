@@ -1975,5 +1975,28 @@
   ],
   "status": "ready",
   "notes": "backlog worker A 2026-11-11: re-recorded on the current engine, cut short per the lead (1, 10, 100, 200, then 40 behind: 16.2 s; pace's under-25 s length block ignored on the lead's word). 2 review rounds (fresh-session reviewer), READY. Nitpicks: held emerald cut off at the right edge; two leaf blocks floating at the top right 14.9-16.1 s; a cow wanders through the 200 at ~13 s; the 40 behind show their backs ~0.3 s before the snap; pace WARNs 2.2 s spans on the 100 and 200 sidesteps (heads moving)",
-  "published_at": "2026-11-11T05:45:33.927Z"
+  "published_at": "2026-11-11T05:45:33.927Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:05:21+00:00",
+    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "package": {
+      "ok": false,
+      "summary": "short.mp4 13.50 s vs the reviewed render 16.22 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 3,
+      "warnings": 0,
+      "summary": "length: 13.5 s: under the 25 s minimum; payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T04:54:53.932Z",
+      "report": "work/hb/villager_crowd.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
