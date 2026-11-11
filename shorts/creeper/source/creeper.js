@@ -7,7 +7,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'first:-0.1', deathScreen: true, endAfter: 'settle:0.6',   // 0.6 s after the blast's smoke has settled (lib/settle.js: 2.2 s after the blast); 9.7 s total, over the 8 s floor
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'first:-0.1', deathScreen: true, endAfter: 'settle:0.1',   // 0.1 s after the blast's smoke has settled (lib/settle.js: 2.2 s after the blast); 9.2 s total. Was settle:0.6: owner 2026-11-11 (r:r52f94c) "we can cut a little earlier"; still after the debris rests (r:r24d99a)
     sfx: [['air', 'start', 'death', { gain: 0.5 }], ['dip', 'hurt', 0.4], ['impact', 'hurt', { gain: 1.4 }]] },   // mixcheck r2: under the NCS bed the blast wasn't a hit: dip + impact on it   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 

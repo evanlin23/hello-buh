@@ -1,10 +1,10 @@
 {
   "name": "creeper",
   "channel": "hellobuh",
-  "caption": "POV: you hear tssss \ud83d\udc80",
+  "caption": "POV: you hear tssss 💀",
   "youtube": {
-    "title": "POV: you hear tssss \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you hear tssss \ud83d\udc80\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you hear tssss 💀 #minecraft #shorts",
+    "description": "POV: you hear tssss 💀\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -25,35 +25,35 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 9.7,
+    "duration_s": 9.2,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14703657,
-    "sha256": "3cce7715dea9d169b9168ef18655a2d9fb277ef761f3745be2aac857de60b37e",
+    "bytes": 14683531,
+    "sha256": "cda63602eb3e241b1048ad4545b9e35ce6c801b43eb71b53a146b2b1272baa5a",
     "release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short.3cce7715dea9d169.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.3cce7715dea9d169.mp4",
-      "sha256": "3cce7715dea9d169b9168ef18655a2d9fb277ef761f3745be2aac857de60b37e",
-      "bytes": 14703657
+      "asset": "creeper.short.cda63602eb3e241b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.cda63602eb3e241b.mp4",
+      "sha256": "cda63602eb3e241b1048ad4545b9e35ce6c801b43eb71b53a146b2b1272baa5a",
+      "bytes": 14683531
     },
     "nosong_release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short_nosong.c2ce59f9a663d683.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.c2ce59f9a663d683.mp4",
-      "sha256": "c2ce59f9a663d68336d47f2ad6c8f4b73723f1a1b78ad668a4bdb6ca6991891c",
-      "bytes": 14703751
+      "asset": "creeper.short_nosong.bba7abf123a23c57.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.bba7abf123a23c57.mp4",
+      "sha256": "bba7abf123a23c572cdf1aa31ebb9bae8e485630b84fda002f095c81883c5932",
+      "bytes": 14684067
     }
   },
   "edit": {
-    "caption": "POV: you hear tssss \ud83d\udc80",
+    "caption": "POV: you hear tssss 💀",
     "red": "tssss",
     "dropAt": "hiss",
     "startAt": "first:-0.1",
     "deathScreen": true,
-    "endAfter": "settle:0.6",
+    "endAfter": "settle:0.1",
     "sfx": [
       [
         "air",
@@ -78,7 +78,9 @@
     ],
     "args": [
       "--caption",
-      "POV: you hear tssss \ud83d\udc80",
+      "POV: you hear tssss 💀",
+      "--self_name",
+      "56e",
       "--red",
       "tssss",
       "--sfx",
@@ -88,7 +90,7 @@
       "--start_at",
       "first:-0.1",
       "--end_after",
-      "settle:0.6"
+      "settle:0.1"
     ]
   },
   "recording": {
@@ -230,12 +232,12 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/creeper",
-    "commit": "298a0004b93d784bbae174519573bd4e0a9e08eb",
+    "branch": "render/56e-creeper",
+    "commit": "385505d362cb909e75a0e216a2571f094cb49914",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43077079144",
-    "rendered_at": "2026-11-11T18:31:14.435Z",
-    "head_at_publish": "d6141e92d486f97606fe9de7bc0e57365030f892",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43091392575",
+    "rendered_at": "2026-11-11T20:05:15.707Z",
+    "head_at_publish": "304dc3369c27e12bb9da99376536c9430838e419",
     "stunt": "stunts/creeper.js",
     "source_snapshot": [
       "source/creeper.js",
@@ -246,37 +248,36 @@
     ]
   },
   "rebuild": [
-    "git checkout 298a0004b93d",
+    "git checkout 385505d362cb",
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss \ud83d\udc80\" --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:-0.1 --end_after settle:0.6 --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --self_name 56e --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:-0.1 --end_after settle:0.1 --out out/creeper.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +15.1 dB; picture unchanged; audio fix-check READY",
-  "published_at": "2026-11-11T19:03:25.526Z",
+  "status": "ready",
+  "notes": "re-render (r:r52f94c): 56e on the death screen; ends 0.5 s earlier (settle:0.1, still after the debris rests, r:r24d99a); independent fix-check READY; nitpick: a faint smoke wisp in the last frames",
+  "published_at": "2026-11-11T21:05:54.167Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:03:49+00:00",
+    "at": "2026-11-11T21:06:17+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 9.71 s vs the reviewed render 9.70 s"
+      "summary": "short.mp4 9.22 s vs the reviewed render 9.20 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T18:35:37.347Z",
-      "report": "work/hb/creeper.check.json"
+      "at": "2026-11-11T19:57:52.540Z",
+      "report": "out/creeper.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "owner 2026-11-11 (@9.7s): \"says hellobuh, also we can cut a little earlier\""
+  }
 }
