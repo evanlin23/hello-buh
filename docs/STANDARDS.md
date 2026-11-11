@@ -335,6 +335,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
   mob; fast is fine, off-aim reads as hacking. Check: review, the aim-error check (rec_check/lint). r:rffba12
+- **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
+  end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
+  Check: pace/rec_check (settle), lint. r:r24d99a
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

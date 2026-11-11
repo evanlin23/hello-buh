@@ -292,6 +292,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall before we
+  end/cut"; "our processes must cover all of these."** A Short never cuts or ends while its payoff is still moving:
+  every falling block has landed, the blast debris has settled, the mob's death puff is done. The payoff moment is when
+  the motion settles, and the 1 s end limit counts from there. Every owner note like these becomes an automatic check
+  in ./hb check / pace, not only a review note.
 - **Owner, 2026-11-11, on the newly published Shorts: "for the torch, we need to look where we are placing/breaking,
   its fine to be fast but right now it just looks like hacking. also, the lava lake lowkey like ragebait but thats ok.
   the rainbow sheep we are not looking at the right sheep when we dye..."** Every place, break, use and dye happens
