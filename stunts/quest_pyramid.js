@@ -8,7 +8,7 @@ const { makeQuest } = require('../lib/quest')
 
 module.exports = makeQuest({
   name: 'quest_pyramid',
-  caption: 'The SECRET chest in every desert pyramid',
+  caption: 'bro found the SECRET chest 😱',
   red: 'SECRET',
   stages: [
     { kind: 'tunnel', len: 9, plug: 4, drop: 3 },
