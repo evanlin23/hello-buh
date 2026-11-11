@@ -41,7 +41,8 @@
    "id": "L01",
    "who": "N",
    "text": "My HUMAN / has TRIED / to LOSE me / thirty-seven TIMES.",
-   "say": "My human has tried to lose me thirty-seven TIMES."
+   "say": "My human has tried to lose me thirty-seven TIMES.",
+   "punch": true
   },
   {
    "id": "L02",
@@ -67,7 +68,8 @@
    "who": "N",
    "text": "He SAYS / a WAITING dog / is a SAD dog. / He WANTS me / to FORGET him.",
    "say": "He says a waiting dog is a SAD dog. He wants me to FORGET him.",
-   "look": false
+   "look": false,
+   "punch": true
   },
   {
    "id": "L06",
@@ -98,7 +100,8 @@
    "id": "L12",
    "who": "N",
    "text": "So I SAT. / SITTING dogs / wait FOREVER.",
-   "say": "So I SAT. Sitting dogs wait FOREVER."
+   "say": "So I SAT. Sitting dogs wait FOREVER.",
+   "punch": true
   },
   {
    "id": "L13",
