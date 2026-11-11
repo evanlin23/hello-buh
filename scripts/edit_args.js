@@ -78,6 +78,7 @@ if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
 if (e.fallen) out.push('--fallen', JSON.stringify(e.fallen))
+if (e.tally) out.push('--tally', JSON.stringify(e.tally))   // a live "blocks used" total (format mega: lib/mega_lapse.js)
 if (e.replay) out.push('--replay', JSON.stringify(e.replay))   // needs scripts/render_replay.py first
 if (e.loop) out.push('--loop', JSON.stringify(e.loop))
 if (e.sfx) out.push('--sfx', JSON.stringify(e.sfx))       // sound effects (scripts/sfx.py)
