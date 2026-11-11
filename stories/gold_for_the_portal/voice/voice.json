@@ -367,17 +367,17 @@
   "L10": {
    "who": "Grandma",
    "text": "One's plenty, sweetie.",
-   "dur": 2.51,
-   "onset": 0.52,
-   "end": 2.14,
+   "dur": 3.115,
+   "onset": 0.68,
+   "end": 2.72,
    "chunks": [
     [
-     0.52,
-     1.46
+     0.68,
+     1.88
     ],
     [
-     1.495,
-     2.14
+     1.955,
+     2.72
     ]
    ],
    "captions": [
@@ -391,7 +391,8 @@
    "beat": "L10",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "15a11528368a"
+   "aligned_wav": "4ef9d5acb0a4",
+   "source": "brand/auditions/2026-11-11_mom_grandma/J_grandma_Autonoe_gemini-3.1-flash-tts-preview.mp3 (claude/audition-mom-grandma): the owner's picked audition take, used as is (Buh Stories lead 2026-11-11), not a new request"
   },
   "L11": {
    "who": "N",
@@ -555,18 +556,19 @@
     "L10"
    ],
    "file": "beat_L10.wav",
-   "dur": 2.51,
+   "dur": 3.115,
    "offsets": [
     0.0
    ],
    "model": "gemini-3.1-flash-tts-preview",
-   "try": 1,
-   "tries": 1,
+   "try": 0,
+   "tries": 0,
    "fixes": [],
    "ok": true,
    "gate": [],
    "cut": "whole",
-   "rejected": []
+   "rejected": [],
+   "source": "brand/auditions/2026-11-11_mom_grandma/J_grandma_Autonoe_gemini-3.1-flash-tts-preview.mp3 (claude/audition-mom-grandma): the owner's picked audition take, used as is (Buh Stories lead 2026-11-11), not a new request"
   }
  },
  "total": 49.75
