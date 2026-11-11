@@ -4,7 +4,7 @@
   "caption": "POV: you got the midas touch 🤑",
   "youtube": {
     "title": "POV: you got the midas touch 🤑 #minecraft #shorts",
-    "description": "POV: you got the midas touch 🤑\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "POV: you got the midas touch 🤑\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,14 +14,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "ayuda.mp3",
-    "title": "AYUDA",
-    "artist": "MXRCVRY",
+    "file": "intranet_crush.mp3",
+    "title": "Intranet Crush",
+    "artist": "hiræth, Willix",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "touch",
-    "drop_in_song_s": 9.0,
+    "drop_in_song_s": 3.0,
     "drop_in_short_s": 0.2,
-    "song_start_s": 8.8
+    "song_start_s": 2.8
   },
   "video": {
     "file": "short.mp4",
@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 27249858,
-    "sha256": "782d43396f31769da46dc6ebebf89d965f91a5b2794f0aae5aa20c62a0da80ac",
+    "bytes": 27247503,
+    "sha256": "ba89270c834b403e6b7f701cfef6a9190d77965dc93c72917ba4793cda903db3",
     "release": {
       "tag": "pkg-midas_touch",
-      "asset": "midas_touch.short.782d43396f31769d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-midas_touch/midas_touch.short.782d43396f31769d.mp4",
-      "sha256": "782d43396f31769da46dc6ebebf89d965f91a5b2794f0aae5aa20c62a0da80ac",
-      "bytes": 27249858
+      "asset": "midas_touch.short.ba89270c834b403e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-midas_touch/midas_touch.short.ba89270c834b403e.mp4",
+      "sha256": "ba89270c834b403e6b7f701cfef6a9190d77965dc93c72917ba4793cda903db3",
+      "bytes": 27247503
     },
     "nosong_release": {
       "tag": "pkg-midas_touch",
@@ -552,30 +552,29 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/midas_touch",
-    "commit": "35abbf3fe3ec4ce2fec4c651cd38e8d116e0ceec",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42993219679",
-    "rendered_at": "2026-11-11T09:23:47.713Z",
-    "head_at_publish": "c5fa55e7c4bc7fa0bb7d77cbaa9b5885559dc492",
+    "branch": "main",
+    "commit": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T15:29:38.570Z",
+    "head_at_publish": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
     "stunt": "stunts/midas_touch.js",
     "source_snapshot": [
       "source/midas_touch.js"
     ]
   },
   "rebuild": [
-    "git checkout 35abbf3fe3ec",
+    "git checkout 9ee7bd45a9cb",
     "gunzip -c shorts/midas_touch/recording.json.gz > work/midas_touch.rec.json",
     "node render.js work/midas_touch.rec.json work/midas_touch.frames 60 1080 1011",
     "python3 audio.py work/midas_touch.rec.json work/midas_touch.wav",
     "python3 edit.py --frames work/midas_touch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/midas_touch.rec.json --audio work/midas_touch.wav --caption \"POV: you got the midas touch 🤑\" --red midas --punch [[\"wave\",0,1.06]] --flash [[\"wave\",0,0.4]] --sfx [[\"dip\",\"wave\",0.35],[\"impact\",\"wave\"]] --start_at touch:-0.2 --end_after wave:1.0 --out out/midas_touch.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "awaiting independent review. backlog worker D: re-recorded and re-cut on the current engine: the touch gilds everything looked at (quicker sweeps, a stronger touch sooner), a cabin goes gold, then a final gold wave over the land (punch + flash + dip + impact); 13.3 s; the old 'stronger' walk into its own gold walls (8 s of gold in the face) cut; pace 0 blockers. No reference song (publish adds the NCS track). Maker's notes: the set is wherever the forest spawn lands (this take: hilly ground by a village), the walk stares at a gilded slope ~3 s.",
-  "published_at": "2026-11-11T09:25:14.640Z",
+  "status": "ready",
+  "notes": "midas touch re-cut (13.3 s): quicker opening sweeps, a stronger touch sooner, the final wave with punch, flash, dip and hit; independent review READY (0 blockers). Nitpicks: 4.5-8 s stares at the gilded slope; an unseen mob suffocates in the gold (~6.4 s).",
+  "published_at": "2026-11-11T15:31:14.694Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:25:40+00:00",
+    "version": 4,
+    "at": "2026-11-11T15:31:38+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -591,8 +590,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:17:11.156Z",
-      "report": "out/midas_touch.check.json"
+      "at": "2026-11-11T15:29:55.690Z",
+      "report": "work/hb/midas_touch.check.json"
     },
     "key_sounds": "n/a"
   }
