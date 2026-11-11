@@ -17,6 +17,10 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 | 2026-11-11 | honey_thief, singing_box | a flying-mob POV: hover bob, low curving fast flight (mobpov only dashed straight) | DONE (camera_world): `R.hover('bee'/'allay')`, `R.fly(points, { above, look, lead })` in lib/mobpov.js |
 | 2026-11-11 | honey_thief | a crane from the POV to 90 up straight down, fov 28 -> 70 in the same move; top-down flower readability | DONE (camera_world): shot `crane: { from: 'pov', to, pitch: -90, fov, secs, tilt }`, `fovPath`; readability: cross flowers vanish from above, flat covers and 2-tall bushes read (docs/engine_proofs/camera_world/flower_readability.md) |
 | 2026-11-11 | saving_up_bastion | Nether places in the world tools (map.json `dimension`, check/claim, world.build and the recorder in the Nether); survey round (-16, -118) | DONE (camera_world): `dimension` in lib/world.js / scripts/world.js, `world.enter`, ground under the roof; survey: basalt deltas, no bastion within 500 blocks (docs/engine_proofs/camera_world/nether_survey.png) |
+| 2026-11-11 | bell_window (+ banked White Horse, Thirteen Songs) | skeleton bow draw on a staged mark | DONE (claude/engine-mob_poses): `pose { bow }`, or recorded from an AI skeleton |
+| 2026-11-11 | red_sheep | evoker spellcasting arms + wololo particles; crossed-vs-free arms; a sheep's colour change mid-shot | DONE (claude/engine-mob_poses): metadata 17 or `pose { spell: 'wololo' }`; the colour change already worked |
+| 2026-11-11 | saving_up_bastion | baby piglin admiring a gold ingot in the off hand | DONE (claude/engine-mob_poses): automatic from the off-hand item (vanilla's rule) |
+| 2026-11-11 | singing_box | the allay's held item (diamond) and its holding arms (build blocker) | DONE (claude/engine-mob_poses): automatic from the main-hand item |
 
 ## Backlog (lead, 2026-11-10 night): next engine round, by value to the stories (worked by agent/engine-2, 2026-11-10)
 | # | needed | why | status |

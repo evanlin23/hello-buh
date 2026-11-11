@@ -578,6 +578,52 @@ the server. `lib/riding.js` holds the shared numbers, `lib/boats.js` the kit.
   leads a boat with a baby villager in it over grass, boards his own boat and rows an S-bend, the led boat following;
   a third boat tied to a fence; proof stills in docs/engine_proofs/boats_leads/). `node --test lib/hb/test/boats.test.js`.
 
+## Mob poses and held items (skeleton bow draw, evoker spellcasting, piglin admiring, allay held item)
+For the Buh Stories batch (The Bell in the Window, Red Sheep, Saving Up for a Bastion, The Singing Box Next Door).
+Code: `renderer/entities.js` (the bone angles), `lib/mob_poses.js` (the node side: spell ids and colours, the bow's pull,
+the piglin_loved tag, the recorded runs), `render.js` (marks -> `extra`), `lib/harness.js` (the recorded flags),
+`renderer/particles.js` (`spell`). Rule zero: every key is new (a staged mark or a new recorded `extra` key), and the
+evoker's crossed arms change only from engine 2; the published Shorts with skeletons (light_sleeper, guess_sound_3,
+interrupt_lamps), the allay (guess_sound_2), piglins (gold_for_the_portal), pillagers (thirty_one_raids) and sheep
+render pixel-identical (docs/engine_proofs/mob_poses/README.md).
+- **A skeleton drawing its bow** (stray, bogged, parched too): staged `ctx.mark('pose', { ids: [id], bow: true })` ...
+  `ctx.mark('pose_off', { ids })`, or recorded (a skeleton with AI aiming: Mob flags bit 4 aggressive -> `extra.aggressive`,
+  LivingEntity flags bit 1 using -> `extra.usingItem`). SkeletonModel's BOW_AND_ARROW: both arms straight out along
+  the head's look (right yRot -0.1, left +0.5, xRot -90 deg + head pitch) with bobModelPart's idle sway; the bow pulls
+  over the mark's first second (items/bow.json: `bow_pulling_0`, `_1` from 13 ticks, `_2` from 18 = full draw). `{ bow:
+  true, drawn: true }` starts fully drawn. The arms follow the head: aim a NoAI skeleton with its `Rotation` pitch.
+  For The Bell in the Window: mark `pose { bow }` 18 ticks before the story's `draw` mark, so `draw` lands on full draw.
+- **An evoker casting** (IllagerArmPose.SPELLCASTING): recorded from SpellcasterIllager metadata 17 (`extra.spell`: 1 vex,
+  2 fangs, 3 wololo, 4 disappear, 5 blindness), or staged `ctx.mark('pose', { ids: [id], spell: 'wololo' })`. Both
+  free arms up and out (zRot +-135 deg) waving with cos(age 0.6662) x 0.25, and two ENTITY_EFFECT particles a tick at
+  the hands (SpellcasterIllager.tick: 1.8 up, 0.6 either side; SpellParticle effect_7 -> effect_0, rising) in the
+  spell's colour (wololo 0.7 0.5 0.2, fangs 0.4 0.3 0.35). Vanilla's wololo (EvokerWololoSpellGoal) lasts 60 ticks and
+  turns the sheep red 40 ticks in, so the arms drop 1 s after the change: a staged spell with no `pose_off` ends 60
+  ticks after its mark. Stage it as vanilla times it: the mark (and `entity.evoker.prepare_wololo`) at T, `/data merge
+  entity <sheep> {Color:14b}` at T + 40 ticks (and `entity.evoker.cast_spell`), nothing else. A real cast needs
+  `mob_griefing` on, a blue sheep within 16 blocks and no target (a player in survival in its sight is targeted first).
+  The crossed arms: IllagerModel draws the crossed `arms` OR the free arms, never both; recordings from engine 2 on
+  draw an idle evoker with only its crossed arms, tilted -0.75 on IllagerModel's pivot (the converted model drew both).
+- **A sheep changing colour mid-shot** (white -> blue, blue -> red) already worked: the colour is recorded per sample,
+  and a change rebuilds the model with the undercoat in the new colour (checked on the fixture).
+- **A piglin admiring** (baby or adult): vanilla's own client rule, nothing to stage: a piglin with a piglin_loved item
+  (a gold ingot, gold block, golden tools...) in its OFF hand takes PiglinArmPose.ADMIRING_ITEM: head down (xRot 0.5,
+  yRot 0), the left arm up to the face (xRot -0.9, yRot 0.5) holding the item. `/summon piglin ~ ~ ~ {IsBaby:1b,
+  IsImmuneToZombification:1b,equipment:{offhand:{id:"minecraft:gold_ingot",count:1}}}` (Overworld: immune, or it
+  zombifies in 15 s), or `/item replace entity <piglin> weapon.offhand with gold_ingot` on cue. Piglins' main-hand and
+  off-hand items now draw at all (the converted bones are lower case: `rightarm`, `leftarm`).
+- **An allay holding an item** (AllayRenderer's ItemInHandLayer): `/summon allay ~ ~ ~ {equipment:{mainhand:{id:
+  "minecraft:diamond",count:1}}}` or a real pickup. The arms take AllayModel's holding pose (reaching forward, xRot
+  -60 deg, spread round the item) and the item sits in front of the chest (AllayModel.translateToHand: the body,
+  T(0, 1/16, 3/16), Rx(arm), S(0.7), then the third-person right-hand display). An empty allay is unchanged.
+- Test: `node scripts/pose_fixture.js --mobposes` (a staged and a recorded skeleton, three evokers, two sheep changing
+  colour, three piglins, two allays) and `./hb still _poses_test tick:5 tick:30 tick:52 --cam 1.5,1.4,1.2,180,0`; live:
+  `./hb record _test_mob_poses --no-strict` (an AI skeleton shooting a golem, a real wololo, the staged draw, the allay
+  and the baby piglin). Stills: docs/engine_proofs/mob_poses/. `npm test` (lib/hb/test/mob_poses.test.js).
+- Not done: the evoker's fangs (EvokerFangsModel's rise and bite; no story shows them), the vex, a pillager's crossbow
+  (its converted bones are lower case too: published pillagers show none, so it stays off), the allay's body tilt
+  while flying fast.
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.
