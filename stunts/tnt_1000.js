@@ -19,7 +19,10 @@ const speed = []
 for (let i = 1; i <= TIERS.length; i++) {
   if (i > 1) speed.push([`cut${i}a`, `cut${i}b`, 'cut'])        // to the next pile
   speed.push([`fuse${i}a`, `fuse${i}b`, 'cut'])                   // most of the 4 s fuse
-  if (i === 4) speed.push(['rim4a', 'rim4b', 'cut'])              // to the rim of the big crater
+  // the waits for the flung dirt to land before the next cut (the settle rule) at 2x: 3.4 s after the 100 and 5.4 s
+  // after the 1000 had nothing new on screen (pace dead BLOCK)
+  if (i === 3) speed.push(['crater3:0.5', 'cut4a', 2])
+  if (i === 4) speed.push(['boom4:1.5', 'rim4a', 2], ['rim4a', 'rim4b', 'cut'])   // ...then to the rim of the big crater
 }
 
 module.exports = {
@@ -28,11 +31,15 @@ module.exports = {
   caption: '1 TNT vs 10 vs 100 vs 1000 💀',
   edit: {
     caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', dropAt: 'boom4',
-    startAt: 'tier1:-0.05', endAfter: 'settle:0.6',   // once the blast's debris settles (lib/settle.js, r:r24d99a)
+    // once the blast's debris settles (lib/settle.js, r:r24d99a), less 0.15 s: the conservative settle (the renderer's
+    // smoke, 2.2 s) held a frozen death screen on which_door; pace's last-0.6 s check still wants a still ending
+    startAt: 'tier1:-0.05', endAfter: 'settle:-0.15',
     deathScreen: true,
-    // the song drops out 0.35 s before the death so the 1000-TNT blast lands as a hit (pace: no sound hit on the payoff,
-    // the bed covered it)
-    sfx: [['dip', 'death', 0.35]],
+    // the payoff pace times is the 1000 pile's LAST blast, 1.85 s (output) after boom5 on this take: a flash, a punch,
+    // the song dip, the game ducked and an impact there (no hit and no picture change on it: pace BLOCK); the song
+    // also drops out 0.35 s before the death. Re-check the offset after a re-record
+    sfx: [['dip', 'death', 0.35], ['dip', 'boom5:1.85', 0.4], ['gamedip', 'boom5:1.85', 0.35], ['impact', 'boom5:1.85', { gain: 1.4 }]],
+    flash: [['boom5:1.85', 0, 0.8]], punch: [['boom5:1.85', 0, 1.15]],
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },
