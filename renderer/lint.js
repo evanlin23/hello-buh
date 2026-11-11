@@ -32,6 +32,24 @@ function project (cam, p, vfov) {
   return { x: (d[0] * r[0] + d[1] * r[1] + d[2] * r[2]) / z / th, y: (d[0] * u[0] + d[1] * u[1] + d[2] * u[2]) / z / tv, z }
 }
 const fmt = (t) => t.toFixed(1)
+// The renderer's near plane (renderer/page.js: PerspectiveCamera(fov, W / H, 0.05, ...)). shotCam pushes the camera's
+// CENTRE out of blocks, so "camera inside a block" (the centre) almost never fires; but a camera left a few
+// centimetres off a block face still clips it: the near plane's corners reach into the block and its culled faces
+// show the inside (owner, 2026-11-11, Good Boy at 0.6 s: "the camera is inside of the block, so we can see inside
+// of it"; a follow camera dipping toward the road). True when any corner of the near plane (or its centre) is in a
+// solid block. aspect: the widest the frame gets (16:9 covers the square and portrait renders too).
+const NEAR = 0.05
+function nearPlaneClips (cam, solidAt, aspect = 16 / 9) {
+  const { f, r, u } = basis(cam.yaw, cam.pitch)
+  const tv = Math.tan(((cam.fov || 70) * Math.PI / 180) / 2), hv = NEAR * tv, hh = hv * aspect
+  for (const [a, b] of [[0, 0], [-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+    const x = cam.x + f[0] * NEAR + r[0] * hh * a + u[0] * hv * b
+    const y = cam.y + f[1] * NEAR + r[1] * hh * a + u[1] * hv * b
+    const z = cam.z + f[2] * NEAR + r[2] * hh * a + u[2] * hv * b
+    if (solidAt(x, y, z)) return true
+  }
+  return false
+}
 
 function run (h) {
   const { rec, stunt, marks, shots, shotCam, camAt, targetAt, actorsAt, lines, mesher, Vec3 } = h
@@ -88,6 +106,7 @@ function run (h) {
       if (!cam) { hit('no camera (a target is missing)', t); continue }
       const vf = (cam.fov || 70) * Math.PI / 180
       if (!sp.pov && solidAt(cam.x, cam.y, cam.z)) hit('camera inside a block', t)
+      else if (!sp.pov && nearPlaneClips(cam, solidAt)) hit('camera inside a block (grazing a face: the near plane clips into it and shows the inside)', t)
       if (prevCam) { const mv = Math.hypot(cam.x - prevCam.x, cam.y - prevCam.y, cam.z - prevCam.z) + Math.abs(cam.yaw - prevCam.yaw) + Math.abs(cam.pitch - prevCam.pitch); if (mv < 0.002) still++ }
       prevCam = cam
       const others = actorsAt(t)
@@ -235,4 +254,4 @@ function run (h) {
   return problems.length
 }
 
-module.exports = { run, project }
+module.exports = { run, project, nearPlaneClips }
