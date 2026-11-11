@@ -1,9 +1,10 @@
 {
   "name": "creeper",
-  "caption": "POV: you hear tssss \ud83d\udc80",
+  "channel": "hellobuh",
+  "caption": "POV: you hear tssss 💀",
   "youtube": {
-    "title": "POV: you hear tssss \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you hear tssss \ud83d\udc80\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you hear tssss 💀 #minecraft #shorts",
+    "description": "POV: you hear tssss 💀\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,62 +14,81 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "intranet_crush.mp3",
-    "title": "Intranet Crush",
-    "artist": "hir\u00e6th, Willix",
+    "file": "montagem_toma.mp3",
+    "title": "Montagem Toma",
+    "artist": "X972, sk3tch01, MXZI",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "hiss",
-    "drop_in_song_s": 3.0,
-    "drop_in_short_s": 3.65,
-    "song_start_s": 0.0
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 5.35,
+    "song_start_s": 9.15
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 6.85,
+    "duration_s": 9.7,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 5759022,
-    "sha256": "a291c76083a67bbcebf36c2402d456b8e7340c32a267f5db3fb10d9837fee0c8",
+    "bytes": 14758965,
+    "sha256": "cdd9fb41f52878e96c4df126bad9d594eeb73009e00102ba436026638b91f17d",
     "release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short.a291c76083a67bbc.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.a291c76083a67bbc.mp4",
-      "sha256": "a291c76083a67bbcebf36c2402d456b8e7340c32a267f5db3fb10d9837fee0c8",
-      "bytes": 5759022
+      "asset": "creeper.short.cdd9fb41f52878e9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.cdd9fb41f52878e9.mp4",
+      "sha256": "cdd9fb41f52878e96c4df126bad9d594eeb73009e00102ba436026638b91f17d",
+      "bytes": 14758965
     },
     "nosong_release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short_nosong.389191ec86b587cd.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.389191ec86b587cd.mp4",
-      "sha256": "389191ec86b587cd679de237756fabb52066033ae3b6faaeaf38da249440b7dc",
-      "bytes": 5731607
+      "asset": "creeper.short_nosong.888b3a28b7e56b96.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.888b3a28b7e56b96.mp4",
+      "sha256": "888b3a28b7e56b969561d0c69a1e0e33f5edbbd2e3bf9f617a89422e7b582106",
+      "bytes": 14756732
     }
   },
   "edit": {
-    "caption": "POV: you hear tssss \ud83d\udc80",
+    "caption": "POV: you hear tssss 💀",
     "red": "tssss",
-    "song": "songs/funk_abnormal.mp3",
     "dropAt": "hiss",
-    "start": 0.4,
+    "startAt": "first:-0.1",
     "deathScreen": true,
-    "endAfter": "death:1.8",
+    "endAfter": "settle:0.6",
+    "sfx": [
+      [
+        "air",
+        "start",
+        "death",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "dip",
+        "hurt",
+        0.4
+      ],
+      [
+        "impact",
+        "hurt",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
     "args": [
       "--caption",
-      "POV: you hear tssss \ud83d\udc80",
+      "POV: you hear tssss 💀",
       "--red",
       "tssss",
+      "--sfx",
+      "[[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]]",
       "--death_screen",
       "death",
-      "--start",
-      "0.4",
+      "--start_at",
+      "first:-0.1",
       "--end_after",
-      "death:1.8",
-      "--song",
-      "songs/funk_abnormal.mp3",
-      "--song_drop_at",
-      "hiss"
+      "settle:0.6"
     ]
   },
   "recording": {
@@ -79,13 +99,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 387,
-      "y": 72,
-      "z": -40
+      "x": 377,
+      "y": 86,
+      "z": -38
     },
     "biome": "minecraft:plains",
-    "ticks": 160,
-    "seconds": 8,
+    "ticks": 265,
+    "seconds": 13.25,
     "deaths": 1,
     "death_message": {
       "with": [
@@ -109,7 +129,7 @@
           }
         },
         {
-          "insertion": "d37ed964-7450-4bf0-8dd9-9fbefffa6264",
+          "insertion": "c61f3378-4312-4432-ab02-683bbf119446",
           "hover_event": {
             "name": {
               "translate": "entity.minecraft.creeper"
@@ -117,10 +137,10 @@
             "action": "show_entity",
             "id": "minecraft:creeper",
             "uuid": [
-              -746661532,
-              1951419376,
-              -1915117634,
-              -368028
+              -971033736,
+              1125270578,
+              -1425905605,
+              -1089366970
             ]
           },
           "translate": "entity.minecraft.creeper"
@@ -130,71 +150,132 @@
     },
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0.85,
+        "t": 1.9,
+        "event": "first"
+      },
+      {
+        "t": 2.25,
+        "event": "place_on"
+      },
+      {
+        "t": 2.25,
         "event": "swing"
       },
       {
-        "t": 1.4,
+        "t": 2.35,
+        "event": "glance"
+      },
+      {
+        "t": 4.7,
+        "event": "place_on"
+      },
+      {
+        "t": 4.7,
         "event": "swing"
       },
       {
-        "t": 1.95,
+        "t": 5.2,
+        "event": "place_on"
+      },
+      {
+        "t": 5.2,
         "event": "swing"
       },
       {
-        "t": 2.6,
+        "t": 5.7,
+        "event": "place_on"
+      },
+      {
+        "t": 5.7,
         "event": "swing"
       },
       {
-        "t": 3.15,
-        "event": "swing"
+        "t": 6,
+        "event": "glance2"
       },
       {
-        "t": 3.75,
-        "event": "swing"
-      },
-      {
-        "t": 4.05,
+        "t": 7.15,
         "event": "hiss"
       },
       {
-        "t": 5.45,
+        "t": 8.7,
         "event": "hurt",
         "type": "player_explosion"
       },
       {
-        "t": 5.45,
+        "t": 8.7,
         "event": "death"
       },
       {
-        "t": 8,
+        "t": 8.7,
+        "event": "motion_start"
+      },
+      {
+        "t": 10.9,
+        "event": "motion_settled"
+      },
+      {
+        "t": 10.9,
+        "event": "settle"
+      },
+      {
+        "t": 13.25,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "502c8b221cdc53c7fd34de7d41062ae1a31f19c3",
-    "rendered_at": "2026-11-06T17:18:18.576Z",
-    "head_at_publish": "502c8b221cdc53c7fd34de7d41062ae1a31f19c3",
+    "branch": "render/creeper",
+    "commit": "b29821901b1328bb78e0d06496d05baf0932b429",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43026005898",
+    "rendered_at": "2026-11-11T13:09:40.189Z",
+    "head_at_publish": "dbd5b7bacd9fa4d2da82dda9f0d5dede27e0bc24",
     "stunt": "stunts/creeper.js",
     "source_snapshot": [
-      "source/creeper.js"
+      "source/creeper.js",
+      "source/plateau.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 502c8b221cdc",
+    "git checkout b29821901b13",
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss \ud83d\udc80\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:-0.1 --end_after settle:0.6 --out out/creeper.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "backlog worker A 2026-11-11: needs-fix (unfinished). stunts/creeper.js (main) is rebuilt: plateau field \u00b134 with a taper and its own biome (r1 review blocker: a cut wall/seam behind the creeper), full hearts, hard difficulty, a second glance as it closes in (~8.3 s), planks placed via lib/act.js, endAfter settle:0.6. The r1 render (5.5 s) had the fuse flash and the creeper on screen at 0.4 s, both fixed. It is not re-recorded yet: the shared server was busy and the disk was low. Next: ./hb make creeper --from record, render, independent review.",
-  "published_at": "2026-11-06T17:19:00.311Z"
+  "status": "ready",
+  "notes": "re-recorded: a ±34 tapered plateau, natural biome, dressed with vanilla trees/grass/flowers; opens on placing a plank; two governed glances as it closes in, the hiss, a governed spin, blown up (hard, full hearts; keep_inventory/block_drops off so nothing sprays over the death screen); endAfter settle:0.6; 9.7 s; r1 seam -> r2 superflat + frozen opener -> r3 fix-check READY (lead-approved); mixcheck OK; nitpicks: distant creeper small on the first glance, near-still death screen 1.8 s (r24d99a)",
+  "published_at": "2026-11-11T13:15:45.431Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T13:16:08+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 9.71 s vs the reviewed render 9.70 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T13:06:20.510Z",
+      "report": "out/creeper.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
