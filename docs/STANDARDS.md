@@ -396,6 +396,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
 - **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
   (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
+- **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action.
+  Check: owner, review. r:r7ef6ec
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or

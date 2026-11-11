@@ -426,6 +426,9 @@ STANDARDS.md in the same commit.
   format, each hurt mob shows its health above its head as a row of Minecraft hearts (full, half and empty, the HUD
   heart style), and the row fills up as it's healed, so the heal reads at a glance. The hearts track the mob's real
   health from the recording.
+- **Owner, 2026-11-11, on fakemod_permission: "Also, for the fake mod thing, I think the pop-up should be in the middle
+  of the screen rather than at the top."** In the `fakemod` format, the permission popup sits centred in the game view
+  (like a real modal dialog over the action), not at the top.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
