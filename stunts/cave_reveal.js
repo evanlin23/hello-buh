@@ -33,7 +33,10 @@ module.exports = {
   expectDeath: true,
   edit: {
     caption: 'never dig straight down 💀', red: 'never', dropAt: 'l5',
-    onFire: 'in_lava:death', deathScreen: true, startAt: 'dig0:-0.3', endAfter: 'death:1.6',
+    onFire: 'in_lava:death', deathScreen: true, endAfter: 'death:1.6',
+    // opens 0.35 s before the first crack (from dig0 the first 2.3 s were the setup's cut pit wall and a slow tilt
+    // down over grass under "just digging down...": independent review 2026-11-11)
+    startAt: 'dig0:1.9',
     subs: [
       ['dig0', 'just digging down...', 3], ['l1', 'oh, a cave', 2.2], ['dig1', 'keep going', 2],
       ['l2', 'a mineshaft??', 2.4], ['dig2', 'keep going...', 2], ['l3', 'a DUNGEON', 2.2], ['dig3', 'one more...', 1.8],
@@ -42,7 +45,7 @@ module.exports = {
     // the burn sped up (6 s of one shot in the lava: pace), and a hit on the death (pace: no sound hit on the payoff;
     // the lava's burning keeps the game track busy, so the impact doesn't flatten the rest)
     speed: [['in_lava:1.0', 'death:-0.4', 2]],
-    sfx: [['pop', 'dig0'], ['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]   // (a pop on the opening: the no-song cut was silent until the first block broke at 2.7 s, pace hook)
+    sfx: [['pop', 'dig0:1.9'], ['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]   // (a pop on the opening: the no-song cut was silent until the first block broke at 2.7 s, pace hook)
   },
 
   async setup (ctx) {
