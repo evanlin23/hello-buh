@@ -1,10 +1,10 @@
 {
   "name": "which_door",
   "channel": "hellobuh",
-  "caption": "which door would you pick? \ud83d\udeaa",
+  "caption": "which door would you pick? 🚪",
   "youtube": {
-    "title": "which door would you pick? \ud83d\udeaa #minecraft #shorts",
-    "description": "which door would you pick? \ud83d\udeaa\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "which door would you pick? 🚪 #minecraft #shorts",
+    "description": "which door would you pick? 🚪\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -16,7 +16,7 @@
   "song": {
     "file": "fearless_funk.mp3",
     "title": "Fearless Funk",
-    "artist": "DR M\u00d8B, Chris Linton",
+    "artist": "DR MØB, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal",
     "drop_in_song_s": 29.5,
@@ -30,26 +30,26 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 38379394,
-    "sha256": "c7c74b2dfd2ea8f9a07402d52018e27a396540aa5812d7c26ca4ae95f6c2a19c",
+    "bytes": 38328387,
+    "sha256": "2060e5056d50f933409f77d82048c52f7529476a65ffe7bfc70a86f8ac57264e",
     "release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short.c7c74b2dfd2ea8f9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.c7c74b2dfd2ea8f9.mp4",
-      "sha256": "c7c74b2dfd2ea8f9a07402d52018e27a396540aa5812d7c26ca4ae95f6c2a19c",
-      "bytes": 38379394
+      "asset": "which_door.short.2060e5056d50f933.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.2060e5056d50f933.mp4",
+      "sha256": "2060e5056d50f933409f77d82048c52f7529476a65ffe7bfc70a86f8ac57264e",
+      "bytes": 38328387
     },
     "nosong_release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short_nosong.efec318e4fa9dcc1.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short_nosong.efec318e4fa9dcc1.mp4",
-      "sha256": "efec318e4fa9dcc1e0afd18da43091ac2a46f2348c2aae2fc6cea87e34d3b46b",
-      "bytes": 38266214
+      "asset": "which_door.short_nosong.cd2d752a270f495e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short_nosong.cd2d752a270f495e.mp4",
+      "sha256": "cd2d752a270f495e90273b6a29e48ac4cd22c815de011943b8fc5c2b71ad9584",
+      "bytes": 38215207
     }
   },
   "edit": {
     "startAt": "intro:0",
-    "caption": "which door would you pick? \ud83d\udeaa",
+    "caption": "which door would you pick? 🚪",
     "red": "door",
     "dropAt": "reveal",
     "endAfter": "settle:-0.15",
@@ -89,41 +89,41 @@
       ],
       [
         "death",
-        "DEAD \u274c",
+        "DEAD ❌",
         0.7,
         "red",
         0
       ],
       [
         "survive",
-        "SURVIVED \u2705",
+        "SURVIVED ✅",
         0.6,
         "green",
         0
       ],
       [
         "survive",
-        "SURVIVED \u2705",
+        "SURVIVED ✅",
         0.6,
         "green",
         1
       ],
       [
         "death",
-        "DEAD \u274c",
+        "DEAD ❌",
         0.7,
         "red",
         1
       ],
       [
         "safe",
-        "THE SAFE ONE \ud83d\ude07",
+        "THE SAFE ONE 😇",
         1,
         "green"
       ],
       [
         "death",
-        "THE WORST ONE \ud83d\udc80",
+        "THE WORST ONE 💀",
         1,
         "red",
         2
@@ -247,7 +247,9 @@
     ],
     "args": [
       "--caption",
-      "which door would you pick? \ud83d\udeaa",
+      "which door would you pick? 🚪",
+      "--self_name",
+      "56e",
       "--red",
       "door",
       "--speed",
@@ -257,7 +259,7 @@
       "--counter",
       "{\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5}",
       "--cards",
-      "[[\"intro\",\"PICK A DOOR\",1.8,\"yellow\"],[\"death\",\"DEAD \u274c\",0.7,\"red\",0],[\"survive\",\"SURVIVED \u2705\",0.6,\"green\",0],[\"survive\",\"SURVIVED \u2705\",0.6,\"green\",1],[\"death\",\"DEAD \u274c\",0.7,\"red\",1],[\"safe\",\"THE SAFE ONE \ud83d\ude07\",1,\"green\"],[\"death\",\"THE WORST ONE \ud83d\udc80\",1,\"red\",2]]",
+      "[[\"intro\",\"PICK A DOOR\",1.8,\"yellow\"],[\"death\",\"DEAD ❌\",0.7,\"red\",0],[\"survive\",\"SURVIVED ✅\",0.6,\"green\",0],[\"survive\",\"SURVIVED ✅\",0.6,\"green\",1],[\"death\",\"DEAD ❌\",0.7,\"red\",1],[\"safe\",\"THE SAFE ONE 😇\",1,\"green\"],[\"death\",\"THE WORST ONE 💀\",1,\"red\",2]]",
       "--shake",
       "[[\"death\",2,24]]",
       "--flash",
@@ -7504,12 +7506,12 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/which_door",
-    "commit": "c81cf36a6ed903d3ae825d7f600f865927878a49",
+    "branch": "render/56e-which_door",
+    "commit": "c1b0d6b904a91fa9e1905cf066f648bc14bd4a04",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43079857593",
-    "rendered_at": "2026-11-11T18:48:37.827Z",
-    "head_at_publish": "da2fe47d6cc1988294a82d77502bd6a9ddc19a85",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43109516253",
+    "rendered_at": "2026-11-11T22:25:30.143Z",
+    "head_at_publish": "b6cd08c0de9e21306b24f6727c812653975ab7c6",
     "stunt": "stunts/which_door.js",
     "source_snapshot": [
       "source/which_door.js",
@@ -7522,18 +7524,18 @@
     ]
   },
   "rebuild": [
-    "git checkout c81cf36a6ed9",
+    "git checkout c1b0d6b904a9",
     "gunzip -c shorts/which_door/recording.json.gz > work/which_door.rec.json",
     "node render.js work/which_door.rec.json work/which_door.frames 60 1080 1011",
     "python3 audio.py work/which_door.rec.json work/which_door.wav",
-    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? \ud83d\udeaa\" --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2],[\"big_blast\",0,1.15]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD \u274c\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED \u2705\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED \u2705\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD \u274c\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE \ud83d\ude07\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE \ud83d\udc80\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.6],[\"big_blast\",0,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"],[\"dip\",\"big_blast\",0.35],[\"gamedip\",\"big_blast\",0.35]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after settle:-0.15 --out out/which_door.mp4"
+    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --self_name 56e --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2],[\"big_blast\",0,1.15]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.6],[\"big_blast\",0,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"],[\"dip\",\"big_blast\",0.35],[\"gamedip\",\"big_blast\",0.35]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after settle:-0.15 --out out/which_door.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +28.6 dB; song + game dip 0.35 s before big_blast (payoff hit, edit only); picture unchanged; audio fix-check READY",
-  "published_at": "2026-11-11T19:17:09.505Z",
+  "status": "ready",
+  "notes": "re-render (r:r52f94c): the player is 56e (all three death screens, 56e's own skin on the bare arm), picture otherwise unchanged; independent fix-check READY (round 2: the arm-stripe fix)",
+  "published_at": "2026-11-11T22:38:04.551Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:17:47+00:00",
+    "at": "2026-11-11T22:38:41+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -7542,17 +7544,16 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T18:53:30.184Z",
-      "report": "work/hb/which_door.check.json"
+      "at": "2026-11-11T22:13:29.993Z",
+      "report": "out/which_door.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "owner 2026-11-11 (@10.1s): \"all of these still say hellobuh instead of 56e\""
+  }
 }
