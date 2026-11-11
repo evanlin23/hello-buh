@@ -626,7 +626,7 @@ def main():
         if key_ not in ("speed", "slowmo", "freeze", "startAt", "endAfter", "dropAt", "sfx", "replay", "song", "caption", "red", "colors", "story"):
             walk(v)
     for e in tl:
-        if e["event"] in ("line", "meter", "death"):
+        if e["event"] in ("line", "meter", "death", "syschat", "chat"):   # (a new chat line is new on screen: the cooked flood)
             overlay.add(out_t(e["t"] / 1000))
     story_dir = a.story_dir or ed.get("story")
     caps_note = ""

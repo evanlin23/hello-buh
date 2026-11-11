@@ -924,6 +924,56 @@ def syschat_png(jar, lines, path, align="left", y_frac=0.70):
     img.save(path)
 
 
+def still_windows(spec, tl_ev, start):
+    """edit.still (format cooked, r:r5ee125 / r:r12cb71): the game view goes dark at `dark`, then a meme picture fills it
+    from `at` to the end, with an optional punch (a hard push-in) at `punch: [EVENT, SCALE]`. Times are marks (EVENT or
+    EVENT:OFFSET) in the timeline. -> [(t0, t1, kind)] in video time, kind 'dark' | 'still' | 'punch'."""
+    def tm(s):
+        if s is None:
+            return None
+        ev, _, off = str(s).partition(":")
+        return tl_ev[ev] + float(off or 0) - start if ev in tl_ev else None
+    at = tm(spec.get("at"))
+    if at is None:
+        print(f"WARNING edit.still: no '{spec.get('at')}' mark in the timeline: no still")
+        return []
+    dark = tm(spec.get("dark"))
+    pun = spec.get("punch")
+    pt = tm(pun[0]) if pun else None
+    out = []
+    if dark is not None and dark < at:
+        out.append((dark, at, "dark"))
+    if pt is not None and pt > at:
+        out += [(at, pt, "still"), (pt, 1e6, "punch")]
+    else:
+        out.append((at, 1e6, "still"))
+    return out
+
+
+def still_png(src, path, scale=1.0, dim=0.0, focus=(0.5, 0.5)):
+    """The picture cover-fitted to the game view (1080x1011 between the bands), scaled by `scale` (a punch), cropped
+    about `focus` (fractions across/down the picture: a portrait's face), darkened by `dim` (0..1) so the chat over it
+    reads; the bands stay transparent."""
+    im = Image.open(src).convert("RGB")
+    k = max(W / im.width, GAME_H / im.height) * scale
+    im = im.resize((max(W, round(im.width * k)), max(GAME_H, round(im.height * k))), Image.LANCZOS)
+    fx, fy = focus
+    x0 = min(im.width - W, max(0, round(im.width * fx - W / 2)))
+    y0 = min(im.height - GAME_H, max(0, round(im.height * fy - GAME_H / 2)))
+    im = im.crop((x0, y0, x0 + W, y0 + GAME_H))
+    if dim:
+        im = Image.blend(im, Image.new("RGB", im.size, (0, 0, 0)), dim)
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    out.paste(im, (0, BAND))
+    out.save(path)
+
+
+def dark_png(path):
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    out.paste(Image.new("RGBA", (W, GAME_H), (0, 0, 0, 255)), (0, BAND))
+    out.save(path)
+
+
 def container_png(jar, state, path):
     """ContainerScreen as the player sees it on opening a chest, barrel or shulker box (the vanilla client: the
     dark gradient over the world, gui/container/generic_54 cut to the rows, or shulker_box, the title and
@@ -1527,6 +1577,7 @@ def main():
     ap.add_argument("--ring", help='JSON list of [EVENT[:off], SECONDS, X_FRAC?, Y_FRAC?, RADIUS_PX?] red highlight rings')
     ap.add_argument("--tags", help='JSON list of [START, END|null, TEXT, COLOR, NTH?] persistent role labels')
     ap.add_argument("--score", help='JSON {"event": "score", "a": [LABEL, COLOR], "b": [LABEL, COLOR]}: a live two-sided score bar from the marks\' a/b shares (format race)')
+    ap.add_argument("--still", help='JSON {"at": EVENT, "dark": EVENT?, "meme": KEY, "punch": [EVENT, SCALE]?, "dim": 0..1?, "fade": S?}: the view goes dark, then a meme picture (lib/memes.json) fills it (format cooked)')
     ap.add_argument("--chat", help='JSON list of [EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?] vanilla chat input typed up to EVENT (Enter)')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
@@ -1833,6 +1884,25 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
+    # edit.still (format cooked): the view goes dark, then the meme picture over the game and the HUD (the chat comes after,
+    # on top of it); fetched at render from lib/memes.json's logged URL (scripts/meme_cache.py), never committed
+    if args.still and args.timeline:
+        spec = json.loads(args.still)
+        import meme_cache
+        src = meme_cache.path(spec.get("meme", "war_soldier"))
+        focus = spec.get("focus") or meme_cache.entry(spec.get("meme", "war_soldier")).get("focus") or (0.5, 0.5)
+        fade = float(spec.get("fade", 0.2))
+        for k, (a, b, kind) in enumerate(still_windows(spec, _tl, args.start)):
+            png = tmp / f"still{k}.png"
+            if kind == "dark":
+                dark_png(png)
+            else:
+                still_png(src, png, scale=float(spec["punch"][1]) if kind == "punch" else 1.0, dim=float(spec.get("dim", 0.0)), focus=focus)
+            inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(png)]
+            fx = f",fade=t=in:st={max(0, a):.4f}:d={fade:.3f}:alpha=1" if kind == "dark" and fade > 0 else ""
+            graph.append(f"[{n_in}:v]format=rgba{fx}[stv{k}]")
+            graph.append(f"[{last}][stv{k}]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sto{k}]")
+            last, n_in = f"sto{k}", n_in + 1
     # an opened chest, barrel or shulker box: the container screen over the game (harness `container` marks)
     if args.timeline:
         cwins = container_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
