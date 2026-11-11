@@ -24,7 +24,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
-    subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'behind',
+    subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
     // the short cut (lead 2026-11-11: as short as it reads, ~8-20 s): 1, 10, 100, 200 and the crowd behind; the 5,
     // 20 (emerald) and 50 crowds are recorded but cut out whole
