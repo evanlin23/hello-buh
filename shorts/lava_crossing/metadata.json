@@ -1,10 +1,10 @@
 {
   "name": "lava_crossing",
   "channel": "hellobuh",
-  "caption": "every way to cross lava (rated) \ud83d\udc80",
+  "caption": "every way to cross lava (rated) 💀",
   "youtube": {
-    "title": "every way to cross lava (rated) \ud83d\udc80 #minecraft #shorts",
-    "description": "every way to cross lava (rated) \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "every way to cross lava (rated) 💀 #minecraft #shorts",
+    "description": "every way to cross lava (rated) 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -30,25 +30,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28367489,
-    "sha256": "bf6a4486d45652f4eb53086b41007a03d4bbc22b34e6dc52992c55a2f217e4d3",
+    "bytes": 28391201,
+    "sha256": "9b848807d13ff0ac37ee9bd1451d303a062b982fc11659d876ed855b81eb8005",
     "release": {
       "tag": "pkg-lava_crossing",
-      "asset": "lava_crossing.short.bf6a4486d45652f4.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.bf6a4486d45652f4.mp4",
-      "sha256": "bf6a4486d45652f4eb53086b41007a03d4bbc22b34e6dc52992c55a2f217e4d3",
-      "bytes": 28367489
+      "asset": "lava_crossing.short.9b848807d13ff0ac.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.9b848807d13ff0ac.mp4",
+      "sha256": "9b848807d13ff0ac37ee9bd1451d303a062b982fc11659d876ed855b81eb8005",
+      "bytes": 28391201
     },
     "nosong_release": {
       "tag": "pkg-lava_crossing",
-      "asset": "lava_crossing.short_nosong.906fc0dbf55a3735.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.906fc0dbf55a3735.mp4",
-      "sha256": "906fc0dbf55a3735e600ab871794451bce3837eac5ac8144db695c61e905b89d",
-      "bytes": 28359577
+      "asset": "lava_crossing.short_nosong.85214a57d963a5bf.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.85214a57d963a5bf.mp4",
+      "sha256": "85214a57d963a5bf633f034de7d39729e22ac155c7c90dc0846422c056574346",
+      "bytes": 28382526
     }
   },
   "edit": {
-    "caption": "every way to cross lava (rated) \ud83d\udc80",
+    "caption": "every way to cross lava (rated) 💀",
     "red": "every",
     "dropAt": "in_lava",
     "onFire": "in_lava:death",
@@ -164,7 +164,9 @@
     ],
     "args": [
       "--caption",
-      "every way to cross lava (rated) \ud83d\udc80",
+      "every way to cross lava (rated) 💀",
+      "--self_name",
+      "56e",
       "--red",
       "every",
       "--subs",
@@ -421,11 +423,12 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
-    "rendered": "local",
-    "rendered_at": "2026-11-11T15:25:59.954Z",
-    "head_at_publish": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
+    "branch": "render/56e-lava_crossing",
+    "commit": "813ef23ec3a0f54f6f2e3b9619fa8b2afc0a936c",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43109503504",
+    "rendered_at": "2026-11-11T22:25:33.355Z",
+    "head_at_publish": "aca28a71d31a5b553ec5cbf8a0d9a45a238527af",
     "stunt": "stunts/lava_crossing.js",
     "source_snapshot": [
       "source/lava_crossing.js",
@@ -436,18 +439,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 9ee7bd45a9cb",
+    "git checkout 813ef23ec3a0",
     "gunzip -c shorts/lava_crossing/recording.json.gz > work/lava_crossing.rec.json",
     "node render.js work/lava_crossing.rec.json work/lava_crossing.frames 60 1080 1011",
     "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
-    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"bridged\",\"crossed\",2]] --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:1.15 --out out/lava_crossing.mp4"
+    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --self_name 56e --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"bridged\",\"crossed\",2]] --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:1.15 --out out/lava_crossing.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "lava crossing ratings re-take (r:r38374d): governed look-backs (<=220 deg/s), the bridge placed aimed via A.place, keep_inventory (nothing floats on the lava), 2x bank walk; independent review round 2 READY (0 blockers).",
-  "published_at": "2026-11-11T15:28:09.151Z",
+  "status": "ready",
+  "notes": "re-render (r:r52f94c): the player is 56e (death screen '56e tried to swim in lava', 56e's own skin on the bare arm), picture otherwise unchanged; independent fix-check READY (round 2: the arm-stripe fix)",
+  "published_at": "2026-11-11T22:36:59.478Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T15:28:45+00:00",
+    "at": "2026-11-11T22:37:29+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -456,17 +459,16 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T15:26:18.213Z",
-      "report": "work/hb/lava_crossing.check.json"
+      "at": "2026-11-11T22:15:45.793Z",
+      "report": "out/lava_crossing.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "owner 2026-11-11 (@20.3s): \"says hellobuh\" (the player must be 56e)"
+  }
 }
