@@ -186,9 +186,10 @@ module.exports = {
       if (o.stop !== false) K.stop()
       const w = await K.cutShot(o.shot, () => {
         if (o.after) o.after()
+      }, { time: o.time, max: 10, at: () => {   // the wolf's jump goes with the shot change itself: in the moves it left the old shot 1-3 ticks before every cut (owner: "we can see the dog teleport")
         if (o.self) K.self(o.self[0], o.self[1])
         K.blink('self', { x: dx, y: dy, z: dz })
-      }, { time: o.time, max: 10 })
+      } })
       await bot.waitForTicks(1); K._clock++
       K.base = K.aim(target); await K.look(0)
       return w
@@ -201,16 +202,25 @@ module.exports = {
       return K.cut(dx, dz, target, dy, { stop: false })
     }
 
-    // L01 "My HUMAN has TRIED to LOSE me thirty-seven TIMES." (the first frame is the mechanic, visual audit): a
-    // camera ahead of Buh as he sprints west down the road toward it (the low sun behind the lens lights his face);
-    // the red-collared wolf runs after him 13 blocks back, small; at 0.4 s it is gone from there and at his heel
-    await scut(44.5, -4.2, P(10, gy(10, -4.2) + 0.6, -4.2), gy(44.5, -4.2), { shot: 'run_ahead', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 33.5, z: -5.0, y: gy(33.5, -5.0), yaw: 90, pitch: 5 }) })   // (voiced: 3 blocks further east than r6 so the walk ends near x 17 and the wolf's L02 sprint stops short of the village tree at x 5; from 36.5 the opening looked back over the plain: flat)
-    K.ctl('sprint', true); K.go(true)
-    await K.preroll(10, () => { walkG(buh, -0.215, 0); autoJump() })   // (L01's walk)
-    await line('L01', async (k, at, n) => {
-      walkG(buh, -Math.min(0.215, 15 / Math.max(1, n)), 0); buh.pitch = 5   // a walk (vanilla 0.215 a tick: the wolf walks beside him after its pop, K.go), at most 16 blocks over the line: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
-      if (once('L01pop', k >= 8)) { await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y); K.ctl('sprint', false); K.go(true) }   // then it walks beside him (standing, the follow camera left it behind: lint)
-      autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.2)); look(k)   // (a block south of his line: right behind him his body hid it)
+    // L01 "My HUMAN / has TRIED / to LOSE me / thirty-seven TIMES." (owner, 2026-11-11: "the opening scene is not very
+    // exciting? Also not centered"): frame 1 is the hook. Low behind the wolf, centred and big, as Buh sprints away
+    // down the road from it, glancing back; on "thirty-seven TIMES" a cut ahead of him: the wolf already running at his
+    // side (placed on the cut, never a jump on screen: "we can see the dog teleport")
+    await scut(41.5, -4.2, P(20, gy(20, -4.2) + 0.6, -4.2), gy(41.5, -4.2), { shot: 'dog_start', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 39.5, z: -5.0, y: gy(39.5, -5.0), yaw: 90, pitch: 5 }) })
+    K.ctl('sprint', true); K.go(false)
+    await K.preroll(10, () => { walkG(buh, -0.28, 0); autoJump() })
+    await line('L01', async (k, at) => {
+      if (k < at.cut(3)) {
+        walkG(buh, -0.28, 0); autoJump()
+        buh.yaw = 90 + (k % 26 > 16 ? -150 * Math.sin((k % 26 - 16) / 10 * Math.PI) : 0); buh.pitch = 5   // a glance back over his shoulder now and then
+        K.base = K.aim(P(buh.x, buh.y + 1.0, buh.z)); look(k)   // the wolf watches him go
+      }
+      if (once('L01cut', k >= at.cut(3))) {
+        buh.yaw = 90
+        await scut(buh.x - 0.3, buh.z + 0.9, P(buh.x - 30, buh.y + 0.6, buh.z + 0.9), buh.y, { shot: 'run_ahead', stop: false })
+        K.ctl('sprint', true); K.go(true)
+      }
+      if (k > at.cut(3)) { walkG(buh, -0.28, 0); buh.yaw = 90; autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.1)); look(k) }
     })
 
     // L02 "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.": POV low behind his heels,
@@ -225,31 +235,31 @@ module.exports = {
         autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2 + 1.8 * Math.max(0, 1 - k / 16), buh.z)); look(k)   // (from the cut's high aim down to his back over 0.8 s)
       }
       if (once('L02cut', k >= at.cut(3))) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
-      if (once('L02pop', k >= at(3) + 10)) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
-      if (k > at(3)) { buh.pitch = 15 + Math.sin(k / 6) * 8; if (k > at(3) + 10) buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.15; look(k) }
+      if (k > at.cut(3) && k < at.cut(4)) { buh.yaw += (-90 - buh.yaw) * 0.15; buh.pitch = 10 + Math.sin(k / 6) * 6; look(k) }   // catching his breath, he looks back up the road: nothing there
+      if (once('L02pair', k >= at.cut(4))) {   // "right NEXT to him": a cut to the two of them, the wolf already at his side (no jump on screen)
+        await scut(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1, { shot: 'yard_pair', stop: false, after: () => { buh.yaw = 0; buh.pitch = 35 } })
+      }
+      if (k > at.cut(4)) { buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.2; buh.pitch = 35 + Math.sin(k / 5) * 4; look(k) }
     })
 
-    // L03 "He tried the WHEAT. / The HILLS. / An ISLAND." (r5: the critic's trim, one shot a phrase, the wolf popping
-    // in beside him in each): crouched in the wheat (the lens over the crop); the north road at night, the lantern
-    // post; climbing onto the island's far beach (no swim shot: wolves teleport, they don't swim)
-    await hide('wheat_cam', { x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 })
+    // L03 "He tried the WHEAT. / The HILLS. / An ISLAND." (r5: one shot a phrase): crouched in the wheat (the lens over
+    // the crop); the north road at night by the lantern post; climbing onto the island's far beach. In each the wolf is
+    // already at his side on the cut (owner, 2026-11-11: "we can see the dog teleport": no pop on screen)
+    await scut(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6), { shot: 'wheat_cam', after: moveWith({ x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 }) })   // beside him, not in front of his face
     sneak(true)
     await line('L03', async (k, at) => {
       if (k < at.cut(1)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
-      if (once('L03pop0', k >= 4)) await blink(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6))   // beside him, not in front of his face
       if (once('L03cut1', k >= at.cut(1))) {
         sneak(false)
-        await scut(7.5, 12.5, P(7.5, 1.4, 20), 1, { shot: 'hills_night', time: NIGHT, after: moveWith({ x: 7.5, z: 27.5, y: gy(7.5, 27.5), yaw: 180, pitch: 0 }) })   // the wolf waits behind the camera
+        await scut(8.4, 28.1, P(8.4, 1.4, 22), gy(8.4, 28.1), { shot: 'hills_night', time: NIGHT, after: moveWith({ x: 7.5, z: 27.5, y: gy(7.5, 27.5), yaw: 180, pitch: 0 }) })
+        K.go(true)
       }
-      if (k > at.cut(1) && k < at.cut(2)) { walkG(buh, 0, -0.14); look(k) }
-      if (once('L03pop1', k >= at(1) + 3)) await blink(8.4, buh.z + 0.6, P(7.5, 1.4, buh.z - 5), gy(8.4, buh.z + 0.6))
-      if (k > at(1) + 3 && k < at.cut(2)) { K.go(true); K.base = K.aim(P(8.4, 1.4, buh.z - 6)) }
+      if (k > at.cut(1) && k < at.cut(2)) { walkG(buh, 0, -0.14); K.base = K.aim(P(8.4, 1.4, buh.z - 6)); look(k) }
       if (once('L03cut2', k >= at.cut(2))) {
         K.go(false)
-        await scut(62.6, 11.0, P(66, 64.5 - F, 13.5), 63 - F, { shot: 'beach', time: GOLD, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // (the wolf is behind the beach camera)
+        await scut(67.6, 14.2, P(70.6, 64.5 - F, 13.6), 64 - F, { shot: 'beach', time: GOLD, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // the wolf already on the sand, 3 blocks from where he climbs out
       }
-      if (k > at.cut(2)) { if (buh.x > 68.2) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
-      if (once('L03pop2', k >= at(2) + 4)) await blink(67.6, 14.2, P(buh.x, buh.y + 1.5, buh.z), 64 - F)   // 4 blocks out (at 2.4 it was a huge blur at the frame edge)
+      if (k > at.cut(2)) { if (buh.x > 68.6) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
     })
 
     // L04 "But SITTING? / I STAY put. / He NEVER / makes me SIT.": the village road, another tamed wolf sitting alone
@@ -402,9 +412,14 @@ const DXs = 102.5, DZs = -513.5, HL = 39   // Dog Hill's D, set-relative (as DX,
 module.exports.shots = {
   pov: { pov: true },
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
+  // L01 frame 1 (owner: "not very exciting? Also not centered"): low behind the wolf, the wolf centred and big, Buh
+  // sprinting away from it down the road toward the village
+  dog_start: { subject: ['self', `actor:${GUY}`], follow: 'self', offset: [2.3, 0.45, 0.35], look: { of: 'self', offset: [-1.6, -0.2, -0.15] }, lag: 0, fov: 60, dof: false },
   run_ahead: { subject: [`actor:${GUY}`, 'self'], follow: `actor:${GUY}`, offset: [-3.8, 1.5, 0.6], look: { of: `actor:${GUY}`, offset: [0, 0.7, 0] }, lag: 2, fov: 50 },
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
+  // L02 "right NEXT to him": the two of them in the yard, the wolf already at his side (a cut, never an on-screen jump)
+  yard_pair: { subject: [`actor:${GUY}`, 'self'], at: [37.2, H + 1.55, 14.7], look: [37.1, H + 1.35, 17.9], fov: 52, push: 0.15, dof: false },
   // L03: over the wheat looking down the rows at him crouched in it (never inside the crop: visual audit)
   wheat_cam: { subject: [`actor:${GUY}`], at: [23.8, H + 2.9, 22.6], look: [20.6, H + 1.4, 19.6], fov: 50, push: 0.15, dof: false },
   // L03: the north road at night, ahead of him, the lantern post beside his path
