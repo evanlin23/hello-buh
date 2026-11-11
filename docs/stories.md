@@ -292,6 +292,18 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing Beazle's "BRO" (caption "Genuinely gotta check if everything is okay at home after ts",
+  subtitle "the type of house that your one actually psycho homie builds": a front door ringed by fire, a burning
+  wheat field, then inside a nether-brick mansion whose floors are open lava, a bed and furnaces perched on one-wide
+  walkways over it): "fake psycho house".** HelloBuh adds a psycho-house format (family `psycho`): a base tour that
+  looks almost normal from the door and turns out insanely dangerous inside (lava floors, fire, one-wide walkways),
+  played straight as a house tour.
+- **Owner, 2026-11-11, via the Buh Connects operator (forwarded at the owner's request): a "Fastest Speedrun Ever"
+  Short the owner called "obviously fake, badly made, with typos and everything".** (Music only, one banner, 67 s:
+  an impossible speedrun in jump cuts: a portal missing obsidian lit anyway, full netherite already on the way back,
+  an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
+  obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
+  (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

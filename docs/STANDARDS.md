@@ -327,6 +327,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "stages"**: a relatable arc in 3 titled chapters, each fast and escalating, a big payoff. Check: owner. r:redb7c0
 - **Format "dilemma"**: a life-or-death choice frozen mid-moment, stretched in slow motion from several angles,
   then a true-vanilla twist that makes the choice moot. Check: owner, minecraft-audit (the twist). r:r9dcf73
+- **Format "psycho"**: a house tour, almost normal at the door, insanely dangerous inside, played straight.
+  Check: owner. r:rc40696
+- **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
+  track comments per 1k views. Check: owner, the numbers check. r:r9105ba
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
