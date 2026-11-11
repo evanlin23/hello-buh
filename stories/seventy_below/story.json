@@ -2,7 +2,7 @@
   "name": "seventy_below",
   "stunt": "story_seventy_below",
   "version": 2,
-  "revision": "r2 (2026-11-11): cold read r1 (60 % at the midpoint, partly, a little surprised): L07 'No monsters. Just us.' cut (it winked: the reader heard 'we are the monsters'), L08 'one MORNING he OPENED it' -> 'one DAY he came EARLY' (morning gave away the sun), L12 adds 'The FIRST one ever.' (the spider's link to the count), the easter egg moves to S14. r1 (2026-11-11): first script from the batch-3 round-3 brief (docs/pitches/batch3_script_briefs/seventy_below.md) with the round-3 must-fixes applied: un-named zombies, the room within 32 blocks of the bed and 8 below it, Grandpa never named or shown above the knees, no Gary. Line 1 changed from the pitch's (see bible.md 'Changes from the pitch').",
+  "revision": "r3 (2026-11-11): critic r2 must-fixes (L08 the sleepy night gives the daylight opening a cause; L07 'the world's all FULL of us'; L03 'right ABOVE us'; L14 'a new SOLDIER'; bedtime after the count) and continuity r2 (hole moved to (-2057, -492), room cameras re-placed, near-vertical lenses up the shaft for S05/S16 and inside it for S06/S12, S04/S14 lenses out of the grass, bed to (-2058, 73, -500), waist-down framing, checkable `shows` ids, the narrator HEARS the spider (L13, L15), counts before bed at 13200, S15 lens over the flock); renumbered L01-L16 / S01-S16. r2 (2026-11-11): cold read r1 (60 % at the midpoint, partly, a little surprised): L07 'No monsters. Just us.' cut (it winked: the reader heard 'we are the monsters'), L08 'one MORNING he OPENED it' -> 'one DAY he came EARLY' (morning gave away the sun), L12 adds 'The FIRST one ever.' (the spider's link to the count), the easter egg moves to S14. r1 (2026-11-11): first script from the batch-3 round-3 brief (docs/pitches/batch3_script_briefs/seventy_below.md) with the round-3 must-fixes applied: un-named zombies, the room within 32 blocks of the bed and 8 below it, Grandpa never named or shown above the knees, no Gary. Line 1 changed from the pitch's (see bible.md 'Changes from the pitch').",
   "caption": "why are 70 zombies waiting under his bed 🧟",
   "upload": {
     "title": "seventy of us wait in the dark under his bed 🧟 #minecraft #shorts",
@@ -25,20 +25,20 @@
   "key_color": "#5E8C4A",
   "mood": "eerie",
   "payoff": "L16",
-  "payoff_note": "L15 is the general's 'Seventy.' over S15 (the seventy faces turned up to his silhouette in the moonlit hole); the lid goes back on, the room goes dark, cut 1.0 s after the word. No line after L15. It loops into L01 ('SEVENTY of us...').",
-  "punch_note": "hook L01, turn L08 (the hole opens in daylight), reveal L15 (the count back at seventy)",
+  "payoff_note": "L16 is the general's 'Seventy.' over S16; the lid goes back on, black, cut 1.0 s after the word. No line after L16. It loops into L01.",
+  "punch_note": "hook L01, turn L08 (too sleepy to count), reveal L16 (the count back at seventy)",
   "look": {
     "time": 18000,
     "fog": false,
     "grade": "cinematic",
-    "note": "per shot (shots[].time): the night of the count 18000 (S01, S02, S05, S06, S15), the general going to bed 13500 (S03), midday on the bench 6000 (S04), the morning of the burn 1000 (S08-S11), that night 14000 (S12), the next night 15000 (S13), a night after 16000 (S14). The room is dark (block light 0): every room shot is lit only by the hole (moonlight or sun) and the renderer's floor brightness (engine note)."
+    "note": "per shot (shots[].time): tonight's count before bed 13200 (S01, S02, S05, S06, S07, S16), then bed 13500 (S03); midday on the bench 6000 (S04); the sleepy night 12800 (S08, sleep skips to morning); the morning 1000 (S09-S12); the spider night 14000 (S13, awake); the next night 13600 (S14); a night after 13000 (S15). The room is dark (block light 0): every room shot is lit only by the hole (moon or sun) and the renderer's floor brightness (engine note)."
   },
   "weather": "clear",
   "world": {
-    "place": "ravenford (canonical): Grandpa's house (stamp `grandpa_house`, x -2059..-2049, z -502..-494, floor y 72) and its yard to the south (z -493..-487). The room is new, under the house and yard: air x -2058..-2050, y 65..67, z -501..-489 (floor y 64, stone ceiling y 68); the hole is a 1x1 shaft at x -2057, z -490, air y 68..70, its lid a grass block at y 71 (the yard's own ground). A bed (new prop) inside the house, head north at (-2058, 73, -501), foot (-2058, 73, -500).",
+    "place": "ravenford (canonical): Grandpa's house (stamp `grandpa_house`, x -2059..-2049, z -502..-494, floor y 72) and its yard to the south (z -493..-487). The room is new, under the house and yard: air x -2058..-2050, y 65..67, z -501..-489 (floor y 64, stone ceiling y 68); the hole is a 1x1 shaft at x -2057, z -492, air y 68..70, its lid a grass block at y 71 (the yard's own ground). A bed (new prop) inside the house, head north at (-2058, 73, -500), foot (-2058, 73, -499).",
     "day": 2200,
     "canon": "The general is Grandpa (Ravenford): `zuri` skin, the slow walk, seen only from the knees down or as a dark head in the hole, never named, never called Grandpa (conflict 11). His voice is his canon `elder` (Charon). He built the room about day 2000 (two hundred nights before), after Thirty-One Raids (1900): the tower hunts of that Short are before it. From day ~2000 Ravenford has no natural night monsters within 128 blocks of his bed while he's home (Red Sheep, 2300, shows none). Raids, patrols and the evoker are not stopped by it (never said). Who else sleeps in the house is not said; Buh is not shown and nobody says his name.",
-    "easter_egg": "blue_flock: Ravenford's blue sheep asleep in the pasture south of the gate, in S14's foreground (from day 1900). Never named."
+    "easter_egg": "blue_flock: Ravenford's blue sheep asleep in the pasture below S15's lens (from day 1900). Never named."
   },
   "voice": {
     "engine": "gemini",
@@ -70,7 +70,7 @@
           85
         ]
       },
-      "on_screen": "Grandpa (Ravenford): player actor, `zuri` skin, the slow walk; shown ONLY from the knees down (S03, S04, S13) or as a dark head against the sky in the 1x1 hole (S05, S06, S11, S15). His three lines are the count, said while his head is in the hole (STANDARDS 1.5: on screen while he speaks). Never named, never called Grandpa, his name tag hidden (engine need, as Honey Thief's Jonah).",
+      "on_screen": "Grandpa (Ravenford): player actor, `zuri` skin, the slow walk; shown ONLY from the waist down (S03, S04, S08, S14) or as a dark head against the sky in the 1x1 hole (S05, S06, S12, S16). His three lines are the count, said while his head is in the hole (STANDARDS 1.5: on screen while he speaks). Never named, never called Grandpa, his name tag hidden (engine need, as Honey Thief's Jonah).",
       "skin": "zuri",
       "note": "Not a new character: Grandpa (Ravenford) with his canon voice `elder` (Charon), so no audition (canon.md 'Recurring characters'). If the owner wants the general unrecognizable instead, the two unused candidates are listed in bible.md 'Voices'."
     }
@@ -144,7 +144,7 @@
     {
       "under": "S13",
       "sound": "entity.spider.step",
-      "note": "the spider's steps on the wall; one entity.spider.ambient hiss"
+      "note": "the spider's steps on the wall, heard from below; one entity.spider.ambient hiss"
     },
     {
       "under": "S14",
@@ -175,18 +175,18 @@
       "at": [
         -2057,
         68,
-        -490
+        -492
       ],
-      "note": "1x1 shaft, air y 68..70; lid = a grass block at (-2057, 71, -490), flush with the yard's grass; open in S05, S06, S08-S11, S13, S15, shut in S04, S12, S14"
+      "note": "1x1 shaft, air y 68..70; lid = the yard's grass block at (-2057, 71, -492): 4 deep once broken; open in S05, S06, S09-S12, S14, S16; shut in S04, S08, S13, S15"
     },
     "bed": {
       "block": "red_bed",
       "at": [
         -2058,
         73,
-        -501
+        -500
       ],
-      "note": "head north at (-2058, 73, -501), foot (-2058, 73, -500), beside the lantern at (-2057, 73, -501)"
+      "note": "head north at (-2058, 73, -500), foot (-2058, 73, -499), against the bookshelf column (-2058, 73..75, -501)"
     },
     "bench": {
       "at": [
@@ -202,23 +202,23 @@
     },
     "brother_seventy": {
       "actor": "zombie",
-      "note": "an adult zombie, no helmet; stands under the hole in S09, burns in S10"
+      "note": "an adult zombie, no helmet; stands under the hole (-2057, 65, -492) in S10, burns in S11 (zero drops shown)"
     },
     "spider": {
       "actor": "spider",
-      "note": "S12 only: climbs the house's south wall beside the east south window (x -2051) at night"
+      "note": "S13 only: climbs the house's south wall beside the east window (x -2051) at night"
     },
     "new_brother": {
       "actor": "zombie",
-      "note": "S13: follows the general across the yard and drops down the hole"
+      "note": "S14: follows the general across the yard; one hit tips it down the hole"
     }
   },
   "ending": {
     "after": "L15",
     "beats": [
-      "S15: the seventy faces turned up to the moonlit square, the general's dark head in it; 'SEVENTY.'; +0.4 s the lid goes back on and the room goes dark; cut 1.0 s after the word. No line after it."
+      "S16: upturned faces ring the frame, the general's dark head in the moonlit shaft; 'SEVENTY.'; +0.4 s the lid goes back on, black; cut 1.0 s after the word. No line after it."
     ],
-    "loop": "'Seventy.' runs straight into line 1, 'SEVENTY of us stand in the dark.' S15 and S01 are the same room on the same kind of night."
+    "loop": "'Seventy.' runs straight into line 1, 'SEVENTY of us stand in the dark.' S16 and S01 are the same room in the same light."
   },
   "bible": "stories/seventy_below/bible.md",
   "beats": "stories/seventy_below/beats.md",
@@ -241,7 +241,8 @@
         },
         {
           "what": [
-            "room"
+            "stone",
+            "cobblestone"
           ],
           "word": "DARK"
         }
@@ -261,7 +262,7 @@
       "shows": [
         {
           "what": [
-            "baby_zombie"
+            "zombie"
           ],
           "word": "LITTLEST"
         },
@@ -273,7 +274,7 @@
         }
       ],
       "look": {
-        "what": "entity:baby_zombie",
+        "what": "entity:zombie",
         "word": "LITTLEST"
       },
       "note": "proud, chin up (the first misreading: an army)"
@@ -333,7 +334,8 @@
       "shows": [
         {
           "what": [
-            "hole"
+            "dirt",
+            "grass_block"
           ],
           "word": "HOLE"
         },
@@ -432,7 +434,8 @@
       "shows": [
         {
           "what": [
-            "hole"
+            "dirt",
+            "stone"
           ],
           "word": "MORNING"
         }
@@ -458,7 +461,8 @@
         },
         {
           "what": [
-            "hole"
+            "dirt",
+            "stone"
           ],
           "word": "SUN"
         }
@@ -512,8 +516,8 @@
     {
       "id": "L13",
       "who": "N",
-      "text": "That NIGHT, / a SPIDER climbed / the general's WALL. / The FIRST one ever. / I think it was LOOKING / for Brother SEVENTY.",
-      "say": "That night, a spider climbed the general's wall. The first one ever. I think it was looking for Brother Seventy.",
+      "text": "That NIGHT, / we HEARD a SPIDER / on the general's WALL. / The FIRST one ever. / I think it was LOOKING / for Brother SEVENTY.",
+      "say": "That night, we heard a spider on the general's wall. The first one ever. I think it was looking for Brother Seventy.",
       "shot": "S13",
       "shows": [
         {
@@ -524,7 +528,9 @@
         },
         {
           "what": [
-            "house"
+            "cobblestone",
+            "spruce_planks",
+            "glass_pane"
           ],
           "word": "WALL"
         }
@@ -556,7 +562,7 @@
         },
         {
           "what": [
-            "hole"
+            "grass_block"
           ],
           "word": "HOLE"
         }
@@ -570,20 +576,22 @@
     {
       "id": "L15",
       "who": "N",
-      "text": "NOTHING climbed the wall / after THAT. / I think they're SCARED / of US.",
-      "say": "Nothing climbed the wall after that. I think they're scared of us.",
+      "text": "We never HEARD / another ONE. / I think they're SCARED / of US.",
+      "say": "We never heard another one. I think they're scared of us.",
       "shot": "S15",
       "shows": [
         {
           "what": [
-            "house"
+            "cobblestone",
+            "spruce_planks",
+            "glass_pane"
           ],
-          "word": "NOTHING"
+          "word": "ONE"
         }
       ],
       "look": {
-        "what": "place:grandpa_house",
-        "word": "NOTHING"
+        "what": "block:glass_pane",
+        "word": "ONE"
       },
       "note": "the proudest line: the army works (the last misreading); full volume, never knowing"
     },
@@ -621,17 +629,17 @@
       "line": "L01",
       "place": "room",
       "size": "ms",
-      "time": 18000,
-      "camera": "in the room, eye 0.5 above the floor (y 65.5) at (-2055.5, 65.5, -491.5) looking north-west toward the hole's light square at (-2056.5, -489.5) and on into the room; a slow pull back south-east (0.3 blocks/s) from frame 1",
-      "frame": "frame 1: the baby zombie (the narrator) centred, MS, in the moonlit square under the hole, its face turned up then to the lens (moving from 0.0 s); behind and around it adult zombies shoulder to shoulder, faces up into the moonlight, the rows fading north into the dark under the house. The pull back widens it to a WS of dozens of zombies by 'NIGHTS'. Lit only by the moonlight down the 1x1 shaft and the renderer's floor brightness. Night."
+      "time": 13200,
+      "camera": "in the room at (-2054.5, 65.5, -490.5), eye 0.5 above the floor, looking north-west at the baby zombie under the hole at (-2056.5, 65, -492.5); a slow pull back south-east to (-2051.5, 65.5, -489.5) (0.3 blocks/s) from frame 1",
+      "frame": "frame 1: the baby zombie (the narrator) centred, MS, in the moonlit square under the hole, its face turned up, then to the lens (moving from 0.0 s); around it adult zombies shoulder to shoulder, faces up into the moonlight; behind it the rows run north into the dark under the house. The pull back widens it to a WS of dozens of zombies by 'NIGHTS'. Lit only by the moonlight down the shaft and the renderer's floor brightness. Early night."
     },
     {
       "id": "S02",
       "line": "L02",
       "place": "room",
       "size": "full",
-      "time": 18000,
-      "camera": "low, eye 0.4 above the floor, 3 blocks west of the baby zombie, looking east; static, a slight drift",
+      "time": 13200,
+      "camera": "low, eye 0.4 above the floor, 3 blocks east of the baby at (-2053.5, 65.4, -492.5), looking west at it (-2056.5, 65, -492.5); static, a slight drift",
       "frame": "subject: the baby zombie full-figure (half an adult's height), chin up, among adult zombies' legs and arms (the adults cut at the chest by the frame top: scale); bg: more legs into the dark. Moonlight from the hole falls at frame right."
     },
     {
@@ -639,9 +647,9 @@
       "line": "L03",
       "place": "grandpa_house",
       "size": "ws",
-      "time": 18500,
-      "camera": "inside the house, on the floor by the barrel at (-2057.5, 73.3, -495.7), looking north at the bed; static",
-      "frame": "subject: the general from the knees down (zuri trousers and shoes; the frame cuts above his knees) walking slowly from frame right to the red bed at the north-west corner and getting in (the bed shows him lying, the frame keeps his head out: a tilt no higher than the mattress); bg: the north wall's lower totem frames glinting in the lantern light (the house as it is; not the cameo). The floor planks fill the lower third: we are above the room. Night, after tonight's count (18500): the count is done, he goes to bed."
+      "time": 13500,
+      "camera": "inside the house at (-2055.5, 73.4, -496.5), low, looking north-west at the bed (head (-2058, 73, -500), foot (-2058, 73, -499)), past the composter (-2058, -498) and the chair (-2055, -498), both out of the line; static",
+      "frame": "subject: the general from the waist down (zuri trousers and shoes; the frame cuts at his belt) walking slowly from frame right to the red bed by the bookshelves and getting in (the frame keeps his head out); the plank floor fills the lower third: we are above the room. Night, after tonight's count."
     },
     {
       "id": "S04",
@@ -649,33 +657,33 @@
       "place": "grandpa_yard",
       "size": "ms",
       "time": 6000,
-      "camera": "low in the yard at (-2056.5, 71.6, -488.5), looking north-east at the bench by the door; static",
-      "frame": "fg: the yard's grass, the lid block (-2057, 71, -490) in the lower-left third, looking like every other grass block (the rewatch plant); subject: the general sitting on his bench, knees down only, his crossbow leaning on the bench beside him; bg: his door and the cobblestone wall. Midday sun."
+      "camera": "low in the yard at (-2056.5, 72.6, -489.5), pitch -20, looking north-east at the bench by the door; static",
+      "frame": "fg: the yard's grass, the lid block (-2057, 71, -492) in the lower-left third, looking like every other grass block (the rewatch plant); subject: the general sitting on his bench, waist down, his crossbow in his hand resting across his knees; bg: his door and the cobblestone wall. Midday sun."
     },
     {
       "id": "S05",
       "line": "L05",
       "place": "room",
       "size": "ws",
-      "time": 18000,
-      "camera": "in the room at (-2054.5, 65.6, -492.5), looking up at 50 degrees toward the hole at (-2056.5, 68, -489.5); static",
-      "frame": "fg: the backs of zombies' heads, all turned up; subject: the 1x1 shaft opening in the ceiling: on 'HOLE' the lid at the top is broken (a grass-break puff) and a square of night sky appears; on 'COUNTS' a dark head leans over it (his silhouette: no face readable); the zombies under the hole look up into the moonlight. The baby zombie in the front row, frame left."
+      "time": 13200,
+      "camera": "in the room 1 block off the shaft at (-2056.2, 65.8, -491.2), pitch about 80 degrees up, looking nearly straight up the 4-deep shaft (air y 68..71 once the lid is broken); static",
+      "frame": "fg: zombies' heads and shoulders around the frame edge, all turned up; centre: the shaft seen nearly end-on: on 'HOLE' the lid at the top breaks (a grass-break puff) and a square of night sky appears; on 'COUNTS' a dark head leans over it (his silhouette: no face readable). The baby zombie's head at the frame's lower left."
     },
     {
       "id": "S06",
       "line": "L06",
       "place": "room",
       "size": "mcu",
-      "time": 18000,
-      "camera": "at the bottom of the shaft, eye at (-2056.5, 66.6, -489.5) (a zombie's eye height, in the air of the room), looking straight up the shaft; static",
-      "frame": "subject: the square of night sky at the top of the 3-block shaft and the general's dark head filling half of it, still; his head nods very slightly with each number. Stars beside it. No face detail (silhouette against the sky)."
+      "time": 13200,
+      "camera": "inside the shaft at (-2056.5, 69.5, -491.5), looking straight up (in air: the shaft is x -2057, z -492, y 68..71 open); static",
+      "frame": "subject: the square of night sky 2 blocks above the lens and the general's dark head filling half of it (an MCU), still; his head nods very slightly with each number. Stars beside it. No face detail."
     },
     {
       "id": "S07",
       "line": "L07",
       "place": "room",
       "size": "ws",
-      "time": 18000,
+      "time": 13200,
       "camera": "in the room's north end under the house at (-2051.5, 65.6, -499.5), looking south down the room toward the moonlit square at the hole; a slow drift",
       "frame": "the length of the room: rows of zombies shoulder to shoulder from the lens to the light square at the far end, every one of them looking up toward it; the room full wall to wall, no gap anywhere. Night."
     },
@@ -684,7 +692,7 @@
       "line": "L08",
       "place": "grandpa_house",
       "size": "full",
-      "time": 13500,
+      "time": 12800,
       "camera": "inside the house by the door at (-2054.5, 73.4, -495.5), low, looking north-west at the bed; static",
       "frame": "subject: his legs (knees down) coming in the door past the lens, slow, straight to the red bed, and he lies down (the frame keeps his head out); the window behind the bed still blue with dusk. He did not go to the hole: the lid stays shut (S08 confirms). In vanilla, sleeping skips to morning."
     },
@@ -694,7 +702,7 @@
       "place": "room",
       "size": "ws",
       "time": 1000,
-      "camera": "in the room at (-2053.5, 65.6, -493.5), looking north-west at the floor under the hole; static",
+      "camera": "in the room at (-2053.5, 65.6, -490.5), looking north-west at the floor under the hole; static",
       "frame": "the room dark; on 'MORNING' the lid above is broken and a hard square of daylight lands on the floor under the shaft (the room's only light), zombies around it in shadow turning their heads up toward it. Morning."
     },
     {
@@ -703,7 +711,7 @@
       "place": "room",
       "size": "full",
       "time": 1000,
-      "camera": "low, at (-2054.5, 65.4, -490.5), looking west at the light square; static",
+      "camera": "low, at (-2054.5, 65.4, -490.5), looking west at the cell under the hole (-2057, 65, -492); static",
       "frame": "subject: Brother Seventy (an adult zombie, no helmet) pushing out of the crowd, arms out, and stepping into the square of sunlight under the hole, his face turned straight up (he has seen the general); on 'SUN' he stands in it, full-figure, lit white."
     },
     {
@@ -712,7 +720,7 @@
       "place": "room",
       "size": "ms",
       "time": 1000,
-      "camera": "at (-2055.5, 66.2, -491.5), looking north-west at Brother Seventy; two set-ups of the same framing joined by a hard cut on 'Then' (a time cut of ~20 s)",
+      "camera": "at (-2055.0, 66.2, -490.0), looking north-west at Brother Seventy under the hole; two set-ups of the same framing joined by a hard cut on 'Then' (a time cut of ~20 s)",
       "frame": "subject: Brother Seventy in the sunlight, still looking up, catches fire on 'GLOWY' (the vanilla burning overlay, smoke); he stays under the hole looking up at the general. Hard cut on 'Then' (vanilla: a burning zombie at 20 health takes about 20 s to die; the cut skips it) to the same framing: the square of sunlight empty, the last white death-puff smoke drifting up the shaft, no drops on the floor (the zero-drop roll; record with doMobLoot off for this shot only). Other zombies at the frame edges in shadow, faces up. Eerie, not gory."
     },
     {
@@ -721,7 +729,7 @@
       "place": "room",
       "size": "mcu",
       "time": 1000,
-      "camera": "at the bottom of the shaft as S06 but at (-2056.5, 66.6, -489.5) after the burn, looking straight up",
+      "camera": "inside the shaft as S06 at (-2056.5, 69.5, -491.5), looking straight up",
       "frame": "subject: the bright day sky in the square and the general's dark head in it, still, looking down at the empty light. On 'NINE' he is still; 0.6 s after the word the lid block goes back on and the shaft goes black (cut)."
     },
     {
@@ -730,35 +738,35 @@
       "place": "grandpa_yard",
       "size": "ms",
       "time": 14000,
-      "camera": "in the yard at (-2051.5, 72.6, -488.5), looking north at the house's south wall; static",
-      "frame": "subject (MS on the wall around the east window, 5 blocks wide): a spider (red eyes) climbing the cobblestone-and-spruce south wall beside the east window (x -2051), toward the lit window; the lantern by the door; the lid block shut in the grass at frame left (lower third). Night. The spider is the only thing moving."
+      "camera": "in the yard at (-2051.5, 72.6, -489.5), looking north at the house's south wall; static",
+      "frame": "subject (MS on the wall around the east window, 5 blocks wide): a spider (red eyes) climbing the cobblestone-and-spruce south wall beside the east window (x -2051), toward the lit window; the lantern by the door. Night. The spider is the only thing moving. (He's awake: a spider within 8 blocks of his bed won't let him sleep.)"
     },
     {
       "id": "S14",
       "line": "L14",
       "place": "grandpa_yard",
       "size": "full",
-      "time": 15000,
-      "camera": "low in the yard at (-2060.5, 71.5, -490.5) by the west fence, looking east across the hole; static",
-      "frame": "subject: the hole open in the grass (centre); the general's legs (knees down) step around it from the right and stop on its far side; on 'SOLDIER' an adult zombie shambling after him reaches the edge (zombies path around a drop); on 'HOLE' he hits it once (the vanilla knockback; it lives) and it tips into the hole and is gone (a 7-block fall from feet y 72 to 65: 4 damage). bg: the grindstone, the barrel, the palisade beyond. Night."
+      "time": 13600,
+      "camera": "low in the yard at (-2060.5, 72.5, -491.5) by the west fence, looking east across the hole; static",
+      "frame": "subject: the hole open in the grass (centre); the general's legs and waist step around it from the right and stop on its far side; on 'SOLDIER' an adult zombie shambling after him reaches the edge (zombies path around a drop); on 'HOLE' he hits it once (vanilla knockback; it lives) and it tips into the hole and is gone (a 7-block fall, feet y 72 to 65: 4 damage). bg: the grindstone, the barrel, the palisade. Night."
     },
     {
       "id": "S15",
       "line": "L15",
       "place": "grandpa_yard",
       "size": "ews",
-      "time": 16000,
-      "camera": "high over the pasture's north fence at (-2056.5, 86, -468.5), looking north (pitch -25) over the generated house's roof (x -2054..-2048, z -482..-474, under the lens's line) at the house's south wall 26 blocks off; a slow push",
-      "frame": "fg: the pasture's north edge with the blue flock lying asleep (the easter egg, `blue_flock`); mid: the road and the roofs; subject: Grandpa's whole south wall at night, the lit windows, nothing on it; the lid shut in the yard (too small to read). The mirror of S12 with the spider gone. Night, the moon high."
+      "time": 13000,
+      "camera": "high over the pasture at (-2056.5, 90, -455), looking north (pitch about -25) over the generated house's roof at the house's south wall about 39 blocks off; a slow push",
+      "frame": "fg: the pasture with the blue flock lying asleep below the lens (the easter egg, `blue_flock`, z -447..-465); mid: the generated house's roof and the road; subject: Grandpa's whole south wall at night, the lit windows, nothing on it. The mirror of S13 with the spider gone. Night, the moon high."
     },
     {
       "id": "S16",
       "line": "L16",
       "place": "room",
-      "size": "ws",
-      "time": 18000,
-      "camera": "in the room's south-east corner, eye 0.5 above the floor at (-2050.5, 65.5, -489.5), looking north-west across the room up toward the hole; static",
-      "frame": "the reveal: all seventy zombies (the baby in the front row, frame centre-left) with their faces turned up to the square of moonlight in the ceiling, the general's dark head in it; on 'SEVENTY' all still; +0.4 s the lid goes back on and the room goes black; cut at +1.0 s. The same room and light as S01 (the loop)."
+      "size": "ms",
+      "time": 13200,
+      "camera": "in the room 1 block off the shaft at (-2056.2, 65.8, -491.2), pitch about 80 degrees up (as S05), static",
+      "frame": "the reveal: upturned zombie faces ring the frame edge (the baby's at lower left), the shaft end-on in the centre with the moonlit square and the general's dark head in it; on 'SEVENTY' all still; +0.4 s the lid goes back on and the frame goes black; cut at +1.0 s. The room's full count was seen in S01 and S07; the same light as S01 (the loop)."
     }
   ]
 }

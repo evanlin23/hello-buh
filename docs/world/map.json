@@ -1832,11 +1832,43 @@
       "/summon sheep -2052.5 75 -447.5 {Color:11b,PersistenceRequired:1b,Rotation:[21f,0f]}",
       "/summon sheep -2050.5 77 -455.5 {Color:11b,PersistenceRequired:1b,Rotation:[231f,0f]}"
      ]
+    },
+    {
+     "id": "seventy_room",
+     "since": 2000,
+     "what": "Seventy Below: the room under Grandpa's house and yard, air x -2058..-2050, y 65..67, z -501..-489, stone floor y 64 and walls, ceiling y 68 (the house's cobblestone foundation under the house, stone under the yard). The seventy zombies are story-only (summoned by the stunt), not stamped.",
+     "do": "cmds",
+     "cmds": [
+      "/fill -2059 64 -502 -2049 68 -488 stone",
+      "/fill -2059 68 -502 -2049 68 -494 cobblestone",
+      "/fill -2058 65 -501 -2050 67 -489 air"
+     ]
+    },
+    {
+     "id": "seventy_hole",
+     "since": 2000,
+     "what": "Seventy Below: the 1x1 shaft from the room's ceiling to the yard at x -2057, z -492 (air y 68..70), its lid the yard's own grass block at y 71 (looks like the rest of the yard)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -2057 68 -492 -2057 70 -492 air",
+      "/setblock -2057 71 -492 grass_block"
+     ]
+    },
+    {
+     "id": "grandpa_bed",
+     "since": 2000,
+     "what": "Seventy Below: Grandpa's red bed, head north at (-2058, 73, -500) against the bookshelf column, foot (-2058, 73, -499)",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -2058 73 -499 red_bed[facing=north,part=foot]",
+      "/setblock -2058 73 -500 red_bed[facing=north,part=head]"
+     ]
     }
    ],
    "story_builds": "the palisade and the east gate are still built by stunts/story_thirty_one_raids.js (gate-relative, on the terrain); Grandpa's house, yard and the totem wall are ported here (stamps). Port the palisade before the next Ravenford story builds (Red Sheep's set.md)",
    "stories": [
     "thirty_one_raids",
+    "seventy_below",
     "red_sheep"
    ],
    "status": "canon"
@@ -2323,7 +2355,7 @@
    "cameos": [
     "blue_flock"
    ],
-   "status": "script r2 (batch 3 round 3): owner audit pending; story stamps (room, hole, bed) in stories/seventy_below/set.md, not yet in ravenford.stamps"
+   "status": "script r3 (batch 3 round 3): owner audit pending; story stamps seventy_room, seventy_hole, grandpa_bed (since 2000)"
   }
  },
  "cameos": {
