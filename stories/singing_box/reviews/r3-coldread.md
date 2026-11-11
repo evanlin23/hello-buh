@@ -24,3 +24,17 @@ diamonds, it sings") hides "who plays it" for casual players; experts still ask,
 - The ending reads without words, if his hand on the block and his face (matching the window) read.
 - Naive all through: "It never sounds knowing."
 - Its notes: the lava fake-out is never paid off; a non-Java viewer gets "he's stealing", not how.
+
+## Final read (the lead's request, 2026-11-11): the final lines, with L15 "This one's too big to throw"
+A fresh reader (plays Java, watches Shorts).
+- **Midpoint:** the neighbor (a rigged note block) **45%** (right); lava 35%; something going wrong with "the biggest one" 15%.
+- **One sentence:** "the singing box is the neighbor's note block. He has dug a hidden room behind the mine wall and taps
+  the block so the allay keeps dropping her diamonds at his feet, and that's how he got a full diamond armor set while
+  she finds the mine empty."
+- **Surprised:** a little; it was mostly right, the hopper detail wrong. The diamond-gear reveal "hits harder than a hopper would".
+- **Share:** 7. Comment: "HE WAS TAPPING THE NOTE BLOCK THE WHOLE TIME 💀 'some of us are trying to SLEEP' bro is
+  literally wearing her diamonds".
+- **Without words:** yes, if his face/skin matches S10 and the tap reads on a phone. It suggests a quick look at 32
+  landing by his diamond boots.
+- **Narrator:** naive the whole way; "the script is the part that hints, not the narrator".
+- Its notes: no beat where she finds out (by design: cut on the reveal); allay-savvy players guess it early.
