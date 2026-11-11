@@ -1,0 +1,706 @@
+{
+  "name": "love_cherry_heart",
+  "channel": "hellobuh",
+  "caption": "send this to your favourite person 💗",
+  "youtube": {
+    "title": "send this to your favourite person 💗 #minecraft #shorts",
+    "description": "send this to your favourite person 💗\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_toma.mp3",
+    "title": "Montagem Toma",
+    "artist": "X972, sk3tch01, MXZI",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "payoff",
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 11.3,
+    "song_start_s": 3.2
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 12.3,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 21046988,
+    "sha256": "08c2cfce0cddcec8e7c4b1e576d0e9f727a8cdfea38804ac36fb744cef01c549",
+    "release": {
+      "tag": "pkg-love_cherry_heart",
+      "asset": "love_cherry_heart.short.08c2cfce0cddcec8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-love_cherry_heart/love_cherry_heart.short.08c2cfce0cddcec8.mp4",
+      "sha256": "08c2cfce0cddcec8e7c4b1e576d0e9f727a8cdfea38804ac36fb744cef01c549",
+      "bytes": 21046988
+    },
+    "nosong_release": {
+      "tag": "pkg-love_cherry_heart",
+      "asset": "love_cherry_heart.short_nosong.7f4365b617eecb4d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-love_cherry_heart/love_cherry_heart.short_nosong.7f4365b617eecb4d.mp4",
+      "sha256": "7f4365b617eecb4d8f93cce3964f8367b1f16c978aea8bc6ec2b8c7b3eef1d27",
+      "bytes": 20948386
+    }
+  },
+  "edit": {
+    "caption": "send this to your favourite person 💗",
+    "red": "favourite person",
+    "startAt": "go:0.45",
+    "endAfter": "payoff:1.0",
+    "dropAt": "payoff",
+    "subs": [
+      [
+        "lamp",
+        "just a few more...",
+        1.6,
+        0
+      ],
+      [
+        "complete",
+        "done!",
+        0.9,
+        0
+      ],
+      [
+        "night",
+        "now we wait for night",
+        2,
+        0
+      ],
+      [
+        "dark",
+        "ready?",
+        0.8,
+        0
+      ],
+      [
+        "payoff",
+        "for you",
+        1,
+        0
+      ]
+    ],
+    "flash": [
+      [
+        "payoff",
+        0,
+        0.45
+      ]
+    ],
+    "punch": [
+      [
+        "payoff",
+        0,
+        1.08
+      ]
+    ],
+    "sfx": [
+      [
+        "pop",
+        "go:0.47",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "pop",
+        "complete",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "dip",
+        "payoff",
+        0.4
+      ],
+      [
+        "impact",
+        "payoff",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "send this to your favourite person 💗",
+      "--red",
+      "favourite person",
+      "--subs",
+      "[[\"lamp\",\"just a few more...\",1.6,0],[\"complete\",\"done!\",0.9,0],[\"night\",\"now we wait for night\",2,0],[\"dark\",\"ready?\",0.8,0],[\"payoff\",\"for you\",1,0]]",
+      "--punch",
+      "[[\"payoff\",0,1.08]]",
+      "--flash",
+      "[[\"payoff\",0,0.45]]",
+      "--sfx",
+      "[[\"pop\",\"go:0.47\",{\"gain\":0.9}],[\"pop\",\"complete\",{\"gain\":0.5}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
+      "--start_at",
+      "go:0.45",
+      "--end_after",
+      "payoff:1.0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 1608.5,
+      "y": 94,
+      "z": 2045
+    },
+    "biome": "minecraft:cherry_grove",
+    "ticks": 291,
+    "seconds": 14.55,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 0.8,
+        "event": "go"
+      },
+      {
+        "t": 2.75,
+        "event": "place_on"
+      },
+      {
+        "t": 2.75,
+        "event": "swing"
+      },
+      {
+        "t": 2.75,
+        "event": "lamp"
+      },
+      {
+        "t": 3.25,
+        "event": "place_on"
+      },
+      {
+        "t": 3.25,
+        "event": "swing"
+      },
+      {
+        "t": 3.25,
+        "event": "lamp"
+      },
+      {
+        "t": 3.7,
+        "event": "place_on"
+      },
+      {
+        "t": 3.7,
+        "event": "swing"
+      },
+      {
+        "t": 3.7,
+        "event": "lamp"
+      },
+      {
+        "t": 4.05,
+        "event": "place_on"
+      },
+      {
+        "t": 4.05,
+        "event": "swing"
+      },
+      {
+        "t": 4.05,
+        "event": "lamp"
+      },
+      {
+        "t": 4.3,
+        "event": "place_on"
+      },
+      {
+        "t": 4.3,
+        "event": "swing"
+      },
+      {
+        "t": 4.3,
+        "event": "lamp"
+      },
+      {
+        "t": 4.6,
+        "event": "place_on"
+      },
+      {
+        "t": 4.6,
+        "event": "swing"
+      },
+      {
+        "t": 4.6,
+        "event": "lamp"
+      },
+      {
+        "t": 4.95,
+        "event": "place_on"
+      },
+      {
+        "t": 4.95,
+        "event": "swing"
+      },
+      {
+        "t": 4.95,
+        "event": "lamp"
+      },
+      {
+        "t": 5.2,
+        "event": "place_on"
+      },
+      {
+        "t": 5.2,
+        "event": "swing"
+      },
+      {
+        "t": 5.2,
+        "event": "lamp"
+      },
+      {
+        "t": 5.45,
+        "event": "place_on"
+      },
+      {
+        "t": 5.45,
+        "event": "swing"
+      },
+      {
+        "t": 5.45,
+        "event": "lamp"
+      },
+      {
+        "t": 5.45,
+        "event": "complete"
+      },
+      {
+        "t": 7.6,
+        "event": "back"
+      },
+      {
+        "t": 7.6,
+        "event": "night"
+      },
+      {
+        "t": 7.6,
+        "event": "time"
+      },
+      {
+        "t": 7.65,
+        "event": "time"
+      },
+      {
+        "t": 7.7,
+        "event": "time"
+      },
+      {
+        "t": 7.75,
+        "event": "time"
+      },
+      {
+        "t": 7.8,
+        "event": "time"
+      },
+      {
+        "t": 7.85,
+        "event": "time"
+      },
+      {
+        "t": 7.9,
+        "event": "time"
+      },
+      {
+        "t": 7.95,
+        "event": "time"
+      },
+      {
+        "t": 8,
+        "event": "time"
+      },
+      {
+        "t": 8.05,
+        "event": "time"
+      },
+      {
+        "t": 8.1,
+        "event": "time"
+      },
+      {
+        "t": 8.15,
+        "event": "time"
+      },
+      {
+        "t": 8.2,
+        "event": "time"
+      },
+      {
+        "t": 8.25,
+        "event": "time"
+      },
+      {
+        "t": 8.3,
+        "event": "time"
+      },
+      {
+        "t": 8.35,
+        "event": "time"
+      },
+      {
+        "t": 8.4,
+        "event": "time"
+      },
+      {
+        "t": 8.45,
+        "event": "time"
+      },
+      {
+        "t": 8.5,
+        "event": "time"
+      },
+      {
+        "t": 8.55,
+        "event": "time"
+      },
+      {
+        "t": 8.6,
+        "event": "time"
+      },
+      {
+        "t": 8.65,
+        "event": "time"
+      },
+      {
+        "t": 8.7,
+        "event": "time"
+      },
+      {
+        "t": 8.75,
+        "event": "time"
+      },
+      {
+        "t": 8.8,
+        "event": "time"
+      },
+      {
+        "t": 8.85,
+        "event": "time"
+      },
+      {
+        "t": 8.9,
+        "event": "time"
+      },
+      {
+        "t": 8.95,
+        "event": "time"
+      },
+      {
+        "t": 9,
+        "event": "time"
+      },
+      {
+        "t": 9.05,
+        "event": "time"
+      },
+      {
+        "t": 9.1,
+        "event": "time"
+      },
+      {
+        "t": 9.15,
+        "event": "time"
+      },
+      {
+        "t": 9.2,
+        "event": "time"
+      },
+      {
+        "t": 9.25,
+        "event": "time"
+      },
+      {
+        "t": 9.3,
+        "event": "time"
+      },
+      {
+        "t": 9.35,
+        "event": "time"
+      },
+      {
+        "t": 9.4,
+        "event": "time"
+      },
+      {
+        "t": 9.45,
+        "event": "time"
+      },
+      {
+        "t": 9.5,
+        "event": "time"
+      },
+      {
+        "t": 9.55,
+        "event": "time"
+      },
+      {
+        "t": 9.6,
+        "event": "time"
+      },
+      {
+        "t": 9.65,
+        "event": "time"
+      },
+      {
+        "t": 9.7,
+        "event": "time"
+      },
+      {
+        "t": 9.75,
+        "event": "time"
+      },
+      {
+        "t": 9.8,
+        "event": "time"
+      },
+      {
+        "t": 9.85,
+        "event": "time"
+      },
+      {
+        "t": 9.95,
+        "event": "time"
+      },
+      {
+        "t": 10,
+        "event": "time"
+      },
+      {
+        "t": 10.1,
+        "event": "time"
+      },
+      {
+        "t": 10.15,
+        "event": "time"
+      },
+      {
+        "t": 10.2,
+        "event": "time"
+      },
+      {
+        "t": 10.25,
+        "event": "time"
+      },
+      {
+        "t": 10.3,
+        "event": "time"
+      },
+      {
+        "t": 10.35,
+        "event": "time"
+      },
+      {
+        "t": 10.4,
+        "event": "time"
+      },
+      {
+        "t": 10.45,
+        "event": "time"
+      },
+      {
+        "t": 10.5,
+        "event": "time"
+      },
+      {
+        "t": 10.55,
+        "event": "time"
+      },
+      {
+        "t": 10.6,
+        "event": "time"
+      },
+      {
+        "t": 10.65,
+        "event": "time"
+      },
+      {
+        "t": 10.7,
+        "event": "time"
+      },
+      {
+        "t": 10.75,
+        "event": "time"
+      },
+      {
+        "t": 10.8,
+        "event": "time"
+      },
+      {
+        "t": 10.85,
+        "event": "time"
+      },
+      {
+        "t": 10.9,
+        "event": "time"
+      },
+      {
+        "t": 10.95,
+        "event": "time"
+      },
+      {
+        "t": 11,
+        "event": "time"
+      },
+      {
+        "t": 11.05,
+        "event": "time"
+      },
+      {
+        "t": 11.1,
+        "event": "time"
+      },
+      {
+        "t": 11.15,
+        "event": "time"
+      },
+      {
+        "t": 11.2,
+        "event": "time"
+      },
+      {
+        "t": 11.25,
+        "event": "time"
+      },
+      {
+        "t": 11.3,
+        "event": "time"
+      },
+      {
+        "t": 11.35,
+        "event": "time"
+      },
+      {
+        "t": 11.4,
+        "event": "time"
+      },
+      {
+        "t": 11.45,
+        "event": "time"
+      },
+      {
+        "t": 11.5,
+        "event": "dark"
+      },
+      {
+        "t": 11.75,
+        "event": "swing"
+      },
+      {
+        "t": 11.75,
+        "event": "lever"
+      },
+      {
+        "t": 11.75,
+        "event": "row"
+      },
+      {
+        "t": 11.85,
+        "event": "row"
+      },
+      {
+        "t": 11.95,
+        "event": "row"
+      },
+      {
+        "t": 12.05,
+        "event": "row"
+      },
+      {
+        "t": 12.15,
+        "event": "row"
+      },
+      {
+        "t": 12.25,
+        "event": "row"
+      },
+      {
+        "t": 12.35,
+        "event": "row"
+      },
+      {
+        "t": 12.45,
+        "event": "row"
+      },
+      {
+        "t": 12.55,
+        "event": "payoff"
+      },
+      {
+        "t": 14.55,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "f2f8fc0b812595ea774b02218a9a2557ad84458d",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T19:24:18.607Z",
+    "head_at_publish": "f2f8fc0b812595ea774b02218a9a2557ad84458d",
+    "stunt": "stunts/love_cherry_heart.js",
+    "source_snapshot": [
+      "source/love_cherry_heart.js",
+      "source/love.js",
+      "source/story.js",
+      "source/motion.js",
+      "source/sight.js",
+      "source/act.js",
+      "source/plateau.js",
+      "source/chain.js",
+      "source/dress.js",
+      "source/voxel.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout f2f8fc0b8125",
+    "gunzip -c shorts/love_cherry_heart/recording.json.gz > work/love_cherry_heart.rec.json",
+    "node render.js work/love_cherry_heart.rec.json work/love_cherry_heart.frames 60 1080 1011",
+    "python3 audio.py work/love_cherry_heart.rec.json work/love_cherry_heart.wav",
+    "python3 edit.py --frames work/love_cherry_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/love_cherry_heart.rec.json --audio work/love_cherry_heart.wav --caption \"send this to your favourite person 💗\" --red \"favourite person\" --subs \"[[\\\"lamp\\\",\\\"just a few more...\\\",1.6,0],[\\\"complete\\\",\\\"done!\\\",0.9,0],[\\\"night\\\",\\\"now we wait for night\\\",2,0],[\\\"dark\\\",\\\"ready?\\\",0.8,0],[\\\"payoff\\\",\\\"for you\\\",1,0]]\" --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go:0.47\",{\"gain\":0.9}],[\"pop\",\"complete\",{\"gain\":0.5}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --start_at go:0.45 --end_after payoff:1.0 --out out/love_cherry_heart.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker love: lib/love.js format + love_cherry_heart; 1 review round READY (subagent af01130d4f0313a3f); nitpicks: 'for you' sub over the heart's top, sparks still falling in the last 0.3 s (fireworks, not settle debris), lever has no visible wiring",
+  "published_at": "2026-11-11T19:26:03.951Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T19:26:27+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 12.31 s vs the reviewed render 12.30 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T19:24:36.112Z",
+      "report": "work/hb/love_cherry_heart.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
