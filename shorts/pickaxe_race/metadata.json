@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 60517067,
-    "sha256": "57331dbe02a3bb9bf5730d0049f696f2b3be5278ca5e4707f5524d01ca96c203",
+    "bytes": 60525196,
+    "sha256": "8f4c7375e24159a067fee432983b88de8f0274e057fca4d1036024f53a2d3878",
     "release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short.57331dbe02a3bb9b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.57331dbe02a3bb9b.mp4",
-      "sha256": "57331dbe02a3bb9bf5730d0049f696f2b3be5278ca5e4707f5524d01ca96c203",
-      "bytes": 60517067
+      "asset": "pickaxe_race.short.8f4c7375e24159a0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.8f4c7375e24159a0.mp4",
+      "sha256": "8f4c7375e24159a067fee432983b88de8f0274e057fca4d1036024f53a2d3878",
+      "bytes": 60525196
     },
     "nosong_release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short_nosong.62140c3ea42e2aa2.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.62140c3ea42e2aa2.mp4",
-      "sha256": "62140c3ea42e2aa24dd61b50708e9d5c4ef9a89b1b3885c62d132bb1cd1555d4",
-      "bytes": 60424085
+      "asset": "pickaxe_race.short_nosong.1daf59ccb7fb73f8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.1daf59ccb7fb73f8.mp4",
+      "sha256": "1daf59ccb7fb73f8a4211d8b5d990129991a0336f5d15bf6174d26f798ac5c17",
+      "bytes": 60432455
     }
   },
   "edit": {
@@ -236,10 +236,17 @@
       [
         "dip",
         "lastboom",
-        0.3
+        0.45
       ],
       [
         "impact",
+        "lastboom",
+        {
+          "gain": 1.4
+        }
+      ],
+      [
+        "boom",
         "lastboom"
       ]
     ],
@@ -275,7 +282,7 @@
       "--flash",
       "[[\"boom\",0,0.6],[\"lastboom\",0,0.5]]",
       "--sfx",
-      "[[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"],[\"dip\",\"lastboom\",0.3],[\"impact\",\"lastboom\"]]",
+      "[[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"],[\"dip\",\"lastboom\",0.45],[\"impact\",\"lastboom\",{\"gain\":1.4}],[\"boom\",\"lastboom\"]]",
       "--start_at",
       "beat:-0.05",
       "--end_after",
@@ -16936,11 +16943,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/pickaxe_race",
-    "commit": "02a35e9051708252db24a084ca3bc30328d2a85f",
+    "commit": "616e4c3ee6aac92624c0f391a21a78d2d3711c66",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42993907487",
-    "rendered_at": "2026-11-11T09:34:40.965Z",
-    "head_at_publish": "3a7aa2fd95be56ef3fe4d0fbce51305b1d89a221",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42997485495",
+    "rendered_at": "2026-11-11T09:58:12.777Z",
+    "head_at_publish": "2dc5fa2ff138bf7310be3cc79aa88485d06c1332",
     "stunt": "stunts/pickaxe_race.js",
     "source_snapshot": [
       "source/pickaxe_race.js",
@@ -16950,18 +16957,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 02a35e905170",
+    "git checkout 616e4c3ee6aa",
     "gunzip -c shorts/pickaxe_race/recording.json.gz > work/pickaxe_race.rec.json",
     "node render.js work/pickaxe_race.rec.json work/pickaxe_race.frames 60 1080 1011",
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
-    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:2.1\",\"cut\"],[\"stonecut_b:1.75\",\"stonecut_b:2.5\",\"cut\"],[\"stonecut_b:4.9\",\"stonecut_b:6.0\",\"cut\"],[\"stonecut_b:8.05\",\"stonecut_b:8.85\",\"cut\"],[\"stonecut_b:11.1\",\"stonecut_b:12.1\",\"cut\"],[\"stonecut_b:13.95\",\"stonecut_b:14.7\",\"cut\"],[\"stonecut_b:17.1\",\"stonecut_b:17.5\",\"cut\"],[\"stonecut_b:19.0\",\"stonecut_b:19.8\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]] --punch [[\"boom\",0,1.12]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.6],[\"lastboom\",0,0.5]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"],[\"dip\",\"lastboom\",0.3],[\"impact\",\"lastboom\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/pickaxe_race.mp4"
+    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:2.1\",\"cut\"],[\"stonecut_b:1.75\",\"stonecut_b:2.5\",\"cut\"],[\"stonecut_b:4.9\",\"stonecut_b:6.0\",\"cut\"],[\"stonecut_b:8.05\",\"stonecut_b:8.85\",\"cut\"],[\"stonecut_b:11.1\",\"stonecut_b:12.1\",\"cut\"],[\"stonecut_b:13.95\",\"stonecut_b:14.7\",\"cut\"],[\"stonecut_b:17.1\",\"stonecut_b:17.5\",\"cut\"],[\"stonecut_b:19.0\",\"stonecut_b:19.8\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]] --punch [[\"boom\",0,1.12]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.6],[\"lastboom\",0,0.5]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"],[\"dip\",\"lastboom\",0.45],[\"impact\",\"lastboom\",{\"gain\":1.4}],[\"boom\",\"lastboom\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/pickaxe_race.mp4"
   ],
   "status": "pending-qa",
-  "notes": "2026-11-11 finishing worker, after the independent review: re-recorded with every dig / place / light through lib/act.js (aimed, r:rffba12) and the eyes drifting between blasts; ends on endAfter 'settle:0.6' (the last blast's debris has landed, r:r24d99a); cuts re-timed so each tier is shorter on screen than the last; flash + song dip + impact on both blasts; 37.6 s; pace 0 blockers (WARN: iron/diamond tiers ~9 s one shot, tail 1.7 s past the last blast = settle + 0.6), check OK; awaiting independent review",
-  "published_at": "2026-11-11T09:40:43.054Z",
+  "notes": "2026-11-11 finishing worker, after the independent review: re-recorded with every dig / place / light through lib/act.js (aimed, r:rffba12) and the eyes drifting between blasts; ends on endAfter 'settle:0.6' (the last blast's debris has landed, r:r24d99a); cuts re-timed so each tier is shorter on screen than the last; flash + song dip + impact (+ boom on the last) on both blasts; 37.6 s; pace 0 blockers (WARN: iron/diamond tiers ~9 s one shot, tail 1.7 s past the last blast = settle + 0.6), check OK; awaiting independent review",
+  "published_at": "2026-11-11T09:59:12.626Z",
   "gates": {
     "version": 3,
-    "at": "2026-11-11T09:41:32+00:00",
+    "at": "2026-11-11T10:00:01+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -16977,7 +16984,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:40:40.317Z",
+      "at": "2026-11-11T09:59:08.741Z",
       "report": "work/hb/pickaxe_race.check.json"
     },
     "key_sounds": "n/a"
