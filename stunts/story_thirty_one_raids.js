@@ -395,11 +395,11 @@ module.exports = {
         l06.pov = true
         K.shot('pov')
         await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)
-        K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
+        K.open(P(-6, 2, -13)).then(w => { chest = w; sound('block.chest.open', 0.9, 1) }).catch(e => ctx.log('chest', e.message))   // the lid's sound on the screen (owner: "the chest opening is too fast": it now holds ~1.8 s)
       }
       look(k)
     })
-    try { K.close(chest) } catch (e) {}
+    try { K.close(chest); sound('block.chest.close', 0.6, 1) } catch (e) {}
 
     // ---- L07 (S08): dusk, a raid night: Grandpa in the open gate, the bottle up on "He DRINKS one" (the drink sound),
     // the crossbow back in his hand by "Then he SAYS"
