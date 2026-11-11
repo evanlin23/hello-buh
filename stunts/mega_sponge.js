@@ -101,6 +101,9 @@ module.exports = {
     const { X, Z, F } = this
     const W = (d) => ({ x: X + d[0], y: F + d[1], z: Z + d[2] })
     bot.physicsEnabled = false                   // the flight is a scripted path: physics off, our own tick clock
+    // the server saw a survival player hanging in the air for the whole flight and kicked it for flying (take 5):
+    // levitation (hidden, and the edit draws no effect icons) is one of vanilla's exemptions; physics is off, so it moves nothing
+    bot.chat('/effect give @s levitation infinite 0 true')
     // the pose is applied by the clock itself, right before each tick is recorded: the server keeps re-sending the
     // spot it last saw (no movement packets with physics off), and mineflayer moved the bot back there between our
     // set and the tick (take 1: every other recorded tick was back on the roof)
