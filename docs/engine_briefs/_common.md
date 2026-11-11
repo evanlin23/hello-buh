@@ -15,6 +15,10 @@ Rules:
 - The renderer is shared with HelloBuh: no change may alter how an existing Short renders. Prove it: render the
   same frame of at least one existing HelloBuh stunt and one Buh Stories story before and after, pixel-identical (or
   explain each difference).
+- HelloBuh lead (2026-11-11): the identity baseline must include sandart_tnt, logic_minecraft and cooked_bedrock
+  (edit.py --still) besides one Buh Stories story; don't change the player default (56e, real skin, wide arms) or
+  renderer/skin_layout.js; ~15 HelloBuh sessions push to main all day, so rebase on the latest main before you report.
+  HelloBuh's daily upload is ~13:30 UTC: nothing merges to main 13:15-13:50 UTC.
 - Prove your piece works: a tiny test stunt (stunts/_test_<piece>.js) recorded and rendered for a few seconds, and
   stills at phone size (1080x1920 and a 300 px-wide thumbnail) committed under docs/engine_proofs/<piece>/ (small
   PNGs only). Add unit tests where the code allows. Update docs/engine_features.md and mark the gap done in

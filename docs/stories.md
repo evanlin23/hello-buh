@@ -658,6 +658,8 @@ STANDARDS.md in the same commit.
   building (voices, renderer pieces, skins) rather than pitching: "ok all".** Both scripts approved as written (with the
   lead's calls: Bramble Hollow, one egg, original skins); next, the engine work the approved scripts need, one
   session per piece.
+- **Owner, 2026-11-11, auditing Seventy Below (the general is Ravenford's Grandpa in his `elder` voice, never named;
+  one zombie burns in the sun, no gore): "Ok".** Approved as written.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

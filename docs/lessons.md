@@ -99,6 +99,7 @@ How the work itself went wrong, and the rule now:
   stalls) and rec_check's sight check blocked it. Build from closer, so every ray goes in through the top face.
 - **A friend who walks the whole way in** waits at his entrance (ep.park), where the camera never looks before he
   joins. A /tp near the frame is a rec_check teleport warning. The turn into hiding goes round the side away from him.
+- **No emoji in subs:** subs draw text only (the caption draws Twemoji images); an emoji in a step sub rendered as a green NO GLYPH box for 3.8 s (review round 1). `trapEdit` now throws on emoji in steps.
 
 ## Love (lib/love.js, love_cherry_heart, 2026-11-11)
 - **Cherry leaves are untinted.** Their model carries tintindex 0 (the leaves parent), but vanilla's BlockColors never

@@ -56,3 +56,5 @@ fakerun_any  # first
 cooked_bedrock  # first
 sandart_tnt  # first
 logic_minecraft  # first
+cave_reveal
+half_heart

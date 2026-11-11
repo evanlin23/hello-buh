@@ -41,6 +41,9 @@ FAMILIES = [
     ("mobpov", lambda n: n.startswith("mobpov_")),   # a mob's annoying trait as an absurd POV chase (lib/mobpov.js, r:r8048f1)
     ("trap", lambda n: n.startswith("trap_")),   # trapping a friend: a bait over a real vanilla trap (lib/trap.js, r:refc733)
     ("logic", lambda n: n.startswith("logic_")),   # rapid real vanilla quirks, one caption (lib/logic.js, r:r40f7c7)
+    ("underdog", lambda n: n.startswith("underdog_")),   # every mob gets X... but what about him? (lib/underdog.js, r:r8dcdb4)
+    ("stages", lambda n: n.startswith("stages_")),   # 3 titled chapters (lib/stages.js, r:redb7c0)
+    ("fakemod", lambda n: n.startswith("fakemod_")),   # a fake mod's popup, the choice plays out (lib/fakemod.js, r:rd551de)
 ]
 
 

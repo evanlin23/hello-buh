@@ -265,6 +265,12 @@ function look (name, extra, regs, engine = 0) {
     if (extra && extra.collar !== undefined && extra.collar !== null) layers.push(`entity/wolf/wolf_collar#${(DYE[extra.collar] ?? DYE[14]).toString(16).padStart(6, '0')}`)
     return { model: 'wolf', layers }
   }
+  // an iron golem's cracks (IronGolemCrackinessLayer, Crackiness.byFraction(health / 100): under 0.25 high, 0.5 medium,
+  // 0.75 low); extra.hp only when hurt (lib/harness.js), so it heals back to the plain texture
+  if (name === 'iron_golem' && extra && Number.isFinite(extra.hp)) {
+    const f = extra.hp / 100, c = f < 0.25 ? 'high' : f < 0.5 ? 'medium' : f < 0.75 ? 'low' : null
+    return { model: name, layers: ['entity/iron_golem/iron_golem', ...(c ? [`entity/iron_golem/iron_golem_crackiness_${c}`] : [])] }
+  }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
   // mobs that share another's model (scripts/mob_audit.js), drawn from recordings made from 2026-11-10 on (engine 2;
@@ -641,7 +647,8 @@ function poseWolf (r, s, walkPos, walkSpeed, tick = 0) {
   // extra.tail: the tail's angle (rad) when a scene sets it. Vanilla lowers a tamed wolf's tail with its health
   // ((0.55 - (20 - hp) * 0.02) pi): Good Boy's opening holds it low, a sad dog watching him go (held high toward a camera
   // behind it, it read as a 'long flat head')
-  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? 0.55 * Math.PI : Math.PI / 5
+  // (extra.hp, recorded when hurt: Wolf.getTailAngle, (0.55 - (40 - hp) / 40 * 0.4) pi for a tamed wolf's max health 40)
+  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? (0.55 - (Number.isFinite(x.hp) ? (40 - Math.min(40, x.hp)) / 40 * 0.4 : 0)) * Math.PI : Math.PI / 5
   // extra.wag: a happy wag (fast side to side), whatever the walk does
   B.tail.rotation.set(tail, x.angry ? 0 : x.wag ? Math.sin(tick * 1.6) * 0.7 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
   if (x.sitting) {
@@ -1088,7 +1095,9 @@ export class EntityLayer {
       if (r.bones.flashMat) r.bones.flashMat.color.setRGB(...LL)
       // on fire (EntityRenderDispatcher.renderFlame): fire_0 / fire_1 layers facing the camera, scale
       // 1.4 x width, each 1 x 1.4 of that, 0.45 higher and 0.9 x smaller than the last, up the height
-      if (s.extra && s.extra.fire && !s.player) {
+      // (players too: EntityRenderDispatcher.renderFlame runs for every burning entity; stages_friends review r1: the
+      // narrator burned in lava with no flames)
+      if (s.extra && s.extra.fire) {
         if (!r.fire) {
           r.fire = new THREE.Group(); r.fireMats = []
           const strips = [await texture(['anim/fire_0']), await texture(['anim/fire_1'])]
