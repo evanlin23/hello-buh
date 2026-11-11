@@ -139,6 +139,6 @@ module.exports = {
     M.shot(ctx, 'boots')
     await ctx.easeLookAt(dog, 600)
     await bot.waitForTicks(30)
-    return !ctx.died && bot.health > 0 && bot.health < 5
+    return !ctx.died && bot.health > 0 && bot.health < 10   // (alive and hurt; saturation regen can add a heart or two by now)
   }
 }
