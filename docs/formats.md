@@ -31,6 +31,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `mobpov` | Galaxscat: "Minecraft Baby Zombie Moment" ("POV: A baby zombie found you") | A blur-fast POV chase that tears through walls, mob pens and a house and down into the Nether; the annoying baby-zombie speed blown up to absurd | "whatever even is this" | r:r8048f1 | idea |
 | `underdog` | hazypapa: "The Most Bullied mob Ever in Minecraft" ("we can repair them but...") | A fast list of every mob you can heal or fix (wolf, cat, horse, camel, iron and copper golem, a cured zombie villager), then "...but what about him?": a lone snow golem melting in the sun, a soft sung track | "whatever this is" | r:r8dcdb4 | idea |
 | `stages` | NoschiTech: "#memeanimation" ("POV: the 3 stages of playing with friends") | Three titled chapters: "1. Betrayal" (pushed into lava), "2. Rise" (Nether, ancient debris, netherite), "3. Revenge" (a TNT cannon flattens the friend's mansion); fast and escalating, 85 s | "and this too" | r:redb7c0 | idea |
+| `dilemma` | (seen by the owner; no file) a hardcore mace-and-dog Short | Falling to a hardcore death with a mace, your dog right there: hit the dog to survive, or die. The fall is dragged out in slow motion from several angles, then the twist: Feather Falling IV saves you anyway | "moral dillema? ... it drags on for a while, fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4" | r:r9dcf73 | idea (scripts/cinematic.py does slow motion + multiple angles from one recording) |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -53,4 +54,6 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   friend... but the lone wandering trader llama.
 - **stages**: the 3 stages of a new world (hope, hunger, hoarding), of finding diamonds, of a creeper encounter,
   of an Ender Dragon fight; keep each chapter tight, the whole Short far under 85 s.
+- **dilemma**: the mace and the dog; a totem or your best friend's last golden apple; save the villager or the
+  diamonds from the lava; each with a vanilla twist that makes the choice moot.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.

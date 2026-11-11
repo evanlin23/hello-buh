@@ -292,6 +292,13 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
+  they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
+  fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
+  HelloBuh adds a moral-dilemma format (family `dilemma`): a life-or-death choice frozen mid-moment (hardcore hearts,
+  a sacrifice that would save you), stretched out in slow motion from several angles to build the tension, then a
+  twist that makes the choice unnecessary. The twist must be true vanilla (minecraft-audit): e.g. the fall height is
+  chosen so Feather Falling IV really saves a full-health player.
 - **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "POV: the 3 stages of playing with friends",
   with chapter titles: "1. Betrayal" (your friend knocks you into lava, you scrape out on half a heart), "2. Rise"
   (a portal, the Nether, ancient debris, a netherite upgrade), "3. Revenge" (a TNT cannon flattens the friend's
