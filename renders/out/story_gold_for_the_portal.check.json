@@ -1,0 +1,1115 @@
+{
+ "stunt": "story_gold_for_the_portal",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_gold_for_the_portal.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (25ef5cf97e62)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  17 camera shot(s), 40.5s: POV checks skipped there (1 cuts, 14 held); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/story_gold_for_the_portal.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "motion fixes: 2 cast members moved with a cut land on it",
+    "motion fixes: the view holds still through 1 container window",
+    "LINT story_gold_for_the_portal: 22 shots, scene 0.0-50.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  s01            0.0-1.8   at     actor:gma 100% seen, 43% tall",
+    "  s01b           1.8-4.2   at     8.95,1.6,7.4 100% seen, 62% tall",
+    "  s02            4.2-5.5   path   4.4,12.6,7.4 100% seen, 13% tall",
+    "  pov_morning    5.5-9.4   pov    ",
+    "  s04b           9.4-10.8  at     9.25,1.1,6.65 100% seen, 89% tall",
+    "  pov_morning   10.8-12.0  pov    ",
+    "  s05           12.0-15.7  at     self 84% seen, 106% tall",
+    "  s06           15.7-19.9  at     actor:Grandpa 100% seen, 66% tall",
+    "  s06b          19.9-21.1  at     actor:Grandpa 100% seen, 79% tall",
+    "  s07           21.1-25.1  at     10.5,-28.1,5.5 100% seen, 20% tall",
+    "  s07b          25.1-26.9  at     8.6,-28.1,3.9 100% seen, 40% tall",
+    "  s08ots        26.9-28.8  at     self 100% seen, 100% tall",
+    "  pov           28.8-31.6  pov    ",
+    "  s_high_portal  31.6-32.9  at     self 100% seen, 25% tall",
+    "  s_rev         32.9-35.1  at     self 100% seen, 67% tall",
+    "  pov           35.1-36.5  pov    ",
+    "  s10ots        36.5-39.2  at     actor:gma 100% seen, 49% tall",
+    "  pov           39.2-41.4  pov    ",
+    "  s_rev         41.4-43.5  at     self 100% seen, 36% tall",
+    "  s10           43.5-45.1  at     self 100% seen, 87% tall",
+    "  s13           45.1-48.6  at     self 100% seen, 49% tall",
+    "  s14           48.6-50.1  at     10.1,1.9,5.6 100% seen, 88% tall",
+    "NOTES (1)",
+    "  - 15.1 s  s05: self: out of frame",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 4 warning(s), 3 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 4.2,
+     "shot": 3,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 18000 (midnight) -> 14500 (night) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 5.5,
+     "shot": 4,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 14500 (night) -> 1000 (morning) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 12,
+     "shot": 8,
+     "line": "L03",
+     "kind": "held",
+     "msg": "held item changes across the cut: gold_ingot -> potion"
+    },
+    {
+     "level": "NOTE",
+     "out": 15.65,
+     "shot": 9,
+     "line": "L05",
+     "kind": "time",
+     "msg": "time cut 1000 (morning) -> 18000 (midnight) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 15.65,
+     "shot": 9,
+     "line": "L05",
+     "kind": "held",
+     "msg": "held item changes across the cut: potion -> gold_ingot"
+    },
+    {
+     "level": "WARN",
+     "out": 21.05,
+     "shot": 11,
+     "line": "L06",
+     "kind": "vanish",
+     "msg": "player Grandpa #304 vanishes in the middle of the frame 3.95 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 45.1,
+     "shot": 22,
+     "line": "L12",
+     "kind": "appear",
+     "msg": "piglin #302 appears in the middle of the frame 2.55 s into the shot (7.9 blocks)"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "20 warning(s) over 23 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": "L01",
+     "kind": "tight",
+     "msg": "camera against the set: 41% of the frame is within 3 blocks (gray_carpet, obsidian)"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": "L01",
+     "kind": "tight",
+     "msg": "tighter than planned: S01 is planned FS full, the recording is MS medium (villager (librarian) 47%)"
+    },
+    {
+     "level": "WARN",
+     "out": 1.75,
+     "shot": 2,
+     "line": "L01",
+     "kind": "tight",
+     "msg": "camera against the set: 59% of the frame is within 3 blocks (gray_carpet, gold_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.05,
+     "shot": 5,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "camera against the set: 73% of the frame is within 3 blocks (gold_block, cobblestone)"
+    },
+    {
+     "level": "WARN",
+     "out": 9.45,
+     "shot": 6,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "camera against the set: 68% of the frame is within 3 blocks (gold_block, gravel)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.85,
+     "shot": 7,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "camera against the set: 83% of the frame is within 3 blocks (stone_bricks, cobblestone)"
+    },
+    {
+     "level": "WARN",
+     "out": 12,
+     "shot": 8,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "too tight (MS medium): the narrator (player) #self fills 66% of the frame height, 2.7 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 15.65,
+     "shot": 9,
+     "line": "L05",
+     "kind": "tight",
+     "msg": "too tight (MS medium): player Grandpa #304 fills 66% of the frame height, 3 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 19.9,
+     "shot": 10,
+     "line": "L05",
+     "kind": "tight",
+     "msg": "too tight (MS medium): player Grandpa #304 fills 75% of the frame height, 2.7 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 21.05,
+     "shot": 11,
+     "line": "L06",
+     "kind": "tight",
+     "msg": "tighter than planned: S07 is planned WS wide, the recording is FS full (villager (librarian) 27%)"
+    },
+    {
+     "level": "WARN",
+     "out": 25.1,
+     "shot": 12,
+     "line": "L07",
+     "kind": "tight",
+     "msg": "tighter than planned: S07 is planned WS wide, the recording is MS medium (villager (librarian) 41%)"
+    },
+    {
+     "level": "WARN",
+     "out": 26.95,
+     "shot": 13,
+     "line": "L08",
+     "kind": "tight",
+     "msg": "too tight (CU close-up): the narrator (player) #self fills 88% of the frame height, 2 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 28.75,
+     "shot": 14,
+     "line": "L08",
+     "kind": "tight",
+     "msg": "camera against the set: 42% of the frame is within 3 blocks (obsidian, stone_bricks)"
+    },
+    {
+     "level": "WARN",
+     "out": 32.9,
+     "shot": 16,
+     "line": "L08",
+     "kind": "tight",
+     "msg": "too tight (MS medium): the narrator (player) #self fills 68% of the frame height, 2.4 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 35.15,
+     "shot": 17,
+     "line": "L09",
+     "kind": "tight",
+     "msg": "tighter than planned: S10 is planned WS wide, the recording is MS medium (villager (librarian) 42%)"
+    },
+    {
+     "level": "WARN",
+     "out": 36.5,
+     "shot": 18,
+     "line": "L10",
+     "kind": "tight",
+     "msg": "tighter than planned: S10 is planned WS wide, the recording is MS medium (villager (librarian) 46%)"
+    },
+    {
+     "level": "WARN",
+     "out": 43.55,
+     "shot": 21,
+     "line": "L11",
+     "kind": "tight",
+     "msg": "too tight (MS medium): the narrator (player) #self fills 74% of the frame height, 2.5 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 45.1,
+     "shot": 22,
+     "line": "L12",
+     "kind": "tight",
+     "msg": "tighter than planned: S13 is planned WS wide, the recording is FS full (the narrator (player) 39%)"
+    },
+    {
+     "level": "WARN",
+     "out": 48.65,
+     "shot": 23,
+     "line": "L12",
+     "kind": "tight",
+     "msg": "too tight (CU close-up): piglin #302 fills 98% of the frame height, 2.1 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 48.65,
+     "shot": 23,
+     "line": "L12",
+     "kind": "tight",
+     "msg": "tighter than planned: S13 is planned WS wide, the recording is CU close-up (piglin 87%)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 24 x 28 blocks (ground y 85; its edge 8 blocks from the set's origin); built footprint 15 x 16; terrain relief around it sd 12.7 blocks",
+     "world": {
+      "level": 85,
+      "area": 309,
+      "w": 24,
+      "d": 28,
+      "edge": 8,
+      "built": 98,
+      "footprint": {
+       "w": 15,
+       "d": 16,
+       "x0": -3,
+       "z0": -4
+      },
+      "relief": 12.7,
+      "outside": 2295
+     }
+    },
+    {
+     "level": "NOTE",
+     "check": "opening",
+     "out": 0,
+     "tick": 47,
+     "line": "L01",
+     "msg": "opening OK: gma (shots.s01.subject) villager (librarian) #299: 40% across (middle third 33%-67%), 47% of the frame height on frame 1, 58% at most (readable from 8%), first 1.5 s; camera 0.39 blocks/s, turn 0.57 deg/s, push 0.22/s, subject 0.5 blocks/s, anything else in frame 0.5 blocks/s, 0 action(s)",
+     "opening": {
+      "subject": "gma",
+      "src": "shots.s01.subject",
+      "n": 31,
+      "motion": {
+       "cam": 0.39,
+       "turn": 0.57,
+       "grow": 0.22,
+       "sub": 0.5,
+       "other": 0.5,
+       "actions": 0
+      },
+      "seen": 1,
+      "x": 0.4,
+      "h0": 0.467,
+      "hMax": 0.58,
+      "label": "villager (librarian) #299"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 35.6,
+     "tick": 758.6,
+     "line": "L09",
+     "low": 4.2,
+     "msg": "looking below \"Grandma\": the first-person look lands a median 4.2 deg under villager (librarian) #299's eyes (~0.25 blocks at 3.4), its face 44% down. Aim at K.face(feet, type) (lib/story.js), not its chest, feet or a block's middle. Owner: \"it feels we are looking slightly too low\""
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s) over 22 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 11,
+     "tick": 236,
+     "line": "L03",
+     "msg": "pov -> s04b: the eye goes from the aim (50% across, 50% down) to the narrator (51%, 21%): a jump of 27% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 12.4,
+     "tick": 264,
+     "line": "L03",
+     "msg": "s04b -> pov: the eye goes from the narrator (51% across, 20% down) to the aim (50%, 50%): a jump of 28% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 30.3,
+     "tick": 622,
+     "line": "L08",
+     "msg": "s08ots -> pov: the eye goes from the narrator (28% across, 50% down) to the aim (50%, 50%): a jump of 22% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 46.65,
+     "tick": 949,
+     "line": "L12",
+     "msg": "s10 -> s13: the eye goes from the narrator (52% across, 92% down) to the narrator (49%, 58%): a jump of 32% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    }
+   ],
+   "rows": [
+    {
+     "tick": 82,
+     "out": 3.3,
+     "line": "L01",
+     "from": "s01",
+     "to": "s01b",
+     "before": {
+      "x": 0.39,
+      "y": 0.3,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.39,
+      "y": 0.32,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.016,
+     "timing": {
+      "next": "nine",
+      "lead": 0.07,
+      "prev": "THROWN",
+      "sincePrev": 0.25,
+      "pause": 0.32,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 131,
+     "out": 5.75,
+     "line": "L02",
+     "from": "s01b",
+     "to": "s02",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "One",
+      "lead": 0.198,
+      "prev": "PORTAL.",
+      "sincePrev": 0.4,
+      "pause": 0.598,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.022
+    },
+    {
+     "tick": 157,
+     "out": 7.05,
+     "line": "L02",
+     "from": "s02",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "And",
+      "lead": 0.058,
+      "prev": "NIGHT.",
+      "sincePrev": 0.482,
+      "pause": 0.54,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 208,
+     "out": 9.6,
+     "line": "L02",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "Some",
+      "lead": 0.128,
+      "prev": "BACK.",
+      "sincePrev": 0.432,
+      "pause": 0.56,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.003
+    },
+    {
+     "tick": 236,
+     "out": 11,
+     "line": "L03",
+     "from": "pov",
+     "to": "s04b",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.51,
+      "y": 0.21,
+      "what": "the narrator",
+      "kind": "cast"
+     },
+     "dist": 0.273,
+     "timing": {
+      "next": "A",
+      "lead": 0.003,
+      "prev": "OBSIDIAN.",
+      "sincePrev": 0.177,
+      "pause": 0.18,
+      "inside": null
+     },
+     "optOut": true
+    },
+    {
+     "tick": 264,
+     "out": 12.4,
+     "line": "L03",
+     "from": "s04b",
+     "to": "pov",
+     "before": {
+      "x": 0.51,
+      "y": 0.2,
+      "what": "the narrator",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.278,
+     "timing": {
+      "next": "Ender",
+      "lead": 0.003,
+      "prev": "STRING.",
+      "sincePrev": 0.677,
+      "pause": 0.68,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 287,
+     "out": 13.55,
+     "line": "L03",
+     "from": "pov",
+     "to": "s05",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.65,
+      "y": 0.5,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.147,
+     "timing": {
+      "next": "A",
+      "lead": 0.033,
+      "prev": "PEARLS.",
+      "sincePrev": 0.387,
+      "pause": 0.42,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 360,
+     "out": 17.2,
+     "line": "L04",
+     "from": "s05",
+     "to": "s06",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.52,
+      "what": "player Grandpa",
+      "kind": "subject"
+     },
+     "dist": 0.021,
+     "timing": {
+      "next": "Twenty-five",
+      "lead": 0.357,
+      "prev": "GRANDPA.",
+      "sincePrev": 0.44,
+      "pause": 0.797,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.023
+    },
+    {
+     "tick": 445,
+     "out": 21.45,
+     "line": "L05",
+     "from": "s06",
+     "to": "s06b",
+     "before": {
+      "x": 0.52,
+      "y": 0.43,
+      "what": "player Grandpa",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.52,
+      "y": 0.44,
+      "what": "player Grandpa",
+      "kind": "subject"
+     },
+     "dist": 0.003,
+     "timing": {
+      "next": "BLUE",
+      "lead": -0.033,
+      "prev": "HELMET",
+      "sincePrev": 0.313,
+      "pause": 0.28,
+      "inside": "BLUE"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 468,
+     "out": 22.6,
+     "line": "L06",
+     "from": "s06b",
+     "to": "s07",
+     "before": {
+      "x": 0.52,
+      "y": 0.47,
+      "what": "player Grandpa",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.52,
+      "y": 0.43,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.035,
+     "timing": {
+      "next": "GOLD",
+      "lead": 0.16,
+      "prev": "ALL.",
+      "sincePrev": 0.443,
+      "pause": 0.603,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    },
+    {
+     "tick": 549,
+     "out": 26.65,
+     "line": "L07",
+     "from": "s07",
+     "to": "s07b",
+     "before": {
+      "x": 0.36,
+      "y": 0.4,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.36,
+      "y": 0.4,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "But",
+      "lead": 0.17,
+      "prev": "GOLD.",
+      "sincePrev": 0.51,
+      "pause": 0.68,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.01
+    },
+    {
+     "tick": 586,
+     "out": 28.5,
+     "line": "L07",
+     "from": "s07b",
+     "to": "s08ots",
+     "before": {
+      "x": 0.35,
+      "y": 0.41,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.35,
+      "y": 0.41,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.001,
+     "timing": {
+      "next": "So",
+      "lead": 0.295,
+      "prev": "BACK.",
+      "sincePrev": 0.44,
+      "pause": 0.735,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.015
+    },
+    {
+     "tick": 622,
+     "out": 30.3,
+     "line": "L08",
+     "from": "s08ots",
+     "to": "pov",
+     "before": {
+      "x": 0.28,
+      "y": 0.5,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.215,
+     "timing": {
+      "next": "BARREL.",
+      "lead": 0.045,
+      "prev": "in",
+      "sincePrev": 0.075,
+      "pause": 0.12,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 678,
+     "out": 33.1,
+     "line": "L08",
+     "from": "pov",
+     "to": "s_high_portal",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "he's",
+      "lead": 0.205,
+      "prev": "TRADING.",
+      "sincePrev": 0.375,
+      "pause": 0.58,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 705,
+     "out": 34.45,
+     "line": "L08",
+     "from": "s_high_portal",
+     "to": "s_rev",
+     "before": {
+      "x": 0.4,
+      "y": 0.48,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.48,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.09,
+     "timing": {
+      "next": "Grandpa's",
+      "lead": -0.025,
+      "prev": "ALIVE.",
+      "sincePrev": 0.525,
+      "pause": 0.5,
+      "inside": "Grandpa's"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 750,
+     "out": 36.7,
+     "line": "L09",
+     "from": "s_rev",
+     "to": "pov",
+     "before": {
+      "x": 0.69,
+      "y": 0.42,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.69,
+      "y": 0.42,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.001,
+     "timing": {
+      "next": "Grandma",
+      "lead": 0.193,
+      "prev": "ever.",
+      "sincePrev": 0.515,
+      "pause": 0.708,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.013
+    },
+    {
+     "tick": 777,
+     "out": 38.05,
+     "line": "L10",
+     "from": "pov",
+     "to": "s10ots",
+     "before": {
+      "x": 0.57,
+      "y": 0.48,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.52,
+      "y": 0.53,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.075,
+     "timing": {
+      "next": "One's",
+      "lead": 0.46,
+      "prev": "NIGHT.",
+      "sincePrev": 0.057,
+      "pause": 0.517,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    },
+    {
+     "tick": 831,
+     "out": 40.75,
+     "line": "L10",
+     "from": "s10ots",
+     "to": "pov",
+     "before": {
+      "x": 0.48,
+      "y": 0.45,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.48,
+      "y": 0.44,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "But",
+      "lead": 0.16,
+      "prev": "sweetie.",
+      "sincePrev": 0.2,
+      "pause": 0.36,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 874,
+     "out": 42.9,
+     "line": "L11",
+     "from": "pov",
+     "to": "s_rev",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "So",
+      "lead": 0.115,
+      "prev": "GOLD.",
+      "sincePrev": 0.19,
+      "pause": 0.305,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 918,
+     "out": 45.1,
+     "line": "L11",
+     "from": "s_rev",
+     "to": "s10",
+     "before": {
+      "x": 0.61,
+      "y": 0.46,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.61,
+      "y": 0.57,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.107,
+     "timing": {
+      "next": "To",
+      "lead": 0.09,
+      "prev": "ALL.",
+      "sincePrev": 0.45,
+      "pause": 0.54,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 949,
+     "out": 46.65,
+     "line": "L12",
+     "from": "s10",
+     "to": "s13",
+     "before": {
+      "x": 0.52,
+      "y": 0.92,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.58,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.318,
+     "timing": {
+      "next": "Then",
+      "lead": 0.341,
+      "prev": "HOME.",
+      "sincePrev": 0.4,
+      "pause": 0.741,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.001
+    },
+    {
+     "tick": 1020,
+     "out": 50.2,
+     "line": "L12",
+     "from": "s13",
+     "to": "s14",
+     "before": {
+      "x": 0.15,
+      "y": 0.47,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.3,
+      "y": 0.47,
+      "what": "piglin",
+      "kind": "cast"
+     },
+     "dist": 0.148,
+     "timing": {
+      "next": null,
+      "lead": null,
+      "prev": "OUT.",
+      "sincePrev": 0.229,
+      "pause": null,
+      "inside": null
+     },
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 1 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "WARN  L10: the aligner starts the first word at 0.46 s, the sound starts at 0.16 s (+0.30 s): a breath or a hum before the word? listen",
+    "OK: 0 blocker(s), 1 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "16 visible sound-making events (chest 2, door 1, hurt 1, step 8, voice 4), 2 with a sound mark, 14 without (audio.py adds those for a story)",
+    "     4.00s  villager idle voice                -> entity.villager.ambient            6.7 blocks          ",
+    "     6.55s  bat hit                            -> entity.bat.hurt                   13.6 blocks          ",
+    "     7.15s  bat step on spruce_planks          -> block.wood.step                   14.2 blocks          key word",
+    "    30.15s  villager step on stone_bricks      -> block.stone.step                   3.5 blocks          key word",
+    "    30.90s  villager step on gravel            -> block.gravel.step                  3.7 blocks          key word",
+    "    32.55s  villager idle voice                -> entity.villager.ambient            3.4 blocks          key word",
+    "    33.85s  barrel closed                      -> block.barrel.close                 2.8 blocks in view  ",
+    "    37.85s  villager idle voice                -> entity.villager.ambient            3.4 blocks in view  key word",
+    "    42.05s  villager step on cobblestone       -> block.stone.step                   2.3 blocks in view  key word",
+    "    42.50s  villager step on stone_bricks      -> block.stone.step                   1.9 blocks          key word",
+    "    42.90s  villager step on cobblestone       -> block.stone.step                   2.7 blocks          key word",
+    "    43.30s  villager step on gravel            -> block.gravel.step                  4.0 blocks          key word",
+    "    43.70s  villager idle voice                -> entity.villager.ambient            5.3 blocks          ",
+    "    43.75s  villager step on gravel            -> block.gravel.step                  5.7 blocks          ",
+    "ambience per shot: -0.20-6.55s cave, 6.55-7.85s cave, 7.85-10.40s cave, 10.40-11.80s cave, 11.80-13.20s cave, 13.20-14.35s cave, 14.35-18.00s day, 18.00-29.30s cave, 29.30-31.10s cave, 31.10-37.50s cave, 37.50-41.55s cave, 41.55-52.70s cave",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T16:45:00.387Z"
+}
