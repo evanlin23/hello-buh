@@ -7,6 +7,9 @@ const stuntMod = require(`../stunts/${process.argv[2]}`)
 const e = { ...(stuntMod.edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }
 const out = []
 if (e.caption) out.push('--caption', process.env.CAPTION || e.caption)
+// the old 'HelloBuh' bot's name in the recording's texts (death screen, chat, feedback) drawn as 56e on a HelloBuh
+// stunt (lib/legacy_player.js; edit.py applies it only when the recording has no user or user 'HelloBuh')
+{ const L = require('../lib/legacy_player'); if (process.env.HB_LEGACY_NAME !== '0' && !L.isStory(process.argv[2], stuntMod)) out.push('--self_name', L.SELF) }
 if (e.red) out.push('--red', e.red)
 // the key word's colour: a Buh Stories Short is Buh gold #FFD640 (docs/brand.md "Buh Stories channel"), keyed on the
 // stunt's (or its edit block's) channel: 'buhstories' only, never on edit.story, since HelloBuh has story_* Shorts too
