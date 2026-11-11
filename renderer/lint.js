@@ -182,6 +182,12 @@ function run (h) {
   }
   // the death screen too: the view is dead still by rule and the screen ("You died!") is the payoff (guess_sound_3)
   for (const e of tl) if (e.event === 'death') { const r = tl.find(x => x.event === 'respawn' && x.t > e.t); GUI.push([e.t / 50, r ? r.t / 50 : Infinity]) }
+  // a stunt's hard cuts (edit.speed [A, B, 'cut']) are not on screen: the off-camera wait inside one isn't "nobody moves"
+  for (const s of ed.speed || []) {
+    if (!Array.isArray(s) || s[2] !== 'cut') continue
+    const a = parseAt(s[0]), b = parseAt(s[1])
+    if (a !== null && b !== null && b > a) GUI.push([a + 1, b - 1])
+  }
   const inGui = (t) => GUI.some(([a, b]) => t >= a - 1 && t <= b + 1)
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
     if (inGui(t) || inGui(t + 12)) { flushDead(t); continue }
