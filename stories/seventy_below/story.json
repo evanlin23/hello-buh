@@ -768,5 +768,23 @@
       "camera": "in the room in the hole's own column, lens at (-2056.5, 65.8, -491.5), aimed at the shaft top (-2056.5, 71.5, -491.5): nearly straight up the 4-deep shaft. That cell and the lens cell stay free of zombies (the baby is in the next cell east, (-2055.5, 65, -491.5)); static",
       "frame": "the reveal: upturned zombie faces ring the frame edge, the shaft end-on in the centre with the moonlit square and the general's dark head in it; on 'SEVENTY' all still; +0.4 s the lid goes back on and the frame goes black; cut at +1.0 s. The room's full count was seen in S01 and S07; the same light as S01 (the loop). He stands at the hole's north edge, feet (-2056.5, 72, -491.75), head pitched 90 degrees down, so his head hangs over the shaft (visible from below)."
     }
-  ]
+  ],
+  "engine": {
+    "have": [
+      "zombie model, baby proportions (renderer/entities.js BABY / poseBaby), mob head pitch (B.head rotation from s.pitch; K.tp with pitch for NoAI mobs)",
+      "spider model with SpiderEyesLayer (eyes full bright: reads at night)",
+      "the on-fire overlay (fire_0/fire_1, EntityRenderDispatcher.renderFlame) for mobs, the death tip-over and red flash, the poof particles",
+      "our own sky/block light engine (renderer/light.js): sky light 15 straight down an open 1x1 shaft, so the daylight/moonlight square under the hole is drawn by the same rules as vanilla",
+      "block-break crack particles (the lid breaking), player actors with skins (zuri), held items (crossbow), name tags opt-in (`stunt.nameTags`): off by default, so the general has none",
+      "camera shots with at/look/fov; a red bed, bookshelf, composter, grass and stone as plain block models"
+    ],
+    "missing": [
+      "readability of a block-light-0 room lit only through a 1x1 shaft (S01, S02, S07, S09-S11, S16): not tested; the night grade may crush 70 green faces to black at 300 px. Needs a still test, maybe a per-shot shadow lift (no new light source)",
+      "70 zombies in one render: no story has drawn this many mobs at once; check the renderer's frame time and the recording's entity budget",
+      "a player head seen from straight below against the sky (the general's silhouette, head pitched 90 down over the shaft): pose and readability untested",
+      "a hard time cut inside one line (S11: burning, cut on 'Then' to the empty light ~20 s later): needs two set-ups joined in the edit at a word mark; check edit.py supports a cut mid-line",
+      "the ported palisade and east gate in map.json (still Thirty-One Raids' own build; Red Sheep needs the same port)",
+      "doMobLoot off for S11 only (a gamerule toggle in the stunt: kit, not renderer)"
+    ]
+  }
 }
