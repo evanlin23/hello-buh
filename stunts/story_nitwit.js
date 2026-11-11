@@ -31,7 +31,7 @@ module.exports = {
   time: DAY,
   edit: {
     caption: CAPTION, red: 'nitwit', story: 'stories/nitwit', startAt: 'line:0',
-    endAfter: 'story_end:0',   // settle-ok: the last blast (L05's creeper) is 20 s before the end; the ending is lightning (no debris)
+    endAfter: 'story_end:-0.35',   // settle-ok: the last blast (L05's creeper) is 20 s before the end; the ending is lightning (no debris)
     punch: ['name_word', 'today_word'],
     cards: [['hmm', 'HMM.', 0.9, 'white']]
   },
