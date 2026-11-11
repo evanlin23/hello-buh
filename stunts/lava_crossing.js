@@ -1,6 +1,6 @@
 // "every way to cross lava (rated) 💀" (~17 s, four beats): a 5-wide lava river through a field.
 // The bot crosses it at four fresh spots, each a real survival technique, with a rating subtitle:
-//   1. bridging: sneak across placing cobblestone block by block (block_place on the face ahead)
+//   1. bridging: sneak to each edge and place cobblestone on its face (lib/act.js A.place)
 //   2. water bucket: pour water at the bank, it flows over the lava and turns it to obsidian,
 //      scoop the water back up, walk across
 //   3. ender pearl: thrown across (aimed by simulating vanilla's pearl flight, like pearl_clutch)
@@ -136,11 +136,18 @@ module.exports = {
     bot.setControlState('forward', true)
     for (let k = 0; k < RIVER_W; k++) {
       const ref = new Vec3(lx, floor, zS - k)                     // the block the new one goes against
-      for (let w = 0; w < 60 && bot.entity.position.z - ref.z > 1.6; w++) await bot.waitForTicks(1)
-      // aimed by construction (lib/act.js A.place, r:rffba12): the crosshair on the lava cell ahead, the click on the top
-      // face of the river's stone bed under it (the ray goes through lava, as in vanilla), the block goes in the lava
-      const cell = ref.offset(0, 0, -1)
-      await A.place(cell, { against: cell.offset(0, -1, 0), sound: 'block.stone.place' })
+      // sneak out to the edge (sneaking stops there: the eye ends up just past the edge block's north face)...
+      for (let w = 0, last = null, still = 0; w < 80; w++) {
+        const pz = bot.entity.position.z
+        if (pz - ref.z < -0.2) break
+        still = last !== null && Math.abs(pz - last) < 0.005 ? still + 1 : 0
+        if (still >= 2) break
+        last = pz
+        await bot.waitForTicks(1)
+      }
+      // ...and put the block against that face: aimed by construction (lib/act.js A.place, r:rffba12), the crosshair on
+      // the face it clicks, as a player bridges forward over a gap
+      await A.place(ref.offset(0, 0, -1), { against: ref, sound: 'block.stone.place' })
       await bot.waitForTicks(2)
       const b = bot.blockAt(ref.offset(0, 0, -1))
       if (!b || b.name !== 'cobblestone') { ctx.log('bridge block', k, 'not placed:', b && b.name); bot.clearControlStates(); return false }
