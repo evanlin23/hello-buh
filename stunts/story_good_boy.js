@@ -223,8 +223,8 @@ module.exports = {
         autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2, buh.z)); look(k)
       }
       if (once('L02cut', k >= at.cut(3))) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
-      if (once('L02pop', k >= at(3) + 5)) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
-      if (k > at(3)) { buh.pitch = 15 + Math.sin(k / 6) * 8; if (k > at(3) + 5) buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.15; look(k) }
+      if (once('L02pop', k >= at(3) + 10)) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
+      if (k > at(3)) { buh.pitch = 15 + Math.sin(k / 6) * 8; if (k > at(3) + 10) buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.15; look(k) }
     })
 
     // L03 "He tried the WHEAT. / The HILLS. / An ISLAND." (r5: the critic's trim, one shot a phrase, the wolf popping
@@ -292,14 +292,24 @@ module.exports = {
       look(k)
     })
 
-    // L09 "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.": Dog Hill, morning: a crane down as
-    // they come up over the south rim onto the meadow and walk north toward his old dirt hut
-    await scut(DX - 1.0, DZ + 5.0, P(DX - 1.0, HILL + 0.6, DZ - 6), HILL, { shot: 'hill_walk', time: MORNING, self: [{ sitting: false, angry: false }, EYE], after: moveWith({ x: DX, z: DZ + 4.6, y: HILL, yaw: 180, pitch: 5 }) })   // (from DZ + 7.5 it stood past the levelled disc and walked into its rim)
-    K.go(true)
-    await line('L09', async (k) => {
-      if (buh.z > DZ + 1.2) { K.step(buh, 0.015, -0.12); buh.pitch = 5 } else { buh.yaw = 180; buh.pitch = 10 }
-      autoJump(); if (bot.entity.position.z - Z < DZ + 1.6) K.go(false)
-      K.base = K.aim(P(DX - 1.0, HILL + 0.6, DZ - 6)); look(k)
+    // L09 "This MORNING / he WALKED me / HOME, / up the HILL.": Dog Hill, morning. "This MORNING" on the wolf's own eyes
+    // looking east over the meadow (the wolf alone: Buh crosses 530 blocks while the camera is on the wolf, so no shot
+    // ever holds on an empty mark: moved under the dusk shot, he vanished from its last frames: lint, dry run 13); then
+    // the crane down onto them walking north toward his old dirt hut
+    await K.cut(DX + 1.0, DZ + 5.0, P(DX + 20, HILL + 3.0, DZ + 4.0), HILL, { shot: 'pov', time: MORNING, self: [{ sitting: false, angry: false }, EYE] })
+    Object.assign(buh, { x: DX - 1.5, z: DZ + 7.5, y: HILL, yaw: 180, pitch: 5 }); K.warp(TAG)   // behind the wolf, out of its view
+    await line('L09', async (k, at) => {
+      if (k < at.cut(1)) look(k)
+      if (once('L09crane', k >= at.cut(1))) {
+        await scut(DX + 1.0, DZ + 5.0, P(DX + 1.0, HILL + 0.6, DZ - 6), HILL, { shot: 'hill_walk', stop: false,   // the wolf on his right, away from the crane (behind him it covered his face: lint)
+            after: moveWith({ x: DX, z: DZ + 4.6, y: HILL, yaw: 180, pitch: 5 }) })
+        K.go(true)
+      }
+      if (k > at.cut(1)) {
+        if (buh.z > DZ + 1.2) { K.step(buh, 0.015, -0.12); buh.pitch = 5 } else { buh.yaw = 180; buh.pitch = 10 }
+        autoJump(); if (bot.entity.position.z - Z < DZ + 1.6) K.go(false)
+        look(k)
+      }
     })
     K.stop()
 
@@ -409,7 +419,7 @@ module.exports.shots = {
   // L07: dusk, from behind them over the sea (sharp: the blur was the "blurry light" note)
   dog_sea: { subject: [`actor:${GUY}`, 'self'], at: [35.4, H + 1.3, 18.4], look: [43.0, H + 2.6, 15.9], fov: 50, push: 0.15, dof: false },
   // L09: Dog Hill, morning: a crane down from over the south rim as they walk up onto the meadow toward the hut
-  hill_walk: { subject: [`actor:${GUY}`], path: [[0, DXs - 3.5, HL + 6, DZs + 11], [3.2, DXs - 2.5, HL + 2.2, DZs + 8.0]], lookPath: [[0, DXs, HL + 1, DZs + 3], [3.2, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
+  hill_walk: { subject: [`actor:${GUY}`], path: [[0, DXs - 3.5, HL + 6, DZs + 11], [1.6, DXs - 2.5, HL + 2.2, DZs + 8.0]], lookPath: [[0, DXs, HL + 1, DZs + 3], [1.6, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
   // L11-L13: ONE locked camera south of D and the patch, low: the wolf a third in from the left facing right, Buh on
   // the patch in the right third, his hut behind; the logout is the same frame minus him (no push, no drift)
   hill_lock: { subject: [[DXs + 3, HL + 2.3, DZs]],   // Buh's head on the patch: where hill_walk left the eye, and still there after the logout (the wolf low in frame was a 34 % eye jump)
