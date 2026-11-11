@@ -116,6 +116,6 @@
     "python3 edit.py --frames work/pearl_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pearl_clutch.rec.json --audio work/pearl_clutch.wav --caption \"POV: You Throw an Ender Pearl But...\" --red Throw --countdown \"glide_start:elytra_broke:Elytra About To Break:item/elytra\" --start 0.8 --song songs/misery.mp3 --song_drop_at teleported --out out/pearl_clutch.mp4"
   ],
   "status": "needs-fix",
-  "notes": "backlog worker A 2026-11-11: needs-fix, superseded. A 7.2 s single clutch: fails the owner's 30 s minimum (retention-audit check 5). The redesign the old note asked for (the block vanishes over lava, a pearl mid-fall onto the island; stunts/pearl_clutch.js) became two tiers of clutch_harder ('pearl over lava x2', ready, 31.1 s; lava_crossing has a pearl too). Standalone it is one beat; growing it to 30 s would remake clutch_harder. Recommend retiring it (do not queue).",
+  "notes": "QA: the stunt (breaking elytra -> pearl) does not read; redesign before uploading",
   "published_at": "2026-11-06T08:15:57.010Z"
 }

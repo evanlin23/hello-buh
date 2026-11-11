@@ -105,6 +105,6 @@
     "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT \ud83d\udc80\" --red 75 --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at boom --out out/tnt.mp4"
   ],
   "status": "needs-fix",
-  "notes": "backlog worker A 2026-11-11: needs-fix, superseded. A 15.4 s single pile of 75 TNT: fails the owner's 30 s minimum (retention-audit check 5), and worker 9 already grew this exact stunt into the 30 s format tnt_1000 ('1 TNT vs 10 vs 100 vs 1000', ready, 31.4 s; worse_tnt and it_rains carry TNT too). Re-rendering it (ground dark, bot stuck) would still be one beat; growing it to 30 s would remake tnt_1000. Recommend retiring it (do not queue).",
+  "notes": "user: ground dark + bot stuck; re-render queued with the fixed stunt",
   "published_at": "2026-11-06T12:27:15.580Z"
 }
