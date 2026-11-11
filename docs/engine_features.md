@@ -365,6 +365,42 @@ lib/hb/test/engine2.test.js.
   blocks: BLOCK; just off the frame (a quarter each side) or behind blocks under 32 blocks, or within 8 blocks of the
   camera: WARN; anything else is no finding.
 
+## Trade screen, tooltip, caption chunks, hidden name tags
+From The Walk (S10: the librarian's book reads Frost Walker II) and The Honey Thief (Jonah: "no name tag"), 2026-11-11.
+All off unless a recording has the new marks or a story asks: story_nitwit (tick 120, 450), creeper (40, 150) and
+story_torch (L02, L05, L08) render pixel-identical before/after; the caption PNG streams of gold_for_the_portal, nitwit
+and torch and the chest screens of gold_for_the_portal and thirty_one_raids are byte-identical.
+- **The villager trade screen** (MerchantScreen, 1.21.11): `const v = await K.trade(villagerEntity)` turns onto its
+  face and opens it (bot.openVillager; the view holds still while it's open, as for chests), `await K.pick(v, i)`
+  selects offer i (the server moves the price into the payment slots: a whole stack, as vanilla), `await
+  K.takeResult(v)` completes it once (a plain click into the inventory; `{ shift: true }` trades as often as the
+  payment lasts; mineflayer's `v.trade` would fail after K.pick), `K.close(v)`. The harness marks `merchant` (the
+  trade_list offers: costs with demand/special price, results, xp, out-of-stock; the trader's level and xp; every slot;
+  each item's tooltip lines from `lib/tooltip.js`) on open and every slot change, and `merchant_close`. edit.py
+  `merchant_png` draws gui/container/villager.png at 276 x 166, "Librarian - Novice" (the level names for a villager),
+  "Trades" / "Inventory", the experience bar (with the selected offer's xp as the result part), up to 7 offer buttons
+  (a discount struck through), arrows, the scroller, the payment/result slots and the inventory (MerchantMenu slot
+  positions), enchanted items glinting, leather armour in its default dye (the merchant screen only).
+- **Tooltips**: `K.hover('result')` (or `'a'`, `'b'`, `'trade:N'`, a window slot number; `null` to move off; a
+  `{ tooltip: [[text, '#RRGGBB']] }` option overrides the lines) marks `gui_hover`: the slot's 1.21.6 highlight sprites
+  and the tooltip box (tooltip/background + tooltip/frame nine-slices, +12/-12 from the cursor, flipped left at the
+  screen's edge as DefaultTooltipPositioner does, 2 px under the title line). Lines (`lib/tooltip.js`, ItemStack
+  tooltips): the name in its rarity colour (an enchanted book yellow, an enchanted sword aqua), then the enchantments
+  (stored ones on a book) gray, curses red, no numeral for a max-level-1 enchantment. The cursor itself isn't drawn.
+- **A non-spoken caption chunk**: `K.onscreen('Frost Walker II', { hold: 1.3 })` (mark `onscreen`; no hold: to the next
+  cut or line, 1.5 s at most; `caption_y` as for lines) draws the words in the story's word-chunk caption style
+  (scripts/story_track.py), every word in the key colour, from the mark's frame (no lead); a spoken caption under it
+  is cut back for its window. The default height (0.70) sits over the merchant screen's lower inventory: The Walk can
+  set `caption_y`.
+- **A hidden name tag**: a story.json cast entry with `"name_tag": false` (matched by its cast id, `user`, `tag`, and
+  its `name`'s first word: The Honey Thief's "Giant" / "Jonah ...") or `stunt.hideNameTags: ['Jonah']`
+  (`lib/name_tags.js`): render.js never draws that entity's plate, not with `playerNames`, `nameTags` or the
+  crosshair on it (vanilla: a team with nametagVisibility never).
+Test: `./hb record _test_gui_tags --no-strict && PREVIEW_W=1080 PREVIEW_FPS=20 scripts/preview.sh _test_gui_tags`
+(the fixture lib/hb/test/fixtures/gui_tags_story: Pia's plate shows, Jonah's doesn't; a librarian's Frost Walker II
+trade opened, picked, hovered, captioned and taken). Stills: docs/engine_proofs/gui_tags/. `npm test`:
+lib/hb/test/gui_tags.test.js.
+
 ## Faster stills: the mesh cache
 `./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
 still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are
