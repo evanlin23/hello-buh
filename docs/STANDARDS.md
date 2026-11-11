@@ -212,6 +212,9 @@ has its vanilla sound (mob voices, steps, splashes included) and every shot its 
 covers a word (the clarity guard). Any owner note on a track or level overrides it.
 Check: `python3 scripts/audio_measure.py out/<name>.mp4`; `python3 scripts/onscreen_sfx.py <rec> --strict` (visible
 actions left silent). r:rc85ccc r:r36632d
+Stunt Shorts (NCS bed): a sound the game hinges on (edit `keySounds`, e.g. guess the mob's call) is **>= 8 dB over
+the music** (owner, 2026-11-11, guess_sound: "had super loud music"); the song ducks to -24 dB under it at publish.
+Check: `python3 scripts/key_sounds.py <name>` (BLOCK in add_song.py and in pace on the package).
 
 ## 8. Pacing (pace, on the finished mp4)
 - **Hook**: the first word by **0.2 s** (BLOCK after 0.4 s); the picture moving from frame 1 (frozen first 0.3 s:

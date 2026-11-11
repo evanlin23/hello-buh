@@ -75,6 +75,13 @@ reference.
   `"whoosh": true` brings the scene-cut whooshes back (at -32 dBFS peak, low-passed at 5 kHz, a 120 ms fade in). A
   stunt's own `edit.sfx` riser, scratch, boom or impact replaces the automatic one.
 - Stunt (non-story) Shorts keep their NCS phonk at -13 LUFS under a -10 LUFS master (unchanged).
+- **Key sounds** (owner, 2026-11-11, on guess_sound: **"had super loud music"**; a guessing game you can't hear is
+  broken): a stunt whose game is a sound names it, edit `keySounds: ['hear']` (lib/guess_sound.js does). At publish
+  `scripts/add_song.py` ducks the NCS bed to -24 dB under each clip (from 0.05 s before it to 0.15 s after it ends;
+  never over the drop) and masters with a -2 dB limit. **The gate: each key sound >= 8 dB over the music**, else
+  BLOCK (add_song.py exits 1; `./hb pace` on the package's short.mp4). Measured: the old mixes had the calls at -1.8
+  to -5.4 dB median under/over the music (worst -12.3, best +4.8); ducked, +11.6 dB at worst. `python3
+  scripts/key_sounds.py <name>` (`--hits` for any other stunt: its loudest game sounds vs the music, a report only).
 
 ## Sound effects
 1. **On-screen sounds (the owner's rule):** every visible event that makes a sound in vanilla gets that sound,
@@ -124,6 +131,8 @@ on the last run's frames. `HB_STEMS=<dir>` writes every layer as a wav, for meas
   mp4's comment tag.
 - `python3 scripts/story_audio.py plan stories/<name> work/<stunt>.rec.json`: the moods, the payoff time, the
   speech spans, the ambience per shot and the score track, without any audio.
+- `python3 scripts/key_sounds.py <name>`: each edit.keySounds clip vs the music on the package (>= 8 dB, else exit 1);
+  `python3 -m unittest scripts/test_key_sounds.py` (in `npm test`).
 - `python3 -m unittest scripts/test_story_audio.py` (in `npm test`): the bed stops before the payoff and never comes
   back, sits ~13.5 dB under the voice, no whoosh by default, the clarity guard, the key-word rule, the silent-action
   check, vanilla's idle timer and step rate.

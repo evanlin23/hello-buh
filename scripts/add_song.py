@@ -137,7 +137,11 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                  f"[0:a]aresample=48000[voice];[voice][song]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
     else:
         import sfx   # edit.sfx 'dip' entries: the song ducks before the payoff (same windows as edit.py, + the hook)
-        duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)))
+        import key_sounds   # edit.keySounds (guess the mob: the call IS the game): the song ducks to -24 dB under each clip
+        keys = key_sounds.key_times(stunt, tl, start, hook_len(stunt))
+        kstop = at if drop_at in ev else None   # the drop lands un-ducked
+        kwin = key_sounds.windows(key_sounds.pcm(src), keys, kstop) if keys else []
+        duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)) + kwin, key_sounds.DUCK)
         import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
         graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, -13, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
                  f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
@@ -148,7 +152,12 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         import story_track
         story_track.master_gain(out, -14.0)
     else:
-        loud.master(out, -10.0, -1.0)
+        loud.master(out, -10.0, -2.0 if keys else -1.0)   # (ducked under the key sounds, the master lifts the game: limit lower)
+        if keys:   # the gate (BLOCK): each key sound >= KEY_MIN_DB over the music (owner 2026-11-11, guess_sound: "super loud music")
+            rows, bad = key_sounds.check(out, src, keys, kstop)
+            print(name, f"key sounds over the music: worst {min(r['margin_db'] for r in rows):+.1f} dB over {len(rows)} clips (need >= {key_sounds.KEY_MIN_DB:.0f})")
+            if bad:
+                sys.exit(f"{name}: BLOCK [keysound] the music covers {len(bad)} key sound(s): " + ", ".join(f"{r['t']:.2f} s ({r['margin_db']:+.1f} dB)" for r in bad))
     f = pathlib.Path(song).name
     t, a = SONGS.get(f, (f, ""))
     if gen:
