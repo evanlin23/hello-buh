@@ -32,7 +32,7 @@ module.exports = {
     startAt: 'hook:-0.1', endAfter: 'lit:1.0',
     // the walk back keeps its start and end around a jump cut (all 3.8 s of it was a span with nothing new: pace)
     speed: [['intr_back:1.2', 'intr_resume:-1.0', 'cut']],
-    punch: [['lit', 0, 1.08]],                            // the payoff's picture change, with the ripple and the drop
+    punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.4]],   // the payoff's picture change (the lights coming on), with the ripple and the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_gone'],   // the thunk, the crunches, the last bite: over the music
     sfx: [['air', 'start', 'lit', { gain: 0.5 }]]          // room tone from frame 1
   },
