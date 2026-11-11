@@ -1,0 +1,264 @@
+{
+ "stunt": "hide_seek",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/hide_seek.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "8 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 170,
+     "col": 46,
+     "text": "for (let i = 0; i < 6; i++) { bot.chat(`/execute as @e[tag=h0,limit=1] at @s run tp @s ~0.01 ~ ~0.005`); await bot.waitForTicks(1) }",
+     "what": "a /tp of a cast member through /execute ... run tp",
+     "use": "K.actor(tag, state) (walks to its mark at 20 Hz; jumps only on a cut: K.cutShot / K.cut), or K.flee(tag, speed)"
+    },
+    {
+     "line": 176,
+     "col": 17,
+     "text": "bot.chat(`/tp @e[tag=h0,limit=1] ${(X + x).toFixed(3)} ${F + 1} ${(Z + z).toFixed(3)}`)",
+     "what": "a /tp of a cast member (a raw /tp loop reaches the client every 3rd tick: it reads as teleporting)",
+     "use": "K.actor(tag, state) (walks to its mark at 20 Hz; jumps only on a cut: K.cutShot / K.cut), K.park(tag) / K.bury(tag), or K.warp(tag) off screen"
+    },
+    {
+     "line": 178,
+     "col": 42,
+     "text": "for (let i = 0; i < 22; i++) { await bot.look(bot.entity.yaw + 0.004, bot.entity.pitch, true); await bot.waitForTicks(1) }   // watches him ",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 181,
+     "col": 15,
+     "text": "bot.chat(`/tp @e[tag=h0,limit=1] ${X + 300} ${F + 1} ${Z}`)   // (off camera: he's in the trunk now)",
+     "what": "a /tp of a cast member (a raw /tp loop reaches the client every 3rd tick: it reads as teleporting)",
+     "use": "K.actor(tag, state) (walks to its mark at 20 Hz; jumps only on a cut: K.cutShot / K.cut), K.park(tag) / K.bury(tag), or K.warp(tag) off screen"
+    },
+    {
+     "line": 260,
+     "col": 5,
+     "text": "bot.setControlState('back', true); await bot.waitForTicks(4); bot.setControlState('back', false)   // a step back off it",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 269,
+     "col": 71,
+     "text": "for (let i = 0; i < 8 && bot.entity.position.z > Z + 0.33; i++) { bot.setControlState('forward', true); bot.setControlState('sneak', true); ",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 270,
+     "col": 5,
+     "text": "bot.setControlState('forward', false); bot.setControlState('sneak', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 340,
+     "col": 13,
+     "text": "await bot.look(bot.entity.yaw + 0.004 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT hide_seek: 1 shots, scene 0.0-54.0 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-54.0  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 4 warning(s), 2 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1,
+     "shot": 2,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #4180 appears in the middle of the frame 6.63 s into the shot (3.5 blocks)"
+    },
+    {
+     "level": "NOTE",
+     "out": 1,
+     "shot": 2,
+     "line": null,
+     "kind": "blocks",
+     "msg": "4 block(s) in view changed during the cut (e.g. oak_door, air at 445 75 -65): intended?"
+    },
+    {
+     "level": "WARN",
+     "out": 24.867,
+     "shot": 7,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #4183 appears in the middle of the frame 3.78 s into the shot (8.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 30.45,
+     "shot": 8,
+     "line": null,
+     "kind": "appear",
+     "msg": "wolf #520 appears in the middle of the frame 1.18 s into the shot (17.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 30.45,
+     "shot": 8,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: diamond_shovel -> diamond_axe"
+    },
+    {
+     "level": "NOTE",
+     "out": 30.45,
+     "shot": 8,
+     "line": null,
+     "kind": "blocks",
+     "msg": "3 block(s) in view changed during the cut (e.g. dirt at 446 77 -48): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "2 warning(s) over 9 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (oak_door, cobblestone)"
+    },
+    {
+     "level": "WARN",
+     "out": 30.45,
+     "shot": 8,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 37% of the frame is within 3 blocks (dirt, grass_block)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 3 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 14.2,
+     "tick": 449,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 161 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 30.733,
+     "tick": 965,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 180 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 34.983,
+     "tick": 1050,
+     "line": null,
+     "msg": "edit cut inside one shot while the view turns: 167 deg/s out, 180 deg/s in (cap 30, over the 2 ticks either side; 1.9 s of source cut, the view 24 deg and the camera 0 blocks on), the same way on both sides from about the same view: reads as one pan. Look at it; still edges are safer (r:r38374d)",
+     "speedOut": 167,
+     "speedIn": 180
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "36 visible sound-making events (break 3, door 4, hit 2, step 10, swim 2, voice 15), 9 with a sound mark, 27 without (audio.py adds those for a story)",
+    "     1.60s  villager step on grass_block       -> block.grass.step                   5.1 blocks in view  ",
+    "     1.80s  villager idle voice                -> entity.villager.ambient            5.8 blocks in view  ",
+    "     1.90s  villager step on grass_block       -> block.grass.step                   6.8 blocks in view  ",
+    "     2.20s  villager step on grass_block       -> block.grass.step                   8.2 blocks in view  ",
+    "     2.50s  villager step on grass_block       -> block.grass.step                   9.8 blocks in view  ",
+    "     3.25s  wolf step on grass_block           -> entity.wolf.step                  14.4 blocks          ",
+    "     4.00s  villager idle voice                -> entity.villager.ambient           12.0 blocks          ",
+    "     7.85s  villager idle voice                -> entity.villager.ambient            7.8 blocks          ",
+    "     9.65s  villager idle voice                -> entity.villager.ambient           13.4 blocks          ",
+    "    14.70s  villager idle voice                -> entity.villager.ambient           12.0 blocks          ",
+    "    23.60s  villager swimming                  -> entity.generic.swim                9.6 blocks in view  ",
+    "    23.75s  villager idle voice                -> entity.villager.ambient            8.3 blocks in view  ",
+    "    24.10s  villager swimming                  -> entity.generic.swim                7.1 blocks in view  ",
+    "    29.00s  villager idle voice                -> entity.villager.ambient            4.8 blocks          ",
+    "    29.65s  wolf step on grass_block           -> entity.wolf.step                  14.9 blocks in view  ",
+    "    30.10s  wolf step on grass_block           -> entity.wolf.step                  14.3 blocks in view  ",
+    "    30.55s  wolf step on grass_block           -> entity.wolf.step                  15.4 blocks          ",
+    "    36.50s  villager idle voice                -> entity.villager.ambient            3.7 blocks in view  ",
+    "    38.45s  villager idle voice                -> entity.villager.ambient           11.6 blocks          ",
+    "    42.65s  villager idle voice                -> entity.villager.ambient           15.5 blocks          ",
+    "    44.00s  villager idle voice                -> entity.villager.ambient            4.8 blocks in view  ",
+    "    46.30s  villager idle voice                -> entity.villager.ambient           12.1 blocks          ",
+    "    48.00s  villager idle voice                -> entity.villager.ambient           10.6 blocks          ",
+    "    53.15s  villager idle voice                -> entity.villager.ambient           12.5 blocks in view  ",
+    "    54.70s  villager idle voice                -> entity.villager.ambient           13.1 blocks          ",
+    "    55.10s  wolf step on grass_block           -> entity.wolf.step                  14.5 blocks          ",
+    "    55.60s  wolf step on grass_block           -> entity.wolf.step                  13.1 blocks          ",
+    "ambience per shot: -0.20-14.15s day, 14.15-25.40s day, 25.40-37.45s day, 37.45-45.55s day, 45.55-56.85s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T11:55:17.020Z"
+}

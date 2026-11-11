@@ -1,0 +1,17 @@
+{
+ "name": "hide_seek",
+ "stunt": "hide_seek",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43015826148",
+ "source": "1e02a34a",
+ "queued": "2026-11-11T11:54:32Z",
+ "finished": "2026-11-11T12:01:52Z",
+ "mp4": "renders/out/hide_seek.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
