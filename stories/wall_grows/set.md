@@ -21,9 +21,9 @@ shallow plains valley, STANDARDS 3.1: no superflat), at full scale with `/fill`.
 | no GATE | L04 | no gate, door, opening or window in the wall anywhere in any shot (the hole only in S04) |
 | (implied) nobody sees outside | L04 | no shot before S11 shows the ground outside the wall (S04 pitched up at the sky; S01b, S05, S06 at or below the rim) |
 | a zombie can't jump TWO blocks | L03 | the farm wall in S02 is exactly 2 high and the zombie stays outside it |
-| something BROWN grows over the top every morning (a "plant") | L05 | a real dirt block, still, just outside the rim, brown against the sky at phone size (the kid never says dirt) |
-| Tomas builds one HIGHER | L06 | his new brick (y0+42) stands above the dirt's top (y0+41) |
-| a block VANISHED / back by NOON | L08 | one 1x1 through-hole at y0+2 (a player's eye height outside), then the same spot patched |
+| something BROWN grows over the top every morning (a "plant") | L07 | a real dirt block, still, just outside the rim, brown against the sky at phone size (the kid never says dirt) |
+| Tomas builds one HIGHER | L08 | his new brick (y0+42) stands above the dirt's top (y0+41) |
+| a block VANISHED / back by NOON | L05 | one 1x1 through-hole at y0+2 (a player's eye height outside), then the same spot patched |
 | that old MINECART | L09 | an empty minecart on the rail stub's end, against the wall |
 | the kids PUSH it, Tomas HIDES | L10 | it rolls along the rail while the kids are beside it |
 | his LADDER | L13 | the kid climbs the ladder from the ground to the rim in S10 |

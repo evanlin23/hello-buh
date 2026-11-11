@@ -51,7 +51,7 @@
    "color": "#F0A845",
    "model": "gemini-3.8-flash-tts",
    "profile": "[An old man in his seventies, slow and low, kind but closed]",
-   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S04, his hand on the patched block) and L12 (S09). Voice: cast `elder` (Charon), old and slow, far from Pip"
+   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S04, by the patched block) and L12 (S09). Voice: cast `elder` (Charon), old and slow, far from Pip"
   },
   "Player": {
    "role": "character",
@@ -224,7 +224,7 @@
    "text": "It's LOOKING / for us.",
    "say": "It's looking for US.",
    "shot": "S04",
-   "direction": "slow and low, his hand still on the patched block",
+   "direction": "slow and low, still facing the patched block",
    "look": {
     "what": "Tomas"
    }
@@ -322,7 +322,7 @@
     },
     {
      "what": "Tomas",
-     "word": "HIDES"
+     "word": "Tomas"
     }
    ]
   },
@@ -427,7 +427,7 @@
   {
    "id": "S01b",
    "line": "L02",
-   "place": "rim",
+   "place": "village",
    "size": "full",
    "camera": "at: (-4, y0+37, -24), in the air over the village 9 blocks off the north wall, looking up at the rim, FOV 50, still",
    "frame": "fg: nothing (air); subject: Tomas (mason) full-figure on the rim, a stone brick over his crossed arms; on 'ONE more' a brick appears on the cap in front of him with a place sound; bg: the morning sky. Morning (1000).",
@@ -442,7 +442,7 @@
    "place": "village",
    "size": "wide",
    "camera": "at: from inside the kid's house window, looking out across the farm, still",
-   "frame": "fg: the window frame (dark oak) of the kid's house; subject: a zombie in the moonlight bumping against the south side of the farm's ring (2 high, full cobblestone blocks, no gap), unable to get over, centred; bg: the dark farm and, behind it, the great wall's dark lower face (its top out of frame); the farm's oak door (closed) out of frame left. Night (18000).",
+   "frame": "fg: the window frame (dark oak) of the kid's house; subject: a zombie in the moonlight bumping against the south side of the farm's ring (2 high, full cobblestone blocks, no gap), unable to get over, centred; bg: the dark farm and, behind it, the great wall's dark lower face (its top out of frame); the farm's oak door (closed) in frame, a little left of centre: shut, the zombie can't open it. Night (18000).",
    "subject": "zombie",
    "look": {
     "time": 18000
@@ -465,8 +465,8 @@
    "line": "L05",
    "place": "village",
    "size": "ms",
-   "camera": "at: inside, 1.5 blocks out from the north wall at x 10, eye y0+1.0, pitched up about 35 degrees",
-   "frame": "subject: the north wall whole on 'BLOCK'; on 'VANISHED' the brick at (10, y0+2, -33) pops out: a 1x1 through-hole, only sky through it (the pitch keeps the ground outside unseen), centred; a time cut to noon: Tomas (mason) at the frame's right edge, robe and crossed arms, facing the spot; on 'BACK' the brick is back with a place sound; he stays facing it for L06. Morning (2000) then noon (6000).",
+   "camera": "at: inside, eye y0+1.75, 1.0 block off the inner face (z -30) at x 10, tilted up 18 degrees: lines through the 2-deep hole rise 14-23 degrees, so it shows sky and far hills over the hall roof, never the hall",
+   "frame": "subject: the north wall whole on 'BLOCK'; on 'VANISHED' the brick at (10, y0+2, -33) pops out: a 1x1 through-hole, daylight and sky through it (the eye height and distance keep the ground and the hall unseen; check the hills on a still), centred; a time cut to noon: Tomas (mason) at the frame's right edge, robe and crossed arms, facing the spot; on 'BACK' the brick is back with a place sound; he stays facing it for L06. Morning (2000) then noon (6000).",
    "subject": "the hole",
    "look": {
     "time": 2000,
@@ -476,10 +476,10 @@
   {
    "id": "S05",
    "line": "L07",
-   "place": "rim",
+   "place": "village",
    "size": "cu",
-   "camera": "at: (-10, y0+40, -19), in the air over the village 14 blocks off the wall, level with the rim, FOV 20, still",
-   "frame": "subject: the rim's top edge in a clean line against the pale sky; the dirt pillar's top block (-10, y0+41, -34) sits just past the rim, about 0.9 of it showing, still, brown against the sky, centred; no rise, no second block; no ground outside in frame. Dawn (23500).",
+   "camera": "at: (-10, y0+40, -19), in the air over the village 14 blocks off the wall, level with the rim, FOV 8, still",
+   "frame": "subject: the rim's top edge in a clean line against the pale sky; the dirt pillar's top block (-10, y0+41, -34) sits just past the rim, about 0.9 of it showing, still, brown against the sky, centred; no rise, no second block; no ground outside in frame. Dawn (23500). At FOV 8 the block is about 40% of the frame height.",
    "subject": "the dirt block",
    "look": {
     "time": 23500
@@ -488,7 +488,7 @@
   {
    "id": "S06",
    "line": "L08",
-   "place": "rim",
+   "place": "village",
    "size": "full",
    "camera": "at: (-6, y0+38, -25), inside and below the rim, FOV 50, pitched up about 20 degrees, still",
    "frame": "fg: the wall's top rows; subject: Tomas full-figure stepping off the ladder's top onto the rim and placing a stone brick on the old cap at (-11, y0+42, -33), right beside the dirt's top (y0+41), so it stands one higher on 'HIGHER'; bg: the dawn sky; no ground outside visible. Dawn (23500).",
@@ -514,8 +514,8 @@
    "line": "L10",
    "place": "village",
    "size": "full",
-   "camera": "at: (12, y0+1.6, -18), south-east of the farm, looking north-west across it, still",
-   "frame": "fg: the farm's ring wall top; subject: two village kids inside the farm push the minecart along the rail (it rolls with its rattle) on 'PUSH'; Tomas, standing at frame left by the farm door, starts running on 'RUNS', exits frame left (west, toward his house at (-12, -20)), his door shutting off screen with its sound on 'HIDES'; bg: the north wall's foot. Afternoon (9000).",
+   "camera": "at: (12, y0+4.5, -18), south-east of the farm, looking north-west down into it over the ring, still",
+   "frame": "fg: the farm's ring wall top; subject: two village kids inside the farm push the minecart along the rail (it rolls with its rattle) on 'PUSH'; Tomas inside the farm at (0, y0+1, -25) starts running on 'RUNS' out through the farm's oak door (it opens and shuts on screen) and away west (frame left) toward his house; his house door's shut sound on 'HIDES'; bg: the north wall's foot. Afternoon (9000).",
    "subject": "Tomas",
    "look": {
     "time": 9000
@@ -524,7 +524,7 @@
   {
    "id": "S09",
    "line": "L11",
-   "place": "rim",
+   "place": "village",
    "size": "ms",
    "camera": "at: the foot of Tomas's ladder inside the north wall, a baby villager's eye height, still",
    "frame": "fg: the narrator (baby villager) at frame left, looking up; subject: Tomas waist up stepping off the ladder's bottom rung and walking past the kid on L12, not looking at him; bg: the ladder rising up the wall out of frame. Late afternoon (11000).",
@@ -551,7 +551,7 @@
    "place": "outside",
    "size": "ews",
    "camera": "at: just behind the narrator's head on the rim, then over him, looking down and out at the hall 15 blocks beyond the wall's foot; a slow tilt down",
-   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, its south end 12 blocks north of the wall's outer foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells along its length, a villager in every cell with a workstation in front, a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); lanterns hung inside under the glass so the cells read at dawn; bg: rolling hills, oak trees and a river north of the hall to the fog. Dawn (23500).",
+   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, its south end 13 blocks north of the wall's outer foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells along its length, a villager in every cell with a workstation in front, a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); lanterns hung inside under the glass so the cells read at dawn; bg: rolling hills, oak trees and a river north of the hall to the fog. Dawn (23500).",
    "subject": "the trading hall",
    "look": {
     "time": 23500
@@ -561,9 +561,9 @@
    "id": "S12",
    "line": "L15",
    "place": "outside",
-   "size": "full",
+   "size": "ms",
    "camera": "at: the narrator's eye on the rim, about 39 blocks above and 12.5 blocks out from the hall door (looking ~72 degrees down), a very long lens (FOV 5), still",
-   "frame": "subject: the player (Steve skin) seen from high above, framed on his face and shoulders with the dirt block in his hand in frame; on 'UP' he turns his face up to the lens, the face about 25% of the frame width; the cut lands on the look; bg: the hall's door and glass front edge. Dawn (23500).",
+   "frame": "subject: the player (Steve skin) seen from high above, framed on his face and shoulders with the dirt block in his hand in frame; on 'UP' he turns his face up to the lens, the face about 14% of the frame width; the cut lands on the look; bg: the hall's door and glass front edge. Dawn (23500).",
    "subject": "the player",
    "look": {
     "time": 23500

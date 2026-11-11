@@ -4,7 +4,7 @@ Notes only. The script is `story.json` (the build and the voice read only that).
 
 ## The ending first (the reveal frame)
 From the top of the wall at dawn, a long lens 40 blocks down: a player (Steve) at the door of a glass-roofed trading
-hall, a 2-high dirt pillar started beside him, dirt in his hand. He turns his head up to us. Cut on the look.
+hall, dirt in his hand (no pillar yet today). He turns his face up to us. Cut on the look.
 
 ## Spine
 - Every morning, old Tomas the mason raises the 40-block wall one block above the brown thing that grows over the rim.
@@ -43,7 +43,7 @@ hall, a 2-high dirt pillar started beside him, dirt in his hand. He turns his he
 | Tomas came in a minecart; hides when it rolls | L09-L10, S07-S08 | "like a king!", "best at hide and seek" | how players haul villagers to trading halls |
 | "Nothing we want to trade with." | L12 | the kid takes it as an answer and wants to see the monster | players trade with boxed villagers |
 | "everybody gets their own room" | L14, S11 | a wonderful village | 1x1 trading-hall cells |
-| someone not in a room; dirt in his hand, a dirt stub beside him | L15, S12 | someone new | the morning dirt was him |
+| someone not in a room; dirt in his hand | L15, S12 | someone new | the morning dirt was him |
 
 ## Twist checklist
 - Naivety (STANDARDS 0a): the kid is proud and never afraid, never hints, never explains; every clue has its innocent read above.

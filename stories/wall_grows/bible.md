@@ -12,7 +12,7 @@ claims are in `set.md`.
 |---|---|---|---|---|
 | A: a morning | S01, S01b | 1000 | sun low east | Tomas placing a block on the north rim |
 | B: a night | S02 | 18000 | moon; lanterns in the village | a zombie inside the village, stuck at the farm wall; the great wall out of frame |
-| C: an afternoon | S03 | 8000 | the west wall's long shadow over the play area | kids playing |
+| C: an afternoon | S03 | 8000 | afternoon light along the west wall | kids playing |
 | D: a dawn | S05, S06 | 23500 | pale sky, sun not yet up | the dirt's top block sits just over the north rim (still); Tomas caps beside it one higher |
 | E: another day | S04 | 2000 then 6000 (a time cut) | daylight through the hole | the hole in the north wall, then patched |
 | F: an afternoon | S07, S08 | 9000 | sun | the rail stub, the cart, Tomas hiding |
