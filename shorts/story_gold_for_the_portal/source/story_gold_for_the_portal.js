@@ -29,6 +29,7 @@ const POCKET = [6, -12, 5]                // where the narrator waits while he's
 
 module.exports = {
   name: 'story_gold_for_the_portal',
+  channel: 'buhstories',   // lib/channel.js; also keys the title band's Buh gold (scripts/edit_args.js)
   caption: CAPTION,
   time: NIGHT,
   botTimeout: 600,
@@ -148,7 +149,7 @@ module.exports = {
     K.shot('s01')
     // (a 30-tick preroll, not in the Short: an idle mob's first moves reach the client ~1 s late, so she's warm by frame 1)
     await K.preroll(30, (k) => { if (hit(k, 27)) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k); const j = Math.max(0, k - 24); gma.pitch = k < 24 ? 20 + 6 * Math.sin(k / 4) : 42 - j * 2; gma.yaw = k < 24 ? -70 + 8 * Math.sin(k / 5) : -60 - j * 1.5 })
-    await line('L01', async (k) => { portalLife(k); if (k < 16) gma.x -= 0.025; gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 8 ? -69 - k * 1.2 : turnToward(gma.yaw, 0, 5) + (k > 22 ? 4 * Math.sin((k - 22) / 9) : 0); if (hit(k, 5)) gone(); if (hit(k, 3)) ctx.sound('block.portal.trigger', 0.12, 1.6) })
+    await line('L01', async (k, at) => { if (hit(k, at.cut(2))) K.shot('s01b'); portalLife(k); if (k < 16) gma.x -= 0.025; gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 8 ? -69 - k * 1.2 : turnToward(gma.yaw, 0, 5) + (k > 22 ? 4 * Math.sin((k - 22) / 9) : 0); if (hit(k, 5)) gone(); if (hit(k, 3)) ctx.sound('block.portal.trigger', 0.12, 1.6) })
     K.base = K.aim(P(11, 2.0, 5.6))
 
     // L02 (S02): the ridge at night, the crane down to the cottage; on 'MORNING' (S03) the cellar at sunrise, POV from
@@ -177,13 +178,13 @@ module.exports = {
     // L03 (S04): three mornings, one gift each, picked up on its word (the hotbar fills slot by slot); then (S05) the
     // garden: the grandson at the gate drinking the fire resistance potion, Hushwell's plaza far off down the slope
     say('/kill @e[type=item,tag=gift]')
-    const morning = [['obsidian', [9.85, 1.05, 6.15], 1, [8.3, 5.9]], ['string', [9.6, 1.05, 6.6], 1, [8.2, 6.9]], ['ender_pearl', [9.75, 1.05, 6.45], 3, [8.4, 6.1]]]   // the same spot, a little moved each morning
+    const morning = [['obsidian', [9.85, 1.05, 6.15], 1, [8.3, 5.9]], ['string', [9.25, 1.05, 6.65], 1, [8.2, 6.9]], ['ender_pearl', [9.75, 1.05, 6.45], 3, [8.4, 6.1]]]   // the same spot, a little moved each morning
     const pickUp = (i) => { say(`/kill @e[type=item,tag=gift]`); say(`/give @s ${morning[i][0]} ${morning[i][2]}`); ctx.sound('entity.item.pickup', 0.5, 1.1 + i * 0.1) }
     const aimG = (i) => P(9.55 + 0.15 * (morning[i][1][0] - 9.75), 1.3, 6.45)   // the gifts' spot (cellar block 9,1,6), the portal's foot above it
     await K.cut(morning[0][3][0], morning[0][3][1], aimG(0), 1, { after: () => gift(...morning[0].slice(0, 3)) })
     await line('L03', async (k, at) => {
       for (let i = 1; i < 3; i++) if (hit(k, at.cut(i))) K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov_morning', after: () => gift(...morning[i].slice(0, 3)) }).catch(e => ctx.log(e.message))   // not awaited: a cut inside a line must not delay the take's next mark
-      for (let i = 0; i < 3; i++) if (hit(k, Math.min(at(i) + 12, at(i + 1) - 3))) pickUp(i)
+      for (let i = 0; i < 3; i++) if (hit(k, at.cut(i + 1) - 2)) pickUp(i)   // picked up just before the next cut: each gift stays on the floor through its word (owner: "we say string, no string on screen")
       if (hit(k, at.cut(3))) {
         bot.setQuickBarSlot(1)   // the fire resistance potion (story.json hotbar slot 2)
         // not awaited: the garden is a long teleport, and an awaited cut here made L04 land 0.33 s late on the take
@@ -360,7 +361,10 @@ module.exports.shots = {
   pov_morning: { pov: true, mood: 'golden_hour' },
   // S01: low on the throw line from the south-west: the ingot over the purple, the gold and its lantern at frame right, Grandma turning to us (audit B1)
   // S01's subject: her eye (y 1.9 sat in the carpet's block, which the lint read as hidden)
-  s01: { at: [6.5, 2.0, 7.8], look: [10.2, 2.0, 5.3], fov: 62, push: 0.12, dof: false, subject: ['actor:gma'] },
+  // S01b: 'nine thousand GOLD / into a PORTAL': behind the gold stack, low, the purple beyond it (owner: what the line
+  // names is on screen while it's said)
+  s01b: { at: [7.2, 2.4, 6.4], look: [11.0, 2.1, 6.8], fov: 70, push: 0, dof: false, subject: [[8.95, 1.6, 7.4]] },   // just outside the stack's face (inside it, the lint read it as hidden)
+  s01: { at: [6.5, 2.0, 7.8], look: [9.35, 2.0, 4.85], fov: 62, push: 0.12, dof: false, subject: ['actor:gma'] },
   // S02: the ridge at night, an extreme-wide crane down from over the slope south-east of the cottage to the gate
   s02: { path: [[0, 10, 19, 18], [1.3, 7.5, 16.5, 15.5]], look: [3.5, 13.3, 3.5], ease: true, fov: 60, dof: false, subject: [[4.4, 12.6, 7.4]] },   // the carrot bed (in view all the way down): eyeTrace takes the cut from S01's Grandma
   // S05: the garden, morning: behind the grandson at the gate, looking south-south-west down the slope to Hushwell's plaza
@@ -375,7 +379,7 @@ module.exports.shots = {
   s07b: { at: [5.0, 2.7 + DOWN, 7.6], look: [9.0, 2.3 + DOWN, 4.4], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
   // S04's middle gift: low at the portal's foot, the string on the floor and me kneeling behind it (audit B6)
   // S04b's subject: the string on the floor (the boy kneels behind it, at the top of the frame)
-  s04b: { at: [10.5, 1.45, 6.3], look: [9.2, 1.25, 6.62], fov: 72, dof: false, eyeTrace: false, subject: [[9.5, 1.1, 6.6]] },
+  s04b: { at: [10.55, 1.5, 6.25], look: [9.0, 1.5, 6.7], fov: 72, push: 0, dof: false, eyeTrace: false, subject: [[9.25, 1.1, 6.65]] },   // the lens >= 1.2 from the string: render.js hides a dropped item nearer the camera
   // S08: over my shoulder at the barrel, before the screen (audit B6)
   s08ots: { at: [6.6, 3.0, 4.6], look: [9.0, 2.3, 3.45], fov: 55, push: 0, dof: false, subject: ['self'] },
   // the stairs, high: the ladder's top looking down the cellar to the portal (audit B6)
