@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 89085602,
-    "sha256": "725b081653ac54d9db5ad86a163dfe46128408537b6b945f72f1b421ccf5e229",
+    "bytes": 89145866,
+    "sha256": "213fdb56bbf9771d21327094a9df6c6a65736b2f872a050cce6934cd25d469fa",
     "release": {
       "tag": "pkg-tnt_1000",
-      "asset": "tnt_1000.short.725b081653ac54d9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short.725b081653ac54d9.mp4",
-      "sha256": "725b081653ac54d9db5ad86a163dfe46128408537b6b945f72f1b421ccf5e229",
-      "bytes": 89085602
+      "asset": "tnt_1000.short.213fdb56bbf9771d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short.213fdb56bbf9771d.mp4",
+      "sha256": "213fdb56bbf9771d21327094a9df6c6a65736b2f872a050cce6934cd25d469fa",
+      "bytes": 89145866
     },
     "nosong_release": {
       "tag": "pkg-tnt_1000",
-      "asset": "tnt_1000.short_nosong.4a5eb2c8e2011b9b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short_nosong.4a5eb2c8e2011b9b.mp4",
-      "sha256": "4a5eb2c8e2011b9bced63c0df4c068eb03125b7b365999487febce3e000e53db",
-      "bytes": 88649025
+      "asset": "tnt_1000.short_nosong.2fed27824e6a03cf.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short_nosong.2fed27824e6a03cf.mp4",
+      "sha256": "2fed27824e6a03cf96b21f44269c6afb4d82f9fe503514a6b6218c1e0f37f8be",
+      "bytes": 88769613
     }
   },
   "edit": {
@@ -38988,11 +38988,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/tnt_1000",
-    "commit": "f2b8f149a05e9468e591b68c7afea01401f3d96b",
+    "commit": "118de98184f77f3d71ef2e7f91b473dd4c832762",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43041537778",
-    "rendered_at": "2026-11-11T15:02:07.706Z",
-    "head_at_publish": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43076963764",
+    "rendered_at": "2026-11-11T18:40:29.079Z",
+    "head_at_publish": "d6141e92d486f97606fe9de7bc0e57365030f892",
     "stunt": "stunts/tnt_1000.js",
     "source_snapshot": [
       "source/tnt_1000.js",
@@ -39004,18 +39004,18 @@
     ]
   },
   "rebuild": [
-    "git checkout f2b8f149a05e",
+    "git checkout 118de98184f7",
     "gunzip -c shorts/tnt_1000/recording.json.gz > work/tnt_1000.rec.json",
     "node render.js work/tnt_1000.rec.json work/tnt_1000.frames 60 1080 1011",
     "python3 audio.py work/tnt_1000.rec.json work/tnt_1000.wav",
     "python3 edit.py --frames work/tnt_1000.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt_1000.rec.json --audio work/tnt_1000.wav --caption \"1 TNT vs 10 vs 100 vs 1000 💀\" --red 1000 --subs \"[[\\\"tier1\\\",\\\"1 TNT\\\",2.6,0],[\\\"tier2\\\",\\\"10 TNT\\\",2.6,0],[\\\"tier3\\\",\\\"100 TNT\\\",2.6,0],[\\\"tier4\\\",\\\"1000 TNT\\\",2.6,0],[\\\"tier5\\\",\\\"1000 TNT... but I'm ON it\\\",3.5,0]]\" --speed [[\"fuse1a\",\"fuse1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fuse2a\",\"fuse2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"fuse3a\",\"fuse3b\",\"cut\"],[\"crater3:0.5\",\"cut4a\",2],[\"cut4a\",\"cut4b\",\"cut\"],[\"fuse4a\",\"fuse4b\",\"cut\"],[\"boom4:1.5\",\"rim4a\",2],[\"rim4a\",\"rim4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse5a\",\"fuse5b\",\"cut\"]] --punch [[\"boom5:1.85\",0,1.15]] --flash [[\"boom5:1.85\",0,0.8]] --sfx [[\"pop\",\"tier1\"],[\"dip\",\"death\",0.35],[\"dip\",\"boom5:1.85\",0.4],[\"gamedip\",\"boom5:1.85\",0.35],[\"impact\",\"boom5:1.85\",{\"gain\":1.4}]] --death_screen death --start_at tier1:-0.05 --end_after settle:-0.15 --out out/tnt_1000.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 backlog-finish worker: re-recorded on the settle fix (ends once the 1000 pile's smoke settles), turns capped at a hand's speed, the finale's spin inside the fuse cut, stray TNT cleared in cuts, the dirt waits at 2x, a pop on the opening, flash + punch + dip + impact on the last blast; 43.95 s; mixcheck OK, pace 0 blockers, check OK; independent review READY. Nitpicks: death screen ~4.2 s (settle rule), point-blank TNT texture opening tiers 2-4, white-out smoke at the big blasts",
-  "published_at": "2026-11-11T15:24:18.066Z",
+  "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +34.0 dB; picture unchanged; audio fix-check READY",
+  "published_at": "2026-11-11T19:01:48.873Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T15:25:17+00:00",
+    "at": "2026-11-11T19:02:39+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -39024,15 +39024,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 9,
+      "warnings": 7,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T14:46:17.253Z",
-      "report": "out/tnt_1000.check.json"
+      "at": "2026-11-11T18:42:19.987Z",
+      "report": "work/hb/tnt_1000.check.json"
     },
     "key_sounds": "n/a"
   }
