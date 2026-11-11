@@ -176,7 +176,15 @@ def plan(spec, timeline, start, cards=None, counter=None):
 
     def at(ev, nth=0):
         ts = [e["t"] / 1000 for e in timeline if e["event"] == ev]
-        return ts[nth] - start if len(ts) > nth else None
+        off = 0.0
+        if not ts and ":" in str(ev):   # 'EVENT:OFFSET_S', as flash/punch take it (retention.event_at)
+            k, _, o = str(ev).rpartition(":")
+            try:
+                off = float(o)
+                ts = [e["t"] / 1000 for e in timeline if e["event"] == k]
+            except ValueError:
+                pass
+        return ts[nth] + off - start if len(ts) > nth else None
     for s in _load(spec):
         s = list(s)
         opts = s.pop() if s and isinstance(s[-1], dict) else {}

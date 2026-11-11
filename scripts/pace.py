@@ -142,21 +142,33 @@ def sound_hits(level, jump=10.0, floor=-38.0, gap=0.2):
     return hits
 
 
-TAIL_STILL = (0.3, 0.6)   # % of the game view changing per frame over the last 0.6 s: WARN / BLOCK (a settle ending)
+TAIL_STILL = (0.15, 0.4)   # % of the game view changing per frame over the last 0.6 s: WARN / BLOCK (a settle ending)
 
 
 def tail_motion(video, dur, secs=0.6):
-    """The median % of the game view's pixels that change (> 20 grey levels at 270x253, 30 fps) frame to frame over the
-    last `secs` of the video. A still death screen or a settled crater is ~0; which_door's renderer debris still falling
-    past "You Died!" was 1.1-1.4%, villager_fired's blast smoke 7.6%, pickaxe_race's settled far blast 0.18%."""
+    """The median % of the game view that changes frame to frame over the last `secs` (270x253 grey, 30 fps), with the
+    camera's own drift taken out: the whole-frame shift (phase correlation) is undone and a pixel counts only when it
+    leaves its 3x3 neighbourhood's range by > 20 grey levels (sub-pixel pans, a slow tilt or a death-screen hold read 0;
+    a speck of debris or smoke moving across does not). Calibrated 2026-11-11: which_door's debris falling past "You
+    Died!" 1.77%; villager_fired re-recorded (a slow tilt, nothing moving) 0.02%; pickaxe_race, creeper, half_heart <= 0.01%."""
     w, h = 270, 253
     cmd = ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, dur - secs - 1 / 30):.3f}", "-i", str(video), "-vf",
            f"fps=30,crop={W}:{GAME_H}:0:{BAND},scale={w}:{h}:flags=area,format=gray", "-f", "rawvideo", "-"]
     raw = subprocess.run(cmd, capture_output=True).stdout
-    f = np.frombuffer(raw, np.uint8)[: len(raw) // (w * h) * w * h].reshape(-1, h, w).astype(np.int16)
+    f = np.frombuffer(raw, np.uint8)[: len(raw) // (w * h) * w * h].reshape(-1, h, w).astype(np.float32)
     if len(f) < 3:
         return None
-    return float(np.median((np.abs(np.diff(f, axis=0)) > 20).mean(axis=(1, 2)) * 100))
+    out = []
+    for a, b in zip(f, f[1:]):
+        R = np.fft.fft2(a - a.mean()) * np.conj(np.fft.fft2(b - b.mean()))
+        c = np.fft.ifft2(R / (np.abs(R) + 1e-6)).real
+        dy, dx = np.unravel_index(int(np.argmax(c)), c.shape)
+        dy, dx = -(dy - h if dy > h // 2 else dy), -(dx - w if dx > w // 2 else dx)
+        pad = np.pad(np.roll(a, (dy, dx), axis=(0, 1)), 1, mode="edge")
+        nb = np.stack([pad[i:i + h, j:j + w] for i in range(3) for j in range(3)])
+        m = 8 + max(abs(dx), abs(dy))
+        out.append(float(((b < nb.min(0) - 20) | (b > nb.max(0) + 20))[m:-m, m:-m].mean() * 100))
+    return float(np.median(out))
 
 
 def picture_events(P):
@@ -733,11 +745,11 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
                 lvl = "WARN" if st.get("puff_only") and tm is not None and tm < TAIL_STILL[0] else "BLOCK"
                 add(lvl, "settle", st["end_out"], st["msg"], "end after it settles (endAfter on a later mark, or a later offset), +1.0 s at most")
         if tm is not None:
-            notes.append(f"the last 0.6 s: {tm:.2f}% of the game view changes per frame (a still ending is ~0)")
+            notes.append(f"the last 0.6 s: {tm:.2f}% of the game view changes per frame besides the camera (a still ending is ~0)")
             if tm >= TAIL_STILL[0]:
                 add("BLOCK" if tm >= TAIL_STILL[1] else "WARN", "settle", round(dur - 0.6, 2),
-                    f"the picture still moves in the last 0.6 s ({tm:.2f}% of the game view changes every frame: blast smoke, "
-                    "debris or the camera): owner, never end while the payoff is moving (r:r24d99a)",
+                    f"the picture still moves in the last 0.6 s ({tm:.2f}% of the game view changes every frame besides the camera's "
+                    "own drift: blast smoke, debris, a mob): owner, never end while the payoff is moving (r:r24d99a)",
                     "re-record so the recording runs past the settle (lib/settle.js waits out the rendered smoke), or endAfter 'settle:1.0'")
         after = [f"{lid} at {t:.2f}" for t, lid in lines if t > payoff + 0.2]
         ok_hi, block_hi = (TEXT_TAIL[1], TEXT_TAIL[1] + 0.5) if text_payoff else (TAIL_MAX, TEXT_TAIL[1])

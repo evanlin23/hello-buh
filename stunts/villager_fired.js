@@ -44,10 +44,11 @@ module.exports = {
     // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
     // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
     speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
-    // the payoff pace times is the ring's LAST blast, 0.45 s after his death (32.55 s vs 32.10 s source): a flash on the
-    // death, then the big flash + punch on that last blast (both on the death were 0.45 s early: pace BLOCK)
-    flash: [['mob_death', 0, 0.6], ['mob_death:0.45', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death:0.45', 0, 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'mob_death', 0.4], ['impact', 'mob_death', { gain: 1.3 }], ['pop', 'gone']]
+    // the payoff pace times is the ring's LAST blast, 0.6 s after his death in this recording (34.05 s vs 33.45 s
+    // source; 0.45 s in the take before): a flash on the death, then the big flash + punch and the song dip + impact on
+    // that last blast (on the death they were early and the payoff had no hit: pace BLOCK). Re-check after a re-record.
+    flash: [['mob_death', 0, 0.6], ['mob_death:0.6', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death:0.6', 0, 1.3]],
+    sfx: [['pop', 'beat'], ['dip', 'mob_death:0.6', 0.4], ['impact', 'mob_death:0.6', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {

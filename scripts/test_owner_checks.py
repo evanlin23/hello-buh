@@ -83,19 +83,34 @@ class Settle(unittest.TestCase):
 
 
 class PaceTailMotion(unittest.TestCase):
-    """pace.tail_motion: the last 0.6 s of the game view; a still ending is ~0, a moving one blocks (which_door 3.3%)."""
-    def clip(self, src):
+    """pace.tail_motion: the last 0.6 s of the game view; a still or merely panning ending is ~0, debris falling across a
+    still view blocks (which_door: 1.77%)."""
+    def clip(self, frame_at, n=45):
         import subprocess, tempfile
         out = pathlib.Path(tempfile.mkdtemp()) / "c.mp4"
-        subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", src, "-t", "1.5", "-pix_fmt", "yuv420p", str(out)], check=True)
+        raw = b"".join(frame_at(i).astype("uint8").tobytes() for i in range(n))
+        subprocess.run(["ffmpeg", "-v", "error", "-f", "rawvideo", "-pix_fmt", "gray", "-s", "270x480", "-r", "30", "-i", "-",
+                        "-vf", "scale=1080:1920:flags=neighbor", "-pix_fmt", "yuv420p", str(out)], input=raw, check=True)
         return out
 
-    def test_still_and_moving_endings(self):
+    def test_still_panning_and_debris_endings(self):
+        import numpy as np
         import pace
-        still = self.clip("color=c=0x553322:s=1080x1920:r=30")
-        moving = self.clip("testsrc2=s=1080x1920:r=30")
-        self.assertLess(pace.tail_motion(still, pace.probe_len(still)), pace.TAIL_STILL[0])
-        self.assertGreaterEqual(pace.tail_motion(moving, pace.probe_len(moving)), pace.TAIL_STILL[1])
+        rng = np.random.default_rng(3)
+        world = np.kron(rng.integers(40, 220, (60, 80)), np.ones((10, 10)))   # blocky terrain, 600x800
+        view = lambda i: world[60 + i: 540 + i, 200:470]                      # the camera tilts 1 px a frame
+        specks = rng.integers(0, 270, (40, 2))
+        def debris(i):
+            f = world[60:540, 200:470].copy()
+            for x, y in specks:
+                yy = (y + 4 * i) % 470
+                f[yy:yy + 3, x:x + 3] = 15                                    # dark crumbs falling 4 px a frame
+            return f
+        for fn, lo, hi in ((lambda i: world[60:540, 200:470], 0, pace.TAIL_STILL[0]), (view, 0, pace.TAIL_STILL[0]),
+                           (debris, pace.TAIL_STILL[1], 100)):
+            v = self.clip(fn)
+            tm = pace.tail_motion(v, pace.probe_len(v))
+            self.assertTrue(lo <= tm < hi, f"{tm:.3f} not in [{lo}, {hi})")
 
 
 class PaceEditCaptions(unittest.TestCase):
