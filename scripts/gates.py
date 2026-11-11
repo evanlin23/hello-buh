@@ -264,9 +264,15 @@ def main() -> int:
             print(why, file=sys.stderr); return 1
         print("fresh: HEAD contains origin/main"); return 0
     if a.cmd == "stale":
+        up = set()
+        for f in (ROOT / "uploads").glob("**/uploads.json"):
+            try:
+                up |= set(json.loads(f.read_text()))
+            except Exception:   # noqa: BLE001
+                pass
         for m in sorted(vd.glob("shorts/*/metadata.json")):
             meta = json.loads(m.read_text())
-            if meta.get("status") == "ready":
+            if meta.get("status") == "ready" and m.parent.name not in up:
                 why = stale(meta)
                 print(f"{m.parent.name}: {why or 'ok (v%s%s)' % ((meta.get('gates') or {}).get('version', '-'), ', ' + exempt(m.parent.name) if exempt(m.parent.name) else '')}")
         return 0
