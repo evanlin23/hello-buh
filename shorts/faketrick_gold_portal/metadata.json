@@ -1,0 +1,497 @@
+{
+  "name": "faketrick_gold_portal",
+  "channel": "hellobuh",
+  "caption": "a nether portal out of GOLD?? nobody knows this 😱",
+  "youtube": {
+    "title": "a nether portal out of GOLD?? nobody knows this 😱 #minecraft #shorts",
+    "description": "a nether portal out of GOLD?? nobody knows this 😱\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "payoff",
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 6.9,
+    "song_start_s": 7.6
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 8.1,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 17685745,
+    "sha256": "551f72a84f8cdf3cde4d4d0f1bc65a0a1a8e77f2c0219f056a16745b64f1c473",
+    "release": {
+      "tag": "pkg-faketrick_gold_portal",
+      "asset": "faketrick_gold_portal.short.551f72a84f8cdf3c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.551f72a84f8cdf3c.mp4",
+      "sha256": "551f72a84f8cdf3cde4d4d0f1bc65a0a1a8e77f2c0219f056a16745b64f1c473",
+      "bytes": 17685745
+    },
+    "nosong_release": {
+      "tag": "pkg-faketrick_gold_portal",
+      "asset": "faketrick_gold_portal.short_nosong.010756e4e0cca296.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short_nosong.010756e4e0cca296.mp4",
+      "sha256": "010756e4e0cca296f1e561c7da074620ab9e7ebf155c62aebd7315752a1633c0",
+      "bytes": 17683704
+    }
+  },
+  "edit": {
+    "caption": "a nether portal out of GOLD?? nobody knows this 😱",
+    "red": "GOLD??",
+    "startAt": "go:-0.05",
+    "endAfter": "payoff:1.2",
+    "dropAt": "payoff",
+    "subs": [
+      [
+        "step",
+        "step 1: gold blocks",
+        1.5,
+        0
+      ],
+      [
+        "step",
+        "step 2: light it",
+        1.5,
+        1
+      ],
+      [
+        "step",
+        "step 3: wait...",
+        1.5,
+        2
+      ],
+      [
+        "payoff",
+        "IT WORKS",
+        1.2,
+        0
+      ]
+    ],
+    "flash": [
+      [
+        "payoff",
+        0,
+        0.45
+      ]
+    ],
+    "punch": [
+      [
+        "payoff",
+        0,
+        1.08
+      ]
+    ],
+    "sfx": [
+      [
+        "pop",
+        "go",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "air",
+        "go",
+        "payoff",
+        {
+          "gain": 0.1
+        }
+      ],
+      [
+        "pop",
+        "step",
+        {
+          "nth": 0,
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "step",
+        {
+          "nth": 1,
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "step",
+        {
+          "nth": 2,
+          "gain": 0.45
+        }
+      ],
+      [
+        "dip",
+        "payoff",
+        0.4
+      ],
+      [
+        "impact",
+        "payoff"
+      ],
+      [
+        "pop",
+        "gold",
+        {
+          "nth": 0,
+          "gain": 0.8
+        }
+      ],
+      [
+        "pop",
+        "gold",
+        {
+          "nth": 4,
+          "gain": 0.8
+        }
+      ],
+      [
+        "pop",
+        "gold",
+        {
+          "nth": 8,
+          "gain": 0.8
+        }
+      ],
+      [
+        "pop",
+        "gold",
+        {
+          "nth": 12,
+          "gain": 0.8
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "a nether portal out of GOLD?? nobody knows this 😱",
+      "--red",
+      "GOLD??",
+      "--subs",
+      "[[\"step\",\"step 1: gold blocks\",1.5,0],[\"step\",\"step 2: light it\",1.5,1],[\"step\",\"step 3: wait...\",1.5,2],[\"payoff\",\"IT WORKS\",1.2,0]]",
+      "--punch",
+      "[[\"payoff\",0,1.08]]",
+      "--flash",
+      "[[\"payoff\",0,0.45]]",
+      "--sfx",
+      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}]]",
+      "--start_at",
+      "go:-0.05",
+      "--end_after",
+      "payoff:1.2"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 408,
+      "y": 85,
+      "z": 16
+    },
+    "biome": "minecraft:plains",
+    "ticks": 190,
+    "seconds": 9.5,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 0.8,
+        "event": "go"
+      },
+      {
+        "t": 0.8,
+        "event": "step"
+      },
+      {
+        "t": 1.15,
+        "event": "place_on"
+      },
+      {
+        "t": 1.15,
+        "event": "swing"
+      },
+      {
+        "t": 1.2,
+        "event": "gold"
+      },
+      {
+        "t": 1.45,
+        "event": "place_on"
+      },
+      {
+        "t": 1.45,
+        "event": "swing"
+      },
+      {
+        "t": 1.5,
+        "event": "gold"
+      },
+      {
+        "t": 1.75,
+        "event": "place_on"
+      },
+      {
+        "t": 1.75,
+        "event": "swing"
+      },
+      {
+        "t": 1.8,
+        "event": "gold"
+      },
+      {
+        "t": 2.05,
+        "event": "place_on"
+      },
+      {
+        "t": 2.05,
+        "event": "swing"
+      },
+      {
+        "t": 2.1,
+        "event": "gold"
+      },
+      {
+        "t": 2.35,
+        "event": "place_on"
+      },
+      {
+        "t": 2.35,
+        "event": "swing"
+      },
+      {
+        "t": 2.4,
+        "event": "gold"
+      },
+      {
+        "t": 2.65,
+        "event": "place_on"
+      },
+      {
+        "t": 2.65,
+        "event": "swing"
+      },
+      {
+        "t": 2.7,
+        "event": "gold"
+      },
+      {
+        "t": 2.95,
+        "event": "place_on"
+      },
+      {
+        "t": 2.95,
+        "event": "swing"
+      },
+      {
+        "t": 3,
+        "event": "gold"
+      },
+      {
+        "t": 3.25,
+        "event": "place_on"
+      },
+      {
+        "t": 3.25,
+        "event": "swing"
+      },
+      {
+        "t": 3.3,
+        "event": "gold"
+      },
+      {
+        "t": 3.55,
+        "event": "place_on"
+      },
+      {
+        "t": 3.55,
+        "event": "swing"
+      },
+      {
+        "t": 3.6,
+        "event": "gold"
+      },
+      {
+        "t": 3.85,
+        "event": "place_on"
+      },
+      {
+        "t": 3.85,
+        "event": "swing"
+      },
+      {
+        "t": 3.9,
+        "event": "gold"
+      },
+      {
+        "t": 4.15,
+        "event": "place_on"
+      },
+      {
+        "t": 4.15,
+        "event": "swing"
+      },
+      {
+        "t": 4.2,
+        "event": "gold"
+      },
+      {
+        "t": 4.6,
+        "event": "place_on"
+      },
+      {
+        "t": 4.6,
+        "event": "swing"
+      },
+      {
+        "t": 4.65,
+        "event": "gold"
+      },
+      {
+        "t": 4.9,
+        "event": "place_on"
+      },
+      {
+        "t": 4.9,
+        "event": "swing"
+      },
+      {
+        "t": 4.95,
+        "event": "gold"
+      },
+      {
+        "t": 5.2,
+        "event": "place_on"
+      },
+      {
+        "t": 5.2,
+        "event": "swing"
+      },
+      {
+        "t": 5.25,
+        "event": "gold"
+      },
+      {
+        "t": 5.5,
+        "event": "place_on"
+      },
+      {
+        "t": 5.5,
+        "event": "swing"
+      },
+      {
+        "t": 5.55,
+        "event": "gold"
+      },
+      {
+        "t": 5.8,
+        "event": "place_on"
+      },
+      {
+        "t": 5.8,
+        "event": "swing"
+      },
+      {
+        "t": 5.85,
+        "event": "gold"
+      },
+      {
+        "t": 5.85,
+        "event": "step"
+      },
+      {
+        "t": 6.25,
+        "event": "swing"
+      },
+      {
+        "t": 6.25,
+        "event": "flint"
+      },
+      {
+        "t": 6.5,
+        "event": "step"
+      },
+      {
+        "t": 7.45,
+        "event": "fake"
+      },
+      {
+        "t": 7.65,
+        "event": "payoff"
+      },
+      {
+        "t": 9.5,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "05d7d81d85b364a0310ae6b4842076812c4494dd",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T19:31:12.859Z",
+    "head_at_publish": "9dd43f8f53bf48cdda95208bfa140e1105f4a7a6",
+    "stunt": "stunts/faketrick_gold_portal.js",
+    "source_snapshot": [
+      "source/faketrick_gold_portal.js",
+      "source/faketrick.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 05d7d81d85b3",
+    "gunzip -c shorts/faketrick_gold_portal/recording.json.gz > work/faketrick_gold_portal.rec.json",
+    "node render.js work/faketrick_gold_portal.rec.json work/faketrick_gold_portal.frames 60 1080 1011",
+    "python3 audio.py work/faketrick_gold_portal.rec.json work/faketrick_gold_portal.wav",
+    "python3 edit.py --frames work/faketrick_gold_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/faketrick_gold_portal.rec.json --audio work/faketrick_gold_portal.wav --caption \"a nether portal out of GOLD?? nobody knows this 😱\" --red GOLD?? --subs \"[[\\\"step\\\",\\\"step 1: gold blocks\\\",1.5,0],[\\\"step\\\",\\\"step 2: light it\\\",1.5,1],[\\\"step\\\",\\\"step 3: wait...\\\",1.5,2],[\\\"payoff\\\",\\\"IT WORKS\\\",1.2,0]]\" --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}]] --start_at go:-0.05 --end_after payoff:1.2 --out out/faketrick_gold_portal.mp4"
+  ],
+  "status": "ready",
+  "notes": "faketrick #1: a nether portal of gold blocks, built aimed from a grass step (16 places), real flint and steel fire, 'step 3: wait...', then it lights (the portal is the staged fake, F.fake). r1 READY, 0 blockers. Nitpicks: step subs sit over the fire at 5.4-6.7 s; few portal particles; the wait beat is short (0.9 s); the mixcheck hook WARN (no hit detected under the bed in 1.5 s).",
+  "published_at": "2026-11-11T19:32:54.009Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T19:33:17+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 8.11 s vs the reviewed render 8.10 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 5,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T19:31:26.891Z",
+      "report": "work/hb/faketrick_gold_portal.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
