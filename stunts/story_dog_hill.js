@@ -66,11 +66,11 @@ module.exports = {
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
     end: { subject: ['actor:dog'], path: [[0, -3, 10, -4.6], [1.6, -7.5, 15, -6.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // rising into the opening's frame: the dog alone above the village (the loop)
   },
-  caption: 'why won\'t this dog stand up?',
+  caption: 'The dog on the hill hasn\'t moved in 900 days',
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
   // 16:9 master); the bed is our own score (scripts/story_short.py --score-only, as .ogg), so publish adds no NCS track
   wideMaster: true,
-  edit: { story: 'stories/dog_hill', startAt: 'shot:0', endAfter: 'payoff:1.0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?', punchStress: true },
+  edit: { story: 'stories/dog_hill', startAt: 'shot:0', endAfter: 'payoff:1.0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'The dog on the hill hasn\'t moved in 900 days', colors: '900=gold', punchStress: true },   // the brand's cover title (docs/brand.md: Buh Stories, white, the key word in Buh gold #FFD640)
 
   async setup (ctx) {
     const { bot } = ctx
