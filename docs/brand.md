@@ -239,12 +239,13 @@ The art is in `brand/buh_stories/`, the review page is linked from the session r
   2. @TheBuhStories
   3. @HelloBuhStories (ties it to the main channel, but it's long)
   4. "Tales from Hushwell" @HushwellTales (a world name instead of the hero; good if "Buh" is taken)
-- **Promise (one line):** *Short Minecraft mysteries, each told by the kid who lived it, with a twist you won't see
-  coming.* Every story stands alone (owner, 2026-11-11, r:rca5363: no shared-world or connected-stories framing).
+- **Promise (one line):** *Short Minecraft stories, told by the kid who lived them.* Every story stands alone (owner,
+  2026-11-11: no shared-world or connected-stories framing, r:rca5363; "just do stories", no mystery or twist pitch,
+  r:rae1fcc).
 - **Who's talking:** Pip's voice: a happy, bubbly kid who's figuring the world out and tells you the strange thing
   like it's a fun fact. Buh is the hero you keep meeting at different ages (kid in Hushwell, Grandpa's helper in
   Ravenford, the player who left his dog).
-- **Tone:** warm, curious, a little eerie. Cosy on the surface, and the twist is underneath. We never mock the
+- **Tone:** warm, curious, a little eerie. Cosy on the surface, with something strange underneath. We never mock the
   characters, never lie in a title, and never say "true story". Nothing in the copy is aimed at kids (the channel is
   "not made for kids"); the stories are for everyone who grew up on Minecraft.
 
@@ -252,7 +253,7 @@ The art is in `brand/buh_stories/`, the review page is linked from the session r
 - **Avatar** `avatar.png` (800x800): the dog with the red collar at sunset, the channel's mascot.
   It reads as "a dog with a red collar" at 48 px.
 - **Banner** `banner.jpg` (2560x1440): the dog alone on Dog Hill against the sunset, in the middle of the 1546x423 safe
-  band. "BUH" in gold and "STORIES" in white (Poppins Black) on the left; "short minecraft / mysteries" on the right (what
+  band. "BUH" in gold and "STORIES" in white (Poppins Black) on the left; "short minecraft / stories" on the right (what
   the channel is, nothing more).
 - **Watermark** `watermark.png` (150x150): the avatar in a Buh-gold ring, transparent outside.
 - **First frame / title band** `cover_dog_hill.png`: the Short format unchanged (black bands, game view 1080x1011),
@@ -291,17 +292,16 @@ varied. Raids' title gives away less than its twist; check it against the final 
 
 ## Description, tags, playlists
 - **Channel description:**
-  "Short Minecraft mysteries. Every story is told by someone who lived it: a village that carpets every
-  road, a grandpa who has won every raid, a dog who never stops waiting. Every one ends on a twist. Made in vanilla
-  Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
+  "Short Minecraft stories, each told by someone who lived it: a village that carpets every
+  road, a grandpa who has won every raid, a dog who never stops waiting. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
 - **Video description template:** line 1 = the hook, then "Buh Story #N.", the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
-- **Keywords (channel and video tags):** minecraft story, minecraft mystery, minecraft shorts, minecraft twist,
+- **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft animation,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
 - **Playlists:** "All Buh Stories", "Dog stories" (Good Boy, Dog on the Hill), "Grandpa and Grandma stories"
   (Thirty-One Raids, Gold for the Portal): themes, not a timeline.
 
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
-"We made a second channel 👀 Buh Stories: short Minecraft mysteries with a twist. First one: a
+"We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a
 village covered in 9,000 carpets. You'll want to know why. → @BuhStories"

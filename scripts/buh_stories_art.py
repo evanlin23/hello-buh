@@ -44,7 +44,7 @@ def banner(src, out, guides):
     h1 = big.getbbox(l1)[3]
     yb = y0 + (BH - 2 * h1 - 10) // 2 - 18
     right_x = x0 + BW - 30
-    tag = ["short minecraft", "mysteries"]   # what the channel is, nothing more (owner: no shared-world tagline, r:rca5363)
+    tag = ["short minecraft", "stories"]   # what the channel is, nothing more (owner: r:rca5363, "just do stories" r:rae1fcc)
     tws = [d.textlength(t, font=small) for t in tag]
     ty = y0 + (BH - len(tag) * 66) // 2
     items = [(l1, big, (bx, yb), GOLD), (l2, big, (bx, yb + h1 + 4), WHITE)]
