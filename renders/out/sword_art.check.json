@@ -1,0 +1,136 @@
+{
+ "stunt": "sword_art",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/sword_art.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT sword_art: 1 shots, scene 0.0-97.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-97.7  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 1 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 6 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 2.85,
+     "tick": 74,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 220 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 15,
+     "tick": 535,
+     "line": null,
+     "msg": "the view swings 74 deg then 72 deg with 0.10 s at rest between (want 0.3 s on something to read it, r:r38374d)"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 16.6,
+     "tick": 586,
+     "line": null,
+     "msg": "the view swings 72 deg then 64 deg with 0.25 s at rest between (want 0.3 s on something to read it, r:r38374d)"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 21.233,
+     "tick": 757,
+     "line": null,
+     "msg": "the view swings 64 deg then 64 deg with 0.10 s at rest between (want 0.3 s on something to read it, r:r38374d)"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 21.6,
+     "tick": 772,
+     "line": null,
+     "msg": "the view swings 64 deg then 66 deg with 0.00 s at rest between (want 0.3 s on something to read it, r:r38374d)"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 35.767,
+     "tick": 1456,
+     "line": null,
+     "msg": "the view swings 99 deg then 81 deg with 0.05 s at rest between (want 0.3 s on something to read it, r:r38374d)"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "151 visible sound-making events (break 44, place 107), 151 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-107.90s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T14:46:23.896Z"
+}

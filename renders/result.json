@@ -1,0 +1,17 @@
+{
+ "name": "sword_art",
+ "stunt": "sword_art",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43041443115",
+ "source": "61bd223f",
+ "queued": "2026-11-11T14:44:43Z",
+ "finished": "2026-11-11T15:01:46Z",
+ "mp4": "renders/out/sword_art.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
