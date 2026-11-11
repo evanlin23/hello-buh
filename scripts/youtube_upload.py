@@ -22,6 +22,14 @@ with little data isn't over- or under-rated; a format not posted yet gets the av
 queue order breaking ties, always keeping the mix. The scores are saved to uploads/scores.json each run.
     python3 scripts/youtube_upload.py --scores   # print the ranking only
 Every upload is recorded in uploads/uploads.json on main.
+
+Channels (owner 2026-11-10: the story Shorts go to a second channel, "Buh Stories"): YT_CHANNEL picks the channel a run
+uploads to, `hellobuh` (the default: everything exactly as above) or `buhstories`. A Short goes only to the channel in
+its metadata.json `channel` (default hellobuh; publish.js sets buhstories for story_* Shorts). Each channel has its own
+token, channel id, switch and records, as the same names with a suffix: YT_REFRESH_TOKEN_BUHSTORIES,
+YT_CHANNEL_ID_BUHSTORIES, YT_ENABLED_BUHSTORIES, YT_PER_DAY_BUHSTORIES, and uploads/buhstories/ (queue.txt,
+uploads.json, PAUSED, scores.json). The OAuth client (YT_CLIENT_ID / YT_CLIENT_SECRET) is shared unless a suffixed one
+exists. docs/upload-setup.md "A second channel".
 """
 from __future__ import annotations
 
@@ -32,10 +40,30 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from check_queue import series, mix_ok   # noqa: E402
 
-UP = ROOT / "uploads"
+CHANNELS = {"hellobuh": "HelloBuh", "buhstories": "Buh Stories"}   # the id a Short's metadata names -> its display name
+CHANNEL = (os.environ.get("YT_CHANNEL", "") or "hellobuh").strip().lower()
+if CHANNEL not in CHANNELS:
+    sys.exit(f"YT_CHANNEL={CHANNEL!r}: not one of {sorted(CHANNELS)}")
+NAME = CHANNELS[CHANNEL]
+SUFFIX = "" if CHANNEL == "hellobuh" else "_" + CHANNEL.upper()
+
+
+def env(key: str, default: str = "") -> str:
+    """This channel's setting: KEY_<CHANNEL> for a second channel (the OAuth client falls back to the shared one)."""
+    v = os.environ.get(key + SUFFIX, "")
+    if not v.strip() and key in ("YT_CLIENT_ID", "YT_CLIENT_SECRET"):
+        v = os.environ.get(key, "")
+    return v if v.strip() else default
+
+
+def channel_of(meta: dict) -> str:
+    return (meta.get("channel") or "hellobuh").strip().lower()
+
+
+UP = ROOT / "uploads" if CHANNEL == "hellobuh" else ROOT / "uploads" / CHANNEL
 QUEUE, RECORD, PAUSED, SCORES = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED", UP / "scores.json"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
-PER_DAY = int(os.environ.get("YT_PER_DAY", "3") or 3)
+PER_DAY = int(env("YT_PER_DAY", "3") or 3)
 WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
 TZ = "America/Chicago"
 
@@ -47,9 +75,9 @@ def central_now() -> dt.datetime:
 
 def enabled() -> tuple[bool, str]:
     need = ("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN", "YT_CHANNEL_ID")
-    missing = [k for k in need if not os.environ.get(k, "").strip()]
-    if os.environ.get("YT_ENABLED", "").strip().lower() != "true":
-        missing.append("YT_ENABLED=true")
+    missing = [k + ("" if k in ("YT_CLIENT_ID", "YT_CLIENT_SECRET") else SUFFIX) for k in need if not env(k).strip()]
+    if env("YT_ENABLED").strip().lower() != "true":
+        missing.append(f"YT_ENABLED{SUFFIX}=true")
     return not missing, ", ".join(missing)
 
 
@@ -60,6 +88,7 @@ def record() -> dict:
 def save_record(done: dict, msg: str) -> None:
     """Write uploads.json, commit and push (rebasing if main moved). An unsaved upload would be retried as a
     duplicate, so this retries hard and fails loudly."""
+    UP.mkdir(parents=True, exist_ok=True)
     RECORD.write_text(json.dumps(done, indent=1, ensure_ascii=False) + "\n")
     subprocess.run(["git", "add", str(RECORD)] + ([str(SCORES)] if SCORES.exists() else []), check=True)
     subprocess.run(["git", "commit", "-m", msg], check=True)
@@ -107,7 +136,8 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
     rest = []
     for m in sorted((vd / "shorts").glob("*/metadata.json")):
         meta = json.loads(m.read_text())
-        rest.append((meta.get("published_at", ""), m.parent.name))
+        if channel_of(meta) == CHANNEL:
+            rest.append((meta.get("published_at", ""), m.parent.name))
     order = queued + [n for _, n in sorted(rest) if n not in queued]
     fam = (scores or {}).get("family", {})
     mean = (scores or {}).get("mean", 0)
@@ -121,6 +151,8 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
         meta = meta_of(vd, name)
         if not meta:
             why.append(f"{name}: not on the videos branch"); continue
+        if channel_of(meta) != CHANNEL:
+            why.append(f"{name}: belongs to the {channel_of(meta)} channel, not {CHANNEL}"); continue
         if meta.get("posted"):
             why.append(f"{name}: posted by hand (record it in uploads.json)"); continue
         if meta.get("status") != "ready":
@@ -156,8 +188,8 @@ def credentials():
     from google.oauth2.credentials import Credentials
     from google.auth.transport.requests import Request
     from google.auth.exceptions import RefreshError
-    creds = Credentials(None, refresh_token=os.environ["YT_REFRESH_TOKEN"], client_id=os.environ["YT_CLIENT_ID"],
-                        client_secret=os.environ["YT_CLIENT_SECRET"], token_uri="https://oauth2.googleapis.com/token")
+    creds = Credentials(None, refresh_token=env("YT_REFRESH_TOKEN"), client_id=env("YT_CLIENT_ID"),
+                        client_secret=env("YT_CLIENT_SECRET"), token_uri="https://oauth2.googleapis.com/token")
     try:
         creds.refresh(Request())
     except RefreshError as e:
@@ -213,6 +245,7 @@ def suppressed(yt, done: dict) -> str:
 
 
 def pause(reason: str) -> None:
+    UP.mkdir(parents=True, exist_ok=True)
     PAUSED.write_text(reason + "\n")
     subprocess.run(["git", "add", str(PAUSED)], check=True)
     subprocess.run(["git", "commit", "-m", "uploads: paused automatically (possible reach suppression)"], check=True)
@@ -410,7 +443,7 @@ def report(yt, done: dict, vd: Path | None, ya=None) -> None:
     if vd:
         for m in sorted((vd / "shorts").glob("*/metadata.json")):
             meta = json.loads(m.read_text())
-            if meta.get("status") == "ready" and m.parent.name not in done and not meta.get("posted"):
+            if meta.get("status") == "ready" and m.parent.name not in done and not meta.get("posted") and channel_of(meta) == CHANNEL:
                 left.append(m.parent.name)
     days = len(left) / max(1, PER_DAY)
     summary = channel_summary(ya, (today - dt.timedelta(days=7)).isoformat(), end) if ya is not None else ""
@@ -430,7 +463,7 @@ def report(yt, done: dict, vd: Path | None, ya=None) -> None:
             + (" - **running low: make more Shorts**" if days < 7 else "")
             + ("\n\n" + ", ".join(left) if left else "")
             + "\n\nTo pause: create `uploads/PAUSED` on main (any text). To stop: set the repo variable YT_ENABLED to anything but `true`.")
-    t = f"HelloBuh weekly report {central_now().date().isoformat()}"
+    t = f"{NAME} weekly report {central_now().date().isoformat()}"
     if os.environ.get("REPORT_STDOUT"):
         print(t); print(body); return
     if not open_issue(t):
@@ -477,8 +510,8 @@ def main() -> None:
             if a.short:
                 meta = meta_of(vd, a.short)
                 history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
-                if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short):
-                    sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, or breaks the mix")
+                if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short) or channel_of(meta) != CHANNEL:
+                    sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, breaks the mix, or belongs to another channel")
                 name, skipped = a.short, ""
             else:
                 name, skipped = pick(vd, done, scores)
@@ -487,8 +520,8 @@ def main() -> None:
             if not name:
                 msg = "Nothing left that is ready and keeps the posting mix. The channel goes quiet until more Shorts are published."
                 print(msg)
-                if not a.dry_run and not open_issue("HelloBuh: nothing left to upload"):
-                    issue("HelloBuh: nothing left to upload", msg + ("\n\nSkipped:\n" + skipped if skipped else ""))
+                if not a.dry_run and not open_issue(f"{NAME}: nothing left to upload"):
+                    issue(f"{NAME}: nothing left to upload", msg + ("\n\nSkipped:\n" + skipped if skipped else ""))
                 return
             meta = meta_of(vd, name)
             yt_meta = meta["youtube"]
@@ -503,8 +536,8 @@ def main() -> None:
             if yt is None:
                 yt = youtube()
                 me = [c["id"] for c in yt.channels().list(part="id", mine=True).execute().get("items", [])]
-                if os.environ["YT_CHANNEL_ID"].strip() not in me:
-                    sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID: refusing to upload")
+                if env("YT_CHANNEL_ID").strip() not in me:
+                    sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID{SUFFIX}: refusing to upload to {NAME}")
                 why = suppressed(yt, done)
                 if why:
                     msg = (f"Every recent auto upload is stuck under 50 views a day or more after going public ({why}). "
@@ -512,7 +545,7 @@ def main() -> None:
                            "of feeding more into a held-back channel. Check YouTube Studio (Analytics > Reach, 'Shown in "
                            "feed'; any policy notices), then delete uploads/PAUSED on main to resume.")
                     pause(msg)
-                    issue("HelloBuh uploads paused: recent Shorts get no views", msg)
+                    issue(f"{NAME} uploads paused: recent Shorts get no views", msg)
                     print(msg); return
             elif slot > n_today:
                 gap = random.randint(240, 720)   # don't fire 3 uploads back to back within seconds

@@ -17,6 +17,25 @@ if (e.speed) out.push('--speed', JSON.stringify(e.speed))    // time-lapse spans
 if (e.clock) out.push('--clock', JSON.stringify(e.clock))    // clocks counting to a target time
 if (e.slowmo) out.push('--slowmo', JSON.stringify(e.slowmo))  // retention toolkit (scripts/retention.py)
 if (e.punch) out.push('--punch', JSON.stringify(e.punch))
+// punchStress (opt-in; owner 2026-11-10, "very bright, exagerated movements"): a short zoom punch on each sentence's
+// spoken stress (its last CAPS word, the r-cast rule), from the story's aligned words: [[line id, s into the line, peak]]
+if (e.punchStress && e.story) {
+  const path = require('path')
+  const wf = path.join(__dirname, '..', e.story, 'voice', 'words.json')
+  if (fs.existsSync(wf)) {
+    const words = JSON.parse(fs.readFileSync(wf, 'utf8')), peak = typeof e.punchStress === 'number' ? e.punchStress : 0.07, ps = []
+    for (const [lid, ws] of Object.entries(words)) {
+      let last = null
+      for (const [w, a] of ws) {
+        const core = String(w).replace(/[^A-Za-z']/g, '')
+        if (core.length > 1 && core === core.toUpperCase() && /[A-Z]/.test(core)) last = a
+        if (/[.!?]["')]*$/.test(w) && last !== null) { ps.push([lid, +last.toFixed(3), peak]); last = null }
+      }
+      if (last !== null) ps.push([lid, +last.toFixed(3), peak])
+    }
+    out.push('--punch_stress', JSON.stringify(ps))
+  }
+}
 if (e.counter) out.push('--counter', JSON.stringify(e.counter))
 if (e.cards) out.push('--cards', JSON.stringify(e.cards))
 if (e.hook) out.push('--hook', JSON.stringify(e.hook))

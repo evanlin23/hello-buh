@@ -38,10 +38,10 @@ module.exports = {
   caption: CAPTION,
   // red: the caption word drawn in red. startAt/endAfter: from the first line to the end mark.
   // Optional: deathScreen + expectDeath (a death ending), zoom/punch (push-ins on marks), story.json "meter".
-  edit: { caption: CAPTION, red: 'sheep', story: 'stories/<name>', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'sheep', story: 'stories/<name>', startAt: 'line:0', endAfter: 'story_end:0', punchStress: true },
   hideHand: true,          // the narrator isn't Steve: no first-person arm
   // time: 18000,          // the opening time of day (night); change it later with K.cut(..., { time }) or K.setTime
-  look: 'auto',            // the grade follows the time of day (renderer/looks.js, docs/look.md); a shot's mood: 'tense' for one shot
+  look: 'bright',          // owner 2026-11-11: stories are bright and punchy (r:rd13834); 'auto' follows the time of day (renderer/looks.js, docs/look.md); a shot's mood: 'tense' for one shot
 
   async setup (ctx) {
     const { bot } = ctx
