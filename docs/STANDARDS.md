@@ -15,6 +15,16 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 1. **Line 1 is the title and the hook**: one strange, concrete image or threat to me, with something countable, said
    flatly in first person over the picture it describes, in the first second ("why tf is this sheep staring at this
    block?"). Then quick escalating examples, the twist, the loop. Check: review, pace (hook). r:rc07fa1 r:rb1b445 r:raf72e0
+1b. **The opening shot shows the subject, centred, big and moving** (owner on Good Boy: "The opening scene is not very
+   exciting? Also not centered."): for the first 1.5 s the shot's `subject` (stunt.shots[name].subject, its first
+   entry; else story shots[].subject, line 1's look, a key word, or the narrator seen from a camera) is in frame and
+   unhidden from frame 1, its median screen-x in the middle third (33-67%), and at least 8% of the frame height
+   (a WS or closer) within the 1.5 s (BLOCK); a speck on frame 1 that a push or swoop brings up later WARNs (frame 1 is
+   the thumbnail); nothing moving in the first 0.5 s (camera < 0.4 blocks/s, turn < 4 deg/s, push < 0.15/s, subject
+   and cast < 0.6 blocks/s, no swing / throw / placed block) WARNs. A bare [dx, dy, dz] subject is checked for centre
+   only. Calibrated 2026-11-11 on the five held stories: Good Boy v7 wolf 25% across (BLOCK), Gold's Grandma 17%
+   (BLOCK), Dog Hill's dog 5% -> 12% in its swoop (WARN), 31 Raids' Grandpa 50% / 46% tall, Light Sleeper's crane
+   point 51% (OK). Check: owner (`opening`, in check). r:r47e14b
 2. **The twist turns the whole story over**, planted at least twice where a rewatch catches it, said in one short line
    or shown by the game itself (runaway ends on the blast + "blown up by Creeper", no spoken reveal). Check: review. r:r9f677e
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
@@ -167,6 +177,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 2. **Cast move only through the kit** (`K.actor`: every tick, at mob speed), placed before the shot mark so the new
    shot's first frame already has them in place; never a stunt's own `/tp @e` loop (dog_hill's hop read as a teleport).
    Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
+   **Nothing on screen jumps while the camera holds**: no entity, the narrator included (a wolf narrator is the
+   recording bot), moves over 0.6 block in a tick in the frame unless the camera itself cuts on that tick; a teleport
+   that is the story (K.blink, `teleport_ok`) still lands on the cut (`K.cutShot(name, moves, { self })` moves the
+   narrator with it; the shot mark waits for the landing). Check: owner (glitch: visible jump, in the frame BLOCK, just
+   out of it WARN; lib/hb/motion.js visibleJumps on the track as render.js draws it). r:rfa229d
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
    (eye-trace: jump <= 15 % of the frame; > 20 % WARN, > 33 % BLOCK), and the cut lands in the pause 33-150 ms before
    the line's first word, never after it nor off the line's voice. Built in: render.js `eyeTrace` re-aims each camera

@@ -86,6 +86,9 @@ the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner
    - then repeat step 2 above signed in as the **Buh Stories account**.
    While the app is in "Testing", Google expires its refresh tokens after 7 days. If HelloBuh's token survives, the
    app is published and this one will too.
+   **Scopes:** besides `youtube.upload` and `youtube.readonly`, tick `https://www.googleapis.com/auth/youtube.force-ssl`
+   for this token: the uploader adds each Short to the "All Buh Stories" playlist and posts its pinned question, and
+   both need it (without it the upload still goes through and the record says `playlist_error` / `comment_error`).
    Check with the `channels?mine=true` call that it shows "Buh Stories", and note its UC... id. The HelloBuh token
    cannot upload there, and vice versa.
 4. **GitHub** → Settings → Secrets and variables → Actions:
@@ -95,6 +98,16 @@ the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner
    - Test: Actions → upload-short → Run workflow → channel `buhstories`, mode `dry-run`.
 5. **The daily clock:** a second cron-job.org job like step 4 above, at another minute, with the body
    `{"ref":"main","inputs":{"channel":"buhstories"}}`. GitHub's own schedule only runs HelloBuh.
+
+**The upload text is built, never hand-written** (owner: "Stuff should be front loaded"): each story's `story.json`
+`upload` block (title from docs/brand.md's table, the pinned question, story tags; a stunt's `edit.youtube` overrides
+it) -> lib/buhstories_upload.js -> title, description (hook sentence / question / music credit / `#minecraft #shorts
+#minecraftstory #buhstories`), tags (a general base + the story's own), pinned comment (question + " 👇"), playlist
+"All Buh Stories", not made for kids, altered content "No". publish.js writes it into the package; the uploader
+rebuilds it from main at upload time (a corrected title needs no re-packaging) and skips a package that BLOCKs
+(HelloBuh hashtags #minecraftmemes/#funny, no music credit, no title or question). It adds the video to the playlist
+on upload and posts the question once the video is public; the API can't pin, so **pin it in Studio**. For a manual
+upload: `./hb paste <story>` prints the whole block.
 
 Day to day it is the same as HelloBuh, in `uploads/buhstories/` (queue.txt, uploads.json, PAUSED); the weekly report
 and the "nothing left" and "paused" issues are titled "Buh Stories ...". Stop it with `YT_ENABLED_BUHSTORIES` = `false`.

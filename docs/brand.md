@@ -293,11 +293,18 @@ varied. Raids' title was checked against the final script (2026-11-11): "he star
 - **Video description template:** line 1 = the hook, then the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
-- **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
+- **Keywords (channel tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
+- **Video tags:** the general base (minecraft story, minecraft stories, minecraft shorts, minecraft mystery, buh
+  stories) plus the story's own `upload.tags`; village / dog / warden / raid only where they fit the story.
 - **Playlists:** one, "All Buh Stories", at launch (owner, 2026-11-11: theme playlists like "Grandpa and Grandma
   stories" feel "too specific"). A series playlist is added only when a premise family has 3+ stories (a hit's
   follow-ups); Shorts playlists mostly help binge-watching from the channel page and a series' "next" link, not reach.
+
+**Built, not hand-written:** the titles, questions and story tags above live in each `stories/<s>/story.json` `upload`
+block; lib/buhstories_upload.js builds the upload text from it (publish.js, the uploader) and `./hb paste <story>`
+prints it for a manual upload. Change a title or question there (and in the tables above: a test keeps the titles in
+sync).
 
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
 "We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a

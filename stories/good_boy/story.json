@@ -4,6 +4,18 @@
  "version": 2,
  "revision": "vNext r-cast (2026-11-10): script_vNext.md's r-cast table: Buh speaks L11 and L13 in his own voice; one spoken stress per sentence (the CAPS word in `say`)",
  "caption": "my human tried to lose me 37 times 🐺",
+ "upload": {
+  "title": "my human tried to lose me 37 times 🐺 #minecraft #shorts",
+  "hook": "My human has tried to lose me 37 times",
+  "pinned": "Be honest: would you have made him sit?",
+  "tags": [
+   "minecraft dog",
+   "minecraft wolf",
+   "minecraft dog story",
+   "minecraft good boy"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste good_boy prints it). pinned = the question, without the 👇",
  "logline": "A dog tells how its human tried to lose it thirty-seven times, and why he never once made it sit.",
  "question": "why tf would he try to lose his own dog?",
  "premise": "The narrator is Buh's tamed wolf, said openly from line 1. Buh (16, never named aloud) has tried to lose it 37 times: tamed wolves teleport back to their owner from 12 blocks, unless they're sitting, and a sitting dog waits forever. He wants it to forget him, so he never makes it sit. He keeps talking about college; every night he says sorry.",
