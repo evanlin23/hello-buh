@@ -22,8 +22,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
    answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
-   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. Check: story-critic (blockers),
-   cold reader. r:ra807e9
+   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. The Short ends the moment its
+   last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
+   cold reader, review. r:ra807e9 r:r8de735
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
@@ -93,7 +94,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 6. **The right voice and the right words on every line**: a line in the wrong voice or with the wrong words is a
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
-   any two voices that talk differ in age, sex or pitch. r:r4b4332 r:raf72e0
+   any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
+   hearing (a grandma sounds like an older woman, not gravelly). Check: review (listen). r:r4b4332 r:raf72e0 r:rf8060c
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -133,7 +135,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    recording. Check: review (manual). r:r4b6024
 3. **No glitches, and the title's promise is on screen**: no doors moving by themselves, never stuck on a block, no
    jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4 r:rff9341
-   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla.
+   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla. The camera is never inside
+   or clipping through a block (the eye always in air). Check: review (stills of every shot). r:rbc17a7
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
 5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
@@ -187,7 +190,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 
 ## 5. Look
 - **Bright and punchy is the story look** (the owner picked it over the cinematic grade): every story stunt sets
-  `look: 'bright'` and `edit.punchStress: true`. Check: owner; review. r:rcae995 r:rd13834
+  `look: 'bright'` and `edit.punchStress: true`. The zoom punches go on the **big moments only** (hook, turn,
+  reveal: story.json `"punch": true` on those lines, at most 4; none marked = the first and last line), never one per
+  sentence. Check: owner; review. r:rcae995 r:rd13834 r:r5aeaf2
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stories use `look: 'bright'` (above); other Shorts keep the cinematic default (`look: 'auto'`).
 - Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
 - Sharp: bloom threshold >= 0.7, no DoF on wide/establishing shots, crf <= 18.
@@ -196,11 +201,17 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
 ## 6. Captions
 1. **2-3 word chunks** (the script's " / " splits), one CAPS key word per chunk in the key colour, Poppins Black 96 px,
    centred at 0.70 of the game view, max 840 px wide; each chunk pops in and cuts out hard on the next; quotes keep
-   their quote marks. (`"captions": "word"` gives one word at a time.) r:r61d371 (supersedes r:rbd7cb6)
+   their quote marks. (`"captions": "word"` gives one word at a time.) **Every spoken word is captioned**, narrator and
+   characters: its line's caption is on screen while it's said, every caption word is shown, and the take says the
+   caption text. Check: `scripts/caption_av_check.py` coverage (BLOCK; in `./hb check`, before the render with
+   `--events`). r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
    r:r62de46
+4. **Join/leave chat lines are centred** ("Buh joined/left the game", any payoff system chat): horizontally centred
+   near caption height, vanilla yellow chat font and strip at `chatScale`, never over the shot's subject. Check:
+   review (stills). r:r0d7fd3
 
 ## 7. Audio
 The lead's mix (docs/audio.md), all of it in `edit.py --story` (previews included: what the owner reviews is what
@@ -211,7 +222,14 @@ hit, and **no music after the payoff**. **No whooshes** on cuts; the riser soft 
 has its vanilla sound (mob voices, steps, splashes included) and every shot its ambience; nothing but the voice
 covers a word (the clarity guard). Any owner note on a track or level overrides it.
 Check: `python3 scripts/audio_measure.py out/<name>.mp4`; `python3 scripts/onscreen_sfx.py <rec> --strict` (visible
-actions left silent). r:rc85ccc r:r36632d
+actions left silent). Every sound is one the picture leads the viewer to expect, and none jumps out over the voice;
+a sound that makes the owner stop is a blocker. Check: review (listen). r:rc85ccc r:r36632d r:rf484cb
+Stunt Shorts (NCS bed): a sound the game hinges on (edit `keySounds`, e.g. guess the mob's call) is **>= 8 dB over
+the music** (owner, 2026-11-11, guess_sound: "had super loud music"); the song ducks to -24 dB under it at publish.
+Check: `python3 scripts/key_sounds.py <name>` (BLOCK in add_song.py and in pace on the package).
+Stunt Shorts' NCS bed sits **about 3 dB lower than before (-16 LUFS against the game's -15)** so the game's own hits
+carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `python3 scripts/key_sounds.py <name>
+--hits` (the game's biggest hits vs the music). r:r662041
 
 ## 8. Pacing (pace, on the finished mp4)
 - **Hook**: the first word by **0.2 s** (BLOCK after 0.4 s); the picture moving from frame 1 (frozen first 0.3 s:
@@ -234,8 +252,8 @@ actions left silent). r:rc85ccc r:r36632d
 - **Explore first, then double down**: early stories vary premise family, arc and outcome (never two in a row the
   same); a Short at 5x the channel median gets 2-3 standalone follow-ups in its family within 7 days. Check: owner,
   the weekly numbers. r:r1bebb1
-- **Stories go to the second channel, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**, never @HelloBuh; uploads wait for the owner to set that channel
-  up. Check: owner. r:r732bc0
+- **Stories go to the second channel by default, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**; uploads there wait for the owner to set that channel
+  up. Check: owner. r:r732bc0 r:rd63b43 (HelloBuh may also post stories as experiments, set per package with `channel: hellobuh`)
 - **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
   Check: owner. r:rca5363
 - **No series number**: no "BUH STORY #N" on the video or in the title; frame 1 shows only the story's hook.
@@ -252,6 +270,13 @@ actions left silent). r:rc85ccc r:r36632d
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. Check: owner. r:r77977b
+- **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
+  swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
+  Check: owner. r:r1f2a80
+- **Rank by views x conversion, and diagnose a flop before blaming its format**: the uploader orders formats by
+  expected subscribers per upload; a Short that stalls gets its execution checked (music level vs voice/key sound,
+  the first 1.5 s, readability) and the same fault fixed in queued Shorts of its format. Check: youtube_upload.py
+  (scores), the numbers check. r:rd56a20
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

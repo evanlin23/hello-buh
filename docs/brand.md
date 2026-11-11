@@ -235,6 +235,7 @@ The art is in `brand/buh_stories/`, the review page is linked from the session r
 ## Identity
 - **Name and handle:** **Buh Stories**, **@BuhStoriesMC** (owner, 2026-11-11: "BuhStoriesMC"; @BuhStories was taken).
   Channel names on YouTube don't have to be unique, only handles, so the name stays "Buh Stories".
+  Channel id: `UC5m8kcDO2cSlXT49VoJjpRw` (https://www.youtube.com/channel/UC5m8kcDO2cSlXT49VoJjpRw).
 - **Promise (one line):** *Short Minecraft stories.* (No "told by someone who lived it", r:r808cba.) Every story stands alone (owner,
   2026-11-11: no shared-world or connected-stories framing, r:rca5363; "just do stories", r:rae1fcc). Each story can still be a
   mystery: its own title, video description and pinned question set it up; the channel's own copy says "stories".
