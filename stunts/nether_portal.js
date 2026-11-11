@@ -37,7 +37,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'rating every way to light a nether portal 😳',
   edit: {
-    subsY: 0.15, caption: 'rating every way to light a nether portal 😳', red: 'every', dropAt: `lit${LAST}`,
+    subsY: 0.15, caption: 'rating every way to light a nether portal 😳',
+    armor: 20,   // the armour bar over the hearts: full netherite (review r1: surviving the anchor's blast with no armour on the HUD read as fake) red: 'every', dropAt: `lit${LAST}`,
     startAt: 'st:-0.05', endAfter: `lit${LAST}:1.4`,   // settle-ok: the payoff is the lit portal and its card (a text payoff: 1.4 s to read it, pace r1); the anchor's blast is over by then
     // pace r1: silent until 0.73 s: room tone from frame 1; the last light gets a dip + impact over the song (the publish gate)
     sfx: [['air', 'start', `lit${LAST}`, { gain: 0.5 }], ['dip', `lit${LAST}`, 0.4], ['impact', `lit${LAST}`, { gain: 1.4 }]],
