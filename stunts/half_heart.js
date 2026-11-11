@@ -20,7 +20,7 @@ module.exports = {
   caption: "POV: you're on half a heart 💀",
   expectDeath: true,
   edit: {
-    caption: "POV: you're on half a heart 💀", red: 'half', song: 'songs/misery.mp3', dropAt: 'placed',
+    caption: "POV: you're on half a heart 💀", red: 'half', dropAt: 'placed',
     startAt: 'jump:-0.5', endAfter: 'death:1.6', deathScreen: true,
     // sound from frame 0: the wind up on the pillar and the fall's rising wind (the 2.3 s fall is silent in vanilla)
     sfx: [['air', 'start', 'jump', { gain: 0.25 }], ['wind', 'jump', 'placed', { gain: 0.5 }]],
