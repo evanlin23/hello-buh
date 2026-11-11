@@ -215,8 +215,8 @@ follow any Short.
    the animals that remember.
 5. **The night the sun set** (plant, no change needed). The Long Day ends on day 1100 with the zombies from under the
    one tree coming out. The Chunk Next Door's Gary has been "gone for 700 NIGHTS". Set both in Stillwater with The
-   Chunk Next Door on day 1800, and Gary was taken the night the Long Day ended. Neither Short contradicts it, and a
-   rewatch of The Sun Won't Set's zombie crowd gains a farmer.
+   Chunk Next Door on day 1800, and Gary was taken the night the Long Day ended. Neither Short contradicts it, and in
+   The Sun Won't Set the farmer walking into his own fence is Gary on his last day.
 6. **Hushwell is both villages** (on screen in coordinates; plant for viewers). Light Sleeper and Dog on the Hill
    were both built on the generated village at (-170, -852) and its north-west hill. Light Sleeper's carpet street
    climbs to the doghouse and the red-collared dog. Dog on the Hill is the same hill 2,800 days later. Plant: in
@@ -330,7 +330,7 @@ of Hushwell, the lighthouse south of it, the Ridge's tower east of Ravenford.
 | `torch_hill`: a lone torch on the slope under the High Meadow | the Digger's House, Tidewater | 300 on |
 | `blue_sheep`: a blue sheep staring at one dirt block | the Digger's House | 700-1112 |
 | `long_day_lever`: a lever on a stone post | Stillwater's square | always (pulled back from 1100) |
-| `gary`: a zombie villager in a straw hat at the fog line, name tag Gary | Stillwater at night | 1100 on |
+| `gary`: a zombie villager in a straw hat at the fog line, name tag Gary | Stillwater at night | 1101 on |
 | `burned_copy`: a burned copy of a Fernbank house | south of Fernbank's last torch | always |
 | `raven_tower`: the old watchtower on the Ridge, no banner | Ravenford | always |
 | `totem_wall`: 31 totems and one empty frame (all 32 full after day 1900), glinting through the south windows | Grandpa's house in Ravenford; from his yard and the pasture | always (Red Sheep, 2300) |
