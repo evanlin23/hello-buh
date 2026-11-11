@@ -292,6 +292,14 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11: "another one i saw is like fake secret chest in desert pyramid that takes like the entire
+  video to get to and theres like parkour and tunnels etc."** HelloBuh adds a quest format (family `quest`): a
+  "secret chest" hidden under a desert pyramid (or similar), and the whole Short is the escalating way down to it:
+  hidden buttons, tunnels, parkour, traps, each stage harder, the chest opened only at the very end.
+- **Owner, 2026-11-11, sharing a "Send This To Someone You Love Most 😍💗" Short (a redstone-and-lamp heart laid out
+  in a cherry grove, the night falls, the heart lights up and fireworks burst around it in a ring): "This is another
+  one thats like a heart and its cute and lovey".** HelloBuh adds a love format (family `love`): a cute, wholesome
+  build with a heart reveal at night (lamps, fireworks), captioned to be sent to someone; made to be shared.
 - **Owner, 2026-11-11, sharing ThreexyMC's "Yeah its over bro" (caption "Am i cooked?": the player mines down through
   a diamond vein and through bedrock into the dark, then the chat fills with "[Notch] joined the game", "[Microsoft]",
   "[Mojang]", "[FBI]", "[Interpol]", "[IRS]", "[Herobrine]", "[NASA]"... over a war-movie soldier image with a

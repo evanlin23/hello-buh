@@ -21,6 +21,8 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `race` | KRIZZIT: "Clear winner" ("Grass vs Fungus") | A huge dirt square, two spreading things race from opposite corners, top-down time-lapse; viewers pick a side | "timelapse grass vs fungus" | r:rbe60ef | idea |
 | `hack` | KingTEC: "POV: You Made FUNCTIONAL Cabinets in Minecraft" | One clever real block trick (doors + cushions as cabinets and gates), a "POV: you realized..." caption, shown working in a lived-in room right away | "another format, cool minecraft gimmicks" | r:rc15847 | idea |
 | `cooked` | ThreexyMC: "Yeah its over bro" ("Am i cooked?") | Something impossible (mining through bedrock), the screen goes dark, then the chat floods with "[Notch] / [Mojang] / [FBI] / [Interpol] / [NASA] joined the game" over a war-movie soldier still; the music is the joke and is track-specific | "doing something impossible, and then having like creators of minecraft join on like the war image... this is music speciifc too, need to sue their music" | r:r5ee125 | idea (decided r:r12cb71: a similar NCS track; the real meme photo, fetched at render, never committed) |
+| `quest` | (seen by the owner; no file) a "secret chest in a desert pyramid" Short | The whole video is the way down to one secret chest: hidden buttons, tunnels, parkour, traps, each stage harder; opened only at the end | "fake secret chest in desert pyramid that takes like the entire video to get to and theres like parkour and tunnels etc." | r:r4b458d | idea |
+| `love` | "Send This To Someone You Love Most 😍💗" | A heart laid out in redstone and lamps in a cherry grove; night falls, it lights up, fireworks ring it; made to be sent to someone | "its like a heart and its cute and lovey" | r:rf91fef | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -31,4 +33,8 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 - **fakemod**: "a creeper asks permission", "mobs need a ticket", "your pickaxe has feelings", "villagers unionise".
 - **hack**: trapdoor shutters, a hidden piston door behind a painting, a stair-and-sign sofa, a cauldron sink,
   a hidden staircase; each a real trick, demoed in a cosy build.
+- **quest**: a desert-pyramid secret chest, a jungle-temple vault, a stronghold library behind a bookshelf; each
+  stage a different trick (sticky-piston stairs, a lava parkour, a hidden lever).
+- **love**: a heart of lamps that lights at night, a pixel-art "for you" made of flowers, two sheep in a heart pen,
+  a heart-shaped firework show.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.
