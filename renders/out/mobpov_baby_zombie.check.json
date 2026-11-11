@@ -1,0 +1,356 @@
+{
+ "stunt": "mobpov_baby_zombie",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/mobpov_baby_zombie.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  2 camera shot(s), 1.6s: POV checks skipped there; run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/mobpov_baby_zombie.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "motion fixes: 7 cast members moved with a cut land on it",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT mobpov_baby_zombie: 4 shots, scene 0.0-8.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  intro          0.0-0.4   at     (no subject: add subject: [...] to check its framing)",
+    "  pov            0.4-1.3   pov    ",
+    "  pen            1.3-2.4   at     (no subject: add subject: [...] to check its framing)",
+    "  pov            2.4-8.7   pov    ",
+    "NOTES (1)",
+    "  - 0.0 s  intro: only 0.4 s: too short to read",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 9 warning(s), 1 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "the narrator (zombie) #self glides 1.3 blocks in one tick in view at 0.35 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "pig #235 glides 1.2 blocks in one tick in view at 0.70 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "pig #235 glides 1.7 blocks in one tick in view at 0.85 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "pig #236 glides 1.3 blocks in one tick in view at 0.85 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "pig #234 glides 1.4 blocks in one tick in view at 0.90 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "pig #235 glides 2.3 blocks in one tick in view at 1.00 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "pop",
+     "msg": "pig #236 glides 1.8 blocks in one tick in view at 1.00 s into the shot"
+    },
+    {
+     "level": "NOTE",
+     "out": 1.25,
+     "shot": 3,
+     "line": null,
+     "kind": "blocks",
+     "msg": "4 block(s) in view changed during the cut (e.g. air, oak_fence at 364 72 -39): intended?"
+    },
+    {
+     "level": "WARN",
+     "out": 4.4,
+     "shot": 5,
+     "line": null,
+     "kind": "appear",
+     "msg": "mannequin \"56e\" #264 appears in the middle of the frame 1.45 s into the shot (20.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 4.4,
+     "shot": 5,
+     "line": null,
+     "kind": "pop",
+     "msg": "mannequin \"56e\" #264 glides 1.4 blocks in one tick in view at 3.75 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "4 warning(s) over 5 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 51% of the frame is within 3 blocks (grass_block, short_grass)"
+    },
+    {
+     "level": "WARN",
+     "out": 2.35,
+     "shot": 4,
+     "line": null,
+     "kind": "tight",
+     "msg": "too tight (ECU extreme close-up): villager (librarian) #261 fills 230% of the frame height, 0.5 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 2.35,
+     "shot": 4,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (WS wide on villager (farmer), median depth 4.5 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 4.4,
+     "shot": 5,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P3 without an establishing shot (no cast, median depth 6 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 6 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 20,
+     "out": 0.2,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 31,
+     "out": 0.75,
+     "line": null,
+     "from": "pov",
+     "to": "intro",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.51,
+      "y": 0.33,
+      "what": "the narrator",
+      "kind": "cast"
+     },
+     "dist": 0.158,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 40,
+     "out": 1.2,
+     "line": null,
+     "from": "intro",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.002,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 57,
+     "out": 2.05,
+     "line": null,
+     "from": "pov",
+     "to": "pen",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.001,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 79,
+     "out": 3.15,
+     "line": null,
+     "from": "pen",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.45,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "dist": 0.048,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 120,
+     "out": 5.2,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "19 visible sound-making events (break 7, hurt 10, voice 2), 17 with a sound mark, 2 without (audio.py adds those for a story)",
+    "     2.85s  pig idle voice                     -> entity.pig.ambient                12.6 blocks in view  ",
+    "     4.05s  villager idle voice                -> entity.villager.ambient            6.8 blocks in view  ",
+    "ambience per shot: -0.20-1.55s day, 1.55-2.85s day, 2.85-3.95s day, 3.95-6.00s day, 6.00-10.95s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T23:31:13.922Z"
+}

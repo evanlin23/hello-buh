@@ -1,0 +1,17 @@
+{
+ "name": "mobpov_baby_zombie",
+ "stunt": "mobpov_baby_zombie",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43120233870",
+ "source": "c8bcf39e",
+ "queued": "2026-11-11T23:29:38Z",
+ "finished": "2026-11-11T23:45:49Z",
+ "mp4": "renders/out/mobpov_baby_zombie.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
