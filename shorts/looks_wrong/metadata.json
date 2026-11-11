@@ -4,7 +4,7 @@
   "caption": "Bro this looks wrong?",
   "youtube": {
     "title": "Bro this looks wrong? #minecraft #shorts",
-    "description": "Bro this looks wrong?\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "Bro this looks wrong?\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "vem_lenta.mp3",
-    "title": "VEM LENTA!",
-    "artist": "KPHK, Eluvo, Sayfalse",
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 36.75,
-    "drop_in_short_s": 36.35,
-    "song_start_s": 0.4
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 37.7,
+    "song_start_s": 0.55
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 37.25,
+    "duration_s": 38.6,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 55665073,
-    "sha256": "bbdb8cedbbf00b48fa6c22d9538e3ab2d025fe691ec0ca62fd98aabf6832e18e",
+    "bytes": 58597597,
+    "sha256": "416d9b9d1ef28212b0d5cfaa332371f537b0c4a1b881d0cb2d63ccdd1591e549",
     "release": {
       "tag": "pkg-looks_wrong",
-      "asset": "looks_wrong.short.bbdb8cedbbf00b48.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.bbdb8cedbbf00b48.mp4",
-      "sha256": "bbdb8cedbbf00b48fa6c22d9538e3ab2d025fe691ec0ca62fd98aabf6832e18e",
-      "bytes": 55665073
+      "asset": "looks_wrong.short.416d9b9d1ef28212.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.416d9b9d1ef28212.mp4",
+      "sha256": "416d9b9d1ef28212b0d5cfaa332371f537b0c4a1b881d0cb2d63ccdd1591e549",
+      "bytes": 58597597
     },
     "nosong_release": {
       "tag": "pkg-looks_wrong",
-      "asset": "looks_wrong.short_nosong.75f0210590789e35.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short_nosong.75f0210590789e35.mp4",
-      "sha256": "75f0210590789e3544c4bd05154085db9bd2f2a32744dc8863e25c9d1b0d9336",
-      "bytes": 55626399
+      "asset": "looks_wrong.short_nosong.f7c5305244372298.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short_nosong.f7c5305244372298.mp4",
+      "sha256": "f7c5305244372298c177a180f8168e596b275b0aceecc8be7ec3656703b599ec",
+      "bytes": 58542435
     }
   },
   "edit": {
@@ -98,177 +98,177 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 375,
-      "y": 63,
-      "z": -52
+      "x": 385,
+      "y": 68,
+      "z": -57
     },
     "biome": "minecraft:plains",
-    "ticks": 783,
-    "seconds": 39.15,
+    "ticks": 931,
+    "seconds": 46.55,
     "deaths": 0,
     "events": [
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "stage"
-      },
-      {
-        "t": 0.75,
-        "event": "build0"
       },
       {
         "t": 0.8,
+        "event": "build0"
+      },
+      {
+        "t": 0.9,
         "event": "swing"
       },
       {
-        "t": 1.15,
+        "t": 1.25,
         "event": "swing"
       },
       {
-        "t": 1.4,
+        "t": 1.5,
         "event": "swing"
       },
       {
-        "t": 1.55,
+        "t": 1.65,
         "event": "swing"
       },
       {
-        "t": 1.7,
+        "t": 1.8,
         "event": "swing"
       },
       {
-        "t": 1.95,
+        "t": 2,
         "event": "swing"
       },
       {
-        "t": 2.2,
+        "t": 2.3,
         "event": "swing"
       },
       {
-        "t": 2.45,
+        "t": 2.55,
         "event": "swing"
       },
       {
-        "t": 2.7,
+        "t": 2.75,
         "event": "swing"
       },
       {
-        "t": 2.95,
+        "t": 3.05,
         "event": "swing"
       },
       {
-        "t": 3.2,
+        "t": 3.3,
         "event": "swing"
       },
       {
-        "t": 3.45,
+        "t": 3.5,
         "event": "swing"
       },
       {
-        "t": 3.55,
+        "t": 3.6,
         "event": "built0"
       },
       {
-        "t": 3.55,
+        "t": 3.6,
         "event": "reveal"
       },
       {
-        "t": 4.6,
+        "t": 4.65,
         "event": "stage"
       },
       {
-        "t": 4.6,
+        "t": 4.65,
         "event": "build1"
       },
       {
-        "t": 4.65,
+        "t": 4.75,
         "event": "swing"
       },
       {
-        "t": 4.8,
+        "t": 4.95,
         "event": "swing"
       },
       {
-        "t": 5,
+        "t": 5.15,
         "event": "swing"
       },
       {
-        "t": 5.2,
+        "t": 5.3,
         "event": "swing"
       },
       {
-        "t": 5.4,
+        "t": 5.55,
         "event": "swing"
       },
       {
-        "t": 5.6,
+        "t": 5.75,
         "event": "swing"
       },
       {
-        "t": 5.8,
+        "t": 5.9,
         "event": "swing"
       },
       {
-        "t": 6.1,
+        "t": 6.15,
         "event": "swing"
       },
       {
-        "t": 6.3,
+        "t": 6.35,
         "event": "swing"
       },
       {
-        "t": 6.45,
+        "t": 6.55,
         "event": "swing"
       },
       {
-        "t": 6.65,
+        "t": 6.7,
         "event": "swing"
       },
       {
-        "t": 6.85,
+        "t": 6.9,
         "event": "swing"
       },
       {
-        "t": 7.05,
+        "t": 7.2,
         "event": "swing"
       },
       {
-        "t": 7.25,
+        "t": 7.4,
         "event": "swing"
       },
       {
-        "t": 7.45,
+        "t": 7.55,
         "event": "swing"
       },
       {
-        "t": 7.65,
+        "t": 7.75,
         "event": "swing"
       },
       {
-        "t": 7.85,
+        "t": 7.95,
         "event": "swing"
       },
       {
-        "t": 8.05,
+        "t": 8.1,
         "event": "swing"
       },
       {
-        "t": 8.25,
+        "t": 8.3,
         "event": "swing"
       },
       {
-        "t": 8.45,
+        "t": 8.5,
         "event": "swing"
       },
       {
-        "t": 8.65,
+        "t": 8.7,
         "event": "swing"
       },
       {
-        "t": 8.85,
+        "t": 8.9,
         "event": "swing"
       },
       {
@@ -276,19 +276,23 @@
         "event": "swing"
       },
       {
-        "t": 9.25,
+        "t": 9.2,
         "event": "swing"
       },
       {
-        "t": 9.45,
+        "t": 9.4,
         "event": "swing"
       },
       {
-        "t": 9.65,
+        "t": 9.6,
         "event": "swing"
       },
       {
-        "t": 9.85,
+        "t": 9.75,
+        "event": "swing"
+      },
+      {
+        "t": 9.9,
         "event": "swing"
       },
       {
@@ -296,11 +300,15 @@
         "event": "swing"
       },
       {
-        "t": 10.25,
+        "t": 10.2,
         "event": "swing"
       },
       {
-        "t": 10.45,
+        "t": 10.35,
+        "event": "swing"
+      },
+      {
+        "t": 10.5,
         "event": "swing"
       },
       {
@@ -308,31 +316,35 @@
         "event": "swing"
       },
       {
-        "t": 10.85,
+        "t": 10.8,
         "event": "swing"
       },
       {
-        "t": 11.05,
+        "t": 11,
         "event": "swing"
       },
       {
-        "t": 11.25,
+        "t": 11.15,
         "event": "swing"
       },
       {
-        "t": 11.45,
+        "t": 11.3,
         "event": "swing"
       },
       {
-        "t": 11.65,
+        "t": 11.5,
         "event": "swing"
       },
       {
-        "t": 11.85,
+        "t": 11.7,
         "event": "swing"
       },
       {
-        "t": 12.05,
+        "t": 11.9,
+        "event": "swing"
+      },
+      {
+        "t": 12.1,
         "event": "swing"
       },
       {
@@ -352,23 +364,23 @@
         "event": "build2"
       },
       {
-        "t": 13.25,
+        "t": 13.3,
         "event": "swing"
       },
       {
-        "t": 13.55,
+        "t": 13.45,
         "event": "swing"
       },
       {
-        "t": 13.8,
+        "t": 13.7,
         "event": "swing"
       },
       {
-        "t": 14.05,
+        "t": 13.95,
         "event": "swing"
       },
       {
-        "t": 14.2,
+        "t": 14.25,
         "event": "swing"
       },
       {
@@ -380,11 +392,7 @@
         "event": "swing"
       },
       {
-        "t": 14.75,
-        "event": "swing"
-      },
-      {
-        "t": 14.9,
+        "t": 14.85,
         "event": "swing"
       },
       {
@@ -392,15 +400,15 @@
         "event": "swing"
       },
       {
-        "t": 15.3,
+        "t": 15.2,
         "event": "swing"
       },
       {
-        "t": 15.6,
+        "t": 15.4,
         "event": "swing"
       },
       {
-        "t": 15.8,
+        "t": 15.65,
         "event": "swing"
       },
       {
@@ -416,35 +424,27 @@
         "event": "swing"
       },
       {
-        "t": 16.6,
+        "t": 16.8,
         "event": "swing"
       },
       {
-        "t": 16.85,
+        "t": 17,
         "event": "swing"
       },
       {
-        "t": 17.05,
+        "t": 17.15,
         "event": "swing"
       },
       {
-        "t": 17.3,
+        "t": 17.45,
         "event": "swing"
       },
       {
-        "t": 17.55,
+        "t": 17.75,
         "event": "swing"
       },
       {
-        "t": 17.7,
-        "event": "swing"
-      },
-      {
-        "t": 17.85,
-        "event": "swing"
-      },
-      {
-        "t": 18.1,
+        "t": 18,
         "event": "swing"
       },
       {
@@ -452,19 +452,19 @@
         "event": "swing"
       },
       {
-        "t": 18.5,
+        "t": 18.6,
         "event": "swing"
       },
       {
-        "t": 18.7,
+        "t": 18.9,
         "event": "swing"
       },
       {
-        "t": 18.95,
+        "t": 19.05,
         "event": "swing"
       },
       {
-        "t": 19.15,
+        "t": 19.25,
         "event": "swing"
       },
       {
@@ -472,31 +472,19 @@
         "event": "swing"
       },
       {
-        "t": 19.6,
+        "t": 19.75,
         "event": "swing"
       },
       {
-        "t": 19.8,
+        "t": 20,
         "event": "swing"
       },
       {
-        "t": 19.95,
+        "t": 20.3,
         "event": "swing"
       },
       {
-        "t": 20.1,
-        "event": "swing"
-      },
-      {
-        "t": 20.25,
-        "event": "swing"
-      },
-      {
-        "t": 20.45,
-        "event": "swing"
-      },
-      {
-        "t": 20.6,
+        "t": 20.5,
         "event": "swing"
       },
       {
@@ -508,27 +496,27 @@
         "event": "swing"
       },
       {
-        "t": 21.1,
+        "t": 21.05,
         "event": "swing"
       },
       {
-        "t": 21.25,
+        "t": 21.2,
         "event": "swing"
       },
       {
-        "t": 21.4,
+        "t": 21.35,
         "event": "swing"
       },
       {
-        "t": 21.55,
+        "t": 21.5,
         "event": "swing"
       },
       {
-        "t": 21.7,
+        "t": 21.65,
         "event": "swing"
       },
       {
-        "t": 21.9,
+        "t": 21.85,
         "event": "swing"
       },
       {
@@ -536,11 +524,11 @@
         "event": "swing"
       },
       {
-        "t": 22.2,
+        "t": 22.25,
         "event": "swing"
       },
       {
-        "t": 22.35,
+        "t": 22.4,
         "event": "swing"
       },
       {
@@ -556,43 +544,39 @@
         "event": "swing"
       },
       {
-        "t": 23,
+        "t": 23.05,
         "event": "swing"
       },
       {
-        "t": 23.15,
+        "t": 23.2,
         "event": "swing"
       },
       {
-        "t": 23.35,
+        "t": 23.4,
         "event": "swing"
       },
       {
-        "t": 23.5,
+        "t": 23.55,
         "event": "swing"
       },
       {
-        "t": 23.65,
+        "t": 23.7,
         "event": "swing"
       },
       {
-        "t": 23.8,
+        "t": 23.9,
         "event": "swing"
       },
       {
-        "t": 24,
+        "t": 24.05,
         "event": "swing"
       },
       {
-        "t": 24.15,
+        "t": 24.25,
         "event": "swing"
       },
       {
-        "t": 24.3,
-        "event": "swing"
-      },
-      {
-        "t": 24.45,
+        "t": 24.4,
         "event": "swing"
       },
       {
@@ -624,10 +608,6 @@
         "event": "swing"
       },
       {
-        "t": 25.6,
-        "event": "backup"
-      },
-      {
         "t": 25.75,
         "event": "swing"
       },
@@ -640,31 +620,35 @@
         "event": "swing"
       },
       {
-        "t": 26.25,
+        "t": 26.2,
         "event": "swing"
       },
       {
-        "t": 26.4,
+        "t": 26.35,
         "event": "swing"
       },
       {
-        "t": 26.55,
+        "t": 26.5,
         "event": "swing"
+      },
+      {
+        "t": 26.5,
+        "event": "backup"
       },
       {
         "t": 26.7,
         "event": "swing"
       },
       {
-        "t": 26.9,
+        "t": 26.85,
         "event": "swing"
       },
       {
-        "t": 27.05,
+        "t": 27,
         "event": "swing"
       },
       {
-        "t": 27.2,
+        "t": 27.15,
         "event": "swing"
       },
       {
@@ -672,107 +656,107 @@
         "event": "swing"
       },
       {
-        "t": 27.55,
+        "t": 27.5,
         "event": "swing"
       },
       {
-        "t": 27.75,
+        "t": 27.65,
         "event": "swing"
       },
       {
-        "t": 27.9,
+        "t": 27.8,
         "event": "swing"
       },
       {
-        "t": 28.05,
+        "t": 27.95,
         "event": "swing"
       },
       {
-        "t": 28.25,
+        "t": 28.1,
         "event": "swing"
       },
       {
-        "t": 28.45,
+        "t": 28.3,
         "event": "swing"
       },
       {
-        "t": 28.6,
+        "t": 28.5,
         "event": "swing"
       },
       {
-        "t": 28.75,
+        "t": 28.65,
         "event": "swing"
       },
       {
-        "t": 28.9,
+        "t": 28.85,
         "event": "swing"
       },
       {
-        "t": 29.05,
+        "t": 29,
         "event": "swing"
       },
       {
-        "t": 29.25,
+        "t": 29.15,
         "event": "swing"
       },
       {
-        "t": 29.4,
+        "t": 29.3,
         "event": "swing"
       },
       {
-        "t": 29.55,
+        "t": 29.45,
         "event": "swing"
       },
       {
-        "t": 29.7,
+        "t": 29.65,
         "event": "swing"
       },
       {
-        "t": 29.9,
+        "t": 29.8,
         "event": "swing"
       },
       {
-        "t": 30.05,
+        "t": 29.95,
         "event": "swing"
       },
       {
-        "t": 30.2,
+        "t": 30.15,
         "event": "swing"
       },
       {
-        "t": 30.35,
+        "t": 30.3,
         "event": "swing"
       },
       {
-        "t": 30.5,
+        "t": 30.45,
         "event": "swing"
       },
       {
-        "t": 30.7,
+        "t": 30.6,
         "event": "swing"
       },
       {
-        "t": 30.85,
+        "t": 30.8,
         "event": "swing"
       },
       {
-        "t": 31,
+        "t": 30.95,
         "event": "swing"
       },
       {
-        "t": 31.15,
+        "t": 31.1,
         "event": "swing"
       },
       {
-        "t": 31.35,
+        "t": 31.25,
         "event": "swing"
       },
       {
-        "t": 31.5,
+        "t": 31.4,
         "event": "swing"
       },
       {
-        "t": 31.65,
+        "t": 31.6,
         "event": "swing"
       },
       {
@@ -781,6 +765,10 @@
       },
       {
         "t": 31.95,
+        "event": "swing"
+      },
+      {
+        "t": 32.1,
         "event": "swing"
       },
       {
@@ -800,7 +788,7 @@
         "event": "swing"
       },
       {
-        "t": 32.9,
+        "t": 32.85,
         "event": "swing"
       },
       {
@@ -808,19 +796,15 @@
         "event": "swing"
       },
       {
-        "t": 33.2,
+        "t": 33.25,
         "event": "swing"
       },
       {
-        "t": 33.35,
+        "t": 33.45,
         "event": "swing"
       },
       {
-        "t": 33.5,
-        "event": "swing"
-      },
-      {
-        "t": 33.7,
+        "t": 33.65,
         "event": "swing"
       },
       {
@@ -828,23 +812,19 @@
         "event": "swing"
       },
       {
-        "t": 34,
+        "t": 34.05,
         "event": "swing"
       },
       {
-        "t": 34.15,
+        "t": 34.25,
         "event": "swing"
       },
       {
-        "t": 34.35,
+        "t": 34.45,
         "event": "swing"
       },
       {
-        "t": 34.5,
-        "event": "swing"
-      },
-      {
-        "t": 34.65,
+        "t": 34.6,
         "event": "swing"
       },
       {
@@ -852,7 +832,7 @@
         "event": "swing"
       },
       {
-        "t": 34.95,
+        "t": 35,
         "event": "swing"
       },
       {
@@ -872,7 +852,7 @@
         "event": "swing"
       },
       {
-        "t": 35.8,
+        "t": 35.75,
         "event": "swing"
       },
       {
@@ -880,35 +860,71 @@
         "event": "swing"
       },
       {
-        "t": 36.1,
+        "t": 36.15,
         "event": "swing"
       },
       {
-        "t": 36.25,
+        "t": 36.35,
         "event": "swing"
       },
       {
-        "t": 36.4,
+        "t": 36.5,
         "event": "swing"
       },
       {
-        "t": 36.6,
+        "t": 36.65,
         "event": "swing"
       },
       {
-        "t": 36.75,
+        "t": 36.85,
         "event": "swing"
       },
       {
-        "t": 36.9,
+        "t": 37,
+        "event": "swing"
+      },
+      {
+        "t": 37.15,
+        "event": "swing"
+      },
+      {
+        "t": 37.3,
+        "event": "swing"
+      },
+      {
+        "t": 37.45,
+        "event": "swing"
+      },
+      {
+        "t": 37.6,
+        "event": "swing"
+      },
+      {
+        "t": 37.75,
+        "event": "swing"
+      },
+      {
+        "t": 37.95,
+        "event": "swing"
+      },
+      {
+        "t": 38.1,
+        "event": "swing"
+      },
+      {
+        "t": 38.25,
+        "event": "swing"
+      },
+      {
+        "t": 38.3,
         "event": "built2"
       },
       {
-        "t": 36.9,
+        "t": 38.3,
         "event": "complete"
       },
       {
-        "t": 39.15,
+        "t": 46.55,
         "event": "end"
       }
     ]
@@ -916,47 +932,50 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/looks_wrong",
-    "commit": "f67e7b7f479943b9e87fde661d019ee8975aa576",
+    "commit": "7d44040dce7eaddef168e6c46bb55daccc64ed7f",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977486813",
-    "rendered_at": "2026-11-11T07:20:42.128Z",
-    "head_at_publish": "8469d0bbe4888ff4c4e837fe00423ab983c6f32d",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43014642738",
+    "rendered_at": "2026-11-11T11:56:14.221Z",
+    "head_at_publish": "f65d51c158cc76037692d5921fcbb8d19599dcb2",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
-      "source/pixel_art.js"
+      "source/pixel_art.js",
+      "source/sight.js",
+      "source/act.js",
+      "source/motion.js"
     ]
   },
   "rebuild": [
-    "git checkout f67e7b7f4799",
+    "git checkout 7d44040dce7e",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
     "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
   ],
-  "status": "ready",
-  "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
-  "published_at": "2026-11-11T07:22:24.782Z",
+  "status": "pending-qa",
+  "notes": "awaiting independent review. worker B 2026-11-11 re-take (r:r650840, r:rffba12): aimed placement (ad926e79); aim 147 actions median 0.0 deg p90 0.3 worst 2.8 (was p90 3.2); walk back now stops ~2.4 blocks short of the small picture (was past its plane, -1.3); pace OK, 38.6 s",
+  "published_at": "2026-11-11T11:58:32.029Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:08:52+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-11T11:59:11+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 37.27 s vs the reviewed render 37.25 s"
+      "summary": "short.mp4 38.61 s vs the reviewed render 38.60 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:36:53.633Z",
-      "report": "work/hb/looks_wrong.check.json"
+      "at": "2026-11-11T11:47:11.737Z",
+      "report": "out/looks_wrong.check.json"
     },
     "key_sounds": "n/a"
   }
