@@ -1408,8 +1408,8 @@
     },
     {
      "id": "buh_yard_cold",
-     "since": 3400,
-     "what": "Buh's yard after he left: the chimney's campfire out, the eight lanterns (gate posts, yard, cottage) gone dark (removed). Before day 3400 the yard is lit as Good Boy built it",
+     "since": 3401,
+     "what": "Buh's yard after he left: the chimney's campfire out, the eight lanterns (gate posts, yard, cottage) gone dark (removed). Through day 3400 (Good Boy, which builds with day 3400) the yard is lit as Good Boy built it",
      "do": "cmds",
      "cmds": [
       "/setblock -266 80 -358 campfire[lit=false]",
