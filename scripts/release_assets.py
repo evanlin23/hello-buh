@@ -219,6 +219,10 @@ if __name__ == "__main__":
     ap.add_argument("--no-push", action="store_true")
     a = ap.parse_args()
     vd = pathlib.Path(a.videos)
+    if a.cmd == "upload" or not a.no_push:   # run on its own, it publishes too: never from a stale checkout
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gates   # (publish.js checked already and set HB_FRESH_OK=1)
+        gates.fresh_or_exit("release_assets.py")
     if a.cmd == "upload":
         upload(vd, a.names, a.from_videos, a.wait)
     else:

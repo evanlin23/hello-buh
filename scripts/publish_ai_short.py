@@ -29,6 +29,8 @@ def main():
     ap.add_argument("--first", action="store_true")
     ap.add_argument("--notes", default="")
     o = ap.parse_args()
+    import gates   # never from a stale checkout; the package records the gates it ran (scripts/gates.py)
+    gates.fresh_or_exit("publish_ai_short.py")
     ep = pathlib.Path(o.episode); cfg = json.loads((ep / "episode.json").read_text())
     name = cfg["stunt"]
     vid = pathlib.Path(o.video)
@@ -63,6 +65,8 @@ def main():
         d = vd / "shorts" / name; d.mkdir(parents=True, exist_ok=True)
         shutil.copy(vid, d / "short.mp4")
         (d / "metadata.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
+        g = gates.stamp(name, vd, str(d / "short.mp4"), by="publish_ai_short.py")
+        print(f"gates v{g['version']}: pace {g['pace'].get('summary')}" + (f" (the uploader will skip it: {gates.stale(meta | {'gates': g})})" if gates.stale(meta | {"gates": g}) else ""))
         (d / "recording.json.gz").write_bytes(gzip.compress((HERE / "work" / f"{name}.rec.json").read_bytes(), 9))
         import release_assets   # the mp4 goes to a GitHub Release, metadata gets video.release (r:rc5eaf0)
         release_assets.upload(vd, [name])
