@@ -137,8 +137,10 @@ module.exports = {
     for (let k = 0; k < RIVER_W; k++) {
       const ref = new Vec3(lx, floor, zS - k)                     // the block the new one goes against
       for (let w = 0; w < 60 && bot.entity.position.z - ref.z > 1.6; w++) await bot.waitForTicks(1)
-      // gated on the crosshair (lib/act.js: it is on the edge block underfoot ahead; r:rffba12)
-      await A.click(ref, 2, [0.5, 0.5, 0], { swing: true, also: () => ctx.sound('block.stone.place', 1, 0.8) })
+      // aimed by construction (lib/act.js A.place, r:rffba12): the crosshair on the lava cell ahead, the click on the top
+      // face of the river's stone bed under it (the ray goes through lava, as in vanilla), the block goes in the lava
+      const cell = ref.offset(0, 0, -1)
+      await A.place(cell, { against: cell.offset(0, -1, 0), sound: 'block.stone.place' })
       await bot.waitForTicks(2)
       const b = bot.blockAt(ref.offset(0, 0, -1))
       if (!b || b.name !== 'cobblestone') { ctx.log('bridge block', k, 'not placed:', b && b.name); bot.clearControlStates(); return false }
@@ -216,7 +218,13 @@ module.exports = {
     bot.clearControlStates()
     bot.removeListener('physicsTick', onTick)
     if (!ctx.died) return false
-    await bot.waitForTicks(40)                                      // hold on the death screen
+    // hold on the death screen; the lava keeps popping embers in view behind it (vanilla LavaFluid.animateTick), so the
+    // backdrop isn't a still frame (rec_check held; keep_inventory leaves no drops to move)
+    const dp = bot.entity.position
+    for (let k = 0; k < 40; k++) {
+      if (k % 6 === 0) { ctx.particles('lava', { x: dp.x + ((k * 7) % 5 - 2) * 0.6, y: floor + 0.95, z: dp.z - 1.5 - (k % 3) }, { count: 2, spread: 0.8 }); ctx.sound('block.lava.pop', 0.5, 0.9 + (k % 3) * 0.1) }
+      await bot.waitForTicks(1)
+    }
     return ctx.died
   }
 }
