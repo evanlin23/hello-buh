@@ -35,6 +35,7 @@ FAMILIES = [
     ("cooked", lambda n: n.startswith("cooked_")),   # an impossible feat, then "X joined the game" on the drop (lib/cooked.js, r:r5ee125)
     ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
     ("herobrine", lambda n: n.startswith("herobrine_")),   # secret herobrine: the "lag" that never was (lib/herobrine.js, r:r047388)
+    ("lucky", lambda n: n.startswith("lucky_")),   # fake super lucky: a dig where every block is luckier (r:r934ea4)
 ]
 
 
