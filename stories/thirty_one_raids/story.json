@@ -71,14 +71,14 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "THIRTY-ONE raids. / EVERY one / started the NIGHT / Grandpa came HOME.",
+      "text": "THIRTY-ONE raids, / EVERY one / started the NIGHT / Grandpa came HOME.",
       "beat": "A",
       "shot": "S01",
       "look": {
         "what": "actor:Grandpa"
       },
       "stress": "THIRTY-ONE, HOME",
-      "say": "Thirty-one raids. Every one started the night Grandpa came HOME."
+      "say": "Thirty-one raids, every one started the night Grandpa came HOME."
     },
     {
       "id": "L02",
@@ -352,5 +352,18 @@
   "one_take": [
     "N"
   ],
-  "one_take_note": "the narrator's 10 lines in ONE request across Grandpa's L08 (tts.py one_take); say: only the spoken-stress word in caps (cast narrator profile: 'punching only the capitalised key word')"
+  "one_take_note": "the narrator's 10 lines in ONE request across Grandpa's L08 (tts.py one_take); say: only the spoken-stress word in caps (cast narrator profile: 'punching only the capitalised key word')",
+  "requests": [
+    {
+      "id": "G",
+      "speakers": [
+        "Grandpa"
+      ],
+      "lines": [
+        "L08"
+      ],
+      "direction": "[An old, tired man, low and slow]",
+      "note": "lead 2026-11-11: a one-clause bracket (the elder's two-sentence profile was read aloud on 3.8-flash-tts; Light Sleeper's one-clause Mom bracket passed)"
+    }
+  ]
 }
