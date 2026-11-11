@@ -43,3 +43,5 @@ mislabel_grandma   # new format, not pinned until the owner's review (mislabel),
 hack_banner_door   # new format, not pinned until the owner's review (hack), 2026-11-11
 interrupt_lamps   # new format, not pinned until the owner's review (interrupt), 2026-11-11
 mega_sponge   # new format, not pinned until the owner's review (mega), 2026-11-11
+creeper
+nether_portal
