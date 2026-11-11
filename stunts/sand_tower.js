@@ -130,7 +130,7 @@ module.exports = {
       ctx.select(1)
       // the torch into the gap, on the top face of the ground block the crosshair is already on, 5 ticks after the break
       while (ctx.tick < tb + 4) await bot.waitForTicks(1)   // (a torch in before the sand starts to fall holds it up)
-      try { await A.place(new Vec3(cx, floor + 1, cz), { against: new Vec3(cx, floor, cz), block: 'torch', delay: 4, sound: 'block.wood.place' }) } catch (e) { ctx.log('torch', cx, cz, e.message) }
+      try { await A.place(new Vec3(cx, floor + 1, cz), { against: new Vec3(cx, floor, cz), block: 'torch', delay: 4, max: 6, sound: 'block.wood.place' }) } catch (e) { ctx.log('torch', cx, cz, e.message) }
       gov.cur = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }; gov.vel = { yaw: 0, pitch: 0 }
       aim = bottom(cx, cz)
       setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name), 500)
@@ -159,7 +159,7 @@ module.exports = {
         const z = t.z0 + iz, rz = nearZ - r
         for (let ix = 0; ix < t.w; ix++) {
           const x = t.x0 + ix
-          goal = new Vec3((t.w >= 3 ? x : t.x0 + (t.w - 1) / 2) + 0.5, 0, rz)
+          goal = new Vec3(t.x0 + t.w / 2, 0, rz)   // centred, standing still while it works (a sidestep per column made the torch late: the sand landed first)
           await column(x, z, last && k === 0 ? 'drop_final' : null)
           k++
         }
