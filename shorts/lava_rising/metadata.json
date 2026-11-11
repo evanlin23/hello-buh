@@ -155,7 +155,7 @@
     "python3 audio.py work/lava_rising.rec.json work/lava_rising.wav",
     "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me \ud83d\ude33\" --red \"1 block\" --start_at rising:-0.3 --end_after stopped:2.6 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); QA2: payoff framing of the 1-block gap could be clearer",
+  "status": "dropped",
+  "notes": "dropped (owner, 2026-11-11, r:rc5eaf0): repeats worse_lava's ending",
   "published_at": "2026-11-06T15:40:31.435Z"
 }

@@ -167,7 +167,7 @@
     "python3 audio.py work/anvil_rain.rec.json work/anvil_rain.wav",
     "python3 edit.py --frames work/anvil_rain.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/anvil_rain.rec.json --audio work/anvil_rain.wav --caption \"minecraft but it rains anvils \ud83d\udc80\" --red anvils --death_screen death --start_at rain:0.2 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at rain --out out/anvil_rain.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
+  "status": "dropped",
+  "notes": "dropped (owner, 2026-11-11, r:rc5eaf0): repeats it_rains phase 1",
   "published_at": "2026-11-06T15:39:14.919Z"
 }
