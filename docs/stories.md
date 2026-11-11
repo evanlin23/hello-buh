@@ -282,6 +282,10 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, sharing ItsMeMx's Minas Tirith time-lapse (caption "We need a small castle to mark the
+  spawn", then a drone-style time-lapse as arches, a plateau and a whole tiered white city rise over 21 s): "this
+  gimmick is like ridiculous megabuild".** Part of the `mega` family (r:r8bb1e3): the second variant is a time-lapse
+  build-up, an understated request in the caption and the build escalating far past it, ending on the full reveal.
 - **Owner, 2026-11-11, sharing hazypapa's "Monsters can't sleep, I am nearby" (a slow walk down a white lab corridor
   of glass cells, each holding a mob stuck in a contraption doing one thing forever; caption "i think bro is doing it
   for fun"): "here is another format. its like a bunch of cells where mobs are forced to do things repeitively

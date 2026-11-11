@@ -279,7 +279,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (scores), the numbers check. r:rd56a20
 - **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
   caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
-  reference Short. Check: owner, the numbers check. r:r8bb1e3
+  reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
+  escalating to the full reveal. r:r4449f0
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
