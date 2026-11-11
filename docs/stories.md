@@ -282,6 +282,10 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, sharing TECHSIN PLAYZ's "Finally, a CRAZY Minecraft illusion" Short: "the gimmick with this is
+  its a normal video with a skeleton shooting and he goes over and eats it and then pretneds nothing happened and goes
+  back tot eh video".** HelloBuh tries an original take (family `interrupt`): a Short that plays straight as a normal
+  video, a mob interrupts, the player deals with it in an absurd way, then carries on as if nothing happened.
 - **Owner, 2026-11-11, sharing KRIZZIT's "Daylight Edition" Short (a giant fractal pyramid, an elytra fly-around
   and dive inside, captioned "7 seconds of my life went into this build"): "new format to try".** HelloBuh tries an
   original take on the format (family `mega`): an absurdly big generated build shown from frame 1, an understated

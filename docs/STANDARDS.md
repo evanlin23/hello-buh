@@ -280,6 +280,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
   caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
   reference Short. Check: owner, the numbers check. r:r8bb1e3
+- **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
+  player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
