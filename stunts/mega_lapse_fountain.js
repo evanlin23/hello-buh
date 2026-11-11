@@ -166,21 +166,21 @@ module.exports = L.makeLapse({
   angles: [['fountain', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['town1', 'town'], ['tier2', 'far'], ['giants', 'giants']],
   payoff: { stage: 'lights', shot: 'reveal', hold: 30 },
   shots: {
-    // 1. close and low on the fountain, pulling back and up as the plaza spreads round it
-    close: { path: [[0, 5.5, 3.2, 7.5], [2.6, 10, 6.5, 13.5]], lookPath: [[0, 0, 1.2, 0], [2.6, 0, 0.5, 0]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 1.5, 0]] },
+    // 1. close and low on the fountain, pulling back and up as the plaza spreads round it (between two lamp posts)
+    close: { path: [[0, 5.5, 3.2, 7.5], [2.6, 10.5, 6.5, 11]], lookPath: [[0, 0, 1.2, 0], [2.6, 0, 0.5, 0]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 4.5, 0]] },
     // 2. a three-quarter angle on the ring wall as it rises, its towers and their roofs
-    ring: { path: [[0, 30, 17, 36], [2.4, 22, 16, 40]], lookPath: [[0, 0, 5, 0], [2.4, 0, 5, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[0, 6, 0]] },
+    ring: { path: [[0, 30, 17, 36], [2.4, 22, 16, 40]], lookPath: [[0, 0, 5, 0], [2.4, 0, 5, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[16, 15, 7]] },
     // 3. high, sliding round: the houses fill the ring outside the wall
-    houses: { path: [[0, -44, 36, 30], [2.4, -50, 33, 16]], lookPath: [[0, 0, 2, 0], [2.4, 0, 2, 0]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 4, 0]] },
-    // 4. outside, low: the terrace's outer face rises across the frame and shuts the town out of view
-    face: { path: [[0, 22, 6, 112], [2.0, 30, 8, 106]], lookPath: [[0, 4, 9, 0], [2.0, 8, 10, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 8, 76]] },
+    houses: { path: [[0, -44, 36, 30], [2.4, -50, 33, 16]], lookPath: [[0, 0, 2, 0], [2.4, 0, 2, 0]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[-20, 8, 14]] },
+    // 4. outside, over the field: the terrace's outer face rises across the front of the town
+    face: { path: [[0, 22, 20, 120], [2.0, 32, 22, 112]], lookPath: [[0, 4, 6, 0], [2.0, 8, 7, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 13, 76]] },
     // 5. high over the south-east corner: the town spreading over the terrace
     town: { path: [[0, 92, 58, 92], [1.8, 86, 54, 98]], lookPath: [[0, 10, 8, 10], [1.8, 8, 8, 12]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[50, 16, 50]] },
-    // 6. the far (north-west) side, low: the second terrace and the corner towers going up
-    far: { path: [[0, -104, 12, -58], [2.0, -98, 14, -70]], lookPath: [[0, 0, 24, 0], [2.0, 0, 24, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[-76, 30, -76]] },
-    // 7. from the plaza, the fountain in front: the four great towers rise behind the walls
-    giants: { path: [[0, -12, 5, -12], [2.7, -10, 4.5, -10]], lookPath: [[0, 24, 18, 24], [2.7, 24, 20, 24]], fov: 72, dof: false, drift: 0.3, scenery: true, subject: [[0, 2, 0], [56, 50, 56]] },
-    // 8. the reveal: the whole city from high, the fountain small in the middle, a slow push
-    reveal: { path: [[0, 70, 118, 100], [1.6, 64, 112, 92]], lookPath: [[0, 0, 4, 0], [1.6, 0, 4, 0]], fov: 64, dof: false, drift: 0.3, scenery: true, subject: [[0, 4, 0]] }
+    // 6. the west side from out on the field: the second terrace and the corner towers going up
+    far: { path: [[0, -150, 26, -30], [2.0, -146, 30, -48]], lookPath: [[0, -40, 22, -20], [2.0, -40, 24, -26]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[-76, 52.5, -76]] },
+    // 7. from the plaza, the fountain in front: the great towers rise behind the walls
+    giants: { path: [[0, -9.5, 5, -9.5], [2.7, -8, 4.5, -8]], lookPath: [[0, 24, 18, 24], [2.7, 24, 20, 24]], fov: 72, dof: false, drift: 0.3, scenery: true, subject: [[0, 4.5, 0], [56, 86.5, 56]] },
+    // 8. the reveal: the whole city from high on its south axis, the fountain small in the middle, a slow push
+    reveal: { path: [[0, 0, 142, 124], [1.6, 0, 135, 116]], lookPath: [[0, 0, 4, 4], [1.6, 0, 4, 4]], fov: 70, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] }
   }
 })
