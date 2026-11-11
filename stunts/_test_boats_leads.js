@@ -17,7 +17,7 @@ module.exports = {
   cast: { Man: 'steve' },
   // one tracking camera on the south side, 6 blocks off the man, looking a little behind him (the led boat in frame)
   shots: {
-    track: { subject: ['actor:Man'], follow: 'actor:Man', offset: [-4.2, 2.6, 10.5], lag: 6, look: { of: 'actor:Man', offset: [-4.2, -1.2, 0] }, fov: 66, dof: false }
+    track: { subject: ['actor:Man'], follow: 'actor:Man', offset: [-3.6, 3.4, 15.5], lag: 6, look: { of: 'actor:Man', offset: [-3.6, -1.4, 0] }, fov: 62, dof: false }
   },
 
   async setup (ctx) {
