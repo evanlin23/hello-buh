@@ -5,10 +5,11 @@
 // cinematic camera shots of the whole thing, getting closer each time, and ends threading the 3x3 hole of the small
 // glowing sponge hung in the big one's hollow middle ("a sponge inside the sponge").
 //
-// Beats (Short seconds): 0 low under the south-west corner, craning up (the build fills the frame) | 3.5 rocket boost,
-// a run along the south face, the holes streaming past | 8 wide orbit: the whole thing over the forest | 12 boost,
-// up the east face and over the top, looking down the top hole at the core | 16.5 the west face head-on, the core
-// glowing deep in its hole | 20 boost, dive into the face hole (flash), slow down inside, thread the core (payoff)
+// Beats (Short seconds, 25.5 s): 0 low under the south-west corner, craning up (the build fills the frame) | 2.0 the
+// south-east corner, wider | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
+// east end | 8.4 wide orbit over the forest | 10.7 high over the top face | 12.8 boost up the north face and over the top,
+// looking down the top hole at the core | 17.6 the west face head-on | 19.6 closer, on the hole's line | 21.5 boost,
+// dive into the face hole (flash), slow down inside | 24.65 thread the core's hole (punch, flash, impact, the drop)
 //
 // Minecraft-true: an elytra glide with rockets (~30 blocks/s with a boost, a rocket used per boost, the stack counts
 // down); the rider is first person, so the elytra itself isn't seen. Film licence: the speed eases off inside without
