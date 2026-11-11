@@ -10,12 +10,12 @@
 ## Scenes and time
 | scene | lines | shots | time |
 |---|---|---|---|
-| A. any night | L01-L04 | S01, S02 | 12000 (villagers still outdoors, heading home) |
-| B. that night, his room | L05-L06 | S03 | 12000 |
+| A. any night | L01-L04 | S01, S02 | 12600 (villagers still outdoors, heading home) |
+| B. that night, his room | L05-L06 | S03 | 12600 |
 | C. day | L07 | S04 | 6000 |
-| D. one night | L08 | S05 | 12000 (right after a ring; a jump cut a minute on: the arrow despawned) |
+| D. one night | L08 | S05 | 12600 (right after a ring; a jump cut a minute on: the arrow despawned) |
 | E. day | L09 | S06 | 6000: the sun high, the oak's shade dark |
-| F. tonight | L10 + the reveal | S07, S08 | 12000 |
+| F. tonight | L10 + the reveal | S07, S08 | 12600 |
 
 ## Cast
 | who | look | voice | shots |

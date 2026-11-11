@@ -15,9 +15,9 @@
  ],
  "payoff": "draw",
  "look": {
-  "time": 12000,
+  "time": 12600,
   "fog": false,
-  "note": "per shot in shots[].look; nights at 12000 (the villagers' rest schedule starts at 12000: they're still outdoors and run home on the bell; by 13500 they're already in bed)"
+  "note": "per shot in shots[].look; nights at 12600 (sun down, deep-blue dusk: villagers' rest schedule started at 12000, they're still heading home and run on the bell); 12000 renders as sunset"
  },
  "weather": "clear",
  "world": {
@@ -266,9 +266,9 @@
    "place": "bedroom",
    "size": "wide",
    "camera": "pov at the window: the hand opens the spruce-trapdoor shutters on 'WINDOW'; a slow push toward the sill",
-   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it's too fast and dark); on 'INSIDE' (L02) every villager in the moonlit square below runs for a door, doors slam. bg: the dark cliff and the lone oak against the stars, straight behind the bell. Night 12000.",
+   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) every villager in the dusky square below runs for a door, doors slam. bg: the dark cliff and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
    "look": {
-    "time": 12000
+    "time": 12600
    }
   },
   {
@@ -277,9 +277,9 @@
    "place": "square",
    "size": "ews",
    "camera": "at: high behind his house (0, 16, 14) looking north along x = 0 at the bell (0, 6, -3), slow push",
-   "frame": "THE AXIS, the single wide: his lit open window lower-centre, the bell just beyond it still swinging, the dark cliff and the oak beyond that: three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at night). The empty square, every door shut. Night 12000.",
+   "frame": "THE AXIS, the single wide: his lit open window lower-centre, the bell just beyond it still swinging, the dark cliff and the oak beyond that: three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at night). The empty square, every door shut. Dusk 12600 (sun down, sky deep blue).",
    "look": {
-    "time": 12000
+    "time": 12600
    },
    "lines": [
     "L03",
@@ -296,9 +296,9 @@
    "place": "bedroom",
    "size": "wide",
    "camera": "at: (2.5, 5.6, 2.5) inside the room looking at Mom at his door, still",
-   "frame": "subject: Mom full figure at his door (on screen from 'MOM'), nodding at the window: the open shutters at frame left, the bell's top visible through them; the bed, a lantern. On 'SHUT' (L05) the shutters swing shut (the kid closes them, off-camera). Night 12000.",
+   "frame": "subject: Mom full figure at his door (on screen from 'MOM'), nodding at the window; the kid at frame left, back to camera, at the open shutters (the bell's top visible through them); on 'SHUT' (L06) he swings them shut. The bed, a lantern. Dusk 12600 (sun down, sky deep blue).",
    "look": {
-    "time": 12000
+    "time": 12600
    }
   },
   {
@@ -320,10 +320,10 @@
    "line": "L08",
    "place": "bedroom",
    "size": "full",
-   "camera": "pov at the open window, still, a small push",
-   "frame": "subject: the bell centred 3 blocks out at his eye level, an arrow stuck in its side, feathers toward the dark cliff (the kid calls it a feather); on 'POOF' a jump cut 1 min later: the arrow gone (vanilla: a stuck arrow despawns after a minute). bg: the cliff and the oak, dark. Night 12000.",
+   "camera": "pov at the open window leaning to the east edge of the sill, still, a small push",
+   "frame": "subject: the bell 3 blocks out at his eye level, seen a little from the side: an arrow stuck in its north face, the shaft and fletching side-on, sticking out past the bell toward the dark cliff (the kid calls it a feather); on 'POOF' a jump cut a minute later: the arrow gone (vanilla: a stuck arrow despawns after a minute). Dusk 12600 (sun down, sky deep blue).",
    "look": {
-    "time": 12000
+    "time": 12600
    },
    "lines": [
     "L08"
@@ -349,9 +349,9 @@
    "place": "bedroom",
    "size": "full",
    "camera": "pov at the open window; on 'PAST' the pov steps out onto the porch roof one block east and leans forward (x +2, eye 5.6)",
-   "frame": "fg: the open shutters; on 'RANG' the bell rings 3 blocks ahead (the clang, doors slam below; an arrow thunks into the bell and sticks); on 'PAST' the pov steps out onto the porch roof and the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Night 12000.",
+   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'PAST' the pov steps out onto the porch roof and the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
    "look": {
-    "time": 12000
+    "time": 12600
    },
    "lines": [
     "L10"
@@ -363,9 +363,9 @@
    "place": "cliff",
    "size": "wide",
    "camera": "at: over the skeleton's right shoulder under the oak (0.6, 12.2, -13), looking down the axis at the window (0, 5, 0), FOV 30, still. The reveal, one shot, no line. Mark `draw` at full draw; cut 1.0 s after it",
-   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade (right third); mid the bell, still swinging, centred on the axis, the lit window behind it; the kid on the porch roof beside the bell, just clear of it, looking up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dark village, every door shut. Night 12000 (the night floor, no lantern: the skeleton readable at phone size).",
+   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade (right third); mid the bell, swinging, centred on the axis, tonight's arrow stuck in its north face pointing straight at the camera (the shield, readable at 300 px), the lit window behind it; the kid on the porch roof beside the bell, just clear of it, waving up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
    "look": {
-    "time": 12000
+    "time": 12600
    }
   }
  ],
@@ -382,7 +382,8 @@
     0,
     6,
     -3
-   ]
+   ],
+   "note": "the village belfry: double_wall between two oak-fence posts on a cobblestone base, nothing above it"
   },
   "post": {
    "at": [
@@ -404,7 +405,8 @@
     0,
     10,
     -12
-   ]
+   ],
+   "note": "on the edge of a sheer stone cliff face, not a grassy bump"
   },
   "skeleton": {
    "at": [
