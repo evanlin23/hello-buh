@@ -34,6 +34,12 @@ let STUNT_MOD = {}
     }
   }
 }
+// A HelloBuh stunt's recording from before the bot became 56e (no rec.user, or 'HelloBuh'): drawn as 56e, its skin and
+// every name in the recording's texts (lib/legacy_player.js, owner 2026-11-11 r:r52f94c). Stories keep their names.
+{
+  const to = require('./lib/legacy_player').applyToRec(rec, { name: rec.stunt, stunt: STUNT_MOD })
+  if (to) console.log(`player: the old 'HelloBuh' bot is drawn as ${to} (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)`)
+}
 // Hidden boxes (stunt.hideBoxes: [[dx0, dy0, dz0, dx1, dy1, dz1], ...] from the set origin, corners inclusive): a
 // cast's waiting room (a barrier floor and a stone roof 60 blocks up, story_good_boy) is a real build the camera can
 // see: a dark slab in the sky over the librarian. Its blocks are left out of the drawn world (and the light), and the
@@ -1121,6 +1127,9 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
 // look target can name them as 'actor:TAG' (dog_hill: subject ['actor:pip']), like a movie's player actors
 const KIT_TAG = new Map()   // id -> tag
 for (const m of rec.timeline || []) if (m.event === 'actor' && m.tag && m.id !== undefined) { KIT_TAG.set(m.id, m.tag); if (!ACTOR_ID.has(m.tag)) ACTOR_ID.set(m.tag, m.id) }
+// a cast member's skin from a tick on (cast_skin marks { user, skin }: the herobrine format's white eyes, lib/herobrine.js)
+const CAST_SKIN = (rec.timeline || []).filter(m => m.event === 'cast_skin' && m.user && m.skin).map(m => ({ t: m.t / 50, user: m.user, skin: m.skin })).sort((a, b) => a.t - b.t)
+const castSkinAt = (user, t) => { let s = null; for (const c of CAST_SKIN) if (c.user === user && c.t <= t) s = c.skin; return s }
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
@@ -2765,6 +2774,7 @@ else:
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
       if (cam.target && cam.target.entity !== undefined) { cam.targetEntity = cam.target.entity; cam.target = null }
+      if (STUNT_MOD.outline === false) cam.target = null   // stunt.outline false: no targeted-block box (a mob's POV, F1 throughout: lib/mobpov.js)
       if (third) cam.target = null   // (the hit outline is a first-person thing: a camera shot drew the player's targeted block, a box over the hole: ai_thin_ice)
       // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
       // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
@@ -2879,7 +2889,8 @@ else:
       // motion fixes: the item's own model (the 1/16-thick extruded sprite), standing, right side up, with its
       // 'ground' display, bobbing and spinning like a block item (ItemEntityRenderer). The camera-facing sprite drew
       // it upside down ("String is upsidedown on the floor", gold_for_the_portal 11 s)
-      if (spriteOf(it) && MOTION_FIXES) {
+      // (no longer gated on MOTION_FIXES: lib/item_stack.js droppedItemForm, r:r52f94c)
+      if (require('./lib/item_stack').droppedItemForm({ sprite: !!spriteOf(it) }) === 'model') {
         const d = thirdPersonDisplay(it, false, 'ground') || { translation: [0, 2, 0], scale: [0.5, 0.5, 0.5] }, gs = d.scale || [1, 1, 1]
         e.shadowName = 'item'; e.shadowY = e.y
         e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
@@ -3049,6 +3060,8 @@ else:
       if ((e.name !== 'player' && e.name !== 'mannequin') || e.id === -1) continue
       const A = ACTOR.get(e.id), user = (e.extra && (e.extra.user || e.extra.name)) || (A && A.user)
       e.extra = { ...(e.extra || {}), ...skinExtra(SKINS.actorSkin({ cast: STUNT_MOD.cast, user })) }
+      const swapSkin = castSkinAt(user, t)
+      if (swapSkin) e.extra.skin = swapSkin
       let wp = 0, ws = 0
       if (A) {
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a

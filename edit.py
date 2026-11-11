@@ -816,6 +816,34 @@ def death_message(jar, comp):
 _lang = None
 
 
+LEGACY_NAME = "HelloBuh"   # the bot's name before it became 56e (lib/legacy_player.js: the same rule in JS)
+
+
+def legacy_rename(v, to, frm=LEGACY_NAME):
+    """Every string in v with the old bot name replaced (keys unchanged)."""
+    if isinstance(v, str):
+        return v.replace(frm, to)
+    if isinstance(v, list):
+        return [legacy_rename(x, to, frm) for x in v]
+    if isinstance(v, dict):
+        return {k: legacy_rename(x, to, frm) for k, x in v.items()}
+    return v
+
+
+def apply_self_name(rec, to):
+    """--self_name: a recording of the old 'HelloBuh' bot (no user, or user 'HelloBuh') drawn as `to` in every text
+    the edit draws from it (death screen, chat, command feedback). Returns the renamed recording, or None when it
+    doesn't apply (another user: a story's Buh, an actor)."""
+    if not to or (rec.get("user") not in (None, "", LEGACY_NAME)):
+        return None
+    out = dict(rec)
+    out["timeline"] = legacy_rename(rec.get("timeline") or [], to)
+    if LEGACY_NAME in json.dumps(rec.get("entities") or []):
+        out["entities"] = legacy_rename(rec["entities"], to)
+    out["user"] = to
+    return out
+
+
 def death_screen_png(jar, path, cause=None, active=True):
     """Vanilla DeathScreen at GUI scale 3, laid out on the 16:9 window the game area crops:
     red gradient, "You Died!" at 2x (y 30), the death message (y 85), the score (y 100), and the
@@ -922,6 +950,56 @@ def syschat_png(jar, lines, path, align="left", y_frac=0.70):
         ImageDraw.Draw(img).rectangle((0, y_, min(320 * GUI, W), y_ + 9 * GUI), fill=(0, 0, 0, 128))   # (wider than the view at chat scale 4+)
         draw_text(img, jar, text, 2 * GUI, y_ + GUI, color=col)
     img.save(path)
+
+
+def still_windows(spec, tl_ev, start):
+    """edit.still (format cooked, r:r5ee125 / r:r12cb71): the game view goes dark at `dark`, then a meme picture fills it
+    from `at` to the end, with an optional punch (a hard push-in) at `punch: [EVENT, SCALE]`. Times are marks (EVENT or
+    EVENT:OFFSET) in the timeline. -> [(t0, t1, kind)] in video time, kind 'dark' | 'still' | 'punch'."""
+    def tm(s):
+        if s is None:
+            return None
+        ev, _, off = str(s).partition(":")
+        return tl_ev[ev] + float(off or 0) - start if ev in tl_ev else None
+    at = tm(spec.get("at"))
+    if at is None:
+        print(f"WARNING edit.still: no '{spec.get('at')}' mark in the timeline: no still")
+        return []
+    dark = tm(spec.get("dark"))
+    pun = spec.get("punch")
+    pt = tm(pun[0]) if pun else None
+    out = []
+    if dark is not None and dark < at:
+        out.append((dark, at, "dark"))
+    if pt is not None and pt > at:
+        out += [(at, pt, "still"), (pt, 1e6, "punch")]
+    else:
+        out.append((at, 1e6, "still"))
+    return out
+
+
+def still_png(src, path, scale=1.0, dim=0.0, focus=(0.5, 0.5)):
+    """The picture cover-fitted to the game view (1080x1011 between the bands), scaled by `scale` (a punch), cropped
+    about `focus` (fractions across/down the picture: a portrait's face), darkened by `dim` (0..1) so the chat over it
+    reads; the bands stay transparent."""
+    im = Image.open(src).convert("RGB")
+    k = max(W / im.width, GAME_H / im.height) * scale
+    im = im.resize((max(W, round(im.width * k)), max(GAME_H, round(im.height * k))), Image.LANCZOS)
+    fx, fy = focus
+    x0 = min(im.width - W, max(0, round(im.width * fx - W / 2)))
+    y0 = min(im.height - GAME_H, max(0, round(im.height * fy - GAME_H / 2)))
+    im = im.crop((x0, y0, x0 + W, y0 + GAME_H))
+    if dim:
+        im = Image.blend(im, Image.new("RGB", im.size, (0, 0, 0)), dim)
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    out.paste(im, (0, BAND))
+    out.save(path)
+
+
+def dark_png(path):
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    out.paste(Image.new("RGBA", (W, GAME_H), (0, 0, 0, 255)), (0, BAND))
+    out.save(path)
 
 
 def container_png(jar, state, path):
@@ -1527,6 +1605,7 @@ def main():
     ap.add_argument("--ring", help='JSON list of [EVENT[:off], SECONDS, X_FRAC?, Y_FRAC?, RADIUS_PX?] red highlight rings')
     ap.add_argument("--tags", help='JSON list of [START, END|null, TEXT, COLOR, NTH?] persistent role labels')
     ap.add_argument("--score", help='JSON {"event": "score", "a": [LABEL, COLOR], "b": [LABEL, COLOR]}: a live two-sided score bar from the marks\' a/b shares (format race)')
+    ap.add_argument("--still", help='JSON {"at": EVENT, "dark": EVENT?, "meme": KEY, "punch": [EVENT, SCALE]?, "dim": 0..1?, "fade": S?}: the view goes dark, then a meme picture (lib/memes.json) fills it (format cooked)')
     ap.add_argument("--chat", help='JSON list of [EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?] vanilla chat input typed up to EVENT (Enter)')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
@@ -1549,11 +1628,21 @@ def main():
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--audio_only", metavar="MP4", help="re-edit only a story's sound onto this finished mp4's picture (stream copy; hb render --reuse locally)")
     ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
+    ap.add_argument("--self_name", help="draw the old 'HelloBuh' bot of a recording with no user as this name in every text (death screen, chat, feedback): HelloBuh stunts re-rendered as 56e (scripts/edit_args.js, lib/legacy_player.js)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     HUD_STYLE.update(hardcore=args.hardcore, armor=args.armor)
     if args.preview:
         os.environ["HB_PREVIEW"] = "1"
+    if args.self_name and args.timeline:
+        renamed = apply_self_name(json.loads(pathlib.Path(args.timeline).read_text()), args.self_name)
+        if renamed is not None:
+            fd, tp = tempfile.mkstemp(prefix="hb_self_", suffix=".rec.json")
+            with os.fdopen(fd, "w") as fh:
+                json.dump(renamed, fh)
+            args.timeline = tp
+            __import__("atexit").register(lambda: os.path.exists(tp) and os.unlink(tp))
+            print(f"player: the old {LEGACY_NAME} bot is drawn as {args.self_name} in the recording's texts")
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
     frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
@@ -1833,6 +1922,25 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
+    # edit.still (format cooked): the view goes dark, then the meme picture over the game and the HUD (the chat comes after,
+    # on top of it); fetched at render from lib/memes.json's logged URL (scripts/meme_cache.py), never committed
+    if args.still and args.timeline:
+        spec = json.loads(args.still)
+        import meme_cache
+        src = meme_cache.path(spec.get("meme", "war_soldier"))
+        focus = spec.get("focus") or meme_cache.entry(spec.get("meme", "war_soldier")).get("focus") or (0.5, 0.5)
+        fade = float(spec.get("fade", 0.2))
+        for k, (a, b, kind) in enumerate(still_windows(spec, _tl, args.start)):
+            png = tmp / f"still{k}.png"
+            if kind == "dark":
+                dark_png(png)
+            else:
+                still_png(src, png, scale=float(spec["punch"][1]) if kind == "punch" else 1.0, dim=float(spec.get("dim", 0.0)), focus=focus)
+            inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(png)]
+            fx = f",fade=t=in:st={max(0, a):.4f}:d={fade:.3f}:alpha=1" if kind == "dark" and fade > 0 else ""
+            graph.append(f"[{n_in}:v]format=rgba{fx}[stv{k}]")
+            graph.append(f"[{last}][stv{k}]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sto{k}]")
+            last, n_in = f"sto{k}", n_in + 1
     # an opened chest, barrel or shulker box: the container screen over the game (harness `container` marks)
     if args.timeline:
         cwins = container_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
