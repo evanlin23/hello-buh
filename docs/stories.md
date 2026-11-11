@@ -558,6 +558,19 @@ STANDARDS.md in the same commit.
   viewer starts to see what the kid can't. The kid never hints, foreshadows, sounds scared too early or explains the
   twist; the gap between what the kid believes and what the viewer suspects is the mystery. Every clue in the clue
   map has its innocent misreading in the kid's own words.
+- **Owner, 2026-11-11, auditing batch 2's scripts:**
+  - The Wall Grows: "ok for villagers to place blocks and climb ladders"; leaving "why doesn't the player dig in?"
+    unanswered: "sure for that, we can have it as arguing in the comments".
+  - Six Thousand Torches: "ok for the goodbye thats fine" (about 65% guess it at the midpoint; dramatic irony is
+    fine); "Jonah is fine" (a new character, not Buh); his voice: "we should test. we need to keep track of our
+    characters".
+  - The Bell in the Window: the implied death is fine ("we dont actually show it"); "whole village runs inside is
+    fine"; L10 takes "so he could see me".
+  - The Walk: "sea freezes is good" (Grandma: "Come back when the sea FREEZES." N: "Mom says it NEVER freezes
+    here."); "3 hundred is fine"; asked why its grandpa can't reuse a grandpa voice.
+  - Red Sheep: "new kid is fine"; ending on the evoker's look with no fangs: "sure".
+  Every speaking character is tracked in one place, docs/world/canon.md "Recurring characters" (who, look, cast id
+  and voice, stories), and a new character's voice is auditioned against Pip before it's cast.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
