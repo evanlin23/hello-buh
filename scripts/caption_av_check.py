@@ -19,7 +19,8 @@ Coverage (owner 2026-11-11: "should we have captions on all of the words, not ju
   every word of every line (narrator and characters, voice/words.json placed where the edit lays the line) has its
   line's caption on screen while it is spoken (its middle, +-40 ms); every caption word of the line (voice.json
   captions) appears in the caption events; and the take says the caption text (Whisper on each line's wav, the take
-  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words); and no caption is on screen
+  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words; a line whisper-base fails is
+  re-heard with whisper-small.en and is only a WARN if that hears it right); and no caption is on screen
   under 0.25 s (whole frames: a flash can't be read). Any miss is a BLOCK.
 
 Short captions in the video (a WARN, not a BLOCK; Buh Stories lead 2026-11-11): with an mp4, the caption holds are
@@ -323,23 +324,46 @@ def take_word_fails(captions, heard):
     return out
 
 
-def whisper_lines(wavs):
-    """{line id: [(word, a, b)]} from Whisper (align.words) on each wav, in this process if transformers is here, else
-    through the TTS venv; None when neither can run."""
+def whisper_lines(wavs, model=None):
+    """{line id: [(word, a, b)]} from Whisper (align.words; model: a checkpoint, default align.WHISPER) on each wav, in
+    this process if transformers is here, else through the TTS venv; None when neither can run."""
+    if not wavs:
+        return {}
     try:
         import align
-        return {lid: align.words(str(w)) for lid, w in wavs.items()}
+        import transformers   # noqa: F401  (align imports it lazily: check here, so a missing one goes to the venv)
+        return {lid: align.words(str(w), model or align.WHISPER) for lid, w in wavs.items()}
     except ImportError:
         pass
     py = os.path.expanduser("~/.hb-tts/bin/python")
     if not os.path.exists(py):
         return None
-    code = ("import sys, json; sys.path.insert(0, sys.argv[1]); import align; "
-            "print(json.dumps({k: align.words(v) for k, v in json.loads(sys.argv[2]).items()}))")
-    r = subprocess.run([py, "-c", code, str(HERE), json.dumps({k: str(v) for k, v in wavs.items()})], capture_output=True, text=True)
+    code = ("import sys, json; sys.path.insert(0, sys.argv[1]); import align; m = sys.argv[3] or align.WHISPER; "
+            "print(json.dumps({k: align.words(v, m) for k, v in json.loads(sys.argv[2]).items()}))")
+    r = subprocess.run([py, "-c", code, str(HERE), json.dumps({k: str(v) for k, v in wavs.items()}), model or ""],
+                       capture_output=True, text=True)
     if r.returncode:
         return None
     return {k: [tuple(x) for x in v] for k, v in json.loads(r.stdout.strip().splitlines()[-1]).items()}
+
+
+CONFIRM_MODEL = "openai/whisper-small.en"   # = align.WHISPER_CONFIRM (kept here so the tests need no transformers)
+
+
+def confirm_word_fails(captions, fails, rehear):
+    """A take whose words whisper-base hears wrong is a BLOCK only if a bigger Whisper agrees (Buh Stories lead
+    2026-11-11: base hears a kid's "Then he said:" as "Denny said?", small.en and medium.en hear it right).
+    fails: take_word_fails with base; rehear(line ids) -> {line id: words} from CONFIRM_MODEL, or None if it can't run.
+    -> (block {line id: [reason]}, warn {line id: [reason]}): a line small.en hears right is a WARN; if small.en can't
+    run, every fail stays a BLOCK (unconfirmed is not cleared)."""
+    if not fails:
+        return {}, {}
+    heard = rehear(sorted(fails))
+    if heard is None:
+        return dict(fails), {}
+    still = take_word_fails({lid: captions[lid] for lid in fails}, heard)
+    return ({lid: fails[lid] for lid in fails if lid in still or lid not in heard},
+            {lid: fails[lid] for lid in fails if lid in heard and lid not in still})
 
 
 def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t: int(round(t * FPS))):
@@ -354,12 +378,15 @@ def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t
     unc = uncaptioned(spoken, events)
     no_words = [lid for lid in lines if not words.get(lid)]
     miss = missing_caption_words({lid: v.get("captions", []) for lid, v in lines.items()}, events)
-    wf, listened = {}, False
+    wf, warn_wf, listened = {}, {}, False
     if listen:
-        heard = whisper_lines({lid: sd / "voice" / f"{lid}.wav" for lid in lines if (sd / "voice" / f"{lid}.wav").exists()})
+        wavs = {lid: sd / "voice" / f"{lid}.wav" for lid in lines if (sd / "voice" / f"{lid}.wav").exists()}
+        heard = whisper_lines(wavs)
         if heard is not None:
             listened = True
-            wf = take_word_fails({lid: v.get("captions", []) for lid, v in lines.items()}, heard)
+            caps = {lid: v.get("captions", []) for lid, v in lines.items()}
+            wf, warn_wf = confirm_word_fails(caps, take_word_fails(caps, heard),
+                                             lambda ids: whisper_lines({k: wavs[k] for k in ids}, CONFIRM_MODEL))
     fl = flashes(events, frame_of)
     block = bool(unc or miss or wf or no_words or fl)
     if verbose:
@@ -377,11 +404,15 @@ def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t
             print(f"  never shown: {lid} {' '.join(ws)!r}")
         for lid, why in wf.items():
             print(f"  take vs captions: {lid}: {'; '.join(why)}")
+        for lid, why in warn_wf.items():
+            print(f"  WARN take vs captions: {lid}: only whisper-base disagrees ({'; '.join(why)}); {CONFIRM_MODEL} hears the "
+                  "captions: not a BLOCK")
         if block:
             print(f"fix: re-align (scripts/align.py {story_dir}) and re-edit; a take that says other words than story.json is a re-take, "
                   "or change the line's text to what was said")
     return {"block": block, "uncaptioned": [list(u) for u in unc], "no_words": no_words, "missing": miss, "words": wf,
-            "flashes": [list(f) for f in fl], "listened": listened}
+            "flashes": [list(f) for f in fl], "listened": listened,
+            "words_warn": warn_wf}
 
 
 def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
