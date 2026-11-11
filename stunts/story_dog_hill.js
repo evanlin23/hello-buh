@@ -47,9 +47,9 @@ module.exports = {
     // L05: the collar, close
     collar: { subject: ['actor:dog'], path: [[0, 2.0, 1.55, -0.4], [4, 1.9, 1.5, -0.2]], look: [0.7, 1.45, 0.5], fov: 45 },
     // L06: the one empty patch, flowers all round it (audit B6)
-    patch: { subject: [3.5, 1.0, 0.5], path: [[0, 0.2, 3.2, 4.4], [4, 0.5, 3.0, 4.0]], look: [4.0, 1.4, -1.6], fov: 52 },   // high 3/4 down on the bare block in its flower ring, the hut behind it (a flat top-down failed the owner gate)
+    patch: { subject: [[3.5, 1.0, 0.5]], path: [[0, 0.2, 3.2, 4.4], [4, 0.5, 3.0, 4.0]], look: [4.0, 1.4, -1.6], fov: 52 },   // high 3/4 down on the bare block in its flower ring, the hut behind it (a flat top-down failed the owner gate)
     // L07: the hut, wide, the dog small in the foreground
-    hut: { subject: [5, 2, -5.5], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
+    hut: { subject: [[5, 2, -5.5]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
     beg: { subject: ['actor:pip'], path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
@@ -62,7 +62,7 @@ module.exports = {
     reveal: { subject: ['self'], path: [[0, 0.4, 2.8, -6.8], [4, 0.5, 2.7, -6.4]], look: [2.0, 1.8, 0.5], fov: 46 },
     // L13-L14: side on, the reunion; the sit wider (F10)
     reunion: { subject: ['actor:dog', 'self'], path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
-    sit: { subject: ['self', 'actor:dog'], path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
+    sit: { subject: ['actor:dog'], path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
     end: { subject: ['actor:dog'], path: [[0, -3, 10, -4.6], [1.6, -7.5, 15, -6.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // rising into the opening's frame: the dog alone above the village (the loop)
   },
@@ -251,6 +251,11 @@ module.exports = {
     // at(i): the tick (from the line's mark) where caption chunk i starts: the picture cuts and acts on the chunk it shows;
     // a cut inside a line goes 1 tick before its chunk (3 when it waits for a mob just summoned), so it shows before the word
     const { line } = K
+    // the dog sits and stares, but alive: a slow look-around (a sitting tamed wolf looks about in vanilla), +-7 deg, while
+    // he sits; off while he runs to Buh (L15) and until he sits again (L17). The lint's "nobody moves" counted only him
+    // for the opener and the night (the narration is one long take)
+    let dogIdle = true
+    K.every(() => { if (dogIdle) { dog.yaw = -90 + 7 * Math.sin(ctx.tick / 11); dog.pitch = 5 * Math.sin(ctx.tick / 17) } })
 
     // ---- L01: the dog on the hill (sunrise)
     await cut('open')
@@ -276,7 +281,7 @@ module.exports = {
         for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
         z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }); z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
       }
-      if (at1('zombies', k >= at.cut(3))) { await cut('zombies', {}, () => K.park('cr')); say('/kill @e[tag=cr]'); cr = null }   // the creeper leaves with the cut
+      if (at1('zombies', k >= at.cut(3))) { await cut('zombies', {}, () => { Object.assign(cr, OFF); K.warp('cr') }); K.park('cr'); say('/kill @e[tag=cr]'); cr = null }   // the creeper leaves with the cut (warped in the cut's moves: the cut waits until it has landed)
       if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (at1('groan', k >= at(3) + 2)) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
     })
     K.park('z1'); K.park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
@@ -338,7 +343,7 @@ module.exports = {
     // on the reunion: he crouches, the dog runs to him
     await cut('reveal')
     await line('L14', (k) => { pip.yaw = lerp(-90, -80, k / 20) })
-    await cut('reunion'); bot.setControlState('sneak', true)
+    await cut('reunion'); bot.setControlState('sneak', true); dogIdle = false
     await line('L15', (k) => {
       const u = ease(k / 12)
       const hop = k > 12 ? Math.max(0, Math.sin((k - 12) / 2.2)) * 0.35 : 0
@@ -346,10 +351,10 @@ module.exports = {
       if (at1('bark', k >= 6)) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
     })
     // ---- L16: "Then he SAID:"; L17: Buh, "Sit, BOY." (the dog sits on BOY) "Be right BACK." He logs out after BACK (the payoff)
-    await cut('sit')
+    await cut('sit'); dogIdle = true   // (standing by Buh he looks about too: the wide holds 2 s)
     await line('L16', (k) => { if (at1('unsneak', k >= 3)) bot.setControlState('sneak', false) })
     await line('L17', (k, at) => {
-      if (at1('sit', k >= Math.max(2, at(1) - 4))) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
+      if (at1('sit', k >= Math.max(2, at(1) - 4))) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90, pitch: 0 }); sitDog(true); bot.swingArm('right'); dogIdle = true }
     })
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
