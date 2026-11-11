@@ -34,7 +34,7 @@
   },
   "weather": "clear",
   "world": {
-    "place": "ravenford (canonical): the pasture inside the palisade with its own fence gate in the east wall 15 blocks south of the east gate, the east gate, Dad's house; the woods are the birch past the ford (+40) east of the gate, the clearing staged at +45..+54 inside the footprint",
+    "place": "ravenford (canonical): the pasture, its fence gate in the east palisade 15 blocks south of the east gate, the east gate; the woods are birch past the ford (+40) east of the gate, the clearing staged at +45..+56 (widen the footprint east to x <= -1975; stamp birch if the seed has none). The pasture's plot must be fitted to the generated village's real layout (see set.md)",
     "day": 2100,
     "canon": "A new Ravenford family (a shepherd Dad and his kid; not Buh, not Grandpa). New canon facts: from about day 1950 Ravenford's flock is dyed blue as an evoker alarm; an evoker lives in the woods east of the ford (where it came from is never said). Nobody says 'Buh'.",
     "easter_egg": "raven_tower: the old watchtower on the Ridge on S01's skyline (never named)"
@@ -323,7 +323,7 @@
       "say": "So I went in to find MORE red ones!",
       "shot": "S11",
       "shows": [
-        "lamb (6 blocks ahead)",
+        "lamb (4 blocks ahead)",
         "woods (birch trunks all round)"
       ],
       "look": {
@@ -340,7 +340,7 @@
       "shot": "S12",
       "punch": true,
       "shows": [
-        "lamb (stopped, 2.5 blocks ahead, still blue)"
+        "lamb (walking, then stopped 1.5 blocks ahead, still blue)"
       ],
       "look": {
         "what": "prop:lamb",
@@ -356,8 +356,8 @@
       "place": "pasture",
       "size": "ews",
       "time": 1000,
-      "camera": "path: crane down from (-30, 22, 15) to (-18, 9, 15) over the pasture, looking EAST at (10, 0, 15). FOV 55. Moving from frame 1",
-      "frame": "fg: the pasture's oak fence; subject: sixty blue sheep grazing, filling the middle third, at full scale; bg: the east palisade, the fields to the ford, the birch woods beyond, the Ridge with the old tower on the skyline (the easter egg). Morning. Every sheep blue, not one other colour; the lamb is among them but not singled out."
+      "camera": "path: crane down from (-50, 20, 15) to (-38, 10, 15), west of the pasture, looking EAST at (-10, 0, 15). FOV 55. Moving from frame 1; every sheep 14+ blocks from the lens",
+      "frame": "fg: the pasture's west oak fence; subject: sixty blue sheep grazing, filling the middle third, at full scale; bg: the east palisade, the fields to the ford, the birch woods beyond, the Ridge with the old tower on the skyline (the easter egg). Morning. Every sheep blue, not one other colour; the lamb is among them but not singled out."
     },
     {
       "id": "S02",
@@ -365,17 +365,17 @@
       "place": "pasture_gate",
       "size": "full",
       "time": 1000,
-      "camera": "at: (4, 1.6, 19) looking at Dad (0, 1, 15), slow push",
-      "frame": "subject: Dad at the pasture gate (outside it, east side) with blue dye in hand; a WHITE stray sheep in front of him. On 'GATE' he uses the dye: it turns blue and trots in through the open gate; bg: the pasture of blue sheep. Morning."
+      "camera": "at: (5, 4, 19) outside the palisade, raised to y 4 so the pasture shows over it, looking at Dad (1.5, 1, 15), slow push",
+      "frame": "subject: Dad just outside the pasture gate (1.5, 0, 15), blue dye in hand; a WHITE stray sheep in front of him. On 'GATE' he uses the dye: it turns blue and trots in through the open gate; bg: over the palisade, the pasture of blue sheep. Morning."
     },
     {
       "id": "S03",
       "line": "L03",
-      "place": "dad_house",
+      "place": "pasture_gate",
       "size": "ms",
       "time": 1000,
-      "camera": "at: (2.5, 1.6, 2) from the house's front looking at Dad's face (0, 1.6, 0), still",
-      "frame": "subject: Dad in his doorway, waist up, looking at camera (at the kid); a blue-dye stack in his hand; bg (out of focus): his house's lantern-lit room. Morning."
+      "camera": "at: (4, 1.6, 15.5) east of Dad, at his eye height, looking at his face (1.5, 1.6, 15), still",
+      "frame": "subject: Dad waist up at the pasture gate, the same moment as S02: he turns from the dyed stray to the camera (to the kid), blue dye still in hand; bg (soft): the gate and blue sheep behind him. Morning."
     },
     {
       "id": "S04",
@@ -392,8 +392,8 @@
       "place": "pasture_gate",
       "size": "wide",
       "time": 13000,
-      "camera": "at: (-6, 2.5, 23) inside the pasture looking at the gate (0, 1, 15), slow pan along the flock",
-      "frame": "subject: Dad at the pasture gate at nightfall, lantern on the gate post, the flock filing in past him, every sheep blue; he nods at each (head bob on each 'blue'). Night 13000, the lantern and the last sky light."
+      "camera": "at: (-6, 2.5, 21) inside the pasture looking at Dad (-2, 1, 17), slow pan with him",
+      "frame": "subject: Dad walking slowly among the flock inside the pasture at nightfall, the lantern on the gate post behind him, every sheep blue; he nods at each (a head bob on each 'blue'). Night 13000, the lantern and the last sky light."
     },
     {
       "id": "S06",
@@ -402,7 +402,7 @@
       "size": "ms",
       "time": 6000,
       "camera": "at: (-3, 1.2, 15) inside the gate, looking EAST out through it at the red sheep (1.5, 0.8, 15), slow push",
-      "frame": "subject: ONE red sheep standing in the open gateway among blue ones, facing camera; Dad's legs and crossbow at the frame edge; bg: the fields, the ford and the birch treeline at +45 behind it (the woods named in the line). Day, last spring."
+      "frame": "subject: the open gateway, the blue sheep around it; on 'WOODS' ONE red sheep steps in from outside and stops, centred and facing camera, by 'RED'; Dad's legs and crossbow at the frame edge; bg: the fields, the ford and the birch treeline at +45 behind it (the woods named in the line). Day, last spring."
     },
     {
       "id": "S07",
@@ -410,8 +410,8 @@
       "place": "east_gate",
       "size": "wide",
       "time": 12300,
-      "camera": "at: (-10, 5, -4) behind Dad, aimed at the outpost (131, 20, 92), still",
-      "frame": "subject: Dad's back, sitting on a log in the east gateway, crossbow held in his right hand, on the camera's side, angled out so it reads past his body, facing the woods; mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk."
+      "camera": "at: (-6, 3, -6), 3/4 behind Dad and to his left at about 7 blocks, aimed east past him at the outpost (131, 20, 92), still",
+      "frame": "subject: Dad sitting on a log in the east gateway, 3/4 from behind, facing the woods, the crossbow held up in his right hand on the camera's side, against the sky (it reads at 300 px); mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk."
     },
     {
       "id": "S08",
@@ -428,8 +428,8 @@
       "place": "pasture_gate",
       "size": "full",
       "time": 12000,
-      "camera": "pov: standing in the open pasture gate, looking east at the lamb trotting toward the treeline",
-      "frame": "fg: the open fence gate; subject: the small blue lamb trotting out, 10-15 blocks out; mid: the ford at +40; bg: the birch treeline at +45. Late afternoon, low sun from behind the camera (west)."
+      "camera": "pov: standing in the open pasture gate, looking east; the lamb starts in the gateway 2 blocks ahead and trots out on 'LAMB'",
+      "frame": "fg: the open fence gate; subject: the small blue lamb 2 blocks ahead in the gateway (full, about a quarter of the frame), trotting out toward the treeline on 'LAMB'; mid: the ford at +40; bg: the birch treeline at +45. Late afternoon, low sun from behind the camera (west)."
     },
     {
       "id": "S10",
@@ -438,7 +438,7 @@
       "size": "ews",
       "time": 12000,
       "camera": "at: (-4, 9, 22) high above the pasture's east fence, looking EAST-north-east over the open gate toward the ford (40, 0, 10), still, a slow drift",
-      "frame": "fg-left: Dad small inside the pasture, his back to the gate, mending the west-facing fence (hitting a post); centre: the open pasture gate; mid: the blue lamb trotting across the ford and the kid (small, from behind, `alex` skin) following it; bg: the birch woods at +45 the line names. Late afternoon, low sun from behind the camera (west). Dad never turns."
+      "frame": "fg-left: Dad inside the pasture (25+ blocks from the lens, small), his back to the gate, mending the west-facing fence (hitting a post); centre: the open pasture gate; mid: the blue lamb trotting across the ford and the kid (small, from behind, `alex` skin) following it; bg: the birch woods at +45 the line names. Late afternoon, low sun from behind the camera (west). Dad never turns."
     },
     {
       "id": "S11",
@@ -446,26 +446,26 @@
       "place": "woods_edge",
       "size": "wide",
       "time": 12100,
-      "camera": "pov walking into the woods, following the lamb 6 blocks ahead",
-      "frame": "subject: the blue lamb between birch trunks; low sun through the trunks; bg: dark trunks, nothing moving. The evoker is NOT in frame (it stands off to the right, behind the trunks of the S11/S12 clearing)."
+      "camera": "pov walking into the woods, following the lamb 4 blocks ahead",
+      "frame": "subject: the blue lamb 4 blocks ahead between birch trunks, walking; low sun through the trunks; bg: dark trunks, nothing moving. No evoker anywhere (it is summoned only after S11; S01, S08 and S10 look at this treeline)."
     },
     {
       "id": "S12",
       "line": "L12",
       "place": "clearing",
-      "size": "full",
+      "size": "ms",
       "time": 12200,
-      "camera": "pov stops: the lamb 2.5 blocks ahead, stopped, facing away toward a dark gap between birch trunks",
-      "frame": "subject: the lamb, still blue, in low sun (the blue must read); the gap she faces is dark; the evoker is hidden behind a thick trunk / leaves in this angle. Sound: entity.evoker.prepare_wololo, faint, from the gap, under 'Like she was LISTENING' (the casting has started)."
+      "camera": "pov: the kid at K (0, 1.6, 0) in the clearing facing EAST; the lamb walks ahead and stops 1.5 blocks away at (1.5, 0, 0) on 'STOPPED', turning to face north-east (toward the evoker's spot); the view tilts down a little to her",
+      "frame": "subject: the lamb, still blue, big in frame (ms), walking, then stopped on 'STOPPED', head turned north-east toward a dark gap between birch trunks off frame left; low sun on her (the blue must read). The evoker stands at (8.5, 0, -6), behind a thick trunk and leaves from K and outside this frame. Sound: entity.evoker.prepare_wololo, faint, from the gap, under 'Like she was LISTENING' (the casting has started)."
     },
     {
       "id": "S13",
       "line": "L12",
       "place": "clearing",
-      "size": "wide",
+      "size": "full",
       "time": 12200,
-      "camera": "at: low behind and left of the kid's shoulder (-1.5, 1.6, 2) looking past the lamb at the evoker 8 blocks beyond it, FOV 35 (the evoker about a quarter of the frame height); the cut lands at the end of L12",
-      "frame": "The reveal, one continuous wide (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, cast 60). fg: the kid's shoulder; mid: the lamb; subject: the evoker between the trunks, ARMS RAISED and waving (spellcasting pose), brownish-orange spell particles at its hands only, looking at the lamb. +0.3 s: the lamb's wool turns from blue to RED on the cast tick (cast-spell sound; no puff on the sheep) = THE REVEAL. +1.3 s: the cast ends, its arms come down and its head turns to the lens: it sees her. CUT there (~1.0 s after the reveal). No line. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
+      "camera": "at: (-1.5, 1.6, 1.5), behind and to the RIGHT of the kid (who faces east; right is +z), low, looking north-east past the lamb (1.5, 0.5, 0) at the evoker (8.5, 1.2, -6), FOV 35 (the evoker about a quarter to a third of the frame height); the trunk that hid it from K is now off to the side; the cut lands at the end of L12",
+      "frame": "The reveal, one continuous wide (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, cast 60). fg: the kid's right shoulder (the lead in her hand); the evoker is 8.5 blocks from the lamb (inside its 16-block spell range) and 10.4 from the kid (inside its 12-block follow range), level with both; mid: the lamb; subject: the evoker between the trunks, ARMS RAISED and waving (spellcasting pose), brownish-orange spell particles at its hands only, looking at the lamb. +0.3 s: the lamb's wool turns from blue to RED on the cast tick (cast-spell sound; no puff on the sheep) = THE REVEAL. +1.3 s: the cast ends, its arms come down and its head turns to the lens: it sees her. CUT there (~1.0 s after the reveal). No line. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
     }
   ],
   "props": {
@@ -487,7 +487,13 @@
       ]
     },
     "evoker": {
-      "actor": "evoker"
+      "actor": "evoker",
+      "at_clearing": [
+        8.5,
+        0,
+        -6
+      ],
+      "note": "clearing-relative (K = the kid's stop point); summoned only after S11"
     }
   },
   "ending": {

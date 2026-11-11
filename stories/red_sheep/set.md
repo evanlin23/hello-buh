@@ -20,7 +20,6 @@ top. No site search and no clearing (STANDARDS 3.5).
 ## Pieces
 - **The pasture:** the canonical palisade, plus an oak-fence pasture inside the south wall (~40 x 30) with its gate in
   the east palisade at (0, 0, 15). Natural grass and slope; no flattening beyond the fence line.
-- **Dad's house:** a small spruce house west of the pasture gate (new stamp, `since: 1950`).
 - **Lanterns:** on the pasture gate post, and on the palisade every 8 blocks along the east side.
 - **The flock:** 60 sheep summoned with `Color:11`. S02: one more with `Color:0` (white), dyed in shot. S06: one with
   `Color:14` (red). The lamb: a baby sheep (`Age:-24000`, refreshed so it never grows), `Color:11`,
@@ -42,8 +41,11 @@ top. No site search and no clearing (STANDARDS 3.5).
 - The woods begin 40+ blocks from the gate: "places far apart in the story are far apart on screen".
 
 ## Pre-build checklist
-1. Port Thirty-One Raids' palisade and east gate into map.json `ravenford` pieces and stamps; add the pasture, its
-   gate and Dad's house (`since: 1950`).
+1. Port Thirty-One Raids' palisade and east gate into map.json `ravenford` pieces and stamps; add the pasture and its
+   gate (`since: 1950`). Fit the pasture to the real layout: the generated plains village covers gate-relative
+   (-136..+3, -78..+55), Thirty-One Raids' square sits at (-30, 0) and Grandpa's yard at (-8, -6), so the planned
+   (-40..0, 0..30) collides; move the plot (and the pasture gate, keep it in the east palisade) to a free stretch.
+   Widen the footprint east to x <= -1975 for the clearing (r3 continuity).
 2. Add `"red_sheep": {"day": 2100, "places": ["ravenford"], "status": "claimed", "cameos": ["raven_tower"]}` to
    map.json `stories`, then `node scripts/world.js check`.
 3. The engine features in reviews/r3-engine.md.

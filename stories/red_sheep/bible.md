@@ -2,7 +2,7 @@
 
 ## World
 - **Place:** Ravenford (canonical: `ravenford` in docs/world/map.json): the pasture inside the log palisade with its
-  own fence gate in the east palisade, the east gate, Dad's house, and the birch woods east of the ford.
+  own fence gate in the east palisade, the east gate, and the birch woods east of the ford. (No house: L03 is shot at the pasture gate.)
 - **Day:** 2100. A new Ravenford family: a shepherd **Dad** and his **kid** (the narrator). Not Buh, not Grandpa.
   Nobody says "Buh" (there's no reason to: he isn't in it).
 - **New canon facts** (add to canon.md when this is made):
@@ -42,10 +42,9 @@
 |---|---|---|
 | pasture | inside the palisade south of the east gate, ~40 x 30, oak fence, 60 sheep | S01 (EWS) |
 | pasture gate | a fence gate in the east palisade at (0, 0, 15), a lantern post | S02, S05, S06, S09 |
-| Dad's house | a small spruce house just inside the palisade, west of the pasture gate (new stamp) | S03 |
 | east gate | canonical, logs, at (0, 0, 0) | S07, S08 |
 | fields and ford | east of the gates: fields, the ford at +40 | S07-S09 |
-| the birch woods | past the ford from +45; the clearing staged at +45..+54 (inside the footprint) | S11-S13 |
+| the birch woods | past the ford from +45; the clearing staged at +45..+56 (widen the footprint east to x <= -1975); birch stamped if the seed has none | S11-S13 |
 
 ## Cast and costume
 - **The kid (narrator):** a player, `alex` skin, never named. POV in S09, S11, S12; small from behind, crossing the ford, in S10; her shoulder in S13. Hearts full,
@@ -72,8 +71,11 @@
 ## Positions and screen direction
 - The woods are east; gate shots look east (S01, S06, S07, S08, S09), except S05 (looks at the gate from inside) and
   S10 (the high wide over the pasture gate, east-north-east).
-- S13: the kid faces east; the lamb 2.5 blocks ahead; the evoker 8 blocks beyond the lamb (10.5 from the kid: inside
-  its 16-block spell range for the lamb and its 12-block follow range for the kid), at the same height (spell box ±4).
+- S12-S13, clearing-relative (K = the kid's stop point, facing east): the lamb stops at (1.5, 0, 0) and turns north-east;
+  the evoker at (8.5, 0, -6), off the kid-lamb line: 8.5 blocks from the lamb (inside the 16-block spell range) and
+  10.4 from the kid (inside its 12-block follow range), level (spell box ±4). A trunk hides it from K (S12); S13's camera
+  at (-1.5, 1.6, 1.5), behind and right of the kid, sees past the trunk. Not summoned before S12 (S01, S08 and S10 look
+  at this treeline).
   At the cut its head has turned to the lens (to her).
 
 ## Who knows what
