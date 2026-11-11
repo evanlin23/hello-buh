@@ -184,9 +184,11 @@ module.exports = {
     // mark read as stepped motion: rec_check). POV cuts stay K.cut (the camera must land already aimed)
     const scut = async (dx, dz, target, dy, o = {}) => {
       if (o.stop !== false) K.stop()
+      const jump = () => { if (o.self) K.self(o.self[0], o.self[1]); K.blink('self', { x: dx, y: dy, z: dz }) }
       const w = await K.cutShot(o.shot, () => {
         if (o.after) o.after()
-      }, { time: o.time, max: 10, at: () => {   // the wolf's jump goes with the shot change itself: in the moves it left the old shot 1-3 ticks before every cut (owner: "we can see the dog teleport")
+        if (o.selfFirst) jump()   // a cut to a set far from the bot (the island): it goes first so the client tracks the cast there (moved on the shot change, Buh was out of range and a tick late: lint)
+      }, { time: o.time, max: 10, at: o.selfFirst ? null : () => {   // the wolf's jump goes with the shot change itself: in the moves it left the old shot 1-3 ticks before every cut (owner: "we can see the dog teleport")
         if (o.self) K.self(o.self[0], o.self[1])
         K.blink('self', { x: dx, y: dy, z: dz })
       } })
@@ -259,7 +261,7 @@ module.exports = {
       if (k > at.cut(1) && k < at.cut(2)) { walkG(buh, 0, -0.14); K.base = K.aim(P(8.4, 1.4, buh.z - 6)); look(k) }
       if (once('L03cut2', k >= at.cut(2))) {
         K.go(false)
-        await scut(67.6, 14.2, P(70.6, 64.5 - F, 13.6), 64 - F, { shot: 'beach', time: GOLD, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // the wolf already on the sand, 3 blocks from where he climbs out
+        await scut(67.6, 14.2, P(70.6, 64.5 - F, 13.6), 64 - F, { shot: 'beach', time: GOLD, selfFirst: true, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // the wolf already on the sand, 3 blocks from where he climbs out
       }
       if (k > at.cut(2)) { if (buh.x > 68.6) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
     })
@@ -416,7 +418,7 @@ module.exports.shots = {
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
   // L01 frame 1 (owner: "not very exciting? Also not centered"): low behind the wolf, the wolf centred and big, Buh
   // sprinting away from it down the road toward the village
-  dog_start: { subject: ['self', `actor:${GUY}`], at: [44.5, 0.62, -5.6], look: [41.5, 0.55, -4.4], fov: 50, push: 0, drift: 0.6, dof: false },   // low behind the wolf's shoulder, a little north of the road, aimed AT the wolf (41.5, -4.2; the road at -0.06): it is centred and big, Buh sprinting away beyond it down the road (west). No push (the bright look's push drove it into the wolf: lint); fov 50 and low (flat 30% at 55)
+  dog_start: { subject: ['self', `actor:${GUY}`], at: [44.5, 0.55, -5.6], look: [41.5, 0.75, -4.4], fov: 48, push: 0, drift: 0.6, dof: false },   // low behind the wolf's shoulder, a little north of the road, aimed AT the wolf (41.5, -4.2; the road at -0.06): it is centred and big, Buh sprinting away beyond it down the road (west). No push (the bright look's push drove it into the wolf: lint); fov 50 and low (flat 30% at 55)
   run_ahead: { subject: ['self', `actor:${GUY}`], follow: `actor:${GUY}`, offset: [-4.3, 0.75, 1.3], look: { of: `actor:${GUY}`, offset: [-0.4, -0.3, 0.1] }, lag: 2, fov: 52 },   // ahead of the pair on the wolf's side, low and level (flat); Buh near the centre where the eye left the wolf in dog_start (cuts), the wolf at his side
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
