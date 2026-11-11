@@ -1,4 +1,4 @@
-# six_thousand_torches: continuity bible (r2)
+# six_thousand_torches: continuity bible (r2; world pass 2026-11-11: Larkfield claimed on the High Meadow, the cameo)
 
 Built on stories/nine_thousand_torches/bible.md (r2). r2: 14 lines, S01-S14 (one shot per line). The nightly habit
 is a WALK HOME with Jonah's own torch (not a torch left by the door: a placed torch burns forever, so it wouldn't need
@@ -22,12 +22,26 @@ ending is Jonah setting his own torch down by our door, waving and walking away,
 - **The ending:** Jonah places his own torch, the last one, on the grass one east of our doorstep (the **door spot**),
   waves, and walks away east empty-handed. **No quit, no chat line, no "left the game"** (audit #6.1). The kid thinks
   he forgot to say "see you tomorrow".
-- **The place and the day:** `larkfield` (to claim; see nine_thousand_torches' bible for the claim command, with
-  `--story six_thousand_torches`, retiring nine_thousand_torches' claim on the same place and day, and its timeline row "leaves the game" rewritten as "walks away"), day 4500. Narrator: a new baby villager of Larkfield, unnamed, **not Pip** (Pip is Hushwell's kid; this one only shares the brand voice). Jonah: a player,
-  not Milo. **Stands alone:** no line names a place or another story. No easter egg: the dog is hidden behind Dog Hill's own ridge from Larkfield (continuity r1); the hill is on S01's skyline as geography only.
-- **Canon to record in the claim commit (not done here):** Larkfield glows with ~6,000 torches from day 4500; Jonah's
-  plot a 9 x 9 square of torches; Jonah's things in the kid's family chest; timeline row "4500, Larkfield. Six Thousand
-  Torches."
+- **The place and the day:** `larkfield`, claimed on main 2026-11-11 (docs/world/map.json): the High Meadow's
+  north-east top (meadow, y 116-119; built, not generated), the bell at (-360, 116, -712), the 90 x 90 box
+  (-405..-316, -757..-668) = bell + (-45..44, -45..44) as below. Day 4500. **Why there (the lead's call, canon link
+  13):** Larkfield's torches must be seen from Dog Hill, and nothing new may be in Dog on the Hill's rendered skyline
+  (day 4300). Every block of the box is 181+ from Dog Hill's D and 185+ from Hushwell's well: past the render distance
+  of Dog on the Hill, Good Boy and Light Sleeper (10 chunks, 160-176 blocks). From D the box's north-east roofs and
+  torches show over the plateau's rim, 185-190 blocks south-west (survey line of sight: about a quarter of the box's
+  rooftop points; the ground is behind the rim). Narrator: a new baby villager of Larkfield, unnamed, **not Pip** (Pip
+  is Hushwell's kid; this one only shares the brand voice). Jonah: a player, not Buh. **Stands alone:** no line names
+  a place or another story.
+- **Easter egg:** `pip_and_dog` (map.json cameo, since 4300): from the box's north-east corner, bell + (39, -44), S04's
+  POV looks north-east over the rim and Pip and the dog sit on Dog Hill's top, two pale specks on the far skyline,
+  185 blocks out (survey: the line clears the ground by 0.7-0.8 at the kid's eye; true at 23185, they sit there every
+  night). Never named, never the subject. The dog is hidden by Dog Hill's own ridge only from the west; from here the
+  line passes south of the ridge.
+- **Canon recorded on main 2026-11-11:** the torches are a permanent stamp from day 4500 (`six_thousand_torches`,
+  `do: torches` over the box, after Larkfield's pieces) and a cameo for later night shots from the hill
+  (`larkfield_glow`); Jonah's plot a 9 x 9 square of torches; Jonah's things in the kid's family chest; the timeline
+  row "4500, Larkfield. Six Thousand Torches" (walks away, never quits). Theme (canon): players leave; the world
+  remembers. Jonah walks away the way Buh did, while Pip sits with the dog who's still waiting.
 
 ## Scenes and time of day (story order)
 | scene | lines | when | ticks | light |
@@ -58,7 +72,7 @@ Coordinates: the village bell is (0,0); +x east, +z south. Real numbers come fro
 | village | box about x -45..44, z -45..44 (90 x 90, includes Jonah's plot; one torch per column, so the smaller box can't reach 6,000) | vanilla plains village, 10-14 houses, paths, farms, bell, well, hay, lamp posts, iron golem | S01 | A/C/D: a torch on every sturdy top. B: none (whole-box swap) |
 | west_lane | a fenced lane, west side, ending at the meeting point | fence line, ridges, the hay pile at the meeting point where the lane ends | S02 | torched |
 | meeting_point | (0,0) | bell, well, hay | S03 | torched |
-| village_edge | north edge, on a rise | the last torch row, open grass, dark oak forest 20+ out | S04 | none |
+| village_edge | the north-east corner, bell + (39, -44), on the High Meadow's north-east rim | the last torch row, open grass to the rim, the drop, the dark lowland; Dog Hill on the far skyline north-east with Pip and the dog (the cameo) | S04 | none |
 | jonah_house / jonah_plot | west end of the main street, about (-38, 4) | B: birch cottage, two chests (coal, sticks) and a crafting table by the door. A/C/D: 9 x 9 coarse dirt, a torch on every block; street fence in front, torched | S05 (B), S10 (C, same angle) | gone after B |
 | our_door / our_house_inside | about (-24, 6), 14 blocks east of Jonah's door, north side of the main street, door facing south | bed under a north-west window, our chest on the west wall; **the door spot** = grass one east of the doorstep | S06 (B), S13 (D, same axis) | D: the door spot empty until S13's last torch |
 | village_south / our_street | the house across the street, about x -27..-20, z 10..17, front facing north; a 1-wide grass strip on its east side (x -19, z 11..18) | the row: up the strip (x -19, z 18→10), west along z 9 (x -19→-23), the path gap (-23, 8), the door spot (-23, 7). in S11 the torches at (-19, 10) then (-19, 9) appear on 'GROWING' (Jonah unseen: nothing round the corner is visible from the strip). The dressing skips the row's cells and the door spot | S11, S12 | the row grows in S11; complete to one short of the door spot by S12 |

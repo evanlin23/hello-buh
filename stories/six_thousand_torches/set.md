@@ -1,12 +1,27 @@
-# six_thousand_torches: set brief (r2)
+# six_thousand_torches: set brief (r2; world pass 2026-11-11)
 
 Inherits stories/nine_thousand_torches/set.md (r2) for the site, the dressing and the scene swaps, with these
 changes: **no chat lines and no quit** anywhere (S07 Jonah waves and turns to walk home; S14 he walks away west down
 the street); one new view (S14, the kid's POV from (-24, 8) looking west); the door cameras moved into the street east
 of the door (S06 about (-15, 9), S13 about (-18, 9), looking west-north-west: a camera due south of the door would be
 inside the house across the street); the box widened to ~90 x 90 (one torch per column: 78 x 78 gives only ~4-5k);
-the dressing skips the growing row's cells and the door spot; no easter egg (the dog is hidden behind Dog Hill's ridge
-from Larkfield). Continuity r1, reviews/r1-continuity.md.
+the dressing skips the growing row's cells and the door spot; the easter egg is `pip_and_dog` in S04 (world pass
+2026-11-11: Larkfield moved to the High Meadow, where the line to the hilltop is clear). Continuity r1, reviews/r1-continuity.md.
+
+## The world (2026-11-11)
+- **Site:** `larkfield` on main (bell (-360, 116, -712), box (-405..-316, -757..-668), the High Meadow's north-east
+  top, meadow at y 116-119; the box's south-east corner is 6 blocks from the Digger's House footprint: keep the dressing
+  inside the box). Build the village from library pieces and write them to map.json `larkfield.pieces` before
+  recording (the canon's torches stamp `six_thousand_torches` dresses the box after the pieces, so later stories get
+  the same glowing village; this story's own dressing keeps its skip list for the growing row and the door spot).
+  There's no dark oak on the plateau: the "forest" in S04 is the dark lowland below the rim; the west hills in S05,
+  S10 and S14 are the High Meadow's west top.
+- **The cameo (S04):** `world.build(ctx, { story: 'six_thousand_torches' })` builds Dog Hill's cameo needs (meadow,
+  dog, Pip, patch, hut). S04's POV at bell + (39, 0.81, -44), facing north-east (yaw toward D (-202, 109, -898), about
+  40 degrees east of north). Dog Hill is 185 blocks out: set `renderDistance: 14` and a chunk stop / recordRadius that
+  holds Dog Hill's chunks. Pip and the dog are 3-4 px at the default FOV: a speck, as intended; check on the still that
+  they read as two pale points on the hilltop and nothing more.
+- **From Dog Hill (later stories):** the cameo `larkfield_glow` (renderDistance 13+ from the hill, south-west).
 
 ## The narration's claims (owner rule: the set matches every claim; check on stills from every shot angle)
 | line | claim | what the set must show | check |
@@ -46,8 +61,8 @@ Jonah's birch cottage in B only; our chest with the 11 items; the growing-row st
 ## What fills each establishing shot out to the fog
 | shot | fg | mid | bg |
 |---|---|---|---|
-| S01 | ridge torches and fence posts under the lens | the whole box: thousands of torches, darker path lines | the forest ring, Dog Hill's ridge on the ESE skyline (no dog: hidden by the ridge), the dawn band |
-| S04 | the last torch row | open unlit grass | the dark oak forest, hills, blue dawn sky |
+| S01 | ridge torches and fence posts under the lens | the whole box: thousands of torches, darker path lines | the High Meadow's east rim falling to the dark lowland and the sea, the dawn band (Dog Hill off frame left) |
+| S04 | the last torch row | open unlit grass to the plateau's rim | the dark lowland, Dog Hill on the far skyline north-east with Pip and the dog (two pale specks: the cameo), blue dawn sky |
 | S05 | Jonah's garden fence and gate lanterns | Jonah at his gate; two villagers on the street | west hills, golden sky |
 | S10 | the torched street fence | the 9 x 9 torch square | west hills (S05's skyline) |
 | S14 | the torched street | Jonah walking away west | the plot's torch square, the west hills in sunrise light | Jonah walking away down the torched street | the east edge of the village, the hills, the sunrise glow |
@@ -66,4 +81,4 @@ Jonah's birch cottage in B only; our chest with the 11 items; the growing-row st
 | 6,000 block-light emitters render in time | **unverified**: render one S01 frame and time it before recording |
 | torch flame and smoke particles | **missing**: renderer/particles.js has no torch flame/smoke. Nice to have for S03, S11, S13 (near torches); bloom carries the far ones. ~1 h, gated |
 | Gemini voice for Jonah (cast `friend`, Fenrir, flash-tts) | exists in voices/cast.json; not auditioned on this line (owner picks new casts from an audition, STANDARDS 2.7) |
-| the place `larkfield` in docs/world/map.json | **missing**: never claimed (claim commit before building) |
+| the place `larkfield` in docs/world/map.json | **claimed** on main 2026-11-11 (pieces still to add) |
