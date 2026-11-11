@@ -206,6 +206,8 @@ module.exports = {
     // exciting? Also not centered"): frame 1 is the hook. Low behind the wolf, centred and big, as Buh sprints away
     // down the road from it, glancing back; on "thirty-seven TIMES" a cut ahead of him: the wolf already running at his
     // side (placed on the cut, never a jump on screen: "we can see the dog teleport")
+    await bot.look(Math.PI / 2, 0, true)   // motion-ok: off screen, before the first shot: the wolf lands already facing down the road (it landed facing north and turned 90 deg in the first 0.6 s: out of frame, lint)
+    await bot.waitForTicks(2); K._clock += 2
     await scut(41.5, -4.2, P(20, gy(20, -4.2) + 0.6, -4.2), gy(41.5, -4.2), { shot: 'dog_start', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 39.5, z: -5.0, y: gy(39.5, -5.0), yaw: 90, pitch: 5 }) })
     K.ctl('sprint', true); K.go(false)
     await K.preroll(10, () => { walkG(buh, -0.28, 0); autoJump() })
@@ -414,7 +416,7 @@ module.exports.shots = {
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
   // L01 frame 1 (owner: "not very exciting? Also not centered"): low behind the wolf, the wolf centred and big, Buh
   // sprinting away from it down the road toward the village
-  dog_start: { subject: ['self', `actor:${GUY}`], at: [44.5, 0.75, -5.6], look: [41.5, 0.5, -4.4], fov: 55, push: 0, drift: 0.6, dof: false },   // low behind the wolf's shoulder, a little north of the road, aimed AT the wolf (41.5, -4.2; the road at -0.06): it is centred and big, Buh sprinting away beyond it down the road (west), just right of it. No push (the bright look's push drove it into the wolf: lint)
+  dog_start: { subject: ['self', `actor:${GUY}`], at: [44.5, 0.62, -5.6], look: [41.5, 0.55, -4.4], fov: 50, push: 0, drift: 0.6, dof: false },   // low behind the wolf's shoulder, a little north of the road, aimed AT the wolf (41.5, -4.2; the road at -0.06): it is centred and big, Buh sprinting away beyond it down the road (west). No push (the bright look's push drove it into the wolf: lint); fov 50 and low (flat 30% at 55)
   run_ahead: { subject: ['self', `actor:${GUY}`], follow: `actor:${GUY}`, offset: [-4.3, 0.75, 1.3], look: { of: `actor:${GUY}`, offset: [-0.4, -0.3, 0.1] }, lag: 2, fov: 52 },   // ahead of the pair on the wolf's side, low and level (flat); Buh near the centre where the eye left the wolf in dog_start (cuts), the wolf at his side
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
