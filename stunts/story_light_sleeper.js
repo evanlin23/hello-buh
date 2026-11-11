@@ -236,7 +236,7 @@ module.exports = {
 
     // ---- L04 "Mom SAYS:" / L05 Mom (her own voice): our doorway, 2 steps up; the camera low, 3 blocks out
     await K.cut(0.5, -3.2, C(0, 4.6, -7.4), PLAZA)
-    await line('L04', async (k) => { mom.pitch = 25; mom.yaw = Math.sin(k / 9) * 6; K.base = K.aim(C(0, 4.5, -7.4)); look(k) })
+    await line('L04', async (k) => { mom.pitch = 25; mom.yaw = Math.sin(k / 9) * 6; K.base = K.aim(C(0, 4.5, -7.4)); look(k) }, 0.15)   // a beat before Mom speaks (her take started on the tail of "SAYS": pace)
     await line('L05', async (k) => {
       mom.pitch = 18 + Math.sin(k / 5) * 8; mom.yaw = Math.sin(k / 6) * 14   // she says it: a mom's 'how many times' nod
       K.base = K.aim(C(0, 4.5, -7.4)); look(k)
@@ -279,8 +279,8 @@ module.exports = {
     // ---- L08: inside our house: "Mom SAID it was a FOX"; the Darkness (the shriek's answer) is on us
     const sk = await put('skel', { x: -36.5, y: standY(ctx, X, Z, -37, 6), z: 6.5, yaw: -90, pitch: 0 })   // F6: on the grass, out of the canopy;
     const cr = await put('creep', { x: -34.0, y: standY(ctx, X, Z, -34, 8), z: 8.0, yaw: -90 })            // placed now, 40 blocks off, so L09 doesn't pop them in
-    await K.cut(0.5, -9.9, C(0, 4.0, -13), 3.07, { shot: 'pov', time: AFTERNOON + 100, after: () => say('/effect give @s minecraft:darkness 30 0 true') })
-    await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 4; mom.yaw = Math.sin(k / 3.2) * 20; K.base = K.aim(C(0, 4.0, -13)); look(k) })   // her face high in the frame, where the last shot had his (the cut's eye trace)   // she shakes her head: a fox
+    await K.cut(0.5, -9.9, K.face(P(0.5, 3.07, -13.5), 'villager'), 3.07, { shot: 'pov', time: AFTERNOON + 100, after: () => say('/effect give @s minecraft:darkness 30 0 true') })
+    await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 4; mom.yaw = Math.sin(k / 3.2) * 20; K.base = K.aim(K.face(P(0.5, 3.07, -13.5), 'villager')); look(k) })   // on her eyes (owner: not too low)   // she shakes her head: a fox
     say(`/setblock ${X} ${F + 1} ${Z} white_wool`)   // the lid is whole again by tonight (Mom re-laid it, bible)
 
     // ---- L09: golden hour at the farm edge: the skeleton shooting at him hits the creeper; the disc drops
@@ -394,7 +394,7 @@ module.exports = {
     const wEnt = () => Object.values(bot.entities).find(e => e.name === 'warden')
     for (let k = 0; k < 6; k++) { wd.y = -2.8 + 3.8 * K.ease(k / 30); look(k); await bot.waitForTicks(1) }
     // the rise and the roar, then the cut 1 s after the roar (vNext: no S17, no death screen; the picture ends it)
-    for (let k = 0; k < 24 + 20; k++) {
+    for (let k = 0; k < 24 + 16; k++) {   // the cut 0.95 s after the roar (owner: end as soon as it lands)
       const r = k + 6
       if (r <= 30) wd.y = Math.min(1.0, -2.8 + 3.8 * K.ease(r / 30))
       if (r % 6 === 0 && r < 30) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
