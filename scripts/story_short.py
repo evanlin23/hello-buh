@@ -170,7 +170,7 @@ def main():
         return o_
     total = omap(b)
     if o.score_only:
-        lines = [(omap(e["t"] / 1000), e["who"], e.get("vox") or e.get("id"), e.get("dur", 2.0)) for e in tl if e["event"] == "line"]
+        lines = [(omap(e["t"] / 1000), e.get("who", "N"), e.get("vox") or e.get("id"), e.get("dur", 2.0)) for e in tl if e["event"] == "line"]
         hushes = list(zip([omap(e["t"] / 1000) for e in tl if e["event"] == "hush"], [omap(e["t"] / 1000) for e in tl if e["event"] == "hush_end"]))
         hits = [(omap(e["t"] / 1000), bool(e.get("soft"))) for e in tl if e["event"] == "hit"]
         m = score(total + 1, lines, hushes, [omap(e["t"] / 1000) for e in tl if e["event"] == "swell"], hits)[: int((total + 1) * SR)]
@@ -239,7 +239,7 @@ def main():
         cur = s1
     parts.append(graw[int(cur * SR):])
     g = np.concatenate(parts)
-    lines = [(omap(e["t"] / 1000), e["who"], e["vox"], e.get("dur", 2.0)) for e in tl if e["event"] == "line"]
+    lines = [(omap(e["t"] / 1000), e.get("who", "N"), e["vox"], e.get("dur", 2.0)) for e in tl if e["event"] == "line"]
     chats = [(omap(e["t"] / 1000), e["text"], e.get("hold", 2.4)) for e in tl if e["event"] == "chat"]
     hush = [omap(e["t"] / 1000) for e in tl if e["event"] == "hush"]
     hush_end = [omap(e["t"] / 1000) for e in tl if e["event"] == "hush_end"]
