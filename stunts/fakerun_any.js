@@ -33,6 +33,7 @@ const LABELS = [
   ['found strongold 1st try', 1.8],
   ['end portel is lit', 1.6],
   ['THE END (looks diferent)', 1.8],
+  ['end crystals: destroyd (all 0)', 1.6],
   ['dragon kiled (trust)', 1.6]
 ]
 const SLOT = { sword: 0, pick: 1, flint: 2 }
@@ -221,7 +222,7 @@ module.exports = {
     }, {
       onCut: async () => {
         ctx.select(SLOT.sword)
-        await ctx.cmd(`/summon blaze ${X + N + 0.5} ${F + 1.6} ${Z - 2.1} {NoAI:1b,NoGravity:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_blaze"],Rotation:[0f,0f]}`)
+        await ctx.cmd(`/summon blaze ${X + N + 0.5} ${F + 1} ${Z - 3.6} {NoAI:1b,NoGravity:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_blaze"],Rotation:[0f,0f]}`)
         // the enderman to the right (east), facing us, also 1 health
         await ctx.cmd(`/summon enderman ${X + N + 3.6} ${F + 1} ${Z - 1.6} {NoAI:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_ender"],Rotation:[90f,0f]}`)
       },
@@ -251,12 +252,13 @@ module.exports = {
     await still(30)
     // the speedrunner's pro tip: dig straight down (the netherrack under the feet), and fall into the cut
     ctx.select(SLOT.pick)
-    await A.turnTo({ yaw: bot.entity.yaw, pitch: -1.45 }, { max: 30, hold: 2 })
-    R.label(ctx, 6)
-    await still(4)
+    // the crosshair on the near edge of the block under the feet (not its centre: straight down, the yaw spun round
+    // the crosshair, review r1), then the dig at once with no re-aim, the label on it
     const under = bot.blockAt(at(N, 0, 0))
     ctx.log('under', under && under.name)
-    await A.dig(under)
+    await A.turnTo(at(N + 0.5, 1.0, 0.12), { max: 30, hold: 2 })
+    R.label(ctx, 6)
+    await A.digNow(under)
     ctx.sound('block.netherrack.break', 1, 1)
     await still(10)
 
@@ -309,8 +311,10 @@ module.exports = {
     // no dragon anywhere (the label says it's dead: for the comments); the pan crosses the obsidian pillars
     const Y = ISLE + 2   // a little under the eye: the island's edge and the pillars rising past it
     await drift(at(E - 8.5, Y, -12.5), 16)
-    await pan(at(E - 8.5, Y, -12.5), at(E - 0.5, Y + 1, -19.5), 30)
+    await pan(at(E - 8.5, Y, -12.5), at(E - 8.5, Y + 9, -12.5), 22)   // up the pillar to its empty top
     R.label(ctx, 10)
+    await pan(at(E - 8.5, Y + 9, -12.5), at(E - 0.5, Y + 1, -19.5), 34)
+    R.label(ctx, 11)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
     await pan(at(E - 0.5, Y + 1, -19.5), at(E + 7.5, Y + 1, -14.5), 30)
     R.finish(ctx)
