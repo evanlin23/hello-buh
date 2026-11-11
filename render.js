@@ -132,14 +132,19 @@ function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.
 const bobState = []
 {
   let walk = 0, bob = 0
+  // a 'seamless' mark ({ dx, dy, dz }: lib/inside.js's hidden cut) is a relative /tp mid-stride: the walk goes on, so
+  // the step that tick is the move minus the offset (the bob's phase and amplitude carry straight across the cut)
+  const SEAMLESS = (rec.timeline || []).filter(e => e.event === 'seamless').map(e => ({ t: e.t / 50, d: [e.dx || 0, e.dy || 0, e.dz || 0] }))
   for (let i = 0; i < P.length; i++) {
     const a = P[Math.max(0, i - 1)], b = P[i]
+    const s = SEAMLESS.find(s => i >= s.t && i <= s.t + 6 && Math.hypot(b[1] - a[1] - s.d[0], b[2] - a[2] - s.d[1], b[3] - a[3] - s.d[2]) < 1)
+    const d = s ? s.d : [0, 0, 0]
     // a teleport (a cut: over a block in one tick, faster than any sprint) moves the player without
     // move(), so vanilla adds no walkDist; counting it bobbed the view for a few ticks after every cut
     // and the whole frame swayed (worker 5, story_runaway f297-300, f939-942)
-    let h = Math.hypot(b[1] - a[1], b[3] - a[3])
+    let h = Math.hypot(b[1] - a[1] - d[0], b[3] - a[3] - d[2])
     if (h > 1) h = 0
-    const onGround = Math.abs(b[2] - a[2]) < 1e-4
+    const onGround = Math.abs(b[2] - a[2] - d[1]) < 1e-4
     walk += h * 0.6
     bob += ((onGround ? Math.min(0.1, h) : 0) - bob) * 0.4
     bobState.push({ walk, bob })
