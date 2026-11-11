@@ -76,10 +76,11 @@ function under (b) {
   b.fill(43, -8, -8, 43, -5, 2, 'bookshelf'); b.fill(43, -5, -8, 43, -5, 2, 'stripped_dark_oak_log[axis=z]')
   const FIVE = [[-7, 'purple'], [-5, 'orange'], [-3, 'black'], [-1, 'magenta'], [1, 'yellow']]
   for (const [z, c] of FIVE) bannerDoor(b, 43, -8, z, c, 4, z === 1 ? {} : { back: { at: [44, z], block: DS } })
-  for (const z of [-6, -2, 2]) b.set(42, -8, z, 'lantern')
+  b.set(42, -8, -6, 'lantern'); b.set(34, -8, 0, 'lantern')
 
   // ---- the mine tunnel: x 44..53, z 0..2 (walk z 1), floor -9, inside -8..-6; door F in the vault's wall (x 54)
   b.fill(44, -10, -1, 53, -5, 3, rock, 'hollow')
+  b.fill(44, -10, 4, 53, -5, 4, rock)                                 // rock behind the ores (a mined ore opened onto daylight)
   b.fill(44, -8, 0, 53, -6, 2, 'air')                                  // (the shell's ends are the library's and the vault's walls)
   b.fill(44, -9, 0, 53, -9, 2, b.mix({ deepslate: 3, cobbled_deepslate: 2, gravel: 1 }))
   const ORE = { 46: [-1, -7, 'deepslate_iron_ore'], 47: [3, -8, 'deepslate_coal_ore'], 49: [-1, -6, 'deepslate_gold_ore'], 51: [3, -6, 'deepslate_redstone_ore'], 52: [-1, -8, 'deepslate_lapis_ore'] }
@@ -103,7 +104,7 @@ function under (b) {
   b.fill(55, -16, -1, 57, -9, 3, DS); b.fill(55, -9, -1, 57, -9, 3, 'polished_deepslate')
   b.fill(55, -8, -1, 56, -8, -1, 'dark_oak_fence'); b.fill(55, -8, 3, 56, -8, 3, 'dark_oak_fence')
   b.set(56, -7, -1, 'lantern'); b.set(56, -7, 3, 'lantern')
-  bannerDoor(b, 54, -8, 1, 'white', 4)
+  bannerDoor(b, 54, -8, 1, 'light_blue', 4)
   // pillars with lanterns
   for (const [x, z] of [[63, -9], [63, 11], [72, -9], [72, 11]]) b.fill(x, -16, z, x, -2, z, 'quartz_pillar[axis=y]')
   // the beacon on a gold / diamond / emerald pyramid (no beam: underground, as in vanilla)
@@ -127,14 +128,15 @@ const SUBS = [
   ['reveal', 'secret room 4', 1.4, 3],
   ['which', 'but which one is real?', 1.8, 0],
   ['reveal', 'secret room 5', 1.6, 4],
-  ['payoff', 'secret room 6', 1.0, 0]
+  ['nope', 'nope', 0.9, 0],
+  ['reveal', 'secret room 6', 1.6, 5]
 ]
 
 module.exports = makeStunt({
   name: 'hack_banner_door',
   caption: 'POV: you realized banners have no hitbox',
   red: 'hitbox',
-  reveals: 5,
+  reveals: 6,
   subs: SUBS,
   wall,
   pieces: { under },
@@ -169,7 +171,7 @@ module.exports = makeStunt({
     ctx.mark('stash')
     await K.open(H.at(6, 1, -5))
     ctx.mark('open_chest')
-    await bot.waitForTicks(26)
+    await bot.waitForTicks(22)
     K.close()
     // the how: a look back at the door from inside (the banner's back, the den's light round it)
     await H.look(6.5, 1.6, 0.5, { max: 30 })
@@ -177,23 +179,35 @@ module.exports = makeStunt({
     await H.hold(8)
     // 2. the blue banner on the stash's east wall -> the stair down
     await H.look(9.5, 1.8, -2.5, { max: 22 })
-    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.8, -7.4, -2.5]], 9, -3, { pitch: -0.55 })
+    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.9, -7.6, -2.5], [22.4, -8, -2.5]], 9, -3, { pitch: -0.55 })
     // 3. the lime banner at the bottom -> the farm
     await H.look(24.5, -6.6, -2.5, { max: 12 })
     await through([[24.4, -8, -2.5], [27.5, -8, -2.5]], 23, -3)
     await H.look(28.5, -7.0, -6.5, { max: 16 })     // the pasture
     await H.look(33.5, -6.6, -2.5, { max: 16 })   // eyes back down the walk
     await through([[33.4, -8, -2.5], [35.5, -8, -2.5]], 33, -3, { during: async (k) => { if (k === 6) ctx.mark('farm_walk') } })
-    // 4. the library: the enchanting table, then the wall of five banners
+    // 4. the library: the enchanting table, then straight at the wall of five banners (the diagonal keeps it ahead)
     await H.look(38.5, -7.6, -5.5, { max: 14 })
-    await H.look(41.5, -6.6, -2.5, { max: 14 })
-    await H.walk([[40.6, -8, -2.5]])
+    await H.look(41.5, -6.6, -1.0, { max: 14 })
+    await H.walk([[41.4, -8, -2.5]])
     ctx.mark('which')
-    await H.look(43.5, -7.0, -6.5, { max: 18 })
-    await H.look(43.5, -7.0, 0.5, { max: 22 })
-    // 5. through it into the mine (one walk: a stop at the door read as sliding on a block); a diamond on the way
-    await H.walk([[41.0, -8, 1.5]])                 // line up on the yellow one first (cutting the corner slid along the niche)
+    await H.look(43.5, -7.0, -6.5, { max: 18 })     // the sweep: purple, orange ...
+    await H.look(43.5, -7.0, 1.5, { max: 24 })      // ... magenta, yellow
+    await H.look(43.5, -7.0, -2.5, { max: 14 })     // the obvious one, in the middle
+    // try it: the black banner is a decoy, rock behind the cloth (a real, deliberate bump: nothing breaks)
+    ctx.mark('nope_try')
+    K.go(true); for (let k = 0; k < 9; k++) { K.look(k); await bot.waitForTicks(1) } K.go(false)
+    ctx.mark('nope')
+    await H.hold(8)
+    K.go(true, 'back'); for (let k = 0; k < 6; k++) { K.look(k); await bot.waitForTicks(1) } K.go(false, 'back')
+    // sidestep along the wall, eyes on the banners, to the yellow one
+    await H.look(60, -6.8, -2.5, { max: 10 })        // square to the wall (due east): 'right' is then a sidestep south along it
+    K.go(true, 'right')
+    for (let k = 0; k < 40 && bot.entity.position.z < H.O.z + 1.05; k++) { K.look(k); await bot.waitForTicks(1) }
+    K.go(false, 'right')
+    for (let k = 0; k < 5; k++) { K.look(k); await bot.waitForTicks(1) }   // (the sidestep's momentum carries ~0.4 block: release early, settle on z 1.5)
     await H.look(44.5, -6.6, 1.5, { max: 12 })
+    // 5. through it into the mine; a diamond on the way
     await through([[44.6, -8, 1.5], [47.3, -8, 1.5]], 43, 1)
     ctx.select(0)
     // vanilla: deepslate diamond ore (hardness 4.5) with a diamond pickaxe (speed 8) breaks in 17 ticks
@@ -205,7 +219,11 @@ module.exports = makeStunt({
     await H.walk([[48.9, -8, 1.5]])
     // 6. the white banner -> the vault (the payoff), the look out over it from the balcony
     await H.look(54.5, -7.2, 1.5, { max: 10 })
-    await through([[52.5, -8, 1.5], [56.9, -8, 1.5]], 54, 1, { payoff: true })
+    K.base.pitch = 0.05
+    await through([[52.5, -8, 1.5], [56.9, -8, 1.5]], 54, 1)
+    await H.hold(12)
+    // the payoff: the look down off the balcony at the hoard
+    H.payoff()
     await H.look(66, -15, 1.5, { max: 24 })
     await H.hold(10)
     return true
