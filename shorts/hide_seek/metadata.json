@@ -19,19 +19,19 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "r5_zoom",
     "drop_in_song_s": 39.75,
-    "drop_in_short_s": 31.13,
-    "song_start_s": 8.62,
+    "drop_in_short_s": 28.12,
+    "song_start_s": 11.63,
     "bed_lufs": -16.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 32.09,
+    "duration_s": 29.06,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 49483191,
-    "sha256": "cba87fa9e16e026acc5ad47a395e06a71b6c0a6d49273c7d5b1f39fd6fc1edff"
+    "bytes": 43417715,
+    "sha256": "88e07e2d3053c42ccf11bd1e75bfe58f4a17ad786c5985ac01567f4124b52f92"
   },
   "edit": {
     "caption": "hide and seek but the villagers cheated \ud83d\ude2d",
@@ -49,6 +49,11 @@
       "label": "MEANWHILE AT Y 320"
     },
     "speed": [
+      [
+        "r1_go:1.3",
+        "r1_go:4.3",
+        "cut"
+      ],
       [
         "cut1a",
         "cut1b",
@@ -1116,6 +1121,6 @@
     "python3 edit.py --frames work/hide_seek.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/hide_seek.rec.json --audio work/hide_seek.wav --caption \"hide and seek but the villagers cheated \ud83d\ude2d\" --red cheated --subs \"[[\\\"r1_end\\\",\\\"where did he go\\\",0.9],[\\\"r2_end\\\",\\\"nothing again\\\",0.9],[\\\"r3_end\\\",\\\"I give up\\\",0.9],[\\\"r4_end\\\",\\\"not again\\\",0.9],[\\\"r5_end\\\",\\\"seriously?\\\",0.9]]\" --subs_y 0.62 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"]] --clock \"[[\\\"r1_go\\\",\\\"r1_end\\\",5,\\\"ROUND 1\\\",\\\"down\\\"],[\\\"r2_go\\\",\\\"r2_end\\\",4,\\\"ROUND 2\\\",\\\"down\\\"],[\\\"r3_go\\\",\\\"r3_end\\\",4,\\\"ROUND 3\\\",\\\"down\\\"],[\\\"r4_go\\\",\\\"r4_end\\\",4,\\\"ROUND 4\\\",\\\"down\\\"],[\\\"r5_go\\\",\\\"r5_end\\\",3,\\\"ROUND 5\\\",\\\"down\\\"]]\" --punch [\"r1_found\",\"r2_found\",\"r3_found\",\"r4_found\",\"r5_zoom\"] --counter {\"at\":[\"r1_found\",\"r2_found\",\"r3_found\",\"r4_found\",\"r5_zoom\"],\"total\":5} --cards \"[[\\\"r1_found\\\",\\\"IN A TREE \ud83d\ude2d\\\",0.8,\\\"yellow\\\"],[\\\"r2_found\\\",\\\"IN THE POND \ud83d\ude2d\\\",0.7,\\\"blue\\\"],[\\\"r3_found\\\",\\\"UNDER ME \ud83d\ude2d\\\",0.9,\\\"orange\\\"],[\\\"r4_found\\\",\\\"IN LAVA \ud83d\udd25\\\",0.9,\\\"gold\\\"]]\" --replay \"{\\\"at\\\":\\\"r5_found\\\",\\\"before\\\":0.05,\\\"after\\\":0.85,\\\"cam\\\":\\\"1.5,324.5,10.5,45,-35\\\",\\\"speed\\\":1,\\\"label\\\":\\\"MEANWHILE AT Y 320\\\"}\" --start_at r1_go:0 --end_after r5_found:-0.3 --out out/hide_seek.mp4"
   ],
   "status": "ready",
-  "notes": "worker 16: 5-round hide and seek (tree, pond shaft, under me, lava, build limit + y 320 zoom-out); passed review 7 on frame/retention/minecraft, nitpicks: apple from intact leaves, no dirt drop in round 3 (block_drops off on purpose), stray leaf_litter x8 in hotbar slot 5, villager faces camera ~0.45 s into the y 320 shot | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -2.9 -> -0.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture",
+  "notes": "worker 16: 5-round hide and seek (tree, pond shaft, under me, lava, build limit + y 320 zoom-out); passed review 7 on frame/retention/minecraft, nitpicks: apple from intact leaves, no dirt drop in round 3 (block_drops off on purpose), stray leaf_litter x8 in hotbar slot 5, villager faces camera ~0.45 s into the y 320 shot | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -2.9 -> -0.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker; Studio: the swipe comes at 1.3-1.5 s): pace BLOCKed 4.5 s with nothing new at 1.5-6.0 s (round 1 door-to-door search). Edit-only: speed cut r1_go+1.3..4.3 (stunts/hide_seek.js), applied to short_nosong.mp4 (frames dropped, no new render), 32.1 -> 29.1 s; remixed at the -16 LUFS bed (same track and drop event). ./hb pace OK (0 blockers; WARN no hit in the first 1.5 s, 2.4 s at r4_go), ./hb check OK (lint now skips footage the edit cuts), key_sounds n/a",
   "published_at": "2026-11-07T15:35:34.719Z"
 }
