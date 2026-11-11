@@ -4,24 +4,24 @@
    "who": "N",
    "text": "Thirty-one raids, every one started the night Grandpa came home.",
    "dur": 3.558,
-   "onset": 0.29,
-   "end": 3.54,
+   "onset": 0.32,
+   "end": 3.22,
    "chunks": [
     [
-     0.29,
-     1.196
+     0.32,
+     1.08
     ],
     [
-     1.196,
-     1.675
+     1.38,
+     1.76
     ],
     [
-     1.675,
-     2.581
+     1.81,
+     2.44
     ],
     [
-     2.581,
-     3.54
+     2.48,
+     3.22
     ]
    ],
    "captions": [
@@ -36,34 +36,36 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "64a45be4d46d"
   },
   "L02": {
    "who": "N",
    "text": "Raid one, raid twelve, raid thirty-one. He won every one.",
    "dur": 3.683,
-   "onset": 0.01,
-   "end": 3.56,
+   "onset": 0.06,
+   "end": 3.44,
    "chunks": [
     [
-     0.01,
-     0.613
+     0.06,
+     0.54
     ],
     [
-     0.613,
-     1.417
+     0.64,
+     1.18
     ],
     [
-     1.417,
-     2.488
+     1.28,
+     1.94
     ],
     [
-     2.488,
-     2.89
+     2.34,
+     2.64
     ],
     [
-     2.89,
-     3.56
+     2.92,
+     3.44
     ]
    ],
    "captions": [
@@ -79,30 +81,32 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 3.558,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "40e7c0e975f5"
   },
   "L03": {
    "who": "N",
    "text": "He says they follow him. They know who beats them.",
    "dur": 2.877,
-   "onset": 0.07,
-   "end": 2.7,
+   "onset": 0.14,
+   "end": 2.56,
    "chunks": [
     [
-     0.07,
-     0.462
+     0.14,
+     0.44
     ],
     [
-     0.462,
-     1.357
+     0.5,
+     1.18
     ],
     [
-     1.357,
-     1.861
+     1.42,
+     1.84
     ],
     [
-     1.861,
-     2.7
+     1.98,
+     2.56
     ]
    ],
    "captions": [
@@ -117,22 +121,24 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 7.24,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "82ece4b8d194"
   },
   "L04": {
    "who": "N",
    "text": "So the villagers throw him bread.",
    "dur": 1.802,
-   "onset": 0.07,
-   "end": 1.52,
+   "onset": 0.11,
+   "end": 1.44,
    "chunks": [
     [
-     0.07,
-     0.795
+     0.11,
+     0.76
     ],
     [
-     0.795,
-     1.52
+     0.8,
+     1.44
     ]
    ],
    "captions": [
@@ -145,34 +151,36 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 10.117,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "e57517e137ca"
   },
   "L05": {
    "who": "N",
    "text": "Since Grandma died, he's always alone. But raid nights? Everyone cheers for him.",
    "dur": 4.978,
-   "onset": 0.05,
-   "end": 4.74,
+   "onset": 0.105,
+   "end": 4.64,
    "chunks": [
     [
-     0.05,
-     1.223
+     0.105,
+     1.0
     ],
     [
-     1.223,
-     2.333
+     1.16,
+     2.18
     ],
     [
-     2.333,
-     3.321
+     2.58,
+     3.26
     ],
     [
-     3.321,
-     4.246
+     3.66,
+     4.32
     ],
     [
-     4.246,
-     4.74
+     4.36,
+     4.64
     ]
    ],
    "captions": [
@@ -187,50 +195,52 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 11.92
+   "offset": 11.92,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "a842f404f919"
   },
   "L06": {
    "who": "N",
    "text": "Every week, he hunts at the tower. He brings back ominous bottles. Ominous means lucky, I think. He calls them his luck.",
    "dur": 7.165,
-   "onset": 0.15,
-   "end": 6.96,
+   "onset": 0.28,
+   "end": 6.82,
    "chunks": [
     [
-     0.15,
-     0.819
+     0.28,
+     0.66
     ],
     [
-     0.819,
-     1.305
+     0.9,
+     1.26
     ],
     [
-     1.305,
-     2.096
+     1.36,
+     1.82
     ],
     [
-     2.096,
-     2.947
+     2.12,
+     2.66
     ],
     [
-     2.947,
-     3.92
+     2.94,
+     3.58
     ],
     [
-     3.92,
-     4.71
+     4.12,
+     4.64
     ],
     [
-     4.71,
-     5.622
+     4.8,
+     5.48
     ],
     [
-     5.622,
-     6.413
+     5.88,
+     6.34
     ],
     [
-     6.413,
-     6.96
+     6.46,
+     6.82
     ]
    ],
    "captions": [
@@ -250,26 +260,28 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
    "offset": 0.0,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "b11323c37fa4"
   },
   "L07": {
    "who": "N",
    "text": "He drinks one at the gate. Then he says:",
    "dur": 2.425,
-   "onset": 0.13,
-   "end": 2.32,
+   "onset": 0.18,
+   "end": 2.16,
    "chunks": [
     [
-     0.13,
-     0.879
+     0.18,
+     0.64
     ],
     [
-     0.879,
-     1.571
+     0.68,
+     1.06
     ],
     [
-     1.571,
-     2.32
+     1.52,
+     2.16
     ]
    ],
    "captions": [
@@ -282,7 +294,9 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 7.164
+   "offset": 7.164,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "ac24e02b6008"
   },
   "L08": {
    "who": "Grandpa",
@@ -317,28 +331,28 @@
    "who": "N",
    "text": "Then a horn goes off. And Grandpa smiles. He must love the raids.",
    "dur": 4.495,
-   "onset": 0.17,
-   "end": 4.26,
+   "onset": 0.22,
+   "end": 4.06,
    "chunks": [
     [
-     0.17,
-     0.908
+     0.22,
+     0.88
     ],
     [
-     0.908,
-     1.511
+     0.94,
+     1.32
     ],
     [
-     1.511,
-     2.785
+     1.74,
+     2.6
     ],
     [
-     2.785,
-     3.59
+     3.06,
+     3.62
     ],
     [
-     3.59,
-     4.26
+     3.68,
+     4.06
     ]
    ],
    "captions": [
@@ -354,26 +368,28 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L09",
    "offset": 0.0,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "3d1da2166516"
   },
   "L10": {
    "who": "N",
    "text": "Tonight he came home too tired to fight.",
    "dur": 2.405,
-   "onset": 0.19,
-   "end": 2.26,
+   "onset": 0.26,
+   "end": 2.06,
    "chunks": [
     [
-     0.19,
-     1.007
+     0.26,
+     0.94
     ],
     [
-     1.007,
-     1.77
+     1.0,
+     1.68
     ],
     [
-     1.77,
-     2.26
+     1.72,
+     2.06
     ]
    ],
    "captions": [
@@ -387,30 +403,32 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L09",
    "offset": 4.495,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "4f58bc4741a6"
   },
   "L11": {
    "who": "N",
    "text": "So I drank his luck. Somebody had to fight.",
    "dur": 3.223,
-   "onset": 0.05,
-   "end": 3.06,
+   "onset": 0.09,
+   "end": 3.02,
    "chunks": [
     [
-     0.05,
-     0.803
+     0.09,
+     1.12
     ],
     [
-     0.803,
-     1.48
+     1.2,
+     1.52
     ],
     [
-     1.48,
-     2.383
+     2.045,
+     2.62
     ],
     [
-     2.383,
-     3.06
+     2.66,
+     3.02
     ]
    ],
    "captions": [
@@ -424,7 +442,9 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L09",
-   "offset": 6.9
+   "offset": 6.9,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "6bfc97f1960e"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
