@@ -58,13 +58,15 @@ def main():
     with tempfile.TemporaryDirectory() as t:
         vd = pathlib.Path(t) / "videos"
         sh("git", "clone", "-q", "--filter=blob:none", "--no-checkout", "--depth", "1", "--branch", "videos", url, str(vd))
-        sh("git", "sparse-checkout", "set", "--no-cone", f"/shorts/{name}/*", cwd=vd)
+        sh("git", "sparse-checkout", "set", "--no-cone", f"/shorts/{name}/*", "/.gitignore", cwd=vd)
         sh("git", "checkout", "-q", "videos", cwd=vd)
         d = vd / "shorts" / name; d.mkdir(parents=True, exist_ok=True)
         shutil.copy(vid, d / "short.mp4")
         (d / "metadata.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
         (d / "recording.json.gz").write_bytes(gzip.compress((HERE / "work" / f"{name}.rec.json").read_bytes(), 9))
-        sh("git", "add", "-A", f"shorts/{name}", cwd=vd)
+        import release_assets   # the mp4 goes to a GitHub Release, metadata gets video.release (r:rc5eaf0)
+        release_assets.upload(vd, [name])
+        sh("git", "add", "-A", f"shorts/{name}", ".gitignore", cwd=vd)
         sh("git", "commit", "-q", "-m", f"{name}: ready ({o.title})", cwd=vd)
         sh("git", "push", "-q", "origin", "videos", cwd=vd)
         print(f"videos branch: shorts/{name} ready ({size / 1e6:.0f} MB)")

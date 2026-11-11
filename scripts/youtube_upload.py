@@ -162,6 +162,17 @@ def fetch_short(vd: Path, name: str, meta: dict | None = None) -> Path:
     return f
 
 
+def has_video(vd: Path, name: str, meta: dict) -> bool:
+    """A release asset, or short.mp4 in the branch's tree (a package republished by a pre-r:rc5eaf0 publish.js after its
+    mp4 left git has neither: skip it rather than stop the run)."""
+    if ((meta.get("video") or {}).get("release") or {}).get("url"):
+        return True
+    if not (vd / ".git").exists():
+        return True   # (tests: a plain directory)
+    r = subprocess.run(["git", "-C", str(vd), "ls-tree", "HEAD", f"shorts/{name}/short.mp4"], capture_output=True, text=True)
+    return r.returncode != 0 or bool(r.stdout.strip())
+
+
 def meta_of(vd: Path, name: str) -> dict | None:
     p = vd / "shorts" / name / "metadata.json"
     return json.loads(p.read_text()) if p.exists() else None
@@ -207,6 +218,9 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
             why.append(f"{name}: its song isn't cleared ({lic or 'no licence'})"); continue
         if not mix_ok(history, name):
             why.append(f"{name}: same format as the last upload, or a 2nd pixel-art in 3"); continue
+        if not has_video(vd, name, meta):
+            why.append(f"{name}: no video (no video.release in metadata.json and no short.mp4 on the branch: re-publish it "
+                       "with publish.js from main)"); continue
         return name, "\n".join(why)
     return None, "\n".join(why)
 
