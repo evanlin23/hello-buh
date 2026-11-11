@@ -4,7 +4,7 @@
   "caption": "every way to cross lava (rated) 💀",
   "youtube": {
     "title": "every way to cross lava (rated) 💀 #minecraft #shorts",
-    "description": "every way to cross lava (rated) 💀\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "every way to cross lava (rated) 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "com_bota.mp3",
-    "title": "COM BOTA",
-    "artist": "cape, crysstales",
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "in_lava",
-    "drop_in_song_s": 16.75,
-    "drop_in_short_s": 15.15,
-    "song_start_s": 1.6
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 15.83,
+    "song_start_s": 0.67
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 19.85,
+    "duration_s": 20.48,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 27373050,
-    "sha256": "7707f073c33908696eddef8693428ecb745f4a44d523edbf9594afc46bbc3802",
+    "bytes": 28367489,
+    "sha256": "bf6a4486d45652f4eb53086b41007a03d4bbc22b34e6dc52992c55a2f217e4d3",
     "release": {
       "tag": "pkg-lava_crossing",
-      "asset": "lava_crossing.short.7707f073c3390869.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.7707f073c3390869.mp4",
-      "sha256": "7707f073c33908696eddef8693428ecb745f4a44d523edbf9594afc46bbc3802",
-      "bytes": 27373050
+      "asset": "lava_crossing.short.bf6a4486d45652f4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.bf6a4486d45652f4.mp4",
+      "sha256": "bf6a4486d45652f4eb53086b41007a03d4bbc22b34e6dc52992c55a2f217e4d3",
+      "bytes": 28367489
     },
     "nosong_release": {
       "tag": "pkg-lava_crossing",
-      "asset": "lava_crossing.short_nosong.43b167fbc2e02c35.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.43b167fbc2e02c35.mp4",
-      "sha256": "43b167fbc2e02c35e5bbbdb8fc93c3fa4d39f1e22a9be688415539271d107b24",
-      "bytes": 27364009
+      "asset": "lava_crossing.short_nosong.906fc0dbf55a3735.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.906fc0dbf55a3735.mp4",
+      "sha256": "906fc0dbf55a3735e600ab871794451bce3837eac5ac8144db695c61e905b89d",
+      "bytes": 28359577
     }
   },
   "edit": {
@@ -53,7 +53,7 @@
     "dropAt": "in_lava",
     "onFire": "in_lava:death",
     "deathScreen": true,
-    "startAt": "beat:-0.3",
+    "startAt": "beat:0.4",
     "endAfter": "death:1.15",
     "subs": [
       [
@@ -114,7 +114,15 @@
     "sfx": [
       [
         "whoosh",
-        "beat"
+        "beat:0.4"
+      ],
+      [
+        "pop",
+        "place_on",
+        {
+          "nth": 0,
+          "gain": 0.5
+        }
       ],
       [
         "pop",
@@ -147,6 +155,13 @@
         "death"
       ]
     ],
+    "speed": [
+      [
+        "bridged",
+        "crossed",
+        2
+      ]
+    ],
     "args": [
       "--caption",
       "every way to cross lava (rated) 💀",
@@ -154,14 +169,16 @@
       "every",
       "--subs",
       "[[\"beat\",\"bridging...\",9,0],[\"crossed\",\"bridging: 6/10\",9,0],[\"beat\",\"water bucket...\",9,1],[\"crossed\",\"water bucket: 9/10\",9,1],[\"beat\",\"ender pearl...\",9,2],[\"crossed\",\"ender pearl: 10/10\",9,2],[\"beat\",\"walking...\",9,3],[\"in_lava\",\"walking: 0/10\",9,0],[\"death\",\" \",0.05,0]]",
+      "--speed",
+      "[[\"bridged\",\"crossed\",2]]",
       "--sfx",
-      "[[\"whoosh\",\"beat\"],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]]",
+      "[[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]]",
       "--on_fire",
       "in_lava:death",
       "--death_screen",
       "death",
       "--start_at",
-      "beat:-0.3",
+      "beat:0.4",
       "--end_after",
       "death:1.15"
     ]
@@ -175,12 +192,12 @@
     },
     "set": {
       "x": 361,
-      "y": 63,
-      "z": -48
+      "y": 68,
+      "z": -41
     },
     "biome": "minecraft:plains",
-    "ticks": 424,
-    "seconds": 21.2,
+    "ticks": 458,
+    "seconds": 22.9,
     "deaths": 1,
     "death_message": {
       "with": [
@@ -216,235 +233,237 @@
         "event": "beat"
       },
       {
-        "t": 1.2,
+        "t": 2.3,
+        "event": "place_on"
+      },
+      {
+        "t": 2.3,
         "event": "swing"
       },
       {
-        "t": 1.35,
+        "t": 3.1,
+        "event": "place_on"
+      },
+      {
+        "t": 3.1,
         "event": "swing"
       },
       {
-        "t": 2.15,
+        "t": 3.85,
+        "event": "place_on"
+      },
+      {
+        "t": 3.85,
         "event": "swing"
       },
       {
-        "t": 2.9,
+        "t": 4.6,
+        "event": "place_on"
+      },
+      {
+        "t": 4.6,
         "event": "swing"
       },
       {
-        "t": 3.7,
+        "t": 5.4,
+        "event": "place_on"
+      },
+      {
+        "t": 5.4,
         "event": "swing"
       },
       {
-        "t": 5.9,
+        "t": 5.5,
+        "event": "bridged"
+      },
+      {
+        "t": 6.25,
         "event": "crossed"
       },
       {
-        "t": 6.7,
+        "t": 7.5,
         "event": "effect"
       },
       {
-        "t": 6.7,
+        "t": 7.5,
         "event": "effect_end"
       },
       {
-        "t": 7.05,
+        "t": 7.85,
         "event": "beat"
       },
       {
-        "t": 7.35,
+        "t": 8.15,
         "event": "swing"
       },
       {
-        "t": 7.35,
+        "t": 8.15,
         "event": "poured"
       },
       {
-        "t": 8.8,
+        "t": 9.6,
         "event": "swing"
       },
       {
-        "t": 11.8,
+        "t": 12.6,
         "event": "crossed"
       },
       {
-        "t": 12.5,
+        "t": 13.75,
         "event": "effect"
       },
       {
-        "t": 12.5,
+        "t": 13.75,
         "event": "effect_end"
       },
       {
-        "t": 12.85,
+        "t": 14.1,
         "event": "beat"
       },
       {
-        "t": 13.3,
+        "t": 14.55,
         "event": "swing"
       },
       {
-        "t": 13.3,
+        "t": 14.55,
         "event": "pearl_thrown"
       },
       {
-        "t": 13.3,
+        "t": 14.55,
         "event": "vel"
       },
       {
-        "t": 13.65,
+        "t": 14.9,
         "event": "hurt",
         "type": "ender_pearl"
       },
       {
-        "t": 13.85,
+        "t": 15.1,
         "event": "crossed"
       },
       {
-        "t": 14.65,
+        "t": 16.35,
         "event": "effect"
       },
       {
-        "t": 14.65,
+        "t": 16.35,
         "event": "effect_end"
       },
       {
-        "t": 15,
+        "t": 16.7,
         "event": "beat"
       },
       {
-        "t": 15.6,
+        "t": 17.35,
         "event": "in_lava"
       },
       {
-        "t": 15.65,
+        "t": 17.4,
         "event": "hurt",
         "type": "lava"
       },
       {
-        "t": 16.1,
+        "t": 17.85,
         "event": "hurt",
         "type": "lava"
       },
       {
-        "t": 16.6,
+        "t": 18.35,
         "event": "hurt",
         "type": "lava"
       },
       {
-        "t": 17.1,
+        "t": 18.85,
         "event": "hurt",
         "type": "lava"
-      },
-      {
-        "t": 17.65,
-        "event": "hurt",
-        "type": "lava"
-      },
-      {
-        "t": 18.15,
-        "event": "hurt",
-        "type": "lava"
-      },
-      {
-        "t": 18.65,
-        "event": "hurt",
-        "type": "lava"
-      },
-      {
-        "t": 19.15,
-        "event": "hurt",
-        "type": "lava"
-      },
-      {
-        "t": 19.15,
-        "event": "vel"
-      },
-      {
-        "t": 19.15,
-        "event": "vel"
-      },
-      {
-        "t": 19.15,
-        "event": "vel"
-      },
-      {
-        "t": 19.15,
-        "event": "death"
       },
       {
         "t": 19.35,
-        "event": "vel"
+        "event": "hurt",
+        "type": "lava"
       },
       {
-        "t": 19.75,
-        "event": "vel"
+        "t": 19.85,
+        "event": "hurt",
+        "type": "lava"
       },
       {
-        "t": 19.75,
-        "event": "vel"
+        "t": 20.35,
+        "event": "hurt",
+        "type": "lava"
       },
       {
-        "t": 19.75,
-        "event": "vel"
+        "t": 20.85,
+        "event": "hurt",
+        "type": "lava"
       },
       {
-        "t": 19.75,
-        "event": "vel"
+        "t": 20.85,
+        "event": "death"
       },
       {
-        "t": 19.9,
-        "event": "collect"
+        "t": 20.85,
+        "event": "motion_start"
       },
       {
-        "t": 21.2,
+        "t": 21.85,
+        "event": "motion_settled"
+      },
+      {
+        "t": 21.85,
+        "event": "settle"
+      },
+      {
+        "t": 22.9,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/lava_crossing",
-    "commit": "5eff2b8c721a148fcc11e98de1de86fa900bb4e2",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42987040245",
-    "rendered_at": "2026-11-11T08:33:33.484Z",
-    "head_at_publish": "573effdd1a9a2ed492b1d4c5e0d9561e5bda1c2f",
+    "branch": "main",
+    "commit": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T15:25:59.954Z",
+    "head_at_publish": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
     "stunt": "stunts/lava_crossing.js",
     "source_snapshot": [
       "source/lava_crossing.js",
-      "source/plateau.js"
+      "source/plateau.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 5eff2b8c721a",
+    "git checkout 9ee7bd45a9cb",
     "gunzip -c shorts/lava_crossing/recording.json.gz > work/lava_crossing.rec.json",
     "node render.js work/lava_crossing.rec.json work/lava_crossing.frames 60 1080 1011",
     "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
-    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --sfx [[\"whoosh\",\"beat\"],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:-0.3 --end_after death:1.15 --out out/lava_crossing.mp4"
+    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"bridged\",\"crossed\",2]] --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:1.15 --out out/lava_crossing.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "2026-11-11 finishing worker: re-recorded and rendered on the current engine (bright look, no reference song): bridging 6/10, water bucket 9/10, ender pearl 10/10, walking in 0/10 (death); whoosh into the first beat, pops on the ratings, song dip + impact on the death; 19.9 s; pace 0 blockers (WARN: the bridging shot holds one picture ~6 s), check OK; awaiting independent review",
-  "published_at": "2026-11-11T08:36:50.295Z",
+  "status": "ready",
+  "notes": "lava crossing ratings re-take (r:r38374d): governed look-backs (<=220 deg/s), the bridge placed aimed via A.place, keep_inventory (nothing floats on the lava), 2x bank walk; independent review round 2 READY (0 blockers).",
+  "published_at": "2026-11-11T15:28:09.151Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:37:13+00:00",
+    "version": 4,
+    "at": "2026-11-11T15:28:45+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 19.86 s vs the reviewed render 19.85 s"
+      "summary": "short.mp4 20.50 s vs the reviewed render 20.48 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T08:34:12.256Z",
+      "at": "2026-11-11T15:26:18.213Z",
       "report": "work/hb/lava_crossing.check.json"
     },
     "key_sounds": "n/a"
