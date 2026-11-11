@@ -323,7 +323,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
   caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
   reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
-  escalating to the full reveal. r:r4449f0
+  escalating to the full reveal. r:r4449f0 Ridiculously big: the build dwarfs a real landscape, shown from high up
+  for scale, ending on a close pass beside the tiny player. r:rf8524b A ticking count of blocks used is a good
+  overlay. r:rce78c5
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
@@ -372,6 +374,15 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:rc40696
 - **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
+  gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
+  picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
+- **Format "dropper"**: a HUGE first-person dropper with an attempt counter, quick fails cut before any death puff,
+  a true-vanilla clean landing as the payoff. Check: owner, minecraft-audit (the landing), the settle check. r:r304cb5
+- **Format "fakeworld"**: a world where everything is one wrong block, played as normal survival; the one ordinary
+  block found is treated as treasure; generated from our own block swap. Check: owner. r:r62f46d
+- **Format "trap"**: an irresistible bait, how it works, then the friend (a second bot, never the owner's name) walks
+  into it; the trap really works in vanilla. Check: owner, minecraft-audit (the trap). r:refc733
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or

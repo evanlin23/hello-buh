@@ -370,6 +370,36 @@ STANDARDS.md in the same commit.
   an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
   obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
   (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
+- **Owner, 2026-11-11, sharing Technoblade's "Sand Art" Short: "huge sand art".** (A giant pixel picture made of
+  concrete powder poured from the sky: the blocks fall and pile into pyramids, the camera rides down the slopes of
+  colour, a subscriber-counter overlay ticks to 1,000,000.) HelloBuh adds a sand-art format (family `sandart`): a
+  HUGE picture made of falling concrete powder (or sand and gravel) dropped from above, so it builds itself by gravity;
+  the camera sits close in the falling blocks, then pulls up to reveal the whole picture. Our own picture and caption;
+  no other creator's name, likeness or overlay. The settle rule holds: never cut or end while blocks still fall.
+- **Owner, 2026-11-11, sharing Necroncore's "what was your favorite version?" time-lapse (a crater dug in a real
+  landscape, a giant grass block rising in it, then a giant iron golem holding Steve and Alex, a wolf beside it):
+  "huge mega build, like ridiculously big".** The `mega` time-lapse variant goes BIGGER: the build must dwarf the
+  landscape (hundreds of blocks across, a real terrain around it for scale), shown from high up so the scale reads,
+  ending on a close pass that shows how small the player is next to it.
+- **Owner, 2026-11-11, sharing a "fananimation" dropper Short (a yellow shaft, "Attempt #1", "#3", "#15" captions,
+  a red-and-green target far below, the landing on #15): "Huge dropper?"** HelloBuh adds a dropper format (family
+  `dropper`): a HUGE, tall dropper fallen in first person, an attempt counter on screen, quick failed attempts cut
+  together, then the clean landing as the payoff. Our own shaft, obstacles and target; failed attempts end on a cut
+  before the death (no death puff left on screen), and the landing must be true vanilla (water, slime, hay, etc.).
+- **Owner, 2026-11-11, sharing "Minecraft Dirt Moment" (caption "bro found dirt for ONCE": a whole world where the
+  ground, hills and everything are one other block, and the player digs a lone patch of real dirt under a tree like
+  it's treasure): "fake world?"** HelloBuh adds a fake-world format (family `fakeworld`): a world where everything is
+  one wrong block (planks, glass, gold, sponge...) shown as normal survival, and the one ordinary block found in it
+  is treated like a rare treasure. Built by generating the world from our own block swap, never a copied map.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "a diabolical trap that made my friend hate
+  me...": a lake with a glass-roofed underwater base, the friend dives for it, the real base is a fake, a tunnel
+  and a hidden drop end in a glass cage): "trapping friend".** HelloBuh adds a friend-trap format (family `trap`):
+  build an irresistible bait (a base, loot, a portal), show how it works, then the friend walks into it; the trap
+  must really work in vanilla (minecraft-audit) and the friend is a second bot, never the owner's name.
+- **Owner, 2026-11-11, sharing struxo's "Beginner Friendly Nether Boss Build Timelapse" (a drone time-lapse of a
+  mangrove swamp cleared and a huge crimson/warped boss statue rising, with block counters ticking in a corner):
+  "another megabuild example".** For the `mega` time-lapse: a running count of blocks used, ticking up, is a good
+  overlay; the build stays our own design, at a ridiculous scale.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
