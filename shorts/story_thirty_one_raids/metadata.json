@@ -744,7 +744,7 @@
     "python3 audio.py work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.wav",
     "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"Thirty-one raids. Every one started the night Grandpa came home\" --red home --red_rgb FFD640 --punch [\"raidbar\"] --punch_stress [[\"L01\",3.04,0.07],[\"L08\",2.82,0.07],[\"L11\",2.74,0.07]] --flash [\"raidbar\"] --chat_align center --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
   ],
-  "status": "held",
+  "status": "ready",
   "notes": "Buh Stories #3, voiced r-cast build; independent review READY + the lead's horn blocker fixed (vanilla raid volume, a key sound over the music) and a flash on the payoff; HELD for the owner's OK",
   "published_at": "2026-11-11T12:03:14.640Z",
   "gates": {
@@ -775,5 +775,11 @@
       ],
       "summary": "key sounds over the music: worst +106.5 dB over 2 clips (need >= 8 dB)"
     }
+  },
+  "owner_ok": {
+    "at": "2026-11-11",
+    "words": "OK Thirty-One Raids, OK Dog on the Hill",
+    "by": "owner, in the Buh Stories lead session",
+    "upload": "manual (YT_ENABLED_BUHSTORIES unset)"
   }
 }

@@ -1821,7 +1821,7 @@
     "python3 audio.py work/story_dog_hill.rec.json work/story_dog_hill.wav",
     "python3 edit.py --frames work/story_dog_hill.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_dog_hill.rec.json --audio work/story_dog_hill.wav --caption \"The dog on the hill hasn't moved in 900 days\" --red 900 --red_rgb FFD640 --punch_stress [[\"L01\",2.56,0.07],[\"L13\",1.735,0.07],[\"L14\",1.36,0.07]] --chat_scale 7 --chat_align center --chat_y 0.88 --story stories/dog_hill --start_at shot:0 --end_after payoff:1.0 --out out/story_dog_hill.mp4"
   ],
-  "status": "held",
+  "status": "ready",
   "notes": "Independent review round 1: READY, 0 blockers. hb check OK; pace OK (WARN length 50.2 s: owner call); caption coverage OK (L16 base-whisper WARN, small.en hears it right); panel 8/7/8, ending understood 3/3 (narrator heard as young adult female: the owner-chosen Pip voice, raised to the owner). Fixed after review: L14 caption moved up off Buh (caption_y 0.22). Nitpicks: 48.2-49.2 s the sit on 'Sit, BOY' is small in the wide; 34.4 s caption over Grandpa; 42.75 s night->reveal eye jump 29%; vanilla: a sitting wolf stands on a click, not a login (story conceit); 6.2-7.5 s bright ground for midnight.",
   "published_at": "2026-11-11T11:59:19.875Z",
   "gates": {
@@ -1846,5 +1846,11 @@
       "report": "out/story_dog_hill.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "owner_ok": {
+    "at": "2026-11-11",
+    "words": "OK Thirty-One Raids, OK Dog on the Hill",
+    "by": "owner, in the Buh Stories lead session",
+    "upload": "manual (YT_ENABLED_BUHSTORIES unset)"
   }
 }
