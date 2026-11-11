@@ -190,7 +190,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 
 ## 5. Look
 - **Bright and punchy is the story look** (the owner picked it over the cinematic grade): every story stunt sets
-  `look: 'bright'` and `edit.punchStress: true`. Check: owner; review. r:rcae995 r:rd13834
+  `look: 'bright'` and `edit.punchStress: true`. The zoom punches go on the **big moments only** (hook, turn,
+  reveal: story.json `"punch": true` on those lines, at most 4; none marked = the first and last line), never one per
+  sentence. Check: owner; review. r:rcae995 r:rd13834 r:r5aeaf2
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stories use `look: 'bright'` (above); other Shorts keep the cinematic default (`look: 'auto'`).
 - Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
 - Sharp: bloom threshold >= 0.7, no DoF on wide/establishing shots, crf <= 18.

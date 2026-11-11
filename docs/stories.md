@@ -319,6 +319,10 @@ STANDARDS.md in the same commit.
   (recommended: centred, vanilla chat style, off the dog): "sure".** In story Shorts the join/leave chat lines (and any
   payoff system chat) are centred horizontally near the caption height, in the vanilla yellow chat font and strip at
   `chatScale` size, placed so they never cover the shot's subject.
+- **Owner, 2026-11-11, on the bright previews' zoom punch on every sentence: "what are all of these bouncy zooms?";
+  offered all / smaller / big moments only / none: "only the big ones i think".** `edit.punchStress` punches only the
+  big moments: the hook, the turn and the reveal (story.json `"punch": true` on those lines, at most 4; none marked:
+  the first and last line), one punch each on the line's stressed word. Supersedes one punch per sentence.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
