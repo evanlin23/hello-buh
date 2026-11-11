@@ -26,7 +26,7 @@ The kid is cheerful from the first word to "HI": no hint, no fear, no foreshadow
 | misread | L07 "She thinks I'll catch a COLD." | S04 day: every shutter open but his (picture only) | only he is a target |
 | **the clue (midpoint)** | L08 "Up on the CLIFF, under the old OAK, there's a guy who's SUPER pale. He never leaves the SHADE." (punch) | S05 the white shape in the oak's shade | players: a skeleton hiding from the sun |
 | **the late clue** | L09 "And one night the bell had a little FEATHER sticking OUT. Then POOF. GONE." | S06 POV: an arrow in the bell, then gone | an arrow hit the bell (it despawns in a minute) |
-| **the try** | L10 "So tonight the bell RANG, and I climbed out PAST it to wave HI." (punch) | S07 POV: the ring; he climbs out and the bell slides out of the line; he waves | he takes the shield away |
+| **the try** | L10 "So tonight the bell RANG, and I climbed out PAST it so he could SEE me wave HI." (punch) | S07 POV: the ring; he climbs out and the bell slides out of the line; he waves | he takes the shield away |
 | **the reveal** | (no line) | S08 the axis from the skeleton: nothing between; it draws | the bell was a shield |
 | **cut** | | 1.0 s after the `draw` mark | |
 

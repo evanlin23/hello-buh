@@ -2,7 +2,7 @@
  "name": "bell_window",
  "stunt": "story_bell_window",
  "version": 2,
- "revision": "r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
+ "revision": "r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom flagged as Saltmouth's own Mom needing her own voice. r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
  "caption": "why does the bell ring when I open my window 🔔",
  "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he climbs out past it to wave hi to the pale guy on the cliff.",
  "question": "why does the bell ring every time he opens his window?",
@@ -45,7 +45,8 @@
    "name": "Mom",
    "color": "#FFC2A8",
    "model": "gemini-3.8-flash-tts",
-   "on_screen": "plains villager (no profession outfit), unarmed, no name tag; on screen in S03 only, where she says L06"
+   "on_screen": "plains villager (no profession outfit), unarmed, no name tag; on screen in S03 only, where she says L06",
+   "note": "Saltmouth's Mom, NOT Hushwell's (Buh's) Mom: a different family and a different villager. She needs her own voice (STANDARDS 7a: one voice is never shared by two characters a viewer could confuse). Cast `mom` (Pulcherrima) is a placeholder until the owner picks; candidates from the 2026-11-11 Mom audition (brand/auditions/2026-11-11_mom_grandma on claude/audition-mom-grandma): A Kore (f0 180, 0.755 to Pip, the furthest from Pip) or E Callirrhoe (f0 162, 4.9 st under Pip, 1.4 st under Pulcherrima)."
   }
  },
  "requests": [
@@ -272,8 +273,8 @@
   {
    "id": "L10",
    "who": "N",
-   "text": "So tonight / the bell RANG, / and I climbed out / PAST it / to wave HI.",
-   "say": "So tonight the bell rang, and I climbed out past it to wave HI.",
+   "text": "So tonight / the bell RANG, / and I climbed out / PAST it / so he could SEE me / wave HI.",
+   "say": "So tonight the bell rang, and I climbed out past it so he could see me wave HI.",
    "shot": "S07",
    "shows": [
     {

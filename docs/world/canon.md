@@ -137,8 +137,8 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 |---|---|---|---|---|
 | the villager kid | The Wall Grows | baby villager | `narrator` (Leda) | cast |
 | Old Tomas | The Wall Grows | old villager, escaped a trading hall | `elder` (Charon) proposed: **clashes with Ravenford's Grandpa** (conflict 11 spirit), audition another | audition |
-| the kid | The Bell in the Window | baby villager, Saltmouth | `narrator` (Leda) | cast |
-| Mom (Saltmouth) | The Bell in the Window | villager | `mom` (Pulcherrima) shared with Hushwell's Mom: decide if she's the same Mom or needs her own voice | decide |
+| the kid | The Bell in the Window | a player kid, default `alex` skin (not Steve), Saltmouth | `narrator` (Leda) | cast |
+| Mom (Saltmouth) | The Bell in the Window | plains villager, no profession | a different Mom from Hushwell's: needs her own voice (`mom`, Pulcherrima, is Hushwell's). Candidates from the 2026-11-11 audition: Kore or Callirrhoe | audition |
 | the grandchild | The Walk | | `narrator` (Leda) | cast |
 | Grandpa (Gullwick) | The Walk | grey-haired old man (new skin) | Iapetus proposed, audition (not Charon: Ravenford's) | audition |
 | Grandma (the island) | The Walk | grey-haired old woman (new skin) | `grandma` (Autonoe) shared with Gold's Grandma: decide | decide |
