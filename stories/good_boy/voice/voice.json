@@ -98,7 +98,7 @@
    ]
   },
   "L04": {
-   "text": "But SITTING? / I STAY put. / A SITTING dog / waits FOREVER.",
+   "text": "But SITTING? / I STAY put. / He NEVER / makes me SIT.",
    "who": "N",
    "dur": 2.185,
    "onset": 0.08,
@@ -106,30 +106,30 @@
    "chunks": [
     [
      0.08,
-     0.537
+     0.599
     ],
     [
-     0.537,
-     0.956
+     0.599,
+     1.076
     ],
     [
-     0.956,
-     1.451
+     1.076,
+     1.422
     ],
     [
-     1.451,
+     1.422,
      1.985
     ]
    ],
    "captions": [
     "But SITTING?",
     "I STAY put.",
-    "A SITTING dog",
-    "waits FOREVER."
+    "He NEVER",
+    "makes me SIT."
    ]
   },
   "L05": {
-   "text": "He SAYS / a WAITING dog / is a SAD dog. / So he NEVER / makes me SIT.",
+   "text": "He SAYS / a WAITING dog / is a SAD dog. / He WANTS me / to FORGET him.",
    "who": "N",
    "dur": 3.137,
    "onset": 0.08,
@@ -137,22 +137,22 @@
    "chunks": [
     [
      0.08,
-     0.431
+     0.425
     ],
     [
-     0.431,
-     1.083
+     0.425,
+     1.065
     ],
     [
-     1.083,
-     1.734
+     1.065,
+     1.706
     ],
     [
-     1.734,
-     2.286
+     1.706,
+     2.247
     ],
     [
-     2.286,
+     2.247,
      2.937
     ]
    ],
@@ -160,8 +160,8 @@
     "He SAYS",
     "a WAITING dog",
     "is a SAD dog.",
-    "So he NEVER",
-    "makes me SIT."
+    "He WANTS me",
+    "to FORGET him."
    ]
   },
   "L06": {
@@ -226,42 +226,6 @@
     "what FOR."
    ]
   },
-  "L08": {
-   "text": "Last NIGHT / he STOPPED / RUNNING. / He just WATCHED / the SUN come UP.",
-   "who": "N",
-   "dur": 2.566,
-   "onset": 0.08,
-   "end": 2.366,
-   "chunks": [
-    [
-     0.08,
-     0.467
-    ],
-    [
-     0.467,
-     0.855
-    ],
-    [
-     0.855,
-     1.165
-    ],
-    [
-     1.165,
-     1.746
-    ],
-    [
-     1.746,
-     2.366
-    ]
-   ],
-   "captions": [
-    "Last NIGHT",
-    "he STOPPED",
-    "RUNNING.",
-    "He just WATCHED",
-    "the SUN come UP."
-   ]
-  },
   "L09": {
    "text": "This MORNING / he WALKED me / HOME, / up the HILL.",
    "who": "N",
@@ -315,19 +279,29 @@
    ]
   },
   "L12": {
-   "text": "So I SAT.",
+   "text": "So I SAT. / SITTING dogs / wait FOREVER.",
    "who": "N",
-   "dur": 0.851,
+   "dur": 1.613,
    "onset": 0.08,
-   "end": 0.651,
+   "end": 1.413,
    "chunks": [
     [
      0.08,
-     0.651
+     0.433
+    ],
+    [
+     0.433,
+     0.904
+    ],
+    [
+     0.904,
+     1.413
     ]
    ],
    "captions": [
-    "So I SAT."
+    "So I SAT.",
+    "SITTING dogs",
+    "wait FOREVER."
    ]
   },
   "L13": {

@@ -58,15 +58,15 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "But SITTING? / I STAY put. / A SITTING dog / waits FOREVER.",
-   "say": "But SITTING? I STAY put. A sitting dog waits FOREVER.",
+   "text": "But SITTING? / I STAY put. / He NEVER / makes me SIT.",
+   "say": "But SITTING? I stay put. He never makes me SIT.",
    "look": false
   },
   {
    "id": "L05",
    "who": "N",
-   "text": "He SAYS / a WAITING dog / is a SAD dog. / So he NEVER / makes me SIT.",
-   "say": "He says a waiting dog is a SAD dog. So he never makes me SIT.",
+   "text": "He SAYS / a WAITING dog / is a SAD dog. / He WANTS me / to FORGET him.",
+   "say": "He says a waiting dog is a SAD dog. He wants me to FORGET him.",
    "look": false
   },
   {
@@ -82,12 +82,6 @@
    "say": "Every night he says, SORRY, buddy. I don't know what FOR."
   },
   {
-   "id": "L08",
-   "who": "N",
-   "text": "Last NIGHT / he STOPPED / RUNNING. / He just WATCHED / the SUN come UP.",
-   "say": "Last night he stopped RUNNING. He just watched the sun come UP."
-  },
-  {
    "id": "L09",
    "who": "N",
    "text": "This MORNING / he WALKED me / HOME, / up the HILL.",
@@ -97,13 +91,14 @@
    "id": "L11",
    "who": "Buh",
    "text": "STAY here, / BUDDY.",
-   "say": "STAY here, buddy."
+   "say": "STAY here, buddy.",
+   "direction": "choked and quick: a teenager holding it together, brisk, NOT soft or breathy, not a command to a pet"
   },
   {
    "id": "L12",
    "who": "N",
-   "text": "So I SAT.",
-   "say": "So I SAT."
+   "text": "So I SAT. / SITTING dogs / wait FOREVER.",
+   "say": "So I SAT. Sitting dogs wait FOREVER."
   },
   {
    "id": "L13",
