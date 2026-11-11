@@ -217,7 +217,7 @@ module.exports = {
       }
       if (once('L01cut', k >= at.cut(3))) {
         buh.yaw = 90
-        await scut(buh.x - 0.3, buh.z + 0.9, P(buh.x - 30, buh.y + 0.6, buh.z + 0.9), buh.y, { shot: 'run_ahead', stop: false })
+        await scut(buh.x - 1.2, buh.z + 0.9, P(buh.x - 30, buh.y + 0.6, buh.z + 0.9), buh.y, { shot: 'run_ahead', stop: false })   // a block ahead of him: from a standstill it falls back level with him
         K.ctl('sprint', true); K.go(true)
       }
       if (k > at.cut(3)) { walkG(buh, -0.28, 0); buh.yaw = 90; autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.1)); look(k) }
@@ -414,7 +414,7 @@ module.exports.shots = {
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
   // L01 frame 1 (owner: "not very exciting? Also not centered"): low behind the wolf, the wolf centred and big, Buh
   // sprinting away from it down the road toward the village
-  dog_start: { subject: ['self', `actor:${GUY}`], at: [42.6, 0.45, -1.7], look: [40.6, 0.35, -4.6], fov: 55, push: 0.1, dof: false },   // a fixed camera low on the road's south side: the wolf (at 41.5, -4.2; the road at -0.06) in profile, centred and big, looking west after Buh sprinting away into the village (following the wolf's eye looked down on its back and jumped when it landed)
+  dog_start: { subject: ['self', `actor:${GUY}`], at: [43.3, 0.95, -0.9], look: [39.6, 0.55, -4.8], fov: 55, push: 0, drift: 0.6, dof: false },   // a fixed camera on the road's south side, 3.6 blocks off: the wolf (41.5, -4.2; the road at -0.06) centred in profile, Buh sprinting away beyond it into the village. No push (the bright look's push drove it into the wolf and the road: lint)
   run_ahead: { subject: ['self', `actor:${GUY}`], follow: `actor:${GUY}`, offset: [-3.0, 0.9, 1.6], look: { of: `actor:${GUY}`, offset: [0, 0.3, 0.7] }, lag: 2, fov: 52 },   // ahead of the pair on the wolf's side: the wolf nearest and central (the cut from dog_start keeps the eye on it), the pair filling the frame
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
