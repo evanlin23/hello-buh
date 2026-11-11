@@ -36,7 +36,7 @@ def glow_text(base, items, blur):
 def banner(src, out, guides):
     im = Image.open(src).convert("RGB").resize((W, H), Image.LANCZOS).convert("RGBA")
     x0, y0 = (W - BW) // 2, (H - BH) // 2
-    # the dog sits in the middle of the band: the wordmark left of it, the promise right of it
+    # the dog sits in the middle of the band: the wordmark left of it, what the channel is right of it
     big, small = ImageFont.truetype(POPPINS, 132), ImageFont.truetype(POPPINS, 50)
     d = ImageDraw.Draw(im)
     bx = x0 + 30
@@ -44,11 +44,11 @@ def banner(src, out, guides):
     h1 = big.getbbox(l1)[3]
     yb = y0 + (BH - 2 * h1 - 10) // 2 - 18
     right_x = x0 + BW - 30
-    tag = ["one world.", "one dog who waits.", "every story connects."]
+    tag = ["short minecraft", "mysteries"]   # what the channel is, nothing more (owner: no shared-world tagline, r:rca5363)
     tws = [d.textlength(t, font=small) for t in tag]
-    ty = y0 + (BH - 3 * 66) // 2
+    ty = y0 + (BH - len(tag) * 66) // 2
     items = [(l1, big, (bx, yb), GOLD), (l2, big, (bx, yb + h1 + 4), WHITE)]
-    items += [(t, small, (right_x - tw, ty + i * 66), WHITE if i < 2 else GOLD) for i, (t, tw) in enumerate(zip(tag, tws))]
+    items += [(t, small, (right_x - tw, ty + i * 66), WHITE if i < len(tag) - 1 else GOLD) for i, (t, tw) in enumerate(zip(tag, tws))]
     im = glow_text(im, items, 14)
     if guides:
         ImageDraw.Draw(im).rectangle((x0, y0, x0 + BW, y0 + BH), outline=(255, 0, 0, 255), width=4)
