@@ -132,7 +132,7 @@ module.exports = makeStunt({
   red: 'hour',
   recordRadius: 200,
   endAfter: 'big_done:0.5',
-  bigCuts: [6, 1.2, 57], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
+  bigCuts: [6, 0.6, 57], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'red_sand', under: 'terracotta', biome: 'minecraft:badlands' },
   hotbar: [['white_concrete', 64], ['red_concrete', 64], ['blue_concrete', 64], ['dirt', 64], 'diamond_shovel'],
   small,
@@ -148,14 +148,14 @@ module.exports = makeStunt({
     // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
     // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the pad
     angles: [
-      [0, [[-34, 5, 42], [0, 6, 0]], [[-31, 10, 39], [0, 20, 0]], 'low front three-quarter'],    // the pad, stage 1
+      [0, [[-22, 14, 30], [0, 1, 0]], [[-31, 12, 40], [0, 20, 0]], 'low front three-quarter'],    // the pad, stage 1
       [372, [[52, 18, 6], [0, 26, 0]], [[50, 26, -2], [0, 38, 0]], 'side'],                       // stages 2 and 3
       [612, [[-12, 52, 26], [0, 50, 0]], [[-9, 54, 22], [0, 52, 0]], 'the nose, close'],          // the nose, the tower
       [852, [[-60, 70, 70], [-10, 15, -5]], [[-54, 72, 64], [-12, 16, -8]], 'high wide'],         // tanks and masts
       // the showcase: the finished rocket from three angles, the hall and the ignition going on
-      [1092, [[30, 6, 50], [-30, 20, 5]], [[26, 6, 52], [-32, 21, 5]], 'low right, across the pad'],
-      [1180, [[-30, 90, 30], [-10, 40, 0]], [[-26, 92, 26], [-10, 42, 0]], 'over the nose'],
-      [1250, [[-6, 21, 99], [-6, 30, 0]], [[-6, 22.5, 91], [-6, 31, 0]], 'the hero wide']         // 60:00: the hall, the tanks and the tower in frame
+      [1086, [[30, 6, 50], [-18, 20, 3]], [[26, 6, 52], [-20, 21, 3]], 'low right, across the pad'],
+      [1206, [[-30, 90, 30], [-10, 40, 0]], [[-26, 92, 26], [-10, 42, 0]], 'over the nose'],
+      [1270, [[-6, 21, 99], [-6, 30, 0]], [[-6, 22.5, 91], [-6, 31, 0]], 'the hero wide']         // 60:00: the hall, the tanks and the tower in frame
     ]
   }
 })
