@@ -82,7 +82,8 @@ let fogSea = null
 // The world, the hand and the darkness quad draw into an off-screen target; then bloom (bright pixels blurred at
 // quarter size), depth of field (camera shots with a focus distance), and one finishing pass: exposure, a colour
 // grade (lift / gamma / gain, saturation, an S-curve), vignette, grain, and letterbox bars (camera shots). The HUD
-// is drawn later by edit.py, so it stays clean. Off unless a stunt sets `look`.
+// is drawn later by edit.py, so it stays clean. On for every stunt: its `look`, or 'bright_stunt' when it has none
+// (renderer/looks.js stuntLook); off for `look: null` and old stories without one.
 const GRADES = {
   neutral: { lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], sat: 1.04, contrast: 0.08, exposure: 1 },
   night: { lift: [0.0, 0.012, 0.03], gamma: [1.0, 1.0, 1.04], gain: [1.07, 1.0, 0.9], sat: 1.06, contrast: 0.14, exposure: 1.06 },
@@ -363,7 +364,7 @@ function makePost (look, w, h) {
   const shadeOn = !!(look.shade || look.reflect)
   const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D rays; uniform float raysK; uniform sampler2D depth; uniform vec2 res;
     uniform float near; uniform float far; uniform float focus; uniform float aperture; uniform float bloomK;
-    uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure;
+    uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure; uniform float knee;
     uniform float vig; uniform float grain; uniform float seed; uniform float bars; uniform float sharpK; uniform float raysBlocks; varying vec2 vUv;
     float lin (float d) { return near * far / (far - d * (far - near)); }
     float coc (vec2 uv) { float z = lin(texture2D(depth, uv).x); float k = res.y / 540.0; return clamp(aperture * abs(z - focus) / max(z, 0.1) * 12.0 * k, 0.0, 14.0 * k); }
@@ -376,6 +377,10 @@ function makePost (look, w, h) {
       c += texture2D(rays, uv).rgb * raysK * mix(raysBlocks, 1.0, step(0.9999, texture2D(depth, uv).x));
       c *= exposure;
       c = pow(max(vec3(0.0), c * gain + lift * (1.0 - c)), 1.0 / gam);
+      // look.rolloff (a knee, 0..1; off at 1): a highlight shoulder before saturation and the clamp. The brightest
+      // channel eases into 1 instead of clipping, and the pixel is scaled whole, so its hue holds: an exposed day
+      // sky stays blue with its clouds instead of blowing to cyan-white (r:r8fa348, look 'bright_stunt')
+      if (knee < 1.0) { float m = max(c.r, max(c.g, c.b)); if (m > knee) c *= (knee + (1.0 - knee) * (1.0 - exp(-(m - knee) / (1.0 - knee)))) / m; }
       float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
       c = mix(vec3(l), c, sat);
       // (clamped first: the S-curve on a value over 1 goes negative, and a blown sky near the sun lost its red: cyan blotches)
@@ -400,7 +405,7 @@ function makePost (look, w, h) {
     src: { value: rt.texture }, bloom: { value: ba.texture }, dof: { value: rd.texture }, rays: { value: rr.texture }, raysK: { value: look.rays || 0 }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) },
     near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 }, bloomK: { value: look.bloom ?? 0.6 },
     lift: { value: new THREE.Vector3(...g.lift) }, gam: { value: new THREE.Vector3(...g.gamma) }, gain: { value: new THREE.Vector3(...g.gain) },
-    sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
+    sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 }, knee: { value: look.rolloff > 0 && look.rolloff < 1 ? look.rolloff : 1 },
     vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 },
     sharpK: { value: look.sharpen || 0 }, raysBlocks: { value: look.raysOverBlocks ?? 1 }
   })
@@ -463,8 +468,9 @@ function runPost (cam, tick) {
     M.prev = { tick: tick || 0, vp, pos: camera.position.clone(), q: camera.quaternion.clone() }
   }
   P.dofMat.uniforms.src.value = frame; P.fin.uniforms.src.value = frame; if (P.rayMat) P.rayMat.uniforms.src.value = frame
-  P.bright.uniforms.src.value = frame; pass(P.bright, P.ba)
-  for (let i = 0; i < P.bloomPasses; i++) {   // two blur rounds at quarter size: a wide, soft glow (look.bloomPasses: 1 = a tighter one)
+  P.bright.uniforms.src.value = frame
+  if (P.fin.uniforms.bloomK.value > 0) pass(P.bright, P.ba)   // (bloom 0, as 'bright_stunt': no bloom passes at all)
+  for (let i = 0; P.fin.uniforms.bloomK.value > 0 && i < P.bloomPasses; i++) {   // two blur rounds at quarter size: a wide, soft glow (look.bloomPasses: 1 = a tighter one)
     P.blur.uniforms.src.value = P.ba.texture; P.blur.uniforms.dir.value.set(1 / P.bw, 0); pass(P.blur, P.bb)
     P.blur.uniforms.src.value = P.bb.texture; P.blur.uniforms.dir.value.set(0, 1 / P.bh); pass(P.blur, P.ba)
   }
