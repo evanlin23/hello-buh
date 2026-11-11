@@ -110,7 +110,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
    (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
-   (listen), speaker distance to the narrator. r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
+   (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
+   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -373,7 +374,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
-- **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b
+- **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b Regular (wide) arms, the slim art widened. r:ra3e80a
 - **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
   Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those
   spans), and the finished 1-hour build is shown from several clearly different steady angles joined by hard cuts (a

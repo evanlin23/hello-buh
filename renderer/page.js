@@ -1567,11 +1567,11 @@ function armBox (w, h, d, grow, u, v) {
   uv.needsUpdate = true
   return g
 }
-async function armObject (skin = null, slim = false) {
-  const ck = skin ? `${skin}|${slim ? 'slim' : 'wide'}` : ''
+async function armObject (skin = null, model = 'auto', profileSlim = false) {
+  const ck = skin ? `${skin}|${model}|${profileSlim}` : ''
   if (ARMS.has(ck)) return ARMS.get(ck)
-  const st = skin ? await skinTexture(skin) : null
-  if (st && st.slimLayout) slim = true   // a slim-painted skin uploaded as classic (entities.js isSlimLayout)
+  const st = skin ? await skinTexture(skin, model, profileSlim) : null   // the same texture and arm model as third person
+  const slim = !!(st && st.slim)
   const t = st ? st.tex : await loadTexture('/assets/env/entity/player/wide/steve.png')
   t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
   const w = slim ? 3 : 4
@@ -1598,7 +1598,7 @@ async function drawHand (cam) {
   const h = cam.hand
   if (!h || cam.dead) return false
   if (!h.key) {   // empty hand: the arm
-    const r = await armObject(h.skin || null, !!h.slim)
+    const r = await armObject(h.skin || null, h.model || 'auto', !!h.slim)
     const a = h.swing || 0, g = Math.sqrt(a)
     const M = HAND_TURN.clone().multiply(new THREE.Matrix4().makeTranslation(-0.3 * Math.sin(g * Math.PI) + 0.64, 0.4 * Math.sin(g * Math.PI * 2) - 0.6 + (h.equip || 0) * -0.6, -0.4 * Math.sin(a * Math.PI) - 0.72))
     M.multiply(new THREE.Matrix4().makeRotationY(45 * D2R))

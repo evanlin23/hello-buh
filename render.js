@@ -1152,8 +1152,8 @@ const SKINS = require('./lib/skins')
 const SELF_USER = process.env.HB_SELF_USER || rec.user || null
 SKINS.ensureSkins(SKINS.wantedSkins({ user: SELF_USER, cast: STUNT_MOD.cast, actors: [...ACTOR.values()].map(a => a.user) }))
 const SELF_SKIN = SKINS.selfSkin({ env: process.env, cast: STUNT_MOD.cast, user: SELF_USER })
-const skinExtra = (k) => k.slim ? { skin: k.skin, slim: true } : { skin: k.skin }
-if (SELF_SKIN.real) console.log(`skin: the player is ${SELF_SKIN.real}'s own skin (${SELF_SKIN.slim ? 'slim' : 'wide'} arms)`)
+const skinExtra = (k) => ({ skin: k.skin, ...(k.slim ? { slim: true } : {}), ...(k.model ? { model: k.model } : {}) })
+if (SELF_SKIN.real) console.log(`skin: the player is ${SELF_SKIN.real}'s own skin (arms: ${SELF_SKIN.model || (SELF_SKIN.slim ? 'slim' : 'auto')})`)
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
 // a stunt with no `look` gets 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "hello buh should use the bright grading as
@@ -2081,6 +2081,7 @@ function camAtLive (t) {
   app.get('/entities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entities.js')))
   app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
   app.get('/poses.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'poses.js')))
+  app.get('/skin_layout.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'skin_layout.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
@@ -2781,7 +2782,7 @@ else:
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb).map(v => v + (1 - v) * lift), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
       // the bare arm in the player's real skin (the jar's Steve otherwise, as published Shorts drew it)
-      if (SELF_SKIN.real) { cam.hand.skin = SELF_SKIN.skin; if (SELF_SKIN.slim) cam.hand.slim = true }
+      if (SELF_SKIN.real) { cam.hand.skin = SELF_SKIN.skin; if (SELF_SKIN.slim) cam.hand.slim = true; if (SELF_SKIN.model) cam.hand.model = SELF_SKIN.model }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
