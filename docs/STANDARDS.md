@@ -36,6 +36,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0z. **A casual viewer gets it** (a friend on Gold for the Portal: "im confsued bro"): the table read's cold readers
+   include a casual player watching once; the twist lands for them in one step from the picture, with no unshown name
+   or mechanic; if they can't say it in one sentence, the script goes back. Check: cold reader (casual), story-critic. r:rac4476
 0a. **Mystery through naivety** (owner: "We need to have that sense of mystery. And naivety"): the kid narrator
    trusts what they see and explains every clue the wrong, innocent way, in their own words; the viewer sees past it.
    The kid never hints, foreshadows, sounds afraid before the reveal or explains the twist. Every clue in the clue map

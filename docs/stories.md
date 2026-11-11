@@ -683,6 +683,12 @@ STANDARDS.md in the same commit.
   session per piece.
 - **Owner, 2026-11-11, auditing Seventy Below (the general is Ravenford's Grandpa in his `elder` voice, never named;
   one zombie burns in the sun, no gore): "Ok".** Approved as written.
+- **Owner, 2026-11-11, relaying a friend's reaction to Gold for the Portal (upload #1): "im confsued bro, feel like i
+  just wasted 10 seconds of my life bro".** A real first viewer didn't get it. Gold's twist takes several unspoken
+  steps (piglins barter; Grandpa died there; a piglin wears his helmet; Grandma knows) and an unexplained name
+  (Nico). From now on every script's cold read includes a CASUAL viewer (plays a little, not a Java expert, watching
+  once at phone speed): the twist must land for them in one step from the picture, with no name or mechanic they
+  weren't shown. A script the casual viewer can't explain in one sentence goes back to the writer.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
