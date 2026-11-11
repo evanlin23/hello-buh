@@ -141,7 +141,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | Mom (Saltmouth) | The Bell in the Window | villager | `mom_saltmouth` (Kore, owner 2026-11-11 "A is fine") | cast |
 | the grandchild | The Walk | | `narrator` (Leda) | cast |
 | Grandpa (Gullwick) | The Walk | grey-haired old man (new skin) | Iapetus proposed, audition (not Charon: Ravenford's) | audition |
-| Grandma (the island) | The Walk | grey-haired old woman (new skin) | `grandma` (Autonoe) shared with Gold's Grandma: decide | decide |
+| Grandma (the island) | The Walk | grey-haired old woman (new skin) | `grandma_island` (Callirrhoe, owner 2026-11-11 "calirrhoe is fine") | cast |
 | the villager kid | Six Thousand Torches | baby villager, Larkfield | `narrator` (Leda) | cast |
 | Jonah | Six Thousand Torches | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
 | the kid | Red Sheep | baby villager, Ravenford | `narrator` (Leda) | cast |
