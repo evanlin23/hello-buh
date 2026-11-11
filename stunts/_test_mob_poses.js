@@ -24,6 +24,7 @@ module.exports = {
     Object.assign(this, { X, Z, F })
     const { c, A, mob } = setKit(ctx, { X, Z, F })
     await ctx.defaultRules()
+    await c('/difficulty easy')   // monsters (skeleton, evoker) can't be summoned on peaceful
     await c('/gamerule mob_griefing true')   // the wololo spell needs it (EvokerWololoSpellGoal.canUse)
     await c(`/fill ${A(-14, 1, -6)} ${A(14, 8, 20)} air`)
     await c(`/fill ${A(-14, 0, -6)} ${A(14, 0, 20)} grass_block`)
@@ -31,7 +32,9 @@ module.exports = {
     await c(`/fill ${A(-9, 4, 3)} ${A(-3, 4, 7)} oak_planks`)
     await c(`/fill ${A(-9, 1, 3)} ${A(-3, 1, 7)} oak_fence hollow`)
     await c(`/summon skeleton ${A(-4, 1, 5).split(' ').map((v, i) => +v + (i === 1 ? 0 : 0.5)).join(' ')} {PersistenceRequired:1b,Invulnerable:1b,Tags:["shooter"],equipment:{mainhand:{id:"minecraft:bow",count:1}}}`)
-    await mob('iron_golem', -8, 1, 5, -90, ['target'])
+    // the golem the skeleton shoots: not Invulnerable (an invulnerable mob is no target: LivingEntity.canBeSeenAsEnemy),
+    // kept alive by Resistance V and regeneration
+    await c(`/summon iron_golem ${A(-8, 1, 5).split(' ').map((v, i) => +v + (i === 1 ? 0 : 0.5)).join(' ')} {NoAI:1b,PersistenceRequired:1b,Tags:["target"],Rotation:[-90f,0f],active_effects:[{id:"minecraft:resistance",amplifier:4b,duration:-1},{id:"minecraft:regeneration",amplifier:4b,duration:-1}]}`)
     // the evoker's pen with three blue sheep
     await c(`/fill ${A(4, 1, 8)} ${A(10, 1, 14)} oak_fence hollow`)
     await c(`/summon evoker ${A(7, 1, 11).split(' ').map((v, i) => +v + (i === 1 ? 0 : 0.5)).join(' ')} {PersistenceRequired:1b,Invulnerable:1b,Tags:["caster"],Rotation:[180f,0f]}`)
@@ -52,6 +55,9 @@ module.exports = {
     const { bot } = ctx
     const { X, Z, F } = this
     const ent = (name, tagHint) => Object.values(bot.entities).filter(e => e.name === name).sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
+    // what the server says each line-up mob holds (a baby piglin was recorded with wheat seeds in its main hand)
+    bot._client.on('entity_equipment', (p) => { const e = bot.entities[p.entityId]; if (e && /piglin|allay/.test(e.name)) ctx.log('equipment packet', e.name, JSON.stringify(p.equipments)) })
+    for (const e of Object.values(bot.entities)) if (/piglin/.test(e.name)) ctx.log('piglin equipment at start', JSON.stringify(e.equipment.map(i => i && i.name)))
     const look = async (x, y, z, ticks = 10) => { await bot.lookAt(new ctx.Vec3(X + x, F + y, Z + z)); await bot.waitForTicks(ticks) }   // motion-ok: a test stunt, not a story
     await look(0.5, 1.6, 3.5)
     ctx.mark('t_allay'); await bot.waitForTicks(30)
