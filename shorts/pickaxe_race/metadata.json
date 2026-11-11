@@ -25,26 +25,26 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.05,
+    "duration_s": 32.9,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 42728608,
-    "sha256": "90c94c80ab88321a5556acb5bd332777ab40d36b8e1b2893bddc6e8cedfbeb44",
+    "bytes": 49291497,
+    "sha256": "8de4453a421716798cb7acee9d06b0b4384181d9d9a83b18403c2be501448179",
     "release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short.90c94c80ab88321a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.90c94c80ab88321a.mp4",
-      "sha256": "90c94c80ab88321a5556acb5bd332777ab40d36b8e1b2893bddc6e8cedfbeb44",
-      "bytes": 42728608
+      "asset": "pickaxe_race.short.8de4453a42171679.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.8de4453a42171679.mp4",
+      "sha256": "8de4453a421716798cb7acee9d06b0b4384181d9d9a83b18403c2be501448179",
+      "bytes": 49291497
     },
     "nosong_release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short_nosong.ffe577d2870832f9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.ffe577d2870832f9.mp4",
-      "sha256": "ffe577d2870832f91c9dd74ffbca97ab8597677ca4db2aafab77d8b5674d106e",
-      "bytes": 42697539
+      "asset": "pickaxe_race.short_nosong.812b08b428118b4e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.812b08b428118b4e.mp4",
+      "sha256": "812b08b428118b4ede448c65e0d4dcf2a1ca979d521d68f73dc420fc78f0aa25",
+      "bytes": 49254650
     }
   },
   "edit": {
@@ -53,7 +53,7 @@
     "red": "every",
     "dropAt": "boom",
     "startAt": "beat:-0.05",
-    "endAfter": "boom:0.98",
+    "endAfter": "lastboom:0.8",
     "speed": [
       [
         "woodcut_a",
@@ -91,7 +91,12 @@
         "cut"
       ],
       [
-        "boom:0.5",
+        "boom:0.85",
+        "boom:1.6",
+        "cut"
+      ],
+      [
+        "boom:1.6",
         "lastboom:-0.4",
         1.75
       ]
@@ -187,6 +192,11 @@
         "boom",
         0,
         0.6
+      ],
+      [
+        "lastboom",
+        0,
+        0.5
       ]
     ],
     "sfx": [
@@ -202,6 +212,10 @@
       [
         "impact",
         "boom"
+      ],
+      [
+        "impact",
+        "lastboom"
       ]
     ],
     "punch": [
@@ -228,19 +242,19 @@
       "--subs_y",
       "0.15",
       "--speed",
-      "[[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]]",
+      "[[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.85\",\"boom:1.6\",\"cut\"],[\"boom:1.6\",\"lastboom:-0.4\",1.75]]",
       "--punch",
       "[[\"boom\",0,1.12]]",
       "--shake",
       "[[\"boom\",0,10]]",
       "--flash",
-      "[[\"boom\",0,0.6]]",
+      "[[\"boom\",0,0.6],[\"lastboom\",0,0.5]]",
       "--sfx",
-      "[[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"]]",
+      "[[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"],[\"impact\",\"lastboom\"]]",
       "--start_at",
       "beat:-0.05",
       "--end_after",
-      "boom:0.98"
+      "lastboom:0.8"
     ]
   },
   "recording": {
@@ -8725,52 +8739,47 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/pickaxe_race",
-    "commit": "8853cb6c18b46108f7ef3aef8e2ef769c4fbb583",
+    "commit": "0fdba7e7f6fd29549185ed4246e0709cf4948a66",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42980459854",
-    "rendered_at": "2026-11-11T07:46:34.336Z",
-    "head_at_publish": "4e66112a9c2eef9a307dee12e69f85592f94c753",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42984005031",
+    "rendered_at": "2026-11-11T08:16:38.832Z",
+    "head_at_publish": "7fce22d51a69afb00a95e2a77a015e34b08750d2",
     "stunt": "stunts/pickaxe_race.js",
     "source_snapshot": [
       "source/pickaxe_race.js"
     ]
   },
   "rebuild": [
-    "git checkout 8853cb6c18b4",
+    "git checkout 0fdba7e7f6fd",
     "gunzip -c shorts/pickaxe_race/recording.json.gz > work/pickaxe_race.rec.json",
     "node render.js work/pickaxe_race.rec.json work/pickaxe_race.frames 60 1080 1011",
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
-    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]] --punch [[\"boom\",0,1.12]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.6]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"]] --start_at beat:-0.05 --end_after boom:0.98 --out out/pickaxe_race.mp4"
+    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.85\",\"boom:1.6\",\"cut\"],[\"boom:1.6\",\"lastboom:-0.4\",1.75]] --punch [[\"boom\",0,1.12]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.6],[\"lastboom\",0,0.5]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"],[\"impact\",\"lastboom\"]] --start_at beat:-0.05 --end_after lastboom:0.8 --out out/pickaxe_race.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); flash + punch + shake and a song dip + impact on the TNT blast (payoff), a pop at 0.05 s (hook); 30.1 s; pace 0 blockers, check OK; awaiting independent review | independent review 2026-11-11: NOT READY, 1 blocker. (1) r:r24d99a (owner: never cut or end while the payoff is still moving): the first TNT blows at ~29.1 s, and at 29.2-30.06 s the second TNT by the right pillar is still primed and flashing white, with the smoke still clearing, when the video ends. Viewers see a lit TNT that never goes off. Cheapest fix: edit-only, endAfter on the last blast once its debris settles (lastboom:~0.8) instead of boom:0.98. Checked OK: every block mined with the crosshair on its crack; TNT placed and lit with the crosshair on it (r:rffba12); tiers and gold breaking plausible; Efficiency V + Haste insta-mine vanilla; pace 0 blockers. Nitpick: pace WARN on build-up, the last third before the TNT sags (19.4-29.1 s, cut rate and bed drop).",
-  "published_at": "2026-11-11T07:47:51.340Z",
+  "status": "pending-qa",
+  "notes": "2026-11-11 finishing worker, after the independent review: ends 0.8 s after the second TNT's blast (lastboom:0.8, no lit TNT left on screen), the still wait after the first blast cut once it settles (lint), flash + impact on both blasts; 32.9 s; pace 0 blockers (WARN hook), check OK; the last blast's smoke is thinning on the final frames; awaiting independent review",
+  "published_at": "2026-11-11T08:18:04.129Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:48:28+00:00",
+    "at": "2026-11-11T08:18:31+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.06 s vs the reviewed render 30.05 s"
+      "summary": "short.mp4 32.92 s vs the reviewed render 32.90 s"
     },
     "pace": {
-      "ok": true,
-      "blockers": 0,
+      "ok": false,
+      "blockers": 1,
       "warnings": 1,
-      "summary": "OK"
+      "summary": "payoff: no sound hit within 0.3 s of the payoff"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:47:39.982Z",
+      "at": "2026-11-11T08:17:38.361Z",
       "report": "work/hb/pickaxe_race.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "review_independent": {
-    "verdict": "NOT READY",
-    "at": "2026-11-11",
-    "notes": "independent review 2026-11-11"
   }
 }
