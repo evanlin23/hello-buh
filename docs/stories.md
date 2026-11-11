@@ -597,6 +597,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on The Walk's Grandma (not Gold's Grandma), candidate E Callirrhoe: "calirrhoe is fine".**
   The island Grandma is cast `grandma_island`, Callirrhoe, directed as an old woman; the first take must still read as
   an old woman to the blind listener (reads_as 60-85), or it comes back to the owner.
+- **Owner, 2026-11-11, on the world: "i really liked how the hill and the place the dog was left was the same place and
+  people watching both will be able to see its connected".** The strongest link between stories is the same exact
+  place, seen again: the same spot, the same build, the same thing left behind (Good Boy's last login is Dog on the
+  Hill's first frame). Every new story looks for one: set it where an earlier story happened, or leave something
+  that a later story will show on the skyline.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

@@ -169,6 +169,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+5a. **Connected by the same place** (owner: "the hill and the place the dog was left was the same place"): each new
+   story is set at, or in sight of, a place an earlier story built (the same spot, the same build, what was left
+   there), or leaves something later stories show; named in its map.json entry and its pitch. Check: story-critic
+   (canon line), owner. r:r24e765
 5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
