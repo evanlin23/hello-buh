@@ -292,8 +292,8 @@
   {
    "id": "L11",
    "who": "N",
-   "text": "One ROW / was still GROWING. / I HAD / to see WHO.",
-   "say": "One row was still growing. I had to see WHO.",
+   "text": "One ROW / of TORCHES / was still GROWING. / I HAD / to see WHO.",
+   "say": "One row of torches was still growing. I had to see WHO.",
    "direction": "curious, then determined",
    "shot": "S11",
    "beat": 5,

@@ -41,7 +41,7 @@ down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "Se
 | 8 | L08 This MORNING, I FOUND his STUFF in OUR chest. | S08 chest screen | **clue**: a gift | |
 | 9 | L09 PRESENTS for the PARTY! | S09 window over the lit village | | presents |
 | 10 | L10 And his HOUSE? GONE. He's MOVING in with US! | S10 the bare plot, S05's angle | **turn**: the viewer sees "leaving" (~25 s) | moving in |
-| 11 | L11 One ROW was still GROWING. I HAD to see WHO. | S11 the arm round the corner | agency: the want | |
+| 11 | L11 One ROW of TORCHES was still GROWING. I HAD to see WHO. | S11 the arm round the corner | agency: the want | |
 | 12 | L12 I FOLLOWED it to MY door. | S12 follow round the corner, the gap at the door | the last spot | |
 | 13 | L13 It was JONAH! With his LAST torch. So I'm NEVER in the DARK! | S13 he sets his own torch down, waves | the walk-home torch, left behind; the gesture in the kid's words (audit #6.2) | a present for me |
 | 14 | L14 He FORGOT to SAY, "See you TOMORROW." | S14 he walks away, silent, no torch | **reveal**: cut on TOMORROW | he forgot |
