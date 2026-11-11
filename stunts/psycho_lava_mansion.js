@@ -11,7 +11,7 @@ module.exports = P.makeStunt({
   rooms: ['living_room', 'kitchen', 'bathroom'],
   finale: 'bed_jump',
   edit: {
-    startAt: 'open:0', endAfter: 'land:0.9', dropAt: 'land',
+    startAt: 'open:0', endAfter: 'land:0.65',   /* r:r188b46: was 0.9 */ dropAt: 'land',
     // a pop on frame 1 under the fire's crackle (the audio hook); the payoff is the landing on the bed: the song dips
     // 0.4 s before it, then an impact and a punch-in
     sfx: [['pop', 'open', { gain: 0.35 }], ['dip', 'land', 0.4], ['impact', 'land']],

@@ -96,6 +96,19 @@ class Dwell(unittest.TestCase):
         self.assertEqual(hit, {("boom", 0.0), ("crater", 0.0)})              # the riser's lit, a card, a whoosh: news only
         self.assertEqual(news, {"lit", "boom", "cut1b", "crater"})            # settle (the end) and the air bed: not beats
 
+    def test_a_repeated_mark_counts_at_the_occurrence_the_edit_names(self):
+        # hack_banner_door: a pop + a sub on each reveal (sfx {nth}, sub's 4th field); a break at 3.0 s, the 3rd reveal at
+        # 3.8 s is the next beat (only the first reveal counted before: 3.0 -> the payoff at 6.0 read as a 2.9 s dwell)
+        tl = [{"t": 1000, "event": "reveal"}, {"t": 2000, "event": "reveal"}, {"t": 3000, "event": "dig_end"},
+              {"t": 3800, "event": "reveal"}, {"t": 6000, "event": "payoff"}]
+        edit = {"sfx": [["pop", "reveal", {"nth": k}] for k in range(3)] + [["impact", "payoff"]],
+                "subs": [["reveal", "c", 1.0, 2]], "endAfter": "payoff:0.6"}
+        news = {(ev, n) for ev, off, why, h, n in DW.edit_marks(edit, nth=True)}
+        self.assertIn(("reveal", 2), news)
+        F, s = check(rec(tl), edit, 6.6, payoff=6.0)
+        self.assertEqual(F, [])
+        self.assertLessEqual(s["worst_mid"]["dwell"], 0.75)
+
 
 if __name__ == "__main__":
     unittest.main()

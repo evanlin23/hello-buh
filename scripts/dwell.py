@@ -67,25 +67,28 @@ def _spec(s):
     return m.group(1), float(m.group(2) or m.group(3) or 0)
 
 
-def edit_marks(edit) -> list:
+def edit_marks(edit, nth=False) -> list:
     """[(event, offset, why, is_hit)]: every mark the edit hangs something on; is_hit: it marks a result (an impact /
-    boom / hit / ding sound, a flash, a shake, the endAfter mark)."""
+    boom / hit / ding sound, a flash, a shake, the endAfter mark). nth=True: (event, offset, why, is_hit, n), n the
+    occurrence of the event it hangs on (an sfx's {"nth": n}, a sub's 4th field; edit.py / sfx.py count from 0)."""
     out = []
-    def add(spec, why, hit):
+    def add(spec, why, hit, n=0):
         ev, off = _spec(spec)
         if ev and ev not in NOT_BEATS:
-            out.append((ev, off, why, hit))
+            out.append((ev, off, why, hit, n) if nth else (ev, off, why, hit))
     for s in edit.get("sfx") or []:
         if isinstance(s, list) and len(s) > 1 and s[0] not in BED_SFX:
+            n = s[-1].get("nth", 0) if isinstance(s[-1], dict) else 0
             for i, x in enumerate(s[1:3]):
                 if isinstance(x, str):
-                    add(x, f"sfx {s[0]}", s[0] in HIT_SFX and i == 0)
+                    add(x, f"sfx {s[0]}", s[0] in HIT_SFX and i == 0, n if i == 0 else 0)
     for k in NEWS_FX:
         items = edit.get(k) or []
         for it in items if isinstance(items, list) else []:
             spec = it[0] if isinstance(it, list) and it else it if isinstance(it, str) else None
+            n = it[3] if k == "subs" and isinstance(it, list) and len(it) > 3 and isinstance(it[3], int) else 0
             if spec:
-                add(spec, k, k in HIT_FX)
+                add(spec, k, k in HIT_FX, n)
     if edit.get("dropAt"):
         add(edit["dropAt"], "dropAt", False)
     for ev in edit.get("keySounds") or []:
@@ -93,7 +96,7 @@ def edit_marks(edit) -> list:
     if edit.get("endAfter"):
         ev, _ = _spec(edit["endAfter"])
         if ev and ev not in NOT_BEATS:
-            out.append((ev, 0.0, "endAfter", True))
+            out.append((ev, 0.0, "endAfter", True, 0) if nth else (ev, 0.0, "endAfter", True))
     return out
 
 
@@ -122,10 +125,10 @@ def beats(rec, clock, edit, cam=None, in_view=None) -> list:
         t1, p = rs[-1][0], tuple(rs[-1][3:6])
         if cam is None or in_view is None or in_view(cam(t1), p):
             put(t1 / 20, "landing", "falling_block", 0.0, "recording")
-    for ev, off, why, hit in edit_marks(edit):
+    for ev, off, why, hit, n in edit_marks(edit, nth=True):
         hits = [e for e in tl if e.get("event") == ev or (e.get("event") == "line" and e.get("id") == ev)]
-        if hits:
-            put(hits[0]["t"] / 1000 + off, "edit", ev, 0.0, why, hit)
+        if len(hits) > n:   # (the occurrence it hangs on: the 6th reveal's pop and sub are a beat too)
+            put(hits[n]["t"] / 1000 + off, "edit", ev, 0.0, why, hit)
     # one row per (time, name): an edit mark named twice is one beat, a result if any use is
     merged = {}
     for b in out:

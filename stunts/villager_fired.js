@@ -25,7 +25,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'settle:0.6',   // the blast and his death puff settled (lib/settle.js)
+    startAt: 'beat:-0.05', endAfter: 'gone:0.65',   // r:r188b46: 0.65 s after his death reads ('permanently'); was settle:0.6, the old smoke wait (2.35 s). settle-ok: the ring's last blast frame and his death puff are over by 'gone' (this take's settle mark is the pre-2026-11-11 smoke wait)
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -43,7 +43,11 @@ module.exports = {
     ],
     // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
     // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
-    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4],
+      // r:r188b46: the waits between a fire and the next hire, and a hire and the next fire, at x1.4 (1.05-1.3 s
+      // held; the turns there peak at 165 deg/s, so x1.4 stays under the whip cap). As offsets from 'beat' (the
+      // hire/fire marks repeat: a span takes an event's first mark): 4.1-5.1, 5.25-6.5, 7.6-8.85 s on this take
+      ['beat:3.3', 'beat:4.3', 1.4], ['beat:4.45', 'beat:5.7', 1.4], ['beat:6.8', 'beat:8.05', 1.4]],   // (pace: 3 s of the cycle before FASTER)
     // the payoff pace times is the ring's LAST blast, 0.6 s after his death in this recording (34.05 s vs 33.45 s
     // source; 0.45 s in the take before): a flash on the death, then the big flash + punch and the song dip + impact on
     // that last blast (on the death they were early and the payoff had no hit: pace BLOCK). Re-check after a re-record.

@@ -29,14 +29,18 @@ module.exports = {
   caption: CAPTION,
   edit: {
     caption: CAPTION, red: 'so clean', dropAt: 'lit',
-    startAt: 'hook:-0.1', endAfter: 'lit:1.0',
+    startAt: 'hook:-0.1', endAfter: 'lit:0.7',   // r:r188b46: 0.7 s after the lights (was 1.0)
     // the walk back stays one continuous walk (owner: the jump cut there "looks weird"), a touch brisker (x1.3: the
     // whole 3 s of it uncut was a span with nothing new, pace)
-    speed: [['intr_back:0.1', 'intr_resume:-0.1', 1.3]],
+    speed: [['intr_back:0.1', 'intr_resume:-0.1', 1.3],
+      // r:r188b46: 3.35 s from the arrow's hit to the next thing (the still hold, the turn, the walk over): the hold at
+      // x2, the turn to the skeleton at x1.25 (it peaks at 180 deg/s: under the whip cap), the walk over at x1.6
+      ['intr_hit:0.3', 'intr_notice', 2], ['intr_notice', 'intr_walk:-0.25', 1.25], ['intr_walk:-0.25', 'intr_deal:-0.4', 1.6]],
     punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.4]],   // the payoff's picture change (the lights coming on), with the ripple and the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_bite', 'intr_gone'],   // the hit, the grab, every bite, the last one: over the music
     // room tone from frame 1; the music dips before the lights and an impact lands on them (mixcheck: the payoff hit over the NCS bed)
-    sfx: [['air', 'start', 'lit', { gain: 0.5 }], ['dip', 'lit', 0.4], ['impact', 'lit', { gain: 1.4 }]]
+    sfx: [['air', 'start', 'lit', { gain: 0.5 }], ['dip', 'lit', 0.4], ['impact', 'lit', { gain: 1.4 }],
+      ['whoosh', 'intr_notice:0.2', { gain: 0.6 }]]   // the snap turn to the skeleton (r:r188b46: the next beat after the hit)
   },
 
   async setup (ctx) {

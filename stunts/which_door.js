@@ -21,7 +21,8 @@ module.exports = R.makeStunt({
     // (settle:-0.15: the settle waits out the renderer's smoke conservatively, 2.2 s; on this take the last debris lands
     // ~1.45 s after the second wave, and settle:0.6 held a frozen death screen 1.25 s: independent review 2026-11-11.
     // pace's last-0.6 s check still sees a still ending)
-    endAfter: 'settle:-0.15', deathScreen: true, onFire: 'lava_in:death',
+    // r:r188b46: settle:-0.45, the death screen ~1.4 s after the second wave (was 1.7; on a re-record: settle:0.5)
+    endAfter: 'settle:-0.45', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
       ['intro', 'PICK A DOOR', 1.8, 'yellow'],   // (no 👇: it sat over door 5 and read as a hint)
@@ -37,7 +38,10 @@ module.exports = R.makeStunt({
     flash: [['death', 2, 0.6], ['big_blast', 0, 0.8]],
     shake: [['death', 2, 24]],
     // the burn in the lava, sped up to the death; its middle 1.3 s cut (lint: nobody moves 12.4-13.6 s)
-    speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5]],
+    speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5],
+      // r:r188b46: after the first respawn, the still hold at x2 and the turn to door 2 at x1.4 (162 deg/s: under the
+      // whip cap): 1.3 s from the death to the next thing before
+      ['respawn:0.05', 'respawn:0.5', 2], ['respawn:0.5', 'respawn:0.85', 1.4]],
     // pace: a hit on the payoff (the last death): the song dips 0.3 s before it, then an impact
     // and a whoosh + pop on the opening card and a pop on every card/counter (the hook: game sound starts with quiet steps)
     sfx: [['whoosh', 'intro'], ['pops'], ['dip', 'last_death', 0.3], ['impact', 'last_death'],
