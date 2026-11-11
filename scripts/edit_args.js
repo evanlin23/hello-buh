@@ -7,6 +7,10 @@ const e = { ...(require(`../stunts/${process.argv[2]}`).edit || {}), ...JSON.par
 const out = []
 if (e.caption) out.push('--caption', process.env.CAPTION || e.caption)
 if (e.red) out.push('--red', e.red)
+// the key word's colour: a story Short (Buh Stories) is Buh gold #FFD640 (docs/brand.md "Buh Stories channel"), the rest
+// HelloBuh red; edit.redColor ('RRGGBB') overrides
+const redColor = e.redColor || (e.story || e.channel === 'buhstories' ? 'FFD640' : null)
+if (e.red && redColor) out.push('--red_rgb', String(redColor).replace(/^#/, ''))
 if (e.bands) out.push('--bands', e.bands)   // 'blur' | 'black'
 if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
