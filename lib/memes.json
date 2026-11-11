@@ -10,8 +10,11 @@
       "https://commons.wikimedia.org/wiki/File:Tom_Lea_-_2000_Yard_Stare.jpg"
     ],
     "about": "the cooked format's still (owner, 2026-11-11: \"The real meme photo\"; identified by the lead from the owner's reference upload): the thousand-yard stare meme, Tom Lea's painting \"Marines Call It That 2,000 Yard Stare\" (1944, Peleliu), held by the U.S. Army Center of Military History. 3008x3861 (the Commons featured-picture restoration) or 1000x1288",
-    "licence": "hosted on Wikimedia Commons (a free-licence-only site; the pages credit the US Army, author Tom Lea); the exact licence template not read: the Commons page is not reachable from the worker box",
-    "focus": [0.5, 0.33],
+    "licence": "PD per Commons (US Army CMH, Army Art Collection); disputed: Lea was a Life staff artist in 1944; unverified (a 2023 Commons featured-picture discussion questioned the PD tag). The owner chose the real meme photo (r:r12cb71) and makes the call per cut with this caveat.",
+    "focus": [
+      0.5,
+      0.33
+    ],
     "logged": "2026-11-11",
     "sha256": null
   }

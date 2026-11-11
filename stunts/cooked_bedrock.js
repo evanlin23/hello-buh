@@ -53,8 +53,9 @@ module.exports = makeStunt({
   red: 'bedrock',
   subs: [['bedrock', 'bedrock??', 1.0], ['crack', "wait it's breaking", 1.3]],
   edit: { sfx: [['pop', 'go', { gain: 0.4 }]] },
-  // who comes for you: the game's makers first, then everything bigger, the punchline last (kid-safe, no real person)
-  joins: ['Notch', 'jeb_', 'Mojang', 'MojangLawyers', 'TheWarden', 'FBI', 'Pentagon', 'NASA', 'EnderDragon', 'YourMom'],
+  // who comes for you: the game's makers first, then everything bigger; the punchline is the block itself (and the
+  // other edition), last (kid-safe, no real person as the punchline, nothing a parent reads as an insult)
+  joins: ['Notch', 'jeb_', 'Mojang', 'MojangLawyers', 'TheWarden', 'FBI', 'Pentagon', 'NASA', 'EnderDragon', 'Bedrock'],
   hotbar: ['netherite_pickaxe[enchantments={efficiency:5}]', ['torch', 64], ['cobbled_deepslate', 64], ['bread', 23], 'water_bucket', ['ladder', 32], ['diamond', 3], 'shield', ['cookie', 64]],
   select: 0,
   start: [0.5, 0, 0.32, 0, 82],   // already looking down at the first ore (a little south of the eye, so the aim's yaw is defined: straight above it, the turn to it was 160 deg)
