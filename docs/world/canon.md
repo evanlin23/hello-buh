@@ -174,6 +174,15 @@ Ravenford 2300.
 Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: Tomas and Dad): each pick takes it off the others' lists.
 | Grandpa (Ravenford), in the background | Red Sheep (Ravenford, 2300) | player actor, `zuri` skin, the slow walk; on his bench by his door; **never named, never called Grandpa** (conflict 11) | none | |
 
+Batch 3 (scripts for owner audit; not canon until made):
+
+| who | story (place, day) | look | voice | status |
+|---|---|---|---|---|
+| the villager kid | Pulled Away (Oakend to Fernbank, 6000) | baby plains villager, no profession, a girl, never named | `narrator` (Leda) | cast |
+| the man | Pulled Away (Oakend to Fernbank, 6000) | player, nameless, no name tag, not Steve (new plain skin or a default the owner picks) | Umbriel or Algieba (both unused), audition against Pip on L05 | audition |
+| Mom (Oakend) | Pulled Away (6000) | plains villager, fletcher; silent | none | cast |
+| the uncle (Oakend) | Pulled Away (6000) | plains villager, butcher; silent | none | cast |
+
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
 an unpublished story. **Theory** means fans can argue it and the canon never confirms it. None of them is needed to

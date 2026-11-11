@@ -2314,6 +2314,19 @@
     "boxed_bell"
    ],
    "status": "made"
+  },
+  "pulled_away": {
+   "day": 6000,
+   "places": [
+    "oakend",
+    "fernbank"
+   ],
+   "cameos": [
+    "fernbank_golem",
+    "empty_boat",
+    "hellobuh_graves"
+   ],
+   "status": "script (batch 3), for the owner's audit; not canon until made"
   }
  },
  "cameos": {

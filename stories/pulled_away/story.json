@@ -1,0 +1,507 @@
+{
+ "name": "pulled_away",
+ "stunt": "story_pulled_away",
+ "version": 2,
+ "revision": "r1 (2026-11-11): first script from the batch-3 premise (round 1 #1) with its three must-changes; script only, nothing voiced (r:ra5bc8f)",
+ "caption": "why is he collecting villagers 🛶",
+ "logline": "A villager kid is dragged out of her village in a boat by a man who calls her number forty and already took her Mom and her uncle, who never came back; she thinks it's the best trip ever, and at dusk the boat bumps into the empty village across the water, every window lit, Mom and her uncle at the dock beside the old librarian who'd been alone for years.",
+ "question": "why tf is this man dragging a villager kid across the grass in a boat?",
+ "premise": "A man (a player) pulls a baby villager out of Oakend in an oak boat on a lead, across the grass. He calls her number forty. He took her Mom last week and her uncle before that, and none of them came back. Before they left he looked across the water at the old empty village, where only one window is lit, and said someone's been alone a long time. She thinks this is the best trip ever.",
+ "twist": "Every Minecraft player knows a villager dragged in a boat is going to a trading hall. He isn't building one. He is filling Fernbank, the empty village across the inlet where the old librarian has lived alone with the golem for years, one villager at a time: number forty is the fortieth neighbour he has brought her. At dusk the boat bumps the dock, every window is lit, and Mom and the uncle are waiting at the dock's foot beside the librarian. 'None of them came back. They must love it there' was true.",
+ "key_color": "#FFD640",
+ "mood": [
+  "tense",
+  "heroic"
+ ],
+ "mood_note": "the score reads as a fun trip with an uneasy undertone for a player (tense, light), then warm on the reveal; if 'tense' plays too dark under a bubbly kid, 'funny' then 'heroic'",
+ "payoff": "L10+1.6",
+ "payoff_note": "the picture lands on EMPTY (the cut to the lit village); S11 opens about 0.6 s after L10 ends and holds 1.6 s (the cold reader: 1 s is too short to pick out Mom, Uncle and the librarian) on Mom, Uncle and the librarian; the Short ends there. No line after L10.",
+ "look": {
+  "time": 11500,
+  "fog": false,
+  "note": "per shot: Oakend late afternoon 11500-11600 (S01-S03), Oakend's bank at sunset 12000-12100 (S04-S06, S08), flashback morning 2000 graded warm (S07, S07b), the inlet at dusk 12600 (S09), Fernbank at dusk 13000 (S10-S11)"
+ },
+ "weather": "clear",
+ "world": {
+  "place": "from oakend (map.json, claimed by names_in_the_woods; the cleric's hamlet on the North Inlet's west bank, at (-497, 63, -1054)) east across the North Inlet to fernbank (canon; the dock at (-423, 63, -1026) facing west, the dock's end and the fisherman's empty boat at about (-436.5, 62.6, -1025.5))",
+  "where": "Oakend's lane and meadow, its east bank facing Fernbank, the inlet's crossing, Fernbank's dock and the village above it",
+  "day": 6000,
+  "canon": "New: the man (a player, nameless) has been bringing villagers to Fernbank one at a time for a while before day 6000, from Oakend and elsewhere; the kid is the fortieth. From day 6000 Fernbank is a living village again: every house lit, about 40 villagers, the librarian no longer alone; the golem still by the well; the empty boat still at the dock; the HELLOBUH graves unchanged. Oakend loses the kid's family (her Mom, her uncle, her). Bible: World.",
+  "easter_egg": "three Fernbank cameos in S04 and S10, never named: fernbank_golem (by the well), empty_boat (the fisherman's, at the dock's end), hellobuh_graves (the churchyard); all canon on day 6000"
+ },
+ "voice": {
+  "engine": "gemini",
+  "recipe": "voices/cast.json narrator (Pip, plain_say) + the man's own voice (to audition); nothing voiced until the owner audits the script (r:ra5bc8f)"
+ },
+ "voice_takes": "beat",
+ "one_take": [
+  "N"
+ ],
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "color": "#FFFFFF",
+   "on_screen": "the kid: a baby plains villager, no profession (a girl; never named), sitting in the oak boat in every present shot (S01-S06, S08-S10), small in her doorway in S07's flashback; not in S11's frame (she is in the boat behind the camera). The house narrator voice (cast `narrator`, Pip), as Good Boy's dog."
+  },
+  "Man": {
+   "role": "character",
+   "name": "the man",
+   "voice": "Umbriel",
+   "model": "gemini-3.8-flash-tts",
+   "color": "#9FD3A8",
+   "profile": "A kind man in his thirties, low and warm, full voice",
+   "on_screen": "a player actor, nameless, no name tag; not Buh's Steve skin (proposed: a new plain skin, brown hair, green shirt, brown trousers; or a default skin the owner picks: every male default is taken by another story's character, bible.md 'Cast'); empty main hand except the lead; on foot on land (S01-S08), swimming in S09, not in S10-S11. One line, L05, on screen while he says it.",
+   "note": "a new speaking character (STANDARDS 7a): two voices no other character uses, Umbriel (working pick) and Algieba; audition both against Pip on L05, the owner picks, then a cast.json entry"
+  },
+  "Mom": {
+   "role": "character",
+   "silent": true,
+   "name": "Mom",
+   "on_screen": "a plains villager, fletcher (the feathered hat), in a boat in S07's flashback, at the dock's foot in S11; never speaks"
+  },
+  "Uncle": {
+   "role": "character",
+   "silent": true,
+   "name": "Uncle",
+   "on_screen": "a plains villager, butcher (white apron, red headband), in a boat in S07b's flashback, at the dock's foot in S11; never speaks"
+  },
+  "Librarian": {
+   "role": "character",
+   "silent": true,
+   "name": "the librarian",
+   "on_screen": "Fernbank's canon librarian (plains, librarian outfit), alone in her lit doorway in S04 (far), at the dock's foot between Mom and Uncle in S11; never named, never speaks"
+  }
+ },
+ "requests": [
+  {
+   "id": "rN",
+   "speakers": [
+    "N"
+   ],
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10"
+   ],
+   "direction": "One continuous telling, start to finish: a bubbly villager kid on the best trip of her life, bright and quick, no dramatic pauses, never scared; the last line a little slower, curious."
+  },
+  {
+   "id": "rM",
+   "speakers": [
+    "Man"
+   ],
+   "lines": [
+    "L05"
+   ],
+   "direction": "[A kind man in his thirties, low and warm, full voice]"
+  }
+ ],
+ "sfx": [
+  {
+   "under": "S01",
+   "sound": "entity.boat.paddle_land",
+   "note": "the boat scraping over grass from frame 1 (vanilla's boat-on-land sound), and the man's steps on grass"
+  },
+  {
+   "under": "S03",
+   "sound": "entity.villager.ambient",
+   "note": "the kid's happy 'hm' on the bump (baby pitch)"
+  },
+  {
+   "under": "S09",
+   "sound": "entity.player.swim",
+   "note": "the man's strokes, the boat's paddle-water sound off (nobody rows)"
+  },
+  {
+   "under": "S10",
+   "sound": "block.wood.hit",
+   "note": "the boat's bow bumping the dock post on 'bumped'"
+  },
+  {
+   "under": "S11",
+   "sound": "entity.villager.yes",
+   "note": "Mom's villager sound as she turns (the payoff hit lands with the cut to S11; no bell: Fernbank has none, and nobody on screen would ring it)"
+  }
+ ],
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "text": "A MAN / pulled me out / of my VILLAGE / in a BOAT. / Across the GRASS.",
+   "say": "A man pulled me out of my village in a boat. Across the grass.",
+   "shot": "S01",
+   "punch": true,
+   "shows": [
+    {
+     "what": "player",
+     "word": "MAN"
+    },
+    {
+     "what": "oak_boat",
+     "word": "BOAT"
+    },
+    {
+     "what": "grass_block",
+     "word": "GRASS"
+    }
+   ],
+   "look": {
+    "what": "Man",
+    "word": "MAN"
+   },
+   "direction": "delighted, one quick breath, telling a friend the best news; the last word lands"
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "text": "He calls me / number FORTY. / He's GOOD / at COUNTING.",
+   "say": "He calls me number forty. He's good at counting.",
+   "shot": "S02",
+   "look": {
+    "what": "Man",
+    "word": "FORTY"
+   },
+   "direction": "proud of him, matter-of-fact",
+   "note": "0a: 'number forty' misread as a skill (he is counting the villagers he has carried home, not stock for a hall)"
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "It's the best / TRIP / EVER.",
+   "say": "It's the best trip ever.",
+   "shot": "S03",
+   "shows": [
+    {
+     "what": "oak_boat",
+     "word": "TRIP"
+    }
+   ],
+   "look": {
+    "what": "Kid",
+    "word": "TRIP"
+   },
+   "direction": "pure joy, bouncing with the boat",
+   "note": "0a: the kid thinks a boat dragged over grass is a fun ride (players know it is how villagers are moved to trading halls)"
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "Before we LEFT, / he looked across the WATER / at the old / EMPTY village. / Only ONE window / was LIT.",
+   "say": "Before we left, he looked across the water at the old empty village. Only one window was lit.",
+   "shot": "S04",
+   "shows": [
+    {
+     "what": "water",
+     "word": "WATER"
+    },
+    {
+     "what": [
+      "glass_pane",
+      "glass"
+     ],
+     "word": "WINDOW"
+    }
+   ],
+   "look": {
+    "what": "prop:fernbank_window",
+    "word": "WINDOW"
+   },
+   "direction": "storytelling, a little hushed wonder but full voice, quick",
+   "note": "must-change 1: the lonely one is planted AT Fernbank, the village the boat will reach (one lit window: the librarian's)"
+  },
+  {
+   "id": "L05",
+   "who": "Man",
+   "text": "Someone's been ALONE / a long TIME.",
+   "say": "Someone's been alone a long time.",
+   "shot": "S05",
+   "look": {
+    "what": "Man"
+   },
+   "direction": "kind and low, looking across the water, not sad-dramatic",
+   "note": "the man's one line (must-change 1), on screen while he says it"
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "text": "I think / he means HIMSELF. / He doesn't have / any FRIENDS.",
+   "say": "I think he means himself. He doesn't have any friends.",
+   "shot": "S06",
+   "look": {
+    "what": "Kid",
+    "word": "HIMSELF"
+   },
+   "direction": "sure of it, sweet, a little sorry for him",
+   "note": "0a: the kid's innocent misreading of 'someone' (it is the old librarian across the water)"
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "He took MOM / last WEEK. / And my UNCLE / before THAT.",
+   "say": "He took Mom last week. And my uncle before that.",
+   "shot": "S07",
+   "punch": true,
+   "shows": [
+    {
+     "what": "villager",
+     "word": "MOM"
+    },
+    {
+     "what": "villager",
+     "word": "UNCLE"
+    }
+   ],
+   "look": [
+    {
+     "what": "Mom",
+     "word": "MOM"
+    },
+    {
+     "what": "Uncle",
+     "word": "UNCLE"
+    }
+   ],
+   "direction": "bright, a fun fact, no worry at all",
+   "note": "the turn: for a player this is the dark beat (a man taking a family one by one); S07 on MOM, S07b on UNCLE"
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "text": "None of them / came BACK. / They must / LOVE it there.",
+   "say": "None of them came back. They must love it there.",
+   "shot": "S08",
+   "look": {
+    "what": "prop:shut_doors",
+    "word": "BACK"
+   },
+   "direction": "cheerful and certain, a shrug in the voice",
+   "note": "0a: the kid reads 'never came back' as 'they love it' (a player reads trading-hall cells); literally true after the reveal"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "At the WATER, / he SWAM / and pulled me BEHIND him. / The boat finally / got to SWIM!",
+   "say": "At the water, he swam and pulled me behind him. The boat finally got to swim!",
+   "shot": "S09",
+   "shows": [
+    {
+     "what": "water",
+     "word": "WATER"
+    },
+    {
+     "what": "oak_boat",
+     "word": "BOAT"
+    }
+   ],
+   "look": {
+    "what": "prop:boat",
+    "word": "BOAT"
+   },
+   "direction": "giggling, the best part of the trip",
+   "note": "vanilla: a leashed boat follows its holder on water too (a lead does nothing only while a player sits in the boat); the villager can't leave the boat on its own"
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "text": "When it got DARK, / we bumped into / the old / EMPTY village.",
+   "say": "When it got dark, we bumped into the old empty village.",
+   "shot": "S10",
+   "punch": true,
+   "look": {
+    "what": "prop:fernbank_lit",
+    "word": "EMPTY"
+   },
+   "direction": "a little slower, curious, still happy; the last word a small wonder",
+   "note": "the reveal starts on EMPTY: the cut to S10 lands on it (every window of the 'empty' village lit, villagers at their doors). The kid says nothing about what the picture shows; S11 follows with no line"
+  }
+ ],
+ "shots": [
+  {
+   "id": "S01",
+   "line": "L01",
+   "place": "oakend_lane",
+   "size": "wide",
+   "camera": "at: 7 blocks south of the boat's path, eye 1.2 above the grass, looking north-north-east, a slow pan right with the boat (no push); the boat enters frame centre-left on frame 1 already moving and ends centre-right",
+   "frame": "subject: the oak boat sliding left to right over the grass, the baby villager sitting in it (head and shoulders over the gunwale), the man walking ahead at frame right holding the lead, its line taut to the boat's bow (engine gap: leads don't draw); bg: Oakend's lane of cottages and the oak fence, warm late light. Screen direction for the whole trip: west (left) to east (right). Late afternoon 11500.",
+   "look": {
+    "time": 11500
+   }
+  },
+  {
+   "id": "S02",
+   "line": "L02",
+   "place": "oakend_lane",
+   "size": "ms",
+   "camera": "at: tracking beside the boat at its speed, 3 blocks off its south side, eye at the kid's head height",
+   "frame": "subject: the kid in the boat, frame left of centre, looking ahead at the man; the man's back and shoulders at frame right, glancing back over his shoulder at FORTY (an eased head turn), the lead between them; bg: cottages sliding past. 11550.",
+   "look": {
+    "time": 11550
+   }
+  },
+  {
+   "id": "S03",
+   "line": "L03",
+   "place": "oakend_meadow",
+   "size": "full",
+   "camera": "at: low, 5 blocks ahead of the boat and to its right, looking back at it as it comes on, still",
+   "frame": "subject: the whole boat head to stern coming toward frame centre over a small grass bump, the kid's head bobbing with the bump; the man out of frame right (the lead runs out right); bg: the dark oak treeline on the meadow's rise. 11600.",
+   "look": {
+    "time": 11600
+   }
+  },
+  {
+   "id": "S04",
+   "line": "L04",
+   "place": "oakend_bank",
+   "size": "ews",
+   "camera": "at: 6 blocks behind the man and 3 up, on Oakend's east bank, looking east across the North Inlet at Fernbank, still, FOV 40",
+   "frame": "fg: the man at lower left from behind, standing on the bank; the boat on the grass beside him with the kid in it, looking where he looks; mid: the narrow inlet; subject: Fernbank across the water, dark roofs in the dusk shadow, the church, every window dark except ONE, the librarian's house (canon piece `librarian`), its door lit warm with the old librarian standing in it (readable as one villager in one lit door; she is the canon stamp, moved into the lit doorway); background details for fans (never named): the iron golem by the well, the fisherman's empty boat at the end of the dock, the churchyard's headstones on the right. Sunset 12000. Flashback? No: the same evening, minutes earlier.",
+   "look": {
+    "time": 12000,
+    "fov": 40
+   }
+  },
+  {
+   "id": "S05",
+   "line": "L05",
+   "place": "oakend_bank",
+   "size": "ms",
+   "camera": "at: 3 blocks south of the man, eye height, a profile looking north at him, still",
+   "frame": "subject: the man waist up in profile at frame left of centre, facing right (east, across the water); over his shoulder at frame right, out of focus, Fernbank's one lit door. 12000.",
+   "look": {
+    "time": 12000
+   }
+  },
+  {
+   "id": "S06",
+   "line": "L06",
+   "place": "oakend_bank",
+   "size": "full",
+   "camera": "at: 4 blocks south-west of the boat, low, looking north-east, still",
+   "frame": "subject: the kid in the boat on the grass, looking up and right at the man (his legs at frame right edge); bg: the inlet's west bank and Oakend's roofs to the left (not Fernbank). 12000.",
+   "look": {
+    "time": 12000
+   }
+  },
+  {
+   "id": "S07",
+   "line": "L07",
+   "place": "oakend_lane",
+   "size": "wide",
+   "camera": "at: across the lane from the kid's door, 8 blocks, looking north, still. Flashback, graded warm and soft",
+   "frame": "subject: on MOM: Mom (plains villager, fletcher: the feathered hat) sitting in an oak boat sliding left to right down the lane, the same man ahead with the lead; the kid small in her cottage doorway at frame left watching (no worry: she sways her head). Day 6000 minus 7 (morning light, 2000).",
+   "look": {
+    "time": 2000,
+    "grade": "flashback"
+   }
+  },
+  {
+   "id": "S07b",
+   "line": "L07",
+   "place": "oakend_gate",
+   "size": "full",
+   "camera": "at: 5 blocks south of the lane's east end, looking north, still; cut in on UNCLE. Flashback, graded as S07",
+   "frame": "subject: Uncle (plains villager, butcher: the white apron and red headband) in an oak boat, head to stern in frame, sliding left to right, the man's legs and the lead at frame right; bg: a different cottage than S07 (another day). Morning 2000.",
+   "look": {
+    "time": 2000,
+    "grade": "flashback"
+   }
+  },
+  {
+   "id": "S08",
+   "line": "L08",
+   "place": "oakend_bank",
+   "size": "wide",
+   "camera": "at: on the bank 3 blocks east of the boat and 2 up, looking back west over the kid's shoulder up the lane, still (a look back, not a travel shot)",
+   "frame": "fg: the kid in the boat from behind, her head turned toward the lane; subject: two cottages on the lane 15-20 blocks back, side by side, doors shut, windows dark (Mom's, then Uncle's); the man's legs at frame left edge. Sunset 12100, after S06.",
+   "look": {
+    "time": 12100
+   }
+  },
+  {
+   "id": "S09",
+   "line": "L09",
+   "place": "north_inlet",
+   "size": "wide",
+   "camera": "at: on the inlet's south reach, 10 blocks south of the crossing, 2 above the water, looking north up the inlet, FOV 45, slow pan right with the boat; Fernbank's houses kept out of frame right (the dock's first posts may show at the edge)",
+   "frame": "subject: the man swimming left to right across the inlet, head above water, the lead (gap) back to the boat floating behind him with the kid in it; bg: the inlet running north between its banks into the evening haze. Dusk 12600.",
+   "look": {
+    "time": 12600,
+    "fov": 45
+   }
+  },
+  {
+   "id": "S10",
+   "line": "L10",
+   "place": "fernbank_dock",
+   "size": "ews",
+   "camera": "at: low over the water 4 blocks behind the boat as it reaches the dock's side, looking east up the dock into Fernbank, a slow push; holds on 'we bumped into the old' on the dock posts and the boat's bow (the village above them still out of frame), then on EMPTY a hard cut to the next setup (same axis, 3 blocks higher, the whole village in frame)",
+   "frame": "subject on EMPTY: Fernbank above the dock, every window and door of every house lit warm, lanterns on posts, villagers in doorways and walking in (vanilla: at dusk they head for their beds); villagers in doorways and lit windows across the whole village (at least 15 readable, the rest as shapes in lit windows: forty must look possible); the iron golem by the well; the fisherman's old empty boat still at the end of the dock (frame left); the churchyard's headstones at frame right. Dusk 13000.",
+   "look": {
+    "time": 13000
+   }
+  },
+  {
+   "id": "S11",
+   "line": null,
+   "place": "fernbank_dock_foot",
+   "size": "full",
+   "camera": "at: on the dock 5 blocks from its foot, eye height, looking east at the dock's foot, still; no line; cut 1.6 s after it opens",
+   "frame": "subject: at the dock's foot, under a lantern, only three villagers, each a different outfit: Mom (fletcher's feathered hat) at frame left, Uncle (butcher's apron and headband) at frame right, and between them the old librarian (the only librarian in the Short, the same villager as S04's lit door), all three turning to the boat; nobody else within 8 blocks of them so they read at phone size; bg: lit house fronts and the golem by the well. Dusk 13000.",
+   "look": {
+    "time": 13000
+   }
+  }
+ ],
+ "props": {
+  "boat": {
+   "note": "an oak boat (not a chest boat), the kid in it from S01 to S10; on a lead to the man's hand on land and in the water (engine gap: leads don't draw)"
+  },
+  "fernbank_window": {
+   "at": "Fernbank's librarian house (map.json fernbank pieces.librarian, (-364, 65, -1050)), its door and front window",
+   "note": "the ONE lit window in S04; every other Fernbank window dark at 12000 (the set must hold this: set.md claim 2)"
+  },
+  "fernbank_lit": {
+   "note": "from day 6000 (stamp `fernbank_alive`): every house lit, about 40 villagers, beds in every room; at dusk in S10"
+  },
+  "shut_doors": {
+   "note": "Mom's and Uncle's cottages on Oakend's lane, doors shut, windows dark (S08)"
+  }
+ },
+ "ending": {
+  "after": "L10",
+  "beats": [
+   "S10: on EMPTY the cut to the whole lit village, held to the end of the line",
+   "S11: Mom, Uncle and the librarian at the dock's foot turn to the boat; 1.6 s; cut. No line."
+  ],
+  "loop": "cause and effect: why he pulled her out of her village (line 1)"
+ },
+ "bible": "stories/pulled_away/bible.md",
+ "set": "stories/pulled_away/set.md",
+ "shotlist": "stories/pulled_away/shots.md",
+ "beats": "stories/pulled_away/beats.md",
+ "upload": {
+  "title": "a man pulled me out of my village in a boat 🛶 #minecraft #shorts",
+  "pinned": "Be honest: where did YOU think he was taking her?",
+  "tags": [
+   "minecraft villager",
+   "minecraft boat",
+   "minecraft trading hall",
+   "minecraft village",
+   "minecraft villager story"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): built from `upload` by lib/buhstories_upload.js; ./hb paste pulled_away prints it.",
+ "family": "player_habit_flip",
+ "family_note": "a habit every player knows (moving villagers by boat for a trading hall) seen from the villager's side, and turned; the premise doc's lesson: 'more premises should turn a habit players know against them'",
+ "hotbar": [],
+ "hotbar_note": "No player POV and no HUD: the narrator is a villager in a boat, every shot is a camera shot. The man's main hand holds the lead.",
+ "coords_note": "World coordinates for the places (map.json); shot cameras are described relative to the boat or the man. The inlet's crossing point and banks are to be read off the survey before the build (bible 'Places')."
+}
