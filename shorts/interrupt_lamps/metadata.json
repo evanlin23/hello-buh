@@ -1,10 +1,10 @@
 {
   "name": "interrupt_lamps",
   "channel": "hellobuh",
-  "caption": "easy light-up dance floor in survival ✨",
+  "caption": "easy light-up dance floor in survival \u2728",
   "youtube": {
-    "title": "easy light-up dance floor in survival ✨ #minecraft #shorts",
-    "description": "easy light-up dance floor in survival ✨\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "easy light-up dance floor in survival \u2728 #minecraft #shorts",
+    "description": "easy light-up dance floor in survival \u2728\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "easy light-up dance floor in survival ✨",
+    "caption": "easy light-up dance floor in survival \u2728",
     "red": "dance floor",
     "dropAt": "lit",
     "startAt": "hook:-0.1",
@@ -103,7 +103,7 @@
     ],
     "args": [
       "--caption",
-      "easy light-up dance floor in survival ✨",
+      "easy light-up dance floor in survival \u2728",
       "--red",
       "dance floor",
       "--speed",
@@ -1438,9 +1438,9 @@
     "gunzip -c shorts/interrupt_lamps/recording.json.gz > work/interrupt_lamps.rec.json",
     "node render.js work/interrupt_lamps.rec.json work/interrupt_lamps.frames 60 1080 1011",
     "python3 audio.py work/interrupt_lamps.rec.json work/interrupt_lamps.wav",
-    "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"easy light-up dance floor in survival ✨\" --red \"dance floor\" --speed [[\"intr_back:1.2\",\"intr_resume:-1.0\",\"cut\"]] --punch [[\"lit\",0,1.08]] --flash [[\"lit\",0,0.4]] --sfx [[\"air\",\"start\",\"lit\",{\"gain\":0.5}],[\"dip\",\"lit\",0.4],[\"impact\",\"lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after lit:1.0 --out out/interrupt_lamps.mp4"
+    "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"easy light-up dance floor in survival \u2728\" --red \"dance floor\" --speed [[\"intr_back:1.2\",\"intr_resume:-1.0\",\"cut\"]] --punch [[\"lit\",0,1.08]] --flash [[\"lit\",0,0.4]] --sfx [[\"air\",\"start\",\"lit\",{\"gain\":0.5}],[\"dip\",\"lit\",0.4],[\"impact\",\"lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after lit:1.0 --out out/interrupt_lamps.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "interrupt #1 (lib/interrupt.js): lamp dance floor build; a skeleton's arrow interrupts, he eats a golden apple in its face, it poofs, back to work, the floor lights up; independent review READY (0 blockers). Nitpicks: badlands/ice spikes behind the plains 12.8-14.2 s; the skeleton never raises its bow; no absorption hearts drawn; no eating crumbs; small arrow on a phone.",
   "published_at": "2026-11-11T09:48:53.739Z",
   "gates": {
@@ -1473,5 +1473,6 @@
       ],
       "summary": "key sounds over the music: worst +12.3 dB over 3 clips (need >= 8 dB)"
     }
-  }
+  },
+  "needs_fix": "edit-cut whip check (lib/hb/owner.js editCutSnaps, r:r38374d): BLOCK at 13.70 s, the walk-back jump cut leaves an 84 deg/s turn and lands on a 20 deg/s turn the other way; move the cut to still edges (edit only)"
 }
