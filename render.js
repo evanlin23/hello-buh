@@ -481,6 +481,14 @@ const PRE_FACE = new Map()   // entity id -> [tick, yaw, headYaw, pitch] last se
 // mobs hit and killed (harness mob_hurt / mob_death marks): the red flash lasts 10 ticks
 // (hurtTime), the death animation runs from the death on (deathTime, removed at 20)
 const MOB_HURT = new Map(), MOB_DEATH = new Map()
+// a stunt's `mob_scale` marks ({ id, scale }): the mob drawn scaled about its feet, linear between marks, the last held
+// (lib/interrupt.js: the skeleton picked up and eaten bite by bite). Recordings without them are unchanged
+const MOB_SCALE = new Map()
+for (const e of rec.timeline || []) if (e.event === 'mob_scale' && e.id !== undefined) { if (!MOB_SCALE.has(e.id)) MOB_SCALE.set(e.id, []); MOB_SCALE.get(e.id).push([e.t / 50, +e.scale]) }
+function mobScaleAt (id, t) {
+  const k = MOB_SCALE.get(id); if (!k || t < k[0][0]) return undefined
+  for (let i = k.length - 1; i >= 0; i--) if (t >= k[i][0]) { const n = k[i + 1]; return n ? k[i][1] + (n[1] - k[i][1]) * (t - k[i][0]) / (n[0] - k[i][0]) : k[i][1] }
+}
 for (const e of rec.timeline || []) {
   if (e.event === 'mob_hurt') { if (!MOB_HURT.has(e.id)) MOB_HURT.set(e.id, []); MOB_HURT.get(e.id).push(e.t / 50) }
   if (e.event === 'mob_death' && !MOB_DEATH.has(e.id)) MOB_DEATH.set(e.id, e.t / 50)
@@ -577,19 +585,21 @@ const HAND = []          // per tick: [shownItem, height]
 }
 // eating / drinking (harness use_start / use_stop marks): [startTick, stopTick, useDuration]
 const EAT_ITEMS = /^(.*_stew|.*_soup|apple|golden_apple|enchanted_golden_apple|bread|.*cookie|cake|melon_slice|.*carrot|.*potato|beetroot|.*_beef|.*_porkchop|.*_mutton|.*_chicken|.*_rabbit|.*_cod|.*_salmon|tropical_fish|pufferfish|sweet_berries|glow_berries|dried_kelp|chorus_fruit|pumpkin_pie|rotten_flesh|spider_eye|poisonous_potato|suspicious_stew|potion|milk_bucket|honey_bottle|ominous_bottle)$/
+// A stunt's own `use_start` with { eat: true } (lib/interrupt.js: the player "eats" the skeleton it picked up, a
+// skull that vanilla can't eat) plays the eating hand for any held item; recordings without it are unchanged.
 const USES = []
 {
-  let open = null
+  let open = null, eat = false
   for (const e of rec.timeline || []) {
-    if (e.event === 'use_start') open = e.t / 50
-    if ((e.event === 'use_stop' || e.event === 'death') && open !== null) { USES.push([open, e.t / 50]); open = null }
+    if (e.event === 'use_start') { open = e.t / 50; eat = !!e.eat }
+    if ((e.event === 'use_stop' || e.event === 'death') && open !== null) { USES.push([open, e.t / 50, eat]); open = null }
   }
-  if (open !== null) USES.push([open, Infinity])
+  if (open !== null) USES.push([open, Infinity, eat])
 }
 function useAt (t, name) {
-  if (!name || !EAT_ITEMS.test(name)) return null
+  if (!name) return null
   const u = USES.find(([a, b]) => t >= a && t < b)
-  if (!u) return null
+  if (!u || !(EAT_ITEMS.test(name) || u[2])) return null
   return { e: t - u[0], d: name === 'honey_bottle' ? 40 : name === 'dried_kelp' ? 16 : 32 }
 }
 function handAt (t) {
@@ -2365,6 +2375,16 @@ else:
     if (!sp || !pose) continue
     PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
   }
+  // eating crumbs (LivingEntity.triggerItemUseEffects -> spawnItemParticles(stack, 5), the same throw as a break):
+  // a stunt's `item_crumbs` mark ({ item }: whose sprite; default the held item), from in front of the eye
+  for (const ev of (rec.timeline || []).filter(e => e.event === 'item_crumbs')) {
+    const t0 = ev.t / 50
+    let name = ev.item || null; if (!name) for (const [tk, n] of HELD) { if (tk <= t0) name = n; else break }
+    const sp = name && spriteOf(name)
+    const pose = P[Math.max(0, Math.min(P.length - 1, Math.floor(t0)))]
+    if (!sp || !pose) continue
+    PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
+  }
   // starting to mine redstone ore (RedStoneOreBlock.attack -> spawnParticles): one redstone dust speck
   // 0.5625 out from the centre of each face not against a solid block, at a random spot on that face
   // (mining it showed nothing: worker 3)
@@ -3253,6 +3273,7 @@ else:
     for (const e of ents) {
       const hs = MOB_HURT.get(e.id); if (hs && hs.some(h => t >= h && t < h + 10)) e.hurt = true
       const dt = MOB_DEATH.get(e.id); if (dt !== undefined && t >= dt) e.deathTime = t - dt + 1
+      if (MOB_SCALE.size) { const sc = mobScaleAt(e.id, t); if (sc !== undefined) e.mobScale = sc }
     }
     // entity shadows (EntityRenderDispatcher: within 16 blocks of the camera, strength 1 - d^2/256;
     // ShadowRenderer: on the ground up to 2 blocks below, alpha (strength - drop / 2) x 0.5)
