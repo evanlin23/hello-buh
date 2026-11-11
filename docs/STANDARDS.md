@@ -116,7 +116,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
    (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
    (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
-   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb; Saltmouth's Mom Kore, r:rd8f6ce)
+   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb; Saltmouth's Mom Kore, r:rd8f6ce; the island Grandma Callirrhoe, r:r83d791)
 7a. **Every character is tracked** (owner: "we need to keep track of our characters"): every speaking or recurring
    character is a row in docs/world/canon.md "Recurring characters" (who, look/skin, cast id + voice, stories) before
    their lines are voiced; a new voice is auditioned against Pip and picked by the owner; one voice is never shared by
@@ -169,6 +169,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+5a. **Connected by the same place** (owner: "the hill and the place the dog was left was the same place"): each new
+   story is set at, or in sight of, a place an earlier story built (the same spot, the same build, what was left
+   there), or leaves something later stories show; named in its map.json entry and its pitch. Check: story-critic
+   (canon line), owner. r:r24e765
 5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
@@ -319,7 +323,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
   caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
   reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
-  escalating to the full reveal. r:r4449f0
+  escalating to the full reveal. r:r4449f0 Ridiculously big: the build dwarfs a real landscape, shown from high up
+  for scale, ending on a close pass beside the tiny player. r:rf8524b A ticking count of blocks used is a good
+  overlay. r:rce78c5
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
@@ -368,6 +374,15 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:rc40696
 - **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
+  gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
+  picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
+- **Format "dropper"**: a HUGE first-person dropper with an attempt counter, quick fails cut before any death puff,
+  a true-vanilla clean landing as the payoff. Check: owner, minecraft-audit (the landing), the settle check. r:r304cb5
+- **Format "fakeworld"**: a world where everything is one wrong block, played as normal survival; the one ordinary
+  block found is treated as treasure; generated from our own block swap. Check: owner. r:r62f46d
+- **Format "trap"**: an irresistible bait, how it works, then the friend (a second bot, never the owner's name) walks
+  into it; the trap really works in vanilla. Check: owner, minecraft-audit (the trap). r:refc733
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
@@ -379,6 +394,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
+- **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
   (the genre's look); every other turn keeps the followable-camera rule. Check: review; the whip check lets one
@@ -393,6 +409,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
+- **No cut mid-action; the view lands centred on what it turns to; cuts never read as getting stuck; a title promises past the obvious end; dropped items right way up; 56e on every re-render too.** Check: cuts (mid-action cut), aim (turn target), review. r:r52f94c
 - **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b Regular (wide) arms, the slim art widened. r:ra3e80a
 - **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
   Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those

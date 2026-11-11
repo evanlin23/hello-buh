@@ -116,7 +116,15 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     if stunt.get("story") and not song_override and not gen:   # a story: the mood score (scripts/story_audio.py, docs/audio.md)
         return story_score(name, d, meta, stunt, rec, tl, start, src, out_override)
     if ncs and not song_override:
-        song_override = pick_ncs(name, at)
+        # edit.ncs pins one NCS track (format cooked, r:r12cb71: the music timing IS the joke, so the drop must be this
+        # track's drop on the flood); else the least-used track whose drop can line up
+        pin = stunt.get("ncs")
+        if pin and (ROOT / "songs" / "ncs" / pin).exists():
+            song_override = "songs/ncs/" + pin
+        else:
+            if pin:   # (another track would land the wrong drop: the joke is this one)
+                sys.exit(f"{name}: edit.ncs '{pin}' is not in songs/ncs: python3 scripts/ncs.py --download")
+            song_override = pick_ncs(name, at)
     song = song_override or stunt.get("song")
     if not gen and (not song or not (ROOT / song).exists()):
         print(name, "no song file"); return

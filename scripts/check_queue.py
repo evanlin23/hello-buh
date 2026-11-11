@@ -18,6 +18,8 @@ FAMILIES = [
     ("worse", lambda n: n.startswith("worse_")),
     ("story", lambda n: n.startswith("story_")),
     ("dilemma", lambda n: n.startswith("dilemma_")),   # the mace and the dog... (docs/formats.md)
+    ("psycho", lambda n: n.startswith("psycho_")),   # the fake psycho house tour (docs/formats.md, r:rc40696)
+    ("fakerun", lambda n: n.startswith("fakerun_")),   # an obviously fake speedrun in jump cuts (lib/fakerun.js, r:r9105ba)
     ("art", lambda n: n.endswith("_art") or n == "looks_wrong"),
     ("clutch", lambda n: "clutch" in n or n in ("one_in_a_million",)),
     ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
@@ -28,7 +30,13 @@ FAMILIES = [
     ("race", lambda n: n.startswith("race_")),   # format race (lib/race.js, r:rbe60ef)
     ("interrupt", lambda n: n.startswith("interrupt_")),   # owner's pick 2026-11-11 (r:re05b89): a normal video, a mob interrupts
     ("hack", lambda n: n.startswith("hack_")),   # one real block trick per Short (docs/formats.md, r:rc15847)
+    ("faketrick", lambda n: n.startswith("faketrick_")),   # an impossible "secret trick" played straight (lib/faketrick.js, r:rfcab11)
     ("mega", lambda n: n.startswith("mega_")),   # huge generated builds, flown round (owner 2026-11-11, r:r8bb1e3)
+    ("cooked", lambda n: n.startswith("cooked_")),   # an impossible feat, then "X joined the game" on the drop (lib/cooked.js, r:r5ee125)
+    ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
+    ("herobrine", lambda n: n.startswith("herobrine_")),   # secret herobrine: the "lag" that never was (lib/herobrine.js, r:r047388)
+    ("lucky", lambda n: n.startswith("lucky_")),   # fake super lucky: a dig where every block is luckier (r:r934ea4)
+    ("mobpov", lambda n: n.startswith("mobpov_")),   # a mob's annoying trait as an absurd POV chase (lib/mobpov.js, r:r8048f1)
 ]
 
 

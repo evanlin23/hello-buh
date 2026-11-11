@@ -224,6 +224,24 @@
   "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma: Autonoe, 237 Hz (heard as a woman of 65-85 by the blind listener; furthest from Pip of all candidates, 0.66)",
   "notes": "An old woman, never a man: earlier Grandmas (Gacrux, Vindemiatrix) read low and gravelly, as a man (owner: \"Grandma sounds like a dude still\", r:rc31bfe). The profile is the audition's one-clause bracket, verbatim."
  },
+ "grandma_island": {
+  "name": "Grandma",
+  "voice": "Callirrhoe",
+  "color": "#C9B6E8",
+  "color_why": "soft lavender: a different grandmother from Gold's (gold)",
+  "profile": "An old woman in her seventies, stubborn, a dare",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    60,
+    85
+   ]
+  },
+  "post": "",
+  "fallback": "af_nicole",
+  "from": "owner 2026-11-11: \"calirrhoe is fine\" (r:r83d791), candidate E of the audition brand/auditions/2026-11-11_mom_grandma: Callirrhoe, f0 162 Hz, 4.9 st under Pip (auditioned there as a mom)",
+  "notes": "The Walk's Grandma on the island, not Gold for the Portal's (`grandma`): one voice per character (STANDARDS 7a). Never auditioned as an old woman: the first take must read 60-85 to the blind listener, else back to the owner."
+ },
  "friend": {
   "name": "Max",
   "voice": "Fenrir",
