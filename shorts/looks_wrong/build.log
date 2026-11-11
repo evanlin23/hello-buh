@@ -1,27 +1,20 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-06:33:01.094 spawned at Vec3 { x: 136.5, y: 70, z: 10.5 }
-06:33:01.573 nearest minecraft:forest at [ 424, -86 ]
-06:33:06.774 script error Error: Timeout waiting for 3 ticks after 5150ms
-    at Timeout._onTimeout (/home/user/hello-buh/node_modules/mineflayer/lib/plugins/physics.js:462:16)
-    at listOnTimeout (node:internal/timers:585:17)
-    at process.processTimers (node:internal/timers:521:7)
-attempt 2
-06:33:12.836 spawned at Vec3 { x: 424.5, y: 200, z: -85.5 }
-06:33:13.105 nearest minecraft:forest at [ 424, -86 ]
-06:33:21.504 set at { x: 432, y: 71, z: -86 }
-06:33:30.158 placed 69, correct 69/69
-06:33:32.078 STUNT OK
+16:41:56.787 spawned at Vec3 { x: 119.5, y: 68, z: 9.5 }
+16:41:57.117 nearest minecraft:forest at [ 439, -87 ]
+16:42:10.214 set at { x: 447, y: 70, z: -87 }
+16:42:18.557 placed 69, correct 69/69
+16:42:21.660 STUNT OK
 meshing from y 8
 light computed in 0.5 s
-meshed + uploaded world in 10.3 s
-rendered 600 frames (10.00 s of video) in 144.5 s = 14.5 s per video second
-wrote work/looks_wrong.wav 10.05s
-song drop at 10.50s lands on 8.05s of the Short (song starts at 2.45s)
-icon black_wool
-wrote out/looks_wrong.mp4 9.70s
+meshed + uploaded world in 15.3 s
+rendered 654 frames (10.90 s of video) in 528.3 s = 48.5 s per video second
+wrote work/looks_wrong.wav 10.95s
+song drop at 10.50s lands on 7.75s of the Short (song starts at 2.75s)
+no 3D block icons needed
+wrote out/looks_wrong.mp4 9.45s
 
-real	6m12.653s
-user	9m13.772s
-sys	0m35.426s
+real	10m27.220s
+user	9m46.847s
+sys	0m22.912s
 exit=0

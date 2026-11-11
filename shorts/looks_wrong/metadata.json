@@ -1,5 +1,6 @@
 {
   "name": "looks_wrong",
+  "channel": "hellobuh",
   "caption": "Bro this looks wrong?",
   "youtube": {
     "title": "Bro this looks wrong? #minecraft #shorts",
@@ -19,20 +20,43 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 36.75,
-    "drop_in_short_s": 31.1,
-    "song_start_s": 5.65
+    "drop_in_short_s": 36.35,
+    "song_start_s": 0.4
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 32,
+    "duration_s": 37.25,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 37649331,
-    "sha256": "1927570cadadf065ebcd036eb777543fdb0b6454ffea1ce4d9cb203e34530dad"
+    "bytes": 44487652,
+    "sha256": "6ad74ad1a90194912b9076c0d38fc3b484c01e4c7f5a47a1e73c0d5590f1d518"
   },
   "edit": {
+    "punch": [
+      [
+        "complete",
+        0,
+        1.12
+      ]
+    ],
+    "sfx": [
+      [
+        "impact",
+        "complete",
+        {
+          "gain": 0.8
+        }
+      ]
+    ],
+    "flash": [
+      [
+        "complete",
+        0,
+        0.45
+      ]
+    ],
     "caption": "Bro this looks wrong?",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
@@ -41,10 +65,20 @@
     "args": [
       "--caption",
       "Bro this looks wrong?",
+      "--punch",
+      "[[\"complete\",0,1.12]]",
+      "--flash",
+      "[[\"complete\",0,0.45]]",
+      "--sfx",
+      "[[\"impact\",\"complete\",{\"gain\":0.8}]]",
       "--start_at",
       "stage:-0.2",
       "--end_after",
-      "complete:0.9"
+      "complete:0.9",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "complete"
     ]
   },
   "recording": {
@@ -55,45 +89,41 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 382,
-      "y": 72,
-      "z": -43
+      "x": 375,
+      "y": 63,
+      "z": -52
     },
     "biome": "minecraft:plains",
-    "ticks": 666,
-    "seconds": 33.3,
+    "ticks": 783,
+    "seconds": 39.15,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0,
+        "t": 0.75,
         "event": "stage"
       },
       {
-        "t": 0.2,
+        "t": 0.75,
+        "event": "build0"
+      },
+      {
+        "t": 0.8,
         "event": "swing"
       },
       {
-        "t": 0.55,
+        "t": 1.15,
         "event": "swing"
       },
       {
-        "t": 0.7,
+        "t": 1.4,
         "event": "swing"
       },
       {
-        "t": 0.95,
-        "event": "swing"
-      },
-      {
-        "t": 1.2,
-        "event": "swing"
-      },
-      {
-        "t": 1.45,
+        "t": 1.55,
         "event": "swing"
       },
       {
@@ -105,71 +135,79 @@
         "event": "swing"
       },
       {
-        "t": 2.25,
+        "t": 2.2,
         "event": "swing"
       },
       {
-        "t": 2.55,
+        "t": 2.45,
         "event": "swing"
       },
       {
-        "t": 2.8,
+        "t": 2.7,
         "event": "swing"
       },
       {
-        "t": 3.05,
+        "t": 2.95,
         "event": "swing"
       },
       {
-        "t": 3.15,
+        "t": 3.2,
+        "event": "swing"
+      },
+      {
+        "t": 3.45,
+        "event": "swing"
+      },
+      {
+        "t": 3.55,
+        "event": "built0"
+      },
+      {
+        "t": 3.55,
         "event": "reveal"
       },
       {
-        "t": 4.2,
+        "t": 4.6,
         "event": "stage"
       },
       {
-        "t": 4.25,
-        "event": "swing"
-      },
-      {
-        "t": 4.45,
-        "event": "swing"
+        "t": 4.6,
+        "event": "build1"
       },
       {
         "t": 4.65,
         "event": "swing"
       },
       {
-        "t": 4.85,
+        "t": 4.8,
         "event": "swing"
       },
       {
-        "t": 5.05,
+        "t": 5,
         "event": "swing"
       },
       {
-        "t": 5.25,
+        "t": 5.2,
         "event": "swing"
       },
       {
-        "t": 5.45,
+        "t": 5.4,
         "event": "swing"
       },
       {
-        "t": 5.65,
+        "t": 5.6,
         "event": "swing"
       },
       {
-        "t": 5.85,
+        "t": 5.8,
         "event": "swing"
       },
       {
-        "t": 6.05,
+        "t": 6.1,
         "event": "swing"
       },
       {
-        "t": 6.25,
+        "t": 6.3,
         "event": "swing"
       },
       {
@@ -269,43 +307,43 @@
         "event": "swing"
       },
       {
-        "t": 11.15,
+        "t": 11.25,
+        "event": "swing"
+      },
+      {
+        "t": 11.45,
+        "event": "swing"
+      },
+      {
+        "t": 11.65,
+        "event": "swing"
+      },
+      {
+        "t": 11.85,
+        "event": "swing"
+      },
+      {
+        "t": 12.05,
+        "event": "swing"
+      },
+      {
+        "t": 12.15,
+        "event": "built1"
+      },
+      {
+        "t": 12.15,
         "event": "reveal"
       },
       {
-        "t": 12.2,
+        "t": 13.2,
         "event": "stage"
       },
       {
-        "t": 12.25,
-        "event": "swing"
-      },
-      {
-        "t": 12.4,
-        "event": "swing"
-      },
-      {
-        "t": 12.55,
-        "event": "swing"
-      },
-      {
-        "t": 12.75,
-        "event": "swing"
-      },
-      {
-        "t": 12.9,
-        "event": "swing"
-      },
-      {
-        "t": 13.05,
-        "event": "swing"
-      },
-      {
         "t": 13.2,
-        "event": "swing"
+        "event": "build2"
       },
       {
-        "t": 13.35,
+        "t": 13.25,
         "event": "swing"
       },
       {
@@ -313,11 +351,7 @@
         "event": "swing"
       },
       {
-        "t": 13.7,
-        "event": "swing"
-      },
-      {
-        "t": 13.85,
+        "t": 13.8,
         "event": "swing"
       },
       {
@@ -329,19 +363,19 @@
         "event": "swing"
       },
       {
-        "t": 14.35,
+        "t": 14.4,
         "event": "swing"
       },
       {
-        "t": 14.55,
+        "t": 14.6,
         "event": "swing"
       },
       {
-        "t": 14.7,
+        "t": 14.75,
         "event": "swing"
       },
       {
-        "t": 14.85,
+        "t": 14.9,
         "event": "swing"
       },
       {
@@ -349,43 +383,31 @@
         "event": "swing"
       },
       {
-        "t": 15.2,
+        "t": 15.3,
         "event": "swing"
       },
       {
-        "t": 15.35,
+        "t": 15.6,
         "event": "swing"
       },
       {
-        "t": 15.55,
+        "t": 15.8,
         "event": "swing"
       },
       {
-        "t": 15.7,
+        "t": 16,
         "event": "swing"
       },
       {
-        "t": 15.85,
+        "t": 16.25,
         "event": "swing"
       },
       {
-        "t": 16.05,
+        "t": 16.45,
         "event": "swing"
       },
       {
-        "t": 16.2,
-        "event": "swing"
-      },
-      {
-        "t": 16.35,
-        "event": "swing"
-      },
-      {
-        "t": 16.55,
-        "event": "swing"
-      },
-      {
-        "t": 16.7,
+        "t": 16.6,
         "event": "swing"
       },
       {
@@ -397,11 +419,7 @@
         "event": "swing"
       },
       {
-        "t": 17.2,
-        "event": "swing"
-      },
-      {
-        "t": 17.35,
+        "t": 17.3,
         "event": "swing"
       },
       {
@@ -417,19 +435,15 @@
         "event": "swing"
       },
       {
-        "t": 18.05,
+        "t": 18.1,
         "event": "swing"
       },
       {
-        "t": 18.2,
+        "t": 18.3,
         "event": "swing"
       },
       {
-        "t": 18.35,
-        "event": "swing"
-      },
-      {
-        "t": 18.55,
+        "t": 18.5,
         "event": "swing"
       },
       {
@@ -437,67 +451,63 @@
         "event": "swing"
       },
       {
-        "t": 18.85,
+        "t": 18.95,
         "event": "swing"
       },
       {
-        "t": 19.05,
+        "t": 19.15,
         "event": "swing"
       },
       {
-        "t": 19.2,
+        "t": 19.45,
         "event": "swing"
       },
       {
-        "t": 19.35,
+        "t": 19.6,
         "event": "swing"
       },
       {
-        "t": 19.55,
+        "t": 19.8,
         "event": "swing"
       },
       {
-        "t": 19.7,
+        "t": 19.95,
         "event": "swing"
       },
       {
-        "t": 19.85,
+        "t": 20.1,
         "event": "swing"
       },
       {
-        "t": 20.05,
+        "t": 20.25,
         "event": "swing"
       },
       {
-        "t": 20.2,
+        "t": 20.45,
         "event": "swing"
       },
       {
-        "t": 20.35,
+        "t": 20.6,
         "event": "swing"
       },
       {
-        "t": 20.55,
+        "t": 20.75,
         "event": "swing"
       },
       {
-        "t": 20.7,
+        "t": 20.9,
         "event": "swing"
       },
       {
-        "t": 20.85,
+        "t": 21.1,
         "event": "swing"
       },
       {
-        "t": 21.05,
+        "t": 21.25,
         "event": "swing"
       },
       {
-        "t": 21.2,
-        "event": "swing"
-      },
-      {
-        "t": 21.35,
+        "t": 21.4,
         "event": "swing"
       },
       {
@@ -505,11 +515,43 @@
         "event": "swing"
       },
       {
-        "t": 21.65,
-        "event": "glance"
+        "t": 21.7,
+        "event": "swing"
       },
       {
-        "t": 23.2,
+        "t": 21.9,
+        "event": "swing"
+      },
+      {
+        "t": 22.05,
+        "event": "swing"
+      },
+      {
+        "t": 22.2,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "swing"
+      },
+      {
+        "t": 22.55,
+        "event": "swing"
+      },
+      {
+        "t": 22.7,
+        "event": "swing"
+      },
+      {
+        "t": 22.85,
+        "event": "swing"
+      },
+      {
+        "t": 23,
+        "event": "swing"
+      },
+      {
+        "t": 23.15,
         "event": "swing"
       },
       {
@@ -517,63 +559,71 @@
         "event": "swing"
       },
       {
-        "t": 23.55,
+        "t": 23.5,
         "event": "swing"
       },
       {
-        "t": 23.7,
+        "t": 23.65,
         "event": "swing"
       },
       {
-        "t": 23.85,
+        "t": 23.8,
         "event": "swing"
       },
       {
-        "t": 24.05,
+        "t": 24,
         "event": "swing"
       },
       {
-        "t": 24.2,
+        "t": 24.15,
         "event": "swing"
       },
       {
-        "t": 24.35,
+        "t": 24.3,
         "event": "swing"
       },
       {
-        "t": 24.55,
+        "t": 24.45,
         "event": "swing"
       },
       {
-        "t": 24.7,
+        "t": 24.6,
         "event": "swing"
       },
       {
-        "t": 24.85,
+        "t": 24.8,
         "event": "swing"
       },
       {
-        "t": 25.05,
+        "t": 24.95,
         "event": "swing"
       },
       {
-        "t": 25.2,
+        "t": 25.1,
         "event": "swing"
       },
       {
-        "t": 25.35,
+        "t": 25.25,
         "event": "swing"
       },
       {
-        "t": 25.55,
+        "t": 25.45,
         "event": "swing"
       },
       {
-        "t": 25.7,
+        "t": 25.6,
         "event": "swing"
       },
       {
-        "t": 25.85,
+        "t": 25.6,
+        "event": "backup"
+      },
+      {
+        "t": 25.75,
+        "event": "swing"
+      },
+      {
+        "t": 25.9,
         "event": "swing"
       },
       {
@@ -581,11 +631,11 @@
         "event": "swing"
       },
       {
-        "t": 26.2,
+        "t": 26.25,
         "event": "swing"
       },
       {
-        "t": 26.35,
+        "t": 26.4,
         "event": "swing"
       },
       {
@@ -597,7 +647,7 @@
         "event": "swing"
       },
       {
-        "t": 26.85,
+        "t": 26.9,
         "event": "swing"
       },
       {
@@ -613,19 +663,15 @@
         "event": "swing"
       },
       {
-        "t": 27.5,
-        "event": "backup"
-      },
-      {
         "t": 27.55,
         "event": "swing"
       },
       {
-        "t": 27.7,
+        "t": 27.75,
         "event": "swing"
       },
       {
-        "t": 27.85,
+        "t": 27.9,
         "event": "swing"
       },
       {
@@ -633,55 +679,55 @@
         "event": "swing"
       },
       {
-        "t": 28.2,
+        "t": 28.25,
         "event": "swing"
       },
       {
-        "t": 28.35,
+        "t": 28.45,
         "event": "swing"
       },
       {
-        "t": 28.5,
+        "t": 28.6,
         "event": "swing"
       },
       {
-        "t": 28.65,
+        "t": 28.75,
         "event": "swing"
       },
       {
-        "t": 28.85,
+        "t": 28.9,
         "event": "swing"
       },
       {
-        "t": 29,
+        "t": 29.05,
         "event": "swing"
       },
       {
-        "t": 29.15,
+        "t": 29.25,
         "event": "swing"
       },
       {
-        "t": 29.35,
+        "t": 29.4,
         "event": "swing"
       },
       {
-        "t": 29.5,
+        "t": 29.55,
         "event": "swing"
       },
       {
-        "t": 29.65,
+        "t": 29.7,
         "event": "swing"
       },
       {
-        "t": 29.85,
+        "t": 29.9,
         "event": "swing"
       },
       {
-        "t": 30,
+        "t": 30.05,
         "event": "swing"
       },
       {
-        "t": 30.15,
+        "t": 30.2,
         "event": "swing"
       },
       {
@@ -693,7 +739,7 @@
         "event": "swing"
       },
       {
-        "t": 30.65,
+        "t": 30.7,
         "event": "swing"
       },
       {
@@ -705,21 +751,167 @@
         "event": "swing"
       },
       {
-        "t": 31.1,
+        "t": 31.15,
+        "event": "swing"
+      },
+      {
+        "t": 31.35,
+        "event": "swing"
+      },
+      {
+        "t": 31.5,
+        "event": "swing"
+      },
+      {
+        "t": 31.65,
+        "event": "swing"
+      },
+      {
+        "t": 31.8,
+        "event": "swing"
+      },
+      {
+        "t": 31.95,
+        "event": "swing"
+      },
+      {
+        "t": 32.25,
+        "event": "swing"
+      },
+      {
+        "t": 32.4,
+        "event": "swing"
+      },
+      {
+        "t": 32.55,
+        "event": "swing"
+      },
+      {
+        "t": 32.7,
+        "event": "swing"
+      },
+      {
+        "t": 32.9,
+        "event": "swing"
+      },
+      {
+        "t": 33.05,
+        "event": "swing"
+      },
+      {
+        "t": 33.2,
+        "event": "swing"
+      },
+      {
+        "t": 33.35,
+        "event": "swing"
+      },
+      {
+        "t": 33.5,
+        "event": "swing"
+      },
+      {
+        "t": 33.7,
+        "event": "swing"
+      },
+      {
+        "t": 33.85,
+        "event": "swing"
+      },
+      {
+        "t": 34,
+        "event": "swing"
+      },
+      {
+        "t": 34.15,
+        "event": "swing"
+      },
+      {
+        "t": 34.35,
+        "event": "swing"
+      },
+      {
+        "t": 34.5,
+        "event": "swing"
+      },
+      {
+        "t": 34.65,
+        "event": "swing"
+      },
+      {
+        "t": 34.8,
+        "event": "swing"
+      },
+      {
+        "t": 34.95,
+        "event": "swing"
+      },
+      {
+        "t": 35.15,
+        "event": "swing"
+      },
+      {
+        "t": 35.3,
+        "event": "swing"
+      },
+      {
+        "t": 35.45,
+        "event": "swing"
+      },
+      {
+        "t": 35.6,
+        "event": "swing"
+      },
+      {
+        "t": 35.8,
+        "event": "swing"
+      },
+      {
+        "t": 35.95,
+        "event": "swing"
+      },
+      {
+        "t": 36.1,
+        "event": "swing"
+      },
+      {
+        "t": 36.25,
+        "event": "swing"
+      },
+      {
+        "t": 36.4,
+        "event": "swing"
+      },
+      {
+        "t": 36.6,
+        "event": "swing"
+      },
+      {
+        "t": 36.75,
+        "event": "swing"
+      },
+      {
+        "t": 36.9,
+        "event": "built2"
+      },
+      {
+        "t": 36.9,
         "event": "complete"
       },
       {
-        "t": 33.3,
+        "t": 39.15,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "7fc53eea7618562f14693ae964641461fe2d9570",
-    "rendered_at": "2026-11-07T00:17:35.575Z",
-    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
+    "branch": "render/looks_wrong",
+    "commit": "a28787d18141ce00e552c92ee6356f6780c55cff",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42968466649",
+    "rendered_at": "2026-11-11T05:58:39.436Z",
+    "head_at_publish": "ae457fa4c807a18bcf6927e39e125155d84061ed",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
@@ -727,13 +919,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 7fc53eea7618",
+    "git checkout a28787d18141",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
-    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
+    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/looks_wrong.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
-  "published_at": "2026-11-07T06:03:29.382Z"
+  "status": "ready",
+  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium picture peeks in at the left edge during the big build's backup; short hold on the medium reveal",
+  "published_at": "2026-11-11T06:19:58.531Z"
 }
