@@ -142,7 +142,20 @@
    },
    "direction": "hit only PORTAL; the rest level and quick",
    "note": "one continuous phrase: no breath or stop before 'nine thousand' (owner v2 note)",
-   "punch": true
+   "punch": true,
+   "shows": [
+    {
+     "what": [
+      "gold_ingot",
+      "gold_block"
+     ],
+     "word": "GOLD"
+    },
+    {
+     "what": "nether_portal",
+     "word": "PORTAL"
+    }
+   ]
   },
   {
    "id": "L02",
@@ -177,7 +190,25 @@
      "word": "FIREPROOF"
     }
    ],
-   "direction": "hit only OBSIDIAN, STRING, PEARLS and FIREPROOF, one each; the rest level and quick"
+   "direction": "hit only OBSIDIAN, STRING, PEARLS and FIREPROOF, one each; the rest level and quick",
+   "shows": [
+    {
+     "what": "obsidian",
+     "word": "OBSIDIAN"
+    },
+    {
+     "what": "string",
+     "word": "STRING"
+    },
+    {
+     "what": "ender_pearl",
+     "word": "PEARLS"
+    },
+    {
+     "what": "potion",
+     "word": "FIREPROOF"
+    }
+   ]
   },
   {
    "id": "L04",
@@ -198,7 +229,13 @@
     "word": "HELMET",
     "size": "ms"
    },
-   "direction": "hit only IN and ALL; the rest level and quick; \"her gold helmet blue stripe and all\" in one breath, no pause before \"blue\" (owner note, 22.9 s)"
+   "direction": "hit only IN and ALL; the rest level and quick; \"her gold helmet blue stripe and all\" in one breath, no pause before \"blue\" (owner note, 22.9 s)",
+   "shows": [
+    {
+     "what": "golden_helmet",
+     "word": "HELMET"
+    }
+   ]
   },
   {
    "id": "L06",
@@ -209,7 +246,13 @@
     "what": "actor:Grandpa",
     "word": "GOLD"
    },
-   "direction": "hit only SAID and the last GOLD; the rest level and quick"
+   "direction": "hit only SAID and the last GOLD; the rest level and quick",
+   "shows": [
+    {
+     "what": "golden_helmet",
+     "word": "GOLD keeps"
+    }
+   ]
   },
   {
    "id": "L07",
@@ -232,7 +275,13 @@
     "what": "prop:gifts_barrel",
     "word": "BARREL"
    },
-   "direction": "hit only BARREL, TRADING, ALIVE and TRADER; the rest level and quick"
+   "direction": "hit only BARREL, TRADING, ALIVE and TRADER; the rest level and quick",
+   "shows": [
+    {
+     "what": "barrel",
+     "word": "BARREL"
+    }
+   ]
   },
   {
    "id": "L09",
@@ -243,7 +292,13 @@
     "what": "Grandma",
     "word": "THROWS"
    },
-   "direction": "hit only NIGHT; the rest level and quick"
+   "direction": "hit only NIGHT; the rest level and quick",
+   "shows": [
+    {
+     "what": "gold_ingot",
+     "word": "THROWS"
+    }
+   ]
   },
   {
    "id": "L10",
@@ -264,7 +319,16 @@
     "what": "prop:portal",
     "word": "HOME"
    },
-   "direction": "hit only GOLD, ALL and HOME; the rest level and quick"
+   "direction": "hit only GOLD, ALL and HOME; the rest level and quick",
+   "shows": [
+    {
+     "what": [
+      "gold_ingot",
+      "gold_block"
+     ],
+     "word": "sixty-four GOLD"
+    }
+   ]
   },
   {
    "id": "L12",
@@ -282,7 +346,13 @@
     }
    ],
    "direction": "hit only WAITED and OUT; the rest level and quick",
-   "punch": true
+   "punch": true,
+   "shows": [
+    {
+     "what": "piglin",
+     "word": "stepped OUT"
+    }
+   ]
   }
  ],
  "shots": [
