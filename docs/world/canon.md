@@ -174,6 +174,15 @@ Ravenford 2300.
 Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: Tomas and Dad): each pick takes it off the others' lists.
 | Grandpa (Ravenford), in the background | Red Sheep (Ravenford, 2300) | player actor, `zuri` skin, the slow walk; on his bench by his door; **never named, never called Grandpa** (conflict 11) | none | |
 
+
+### Planned characters (batch 3, scripts pending the owner's audit; not canon until made)
+
+| who | story (place, day) | look | voice | status |
+|---|---|---|---|---|
+| the baby piglin | Saving Up for a Bastion (the Nether below the Portal Cottage, 5000) | vanilla baby piglin; never grows up | `narrator` (Leda), the house narrator voice | cast |
+| the player (barter farm) | Saving Up for a Bastion (the Nether below the Portal Cottage, 5000) | player, default `efe` skin, iron armour, no name tag, never named | new: Umbriel or Zubenelgenubi (both unused), audition against Pip on L10 | audition |
+| the helmet piglin (background) | Saving Up for a Bastion (5000) | adult piglin in Grandpa's gold helmet with the lapis trim (Gold for the Portal) | none | |
+
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
 an unpublished story. **Theory** means fans can argue it and the canon never confirms it. None of them is needed to

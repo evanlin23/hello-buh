@@ -1,0 +1,470 @@
+{
+ "name": "saving_up_bastion",
+ "stunt": "story_saving_up_bastion",
+ "version": 2,
+ "revision": "r1 (2026-11-11): first script, batch 3 (round 2 #2, the critic's pick); script only, owner audit before voice or build",
+ "caption": "why does gold fall from the sky every 6 seconds 🪙",
+ "upload": {
+  "title": "a gold ingot falls from the sky every 6 seconds and i keep all of them 🐷 #minecraft #shorts",
+  "pinned": "How long until he figures it out? Wrong answers only",
+  "tags": [
+   "minecraft piglin",
+   "minecraft bartering",
+   "minecraft barter farm",
+   "minecraft nether",
+   "minecraft baby piglin",
+   "minecraft story"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\": the upload text is built from `upload` (lib/buhstories_upload.js). pinned = the question, without the 👇",
+ "family": "narrator_is_the_problem",
+ "logline": "A baby piglin catches a gold ingot that falls from the sky every six seconds and is saving all of them for a bastion of its own, grateful to the generous stranger up there who keeps giving it gifts, until we see the stranger's barter farm: the baby is stuck in the cell, and babies never barter.",
+ "question": "why tf does gold fall on this baby piglin every six seconds?",
+ "premise": "In the Nether by the Portal Cottage's portal, a player (efe skin) built a barter farm: a dropper drops one gold ingot every six seconds onto a one-piglin cell, the piglin barters, the hoppers carry the barters to a chest. A baby piglin chased an ingot down the farm's catch hole and landed in the cell. It thinks the cell is its room, the gold is a gift from a generous stranger, and it is saving up for a bastion of its own, for when it's big.",
+ "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a lava moat, a PLEASE WORK sign) the baby read as a present. The reveal is the picture: the farm's output chest open and empty under the hopper floor, the baby above it hugging an ingot as the dropper clicks out another. Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
+ "key_color": "#F2C14E",
+ "mood": "funny",
+ "payoff": "drop",
+ "payoff_note": "`drop`: the stunt mark when the dropper fires the next ingot in S11, on 'SIX'; the Short ends <= 1.0 s after it (owner: cut right on the reveal). No line after L12.",
+ "look": {
+  "time": "nether",
+  "fog": "nether (crimson)"
+ },
+ "weather": "none (the Nether)",
+ "world": {
+  "place": "portal_cottage_nether (new, claimed on this branch; the lead merges claims): the Nether side of the Portal Cottage's cellar portal, at about (-16, 80, -118) in Nether coordinates (the cellar portal (-126, 80, -938) / 8). A netherrack-and-basalt shelf over a lava lake; the portal Grandpa lit on day ~175; the player's barter farm about 10 blocks east of it; a bastion remnant across the lake.",
+  "day": 5000,
+  "canon": "Not Buh's story and nobody from the Portal Cottage appears. The player is a new, nameless player (efe skin, conflict 18). The piglins crowd this shelf because a gold ingot comes out of the portal every night (Grandma's, Gold for the Portal): that is why the player built his farm here. Never said. The baby never grows up (vanilla), so it can still be here on day 9300 for any later story.",
+  "easter_egg": "helmet_piglin: among the adults in S04 (frame left, mid-ground), an adult piglin in a gold helmet with a blue (lapis) trim: Grandpa's helmet from Gold for the Portal (it wears it from day ~175; Gold's day 9300 is still to come). Never named, never centred."
+ },
+ "voice": {
+  "engine": "gemini",
+  "model_hint": "the cast locks each speaker's model: narrator gemini-3.8-flash-lite-tts (Pip); the player per his cast entry once auditioned"
+ },
+ "voice_takes": "beat",
+ "one_take": [
+  "N"
+ ],
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "name": "the baby piglin",
+   "color": "#FFFFFF",
+   "on_screen": "a vanilla baby piglin, empty-handed until it catches L01's ingot, then always holding one in its off hand (the admiring pose: ingot up, head down to it); in the cell in every shot but S06-S08 (cutaways to the player). Pip's voice (cast `narrator`, plain_say), the house narrator voice as for Good Boy's dog. Never named."
+  },
+  "P": {
+   "role": "character",
+   "name": "the player",
+   "color": "#9FD3FF",
+   "voice": "Umbriel",
+   "model": "gemini-3.8-flash-tts",
+   "profile": "[A tired man in his twenties, flat and fed up, full volume]",
+   "on_screen": "a player, default `efe` skin (not Steve: Steve reads as Buh), iron armour, no name tag; seen in S06-S10; one line (L10), on screen while he says it.",
+   "note": "NEW character (STANDARDS 7a, docs/world/canon.md Planned characters). Voice candidates, both unused by any character in voices/cast.json or canon.md: Umbriel (easy-going male) and Zubenelgenubi (casual male). Audition both against Pip on L10; the owner picks. No TTS requested (quota booked)."
+  }
+ },
+ "requests": [
+  {
+   "id": "rN",
+   "speakers": [
+    "N"
+   ],
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L11",
+    "L12"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "rP",
+   "speakers": [
+    "P"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "voice": "Umbriel",
+   "lines": [
+    "L10"
+   ],
+   "direction": "[A tired man in his twenties, flat and fed up, full volume]"
+  }
+ ],
+ "sfx": [
+  {
+   "under": "S01",
+   "sound": "block.dispenser.dispense",
+   "note": "the dropper's click every 6 s from frame 1 (the clock you can count), the ingot's clink on the hopper"
+  },
+  {
+   "under": "S04",
+   "sound": "entity.piglin.admiring_item",
+   "note": "an adult admires, then the barter: gravel pops out (entity.item.pickup off)"
+  },
+  {
+   "under": "S08",
+   "sound": "block.lava.pop",
+   "note": "the moat"
+  },
+  {
+   "under": "S10",
+   "sound": "block.chest.open",
+   "note": "the player opens the chest on 'Come ON'; the lid hides its inside from us"
+  },
+  {
+   "under": "S11",
+   "sound": "block.dispenser.dispense",
+   "note": "on the `drop` mark ('SIX'): the click and the ingot; the music has dropped 0.45 s before"
+  }
+ ],
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "text": "Every SIX seconds, / a gold INGOT / falls from the SKY. / I've caught / FOUR HUNDRED.",
+   "say": "Every six seconds, a gold ingot falls from the sky. I've caught four HUNDRED.",
+   "shot": "S01",
+   "shows": [
+    {
+     "what": [
+      "dropper"
+     ],
+     "word": "SKY"
+    },
+    {
+     "what": [
+      "gold_ingot"
+     ],
+     "word": "INGOT"
+    },
+    {
+     "what": [
+      "piglin_baby"
+     ],
+     "word": "CAUGHT"
+    }
+   ],
+   "punch": true,
+   "direction": "proud and amazed, one quick breath; the number lands"
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "text": "I found / this ROOM / chasing one / down a HOLE.",
+   "say": "I found this room chasing one down a HOLE.",
+   "shot": "S02",
+   "shows": [
+    {
+     "what": [
+      "gold_ingot"
+     ],
+     "word": "ONE"
+    },
+    {
+     "what": [
+      "glass",
+      "nether_bricks"
+     ],
+     "word": "ROOM"
+    }
+   ],
+   "direction": "delighted, like finding a secret clubhouse"
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "It has a WINDOW, / so I can watch / the GROWN-UPS.",
+   "say": "It has a window, so I can watch the GROWN-UPS.",
+   "shot": "S03",
+   "shows": [
+    {
+     "what": [
+      "glass"
+     ],
+     "word": "WINDOW"
+    },
+    {
+     "what": [
+      "piglin"
+     ],
+     "word": "GROWN-UPS"
+    }
+   ],
+   "direction": "cosy, pleased with the view"
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "They give their gold / AWAY / for GRAVEL. / FOOLS.",
+   "say": "They give their gold away for gravel. FOOLS.",
+   "shot": "S04",
+   "shows": [
+    {
+     "what": [
+      "gold_ingot"
+     ],
+     "word": "GOLD"
+    },
+    {
+     "what": [
+      "gravel"
+     ],
+     "word": "GRAVEL"
+    }
+   ],
+   "direction": "a tiny scoff, very superior, then a giggle"
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "text": "Not ME. / I'm saving up / for a whole BASTION. / For when I'm BIG.",
+   "say": "Not me. I'm saving up for a whole bastion. For when I'm BIG.",
+   "shot": "S05",
+   "shows": [
+    {
+     "what": [
+      "bastion_remnant"
+     ],
+     "word": "BASTION"
+    }
+   ],
+   "punch": true,
+   "direction": "dreamy and sure, chin up"
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "text": "And somebody / up there / is very / GENEROUS.",
+   "say": "And somebody up there is very GENEROUS.",
+   "shot": "S06",
+   "shows": [
+    {
+     "what": [
+      "player"
+     ],
+     "word": "SOMEBODY"
+    }
+   ],
+   "direction": "grateful, sweet"
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "He gave me / a shiny / new FLOOR.",
+   "say": "He gave me a shiny new FLOOR.",
+   "shot": "S07",
+   "shows": [
+    {
+     "what": [
+      "hopper"
+     ],
+     "word": "FLOOR"
+    }
+   ],
+   "direction": "thrilled, showing it off"
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "text": "A MOAT / of LAVA, / like a real / CASTLE.",
+   "say": "A moat of lava, like a real CASTLE.",
+   "shot": "S08",
+   "shows": [
+    {
+     "what": [
+      "lava"
+     ],
+     "word": "LAVA"
+    }
+   ],
+   "direction": "bigger, can't believe it"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "And a NOTE. / I can't READ. / But I think it says / I LOVE YOU.",
+   "say": "And a note. I can't read. But I think it says I love YOU.",
+   "shot": "S09",
+   "shows": [
+    {
+     "what": [
+      "oak_sign"
+     ],
+     "word": "NOTE"
+    }
+   ],
+   "punch": true,
+   "direction": "touched, all heart; the last word warm and up"
+  },
+  {
+   "id": "L10",
+   "who": "P",
+   "text": "Come ON. / Not even / GRAVEL?",
+   "say": "Come on. Not even GRAVEL?",
+   "shot": "S10",
+   "shows": [
+    {
+     "what": [
+      "player",
+      "chest"
+     ],
+     "word": "COME"
+    }
+   ],
+   "direction": "fed up, flat, staring into a box"
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "He LOVES gravel. / Grown-ups / are SO weird.",
+   "say": "He loves gravel. Grown-ups are SO weird.",
+   "shot": "S10",
+   "shows": [
+    {
+     "what": [
+      "player"
+     ],
+     "word": "HE"
+    }
+   ],
+   "direction": "a fond eye-roll, giggly"
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "text": "So I hug my GOLD, / and I count / to SIX.",
+   "say": "So I hug my gold, and I count to SIX.",
+   "shot": "S11",
+   "shows": [
+    {
+     "what": [
+      "gold_ingot"
+     ],
+     "word": "GOLD"
+    },
+    {
+     "what": [
+      "dropper"
+     ],
+     "word": "SIX"
+    }
+   ],
+   "punch": true,
+   "direction": "cosy and content, counting under its breath on the last word"
+  }
+ ],
+ "punch_note": "4 punches: L01 hook, L05 the turn into the want, L09 the biggest misreading, L12 the reveal.",
+ "ending": {
+  "after": "L12",
+  "beats": [
+   "S11: on 'GOLD' the camera cranes down from the baby, through the cutaway, to the chest room: the chest still open from L10, EMPTY, directly under the hopper floor; on 'SIX' the dropper clicks above and an ingot drops on the baby, who catches it. Cut 1.0 s after `drop`. No line."
+  ],
+  "loop": "L12 'I count to six' runs into L01 'Every six seconds, a gold ingot falls from the sky.'"
+ },
+ "beats": "stories/saving_up_bastion/beats.md",
+ "set": "stories/saving_up_bastion/set.md",
+ "shotlist": "stories/saving_up_bastion/shots.md",
+ "bible": "stories/saving_up_bastion/bible.md",
+ "shots": [
+  {
+   "id": "S01",
+   "line": "L01",
+   "place": "cell",
+   "size": "ms",
+   "camera": "inside the cell at the baby's eye level +0.5, facing the glass window; slow push in from 0.0 s",
+   "frame": "frame 1: the baby piglin centred, big (about 40% of frame height), looking up; the dropper's face in the ceiling at top centre. On 'SKY' the dropper clicks and an ingot falls; on 'INGOT' the baby catches it (off hand up, the admiring pose); on 'HUNDRED' the pile is NOT shown (it's in its inventory, vanilla); instead the push ends on the baby hugging the ingot. bg through the glass: the lava lake glow.",
+   "subject": "baby"
+  },
+  {
+   "id": "S02",
+   "line": "L02",
+   "place": "shelf",
+   "size": "ws",
+   "camera": "outside, low on the shelf, a quick flash-back: tracks the baby running east after a thrown ingot",
+   "frame": "a single ingot skittering across netherrack (a piglin's barter throw, or Grandma's from the portal: not said), the baby chasing it, both dropping into the farm's 1x1 catch hole at the tower's foot (a trapdoor-edged hole). The tower fills the right half: nether brick, one glass window high up. Same day, earlier."
+  },
+  {
+   "id": "S03",
+   "line": "L03",
+   "place": "cell",
+   "size": "ots",
+   "camera": "over the baby's shoulder through the glass window, looking west down at the shelf",
+   "frame": "fg: the baby's head and the ingot; the glass; bg: the shelf below with 5-6 adult piglins milling by the lit Nether portal (the portal at frame right third), the lava lake beyond."
+  },
+  {
+   "id": "S04",
+   "line": "L04",
+   "place": "shelf",
+   "size": "ws",
+   "camera": "outside on the shelf at piglin height, slow drift right",
+   "frame": "an adult piglin holds an ingot up (admiring), then tosses out GRAVEL (a dropped gravel block item) on 'GRAVEL'; two more adults at the portal. EASTER EGG: frame left, mid-ground, an adult in a gold helmet with a blue (lapis) trim, not centred, 1-3 s. Where the adults' gold comes from is not shown (the portal, Grandma's; never said)."
+  },
+  {
+   "id": "S05",
+   "line": "L05",
+   "place": "lake",
+   "size": "ews",
+   "camera": "from the cell window pushing out over the lava lake, rising",
+   "frame": "the bastion remnant on the far shore of the lava lake, huge, blackstone, a few gold blocks glinting; fg left: the tower's window edge with the baby's silhouette and its ingot. Crimson fog."
+  },
+  {
+   "id": "S06",
+   "line": "L06",
+   "place": "tower_top",
+   "size": "ms",
+   "camera": "low angle up the tower's outside wall to its roof",
+   "frame": "the PLAYER (efe skin, iron armour) on the tower's roof, his face visible, feeding gold into the hopper over the dropper from a stack; he checks a clock (redstone) and frowns. He does not look into the cell (the roof is solid nether brick over the dropper)."
+  },
+  {
+   "id": "S07",
+   "line": "L07",
+   "place": "chest_room",
+   "size": "ms",
+   "camera": "the chest room under the cell, side on",
+   "frame": "the player swaps the hopper in the cell's floor (seen from below: a new hopper placed into the ceiling of the chest room, feeding straight down into the chest); his face, hopeful. The chest is closed."
+  },
+  {
+   "id": "S08",
+   "line": "L08",
+   "place": "shelf",
+   "size": "wide",
+   "camera": "outside, low, the tower's foot",
+   "frame": "the player pours lava from a bucket into a 1-wide trench ringing the tower's foot (the moat), keeping hoglins off; bright lava glow on his face; the baby's window above, dark, the baby small in it."
+  },
+  {
+   "id": "S09",
+   "line": "L09",
+   "place": "cell",
+   "size": "cu",
+   "camera": "on the sign through the glass from inside the cell (the baby's view), the baby's ingot soft in fg",
+   "frame": "an oak sign on the tower's outside wall just below the window, readable at phone size: line 1 'PLEASE', line 2 'WORK'. The player's hand just leaving it. The ONLY close-up before the reveal."
+  },
+  {
+   "id": "S10",
+   "line": "L10,L11",
+   "place": "chest_room",
+   "size": "ms",
+   "camera": "in the chest room, at the chest, facing the player across it",
+   "frame": "the player opens the chest on 'Come ON' (the lid toward us hides its inside), stares into it, slumps. L11 over the same shot (no cut); a hopper in the ceiling above the chest."
+  },
+  {
+   "id": "S11",
+   "line": "L12",
+   "place": "cutaway",
+   "size": "ws",
+   "camera": "the reveal: a crane down a cutaway of the tower (one wall removed, cinematic), from the baby to the chest room",
+   "frame": "start: the baby hugging its ingot in the cell (MS). On 'GOLD' crane down through the hopper floor to the chest room: the chest still OPEN, EMPTY, the hopper straight above it, the baby straight above that, all in one vertical line in frame; the player gone. On 'SIX' (`drop`) the dropper at the top clicks, an ingot falls, the baby catches it. Cut 1.0 s after.",
+   "marks": [
+    "drop"
+   ]
+  }
+ ]
+}

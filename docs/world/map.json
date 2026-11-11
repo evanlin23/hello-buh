@@ -2089,6 +2089,33 @@
    ],
    "status": "claimed 2026-11-11 by the_walk",
    "story_builds": "Grandma's cottage (one 3 x 2 glass-pane window facing the dock, lit) and her boat on the beach: the_walk's set, since about day 350"
+  },
+  "portal_cottage_nether": {
+   "name": "The Nether below the Portal Cottage",
+   "kind": "nether",
+   "region": null,
+   "at": [
+    -16,
+    80,
+    -118
+   ],
+   "footprint": [
+    -40,
+    -140,
+    8,
+    -96
+   ],
+   "about": "NETHER DIMENSION (x, z are Nether coordinates: the Portal Cottage's cellar portal at about (-126, 80, -938) links here, /8). The portal Grandpa lit when he walked through on day ~175 stands on a basalt-and-netherrack shelf over a lava lake; the piglins of a bastion across the lake gather at it, because a gold ingot comes out of it every night (Grandma's). A player's barter farm (a nether-brick tower: a dropper over a one-piglin cell with a glass window to the lake, a hopper floor down to a chest room, a lava moat) stands about 10 blocks from the portal, built by day 4900. Day 5000: a baby piglin is stuck in its cell (Saving Up for a Bastion).",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "saving_up_bastion"
+   ],
+   "status": "claimed 2026-11-11 by saving_up_bastion",
+   "dimension": "the_nether",
+   "links": {
+    "portal_cottage": "the cellar portal (Overworld (-126, 80, -938) / 8)"
+   }
   }
  },
  "stories": {
@@ -2314,6 +2341,16 @@
     "boxed_bell"
    ],
    "status": "made"
+  },
+  "saving_up_bastion": {
+   "day": 5000,
+   "places": [
+    "portal_cottage_nether"
+   ],
+   "cameos": [
+    "helmet_piglin"
+   ],
+   "status": "claimed"
   }
  },
  "cameos": {
@@ -2460,6 +2497,12 @@
    ],
    "since": 4501,
    "what": "Larkfield's 6,000 torches: the High Meadow's north-east rim glowing on the skyline south-west of Dog Hill at night (from the hilltop, Hushwell's north road; 185+ blocks: renderDistance 13+)"
+  },
+  "helmet_piglin": {
+   "place": "portal_cottage_nether",
+   "needs": [],
+   "since": 175,
+   "what": "an adult piglin in a gold helmet with a blue (lapis) trim (Grandpa's, Gold for the Portal) among the adults at the Nether portal; never named"
   }
  }
 }
