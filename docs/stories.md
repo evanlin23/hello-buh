@@ -254,6 +254,8 @@ STANDARDS.md in the same commit.
   title either (each story stands alone, r:rca5363); the channel name under the Short and `#buhstories` carry the brand.
 - **Owner, 2026-11-11: "I dont like the channel description, specifcally the "each told by someone who lived it:"".** No
   "told by someone/the kid who lived it" framing in the channel description or the promise.
+- **Owner, 2026-11-11: "BuhStoriesMC"** (after "Buh Stories is taken"). The second channel is named "Buh Stories", handle
+  @BuhStoriesMC (names needn't be unique on YouTube, handles must).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

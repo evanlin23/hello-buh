@@ -233,12 +233,8 @@ Nothing is uploaded until the owner creates the channel and authorises it (docs/
 The art is in `brand/buh_stories/`, the review page is linked from the session report.
 
 ## Identity
-- **Name and handle:** **Buh Stories**, **@BuhStories**. It reads cleanly, says what it is, and keeps the Buh name
-  that ties the two channels. YouTube availability can't be checked from here. Fallbacks, in order:
-  1. @BuhStoriesMC
-  2. @TheBuhStories
-  3. @HelloBuhStories (ties it to the main channel, but it's long)
-  4. "Tales from Hushwell" @HushwellTales (a world name instead of the hero; good if "Buh" is taken)
+- **Name and handle:** **Buh Stories**, **@BuhStoriesMC** (owner, 2026-11-11: "BuhStoriesMC"; @BuhStories was taken).
+  Channel names on YouTube don't have to be unique, only handles, so the name stays "Buh Stories".
 - **Promise (one line):** *Short Minecraft stories.* (No "told by someone who lived it", r:r808cba.) Every story stands alone (owner,
   2026-11-11: no shared-world or connected-stories framing, r:rca5363; "just do stories", r:rae1fcc). Each story can still be a
   mystery: its own title, video description and pinned question set it up; the channel's own copy says "stories".
@@ -303,4 +299,4 @@ varied. Raids' title gives away less than its twist; check it against the final 
 
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
 "We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a
-village covered in 9,000 carpets. You'll want to know why. → @BuhStories"
+village covered in 9,000 carpets. You'll want to know why. → @BuhStoriesMC"

@@ -72,7 +72,7 @@ Story Shorts go to their own channel, never @HelloBuh. Every package's `metadata
 uploader sends a Short only to that channel. Nothing goes up until **all** of this is done, and each story still needs
 the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner does, once:
 1. **Create the channel.** YouTube → your account → Settings → "Add or manage your channels" → Create a channel →
-   name "Buh Stories", handle @BuhStories (fallbacks in docs/brand.md). It is a Brand Account channel, so the same
+   name "Buh Stories", handle @BuhStoriesMC. It is a Brand Account channel, so the same
    Google login manages both.
 2. **Branding.** Upload the kit in `brand/buh_stories/` (avatar.png, banner.jpg, watermark.png) and the description in
    docs/brand.md "Buh Stories channel" (YouTube Studio → Customization). Audience: "No, it's not made for kids".

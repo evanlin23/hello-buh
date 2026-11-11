@@ -227,7 +227,7 @@ actions left silent). r:rc85ccc r:r36632d
 - A finding that has happened before becomes a rule (cinematic-style "Mistakes already solved", or the house rules).
 
 ## 10. Publish
-- **Stories go to the second channel, "Buh Stories"**, never @HelloBuh; uploads wait for the owner to set that channel
+- **Stories go to the second channel, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**, never @HelloBuh; uploads wait for the owner to set that channel
   up. Check: owner. r:r732bc0
 - **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
   Check: owner. r:rca5363
