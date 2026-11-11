@@ -639,7 +639,7 @@
     "python3 audio.py work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.wav",
     "python3 edit.py --frames work/story_gold_for_the_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_gold_for_the_portal.rec.json --audio work/story_gold_for_the_portal.wav --caption \"My grandma has thrown 9,000 gold into a portal\" --red portal --red_rgb FFD640 --punch [[\"reveal\",0,0.08]] --punch_stress [[\"L01\",3.44,0.07],[\"L07\",1.14,0.07],[\"L12\",3.22,0.07]] --gui_scale 4 --chat_align center --story stories/gold_for_the_portal --start_at line:0 --end_after story_end:0 --out out/story_gold_for_the_portal.mp4"
   ],
-  "status": "held",
+  "status": "ready",
   "notes": "Held (owner rule). L10 = owner's picked audition take J (Autonoe, original wav); string on screen on STRING; S01 opening centred. Don't queue next to One More Eye (both a basement portal and a lost relative).",
   "published_at": "2026-11-11T17:09:00.312Z",
   "gates": {
@@ -664,5 +664,11 @@
       "report": "out/story_gold_for_the_portal.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "owner_ok": {
+    "at": "2026-11-11",
+    "words": "Gold for portal is good",
+    "by": "owner, in the Buh Stories lead session",
+    "upload": "manual (YT_ENABLED_BUHSTORIES unset)"
   }
 }
