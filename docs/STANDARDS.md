@@ -336,7 +336,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "logic"**: rapid real vanilla quirks, each set up and paid off in seconds, one caption. Check: owner,
   minecraft-audit (every quirk must be true vanilla). r:r40f7c7
 - **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
-  mods and menus. Check: owner. r:rd551de
+  mods and menus (the popup is edit.popup, scripts/popup.py; the stunt side is lib/fakemod.js: the asking mob waits
+  with NoAI, what follows is vanilla). Check: owner. r:rd551de
 - **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
   vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
 - **Format "cells"**: a walk past glass cells, each a mob stuck in an endless vanilla-built loop, a deadpan caption.

@@ -638,7 +638,9 @@ const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(_
 // the block under the crosshair within reach (4.5, survival): vanilla outlines it in black
 // hitbox [width, height] of mobs that can be targeted (EntityType sizes); an entity under the crosshair
 // within the 3-block entity reach is the target, and vanilla draws no outline for it
-const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], zombie_villager: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
+const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], zombie_villager: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95],
+  // (vanilla EntityType sizes; without them the crosshair passed through these mobs and outlined the block behind: underdog_heal's cat)
+  wolf: [0.6, 0.85], cat: [0.6, 0.7], ocelot: [0.6, 0.7], horse: [1.3965, 1.6], donkey: [1.3965, 1.5], mule: [1.3965, 1.6], snow_golem: [0.7, 1.9], fox: [0.6, 0.7], goat: [0.9, 1.3], llama: [0.9, 1.87] }
 // outline shapes (Block.getShape) where they differ from the collision shape: fences, walls and
 // gates outline 1 block tall (their collision is 1.5), and blocks you walk through still get targeted
 // and outlined: crops by age, plants, torches (a ray used to pass through wheat and outline the
@@ -1674,6 +1676,9 @@ function bodyAfterDeath (d, t) {
 // bounce. A synced position snaps. A pickup ('collect') flies the item to the collector over 3 ticks
 // (ItemPickupParticle), then it's gone: they froze at the spawn and blinked out (fortune f1613).
 const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'lingering_potion', 'experience_bottle', 'potion'])
+// the throwables whose hit on a mob plays the red flash (Snowball / ThrownEgg / ThrownEnderpearl.onHitEntity: hurt(..., 0));
+// a potion or XP bottle breaks without hurting anyone (underdog_heal's weakness potion flashed the zombie villager red)
+const HIT_FLASH = new Set(['ender_pearl', 'snowball', 'egg'])
 // the living entity (id) whose hitbox the step from p by v passes through, or null: ProjectileUtil.getEntityHitResult
 // tests the mob's box inflated by 0.3 (a 0.6-wide humanoid: 0.6 a side). For the motion fixes' projectile hits.
 const NOT_LIVING = /^(item|experience_orb|falling_block|moving_block|egg|snowball|arrow|spectral_arrow|trident|ender_pearl|splash_potion|lingering_potion|experience_bottle|firework_rocket|armor_stand|painting|item_frame|glow_item_frame|marker|text_display|block_display|item_display|interaction|boat|minecart|lightning_bolt|player)$/
@@ -1747,7 +1752,7 @@ function simulateDrops (world) {
         // (ThrownEgg / Snowball.onHitEntity: hurt(..., 0), so the red flash still plays). The cast is Invulnerable and
         // sends no damage event, and the flight here ignored mobs: names_in_the_woods' eggs flew through Hugo and Pia
         // with no red ("the villagers dont have hte damage red when theyre hit")
-        if (MOTION_FIXES && vx * vx + vy * vy + vz * vz > 1e-6) {
+        if (MOTION_FIXES && HIT_FLASH.has(rows[0][2]) && vx * vx + vy * vy + vz * vz > 1e-6) {
           if (owner && owner.size) { const still = insideOf(ENT.get(tick), id, [x, y, z]); for (const o of [...owner]) if (!still.has(o)) owner.delete(o) }
           const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz], owner)
           if (hit !== null) {
@@ -1778,7 +1783,7 @@ function simulateDrops (world) {
     }
     // motion fixes: a projectile the server removed in flight (its last rows still flying) hit something the flight
     // above didn't reach in time (the server's own spawn point and tick differ a little): the mob ahead within 3 steps
-    if (thrown && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
+    if (thrown && HIT_FLASH.has(rows[0][2]) && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
       let q = [x, y, z], w = [vx, vy, vz]
       for (let k = 0; k < 3; k++) {
         const hit = projectileHit(ENT.get(t1), id, q, w)
@@ -2869,7 +2874,7 @@ else:
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
+          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}), ...(P[i][7] & 4 ? { fire: true } : {}) }, light: lightmap(ls, lb),   // (pose flag 4: on fire) stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }

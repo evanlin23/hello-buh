@@ -302,7 +302,7 @@ def edit_caption_times(video, edit, rec, clock):
     if meta.exists():
         try:
             e = json.loads(meta.read_text()).get("edit")
-            if isinstance(e, dict) and (e.get("subs") or e.get("cards")):
+            if isinstance(e, dict) and (e.get("subs") or e.get("cards") or e.get("popup")):
                 edit = e
         except ValueError:
             pass
@@ -334,7 +334,23 @@ def edit_caption_times(video, edit, rec, clock):
                 o = clock.out_of_src(ts[nth] + off)
                 if o is not None:
                     out.append(round(o, 2))
-    return out
+    pops = edit.get("popup") or []                   # the fake mod's popups (scripts/popup.py): opening, the click, the
+    if isinstance(pops, str):                        # roll's every step and closing each change the picture
+        try:
+            pops = json.loads(pops)
+        except ValueError:
+            pops = []
+    for pp in pops:
+        if not isinstance(pp, dict):
+            continue
+        names = list(pp.get("at") or []) + list(pp.get("marks") or []) + [(pp.get("roll") or {}).get(k) for k in ("ticks", "at")]
+        for ev in {n for n in names if n}:
+            for e in tl:
+                if e.get("event") == ev:
+                    o = clock.out_of_src(e["t"] / 1000)
+                    if o is not None:
+                        out.append(round(o, 2))
+    return sorted(out)
 
 
 # ---------------------------------------------------------------- owner notes as checks (scripts/owner_checks.py)

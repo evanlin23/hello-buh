@@ -25,7 +25,7 @@ module.exports = makeStunt({
   name: 'trap_free_diamonds',
   caption: 'trapping my friend with FREE DIAMONDS 💀',
   red: 'FREE DIAMONDS',
-  steps: ['step 1: a hole', 'step 2: a trapdoor on top', 'step 3: a TRAPPED chest behind it', 'step 4: free diamonds 💎', 'now hide 🤫'],
+  steps: ['step 1: a hole', 'step 2: a trapdoor on top', 'step 3: a TRAPPED chest behind it', 'step 4: free diamonds', 'now hide'],
   friend: { name: FRIEND, skin: 'kai' },
   hotbar: ['diamond_shovel', ['spruce_trapdoor', 4], 'trapped_chest', ['diamond_block', 2], ['bread', 12]],
   select: 0,
