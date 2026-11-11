@@ -289,6 +289,9 @@ STANDARDS.md in the same commit.
   mycelium from another, a top-down time-lapse race; caption "Grass vs Fungus"): "timelapse grass vs fungus".**
   HelloBuh adds a spread-race format (family `race`): two vanilla things that spread (grass, mycelium, moss, sculk,
   vines, fire...) race across one big field in a top-down time-lapse; viewers pick a side and wait for the winner.
+- **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
+  meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
+  war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
 - **Owner, 2026-11-11, sharing ThreexyMC's "Yeah its over bro" (caption "Am i cooked?": the player mines down through
   a diamond vein and through bedrock into the dark, then the chat fills with "[Notch] joined the game", "[Microsoft]",
   "[Mojang]", "[FBI]", "[Interpol]", "[IRS]", "[Herobrine]", "[NASA]"... over a war-movie soldier image with a
