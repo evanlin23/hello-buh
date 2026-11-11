@@ -29,8 +29,9 @@ module.exports = R.makeStunt({
       ['safe', 'THE SAFE ONE 😇', 1.0, 'green'],
       ['death', 'THE WORST ONE 💀', 1.0, 'red', 2]
     ],
-    punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2]],
-    flash: [['death', 2, 0.8]],
+    // the payoff pace times is the TNT floor's second wave (big_blast), 0.6 s after his death: the flash and a punch there too
+    punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2], ['big_blast', 0, 1.15]],
+    flash: [['death', 2, 0.6], ['big_blast', 0, 0.8]],
     shake: [['death', 2, 24]],
     // the burn in the lava, sped up to the death; its middle 1.3 s cut (lint: nobody moves 12.4-13.6 s)
     speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5]],
