@@ -1,0 +1,17 @@
+{
+ "name": "skull_art",
+ "stunt": "skull_art",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43019986280",
+ "source": "f65d51c1",
+ "queued": "2026-11-11T12:23:54Z",
+ "finished": "2026-11-11T12:32:35Z",
+ "mp4": "renders/out/skull_art.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
