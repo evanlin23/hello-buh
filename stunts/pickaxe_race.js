@@ -41,7 +41,8 @@ module.exports = {
       ['tntwalk', 'lit', 2.2], ['lit', 'boom:-1.6', 2],
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
-      ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
+      ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
+      flash: [['boom', 0, 0.6]], punch: [['boom', 0, 1.12]], shake: [['boom', 0, 10]] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {

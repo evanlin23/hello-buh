@@ -30,6 +30,9 @@ module.exports = R.makeStunt({
     punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2]],
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
-    speed: [['lava_a', 'lava_dead', 2.5]]     // the burn in the lava, sped up to the death
+    // the burn in the lava, sped up to the death; its middle 1.3 s cut (lint: nobody moves 12.4-13.6 s)
+    speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5]],
+    // pace: a hit on the payoff (the last death): the song dips 0.3 s before it, then an impact
+    sfx: [['dip', 'last_death', 0.3], ['impact', 'last_death']]
   }
 })

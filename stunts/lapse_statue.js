@@ -108,6 +108,7 @@ module.exports = makeStunt({
   red: 'hour',
   recordRadius: 200,
   endAfter: 'big_done:0.5',
+  bigCuts: [6, 1.2, 63], payoffFlash: true,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'sand', under: 'sandstone', biome: 'minecraft:desert' },
   hotbar: [['hay_block', 64], ['carved_pumpkin', 64], ['stone_bricks', 64], ['brown_concrete', 64], ['terracotta', 64], ['emerald_block', 64], ['dark_oak_planks', 64], ['dirt', 64], 'diamond_shovel'],
   small,
