@@ -1,4 +1,4 @@
-# red_sheep: set plan (r4, 2026-11-11)
+# red_sheep: set plan (r4, 2026-11-11; world pass 2026-11-11)
 
 Built with `world.build(ctx, { story: 'red_sheep' })` on Ravenford's canonical pieces, with these story-only stamps on
 top. No site search and no clearing (STANDARDS 3.5).
@@ -17,9 +17,28 @@ top. No site search and no clearing (STANDARDS 3.5).
 | Dad says never go in the woods | L10 | S10: Dad (13 blocks out, in the field) and the woods both in frame |
 | (went in) | L11 | S11: birch trunks all round, the lamb ahead |
 
+## The world (docs/world/map.json, as of day 2300)
+`world.build(ctx, { story: 'red_sheep' })` now builds, from Ravenford's stamps: Grandpa's house and yard
+(`grandpa_house`, ported from stunts/story_thirty_one_raids.js), the totem wall with all 32 frames full
+(`totem_wall`), the pasture fence (`pasture`: gate + (-29..-1, 13..40) on the natural ground, survey-checked: clear of
+the generated village house at gate + (-10..-4, 3..11), the trees at (-22..-18, 1..5) and the farm at (-52..-44, 3..7))
+and eight blue sheep (`blue_flock`, live; kill or keep them under the 60). The **palisade and east gate are still
+Thirty-One Raids' build**: port them (gate-relative, on the terrain) into map.json before recording, with the pasture
+gate (a fence gate, lantern post) in the palisade at (0, 0, 15).
+
+| claim | line | check |
+|---|---|---|
+| (the easter egg) Grandpa's house, the totems, Grandpa | L04 | S04 still: the west south window lit with gold in it, the bench with the zuri actor, both soft; nothing named |
+
 ## Pieces
-- **The pasture:** the canonical palisade, plus an oak-fence pasture inside the south wall (~40 x 30) with its gate in
-  the east palisade at (0, 0, 15). Natural grass and slope; no flattening beyond the fence line.
+- **The pasture:** the canonical palisade, plus the oak-fence pasture (map.json `pasture`: gate + (-29..-1, 13..40),
+  29 x 28; the old ~40 x 30 plan collided with the village) with its gate in the east palisade at (0, 0, 15).
+  Natural grass and slope (y 70-77 across it); no flattening beyond the fence line.
+- **S04's background (the cameo):** the camera at gate + (-13, 1.4, 18) looking north. Its axis runs over the pasture's
+  north fence (top ~y 75.5 at z 13; keep the lens 1.4 up so the fence doesn't cut the window), the road, the yard's
+  south fence (y 72) and into Grandpa's west south window at (-13, 74-75, -9). Inside, the totem wall's west column
+  (frames at x -13, y 74-77, z -16) and the floor lantern under it make the glint. Open the window's trapdoor
+  shutters (they are). Grandpa sits on the bench (-8..-7, 72, -8), facing south, about 5 blocks right of the axis.
 - **Lanterns:** on the pasture gate post, and on the palisade every 8 blocks along the east side.
 - **The flock:** 60 sheep summoned with `Color:11`. S02: one more with `Color:0` (white), dyed in shot. S06: one with
   `Color:14` (red). The lamb: a baby sheep (`Age:-24000`, refreshed so it never grows), `Color:11`,
@@ -42,12 +61,12 @@ top. No site search and no clearing (STANDARDS 3.5).
 - The woods begin 40+ blocks from the gate: "places far apart in the story are far apart on screen".
 
 ## Pre-build checklist
-1. Port Thirty-One Raids' palisade and east gate into map.json `ravenford` pieces and stamps; add the pasture and its
-   gate (`since: 1950`). Fit the pasture to the real layout: the generated plains village covers gate-relative
-   (-136..+3, -78..+55), Thirty-One Raids' square sits at (-30, 0) and Grandpa's yard at (-8, -6), so the planned
-   (-40..0, 0..30) collides; move the plot (and the pasture gate, keep it in the east palisade) to a free stretch.
-   Widen the footprint east to x <= -1975 for the clearing (r3 continuity).
-2. Add `"red_sheep": {"day": 2100, "places": ["ravenford"], "status": "claimed", "cameos": ["raven_tower"]}` to
-   map.json `stories`, then `node scripts/world.js check`.
+1. Done on main 2026-11-11: the pasture (`since: 1900`), Grandpa's house and the totem wall are stamps, and
+   `"red_sheep": {"day": 2300, "places": ["ravenford"], "cameos": ["totem_wall"]}` is in map.json `stories`. Still to
+   do: port Thirty-One Raids' palisade and east gate into map.json (with the pasture gate at (0, 0, 15)), and widen
+   Ravenford's footprint east to x <= -1975 for the clearing (r3 continuity). Then `node scripts/world.js check`.
+2. The S01 crane (west of the pasture, looking east at (-10, 0, 15)): re-aim at the pasture's middle, about
+   (-15, 0, 26), now that it is fitted (its west side is open grass to x -40; the generated house at (-39..-33, 3..11)
+   is north-west, out of frame).
 3. The engine features in reviews/r3-engine.md.
 4. Shot sheet: the lamb's blue and its red read at 300 px in S12-S13.

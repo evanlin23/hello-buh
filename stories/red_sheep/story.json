@@ -34,10 +34,10 @@
   },
   "weather": "clear",
   "world": {
-    "place": "ravenford (canonical): the pasture, its fence gate in the east palisade 15 blocks south of the east gate, the east gate; the woods are birch past the ford (+40) east of the gate, the clearing staged at +45..+56 (widen the footprint east to x <= -1975; stamp birch if the seed has none). The pasture's plot must be fitted to the generated village's real layout (see set.md)",
-    "day": 2100,
-    "canon": "A new Ravenford family (a shepherd Dad and his kid; not Buh, not Grandpa). New canon facts: from about day 1950 Ravenford's flock is dyed blue as an evoker alarm; an evoker lives in the woods east of the ford (where it came from is never said). Nobody says 'Buh'.",
-    "easter_egg": "raven_tower: the old watchtower on the Ridge on S01's skyline (never named)"
+    "place": "ravenford (canonical): the pasture (map.json stamp `pasture`, gate + (-29..-1, 13..40)), its fence gate in the east palisade 15 blocks south of the east gate, the east gate; Grandpa's house across the road north (stamps `grandpa_house`, `totem_wall`); the woods are birch past the ford (+40) east of the gate, the clearing staged at +45..+56 (widen the footprint east to x <= -1975; stamp birch if the seed has none)",
+    "day": 2300,
+    "canon": "A Ravenford shepherd family (Dad and his kid; not Buh, not Grandpa). Canon (docs/world/canon.md links 11, 16): the evoker in the woods is the one that got away from raid 32 (day 1900); Ravenford dyes its sheep blue from then on. Grandpa (zuri, the slow walk) is a background figure in S04, never named. Nobody says 'Buh'.",
+    "easter_egg": "totem_wall: Grandpa's totems glinting through his west south window in S04's background, Grandpa on his bench (never named); the Ridge tower on S01's skyline is geography"
   },
   "voice": {
     "engine": "gemini",
@@ -388,8 +388,8 @@
       "place": "pasture",
       "size": "full",
       "time": 1000,
-      "camera": "at: (-9, 1.0, 20) inside the pasture, at sheep eye height, looking at one blue sheep (-6.5, 0.8, 20) 2.5 blocks away, still",
-      "frame": "subject: one blue sheep full figure, side-on, turning its head to stare blankly at the camera, chewing; bg: more blue sheep, the palisade. Morning. (The comic beat: 'can't even SEE that good'.)"
+      "camera": "at: (-13, 1.4, 18) inside the pasture near its north fence, just over sheep eye height, looking NORTH at one blue sheep (-13, 0.8, 15.5) 2.5 blocks away, still (the axis runs on through Grandpa's west south window, gate + (-13, 3.5, -9), 27 blocks out)",
+      "frame": "subject: one blue sheep full figure, side-on, turning its head to stare blankly at the camera, chewing; bg (soft, out of focus): the north fence, the road, and across it Grandpa's yard and house: his west south window lit, the totem wall's gold glinting through it (the easter egg, never named), and an old man (zuri skin) sitting slow on the bench by the door, frame right. Morning. (The comic beat: 'can't even SEE that good'.)"
     },
     {
       "id": "S05",
