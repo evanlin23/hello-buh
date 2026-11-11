@@ -24,9 +24,9 @@ module.exports = {
     startAt: 'jump:-0.5', endAfter: 'death:1.6', deathScreen: true,
     // sound from frame 0: the wind up on the pillar and the fall's rising wind (the 2.3 s fall is silent in vanilla)
     sfx: [['air', 'start', 'jump', { gain: 0.25 }], ['wind', 'jump', 'placed', { gain: 0.5 }],
-      // over the NCS bed the bridge's lava pops don't count: a whoosh on 'almost there...' (the 15th sound), and a
+      // over the NCS bed the bridge's lava pops don't count: pops on the bridge's lava pops (the 13th and 17th sounds) and a ding on 'almost there...' (the 15th; a whoosh didn't count as a hit), and a
       // song dip + impact on the death (v2 gates on the packaged mix: 4.45 s dead on the bridge, no hit on the payoff)
-      ['whoosh', 'sound', { nth: 14 }], ['dip', 'death', 0.3], ['impact', 'death']],
+      ['pop', 'sound', { nth: 12, gain: 0.6 }], ['ding', 'sound', { nth: 14 }], ['pop', 'sound', { nth: 16, gain: 0.6 }], ['dip', 'death', 0.3], ['impact', 'death']],
     subs: [
       ['jump', 'water clutch', 2.4], ['magma', 'magma: sneak', 2.0],
       ['drop', '3 blocks = 0 damage', 1.6], ['bridge', 'lava bridge', 2.8],
