@@ -13,18 +13,18 @@
    "chunks": [
     [
      0.08,
-     0.408
+     0.378
     ],
     [
-     0.408,
-     0.773
+     0.378,
+     0.714
     ],
     [
-     0.773,
-     1.138
+     0.714,
+     1.086
     ],
     [
-     1.138,
+     1.086,
      1.794
     ]
    ],
@@ -52,14 +52,14 @@
     ],
     [
      0.777,
-     1.475
+     1.516
     ],
     [
-     1.475,
-     2.008
+     1.516,
+     2.049
     ],
     [
-     2.008,
+     2.049,
      2.459
     ],
     [
@@ -85,34 +85,34 @@
    "chunks": [
     [
      0.08,
-     0.409
+     0.359
     ],
     [
-     0.409,
-     0.974
+     0.359,
+     0.964
     ],
     [
-     0.974,
-     1.633
+     0.964,
+     1.615
     ],
     [
-     1.633,
-     2.056
+     1.615,
+     2.033
     ],
     [
-     2.056,
-     2.433
+     2.033,
+     2.359
     ],
     [
-     2.433,
-     2.998
+     2.359,
+     2.964
     ],
     [
-     2.998,
-     3.515
+     2.964,
+     3.475
     ],
     [
-     3.515,
+     3.475,
      4.08
     ]
    ],
@@ -136,18 +136,18 @@
    "chunks": [
     [
      0.08,
-     0.546
+     0.537
     ],
     [
-     0.546,
-     0.935
+     0.537,
+     0.956
     ],
     [
-     0.935,
-     1.441
+     0.956,
+     1.451
     ],
     [
-     1.441,
+     1.451,
      1.985
     ]
    ],
@@ -159,38 +159,43 @@
    ]
   },
   "L05": {
-   "text": "He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT.",
+   "text": "He SAYS / a WAITING dog / is a SAD dog. / So he NEVER / makes me SIT.",
    "who": "N",
-   "dur": 2.566,
+   "dur": 3.137,
    "onset": 0.08,
-   "end": 2.366,
+   "end": 2.937,
    "chunks": [
     [
      0.08,
-     0.761
+     0.431
     ],
     [
-     0.761,
-     1.247
+     0.431,
+     1.083
     ],
     [
-     1.247,
-     1.782
+     1.083,
+     1.734
     ],
     [
-     1.782,
-     2.366
+     1.734,
+     2.286
+    ],
+    [
+     2.286,
+     2.937
     ]
    ],
    "captions": [
-    "He doesn't WANT",
-    "me to WAIT.",
+    "He SAYS",
+    "a WAITING dog",
+    "is a SAD dog.",
     "So he NEVER",
     "makes me SIT."
    ]
   },
   "L06": {
-   "text": "He keeps TALKING / about a PLACE / called COLLEGE. / It sounds BORING.",
+   "text": "He keeps TALKING / about COLLEGE. / He SAYS / there's no MINECRAFT / THERE.",
    "who": "N",
    "dur": 2.375,
    "onset": 0.08,
@@ -198,26 +203,31 @@
    "chunks": [
     [
      0.08,
-     0.639
+     0.612
     ],
     [
-     0.639,
-     1.093
+     0.612,
+     1.078
     ],
     [
-     1.093,
-     1.617
+     1.078,
+     1.311
     ],
     [
-     1.617,
+     1.311,
+     1.976
+    ],
+    [
+     1.976,
      2.175
     ]
    ],
    "captions": [
     "He keeps TALKING",
-    "about a PLACE",
-    "called COLLEGE.",
-    "It sounds BORING."
+    "about COLLEGE.",
+    "He SAYS",
+    "there's no MINECRAFT",
+    "THERE."
    ]
   },
   "L07": {
@@ -229,22 +239,22 @@
    "chunks": [
     [
      0.08,
-     0.564
+     0.515
     ],
     [
-     0.564,
-     0.886
+     0.515,
+     0.831
     ],
     [
-     0.886,
-     1.369
+     0.831,
+     1.345
     ],
     [
-     1.369,
-     1.813
+     1.345,
+     1.819
     ],
     [
-     1.813,
+     1.819,
      2.175
     ]
    ],
@@ -257,39 +267,39 @@
    ]
   },
   "L08": {
-   "text": "Then last NIGHT, / a ZOMBIE / came for HIM. / But I GOT / there FIRST.",
+   "text": "Last NIGHT / he STOPPED / RUNNING. / He just WATCHED / the SUN come UP.",
    "who": "N",
-   "dur": 2.756,
+   "dur": 2.566,
    "onset": 0.08,
-   "end": 2.556,
+   "end": 2.366,
    "chunks": [
     [
      0.08,
-     0.732
+     0.467
     ],
     [
-     0.732,
-     1.123
+     0.467,
+     0.855
     ],
     [
-     1.123,
-     1.644
+     0.855,
+     1.165
     ],
     [
-     1.644,
-     2.035
+     1.165,
+     1.746
     ],
     [
-     2.035,
-     2.556
+     1.746,
+     2.366
     ]
    ],
    "captions": [
-    "Then last NIGHT,",
-    "a ZOMBIE",
-    "came for HIM.",
-    "But I GOT",
-    "there FIRST."
+    "Last NIGHT",
+    "he STOPPED",
+    "RUNNING.",
+    "He just WATCHED",
+    "the SUN come UP."
    ]
   },
   "L09": {
@@ -301,22 +311,22 @@
    "chunks": [
     [
      0.08,
-     0.655
+     0.645
     ],
     [
-     0.655,
-     1.185
+     0.645,
+     1.166
     ],
     [
-     1.185,
-     1.628
+     1.166,
+     1.6
     ],
     [
-     1.628,
-     2.114
+     1.6,
+     2.078
     ],
     [
-     2.114,
+     2.078,
      2.556
     ]
    ],
@@ -329,44 +339,54 @@
    ]
   },
   "L10": {
-   "text": "He TURNED / to ME.",
+   "text": "He TURNED / to ME / and SAID:",
    "who": "N",
-   "dur": 1.042,
+   "dur": 1.423,
    "onset": 0.08,
-   "end": 0.842,
+   "end": 1.223,
    "chunks": [
     [
      0.08,
-     0.556
+     0.527
     ],
     [
-     0.556,
-     0.842
+     0.527,
+     0.776
+    ],
+    [
+     0.776,
+     1.223
     ]
    ],
    "captions": [
     "He TURNED",
-    "to ME."
+    "to ME",
+    "and SAID:"
    ]
   },
   "L11": {
-   "text": "Sit, BOY.",
+   "text": "STAY here, / BUDDY.",
    "who": "Buh",
-   "dur": 0.661,
+   "dur": 0.851,
    "onset": 0.08,
-   "end": 0.461,
+   "end": 0.651,
    "chunks": [
     [
      0.08,
-     0.461
+     0.437
+    ],
+    [
+     0.437,
+     0.651
     ]
    ],
    "captions": [
-    "Sit, BOY."
+    "STAY here,",
+    "BUDDY."
    ]
   },
   "L12": {
-   "text": "Then he SAID:",
+   "text": "So I SAT.",
    "who": "N",
    "dur": 0.851,
    "onset": 0.08,
@@ -378,7 +398,7 @@
     ]
    ],
    "captions": [
-    "Then he SAID:"
+    "So I SAT."
    ]
   },
   "L13": {

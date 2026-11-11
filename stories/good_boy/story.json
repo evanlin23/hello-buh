@@ -65,15 +65,15 @@
   {
    "id": "L05",
    "who": "N",
-   "text": "He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT.",
-   "say": "He doesn't want me to WAIT. So he never makes me SIT.",
+   "text": "He SAYS / a WAITING dog / is a SAD dog. / So he NEVER / makes me SIT.",
+   "say": "He says a waiting dog is a SAD dog. So he never makes me SIT.",
    "look": false
   },
   {
    "id": "L06",
    "who": "N",
-   "text": "He keeps TALKING / about a PLACE / called COLLEGE. / It sounds BORING.",
-   "say": "He keeps talking about a place called COLLEGE. It sounds BORING."
+   "text": "He keeps TALKING / about COLLEGE. / He SAYS / there's no MINECRAFT / THERE.",
+   "say": "He keeps talking about COLLEGE. He says there's no MINECRAFT there."
   },
   {
    "id": "L07",
@@ -84,8 +84,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "Then last NIGHT, / a ZOMBIE / came for HIM. / But I GOT / there FIRST.",
-   "say": "Then last night, a zombie came for HIM. But I got there FIRST."
+   "text": "Last NIGHT / he STOPPED / RUNNING. / He just WATCHED / the SUN come UP.",
+   "say": "Last night he stopped RUNNING. He just watched the sun come UP."
   },
   {
    "id": "L09",
@@ -96,20 +96,20 @@
   {
    "id": "L10",
    "who": "N",
-   "text": "He TURNED / to ME.",
-   "say": "He turned to ME."
+   "text": "He TURNED / to ME / and SAID:",
+   "say": "He turned to me and SAID:"
   },
   {
    "id": "L11",
    "who": "Buh",
-   "text": "Sit, BOY.",
-   "say": "Sit, BOY."
+   "text": "STAY here, / BUDDY.",
+   "say": "STAY here, buddy."
   },
   {
    "id": "L12",
    "who": "N",
-   "text": "Then he SAID:",
-   "say": "Then he SAID:"
+   "text": "So I SAT.",
+   "say": "So I SAT."
   },
   {
    "id": "L13",

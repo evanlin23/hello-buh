@@ -2,8 +2,8 @@
 // The narrator is Buh's tamed wolf, said openly from line 1. Buh (16, never named aloud) has tried to lose it 37
 // times: a tamed wolf teleports to its owner from 12 blocks (it blinks in beside him: the first frame), unless it is
 // sitting, and a sitting dog waits forever. He wants it to forget him, so he never makes it sit. College; "sorry,
-// buddy" every night; a zombie, and the dog got there first. This morning he walked it up Dog Hill to his old hut:
-// "sit, boy", "I'll be right back", and the chat says "Buh left the game". The one sit he avoided 37 times is the one
+// buddy" every night; last night he stopped running and watched the sun come up. This morning he walked it up Dog
+// Hill to his old hut: "stay here, buddy" (so it sat), "I'll be right back", and the chat says "Buh left the game". The one sit he avoided 37 times is the one
 // he finally used: the first frame of Dog on the Hill.
 //
 // Sets: Saltmouth (seed hellobuh's plains village, O = (-304, -384); the cottage on its east-edge pad above the sea,
@@ -18,7 +18,7 @@ const { storyLines, storyKit, setKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'good_boy')
 const CAPTION = 'my human tried to lose me 37 times 🐺'
-const GOLD = 12300, NIGHT = 18000, DUSK = 13000, MORNING = 1500
+const GOLD = 12300, NIGHT = 18000, DUSK = 13000, MORNING = 1500, DAWN = 23300
 const GUY = 'Buh', TAG = 'buh'
 const SIT_EYE = 0.5, EYE = 0.68
 const VX = -304, VZ = -384          // Saltmouth (the plains village; map.json saltmouth)
@@ -124,10 +124,6 @@ module.exports = {
     // (18, -8) facing the road): a blue collar, NoAI, sitting (only an owner makes a wolf sit)
     const dogY = groundAt(ctx, X + 18, Z - 6) + 1
     await c(`/summon wolf ${X + 18.5} ${dogY} ${Z - 6.4} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Sitting:1b,Tags:["other_dog"],Rotation:[0f,0f],CollarColor:11b,Owner:[I;12345,67890,13579,24680]}`)
-    // the zombie for L08 waits high above out of view, under a roof (it burned in the daylight)
-    await c(`/fill ${X - 6} ${F + 60} ${Z - 6} ${X + 6} ${F + 60} ${Z + 6} barrier`)
-    await c(`/fill ${X - 6} ${F + 64} ${Z - 6} ${X + 6} ${F + 64} ${Z + 6} stone`)
-    await c(`/summon zombie ${X} ${F + 61} ${Z - 3} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Tags:["zom"]}`)
 
     // Buh joins at the world spawn: put it on the pad first (a spawn 400 blocks away stalled the server)
     await c(`/setworldspawn ${A(37, 1, 15)}`)
@@ -168,7 +164,6 @@ module.exports = {
     const moveWith = (s) => () => Object.assign(buh, s)
     // feet follow the ground, eased (a full-block step in one tick read as a 1.04-block jump: rec_check)
     const walkG = (a, dx, dz) => { K.step(a, dx, dz); const g = gy(a.x, a.z); a.y += Math.max(-0.2, Math.min(0.2, g - a.y)) }
-    const zEnt = () => Object.values(bot.entities).find(e => e.name === 'zombie')
     // a one-block step ahead while the wolf runs (mineflayer doesn't step up)
     const autoJump = () => {
       const p = bot.entity.position, yw = bot.entity.yaw, ax = p.x - Math.sin(yw) * 0.8, az = p.z - Math.cos(yw) * 0.8
@@ -302,38 +297,15 @@ module.exports = {
       look(k)
     })
 
-    // L08 "Last NIGHT, / a ZOMBIE / came for HIM. / I got THERE / FIRST, though.": night in the yard, lit by the
-    // lantern post on the camera's side: the zombie walks in at him; on "I got THERE" the POV, at it, two bites from
-    // 2.4 blocks (no close-up of its belt), and it's down on the line's end
-    const zom = K.actor('zom', { x: 36.6, y: gy(36.6, 9.5), z: 9.5, yaw: 0 })
-    await scut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1, { shot: 'night_yard', time: NIGHT, self: [{ sitting: true }, SIT_EYE], after: moveWith({ x: 37.5, z: 15.2, y: H + 1, yaw: 180, pitch: 0 }) })
-    await line('L08', async (k, at, n) => {
-      if (k < at.cut(3)) {
-        const dx = buh.x - 0.2 - zom.x, dz = buh.z - 2.0 - zom.z, d = Math.hypot(dx, dz)
-        if (d > 0.2) walkG(zom, dx / d * 0.1, dz / d * 0.1)
-        if (k === 6) ctx.sound('entity.zombie.ambient', 0.8, 1)
-        buh.yaw = yawTo(buh.x, buh.z, zom.x, zom.z)
-        K.base = K.aim(P(zom.x, zom.y + 1.5, zom.z)); look(k)
-      }
-      if (once('L08cut', k >= at.cut(3))) {
-        K.actors.delete('zom')   // the real zombie from here: the wolf bites it
-        await K.cut(36.4, 15.6, P(zom.x, zom.y + 1.6, zom.z), H + 1, { shot: 'pov', self: [{ sitting: false, angry: true }, EYE] })
-        ctx.sound('entity.wolf.growl', 1, 1.1)
-        K.ctl('sprint', true); K.go(true)
-      }
-      if (k > at.cut(3)) {
-        const [sy, sp] = shake(k, 0.03)
-        const z = zEnt()
-        if (z && bot.entity.position.distanceTo(z.position) < 2.4) K.go(false)
-        if (once('L08bite1', k >= at(3) + 6) || once('L08bite2', k >= at(4) + 2)) { if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.15) }
-        if (once('L08kill', k >= n - 1)) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
-        if (k >= n - 1) say('/kill @e[type=experience_orb]')
-        if (z) K.base = K.aim(z.position.offset(0, 1.5, 0))   // its head and chest in frame
-        look(k, sy, sp)
-      }
+    // L08 "Last NIGHT / he STOPPED / RUNNING. / He just WATCHED / the SUN come UP.": dawn at the same sea edge, from
+    // further back and lower than L07 (the sun coming up over the sea ahead of them): he stands still beside the sitting
+    // wolf, looking out; on "WATCHED" he looks down at it (the critic's fix: the zombie was a dead end)
+    await scut(41.5, 16.6, P(60, eyeY(0.6), 16.4), H + 1, { shot: 'dawn_sea', time: DAWN, self: [{ sitting: true }, SIT_EYE], after: moveWith({ x: 40.4, z: 15.6, y: H + 1, yaw: -90, pitch: -5 }) })
+    await line('L08', async (k, at) => {
+      if (k < at(3)) { buh.yaw = -90 + Math.sin(k / 13) * 4; buh.pitch = -5 }   // out to sea, at the sunrise
+      else { buh.yaw += (yawTo(buh.x, buh.z, 41.5, 16.6) - buh.yaw) * 0.12; buh.pitch += (35 - buh.pitch) * 0.12 }
+      look(k)
     })
-    if (once('L08kill', true)) say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s')   // (the line ended before its last tick ran)
-    K.stop()
 
     // L09 "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.": Dog Hill, morning: a crane down as
     // they come up over the south rim onto the meadow and walk north toward his old dirt hut
@@ -346,21 +318,25 @@ module.exports = {
     })
     K.stop()
 
-    // L10 "He TURNED / to ME.", L11 Buh: "Sit, BOY.", L12 "Then he SAID:", L13 Buh: "I'll BE / right BACK.": ONE locked
+    // L10 "He TURNED / to ME / and SAID:", L11 Buh: "STAY here, / BUDDY.", L12 "So I SAT.", L13 Buh: "I'll BE / right BACK.": ONE locked
     // camera (the logout must read as Buh gone from the same frame, not an edit: visual audit). The wolf on D, Buh on
-    // the patch looking at his hut; on "to ME" he turns to the wolf; on "BOY" it sits; a wave on "BACK"; then the chat
+    // the patch looking at his hut; on "to ME" he turns to the wolf; on "SAT" it sits; a wave on "BACK"; then the chat
     // says "Buh left the game" and he is gone on that frame. Cut 1.0 s after it (the payoff: story.json "syschat")
     await scut(DX, DZ, P(DX + 3, HILL + 1.4, DZ), HILL, { shot: 'hill_lock', self: [{ sitting: false }, EYE], after: moveWith({ x: DX + 3, z: DZ, y: HILL, yaw: 180, pitch: 5 }) })
     await line('L10', async (k, at) => {
       if (k >= at(1) - 4) { buh.yaw += (90 - buh.yaw) * 0.2; buh.pitch += (35 - buh.pitch) * 0.2 }   // he turns to me
       look(k)
     })
-    await line('L11', async (k, at, n) => {
-      if (k === Math.round(n * 0.45)) { swing(); K.self({ sitting: true }, SIT_EYE) }   // it sits on "BOY"
+    await line('L11', async (k, at) => {
       buh.pitch = 35 + Math.sin(k / 6) * 3
+      if (k === at(1)) swing()   // a pat toward the wolf on "BUDDY"
       look(k)
     })
-    await line('L12', async (k) => { buh.yaw = 90 + Math.sin(k / 7) * 10; buh.pitch = 30; look(k) })
+    await line('L12', async (k, at, n) => {
+      if (k === Math.round(n * 0.5)) K.self({ sitting: true }, SIT_EYE)   // it sits on "SAT"
+      buh.yaw = 90 + Math.sin(k / 7) * 6; buh.pitch = 32
+      look(k)
+    })
     await line('L13', async (k, at) => {
       buh.yaw = 90 + Math.sin(k / 7) * 12; buh.pitch = 25 + Math.sin(k / 6) * 4
       if (k === at(1)) swing()   // a wave on "right BACK"
@@ -452,8 +428,8 @@ module.exports.shots = {
   step: { subject: [`actor:${GUY}`], at: [36.6, H + 1.7, 15.4], look: [36.5, H + 1.9, 19.0], fov: 50, push: 0.15, dof: false },
   // L07: dusk, from behind them over the sea (sharp: the blur was the "blurry light" note)
   dog_sea: { subject: [`actor:${GUY}`, 'self'], at: [35.4, H + 1.3, 18.4], look: [43.0, H + 2.6, 15.9], fov: 50, push: 0.15, dof: false },
-  // L08: night, the yard from its south-west corner at face height, the lantern post between: the zombie walking in
-  night_yard: { subject: [`actor:${GUY}`], at: [33.4, H + 1.4, 18.6], look: [37.5, H + 2.9, 13.5], fov: 56, push: 0.2, dof: false },
+  // L08: dawn, low behind the two of them, due east over the sea: the sun coming up ahead (wider than L07's dusk)
+  dawn_sea: { subject: [`actor:${GUY}`, 'self'], at: [33.0, H + 1.1, 16.2], look: [52.0, H + 2.4, 16.2], fov: 50, push: 0.12, dof: false },
   // L09: Dog Hill, morning: a crane down from over the south rim as they walk up onto the meadow toward the hut
   hill_walk: { subject: [`actor:${GUY}`], path: [[0, DXs - 3.5, HL + 6, DZs + 11], [3.2, DXs - 2.5, HL + 2.2, DZs + 8.0]], lookPath: [[0, DXs, HL + 1, DZs + 3], [3.2, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
   // L10-L11: ONE locked camera south of D and the patch, low: the wolf a third in from the left facing right, Buh on
