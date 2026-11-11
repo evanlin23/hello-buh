@@ -10,7 +10,8 @@ module.exports = guessSound({
   expectDeath: true,
   difficulty: 'hard',   // a creeper blast from 3 blocks is ~17 on normal (survivable), ~25 on hard
   endAfter: null,
-  edit: { deathScreen: true, endAfter: 'death:1.0', sfx: [['dip', 'death', 0.3]] },   // the song dips 0.3 s before the blast: it lands as a hit (pace), not under the drop
+  edit: { deathScreen: true, endAfter: 'settle:0.6',   // 0.6 s after the blast's rendered smoke settles (lib/settle.js; the death screen holds while it does)
+     sfx: [['dip', 'death', 0.3]] },   // the song dips 0.3 s before the blast: it lands as a hit (pace), not under the drop
   // the skeleton's rattle and the creeper's low hiss sat under the music (mixcheck: -2.5 / +5.0 / +1.1 dB, need +8): louder calls
   rounds: [
     { mob: 'chicken', room: 'farm', sound: 'entity.chicken.ambient', label: 'EASY', answer: 'CHICKEN', react: 'call', leanTicks: 5, lookY: 0.6 },
