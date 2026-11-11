@@ -22,7 +22,7 @@ module.exports = {
     // opens on the first break (sound on frame 0: pace), a punch + shake as the 6x6 crashes (the payoff's picture change)
     // the end counts from the last block landing (r:r24d99a): a shake as the 4x4 crashes down, then the hit, a punch and
     // the song's dip on 'settled' (the payoff: pace wants a sound and a picture change on it), out 0.6 s later
-    startAt: 'walk0:0.45', endAfter: 'settle:0.6', shake: [['crash', 0, 8]], punch: [['settle', 0, 1.06]],
+    startAt: 'walk0:0.45', endAfter: 'settle:0.6', speed: [['crash', 'settle', 1.5]], shake: [['crash', 0, 8]], punch: [['settle', 0, 1.06]],
     sfx: [['dip', 'settle', 0.35], ['impact', 'settle']]
   },
 
@@ -162,7 +162,9 @@ module.exports = {
       // in front has come down onto its torches: it watches each row pour down, then steps in one block for the next
       // (the torches are below the eye line, so the next row's bottom block shows over them)
       let k = 0
-      const rowClear = (z) => { for (let ix = 0; ix < t.w; ix++) for (let y = 1; y <= t.h; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, z)).name === 'sand') return false; return true }
+      // only the row's bottom two cells have to be clear for the eye to see past it (the rest of the column is falling
+      // blocks by then: entities, which the crosshair passes); waiting for the whole column was 4.3 s of dead time a row (pace)
+      const rowClear = (z) => { for (let ix = 0; ix < t.w; ix++) for (let y = 1; y <= 2; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, z)).name === 'sand') return false; return true }
       for (let r = 0, iz = t.w - 1; iz >= 0; iz--, r++) {
         const z = t.z0 + iz, rz = nearZ - r
         // from the middle out: a column's torch is placed past its neighbour toward the eye, so that neighbour has to be
