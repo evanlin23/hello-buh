@@ -55,7 +55,9 @@ module.exports = {
     startAt: 'start:0', endAfter: 'thread:0.8',
     flash: [['inside', 0, 0.45], ['thread', 0, 0.3]],   // into the build, into the core
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
-    sfx: [['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }]]   // the music dips under the hit (mixcheck)
+    // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
+    // boosts alone left 3.1 s with nothing new)
+    sfx: [['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {
