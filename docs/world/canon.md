@@ -128,7 +128,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 4000 | Gullwick | **The Walk** (planned, not canon until made). Grandpa has broken the same lectern 300 times. This morning the librarian holds up Frost Walker, and he walks out across the sea to Grandma's window. |
 | 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Buh joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
 | 4500 | Larkfield | **Six Thousand Torches** (planned, not canon until made). Jonah, Larkfield's one player, puts a torch on every block of the village overnight, leaves his things in his friend's chest, sets his last torch by the kid's door and walks away. From here on Larkfield glows every night, and Dog Hill sees it. |
-| 6000 | Fernbank | **Pulled Away** (script, not canon until made). A player tows a villager kid from Oakend across the inlet in a boat: number forty. Fernbank is a village again (a new quarter on the rise east of the church, out of Oakend's sight), her Mom, her uncle and the old librarian at the dock. |
+| 6000 | Fernbank | **Pulled Away** (script, not canon until made). A player tows a villager kid from Oakend across the inlet in a boat: number forty. Fernbank is a village again, her Mom, her uncle and the old librarian at the dock. |
 | 9300 | The Portal Cottage | **Gold for the Portal.** the grandson throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
 
 ## Recurring characters

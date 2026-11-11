@@ -43,7 +43,7 @@ lit window across the water.
 | 7 | S07, S07b | flashbacks: Mom in a boat down the lane; Uncle another day | N: "He took MOM last WEEK. And my UNCLE before THAT." | the turn, dark for a player |
 | 8 | S08 | the kid looks back at the two shut cottages | N: "None of them came BACK. They must LOVE it there. So TODAY, I got in the BOAT and WAITED." | clue 4 (misread as fondness), and her own act. **The attentive viewer is ahead of her here.** |
 | 9 | S09 | two boats crossing, his rowing, hers towed | N: "At the WATER, he got in his OWN boat, and mine came RIGHT behind. My boat finally got to SWIM!" | the trip's joy; toward the old village |
-| 10 | S10, S11 | the bow bumps the dock; on EMPTY the cut to Mom, the librarian and Uncle at the dock's foot, the lit quarter behind | N: "When it got DARK, we bumped into the old EMPTY village." | the reveal (the word says empty, the picture full); 1.2 s; cut |
+| 10 | S10, S11 | the bow bumps the dock; on EMPTY the cut to Mom, the librarian and Uncle at the dock's foot, the lit village behind | N: "When it got DARK, we bumped into the old EMPTY village." | the reveal (the word says empty, the picture full); 1.2 s; cut |
 
 Midpoint (after beat 8): the cold reader should guess but not be sure (trading hall vs. something to do with the lit
 window).
