@@ -54,3 +54,4 @@ lucky_dig   # first: owner's new format (lucky); uploads only after the owner's 
 mega_lapse_fountain  # first
 fakerun_any  # first
 cooked_bedrock  # first
+sandart_tnt  # first
