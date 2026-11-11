@@ -70,9 +70,29 @@ module.exports = {
       await c(`/setblock ${A(x, g - 2, z)} sand`)
     }
 
-    // the camera spots by the house and the torch line: tall plants cut (they filled the lens)
-    for (const [x0, z0, x1, z1] of [[24, 12, 36, 22], [this.street.x - X - 2, this.street.z - Z - 4, this.street.x - X + 12, this.street.z - Z + 4], [-6, -3, 6, 9], [22, -26, 30, -16]]) {
-      for (const b of ['tall_grass', 'short_grass', 'large_fern', 'fern']) await c(`/fill ${A(x0, -3, z0)} ${A(x1, 4, z1)} air replace ${b}`)
+    // the ground round the block is naturally level: dress it the way a meadow is (ferns, flowers, tall grass), clear
+    // of the block, the sheep, the shaft's edge and every camera spot (plants in the lens filled it)
+    const CAMS = [[2.6, 6.4], [3.8, 4.6], [2.3, 3.6], [26.5, -21.0], [-3.4, 9.5], [4.6, 2.0], [-1.6, 5.2], [1.9, 4.1], [-3.0, -2.6], [-1.4, 4.6], [31.5, 18.5], [5.5, 0.5], [5.0, 11.5],
+      [Math.floor(this.street.x - X) + 8.5, Math.floor(this.street.z - Z) + 0.2]]
+    for (const [x, z] of CAMS) for (const b of ['tall_grass', 'short_grass', 'large_fern', 'fern']) await c(`/fill ${A(Math.floor(x) - 1, -3, Math.floor(z) - 1)} ${A(Math.floor(x) + 1, 4, Math.floor(z) + 1)} air replace ${b}`)
+    let seed = 7
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
+    for (let x = -12; x <= 12; x++) for (let z = -10; z <= 12; z++) {
+      if (Math.abs(x) <= 2 && z >= -2 && z <= 4) continue
+      if (CAMS.some(([cx, cz]) => Math.hypot(cx - x, cz - z) < 2.5)) continue
+      const r = rnd(); if (r > 0.34) continue
+      const g = gy(x, z) - F
+      const b = bot.blockAt(new ctx.Vec3(X + x, F + g, Z + z)), up = bot.blockAt(new ctx.Vec3(X + x, F + g + 1, Z + z))
+      if (!b || b.name !== 'grass_block' || !up || up.name !== 'air') continue
+      const plant = r < 0.12 ? 'short_grass' : r < 0.18 ? 'fern' : r < 0.23 ? ['poppy', 'cornflower', 'dandelion', 'oxeye_daisy', 'azure_bluet'][Math.floor(rnd() * 5)] : r < 0.29 ? 'tall_grass[half=lower]' : 'sweet_berry_bush[age=1]'
+      await c(`/setblock ${A(x, g + 1, z)} ${plant}`)
+      if (plant.startsWith('tall_grass')) await c(`/setblock ${A(x, g + 2, z)} tall_grass[half=upper]`)
+    }
+    // the creek's banks (the lowland is level): two birches, sugar cane and tall grass along the far bank
+    for (const [x, z] of [[13, -19], [12, -28]]) await c(`/place feature minecraft:birch ${A(x, gy(x, z) - F + 1, z)}`)
+    for (let x = CREEK[0] - 1; x <= CREEK[2] + 1; x++) {
+      const g = gy(x, CREEK[1] - 1) - F
+      if (x % 3 === 0) { await c(`/fill ${A(x, g + 1, CREEK[1] - 1)} ${A(x, g + 2, CREEK[1] - 1)} sugar_cane`) } else if (x % 3 === 1) { await c(`/setblock ${A(x, g + 1, CREEK[1] - 1)} tall_grass[half=lower]`); await c(`/setblock ${A(x, g + 2, CREEK[1] - 1)} tall_grass[half=upper]`) }
     }
     // --- the cast, all NoAI (they move only when a scene moves them)
     const at = (dx, dz, dy = 1) => ({ x: dx, z: dz, y: gy(dx, dz) - F + dy })
@@ -158,7 +178,7 @@ module.exports = {
         K.base = K.aim(P(RV.x, RV.y + 0.6, RV.z - 0.4)); look(k)
         return
       }
-      if (!c3) { c3 = true; await cutP(-3.4, 9.5, P(SHEEP.x, gy(SHEEP.x, SHEEP.z + 5) + 0.9, SHEEP.z + 4.5), () => { Object.assign(SH, { z: SHEEP.z + 5, yaw: 180, y: gy(SHEEP.x, SHEEP.z + 5) }); RV.y = 50 }) }
+      if (!c3) { c3 = true; await cutP(5.0, 11.5, P(SHEEP.x, gy(SHEEP.x, SHEEP.z + 5) + 0.9, SHEEP.z + 4.5), () => { Object.assign(SH, { z: SHEEP.z + 5, yaw: 180, y: gy(SHEEP.x, SHEEP.z + 5) }); RV.y = 50 }) }
       if (SH.z > HOME.z) walk(SH, 0, -0.12)                       // a sheep's walk home, north
       else { SH.yaw += (HOME.yaw - SH.yaw) * 0.45; SH.pitch += (HOME.pitch - SH.pitch) * 0.45 }
       K.base = K.aim(P(SH.x, SH.y + 0.6, SH.z)); look(k)
@@ -240,8 +260,8 @@ module.exports = {
     K.stop()
 
     // L12: so today I got curious (up the torch line to the block)
-    await cut(3.5, 7.5, P(0.3, 1.3, 0.5))
-    await line('L12', (k) => { ctl('forward', me().z > Z + 4.0); K.base = K.aim(P(0.3, 1.3, 0.5)); look(k) })
+    await cut(5.5, 0.5, P(0.5, 1.2, 0.5))   // from the east, straight at it (the slope behind, the sheep to the left)
+    await line('L12', (k) => { ctl('forward', me().x > X + 2.6); K.base = K.aim(P(0.5, 1.2, 0.5)); look(k) })
     K.stop()
     // L13: for the first time in 412 days, he looked at me
     from = null
@@ -262,10 +282,11 @@ module.exports = {
     // L15: a hole under it, straight down (to the edge, look in; the groan again, from below)
     from = null
     await line('L15', (k, at) => {
-      ctl('sneak', true); ctl('forward', me().z > Z + 1.4)
+      ctl('sneak', true); ctl('forward', me().x > X + 1.45)
       from = from || { ...K.base }; K.turnTo(from, HOLE, (k - 1) / 16)
       if (k === at(3) + 2) ctx.sound('entity.zombie.ambient', 0.5, 0.8)
-      look(k, Math.sin(k / 7) * 0.03, k >= at(3) + 3 ? 0.06 * Math.sin(Math.min(1, (k - at(3) - 3) / 12) * Math.PI) : 0)   // a flinch up from the groan, back down
+      K.base = { yaw: K.base.yaw, pitch: K.base.pitch - 0.004 }   // leaning in over the edge, slowly
+      look(k, Math.sin(k / 6) * 0.07, k >= at(3) + 3 ? 0.08 * Math.sin(Math.min(1, (k - at(3) - 3) / 12) * Math.PI) : 0)   // a flinch up from the groan, back down
     })
     // L16: who digs straight down? (he looks back at the sheep, then down; steps in)
     let fell = false
