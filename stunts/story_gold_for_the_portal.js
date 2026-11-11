@@ -113,12 +113,9 @@ module.exports = {
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F }, { warm: null })
     const { P, line, say } = K
-    // K.line runs on the recording clock (main b4cd314): k can skip a value after a slow tick, so one-shot events
-    // fire once at or after their tick (hit), never on k === t alone. A new line (or loop) starts k again from 0:
-    // that clears what has fired
-    let lastK = -1
-    const seen = new Set()
-    const hit = (k, t) => { if (k < lastK) seen.clear(); lastK = k; if (k < t || seen.has(t)) return false; seen.add(t); return true }
+    // K.line calls the scene for every k, once and in order (main 83cdedc): a plain equality is safe. (A fire-once
+    // helper keyed by tick alone swallowed the morning cut when at.cut(1) landed on the same tick as at(1) - 2.)
+    const hit = (k, t) => k === t
     const A = (dx, dy, dz) => `${(X + dx).toFixed(2)} ${(F + dy).toFixed(2)} ${(Z + dz).toFixed(2)}`
     const ent = (name, near) => Object.values(bot.entities).filter(e => e.name === name).sort((a, b) => (near ? a.position.distanceTo(near) - b.position.distanceTo(near) : 0))[0]
     // the portal: purple specks drifting off the sheet, and its hum now and then
@@ -126,12 +123,19 @@ module.exports = {
       if (k % 3 === 0) ctx.particles('portal', P(11.4, 1.2 + Math.random() * 2.6 + dy, 5 + Math.random() * 2), { count: 3 })
       if (k % 70 === 0) ctx.sound('block.portal.ambient', 0.25, 0.9 + Math.random() * 0.2)
     }
-    // an item thrown from a hand: `from` and `to` cellar-local, `t` ticks in the air (vanilla item: gravity 0.04, drag 0.98)
+    // an item thrown from a hand: `from` and `to` cellar-local, `t` ticks in the air (vanilla item: gravity 0.04, drag 0.98).
+    // It never reaches the portal block (x 11): an item that enters it is sent to the Nether, and loading the Nether
+    // stalled the server ~1.6 s (Grandma froze on frame 1, then snapped 75 degrees). So a throw at the purple stops at
+    // x 10.8 (the flight cut to match) and is removed on its arrival tick: it "goes in" at the purple's face.
+    const gone = () => say(`/kill @e[type=item,tag=toss,x=${X + 11},y=${F + 2},z=${Z + 5.5},distance=..1.6]`)   // into the purple
+    const arrivals = []
+    K.every(() => { const now = K.now(); while (arrivals.length && arrivals[0] <= now) { arrivals.shift(); gone() } })
     const toss = (item, from, to, t, count = 1) => {
+      if (to[0] > 10.8) { const f = (10.8 - from[0]) / (to[0] - from[0]); to = [10.8, from[1] + (to[1] - from[1]) * f, from[2] + (to[2] - from[2]) * f]; t = Math.max(1, Math.round(t * f)) }
       const vx = (to[0] - from[0]) / t, vz = (to[2] - from[2]) / t, vy = (to[1] - from[1]) / t + 0.04 * t / 2
       say(`/summon item ${A(...from)} {Item:{id:"minecraft:${item}",count:${count}},PickupDelay:32767,Motion:[${vx.toFixed(3)},${vy.toFixed(3)},${vz.toFixed(3)}],Tags:["toss"]}`)
+      arrivals.push(K.now() + t); arrivals.sort((p, q) => p - q)
     }
-    const gone = () => say(`/kill @e[type=item,tag=toss,x=${X + 11},y=${F + 2},z=${Z + 5.5},distance=..1.6]`)   // into the purple
     const gift = (item, at, count = 1, tag = 'gift') => say(`/summon item ${A(...at)} {Item:{id:"minecraft:${item}",count:${count}},PickupDelay:32767,NoGravity:0b,Tags:["${tag}"],Motion:[0d,0d,0d]}`)
     const look = (k, a = 0, b = 0) => K._cutting ? null : K.look(k, a, b)   // never re-aim while a cut lands (the cut arrives aimed)
     const hatch = (open, sound = true) => { say(`/setblock ${X + 1} ${F + 11} ${Z + 1} spruce_trapdoor[facing=south,half=top,open=${open}]`); if (sound) ctx.sound(open ? 'block.wooden_trapdoor.open' : 'block.wooden_trapdoor.close', 0.7, 1) }
@@ -157,12 +161,12 @@ module.exports = {
     let from2 = null, walking = false
     await line('L02', async (k, at) => {
       if (k < at(1) - 2) { gma.yaw += 1.2 * Math.sin(k / 5); gma.pitch = 6 + 6 * Math.sin(k / 7) }   // still at the portal under the crane
-    if (hit(k, at(1) - 2)) K.park('gma')
+    if (hit(k, at(1) - 8)) K.park('gma')   // well before the morning cut (at.cut(1)): parked a tick after it read as a jump
     if (hit(k, at(1) + 1)) say(`/tp @e[type=bat,tag=bat] ${X} ${F - 200} ${Z}`)   // motion-ok: the bat leaves after the cut, unseen from the cellar (a /kill drew its red death poof: audit F9)
       if (hit(k, at.cut(1))) K.cut(2.4, 3.4, P(11, 2.0, 5.6), 1, { shot: 'pov_morning', time: MORNING }).catch(e => ctx.log(e.message))   // on the spot, arriving aimed at the portal (a bare shot switch kept the crane-time north aim)   // already standing there: no cut, no in-between frames
       if (hit(k, at(1) + 4)) { walking = true; K.walkTo([P(3.6, 1, 3.4), P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
       if (k > at(1)) portalLife(k)
-      if (hit(k, at(2))) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
+      if (hit(k, at(2))) { say(`/summon item ${A(10.8, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
       if (hit(k, at(2) + 9)) ctx.sound('block.stone.step', 0.8, 0.9)
       if (!walking && k > at(2) + 6) { from2 = from2 || { ...K.base }; K.turnTo(from2, P(11.2, 1.55, 5.6), Math.min(1, (k - at(2) - 6) / 14)) }   // eyes on the obsidian that came out
       if (k >= at(1) && !walking) look(k, 0.1 * Math.sin(k / 7), 0.03 * Math.sin(k / 9))
@@ -251,7 +255,7 @@ module.exports = {
     await line('L08', async (k, at) => {
       portalLife(k)
       if (hit(k, 4)) K.park('gma0')   // the flashback's Grandma leaves, off screen now
-      if (hit(k, at.cut(2))) { ctx.mark('cut'); K.shot('pov'); K.open(P(10, 1, 3)).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message)) }
+      if (hit(k, at.cut(2))) { ctx.mark('cut'); K.shot('pov'); ctx.sound('block.barrel.open', 0.8, 1); K.open(P(10, 1, 3)).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message)) }
       if (hit(k, at.cut(5) - 2)) { if (win) { K.close(win); win = null } else K.close() }
       if (hit(k, at.cut(5))) K.shot('s_high_portal')
       if (hit(k, at.cut(6))) K.shot('s_rev')
@@ -319,13 +323,16 @@ module.exports = {
     let pig = null, pg = null
     await line('L12', async (k, at) => {
       portalLife(k)
-      if (hit(k, at(2) - 4)) { pg = K.actor('pig', { x: 11.75, y: 1, z: 5.6, yaw: 90, pitch: 0 }); K.warp('pig') }
-      if (hit(k, at(2) - 1)) { pig = ent('piglin', P(11, 1, 5.5)); if (pig) ctx.mark('pose', { ids: [pig.id], converting: true }); else ctx.log('no piglin entity for the shake') }
-      if (k >= at(2) && pg && pg.x > 10.1) pg.x -= 0.14
-      if (hit(k, at(2))) { ctx.sound('entity.piglin.ambient', 1, 1); ctx.particles('portal', P(11.2, 2, 5.6), { count: 30 }) }
+      // the piglin appears at the purple's face in a burst of portal particles (never inside the portal block: a mob
+      // in it is sent to the Nether, which stalled the server ~2 s and froze it there), then steps out
+      if (hit(k, at(2) - 1)) { pg = K.actor('pig', { x: 10.65, y: 1, z: 5.6, yaw: 90, pitch: 0 }); K.warp('pig'); ctx.particles('portal', P(10.9, 2, 5.6), { count: 40 }) }
+      if (hit(k, at(2) + 1)) { pig = ent('piglin', P(10.6, 1, 5.6)); if (pig) ctx.mark('pose', { ids: [pig.id], converting: true }); else ctx.log('no piglin entity for the shake') }
+      if (k >= at(2) && pg && pg.x > 10.1) pg.x -= 0.1
+      if (k >= at(2) && pg) { pg.yaw = 90 + 10 * Math.sin(k / 7); pg.pitch = 4 * Math.sin(k / 6) }   // looking round the cellar it stepped into
+      if (hit(k, at(2))) ctx.sound('entity.piglin.ambient', 1, 1)
       if (hit(k, at(2) + 6) || hit(k, at(2) + 11)) ctx.sound('entity.piglin.step', 0.6, 1)
       // 'Then I WAITED': glancing at the hatch and back to the purple; eyes fixed on it from 'And SOMETHING'
-      look(k, k < at(1) ? 0.4 * Math.sin(k / 9) : 0.04 * Math.sin(k / 9), k < at(1) ? 0.1 * Math.sin(k / 6) : 0.03 * Math.sin(k / 11))
+      look(k, k < at(1) ? 0.4 * Math.sin(k / 9) : 0.12 * Math.sin(k / 6), k < at(1) ? 0.1 * Math.sin(k / 6) : 0.05 * Math.sin(k / 8))   // then leaning in as it comes out
     })
 
     // S14 (no line): the reveal, close: the piglin, shaking, in the gold helmet with the blue stripe. The cut comes
@@ -333,7 +340,7 @@ module.exports = {
     K.shot('s14')
     for (let k = 0; k < 30; k++) {
       portalLife(k)
-      if (pg) { if (pg.x > 10.1) pg.x -= 0.14; pg.yaw = 90 + 10 * Math.sin(k / 7); pg.pitch = 4 * Math.sin(k / 6) }
+      if (pg) { if (pg.x > 10.1) pg.x -= 0.1; pg.yaw = 90 + 10 * Math.sin(k / 7); pg.pitch = 4 * Math.sin(k / 6) }
       if (hit(k, 10)) { ctx.mark('reveal'); ctx.sound('entity.piglin.ambient', 0.8, 0.9) }
       look(k)
       await bot.waitForTicks(1)
