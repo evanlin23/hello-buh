@@ -9,6 +9,7 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 | 2026-11-10 | thirty_one_raids | chest contents (as the vanilla chest GUI on open) | building (agent/ergonomics) |
 | 2026-11-10 | thirty_one_raids | campfire smoke | building (agent/ergonomics) |
 | 2026-11-10 | light_sleeper | warden emerge animation | building (agent/ergonomics) |
+| 2026-11-11 | the_walk, pulled_away, wall_grows, singing_box, saving_up_bastion | original player skins (every default skin is taken) | DONE (engine-skins): ten skins drawn by us, `scripts/make_story_skins.py` -> `skins/`; docs/engine_features.md "Original player skins" |
 
 ## Backlog (lead, 2026-11-10 night): next engine round, by value to the stories (worked by agent/engine-2, 2026-11-10)
 | # | needed | why | status |
