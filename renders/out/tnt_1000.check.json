@@ -1,0 +1,238 @@
+{
+ "stunt": "tnt_1000",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/tnt_1000.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "6 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 108,
+     "col": 24,
+     "text": "await ctx.cmd(`/tp @s ${x} ${y} ${z} ${yawDeg} ${pitchDeg}`)",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    },
+    {
+     "line": 118,
+     "col": 13,
+     "text": "await bot.look(bot.entity.yaw + dy * f, bot.entity.pitch + (gp - bot.entity.pitch) * f, true)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 178,
+     "col": 46,
+     "text": "bot.setControlState('sprint', true); bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 185,
+     "col": 77,
+     "text": "if (!glance && ctx.tick - litAt >= 60) { glance = true; await up; bot.setControlState('forward', false); bot.setControlState('sprint', false",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 272,
+     "col": 9,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 280,
+     "col": 9,
+     "text": "bot.setControlState('forward', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "player: the old 'HelloBuh' bot is drawn as 56e (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT tnt_1000: 1 shots, scene 0.0-66.2 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-66.2  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 1 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 26.383,
+     "shot": 8,
+     "line": null,
+     "kind": "blocks",
+     "msg": "3 block(s) in view changed during the cut (e.g. dirt at 401 88 -42): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "6 warning(s) over 11 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 8.333,
+     "shot": 3,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 89% of the frame is within 3 blocks (tnt, dirt)"
+    },
+    {
+     "level": "WARN",
+     "out": 16.1,
+     "shot": 5,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (tnt, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 23.95,
+     "shot": 7,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (tnt, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 23.95,
+     "shot": 7,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (no cast, median depth 1.9 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 34.167,
+     "shot": 10,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 64% of the frame is within 3 blocks (tnt)"
+    },
+    {
+     "level": "WARN",
+     "out": 34.167,
+     "shot": 10,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P3 without an establishing shot (no cast, median depth 2.5 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 39.933,
+     "tick": 1259,
+     "line": null,
+     "msg": "the player walks into something and stops dead for 6.05 s (4.4 blocks/s -> 0): reads as stuck. Owner: \"when we walk out we keep getting stuck on the door\": open it first, path around it, or cut before contact"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 13.2 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 10.3 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.7 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 13.2 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.5 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.1 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 14.3 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.0 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.6 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.7 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.7 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 10.0 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.3 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 14.9 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.5 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.0 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.9 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 13.7 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 13.0 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.4 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 12.3 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.9 blocks in view  ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.4 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 10.6 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                  9.3 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 10.7 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.4 blocks          ",
+    "    63.20s  TNT lit                            -> entity.tnt.primed                 11.7 blocks          ",
+    "ambience per shot: -0.20-3.75s day, 3.75-12.10s day, 12.10-14.00s day, 14.00-23.75s day, 23.75-26.75s day, 26.75-36.90s day, 36.90-40.15s day, 40.15-50.40s day, 50.40-54.15s day, 54.15-69.10s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T19:56:17.195Z"
+}
