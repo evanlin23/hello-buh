@@ -18,89 +18,150 @@ const OR = 'orange_wool', WH = 'white_wool', BK = 'black_wool'
 const OX = 24, OZ = -12
 const PLAYER = [-140 + OX, 0 + OZ]        // 56e: 28 blocks in front of the snout, on its axis (the whole face behind him)
 
-// a box in fox coordinates -> a lapse box in the field's, its step the layer (y) it rises with
-const bx = (out, x0, y0, z0, x1, y1, z1, block, step) => {
-  for (let y = y0; y <= y1; y++) out.push({ box: [x0 + OX, y, z0 + OZ, x1 + OX, y, z1 + OZ], block, step: step ? step(y) : y })
-  return out
-}
-// a block of fur with its top three layers stepped in (a rounded back, not a crate)
-const loaf = (out, x0, z0, x1, z1, top, block, step) => {
-  bx(out, x0, 1, z0, x1, top - 3, z1, block, step)
-  for (let k = 1; k <= 3; k++) bx(out, x0 + k, top - 3 + k, z0 + k, x1 - k, top - 3 + k, z1 - k, block, step)
-  return out
+// the fox is voxels: each part a shape test + its colouring, swept over its bounds a layer (y) at a time; the lapse
+// compresses each layer to /fill boxes. Rounded forms (superellipsoids), fur tufts and overhangs, a darker spine and
+// tail rings, cheek tufts and a brow (owner r:r13865d: depth and detail, never flat)
+const DK = 'orange_terracotta'
+const se = (dx, dy, dz, a, b, c, p = 4) => Math.abs(dx / a) ** p + Math.abs(dy / b) ** p + Math.abs(dz / c) ** p <= 1
+const ell = (dx, dy, dz, a, b, c) => (dx / a) ** 2 + (dy / b) ** 2 + (dz / c) ** 2 <= 1
+function vox (name, ticks, [x0, x1, y0, y1, z0, z1], fn, step = (y) => y) {
+  const cells = []
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) for (let z = z0; z <= z1; z++) {
+    const blk = fn(x, y, z)
+    if (blk) cells.push([x + OX, y, z + OZ, blk, step(y)])
+  }
+  return { name, ticks, cells }
 }
 
-// 1. the front paws (black), either side of where the snout goes: the "small statue" for a second
+// the shapes (fox coordinates)
+const inBody = (x, y, z) => y >= 1 && se(x - 4, y - 1, z, 46, 41, 25, 3)
+const inHaunch = (x, y, z) => y >= 1 && ell(x - 24, y - 6, z + 18, 22, 20, 14)
+const inHead = (x, y, z) => y >= 1 && se(x + 64, y - 1, z, 25, 44, 33, 4)
+const inSnout = (x, y, z) => y >= 1 && se(x + 100, y - 1, z, 13, 16, 16, 3)
+const TZ = 41                                           // the tail's run along the south side
+const tailR = (x) => x > 40 ? 11 : 11 + 5 * Math.sin(Math.PI * Math.min(1, (40 - x) / 120))  // fat in the middle
+function inTail (x, y, z) {
+  if (y < 1) return false
+  if (x >= 40 && x <= 64 && z >= 6 && z <= TZ && ell(x - 52, y - 11, 0, 12, 11, 1)) return true   // the root, round the back
+  if (x > 60 || x < -96) return false
+  const r = tailR(x), cx = Math.max(x, -92 + r)        // a round end at the tip
+  return ell(x - cx, y - r, z - TZ, x < -92 + r ? r : 1e9, r, r * 1.1)
+}
+
+// 1. the front legs and paws: orange forelegs from the chest, black paws with toes, either side of the snout
 function paws () {
-  const b = []
-  bx(b, -104, 1, -30, -89, 8, -20, BK); bx(b, -104, 1, 20, -89, 8, 30, BK)
-  return { name: 'paws', ticks: 18, boxes: b }
+  return vox('paws', 18, [-106, -38, 1, 11, -32, 32], (x, y, z) => {
+    const az = Math.abs(z)
+    if (az < 18 || az > 31) return null
+    if (x <= -92) return (y <= 7 && (x > -105 || (az % 4) !== 1)) ? BK : null   // toes: a notch every 4
+    return se(x + 66, y - 1, az - 24.5, 27, 10, 6.5, 4) ? OR : null
+  })
 }
 
-// 2. the snout (white), resting on the ground between the paws
+// 2. the snout: white, rounded, resting on the ground between the paws
 function snout () {
-  const b = []
-  loaf(b, -112, -16, -89, 16, 16, WH, (y) => 20 + y)
-  return { name: 'snout', ticks: 26, boxes: b }
+  return vox('snout', 26, [-114, -86, 1, 17, -17, 17], (x, y, z) => inSnout(x, y, z) ? WH : null, (y) => 20 + y)
 }
 
-// 3. the head: orange, a white face and cheeks below the eyes
+// 3. the head: orange, a white face and cheeks, cheek tufts flaring out, a brow over the eyes, a darker crown
 function head () {
-  const b = []
-  for (let y = 1; y <= 44; y++) {
-    const k = Math.max(0, y - 41)                       // the stepped-in top
-    bx(b, -88 + k, y, -32 + k, -40 - k, y, 32 - k, OR)
-    if (y <= 18) {                                      // the white face (2 deep) and cheeks on both sides
-      bx(b, -88, y, -32, -87, y, 32, WH)
-      bx(b, -86, y, -32, -70, y, -31, WH); bx(b, -86, y, 31, -70, y, 32, WH)
+  return vox('head', 50, [-92, -36, 1, 45, -40, 40], (x, y, z) => {
+    const az = Math.abs(z)
+    if (inHead(x, y, z)) {
+      if (y >= 37 && az < 9) return DK                             // the crown
+      if (y <= 18 && (x < -84 || az > 28)) return WH                // the face and cheeks
+      return OR
     }
-  }
-  return { name: 'head', ticks: 50, boxes: b }
+    // cheek tufts: white fur flaring out from the jaw, ragged at the edge
+    if (az >= 30 && az <= 38 && y >= 2 && y <= 16 && x >= -88 && x <= -66 && (38 - az) > ((y + x) % 4) && (x + 88) > (az - 30) * 1.5) return WH
+    // the brow: a ledge over each eye
+    if (x >= -91 && x <= -89 && y >= 30 && y <= 31 && az >= 11 && az <= 28 && inHead(x + 3, y, z)) return DK
+    return null
+  })
 }
 
-// 4. the body: lying low behind the head, a white chest on both sides at the front, a black hind paw on the north side
+// 4. the body: a long rounded loaf, the haunch bulging on the north side with its black paw, a white chest, a darker
+// spine with tufts of fur standing up along it
 function body () {
-  const b = []
-  for (let y = 1; y <= 40; y++) {
-    const k = Math.max(0, y - 37)
-    bx(b, -40 + k, y, -24 + k, 48 - k, y, 24 - k, OR)
-    if (y <= 20) { bx(b, -40, y, -24, -24, y, -24, WH); bx(b, -40, y, 24, -24, y, 24, WH) }
-    if (y <= 8) bx(b, 28, y, -32, 44, y, -25, BK)
-  }
-  return { name: 'body', ticks: 56, boxes: b }
+  return vox('body', 56, [-44, 52, 1, 46, -38, 26], (x, y, z) => {
+    const inB = inBody(x, y, z), inH = inHaunch(x, y, z)
+    if (inB || inH) {
+      if (x < -28 && y <= 22 && Math.abs(z) > 14) return WH         // the chest
+      if (y >= 36 && Math.abs(z) < 7) return DK                     // the spine
+      return OR
+    }
+    // the hind paw, tucked under the haunch
+    if (x >= 28 && x <= 46 && z >= -35 && z <= -26 && y <= 6) return BK
+    // tufts: every 9 blocks along the spine a ragged ridge standing 2-4 above the back (overhangs at the ends)
+    const k = ((x + 400) % 9)
+    if (k <= 4 && Math.abs(z) <= 5 - (k === 0 || k === 4 ? 2 : 0) && inBody(x, y - 2 - (k === 2 ? 2 : k % 2), z) && !inBody(x, y, z)) return DK
+    return null
+  })
 }
 
-// 5. the tail: a fat round brush curled from the back round the south side to the paws, its tip white
+// 5. the tail: a fat brush curled round the south side to the paws, darker rings along it, a white ragged tip
 function tail () {
-  const b = []
-  const R = 15, CY = 15                                 // the cross-section: 15 up, 16 across, centred 15 up
-  for (let y = 1; y <= 30; y++) {
-    const w = Math.floor(16 * Math.sqrt(Math.max(0, 1 - ((y - CY) / R) ** 2)))
-    if (w < 1) continue
-    // the root: across the back of the body (x 40..64), from the middle of the back out to the side
-    const wx = Math.floor(12 * Math.sqrt(Math.max(0, 1 - ((y - CY) / R) ** 2)))
-    bx(b, 52 - wx, y, 10, 52 + wx, y, 41, OR)
-    // the long run along the south side, toward the paws, the last 26 blocks white
-    bx(b, -65, y, 41 - w, 56, y, 41 + w, OR)
-    bx(b, -92, y, 41 - w, -66, y, 41 + w, WH)
-  }
-  return { name: 'tail', ticks: 44, boxes: b }
+  return vox('tail', 44, [-96, 64, 1, 33, 4, 60], (x, y, z) => {
+    if (!inTail(x, y, z)) return null
+    if (x < -64 + ((y + z) % 3)) return WH
+    if (x <= 40 && ((x + 400) % 26) < 3) return DK                  // the rings
+    return OR
+  })
 }
 
 // 6. the payoff, in one tick on the reveal cut: the ears (black tips, white inside), the closed eyes, the nose
 function face () {
   const c = []
-  const cells = (x0, y0, z0, x1, y1, z1, block) => {
-    for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) for (let z = z0; z <= z1; z++) c.push([x + OX, y, z + OZ, block, 0])
+  const put = (x, y, z, b) => c.push([x + OX, y, z + OZ, b, 0])
+  for (const s of [-1, 1]) {
+    for (let y = 44; y <= 64; y++) {
+      const h = (y - 44) / 20, half = Math.round(9 - 6 * h), cz = 22 * s
+      for (let x = -76; x <= -70; x++) for (let z = cz - half; z <= cz + half; z++) {
+        if (!(y > 44 || inHead(x, y - 1, z))) continue
+        put(x, y, z, y >= 58 ? BK : (x === -76 && Math.abs(z - cz) < half - 1 && y < 56) ? WH : OR)
+      }
+    }
   }
-  for (const [z0, z1] of [[-29, -16], [16, 29]]) {
-    cells(-76, 45, z0, -68, 56, z1, OR)
-    cells(-76, 57, z0, -68, 62, z1, BK)
-    cells(-77, 47, z0 + 3, -77, 55, z1 - 3, WH)       // the inside of the ear, on its front face
+  // eyes shut: on the face's front surface, two black lines
+  for (const s of [-1, 1]) for (let y = 25; y <= 27; y++) for (let a = 13; a <= 25; a++) {
+    const z = a * s
+    let x = -100
+    while (x < -60 && !inHead(x, y, z)) x++
+    put(x, y, z, BK)
   }
-  cells(-88, 26, -26, -88, 28, -13, BK); cells(-88, 26, 13, -88, 28, 26, BK)   // eyes shut: two black lines
-  cells(-112, 8, -6, -111, 13, 6, BK)                                          // the nose
+  for (let y = 9; y <= 14; y++) for (let z = -6; z <= 6; z++) {   // the nose, on the snout's tip
+    let x = -120
+    while (x < -90 && !inSnout(x, y, z)) x++
+    put(x, y, z, BK); put(x + 1, y, z, BK)
+  }
   return { name: 'face', ticks: 1, cells: c }
+}
+
+// the clearing dressed like the taiga round it (r:r13865d: a real world, not a lawn): podzol and coarse dirt patches,
+// ferns and grass, mossy boulders, and real spruces round the edge (none in a camera's path or on 56e's spot)
+function dress () {
+  const d = [], rnd = (i, k) => { const v = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return v - Math.floor(v) }
+  const W = 120, D = 54                                // the field's half-size (shifted coordinates), inside the taper
+  const clearOf = (x, z, r) => Math.hypot(x - PLAYER[0], z - PLAYER[1]) > r && !(x < -112 && z < -10)   // 56e, the opening's camera
+  for (let i = 0; i < 70; i++) {
+    const x = Math.round((rnd(i, 1) * 2 - 1) * W), z = Math.round((rnd(i, 2) * 2 - 1) * D), r = 2 + Math.floor(rnd(i, 3) * 4)
+    d.push([x - r, 0, z - r, x + r, 0, z + r, (i % 3 ? 'podzol' : 'coarse_dirt') + ' replace grass_block'])
+  }
+  for (let i = 0; i < 260; i++) {
+    const x = Math.round((rnd(i, 4) * 2 - 1) * W), z = Math.round((rnd(i, 5) * 2 - 1) * D)
+    if (!clearOf(x, z, 3)) continue
+    d.push([x, 1, z, i % 3 ? 'fern' : 'short_grass'])
+  }
+  for (let i = 0; i < 8; i++) {
+    const x = Math.round((rnd(i, 6) * 2 - 1) * W), z = Math.round((rnd(i, 7) * 2 - 1) * D)
+    if (!clearOf(x, z, 10)) continue
+    d.push([x - 1, 1, z - 1, x + 1, 2, z + 1, 'mossy_cobblestone'], [x, 3, z, x, 3, z, 'mossy_cobblestone'])
+  }
+  // spruces along the edges of the clearing, clear of the fox (its footprint is x -92..92, z -44..45 shifted)
+  for (const [x, z] of [[-118, -46], [-104, 50], [-120, 30], [-60, -52], [-20, 52], [10, -53], [60, -50], [96, 50], [112, -40], [118, 20], [80, 53], [-86, -53], [40, 53], [-40, -54]]) {
+    if (clearOf(x, z, 8)) d.push([x, 1, z, 'tree:minecraft:spruce'])
+  }
+  return d
 }
 
 // the camera's points, in the field's coordinates
@@ -117,12 +178,13 @@ module.exports = L.makeLapse({
   look: { mood: 'golden_hour', bloom: 0.3, bloomThreshold: 0.88, bloomPasses: 1, sharpen: 0.4, rays: 0.3, raysOverBlocks: 0.2, shadows: true, vignette: 0.2, grain: 0.01 },
   field: [124, 56],                      // the clearing: the fox's footprint (177 x 90) plus room for 56e in front
   height: 80,
-  clearTrees: 6,                         // no half-cut trees at the clearing's edge; the forest beyond stays
+  clearTrees: 3,                         // no half-cut trees at the clearing's edge; the forest beyond stays
   renderDistance: 16, recordRadius: 256, // the reveal looks out over the forest: no missing chunks at the frame's edge
   chunkStops: [[-160, -160], [160, -160], [-160, 160], [160, 160]],
   botTimeout: 1200,
   player: { at: PLAYER, yaw: -90, pitch: -20 },   // facing east, up at the fox (mineflayer yaw -90 = east)
   tally: 'blocks used',
+  dress: dress(),
   stages: [paws(), snout(), head(), body(), tail(), face()],
   perTick: 60,
   angles: [['paws', 'close'], ['head', 'front'], ['body', 'back'], ['tail', 'forest']],
