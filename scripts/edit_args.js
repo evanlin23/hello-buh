@@ -10,6 +10,7 @@ if (e.red) out.push('--red', e.red)
 if (e.bands) out.push('--bands', e.bands)   // 'blur' | 'black'
 if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
+if (e.captions) out.push('--captions', JSON.stringify(e.captions))   // the band caption switching on marks ([[EVENT, TEXT]]: a numbered list)
 if (e.subs) out.push('--subs', JSON.stringify(e.subs))
 if (e.subsY !== undefined) out.push('--subs_y', String(e.subsY))   // subtitle height: fraction of the game view (0.15 = top, default 0.42)
 if (e.timer) out.push('--timer', e.timer)

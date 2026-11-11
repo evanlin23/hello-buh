@@ -1,0 +1,273 @@
+{
+ "block/tnt_side": {
+  "rows": [
+   "aabbaabbaabbaabb",
+   "bbbcbbbcbbbcbbbc",
+   "bbbcbbbcbbbcbbbc",
+   "bbbcbbbcbbbcbbbc",
+   "bbbcbbbcbbbcbbbc",
+   "deddeedddeeddddd",
+   "ddfffdfeefdfffed",
+   "deefeeffefedfddd",
+   "dedfddfdffeefeed",
+   "ddefedfeefeefded",
+   "eeeeeeeeeeeeeeee",
+   "bbccbbccbbccbbcc",
+   "bbbcbbbcbbbcbbbc",
+   "bbbcbbbcbbbcbbbc",
+   "bbbcbbbcbbbcbbbc",
+   "bbbcbbbcbbbcbbbc"
+  ],
+  "palette": {
+   "a": "orange_concrete",
+   "b": "redstone_block",
+   "c": "red_concrete",
+   "d": "iron_block",
+   "e": "white_concrete",
+   "f": "gray_concrete"
+  }
+ },
+ "item/lava_bucket": {
+  "rows": [
+   "................",
+   ".....aaaaaa.....",
+   "...aabcccddaa...",
+   "..acdeebbebdca..",
+   "..adbebeebebda..",
+   "..afgdbedeedca..",
+   "..ahfggggdbcca..",
+   "..ahhhhffcdcfa..",
+   "..ahhhhffcccfa..",
+   "..afhhhffcdcfa..",
+   "..achhhffcccca..",
+   "...ahhhffccca...",
+   "...afhhfcccca...",
+   "....afhfccca....",
+   ".....aaaaaa.....",
+   "................"
+  ],
+  "palette": {
+   "a": "gray_concrete",
+   "b": "yellow_terracotta",
+   "c": "light_gray_concrete",
+   "d": "orange_concrete",
+   "e": "gold_block",
+   "f": "white_concrete",
+   "g": "red_terracotta",
+   "h": "iron_block"
+  }
+ },
+ "item/diamond": {
+  "rows": [
+   "................",
+   "................",
+   "......aaaa......",
+   ".....abbbba.....",
+   "....abcccbde....",
+   "...abcccbccde...",
+   "...abcbbbbcce...",
+   "..abcbccccddde..",
+   "..abcbccccadde..",
+   "..abbdccccadde..",
+   "..abccddddddae..",
+   "...ecddddddde...",
+   "...ecddddddce...",
+   "....eaccccde....",
+   ".....eeeeee.....",
+   "................"
+  ],
+  "palette": {
+   "a": "cyan_concrete",
+   "b": "iron_block",
+   "c": "diamond_block",
+   "d": "light_blue_concrete",
+   "e": "gray_concrete"
+  }
+ },
+ "item/pufferfish": {
+  "rows": [
+   "................",
+   "........a.......",
+   "......abcba..d..",
+   ".....bcaaabbcdd.",
+   "...abaaaacccdde.",
+   "...bccaacfgced..",
+   "..cbgfcccccacecc",
+   "ddbcccchhcccccb.",
+   "eddccchggcccffb.",
+   ".eecccccchhfhcb.",
+   "...bhffhfhfcfbc.",
+   "..cbcfffhfhfcb..",
+   "....bhfcfhfcbc..",
+   "....ibchhcbb....",
+   "......bbbbc.....",
+   "................"
+  ],
+  "palette": {
+   "a": "yellow_concrete",
+   "b": "red_terracotta",
+   "c": "yellow_terracotta",
+   "d": "light_gray_concrete",
+   "e": "light_blue_concrete",
+   "f": "iron_block",
+   "g": "gray_concrete",
+   "h": "white_concrete",
+   "i": "gold_block"
+  }
+ },
+ "item/ender_pearl": {
+  "rows": [
+   "................",
+   "................",
+   ".......aaa......",
+   ".....aabbbaa....",
+   "....abbbaabbc...",
+   "...abbddaaaabc..",
+   "...abddaaaaaac..",
+   "..abbdacccaaaac.",
+   "..cbaaacccaabac.",
+   "..cbaaacccaabac.",
+   "...cbaaaaaadbc..",
+   "...cbaaaaaddac..",
+   "....cbaabbbac...",
+   ".....ccaaacc....",
+   ".......ccc......",
+   "................"
+  ],
+  "palette": {
+   "a": "gray_concrete",
+   "b": "cyan_concrete",
+   "c": "coal_block",
+   "d": "diamond_block"
+  }
+ },
+ "item/totem_of_undying": {
+  "rows": [
+   "................",
+   ".....aaaaaa.....",
+   "....abbbbbba....",
+   "....abccccba....",
+   "....abbcbbba....",
+   "....acdbbcda....",
+   "....addccdda....",
+   "....aebcbbea....",
+   ".aaaaaebbeaaaaa.",
+   ".abbabbeebeaeba.",
+   "..aaacccbbbaaa..",
+   "....abbbbbea....",
+   "....aaaaaaaa....",
+   ".....abeeea.....",
+   ".....abeeba.....",
+   "......aaaa......"
+  ],
+  "palette": {
+   "a": "red_terracotta",
+   "b": "gold_block",
+   "c": "iron_block",
+   "d": "emerald_block",
+   "e": "yellow_terracotta"
+  }
+ },
+ "item/cake": {
+  "rows": [
+   "................",
+   "....aaaaaaaa....",
+   "..aabbbbbbbbaa..",
+   ".abbbcbddbbbbba.",
+   "abbcbbdefdbcbbba",
+   "abbbbbafdabbbfba",
+   "abbbfbbaabbbbbba",
+   "abbbbbbbbbfbbbba",
+   "gbbbbbbbbbbbbbag",
+   "ghbbbbbbbbbbbagi",
+   "ghhbbbbbbbbbhhgi",
+   "ghjjhbhjhhbhhhgi",
+   ".ghfjfjfjhhhhhi.",
+   "..ggjfffjfhhii..",
+   "....iiiiiiii....",
+   "................"
+  ],
+  "palette": {
+   "a": "white_concrete",
+   "b": "iron_block",
+   "c": "red_concrete",
+   "d": "redstone_block",
+   "e": "pink_concrete",
+   "f": "orange_concrete",
+   "g": "brown_concrete",
+   "h": "red_terracotta",
+   "i": "brown_terracotta",
+   "j": "yellow_terracotta"
+  }
+ },
+ "item/slime_ball": {
+  "rows": [
+   "................",
+   "................",
+   "......aaaa......",
+   "....aabccbad....",
+   "...abcccccbad...",
+   "...aceeccccbd...",
+   "..abceecccccad..",
+   "..abcccccccbad..",
+   "..abcccccbcaad..",
+   "..aabcbcccaaad..",
+   "...aabccbaaad...",
+   "...daaaaaaaad...",
+   "....ddaaaadd....",
+   "......dddd......",
+   "................",
+   "................"
+  ],
+  "palette": {
+   "a": "lime_terracotta",
+   "b": "light_gray_concrete",
+   "c": "emerald_block",
+   "d": "green_terracotta",
+   "e": "iron_block"
+  }
+ },
+ "item/cookie": {
+  "rows": [
+   "................",
+   "................",
+   ".....aaaaaa.....",
+   "...aabcaaaaaa...",
+   "..aadddddaddab..",
+   ".addcddbcdbdadb.",
+   ".acadaaccdcadda.",
+   ".adddbdaddaddba.",
+   ".adadcdddaadada.",
+   ".badadabcddcdac.",
+   ".cbacdddddddabc.",
+   "..cbaaaaacaabc..",
+   "...ccbaaaabcc...",
+   ".....cccccc.....",
+   "................",
+   "................"
+  ],
+  "palette": {
+   "a": "yellow_terracotta",
+   "b": "red_terracotta",
+   "c": "brown_terracotta",
+   "d": "yellow_concrete"
+  }
+ },
+ "creeper_face": {
+  "rows": [
+   "GLGGLGGL",
+   "LGLGGLLG",
+   "GKKLLKKG",
+   "LKKGGKKL",
+   "GLGKKGLG",
+   "GGKKKKLG",
+   "LGKKKKGL",
+   "GLKLLKGG"
+  ],
+  "palette": {
+   "G": "green_concrete",
+   "L": "lime_concrete",
+   "K": "black_concrete"
+  }
+ }
+}

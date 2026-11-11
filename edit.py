@@ -1226,6 +1226,27 @@ def fgrid(t, fps):
     return math.ceil(t * fps - 1e-6) / fps - 0.5 / fps
 
 
+def band_captions(args, tl_ev, dur, tmp, colors):
+    """edit.captions [[EVENT, TEXT], ...] -> [(t0, t1, png)] in Short time: the top band's caption from each mark to the
+    next (the last to the end). A mark due a frame or two before a hard cut starts on the cut (the label of the next
+    item never flashes over the last frames of the one before). Marks missing from the timeline are skipped, loudly."""
+    out = []
+    for k, c in enumerate(json.loads(args.captions)):
+        ev_, text = c[0], c[1]
+        if ev_ not in tl_ev:
+            print(f"WARNING captions: no {ev_!r} mark, {text!r} skipped")
+            continue
+        t0 = tl_ev[ev_] - args.start
+        for ct in cut_times(args):
+            if ct - 0.07 < t0 < ct:
+                t0 = ct
+        png = tmp / f"caption_{k}.png"
+        caption_png(text, args.red, png, colors, bands=args.bands)
+        out.append([max(0.0, t0), png])
+    out.sort(key=lambda x: x[0])
+    return [(a, (out[i + 1][0] if i + 1 < len(out) else dur + 1.0), png) for i, (a, png) in enumerate(out) if a < dur]
+
+
 def cut_times(args):
     """Video times of the hard cuts (speed "cut" spans)."""
     w = getattr(args, "warp", None)
@@ -1321,6 +1342,7 @@ def main():
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
+    ap.add_argument("--captions", help='JSON list of [EVENT, TEXT]: the top band\'s caption switches to TEXT at EVENT (a numbered list: "1. ...", "2. ..."); --caption shows before the first')
     ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
     ap.add_argument("--subs_y", type=float, default=0.42, help="subtitle height as a fraction of the game view (0.15 = top third; default 0.42, mid view)")
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
@@ -1699,7 +1721,17 @@ def main():
             graph.append(f"[{last}][mtv]overlay=0:0:eof_action=repeat[mto]")
             last, n_in = "mto", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
-    graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
+    band_caps = band_captions(args, tl_ev, dur, tmp, colors) if args.captions and args.timeline else []
+    if band_caps:   # the band's caption switches on marks (edit.captions): each one over the base band in its window
+        graph.append(f"[{last}][1:v]overlay=0:0[bc0]")
+        last = "bc0"
+        for k, (a, b, png) in enumerate(band_caps):
+            inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(png)]
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(a, args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[bc{k + 1}]")
+            last, n_in = f"bc{k + 1}", n_in + 1
+        graph.append(f"[{last}]format=yuv420p[v]")
+    else:
+        graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     audio_ss, duck = args.start, ""
     # with a replay or a hook the song goes in LAST, over the whole finished video, so it plays on
     # under the appended replay instead of cutting out (one_in_a_million: the bass fell 35 dB 1 s
