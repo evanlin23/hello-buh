@@ -3,25 +3,25 @@
   "L01": {
    "who": "N",
    "text": "My grandma has thrown nine thousand gold into a portal.",
-   "dur": 3.58,
-   "onset": 0.26,
-   "end": 3.4,
+   "dur": 4.178,
+   "onset": 0.3,
+   "end": 3.8,
    "chunks": [
     [
-     0.26,
-     0.64
+     0.3,
+     0.88
     ],
     [
-     0.72,
-     1.08
+     1.04,
+     1.5
     ],
     [
-     1.36,
-     2.64
+     1.82,
+     2.98
     ],
     [
-     2.78,
-     3.4
+     3.1,
+     3.8
     ]
    ],
    "captions": [
@@ -38,26 +38,26 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "ea320d2fd8e8"
+   "aligned_wav": "ba3beb401bfd"
   },
   "L02": {
    "who": "N",
    "text": "One every night. And every morning, something comes back.",
-   "dur": 3.417,
-   "onset": 0.26,
-   "end": 2.92,
+   "dur": 3.875,
+   "onset": 0.22,
+   "end": 3.44,
    "chunks": [
     [
-     0.26,
-     0.98
+     0.22,
+     0.84
     ],
     [
-     1.46,
-     2.08
+     1.38,
+     2.3
     ],
     [
-     2.165,
-     2.92
+     2.535,
+     3.44
     ]
    ],
    "captions": [
@@ -70,33 +70,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 3.58,
+   "offset": 4.178,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "84197ad7671b"
+   "aligned_wav": "799648186b32"
   },
   "L03": {
    "who": "N",
    "text": "Some obsidian. A little string. Ender pearls. A fireproof potion.",
-   "dur": 4.97,
-   "onset": 0.105,
-   "end": 4.54,
+   "dur": 5.418,
+   "onset": 0.125,
+   "end": 5.1,
    "chunks": [
     [
-     0.105,
-     0.82
+     0.125,
+     1.22
     ],
     [
-     1.16,
-     1.8
+     1.4,
+     2.12
     ],
     [
-     2.26,
-     2.78
+     2.8,
+     3.56
     ],
     [
-     3.24,
-     4.54
+     3.98,
+     5.1
     ]
    ],
    "captions": [
@@ -110,25 +110,25 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 6.997,
+   "offset": 8.053,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "73105ada423f"
+   "aligned_wav": "a6245db88655"
   },
   "L04": {
    "who": "N",
    "text": "Grandma says it's from grandpa.",
-   "dur": 1.785,
-   "onset": 0.14,
-   "end": 1.18,
+   "dur": 2.158,
+   "onset": 0.2,
+   "end": 1.74,
    "chunks": [
     [
-     0.14,
-     0.56
+     0.2,
+     0.8
     ],
     [
-     0.62,
-     1.18
+     0.96,
+     1.74
     ]
    ],
    "captions": [
@@ -140,48 +140,48 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 11.967,
+   "offset": 13.47,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "23d65665bfee"
+   "aligned_wav": "f91b8823b4b9"
   },
   "L05": {
    "who": "N",
-   "text": "Twenty-five years ago, Grandpa went in. He wore her gold helmet, blue stripe and all.",
-   "dur": 4.32,
-   "onset": 0.18,
-   "end": 4.12,
+   "text": "Twenty-five years ago, Grandpa went in. He wore her gold helmet blue stripe and all.",
+   "dur": 5.423,
+   "onset": 0.38,
+   "end": 4.98,
    "chunks": [
     [
-     0.18,
-     0.98
+     0.38,
+     1.3
     ],
     [
-     1.14,
-     1.74
+     1.64,
+     2.38
     ],
     [
-     2.3,
-     2.62
+     2.92,
+     3.22
     ],
     [
-     2.68,
-     3.32
+     3.28,
+     3.96
     ],
     [
-     3.5,
-     3.88
+     4.24,
+     4.66
     ],
     [
-     3.92,
-     4.12
+     4.7,
+     4.98
     ]
    ],
    "captions": [
     "Twenty-five YEARS ago,",
     "Grandpa went IN.",
     "He WORE",
-    "her gold HELMET,",
+    "her gold HELMET",
     "BLUE stripe",
     "and ALL."
    ],
@@ -190,41 +190,41 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 13.752,
+   "offset": 15.627,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "bd7aff565090"
+   "aligned_wav": "823157c30836"
   },
   "L06": {
    "who": "N",
    "text": "Gold keeps you safe, Grandma said. piglins won't touch you in gold.",
-   "dur": 3.425,
-   "onset": 0.26,
-   "end": 2.96,
+   "dur": 4.04,
+   "onset": 0.16,
+   "end": 3.54,
    "chunks": [
     [
-     0.26,
-     0.66
+     0.16,
+     0.7
     ],
     [
-     0.68,
-     1.0
+     0.72,
+     1.12
     ],
     [
-     1.06,
-     1.52
+     1.36,
+     1.84
     ],
     [
-     1.86,
-     2.3
+     2.26,
+     2.76
     ],
     [
-     2.34,
-     2.62
+     2.8,
+     3.12
     ],
     [
-     2.68,
-     2.96
+     3.2,
+     3.54
     ]
    ],
    "captions": [
@@ -240,25 +240,25 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 18.073,
+   "offset": 21.05,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "dd2a30fa7a09"
+   "aligned_wav": "bbfbdd2b7300"
   },
   "L07": {
    "who": "N",
    "text": "But he never came back.",
-   "dur": 1.228,
+   "dur": 1.845,
    "onset": 0.18,
-   "end": 0.9,
+   "end": 1.42,
    "chunks": [
     [
      0.18,
-     0.52
+     0.84
     ],
     [
-     0.56,
-     0.9
+     0.92,
+     1.42
     ]
    ],
    "captions": [
@@ -270,49 +270,49 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 21.497,
+   "offset": 25.09,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "12f0ffe8d242"
+   "aligned_wav": "4885f2e77fb8"
   },
   "L08": {
    "who": "N",
    "text": "So I keep his gifts in a barrel. Grandma says he's still trading. So he's alive. Grandpa's the best trader ever.",
-   "dur": 6.335,
-   "onset": 0.175,
-   "end": 5.9,
+   "dur": 8.227,
+   "onset": 0.31,
+   "end": 7.7,
    "chunks": [
     [
-     0.175,
-     0.9
-    ],
-    [
-     0.96,
+     0.31,
      1.26
     ],
     [
-     1.3,
-     1.68
+     1.32,
+     1.66
     ],
     [
-     2.16,
-     2.62
+     1.7,
+     2.14
     ],
     [
-     2.66,
-     3.38
+     2.76,
+     3.3
     ],
     [
-     3.55,
-     4.2
+     3.42,
+     4.24
     ],
     [
-     4.66,
-     5.34
+     4.61,
+     5.44
     ],
     [
-     5.38,
-     5.9
+     5.94,
+     6.9
+    ],
+    [
+     6.96,
+     7.7
     ]
    ],
    "captions": [
@@ -330,25 +330,25 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 22.725,
+   "offset": 26.935,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "b3957c7edbe0"
+   "aligned_wav": "ea03ed5c08cb"
   },
   "L09": {
    "who": "N",
    "text": "Grandma throws one a night.",
-   "dur": 1.38,
+   "dur": 1.755,
    "onset": 0.18,
-   "end": 1.08,
+   "end": 1.28,
    "chunks": [
     [
      0.18,
-     0.68
+     0.8
     ],
     [
-     0.76,
-     1.08
+     0.88,
+     1.28
     ]
    ],
    "captions": [
@@ -360,24 +360,24 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 29.06,
+   "offset": 35.163,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "cc10cf9b7aa6"
+   "aligned_wav": "860cadde6646"
   },
   "L10": {
    "who": "Grandma",
    "text": "One's plenty, sweetie.",
-   "dur": 2.905,
-   "onset": 0.74,
-   "end": 2.54,
+   "dur": 2.675,
+   "onset": 0.5,
+   "end": 2.38,
    "chunks": [
     [
-     0.74,
-     1.84
+     0.5,
+     1.64
     ],
     [
-     1.895,
-     2.54
+     1.735,
+     2.38
     ]
    ],
    "captions": [
@@ -391,42 +391,42 @@
    "beat": "L10",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "3bc303492808"
+   "aligned_wav": "285cb440788b"
   },
   "L11": {
    "who": "N",
    "text": "But I had sixty-four gold. So tonight, I threw them all. To buy him a way home.",
-   "dur": 5.43,
-   "onset": 0.18,
-   "end": 4.8,
+   "dur": 5.8,
+   "onset": 0.06,
+   "end": 5.4,
    "chunks": [
     [
-     0.18,
+     0.06,
      0.92
     ],
     [
-     0.925,
-     1.68
+     0.95,
+     1.86
     ],
     [
-     2.105,
-     2.64
+     2.165,
+     2.96
     ],
     [
-     2.74,
-     2.94
-    ],
-    [
-     3.0,
+     3.08,
      3.36
     ],
     [
-     3.72,
-     4.14
+     3.44,
+     3.8
     ],
     [
-     4.2,
-     4.8
+     4.34,
+     4.76
+    ],
+    [
+     4.82,
+     5.4
     ]
    ],
    "captions": [
@@ -446,26 +446,26 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "112d96c8d1f9"
+   "aligned_wav": "41dfbd887524"
   },
   "L12": {
    "who": "N",
    "text": "Then I waited. And something stepped out.",
-   "dur": 2.45,
-   "onset": 0.1,
-   "end": 2.14,
+   "dur": 3.772,
+   "onset": 0.34,
+   "end": 3.32,
    "chunks": [
     [
-     0.1,
-     0.6
+     0.34,
+     1.08
     ],
     [
-     1.22,
-     1.68
+     1.76,
+     2.46
     ],
     [
-     1.705,
-     2.14
+     2.535,
+     3.32
     ]
    ],
    "captions": [
@@ -478,9 +478,9 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
-   "offset": 5.43,
+   "offset": 5.801,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "6af855877191"
+   "aligned_wav": "cb7bc4831ec9"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -505,58 +505,26 @@
     "L09"
    ],
    "file": "beat_L01.wav",
-   "dur": 30.44,
-   "tempo": 1.1,
-   "rate": 1.0,
-   "semitones": 1.0,
-   "stretch": "rubberband",
+   "dur": 36.917,
    "offsets": [
     0.0,
-    3.58,
-    6.997,
-    11.967,
-    13.752,
-    18.073,
-    21.497,
-    22.725,
-    29.06
+    4.178,
+    8.053,
+    13.47,
+    15.627,
+    21.05,
+    25.09,
+    26.935,
+    35.163
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 1.65,
-     "len": 0.31,
-     "why": "0.31 s pause inside line 1 (limit 0.2 s, the opening)"
-    },
-    {
-     "kind": "pause",
-     "at": 13.23,
-     "len": 0.67,
-     "why": "0.67 s pause between lines 3-4 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 35.28,
-     "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.31 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.67 s pause between lines 3-4 (limit 0.6 s)",
-      "0.72 s pause between lines 9-10 (limit 0.6 s)"
-     ]
-    }
-   ],
+   "rejected": [],
    "take": "L01",
    "take_at": 0.0
   },
@@ -566,60 +534,28 @@
     "L12"
    ],
    "file": "beat_L11.wav",
-   "dur": 7.88,
-   "tempo": 1.1,
-   "rate": 1.0,
-   "semitones": 1.0,
-   "stretch": "rubberband",
+   "dur": 9.572,
    "offsets": [
     0.0,
-    5.43
+    5.801
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 1.65,
-     "len": 0.31,
-     "why": "0.31 s pause inside line 1 (limit 0.2 s, the opening)"
-    },
-    {
-     "kind": "pause",
-     "at": 13.23,
-     "len": 0.67,
-     "why": "0.67 s pause between lines 3-4 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 35.28,
-     "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.31 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.67 s pause between lines 3-4 (limit 0.6 s)",
-      "0.72 s pause between lines 9-10 (limit 0.6 s)"
-     ]
-    }
-   ],
+   "rejected": [],
    "take": "L01",
-   "take_at": 30.44
+   "take_at": 36.917
   },
   "L10": {
    "lines": [
     "L10"
    ],
    "file": "beat_L10.wav",
-   "dur": 2.905,
+   "dur": 2.675,
    "offsets": [
     0.0
    ],
@@ -633,5 +569,5 @@
    "rejected": []
   }
  },
- "total": 41.98
+ "total": 49.92
 }
