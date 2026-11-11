@@ -128,7 +128,7 @@
     "python3 audio.py work/villager_job.rec.json work/villager_job.wav",
     "python3 edit.py --frames work/villager_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_job.rec.json --audio work/villager_job.wav --caption \"POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80\" --colors pov=red,villager=green --start 0.5 --song songs/payphone.mp3 --song_drop_at hired --out out/villager_job.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
+  "status": "needs-fix",
+  "notes": "backlog worker D 2026-11-11: needs-fix, superseded. A 9.6 s single hire/fire cycle: fails the owner's 30 s minimum (retention-audit check 5) and its only beat is already act 1 of villager_fired (ready, 31.7 s: hired/fired x3, all 13 jobs, TNT ring). Growing it to 30 s would remake villager_fired. Recommend retiring it (do not queue).",
   "published_at": "2026-11-06T15:39:41.586Z"
 }
