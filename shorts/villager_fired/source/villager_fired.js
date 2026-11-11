@@ -3,8 +3,9 @@
 // Act 1: hired, fired (break the lectern), hired, fired (the composter). Act 2: "fine, EVERY job":
 // all 13 job sites go down around him, faster and faster, the outfit changing with each one, then
 // all 13 at once (the outfit flickers through every job). Act 3: the TNT under the job sites.
-// Flint and steel on the fuse line... he gets FIRED from all 13 jobs at once (and keeps his life:
-// resistance, no knockback; the crowd too).
+// Flint and steel on the fuse line... he gets FIRED from all 13 jobs at once, and the point-blank ring
+// kills him (vanilla: a villager by a TNT ring dies; independent review 2026-11-11: he used to survive by a
+// hidden resistance effect and turn nitwit, which no villager does). The crowd keeps resistance (well back, resistance by command).
 // Profession changes are by command at the moment of placement/break (the AI would take seconds
 // to path to the job site); placing, breaking and lighting are real survival actions.
 const JOBS = [
@@ -24,7 +25,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'nitwit:1.0',
+    startAt: 'beat:-0.05', endAfter: 'settle:0.6',   // the blast and his death puff settled (lib/settle.js)
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -37,15 +38,18 @@ module.exports = {
       ['crowd', 'the rest of the village: 0 jobs', 2.2, 0],
       ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
-      ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast (the wait after it is cut)
-      ['nitwit', 'now he is unemployable', 2.0, 0]
+      ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast
+      ['gone', 'permanently', 1.5, 0]   // (the subtitle font has no emoji: it drew a box)
     ],
-    // the still wait on the pillar before he turns nitwit is cut (lint: nobody moves 31.6-34.1 s); a flash, punch and a
-    // held push-in on the change (pace: the payoff's picture change; he's small at 13 blocks)
-    speed: [['fuse_a', 'fuse_b', 'cut'], ['close_a', 'close_b', 'cut'], ['fired_all:0.45', 'nitwit', 'cut']],
-    flash: [['nitwit', 0, 0.5]], punch: [['nitwit', 0, 1.1]], zoom: [['nitwit', 'end', 1.4]],
-    // pace: a pop on the opening (game sound starts at 2 s), a song dip + impact on the change
-    sfx: [['pop', 'beat'], ['dip', 'nitwit', 0.3], ['impact', 'nitwit']]
+    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
+    // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
+    // the payoff pace times is the ring's LAST blast, 0.6 s after his death in this recording (34.05 s vs 33.45 s
+    // source; 0.45 s in the take before): a flash on the death, then the big flash + punch and the song dip + impact on
+    // that last blast (on the death they were early and the payoff had no hit: pace BLOCK). Re-check after a re-record.
+    flash: [['mob_death', 0, 0.6], ['mob_death:0.6', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death:0.6', 0, 1.3]],
+    // (+ the game audio ducked 0.35 s before it: the ring's blasts 0.15-0.45 s earlier flattened its hit, as on pickaxe_race)
+    sfx: [['pop', 'beat'], ['dip', 'mob_death:0.6', 0.4], ['gamedip', 'mob_death:0.6', 0.35], ['impact', 'mob_death:0.6', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {
@@ -70,7 +74,7 @@ module.exports = {
     // NoAI: once the fuse line's first blast broke his fence he walked off his pillar into the crater
     // before the ring went (and /data then hit a crowd villager). His head still turns to the camera
     // through the face_on mark.
-    await ctx.cmd(`/summon villager ${x + 0.5} ${floor + 1} ${vz + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b,NoAI:1b}`)
+    await ctx.cmd(`/summon villager ${x + 0.5} ${floor + 1} ${vz + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b,NoAI:1b,Tags:["hb_worker"]}`)
     // the crowd: unemployed villagers behind the pen, watching
     this.crowd = []
     // two groups with a gap straight behind him: in the last shot he stood against the crowd and
@@ -80,15 +84,17 @@ module.exports = {
       const cxp = x + DX[i], czp = vz - 5 - (i % 2)
       await ctx.cmd(`/summon villager ${cxp + 0.5} ${floor + 1} ${czp + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b,NoAI:1b}`)
     }
-    // nobody dies and nobody flies: resistance V and no explosion knockback for every villager
+    // nobody dies early and nobody flies: resistance V and no explosion knockback for every villager; his resistance
+    // ends as the fuse line goes (perform), so the ring itself kills him
     await ctx.cmd('/effect give @e[type=villager] resistance infinite 4 true')
     await ctx.cmd('/execute as @e[type=villager] run attribute @s minecraft:explosion_knockback_resistance base set 1')
     await ctx.cmd('/execute as @e[type=villager] run attribute @s minecraft:knockback_resistance base set 1')
     // job site spots (13): both sides, the front corners and the back row
     const spots = []
-    // (none in the middle of the front row: there they hid his outfit from the camera)
-    for (const dz of [1, 2, 0, -1, -2]) { spots.push([x + 2, vz + dz]); spots.push([x - 2, vz + dz]) }
-    for (const dx of [-1, 0, 1]) spots.push([x + dx, vz - 2])
+    // (none in the middle of the front row: there they hid his outfit from the camera). Placed back to front, the
+    // outer column first: each spot's top face is in sight when its block goes down (lib/act.js aims at it; a placed
+    // block in front hid the one behind; the pen's corner posts hide x±2 at the back: the back pair sits at x±3)
+    for (const [dx, dz] of [[3, -2], [-3, -2], [3, -1], [-3, -1], [2, -1], [-2, -1], [2, 0], [-2, 0], [3, 1], [2, 1], [-2, 1], [2, 2], [-2, 2]]) spots.push([x + dx, vz + dz])
     this.spots = spots
     // TNT in the ground under every spot, and a 3-block fuse line toward the player
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)
@@ -118,13 +124,14 @@ module.exports = {
     const head = new Vec3(x + 0.5, floor + 3.0, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
     ctx.mark('face_on', { near: [x + 0.5, vz - 2, 10.5], head: true })
+    const A = require('../lib/act')(ctx)
     const slotOf = (i) => (i < 8 ? i : i - 8)
     const place = async (i, lookMs, spot) => {
       const [bx, bz] = spot || this.spots[i]
       ctx.select(slotOf(i))
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + (i >= 8 ? 2.8 : 1.2), bz + 0.5), lookMs)   // the fast ones aimed high: the subtitle clears his outfit
-      bot._client.write('block_place', { hand: 0, location: { x: bx, y: floor, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound(STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place', 1, 0.8)
+      // aimed by construction (lib/act.js, r:rffba12): the crosshair on the spot as the job site goes down (reach 10: the
+      // setup raises block_interaction_range to 9, the far spots are ~9 blocks from the eye)
+      await A.place(new Vec3(bx, floor + 1, bz), { reach: 10, against: new Vec3(bx, floor, bz), sound: STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place' })
       await bot.waitForTicks(1)
       setJob(JOBS[i][1])
       ctx.sound(`entity.villager.work_${JOBS[i][1]}`, 1, 1)
@@ -132,9 +139,8 @@ module.exports = {
     }
     const breakAt = async ([bx, bz], name) => {
       ctx.select(8); await bot.waitForTicks(2)
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + 1.5, bz + 0.5), 200)
       const b = bot.blockAt(new Vec3(bx, floor + 1, bz))
-      if (b && b.name === name) { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
+      if (b && b.name === name) { try { await A.dig(b, { reach: 10 }) } catch (e) { ctx.log('dig', e.message) } }
       setJob('none'); ctx.sound('entity.villager.no', 1, 1)
     }
     // a hold that still moves: a slow drift of the look, never a frozen frame
@@ -200,9 +206,7 @@ module.exports = {
     await bot.waitForTicks(2)
     ctx.select(5); await bot.waitForTicks(6)
     const L = [x, floor, vz + 4]
-    await ctx.easeLookAt(new Vec3(L[0] + 0.5, L[1] + 1, L[2] + 0.5), 200)
-    bot._client.write('block_place', { hand: 0, location: { x: L[0], y: L[1], z: L[2] }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    await A.use(new Vec3(L[0], L[1], L[2]), { reach: 10, sound: 'item.flintandsteel.use' }); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     const litAt = ctx.tick
     // back off facing it, the villager in view
@@ -225,32 +229,22 @@ module.exports = {
       if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.1, 0.95, 1.2, 1.0][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
       await bot.waitForTicks(1)
     }
-    // wait for the ring itself to go (the 4th blast on), then he's unemployed
+    // the fuse line went: his resistance ends (the crowd keeps theirs), and the ring catches him point-blank
+    bot.chat('/effect clear @e[type=villager,tag=hb_worker] resistance')
     for (let k = 0; k < 60 && booms < 4; k++) await bot.waitForTicks(1)
     ctx.mark('ring_boom')
-    await bot.waitForTicks(10)
-    // cut to the crater's near rim: him close and big, in the lower half, clear of the subtitles
-    ctx.mark('close_a')
-    const solid = (zz) => { const bb = bot.blockAt(new Vec3(x, floor, zz)); return bb && bb.name !== 'air' }
-    let rz = vz + 3
-    while (rz < vz + 12 && !(solid(rz) && solid(rz + 1))) rz++
-    await ctx.tpCheck(x + 0.5, floor + 1, rz + 0.5, 180, 20)
-    const d = rz + 0.5 - (vz + 0.5)
-    const top = new Vec3(x + 0.5, floor + 2.95 + d * 0.09, vz + 0.5)    // his head ~0.09 rad under the centre
-    await ctx.easeLookAt(top.offset(0, -0.4, 0), 100)                  // inside the cut (after it, it was a visible whip)
-    await bot.waitForTicks(2)
-    ctx.mark('close_b')
-    setJob('none'); ctx.sound('entity.villager.no', 1, 0.9)
-    ctx.mark('fired_all')
-    const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
-    // a slow look down his pillar and back up
-    await ctx.easeLookAt(top.offset(0.3, -0.6, 0), 600)   // a small dip (a big one pushed him up into the subtitle)
-    await ctx.easeLookAt(top.offset(-0.2, 0, 0), 600)
-    // ...and he gives up on work for good: nitwit
-    setJob('nitwit'); ctx.sound('entity.villager.no', 1, 0.7)
-    ctx.particles('angry', { x: x + 0.5, y: floor + 3.3, z: vz + 0.5 }, { count: 4 })
-    ctx.mark('nitwit')
-    await ctx.easeLookAt(top.offset(0.9, 0.25, 0), 1500)        // straight into a real drift to the end (any hold read as a pause)
-    return booms >= 4 && !ctx.died && !!v
+    const alive = () => Object.values(bot.entities).some(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 1.5 && Math.abs(e.position.z - (vz + 0.5)) < 1.5)
+    // hold the wide on his pillar while the smoke and debris settle and his death puff plays out (owner r:r24d99a:
+    // never cut while the payoff moves), the eyes drifting so the shot never parks
+    let gone = false
+    for (let k = 0; k < 80; k++) {
+      if (k % 12 === 0) ctx.easeLookAt(head.offset([0.4, -0.3, 0.5, -0.4][(k / 12) % 4], [0.9, 1.0, 0.85, 1.0][(k / 12) % 4], 0), 550)
+      if (!gone && !alive()) { gone = true; ctx.mark('gone') }
+      if (gone && k > 50) break
+      await bot.waitForTicks(1)
+    }
+    if (!gone) ctx.log('he survived the ring')
+    await ctx.easeLookAt(head.offset(0.9, 0.6, 0), 1200)   // a real drift to the end (any hold read as a pause)
+    return booms >= 4 && !ctx.died && gone
   }
 }

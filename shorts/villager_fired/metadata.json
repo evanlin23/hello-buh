@@ -4,7 +4,7 @@
   "caption": "I gave the villager every job 💀",
   "youtube": {
     "title": "I gave the villager every job 💀 #minecraft #shorts",
-    "description": "I gave the villager every job 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "I gave the villager every job 💀\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "feel_good_funk.mp3",
-    "title": "Feel Good Funk",
-    "artist": "Syn Cole, Nakama",
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "all_jobs",
-    "drop_in_song_s": 16.5,
-    "drop_in_short_s": 16.3,
-    "song_start_s": 0.2
+    "drop_in_song_s": 39.75,
+    "drop_in_short_s": 18.8,
+    "song_start_s": 20.95
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.52,
+    "duration_s": 34.34,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 44665848,
-    "sha256": "fb0991846482895dda2ea95932f12c5d856494ff18311fb302c0d96bd6bc3b31",
+    "bytes": 56921652,
+    "sha256": "5db073f2cede74c12c51d9b9c6aba07a15da8105ae002c08f69dd27c572b35e5",
     "release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short.fb0991846482895d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.fb0991846482895d.mp4",
-      "sha256": "fb0991846482895dda2ea95932f12c5d856494ff18311fb302c0d96bd6bc3b31",
-      "bytes": 44665848
+      "asset": "villager_fired.short.5db073f2cede74c1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.5db073f2cede74c1.mp4",
+      "sha256": "5db073f2cede74c12c51d9b9c6aba07a15da8105ae002c08f69dd27c572b35e5",
+      "bytes": 56921652
     },
     "nosong_release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short_nosong.ac68cd70b816384b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.ac68cd70b816384b.mp4",
-      "sha256": "ac68cd70b816384b8dd18c501bbfb1f3fb5f8d15cde619a56095acfa6fc8dc64",
-      "bytes": 44461081
+      "asset": "villager_fired.short_nosong.b4314aed0da5b894.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.b4314aed0da5b894.mp4",
+      "sha256": "b4314aed0da5b894b80a98264f3cc6d1714ed7b41750e33265d84100dc8d24c4",
+      "bytes": 56713034
     }
   },
   "edit": {
@@ -52,7 +52,7 @@
     "red": "every",
     "dropAt": "all_jobs",
     "startAt": "beat:-0.05",
-    "endAfter": "nitwit:1.0",
+    "endAfter": "settle:0.6",
     "subs": [
       [
         "hire",
@@ -175,9 +175,9 @@
         0
       ],
       [
-        "nitwit",
-        "now he is unemployable",
-        2,
+        "gone",
+        "permanently",
+        1.5,
         0
       ]
     ],
@@ -188,35 +188,33 @@
         "cut"
       ],
       [
-        "close_a",
-        "close_b",
-        "cut"
-      ],
-      [
-        "fired_all:0.45",
-        "nitwit",
-        "cut"
+        "all_jobs:0.3",
+        "faster",
+        1.4
       ]
     ],
     "flash": [
       [
-        "nitwit",
+        "mob_death",
         0,
-        0.5
+        0.6
+      ],
+      [
+        "mob_death:0.6",
+        0,
+        0.9
+      ],
+      [
+        "gone",
+        0,
+        0.4
       ]
     ],
     "punch": [
       [
-        "nitwit",
+        "mob_death:0.6",
         0,
-        1.1
-      ]
-    ],
-    "zoom": [
-      [
-        "nitwit",
-        "end",
-        1.4
+        1.3
       ]
     ],
     "sfx": [
@@ -226,12 +224,24 @@
       ],
       [
         "dip",
-        "nitwit",
-        0.3
+        "mob_death:0.6",
+        0.4
+      ],
+      [
+        "gamedip",
+        "mob_death:0.6",
+        0.35
       ],
       [
         "impact",
-        "nitwit"
+        "mob_death:0.6",
+        {
+          "gain": 1.3
+        }
+      ],
+      [
+        "pop",
+        "gone"
       ]
     ],
     "args": [
@@ -240,21 +250,19 @@
       "--red",
       "every",
       "--subs",
-      "[[\"hire\",\"job 1: librarian\",1.6,0],[\"fire\",\"fired\",1.2,0],[\"hire\",\"job 2: farmer\",1.4,1],[\"fire\",\"fired again\",1.2,1],[\"hire\",\"job 3: fisherman\",1.2,2],[\"fire\",\"FIRED AGAIN\",1.2,2],[\"every\",\"fine. EVERY job\",1.6,0],[\"job\",\"job 4: armorer\",1.1,3],[\"job\",\"job 5: butcher\",1,4],[\"job\",\"job 6: cartographer\",1,5],[\"job\",\"job 7: cleric\",0.9,6],[\"job\",\"job 8: fletcher\",0.9,7],[\"job\",\"jobs 9, 10, 11...\",1.4,8],[\"job\",\"13 JOBS\",1.4,12],[\"all_jobs\",\"all 13 at once\",2.8,0],[\"faster\",\"FASTER\",1.2,0],[\"crowd\",\"the rest of the village: 0 jobs\",2.2,0],[\"tnt\",\"one problem...\",1.6,0],[\"lit\",\"he is about to get FIRED\",2.2,0],[\"ring_boom\",\"fired from 13 jobs at once\",1.5,0],[\"nitwit\",\"now he is unemployable\",2,0]]",
+      "[[\"hire\",\"job 1: librarian\",1.6,0],[\"fire\",\"fired\",1.2,0],[\"hire\",\"job 2: farmer\",1.4,1],[\"fire\",\"fired again\",1.2,1],[\"hire\",\"job 3: fisherman\",1.2,2],[\"fire\",\"FIRED AGAIN\",1.2,2],[\"every\",\"fine. EVERY job\",1.6,0],[\"job\",\"job 4: armorer\",1.1,3],[\"job\",\"job 5: butcher\",1,4],[\"job\",\"job 6: cartographer\",1,5],[\"job\",\"job 7: cleric\",0.9,6],[\"job\",\"job 8: fletcher\",0.9,7],[\"job\",\"jobs 9, 10, 11...\",1.4,8],[\"job\",\"13 JOBS\",1.4,12],[\"all_jobs\",\"all 13 at once\",2.8,0],[\"faster\",\"FASTER\",1.2,0],[\"crowd\",\"the rest of the village: 0 jobs\",2.2,0],[\"tnt\",\"one problem...\",1.6,0],[\"lit\",\"he is about to get FIRED\",2.2,0],[\"ring_boom\",\"fired from 13 jobs at once\",1.5,0],[\"gone\",\"permanently\",1.5,0]]",
       "--speed",
-      "[[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"],[\"fired_all:0.45\",\"nitwit\",\"cut\"]]",
+      "[[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4]]",
       "--punch",
-      "[[\"nitwit\",0,1.1]]",
-      "--zoom",
-      "[[\"nitwit\",\"end\",1.4]]",
+      "[[\"mob_death:0.6\",0,1.3]]",
       "--flash",
-      "[[\"nitwit\",0,0.5]]",
+      "[[\"mob_death\",0,0.6],[\"mob_death:0.6\",0,0.9],[\"gone\",0,0.4]]",
       "--sfx",
-      "[[\"pop\",\"beat\"],[\"dip\",\"nitwit\",0.3],[\"impact\",\"nitwit\"]]",
+      "[[\"pop\",\"beat\"],[\"dip\",\"mob_death:0.6\",0.4],[\"gamedip\",\"mob_death:0.6\",0.35],[\"impact\",\"mob_death:0.6\",{\"gain\":1.3}],[\"pop\",\"gone\"]]",
       "--start_at",
       "beat:-0.05",
       "--end_after",
-      "nitwit:1.0"
+      "settle:0.6"
     ]
   },
   "recording": {
@@ -265,141 +273,89 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 364,
+      "x": 356,
       "y": 72,
-      "z": -48
+      "z": -41
     },
     "biome": "minecraft:plains",
-    "ticks": 698,
-    "seconds": 34.9,
+    "ticks": 775,
+    "seconds": 38.75,
     "deaths": 0,
     "events": [
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "face_on"
       },
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "beat"
       },
       {
-        "t": 0.85,
+        "t": 1.6,
+        "event": "place_on"
+      },
+      {
+        "t": 1.6,
         "event": "swing"
       },
       {
-        "t": 0.9,
+        "t": 1.8,
         "event": "hire"
       },
       {
-        "t": 2.3,
+        "t": 3.55,
         "event": "dig"
       },
       {
-        "t": 2.3,
+        "t": 3.55,
         "event": "swing"
       },
       {
-        "t": 2.65,
+        "t": 3.85,
         "event": "swing"
-      },
-      {
-        "t": 2.8,
-        "event": "dig_end"
-      },
-      {
-        "t": 2.8,
-        "event": "fire"
-      },
-      {
-        "t": 2.8,
-        "event": "vel"
-      },
-      {
-        "t": 3.3,
-        "event": "vel"
-      },
-      {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
-        "t": 3.8,
-        "event": "vel"
-      },
-      {
-        "t": 3.9,
-        "event": "swing"
-      },
-      {
-        "t": 3.95,
-        "event": "hire"
-      },
-      {
-        "t": 3.95,
-        "event": "vel"
       },
       {
         "t": 4,
-        "event": "vel"
+        "event": "dig_end"
+      },
+      {
+        "t": 4,
+        "event": "fire"
       },
       {
         "t": 4.05,
         "event": "vel"
       },
       {
-        "t": 4.1,
+        "t": 4.65,
         "event": "vel"
       },
       {
-        "t": 4.15,
+        "t": 5.05,
         "event": "vel"
-      },
-      {
-        "t": 4.2,
-        "event": "vel"
-      },
-      {
-        "t": 4.25,
-        "event": "vel"
-      },
-      {
-        "t": 4.3,
-        "event": "vel"
-      },
-      {
-        "t": 4.8,
-        "event": "vel"
-      },
-      {
-        "t": 5.1,
-        "event": "dig"
-      },
-      {
-        "t": 5.1,
-        "event": "swing"
       },
       {
         "t": 5.15,
-        "event": "vel"
+        "event": "place_on"
+      },
+      {
+        "t": 5.15,
+        "event": "swing"
       },
       {
         "t": 5.2,
-        "event": "dig_end"
+        "event": "hire"
       },
       {
         "t": 5.2,
-        "event": "fire"
-      },
-      {
-        "t": 5.25,
         "event": "vel"
       },
       {
-        "t": 5.55,
+        "t": 5.4,
         "event": "vel"
       },
       {
@@ -407,171 +363,135 @@
         "event": "vel"
       },
       {
-        "t": 5.85,
+        "t": 6.05,
         "event": "vel"
       },
       {
-        "t": 5.95,
+        "t": 6.2,
         "event": "vel"
       },
       {
-        "t": 6.1,
+        "t": 6.4,
+        "event": "dig"
+      },
+      {
+        "t": 6.4,
         "event": "swing"
       },
       {
-        "t": 6.15,
-        "event": "hire"
+        "t": 6.55,
+        "event": "dig_end"
       },
       {
-        "t": 6.25,
-        "event": "vel"
-      },
-      {
-        "t": 6.35,
-        "event": "vel"
+        "t": 6.55,
+        "event": "fire"
       },
       {
         "t": 6.55,
         "event": "vel"
       },
       {
-        "t": 6.8,
-        "event": "vel"
-      },
-      {
-        "t": 6.95,
-        "event": "vel"
-      },
-      {
-        "t": 6.95,
-        "event": "vel"
-      },
-      {
         "t": 7.05,
-        "event": "dig"
-      },
-      {
-        "t": 7.05,
-        "event": "swing"
-      },
-      {
-        "t": 7.25,
         "event": "vel"
       },
       {
-        "t": 7.35,
+        "t": 7.1,
         "event": "vel"
       },
       {
-        "t": 7.35,
-        "event": "swing"
+        "t": 7.2,
+        "event": "vel"
       },
       {
         "t": 7.5,
-        "event": "dig_end"
+        "event": "place_on"
       },
       {
         "t": 7.5,
-        "event": "fire"
+        "event": "swing"
+      },
+      {
+        "t": 7.55,
+        "event": "hire"
       },
       {
         "t": 7.55,
         "event": "vel"
       },
       {
-        "t": 7.8,
+        "t": 7.65,
         "event": "vel"
       },
       {
-        "t": 7.95,
+        "t": 8.05,
         "event": "vel"
       },
       {
-        "t": 8.1,
+        "t": 8.05,
         "event": "vel"
       },
       {
-        "t": 8.25,
+        "t": 8.2,
         "event": "vel"
       },
       {
-        "t": 8.3,
-        "event": "every"
+        "t": 8.45,
+        "event": "dig"
       },
       {
-        "t": 8.35,
-        "event": "vel"
+        "t": 8.45,
+        "event": "swing"
       },
       {
         "t": 8.55,
         "event": "vel"
       },
       {
-        "t": 8.6,
+        "t": 8.65,
         "event": "vel"
       },
       {
-        "t": 8.8,
-        "event": "vel"
+        "t": 8.75,
+        "event": "swing"
       },
       {
-        "t": 8.8,
-        "event": "vel"
+        "t": 8.9,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.9,
+        "event": "fire"
       },
       {
         "t": 8.95,
         "event": "vel"
       },
       {
-        "t": 9.2,
-        "event": "swing"
-      },
-      {
-        "t": 9.2,
+        "t": 9.05,
         "event": "vel"
       },
       {
-        "t": 9.25,
-        "event": "job"
-      },
-      {
-        "t": 9.25,
-        "event": "vel"
-      },
-      {
-        "t": 9.35,
+        "t": 9.2,
         "event": "vel"
       },
       {
         "t": 9.5,
-        "event": "swing"
-      },
-      {
-        "t": 9.55,
-        "event": "job"
-      },
-      {
-        "t": 9.55,
         "event": "vel"
       },
       {
-        "t": 9.55,
+        "t": 9.5,
         "event": "vel"
       },
       {
-        "t": 9.75,
+        "t": 9.6,
         "event": "vel"
       },
       {
-        "t": 9.8,
-        "event": "swing"
+        "t": 9.7,
+        "event": "every"
       },
       {
-        "t": 9.85,
-        "event": "job"
-      },
-      {
-        "t": 9.85,
+        "t": 9.9,
         "event": "vel"
       },
       {
@@ -579,19 +499,19 @@
         "event": "vel"
       },
       {
-        "t": 10.05,
+        "t": 10,
         "event": "vel"
       },
       {
-        "t": 10.2,
+        "t": 10.15,
         "event": "vel"
       },
       {
-        "t": 10.3,
+        "t": 10.15,
         "event": "vel"
       },
       {
-        "t": 10.5,
+        "t": 10.35,
         "event": "vel"
       },
       {
@@ -599,47 +519,71 @@
         "event": "vel"
       },
       {
-        "t": 10.75,
-        "event": "vel"
+        "t": 10.65,
+        "event": "place_on"
       },
       {
-        "t": 10.9,
+        "t": 10.65,
         "event": "swing"
       },
       {
-        "t": 10.9,
+        "t": 10.65,
+        "event": "vel"
+      },
+      {
+        "t": 10.7,
+        "event": "job"
+      },
+      {
+        "t": 10.8,
         "event": "vel"
       },
       {
         "t": 10.95,
-        "event": "job"
+        "event": "vel"
+      },
+      {
+        "t": 11,
+        "event": "vel"
+      },
+      {
+        "t": 11.05,
+        "event": "place_on"
+      },
+      {
+        "t": 11.05,
+        "event": "swing"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
       },
       {
         "t": 11.1,
+        "event": "job"
+      },
+      {
+        "t": 11.2,
         "event": "vel"
       },
       {
-        "t": 11.25,
-        "event": "vel"
+        "t": 11.5,
+        "event": "place_on"
       },
       {
-        "t": 11.35,
-        "event": "vel"
+        "t": 11.5,
+        "event": "swing"
+      },
+      {
+        "t": 11.55,
+        "event": "job"
       },
       {
         "t": 11.55,
         "event": "vel"
       },
       {
-        "t": 11.55,
-        "event": "vel"
-      },
-      {
-        "t": 11.6,
-        "event": "vel"
-      },
-      {
-        "t": 11.8,
+        "t": 11.65,
         "event": "vel"
       },
       {
@@ -648,62 +592,14 @@
       },
       {
         "t": 12,
-        "event": "swing"
-      },
-      {
-        "t": 12.05,
-        "event": "job"
-      },
-      {
-        "t": 12.05,
         "event": "vel"
       },
       {
         "t": 12.05,
-        "event": "vel"
-      },
-      {
-        "t": 12.15,
-        "event": "vel"
-      },
-      {
-        "t": 12.15,
         "event": "vel"
       },
       {
         "t": 12.2,
-        "event": "vel"
-      },
-      {
-        "t": 12.25,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.35,
-        "event": "vel"
-      },
-      {
-        "t": 12.35,
-        "event": "vel"
-      },
-      {
-        "t": 12.4,
-        "event": "vel"
-      },
-      {
-        "t": 12.4,
-        "event": "vel"
-      },
-      {
-        "t": 12.5,
         "event": "vel"
       },
       {
@@ -712,14 +608,18 @@
       },
       {
         "t": 12.6,
-        "event": "vel"
+        "event": "place_on"
       },
       {
-        "t": 12.8,
-        "event": "vel"
+        "t": 12.6,
+        "event": "swing"
       },
       {
-        "t": 12.95,
+        "t": 12.65,
+        "event": "job"
+      },
+      {
+        "t": 12.65,
         "event": "vel"
       },
       {
@@ -728,26 +628,14 @@
       },
       {
         "t": 13,
-        "event": "swing"
+        "event": "vel"
       },
       {
         "t": 13.05,
-        "event": "job"
+        "event": "vel"
       },
       {
         "t": 13.2,
-        "event": "vel"
-      },
-      {
-        "t": 13.25,
-        "event": "vel"
-      },
-      {
-        "t": 13.35,
-        "event": "vel"
-      },
-      {
-        "t": 13.4,
         "event": "vel"
       },
       {
@@ -755,16 +643,28 @@
         "event": "vel"
       },
       {
-        "t": 13.6,
+        "t": 13.65,
+        "event": "place_on"
+      },
+      {
+        "t": 13.65,
+        "event": "swing"
+      },
+      {
+        "t": 13.65,
         "event": "vel"
       },
       {
-        "t": 13.8,
+        "t": 13.7,
+        "event": "job"
+      },
+      {
+        "t": 13.7,
         "event": "vel"
       },
       {
         "t": 13.95,
-        "event": "swing"
+        "event": "vel"
       },
       {
         "t": 13.95,
@@ -772,14 +672,10 @@
       },
       {
         "t": 14,
-        "event": "job"
-      },
-      {
-        "t": 14.25,
         "event": "vel"
       },
       {
-        "t": 14.35,
+        "t": 14.05,
         "event": "vel"
       },
       {
@@ -787,19 +683,23 @@
         "event": "vel"
       },
       {
-        "t": 14.6,
-        "event": "vel"
+        "t": 14.65,
+        "event": "place_on"
       },
       {
-        "t": 14.8,
-        "event": "vel"
-      },
-      {
-        "t": 14.85,
+        "t": 14.65,
         "event": "swing"
       },
       {
-        "t": 14.9,
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 14.7,
         "event": "job"
       },
       {
@@ -807,11 +707,19 @@
         "event": "vel"
       },
       {
-        "t": 15.25,
+        "t": 15,
         "event": "vel"
       },
       {
-        "t": 15.35,
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15.05,
+        "event": "vel"
+      },
+      {
+        "t": 15.2,
         "event": "vel"
       },
       {
@@ -820,18 +728,18 @@
       },
       {
         "t": 15.6,
-        "event": "vel"
+        "event": "place_on"
       },
       {
-        "t": 15.75,
+        "t": 15.6,
         "event": "swing"
       },
       {
-        "t": 15.8,
+        "t": 15.65,
         "event": "job"
       },
       {
-        "t": 15.8,
+        "t": 15.65,
         "event": "vel"
       },
       {
@@ -840,35 +748,19 @@
       },
       {
         "t": 16,
-        "event": "swing"
+        "event": "vel"
       },
       {
         "t": 16.05,
-        "event": "job"
+        "event": "vel"
       },
       {
         "t": 16.2,
-        "event": "swing"
-      },
-      {
-        "t": 16.25,
-        "event": "job"
-      },
-      {
-        "t": 16.25,
         "event": "vel"
       },
       {
-        "t": 16.35,
-        "event": "swing"
-      },
-      {
-        "t": 16.35,
-        "event": "vel"
-      },
-      {
-        "t": 16.4,
-        "event": "job"
+        "t": 16.5,
+        "event": "place_on"
       },
       {
         "t": 16.5,
@@ -887,7 +779,7 @@
         "event": "vel"
       },
       {
-        "t": 16.8,
+        "t": 16.9,
         "event": "vel"
       },
       {
@@ -896,26 +788,46 @@
       },
       {
         "t": 17,
-        "event": "all_jobs"
-      },
-      {
-        "t": 17.25,
         "event": "vel"
       },
       {
-        "t": 17.35,
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.5,
+        "event": "place_on"
+      },
+      {
+        "t": 17.5,
+        "event": "swing"
+      },
+      {
+        "t": 17.5,
         "event": "vel"
       },
       {
         "t": 17.55,
-        "event": "vel"
+        "event": "job"
       },
       {
         "t": 17.6,
         "event": "vel"
       },
       {
-        "t": 17.8,
+        "t": 17.7,
+        "event": "place_on"
+      },
+      {
+        "t": 17.7,
+        "event": "swing"
+      },
+      {
+        "t": 17.75,
+        "event": "job"
+      },
+      {
+        "t": 17.9,
         "event": "vel"
       },
       {
@@ -923,63 +835,99 @@
         "event": "vel"
       },
       {
-        "t": 18.25,
+        "t": 18,
         "event": "vel"
       },
       {
-        "t": 18.3,
+        "t": 18.05,
+        "event": "place_on"
+      },
+      {
+        "t": 18.05,
+        "event": "swing"
+      },
+      {
+        "t": 18.1,
+        "event": "job"
+      },
+      {
+        "t": 18.15,
         "event": "vel"
       },
       {
-        "t": 18.5,
-        "event": "vel"
+        "t": 18.55,
+        "event": "place_on"
+      },
+      {
+        "t": 18.55,
+        "event": "swing"
       },
       {
         "t": 18.55,
         "event": "vel"
       },
       {
-        "t": 18.75,
+        "t": 18.6,
+        "event": "job"
+      },
+      {
+        "t": 18.65,
         "event": "vel"
       },
       {
-        "t": 18.9,
+        "t": 18.95,
         "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19.05,
+        "event": "place_on"
+      },
+      {
+        "t": 19.05,
+        "event": "swing"
+      },
+      {
+        "t": 19.05,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "job"
       },
       {
         "t": 19.2,
         "event": "vel"
       },
       {
-        "t": 19.3,
-        "event": "vel"
-      },
-      {
-        "t": 19.5,
-        "event": "vel"
+        "t": 19.55,
+        "event": "all_jobs"
       },
       {
         "t": 19.55,
         "event": "vel"
       },
       {
-        "t": 19.75,
+        "t": 19.65,
         "event": "vel"
       },
       {
         "t": 19.95,
-        "event": "faster"
-      },
-      {
-        "t": 19.95,
         "event": "vel"
       },
       {
-        "t": 20.25,
+        "t": 20,
         "event": "vel"
       },
       {
-        "t": 20.35,
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.2,
         "event": "vel"
       },
       {
@@ -987,11 +935,7 @@
         "event": "vel"
       },
       {
-        "t": 20.6,
-        "event": "vel"
-      },
-      {
-        "t": 20.8,
+        "t": 20.65,
         "event": "vel"
       },
       {
@@ -999,27 +943,23 @@
         "event": "vel"
       },
       {
-        "t": 21.25,
+        "t": 21,
         "event": "vel"
       },
       {
-        "t": 21.35,
+        "t": 21.05,
         "event": "vel"
       },
       {
-        "t": 21.5,
-        "event": "crowd"
+        "t": 21.2,
+        "event": "vel"
       },
       {
         "t": 21.55,
         "event": "vel"
       },
       {
-        "t": 21.6,
-        "event": "vel"
-      },
-      {
-        "t": 21.8,
+        "t": 21.65,
         "event": "vel"
       },
       {
@@ -1027,23 +967,27 @@
         "event": "vel"
       },
       {
-        "t": 22.25,
+        "t": 22,
         "event": "vel"
       },
       {
-        "t": 22.35,
+        "t": 22.05,
         "event": "vel"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.45,
+        "event": "faster"
       },
       {
         "t": 22.55,
         "event": "vel"
       },
       {
-        "t": 22.6,
-        "event": "vel"
-      },
-      {
-        "t": 22.8,
+        "t": 22.65,
         "event": "vel"
       },
       {
@@ -1051,11 +995,15 @@
         "event": "vel"
       },
       {
-        "t": 23.25,
+        "t": 23,
         "event": "vel"
       },
       {
-        "t": 23.35,
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.2,
         "event": "vel"
       },
       {
@@ -1063,15 +1011,7 @@
         "event": "vel"
       },
       {
-        "t": 23.6,
-        "event": "vel"
-      },
-      {
-        "t": 23.7,
-        "event": "tnt"
-      },
-      {
-        "t": 23.8,
+        "t": 23.65,
         "event": "vel"
       },
       {
@@ -1079,11 +1019,19 @@
         "event": "vel"
       },
       {
-        "t": 24.25,
+        "t": 24,
+        "event": "crowd"
+      },
+      {
+        "t": 24,
         "event": "vel"
       },
       {
-        "t": 24.35,
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.2,
         "event": "vel"
       },
       {
@@ -1095,7 +1043,7 @@
         "event": "vel"
       },
       {
-        "t": 24.8,
+        "t": 24.9,
         "event": "vel"
       },
       {
@@ -1103,23 +1051,15 @@
         "event": "vel"
       },
       {
-        "t": 25.25,
+        "t": 25,
         "event": "vel"
       },
       {
-        "t": 25.35,
+        "t": 25.15,
         "event": "vel"
       },
       {
         "t": 25.5,
-        "event": "swing"
-      },
-      {
-        "t": 25.5,
-        "event": "lit"
-      },
-      {
-        "t": 25.55,
         "event": "vel"
       },
       {
@@ -1127,7 +1067,7 @@
         "event": "vel"
       },
       {
-        "t": 25.8,
+        "t": 25.9,
         "event": "vel"
       },
       {
@@ -1135,15 +1075,19 @@
         "event": "vel"
       },
       {
-        "t": 26.25,
+        "t": 26,
         "event": "vel"
       },
       {
-        "t": 26.35,
+        "t": 26.15,
         "event": "vel"
       },
       {
-        "t": 26.55,
+        "t": 26.2,
+        "event": "tnt"
+      },
+      {
+        "t": 26.5,
         "event": "vel"
       },
       {
@@ -1151,23 +1095,19 @@
         "event": "vel"
       },
       {
-        "t": 26.8,
-        "event": "vel"
-      },
-      {
         "t": 26.9,
-        "event": "fuse_a"
+        "event": "vel"
       },
       {
         "t": 26.95,
         "event": "vel"
       },
       {
-        "t": 27.25,
+        "t": 27,
         "event": "vel"
       },
       {
-        "t": 27.35,
+        "t": 27.15,
         "event": "vel"
       },
       {
@@ -1175,27 +1115,35 @@
         "event": "vel"
       },
       {
-        "t": 27.6,
+        "t": 27.65,
         "event": "vel"
       },
       {
-        "t": 27.8,
-        "event": "vel"
+        "t": 27.95,
+        "event": "swing"
       },
       {
-        "t": 27.9,
-        "event": "fuse_b"
+        "t": 27.95,
+        "event": "lit"
       },
       {
         "t": 27.95,
         "event": "vel"
       },
       {
-        "t": 28.25,
+        "t": 27.95,
+        "event": "motion_start"
+      },
+      {
+        "t": 28,
         "event": "vel"
       },
       {
-        "t": 28.35,
+        "t": 28.05,
+        "event": "vel"
+      },
+      {
+        "t": 28.2,
         "event": "vel"
       },
       {
@@ -1203,11 +1151,7 @@
         "event": "vel"
       },
       {
-        "t": 28.6,
-        "event": "vel"
-      },
-      {
-        "t": 28.8,
+        "t": 28.65,
         "event": "vel"
       },
       {
@@ -1215,87 +1159,27 @@
         "event": "vel"
       },
       {
-        "t": 29.25,
+        "t": 29,
+        "event": "vel"
+      },
+      {
+        "t": 29.05,
+        "event": "vel"
+      },
+      {
+        "t": 29.2,
         "event": "vel"
       },
       {
         "t": 29.35,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.45,
-        "event": "vel"
-      },
-      {
-        "t": 29.5,
-        "event": "vel"
+        "event": "fuse_a"
       },
       {
         "t": 29.55,
         "event": "vel"
       },
       {
-        "t": 29.7,
-        "event": "vel"
-      },
-      {
-        "t": 29.75,
-        "event": "vel"
-      },
-      {
-        "t": 29.95,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 29.95,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 29.95,
-        "event": "vel"
-      },
-      {
-        "t": 29.95,
+        "t": 29.65,
         "event": "vel"
       },
       {
@@ -1307,351 +1191,27 @@
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.05,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.2,
         "event": "vel"
       },
       {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30.25,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.25,
-        "event": "vel"
-      },
-      {
-        "t": 30.25,
-        "event": "vel"
-      },
-      {
-        "t": 30.25,
-        "event": "vel"
-      },
-      {
-        "t": 30.25,
-        "event": "vel"
-      },
-      {
-        "t": 30.25,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "ring_boom"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.45,
-        "event": "vel"
-      },
-      {
-        "t": 30.45,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.45,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.45,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.45,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.45,
-        "event": "vel"
-      },
-      {
-        "t": 30.45,
-        "event": "vel"
-      },
-      {
-        "t": 30.5,
-        "event": "vel"
-      },
-      {
-        "t": 30.5,
-        "event": "vel"
-      },
-      {
-        "t": 30.5,
-        "event": "vel"
-      },
-      {
-        "t": 30.5,
-        "event": "vel"
-      },
-      {
-        "t": 30.5,
-        "event": "vel"
-      },
-      {
-        "t": 30.5,
-        "event": "vel"
+        "t": 30.35,
+        "event": "fuse_b"
       },
       {
         "t": 30.55,
         "event": "vel"
       },
       {
-        "t": 30.55,
-        "event": "vel"
-      },
-      {
-        "t": 30.55,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
-        "t": 30.6,
-        "event": "vel"
-      },
-      {
         "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.7,
-        "event": "vel"
-      },
-      {
-        "t": 30.7,
-        "event": "vel"
-      },
-      {
-        "t": 30.7,
-        "event": "vel"
-      },
-      {
-        "t": 30.8,
-        "event": "close_a"
-      },
-      {
-        "t": 30.8,
-        "event": "cut"
-      },
-      {
-        "t": 30.9,
-        "event": "vel"
-      },
-      {
-        "t": 30.9,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.9,
-        "event": "vel"
-      },
-      {
-        "t": 30.9,
-        "event": "vel"
-      },
-      {
-        "t": 30.9,
-        "event": "vel"
-      },
-      {
-        "t": 30.9,
         "event": "vel"
       },
       {
         "t": 30.95,
-        "event": "vel"
-      },
-      {
-        "t": 30.95,
-        "event": "vel"
-      },
-      {
-        "t": 30.95,
-        "event": "vel"
-      },
-      {
-        "t": 30.95,
-        "event": "vel"
-      },
-      {
-        "t": 30.95,
-        "event": "vel"
-      },
-      {
-        "t": 31,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31,
         "event": "vel"
       },
       {
@@ -1660,62 +1220,6 @@
       },
       {
         "t": 31.05,
-        "event": "vel"
-      },
-      {
-        "t": 31.05,
-        "event": "vel"
-      },
-      {
-        "t": 31.05,
-        "event": "vel"
-      },
-      {
-        "t": 31.05,
-        "event": "vel"
-      },
-      {
-        "t": 31.1,
-        "event": "vel"
-      },
-      {
-        "t": 31.1,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
         "event": "vel"
       },
       {
@@ -1723,43 +1227,7 @@
         "event": "vel"
       },
       {
-        "t": 31.3,
-        "event": "vel"
-      },
-      {
-        "t": 31.35,
-        "event": "vel"
-      },
-      {
-        "t": 31.35,
-        "event": "vel"
-      },
-      {
-        "t": 31.4,
-        "event": "vel"
-      },
-      {
         "t": 31.55,
-        "event": "vel"
-      },
-      {
-        "t": 31.55,
-        "event": "vel"
-      },
-      {
-        "t": 31.6,
-        "event": "vel"
-      },
-      {
-        "t": 31.6,
-        "event": "vel"
-      },
-      {
-        "t": 31.6,
-        "event": "vel"
-      },
-      {
-        "t": 31.6,
         "event": "vel"
       },
       {
@@ -1767,43 +1235,39 @@
         "event": "vel"
       },
       {
-        "t": 31.65,
+        "t": 31.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.7,
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.7,
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.75,
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.8,
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.85,
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.9,
+        "t": 31.95,
         "event": "vel"
       },
       {
-        "t": 31.9,
-        "event": "vel"
-      },
-      {
-        "t": 31.9,
-        "event": "vel"
-      },
-      {
-        "t": 31.9,
+        "t": 31.95,
         "event": "vel"
       },
       {
@@ -1819,7 +1283,7 @@
         "event": "vel"
       },
       {
-        "t": 32.05,
+        "t": 32,
         "event": "vel"
       },
       {
@@ -1828,98 +1292,10 @@
       },
       {
         "t": 32.05,
-        "event": "vel"
-      },
-      {
-        "t": 32.05,
-        "event": "vel"
-      },
-      {
-        "t": 32.05,
-        "event": "vel"
-      },
-      {
-        "t": 32.1,
-        "event": "vel"
-      },
-      {
-        "t": 32.15,
-        "event": "vel"
-      },
-      {
-        "t": 32.15,
-        "event": "vel"
-      },
-      {
-        "t": 32.15,
-        "event": "vel"
-      },
-      {
-        "t": 32.15,
         "event": "vel"
       },
       {
         "t": 32.2,
-        "event": "close_b"
-      },
-      {
-        "t": 32.2,
-        "event": "fired_all"
-      },
-      {
-        "t": 32.2,
-        "event": "vel"
-      },
-      {
-        "t": 32.2,
-        "event": "vel"
-      },
-      {
-        "t": 32.25,
-        "event": "vel"
-      },
-      {
-        "t": 32.25,
-        "event": "vel"
-      },
-      {
-        "t": 32.3,
-        "event": "vel"
-      },
-      {
-        "t": 32.3,
-        "event": "vel"
-      },
-      {
-        "t": 32.3,
-        "event": "vel"
-      },
-      {
-        "t": 32.35,
-        "event": "vel"
-      },
-      {
-        "t": 32.35,
-        "event": "vel"
-      },
-      {
-        "t": 32.4,
-        "event": "vel"
-      },
-      {
-        "t": 32.45,
-        "event": "vel"
-      },
-      {
-        "t": 32.5,
-        "event": "vel"
-      },
-      {
-        "t": 32.5,
-        "event": "vel"
-      },
-      {
-        "t": 32.5,
         "event": "vel"
       },
       {
@@ -1931,19 +1307,27 @@
         "event": "vel"
       },
       {
-        "t": 32.55,
+        "t": 32.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 32.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 32.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 32.65,
         "event": "vel"
       },
       {
-        "t": 32.55,
+        "t": 32.65,
         "event": "vel"
       },
       {
-        "t": 32.6,
-        "event": "vel"
-      },
-      {
-        "t": 32.6,
+        "t": 32.65,
         "event": "vel"
       },
       {
@@ -1959,15 +1343,59 @@
         "event": "vel"
       },
       {
-        "t": 32.7,
+        "t": 32.65,
         "event": "vel"
       },
       {
-        "t": 32.75,
+        "t": 32.65,
         "event": "vel"
       },
       {
-        "t": 32.85,
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
         "event": "vel"
       },
       {
@@ -1976,10 +1404,82 @@
       },
       {
         "t": 32.95,
+        "event": "ring_boom"
+      },
+      {
+        "t": 32.95,
         "event": "vel"
       },
       {
-        "t": 33.05,
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "vel"
+      },
+      {
+        "t": 33,
         "event": "vel"
       },
       {
@@ -1999,7 +1499,11 @@
         "event": "vel"
       },
       {
-        "t": 33.15,
+        "t": 33.1,
+        "event": "vel"
+      },
+      {
+        "t": 33.1,
         "event": "vel"
       },
       {
@@ -2011,39 +1515,115 @@
         "event": "vel"
       },
       {
-        "t": 33.2,
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_death"
+      },
+      {
+        "t": 33.45,
         "event": "vel"
       },
       {
-        "t": 33.25,
+        "t": 33.45,
         "event": "vel"
       },
       {
-        "t": 33.25,
+        "t": 33.45,
         "event": "vel"
       },
       {
-        "t": 33.3,
+        "t": 33.45,
         "event": "vel"
       },
       {
-        "t": 33.35,
+        "t": 33.45,
         "event": "vel"
       },
       {
-        "t": 33.4,
-        "event": "nitwit"
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
       },
       {
         "t": 33.5,
         "event": "vel"
       },
       {
+        "t": 33.55,
+        "event": "vel"
+      },
+      {
+        "t": 33.55,
+        "event": "vel"
+      },
+      {
         "t": 33.6,
         "event": "vel"
       },
       {
         "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.65,
+        "event": "vel"
+      },
+      {
+        "t": 33.65,
+        "event": "vel"
+      },
+      {
+        "t": 33.65,
         "event": "vel"
       },
       {
@@ -2051,11 +1631,35 @@
         "event": "vel"
       },
       {
-        "t": 33.75,
+        "t": 33.8,
         "event": "vel"
       },
       {
-        "t": 33.9,
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 34,
+        "event": "vel"
+      },
+      {
+        "t": 34,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
         "event": "vel"
       },
       {
@@ -2075,7 +1679,23 @@
         "event": "vel"
       },
       {
-        "t": 34.15,
+        "t": 34.1,
+        "event": "vel"
+      },
+      {
+        "t": 34.1,
+        "event": "vel"
+      },
+      {
+        "t": 34.1,
+        "event": "vel"
+      },
+      {
+        "t": 34.1,
+        "event": "vel"
+      },
+      {
+        "t": 34.1,
         "event": "vel"
       },
       {
@@ -2084,10 +1704,6 @@
       },
       {
         "t": 34.15,
-        "event": "vel"
-      },
-      {
-        "t": 34.2,
         "event": "vel"
       },
       {
@@ -2099,7 +1715,31 @@
         "event": "vel"
       },
       {
+        "t": 34.3,
+        "event": "vel"
+      },
+      {
+        "t": 34.3,
+        "event": "vel"
+      },
+      {
         "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.45,
+        "event": "gone"
+      },
+      {
+        "t": 34.45,
+        "event": "vel"
+      },
+      {
+        "t": 34.45,
         "event": "vel"
       },
       {
@@ -2107,11 +1747,55 @@
         "event": "vel"
       },
       {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.55,
+        "event": "vel"
+      },
+      {
+        "t": 34.55,
+        "event": "vel"
+      },
+      {
         "t": 34.6,
         "event": "vel"
       },
       {
         "t": 34.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.65,
+        "event": "vel"
+      },
+      {
+        "t": 34.65,
+        "event": "vel"
+      },
+      {
+        "t": 34.65,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
         "event": "vel"
       },
       {
@@ -2123,7 +1807,415 @@
         "event": "vel"
       },
       {
+        "t": 34.85,
+        "event": "vel"
+      },
+      {
         "t": 34.9,
+        "event": "vel"
+      },
+      {
+        "t": 34.95,
+        "event": "vel"
+      },
+      {
+        "t": 35,
+        "event": "vel"
+      },
+      {
+        "t": 35,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.2,
+        "event": "vel"
+      },
+      {
+        "t": 35.2,
+        "event": "vel"
+      },
+      {
+        "t": 35.25,
+        "event": "vel"
+      },
+      {
+        "t": 35.25,
+        "event": "vel"
+      },
+      {
+        "t": 35.3,
+        "event": "vel"
+      },
+      {
+        "t": 35.3,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.45,
+        "event": "vel"
+      },
+      {
+        "t": 35.5,
+        "event": "vel"
+      },
+      {
+        "t": 35.5,
+        "event": "vel"
+      },
+      {
+        "t": 35.55,
+        "event": "vel"
+      },
+      {
+        "t": 35.55,
+        "event": "vel"
+      },
+      {
+        "t": 35.6,
+        "event": "vel"
+      },
+      {
+        "t": 35.6,
+        "event": "vel"
+      },
+      {
+        "t": 35.65,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.75,
+        "event": "vel"
+      },
+      {
+        "t": 35.8,
+        "event": "vel"
+      },
+      {
+        "t": 35.9,
+        "event": "vel"
+      },
+      {
+        "t": 36,
+        "event": "vel"
+      },
+      {
+        "t": 36.05,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.2,
+        "event": "vel"
+      },
+      {
+        "t": 36.2,
+        "event": "vel"
+      },
+      {
+        "t": 36.25,
+        "event": "vel"
+      },
+      {
+        "t": 36.25,
+        "event": "vel"
+      },
+      {
+        "t": 36.25,
+        "event": "motion_settled"
+      },
+      {
+        "t": 36.25,
+        "event": "settle"
+      },
+      {
+        "t": 36.3,
+        "event": "vel"
+      },
+      {
+        "t": 36.3,
+        "event": "vel"
+      },
+      {
+        "t": 36.5,
+        "event": "vel"
+      },
+      {
+        "t": 36.6,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.75,
+        "event": "vel"
+      },
+      {
+        "t": 36.8,
+        "event": "vel"
+      },
+      {
+        "t": 37.05,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.2,
+        "event": "vel"
+      },
+      {
+        "t": 37.2,
+        "event": "vel"
+      },
+      {
+        "t": 37.25,
+        "event": "vel"
+      },
+      {
+        "t": 37.25,
+        "event": "vel"
+      },
+      {
+        "t": 37.3,
+        "event": "vel"
+      },
+      {
+        "t": 37.3,
+        "event": "vel"
+      },
+      {
+        "t": 37.5,
+        "event": "vel"
+      },
+      {
+        "t": 37.6,
+        "event": "vel"
+      },
+      {
+        "t": 37.7,
+        "event": "vel"
+      },
+      {
+        "t": 37.7,
+        "event": "vel"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.8,
+        "event": "vel"
+      },
+      {
+        "t": 38.05,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.2,
+        "event": "vel"
+      },
+      {
+        "t": 38.2,
+        "event": "vel"
+      },
+      {
+        "t": 38.25,
+        "event": "vel"
+      },
+      {
+        "t": 38.25,
+        "event": "vel"
+      },
+      {
+        "t": 38.3,
+        "event": "vel"
+      },
+      {
+        "t": 38.3,
+        "event": "vel"
+      },
+      {
+        "t": 38.5,
+        "event": "vel"
+      },
+      {
+        "t": 38.6,
+        "event": "vel"
+      },
+      {
+        "t": 38.7,
+        "event": "vel"
+      },
+      {
+        "t": 38.7,
+        "event": "vel"
+      },
+      {
+        "t": 38.75,
         "event": "end"
       }
     ]
@@ -2131,37 +2223,38 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/villager_fired",
-    "commit": "7208e2138563176f9bde6f997d6721d85a3d5d03",
+    "commit": "a43caa6a43f7eb7e5d014c18cba7a636488abf8b",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42978233768",
-    "rendered_at": "2026-11-11T07:31:17.460Z",
-    "head_at_publish": "34f72713bb92b965814232601191e699167d96f6",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43027779263",
+    "rendered_at": "2026-11-11T13:31:24.993Z",
+    "head_at_publish": "0fb94b41014705645843e2a0cb07849d7f5eebc0",
     "stunt": "stunts/villager_fired.js",
     "source_snapshot": [
       "source/villager_fired.js",
       "source/plateau.js",
       "source/story.js",
       "source/motion.js",
-      "source/sight.js"
+      "source/sight.js",
+      "source/act.js"
     ]
   },
   "rebuild": [
-    "git checkout 7208e2138563",
+    "git checkout a43caa6a43f7",
     "gunzip -c shorts/villager_fired/recording.json.gz > work/villager_fired.rec.json",
     "node render.js work/villager_fired.rec.json work/villager_fired.frames 60 1080 1011",
     "python3 audio.py work/villager_fired.rec.json work/villager_fired.wav",
-    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"ring_boom\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"nitwit\\\",\\\"now he is unemployable\\\",2,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"],[\"fired_all:0.45\",\"nitwit\",\"cut\"]] --punch [[\"nitwit\",0,1.1]] --zoom [[\"nitwit\",\"end\",1.4]] --flash [[\"nitwit\",0,0.5]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"nitwit\",0.3],[\"impact\",\"nitwit\"]] --start_at beat:-0.05 --end_after nitwit:1.0 --out out/villager_fired.mp4"
+    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"ring_boom\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"gone\\\",\\\"permanently\\\",1.5,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4]] --punch [[\"mob_death:0.6\",0,1.3]] --flash [[\"mob_death\",0,0.6],[\"mob_death:0.6\",0,0.9],[\"gone\",0,0.4]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"mob_death:0.6\",0.4],[\"gamedip\",\"mob_death:0.6\",0.35],[\"impact\",\"mob_death:0.6\",{\"gain\":1.3}],[\"pop\",\"gone\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/villager_fired.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); still wait before the nitwit change cut (lint), flash + punch + push-in and a song dip + impact on it, pop on the opening; 30.5 s; pace 0 blockers; self-review READY | independent review 2026-11-11: NOT READY, 2 blockers. (1) r:r24d99a (owner: never cut while the payoff is still moving): at 29.08 s (frame 1745) the edit hard-cuts from the blast (smoke, debris and primed TNT still in the air, 28.4-29.05 s) straight to the settled crater (speed cut fired_all:0.45 -> nitwit). Fix: let the blast settle on camera (cut later, after the debris lands) or hold the wide through it. (2) un-vanilla payoff (minecraft-audit): 'now he is unemployable' turns him into a nitwit (green robe, 29.5 s). In vanilla a villager whose job sites are gone reverts to unemployed (brown robe); nothing turns a villager into a nitwit, so this is the top comment. Also unexplained: he survives point-blank TNT with no visible reason (resistance by command, no particles). Fix: re-record the ending keeping him unemployed (brown robe) with a vanilla-true line ('0 jobs again'), or show the cause. Checked OK: job sites placed and broken with the crosshair on them, flint and steel on the TNT (r:rffba12); 30.5 s; pace 0 blockers. Nitpick: some job-site placements in the fast run happen just out of frame (butcher ~11.3 s: the smoker is never seen).",
-  "published_at": "2026-11-11T07:36:31.240Z",
+  "status": "ready",
+  "notes": "2026-11-11 backlog-finish worker: re-recorded after the settle fix (blast window 44 ticks, recording tail) so the ring's smoke has cleared before the end; he dies in the TNT ring (vanilla death, unemployed, no nitwit); flash/punch/dip/impact + game duck on the ring's last blast; 34.3 s; mixcheck OK, pace 0 blockers, check OK. Reviews: round 1 NOT READY (cut mid-blast, nitwit), round 2 READY (prev take), confirmation READY on this take (independent). Nitpicks: ends ~2.8 s after the last blast (settle rule); smoke fills the frame 2-3 frames at the peak; sub over smoke; crowd villagers flash red",
+  "published_at": "2026-11-11T13:41:24.419Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:36:56+00:00",
+    "version": 4,
+    "at": "2026-11-11T13:42:03+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.53 s vs the reviewed render 30.52 s"
+      "summary": "short.mp4 34.35 s vs the reviewed render 34.34 s"
     },
     "pace": {
       "ok": true,
@@ -2173,14 +2266,9 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:17:29.585Z",
+      "at": "2026-11-11T13:18:16.469Z",
       "report": "out/villager_fired.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "review_independent": {
-    "verdict": "NOT READY",
-    "at": "2026-11-11",
-    "notes": "independent review 2026-11-11"
   }
 }
