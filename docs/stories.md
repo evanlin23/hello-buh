@@ -292,6 +292,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing Galaxscat's "Minecraft Baby Zombie Moment" (caption "POV: A baby zombie found you",
+  31 s: a blur-fast chase that tears straight through stone walls, a pen of pigs and a row of mobs, through a village
+  house, out the other side and down into the Nether; nothing slows it): "whatever even is this".** HelloBuh saves it as
+  an exaggerated-mob-POV format (family `mobpov`): a mob players find annoying (the baby zombie's speed, the
+  creeper's sneak, the phantom's timing) blown up into an unstoppable, absurdly fast POV chase through everything.
 - **Owner, 2026-11-11, sharing Silly Willies' "We all have that one bro" (10 s, caption "That one friend when you
   start a new world": you're still standing at the first tree while your friend strips it in a blink and a whole house
   is already up behind you): "i think this is like hacking friend? like its a relatable beat, just exagerated".**

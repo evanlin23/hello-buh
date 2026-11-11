@@ -28,6 +28,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `desire` | YalkyGM: "Who tf is doing this" | One locked top-down shot: a dirt shortcut keeps appearing between two houses across a road; the town answers with a crosswalk, bush, tree, railway, walls, a boulder, a pond, lava, and the path always comes back | "desire paths format" | r:r2e0a32 | idea |
 | `herobrine` | Galaxscat: "Minecraft meme" ("I thougt he was just lagging") | A bridge fight over the void with a Steve-like player who stutters and rubber-bands like lag; his bridge breaks and he keeps standing on air, the white-eyed reveal, he drifts away | "secret herobrine" | r:r047388 | idea |
 | `friend` | Silly Willies: "We all have that one bro" ("That one friend when you start a new world") | A relatable multiplayer moment from your point of view, the friend exaggerated to the absurd (a tree gone in a blink, a full house already built); 10 s | "i think this is like hacking friend? like its a relatable beat, just exagerated" | r:ra64f79 | idea |
+| `mobpov` | Galaxscat: "Minecraft Baby Zombie Moment" ("POV: A baby zombie found you") | A blur-fast POV chase that tears through walls, mob pens and a house and down into the Nether; the annoying baby-zombie speed blown up to absurd | "whatever even is this" | r:r8048f1 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
