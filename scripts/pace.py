@@ -53,6 +53,12 @@ SAME_WARN = 5.0               # runaway (the benchmark) holds one picture 3.3 s 
 PAYOFF_WIN = 0.3
 TAIL_MAX, TEXT_TAIL = 1.0, (1.2, 1.8)
 LEN_MIN, LEN_WARN = 25.0, 45.0   # 25: no-pause narration at ~5.25 words/s runs 25-29 s (owner: no dramatic pauses)
+LEN_MIN_STUNT = 8.0   # an unnarrated stunt (lead 2026-11-11: the 25 s floor is the narration floor; the owner's "inside" format is 8-12 s)
+
+
+def length_floor(is_story):
+    """The shortest a Short may be: the narration floor for a story, the stunt floor otherwise."""
+    return LEN_MIN if is_story else LEN_MIN_STUNT
 
 
 # ---------------------------------------------------------------- measuring
@@ -258,8 +264,9 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             'drop "gap" (K.line defaults to 0.08 s); published stories keep theirs only so they render as before')
 
     # ---- 6. length
-    if dur < LEN_MIN:
-        add("BLOCK", "length", dur, f"{dur:.1f} s: under the 25 s minimum", "more beats (an escalating series), not slower ones")
+    floor = length_floor(is_story)
+    if dur < floor:
+        add("BLOCK", "length", dur, f"{dur:.1f} s: under the {floor:g} s minimum" + ("" if is_story else " for a stunt"), "more beats (an escalating series), not slower ones")
     elif is_story and dur > LEN_WARN:
         add("WARN", "length", dur, f"{dur:.1f} s: over 45 s for a story (owner wants them tight)", "cut the line/shot that adds least (see the slowest spans below), or end on the payoff")
 
