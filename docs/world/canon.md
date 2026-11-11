@@ -86,6 +86,7 @@ coast at Tidewater.
 | **Grandma's Island** | (-2374, 62, -630) | A natural sand-and-grass islet (13 x 17, at sea level) 92 blocks north-west of Gullwick's dock across open cold ocean (never frozen: L08 holds by vanilla). Grandma's cottage with one lit window facing the dock, her boat on the beach, since about day 350. | The Walk (4000, planned) |
 | **Highwall** | (-1594, 133, -524): the plaza bell | The walled village on a snowy plateau in the middle of the White (y 133-141), 40 blocks off the line of the old road between Frostgate and Ravenford. A stone-brick wall 40 high on day 3700 (top y 173, the road's landmark), no gate; a player's trading hall (12 x 52, 100 cells) on level ground outside its north side. No rendered Short within 450 blocks (Ravenford 452 west, Frostgate 812 east). | The Wall Grows (3700, planned) |
 | **Larkfield** | (-360, 116, -712): the bell | Jonah's village on the High Meadow's north-east top (built, not generated; a 90 x 90 box (-405..-316, -757..-668)). From day 4500 a torch on every sturdy top: **the glowing village**, seen from Dog Hill as a lit rim on the plateau's edge 185-190 blocks south-west. Every block is 181+ from D and 185+ from Hushwell's well, outside Dog on the Hill's, Good Boy's and Light Sleeper's render distance. | Six Thousand Torches (4500, planned) |
+| **Bramble Hollow** | (-598, 70, -1062) | A family homestead (two cottages, a field) in a hollow behind the dark oak ridge west of Oakend, out of sight of Fernbank; no name tags. Planned, not canon until made. | Pulled Away (6000, planned) |
 | **The Portal Cottage** | (-128, 85, -940): the cottage | A spruce cottage on the hill's south-east slope north of Hushwell, its garden looking down to the plaza (the boxed bell in view). The cellar, sunk under it on a ladder shaft, has a lit Nether portal in its east wall, a barrel of 25 years of barters ("Grandpa's Gifts") and obsidian patching the walls. the grandson and his grandma live here (not Buh's family). | Gold for the Portal (9300) |
 
 Regions: **the Green** (-620..-40, -1140..-300), **the White** (-1850..-640), **the West March** (-2400..-1860).
@@ -128,7 +129,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 4000 | Gullwick | **The Walk** (planned, not canon until made). Grandpa has broken the same lectern 300 times. This morning the librarian holds up Frost Walker, and he walks out across the sea to Grandma's window. |
 | 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Buh joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
 | 4500 | Larkfield | **Six Thousand Torches** (planned, not canon until made). Jonah, Larkfield's one player, puts a torch on every block of the village overnight, leaves his things in his friend's chest, sets his last torch by the kid's door and walks away. From here on Larkfield glows every night, and Dog Hill sees it. |
-| 6000 | Fernbank | **Pulled Away** (script, not canon until made). A player tows a villager kid from Oakend across the inlet in a boat: number forty. Fernbank is a village again, her Mom, her uncle and the old librarian at the dock. |
+| 6000 | Fernbank | **Pulled Away** (script, not canon until made). A player tows a villager kid from Bramble Hollow (a homestead behind the ridge west of Oakend) across the inlet in a boat: number forty. Fernbank is a village again, her Mom, her uncle and the old librarian at the dock. |
 | 9300 | The Portal Cottage | **Gold for the Portal.** the grandson throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
 
 ## Recurring characters
@@ -179,10 +180,10 @@ Batch 3 (scripts for owner audit; not canon until made):
 
 | who | story (place, day) | look | voice | status |
 |---|---|---|---|---|
-| the villager kid | Pulled Away (Oakend to Fernbank, 6000) | baby plains villager, no profession, a girl, never named | `narrator` (Leda) | cast |
-| the man | Pulled Away (Oakend to Fernbank, 6000) | player, nameless, no name tag, not Steve (new plain skin or a default the owner picks); not Remy | Algieba (unused) or Umbriel (Jonah's spare), audition against Pip on L05 | audition |
-| Mom (Oakend) | Pulled Away (6000) | plains villager, fletcher; silent | none | cast |
-| the uncle (Oakend) | Pulled Away (6000) | plains villager, butcher; silent | none | cast |
+| the villager kid | Pulled Away (Bramble Hollow to Fernbank, 6000) | baby plains villager, no profession, a girl, never named, no name tag | `narrator` (Leda) | cast |
+| the man | Pulled Away (Bramble Hollow to Fernbank, 6000) | player, nameless, no name tag, a new plain skin (commissioned at build), never Steve | Algieba (unused) or Umbriel (Jonah's spare), audition against Pip on L05 | audition |
+| Mom (Bramble Hollow) | Pulled Away (6000) | plains villager, fletcher; silent | none | cast |
+| the uncle (Bramble Hollow) | Pulled Away (6000) | plains villager, butcher; silent | none | cast |
 
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in

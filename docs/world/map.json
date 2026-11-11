@@ -2089,6 +2089,29 @@
    ],
    "status": "claimed 2026-11-11 by the_walk",
    "story_builds": "Grandma's cottage (one 3 x 2 glass-pane window facing the dock, lit) and her boat on the beach: the_walk's set, since about day 350"
+  },
+  "bramble_hollow": {
+   "name": "Bramble Hollow",
+   "kind": "homestead",
+   "region": "the_green",
+   "at": [
+    -598,
+    70,
+    -1062
+   ],
+   "footprint": [
+    -610,
+    -1075,
+    -585,
+    -1050
+   ],
+   "about": "A family homestead (two cottages, a field) in a hollow behind the dark oak ridge west of Oakend, out of sight of Fernbank and the North Inlet (the ridge blocks the view: verify on the survey and on stills before the build; ground y 70 is a placeholder). The villager kid's family lived here: Mom (fletcher), Uncle (butcher), the kid. No name tags (not Oakend's custom). A grassy run of about 140 blocks east over the ridge and along Oakend's north edge leads to the inlet's west bank (the flashback spot and the crossing at about (-452, 66, -1076)).",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "pulled_away"
+   ],
+   "status": "claimed 2026-11-11 by pulled_away"
   }
  },
  "stories": {
@@ -2318,13 +2341,11 @@
   "pulled_away": {
    "day": 6000,
    "places": [
-    "oakend",
+    "bramble_hollow",
     "fernbank"
    ],
    "cameos": [
-    "fernbank_golem",
-    "empty_boat",
-    "hellobuh_graves"
+    "empty_boat"
    ],
    "status": "script (batch 3), for the owner's audit; not canon until made"
   }

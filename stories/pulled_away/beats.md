@@ -1,4 +1,6 @@
-# pulled_away: beat sheet and clue map (r2)
+# pulled_away: beat sheet and clue map (r4)
+
+r4: the family lives at Bramble Hollow (a homestead behind the ridge, out of sight of Fernbank), not Oakend; lines unchanged.
 
 r2: critic r1 and continuity r1 applied (reviews/). Changes: the look across the water is a flashback (the first time he came); "Somebody left ONE light ON" (the misreading); "A PLAYER"; "So TODAY, I got in the BOAT and WAITED" (her own act); he tows her boat from his own; the reveal is one shot cut on EMPTY.
 
@@ -16,7 +18,7 @@ villager on the way to a trading hall. After the reveal: a villager on the way h
 librarian who has been alone across the water for years.
 
 **Spine.**
-1. Every few days, a man pulls one of Oakend's villagers away in a boat, and none of them comes back.
+1. Every few days, a player pulls one of the Hollow's villagers away in a boat, and none of them comes back.
 2. One evening it's the kid's turn: number forty.
 3. Because of that, she gets the best trip of her life: over the grass, across the water.
 4. Until finally the boat bumps into the old empty village, every window lit, and Mom is waiting at the dock.
