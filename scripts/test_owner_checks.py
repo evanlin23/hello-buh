@@ -73,6 +73,30 @@ class Settle(unittest.TestCase):
         tr = OC.debris_tracks(rec)
         self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("death", 20, 40))
 
+    def test_the_end_also_waits_out_the_rendered_blast_smoke(self):   # which_door: debris past "You Died!"
+        rec = self.rec([], [{"t": 30 * 50, "event": "particles", "type": "explosion", "x": 0.5, "y": 64, "z": -5}])
+        self.assertEqual(OC.debris_tracks(rec), [])
+        tr = OC.debris_tracks(rec, puffs=True)
+        self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("puff", 30, 30 + OC.PUFF_TICKS))
+        self.assertTrue(OC.moving(tr, 60, OC.pose_cam(rec)))
+        self.assertEqual(OC.settle_after(tr, 60, OC.pose_cam(rec)), 30 + OC.PUFF_TICKS + 1)
+
+
+class PaceTailMotion(unittest.TestCase):
+    """pace.tail_motion: the last 0.6 s of the game view; a still ending is ~0, a moving one blocks (which_door 3.3%)."""
+    def clip(self, src):
+        import subprocess, tempfile
+        out = pathlib.Path(tempfile.mkdtemp()) / "c.mp4"
+        subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", src, "-t", "1.5", "-pix_fmt", "yuv420p", str(out)], check=True)
+        return out
+
+    def test_still_and_moving_endings(self):
+        import pace
+        still = self.clip("color=c=0x553322:s=1080x1920:r=30")
+        moving = self.clip("testsrc2=s=1080x1920:r=30")
+        self.assertLess(pace.tail_motion(still, pace.probe_len(still)), pace.TAIL_STILL[0])
+        self.assertGreaterEqual(pace.tail_motion(moving, pace.probe_len(moving)), pace.TAIL_STILL[1])
+
 
 class PaceEditCaptions(unittest.TestCase):
     def test_subs_and_cards_count_as_caption_events(self):   # half_heart: "lava bridge", "almost there..." (nth 1)

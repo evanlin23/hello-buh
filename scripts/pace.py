@@ -142,6 +142,23 @@ def sound_hits(level, jump=10.0, floor=-38.0, gap=0.2):
     return hits
 
 
+TAIL_STILL = (0.3, 0.6)   # % of the game view changing per frame over the last 0.6 s: WARN / BLOCK (a settle ending)
+
+
+def tail_motion(video, dur, secs=0.6):
+    """The median % of the game view's pixels that change (> 20 grey levels at 270x253, 30 fps) frame to frame over the
+    last `secs` of the video. A still death screen or a settled crater is ~0; which_door's renderer debris still falling
+    past "You Died!" was 1.1-1.4%, villager_fired's blast smoke 7.6%, pickaxe_race's settled far blast 0.18%."""
+    w, h = 270, 253
+    cmd = ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, dur - secs - 1 / 30):.3f}", "-i", str(video), "-vf",
+           f"fps=30,crop={W}:{GAME_H}:0:{BAND},scale={w}:{h}:flags=area,format=gray", "-f", "rawvideo", "-"]
+    raw = subprocess.run(cmd, capture_output=True).stdout
+    f = np.frombuffer(raw, np.uint8)[: len(raw) // (w * h) * w * h].reshape(-1, h, w).astype(np.int16)
+    if len(f) < 3:
+        return None
+    return float(np.median((np.abs(np.diff(f, axis=0)) > 20).mean(axis=(1, 2)) * 100))
+
+
 def picture_events(P):
     """Cuts (a cut score well over its neighbours) and motion onsets (motion jumps to >= 2.2x the last second's
     median and >= 3 grey levels: something starts moving, a hit, an explosion, a whip pan) in seconds."""
@@ -334,7 +351,7 @@ def owner_checks_on(add, notes, rec, recp, clock, stunt, dur):
             add(lvl, "aim", clock.out_of_src(tick / 20), msg)
     else:
         notes.append(f"aim: not checked ({sres.get('error')})")
-    tracks = OC.debris_tracks(rec)
+    tracks = OC.debris_tracks(rec, puffs=True)   # (the end: the rendered smoke and debris count too)
     if not tracks:
         return lambda payoff: None
     cam = OC.pose_cam(rec)
@@ -362,7 +379,8 @@ def owner_checks_on(add, notes, rec, recp, clock, stunt, dur):
                + "): owner, let the last pillar of sand all fall before we end/cut (r:r24d99a)")
         note = (f"settle (r:r24d99a): the payoff's motion ({what}) settles at {out:.2f} s: the 1 s tail counts from there" if out is not None
                 else f"settle (r:r24d99a): the payoff's motion ({what}) is still going at the end")
-        return {"out": out, "end_out": round(dur, 2), "blocks": blocks, "msg": msg, "note": note}
+        return {"out": out, "end_out": round(dur, 2), "blocks": blocks, "msg": msg, "note": note,
+                "puff_only": bool(moving_end) and all(t["kind"] == "puff" for t in moving_end)}
     return settle
 
 
@@ -706,8 +724,21 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         tail = dur - max(payoff, st["out"] if st and st["out"] is not None else payoff)
         if st:
             notes.append(st["note"])
+        # the picture itself (the renderer's particles outlive the entities; which_door, independent review): a blast /
+        # fall / settle ending must be still in its last 0.6 s
+        tm = tail_motion(video, dur) if (st or str(edit.get("endAfter") or "").startswith("settle")) else None
+        if st:
             if st["blocks"]:
-                add("BLOCK", "settle", st["end_out"], st["msg"], "end after it settles (endAfter on a later mark, or a later offset), +1.0 s at most")
+                # only the rendered smoke left (by the recording's clock) and the picture is still: a far or small blast
+                lvl = "WARN" if st.get("puff_only") and tm is not None and tm < TAIL_STILL[0] else "BLOCK"
+                add(lvl, "settle", st["end_out"], st["msg"], "end after it settles (endAfter on a later mark, or a later offset), +1.0 s at most")
+        if tm is not None:
+            notes.append(f"the last 0.6 s: {tm:.2f}% of the game view changes per frame (a still ending is ~0)")
+            if tm >= TAIL_STILL[0]:
+                add("BLOCK" if tm >= TAIL_STILL[1] else "WARN", "settle", round(dur - 0.6, 2),
+                    f"the picture still moves in the last 0.6 s ({tm:.2f}% of the game view changes every frame: blast smoke, "
+                    "debris or the camera): owner, never end while the payoff is moving (r:r24d99a)",
+                    "re-record so the recording runs past the settle (lib/settle.js waits out the rendered smoke), or endAfter 'settle:1.0'")
         after = [f"{lid} at {t:.2f}" for t, lid in lines if t > payoff + 0.2]
         ok_hi, block_hi = (TEXT_TAIL[1], TEXT_TAIL[1] + 0.5) if text_payoff else (TAIL_MAX, TEXT_TAIL[1])
         if tail > ok_hi + 0.05:
