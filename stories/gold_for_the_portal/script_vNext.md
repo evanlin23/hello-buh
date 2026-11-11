@@ -16,7 +16,7 @@ Format rules:
 - **The question (by 3 s):** why tf has grandma thrown 9,000 gold ingots into a portal?
 - **Loop:** Cause and effect, made unambiguous by the new plant ("PIGLINS won't TOUCH you in GOLD"): a piglin wearing his helmet means Grandpa isn't wearing it. The gifts were barters, and line 1's 9,000 ingots bought them.
 - **The reveal and the cut:** New S14, no line: the piglin steps out, shaking, wearing the gold helmet with the blue stripe. Cut 1.0 s after the stripe reads. Drop Grandma's last toss (no epilogue).
-- **What changes from the current version:** "Nico" is gone. Grandma's lines are now narrated (one voice). The gold-protects plant is new; the obsidian-patch line is cut. The shot map is re-aligned (critic). One new shot (S14).
+- **What changes from the current version:** "the grandson" is gone. Grandma's lines are now narrated (one voice). The gold-protects plant is new; the obsidian-patch line is cut. The shot map is re-aligned (critic). One new shot (S14).
 - **Delivery: continuous, no dramatic pauses anywhere (owner: "the narrator just yaps on and on"). One take per beat, sentence after sentence from frame 0 to the cut; drama from the words and the picture, never from silence.**
 - **Length:** 128 words, ~24 s spoken at 5.25 words/s, plus ~1.5-2 s of reveal.
 

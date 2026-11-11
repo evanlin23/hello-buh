@@ -50,7 +50,7 @@ and carry the easter egg. Every set follows `docs/building_guide.md` and scores 
 |---|---|---|---|
 | S01 cellar (full figure, 4 blocks west of the portal) | the stone floor | Grandma full-figure beside the purple portal, the ingot crossing the sheet on frame 1 | the gold chest under a lantern at frame left, the obsidian-patched wall (the ladder is behind the camera) |
 | S02 ridge (ews crane, night, time 14500: the moon low, not overhead) | the garden fence and gate lanterns (crane end) | the cottage: lit window, chimney smoke, the open door with a faint purple glow from the hatch | the dark valley, the stream catching moonlight, forest on the far slope, hills |
-| S05 garden (wide, morning, camera north of the gate looking south) | fence, gate lanterns, flowers | Nico at the gate drinking, the cottage's corner at frame right | across the valley: Hushwell's plaza at frame right with its boxed bell (the easter egg), forest, hills into the haze |
+| S05 garden (wide, morning, camera north of the gate looking south) | fence, gate lanterns, flowers | the grandson at the gate drinking, the cottage's corner at frame right | across the valley: Hushwell's plaza at frame right with its boxed bell (the easter egg), forest, hills into the haze |
 | S07 cellar 25 years ago (wide; camera about (0.5,z2.8) aimed 95 degrees) | the ladder's bottom rungs on the left edge | Grandpa walking into the portal, Grandma beside it | the bare cellar wall, one lantern |
 
 ## The easter egg
@@ -69,7 +69,7 @@ It is never the subject, never named, and on screen only for S05's ~2 s. No carp
 | a cottage over a basement (hatch through the cottage floor) | not wired: the pieces are separate | ~30 min: place both on the same x/z, cut a trapdoor into the cottage floor over the basement's ladder | **build it** |
 | an item coming out of a portal / a villager throwing an item | staged: `/summon item` at the sheet (or at Grandma's hand) with `Motion`; vanilla items do cross portals and villagers do throw items | 0 | stage |
 | the piglin stepping out of the portal | staged: `K.actor` (NoAI piglin /tp'd every tick) from inside the sheet to the floor; portal particles render? check | 0-15 min | stage; check portal particles on a still |
-| Nico sitting (S13; camera at about (1.3,F+2.0,9.7), FOV 70, yaw 40, pitch -10; Nico on the bed's north-east corner, about x2.9 z9.0) and drinking (S05) | drink: the recorded use flag plays it; sit: `M.pose` is for player actors/mannequins | check whether the recording bot can take a `pose` mark in camera shots; if not, ~30 min | build if needed, or seat Nico on a stair-block "seat" with a mannequin in his skin |
+| the grandson sitting (S13; camera at about (1.3,F+2.0,9.7), FOV 70, yaw 40, pitch -10; the grandson on the bed's north-east corner, about x2.9 z9.0) and drinking (S05) | drink: the recorded use flag plays it; sit: `M.pose` is for player actors/mannequins | check whether the recording bot can take a `pose` mark in camera shots; if not, ~30 min | build if needed, or seat the grandson on a stair-block "seat" with a mannequin in his skin |
 | barrel screen with a custom title | exists (`container_png`, `contTitle`) | 0 | check the title renders |
 | the flashback grade (S06-S07) | per-shot look: check `stunt.shots[name].look` overrides the grade | 0-30 min | build if missing (a shot-level `grade`) |
 
