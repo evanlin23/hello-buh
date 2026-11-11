@@ -116,6 +116,6 @@
     "python3 edit.py --frames work/pearl_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pearl_clutch.rec.json --audio work/pearl_clutch.wav --caption \"POV: You Throw an Ender Pearl But...\" --red Throw --countdown \"glide_start:elytra_broke:Elytra About To Break:item/elytra\" --start 0.8 --song songs/misery.mp3 --song_drop_at teleported --out out/pearl_clutch.mp4"
   ],
   "status": "needs-fix",
-  "notes": "QA: the stunt (breaking elytra -> pearl) does not read; redesign before uploading",
+  "notes": "backlog worker A 2026-11-11: needs-fix, can't be saved standalone. Re-recorded on the current engine (the redesign: the block under you vanishes over a lava lake, a pearl mid-fall onto the island): the whole stunt is 3.7 s of footage (fall at 0.9 s, teleport at 2.7 s, end 1.0 s later), too thin to read even as a short Short, and the old elytra cut (this package's mp4) is the one QA said doesn't read. The same clutch is two tiers of clutch_harder (ready, 31.1 s; lava_crossing has a pearl too). Recommend retiring it (do not queue), or rebuilding it as a new 8-15 s format (e.g. three pearl clutches, each over a wider gap).",
   "published_at": "2026-11-06T08:15:57.010Z"
 }
