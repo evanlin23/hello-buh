@@ -2,6 +2,7 @@
 // behind it (a real mob with its own AI, difficulty normal); when it gets close the hiss starts,
 // the bot spins round to see it swelling right there... and it goes off. Death screen:
 // "HelloBuh was blown up by Creeper".
+const { plateau } = require('../lib/plateau')
 module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
@@ -15,16 +16,17 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
     await ctx.defaultRules()
-    for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 14} ${y0} ${z - 14} ${x + 14} ${y0 + 5} ${z + 14} air`)
-    await ctx.cmd(`/fill ${x - 14} ${floor} ${z - 14} ${x + 14} ${floor} ${z + 14} grass_block`)
-    await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z - 14} ${x + 14} ${floor - 1} ${z + 14} dirt`)
+    // a field levelled at the terrain's high percentile (lib/plateau): the old 29-block box cleared down to the
+    // start height left a cut dirt-and-stone wall right behind the creeper (frame review 2026-11-11)
+    const floor = await plateau(ctx, { x0: x - 32, x1: x + 32, z0: z - 32, z1: z + 32, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    this.x = x; this.z = z; this.floor = floor
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar([['oak_planks', 64], 'diamond_sword', ['bread', 16], ['torch', 32]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 25)       // facing north, looking at the ground ahead
+    await ctx.cmd('/effect give @s instant_health 1 10 true')   // full hearts (the last render started on 1.5 hearts)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
