@@ -52,14 +52,14 @@
 ## Places
 | place | where (from the east gate, canonical; x east, z south) | establishing shot |
 |---|---|---|
-| pasture | inside the palisade south of the east gate, ~40 x 30, oak fence, 60 sheep | S01 (EWS) |
+| pasture | inside the palisade south of the east gate, gate + (-29..-1, 13..40), 29 x 28, oak fence, 60 sheep | S01 (EWS) |
 | pasture gate | a fence gate in the east palisade at (0, 0, 15), a lantern post | S02, S03, S05, S06, S09, S10 |
 | east gate | canonical, logs, at (0, 0, 0) | S07, S08 |
 | fields and ford | east of the gates: fields, the ford at +40 | S07-S09 |
 | the birch woods | past the ford from +45; the clearing staged at +45..+56 (widen the footprint east to x <= -1975); birch stamped if the seed has none | S11-S13 |
 
 ## Cast and costume
-- **Grandpa (background only):** player actor, `zuri` skin, crossbow on his back or in hand as in Thirty-One Raids,
+- **Grandpa (background only):** player actor, `zuri` skin, empty-handed (the renderer can't draw a crossbow on the back),
   sitting on his bench (gate + (-7.5, 1, -8)) in S04, small and soft at 27 blocks; the slow walk if he moves. No line,
   no name, no look at the camera.
 - **The kid (narrator):** a player, `alex` skin, never named. POV in S09, S11, S12; small from behind, crossing the ford, in S10; her shoulder in S13. Hearts full,
@@ -102,7 +102,7 @@
   L12; everyone knows at S13.
 
 ## Numbers the picture must match
-- 60 sheep, all blue (S01); 1 white stray (S02); 1 red sheep (S06); 3 snaps (S08); 1 lamb.
+- 60 sheep, all blue (S01) (the canon `blue_flock` stamp's 8 count: summon 52 more, or kill the 8 first); 1 white stray (S02); 1 red sheep (S06); 3 snaps (S08); 1 lamb.
 
 ## The narrator
 The kid, first person, Pip's voice (cast `narrator`), past tense from L06. The narrator's sex is never said aloud; "she" in

@@ -361,8 +361,8 @@
       "place": "pasture",
       "size": "ews",
       "time": 1000,
-      "camera": "path: crane down from (-50, 20, 15) to (-38, 10, 15), west of the pasture, looking EAST at (-10, 0, 15). FOV 55. Moving from frame 1; every sheep 14+ blocks from the lens",
-      "frame": "fg: the pasture's west oak fence; subject: sixty blue sheep grazing, filling the middle third, at full scale; bg: the east palisade, the fields to the ford, the birch woods beyond, the Ridge with the old tower on the skyline (the easter egg). Morning. Every sheep blue, not one other colour; the lamb is one of the sixty, not singled out."
+      "camera": "path: crane down from (-50, 20, 26) to (-38, 10, 26), west of the pasture, looking EAST at (-15, 0, 26). FOV 55. Moving from frame 1; every sheep 14+ blocks from the lens",
+      "frame": "fg: the pasture's west oak fence; subject: sixty blue sheep grazing, filling the middle third, at full scale; bg: the east palisade, the fields to the ford, the birch woods beyond, the Ridge with the old tower on the skyline (geography, not the cameo). Morning. Every sheep blue, not one other colour; the lamb is one of the sixty, not singled out."
     },
     {
       "id": "S02",

@@ -33,12 +33,13 @@ gate (a fence gate, lantern post) in the palisade at (0, 0, 15).
 ## Pieces
 - **The pasture:** the canonical palisade, plus the oak-fence pasture (map.json `pasture`: gate + (-29..-1, 13..40),
   29 x 28; the old ~40 x 30 plan collided with the village) with its gate in the east palisade at (0, 0, 15).
-  Natural grass and slope (y 70-77 across it); no flattening beyond the fence line.
+  Natural grass and slope (y 67-78 along the south fence); no flattening beyond the fence line.
 - **S04's background (the cameo):** the camera at gate + (-13, 1.4, 18) looking north. Its axis runs over the pasture's
   north fence (top ~y 75.5 at z 13; keep the lens 1.4 up so the fence doesn't cut the window), the road, the yard's
   south fence (y 72) and into Grandpa's west south window at (-13, 74-75, -9). Inside, the totem wall's west column
   (frames at x -13, y 74-77, z -16) and the floor lantern under it make the glint. Open the window's trapdoor
-  shutters (they are). Grandpa sits on the bench (-8..-7, 72, -8), facing south, about 5 blocks right of the axis.
+  shutters (they are). Grandpa sits on the bench (-8..-7, 72, -8), turned east down the road (not at the lens), about 5 blocks right of the axis, no name plate (`playerNames` off).
+- **Check S04 on a still before recording** (continuity r6): the ground at (-13, 18) is y 74 on the survey, so the lens 1.4 up sits at ~76.4, over the north fence's top (75.0) and the window (y 74-76). The line to the bench grazes the generated house's corner (-10, 3) by ~0.2: if it clips Grandpa, stand him at (-9, 1, -6) instead; if the window is cut, raise the lens to 75.6+ absolute and put the sheep 4 blocks out.
 - **Lanterns:** on the pasture gate post, and on the palisade every 8 blocks along the east side.
 - **The flock:** 60 sheep summoned with `Color:11`. S02: one more with `Color:0` (white), dyed in shot. S06: one with
   `Color:14` (red). The lamb: a baby sheep (`Age:-24000`, refreshed so it never grows), `Color:11`,
