@@ -1454,13 +1454,15 @@ SPLIT_POS = (24, 479)      # the split timer's strip: top-left of the game area 
 
 def split_timer(spec, timeline, start, dur, outdir, fps=60):
     """edit.splits: a speedrun timer that times ONE attempt (owner r:r32b983, end_portal_job: "the timer should reset
-    every single time like we start a new ender portal"). spec {reset, split, of, endless}: the timer starts at 0:00.00 on
+    every single time like we start a new ender portal"). spec {reset, split, of, endless, hide}: the timer starts at 0:00.00 on
     every `reset` mark and runs in output time, freezes green on the next `split` mark (that attempt's time) with "n/of",
     holds until the next reset and starts again from 0; from the `endless` mark (optional) it starts from 0 once more,
-    red, "n/∞", and never stops. Returns (an image-sequence pattern of SW x SH strips, one per output frame, x, y)."""
+    red, "n/∞", and never stops; from the `hide` mark (optional) it is gone. Returns (an image-sequence pattern of SW x SH strips, one per output frame, x, y)."""
     sp = json.loads(spec) if isinstance(spec, str) else spec
     ev = lambda name: sorted(e["t"] / 1000 - start for e in timeline if e["event"] == name) if name else []
     resets, splits_, endless = ev(sp["reset"]), ev(sp.get("split")), ev(sp.get("endless"))
+    hide = ev(sp.get("hide"))                    # optional: the strip goes away from this mark (pickaxe_race's TNT finale
+    hide_at = hide[0] if hide else math.inf      # is no attempt: a frozen last split read as TNT's time, review 2026-11-11)
     runs = []                                    # (t0, t1 or None, n, endless)
     for i, a in enumerate(resets):
         nxt = resets[i + 1] if i + 1 < len(resets) else math.inf
@@ -1501,7 +1503,9 @@ def split_timer(spec, timeline, start, dur, outdir, fps=60):
     for i in range(int(math.ceil(dur * fps)) + 1):
         t = i / fps
         cur = [r for r in runs if r[0] <= t + 1e-6]
-        if not cur:                              # before the first attempt: 0:00.00, waiting
+        if t >= hide_at - 1e-6:
+            key = ("", None, "", None)
+        elif not cur:                              # before the first attempt: 0:00.00, waiting
             key = (fmt(0), WHITE, "", WHITE)
         else:
             a, b, n, endl = cur[-1]
@@ -1513,7 +1517,7 @@ def split_timer(spec, timeline, start, dur, outdir, fps=60):
                 key = (fmt(t - a), WHITE, f"{n - 1}/{of}" if n > 1 else "", GREEN)
         if key not in cache:
             path = outdir / f"split{len(cache)}.png"
-            strip(*key).save(path)
+            (Image.new("RGBA", (SW, SH), (0, 0, 0, 0)) if key[1] is None else strip(*key)).save(path)
             cache[key] = path
         (seq / f"s{i:05d}.png").hardlink_to(cache[key])
     return seq / "s%05d.png", SPLIT_POS
@@ -1814,7 +1818,7 @@ def main():
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
-    ap.add_argument("--splits", help='JSON {reset, split, of, endless}: a speedrun timer reset to 0 at every attempt (edit.splits)')
+    ap.add_argument("--splits", help='JSON {reset, split, of, endless, hide}: a speedrun timer reset to 0 at every attempt (edit.splits)')
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
