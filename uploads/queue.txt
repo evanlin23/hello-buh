@@ -37,8 +37,8 @@ water_vs_lava
 rainbow_sheep
 desire_town
 inside_library
-dilemma_mace   # first: owner's new format (dilemma), 2026-11-11
-race_grass_mycelium   # first: owner's new format (race), 2026-11-11
-mislabel_grandma   # first: owner's new format (mislabel), 2026-11-11
-hack_banner_door   # first: owner's new format (hack), 2026-11-11
-interrupt_lamps   # first: owner's new format (interrupt), 2026-11-11
+dilemma_mace   # new format, not pinned until the owner's review (dilemma), 2026-11-11
+race_grass_mycelium   # new format, not pinned until the owner's review (race), 2026-11-11
+mislabel_grandma   # new format, not pinned until the owner's review (mislabel), 2026-11-11
+hack_banner_door   # new format, not pinned until the owner's review (hack), 2026-11-11
+interrupt_lamps   # new format, not pinned until the owner's review (interrupt), 2026-11-11

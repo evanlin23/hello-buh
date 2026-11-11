@@ -220,6 +220,24 @@ class Coverage(unittest.TestCase):
         self.assertEqual(self.C.take_word_fails(caps, good), {})
         self.assertIn("L01", self.C.take_word_fails(caps, bad))
 
+    def test_a_base_mishearing_is_confirmed_by_small_en_before_it_blocks(self):
+        # dog_hill L16, 2026-11-11: whisper-base hears the kid's "Then he said:" as "Denny said?"; small.en hears it
+        caps = {"L16": ["Then he SAID:"], "L17": ["My village is COVERED in carpets."]}
+        base = {"L16": [("Denny", 0, .4), ("said?", .4, 1)], "L17": [(w, 0, 0) for w in "Nine thousand dogs bark".split()]}
+        fails = self.C.take_word_fails(caps, base)
+        self.assertEqual(set(fails), {"L16", "L17"})
+        small = {"L16": [("Then", 0, .4), ("he", .4, .5), ("said.", .5, 1)], "L17": base["L17"]}
+        asked = []
+        rehear = lambda ids: asked.extend(ids) or {k: small[k] for k in ids}
+        block, warn = self.C.confirm_word_fails(caps, fails, rehear)
+        self.assertEqual(asked, ["L16", "L17"])        # only the lines base failed are re-heard
+        self.assertEqual(set(block), {"L17"})          # small.en agrees it's wrong: still a BLOCK
+        self.assertEqual(set(warn), {"L16"})           # only base disagrees: a WARN
+        # small.en can't run: nothing is cleared
+        self.assertEqual(self.C.confirm_word_fails(caps, fails, lambda ids: None), (fails, {}))
+        # nothing failed: small.en isn't loaded at all
+        self.assertEqual(self.C.confirm_word_fails(caps, {}, lambda ids: self.fail("re-heard")), ({}, {}))
+
 
 class MinShow(unittest.TestCase):
     """story_track.min_show: no caption under 0.30 s (a merge within its line when it fits, else time borrowed from the
