@@ -159,6 +159,8 @@ module.exports = {
         return booms > 0 && ctx.died
       }
       if (i > 0) {   // cut to the next pile
+        // ...once the last pile's flung dirt has landed (rec_check settle, r:r24d99a: tier 3's flew 2.8 s), eyes drifting
+        for (let k = 0; k < 80 && ctx.tick - lastBoom < 60; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
         ctx.mark(`cut${n}a`)
         await tp(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)
         await bot.waitForTicks(4)
