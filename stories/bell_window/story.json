@@ -2,11 +2,11 @@
  "name": "bell_window",
  "stunt": "story_bell_window",
  "version": 2,
- "revision": "r3 (2026-11-11): the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
+ "revision": "r4 (2026-11-11): STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
  "caption": "why does the bell ring when I open my window 🔔",
- "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; tonight he leans out past the bell to see who rings it.",
+ "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he leans out past it to wave hi to the pale guy on the cliff.",
  "question": "why does the bell ring every time he opens his window?",
- "premise": "For three hundred nights, every time the kid opens his upstairs window, the village bell right outside it rings and every villager runs inside. Nobody's ever there. Mom: 'Shutters SHUT, honey.' Every morning there's an arrow in the bell post, which Mom pulls out. By day every window in the village is open except his. Up on the cliff, under an old oak, something white stands all day. Tonight the bell rings again and he leans out past it to see who rings it.",
+ "premise": "For three hundred nights, every time the kid opens his upstairs window, the village bell right outside it rings and the whole village runs inside. It only rings for his window, so he's sure the bell likes him and the villagers are shy. Mom: 'Shutters SHUT, honey' (he thinks she's afraid he'll catch a cold). Once the bell had a little feather sticking out of it, then poof, gone. Up on the cliff, under the old oak, there's a super pale guy who never leaves the shade. Tonight the bell rings again and he leans out past it to wave hi.",
  "twist": "Nobody rings the bell. A skeleton lives in the shade of the oak on the cliff (skeletons shelter from the sun) and shoots at the only player in the village whenever he shows himself: the kid at his open window. The bell hangs on the arrow's line between the oak and his window, so every arrow hits the bell (vanilla: a projectile rings a bell; a rung bell sends villagers indoors). The bell was a shield. Tonight he leans out past it, and the skeleton draws on him with nothing in between. Cut on the draw.",
  "key_color": "#E8C547",
  "mood": [
@@ -59,10 +59,11 @@
     "L02",
     "L03",
     "L04",
-    "L06",
+    "L05",
     "L07",
     "L08",
-    "L09"
+    "L09",
+    "L10"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -73,7 +74,7 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L05"
+    "L06"
    ],
    "direction": "[A warm mother around forty, low, calm and steady]"
   }
@@ -85,7 +86,6 @@
    "text": "Every time / I open my WINDOW, / the village / BELL RINGS.",
    "say": "Every time I open my window, the village bell RINGS.",
    "shot": "S01",
-   "punch": true,
    "shows": [
     {
      "what": [
@@ -100,13 +100,14 @@
      "word": "BELL"
     }
    ],
-   "direction": "puzzled and excited, one quick breath"
+   "punch": true,
+   "direction": "delighted, like it's a magic trick; one quick breath"
   },
   {
    "id": "L02",
    "who": "N",
-   "text": "And the WHOLE / village / runs INSIDE.",
-   "say": "And the whole village runs INSIDE.",
+   "text": "And the WHOLE / village / runs INSIDE. / Everybody's / so SHY.",
+   "say": "And the whole village runs inside. Everybody's so SHY.",
    "shot": "S01",
    "shows": [
     {
@@ -115,26 +116,44 @@
      ],
      "word": "VILLAGE"
     }
-   ]
+   ],
+   "direction": "giggly, fond of them"
   },
   {
    "id": "L03",
    "who": "N",
-   "text": "Three hundred NIGHTS. / And nobody's / ever THERE.",
-   "say": "Three hundred nights. And nobody's ever THERE.",
+   "text": "Three hundred NIGHTS, / and it only rings / for MY window.",
+   "say": "Three hundred nights, and it only rings for MY window.",
+   "shot": "S02",
+   "shows": [
+    {
+     "what": [
+      "spruce_trapdoor",
+      "glass_pane"
+     ],
+     "word": "WINDOW"
+    }
+   ],
+   "direction": "proud"
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "I think / the bell / LIKES me.",
+   "say": "I think the bell LIKES me.",
    "shot": "S02",
    "shows": [
     {
      "what": [
       "bell"
      ],
-     "word": "THERE"
+     "word": "BELL"
     }
    ],
-   "direction": "amazed, then spooked on the last word"
+   "direction": "sure of it, beaming"
   },
   {
-   "id": "L04",
+   "id": "L05",
    "who": "N",
    "text": "Mom just SAYS:",
    "say": "Mom just says:",
@@ -149,7 +168,7 @@
    ]
   },
   {
-   "id": "L05",
+   "id": "L06",
    "who": "Mom",
    "text": "Shutters SHUT, / honey.",
    "say": "Shutters SHUT, honey.",
@@ -165,51 +184,41 @@
    "direction": "warm and quick, firmer than she sounds"
   },
   {
-   "id": "L06",
+   "id": "L07",
    "who": "N",
-   "text": "One night / there was an ARROW / stuck in / the bell POST.",
-   "say": "One night there was an arrow stuck in the bell POST.",
+   "text": "She thinks / I'll catch / a COLD.",
+   "say": "She thinks I'll catch a COLD.",
    "shot": "S04",
+   "direction": "an eye-roll, cheerful"
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "text": "One night / the bell had a little / FEATHER / sticking OUT. / Then POOF. / GONE.",
+   "say": "One night the bell had a little feather sticking out. Then poof. GONE.",
+   "shot": "S05",
    "shows": [
     {
      "what": [
       "arrow"
      ],
-     "word": "ARROW"
+     "word": "FEATHER"
     },
     {
      "what": [
-      "oak_fence"
+      "bell"
      ],
-     "word": "POST"
+     "word": "BELL"
     }
    ],
-   "direction": "matter-of-fact, a little proud he noticed"
+   "direction": "amazed, a tiny magic-trick lift on the last word"
   },
   {
-   "id": "L07",
+   "id": "L09",
    "who": "N",
-   "text": "Every window / in the village / is OPEN. / Except MINE.",
-   "say": "Every window in the village is open. Except MINE.",
-   "shot": "S05",
-   "shows": [
-    {
-     "what": [
-      "spruce_trapdoor",
-      "glass_pane"
-     ],
-     "word": "WINDOW"
-    }
-   ],
-   "direction": "a small proud brag"
-  },
-  {
-   "id": "L08",
-   "who": "N",
-   "text": "Up on the CLIFF / there's an old OAK. / Something WHITE / stands under it / all DAY.",
-   "say": "Up on the cliff there's an old oak. Something white stands under it all DAY.",
+   "text": "Up on the CLIFF, / under the old OAK, / there's a guy / who's SUPER pale. / He never leaves / the SHADE.",
+   "say": "Up on the cliff, under the old oak, there's a guy who's super pale. He never leaves the SHADE.",
    "shot": "S06",
-   "punch": true,
    "shows": [
     {
      "what": [
@@ -222,18 +231,18 @@
      "what": [
       "skeleton"
      ],
-     "word": "WHITE"
+     "word": "PALE"
     }
    ],
-   "direction": "curious, a little scared on the white thing"
+   "punch": true,
+   "direction": "chatty, a little sorry for him, never scared"
   },
   {
-   "id": "L09",
+   "id": "L10",
    "who": "N",
-   "text": "Tonight / the bell RANG again. / So I LEANED out / PAST it.",
-   "say": "Tonight the bell rang again. So I leaned out PAST it.",
+   "text": "So tonight / the bell RANG, / and I leaned out / PAST it / to wave HI.",
+   "say": "So tonight the bell rang, and I leaned out past it to wave HI.",
    "shot": "S07",
-   "punch": true,
    "shows": [
     {
      "what": [
@@ -242,7 +251,8 @@
      "word": "BELL"
     }
    ],
-   "direction": "brave and fast, the last word up"
+   "punch": true,
+   "direction": "bright and friendly, the last word up; not scared"
   }
  ],
  "shots": [
@@ -270,14 +280,18 @@
    "frame": "THE AXIS, the single wide: his lit open window lower-centre, the bell just beyond it still swinging, the dark cliff and the oak beyond that: three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at night). The empty square, every door shut. Night 12000.",
    "look": {
     "time": 12000
-   }
+   },
+   "lines": [
+    "L03",
+    "L04"
+   ]
   },
   {
    "id": "S03",
-   "line": "L04",
+   "line": "L05",
    "lines": [
-    "L04",
-    "L05"
+    "L05",
+    "L06"
    ],
    "place": "bedroom",
    "size": "wide",
@@ -289,47 +303,59 @@
   },
   {
    "id": "S04",
-   "line": "L06",
-   "place": "bedroom",
-   "size": "full",
-   "camera": "pov at the open window, still, a small push",
-   "frame": "subject: an arrow stuck in the east bell post at (1, 5.6, -3), right at his eye level, 3 blocks out, its feathers toward the dark cliff; the bell beside it, still. bg: the cliff and the oak, dark. Night 12000. (Vanilla: a stuck arrow despawns after a minute, so it's only ever seen right after a ring.)",
+   "line": "L07",
+   "place": "square",
+   "size": "ews",
+   "camera": "at: (6, 3, -8) in the square looking south-west at his house and its neighbours, still",
+   "frame": "subject: the village by day, every window's shutters open but his (shut), the bell right in front of his; villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house. Day 6000.",
    "look": {
-    "time": 12000
-   }
+    "time": 6000
+   },
+   "lines": [
+    "L07"
+   ]
   },
   {
    "id": "S05",
-   "line": "L07",
-   "place": "square",
-   "size": "wide",
-   "camera": "at: (6, 3, -8) in the square looking south-west at his house and its neighbours, still",
-   "frame": "subject: the village by day, every window's shutters open but his (shut), the bell right in front of his; villagers working, unarmed (skeletons ignore villagers: only he is a target). The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house. Day 6000.",
+   "line": "L08",
+   "place": "bedroom",
+   "size": "full",
+   "camera": "pov at the open window, still, a small push",
+   "frame": "subject: the bell centred 3 blocks out at his eye level, an arrow stuck in its side, feathers toward the dark cliff (the kid calls it a feather); on 'POOF' a jump cut 1 min later: the arrow gone (vanilla: a stuck arrow despawns after a minute). bg: the cliff and the oak, dark. Night 12000.",
    "look": {
-    "time": 6000
-   }
+    "time": 12000
+   },
+   "lines": [
+    "L08"
+   ]
   },
   {
    "id": "S06",
-   "line": "L08",
+   "line": "L09",
    "place": "cliff",
    "size": "ews",
    "camera": "at: (0, 2, -2) by the bell looking up north at the oak on the rise (0, 10, -12), slow push",
    "frame": "subject: the oak on the cliff edge in full sun; in its dark shade a pale white figure standing still (the skeleton: a white shape at phone size, not yet readable as a skeleton, no bow visible). Day 6000.",
    "look": {
     "time": 6000
-   }
+   },
+   "lines": [
+    "L09"
+   ]
   },
   {
    "id": "S07",
-   "line": "L09",
+   "line": "L10",
    "place": "bedroom",
    "size": "full",
    "camera": "pov at the open window; on 'PAST' the pov steps out onto the porch roof one block east and leans forward (x +2, eye 5.6)",
-   "frame": "fg: the open shutters; on 'RANG' the bell rings 3 blocks ahead (the clang, doors slam below; an arrow thunks into the bell and drops); on 'PAST' the bell slides out of the frame's centre to the left and the cliff and the oak come clear, straight ahead, dark. Night 12000.",
+   "frame": "fg: the open shutters; on 'RANG' the bell rings 3 blocks ahead (the clang, doors slam below; an arrow thunks into the bell and sticks); on 'PAST' the pov steps out onto the porch roof and the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Night 12000.",
    "look": {
     "time": 12000
-   }
+   },
+   "lines": [
+    "L10"
+   ]
   },
   {
    "id": "S08",
@@ -367,10 +393,11 @@
   },
   "arrow": {
    "at": [
-    1,
-    5.6,
+    0,
+    6.5,
     -3
-   ]
+   ],
+   "note": "stuck in the bell's north side"
   },
   "oak": {
    "at": [

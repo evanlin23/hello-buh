@@ -1,17 +1,16 @@
-# bell_window: set plan (r3)
+# bell_window: set plan (r4)
 
 `world.build(ctx, { story: 'bell_window' })` builds canonical Saltmouth. Stamp the oak on the north rise (`since: 1700`), the bell frame (two oak-fence posts, the bell double_wall-mounted between them, nothing above it) and his two-storey house with a porch roof east of the upstairs window. No lantern under the oak: the night floor.
 
 ## The narration's claims, and what makes each true
 | claim (line) | true because | check |
 |---|---|---|
-| opening the window rings the bell (L01) | the skeleton (16-block follow range, shoots within 15) sees him the moment the shutters open; its arrow, aimed at his chest, hits the bell on the way | the line-up below |
+| opening the window rings the bell (L01); it only rings for his window (L03) | the skeleton (16-block follow range, shoots within 15) sees him the moment the shutters open; its arrow, aimed at his chest, hits the bell on the way | the line-up below |
 | the whole village runs inside (L02) | vanilla: any ring, a projectile's included, sets HEARD_BELL_TIME on villagers within 48 blocks and they go home | villagers out at 12000 (rest schedule starts then) |
-| nobody's ever there (L03) | the shooter is up the cliff, 13.7 blocks off, in the dark | S02 shows nothing readable on the cliff at night |
-| an arrow stuck in the bell post (L06) | a stray arrow (skeleton spread) hits the east post at his eye level; it despawns after a minute, so he only ever sees one right after a ring | S04 POV at the window |
-| every window open but his (L07) | skeletons don't target villagers; nobody else needs shutters | S05 by day |
-| something white under the oak all day (L08) | skeletons shelter in shade from the sun; the oak's shade never moves off it | S06 at 6000: the skeleton fully in shade, not burning |
-| he leaned out past the bell (L09) | he steps one block east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S08 |
+| it only rings for his window (L03) | he's the only player in Saltmouth; skeletons don't target villagers, so their open windows are safe | S04 by day (every shutter open but his) |
+| the bell had a little feather sticking out; then poof, gone (L08) | an arrow sticks in the bell block (its fletching toward the cliff) and despawns after 1200 ticks (one minute) | S05 POV, a jump cut |
+| a super pale guy under the oak who never leaves the shade (L09) | skeletons shelter in shade from the sun; the oak's shade never moves off it | S06 at 6000: fully in shade, not burning |
+| he leaned out past the bell to wave hi (L10) | he steps one block east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S07, S08 |
 
 ## The line-up check (the audit's must-changes 1 and 2), before anything else
 Local coordinates: origin = the square's ground under his window; the window faces north (-z).
