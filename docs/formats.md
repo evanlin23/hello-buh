@@ -27,6 +27,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `inside` | "Every Time I Snap" ("Why does my house always end up like this?") | One walk from a detailed interior out the door to a small plain house that cannot hold it; the cut is hidden, it is 11 s long, and the mismatch makes people replay to find the trick | "this one lends to replays, since its short and the inside differs from the outside so its confusing and the cut is not obvious" | r:r9a54b2 | idea |
 | `desire` | YalkyGM: "Who tf is doing this" | One locked top-down shot: a dirt shortcut keeps appearing between two houses across a road; the town answers with a crosswalk, bush, tree, railway, walls, a boulder, a pond, lava, and the path always comes back | "desire paths format" | r:r2e0a32 | idea |
 | `herobrine` | Galaxscat: "Minecraft meme" ("I thougt he was just lagging") | A bridge fight over the void with a Steve-like player who stutters and rubber-bands like lag; his bridge breaks and he keeps standing on air, the white-eyed reveal, he drifts away | "secret herobrine" | r:r047388 | idea |
+| `friend` | Silly Willies: "We all have that one bro" ("That one friend when you start a new world") | A relatable multiplayer moment from your point of view, the friend exaggerated to the absurd (a tree gone in a blink, a full house already built); 10 s | "i think this is like hacking friend? like its a relatable beat, just exagerated" | r:ra64f79 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -43,4 +44,6 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   a heart-shaped firework show.
 - **desire**: a shortcut through a farm, across a moat, over a lava trench, through a mansion; each obstacle
   absurder than the last, the path reappearing every time.
+- **friend**: the friend who already has full diamond on day 1, who "borrows" your stuff, who builds a castle while
+  you build a dirt hut, who is AFK in the worst place, who always dies first.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.

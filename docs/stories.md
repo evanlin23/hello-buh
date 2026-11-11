@@ -292,6 +292,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing Silly Willies' "We all have that one bro" (10 s, caption "That one friend when you
+  start a new world": you're still standing at the first tree while your friend strips it in a blink and a whole house
+  is already up behind you): "i think this is like hacking friend? like its a relatable beat, just exagerated".**
+  HelloBuh adds a that-one-friend format (family `friend`): a relatable multiplayer moment ("that one friend
+  who..."), shown from your point of view with the friend's part exaggerated to the absurd; short and punchy.
 - **Owner, 2026-11-11, sharing Galaxscat's "Minecraft meme" (caption "I thougt he was just lagging": a bridge fight
   over the void with a Steve-looking player who stutters and rubber-bands like lag; his bridge breaks under him and
   he just keeps standing on air, the white-eyed reveal, then he drifts off into the sky): "secret herobrine".**

@@ -319,6 +319,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   round a beat, the path always wins. Check: owner. r:r2e0a32
 - **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
   the caption plays it as a normal complaint. Check: owner. r:r047388
+- **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
+  absurd; short. Check: owner. r:ra64f79
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
