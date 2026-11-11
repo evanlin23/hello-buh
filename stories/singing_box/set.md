@@ -21,14 +21,14 @@ are a first fit for the live check.
   his room, in his reach. Its note particle (y + 1.2 = -49.8) rises in the hole, visible from the tunnel.
 - **His room:** x -279..-273, z -692..-686 (7x7), floor y -53, air y -52..-49, torch-lit; his ladder in the south-west
   corner (not behind S13b's north-wall camera) up to his cottage. Nothing in it but him and the note block.
-- **The cottages:** hers (birch and cobble) by the shaft mouths; his (spruce) about 8 blocks north-east, its shuttered
+- **The cottages:** hers (birch and cobble) by the shaft mouths; his (spruce) 4-5 blocks north-east of where she stands in S10, its shuttered
   window facing the shaft mouths (S10). Both new.
 - **Earshot:** every point in the tunnel is within 15.4 blocks of the note block (r2 continuity).
 
 ## The easter egg (map.json, at build)
 `sheep_block` (with the door torches) and cameo `blue_sheep` end at day 1112; only `shaft_open` (a 1x1 hole) runs on.
 Add a stamp `door_torches` (the 5 torches from the Digger's door, since 700, no until) and a cameo `sheep_hole`
-(`needs: [shaft_open, door_torches]`, since 1112). S09 looks south-south-east from north-west of the shaft so the hole
+(`needs: [shaft_open, door_torches]`, since 1112). S09 looks south-east (~140 deg) from north-west of the shaft so the hole
 and torch line sit small at frame left.
 
 ## The narration's claims, and what makes each true

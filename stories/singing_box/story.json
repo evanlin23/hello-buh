@@ -2,7 +2,7 @@
  "name": "singing_box",
  "stunt": "story_singing_box",
  "version": 2,
- "revision": "r3 (2026-11-11): r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
+ "revision": "r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
  "caption": "where do her diamonds go 💎",
  "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, sure the box is just hungry, while she climbs out empty-handed every night; today it flies diamond 32, the biggest find yet, through the hole and finds the neighbor in diamond armour tapping the box.",
  "question": "why has she never had more than one diamond?",
@@ -159,12 +159,12 @@
   {
    "under": "S07",
    "sound": "block.note_block.harp",
-   "note": "two notes: 'SINGS' and 'CLOSE'"
+   "note": "two notes: one just before the allay enters (the true order), one on 'SINGS'; if ./hb owner flags the first as early, move it into the last second of S06"
   },
   {
    "under": "S10",
    "sound": "block.wooden_trapdoor.open",
-   "note": "his shutter bangs open before L11, slams on L12"
+   "note": "his shutter bangs open before L11 (S10), slams on 'BOOM' in L12 (S10b)"
   },
   {
    "under": "S12",
@@ -444,12 +444,12 @@
    ],
    "look": [
     {
-     "what": "Her",
-     "word": "EMPTY"
+     "what": "block:ladder",
+     "word": "NIGHT"
     },
     {
-     "what": "entity:allay",
-     "word": "NIGHT"
+     "what": "Her",
+     "word": "EMPTY"
     }
    ],
    "direction": "the bounce drops a little, puzzled"
@@ -485,7 +485,7 @@
    "who": "N",
    "text": "She's not / that LOUD. / The BOOM blocks are.",
    "say": "She's not that loud. The boom blocks ARE.",
-   "shot": "S10",
+   "shot": "S10b",
    "look": [
     {
      "what": "Her",
@@ -551,8 +551,8 @@
   {
    "id": "L15",
    "who": "N",
-   "text": "And the box SANG, / so I flew / right through / the little HOLE.",
-   "say": "And the box sang, so I flew right through the little HOLE.",
+   "text": "And the box SANG! / This one's too BIG / to throw, / so I flew it / right through / the HOLE.",
+   "say": "And the box sang! This one's too big to throw, so I flew it right through the HOLE.",
    "shot": "S13a",
    "shows": [
     {
@@ -560,6 +560,12 @@
       "note_block"
      ],
      "word": "SANG"
+    },
+    {
+     "what": [
+      "diamond"
+     ],
+     "word": "BIG"
     }
    ],
    "look": [
@@ -675,15 +681,24 @@
    "id": "S10",
    "line": "L11",
    "lines": [
-    "L11",
-    "L12"
+    "L11"
    ],
    "place": "cottages",
    "size": "ms",
    "time": "1499 dusk 12600",
-   "camera": "over her shoulder north-east to his cottage window (his cottage 4-5 blocks away, or FOV 30), still",
+   "camera": "over her shoulder north-east to his cottage window (his cottage 4-5 blocks away), still",
    "subject": "Neighbor",
-   "frame": "the neighbor (`efe` skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms all day; he says he sleeps by day); L12 over him slamming the shutter, her shoulder and head in frame-right fg. His face is the face of S13b."
+   "frame": "the neighbor (`efe` skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms all day; he says he sleeps by day); her shoulder and head in frame-right fg. His face is the face of S13b."
+  },
+  {
+   "id": "S10b",
+   "line": "L12",
+   "place": "cottages",
+   "size": "wide",
+   "time": "1499 dusk 12600",
+   "camera": "from her south-west, the same side of the line as S10, still",
+   "subject": "allay",
+   "frame": "she stands right of centre, main hand empty; the allay at her head, centred, the diamond in its hands; on 'BOOM' his shutter slams in the background left."
   },
   {
    "id": "S11",
@@ -713,7 +728,7 @@
    "time": "1500 (underground)",
    "camera": "follow cam behind the allay up to the hole; on 'HOLE' it passes through and the camera follows to the hole's mouth",
    "subject": "allay",
-   "frame": "on 'SANG' a note rises from the hole; the allay flies to it and through, over the note block, on 'HOLE'."
+   "frame": "on 'SANG' a note rises from the hole; on 'BIG' the allay hugs diamond 32 to itself; it flies to the hole and through, over the note block, on 'HOLE'."
   },
   {
    "id": "S13b",

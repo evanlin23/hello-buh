@@ -10,7 +10,7 @@ pickaxe and sword, taps the note block beside the hole; the allay drops diamond 
 - **Because of that** the allay decides to find her the biggest one yet.
 - **Until finally** it carries diamond 32 through the hole, to the neighbor wearing the other 31.
 
-## Beat sheet (Pip pace, ~2.9 words/s; 174 words, about 57 s; length is a note, not a target)
+## Beat sheet (Pip pace, ~2.9 words/s; 182 words, about 60 s; length is a note, not a target)
 | beat | ~time | picture | line | clue planted |
 |---|---|---|---|---|
 | hook | 0-4 s | the allay, big and centred, drops a diamond on a note block in a hole (S01) | L01 31 diamonds, never more than one | the box is in a hole; the drop |
@@ -23,7 +23,7 @@ pickaxe and sword, taps the note block beside the hole; the allay drops diamond 
 | the neighbor | 39-44 | the neighbor bangs his shutter open and shouts; the allay sticks up for her (S10) | L11, L12 | **he's right next door and claims he sleeps by day** (misread: the boom blocks are loud, not her) |
 | the turn | 44-48 | three TNT (S11) | L13 | the allay decides: the biggest one yet (the harder it helps, the more he gets) |
 | the climax | 49-51 | the big blast; diamond 32 caught in the air (S12) | L14 | |
-| reveal | 51-56 | the allay flies through the hole (S13a); his room: him in diamond, the tap, 32 lands (S13b) | L15, then the picture | the payoff: cut 0.8 s after 32 lands |
+| reveal | 51-57 | "too BIG to throw": the allay flies it through the hole (S13a); his room: him in diamond, the tap, 32 lands (S13b) | L15, then the picture | the payoff: cut 0.8 s after 32 lands |
 
 **The second the viewer gets ahead:** L08 ("they're GONE") for a hopper/lava guess; S10's grumpy neighbor for the real one (cold read: 35-60%, lava 25-50%).
 
