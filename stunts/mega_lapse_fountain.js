@@ -182,8 +182,8 @@ function lights () {
 // camera points: [seconds, x, y, z] (output seconds; y from the ground)
 module.exports = L.makeLapse({
   name: 'mega_lapse_fountain',
-  caption: 'the server asked me for a small fountain at spawn',
-  red: 'small',
+  caption: 'bro asked for a SMALL fountain at spawn 😭',   // (a reaction, not a label: r:r0f3da0; take 2's 'the server asked me for a small fountain at spawn')
+  red: 'SMALL',
   biome: 'minecraft:flower_forest',
   near: [-2757, -206],                    // a flower forest among hills (ground 63-83: mega_sponge's site), a real world round the city
   fieldBiome: 'minecraft:flower_forest',
