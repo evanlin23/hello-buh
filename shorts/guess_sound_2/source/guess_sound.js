@@ -109,6 +109,11 @@ module.exports = function guessSound (cfg) {
 
     async perform (ctx) {
       const { bot, Vec3 } = ctx
+      // the aimed actions and a followable camera (owner 2026-11-11, r:r38374d: "the camera moves around so quickly ...
+      // confusing to follow"): the turn round to the sound and the tilt up onto the mob are lib/act.js's governor, eased,
+      // at most TURN deg/s (the old 0.4 s ease turned at ~700 deg/s); the torch goes down only with the crosshair on the
+      // floor block it clicks. A stunt keeps its pace with edit cuts on the turn marks ('turn' -> 'turned'), not speed
+      const A = require('./act')(ctx, { turnSpeed: cfg.turnSpeed ?? 220, turnAccel: cfg.turnAccel ?? 1100 })
       const { x0, z, floor } = this
       const mobOf = (i) => Object.values(bot.entities).find(e => e.name === R[i].mob && Math.abs(e.position.x - (x0 + i * SPACING + 0.5)) < 2 && Math.abs(e.position.z - z) < 6)
       // listening in the dark: the player scans the room for the sound (left, right, a glance up), so
@@ -156,17 +161,20 @@ module.exports = function guessSound (cfg) {
         const e = bot.entity.position.offset(0, 1.62, 0), d = new Vec3(mob.position.x, headY, mob.position.z).minus(e)
         ctx.mark('turn', { n: i })
         const tz = z + 1, tx = cx + (r.torchDx || 0)   // (torchDx: off to the side, for a mob that walks up to you)
-        // ...looking down at the floor where the torch goes (you place on the face you target)...
-        const ft = new Vec3(tx + 0.5, floor + 1, tz + 0.5).minus(e)
-        await ctx.easeLook(Math.atan2(-ft.x, -ft.z), Math.atan2(ft.y, Math.hypot(ft.x, ft.z)), 400)
+        // ...looking down at the floor where the torch goes (you place on the face you target): the top face's
+        // middle, the crosshair on that block before the click...
+        const flr = { x: tx, y: floor, z: tz }
+        await A.aimAt(new Vec3(tx + 0.5, floor + 0.95, tz + 0.5), { on: flr, tol: 0.02, max: 60, strict: false })
+        ctx.mark('turned', { n: i })
         // ...put it down (the place mark lets the renderer predict it like the client)...
-        bot._client.write('block_place', { hand: 0, location: { x: tx, y: floor, z: tz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-        ctx.mark('place', { x: tx, y: floor + 1, z: tz })
-        bot.swingArm(); ctx.sound('block.wood.place', 1, 0.8)   // BlockItem: the sound type's pitch x 0.8
+        await A.click(flr, 1, [0.5, 1, 0.5], { deg: 0, also: () => {
+          ctx.mark('place', { x: tx, y: floor + 1, z: tz })
+          bot.swingArm(); ctx.sound('block.wood.place', 1, 0.8)   // BlockItem: the sound type's pitch x 0.8
+        } })
         ctx.mark('reveal', { n: i, mob: r.mob })
         const revealTick = ctx.tick
         // ...and tilt up onto what the light shows (aim a little above the head: the mob sits below the answer card)
-        await ctx.easeLook(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)) - (r.lookDown ?? -0.14), 300)
+        await A.turnTo({ yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) - (r.lookDown ?? -0.14) }, { tol: 0.03, max: 30 })
         let litTick = ctx.tick + 3
         bot.waitForTicks(3).then(() => { litTick = ctx.tick; ctx.mark('lit', { n: i }) })   // the relight lands a few ticks after the placement: the answer card waits for it
         if (i === last) ctx.mark('final_reveal')
