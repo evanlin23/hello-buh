@@ -298,6 +298,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "race"**: two vanilla spreaders race across one field, top-down time-lapse. Check: owner. r:rbe60ef
 - **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
   the same commit as its house rule. Check: owner. r:rc43770
+- **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
+  downloads each mp4 from its release (keeps the disk from filling). Check: owner. r:rc5eaf0
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

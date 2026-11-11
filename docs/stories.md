@@ -289,6 +289,10 @@ STANDARDS.md in the same commit.
   mycelium from another, a top-down time-lapse race; caption "Grass vs Fungus"): "timelapse grass vs fungus".**
   HelloBuh adds a spread-race format (family `race`): two vanilla things that spread (grass, mycelium, moss, sculk,
   vines, fire...) race across one big field in a top-down time-lapse; viewers pick a side and wait for the winner.
+- **Owner, 2026-11-11, on moving finished videos out of git history to GitHub Releases (permanent, no expiry, only
+  metadata in the repo) and dropping anvil_rain / lava_rising (they repeat it_rains and worse_lava): "sure we can do
+  that".** Finished Short mp4s live as GitHub Release assets; the videos branch keeps metadata; the uploader downloads
+  from the release. anvil_rain and lava_rising are dropped (status `dropped`), never uploaded.
 - **Owner, 2026-11-11: "please tell me ur saving all of the formats im sending you".** Every format the owner sends
   is saved in docs/formats.md (what the reference does, the owner's words, our family name, status), alongside its
   house rule here.
