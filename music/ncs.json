@@ -142,5 +142,16 @@
     "slug": "MortalsFunk",
     "mp3": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/001/836/mortals-funk-remix-1737075672-B868z8NMpI.mp3",
     "credit": "Song: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube"
+  },
+  {
+    "file": "executioner.mp3",
+    "title": "EXECUTIONER",
+    "artist": "DJ FKU",
+    "genre": "Phonk",
+    "slug": "EXECUTIONER",
+    "mp3": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/001/738/1723718204_7CFlBpXrJX_01-DJ-FKU---EXECUTIONER-NCS-Release.mp3",
+    "credit": "Song: DJ FKU - EXECUTIONER [NCS Release]\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/EXECUTIONER\nWatch: http://ncs.lnk.to/EXECUTIONERAT/youtube",
+    "pin_only": true,
+    "mood": "dark (ncs.io mood Dark): the cooked format's ominous drop (owner r:rcefdcc)"
   }
 ]

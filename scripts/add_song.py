@@ -30,7 +30,7 @@ def pick_ncs(name, at=0.0):
         f = (json.loads(m.read_text()).get("song") or {}).get("file")
         if m.parent.name != name and f in NCS:
             used[f] = used.get(f, 0) + 1
-    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists()]
+    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists() and not NCS[f].get("pin_only")]   # (pin_only: a format's own track, edit.ncs)
     if not have:
         sys.exit("no NCS tracks downloaded: python3 scripts/ncs.py --download")
     late = [f for f in have if song_drop(ROOT / "songs" / "ncs" / f) >= at - 0.05]
@@ -141,6 +141,9 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         if drop < at - 0.05:
             print(f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
     song_start = max(0.0, drop - at)
+    # edit.songLate: a track whose drop comes before the drop event starts late instead (silence, then the song) so the
+    # drop still lands on the event (format cooked: EXECUTIONER drops 7.0 s in, the flood is ~8.4 s into the Short)
+    late = max(0.0, at - drop) if stunt.get("songLate") and not stunt.get("story") and not gen else 0.0
     out = pathlib.Path(out_override) if out_override else d / "short.mp4"
     if stunt.get("story"):   # narrated story (docs/stories.md): the song is a quiet bed under the voice, master -14 LUFS
         song_start = max(0.0, drop - 1.0) if not gen else 0.0   # start a little before the drop: the bed builds into it
@@ -154,7 +157,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         kwin = key_sounds.windows(key_sounds.pcm(src), keys, kstop) if keys else []
         duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)) + kwin, key_sounds.DUCK)
         import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
-        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, BED_LUFS, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+        lat = f",adelay={int(round(late * 1000))}:all=1" if late else ""
+        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, BED_LUFS, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
                  f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
@@ -184,7 +188,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         credit, licence = "", "original (scripts/phonk.py), ours"
     else:
         credit, licence = f"Song: {t}{' · ' + a if a else ''}", "unlicensed: owner-supplied, expect a Content ID claim"
-    meta["song"] = {"file": f, "title": t, "artist": a, "licence": licence, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2)}
+    meta["song"] = {"file": f, "title": t, "artist": a, "licence": licence, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2),
+                    **({"song_enters_short_s": round(late, 2)} if late else {})}
     # rebuild the description: caption, credit, hashtags (any older song credit goes)
     yt = meta["youtube"]
     yt["description"] = meta.get("caption", name) + (f"\n\n{credit}" if credit else "") + "\n\n" + " ".join(yt.get("hashtags", []))

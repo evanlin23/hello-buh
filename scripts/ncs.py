@@ -66,6 +66,9 @@ if __name__ == "__main__":
     if "--download" not in sys.argv:
         CAT.parent.mkdir(exist_ok=True)
         cat = catalog()
+        # keep the hand-added tracks a format pins (pin_only: never in add_song's random pick; cooked's dark drop)
+        old = json.loads(CAT.read_text()) if CAT.exists() else []
+        cat += [t for t in old if t.get("pin_only") and t["file"] not in {c["file"] for c in cat}]
         CAT.write_text(json.dumps(cat, indent=2, ensure_ascii=False) + "\n")
         print(len(cat), "tracks ->", CAT)
     download(json.loads(CAT.read_text()))
