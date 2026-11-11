@@ -22,7 +22,9 @@ module.exports = {
   edit: {
     caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'settle:0.6',
     dropAt: 'boom',
-    sfx: [['air', 'first', 'boom', { gain: 0.4 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }]],
+    sfx: [['air', 'first', 'boom', { gain: 0.4 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }],
+      ['pop', 'fm1_open'], ['pop', 'fm2_open'], ['pop', 'fm3_open'],   // a hit as each popup opens (mixcheck: under the NCS bed the toast sound wasn't one)
+      ['riser', 'fm3_click', 'fm3_result', { gain: 0.35 }]],          // the roll builds (pace: the last third sagged); it ends 1.6 s before the dip
     popup: [
       FM.popup({ k: 1, mob: 'zombie', text: ['A ', ['Zombie', 'red'], ' is asking for permission to attack you.'], pick: 'Deny', done: ['Request ', ['DENIED', 'red'], '.'], y: 0.03 }),
       FM.popup({ k: 2, mob: 'skeleton', text: ['A ', ['Skeleton', 'red'], ' is asking for permission to shoot you.'], pick: 'Deny', hover: ['Allow', 'Deny'], done: ['Request ', ['DENIED', 'red'], '.'], y: 0.03 }),
