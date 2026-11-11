@@ -190,9 +190,10 @@ function run (h) {
   const swingsAt = new Set(tl.filter(e => e.event === 'ent_swing' || e.event === 'swing').map(e => Math.round(e.t / 50)))
   // a container window is up (the harness's container..container_close, the kit's gui_freeze..gui_thaw): the view holds
   // still by rule (docs/engine_features.md "Motion by construction": vanilla's mouse drives the cursor) and the screen
-  // itself is the action (the items, the hand on them), so that stretch is not "nobody moves"
+  // itself is the action (the items, the hand on them), so that stretch is not "nobody moves". The same for the
+  // vanilla death screen (death -> respawn): its text is the payoff a stunt ends on, and a dead player can't move
   const GUI = []
-  for (const [o, c] of [['container', 'container_close'], ['gui_freeze', 'gui_thaw']]) {
+  for (const [o, c] of [['container', 'container_close'], ['gui_freeze', 'gui_thaw'], ['death', 'respawn']]) {
     let a = null
     for (const e of tl) {
       if (e.event === o && a === null) a = e.t / 50
