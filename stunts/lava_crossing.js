@@ -1,6 +1,6 @@
 // "every way to cross lava (rated) 💀" (~17 s, four beats): a 5-wide lava river through a field.
 // The bot crosses it at four fresh spots, each a real survival technique, with a rating subtitle:
-//   1. bridging: sneak across placing cobblestone block by block (block_place on the face ahead)
+//   1. bridging: sneak to each edge and place cobblestone on its face (lib/act.js A.place)
 //   2. water bucket: pour water at the bank, it flows over the lava and turns it to obsidian,
 //      scoop the water back up, walk across
 //   3. ender pearl: thrown across (aimed by simulating vanilla's pearl flight, like pearl_clutch)
@@ -16,7 +16,7 @@ module.exports = {
   caption: 'every way to cross lava (rated) 💀',
   edit: {
     caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
-    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:-0.3', endAfter: 'death:1.15',
+    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:1.15',
     subs: [
       ['beat', 'bridging...', 9, 0], ['crossed', 'bridging: 6/10', 9, 0],
       ['beat', 'water bucket...', 9, 1], ['crossed', 'water bucket: 9/10', 9, 1],
@@ -25,7 +25,7 @@ module.exports = {
       ['death', ' ', 0.05, 0]       // blank: ends the rating as the death screen opens (it drew over the buttons)
     ],
     // pace: sound by 0.3 s (a whoosh into the first beat), a pop on each rating, a song dip + impact on the death
-    sfx: [['whoosh', 'beat'], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
+    sfx: [['whoosh', 'beat:0.4'], ['pop', 'place_on', { nth: 0, gain: 0.5 }], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
       ['dip', 'death', 0.3], ['impact', 'death']],
     // the sneak along the finished bridge to the bank (nothing new: review nitpick) at 2x
     speed: [['bridged', 'crossed', 2]]
@@ -136,9 +136,22 @@ module.exports = {
     bot.setControlState('forward', true)
     for (let k = 0; k < RIVER_W; k++) {
       const ref = new Vec3(lx, floor, zS - k)                     // the block the new one goes against
-      for (let w = 0; w < 60 && bot.entity.position.z - ref.z > 1.6; w++) await bot.waitForTicks(1)
-      // gated on the crosshair (lib/act.js: it is on the edge block underfoot ahead; r:rffba12)
-      await A.click(ref, 2, [0.5, 0.5, 0], { swing: true, also: () => ctx.sound('block.stone.place', 1, 0.8) })
+      // sneak out to the edge (sneaking stops there: the eye ends up just past the edge block's north face)...
+      for (let w = 0, last = null, still = 0; w < 80; w++) {
+        const pz = bot.entity.position.z
+        if (pz - ref.z < -0.2) break
+        still = last !== null && Math.abs(pz - last) < 0.005 ? still + 1 : 0
+        if (still >= 2 && pz - ref.z < 0.3) break   // stopped by the sneak at the edge (not the walk's first ticks)
+        last = pz
+        await bot.waitForTicks(1)
+      }
+      // ...and from there put the block into the lava cell ahead: aimed by construction (lib/act.js A.place, r:rffba12),
+      // the crosshair through the lava onto the river's stone bed under the cell (from the edge nothing is in the way;
+      // the ray goes through lava as in vanilla), the click on the bed's top face. The feet stop while the hand works
+      const cell = ref.offset(0, 0, -1)
+      bot.setControlState('forward', false)   // motion-ok: sneaking at the edge
+      await A.place(cell, { against: cell.offset(0, -1, 0), sound: 'block.stone.place' })
+      bot.setControlState('forward', true)   // motion-ok: on along the bridge
       await bot.waitForTicks(2)
       const b = bot.blockAt(ref.offset(0, 0, -1))
       if (!b || b.name !== 'cobblestone') { ctx.log('bridge block', k, 'not placed:', b && b.name); bot.clearControlStates(); return false }
@@ -216,7 +229,13 @@ module.exports = {
     bot.clearControlStates()
     bot.removeListener('physicsTick', onTick)
     if (!ctx.died) return false
-    await bot.waitForTicks(40)                                      // hold on the death screen
+    // hold on the death screen; the lava keeps popping embers in view behind it (vanilla LavaFluid.animateTick), so the
+    // backdrop isn't a still frame (rec_check held; keep_inventory leaves no drops to move)
+    const dp = bot.entity.position
+    for (let k = 0; k < 40; k++) {
+      if (k % 6 === 0) { ctx.particles('lava', { x: dp.x + ((k * 7) % 5 - 2) * 0.6, y: floor + 0.95, z: dp.z - 2.5 - (k % 3) }, { count: 2, spread: 0.8 }); ctx.sound('block.lava.pop', 0.5, 0.9 + (k % 3) * 0.1) }
+      await bot.waitForTicks(1)
+    }
     return ctx.died
   }
 }

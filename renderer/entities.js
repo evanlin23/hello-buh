@@ -45,13 +45,40 @@ async function texture (layers) {
   const c = document.createElement('canvas'); c.width = imgs[0].width; c.height = imgs[0].height
   const g = c.getContext('2d')
   for (const i of imgs) g.drawImage(i, 0, 0, c.width, c.height)
+  const real = layers[0].startsWith('entity/player/wide/real/')
+  const slimLayout = real && isSlimLayout(g, c.width)
+  if (real) opaqueBase(g, c.width, c.height)
   const t = new THREE.CanvasTexture(c)
   t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
   t.colorSpace = THREE.NoColorSpace
-  const out = { tex: t, w: c.width, h: c.height }
+  const out = { tex: t, w: c.width, h: c.height, slimLayout }
   texCache.set(key, out)
   return out
 }
+
+// A downloaded skin's base layer is drawn opaque (SkinTextureDownloader.processLegacySkin setNoAlpha on
+// (0,0)-(32,16), (0,16)-(64,32), (16,48)-(48,64)): a transparent base pixel shows its colour (black when empty),
+// never a hole; only the overlays (hat, jacket, sleeves, pants) are cut out by alpha. (scripts/fetch_skin.py does
+// the same to a Mojang fetch; the private-assets copy is the raw PNG.)
+function opaqueBase (g, w, h) {
+  const k = w / 64
+  for (const [x0, y0, x1, y1] of [[0, 0, 32, 16], [0, 16, 64, 32], [16, 48, 48, 64]]) {
+    const d = g.getImageData(x0 * k, y0 * k, (x1 - x0) * k, (y1 - y0) * k)
+    for (let i = 3; i < d.data.length; i += 4) d.data[i] = 255
+    g.putImageData(d, x0 * k, y0 * k)
+  }
+}
+// A skin painted for slim arms but uploaded as classic (no "slim" in its Mojang profile: 56e's, 2026-11-11) leaves
+// the wide arm's 4th column empty: the right arm's back face x 54-55 and bottom x 50-51, the left arm's x 46-47 and
+// 42-43. The game would draw those as black stripes down the arms (setNoAlpha); we draw the slim arms the art is
+// for, so the owner's skin looks like the skin they made rather than a texture glitch.
+function isSlimLayout (g, w) {
+  const k = w / 64
+  const clear = (x, y, ww, hh) => { const d = g.getImageData(x * k, y * k, ww * k, hh * k).data; for (let i = 3; i < d.length; i += 4) if (d[i]) return false; return true }
+  return clear(54, 20, 2, 12) && clear(50, 16, 2, 4) && clear(46, 52, 2, 12) && clear(42, 48, 2, 4) && !clear(50, 20, 4, 12)
+}
+// a real player skin (render.js 'real/<name>', lib/skins.js), as the entity layer loads it: also the first-person arm's
+export const skinTexture = (skin) => texture([`entity/player/wide/${skin}`])
 
 // an armour trim (PalettedPermutations atlas source): the greyscale pattern's pixels matching trims/color_palettes/
 // trim_palette's 8 keys are replaced by the material palette's 8 colours, alpha kept
@@ -281,6 +308,13 @@ const PLAYER_PARTS = [
   ['leftLeg', null, [1.9, 12, 0], [[[-2, 0, -2], [4, 12, 4], [16, 48], 0]]],
   ['leftPants', 'leftLeg', [0, 0, 0], [[[-2, 0, -2], [4, 12, 4], [0, 48], 0.25]]]
 ]
+// PlayerModel with slim arms (a skin whose profile says model "slim"): 3 px wide, half a pixel lower
+// (PlayerModel.createMesh(slim): arms addBox(-2|-1, -2, -2, 3, 12, 4) at offset (-+5, 2.5, 0))
+const PLAYER_PARTS_SLIM = PLAYER_PARTS.map(p => {
+  if (p[0] === 'rightArm' || p[0] === 'rightSleeve') return [p[0], p[1], p[0] === 'rightArm' ? [-5, 2.5, 0] : p[2], [[[-2, -2, -2], [3, 12, 4], p[3][0][2], p[3][0][3]]]]
+  if (p[0] === 'leftArm' || p[0] === 'leftSleeve') return [p[0], p[1], p[0] === 'leftArm' ? [5, 2.5, 0] : p[2], [[[-1, -2, -2], [3, 12, 4], p[3][0][2], p[3][0][3]]]]
+  return p
+})
 function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null) {
   const root = new THREE.Group()            // world: position + Ry + death Rz
   const model = new THREE.Group()           // S(-1,-1,1) S(0.9375) T(0,-1.501,0) S(1/16)
@@ -917,7 +951,9 @@ export class EntityLayer {
       const t = await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
       const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
-      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
+      // a real skin (render.js: skin 'real/<name>', lib/skins.js): its own slim or wide arms; the hat, jacket,
+      // sleeves and pants overlays are PLAYER_PARTS' grown cubes, cut out by the skin's alpha like vanilla
+      if (t) { const b = buildPlayer(t, extra && (extra.slim || t.slimLayout) ? PLAYER_PARTS_SLIM : undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
     } else if (name === 'item' && extra && extra.special && this.itemFactory) {
       // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
       // display, turned about y by the spin (render.js)

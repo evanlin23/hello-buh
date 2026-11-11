@@ -21,7 +21,7 @@ fi
 S=work/server
 cp server.properties "$S/server.properties"
 echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEULA), accepted for this private server
-python3 make_ops.py HelloBuh,Milo,Buh "$S/ops.json"   # Milo/Buh: a stunt's botName (lib/harness.js)
+python3 make_ops.py 56e,HelloBuh,Milo,Buh "$S/ops.json"   # Milo/Buh: a stunt's botName (lib/harness.js)
 # fresh world every run; KEEP_WORLD=1 keeps it (movie scenes that share one set: build it once, docs/movie_engine.md)
 [ "${KEEP_WORLD:-0}" = 1 ] || rm -rf "$S/world"
 rm -f "$S/console" && mkfifo "$S/console"

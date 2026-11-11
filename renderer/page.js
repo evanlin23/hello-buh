@@ -1,7 +1,7 @@
 // Renders pre-meshed Minecraft sections the way the game's default settings look, one frame on
 // demand. Driven by render.js through window.HB; nothing animates on its own.
 import * as THREE from 'three'
-import { EntityLayer } from '/entities.js'
+import { EntityLayer, skinTexture } from '/entities.js'
 import { BlockEntityLayer } from '/blockentities.js'
 // Render-distance fog uses fog_cylindrical_distance from the jar's shaders/include/fog.glsl:
 // max(length(xz), abs(y)). three.js fogs by view depth. An earlier version here used length(xz) alone
@@ -1545,33 +1545,51 @@ async function thirdPersonItem (h) {
   obj.add(inner)
   return { obj, mat }
 }
-// The bare arm when nothing is held (ItemInHandRenderer.renderPlayerArm + PlayerModel.rightArm,
-// default wide Steve skin). Model units are pixels (1/16 block), used as-is like the game does.
-let ARM = null
-async function armObject () {
-  if (ARM) return ARM
-  const t = await loadTexture('/assets/env/entity/player/wide/steve.png')
-  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
-  const g = new THREE.BoxGeometry(4 / 16, 12 / 16, 4 / 16)
-  // box UV at (40,16), size 4x12x4 on a 64x64 skin; BoxGeometry face order: +x, -x, +y, -y, +z, -z
+// The bare arm when nothing is held (ItemInHandRenderer.renderPlayerArm + PlayerModel.rightArm and rightSleeve).
+// Model units are pixels (1/16 block), used as-is like the game does. Without h.skin it is the jar's wide Steve arm
+// alone, as published Shorts drew it; a real skin (render.js cam.hand.skin, lib/skins.js) gets its own arm, slim
+// (3 px) or wide, and the sleeve overlay (0.25 px bigger, cut out by alpha) like vanilla.
+const ARMS = new Map()
+function armBox (w, h, d, grow, u, v) {
+  const g = new THREE.BoxGeometry((w + 2 * grow) / 16, (h + 2 * grow) / 16, (d + 2 * grow) / 16)
+  // box UV at (u,v) on a 64x64 skin; BoxGeometry face order: +x, -x, +y, -y, +z, -z
   // model space is y-down: y=0 (the shoulder, the skin's sleeve rows) is our -y end, so side faces run
   // top-down from -y and the 'top' rect goes on -y, the 'bottom' (the fist) on +y
-  const rect = { px: [48, 20, 4, 12], nx: [40, 20, 4, 12], py: [48, 16, 4, 4], ny: [44, 16, 4, 4], pz: [44, 20, 4, 12], nz: [52, 20, 4, 12] }
+  const rect = { px: [u + d + w, v + d, d, h], nx: [u, v + d, d, h], py: [u + d + w, v, w, d], ny: [u + d, v, w, d], pz: [u + d, v + d, w, h], nz: [u + 2 * d + w, v + d, w, h] }
   const uv = g.attributes.uv, order = ['px', 'nx', 'py', 'ny', 'pz', 'nz']
   for (let f = 0; f < 6; f++) {
-    const [u, v, w, h] = rect[order[f]]
+    const [ru, rv, rw, rh] = rect[order[f]]
     for (let k = 0; k < 4; k++) {
       const i = f * 4 + k, a = uv.array[i * 2], b = uv.array[i * 2 + 1]
-      uv.array[i * 2] = (u + a * w) / 64; uv.array[i * 2 + 1] = (v + (f === 2 || f === 3 ? 1 - b : b) * h) / 64   // flipY off: v runs top-down; sides flipped (y-down model)
+      uv.array[i * 2] = (ru + a * rw) / 64; uv.array[i * 2 + 1] = (rv + (f === 2 || f === 3 ? 1 - b : b) * rh) / 64   // flipY off: v runs top-down; sides flipped (y-down model)
     }
   }
   uv.needsUpdate = true
+  return g
+}
+async function armObject (skin = null, slim = false) {
+  const ck = skin ? `${skin}|${slim ? 'slim' : 'wide'}` : ''
+  if (ARMS.has(ck)) return ARMS.get(ck)
+  const st = skin ? await skinTexture(skin) : null
+  if (st && st.slimLayout) slim = true   // a slim-painted skin uploaded as classic (entities.js isSlimLayout)
+  const t = st ? st.tex : await loadTexture('/assets/env/entity/player/wide/steve.png')
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
+  const w = slim ? 3 : 4
   const mat = new THREE.MeshBasicMaterial({ map: t, alphaTest: 0.1 })
-  const mesh = new THREE.Mesh(g, mat)
-  mesh.position.set(-6 / 16, 6 / 16, 0)      // the cube's centre: pivot (-5,2,0) + (-3..1, -2..10, -2..2)
-  const obj = new THREE.Group(); obj.add(mesh); obj.matrixAutoUpdate = false
-  ARM = { obj, mat }
-  return ARM
+  const obj = new THREE.Group(); obj.matrixAutoUpdate = false
+  // the cube's centre: pivot (-5, 2, 0) + (-3..1, -2..10, -2..2) wide; pivot (-5, 2.5, 0) + (-2..1, -2..10, -2..2) slim
+  const cx = slim ? -5.5 : -6, cy = slim ? 6.5 : 6
+  const mesh = new THREE.Mesh(armBox(w, 12, 4, 0, 40, 16), mat)
+  mesh.position.set(cx / 16, cy / 16, 0); obj.add(mesh)
+  if (skin) {   // the sleeve (rightSleeve: the same box grown 0.25 at (40, 32)); both sides drawn (entityCutoutNoCull)
+    const sm = new THREE.MeshBasicMaterial({ map: t, alphaTest: 0.1, side: THREE.DoubleSide })
+    const sleeve = new THREE.Mesh(armBox(w, 12, 4, 0.25, 40, 32), sm)
+    sleeve.position.copy(mesh.position); obj.add(sleeve)
+    sleeve.onBeforeRender = () => sm.color.copy(mat.color)   // lit like the arm
+  }
+  const r = { obj, mat }
+  ARMS.set(ck, r)
+  return r
 }
 
 let darkQuad = null, darkScene = null, darkCam = null
@@ -1580,7 +1598,7 @@ async function drawHand (cam) {
   const h = cam.hand
   if (!h || cam.dead) return false
   if (!h.key) {   // empty hand: the arm
-    const r = await armObject()
+    const r = await armObject(h.skin || null, !!h.slim)
     const a = h.swing || 0, g = Math.sqrt(a)
     const M = HAND_TURN.clone().multiply(new THREE.Matrix4().makeTranslation(-0.3 * Math.sin(g * Math.PI) + 0.64, 0.4 * Math.sin(g * Math.PI * 2) - 0.6 + (h.equip || 0) * -0.6, -0.4 * Math.sin(a * Math.PI) - 0.72))
     M.multiply(new THREE.Matrix4().makeRotationY(45 * D2R))
