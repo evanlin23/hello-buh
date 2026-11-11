@@ -1,0 +1,168 @@
+{
+ "stunt": "water_vs_lava",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/water_vs_lava.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "7 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 126,
+     "col": 7,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 133,
+     "col": 7,
+     "text": "bot.setControlState('forward', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 169,
+     "col": 15,
+     "text": "await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.3, true)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 173,
+     "col": 9,
+     "text": "bot.setControlState('forward', f > 0.35); bot.setControlState('back', f < -0.35)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 174,
+     "col": 9,
+     "text": "bot.setControlState('right', rr > 0.35); bot.setControlState('left', rr < -0.35)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 185,
+     "col": 7,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 187,
+     "col": 7,
+     "text": "bot.setControlState('forward', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  [edit   ]                         speed span run4a..run4b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run5a..run5b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run6a..run6b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run7a..run7b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run8a..run8b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run9a..run9b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run10a..run10b skipped (event missing or empty)",
+    "  [edit   ]                         speed span run11a..run11b skipped (event missing or empty)",
+    "  [edit   ]                         speed span mop2a..mop2b skipped (event missing or empty)",
+    "  [edit   ]                         speed span mop3a..mop3b skipped (event missing or empty)"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT water_vs_lava: 1 shots, scene 0.0-49.3 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-49.3  pov    ",
+    "verdict: clean"
+   ]
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 1 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 44% of the frame is within 3 blocks (lava, grass_block)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "14 visible sound-making events (splash 10, swim 4), 0 with a sound mark, 14 without (audio.py adds those for a story)",
+    "     2.60s  self into the water                -> entity.player.splash               1.6 blocks in view  ",
+    "     4.30s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "     8.10s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "     9.50s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "    12.30s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    20.10s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    20.90s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "    25.40s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    25.70s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    33.60s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    38.40s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    42.90s  self into the water                -> entity.player.splash               1.6 blocks in view  ",
+    "    43.90s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "    47.30s  self into the water                -> entity.player.splash               1.6 blocks in view  ",
+    "ambience per shot: -0.25-50.55s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T07:21:55.339Z"
+}
