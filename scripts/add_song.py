@@ -139,7 +139,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     else:
         drop = song_drop(ROOT / song)
         if drop < at - 0.05:
-            print(f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
+            print(f"{name}: the song starts {at - drop:.2f}s into the Short so its drop lands on the event (edit.songLate)" if stunt.get("songLate") and not stunt.get("story")
+                  else f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
     song_start = max(0.0, drop - at)
     # edit.songLate: a track whose drop comes before the drop event starts late instead (silence, then the song) so the
     # drop still lands on the event (format cooked: EXECUTIONER drops 7.0 s in, the flood is ~8.4 s into the Short)
