@@ -1,0 +1,367 @@
+{
+  "name": "herobrine_bridge",
+  "channel": "hellobuh",
+  "caption": "this guy's ping is actually unplayable",
+  "youtube": {
+    "title": "this guy's ping is actually unplayable #minecraft #shorts",
+    "description": "this guy's ping is actually unplayable\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "payoff",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 11.95,
+    "song_start_s": 4.55
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 12.95,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 4938552,
+    "sha256": "4d56fa34262b7b559028bc0f263cea6cfb2d4f4bb3d646424f52c30cb256e61c",
+    "release": {
+      "tag": "pkg-herobrine_bridge",
+      "asset": "herobrine_bridge.short.4d56fa34262b7b55.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short.4d56fa34262b7b55.mp4",
+      "sha256": "4d56fa34262b7b559028bc0f263cea6cfb2d4f4bb3d646424f52c30cb256e61c",
+      "bytes": 4938552
+    },
+    "nosong_release": {
+      "tag": "pkg-herobrine_bridge",
+      "asset": "herobrine_bridge.short_nosong.cc5bd2851aa5eef8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short_nosong.cc5bd2851aa5eef8.mp4",
+      "sha256": "cc5bd2851aa5eef884c943ebaac79b94788ee47cc97059b3ff760c9e2975ed42",
+      "bytes": 4743635
+    }
+  },
+  "edit": {
+    "caption": "this guy's ping is actually unplayable",
+    "red": "unplayable",
+    "startAt": "go:-0.05",
+    "endAfter": "payoff:1.0",
+    "dropAt": "payoff",
+    "subs": [
+      [
+        "air",
+        "why isn't he falling",
+        1.6,
+        0
+      ],
+      [
+        "drift",
+        "bro??",
+        1.2,
+        0
+      ]
+    ],
+    "flash": [
+      [
+        "payoff",
+        0,
+        0.35
+      ]
+    ],
+    "punch": [
+      [
+        "reveal",
+        0,
+        1.12
+      ],
+      [
+        "payoff",
+        0,
+        1.06
+      ]
+    ],
+    "sfx": [
+      [
+        "dip",
+        "payoff",
+        0.4
+      ],
+      [
+        "gamedip",
+        "payoff",
+        0.4
+      ],
+      [
+        "impact",
+        "payoff",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "subsY": 0.12,
+    "chatScale": 5,
+    "args": [
+      "--caption",
+      "this guy's ping is actually unplayable",
+      "--red",
+      "unplayable",
+      "--subs",
+      "[[\"air\",\"why isn't he falling\",1.6,0],[\"drift\",\"bro??\",1.2,0]]",
+      "--subs_y",
+      "0.12",
+      "--punch",
+      "[[\"reveal\",0,1.12],[\"payoff\",0,1.06]]",
+      "--flash",
+      "[[\"payoff\",0,0.35]]",
+      "--sfx",
+      "[[\"dip\",\"payoff\",0.4],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
+      "--chat_scale",
+      "5",
+      "--start_at",
+      "go:-0.05",
+      "--end_after",
+      "payoff:1.0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 360,
+      "y": 160,
+      "z": -48
+    },
+    "biome": "minecraft:plains",
+    "ticks": 299,
+    "seconds": 14.95,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1,
+        "event": "go"
+      },
+      {
+        "t": 1,
+        "event": "hit_him"
+      },
+      {
+        "t": 1,
+        "event": "lag"
+      },
+      {
+        "t": 1.45,
+        "event": "lag"
+      },
+      {
+        "t": 1.7,
+        "event": "ent_swing"
+      },
+      {
+        "t": 2.05,
+        "event": "hit_him"
+      },
+      {
+        "t": 2.05,
+        "event": "lag"
+      },
+      {
+        "t": 2.1,
+        "event": "lag"
+      },
+      {
+        "t": 3,
+        "event": "ent_swing"
+      },
+      {
+        "t": 3.15,
+        "event": "hit_him"
+      },
+      {
+        "t": 3.15,
+        "event": "complain"
+      },
+      {
+        "t": 3.15,
+        "event": "syschat"
+      },
+      {
+        "t": 3.15,
+        "event": "lag"
+      },
+      {
+        "t": 3.4,
+        "event": "lag"
+      },
+      {
+        "t": 3.4,
+        "event": "ent_swing"
+      },
+      {
+        "t": 3.65,
+        "event": "lag"
+      },
+      {
+        "t": 3.65,
+        "event": "ent_swing"
+      },
+      {
+        "t": 3.9,
+        "event": "lag"
+      },
+      {
+        "t": 3.95,
+        "event": "lag"
+      },
+      {
+        "t": 4.25,
+        "event": "lag"
+      },
+      {
+        "t": 4.3,
+        "event": "lag"
+      },
+      {
+        "t": 4.5,
+        "event": "lag"
+      },
+      {
+        "t": 4.55,
+        "event": "lag"
+      },
+      {
+        "t": 4.85,
+        "event": "shears"
+      },
+      {
+        "t": 5.45,
+        "event": "dig"
+      },
+      {
+        "t": 5.45,
+        "event": "swing"
+      },
+      {
+        "t": 5.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 5.7,
+        "event": "broke"
+      },
+      {
+        "t": 6.15,
+        "event": "dig"
+      },
+      {
+        "t": 6.15,
+        "event": "swing"
+      },
+      {
+        "t": 6.4,
+        "event": "dig_end"
+      },
+      {
+        "t": 6.4,
+        "event": "broke"
+      },
+      {
+        "t": 6.4,
+        "event": "air"
+      },
+      {
+        "t": 6.6,
+        "event": "lag"
+      },
+      {
+        "t": 9.2,
+        "event": "cast_skin"
+      },
+      {
+        "t": 10.6,
+        "event": "reveal"
+      },
+      {
+        "t": 11.3,
+        "event": "drift"
+      },
+      {
+        "t": 12.9,
+        "event": "syschat"
+      },
+      {
+        "t": 12.9,
+        "event": "payoff"
+      },
+      {
+        "t": 14.95,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "260191a0060940e94204f47e7ff1f64e475972c3",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T19:47:51.311Z",
+    "head_at_publish": "8638a26a55b9d3468fbfea50397bf79fa01976fe",
+    "stunt": "stunts/herobrine_bridge.js",
+    "source_snapshot": [
+      "source/herobrine_bridge.js",
+      "source/herobrine.js",
+      "source/story.js",
+      "source/motion.js",
+      "source/sight.js",
+      "source/act.js",
+      "source/movie.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 260191a00609",
+    "gunzip -c shorts/herobrine_bridge/recording.json.gz > work/herobrine_bridge.rec.json",
+    "node render.js work/herobrine_bridge.rec.json work/herobrine_bridge.frames 60 1080 1011",
+    "python3 audio.py work/herobrine_bridge.rec.json work/herobrine_bridge.wav",
+    "python3 edit.py --frames work/herobrine_bridge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/herobrine_bridge.rec.json --audio work/herobrine_bridge.wav --caption \"this guy's ping is actually unplayable\" --red unplayable --subs \"[[\\\"air\\\",\\\"why isn't he falling\\\",1.6,0],[\\\"drift\\\",\\\"bro??\\\",1.2,0]]\" --subs_y 0.12 --punch [[\"reveal\",0,1.12],[\"payoff\",0,1.06]] --flash [[\"payoff\",0,0.35]] --sfx [[\"dip\",\"payoff\",0.4],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:1.0 --out out/herobrine_bridge.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: herobrine #1 (bridge fight over the void, lag -> standing on air -> white eyes -> logs out); independent review 2 rounds (r1 sub over the gap -> subsY 0.12); mixcheck OK; pace buildup WARN = deliberate stare. Nitpicks: top sub crosses his face on the look-down; chat band over his shins in the reveal; wool vanishes while half turned.",
+  "published_at": "2026-11-11T19:49:20.954Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T19:49:41+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 12.97 s vs the reviewed render 12.95 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T19:48:08.977Z",
+      "report": "work/hb/herobrine_bridge.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
