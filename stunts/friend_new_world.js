@@ -40,7 +40,7 @@ module.exports = {
     endAfter: 'reveal:0.7',
     // fast cuts (r:r188b46): 0.4 s after my first log is in the hotbar (the collect, log1 + 0.5) straight to the second
     // dig; never inside a dig (r:r52f94c: the second log plays whole). bro's warp and his gear change fall in the cut
-    speed: [['log1:0.9', 'dig2:-0.05', 'cut']],
+    speed: [['log1:0.9', 'dig2:0.4', 'cut']],   // (the dig itself starts ~0.45 s after the dig2 mark: straight to the swing)
     dropAt: 'reveal',
     punch: [['reveal', 0, 1.06]], flash: [['reveal', 0, 0.3]],   // the payoff's picture change (pace: the turn itself starts before the mark)
     keySounds: ['friend_vanish'],
