@@ -246,7 +246,7 @@ module.exports = {
     await line('L07', async (k, at) => {
       nRoof.yaw = 90 + Math.sin(ctx.tick / 9) * 30
       if (!next7 && k >= at.cut(1)) { next7 = true; await cutP(-8.5, -4.0, P(ROOF[0] - 0.5, ROOF[1] - 1.5, ROOF[2]), () => away('nRoof', nRoof)) }
-      if (next7 && k >= at(3) - 16 && rained < drops.length && (k - at(3)) % 2 === 0) { anvil(...drops[rained]); rained++ }
+      if (next7 && k >= at(2) - 6 && rained < drops.length && (k - at(2)) % 2 === 0) { anvil(...drops[rained]); rained++ }
       look(k)
     })
 
