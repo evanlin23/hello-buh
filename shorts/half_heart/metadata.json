@@ -1,10 +1,10 @@
 {
   "name": "half_heart",
   "channel": "hellobuh",
-  "caption": "POV: you're on half a heart \ud83d\udc80",
+  "caption": "POV: you're on half a heart 💀",
   "youtube": {
-    "title": "POV: you're on half a heart \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you're on half a heart \ud83d\udc80\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you're on half a heart 💀 #minecraft #shorts",
+    "description": "POV: you're on half a heart 💀\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,14 +14,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "favela.mp3",
-    "title": "FAVELA",
-    "artist": "MXZI, Deno",
+    "file": "the_redeemer.mp3",
+    "title": "THE REDEEMER",
+    "artist": "BVSSL7ON, ANIZYZ",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "placed",
-    "drop_in_song_s": 4.5,
+    "drop_in_song_s": 3.0,
     "drop_in_short_s": 2.3,
-    "song_start_s": 2.2
+    "song_start_s": 0.7
   },
   "video": {
     "file": "short.mp4",
@@ -30,25 +30,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 29681847,
-    "sha256": "e44c160259f9d5c9a4ce8c2e4ffdd9c0372e5b1e798a1bd41f79de778ef620a8",
+    "bytes": 29648816,
+    "sha256": "dd6df8493ef2a426b66e0574075dfacf030900d598a3ce1a28728009d10488e8",
     "release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short.e44c160259f9d5c9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.e44c160259f9d5c9.mp4",
-      "sha256": "e44c160259f9d5c9a4ce8c2e4ffdd9c0372e5b1e798a1bd41f79de778ef620a8",
-      "bytes": 29681847
+      "asset": "half_heart.short.dd6df8493ef2a426.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.dd6df8493ef2a426.mp4",
+      "sha256": "dd6df8493ef2a426b66e0574075dfacf030900d598a3ce1a28728009d10488e8",
+      "bytes": 29648816
     },
     "nosong_release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short_nosong.fe9fd21a20f5d624.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.fe9fd21a20f5d624.mp4",
-      "sha256": "fe9fd21a20f5d62432e749115e94525cc1fb5b5076f4d5bb60b2e8f804ae5b2d",
-      "bytes": 29598707
+      "asset": "half_heart.short_nosong.58961e0df6db7653.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.58961e0df6db7653.mp4",
+      "sha256": "58961e0df6db7653e2c8fb4fa2228a4e7bbeae55924787e97e5a2e1968f0554d",
+      "bytes": 29562946
     }
   },
   "edit": {
-    "caption": "POV: you're on half a heart \ud83d\udc80",
+    "caption": "POV: you're on half a heart 💀",
     "red": "half",
     "dropAt": "placed",
     "startAt": "jump:-0.5",
@@ -134,7 +134,9 @@
     ],
     "args": [
       "--caption",
-      "POV: you're on half a heart \ud83d\udc80",
+      "POV: you're on half a heart 💀",
+      "--self_name",
+      "56e",
       "--red",
       "half",
       "--subs",
@@ -343,12 +345,12 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/half_heart",
-    "commit": "460a3373a7fe20af119853cfec2f44d16055791b",
+    "branch": "render/56e-half_heart",
+    "commit": "e4a6d4f4111f48ec0693abc36afde51931125cc6",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43021419175",
-    "rendered_at": "2026-11-11T12:40:00.289Z",
-    "head_at_publish": "7b7d39bbcc873087aa0d619ff2cfe4897ce77c57",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43091404989",
+    "rendered_at": "2026-11-11T20:05:20.119Z",
+    "head_at_publish": "304dc3369c27e12bb9da99376536c9430838e419",
     "stunt": "stunts/half_heart.js",
     "source_snapshot": [
       "source/half_heart.js",
@@ -359,18 +361,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 460a3373a7fe",
+    "git checkout e4a6d4f4111f",
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart \ud83d\udc80\" --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --self_name 56e --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "worker whip: a followable camera (r:r38374d): the look up the pillar on lib/act.js's eased governor (water_clutch, <=220 deg/s, was 533) and a hard cut to the course instead of a 749 deg/s whip north; re-recorded, check clean, mixcheck OK; independent review READY",
-  "published_at": "2026-11-11T13:03:18.540Z",
+  "status": "ready",
+  "notes": "re-render (r:r52f94c): the player is 56e (death screen), picture otherwise unchanged; independent fix-check READY",
+  "published_at": "2026-11-11T21:06:55.715Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T13:03:41+00:00",
+    "at": "2026-11-11T21:07:20+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -379,17 +381,16 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:34:27.251Z",
+      "at": "2026-11-11T19:55:17.145Z",
       "report": "out/half_heart.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "owner 2026-11-11 (@15.3s): \"says hello buh\" (the player must be 56e)"
+  }
 }
