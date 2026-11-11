@@ -20,7 +20,7 @@ module.exports = {
   time: 12950,     // sunset: undead don't burn (the sky is too dark for it) and the sky goes orange
   caption: CAPTION,
   edit: {
-    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'boom:1.0',   // settle-ok: r2 review: the smoke clears and the death screen's buttons light ~0.95 s after the blast; later is a still screen (r1 2.8 s, r2 0.75 s)
+    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'boom:1.5',   // settle-ok: the smoke clears ~0.95 s after the blast (boom:1.0 ended on it: pace), the screen is still after that (r1 2.8 s, r2 0.75 s): ~0.5 s of still text
     dropAt: 'boom',
     sfx: [['air', 'first', 'boom', { gain: 0.4 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }],
       ['pop', 'fm1_open'], ['pop', 'fm2_open'], ['pop', 'fm3_open'],   // a hit as each popup opens (mixcheck: under the NCS bed the toast sound wasn't one)
