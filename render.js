@@ -34,6 +34,12 @@ let STUNT_MOD = {}
     }
   }
 }
+// A HelloBuh stunt's recording from before the bot became 56e (no rec.user, or 'HelloBuh'): drawn as 56e, its skin and
+// every name in the recording's texts (lib/legacy_player.js, owner 2026-11-11 r:r52f94c). Stories keep their names.
+{
+  const to = require('./lib/legacy_player').applyToRec(rec, { name: rec.stunt, stunt: STUNT_MOD })
+  if (to) console.log(`player: the old 'HelloBuh' bot is drawn as ${to} (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)`)
+}
 // Hidden boxes (stunt.hideBoxes: [[dx0, dy0, dz0, dx1, dy1, dz1], ...] from the set origin, corners inclusive): a
 // cast's waiting room (a barrier floor and a stone roof 60 blocks up, story_good_boy) is a real build the camera can
 // see: a dark slab in the sky over the librarian. Its blocks are left out of the drawn world (and the light), and the

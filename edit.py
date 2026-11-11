@@ -816,6 +816,34 @@ def death_message(jar, comp):
 _lang = None
 
 
+LEGACY_NAME = "HelloBuh"   # the bot's name before it became 56e (lib/legacy_player.js: the same rule in JS)
+
+
+def legacy_rename(v, to, frm=LEGACY_NAME):
+    """Every string in v with the old bot name replaced (keys unchanged)."""
+    if isinstance(v, str):
+        return v.replace(frm, to)
+    if isinstance(v, list):
+        return [legacy_rename(x, to, frm) for x in v]
+    if isinstance(v, dict):
+        return {k: legacy_rename(x, to, frm) for k, x in v.items()}
+    return v
+
+
+def apply_self_name(rec, to):
+    """--self_name: a recording of the old 'HelloBuh' bot (no user, or user 'HelloBuh') drawn as `to` in every text
+    the edit draws from it (death screen, chat, command feedback). Returns the renamed recording, or None when it
+    doesn't apply (another user: a story's Buh, an actor)."""
+    if not to or (rec.get("user") not in (None, "", LEGACY_NAME)):
+        return None
+    out = dict(rec)
+    out["timeline"] = legacy_rename(rec.get("timeline") or [], to)
+    if LEGACY_NAME in json.dumps(rec.get("entities") or []):
+        out["entities"] = legacy_rename(rec["entities"], to)
+    out["user"] = to
+    return out
+
+
 def death_screen_png(jar, path, cause=None, active=True):
     """Vanilla DeathScreen at GUI scale 3, laid out on the 16:9 window the game area crops:
     red gradient, "You Died!" at 2x (y 30), the death message (y 85), the score (y 100), and the
@@ -1600,11 +1628,21 @@ def main():
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--audio_only", metavar="MP4", help="re-edit only a story's sound onto this finished mp4's picture (stream copy; hb render --reuse locally)")
     ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
+    ap.add_argument("--self_name", help="draw the old 'HelloBuh' bot of a recording with no user as this name in every text (death screen, chat, feedback): HelloBuh stunts re-rendered as 56e (scripts/edit_args.js, lib/legacy_player.js)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     HUD_STYLE.update(hardcore=args.hardcore, armor=args.armor)
     if args.preview:
         os.environ["HB_PREVIEW"] = "1"
+    if args.self_name and args.timeline:
+        renamed = apply_self_name(json.loads(pathlib.Path(args.timeline).read_text()), args.self_name)
+        if renamed is not None:
+            fd, tp = tempfile.mkstemp(prefix="hb_self_", suffix=".rec.json")
+            with os.fdopen(fd, "w") as fh:
+                json.dump(renamed, fh)
+            args.timeline = tp
+            __import__("atexit").register(lambda: os.path.exists(tp) and os.unlink(tp))
+            print(f"player: the old {LEGACY_NAME} bot is drawn as {args.self_name} in the recording's texts")
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
     frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
