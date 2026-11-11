@@ -194,7 +194,8 @@
  ],
  "hotbar_note": "Buh's bar (the only player). No POV shot in this story, so it never shows; kept the same throughout if a POV is ever added. Story tools first (bone, lead, name tag, his hut's door, crafting table, torch), then the ridiculous ones: a whole cake, a milk bucket, 67 eggs (owner).",
  "one_take": [
-  "N"
+  "N",
+  "Buh"
  ],
  "requests": [
   {
@@ -241,7 +242,7 @@
     "L15",
     "L17"
    ],
-   "direction": "A friendly sixteen-year-old boy back after a long time away, warm and a little guilty, casual; full volume. Hit only the capitalised words."
+   "direction": "[A friendly sixteen-year-old boy, warm and a little guilty, casual; full volume, not whispered]"
   }
  ]
 }
