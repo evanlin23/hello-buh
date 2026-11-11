@@ -1,0 +1,3 @@
+# The owner's OK per Short, bound to the exact cut they watched (scripts/owner_ok.py; youtube_upload.py)
+story_gold_for_the_portal  5ecb120b2a78de45  # 2026-11-11: owner 2026-11-11: "Gold for portal is good"
+story_thirty_one_raids  68936f0c0590a42b  # 2026-11-11: owner 2026-11-11: "OK Thirty-One Raids"
