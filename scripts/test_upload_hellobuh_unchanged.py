@@ -25,6 +25,8 @@ def load():
         spec = importlib.util.spec_from_file_location("youtube_upload_hb", src)
         m = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(m)
+        if hasattr(m, "owner_ok"):
+            m.owner_ok = lambda name, meta: ""  # (the owner-OK gate is tested in scripts/test_owner_ok.py)
         return m
     finally:
         os.environ.clear(); os.environ.update(old)

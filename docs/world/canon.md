@@ -1,6 +1,12 @@
 # The HelloBuh world: canon
 
-Owner, 2026-11-10: **"wouldnt the lore be crazy if all of the sets were the same world"**.
+Owner, 2026-11-10: **"wouldnt the lore be crazy if all of the sets were the same world"**. 2026-11-11: "sure do
+wahtever be creative with the lore".
+
+**The theme: players leave; the world remembers.** Buh stops playing (day 3400) and comes back for one minute. The
+grandson's grandpa walks into a portal. Leo goes to the End. Jonah walks out of Larkfield. The narrators are the
+ones who stay: villagers, kids, animals. What the players leave behind (a dog on a hill, an empty yard, 32 totems, a
+lit window, 6,000 torches) is the world's memory, and every new story is told from inside it.
 
 Every HelloBuh story happens in one persistent Minecraft world. The same places, characters and consequences turn
 up across Shorts, so the lore builds up for the viewers who watch them all. **Every Short still stands alone:** a
@@ -42,7 +48,8 @@ plot never depends on them.
   - **the White**: 2 km of snowy plains, ice spikes and frozen rivers. It holds four snowy villages, igloos, trail
     ruins, two ancient cities deep under it, and a pillager outpost.
   - **the West March**: green coast beyond the White, with Ravenford (a plains village), a real pillager outpost,
-    trial chambers, and the world's only stronghold in range, under the islets.
+    trial chambers, and the world's only stronghold in range, under the low headland west of Leo's lagoon (Gullwick
+    stands on it; the survey found no islet over it, conflict 20).
   - cold and deep oceans to the east, with two ocean monuments, shipwrecks and ruins.
 - **Coordinates**: block coordinates, +x east, +z south. The sea surface is y 62. Every place has an `at` (its
   origin: the spot its story measures from) and a `footprint` (x0, z0, x1, z1).
@@ -71,14 +78,18 @@ coast at Tidewater.
 | **Stillwater** | (-215, 68, -1060) | Small farming village on the north shore: Grandpa's cottage, the lever house, the neighbour's cottage, Gary's cottage and field, the one tree (-188, -1058), and the Long Day lever on a stone post (-214, -1062) | The Sun Won't Set (800-1100), The Chunk Next Door (1800) |
 | **The Cliff House** | (-514, 121, -765) | Family house on the west rim of the High Meadow, above a 40-block fall to the White's frozen shore | Respawn Voice (1300) |
 | **Tidewater** | (-200, 63, -700) | Lowland fishing hamlet one block above the sea, south of Hushwell; the lighthouse on the rise at (-150, -712), a dock | One Block Higher (2600, in progress) |
-| **Saltmouth** | (-286, 69, -381): generated plains village | The south peninsula's village, a ruined portal on its east edge. Good Boy's yard is village + (37, 16). Buh lived here with the dog at 16. | Good Boy (3300-3400, reworked) |
+| **Saltmouth** | (-286, 69, -381): generated plains village (Good Boy measures from (-304, -384)) | The south peninsula's village. **Buh's yard**: the pad at (-275..-260, -375..-351), y 70, the cottage, the fence, the fancy oak and the old oak (-261, 71, -353) on its south-east corner, which stands 8 over the sea on a stepped bank (Good Boy's "cliff"); empty from day 3400. The pad buried the ruined portal at (-269, -366). From day 3450 a family's stilt house on a boardwalk under that bank, the village bell on a belfry outside the boy's window (-263, 69, -343); from day 3500 a skeleton in the old oak's shade. | Good Boy (3300-3400, reworked), The Bell in the Window (3800, planned) |
 | **Frostgate** | (-801, 104, -697): generated snowy village | At the White's east edge, on the old road west | More Golems (2900, in progress) |
-| **Ravenford** | (-2044, 71, -485): the east gate; generated plains village at (-2111, -497) | Grandpa's village across the White: the log palisade and east gate, Grandpa's house with the totem wall, the road over the ford to the Ridge and the old tower (-2000, -445). A real pillager outpost stands at (-1913, -393). | Thirty-One Raids (1900) |
-| **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing the islets over the stronghold. Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
+| **Ravenford** | (-2044, 71, -485): the east gate; generated plains village at (-2111, -497) | Grandpa's village across the White: the log palisade and east gate, Grandpa's house with the totem wall (stamps from Thirty-One Raids: house gate + (-15..-5, -17..-9), the wall inside its north wall, seen through the two south windows), the shepherd family's pasture south of the gate (gate + (-29..-1, 13..40), its gate in the palisade at (0, 15)) with the **blue flock** from day 1900, the road over the ford to the Ridge and the old tower (-2000, -445), birch woods past the ford where the evoker lives. A real pillager outpost stands at (-1913, -393). | Thirty-One Raids (1900), Red Sheep (2300, planned) |
+| **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing a lagoon and, across it, the low headland over the stronghold (Gullwick). Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
+| **Gullwick** | (-2301, 62, -566): the dock's end | A shore hamlet on the low headland west of Leo's lagoon, **over the world's only stronghold** (its pieces (-2313..-2272, -600..-534); never said, never dug on screen): the library hut, the dock flush at sea level pointing north-west, an empty oak boat. Grandpa (Gullwick) breaks the librarian's lectern here. | The Walk (4000, planned) |
+| **Grandma's Island** | (-2374, 62, -630) | A natural sand-and-grass islet (13 x 17, at sea level) 92 blocks north-west of Gullwick's dock across open cold ocean (never frozen: L08 holds by vanilla). Grandma's cottage with one lit window facing the dock, her boat on the beach, since about day 350. | The Walk (4000, planned) |
+| **Highwall** | (-1100, 72, -630): the plaza bell | The walled village in the White's east lowland (snowy plains), where the old road comes down west from Frostgate's highlands. A stone-brick wall 40 high on day 3700, no gate; a player's trading hall (12 x 52, 100 cells) outside its north side. Hidden from Frostgate by the hills; no rendered Short within 500 blocks. | The Wall Grows (3700, planned) |
+| **Larkfield** | (-360, 116, -712): the bell | Jonah's village on the High Meadow's north-east top (built, not generated; a 90 x 90 box (-405..-316, -757..-668)). From day 4500 a torch on every sturdy top: **the glowing village**, seen from Dog Hill as a lit rim on the plateau's edge 185-190 blocks south-west. Every block is 181+ from D and 185+ from Hushwell's well, outside Dog on the Hill's, Good Boy's and Light Sleeper's render distance. | Six Thousand Torches (4500, planned) |
 | **The Portal Cottage** | (-128, 85, -940): the cottage | A spruce cottage on the hill's south-east slope north of Hushwell, its garden looking down to the plaza (the boxed bell in view). The cellar, sunk under it on a ladder shaft, has a lit Nether portal in its east wall, a barrel of 25 years of barters ("Grandpa's Gifts") and obsidian patching the walls. the grandson and his grandma live here (not Buh's family). | Gold for the Portal (9300) |
 
 Regions: **the Green** (-620..-40, -1140..-300), **the White** (-1850..-640), **the West March** (-2400..-1860).
-Empty land is there to be claimed: the High Meadow's top, the north forest, the coves east of Hushwell, the
+Empty land is there to be claimed: the High Meadow's top (west of Larkfield), the north forest, the coves east of Hushwell, the
 White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's south lakes, the ocean monuments
 (95, -465) and (287, -1265).
 
@@ -89,6 +100,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 0 | | The world is made. |
 | ~175 | The Portal Cottage | the grandson's grandpa walks into the cellar's Nether portal in Grandma's gold helmet with the blue (lapis) stripe and never comes back. A piglin wears the helmet from then on. Grandma throws in one gold ingot a night (not in the Long Day); a barter comes back each morning. |
 | 300 | Digger's House | **Torch.** A boy finds 40 of his own torches down a shaft on Torch Hill, digs straight down and dies in lava. He forgets every death. |
+| ~350 | Gullwick | Grandma rows out to the island and tells Grandpa "Come back when the sea freezes." Her window is lit every night from then on. (The Walk's flashback; planned, not canon until made.) |
 | 400 | Fernbank | **Runaway.** The creeper who thinks he's a boy goes to the village party. The fisherman jumps in his boat and never comes back. Only the nitwit stays near him. |
 | 470 | Fernbank | **Nitwit.** The nitwit (4,096 hmms) leads the narrator past the last torch to the Burned Copy, and says his name and the date of the end: today. |
 | 520 | Fernbank | **Respawn Tax.** Every respawn costs a villager. The fisherman's boat is found floating empty. The nitwit volunteers. In the end only the librarian is left. From here on Fernbank is empty but for her and the golem. |
@@ -101,14 +113,21 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 1500 | Hushwell | **Light Sleeper.** Buh (about 10) plays a music disc on the open well and the warden rises. "Buh was obliterated by a sonically-charged shriek." His dog sits by its doghouse on the north slope. |
 | ~1550 | | After the warden night Buh is sent across the White to Grandpa in Ravenford. |
 | 1800 | Stillwater | **The Chunk Next Door.** 700 nights after the Long Day ended, the neighbour looks Gary in the face. |
-| 1900 | Ravenford | **Thirty-One Raids.** Buh (about 11) drinks Grandpa's "courage". Raid 32. The 32nd frame on the totem wall is filled after it. |
+| 1900 | Ravenford | **Thirty-One Raids.** Buh (about 11) drinks Grandpa's "courage". Raid 32. The 32nd frame on the totem wall is filled after it. (Lore, never on screen: raid 32 brought two evokers. One fell, and its totem is the 32nd. The other strayed past the Ridge, out of the raid's reach, and got away into the birch woods past the ford. From the next morning Ravenford dyes its sheep blue.) |
 | ~2000 | Leo's House | Put Back (pilot, not canon until made): Leo's house, blown up three years before, comes back block by block. |
+| 2300 | Ravenford | **Red Sheep** (planned, not canon until made). A shepherd's kid in Ravenford: every sheep in the village is blue, and Dad won't let a white one through the gate. Last spring one came back from the woods red. Today the kid's lamb gets out, and the kid follows it into the woods, where it turns red in front of the evoker. Grandpa's house and the 32 totems are in the background, Grandpa slow on his bench. |
 | 2600 | Tidewater | One Block Higher (in progress). |
 | 2900 | Frostgate | More Golems (in progress). |
 | 3000 | Leo's House | One More Eye (in progress): eleven eyes; Leo left six years ago (day ~810). |
 | 3300-3400 | Saltmouth, then Dog Hill | **Good Boy** (reworked, script approved 2026-11-10; to build). Told by the dog. Buh at 16 tries to lose his dog 37 times so it will forget him and not wait when he stops playing. A tamed wolf teleports back unless it's sitting, and he never makes it sit. On day 3400 he walks it up Dog Hill to his old hut: "sit, boy... I'll be right back", and he leaves the game. |
 | 3400 | Dog Hill | Buh's last login: "Sit, boy. I'll be right back." The dog sits on the hilltop. Hushwell takes its carpets up (the shrieker only answers players). The bell stays boxed. |
+| 3450-3500 | Saltmouth | A family builds a stilt house on the boardwalk under Buh's empty yard and hangs the village bell outside the boy's window. About 100 days later a skeleton takes the shade of the old oak on the yard's bank. (Planned with The Bell in the Window.) |
+| before 3700 | Highwall | Old Tomas, who came in a minecart from a trading hall, raises Highwall's wall one block every morning. It is 40 high on day 3700. |
+| 3700 | Highwall | **The Wall Grows** (planned, not canon until made). The kid climbs Tomas's ladder before dawn: outside is a trading hall of 100 villagers, and someone not in a room looks up. |
+| 3800 | Saltmouth | **The Bell in the Window** (planned, not canon until made). 300 nights of the bell ringing whenever the boy, Saltmouth's only player, opens his window. Tonight he climbs out past it to wave at the pale guy under the oak. Buh's empty yard is on the bank above. |
+| 4000 | Gullwick | **The Walk** (planned, not canon until made). Grandpa has broken the same lectern 300 times. This morning the librarian holds up Frost Walker, and he walks out across the sea to Grandma's window. |
 | 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Buh joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
+| 4500 | Larkfield | **Six Thousand Torches** (planned, not canon until made). Jonah, Larkfield's one player, puts a torch on every block of the village overnight, leaves his things in his friend's chest, sets his last torch by the kid's door and walks away. From here on Larkfield glows every night, and Dog Hill sees it. |
 | 9300 | The Portal Cottage | **Gold for the Portal.** the grandson throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
 
 ## Recurring characters
@@ -133,19 +152,27 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | **Grandma (Portal Cottage)** | as in Gold for the Portal | `grandma` (Autonoe) | Throws one gold ingot into the cellar portal every night for 25 years. Her husband walked in on day ~175 in her gold helmet. |
 
 ### Planned characters (batch 2, scripts owner-audited 2026-11-11; not canon until made)
-| who | story | look | voice | status |
+Places and days as set 2026-11-11 (the lore pass): Highwall 3700, Saltmouth 3800, Gullwick 4000, Larkfield 4500,
+Ravenford 2300.
+
+| who | story (place, day) | look | voice | status |
 |---|---|---|---|---|
-| the villager kid | The Wall Grows | baby villager | `narrator` (Leda) | cast |
-| Old Tomas | The Wall Grows | old villager, escaped a trading hall | `elder` (Charon) proposed: **clashes with Ravenford's Grandpa** (conflict 11 spirit), audition another | audition |
-| the kid | The Bell in the Window | baby villager, Saltmouth | `narrator` (Leda) | cast |
-| Mom (Saltmouth) | The Bell in the Window | villager | `mom` (Pulcherrima) shared with Hushwell's Mom: decide if she's the same Mom or needs her own voice | decide |
-| the grandchild | The Walk | | `narrator` (Leda) | cast |
-| Grandpa (Gullwick) | The Walk | grey-haired old man (new skin) | Iapetus proposed, audition (not Charon: Ravenford's) | audition |
-| Grandma (the island) | The Walk | grey-haired old woman (new skin) | `grandma` (Autonoe) shared with Gold's Grandma: decide | decide |
-| the villager kid | Six Thousand Torches | baby villager, Larkfield | `narrator` (Leda) | cast |
-| Jonah | Six Thousand Torches | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
-| the kid | Red Sheep | baby villager, Ravenford | `narrator` (Leda) | cast |
-| Dad | Red Sheep | villager, crossbow | Alnilam proposed, audition | audition |
+| the villager kid | The Wall Grows (Highwall, 3700) | baby villager, **snowy** (Highwall is in the White) | `narrator` (Leda) | cast |
+| Old Tomas | The Wall Grows (Highwall, 3700) | old snowy villager, mason, **no name tag** (link 17); escaped a trading hall | not `elder` (Charon is Ravenford's Grandpa): Sadaltager or Rasalgethi, audition | audition |
+| the player in the hall | The Wall Grows (Highwall, 3700) | player, nameless, no name tag; the script has the default Steve skin (conflict 18) | none | |
+| the kid | The Bell in the Window (Saltmouth, 3800) | player, `alex` skin; Saltmouth's only player (Buh left on day 3400) | `narrator` (Leda) | cast |
+| Mom (Saltmouth) | The Bell in the Window (Saltmouth, 3800) | plains villager, no profession | `mom_saltmouth` (Kore, owner 2026-11-11 "A is fine") | cast |
+| the grandchild | The Walk (Gullwick, 4000) | player, `kai` skin | `narrator` (Leda) | cast |
+| Grandpa (Gullwick) | The Walk (Gullwick, 4000) | grey-haired old man (new skin) | audition Iapetus vs Sadaltager (not Charon: Ravenford's); the_walk bible "Voices" | audition |
+| Grandma (the island) | The Walk (Grandma's Island, ~350 and 4000) | grey-haired old woman (new skin) | `grandma_island` (Callirrhoe, owner 2026-11-11 "calirrhoe is fine") | cast |
+| Mom (Gullwick) | The Walk (Gullwick, 4000) | player, `makena` skin, silent | none | cast |
+| the villager kid | Six Thousand Torches (Larkfield, 4500) | baby villager, plains, Larkfield | `narrator` (Leda) | cast |
+| Jonah | Six Thousand Torches (Larkfield, 4500) | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
+| the kid | Red Sheep (Ravenford, 2300) | player, `alex` skin, Ravenford (POV; never named, not Buh) | `narrator` (Leda) | cast |
+| Dad | Red Sheep (Ravenford, 2300) | player, `sunny` skin, Ravenford's shepherd, crossbow | Alnilam or Rasalgethi (both unused), audition against Pip on L03 | audition |
+
+Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: Tomas and Dad): each pick takes it off the others' lists.
+| Grandpa (Ravenford), in the background | Red Sheep (Ravenford, 2300) | player actor, `zuri` skin, the slow walk; on his bench by his door; **never named, never called Grandpa** (conflict 11) | none | |
 
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
@@ -190,7 +217,50 @@ follow any Short.
 10. **Leo in the End** (plant, both unpublished). One More Eye's brother Leo went to the End six years ago. Put
     Back's big brother went to the End and never came back. Make them one brother at Leo's House (One More Eye's
     basement portal; Put Back's house coming back block by block). The world's only stronghold in range is under the
-    islets in front of the house.
+    islets in front of the house. (2026-11-11: the survey puts it under the low headland across Leo's lagoon, where
+    Gullwick stands; see link 15.)
+
+*Added 2026-11-11 (the lore pass; batch 2 is planned, so every one of these is a plant until its Short is made):*
+
+11. **Totems come from evokers** (plant: Red Sheep x Thirty-One Raids). Vanilla: an evoker drops a totem of undying,
+    and nothing else in reach does (no woodland mansion in the survey). So Grandpa's 31 totems are 31 dead evokers, one
+    a raid, and the 32nd is raid 32's. Raid 32 brought two: the other strayed past the Ridge (vanilla drops a raider
+    more than 112 blocks from the raid's centre out of the raid) and got away into the birch woods past the ford.
+    Since then Ravenford dyes its sheep blue (an evoker turns a blue sheep within 16 blocks red: the alarm). Red
+    Sheep (day 2300) is set in Ravenford's pasture by the east gate, with Grandpa's house in the background, the totem
+    wall glinting through its south window, and Grandpa (zuri, the slow walk) on his bench. Nobody says where the
+    evoker came from; a fan who has seen Thirty-One Raids counts the frames.
+12. **Two bells** (plant: The Bell in the Window x Light Sleeper x Good Boy). Hushwell boxed its bell in wool for
+    silence (day 1400, on screen in Light Sleeper and Dog on the Hill). Saltmouth hung its bell where it catches a
+    skeleton's arrows (from day 3450). Same object, two villages, opposite reasons. The Bell in the Window's house
+    stands on the boardwalk under **Buh's empty yard** (Good Boy's pad and cottage), and its skeleton lives under
+    Buh's old oak: the dog's yard, 400 days after the dog went up the hill. The boy is Saltmouth's only player
+    because Buh is gone.
+13. **The glowing village** (plant: Six Thousand Torches x Dog on the Hill). Larkfield is on the High Meadow's
+    north-east top, 185-190 blocks south-west of Dog Hill, just past what Dog on the Hill's and Good Boy's renders
+    draw (render distance 10: 160-176 blocks). From day 4500 its torches are a permanent stamp: every later night shot
+    from the hilltop with render distance 13+ shows the High Meadow's rim glowing on the south-west skyline. Torches'
+    S04 POV from Larkfield's north-east corner sees Pip and the dog on the hilltop, a pale speck 185 blocks out
+    (cameo `pip_and_dog`). Jonah walks away the way Buh did; Pip sits with the dog who's still waiting.
+14. **The wall on the old road** (plant: The Wall Grows). Highwall stands where the old road west comes down from
+    Frostgate's highlands into the White's east lowland: the road Buh walked to Grandpa's (~1550, when there was no
+    wall: it is 40 high on day 3700, one block a morning). A later story on the road can show it on the skyline, at
+    40 or more, never lower. The hills hide it from Frostgate.
+15. **Grandma's island and the stronghold** (plant: The Walk x One More Eye x Put Back). Gullwick, where Grandpa
+    breaks the lectern 300 times, stands on the low headland over the world's only stronghold, 100 blocks across the
+    lagoon from Leo's House. Grandma's island is the nearest true island, 92 blocks out in a cold ocean that never
+    freezes. Never said; Leo's House's stone roof is on S05's inland skyline. Fans who know where strongholds are can
+    work it out.
+16. **Blue sheep** (theory: Sheep Stares x Red Sheep). The Digger's blue sheep (days 700-1112) stared at one dirt
+    block until he broke it and fell. Ravenford's flocks are blue from day 1900, so an evoker shows itself. Same blue
+    (`Color 11`) on purpose. Is the Digger's sheep a warning too? The canon never says.
+17. **Two Tomases** (theory: The Wall Grows x Names in the Woods). Oakend's Tomas was converted in the siege (~2500).
+    Curing a zombie villager is how a player gets cheap trades, and cured villagers end up in trading halls. Highwall's
+    old Tomas escaped a trading hall in a minecart. Same Tomas? Against it: every Oakend villager wears a name tag, a
+    name tag never comes off, and Highwall's Tomas has none (keep it that way). Never answered.
+18. **Players leave** (the theme; on screen across Shorts). Buh logs out on the hill (Good Boy, Dog on the Hill), the
+    grandson's grandpa walks into the portal (Gold for the Portal), Leo goes to the End (One More Eye), Jonah walks
+    out of Larkfield (Six Thousand Torches), Grandma rows away (The Walk). Somebody who stays tells each one.
 
 ## Conflicts and how they're read (no published Short is re-rendered)
 
@@ -213,6 +283,13 @@ follow any Short.
 | 15 | Dog on the Hill's bible puts the hut west of D with the patch at D + (-3, 0, 0); its stunt (and render) builds the hut north-east of D, the patch at D + (3, 0, 0), the dog facing east | The render is canon. map.json's Dog Hill stamps are the stunt's own build, ported (meadow, ridge, hut, ledge, patch, bones, dog). |
 | 16 | The recorder on main doesn't save a wolf's sitting/tame/collar state (claude/story-cine-2's harness does), so a main recording shows the dog standing with no collar | The establishing still patches the recording's wolf entries. Merge story-cine-2's harness wolf metadata to main before any story films the dog. |
 | 17 | The Sign by the Bed and Same Spot (pilots, never made) set other "world rules" (signs from the future, frozen chunks) | Not canon. A pilot becomes canon only when it's made, and then it has to fit. |
+| 18 | The Wall Grows' hall player wears the default Steve skin, and Steve is Buh's look (STANDARDS: "Steve reads as Buh"). Day 3700 falls in Buh's gap (3400-4300), so it can't be him, but a viewer can't know that | Open question "who built the hall?" stays open. Recommended: give the player a non-Steve default skin no one else wears (`ari`, `efe` or `noor`; `kai` is Jonah's, `sunny` Red Sheep's Dad's, `alex` the kids', `makena` The Walk's Mom, `zuri` Grandpa's): the lead's and owner's call, since he's cast, not set. |
+| 19 | The Walk's kid and Jonah (Six Thousand Torches) both wear the `kai` skin | Players a viewer could confuse. Recommended: recast The Walk's kid (seen small, mostly POV) as `noor`. Lead's call. |
+| 20 | Canon called the stronghold's land "the islets in front of Leo's House"; the survey (2026-11-11) shows a low headland joined to the mainland in the north, across a lagoon from Leo's House, with no islet over the stronghold's pieces | Read as the headland. Gullwick stands on it. Grandma's island is the nearest true island (92 blocks north-west of the dock, 55 west of the stronghold's pieces). Nothing published says "islets". |
+| 21 | Good Boy's pad (rendered) buried Saltmouth's ruined portal at (-269, -366), and its set measures the village from (-304, -384), not the survey's (-286, -381) | Both are canon: the portal is under Buh's yard from day 3300. The Bell in the Window's old easter egg (the portal) is dropped for `buh_yard`. Good Boy's "village + (37, 16)" means (-304, -384) + (37, 16). |
+| 22 | The Bell in the Window's set asked for "a sheer stone cliff"; Saltmouth is flat. The only bank over it is Buh's pad, whose south-east corner stands 8 over the sea on four steps | The bank is the cliff (Good Boy already calls it one: "the wolf behind the camera on the cliff"). The house stands on a boardwalk at sea level; the skeleton's spot, the bell and the window keep the script's offsets (bell_window set.md). The live-AI gate decides. |
+| 23 | An evoker left out of a raid is an ordinary mob and could despawn in 400 days | Never shown or said. Red Sheep's players live within its range; the canon doesn't explain it (fans may). |
+| 24 | Highwall is in the White, a snowy village; The Wall Grows' bible had a plains village | Set dressing: snowy villagers, snow on the ground; the wall, the hall and every line are unchanged. |
 
 ## Easter eggs
 **Rules:** one per story; in the background (out of focus, off centre, never the subject of a shot); on screen 1-3 s;
@@ -235,7 +312,11 @@ of Hushwell, the lighthouse south of it, the Ridge's tower east of Ravenford.
 | `gary`: a zombie villager in a straw hat at the fog line, name tag Gary | Stillwater at night | 1100 on |
 | `burned_copy`: a burned copy of a Fernbank house | south of Fernbank's last torch | always |
 | `raven_tower`: the old watchtower on the Ridge, no banner | Ravenford | always |
-| `totem_wall`: 31 totems and one empty frame (all 32 full after day 1900) | Grandpa's house in Ravenford | always |
+| `totem_wall`: 31 totems and one empty frame (all 32 full after day 1900), glinting through the south windows | Grandpa's house in Ravenford; from his yard and the pasture | always (Red Sheep, 2300) |
+| `blue_flock`: Ravenford's blue sheep in the pasture by the east gate | Ravenford | 1900 on |
+| `buh_yard`: Buh's empty yard, cottage and old oak on the bank over Saltmouth's south-east shore, no dog | Saltmouth's shore and boardwalk | 3400 on (The Bell in the Window, 3800) |
+| `larkfield_glow`: the High Meadow's north-east rim glowing with 6,000 torches | Dog Hill and Hushwell's north road at night, south-west, 185+ blocks (render distance 13+) | 4500 on |
+| `pip_and_dog` from Larkfield: a pale speck on the hilltop 185 blocks north-east | Larkfield's north-east corner (Six Thousand Torches S04) | 4500 on |
 
 ## How a story uses the world
 1. **Pitch** (`/story-write`): name the place (from `node scripts/world.js list`, or a new one in empty land) and
@@ -274,3 +355,10 @@ WORLD_AT=x,z STUNT=_world_build ./run.sh` builds places and records them for sti
 - Whose world was the Burned Copy, and when does Fernbank burn?
 - What came through One More Eye's portal?
 - Will Buh come back to the hill?
+- Who built Highwall's trading hall? (Never a name, never a name tag.)
+- Does Tomas keep building after the morning the kid climbs up?
+- What's under Gullwick? (The canon knows: the stronghold. The Shorts never say. The question the lead asked, "what's
+  under Grandma's island?", has no answer the survey supports: open sea floor. Fans can ask it anyway.)
+- Where did Ravenford's evoker come from, and why is it still there?
+- Did the bell catch the last arrow?
+- Is the Digger's blue sheep a warning, like Ravenford's?

@@ -69,6 +69,23 @@ def channel_of(meta: dict) -> str:
 
 UP = ROOT / "uploads" if CHANNEL == "hellobuh" else ROOT / "uploads" / CHANNEL
 QUEUE, RECORD, PAUSED, SCORES = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED", UP / "scores.json"
+OWNER_OK = UP / "owner_ok.txt"   # owner 2026-11-11: "dont let anything go to youtube anymore without an OK from me"
+
+
+def owner_ok(name: str, meta: dict) -> str:
+    """"" when the owner OK'd THIS cut of the Short: uploads/owner_ok.txt has a line "<name> <sha256 prefix of the
+    package's video.release> ..." (scripts/owner_ok.py add <name> writes it after the owner watched that file). A
+    re-published Short needs a new OK. Otherwise the reason it can't go up."""
+    sha = ((meta.get("video") or {}).get("release") or {}).get("sha256", "")
+    if not OWNER_OK.exists():
+        return "no owner OK (uploads/owner_ok.txt missing)"
+    for line in OWNER_OK.read_text().splitlines():
+        parts = line.split("#")[0].split()
+        if len(parts) >= 2 and parts[0] == name:
+            if sha and len(parts[1]) >= 12 and sha.startswith(parts[1]):
+                return ""
+            return f"the owner OK'd another cut ({parts[1][:12]}), not this one ({sha[:12] or 'no release'})"
+    return "no owner OK yet (scripts/owner_ok.py add " + name + " once the owner says OK)"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
 PER_DAY = int(env("YT_PER_DAY", "3") or 3)
 WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
@@ -311,6 +328,9 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
             if name in queued:
                 why.append(f"{name}: status {meta.get('status')!r}, not ready")
             continue
+        ok = owner_ok(name, meta)
+        if ok:
+            why.append(f"{name}: {ok}"); continue
         gw = gates.stale({"name": name, **meta})
         if gw:
             why.append(f"{name}: {gw}"); continue
@@ -719,6 +739,9 @@ def main() -> None:
                 history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
                 if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short) or channel_of(meta) != CHANNEL:
                     sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, breaks the mix, or belongs to another channel")
+                ok = owner_ok(a.short, meta)
+                if ok:
+                    sys.exit(f"{a.short}: {ok}")
                 gw = gates.stale({"name": a.short, **meta})
                 if gw:
                     sys.exit(f"{a.short}: {gw}")

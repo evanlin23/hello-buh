@@ -188,6 +188,24 @@
   "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Pulcherrima, 176 Hz, 3.5 st under Pip",
   "notes": "Home scenes, the normal life before the strange thing. Her ordinary line is often the scariest one in the twist. History: was Sulafat (\"Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it\") until 2026-11-11; the owner: \"The moms voice is too similar to narrator\" (r:rc31bfe): Sulafat sat at Pip's own 215 Hz, speaker similarity 0.85. The profile is the one-clause bracket the audition used, verbatim (3.8 reads a long bracket aloud)."
  },
+ "mom_saltmouth": {
+  "name": "Mom",
+  "voice": "Kore",
+  "color": "#F2B8C6",
+  "color_why": "soft rose: a different home from Hushwell's Mom",
+  "profile": "A warm mother around forty, low, calm and steady",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    30,
+    50
+   ]
+  },
+  "post": "",
+  "fallback": "af_sarah",
+  "from": "owner 2026-11-11: \"A is fine\" (r:rd8f6ce), candidate A of the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Kore, f0 180 Hz, 0.755 similarity to Pip, the furthest Mom from Pip",
+  "notes": "Saltmouth's Mom (The Bell in the Window), not Buh's Mom in Hushwell (`mom`): one voice per character (STANDARDS 7a)."
+ },
  "grandma": {
   "name": "Grandma",
   "voice": "Autonoe",
@@ -205,6 +223,24 @@
   "fallback": "af_nicole",
   "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma: Autonoe, 237 Hz (heard as a woman of 65-85 by the blind listener; furthest from Pip of all candidates, 0.66)",
   "notes": "An old woman, never a man: earlier Grandmas (Gacrux, Vindemiatrix) read low and gravelly, as a man (owner: \"Grandma sounds like a dude still\", r:rc31bfe). The profile is the audition's one-clause bracket, verbatim."
+ },
+ "grandma_island": {
+  "name": "Grandma",
+  "voice": "Callirrhoe",
+  "color": "#C9B6E8",
+  "color_why": "soft lavender: a different grandmother from Gold's (gold)",
+  "profile": "An old woman in her seventies, stubborn, a dare",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    60,
+    85
+   ]
+  },
+  "post": "",
+  "fallback": "af_nicole",
+  "from": "owner 2026-11-11: \"calirrhoe is fine\" (r:r83d791), candidate E of the audition brand/auditions/2026-11-11_mom_grandma: Callirrhoe, f0 162 Hz, 4.9 st under Pip (auditioned there as a mom)",
+  "notes": "The Walk's Grandma on the island, not Gold for the Portal's (`grandma`): one voice per character (STANDARDS 7a). Never auditioned as an old woman: the first take must read 60-85 to the blind listener, else back to the owner."
  },
  "friend": {
   "name": "Max",

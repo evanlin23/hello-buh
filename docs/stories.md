@@ -292,6 +292,22 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, Review Room notes on the ready Shorts: "still says hellobuh" / "all of these still say hellobuh
+  instead of 56e" (cave_reveal, creeper, half_heart, lava_crossing, tnt_1000, which_door); pickaxe_race: "why is there a
+  cut when we are using the wooden pick?" "actually theres a cut for all." "Also, we should have like a timer...";
+  guess_sound_2: "when we look over at the mob, we arent looking directly at it."; fortune: "The items are all
+  upsidedown?? Also we should have more drop."; mega_sponge: "the cuts are too jarring, it looks like we get stuck";
+  tnt_1000: "the title could be like vs SECRET or smth idk bc i wouldve swiped after 1000".** Every Short shows the player
+  as 56e (death messages, chat, command feedback), re-renders of older recordings included. No cut in the middle of an
+  action (a dig, a place, a use): cut between actions. When the view turns to a mob or thing, it lands centred on it.
+  Dropped items render the right way up (an engine bug). Cuts never look like the player got stuck. A title promises
+  something past the obvious end point, so the viewer stays for it.
+- **Owner, 2026-11-11: "make everything, then put all of it into a review folder. dont let anything go to youtube
+  anymore without an OK from me"; "the \"review folder\" is the review artifact"; "show what i need to review there,
+  then archive the rest (still available)".** Nothing uploads without the owner's OK for that exact cut:
+  scripts/youtube_upload.py skips any Short without a line in uploads/owner_ok.txt naming the sha256 of the video the
+  owner watched (scripts/owner_ok.py add, only after the owner says OK); a re-published Short needs a new OK. Every
+  ready Short goes on the review artifact; what is already decided is archived there, still viewable.
 - **Owner, 2026-11-11, on the skin stills: "i want it to be regular arms, the slim dont look good".** The player 56e
   renders with regular (wide, classic) arms; the slim-painted arm art is widened to the wide layout (a duplicated column
   per arm face) so no black stripes show. Supersedes the slim-arm auto-detect for 56e.
@@ -354,6 +370,36 @@ STANDARDS.md in the same commit.
   an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
   obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
   (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
+- **Owner, 2026-11-11, sharing Technoblade's "Sand Art" Short: "huge sand art".** (A giant pixel picture made of
+  concrete powder poured from the sky: the blocks fall and pile into pyramids, the camera rides down the slopes of
+  colour, a subscriber-counter overlay ticks to 1,000,000.) HelloBuh adds a sand-art format (family `sandart`): a
+  HUGE picture made of falling concrete powder (or sand and gravel) dropped from above, so it builds itself by gravity;
+  the camera sits close in the falling blocks, then pulls up to reveal the whole picture. Our own picture and caption;
+  no other creator's name, likeness or overlay. The settle rule holds: never cut or end while blocks still fall.
+- **Owner, 2026-11-11, sharing Necroncore's "what was your favorite version?" time-lapse (a crater dug in a real
+  landscape, a giant grass block rising in it, then a giant iron golem holding Steve and Alex, a wolf beside it):
+  "huge mega build, like ridiculously big".** The `mega` time-lapse variant goes BIGGER: the build must dwarf the
+  landscape (hundreds of blocks across, a real terrain around it for scale), shown from high up so the scale reads,
+  ending on a close pass that shows how small the player is next to it.
+- **Owner, 2026-11-11, sharing a "fananimation" dropper Short (a yellow shaft, "Attempt #1", "#3", "#15" captions,
+  a red-and-green target far below, the landing on #15): "Huge dropper?"** HelloBuh adds a dropper format (family
+  `dropper`): a HUGE, tall dropper fallen in first person, an attempt counter on screen, quick failed attempts cut
+  together, then the clean landing as the payoff. Our own shaft, obstacles and target; failed attempts end on a cut
+  before the death (no death puff left on screen), and the landing must be true vanilla (water, slime, hay, etc.).
+- **Owner, 2026-11-11, sharing "Minecraft Dirt Moment" (caption "bro found dirt for ONCE": a whole world where the
+  ground, hills and everything are one other block, and the player digs a lone patch of real dirt under a tree like
+  it's treasure): "fake world?"** HelloBuh adds a fake-world format (family `fakeworld`): a world where everything is
+  one wrong block (planks, glass, gold, sponge...) shown as normal survival, and the one ordinary block found in it
+  is treated like a rare treasure. Built by generating the world from our own block swap, never a copied map.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "a diabolical trap that made my friend hate
+  me...": a lake with a glass-roofed underwater base, the friend dives for it, the real base is a fake, a tunnel
+  and a hidden drop end in a glass cage): "trapping friend".** HelloBuh adds a friend-trap format (family `trap`):
+  build an irresistible bait (a base, loot, a portal), show how it works, then the friend walks into it; the trap
+  must really work in vanilla (minecraft-audit) and the friend is a second bot, never the owner's name.
+- **Owner, 2026-11-11, sharing struxo's "Beginner Friendly Nether Boss Build Timelapse" (a drone time-lapse of a
+  mangrove swamp cleared and a huge crimson/warped boss statue rising, with block counters ticking in a corner):
+  "another megabuild example".** For the `mega` time-lapse: a running count of blocks used, ticking up, is a good
+  overlay; the build stays our own design, at a ridiculous scale.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -576,6 +622,16 @@ STANDARDS.md in the same commit.
   leaves at once needs a word on why: Buh says why he came and that he can't stay before "Sit, BOY. Be right BACK."
   (L15 "Hey, BUDDY! I just wanted to SEE you again." L17 "But I gotta GO already. Sit, BOY. Be right BACK."). The
   OK'd package goes back to held until the owner re-OKs it.
+- **Owner, 2026-11-11, on The Bell in the Window's Mom (Saltmouth, not Buh's Mom), candidates A Kore / E Callirrhoe
+  from the Mom/Grandma audition: "A is fine".** Saltmouth's Mom is cast `mom_saltmouth`, Kore.
+- **Owner, 2026-11-11, on The Walk's Grandma (not Gold's Grandma), candidate E Callirrhoe: "calirrhoe is fine".**
+  The island Grandma is cast `grandma_island`, Callirrhoe, directed as an old woman; the first take must still read as
+  an old woman to the blind listener (reads_as 60-85), or it comes back to the owner.
+- **Owner, 2026-11-11, on the world: "i really liked how the hill and the place the dog was left was the same place and
+  people watching both will be able to see its connected".** The strongest link between stories is the same exact
+  place, seen again: the same spot, the same build, the same thing left behind (Good Boy's last login is Dog on the
+  Hill's first frame). Every new story looks for one: set it where an earlier story happened, or leave something
+  that a later story will show on the skyline.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
