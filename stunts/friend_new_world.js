@@ -1,8 +1,8 @@
 // "friend" #1 (owner's new format, 2026-11-11, r:ra64f79; lib/friend.js): day 1 of a new world, from my point of view
 // (56e). I punch my first oak log with my bare hand, vanilla speed (3 s a log). Beside me my friend ("bro") punches
 // his tree too, and it is gone in a blink. He runs off; the forest ahead goes, tree after tree, and his advancements
-// flood the chat (Getting Wood, Benchmarking, Stone Age... Diamonds!). My log breaks, I step in and pick it up:
-// "56e has made the advancement [Getting Wood]". The second log (the jump cut takes the middle of it); all the while
+// flood the chat (Stone Age, Getting an Upgrade, Acquire Hardware... Diamonds!). My log breaks, I step in and pick it
+// up: one log in my hotbar. The second log (the jump cut takes the middle of it); all the while
 // somebody is building behind me. I turn round: a whole cottage with a garden, and bro in front of his garden in full
 // diamond, waving. "bro has made the advancement [Cover Me with Diamonds]".
 // My own actions are vanilla and aimed (K.dig at the hand's speed, a governed turn); only bro's speed is staged.
@@ -20,11 +20,11 @@ const MINE = { dx: 0, dz: -1, h: 8 }  // my tree, tall: its canopy above the fra
 const HIS = { dx: 4, dz: -7, h: 5 }   // bro's tree, in frame on the right, its canopy against the sky
 const BRO_AT = [3.3, -4.7]            // bro at his tree
 const FOREST = [                       // the forest ahead, in the order it goes (right to left, from where he ran)
-  { dx: 8, dz: -12, h: 5 }, { dx: 10, dz: -19, h: 6 }, { dx: 3, dz: -18, h: 5 },
+  { dx: 10, dz: -19, h: 6 }, { dx: 3, dz: -18, h: 5 },
   { dx: -3, dz: -14, h: 6 }, { dx: -11, dz: -16, h: 5 }, { dx: -7, dz: -8, h: 5 }
 ]
-const HOUSE = [1, 17]                 // the cottage's centre behind me, its garden toward me (facing north)
-const BRO_END = [3.5, 6.2]            // bro at the end: in front of his garden, close enough for the diamond to read
+const HOUSE = [2, 17]                 // the cottage's centre behind me, its garden toward me (facing north)
+const BRO_END = [0.5, 6.2]            // bro at the end: in front of his garden, right of centre (the chat is bottom left), close enough for the diamond to read
 
 module.exports = {
   name: 'friend_new_world',
@@ -34,10 +34,11 @@ module.exports = {
   playerNames: true,                  // "bro" over his head, as the game draws another player's name
   edit: {
     caption: CAPTION, red: 'my friend',
+    chatScale: 5,   // the advancement flood readable on a phone (independent review round 1; vanilla GUI 3 was ~16 px glyphs)
     startAt: 'dig1:-0.1', endAfter: 'reveal:0.9',
     // the middle of the second log (my hand is slow: that's the joke, once is enough); both edges mid-dig, the view
     // at rest on the log (sway off while digging)
-    speed: [['dig2:0.5', 'dig2:2.3', 'cut']],
+    speed: [['dig2:0.5', 'dig2:2.4', 'cut']],   // (8 s is the stunt floor)
     dropAt: 'reveal',
     punch: [['reveal', 0, 1.06]], flash: [['reveal', 0, 0.3]],   // the payoff's picture change (pace: the turn itself starts before the mark)
     keySounds: ['friend_vanish'],
@@ -106,17 +107,14 @@ module.exports = {
     ctx.mark('dig1')
     const tl = FR.timeline(ctx, K, [
       [12, () => { stopSwing(); return FR.vanish(ctx, K, P, this.his, { by: bro, ticks: 4 }) }],
-      [16, adv('Getting Wood')],
       [19, () => {   // off he runs, east, out of frame
         b.yaw = -90; b.pitch = 0
         broRun = () => { if (b.x < 13) b.x += 0.28 }
       }],
-      [24, adv('Benchmarking')],
+      [16, adv('Stone Age')],
       ...FOREST.map((t, i) => [30 + i * 7, () => FR.vanish(ctx, K, P, this.forest[i], { ticks: 3, vol: Math.max(0.3, 0.75 - i * 0.08), pops: 2 })]),
-      [33, adv('Time to Mine!')],
-      [41, adv('Stone Age')],
-      [49, adv('Getting an Upgrade')],
-      [57, adv('Acquire Hardware')]
+      [34, adv('Getting an Upgrade')],
+      [52, adv('Acquire Hardware')]
     ])
     await K.dig(log(2))
     ctx.mark('log1')
@@ -129,19 +127,15 @@ module.exports = {
     for (let k = 0; k < 30 && has() < 1; k++) { K.look(k); await bot.waitForTicks(1) }
     ctx.log(`friend_new_world: stood at dz ${(bot.entity.position.z - Z).toFixed(2)}`)
     ctx.log(`friend_new_world: logs after the first: ${has()}`)
-    FR.advancement(ctx, '56e', 'Getting Wood', 4.0)   // mine lingers while his keep coming
-    ctx.mark('mine_adv')
     await tl.done
 
     // 2. the second log; someone is building behind me; the chat goes on
     broRun = null
     const tl2 = FR.timeline(ctx, K, [
       [0, () => FR.buildNoise(ctx, { n: 10, every: 2, vol: [0.25, 0.45] })],
-      [4, adv('Suit Up')],
-      [12, adv('Hot Stuff')],
-      [20, adv("Isn't It Iron Pick")],
+      [3, adv('Suit Up')],
       [22, () => FR.buildNoise(ctx, { n: 12, every: 2, vol: [0.45, 0.65] })],
-      [30, adv('Diamonds!')],
+      [58, adv('Diamonds!')],   // (the edit's cut takes ~8-54 of the dig: nothing in there)
       [44, () => FR.buildNoise(ctx, { n: 10, every: 2, vol: [0.65, 0.8], mats: ['wood', 'wood', 'stone'] })]
     ])
     // bro, off screen behind me: in front of his garden in full diamond, facing me
@@ -154,7 +148,7 @@ module.exports = {
     await tl2.done
 
     // 3. I turn round (to the right, governed): the house, and bro at its gate, waving
-    const aimAt = P(3.3, 2.5, 10)   // bro in the lower third, the house over him (the pickup lands during the turn)
+    const aimAt = P(2.2, 2.5, 10)   // bro in the lower third, the house over him (the pickup lands during the turn)
     M.pose(ctx, BRO, 'wave')
     K.sway = 0.3
     const want = K.aim(aimAt)
@@ -170,7 +164,7 @@ module.exports = {
     FR.advancement(ctx, BRO, 'Cover Me with Diamonds')
     ctx.sound('block.wood.place', 0.7, 0.9)
     // bro steps up to me, waving (the end is never a still frame)
-    for (let j = 0; j < 40; j++) { if (j < 14) b.z -= 0.08; K.look(k + j); await bot.waitForTicks(1) }
+    for (let j = 0; j < 40; j++) { if (j < 8) b.z -= 0.07; K.look(k + j); await bot.waitForTicks(1) }
     ctx.log(`friend_new_world: logs after the second: ${has()}`)
     M.poseOff(ctx, BRO)
     const ok = !bot.blockAt(P(HIS.dx, 2, HIS.dz)).name.includes('log') && has() >= 2
