@@ -21,6 +21,8 @@ FAMILIES = [
     ("clutch", lambda n: "clutch" in n or n in ("one_in_a_million",)),
     ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
     ("inside", lambda n: n.startswith("inside_")),
+    ("desire", lambda n: n.startswith("desire_")),
+    ("cells", lambda n: n.startswith("cells_")),
 ]
 
 

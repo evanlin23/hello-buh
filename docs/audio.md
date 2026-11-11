@@ -79,6 +79,9 @@ reference.
   i think"**: the bed went down ~3 dB on every stunt Short so the game's own hits carry the payoff, and every ready,
   not-yet-uploaded stunt Short was remixed to it from its short_nosong.mp4 (r:r662041). Check: `python3
   scripts/key_sounds.py <name> --hits` (the biggest game hits vs the music).
+  The -10 LUFS master's true peak is held at or under -1 dBTP (-2 with key sounds): `loud.master` limits the
+  4x-oversampled signal and re-measures the decoded AAC (2026-11-11: stunt packages peaked at +0.4 dBTP with the old
+  sample-peak limiter, a clipping risk after YouTube's transcode; forward only, old packages stay). pace WARNs over -1 dBTP.
 - **Key sounds** (owner, 2026-11-11, on guess_sound: **"had super loud music"**; a guessing game you can't hear is
   broken): a stunt whose game is a sound names it, edit `keySounds: ['hear']` (lib/guess_sound.js does). At publish
   `scripts/add_song.py` ducks the NCS bed to -24 dB under each clip (from 0.05 s before it to 0.15 s after it ends;

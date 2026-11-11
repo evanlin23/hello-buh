@@ -1,6 +1,6 @@
 // Line of sight to every dig and place in a recording (owner, 2026-11-10: "sometimes there will be a block in the way.
 // we need to ensure there is a clear line of sight to the stuff we are placing or breaking", STANDARDS 3b.4).
-//   node scripts/rec_sight.js <rec.json[.gz]> [--json]
+//   node scripts/rec_sight.js <rec.json[.gz]> [--json] [--all]   (--all: every action's aim, not only the off-aim ones)
 // For each dig (the harness's dig mark, to its dig_end) and each place (the kit's place_on mark, a stunt's place mark,
 // or a block that appears from air within 4 ticks of a swing, near the player), in the world as it stands then (the
 // recording's chunks with its block changes applied), from the recorded eye (1.62 over the feet, 1.27 crouched, a
@@ -23,9 +23,32 @@ if (!recP) { console.error('usage: node scripts/rec_sight.js <rec.json[.gz]> [--
 const buf = fs.readFileSync(recP)
 const rec = JSON.parse((recP.endsWith('.gz') ? zlib.gunzipSync(buf) : buf).toString())
 const out = { digs: 0, places: 0, found: [] }
-if (!(rec.columns || []).length || !(rec.poses || []).length) {
-  if (args.includes('--json')) console.log(JSON.stringify({ ...out, skipped: 'no chunk columns or poses in the recording' }))
-  else console.log('rec_sight: no chunk columns or poses in the recording')
+const AIM = require(path.join(__dirname, '..', 'lib', 'aim'))
+const report = () => {
+  if (args.includes('--json')) { console.log(JSON.stringify(out)); return }
+  if (out.skipped) console.log(`rec_sight: ${out.skipped}`)
+  else console.log(`rec_sight ${path.basename(recP)}: ${out.digs} dig(s), ${out.places} place(s), ${out.found.length} problem(s)`)
+  for (const f of out.found) {
+    const by = f.blocker ? `${f.blocker.name} at ${f.blocker.x} ${f.blocker.y} ${f.blocker.z}` : 'nothing faces the eye'
+    console.log(`  src ${(f.tick / 20).toFixed(2)}s (tick ${Math.round(f.tick)}) ${f.kind} ${f.block} at ${f.x} ${f.y} ${f.z} [${f.source}]: ` +
+      (f.problem === 'hidden' ? `no face visible from the eye (${by} in the way)` : `the crosshair hits ${by} first on ${f.n}/${f.of} tick(s)`))
+  }
+  const a = out.aim
+  if (a) {
+    console.log(`aim: ${a.n} action(s), worst ${a.worst === null ? '-' : a.worst.toFixed(1)} deg, median ${a.median === null ? '-' : a.median.toFixed(1)}, ${a.onAim} on the target, ${a.over} over ${a.max} deg or off-screen`)
+    for (const x of a.actions) if (x.deg > a.max || !x.onScreen || args.includes('--all')) console.log(`  src ${(x.tick / 20).toFixed(2)}s (tick ${Math.round(x.tick)}) ${x.kind} ${x.what}${x.x !== undefined ? ` at ${x.x} ${x.y} ${x.z}` : ''} [${x.source}]: ${x.deg.toFixed(1)} deg off${x.onScreen ? '' : ', off-screen'}`)
+  }
+}
+if (!(rec.poses || []).length) {
+  out.skipped = 'no poses in the recording'
+  report()
+  process.exit(0)
+}
+if (!(rec.columns || []).length) {
+  // the aim check needs no world for the marked actions (digs, place marks, entity uses)
+  out.aim = AIM.run(rec)
+  out.skipped = 'no chunk columns in the recording (sight not checked; aim on the marked actions only)'
+  report()
   process.exit(0)
 }
 const Chunk = require('prismarine-chunk')(rec.version)
@@ -48,6 +71,18 @@ const shapesAt = (x, y, z) => info(get(x, y, z))
 const nameAt = (x, y, z) => { const s = get(x, y, z); info(s); return NM.get(s) }
 const AIRY = /^(air|cave_air|void_air|short_grass|tall_grass|fern|large_fern|snow|water|lava|bubble_column|dead_bush|seagrass|tall_seagrass)$/
 const FLUID = /^(water|lava|bubble_column|fire|soul_fire)$/
+
+// the aim on every action (lib/aim.js; owner r:rffba12), in the world as recorded: each block change's state before it
+{
+  const before = new Map(), prevOf = new Map()
+  for (const b of [...(rec.blocks || [])].sort((a, b) => a[0] - b[0])) {
+    const kk = `${b[1]},${b[2]},${b[3]}`
+    prevOf.set(b, before.has(kk) ? before.get(kk) : get(b[1], b[2], b[3]))
+    before.set(kk, b[4])
+  }
+  const nm = (s) => { info(s); return NM.get(s) }
+  out.aim = AIM.run(rec, { nameBefore: (b) => nm(prevOf.get(b)), nameOf: nm })
+}
 
 // the eye and aim at tick k
 const P = rec.poses
@@ -142,12 +177,4 @@ for (const e of ev) {
   }
 }
 
-if (args.includes('--json')) console.log(JSON.stringify(out))
-else {
-  console.log(`rec_sight ${path.basename(recP)}: ${out.digs} dig(s), ${out.places} place(s), ${out.found.length} problem(s)`)
-  for (const f of out.found) {
-    const by = f.blocker ? `${f.blocker.name} at ${f.blocker.x} ${f.blocker.y} ${f.blocker.z}` : 'nothing faces the eye'
-    console.log(`  src ${(f.tick / 20).toFixed(2)}s (tick ${Math.round(f.tick)}) ${f.kind} ${f.block} at ${f.x} ${f.y} ${f.z} [${f.source}]: ` +
-      (f.problem === 'hidden' ? `no face visible from the eye (${by} in the way)` : `the crosshair hits ${by} first on ${f.n}/${f.of} tick(s)`))
-  }
-}
+report()

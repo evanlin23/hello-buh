@@ -119,13 +119,13 @@ module.exports = {
     const head = new Vec3(x + 0.5, floor + 3.0, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
     ctx.mark('face_on', { near: [x + 0.5, vz - 2, 10.5], head: true })
+    const A = require('../lib/act')(ctx)
     const slotOf = (i) => (i < 8 ? i : i - 8)
     const place = async (i, lookMs, spot) => {
       const [bx, bz] = spot || this.spots[i]
       ctx.select(slotOf(i))
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + (i >= 8 ? 2.8 : 1.2), bz + 0.5), lookMs)   // the fast ones aimed high: the subtitle clears his outfit
-      bot._client.write('block_place', { hand: 0, location: { x: bx, y: floor, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound(STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place', 1, 0.8)
+      // aimed by construction (lib/act.js, r:rffba12): the crosshair on the spot as the job site goes down
+      await A.place(new Vec3(bx, floor + 1, bz), { against: new Vec3(bx, floor, bz), sound: STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place' })
       await bot.waitForTicks(1)
       setJob(JOBS[i][1])
       ctx.sound(`entity.villager.work_${JOBS[i][1]}`, 1, 1)
@@ -133,9 +133,8 @@ module.exports = {
     }
     const breakAt = async ([bx, bz], name) => {
       ctx.select(8); await bot.waitForTicks(2)
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + 1.5, bz + 0.5), 200)
       const b = bot.blockAt(new Vec3(bx, floor + 1, bz))
-      if (b && b.name === name) { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
+      if (b && b.name === name) { try { await A.dig(b) } catch (e) { ctx.log('dig', e.message) } }
       setJob('none'); ctx.sound('entity.villager.no', 1, 1)
     }
     // a hold that still moves: a slow drift of the look, never a frozen frame
@@ -201,9 +200,7 @@ module.exports = {
     await bot.waitForTicks(2)
     ctx.select(5); await bot.waitForTicks(6)
     const L = [x, floor, vz + 4]
-    await ctx.easeLookAt(new Vec3(L[0] + 0.5, L[1] + 1, L[2] + 0.5), 200)
-    bot._client.write('block_place', { hand: 0, location: { x: L[0], y: L[1], z: L[2] }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    await A.use(new Vec3(L[0], L[1], L[2]), { sound: 'item.flintandsteel.use' }); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     const litAt = ctx.tick
     // back off facing it, the villager in view
