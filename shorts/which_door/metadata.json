@@ -4,7 +4,7 @@
   "caption": "which door would you pick? 🚪",
   "youtube": {
     "title": "which door would you pick? 🚪 #minecraft #shorts",
-    "description": "which door would you pick? 🚪\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "which door would you pick? 🚪\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "royalty_funk.mp3",
-    "title": "Royalty Funk",
-    "artist": "LXNGVX",
+    "file": "fearless_funk.mp3",
+    "title": "Fearless Funk",
+    "artist": "DR MØB, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal",
-    "drop_in_song_s": 47.5,
+    "drop_in_song_s": 29.5,
     "drop_in_short_s": 22.04,
-    "song_start_s": 25.46
+    "song_start_s": 7.46
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 27.54,
+    "duration_s": 26.79,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 36863236,
-    "sha256": "ab26324d590ba9d5de20ef147f2a0d3b63e390d4e5bed1ecb26f08953786c282",
+    "bytes": 35853201,
+    "sha256": "72251383fd94f1a96b7788c262920ee94fa40a3f71e439749dbd9483b7e68701",
     "release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short.ab26324d590ba9d5.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.ab26324d590ba9d5.mp4",
-      "sha256": "ab26324d590ba9d5de20ef147f2a0d3b63e390d4e5bed1ecb26f08953786c282",
-      "bytes": 36863236
+      "asset": "which_door.short.72251383fd94f1a9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.72251383fd94f1a9.mp4",
+      "sha256": "72251383fd94f1a96b7788c262920ee94fa40a3f71e439749dbd9483b7e68701",
+      "bytes": 35853201
     },
     "nosong_release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short_nosong.8e00ac402964dd74.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short_nosong.8e00ac402964dd74.mp4",
-      "sha256": "8e00ac402964dd74891d6f152fcdd960ae1887e35fb0c46fc5d3680d16253d30",
-      "bytes": 36724767
+      "asset": "which_door.short_nosong.f83f3d8070f6bc71.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short_nosong.f83f3d8070f6bc71.mp4",
+      "sha256": "f83f3d8070f6bc71ea4418a6f189b59356c5bf271e09bcb3ac288f763dfe8652",
+      "bytes": 35704322
     }
   },
   "edit": {
@@ -52,7 +52,7 @@
     "caption": "which door would you pick? 🚪",
     "red": "door",
     "dropAt": "reveal",
-    "endAfter": "last_death:1.3",
+    "endAfter": "last_death:0.55",
     "deathScreen": true,
     "onFire": "lava_in:death",
     "counter": {
@@ -251,7 +251,7 @@
       "--start_at",
       "intro:0",
       "--end_after",
-      "last_death:1.3"
+      "last_death:0.55"
     ]
   },
   "recording": {
@@ -3425,11 +3425,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/which_door",
-    "commit": "3d2c6ab88f0e5aeedc67047740815e046c3da163",
+    "commit": "babb618d419d53dad3ed3b73b9a1e89b05917ebc",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42978174131",
-    "rendered_at": "2026-11-11T07:28:46.504Z",
-    "head_at_publish": "cee5b5c6894addef5d2b0203aab59d53b5ee84be",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42983685901",
+    "rendered_at": "2026-11-11T08:11:03.856Z",
+    "head_at_publish": "7fce22d51a69afb00a95e2a77a015e34b08750d2",
     "stunt": "stunts/which_door.js",
     "source_snapshot": [
       "source/which_door.js",
@@ -3439,22 +3439,22 @@
     ]
   },
   "rebuild": [
-    "git checkout 3d2c6ab88f0e",
+    "git checkout babb618d419d",
     "gunzip -c shorts/which_door/recording.json.gz > work/which_door.rec.json",
     "node render.js work/which_door.rec.json work/which_door.frames 60 1080 1011",
     "python3 audio.py work/which_door.rec.json work/which_door.wav",
-    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after last_death:1.3 --out out/which_door.mp4"
+    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after last_death:0.55 --out out/which_door.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); the lava burn's still 1.3 s cut (lint), whoosh+pops from frame 0, song dip + impact on the last death, worst-one card held 1.3 s; 27.5 s; pace 0 blockers; self-review READY | independent review 2026-11-11: NOT READY, 1 blocker. (1) r:r24d99a (owner: never cut or end while the payoff is still moving): the video ends at 27.54 s (frame ~1652) in the middle of the TNT chain under 'THE WORST ONE': a fresh wave of block debris starts at ~26.9 s and is still filling the death screen on the last frame. Cheapest fix: edit-only, endAfter later (last_death:~2.5, once the debris has settled; the death screen is a text payoff so the extra hold reads as reading time) or end before the second wave (~26.8 s). Checked and OK: every door opened with the crosshair on the door (r:rffba12); the lava death has a visible cause (second hop falls short of the gap, 5.9-6.1 s); arrows/creepers/zombies vanilla. Nitpicks: the opening 'PICK A DOOR' facade is nearly still for 1.8 s (pace passes it: whoosh + pops); 10.75-16.95 s one corridor angle (WARN).",
-  "published_at": "2026-11-11T07:32:11.168Z",
+  "status": "pending-qa",
+  "notes": "2026-11-11 finishing worker, after the independent review: ends 0.55 s after the last death (26.79 s), before the renderer's second debris wave (the recording stops 1.5 s after the blast, so the debris can't settle on screen; the first blast puff is still clearing on the last frames: judge it); pace 0 blockers (WARN text payoff held 0.54 s), check OK; awaiting independent review",
+  "published_at": "2026-11-11T08:14:22.504Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:32:40+00:00",
+    "at": "2026-11-11T08:14:52+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 27.54 s vs the reviewed render 27.54 s"
+      "summary": "short.mp4 26.79 s vs the reviewed render 26.79 s"
     },
     "pace": {
       "ok": true,
@@ -3466,14 +3466,9 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:16:55.330Z",
-      "report": "out/which_door.check.json"
+      "at": "2026-11-11T08:14:00.979Z",
+      "report": "work/hb/which_door.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "review_independent": {
-    "verdict": "NOT READY",
-    "at": "2026-11-11",
-    "notes": "independent review 2026-11-11"
   }
 }
