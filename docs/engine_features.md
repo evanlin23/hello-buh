@@ -429,6 +429,72 @@ jar's skins, so a stunt casts one by name like a jar skin: `cast: { Grandpa: 'gr
   (Steve's cyan shirt and blue trousers read as Buh).
 - Proofs: docs/engine_proofs/skins/ (line-ups at 1080 and 300 px, phone stills, armour, taken vs new).
 
+## Flying-mob POV, the crane, the Nether (camera_world, 2026-11-11)
+Brief: docs/engine_briefs/camera_world.md (The Honey Thief's bee, The Singing Box's allay, Saving Up for a Bastion).
+Proof: docs/engine_proofs/camera_world/ (stills, the flower readability table, the Nether survey).
+
+**A flying narrator** (`lib/mobpov.js`, the rusher: the narrator's client position driven a tick at a time; stunt.self
+gives the model and eye: a bee `{ model: 'bee', eye: 0.3 }`)
+- `R.hover('bee' | 'allay' | { rate, amp, nod, drift }, { scale, nod, drift, ramp })`: from now on every hold, turn,
+  dash and fly bobs like the model's body (BeeModel.setupAnim: bone.y -= cos(age x 0.18) x 0.9 px, xRot 0.1 + cos x
+  PI x 0.025; AllayModel: root.y += cos(age x 9 deg) x 0.25 px), with a slow horizontal drift. Defaults: height x1.6
+  (the bee's own 0.056 blocks read as still), nod x0.35 (+-1.6 deg; the body's +-4.5 tipped the whole frame), drift
+  0.05 blocks; it ramps in over 10 ticks. `R.hover(null)` stops it. While hovering the narrator is not on the ground,
+  so the renderer adds no walking view-bob.
+- `await R.fly([p1, p2, ...], o)`: a centripetal Catmull-Rom curve through the points (no stops, no loops or cusps),
+  `speed` blocks a tick (0.5 = 10 blocks/s; a bee's real cruise is ~0.3-0.5), eased in over `accel` ticks and out over
+  `decel` (0: arrive at speed and go on into the next leg; `v0` is the last leg's speed, so legs join). The view looks
+  `lead` blocks ahead along the curve (`pitchFollow` 0.5 of the climb), or at `look: Vec3` (flying at someone), easing
+  from the view it had over `blend` ticks. `above: 1.5` keeps it 1.5 over the ground (read under the path and `lead`
+  ahead, smoothed over 7 ticks: it lifts before a rise; flowers and grass are not ground). It throws before flying when
+  a turn would pass `R.maxTurn` (150 deg/s): widen the curve, slow down, look further ahead, or cut. The planner is
+  pure (`flightPlan`, tests in lib/hb/test/camera_world.test.js).
+
+**The crane off a view** (render.js camera director, a shot spec; opt-in, nothing else changes)
+```js
+crane: { crane: { from: 'pov', to: [0, 90, 0], yaw: 0, pitch: -90, fov: 70, secs: 2.5 } }
+```
+Mark the shot where the lift starts (`R.shot('crane')` on 'TELL'). Its first frame IS the view before it (the POV, with
+its stunt.fovZoom fov and stunt.self eye; `from: 'prev'` takes the camera shot before), and a cubic Hermite carries
+that view's own motion (position, yaw, pitch, tan of the fov) into the end pose at rest: no stop on take-off, no
+snap, no overshoot. `pitch: -90` is straight down with `yaw` the frame's up (0 = north up), the turn done in the first `tilt` (0.6) of the move so it finds the ground early; `to` is set-relative or a
+TARGET. No eye-trace (it starts on the frame before it) and no handheld drift. The narrator flies on below (stunt.self
+draws its model in camera shots: the bee is the yellow dot). Also on any camera shot: `fovPath: [[sec, deg], ...]`
+(keyed like `path`, eased in tan space).
+- Render distance: a top-down from 90 up sees ground 90-115 blocks from the lens; `renderDistance: 8` (chunks) fogs
+  its edges. Use 12.
+- The narrator's own model is not drawn while a crane's lens is within 2.5 blocks of its eye (it leaves from inside
+  the bee's head; the first frames were all bee).
+- **Flowers from straight above** (90 up, fov 70, 7x7 patches, CIE76 delta E against the grass round each patch, on a
+  300 px-wide thumbnail; docs/engine_proofs/camera_world/flower_readability.md): bare podzol 52, pink_petals 35,
+  lilac 19, rose_bush 18, wildflowers 11, peony 11, sunflower 8; every cross-sprite flower (dandelion, poppy, oxeye
+  daisy, lily of the valley, tulips, cornflower, allium, bluet, orchid, torchflower) 1-6: seen edge-on they vanish into
+  the grass. A picture meant to read from above is drawn in flat covers (pink_petals, wildflowers), 2-tall bushes
+  (rose bush red, lilac) and bare ground stripes, not in single flowers. The ~75 degree alternative (`tilt75` in the
+  test) reads the bushes a little better and the single flowers no better.
+
+**The Nether in the world tools** (`lib/world.js`, `scripts/world.js`)
+- A place says `"dimension": "the_nether"` (or `"the_end"`; none = the Overworld); its `at`/`footprint` are that
+  dimension's coordinates. `world.check` only clashes footprints in the same dimension (and checks the name);
+  `world.at(x, z, dim)`; `./hb world where X Z --dimension the_nether`; `./hb world claim ... --dimension the_nether`;
+  the world map skips other dimensions' places.
+- `world.build` takes the bot there first (`world.enter(ctx, dim, x, y, z)`: `/execute in minecraft:<dim> run tp`,
+  waits for the client's respawn into it and the chunks), forceloads the footprint there, and reads the ground under
+  the roof: `ctx.groundTop` (place y + 24) makes `lib/sets/site.js` column read the first floor with open space over
+  it (netherrack, soul sand, basalt, blackstone, nylium...) instead of the bedrock roof. Pieces, stamps and the ground
+  check then work as in the Overworld. Every command after it runs in the Nether, and the harness records
+  `rec.dimension` from the bot (render.js draws the Nether's sky, fog and light).
+- The survey round the Portal Cottage's Nether side (-16, -118): **basalt deltas** (basalt and blackstone floors broken
+  by lava pools at every height, the lava sea at y 31; at the origin the floors are y 82 and y 33); the nearest
+  bastion remnant is at (-160, -608), 510 blocks off, the nearest fortress at (-320, -144). A bastion "across the lake"
+  has to be placed (`/place structure minecraft:bastion_remnant`) or built.
+- `HB_WORLD_MAP=file` points lib/world at a test map (lib/hb/test/fixtures/world_nether_map.json).
+- Test: `./hb record _test_camera_world_nether` (builds the fixture's Nether place, surveys the Nether round it:
+  `/locate` bastion and fortress, every column's floors and lava -> work/nether_survey.json ->
+  `python3 scripts/nether_survey.py`), and `./hb record _test_camera_world` (the bee: hover, low curving flight, the
+  fov narrowing, the crane to 90 straight down; the meadow is the flower readability patch:
+  `python3 scripts/flower_readability.py <top still> --set X,Y,Z`).
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

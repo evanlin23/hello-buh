@@ -10,6 +10,9 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 | 2026-11-10 | thirty_one_raids | campfire smoke | building (agent/ergonomics) |
 | 2026-11-10 | light_sleeper | warden emerge animation | building (agent/ergonomics) |
 | 2026-11-11 | the_walk, pulled_away, wall_grows, singing_box, saving_up_bastion | original player skins (every default skin is taken) | DONE (engine-skins): ten skins drawn by us, `scripts/make_story_skins.py` -> `skins/`; docs/engine_features.md "Original player skins" |
+| 2026-11-11 | honey_thief, singing_box | a flying-mob POV: hover bob, low curving fast flight (mobpov only dashed straight) | DONE (camera_world): `R.hover('bee'/'allay')`, `R.fly(points, { above, look, lead })` in lib/mobpov.js |
+| 2026-11-11 | honey_thief | a crane from the POV to 90 up straight down, fov 28 -> 70 in the same move; top-down flower readability | DONE (camera_world): shot `crane: { from: 'pov', to, pitch: -90, fov, secs, tilt }`, `fovPath`; readability: cross flowers vanish from above, flat covers and 2-tall bushes read (docs/engine_proofs/camera_world/flower_readability.md) |
+| 2026-11-11 | saving_up_bastion | Nether places in the world tools (map.json `dimension`, check/claim, world.build and the recorder in the Nether); survey round (-16, -118) | DONE (camera_world): `dimension` in lib/world.js / scripts/world.js, `world.enter`, ground under the roof; survey: basalt deltas, no bastion within 500 blocks (docs/engine_proofs/camera_world/nether_survey.png) |
 
 ## Backlog (lead, 2026-11-10 night): next engine round, by value to the stories (worked by agent/engine-2, 2026-11-10)
 | # | needed | why | status |
@@ -21,7 +24,7 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 | 5 | Motion blur on whips and timelapses (roadmap 3b.6) | fast moves strobe on phones | DONE (opt-in `look.motionBlur`): camera reprojection blur for whips/pans, `trail` afterimage for time-lapses; moving mobs aren't blurred |
 | 6 | Villager and mob life: villager work/sleep/panic animations, head-turn to look at a speaker, mob idle variety | the cast looks frozen | DONE: `stunt.lookAtSpeaker`, `look_at` marks (`M.headTo`), staged `sleep` / `shake` for mobs; vanilla villagers have no work/panic animation (record them running); idle variety was `idleLife` |
 | 7 | Name tags over heads (optional per actor) | who's who in a crowd; pairs with caption colours | DONE: `stunt.nameTags` (true or a list of names) |
-| 8 | Nether and End dimension looks (sky, fog, portal particles verified) | premises set there | OPEN: Nether/End sky, fog and the End sky box were already drawn (page.js); biome ambient particles (ash, spores) not done |
+| 8 | Nether and End dimension looks (sky, fog, portal particles verified) | premises set there | OPEN: Nether/End sky, fog and the End sky box were already drawn (page.js); the world tools build and record in the Nether (camera_world, 2026-11-11); biome ambient particles (ash, spores) not done |
 | 9 | Faster stills: cache the meshed world between `./hb still` calls (3 min -> seconds) | agents iterate on cameras | DONE: the first mesh is cached between `./hb still` calls (work/hb/meshcache; story_nitwit 56 s -> 25 s) |
 | 10 | Mob coverage audit: every 1.21 mob renders with its animations (list what's missing) | stories pick mobs freely | AUDITED (`scripts/mob_audit.js`): 76 of 89 drawn; added bogged, parched, illusioner, glow squid, trader llama (engine 2). Next: goat, camel, axolotl, armadillo, breeze, creaking |
 | 11 | Weather on screen: snow, rain splashes, puddle-free wet look | mood | OPEN: rain columns, splashes and snow in cold biomes were already drawn (worker 11); a wet look not done |
