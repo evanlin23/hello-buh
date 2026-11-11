@@ -36,7 +36,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `dilemma` | (seen by the owner; no file) a hardcore mace-and-dog Short | Falling to a hardcore death with a mace, your dog right there: hit the dog to survive, or die. The fall is dragged out in slow motion from several angles, then the twist: Feather Falling IV saves you anyway | "moral dillema? ... it drags on for a while, fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4" | r:r9dcf73 | queued (dilemma_mace, owner OK 2026-11-11) |
 | `psycho` | Beazle: "BRO" ("Genuinely gotta check if everything is okay at home after ts") | A house tour that looks almost normal at the door (a ring of fire, a burning wheat field) and inside is a nether-brick mansion over open lava, with a bed and furnaces on one-wide walkways; played straight | "fake psycho house" | r:rc40696 | building (own session, 2026-11-11) |
 | `fakerun` | (via the Buh Connects operator) "Fastest Speedrun Ever" | An obviously impossible speedrun in jump cuts (a portal missing corners lit anyway, full netherite already, lava in the end portal, typo labels), one banner, music only, 67 s; comment bait | "obviously fake, badly made, with typos and everything" | r:r9105ba | building (own session, 2026-11-11) (also track comments per 1k views) |
-| `sandart` | Technoblade: "Sand Art" | A giant pixel picture poured from the sky in concrete powder: the blocks fall and pile into pyramids, the camera rides down the slopes of colour, then the whole picture shows | "huge sand art" | r:r718ec5 | building (own session, 2026-11-11) |
+| `sandart` | Technoblade: "Sand Art" | A giant pixel picture poured from the sky in concrete powder: the blocks fall and pile into pyramids, the camera rides down the slopes of colour, then the whole picture shows | "huge sand art" | r:r718ec5 | building (sandart_tnt: lib/sandart.js, an episode gives a pixel picture and a palette) |
 | `dropper` | (owner upload "fananimation") | A towering yellow dropper in first person, "Attempt #1, #3, #15" on screen, quick fails, the clean landing on the target far below | "Huge dropper?" | r:r304cb5 | building (own session, 2026-11-11) |
 | `fakeworld` | "Minecraft Dirt Moment" ("bro found dirt for ONCE") | A whole world made of one wrong block, played as normal survival; finding one patch of real dirt is the treasure | "fake world?" | r:r62f46d | building (own session, 2026-11-11) |
 | `trap` | NoschiTech: "#memeanimation" ("a diabolical trap that made my friend hate me...") | A glass-roofed "underwater base" as bait; the friend dives in, the base is a fake, a hidden drop ends in a glass cage | "trapping friend" | r:refc733 | building: `lib/trap.js` (a bait over a real vanilla trap, the friend a second player bot on his own physics), first Short `trap_free_diamonds` (a trapped chest opens the trapdoor he stands on) |
@@ -77,6 +77,13 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold (faketrick_gold_portal). The kit: lib/faketrick.js
   (makeStunt: a graded pad, steps as subs, F.fake marks the staged result; every visible action through lib/act.js).
   Anything built above the eye goes from a step or a rise: a top face above the eye can't be clicked (act refuses it).
+- **sandart**: a giant TNT block (sandart_tnt), a diamond, a golden apple, a pig's face, the Earth, a Minecraft
+  heart; poured in concrete powder, sand, red sand and gravel. Built (lib/sandart.js): makeSandArt({ art, palette, scale })
+  pours every pixel as real falling blocks over a flattened field, each landing scheduled so they touch down evenly
+  (the vanilla fall worked back to a release tick) and released above the drone, so no block ever pops into view; one
+  continuous drone shot (sink into the rain, glide low, pull straight up), no cut while anything falls, the live
+  `edit.tally` count of blocks landed, the payoff on the last landing (`settle`). `node lib/sandart.js stunts/<name>.js`
+  prints the schedule. Falling blocks land silently in vanilla: the patter is a soft sand place sound.
 - **psycho**: the lava mansion (psycho_lava_mansion); a "cosy" treehouse whose rope bridges cross a ravine of
   magma and pointed dripstone; an underwater house whose rooms are all open to the drowned; a TNT cottage (a floor
   of TNT under the rug, redstone torches for candles); a tiny-flat tour on a one-wide skybridge at build height.
