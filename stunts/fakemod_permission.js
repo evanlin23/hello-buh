@@ -7,7 +7,7 @@
 //      clicks Roll. ALLOW / DENY / ALLOW ... it lands on ALLOW. It lights, swells and goes off. Death screen.
 // The mechanics are vanilla: the "mod" only sets NoAI while it waits for an answer (a mob with NoAI stands still), and
 // Allow on the creeper sets its `ignited` flag (flint and steel's effect: the 30-tick fuse). The kills are netherite
-// sword hits at the attack cooldown (8 damage, 3 hits on 20 health; the zombie's 2 armour: 7.36 x 3 = 22). Hard
+// sword jump crits at the attack cooldown (8 x 1.5 = 12 damage: 2 hits on 20 health, the zombie's 2 armour too). Hard
 // difficulty: a creeper going off ~3 blocks away kills a full-health player.
 const { plateau } = require('../lib/plateau')
 const FM = require('../lib/fakemod')
@@ -87,9 +87,12 @@ module.exports = {
     const kill = async (e, n = 4) => {
       const hp = () => (e.metadata && typeof e.metadata[9] === 'number') ? e.metadata[9] : 20   // LivingEntity health
       for (let i = 0; i < n && e.isValid !== false && hp() > 0; i++) {
+        // a jump crit (vanilla: falling, not on the ground: x1.5 and the crit stars): jump, hit on the way down
+        bot.setControlState('jump', true); await bot.waitForTicks(1); bot.setControlState('jump', false)   // motion-ok: one jump, the view stays on the mob (A.view)
+        for (let j = 0; j < 12 && !(bot.entity.velocity.y < 0 && !bot.entity.onGround); j++) { A.view(e.position.offset(0, 1.2, 0)); await bot.waitForTicks(1) }
         try { await A.hit(e, { delay: i === 0 ? 0 : 13, max: 30 }) } catch (err) { if (/is gone/.test(err.message)) break; throw err }   // the sword's cooldown (1.6 attacks/s): full-damage hits
-        ctx.sound('entity.player.attack.strong', 1, 1)
-        await bot.waitForTicks(2)
+        ctx.sound('entity.player.attack.crit', 1, 1)
+        for (let j = 0; j < 8 && !bot.entity.onGround; j++) await bot.waitForTicks(1)
       }
       for (let i = 0; i < 30 && e.isValid !== false; i++) await bot.waitForTicks(1)
     }
