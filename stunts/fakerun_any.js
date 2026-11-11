@@ -25,7 +25,8 @@ const LABELS = [
   ['0:00 spawned in ful netherite', 2.4],
   ['diamods (after netherite??)', 2.2],
   ['portal (corners are optinal)', 2.4],
-  ['nether (blaze rods: 1 of 6)', 2.2],
+  ['nether fortres found (its 1 wall)', 2.0],
+  ['blaze rods: 1 of 6 (enuf)', 2.0],
   ['ender perls x12 (1 enderman)', 2.2],
   ['dug strait down (pro tip)', 1.6],
   ['found strongold 1st try', 1.8],
@@ -215,7 +216,7 @@ module.exports = {
     const N = SX.nether
     await R.jump(ctx, 3, async () => {
       bot.removeListener('physicsTick', portalParts)
-      await tp(N + 0.5, 1, 0.5, 180, -6)
+      await tp(N + 0.5, 1, 0.5, 157, -9)   // on the wall's left end: the pan crosses it
     }, {
       onCut: async () => {
         ctx.select(SLOT.sword)
@@ -226,6 +227,11 @@ module.exports = {
       after: 8
     })
     R.label(ctx, 3)
+    {
+      const pan = async (a, b, ticks) => { for (let k = 1; k <= ticks; k++) { await A.view(a.plus(b.minus(a).scaled(k / ticks))); await still(1) } }
+      await pan(at(N - 5, 3.2, -12), at(N + 5, 3.2, -12), 38)   // the whole "fortress": one wall
+    }
+    R.label(ctx, 4)
     const blaze = Object.values(bot.entities).find(e => e.name === 'blaze')
     if (!blaze) throw new Error('no blaze')
     await still(8)
@@ -236,7 +242,7 @@ module.exports = {
     const ender = Object.values(bot.entities).find(e => e.name === 'enderman')
     if (!ender) throw new Error('no enderman')
     await A.turnTo(ender.position.offset(0, 2.2, 0), { max: 30 })
-    R.label(ctx, 4)
+    R.label(ctx, 5)
     await still(4)
     await A.hit(ender)
     ctx.sound('entity.player.attack.strong', 1, 1); ctx.sound('entity.enderman.death', 1, 1)
@@ -245,7 +251,7 @@ module.exports = {
     // the speedrunner's pro tip: dig straight down (the netherrack under the feet), and fall into the cut
     ctx.select(SLOT.pick)
     await A.turnTo({ yaw: bot.entity.yaw, pitch: -1.45 }, { max: 30, hold: 2 })
-    R.label(ctx, 5)
+    R.label(ctx, 6)
     await still(4)
     const under = bot.blockAt(at(N, 0, 0))
     ctx.log('under', under && under.name)
@@ -256,11 +262,11 @@ module.exports = {
     // ---- 4. the stronghold: lava in the end portal, and in we go
     const H = SX.hold
     await R.jump(ctx, 4, () => tp(H + 0.5, 1, 1.2, 180, 30))
-    R.label(ctx, 6)
+    R.label(ctx, 7)
     await drift(at(H - 0.6, 1.2, -6.5), 16)
     await drift(at(H + 1.4, 1.2, -6.5), 16)
     await still(2)
-    R.label(ctx, 7)
+    R.label(ctx, 8)
     await drift(at(H + 0.5, 1.0, -6.5), 10)
     await still(6)
     // walk up to the ring and jump onto / over the frame into the lava
@@ -296,14 +302,14 @@ module.exports = {
       },
       after: 10
     })
-    R.label(ctx, 8)
+    R.label(ctx, 9)
     ctx.sound('entity.enderman.teleport', 0.8, 1)
     // never a still frame here (rec_check: held): one slow pan across the dragon, left to right and a little back
     const pan = async (a, b, ticks) => { for (let k = 1; k <= ticks; k++) { await A.view(a.plus(b.minus(a).scaled(k / ticks))); await still(1) } }
     const D = at(E + 0.5, ISLE + 9.5, -16)
     await drift(D.offset(-6, -1, 0), 16)
     await pan(D.offset(-6, -1, 0), D.offset(-1, 0, 0), 30)
-    R.label(ctx, 9)
+    R.label(ctx, 10)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
     await pan(D.offset(-1, 0, 0), D.offset(3, 0.5, 0), 30)
     R.finish(ctx)
