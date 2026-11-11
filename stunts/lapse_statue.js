@@ -109,7 +109,7 @@ module.exports = makeStunt({
   recordRadius: 200,
   botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 4 of 5 tries on a busy box
   endAfter: 'big_done:0.5',
-  bigCuts: [6, 1.2, 63], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
+  bigCuts: [6, 1.2, 57], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'sand', under: 'sandstone', biome: 'minecraft:desert' },
   hotbar: [['hay_block', 64], ['carved_pumpkin', 64], ['stone_bricks', 64], ['brown_concrete', 64], ['terracotta', 64], ['emerald_block', 64], ['dark_oak_planks', 64], ['dirt', 64], 'diamond_shovel'],
   small,
@@ -120,18 +120,19 @@ module.exports = makeStunt({
     hold: 'terracotta', slot: 4,
     // plinth, legs, robe, arms, head, face, obelisks + oases, the pyramid, crown
     stageTicks: { 0: 100, 1: 100, 2: 140, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 80 },
-    // one smooth move for the whole round (owner r:r200cfe, on lapse_rocket's lapse: "a ton of jerking around between
-    // shots"; this round's own rail swung 8-28 deg and moved 6-18 blocks across its jump cuts): a slow crane-out from
-    // low in front of the plinth to the wide of the finished statue, the look rising with the build so the head stays
-    // under the clock. Across a 1.2 s jump cut the camera moves under a block and turns under a degree.
-    keys: [
-      [0, [-8, 12, 52], [0, 8, 0]],
-      [660, [-4, 15, 74], [0, 26, 0]],
-      [1318, [0, 17, 96], [0, 31, 0]]          // the pull-back lands on 60:00: the crown under the clock, the pyramid beside
-    ],
-    reveal: [
-      [8, [0.05, 17.03, 96.27], [0, 31, 0]],   // on along the same line, as slowly
-      [16, [0.1, 17.06, 96.54], [0, 31, 0]]
+    // several clearly different steady angles joined by hard cuts (owner r:r66efa4, 2026-11-11: "we should have more
+    // angles when we're showing the last thing"), each one slow and straight so its own jump cuts carry it on
+    // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
+    // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the statue
+    angles: [
+      [0, [[-34, 6, 44], [0, 8, 0]], [[-31, 12, 40], [0, 24, 0]], 'low front three-quarter'],   // plinth, legs, robe
+      [372, [[52, 18, 6], [0, 28, 2]], [[50, 26, -2], [0, 40, 0]], 'side'],                      // the arms, the head
+      [612, [[8, 45, 34], [0, 45, 7]], [[5, 46, 27], [0, 46, 7]], 'the face, close'],             // eyes, unibrow, nose
+      [852, [[-55, 60, 60], [4, 14, -8]], [[-49, 63, 54], [6, 15, -12]], 'high wide'],           // obelisks, oases, pyramid
+      // the showcase: the finished statue from three angles, the crown going on in the last two
+      [1092, [[38, 4, 44], [2, 30, 0]], [[34, 4, 47], [2, 32, 0]], 'low right, looking up'],
+      [1180, [[-24, 78, 34], [0, 46, 0]], [[-20, 80, 30], [0, 48, 0]], 'over the head'],
+      [1250, [[0, 16, 100], [0, 30, 0]], [[0, 17.5, 93], [0, 31, 0]], 'the hero wide']          // 60:00: the crown under the clock, the pyramid beside, the small ones in front
     ]
   }
 })
