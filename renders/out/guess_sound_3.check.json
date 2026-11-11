@@ -1,0 +1,218 @@
+{
+ "stunt": "guess_sound_3",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/guess_sound_3.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT guess_sound_3: 1 shots, scene 0.0-43.6 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-43.6  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 33.9,
+     "shot": 6,
+     "line": null,
+     "kind": "vanish",
+     "msg": "creeper #362 vanishes in the middle of the frame 6.90 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 6 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 20.45,
+     "shot": 4,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (no cast, median depth 3.7 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 13 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 3.95,
+     "tick": 94,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 160 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 4.45,
+     "tick": 104,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 205 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 5.4,
+     "tick": 123,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 171 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 11.1,
+     "tick": 237,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 210 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 12.2,
+     "tick": 259,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 144 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 17.5,
+     "tick": 365,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 218 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 18.05,
+     "tick": 376,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 195 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 18.65,
+     "tick": 388,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 162 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 31.05,
+     "tick": 636,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 164 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 32.25,
+     "tick": 660,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 173 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 37.85,
+     "tick": 772,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 214 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 38.5,
+     "tick": 785,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 190 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 39.05,
+     "tick": 796,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 152 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "13 visible sound-making events (place 5, voice 8), 5 with a sound mark, 8 without (audio.py adds those for a story)",
+    "     1.35s  chicken idle voice                 -> entity.chicken.ambient             3.1 blocks          ",
+    "     7.10s  chicken idle voice                 -> entity.chicken.ambient             2.8 blocks in view  ",
+    "    13.15s  chicken idle voice                 -> entity.chicken.ambient            14.9 blocks          ",
+    "    19.15s  skeleton idle voice                -> entity.skeleton.ambient           14.9 blocks          ",
+    "    25.20s  blaze idle voice                   -> entity.blaze.ambient              13.7 blocks in view  ",
+    "    31.45s  blaze idle voice                   -> entity.blaze.ambient               3.1 blocks          ",
+    "    36.65s  blaze idle voice                   -> entity.blaze.ambient              14.9 blocks          ",
+    "    41.45s  blaze idle voice                   -> entity.blaze.ambient              14.9 blocks          ",
+    "ambience per shot: -0.20-7.90s indoor_day, 7.90-14.70s indoor_day, 14.70-21.20s indoor_day, 21.20-27.65s indoor_day, 27.65-34.65s indoor_day, 34.65-45.75s indoor_day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T15:06:59.179Z"
+}
