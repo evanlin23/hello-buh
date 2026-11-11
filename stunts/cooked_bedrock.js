@@ -15,8 +15,9 @@ const BEDROCK_Y = -6
 async function build (ctx, H) {
   const c = (s, o) => H.cmd(s, o)
   await ctx.forceload({ x0: H.O.x - 8, z0: H.O.z - 8, x1: H.O.x + 8, z1: H.O.z + 8 })
-  // the rock: deepslate with tuff and cobbled patches, y -26..4
-  for (let y0 = -26; y0 <= 4; y0 += 8) await c(`/fill ${H.A(-6, y0, -6)} ${H.A(6, Math.min(4, y0 + 7), 6)} deepslate`)
+  // the rock: deepslate with tuff and cobbled patches, y -22..4 (at depth -40 that is world y -62: above the world's
+  // floor, -64; from -26 the bottom /fill failed and the real terrain's lava showed through the hole)
+  for (let y0 = -22; y0 <= 4; y0 += 8) await c(`/fill ${H.A(-6, y0, -6)} ${H.A(6, Math.min(4, y0 + 7), 6)} deepslate`)
   let seed = 11
   const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
   for (let i = 0; i < 40; i++) {
@@ -30,7 +31,7 @@ async function build (ctx, H) {
     if (Math.abs(x) <= 0 && Math.abs(z) <= 0) continue
     await c(`/setblock ${H.A(x, BEDROCK_Y + 1, z)} bedrock`)
   }
-  await c(`/fill ${H.A(-3, -22, -3)} ${H.A(3, BEDROCK_Y - 1, 3)} air`)
+  await c(`/fill ${H.A(-3, -18, -3)} ${H.A(3, BEDROCK_Y - 1, 3)} air`)
   // the room the player starts in: 3x3, 3 high, lit by two torches
   await c(`/fill ${H.A(-1, 0, -1)} ${H.A(1, 2, 1)} air`)
   await c(`/setblock ${H.A(-1, 0, 1)} torch`)
@@ -49,10 +50,11 @@ async function build (ctx, H) {
 
 module.exports = makeStunt({
   name: 'cooked_bedrock',
-  caption: 'POV: you broke bedrock in survival',
-  red: 'bedrock',
+  // the caption asks what only the ending answers (review r1: "you broke bedrock" gave the feat away)
+  caption: 'why did everyone just join my world?',
+  red: 'everyone',
   subs: [['bedrock', 'bedrock??', 1.0], ['crack', "wait it's breaking", 1.3]],
-  edit: { sfx: [['pop', 'go', { gain: 0.4 }]] },
+  edit: { sfx: [['pop', 'go', { gain: 0.4 }], ['impact', 'dark']] },   // the break is a hit you hear under the music (review r1)
   // who comes for you: the game's makers first, then everything bigger; the punchline is the block itself (and the
   // other edition), last (kid-safe, no real person as the punchline, nothing a parent reads as an insult)
   joins: ['Notch', 'jeb_', 'Mojang', 'MojangLawyers', 'TheWarden', 'FBI', 'Pentagon', 'NASA', 'EnderDragon', 'Bedrock'],
@@ -73,10 +75,23 @@ module.exports = makeStunt({
     }
     // vanilla: an Efficiency V netherite pickaxe mines at 9 + 26 = 35 (mineflayer rates it as no tool: 6.75 s a block)
     const effV = (b) => { const h = bot.registry.blocksByName[b.name].hardness; const dmg = 35 / h / 30; return dmg >= 1 ? 50 : Math.ceil(1 / dmg) * 50 }
+    // a dig with vanilla's sounds: the block's hit sound every 4 ticks while mining (MultiPlayerGameMode), its break
+    // sound when it goes (review r1: the render's mining was silent)
+    const mine = async (b, ms, o = {}) => {
+      const g = ctx.soundGroup(b.name)
+      let on = true
+      // ...and vanilla's mining crumbs: one block_hit particle a tick off the top face (ParticleEngine.crack; on the
+      // dark bedrock they are the visible progress, its crack overlay barely shows: review r1)
+      const p = b.position
+      const hits = (async () => { for (let k = 0; on; k++) { if (k % 4 === 0) ctx.sound(`block.${g}.hit`, 0.6, 0.5); ctx.particles('block_hit', p, { block: b.name, face: [0, 1, 0], count: o.crumbs || 1 }); await bot.waitForTicks(1) } })()
+      try { await A.dig(b, { ms }) } catch (e) { if (!o.mayFail) throw e; ctx.log('cooked_bedrock: dig', e.message) } finally { on = false }
+      await hits
+      if (!o.silentBreak) ctx.sound(`block.${g}.break`, 1, 0.8)
+    }
     // 1. straight down through the vein
     for (const y of SHAFT) {
       const b = bot.blockAt(H.at(0, y, 0))
-      await A.dig(b, { ms: effV(b) })
+      await mine(b, effV(b))
       await fallTo(y)
       // an invisible light block in the dug cell above the head: the shaft stays as lit as the room (the torches'
       // light dies off a level a block, and the bedrock and its cracks read black at the bottom)
@@ -87,6 +102,10 @@ module.exports = makeStunt({
     const bed = bot.blockAt(H.at(0, BEDROCK_Y, 0))
     if (!bed || bed.name !== 'bedrock') throw new Error(`cooked_bedrock: no bedrock under the feet (${bed && bed.name})`)
     ctx.mark('bedrock')
+    // full light on the bedrock's face (invisible light blocks in the player's own cells): on the dark bedrock the
+    // crack overlay (a darkening blend) only reads on a well-lit block (review r1: no cracks visible)
+    H.cmd(`/setblock ${H.A(0, BEDROCK_Y + 1, 0)} light[level=15]`, { mayFail: true })
+    H.cmd(`/setblock ${H.A(0, BEDROCK_Y + 2, 0)} light[level=15]`, { mayFail: true })
     await A.turnTo(H.at(0.5, BEDROCK_Y + 1, 0.5), { hold: 6 })
     // 3. mine it: it cracks like any block (the dig at an Efficiency V netherite pickaxe's pace for ~2 s), and at the
     //    end of the dig it breaks (the one staged thing: /setblock to air, the break's particles and sound)
@@ -99,10 +118,11 @@ module.exports = makeStunt({
       const done = H.cmd(`/setblock ${p.x} ${p.y} ${p.z} air`)
       ctx.mark('dark')
       ctx.particles('block', p, { block: 'bedrock' })
-      ctx.sound('block.stone.break', 1, 0.8)
+      ctx.sound('block.stone.break', 1, 0.6)
+      ctx.vanillaSound('block.deepslate.break', 0.5)
       await done
     })()
-    try { await A.dig(bed, { ms: BREAK }) } catch (e) { ctx.log('cooked_bedrock: bedrock dig', e.message) }
+    await mine(bed, BREAK, { mayFail: true, silentBreak: true, crumbs: 2 })
     await staged
     ctx.mark('dig_end', { ok: true })
     return true

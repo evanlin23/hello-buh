@@ -41,6 +41,20 @@ function spawn (ev, blockTex) {
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.05 * (r() * 0.5 + 0.5) * 2, collide: true,
         tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: ev.tint ? ev.tint.map(c => c * 0.6) : [0.6, 0.6, 0.6] })
     }
+  } else if (ev.type === 'block_hit' && blockTex) {
+    // mining a block (ParticleEngine.crack, every tick the player keeps digging): one TerrainParticle on a random point
+    // 0.1 off the hit face (ev.face [nx, ny, nz], default up), setPower(0.2) (a slow drift: xd * 0.2, yd (yd - 0.1) *
+    // 0.2 + 0.1), scale 0.6. The visible sign of progress on a dark block whose crack overlay barely shows (bedrock)
+    const n = ev.face || [0, 1, 0]
+    for (let i = 0; i < (ev.count || 1); i++) {
+      const at = (k) => n[k] > 0 ? 1.1 : n[k] < 0 ? -0.1 : 0.1 + r() * 0.8
+      const sp = (r() + r() + 1) * 0.15 * 0.4
+      const d = [r() * 2 - 1, r() * 2 - 1, r() * 2 - 1], m = Math.hypot(...d) || 1
+      const uo = r() * 3, vo = r() * 3
+      P({ x: ev.x + at(0), y: ev.y + at(1), z: ev.z + at(2), vx: d[0] / m * sp * 0.2, vy: (d[1] / m * sp + 0.1 - 0.1) * 0.2 + 0.1, vz: d[2] / m * sp * 0.2,
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.05 * (r() * 0.5 + 0.5) * 2 * 0.6, collide: true,
+        tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: ev.tint ? ev.tint.map(c => c * 0.6) : [0.6, 0.6, 0.6] })
+    }
   } else if (ev.type === 'portal') {
     for (let i = 0; i < (ev.count || 40); i++) {
       const f = r() * 0.6 + 0.4
