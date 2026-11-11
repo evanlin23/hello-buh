@@ -62,119 +62,119 @@
   {
    "id": "L03",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "He's ALWAYS / standing / somewhere / WEIRD.",
    "say": "He's always standing somewhere WEIRD."
   },
   {
    "id": "L04",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "Under a TREE. / That night, / LIGHTNING / split it.",
    "say": "Under a TREE. That night, LIGHTNING split it."
   },
   {
    "id": "L05",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "In the WHEAT. / A CREEPER / walked in / and BOOM.",
    "say": "In the WHEAT. A creeper walked in and BOOM."
   },
   {
    "id": "L06",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "By the WELL. / The water / turned to / LAVA.",
    "say": "By the WELL. The water turned to LAVA."
   },
   {
    "id": "L07",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "On MY roof. / The next day, / it rained / ANVILS.",
    "say": "On MY roof. The next day, it rained ANVILS."
   },
   {
    "id": "L08",
    "who": "N",
-   "beat": "c",
+   "beat": "a",
    "text": "The other / villagers / WALK AWAY / when he comes.",
    "say": "The other villagers walk AWAY when he comes."
   },
   {
    "id": "L09",
    "who": "N",
-   "beat": "c",
+   "beat": "a",
    "text": "Even the / IRON GOLEM / goes AROUND him.",
    "say": "Even the iron golem goes AROUND him."
   },
   {
    "id": "L10",
    "who": "N",
-   "beat": "c",
+   "beat": "a",
    "text": "So one night, / I FOLLOWED him.",
    "say": "So one night, I FOLLOWED him."
   },
   {
    "id": "L11",
    "who": "N",
-   "beat": "d",
+   "beat": "a",
    "text": "Past the / last torch / was ANOTHER / village.",
    "say": "Past the last torch was ANOTHER village."
   },
   {
    "id": "L12",
    "who": "N",
-   "beat": "d",
+   "beat": "a",
    "text": "MY village. / BURNED. / EMPTY.",
    "say": "MY village. BURNED. EMPTY."
   },
   {
    "id": "L13",
    "who": "N",
-   "beat": "d",
+   "beat": "a",
    "text": "The TREE. / The WHEAT. / The WELL. / All GONE.",
    "say": "The TREE. The WHEAT. The WELL. All GONE."
   },
   {
    "id": "L14",
    "who": "N",
-   "beat": "e",
+   "beat": "a",
    "text": "He's not / FROM here. / His world / already ENDED.",
    "say": "He's not FROM here. His world already ENDED."
   },
   {
    "id": "L15",
    "who": "N",
-   "beat": "e",
+   "beat": "a",
    "text": "They sent him / BACK / to WARN us.",
    "say": "They sent him back to WARN us."
   },
   {
    "id": "L16",
    "who": "N",
-   "beat": "e",
+   "beat": "a",
    "text": "But a NITWIT / can only / say one word.",
    "say": "But a NITWIT can only say one word."
   },
   {
    "id": "L17",
    "who": "N",
-   "beat": "f",
+   "beat": "a",
    "text": "And today, / he's standing / right next / to ME.",
    "say": "And today, he's standing right next to ME."
   },
   {
    "id": "L18",
    "who": "N",
-   "beat": "f",
+   "beat": "a",
    "text": "He said / my NAME. / Then the DATE / of the END.",
    "say": "He said my NAME. Then the date of the END."
   },
   {
    "id": "L19",
    "who": "N",
-   "beat": "g",
+   "beat": "b",
    "text": "It's TODAY.",
    "say": "It's TODAY.",
    "note": "the owner: 'need the voice to be better'. Its own beat, its own take, room before it"
@@ -190,83 +190,28 @@
    "voice": "Leda",
    "lines": [
     "L01",
-    "L02"
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14",
+    "L15",
+    "L16",
+    "L17",
+    "L18"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
   {
    "id": "r_b",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L03",
-    "L04",
-    "L05",
-    "L06",
-    "L07"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_c",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L08",
-    "L09",
-    "L10"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_d",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L11",
-    "L12",
-    "L13"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_e",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L14",
-    "L15",
-    "L16"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_f",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L17",
-    "L18"
-   ],
-   "direction": "[A nine-year-old kid, a little scared now, slower, every word clear; not whispery or soft]"
-  },
-  {
-   "id": "r_g",
    "speakers": [
     "N"
    ],

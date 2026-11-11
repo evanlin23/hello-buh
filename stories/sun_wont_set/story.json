@@ -111,7 +111,7 @@
   {
    "id": "L04",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "Every day, / GRANDPA / asks me / the same THING.",
    "say": "Every day, Grandpa asks me the same THING.",
    "shot": "S05",
@@ -135,7 +135,7 @@
   {
    "id": "L06",
    "who": "N",
-   "beat": "c",
+   "beat": "b",
    "text": "And every day / I tell him, / NOT YET.",
    "say": "And every day I tell him, not YET.",
    "shot": "S06",
@@ -147,7 +147,7 @@
   {
    "id": "L07",
    "who": "N",
-   "beat": "c",
+   "beat": "b",
    "text": "Everyone thinks / it's a CURSE. / It's NOT.",
    "say": "Everyone thinks it's a curse. It's NOT.",
    "shot": "S07",
@@ -159,7 +159,7 @@
   {
    "id": "L08",
    "who": "N",
-   "beat": "d",
+   "beat": "b",
    "text": "It's a LEVER. / And I / PULLED it.",
    "say": "It's a LEVER. And I PULLED it.",
    "shot": "S08",
@@ -175,7 +175,7 @@
   {
    "id": "L09",
    "who": "N",
-   "beat": "e",
+   "beat": "b",
    "text": "Because at NIGHT, / zombies come OUT. / And Grandpa / is way too SLOW / to RUN.",
    "say": "Because at night, zombies come out. And Grandpa is way too slow to RUN.",
    "shot": "S09",
@@ -193,7 +193,7 @@
   {
    "id": "L10",
    "who": "N",
-   "beat": "e",
+   "beat": "b",
    "text": "Me? I haven't slept / in 300 days / EITHER. / I'm not even TIRED!",
    "say": "Me? I haven't slept in three hundred days either. I'm not even TIRED!",
    "shot": "S10",
@@ -206,7 +206,7 @@
   {
    "id": "L11",
    "who": "N",
-   "beat": "f",
+   "beat": "b",
    "text": "But TODAY, / Grandpa SAID,",
    "say": "But today, Grandpa SAID,",
    "shot": "S11",
@@ -231,7 +231,7 @@
   {
    "id": "L13",
    "who": "N",
-   "beat": "g",
+   "beat": "c",
    "text": "ME? / HE'S the one / who's TIRED.",
    "say": "Me? HE'S the one who's tired.",
    "shot": "S12",
@@ -244,7 +244,7 @@
   {
    "id": "L14",
    "who": "N",
-   "beat": "g",
+   "beat": "c",
    "text": "So I walked him / HOME. / Then I pulled / the lever BACK.",
    "say": "So I walked him home. Then I pulled the lever BACK.",
    "shot": "S13",
@@ -262,7 +262,7 @@
   {
    "id": "L15",
    "who": "N",
-   "beat": "h",
+   "beat": "c",
    "text": "The sun went DOWN. / The zombies / came OUT. / So I stood GUARD / at his DOOR.",
    "say": "The sun went down. The zombies came out. So I stood guard at his DOOR.",
    "shot": "S14",
@@ -285,7 +285,7 @@
   {
    "id": "L16",
    "who": "N",
-   "beat": "h",
+   "beat": "c",
    "text": "Then something / SCREAMED / up in the SKY.",
    "say": "Then something screamed up in the SKY.",
    "shot": "S16",
@@ -496,9 +496,23 @@
    "lines": [
     "L01",
     "L02",
-    "L03"
+    "L03",
+    "L04"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_gp",
+   "speakers": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "voice": "Rasalgethi",
+   "lines": [
+    "L05",
+    "L12"
+   ],
+   "direction": "[An old village grandpa, tired and kind, slow]"
   },
   {
    "id": "r_b",
@@ -508,21 +522,14 @@
    "model": "gemini-3.8-flash-lite-tts",
    "voice": "Leda",
    "lines": [
-    "L04"
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11"
    ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_gp_L05",
-   "speakers": [
-    "Grandpa"
-   ],
-   "model": "gemini-3.8-flash-tts",
-   "voice": "Rasalgethi",
-   "lines": [
-    "L05"
-   ],
-   "direction": "[An old village grandpa, tired and kind, slow]"
+   "direction": "[A bubbly nine-year-old kid telling a friend his big secret, bright and proud, clear, never rushed; not whispery or soft]"
   },
   {
    "id": "r_c",
@@ -532,85 +539,15 @@
    "model": "gemini-3.8-flash-lite-tts",
    "voice": "Leda",
    "lines": [
-    "L06",
-    "L07"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_d",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L08"
-   ],
-   "direction": "[A proud nine-year-old kid telling his big secret, bright, slower, every word clear; not whispery or soft]"
-  },
-  {
-   "id": "r_e",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L09",
-    "L10"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_f",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L11"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_gp_L12",
-   "speakers": [
-    "Grandpa"
-   ],
-   "model": "gemini-3.8-flash-tts",
-   "voice": "Rasalgethi",
-   "lines": [
-    "L12"
-   ],
-   "direction": "[An old village grandpa, tired and kind, slow]"
-  },
-  {
-   "id": "r_g",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
     "L13",
-    "L14"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_h",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
+    "L14",
     "L15",
     "L16"
    ],
-   "direction": "[A brave nine-year-old kid standing guard, bright and proud, then puzzled; not whispery or soft]"
+   "direction": "[A bubbly nine-year-old kid, a laugh, then brave and proud, then puzzled; not whispery or soft]"
   }
+ ],
+ "one_take": [
+  "Grandpa"
  ]
 }

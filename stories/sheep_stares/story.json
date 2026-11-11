@@ -54,63 +54,63 @@
   {
    "id": "L03",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "I pushed him / into the RIVER. / He WALKED / right BACK.",
    "say": "I pushed him into the RIVER. He walked right BACK."
   },
   {
    "id": "L04",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "WOLVES / showed up. / They took / one LOOK / at him / and LEFT.",
    "say": "WOLVES showed up. They took one look at him and LEFT."
   },
   {
    "id": "L05",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "I put / a block / of GOLD / on top. / He stared / THROUGH it.",
    "say": "I put a block of GOLD on top. He stared THROUGH it."
   },
   {
    "id": "L06",
    "who": "N",
-   "beat": "b",
+   "beat": "a",
    "text": "Sometimes / the block / GROANS. / I figured / dirt just / DOES that.",
    "say": "Sometimes the block GROANS. I figured dirt just DOES that."
   },
   {
    "id": "L07",
    "who": "N",
-   "beat": "c",
+   "beat": "a",
    "text": "Honestly, / I don't / remember / GETTING / a sheep. / Or dyeing / him BLUE.",
    "say": "Honestly, I don't remember GETTING a sheep. Or dyeing him BLUE."
   },
   {
    "id": "L08",
    "who": "N",
-   "beat": "c",
+   "beat": "a",
    "text": "I woke up / in this house / 412 days ago. / No TOOLS. / No MEMORIES. / Just HIM, / already STARING.",
    "say": "I woke up in this house four hundred and twelve days ago. No TOOLS. No MEMORIES. Just him, already STARING."
   },
   {
    "id": "L09",
    "who": "N",
-   "beat": "c",
+   "beat": "a",
    "text": "The house / was already / BUILT. / There's / a line / of TORCHES / from my door / to that BLOCK.",
    "say": "The house was already BUILT. There's a line of torches from my door to that BLOCK."
   },
   {
    "id": "L10",
    "who": "N",
-   "beat": "d",
+   "beat": "b",
    "text": "The villagers / call me / the NEW one.",
    "say": "The villagers call me the NEW one."
   },
   {
    "id": "L11",
    "who": "N",
-   "beat": "d",
+   "beat": "b",
    "text": "They keep / asking / what happened / to the OLD one. / I say, / WHO?",
    "say": "They keep asking what happened to the OLD one. I say, WHO?",
    "note": "the owner: 'who needs to be like better delivered'. Its own beat: a real, puzzled question"
@@ -118,35 +118,35 @@
   {
    "id": "L12",
    "who": "N",
-   "beat": "e",
+   "beat": "b",
    "text": "So today / I got / CURIOUS.",
    "say": "So today I got CURIOUS."
   },
   {
    "id": "L13",
    "who": "N",
-   "beat": "e",
+   "beat": "b",
    "text": "And for / the FIRST time / in 412 days, / he LOOKED / at ME.",
    "say": "And for the first time in four hundred and twelve days, he looked at ME."
   },
   {
    "id": "L14",
    "who": "N",
-   "beat": "e",
+   "beat": "b",
    "text": "I broke / the BLOCK.",
    "say": "I broke the BLOCK."
   },
   {
    "id": "L15",
    "who": "N",
-   "beat": "f",
+   "beat": "b",
    "text": "There's / a HOLE / under it. / It goes / STRAIGHT down.",
    "say": "There's a HOLE under it. It goes STRAIGHT down."
   },
   {
    "id": "L16",
    "who": "N",
-   "beat": "f",
+   "beat": "b",
    "text": "Who digs / STRAIGHT / DOWN?",
    "say": "Who digs straight DOWN?",
    "note": "the last line: baffled, not a punchline"
@@ -162,7 +162,14 @@
    "voice": "Leda",
    "lines": [
     "L01",
-    "L02"
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -174,66 +181,15 @@
    "model": "gemini-3.8-flash-lite-tts",
    "voice": "Leda",
    "lines": [
-    "L03",
-    "L04",
-    "L05",
-    "L06"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_c",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
-    "L07",
-    "L08",
-    "L09"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_d",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
     "L10",
-    "L11"
-   ],
-   "direction": "[A nine-year-old kid, honestly confused, a real puzzled 'who?' at the end; not whispery]"
-  },
-  {
-   "id": "r_e",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
+    "L11",
     "L12",
     "L13",
-    "L14"
-   ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r_f",
-   "speakers": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
-   "lines": [
+    "L14",
     "L15",
     "L16"
    ],
-   "direction": "[A nine-year-old kid, staring down a hole, baffled and a bit scared, slower; not whispery]"
+   "direction": "[A bubbly nine-year-old kid, honestly puzzled, real questions, getting curious, then baffled; not whispery or soft]"
   }
  ]
 }
