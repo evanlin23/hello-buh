@@ -4,7 +4,7 @@
   "caption": "building a statue in 1 second vs 1 minute vs 1 hour 💀",
   "youtube": {
     "title": "building a statue in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
-    "description": "building a statue in 1 second vs 1 minute vs 1 hour 💀\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "building a statue in 1 second vs 1 minute vs 1 hour 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,14 +14,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "fearless_funk.mp3",
-    "title": "Fearless Funk",
-    "artist": "DR MØB, Chris Linton",
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "big_done",
-    "drop_in_song_s": 29.5,
+    "drop_in_song_s": 36.75,
     "drop_in_short_s": 27.43,
-    "song_start_s": 2.07
+    "song_start_s": 9.32
   },
   "video": {
     "file": "short.mp4",
@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 32017968,
-    "sha256": "11485ba35595d7cd980c75797622021c3e7d1807084c4aedfc7c54ed0e4adea2",
+    "bytes": 32011348,
+    "sha256": "9b4138ec41348ede091a750afd19e77628d5c2a604fea3abf986622c51a0bff2",
     "release": {
       "tag": "pkg-lapse_statue",
-      "asset": "lapse_statue.short.11485ba35595d7cd.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short.11485ba35595d7cd.mp4",
-      "sha256": "11485ba35595d7cd980c75797622021c3e7d1807084c4aedfc7c54ed0e4adea2",
-      "bytes": 32017968
+      "asset": "lapse_statue.short.9b4138ec41348ede.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short.9b4138ec41348ede.mp4",
+      "sha256": "9b4138ec41348ede091a750afd19e77628d5c2a604fea3abf986622c51a0bff2",
+      "bytes": 32011348
     },
     "nosong_release": {
       "tag": "pkg-lapse_statue",
-      "asset": "lapse_statue.short_nosong.8c7369e4fb2f1aa8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short_nosong.8c7369e4fb2f1aa8.mp4",
-      "sha256": "8c7369e4fb2f1aa838268205629ca66745140e5f38044def89baeb4012e7d7d2",
-      "bytes": 31957082
+      "asset": "lapse_statue.short_nosong.d8709518590e72ce.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short_nosong.d8709518590e72ce.mp4",
+      "sha256": "d8709518590e72cebdbdb46b18c027085a1cc4c9eaa23d00bba60cea66ba2d47",
+      "bytes": 31957113
     }
   },
   "edit": {
@@ -210,6 +210,17 @@
         1.08
       ]
     ],
+    "sfx": [
+      [
+        "dip",
+        "big_done",
+        0.3
+      ],
+      [
+        "impact",
+        "big_done"
+      ]
+    ],
     "args": [
       "--caption",
       "building a statue in 1 second vs 1 minute vs 1 hour 💀",
@@ -223,6 +234,8 @@
       "[[\"big_done\",0,1.08]]",
       "--flash",
       "[[\"big_done\",0,0.5]]",
+      "--sfx",
+      "[[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]]",
       "--start_at",
       "small_start:-0.1",
       "--end_after",
@@ -4151,11 +4164,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/lapse_statue",
-    "commit": "b1cde92fcae25de6d1e79f33de1f0fd82e6f0e5d",
+    "commit": "98ae87d729a3ca73384a210eab8dd4813fb14ace",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977265479",
-    "rendered_at": "2026-11-11T07:22:14.564Z",
-    "head_at_publish": "acd1c15212f115b4d8f25d0d14518d7fd3139291",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42979381988",
+    "rendered_at": "2026-11-11T07:39:37.508Z",
+    "head_at_publish": "eabfc917d83639b924c5338e2dd3bda40f83923a",
     "stunt": "stunts/lapse_statue.js",
     "source_snapshot": [
       "source/lapse_statue.js",
@@ -4163,34 +4176,34 @@
     ]
   },
   "rebuild": [
-    "git checkout b1cde92fcae2",
+    "git checkout 98ae87d729a3",
     "gunzip -c shorts/lapse_statue/recording.json.gz > work/lapse_statue.rec.json",
     "node render.js work/lapse_statue.rec.json work/lapse_statue.frames 60 1080 1011",
     "python3 audio.py work/lapse_statue.rec.json work/lapse_statue.wav",
-    "python3 edit.py --frames work/lapse_statue.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_statue.rec.json --audio work/lapse_statue.wav --caption \"building a statue in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:7.2\",\"cut\"],[\"big_start:7.2\",\"big_start:12\",3],[\"big_start:12\",\"big_start:13.2\",\"cut\"],[\"big_start:13.2\",\"big_start:18\",3],[\"big_start:18\",\"big_start:19.2\",\"cut\"],[\"big_start:19.2\",\"big_start:24\",3],[\"big_start:24\",\"big_start:25.2\",\"cut\"],[\"big_start:25.2\",\"big_start:30\",3],[\"big_start:30\",\"big_start:31.2\",\"cut\"],[\"big_start:31.2\",\"big_start:36\",3],[\"big_start:36\",\"big_start:37.2\",\"cut\"],[\"big_start:37.2\",\"big_start:42\",3],[\"big_start:42\",\"big_start:43.2\",\"cut\"],[\"big_start:43.2\",\"big_start:48\",3],[\"big_start:48\",\"big_start:49.2\",\"cut\"],[\"big_start:49.2\",\"big_start:54\",3],[\"big_start:54\",\"big_start:55.2\",\"cut\"],[\"big_start:55.2\",\"big_start:60\",3],[\"big_start:60\",\"big_start:61.2\",\"cut\"],[\"big_start:61.2\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_statue.mp4"
+    "python3 edit.py --frames work/lapse_statue.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_statue.rec.json --audio work/lapse_statue.wav --caption \"building a statue in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:7.2\",\"cut\"],[\"big_start:7.2\",\"big_start:12\",3],[\"big_start:12\",\"big_start:13.2\",\"cut\"],[\"big_start:13.2\",\"big_start:18\",3],[\"big_start:18\",\"big_start:19.2\",\"cut\"],[\"big_start:19.2\",\"big_start:24\",3],[\"big_start:24\",\"big_start:25.2\",\"cut\"],[\"big_start:25.2\",\"big_start:30\",3],[\"big_start:30\",\"big_start:31.2\",\"cut\"],[\"big_start:31.2\",\"big_start:36\",3],[\"big_start:36\",\"big_start:37.2\",\"cut\"],[\"big_start:37.2\",\"big_start:42\",3],[\"big_start:42\",\"big_start:43.2\",\"cut\"],[\"big_start:43.2\",\"big_start:48\",3],[\"big_start:48\",\"big_start:49.2\",\"cut\"],[\"big_start:49.2\",\"big_start:54\",3],[\"big_start:54\",\"big_start:55.2\",\"cut\"],[\"big_start:55.2\",\"big_start:60\",3],[\"big_start:60\",\"big_start:61.2\",\"cut\"],[\"big_start:61.2\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_statue.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); jump cuts every ~1.6 s through the 1-hour round (was 5.7 s / 6.95 s dead), flash + punch on 60:00; 27.9 s; pace 0 blockers (WARN build-up); self-review READY",
-  "published_at": "2026-11-11T07:23:43.150Z",
+  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); jump cuts every ~1.6 s through the 1-hour round (was 5.7 s / 6.95 s dead), flash + punch + song dip + impact on 60:00; 27.9 s; pace 0 blockers (WARN build-up); self-review READY",
+  "published_at": "2026-11-11T07:41:14.470Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:24:07+00:00",
+    "at": "2026-11-11T07:41:39+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
       "summary": "short.mp4 27.95 s vs the reviewed render 27.93 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 1,
+      "ok": true,
+      "blockers": 0,
       "warnings": 0,
-      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+      "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:08:48.454Z",
+      "at": "2026-11-11T07:26:01.695Z",
       "report": "out/lapse_statue.check.json"
     },
     "key_sounds": "n/a"
