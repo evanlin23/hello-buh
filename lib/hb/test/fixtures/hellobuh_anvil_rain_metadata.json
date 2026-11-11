@@ -1,0 +1,49 @@
+{
+  "name": "anvil_rain",
+  "caption": "minecraft but it rains anvils 💀",
+  "youtube": {
+    "title": "minecraft but it rains anvils 💀 #minecraft #shorts",
+    "description": "minecraft but it rains anvils 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "rain"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 10.05,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 12994073,
+    "sha256": "d09a576faec8ff9b4912ae27098c289da71a42a7ba2c685daf058316b12017a0",
+    "release": {
+      "tag": "pkg-anvil_rain",
+      "asset": "anvil_rain.short.d09a576faec8ff9b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-anvil_rain/anvil_rain.short.d09a576faec8ff9b.mp4",
+      "sha256": "d09a576faec8ff9b4912ae27098c289da71a42a7ba2c685daf058316b12017a0",
+      "bytes": 12994073
+    },
+    "nosong_release": {
+      "tag": "pkg-anvil_rain",
+      "asset": "anvil_rain.short_nosong.e16db15e376521a7.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-anvil_rain/anvil_rain.short_nosong.e16db15e376521a7.mp4",
+      "sha256": "e16db15e376521a7121de7a7cc1290b7041a9d55cdf9a1e5397777ababaabf64",
+      "bytes": 12901550
+    }
+  },
+  "status": "dropped",
+  "notes": "dropped (owner, 2026-11-11, r:rc5eaf0): repeats it_rains phase 1",
+  "published_at": "2026-11-06T15:39:14.919Z"
+}

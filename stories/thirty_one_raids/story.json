@@ -4,6 +4,16 @@
   "version": 2,
   "revision": "r2 (2026-11-10): the critic's 6 must-fixes and both should-fixes applied; lines renumbered in the new order; see reviews/r2-selfcheck.md",
   "caption": "why do raiders always follow grandpa home 😶",
+  "upload": {
+    "title": "thirty-one raids. every one started the night grandpa came home 😳 #minecraft #shorts",
+    "pinned": "Should anyone ever tell Grandpa where raid 32 came from?",
+    "tags": [
+      "minecraft grandpa",
+      "minecraft bad omen",
+      "minecraft pillager"
+    ]
+  },
+  "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste thirty_one_raids prints it). pinned = the question, without the 👇",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
   "premise": "Grandpa keeps a totem from every raid he has saved the village from: 31 on his wall, and one empty frame. Every raid started the night he came home; he says they follow him because he beats them. The villagers throw him bread when he walks by. He hunts at the old pillager tower on the hill and brings back grey bottles, a whole chest of them; he calls it his courage and drinks it at the gate, then tells the boy to lock the door. Since Grandma died, a raid is the only time anyone is glad to see him.",

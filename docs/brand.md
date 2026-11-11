@@ -299,6 +299,11 @@ varied. Raids' title was checked against the final script (2026-11-11): "he star
   stories" feel "too specific"). A series playlist is added only when a premise family has 3+ stories (a hit's
   follow-ups); Shorts playlists mostly help binge-watching from the channel page and a series' "next" link, not reach.
 
+**Built, not hand-written:** the titles, questions and story tags above live in each `stories/<s>/story.json` `upload`
+block; lib/buhstories_upload.js builds the upload text from it (publish.js, the uploader) and `./hb paste <story>`
+prints it for a manual upload. Change a title or question there (and in the tables above: a test keeps the titles in
+sync).
+
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
 "We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a
 village covered in 9,000 carpets. You'll want to know why. → @BuhStoriesMC"

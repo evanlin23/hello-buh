@@ -1,0 +1,42 @@
+{
+  "name": "story_gold_for_the_portal",
+  "channel": "buhstories",
+  "caption": "My grandma has thrown 9,000 gold into a portal",
+  "youtube": {
+    "title": "My grandma has thrown 9,000 gold into a portal #minecraft #shorts",
+    "description": "My grandma has thrown 9,000 gold into a portal\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "songs/score/darkest_child.ogg",
+    "title": "Darkest Child",
+    "artist": "Kevin MacLeod",
+    "tracks": [
+      "darkest_child"
+    ],
+    "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
+    "mood": [
+      "eerie",
+      "sad"
+    ],
+    "payoff_in_short_s": 49.0,
+    "mix": "scripts/story_audio.py (docs/audio.md)",
+    "mixed_in": "edit"
+  },
+  "video": {
+    "duration_s": 50
+  },
+  "edit": {
+    "story": "stories/gold_for_the_portal",
+    "caption": "My grandma has thrown 9,000 gold into a portal"
+  },
+  "status": "held",
+  "notes": "band: the brand cover title 'My grandma has thrown 9,000 gold into a portal', key word Buh gold #FFD640. Pip narrator (one take) + Grandma (Vindemiatrix); bright look, punches on L01/L07/L12; owner notes fixed. Nitpicks: 50 s / 2.89 wps, one ingot drawn for the 64-stack throw, the night garden shot reads like day.",
+  "published_at": "2026-11-11T09:58:56.406Z"
+}
