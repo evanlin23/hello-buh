@@ -271,13 +271,13 @@ comes first because feed titles are cut at about 40-60 characters (thin evidence
 |---|---|---|---|
 | 1 | Light Sleeper | my village is covered in 9,000 carpets 😶 #minecraft #shorts | My village is covered in 9,000 **carpets** |
 | 2 | Good Boy | my human tried to lose me 37 times 🐺 #minecraft #shorts | My human has tried to lose me 37 **times** |
-| 3 | Thirty-One Raids | grandpa won 31 raids. he started all of them 😳 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
+| 3 | Thirty-One Raids | thirty-one raids. every one started the night grandpa came home 😳 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
 | 4 | Gold for the Portal | my grandma has thrown 9,000 gold into a portal 🪙 #minecraft #shorts | My grandma has thrown 9,000 gold into a **portal** |
 | 5 | Dog on the Hill | the dog on the hill hasn't moved in 900 days 🐕 #minecraft #shorts | The dog on the hill hasn't moved in **900** days |
 
 Why this order: Light Sleeper is the strongest hook and the bar, so it opens the channel. After that the order is free,
 because each story stands alone; the two dog stories (Good Boy, Dog on the Hill) are kept apart so the feed stays
-varied. Raids' title gives away less than its twist; check it against the final script before upload.
+varied. Raids' title was checked against the final script (2026-11-11): "he started all of them" contradicted the twist (the boy starts them), so the title is the story's own hook line.
 
 ## Pinned comment (one question per story, one people want to answer)
 1. Light Sleeper: "What do you think is under the well? Wrong answers only 👇"
