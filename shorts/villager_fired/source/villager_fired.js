@@ -23,8 +23,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'I gave the villager every job 💀',
   edit: {
-    caption: 'I gave the villager every job 💀', red: 'every', song: 'songs/payphone.mp3', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'nitwit:1.4',
+    caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
+    startAt: 'beat:-0.05', endAfter: 'nitwit:1.0',
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -37,10 +37,15 @@ module.exports = {
       ['crowd', 'the rest of the village: 0 jobs', 2.2, 0],
       ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
-      ['fired_all', 'fired from 13 jobs at once', 1.5, 0],
+      ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast (the wait after it is cut)
       ['nitwit', 'now he is unemployable', 2.0, 0]
     ],
-    speed: [['fuse_a', 'fuse_b', 'cut'], ['close_a', 'close_b', 'cut']]
+    // the still wait on the pillar before he turns nitwit is cut (lint: nobody moves 31.6-34.1 s); a flash, punch and a
+    // held push-in on the change (pace: the payoff's picture change; he's small at 13 blocks)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['close_a', 'close_b', 'cut'], ['fired_all:0.45', 'nitwit', 'cut']],
+    flash: [['nitwit', 0, 0.5]], punch: [['nitwit', 0, 1.1]], zoom: [['nitwit', 'end', 1.4]],
+    // pace: a pop on the opening (game sound starts at 2 s), a song dip + impact on the change
+    sfx: [['pop', 'beat'], ['dip', 'nitwit', 0.3], ['impact', 'nitwit']]
   },
 
   async setup (ctx) {
