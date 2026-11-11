@@ -24,3 +24,4 @@ sword_art  371a726d38ca931c  # 2026-11-11: owner pressed 'OK for YouTube' on thi
 tnt  94a8290be1534cae  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 villager_crowd  0313230f22df513e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 villager_fired  ac9c6fb47e9dd85e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+psycho_lava_mansion  14b70bd2fadc1cc0  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:44 UTC

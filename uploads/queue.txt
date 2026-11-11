@@ -48,3 +48,4 @@ nether_portal
 cells_lab   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
 love_cherry_heart   # first: owner's new format (love); uploads only after the owner's OK (r:r7ec7d3)
 faketrick_gold_portal   # first: owner's new format (faketrick); uploads only after the owner's OK (r:r7ec7d3)
+psycho_lava_mansion   # first: owner's new format (psycho), OK'd 2026-11-11
