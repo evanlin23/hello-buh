@@ -532,6 +532,11 @@ STANDARDS.md in the same commit.
   current length is fine, we shouldnt harp too much on length".** About 50 s at Pip's natural pace is fine. Length is
   not a reason to cut lines or re-voice; a line goes only if it doesn't move the question. pace keeps only its floor
   BLOCK; anything over 45 s is a note, never a blocker or a fix request.
+- **Owner, 2026-11-11, on Good Boy's voiced preview: "The opening scene is not very exciting? Also not centered."**
+  Its first 4 s were Buh walking a dirt road with the dog (the narrator, the story's subject) small at the right edge.
+  The opening shot puts the story's subject (the shot's `subject`, else line 1's) in frame from frame 1, in the middle
+  third of the frame and big enough to read at phone size, with something story-relevant already moving (the subject,
+  the cast, an action or a camera push) in the first 0.5 s; never a static or empty establishing frame.
 - **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
   stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
