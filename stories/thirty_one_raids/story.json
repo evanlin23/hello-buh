@@ -175,7 +175,9 @@
       },
       "stress": "DOOR, COMING",
       "say": "Lock the door, kid, they're coming.",
-      "punch": true
+      "punch": true,
+      "caption_clear": 0.25,
+      "caption_clear_note": "the raid horn plays alone in the 0.9 s hold after this line (owner 2026-11-11: fix the horn): the caption clears so Grandpa's turn on the horn is seen (scripts/story_track.py)"
     },
     {
       "id": "L09",
