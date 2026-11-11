@@ -30,8 +30,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 44487652,
-    "sha256": "6ad74ad1a90194912b9076c0d38fc3b484c01e4c7f5a47a1e73c0d5590f1d518"
+    "bytes": 37690522,
+    "sha256": "c44d58726e00743b208ceb2e04f741a20d10b49e958cdef01febd6479ca04e26",
+    "release": {
+      "tag": "pkg-looks_wrong",
+      "asset": "looks_wrong.short.c44d58726e00743b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.c44d58726e00743b.mp4",
+      "sha256": "c44d58726e00743b208ceb2e04f741a20d10b49e958cdef01febd6479ca04e26",
+      "bytes": 37690522
+    },
+    "nosong_release": {
+      "tag": "pkg-looks_wrong",
+      "asset": "looks_wrong.short_nosong.a03368820f189392.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short_nosong.a03368820f189392.mp4",
+      "sha256": "a03368820f1893929bcea19814a7d2deb91ab70f6f90fdd531a1b61c5877597d",
+      "bytes": 37635843
+    }
   },
   "edit": {
     "punch": [

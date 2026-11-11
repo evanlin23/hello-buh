@@ -1,9 +1,9 @@
 {
   "name": "story_sheep_stares",
-  "caption": "why is my sheep staring at this block \ud83d\udc80",
+  "caption": "why is my sheep staring at this block 💀",
   "youtube": {
-    "title": "why is my sheep staring at this block \ud83d\udc80 #minecraft #shorts",
-    "description": "why is my sheep staring at this block \ud83d\udc80\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "why is my sheep staring at this block 💀 #minecraft #shorts",
+    "description": "why is my sheep staring at this block 💀\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 56953779,
-    "sha256": "28c7c94ea718ab99a150ae41c6015b7bacb841ff4210640c0ed7f52ef4e25b34"
+    "bytes": 57050748,
+    "sha256": "5cf27b62f1fd8d1a3cedc9b42f3c348e10fc0da7f51bdf8ce84b0b354635dd22",
+    "release": {
+      "tag": "pkg-story_sheep_stares",
+      "asset": "story_sheep_stares.short.5cf27b62f1fd8d1a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_sheep_stares/story_sheep_stares.short.5cf27b62f1fd8d1a.mp4",
+      "sha256": "5cf27b62f1fd8d1a3cedc9b42f3c348e10fc0da7f51bdf8ce84b0b354635dd22",
+      "bytes": 57050748
+    },
+    "nosong_release": {
+      "tag": "pkg-story_sheep_stares",
+      "asset": "story_sheep_stares.short_nosong.28c7c94ea718ab99.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_sheep_stares/story_sheep_stares.short_nosong.28c7c94ea718ab99.mp4",
+      "sha256": "28c7c94ea718ab99a150ae41c6015b7bacb841ff4210640c0ed7f52ef4e25b34",
+      "bytes": 56953779
+    }
   },
   "edit": {
-    "caption": "why is my sheep staring at this block \ud83d\udc80",
+    "caption": "why is my sheep staring at this block 💀",
     "red": "staring",
     "story": "stories/sheep_stares",
     "startAt": "line:0",
@@ -88,7 +102,7 @@
     ],
     "args": [
       "--caption",
-      "why is my sheep staring at this block \ud83d\udc80",
+      "why is my sheep staring at this block 💀",
       "--red",
       "staring",
       "--zoom",
@@ -475,7 +489,7 @@
     "gunzip -c shorts/story_sheep_stares/recording.json.gz > work/story_sheep_stares.rec.json",
     "node render.js work/story_sheep_stares.rec.json work/story_sheep_stares.frames 60 1080 1011",
     "python3 audio.py work/story_sheep_stares.rec.json work/story_sheep_stares.wav",
-    "python3 edit.py --frames work/story_sheep_stares.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sheep_stares.rec.json --audio work/story_sheep_stares.wav --caption \"why is my sheep staring at this block \ud83d\udc80\" --red staring --zoom [[\"slain:0.10\",\"slain:3\",1.07],[\"slain:0.30\",\"slain:3\",1.07],[\"slain:0.50\",\"slain:3\",1.07],[\"slain:0.70\",\"slain:3\",1.07],[\"slain:0.90\",\"slain:3\",1.07],[\"slain:1.10\",\"slain:3\",1.07],[\"slain:1.30\",\"slain:3\",1.07],[\"slain:1.50\",\"slain:3\",1.07],[\"slain:1.70\",\"slain:3\",1.07]] --death_screen death --story stories/sheep_stares --start_at line:0 --end_after slain:1.9 --out out/story_sheep_stares.mp4"
+    "python3 edit.py --frames work/story_sheep_stares.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sheep_stares.rec.json --audio work/story_sheep_stares.wav --caption \"why is my sheep staring at this block 💀\" --red staring --zoom [[\"slain:0.10\",\"slain:3\",1.07],[\"slain:0.30\",\"slain:3\",1.07],[\"slain:0.50\",\"slain:3\",1.07],[\"slain:0.70\",\"slain:3\",1.07],[\"slain:0.90\",\"slain:3\",1.07],[\"slain:1.10\",\"slain:3\",1.07],[\"slain:1.30\",\"slain:3\",1.07],[\"slain:1.50\",\"slain:3\",1.07],[\"slain:1.70\",\"slain:3\",1.07]] --death_screen death --story stories/sheep_stares --start_at line:0 --end_after slain:1.9 --out out/story_sheep_stares.mp4"
   ],
   "status": "ready",
   "notes": "story premise 3 (The Sheep That Stares). Frame review, retention audit, Minecraft audit: ready. Nitpicks: caption switches a few frames before the two mid-line day/night cuts; sheep floats high in the river (0.4 s); death-screen item name upright, hearts blink (engine).",

@@ -29,8 +29,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 39929671,
-    "sha256": "40b9362411ca63a6a05a2fde44a27c162012f4d9a8748ab114ec09a61481ae4b"
+    "bytes": 40030566,
+    "sha256": "c6206670511f857a6ffcfb53d6dd5aecfeb1b79ed47843be1687a066793d6b5a",
+    "release": {
+      "tag": "pkg-story_runaway",
+      "asset": "story_runaway.short.c6206670511f857a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_runaway/story_runaway.short.c6206670511f857a.mp4",
+      "sha256": "c6206670511f857a6ffcfb53d6dd5aecfeb1b79ed47843be1687a066793d6b5a",
+      "bytes": 40030566
+    },
+    "nosong_release": {
+      "tag": "pkg-story_runaway",
+      "asset": "story_runaway.short_nosong.40b9362411ca63a6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_runaway/story_runaway.short_nosong.40b9362411ca63a6.mp4",
+      "sha256": "40b9362411ca63a6a05a2fde44a27c162012f4d9a8748ab114ec09a61481ae4b",
+      "bytes": 39929671
+    }
   },
   "edit": {
     "caption": "why does everyone run from me 💀",

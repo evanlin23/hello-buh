@@ -1,9 +1,9 @@
 {
   "name": "water_clutch",
-  "caption": "water bucket clutch \ud83d\udc80",
+  "caption": "water bucket clutch 💀",
   "youtube": {
-    "title": "water bucket clutch \ud83d\udc80 #minecraft #shorts",
-    "description": "water bucket clutch \ud83d\udc80\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "water bucket clutch 💀 #minecraft #shorts",
+    "description": "water bucket clutch 💀\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,18 +29,32 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 12079081,
-    "sha256": "c38874d951c30b63fa1c282cfaa0fba800b0ac27753bc1629fd13267eb832939"
+    "bytes": 12079524,
+    "sha256": "0939947a157fa167a08f8031d443be71796077d18ca0fbbeeb9a89760d94306f",
+    "release": {
+      "tag": "pkg-water_clutch",
+      "asset": "water_clutch.short.0939947a157fa167.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_clutch/water_clutch.short.0939947a157fa167.mp4",
+      "sha256": "0939947a157fa167a08f8031d443be71796077d18ca0fbbeeb9a89760d94306f",
+      "bytes": 12079524
+    },
+    "nosong_release": {
+      "tag": "pkg-water_clutch",
+      "asset": "water_clutch.short_nosong.2f4073793726fb4f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_clutch/water_clutch.short_nosong.2f4073793726fb4f.mp4",
+      "sha256": "2f4073793726fb4f8f7396e415de398ed6d5d7a812c32d5c7b421673d5456289",
+      "bytes": 11992297
+    }
   },
   "edit": {
-    "caption": "water bucket clutch \ud83d\udc80",
+    "caption": "water bucket clutch 💀",
     "song": "songs/misery.mp3",
     "dropAt": "placed",
     "startAt": "jump:-1.0",
     "endAfter": "placed:2.4",
     "args": [
       "--caption",
-      "water bucket clutch \ud83d\udc80",
+      "water bucket clutch 💀",
       "--start_at",
       "jump:-1.0",
       "--end_after",
@@ -102,7 +116,7 @@
     "gunzip -c shorts/water_clutch/recording.json.gz > work/water_clutch.rec.json",
     "node render.js work/water_clutch.rec.json work/water_clutch.frames 60 1080 1011",
     "python3 audio.py work/water_clutch.rec.json work/water_clutch.wav",
-    "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch \ud83d\udc80\" --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
+    "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch 💀\" --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
   ],
   "status": "needs-fix",
   "notes": "backlog worker D 2026-11-11: needs-fix, superseded. A 5.9 s single water clutch: fails the owner's 30 s minimum (retention-audit check 5; one beat, no build-up) and the same clutch is tiers 1-4 of clutch_harder (ready, 31.1 s; also boat_clutch, ladder_clutch). Growing it to 30 s would remake clutch_harder. Recommend retiring it (do not queue).",

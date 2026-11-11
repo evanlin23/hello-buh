@@ -1,9 +1,9 @@
 {
   "name": "wrong_bucket",
-  "caption": "POV: you grabbed the wrong bucket \ud83d\udc80",
+  "caption": "POV: you grabbed the wrong bucket 💀",
   "youtube": {
-    "title": "POV: you grabbed the wrong bucket \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you grabbed the wrong bucket \ud83d\udc80\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you grabbed the wrong bucket 💀 #minecraft #shorts",
+    "description": "POV: you grabbed the wrong bucket 💀\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 18458500,
-    "sha256": "4f155a8114b640c88707dd35ada757760220a2426e9a9f9a1bb23b6301bb17b9"
+    "bytes": 18455774,
+    "sha256": "3a8e832f438cc4267efaf221c33f44c2d8dba8f34a37d37b99729488a511c306",
+    "release": {
+      "tag": "pkg-wrong_bucket",
+      "asset": "wrong_bucket.short.3a8e832f438cc426.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-wrong_bucket/wrong_bucket.short.3a8e832f438cc426.mp4",
+      "sha256": "3a8e832f438cc4267efaf221c33f44c2d8dba8f34a37d37b99729488a511c306",
+      "bytes": 18455774
+    },
+    "nosong_release": {
+      "tag": "pkg-wrong_bucket",
+      "asset": "wrong_bucket.short_nosong.8483e59538f6f59b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-wrong_bucket/wrong_bucket.short_nosong.8483e59538f6f59b.mp4",
+      "sha256": "8483e59538f6f59bfac3f79f8642d20a5302ab7f423f646aa5be70b2dfe05ecb",
+      "bytes": 18321890
+    }
   },
   "edit": {
-    "caption": "POV: you grabbed the wrong bucket \ud83d\udc80",
+    "caption": "POV: you grabbed the wrong bucket 💀",
     "red": "wrong",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "death",
@@ -42,7 +56,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "POV: you grabbed the wrong bucket \ud83d\udc80",
+      "POV: you grabbed the wrong bucket 💀",
       "--red",
       "wrong",
       "--on_fire",
@@ -177,7 +191,7 @@
     "gunzip -c shorts/wrong_bucket/recording.json.gz > work/wrong_bucket.rec.json",
     "node render.js work/wrong_bucket.rec.json work/wrong_bucket.frames 60 1080 1011",
     "python3 audio.py work/wrong_bucket.rec.json work/wrong_bucket.wav",
-    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket \ud83d\udc80\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
+    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket 💀\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
   ],
   "status": "needs-fix",
   "notes": "backlog worker D 2026-11-11: needs-fix, superseded. A 9.85 s lava-bucket clutch joke: fails the owner's 30 s minimum (retention-audit check 5) and the same joke is clutch_harder's payoff tier ('EASY ONE', ready, 31.1 s). Standalone it is one beat with no build-up; growing it to 30 s would remake clutch_harder. Recommend retiring it (do not queue).",

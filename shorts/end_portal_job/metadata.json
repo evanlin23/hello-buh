@@ -31,7 +31,21 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 53365436,
-    "sha256": "f53936f2fd6b353b1f2c9701d73cb8ab3404486643dbc31ecf576147c35f10b5"
+    "sha256": "f53936f2fd6b353b1f2c9701d73cb8ab3404486643dbc31ecf576147c35f10b5",
+    "release": {
+      "tag": "pkg-end_portal_job",
+      "asset": "end_portal_job.short.f53936f2fd6b353b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short.f53936f2fd6b353b.mp4",
+      "sha256": "f53936f2fd6b353b1f2c9701d73cb8ab3404486643dbc31ecf576147c35f10b5",
+      "bytes": 53365436
+    },
+    "nosong_release": {
+      "tag": "pkg-end_portal_job",
+      "asset": "end_portal_job.short_nosong.18acc1f402b96525.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short_nosong.18acc1f402b96525.mp4",
+      "sha256": "18acc1f402b9652562869be67c03a19b68fb57ee08e0805a690cf4948d03856d",
+      "bytes": 53344231
+    }
   },
   "edit": {
     "caption": "POV: your job is filling end portals",
@@ -82,7 +96,7 @@
     "cards": [
       [
         "outro",
-        "IT NEVER ENDS \ud83d\udc80",
+        "IT NEVER ENDS 💀",
         1.4,
         "red"
       ]
@@ -171,7 +185,7 @@
       "--speed",
       "[[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]]",
       "--cards",
-      "[[\"outro\",\"IT NEVER ENDS \ud83d\udc80\",1.4,\"red\"]]",
+      "[[\"outro\",\"IT NEVER ENDS 💀\",1.4,\"red\"]]",
       "--start_at",
       "start:0",
       "--end_after",
@@ -1189,10 +1203,10 @@
     "gunzip -c shorts/end_portal_job/recording.json.gz > work/end_portal_job.rec.json",
     "node render.js work/end_portal_job.rec.json work/end_portal_job.frames 60 1080 1011",
     "python3 audio.py work/end_portal_job.rec.json work/end_portal_job.wav",
-    "python3 edit.py --frames work/end_portal_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/end_portal_job.rec.json --audio work/end_portal_job.wav --caption \"POV: your job is filling end portals\" --red job --subs \"[[\\\"ring\\\",\\\"getting faster\\\",1.6,1],[\\\"ring\\\",\\\"speedrun\\\",1.6,2],[\\\"ring\\\",\\\"world record pace\\\",1.6,3],[\\\"ring\\\",\\\"overtime\\\",1.6,4],[\\\"ring\\\",\\\"double shift\\\",1.6,5],[\\\"ring\\\",\\\"no breaks\\\",1.6,6]]\" --subs_y 0.15 --speed [[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]] --cards \"[[\\\"outro\\\",\\\"IT NEVER ENDS \ud83d\udc80\\\",1.4,\\\"red\\\"]]\" --start_at start:0 --end_after outro:1.4 --out out/end_portal_job.mp4",
+    "python3 edit.py --frames work/end_portal_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/end_portal_job.rec.json --audio work/end_portal_job.wav --caption \"POV: your job is filling end portals\" --red job --subs \"[[\\\"ring\\\",\\\"getting faster\\\",1.6,1],[\\\"ring\\\",\\\"speedrun\\\",1.6,2],[\\\"ring\\\",\\\"world record pace\\\",1.6,3],[\\\"ring\\\",\\\"overtime\\\",1.6,4],[\\\"ring\\\",\\\"double shift\\\",1.6,5],[\\\"ring\\\",\\\"no breaks\\\",1.6,6]]\" --subs_y 0.15 --speed [[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]] --cards \"[[\\\"outro\\\",\\\"IT NEVER ENDS 💀\\\",1.4,\\\"red\\\"]]\" --start_at start:0 --end_after outro:1.4 --out out/end_portal_job.mp4",
     "python3 shorts/end_portal_job/source/timer_overlay.py strip 32.083 && ffmpeg -i short.mp4 -framerate 60 -i strip/t_%05d.png -filter_complex '[0:v][1:v]overlay=24:479:eof_action=repeat' -c:a copy -c:v libx264 -crf 18 -maxrate 18M -bufsize 36M (speedrun timer overlay, owner request)"
   ],
   "status": "ready",
-  "notes": "worker 4: v10, 7 rings each faster, eyes from inside the ring with the 12th from outside, spare-ring outro. Independent review ready, no blockers. Nitpicks left: a small pitch settle at each ring cut, the card briefly over the spare ring's far frames, the hand lowering 1-4 frames early on a stack's last eye (engine). | Owner request: speedrun timer overlay (top-left of the game area), splits green on each portal opening (measured in the video), red on the IT NEVER ENDS outro (8/\u221e). | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -1.4 -> +4.3 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker): pace BLOCKed no sound hit on the payoff (the cut to the next empty ring + IT NEVER ENDS at 30.68 s; the portal hum and the bed ran through it). Edit-only, picture unchanged: edit.sfx dip + impact on outro (stunts/end_portal_job.js) and the game dropped 18 dB over the 0.4 s before it, mixed into short_nosong.mp4; remixed at the -16 LUFS bed, same track and drop. ./hb pace OK (0 blockers, 0 warnings), ./hb check OK, key_sounds n/a",
+  "notes": "worker 4: v10, 7 rings each faster, eyes from inside the ring with the 12th from outside, spare-ring outro. Independent review ready, no blockers. Nitpicks left: a small pitch settle at each ring cut, the card briefly over the spare ring's far frames, the hand lowering 1-4 frames early on a stack's last eye (engine). | Owner request: speedrun timer overlay (top-left of the game area), splits green on each portal opening (measured in the video), red on the IT NEVER ENDS outro (8/∞). | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -1.4 -> +4.3 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker): pace BLOCKed no sound hit on the payoff (the cut to the next empty ring + IT NEVER ENDS at 30.68 s; the portal hum and the bed ran through it). Edit-only, picture unchanged: edit.sfx dip + impact on outro (stunts/end_portal_job.js) and the game dropped 18 dB over the 0.4 s before it, mixed into short_nosong.mp4; remixed at the -16 LUFS bed, same track and drop. ./hb pace OK (0 blockers, 0 warnings), ./hb check OK, key_sounds n/a",
   "published_at": "2026-11-07T18:19:44.417Z"
 }

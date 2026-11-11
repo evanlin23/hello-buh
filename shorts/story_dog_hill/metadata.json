@@ -25,7 +25,14 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 30581041,
-    "sha256": "f96c126fdbeb4fb44ea8a470887f5e90e6e16df191ff019d317adb5f2e65c0f8"
+    "sha256": "f96c126fdbeb4fb44ea8a470887f5e90e6e16df191ff019d317adb5f2e65c0f8",
+    "release": {
+      "tag": "pkg-story_dog_hill",
+      "asset": "story_dog_hill.short.f96c126fdbeb4fb4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_dog_hill/story_dog_hill.short.f96c126fdbeb4fb4.mp4",
+      "sha256": "f96c126fdbeb4fb44ea8a470887f5e90e6e16df191ff019d317adb5f2e65c0f8",
+      "bytes": 30581041
+    }
   },
   "edit": {
     "story": "stories/dog_hill",

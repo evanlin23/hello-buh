@@ -1,9 +1,9 @@
 {
   "name": "creeper",
-  "caption": "POV: you hear tssss \ud83d\udc80",
+  "caption": "POV: you hear tssss 💀",
   "youtube": {
-    "title": "POV: you hear tssss \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you hear tssss \ud83d\udc80\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you hear tssss 💀 #minecraft #shorts",
+    "description": "POV: you hear tssss 💀\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -15,7 +15,7 @@
   "song": {
     "file": "intranet_crush.mp3",
     "title": "Intranet Crush",
-    "artist": "hir\u00e6th, Willix",
+    "artist": "hiræth, Willix",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "hiss",
     "drop_in_song_s": 3.0,
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 5757369,
-    "sha256": "6669dcc4d58ad72bdf684c4ff0e8d503f2c1946f66c29759706680877150eef6"
+    "bytes": 5759022,
+    "sha256": "a291c76083a67bbcebf36c2402d456b8e7340c32a267f5db3fb10d9837fee0c8",
+    "release": {
+      "tag": "pkg-creeper",
+      "asset": "creeper.short.a291c76083a67bbc.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.a291c76083a67bbc.mp4",
+      "sha256": "a291c76083a67bbcebf36c2402d456b8e7340c32a267f5db3fb10d9837fee0c8",
+      "bytes": 5759022
+    },
+    "nosong_release": {
+      "tag": "pkg-creeper",
+      "asset": "creeper.short_nosong.389191ec86b587cd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.389191ec86b587cd.mp4",
+      "sha256": "389191ec86b587cd679de237756fabb52066033ae3b6faaeaf38da249440b7dc",
+      "bytes": 5731607
+    }
   },
   "edit": {
-    "caption": "POV: you hear tssss \ud83d\udc80",
+    "caption": "POV: you hear tssss 💀",
     "red": "tssss",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "hiss",
@@ -42,7 +56,7 @@
     "endAfter": "death:1.8",
     "args": [
       "--caption",
-      "POV: you hear tssss \ud83d\udc80",
+      "POV: you hear tssss 💀",
       "--red",
       "tssss",
       "--death_screen",
@@ -178,7 +192,7 @@
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss \ud83d\udc80\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
   ],
   "status": "needs-fix",
   "notes": "frame QA: creeper not on screen until 4.2 s, no fuse flash; re-render queued",

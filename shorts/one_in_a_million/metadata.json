@@ -1,9 +1,9 @@
 {
   "name": "one_in_a_million",
-  "caption": "1 in a million landing, but it gets harder \ud83d\ude33",
+  "caption": "1 in a million landing, but it gets harder 😳",
   "youtube": {
-    "title": "1 in a million landing, but it gets harder \ud83d\ude33 #minecraft #shorts",
-    "description": "1 in a million landing, but it gets harder \ud83d\ude33\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "1 in a million landing, but it gets harder 😳 #minecraft #shorts",
+    "description": "1 in a million landing, but it gets harder 😳\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -31,10 +31,24 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 62850591,
-    "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124"
+    "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124",
+    "release": {
+      "tag": "pkg-one_in_a_million",
+      "asset": "one_in_a_million.short.5df9f64bf48c09b5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-one_in_a_million/one_in_a_million.short.5df9f64bf48c09b5.mp4",
+      "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124",
+      "bytes": 62850591
+    },
+    "nosong_release": {
+      "tag": "pkg-one_in_a_million",
+      "asset": "one_in_a_million.short_nosong.7ce945d454b424bc.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-one_in_a_million/one_in_a_million.short_nosong.7ce945d454b424bc.mp4",
+      "sha256": "7ce945d454b424bcdb6e09e9c2878bf7c34440f6a0788c1ffc76d7c23512a61d",
+      "bytes": 62826998
+    }
   },
   "edit": {
-    "caption": "1 in a million landing, but it gets harder \ud83d\ude33",
+    "caption": "1 in a million landing, but it gets harder 😳",
     "red": "harder",
     "song": "songs/ncs/fearless_funk.mp3",
     "dropAt": "splash5",
@@ -129,7 +143,7 @@
       "at": "splash5",
       "before": 1.7,
       "after": -0.2,
-      "text": "wait for the last one \ud83d\ude33"
+      "text": "wait for the last one 😳"
     },
     "counter": {
       "at": [
@@ -227,7 +241,7 @@
       ],
       [
         "splash3",
-        "TIGHT \ud83d\ude2c",
+        "TIGHT 😬",
         0.8,
         "yellow"
       ],
@@ -365,7 +379,7 @@
     ],
     "args": [
       "--caption",
-      "1 in a million landing, but it gets harder \ud83d\ude33",
+      "1 in a million landing, but it gets harder 😳",
       "--red",
       "harder",
       "--subs",
@@ -381,9 +395,9 @@
       "--counter",
       "{\"at\":[\"look1\",\"look2\",\"look3\",\"look4\",\"look5\"],\"total\":5}",
       "--cards",
-      "[[\"splash1\",\"EASY\",0.8,\"green\"],[\"splash2\",\"CLEAN\",0.8,\"green\"],[\"splash3\",\"TIGHT \ud83d\ude2c\",0.8,\"yellow\"],[\"splash4\",\"INSANE\",0.8,\"orange\"],[\"splash5\",\"1 IN A MILLION\",1.2,\"red\",0,\"stamp\"]]",
+      "[[\"splash1\",\"EASY\",0.8,\"green\"],[\"splash2\",\"CLEAN\",0.8,\"green\"],[\"splash3\",\"TIGHT 😬\",0.8,\"yellow\"],[\"splash4\",\"INSANE\",0.8,\"orange\"],[\"splash5\",\"1 IN A MILLION\",1.2,\"red\",0,\"stamp\"]]",
       "--hook",
-      "{\"at\":\"splash5\",\"before\":1.7,\"after\":-0.2,\"text\":\"wait for the last one \ud83d\ude33\"}",
+      "{\"at\":\"splash5\",\"before\":1.7,\"after\":-0.2,\"text\":\"wait for the last one 😳\"}",
       "--shake",
       "[\"splash5\"]",
       "--flash",
@@ -1992,7 +2006,7 @@
     "gunzip -c shorts/one_in_a_million/recording.json.gz > work/one_in_a_million.rec.json",
     "node render.js work/one_in_a_million.rec.json work/one_in_a_million.frames 60 1080 1011",
     "python3 audio.py work/one_in_a_million.rec.json work/one_in_a_million.wav",
-    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing, but it gets harder \ud83d\ude33\" --red harder --subs \"[[\\\"look1\\\",\\\"40 blocks, 5x5\\\",0.55,0],[\\\"look2\\\",\\\"100 blocks, 3x3\\\",0.55,0],[\\\"look3\\\",\\\"160 blocks, 1x1\\\",0.55,0],[\\\"look4\\\",\\\"BUILD LIMIT, 1x1... IN CACTUS\\\",0.55,0],[\\\"look5\\\",\\\"BUILD LIMIT... INTO LAVA\\\",0.55,0]]\" --subs_y 0.12 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"look3:0\",\"look3:0.2\",\"cut\"],[\"look4:0\",\"look4:0.6\",\"cut\"],[\"look5:0\",\"look5:1.2\",\"cut\"],[\"drop4:0.5\",\"drop4:2.4\",2],[\"drop5:0\",\"drop5:0.6\",2],[\"drop5:0.6\",\"drop5:3.3\",2.5]] --slowmo [[\"drift3\",0,0.6],[\"drift4\",0,0.6],[\"drift5\",0,0.6],[\"splash5\",0.25,0.25]] --punch [\"splash1\",\"splash2\",\"splash3\",\"splash4\",\"splash5\"] --counter {\"at\":[\"look1\",\"look2\",\"look3\",\"look4\",\"look5\"],\"total\":5} --cards \"[[\\\"splash1\\\",\\\"EASY\\\",0.8,\\\"green\\\"],[\\\"splash2\\\",\\\"CLEAN\\\",0.8,\\\"green\\\"],[\\\"splash3\\\",\\\"TIGHT \ud83d\ude2c\\\",0.8,\\\"yellow\\\"],[\\\"splash4\\\",\\\"INSANE\\\",0.8,\\\"orange\\\"],[\\\"splash5\\\",\\\"1 IN A MILLION\\\",1.2,\\\"red\\\",0,\\\"stamp\\\"]]\" --hook \"{\\\"at\\\":\\\"splash5\\\",\\\"before\\\":1.7,\\\"after\\\":-0.2,\\\"text\\\":\\\"wait for the last one \ud83d\ude33\\\"}\" --shake [\"splash5\"] --flash [[\"splash5\",0,0.5]] --fallen [[\"drop1\",\"splash1\",\"blocks\",-1],[\"drop2\",\"splash2\",\"blocks\",-1],[\"drop3\",\"splash3\",\"blocks\",-1],[\"drop4\",\"splash4\",\"blocks\",-1],[\"drop5\",\"splash5\",\"blocks\",-1]] --loop true --sfx [[\"whoosh\",\"cut1b\"],[\"whoosh\",\"cut2b\"],[\"whoosh\",\"cut3b\"],[\"whoosh\",\"cut4b\"],[\"wind\",\"drop1\",\"splash1\"],[\"wind\",\"drop2\",\"splash2\"],[\"wind\",\"drop3\",\"splash3\"],[\"wind\",\"drop4\",\"splash4\"],[\"wind\",\"drop5\",\"splash5\"],[\"riser\",\"drop5\",\"splash5\"],[\"impact\",\"splash1\",{\"gain\":0.5}],[\"impact\",\"splash2\",{\"gain\":0.6}],[\"impact\",\"splash3\",{\"gain\":0.7}],[\"impact\",\"splash4\",{\"gain\":0.8}],[\"boom\",\"splash5\"],[\"dip\",\"splash5\",0.3],[\"pops\"],[\"whoosh\",\"drift2\",{\"gain\":0.6}],[\"whoosh\",\"drift3\",{\"gain\":0.6}],[\"whoosh\",\"drift4\",{\"gain\":0.6}],[\"whoosh\",\"drift5\",{\"gain\":0.6}]] --start_at drop1:-0.85 --end_after splash5:1.15 --song songs/ncs/fearless_funk.mp3 --song_drop_at splash5 --out out/one_in_a_million.mp4"
+    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing, but it gets harder 😳\" --red harder --subs \"[[\\\"look1\\\",\\\"40 blocks, 5x5\\\",0.55,0],[\\\"look2\\\",\\\"100 blocks, 3x3\\\",0.55,0],[\\\"look3\\\",\\\"160 blocks, 1x1\\\",0.55,0],[\\\"look4\\\",\\\"BUILD LIMIT, 1x1... IN CACTUS\\\",0.55,0],[\\\"look5\\\",\\\"BUILD LIMIT... INTO LAVA\\\",0.55,0]]\" --subs_y 0.12 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"look3:0\",\"look3:0.2\",\"cut\"],[\"look4:0\",\"look4:0.6\",\"cut\"],[\"look5:0\",\"look5:1.2\",\"cut\"],[\"drop4:0.5\",\"drop4:2.4\",2],[\"drop5:0\",\"drop5:0.6\",2],[\"drop5:0.6\",\"drop5:3.3\",2.5]] --slowmo [[\"drift3\",0,0.6],[\"drift4\",0,0.6],[\"drift5\",0,0.6],[\"splash5\",0.25,0.25]] --punch [\"splash1\",\"splash2\",\"splash3\",\"splash4\",\"splash5\"] --counter {\"at\":[\"look1\",\"look2\",\"look3\",\"look4\",\"look5\"],\"total\":5} --cards \"[[\\\"splash1\\\",\\\"EASY\\\",0.8,\\\"green\\\"],[\\\"splash2\\\",\\\"CLEAN\\\",0.8,\\\"green\\\"],[\\\"splash3\\\",\\\"TIGHT 😬\\\",0.8,\\\"yellow\\\"],[\\\"splash4\\\",\\\"INSANE\\\",0.8,\\\"orange\\\"],[\\\"splash5\\\",\\\"1 IN A MILLION\\\",1.2,\\\"red\\\",0,\\\"stamp\\\"]]\" --hook \"{\\\"at\\\":\\\"splash5\\\",\\\"before\\\":1.7,\\\"after\\\":-0.2,\\\"text\\\":\\\"wait for the last one 😳\\\"}\" --shake [\"splash5\"] --flash [[\"splash5\",0,0.5]] --fallen [[\"drop1\",\"splash1\",\"blocks\",-1],[\"drop2\",\"splash2\",\"blocks\",-1],[\"drop3\",\"splash3\",\"blocks\",-1],[\"drop4\",\"splash4\",\"blocks\",-1],[\"drop5\",\"splash5\",\"blocks\",-1]] --loop true --sfx [[\"whoosh\",\"cut1b\"],[\"whoosh\",\"cut2b\"],[\"whoosh\",\"cut3b\"],[\"whoosh\",\"cut4b\"],[\"wind\",\"drop1\",\"splash1\"],[\"wind\",\"drop2\",\"splash2\"],[\"wind\",\"drop3\",\"splash3\"],[\"wind\",\"drop4\",\"splash4\"],[\"wind\",\"drop5\",\"splash5\"],[\"riser\",\"drop5\",\"splash5\"],[\"impact\",\"splash1\",{\"gain\":0.5}],[\"impact\",\"splash2\",{\"gain\":0.6}],[\"impact\",\"splash3\",{\"gain\":0.7}],[\"impact\",\"splash4\",{\"gain\":0.8}],[\"boom\",\"splash5\"],[\"dip\",\"splash5\",0.3],[\"pops\"],[\"whoosh\",\"drift2\",{\"gain\":0.6}],[\"whoosh\",\"drift3\",{\"gain\":0.6}],[\"whoosh\",\"drift4\",{\"gain\":0.6}],[\"whoosh\",\"drift5\",{\"gain\":0.6}]] --start_at drop1:-0.85 --end_after splash5:1.15 --song songs/ncs/fearless_funk.mp3 --song_drop_at splash5 --out out/one_in_a_million.mp4"
   ],
   "status": "ready",
   "notes": "not yet passed the frame-by-frame review (docs/qa.md);  | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; same track, drop and picture. ./hb pace OK (0 blockers), ./hb check OK (lint clean once it skips footage the edit cuts), key_sounds --hits worst -0.1 dB (report only)",

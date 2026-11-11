@@ -1,9 +1,9 @@
 {
   "name": "lapse_house",
-  "caption": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+  "caption": "building a house in 1 second vs 1 minute vs 1 hour 💀",
   "youtube": {
-    "title": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80 #minecraft #shorts",
-    "description": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a house in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
+    "description": "building a house in 1 second vs 1 minute vs 1 hour 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 64290863,
-    "sha256": "f5e02cdd64a1678279673ca2b266e711faca2d7fc36d7680b49d2e724111b608"
+    "bytes": 64346169,
+    "sha256": "c3f07b34b466853324101c9edc83d3a619e96decfd03d5e8cff204857e437d63",
+    "release": {
+      "tag": "pkg-lapse_house",
+      "asset": "lapse_house.short.c3f07b34b4668533.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_house/lapse_house.short.c3f07b34b4668533.mp4",
+      "sha256": "c3f07b34b466853324101c9edc83d3a619e96decfd03d5e8cff204857e437d63",
+      "bytes": 64346169
+    },
+    "nosong_release": {
+      "tag": "pkg-lapse_house",
+      "asset": "lapse_house.short_nosong.59b6e9820a3ae25a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_house/lapse_house.short_nosong.59b6e9820a3ae25a.mp4",
+      "sha256": "59b6e9820a3ae25a42426282b612f4278da4c85ed904d1979bc7b2e9a398fcd5",
+      "bytes": 64300870
+    }
   },
   "edit": {
-    "caption": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+    "caption": "building a house in 1 second vs 1 minute vs 1 hour 💀",
     "red": "hour",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "big_done",
@@ -93,7 +107,7 @@
     ],
     "args": [
       "--caption",
-      "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+      "building a house in 1 second vs 1 minute vs 1 hour 💀",
       "--red",
       "hour",
       "--speed",
@@ -7110,7 +7124,7 @@
     "gunzip -c shorts/lapse_house/recording.json.gz > work/lapse_house.rec.json",
     "node render.js work/lapse_house.rec.json work/lapse_house.frames 60 1080 1011",
     "python3 audio.py work/lapse_house.rec.json work/lapse_house.wav",
-    "python3 edit.py --frames work/lapse_house.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_house.rec.json --audio work/lapse_house.wav --caption \"building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start\",3],[\"roof_start\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_house.mp4"
+    "python3 edit.py --frames work/lapse_house.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_house.rec.json --audio work/lapse_house.wav --caption \"building a house in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start\",3],[\"roof_start\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_house.mp4"
   ],
   "status": "ready",
   "notes": "1 s vs 1 min vs 1 h house time-lapse; frame review + retention + minecraft audit passed (round 4)",

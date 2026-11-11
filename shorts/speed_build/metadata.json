@@ -1,9 +1,9 @@
 {
   "name": "speed_build",
-  "caption": "Fastest house build \ud83d\udc80",
+  "caption": "Fastest house build 💀",
   "youtube": {
-    "title": "Fastest house build \ud83d\udc80 #minecraft #shorts",
-    "description": "Fastest house build \ud83d\udc80\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "Fastest house build 💀 #minecraft #shorts",
+    "description": "Fastest house build 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 35418750,
-    "sha256": "39c5476fb03b720773c352820e7e80ec3b2efc301838630f76885082f3f12a84"
+    "bytes": 35479809,
+    "sha256": "8b93910c8edb161a77ef820ac3f2a0f7df8dd69e1e125b936554a5740f663d1b",
+    "release": {
+      "tag": "pkg-speed_build",
+      "asset": "speed_build.short.8b93910c8edb161a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-speed_build/speed_build.short.8b93910c8edb161a.mp4",
+      "sha256": "8b93910c8edb161a77ef820ac3f2a0f7df8dd69e1e125b936554a5740f663d1b",
+      "bytes": 35479809
+    },
+    "nosong_release": {
+      "tag": "pkg-speed_build",
+      "asset": "speed_build.short_nosong.39c5476fb03b7207.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-speed_build/speed_build.short_nosong.39c5476fb03b7207.mp4",
+      "sha256": "39c5476fb03b720773c352820e7e80ec3b2efc301838630f76885082f3f12a84",
+      "bytes": 35418750
+    }
   },
   "edit": {
-    "caption": "Fastest house build \ud83d\udc80",
+    "caption": "Fastest house build 💀",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "done",
     "timer": "build_start:done",
@@ -41,7 +55,7 @@
     "endAfter": "done:0.9",
     "args": [
       "--caption",
-      "Fastest house build \ud83d\udc80",
+      "Fastest house build 💀",
       "--timer",
       "build_start:done",
       "--start_at",
@@ -841,7 +855,7 @@
     "gunzip -c shorts/speed_build/recording.json.gz > work/speed_build.rec.json",
     "node render.js work/speed_build.rec.json work/speed_build.frames 60 1080 1011",
     "python3 audio.py work/speed_build.rec.json work/speed_build.wav",
-    "python3 edit.py --frames work/speed_build.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/speed_build.rec.json --audio work/speed_build.wav --caption \"Fastest house build \ud83d\udc80\" --timer build_start:done --start_at build_start:-0.05 --end_after done:0.9 --out out/speed_build.mp4"
+    "python3 edit.py --frames work/speed_build.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/speed_build.rec.json --audio work/speed_build.wav --caption \"Fastest house build 💀\" --timer build_start:done --start_at build_start:-0.05 --end_after done:0.9 --out out/speed_build.mp4"
   ],
   "status": "needs-fix",
   "notes": "worker: 30.7 s two-storey speed build with timer; frame review + retention + minecraft audits passed. Nitpicks: final look clips the roof ridge under the timer, 0.7 s length margin | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK x5: dead spans of 7.7 s (9.96-17.66 s) and 9.1 s (17.66-26.76 s), and the payoff mark 'done' lands at 6.75 s (24 s before the end: no hit, no picture change). Needs a recut (time-lapse the build, endAfter on the finished house) and the -16 LUFS remix.",

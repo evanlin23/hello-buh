@@ -1,9 +1,9 @@
 {
   "name": "clutch_harder",
-  "caption": "clutches, but each one is harder \ud83d\ude33",
+  "caption": "clutches, but each one is harder 😳",
   "youtube": {
-    "title": "clutches, but each one is harder \ud83d\ude33 #minecraft #shorts",
-    "description": "clutches, but each one is harder \ud83d\ude33\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "clutches, but each one is harder 😳 #minecraft #shorts",
+    "description": "clutches, but each one is harder 😳\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -15,7 +15,7 @@
   "song": {
     "file": "fearless_funk.mp3",
     "title": "Fearless Funk",
-    "artist": "DR M\u00d8B, Chris Linton",
+    "artist": "DR MØB, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "placed8",
     "drop_in_song_s": 29.5,
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 68441314,
-    "sha256": "d39bfa42119128ec724aa15e2ebce3df790a7ee20d44403007aaff97ca3250cd"
+    "bytes": 68394679,
+    "sha256": "e353da9abf5d16efc4f36b1f24604494d6ef0634c561a1a3c58c9af88412a4cb",
+    "release": {
+      "tag": "pkg-clutch_harder",
+      "asset": "clutch_harder.short.e353da9abf5d16ef.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-clutch_harder/clutch_harder.short.e353da9abf5d16ef.mp4",
+      "sha256": "e353da9abf5d16efc4f36b1f24604494d6ef0634c561a1a3c58c9af88412a4cb",
+      "bytes": 68394679
+    },
+    "nosong_release": {
+      "tag": "pkg-clutch_harder",
+      "asset": "clutch_harder.short_nosong.af77272f1482e985.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-clutch_harder/clutch_harder.short_nosong.af77272f1482e985.mp4",
+      "sha256": "af77272f1482e9853e0e1d12ded769c41e825c7a63c46c04427c5ad9beaf1a23",
+      "bytes": 67980124
+    }
   },
   "edit": {
-    "caption": "clutches, but each one is harder \ud83d\ude33",
+    "caption": "clutches, but each one is harder 😳",
     "red": "harder",
     "song": "songs/ncs/vem_lenta.mp3",
     "dropAt": "placed8",
@@ -156,7 +170,7 @@
     ],
     "args": [
       "--caption",
-      "clutches, but each one is harder \ud83d\ude33",
+      "clutches, but each one is harder 😳",
       "--red",
       "harder",
       "--subs",
@@ -570,7 +584,7 @@
     "gunzip -c shorts/clutch_harder/recording.json.gz > work/clutch_harder.rec.json",
     "node render.js work/clutch_harder.rec.json work/clutch_harder.frames 60 1080 1011",
     "python3 audio.py work/clutch_harder.rec.json work/clutch_harder.wav",
-    "python3 edit.py --frames work/clutch_harder.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/clutch_harder.rec.json --audio work/clutch_harder.wav --caption \"clutches, but each one is harder \ud83d\ude33\" --red harder --subs \"[[\\\"look1\\\",\\\"40 BLOCKS\\\",2.4,0],[\\\"look2\\\",\\\"70 BLOCKS\\\",2.4,0],[\\\"look3\\\",\\\"HALF A HEART\\\",2.4,0],[\\\"look4\\\",\\\"131 BLOCKS, HALF A HEART\\\",2.4,0],[\\\"look5\\\",\\\"PEARL OVER LAVA\\\",2.4,0],[\\\"look6\\\",\\\"AT NIGHT\\\",2.4,0],[\\\"look7\\\",\\\"100 BLOCKS + STORM\\\",2.4,0],[\\\"look8\\\",\\\"EASY ONE\\\",2.4,0]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"cut7a\",\"cut7b\",\"cut\"]] --fallen [[\"jump2\",\"placed2\",\"blocks\"],[\"jump3\",\"placed3\",\"blocks\"],[\"jump4\",\"placed4\",\"blocks\"]] --sfx [[\"boom\",\"look7\",{\"gain\":0.8}]] --on_fire placed8:death --death_screen death --start_at look1:0.3 --end_after death:1.3 --song songs/ncs/vem_lenta.mp3 --song_drop_at placed8 --out out/clutch_harder.mp4"
+    "python3 edit.py --frames work/clutch_harder.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/clutch_harder.rec.json --audio work/clutch_harder.wav --caption \"clutches, but each one is harder 😳\" --red harder --subs \"[[\\\"look1\\\",\\\"40 BLOCKS\\\",2.4,0],[\\\"look2\\\",\\\"70 BLOCKS\\\",2.4,0],[\\\"look3\\\",\\\"HALF A HEART\\\",2.4,0],[\\\"look4\\\",\\\"131 BLOCKS, HALF A HEART\\\",2.4,0],[\\\"look5\\\",\\\"PEARL OVER LAVA\\\",2.4,0],[\\\"look6\\\",\\\"AT NIGHT\\\",2.4,0],[\\\"look7\\\",\\\"100 BLOCKS + STORM\\\",2.4,0],[\\\"look8\\\",\\\"EASY ONE\\\",2.4,0]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"cut7a\",\"cut7b\",\"cut\"]] --fallen [[\"jump2\",\"placed2\",\"blocks\"],[\"jump3\",\"placed3\",\"blocks\"],[\"jump4\",\"placed4\",\"blocks\"]] --sfx [[\"boom\",\"look7\",{\"gain\":0.8}]] --on_fire placed8:death --death_screen death --start_at look1:0.3 --end_after death:1.3 --song songs/ncs/vem_lenta.mp3 --song_drop_at placed8 --out out/clutch_harder.mp4"
   ],
   "status": "ready",
   "notes": "orchestrator: 8 escalating clutches, 31 s; independent review v6 PASS (frame review, retention incl. camera check, minecraft). Nitpicks: label wraps, ~0.4 s near-still at the 131 opening, night opening mostly dark treeline",

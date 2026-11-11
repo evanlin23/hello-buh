@@ -1,9 +1,9 @@
 {
   "name": "nether_portal",
-  "caption": "POV: your first nether portal \ud83d\ude33",
+  "caption": "POV: your first nether portal 😳",
   "youtube": {
-    "title": "POV: your first nether portal \ud83d\ude33 #minecraft #shorts",
-    "description": "POV: your first nether portal \ud83d\ude33\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: your first nether portal 😳 #minecraft #shorts",
+    "description": "POV: your first nether portal 😳\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,18 +29,32 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 7413348,
-    "sha256": "da12e6fb87bdc9e778d4192d7395b506b401b1cec9867c23abaf4ad4e94ea9f3"
+    "bytes": 7418250,
+    "sha256": "3d8a1583838cb141475c296362d182a340eef47b3d116806b198112d2e63f4df",
+    "release": {
+      "tag": "pkg-nether_portal",
+      "asset": "nether_portal.short.3d8a1583838cb141.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.3d8a1583838cb141.mp4",
+      "sha256": "3d8a1583838cb141475c296362d182a340eef47b3d116806b198112d2e63f4df",
+      "bytes": 7418250
+    },
+    "nosong_release": {
+      "tag": "pkg-nether_portal",
+      "asset": "nether_portal.short_nosong.14e0d0c8211e1dc3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.14e0d0c8211e1dc3.mp4",
+      "sha256": "14e0d0c8211e1dc336a244c1b2f7c671a224e85590dbcb33fe979586bf2cc62f",
+      "bytes": 7380409
+    }
   },
   "edit": {
-    "caption": "POV: your first nether portal \ud83d\ude33",
+    "caption": "POV: your first nether portal 😳",
     "red": "nether",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "lit",
     "endAfter": "lit:2.4",
     "args": [
       "--caption",
-      "POV: your first nether portal \ud83d\ude33",
+      "POV: your first nether portal 😳",
       "--red",
       "nether",
       "--end_after",
@@ -158,7 +172,7 @@
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal 😳\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
   ],
   "status": "needs-fix",
   "notes": "frame QA pass (reviewer 2026-11-06): nitpicks only (0.55 s still opening, portal particles column)",

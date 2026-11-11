@@ -29,8 +29,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 36062646,
-    "sha256": "98f0dd11672790000d74882ee24062170f57c48a488e810c6d04e35772a148b6"
+    "bytes": 36435096,
+    "sha256": "87f2d90d0a0dbb0277091303ce5709916f36cc57d18814a2e5061d112fb013fd",
+    "release": {
+      "tag": "pkg-spot_wrong",
+      "asset": "spot_wrong.short.87f2d90d0a0dbb02.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-spot_wrong/spot_wrong.short.87f2d90d0a0dbb02.mp4",
+      "sha256": "87f2d90d0a0dbb0277091303ce5709916f36cc57d18814a2e5061d112fb013fd",
+      "bytes": 36435096
+    },
+    "nosong_release": {
+      "tag": "pkg-spot_wrong",
+      "asset": "spot_wrong.short_nosong.98f0dd1167279000.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-spot_wrong/spot_wrong.short_nosong.98f0dd1167279000.mp4",
+      "sha256": "98f0dd11672790000d74882ee24062170f57c48a488e810c6d04e35772a148b6",
+      "bytes": 36062646
+    }
   },
   "edit": {
     "caption": "find the mistake 🤔",

@@ -29,8 +29,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 65688729,
-    "sha256": "4f84caad518ab609efb692d17fe0632c703039f797e507a940aed3ae016c76ac"
+    "bytes": 65727477,
+    "sha256": "312e69e2b90ba9341d473e06498bdd8a69c39a2fed9407738cb855ae6368f6a8",
+    "release": {
+      "tag": "pkg-lapse_castle",
+      "asset": "lapse_castle.short.312e69e2b90ba934.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_castle/lapse_castle.short.312e69e2b90ba934.mp4",
+      "sha256": "312e69e2b90ba9341d473e06498bdd8a69c39a2fed9407738cb855ae6368f6a8",
+      "bytes": 65727477
+    },
+    "nosong_release": {
+      "tag": "pkg-lapse_castle",
+      "asset": "lapse_castle.short_nosong.4f84caad518ab609.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_castle/lapse_castle.short_nosong.4f84caad518ab609.mp4",
+      "sha256": "4f84caad518ab609efb692d17fe0632c703039f797e507a940aed3ae016c76ac",
+      "bytes": 65688729
+    }
   },
   "edit": {
     "caption": "building a castle in 1 second vs 1 minute vs 1 hour 💀",

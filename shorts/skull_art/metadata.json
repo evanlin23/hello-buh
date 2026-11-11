@@ -1,10 +1,10 @@
 {
   "name": "skull_art",
   "channel": "hellobuh",
-  "caption": "why is he building THIS \ud83d\ude28",
+  "caption": "why is he building THIS 😨",
   "youtube": {
-    "title": "why is he building THIS \ud83d\ude28 #minecraft #shorts",
-    "description": "why is he building THIS \ud83d\ude28\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "why is he building THIS 😨 #minecraft #shorts",
+    "description": "why is he building THIS 😨\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -30,8 +30,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 37698825,
-    "sha256": "9111d6faafecc9d755fc1367bd23fd32ee5d52720140473ca7be88ae08a2aaed"
+    "bytes": 34201744,
+    "sha256": "f340d79c98a2d25cfdaad676c89342c472599b9d48dc22c8c893577bee1d603b",
+    "release": {
+      "tag": "pkg-skull_art",
+      "asset": "skull_art.short.f340d79c98a2d25c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.f340d79c98a2d25c.mp4",
+      "sha256": "f340d79c98a2d25cfdaad676c89342c472599b9d48dc22c8c893577bee1d603b",
+      "bytes": 34201744
+    },
+    "nosong_release": {
+      "tag": "pkg-skull_art",
+      "asset": "skull_art.short_nosong.c62ee5c26aede1e3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short_nosong.c62ee5c26aede1e3.mp4",
+      "sha256": "c62ee5c26aede1e3464ce6095dce0d827321c08d6c06b98ab4bcb8ab317aa32d",
+      "bytes": 34142636
+    }
   },
   "edit": {
     "punch": [
@@ -57,14 +71,14 @@
         0.45
       ]
     ],
-    "caption": "why is he building THIS \ud83d\ude28",
+    "caption": "why is he building THIS 😨",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
     "args": [
       "--caption",
-      "why is he building THIS \ud83d\ude28",
+      "why is he building THIS 😨",
       "--punch",
       "[[\"complete\",0,1.12]]",
       "--flash",
@@ -871,7 +885,7 @@
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
-    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS \ud83d\ude28\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
+    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS 😨\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
   ],
   "status": "ready",
   "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium picture peeks in at the left edge during the big build's backup; short hold on the medium reveal",

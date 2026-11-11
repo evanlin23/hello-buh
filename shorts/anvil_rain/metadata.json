@@ -1,9 +1,9 @@
 {
   "name": "anvil_rain",
-  "caption": "minecraft but it rains anvils \ud83d\udc80",
+  "caption": "minecraft but it rains anvils 💀",
   "youtube": {
-    "title": "minecraft but it rains anvils \ud83d\udc80 #minecraft #shorts",
-    "description": "minecraft but it rains anvils \ud83d\udc80\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "minecraft but it rains anvils 💀 #minecraft #shorts",
+    "description": "minecraft but it rains anvils 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -27,10 +27,24 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 12994073,
-    "sha256": "d09a576faec8ff9b4912ae27098c289da71a42a7ba2c685daf058316b12017a0"
+    "sha256": "d09a576faec8ff9b4912ae27098c289da71a42a7ba2c685daf058316b12017a0",
+    "release": {
+      "tag": "pkg-anvil_rain",
+      "asset": "anvil_rain.short.d09a576faec8ff9b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-anvil_rain/anvil_rain.short.d09a576faec8ff9b.mp4",
+      "sha256": "d09a576faec8ff9b4912ae27098c289da71a42a7ba2c685daf058316b12017a0",
+      "bytes": 12994073
+    },
+    "nosong_release": {
+      "tag": "pkg-anvil_rain",
+      "asset": "anvil_rain.short_nosong.e16db15e376521a7.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-anvil_rain/anvil_rain.short_nosong.e16db15e376521a7.mp4",
+      "sha256": "e16db15e376521a7121de7a7cc1290b7041a9d55cdf9a1e5397777ababaabf64",
+      "bytes": 12901550
+    }
   },
   "edit": {
-    "caption": "minecraft but it rains anvils \ud83d\udc80",
+    "caption": "minecraft but it rains anvils 💀",
     "red": "anvils",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "rain",
@@ -39,7 +53,7 @@
     "endAfter": "death:1.8",
     "args": [
       "--caption",
-      "minecraft but it rains anvils \ud83d\udc80",
+      "minecraft but it rains anvils 💀",
       "--red",
       "anvils",
       "--death_screen",
@@ -165,7 +179,7 @@
     "gunzip -c shorts/anvil_rain/recording.json.gz > work/anvil_rain.rec.json",
     "node render.js work/anvil_rain.rec.json work/anvil_rain.frames 60 1080 1011",
     "python3 audio.py work/anvil_rain.rec.json work/anvil_rain.wav",
-    "python3 edit.py --frames work/anvil_rain.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/anvil_rain.rec.json --audio work/anvil_rain.wav --caption \"minecraft but it rains anvils \ud83d\udc80\" --red anvils --death_screen death --start_at rain:0.2 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at rain --out out/anvil_rain.mp4"
+    "python3 edit.py --frames work/anvil_rain.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/anvil_rain.rec.json --audio work/anvil_rain.wav --caption \"minecraft but it rains anvils 💀\" --red anvils --death_screen death --start_at rain:0.2 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at rain --out out/anvil_rain.mp4"
   ],
   "status": "dropped",
   "notes": "dropped (owner, 2026-11-11, r:rc5eaf0): repeats it_rains phase 1",

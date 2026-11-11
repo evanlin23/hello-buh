@@ -1,9 +1,9 @@
 {
   "name": "lava_cast",
-  "caption": "satisfying lava cast \ud83d\ude0c",
+  "caption": "satisfying lava cast 😌",
   "youtube": {
-    "title": "satisfying lava cast \ud83d\ude0c #minecraft #shorts",
-    "description": "satisfying lava cast \ud83d\ude0c\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "satisfying lava cast 😌 #minecraft #shorts",
+    "description": "satisfying lava cast 😌\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 42887442,
-    "sha256": "d5039a703e8abb077665ad8af1b1cd59f01e89f151f1f961caf04421a53be2a3"
+    "bytes": 43443035,
+    "sha256": "07fff0480fcef09cc8f51de49578f6f31738853f19444ed2319e73c58e1f6360",
+    "release": {
+      "tag": "pkg-lava_cast",
+      "asset": "lava_cast.short.07fff0480fcef09c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_cast/lava_cast.short.07fff0480fcef09c.mp4",
+      "sha256": "07fff0480fcef09cc8f51de49578f6f31738853f19444ed2319e73c58e1f6360",
+      "bytes": 43443035
+    },
+    "nosong_release": {
+      "tag": "pkg-lava_cast",
+      "asset": "lava_cast.short_nosong.5aceeb4442554e44.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_cast/lava_cast.short_nosong.5aceeb4442554e44.mp4",
+      "sha256": "5aceeb4442554e44d9bd36c51b73990df5ebc12e30bf44e898fe8535ac87fd31",
+      "bytes": 42868344
+    }
   },
   "edit": {
-    "caption": "satisfying lava cast \ud83d\ude0c",
+    "caption": "satisfying lava cast 😌",
     "red": "lava",
     "song": "songs/misery.mp3",
     "dropAt": "water:0",
@@ -57,13 +71,13 @@
     "cards": [
       [
         "reveal",
-        "LAYER 1 \u2705",
+        "LAYER 1 ✅",
         0.9,
         "white"
       ],
       [
         "final",
-        "LAYER 2 \ud83d\ude0c",
+        "LAYER 2 😌",
         0.95,
         "gold"
       ]
@@ -139,11 +153,11 @@
       "at": "back0a",
       "before": 1.4,
       "after": -0.05,
-      "text": "wait for the end \ud83d\ude0c"
+      "text": "wait for the end 😌"
     },
     "args": [
       "--caption",
-      "satisfying lava cast \ud83d\ude0c",
+      "satisfying lava cast 😌",
       "--red",
       "lava",
       "--subs",
@@ -153,9 +167,9 @@
       "--speed",
       "[[\"run0a\",\"run0b\",\"cut\"],[\"run0\",\"back0a\",3],[\"back0a\",\"back0b\",\"cut\"],[\"follow\",\"scoop\",2],[\"rv0a\",\"rv0b\",\"cut\"],[\"drain0\",\"reveal\",2],[\"climb2a\",\"climb2b\",\"cut\"],[\"run1a\",\"run1b\",\"cut\"],[\"run1\",\"back1a\",3],[\"back1a\",\"back1b\",\"cut\"],[\"follow1\",\"scoop1\",2],[\"rv1a\",\"rv1b\",\"cut\"],[\"drain1\",\"final\",2]]",
       "--cards",
-      "[[\"reveal\",\"LAYER 1 \u2705\",0.9,\"white\"],[\"final\",\"LAYER 2 \ud83d\ude0c\",0.95,\"gold\"]]",
+      "[[\"reveal\",\"LAYER 1 ✅\",0.9,\"white\"],[\"final\",\"LAYER 2 😌\",0.95,\"gold\"]]",
       "--hook",
-      "{\"at\":\"back0a\",\"before\":1.4,\"after\":-0.05,\"text\":\"wait for the end \ud83d\ude0c\"}",
+      "{\"at\":\"back0a\",\"before\":1.4,\"after\":-0.05,\"text\":\"wait for the end 😌\"}",
       "--start_at",
       "pour:-0.15",
       "--end_after",
@@ -3258,7 +3272,7 @@
     "gunzip -c shorts/lava_cast/recording.json.gz > work/lava_cast.rec.json",
     "node render.js work/lava_cast.rec.json work/lava_cast.frames 60 1080 1011",
     "python3 audio.py work/lava_cast.rec.json work/lava_cast.wav",
-    "python3 edit.py --frames work/lava_cast.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_cast.rec.json --audio work/lava_cast.wav --caption \"satisfying lava cast \ud83d\ude0c\" --red lava --subs \"[[\\\"pour\\\",\\\"layer 1\\\",1.4,0],[\\\"pour\\\",\\\"layer 2\\\",1.4,1]]\" --subs_y 0.1 --speed [[\"run0a\",\"run0b\",\"cut\"],[\"run0\",\"back0a\",3],[\"back0a\",\"back0b\",\"cut\"],[\"follow\",\"scoop\",2],[\"rv0a\",\"rv0b\",\"cut\"],[\"drain0\",\"reveal\",2],[\"climb2a\",\"climb2b\",\"cut\"],[\"run1a\",\"run1b\",\"cut\"],[\"run1\",\"back1a\",3],[\"back1a\",\"back1b\",\"cut\"],[\"follow1\",\"scoop1\",2],[\"rv1a\",\"rv1b\",\"cut\"],[\"drain1\",\"final\",2]] --cards \"[[\\\"reveal\\\",\\\"LAYER 1 \u2705\\\",0.9,\\\"white\\\"],[\\\"final\\\",\\\"LAYER 2 \ud83d\ude0c\\\",0.95,\\\"gold\\\"]]\" --hook \"{\\\"at\\\":\\\"back0a\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"wait for the end \ud83d\ude0c\\\"}\" --start_at pour:-0.15 --end_after final:0.95 --out out/lava_cast.mp4"
+    "python3 edit.py --frames work/lava_cast.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_cast.rec.json --audio work/lava_cast.wav --caption \"satisfying lava cast 😌\" --red lava --subs \"[[\\\"pour\\\",\\\"layer 1\\\",1.4,0],[\\\"pour\\\",\\\"layer 2\\\",1.4,1]]\" --subs_y 0.1 --speed [[\"run0a\",\"run0b\",\"cut\"],[\"run0\",\"back0a\",3],[\"back0a\",\"back0b\",\"cut\"],[\"follow\",\"scoop\",2],[\"rv0a\",\"rv0b\",\"cut\"],[\"drain0\",\"reveal\",2],[\"climb2a\",\"climb2b\",\"cut\"],[\"run1a\",\"run1b\",\"cut\"],[\"run1\",\"back1a\",3],[\"back1a\",\"back1b\",\"cut\"],[\"follow1\",\"scoop1\",2],[\"rv1a\",\"rv1b\",\"cut\"],[\"drain1\",\"final\",2]] --cards \"[[\\\"reveal\\\",\\\"LAYER 1 ✅\\\",0.9,\\\"white\\\"],[\\\"final\\\",\\\"LAYER 2 😌\\\",0.95,\\\"gold\\\"]]\" --hook \"{\\\"at\\\":\\\"back0a\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"wait for the end 😌\\\"}\" --start_at pour:-0.15 --end_after final:0.95 --out out/lava_cast.mp4"
   ],
   "status": "needs-fix",
   "notes": "worker 4: v16, two-layer lava cast on a built hill on natural ground. Final reveal from the field in front, standing, so the layer-2 ridges read on the first shell. Independent review ready, no blockers. Nitpicks left: two 6-7 s lava runs at 3x (front advancing), lava visible under water ~0.2 s before converting (possible engine timing), a 1-frame judder in the hook preview, the held bucket over the east edge of the shell at the end. | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: no sound hit on the payoff (32.6 s); ./hb check BLOCK: rec_check (re-record) + lint nobody moves (12.6-22.2 s, 39.8-44.8 s and 6 shorter); not remixed at -16 LUFS yet. Needs a re-record or a recut.",

@@ -1,9 +1,9 @@
 {
   "name": "story_respawn_voice",
-  "caption": "which voice do I TRUST? \ud83d\ude33",
+  "caption": "which voice do I TRUST? 😳",
   "youtube": {
-    "title": "which voice do I TRUST? \ud83d\ude33 #minecraft #shorts",
-    "description": "which voice do I TRUST? \ud83d\ude33\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "which voice do I TRUST? 😳 #minecraft #shorts",
+    "description": "which voice do I TRUST? 😳\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 29208848,
-    "sha256": "7017dad05cd9aac6089914d3e72a8609ebc5bfb4662ea4ecc4f5e68a8edb1d58"
+    "bytes": 29315386,
+    "sha256": "aaf93c01ee5a84391ded45d1857a0d1a4e3a58e3ebaa0620d195558b3c1f95a8",
+    "release": {
+      "tag": "pkg-story_respawn_voice",
+      "asset": "story_respawn_voice.short.aaf93c01ee5a8439.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_respawn_voice/story_respawn_voice.short.aaf93c01ee5a8439.mp4",
+      "sha256": "aaf93c01ee5a84391ded45d1857a0d1a4e3a58e3ebaa0620d195558b3c1f95a8",
+      "bytes": 29315386
+    },
+    "nosong_release": {
+      "tag": "pkg-story_respawn_voice",
+      "asset": "story_respawn_voice.short_nosong.7017dad05cd9aac6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_respawn_voice/story_respawn_voice.short_nosong.7017dad05cd9aac6.mp4",
+      "sha256": "7017dad05cd9aac6089914d3e72a8609ebc5bfb4662ea4ecc4f5e68a8edb1d58",
+      "bytes": 29208848
+    }
   },
   "edit": {
-    "caption": "which voice do I TRUST? \ud83d\ude33",
+    "caption": "which voice do I TRUST? 😳",
     "red": "TRUST?",
     "story": "stories/respawn_voice",
     "startAt": "line:0",
@@ -97,7 +111,7 @@
       ],
       [
         "question",
-        "TRUST VOICE 1 OR 2? COMMENT \ud83d\udc47",
+        "TRUST VOICE 1 OR 2? COMMENT 👇",
         1.8,
         "gold"
       ]
@@ -126,13 +140,13 @@
     ],
     "args": [
       "--caption",
-      "which voice do I TRUST? \ud83d\ude33",
+      "which voice do I TRUST? 😳",
       "--red",
       "TRUST?",
       "--punch",
       "[[\"nailed\",0,0.06]]",
       "--cards",
-      "[[\"line\",\"VOICE 1 OR VOICE 2?\",0.9,\"gold\",0],[\"heard_brother\",\"DON'T MINE THE GOLD.\",1.7,\"white\"],[\"heard_sister\",\"CLOSE THE DOOR.\",1.5,\"white\"],[\"voice1\",\"DON'T SLEEP IN THE NEW BED.\",1.3,\"yellow\"],[\"no_bed\",\"NO HOME BED?\",1.4,\"white\"],[\"voice2\",\"SLEEP IN THE BED,\",0.75,\"blue\"],[\"voice2b\",\"OR YOU'LL RESPAWN\",0.5,\"blue\"],[\"voice2c\",\"SOMEWHERE THAT ISN'T HOME.\",1.3,\"blue\"],[\"old_voice\",\"DON'T SLEEP IN THE NEW BED.\",1.1,\"yellow\"],[\"question\",\"TRUST VOICE 1 OR 2? COMMENT \ud83d\udc47\",1.8,\"gold\"]]",
+      "[[\"line\",\"VOICE 1 OR VOICE 2?\",0.9,\"gold\",0],[\"heard_brother\",\"DON'T MINE THE GOLD.\",1.7,\"white\"],[\"heard_sister\",\"CLOSE THE DOOR.\",1.5,\"white\"],[\"voice1\",\"DON'T SLEEP IN THE NEW BED.\",1.3,\"yellow\"],[\"no_bed\",\"NO HOME BED?\",1.4,\"white\"],[\"voice2\",\"SLEEP IN THE BED,\",0.75,\"blue\"],[\"voice2b\",\"OR YOU'LL RESPAWN\",0.5,\"blue\"],[\"voice2c\",\"SOMEWHERE THAT ISN'T HOME.\",1.3,\"blue\"],[\"old_voice\",\"DON'T SLEEP IN THE NEW BED.\",1.1,\"yellow\"],[\"question\",\"TRUST VOICE 1 OR 2? COMMENT 👇\",1.8,\"gold\"]]",
       "--sfx",
       "[[\"impact\",\"nailed\"],[\"scratch\",\"not_dead\"],[\"dip\",\"question\",0.3]]",
       "--death_screen",
@@ -447,7 +461,7 @@
     "gunzip -c shorts/story_respawn_voice/recording.json.gz > work/story_respawn_voice.rec.json",
     "node render.js work/story_respawn_voice.rec.json work/story_respawn_voice.frames 60 1080 1011",
     "python3 audio.py work/story_respawn_voice.rec.json work/story_respawn_voice.wav",
-    "python3 edit.py --frames work/story_respawn_voice.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_respawn_voice.rec.json --audio work/story_respawn_voice.wav --caption \"which voice do I TRUST? \ud83d\ude33\" --red TRUST? --punch [[\"nailed\",0,0.06]] --cards \"[[\\\"line\\\",\\\"VOICE 1 OR VOICE 2?\\\",0.9,\\\"gold\\\",0],[\\\"heard_brother\\\",\\\"DON'T MINE THE GOLD.\\\",1.7,\\\"white\\\"],[\\\"heard_sister\\\",\\\"CLOSE THE DOOR.\\\",1.5,\\\"white\\\"],[\\\"voice1\\\",\\\"DON'T SLEEP IN THE NEW BED.\\\",1.3,\\\"yellow\\\"],[\\\"no_bed\\\",\\\"NO HOME BED?\\\",1.4,\\\"white\\\"],[\\\"voice2\\\",\\\"SLEEP IN THE BED,\\\",0.75,\\\"blue\\\"],[\\\"voice2b\\\",\\\"OR YOU'LL RESPAWN\\\",0.5,\\\"blue\\\"],[\\\"voice2c\\\",\\\"SOMEWHERE THAT ISN'T HOME.\\\",1.3,\\\"blue\\\"],[\\\"old_voice\\\",\\\"DON'T SLEEP IN THE NEW BED.\\\",1.1,\\\"yellow\\\"],[\\\"question\\\",\\\"TRUST VOICE 1 OR 2? COMMENT \ud83d\udc47\\\",1.8,\\\"gold\\\"]]\" --sfx [[\"impact\",\"nailed\"],[\"scratch\",\"not_dead\"],[\"dip\",\"question\",0.3]] --death_screen death --story stories/respawn_voice --start_at line:0 --end_after story_end:0 --out out/story_respawn_voice.mp4"
+    "python3 edit.py --frames work/story_respawn_voice.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_respawn_voice.rec.json --audio work/story_respawn_voice.wav --caption \"which voice do I TRUST? 😳\" --red TRUST? --punch [[\"nailed\",0,0.06]] --cards \"[[\\\"line\\\",\\\"VOICE 1 OR VOICE 2?\\\",0.9,\\\"gold\\\",0],[\\\"heard_brother\\\",\\\"DON'T MINE THE GOLD.\\\",1.7,\\\"white\\\"],[\\\"heard_sister\\\",\\\"CLOSE THE DOOR.\\\",1.5,\\\"white\\\"],[\\\"voice1\\\",\\\"DON'T SLEEP IN THE NEW BED.\\\",1.3,\\\"yellow\\\"],[\\\"no_bed\\\",\\\"NO HOME BED?\\\",1.4,\\\"white\\\"],[\\\"voice2\\\",\\\"SLEEP IN THE BED,\\\",0.75,\\\"blue\\\"],[\\\"voice2b\\\",\\\"OR YOU'LL RESPAWN\\\",0.5,\\\"blue\\\"],[\\\"voice2c\\\",\\\"SOMEWHERE THAT ISN'T HOME.\\\",1.3,\\\"blue\\\"],[\\\"old_voice\\\",\\\"DON'T SLEEP IN THE NEW BED.\\\",1.1,\\\"yellow\\\"],[\\\"question\\\",\\\"TRUST VOICE 1 OR 2? COMMENT 👇\\\",1.8,\\\"gold\\\"]]\" --sfx [[\"impact\",\"nailed\"],[\"scratch\",\"not_dead\"],[\"dip\",\"question\",0.3]] --death_screen death --story stories/respawn_voice --start_at line:0 --end_after story_end:0 --out out/story_respawn_voice.mp4"
   ],
   "status": "ready",
   "notes": "worker (respawn voice): 'Who do you trust?' format; frame review, retention and Minecraft audits ready; intended answer (voice 1) is in the stunt file; stunt lives on branch claude/story-respawn-voice",

@@ -1,9 +1,9 @@
 {
   "name": "sword_art",
-  "caption": "can you guess what I'm building? \ud83e\udd14",
+  "caption": "can you guess what I'm building? 🤔",
   "youtube": {
-    "title": "can you guess what I'm building? \ud83e\udd14 #minecraft #shorts",
-    "description": "can you guess what I'm building? \ud83e\udd14\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "can you guess what I'm building? 🤔 #minecraft #shorts",
+    "description": "can you guess what I'm building? 🤔\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,18 +29,32 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 60972732,
-    "sha256": "8f748cca05bd1b21d2519afbe4dc1c3e2d142b9c7c8b045dcb7b5e400818fbf3"
+    "bytes": 61072523,
+    "sha256": "8ea9171e7c48898d0a35b9e9c1533858cbae7b65b9a91872a70940c275e7bcef",
+    "release": {
+      "tag": "pkg-sword_art",
+      "asset": "sword_art.short.8ea9171e7c48898d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sword_art/sword_art.short.8ea9171e7c48898d.mp4",
+      "sha256": "8ea9171e7c48898d0a35b9e9c1533858cbae7b65b9a91872a70940c275e7bcef",
+      "bytes": 61072523
+    },
+    "nosong_release": {
+      "tag": "pkg-sword_art",
+      "asset": "sword_art.short_nosong.3706a90cc0bc2201.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sword_art/sword_art.short_nosong.3706a90cc0bc2201.mp4",
+      "sha256": "3706a90cc0bc220107bcd7ac7eaaf324754345f566e60a593ea68f5543901338",
+      "bytes": 60968549
+    }
   },
   "edit": {
-    "caption": "can you guess what I'm building? \ud83e\udd14",
+    "caption": "can you guess what I'm building? 🤔",
     "song": "songs/misery.mp3",
     "dropAt": "complete",
     "startAt": "stage:0.1",
     "endAfter": "complete:0.9",
     "args": [
       "--caption",
-      "can you guess what I'm building? \ud83e\udd14",
+      "can you guess what I'm building? 🤔",
       "--start_at",
       "stage:0.1",
       "--end_after",
@@ -699,7 +713,7 @@
     "gunzip -c shorts/sword_art/recording.json.gz > work/sword_art.rec.json",
     "node render.js work/sword_art.rec.json work/sword_art.frames 60 1080 1011",
     "python3 audio.py work/sword_art.rec.json work/sword_art.wav",
-    "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? \ud83e\udd14\" --start_at stage:0.1 --end_after complete:0.9 --out out/sword_art.mp4"
+    "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? 🤔\" --start_at stage:0.1 --end_after complete:0.9 --out out/sword_art.mp4"
   ],
   "status": "pending-qa",
   "notes": "worker: held for re-render (owner: remove the mid-build glance)",

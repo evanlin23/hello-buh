@@ -1,9 +1,9 @@
 {
   "name": "lapse_rocket",
-  "caption": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+  "caption": "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
   "youtube": {
-    "title": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80 #minecraft #shorts",
-    "description": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a rocket in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
+    "description": "building a rocket in 1 second vs 1 minute vs 1 hour 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -31,10 +31,24 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 26970755,
-    "sha256": "9e96308b16df20c676f26f2c51e519ef5afbfe82d901557f415bd23a86592518"
+    "sha256": "9e96308b16df20c676f26f2c51e519ef5afbfe82d901557f415bd23a86592518",
+    "release": {
+      "tag": "pkg-lapse_rocket",
+      "asset": "lapse_rocket.short.9e96308b16df20c6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.9e96308b16df20c6.mp4",
+      "sha256": "9e96308b16df20c676f26f2c51e519ef5afbfe82d901557f415bd23a86592518",
+      "bytes": 26970755
+    },
+    "nosong_release": {
+      "tag": "pkg-lapse_rocket",
+      "asset": "lapse_rocket.short_nosong.d98bfb9b8d4c0027.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short_nosong.d98bfb9b8d4c0027.mp4",
+      "sha256": "d98bfb9b8d4c002749eaec76d9501aaf8f1be2ea8f6acb9ab17724bcd82593f7",
+      "bytes": 26920887
+    }
   },
   "edit": {
-    "caption": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+    "caption": "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
     "red": "hour",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "big_done",
@@ -84,7 +98,7 @@
     ],
     "args": [
       "--caption",
-      "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+      "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
       "--red",
       "hour",
       "--speed",
@@ -7313,7 +7327,7 @@
     "gunzip -c shorts/lapse_rocket/recording.json.gz > work/lapse_rocket.rec.json",
     "node render.js work/lapse_rocket.rec.json work/lapse_rocket.frames 60 1080 1011",
     "python3 audio.py work/lapse_rocket.rec.json work/lapse_rocket.wav",
-    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
+    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
   ],
   "status": "needs-fix",
   "notes": "1 s vs 1 min vs 1 h rocket time-lapse (badlands launch complex); 4 rounds; frame review + retention + minecraft audit ready (r4) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +17.2 -> +17.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: 3.37 s and 3.12 s with nothing new (20.58-27.07 s), no picture change on the payoff (31.53 s). Fix: speed up / cut that stretch + a flash or punch on the payoff (edit-only), then add_song.",

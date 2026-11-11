@@ -1,9 +1,9 @@
 {
   "name": "story_respawn_tax",
-  "caption": "every time I respawn, someone disappears \ud83d\ude33",
+  "caption": "every time I respawn, someone disappears 😳",
   "youtube": {
-    "title": "every time I respawn, someone disappears \ud83d\ude33 #minecraft #shorts",
-    "description": "every time I respawn, someone disappears \ud83d\ude33\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "every time I respawn, someone disappears 😳 #minecraft #shorts",
+    "description": "every time I respawn, someone disappears 😳\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 49041647,
-    "sha256": "c1b07d2ec70c6ebc2c64d83c9de453a8fe58b77e070cb672c7fe7f293d0ea4dd"
+    "bytes": 49135150,
+    "sha256": "039d85c35c69ce6dacbd621a03dcee21e8b1b047a752f371020b6d1ef31c898c",
+    "release": {
+      "tag": "pkg-story_respawn_tax",
+      "asset": "story_respawn_tax.short.039d85c35c69ce6d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_respawn_tax/story_respawn_tax.short.039d85c35c69ce6d.mp4",
+      "sha256": "039d85c35c69ce6dacbd621a03dcee21e8b1b047a752f371020b6d1ef31c898c",
+      "bytes": 49135150
+    },
+    "nosong_release": {
+      "tag": "pkg-story_respawn_tax",
+      "asset": "story_respawn_tax.short_nosong.c1b07d2ec70c6ebc.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_respawn_tax/story_respawn_tax.short_nosong.c1b07d2ec70c6ebc.mp4",
+      "sha256": "c1b07d2ec70c6ebc2c64d83c9de453a8fe58b77e070cb672c7fe7f293d0ea4dd",
+      "bytes": 49041647
+    }
   },
   "edit": {
-    "caption": "every time I respawn, someone disappears \ud83d\ude33",
+    "caption": "every time I respawn, someone disappears 😳",
     "red": "respawn,",
     "story": "stories/respawn_tax",
     "startAt": "line:0",
@@ -61,7 +75,7 @@
     ],
     "args": [
       "--caption",
-      "every time I respawn, someone disappears \ud83d\ude33",
+      "every time I respawn, someone disappears 😳",
       "--red",
       "respawn,",
       "--punch",
@@ -461,7 +475,7 @@
     "gunzip -c shorts/story_respawn_tax/recording.json.gz > work/story_respawn_tax.rec.json",
     "node render.js work/story_respawn_tax.rec.json work/story_respawn_tax.frames 60 1080 1011",
     "python3 audio.py work/story_respawn_tax.rec.json work/story_respawn_tax.wav",
-    "python3 edit.py --frames work/story_respawn_tax.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_respawn_tax.rec.json --audio work/story_respawn_tax.wav --caption \"every time I respawn, someone disappears \ud83d\ude33\" --red respawn, --punch [[\"go_on\",0,0.08],[\"respawn_word\",0,0.1]] --zoom [[\"respawn_word:0.3\",\"story_end\",1.05]] --on_fire burn:death --death_screen death --story stories/respawn_tax --start_at line:0 --end_after story_end:-0.05 --out out/story_respawn_tax.mp4"
+    "python3 edit.py --frames work/story_respawn_tax.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_respawn_tax.rec.json --audio work/story_respawn_tax.wav --caption \"every time I respawn, someone disappears 😳\" --red respawn, --punch [[\"go_on\",0,0.08],[\"respawn_word\",0,0.1]] --zoom [[\"respawn_word:0.3\",\"story_end\",1.05]] --on_fire burn:death --death_screen death --story stories/respawn_tax --start_at line:0 --end_after story_end:-0.05 --out out/story_respawn_tax.mp4"
   ],
   "status": "ready",
   "notes": "Narrated mystery: every respawn costs a villager. Passed frame review r12, retention r9 and minecraft-audit r12 (all ready). Recording carries one hand edit (lane librarian rows trimmed to the cut ticks; see notes in recording.json).",

@@ -26,7 +26,14 @@
     "fps": "30/1",
     "codec": "h264",
     "bytes": 63375479,
-    "sha256": "0db9021130eae66796184ee510681534b4cefd9ad7c8d9e8e7e6f0939bbb8b5d"
+    "sha256": "0db9021130eae66796184ee510681534b4cefd9ad7c8d9e8e7e6f0939bbb8b5d",
+    "release": {
+      "tag": "pkg-ai_dirk_willems",
+      "asset": "ai_dirk_willems.short.0db9021130eae667.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ai_dirk_willems/ai_dirk_willems.short.0db9021130eae667.mp4",
+      "sha256": "0db9021130eae66796184ee510681534b4cefd9ad7c8d9e8e7e6f0939bbb8b5d",
+      "bytes": 63375479
+    }
   },
   "recording": {
     "file": "recording.json.gz",

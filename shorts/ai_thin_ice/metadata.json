@@ -26,7 +26,14 @@
     "fps": "30/1",
     "codec": "h264",
     "bytes": 68074462,
-    "sha256": "fb3f0fc2048ed23f47b7bd1e9270ac1585176f1e9da1d114e48196f9cccdb629"
+    "sha256": "fb3f0fc2048ed23f47b7bd1e9270ac1585176f1e9da1d114e48196f9cccdb629",
+    "release": {
+      "tag": "pkg-ai_thin_ice",
+      "asset": "ai_thin_ice.short.fb3f0fc2048ed23f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ai_thin_ice/ai_thin_ice.short.fb3f0fc2048ed23f.mp4",
+      "sha256": "fb3f0fc2048ed23f47b7bd1e9270ac1585176f1e9da1d114e48196f9cccdb629",
+      "bytes": 68074462
+    }
   },
   "recording": {
     "file": "recording.json.gz",

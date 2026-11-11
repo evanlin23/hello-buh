@@ -1,9 +1,9 @@
 {
   "name": "worse_lava",
-  "caption": "every 5 seconds it gets worse \ud83d\ude30",
+  "caption": "every 5 seconds it gets worse 😰",
   "youtube": {
-    "title": "every 5 seconds it gets worse \ud83d\ude30 #minecraft #shorts",
-    "description": "every 5 seconds it gets worse \ud83d\ude30\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "every 5 seconds it gets worse 😰 #minecraft #shorts",
+    "description": "every 5 seconds it gets worse 😰\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 55595005,
-    "sha256": "02562905f50ddd5e51ae49a48b32d1a077d101f4fff4dbd1220082b9d5aa15cf"
+    "bytes": 55803030,
+    "sha256": "19e0fd65230401f07efe262bbc33d69d23b4811fc4fc06ba68ffbf795751bc7f",
+    "release": {
+      "tag": "pkg-worse_lava",
+      "asset": "worse_lava.short.19e0fd65230401f0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-worse_lava/worse_lava.short.19e0fd65230401f0.mp4",
+      "sha256": "19e0fd65230401f07efe262bbc33d69d23b4811fc4fc06ba68ffbf795751bc7f",
+      "bytes": 55803030
+    },
+    "nosong_release": {
+      "tag": "pkg-worse_lava",
+      "asset": "worse_lava.short_nosong.02562905f50ddd5e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-worse_lava/worse_lava.short_nosong.02562905f50ddd5e.mp4",
+      "sha256": "02562905f50ddd5e51ae49a48b32d1a077d101f4fff4dbd1220082b9d5aa15cf",
+      "bytes": 55595005
+    }
   },
   "edit": {
-    "caption": "every 5 seconds it gets worse \ud83d\ude30",
+    "caption": "every 5 seconds it gets worse 😰",
     "red": "worse",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "l7",
@@ -110,7 +124,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "every 5 seconds it gets worse \ud83d\ude30",
+      "every 5 seconds it gets worse 😰",
       "--red",
       "worse",
       "--countdown",
@@ -2046,7 +2060,7 @@
     "gunzip -c shorts/worse_lava/recording.json.gz > work/worse_lava.rec.json",
     "node render.js work/worse_lava.rec.json work/worse_lava.frames 60 1080 1011",
     "python3 audio.py work/worse_lava.rec.json work/worse_lava.wav",
-    "python3 edit.py --frames work/worse_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/worse_lava.rec.json --audio work/worse_lava.wav --caption \"every 5 seconds it gets worse \ud83d\ude30\" --red worse --countdown go:done:SURVIVE --punch [\"boom1\",\"tntboom\",\"done\"] --counter {\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7} --cards \"[[\\\"l1\\\",\\\"THE LAVA RISES\\\",1,\\\"orange\\\"],[\\\"l2\\\",\\\"+1 CREEPER\\\",1,\\\"green\\\"],[\\\"l3\\\",\\\"TNT RAIN\\\",1,\\\"red\\\"],[\\\"l4\\\",\\\"NIGHT FALLS\\\",1,\\\"blue\\\"],[\\\"l5\\\",\\\"+2 CREEPERS\\\",1,\\\"green\\\"],[\\\"l6\\\",\\\"THE FLOOR BREAKS\\\",1,\\\"yellow\\\"],[\\\"l7\\\",\\\"THE LAVA SPEEDS UP\\\",1,\\\"red\\\"],[\\\"done\\\",\\\"SURVIVED\\\",1.2,\\\"green\\\"]]\" --death_screen death --start_at go:-0.5 --end_after done:0.9 --out out/worse_lava.mp4"
+    "python3 edit.py --frames work/worse_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/worse_lava.rec.json --audio work/worse_lava.wav --caption \"every 5 seconds it gets worse 😰\" --red worse --countdown go:done:SURVIVE --punch [\"boom1\",\"tntboom\",\"done\"] --counter {\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7} --cards \"[[\\\"l1\\\",\\\"THE LAVA RISES\\\",1,\\\"orange\\\"],[\\\"l2\\\",\\\"+1 CREEPER\\\",1,\\\"green\\\"],[\\\"l3\\\",\\\"TNT RAIN\\\",1,\\\"red\\\"],[\\\"l4\\\",\\\"NIGHT FALLS\\\",1,\\\"blue\\\"],[\\\"l5\\\",\\\"+2 CREEPERS\\\",1,\\\"green\\\"],[\\\"l6\\\",\\\"THE FLOOR BREAKS\\\",1,\\\"yellow\\\"],[\\\"l7\\\",\\\"THE LAVA SPEEDS UP\\\",1,\\\"red\\\"],[\\\"done\\\",\\\"SURVIVED\\\",1.2,\\\"green\\\"]]\" --death_screen death --start_at go:-0.5 --end_after done:0.9 --out out/worse_lava.mp4"
   ],
   "status": "needs-fix",
   "notes": "worker 18: every 5 seconds it gets worse #1 (lava island; survives, lava one block below at 0.00); 5 independent review rounds, round 5 ready on frame/retention/minecraft | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: 5.0 s with nothing new right after the hook (0.5-5.5 s), no picture change on the payoff (35.45 s); ./hb check BLOCK: two creepers jump 1.7 blocks in one tick in view (8.2 s, 22.9 s; owner 'Grandma teleports'), lint nobody moves 12.0-13.6 s and 26.4-28.0 s; not remixed at -16 LUFS yet. Needs a re-record (or motionFixes) plus the pace edits.",

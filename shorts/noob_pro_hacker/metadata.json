@@ -1,9 +1,9 @@
 {
   "name": "noob_pro_hacker",
-  "caption": "noob vs pro vs hacker \ud83d\udc80",
+  "caption": "noob vs pro vs hacker 💀",
   "youtube": {
-    "title": "noob vs pro vs hacker \ud83d\udc80 #minecraft #shorts",
-    "description": "noob vs pro vs hacker \ud83d\udc80\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "noob vs pro vs hacker 💀 #minecraft #shorts",
+    "description": "noob vs pro vs hacker 💀\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 34799888,
-    "sha256": "092e4b97c56926d7592c1ebf9ba73029b46b483c1cb43cff3d1b060d67f17d01"
+    "bytes": 34996237,
+    "sha256": "915806e4d70ae7b838b70fe0f1523871081be07ca5d5087eeb15aad6f774bcb6",
+    "release": {
+      "tag": "pkg-noob_pro_hacker",
+      "asset": "noob_pro_hacker.short.915806e4d70ae7b8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-noob_pro_hacker/noob_pro_hacker.short.915806e4d70ae7b8.mp4",
+      "sha256": "915806e4d70ae7b838b70fe0f1523871081be07ca5d5087eeb15aad6f774bcb6",
+      "bytes": 34996237
+    },
+    "nosong_release": {
+      "tag": "pkg-noob_pro_hacker",
+      "asset": "noob_pro_hacker.short_nosong.092e4b97c56926d7.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-noob_pro_hacker/noob_pro_hacker.short_nosong.092e4b97c56926d7.mp4",
+      "sha256": "092e4b97c56926d7592c1ebf9ba73029b46b483c1cb43cff3d1b060d67f17d01",
+      "bytes": 34799888
+    }
   },
   "edit": {
-    "caption": "noob vs pro vs hacker \ud83d\udc80",
+    "caption": "noob vs pro vs hacker 💀",
     "red": "hacker",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "hack",
@@ -235,7 +249,7 @@
       "at": "boom",
       "before": 0.5,
       "after": 0.9,
-      "text": "wait for the hacker \ud83d\udc80"
+      "text": "wait for the hacker 💀"
     },
     "punch": [
       [
@@ -263,7 +277,7 @@
     ],
     "args": [
       "--caption",
-      "noob vs pro vs hacker \ud83d\udc80",
+      "noob vs pro vs hacker 💀",
       "--red",
       "hacker",
       "--subs",
@@ -275,7 +289,7 @@
       "--punch",
       "[[\"hack\",0,1.08],[\"hack\",1,1.08],[\"boom\",0,1.18]]",
       "--hook",
-      "{\"at\":\"boom\",\"before\":0.5,\"after\":0.9,\"text\":\"wait for the hacker \ud83d\udc80\"}",
+      "{\"at\":\"boom\",\"before\":0.5,\"after\":0.9,\"text\":\"wait for the hacker 💀\"}",
       "--tags",
       "[[\"seg\",null,\"NOOB\",\"green\",0],[\"seg\",null,\"PRO\",\"blue\",1],[\"seg\",null,\"HACKER\",\"red\",2],[\"seg\",\"death\",\"NOOB\",\"green\",3],[\"seg\",null,\"PRO\",\"blue\",4],[\"seg\",null,\"HACKER\",\"red\",5],[\"seg\",\"death\",\"NOOB\",\"green\",6],[\"seg\",null,\"PRO\",\"blue\",7],[\"seg\",null,\"HACKER\",\"red\",8]]",
       "--chat",
@@ -1945,7 +1959,7 @@
     "gunzip -c shorts/noob_pro_hacker/recording.json.gz > work/noob_pro_hacker.rec.json",
     "node render.js work/noob_pro_hacker.rec.json work/noob_pro_hacker.frames 60 1080 1011",
     "python3 audio.py work/noob_pro_hacker.rec.json work/noob_pro_hacker.wav",
-    "python3 edit.py --frames work/noob_pro_hacker.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/noob_pro_hacker.rec.json --audio work/noob_pro_hacker.wav --caption \"noob vs pro vs hacker \ud83d\udc80\" --red hacker --subs \"[[\\\"seg\\\",\\\"task 1: climb the mountain\\\",1.6,0],[\\\"seg\\\",\\\"task 2: cross the lava\\\",1.6,3],[\\\"seg\\\",\\\"task 3: escape the pit\\\",1.6,6]]\" --subs_y 0.3 --speed [[\"seg:1.2\",\"climb_a:-0.35\",\"cut\"],[\"climb_a\",\"ladders_out\",1.6],[\"pillar_a\",\"pillared\",1.4],[\"pearl:0.1\",\"summit:-0.05\",\"cut\"],[\"burn_a\",\"death:-0.2\",\"cut\"],[\"x1\",\"g1\",\"cut\"],[\"x2\",\"g2\",\"cut\"],[\"x3\",\"g3\",\"cut\"],[\"x4\",\"g4\",\"cut\"],[\"x5\",\"g5\",\"cut\"],[\"x6\",\"g6\",\"cut\"],[\"x7\",\"g7\",\"cut\"],[\"x8\",\"g8\",\"cut\"]] --punch [[\"hack\",0,1.08],[\"hack\",1,1.08],[\"boom\",0,1.18]] --hook \"{\\\"at\\\":\\\"boom\\\",\\\"before\\\":0.5,\\\"after\\\":0.9,\\\"text\\\":\\\"wait for the hacker \ud83d\udc80\\\"}\" --tags [[\"seg\",null,\"NOOB\",\"green\",0],[\"seg\",null,\"PRO\",\"blue\",1],[\"seg\",null,\"HACKER\",\"red\",2],[\"seg\",\"death\",\"NOOB\",\"green\",3],[\"seg\",null,\"PRO\",\"blue\",4],[\"seg\",null,\"HACKER\",\"red\",5],[\"seg\",\"death\",\"NOOB\",\"green\",6],[\"seg\",null,\"PRO\",\"blue\",7],[\"seg\",null,\"HACKER\",\"red\",8]] --chat \"[[\\\"typed0\\\",\\\"/effect give @s levitation 5 39 true\\\",0.9,0,\\\"Applied effect Levitation to HelloBuh\\\"],[\\\"typed1\\\",\\\"/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava\\\",0.9,0,\\\"Successfully filled 208 block(s)\\\"],[\\\"typed2\\\",\\\"/summon tnt ~ ~ ~ {fuse:20,explosion_power:6}\\\",0.9,0,\\\"Summoned new Primed TNT\\\"],[\\\"typed3\\\",\\\"/summon tnt ~ ~ ~ {fuse:14,explosion_power:6}\\\",0.15,0,\\\"Summoned new Primed TNT\\\"],[\\\"typed4\\\",\\\"/summon tnt ~ ~ ~ {fuse:8,explosion_power:6}\\\",0.15,0,\\\"Summoned new Primed TNT\\\"]]\" --shake [[\"boom\",0,22]] --on_fire in_lava:death --death_screen death --start_at seg:0 --end_after boom:0.95 --out out/noob_pro_hacker.mp4"
+    "python3 edit.py --frames work/noob_pro_hacker.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/noob_pro_hacker.rec.json --audio work/noob_pro_hacker.wav --caption \"noob vs pro vs hacker 💀\" --red hacker --subs \"[[\\\"seg\\\",\\\"task 1: climb the mountain\\\",1.6,0],[\\\"seg\\\",\\\"task 2: cross the lava\\\",1.6,3],[\\\"seg\\\",\\\"task 3: escape the pit\\\",1.6,6]]\" --subs_y 0.3 --speed [[\"seg:1.2\",\"climb_a:-0.35\",\"cut\"],[\"climb_a\",\"ladders_out\",1.6],[\"pillar_a\",\"pillared\",1.4],[\"pearl:0.1\",\"summit:-0.05\",\"cut\"],[\"burn_a\",\"death:-0.2\",\"cut\"],[\"x1\",\"g1\",\"cut\"],[\"x2\",\"g2\",\"cut\"],[\"x3\",\"g3\",\"cut\"],[\"x4\",\"g4\",\"cut\"],[\"x5\",\"g5\",\"cut\"],[\"x6\",\"g6\",\"cut\"],[\"x7\",\"g7\",\"cut\"],[\"x8\",\"g8\",\"cut\"]] --punch [[\"hack\",0,1.08],[\"hack\",1,1.08],[\"boom\",0,1.18]] --hook \"{\\\"at\\\":\\\"boom\\\",\\\"before\\\":0.5,\\\"after\\\":0.9,\\\"text\\\":\\\"wait for the hacker 💀\\\"}\" --tags [[\"seg\",null,\"NOOB\",\"green\",0],[\"seg\",null,\"PRO\",\"blue\",1],[\"seg\",null,\"HACKER\",\"red\",2],[\"seg\",\"death\",\"NOOB\",\"green\",3],[\"seg\",null,\"PRO\",\"blue\",4],[\"seg\",null,\"HACKER\",\"red\",5],[\"seg\",\"death\",\"NOOB\",\"green\",6],[\"seg\",null,\"PRO\",\"blue\",7],[\"seg\",null,\"HACKER\",\"red\",8]] --chat \"[[\\\"typed0\\\",\\\"/effect give @s levitation 5 39 true\\\",0.9,0,\\\"Applied effect Levitation to HelloBuh\\\"],[\\\"typed1\\\",\\\"/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava\\\",0.9,0,\\\"Successfully filled 208 block(s)\\\"],[\\\"typed2\\\",\\\"/summon tnt ~ ~ ~ {fuse:20,explosion_power:6}\\\",0.9,0,\\\"Summoned new Primed TNT\\\"],[\\\"typed3\\\",\\\"/summon tnt ~ ~ ~ {fuse:14,explosion_power:6}\\\",0.15,0,\\\"Summoned new Primed TNT\\\"],[\\\"typed4\\\",\\\"/summon tnt ~ ~ ~ {fuse:8,explosion_power:6}\\\",0.15,0,\\\"Summoned new Primed TNT\\\"]]\" --shake [[\"boom\",0,22]] --on_fire in_lava:death --death_screen death --start_at seg:0 --end_after boom:0.95 --out out/noob_pro_hacker.mp4"
   ],
   "status": "needs-fix",
   "notes": "worker 15: noob vs pro vs hacker (mountain, lava lake, pit); 8 independent review rounds, final: frame/retention/minecraft ready; engine nitpicks left: TNT entity hidden ~7 frames before the blast, hook has no HUD, shaft relight black for ~0.15 s | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). ./hb pace OK, but ./hb check BLOCK: rec_check sight x7 (14.4-14.9 s: blocks placed with no face visible from the eye, STANDARDS 3b.4): needs a re-record; not remixed at -16 LUFS yet.",

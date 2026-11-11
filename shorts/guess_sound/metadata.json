@@ -1,9 +1,9 @@
 {
   "name": "guess_sound",
-  "caption": "guess the mob from its sound \ud83d\udd0a",
+  "caption": "guess the mob from its sound 🔊",
   "youtube": {
-    "title": "guess the mob from its sound \ud83d\udd0a #minecraft #shorts",
-    "description": "guess the mob from its sound \ud83d\udd0a\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "guess the mob from its sound 🔊 #minecraft #shorts",
+    "description": "guess the mob from its sound 🔊\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15126232,
-    "sha256": "d69eb7c2825a1ee6d8a348c37a1e0d6e59530b917bfff6943095a4cd37997eef"
+    "bytes": 15339592,
+    "sha256": "05c15a8985336aba4054f8bc6d194a70c2b443d1d8f981cec64787c717e8ac58",
+    "release": {
+      "tag": "pkg-guess_sound",
+      "asset": "guess_sound.short.05c15a8985336aba.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short.05c15a8985336aba.mp4",
+      "sha256": "05c15a8985336aba4054f8bc6d194a70c2b443d1d8f981cec64787c717e8ac58",
+      "bytes": 15339592
+    },
+    "nosong_release": {
+      "tag": "pkg-guess_sound",
+      "asset": "guess_sound.short_nosong.09c846ebb79fd57d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short_nosong.09c846ebb79fd57d.mp4",
+      "sha256": "09c846ebb79fd57d6db891495691f704dd85f21b228d6df984811766444417bc",
+      "bytes": 15125932
+    }
   },
   "edit": {
-    "caption": "guess the mob from its sound \ud83d\udd0a",
+    "caption": "guess the mob from its sound 🔊",
     "red": "sound",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "final_reveal",
@@ -205,7 +219,7 @@
     "subsY": 0.77,
     "args": [
       "--caption",
-      "guess the mob from its sound \ud83d\udd0a",
+      "guess the mob from its sound 🔊",
       "--red",
       "sound",
       "--subs",
@@ -674,7 +688,7 @@
     "gunzip -c shorts/guess_sound/recording.json.gz > work/guess_sound.rec.json",
     "node render.js work/guess_sound.rec.json work/guess_sound.frames 60 1080 1011",
     "python3 audio.py work/guess_sound.rec.json work/guess_sound.wav",
-    "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound \ud83d\udd0a\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4],[\\\"lit\\\",\\\"PARROT??\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound.mp4"
+    "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound 🔊\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4],[\\\"lit\\\",\\\"PARROT??\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound.mp4"
   ],
   "status": "ready",
   "notes": "worker 13: guess the mob from its sound (cow, llama, polar bear, enderman, warden, then a parrot imitating a creeper); independent review r5 ready on retention, minecraft and frame review. Post before pt 2 and pt 3 (they call back to the parrot).",

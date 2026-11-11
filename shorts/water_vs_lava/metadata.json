@@ -1,9 +1,9 @@
 {
   "name": "water_vs_lava",
-  "caption": "pouring water on a lava lake \ud83d\ude33",
+  "caption": "pouring water on a lava lake 😳",
   "youtube": {
-    "title": "pouring water on a lava lake \ud83d\ude33 #minecraft #shorts",
-    "description": "pouring water on a lava lake \ud83d\ude33\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "pouring water on a lava lake 😳 #minecraft #shorts",
+    "description": "pouring water on a lava lake 😳\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19619452,
-    "sha256": "134de2100e1eddf40d72d8f460200b9eabe779167e4ae3d98923d3efef279e53"
+    "bytes": 19782289,
+    "sha256": "9c73a9e637ed38c9cfdbaf9de37c6d85bcaf3105c172f4b74f2ac8d6b2393cfd",
+    "release": {
+      "tag": "pkg-water_vs_lava",
+      "asset": "water_vs_lava.short.9c73a9e637ed38c9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_vs_lava/water_vs_lava.short.9c73a9e637ed38c9.mp4",
+      "sha256": "9c73a9e637ed38c9cfdbaf9de37c6d85bcaf3105c172f4b74f2ac8d6b2393cfd",
+      "bytes": 19782289
+    },
+    "nosong_release": {
+      "tag": "pkg-water_vs_lava",
+      "asset": "water_vs_lava.short_nosong.134de2100e1eddf4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_vs_lava/water_vs_lava.short_nosong.134de2100e1eddf4.mp4",
+      "sha256": "134de2100e1eddf40d72d8f460200b9eabe779167e4ae3d98923d3efef279e53",
+      "bytes": 19619452
+    }
   },
   "edit": {
-    "caption": "pouring water on a lava lake \ud83d\ude33",
+    "caption": "pouring water on a lava lake 😳",
     "red": "lava",
     "song": "songs/misery.mp3",
     "dropAt": "reveal",
@@ -41,7 +55,7 @@
     "endAfter": "end_look:1.7",
     "args": [
       "--caption",
-      "pouring water on a lava lake \ud83d\ude33",
+      "pouring water on a lava lake 😳",
       "--red",
       "lava",
       "--start_at",
@@ -185,7 +199,7 @@
     "gunzip -c shorts/water_vs_lava/recording.json.gz > work/water_vs_lava.rec.json",
     "node render.js work/water_vs_lava.rec.json work/water_vs_lava.frames 60 1080 1011",
     "python3 audio.py work/water_vs_lava.rec.json work/water_vs_lava.wav",
-    "python3 edit.py --frames work/water_vs_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_vs_lava.rec.json --audio work/water_vs_lava.wav --caption \"pouring water on a lava lake \ud83d\ude33\" --red lava --start_at pour:-0.35 --end_after end_look:1.7 --out out/water_vs_lava.mp4"
+    "python3 edit.py --frames work/water_vs_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_vs_lava.rec.json --audio work/water_vs_lava.wav --caption \"pouring water on a lava lake 😳\" --red lava --start_at pour:-0.35 --end_after end_look:1.7 --out out/water_vs_lava.mp4"
   ],
   "status": "pending-qa",
   "notes": "worker frame QA: NOT ready, engine blockers: water drains as a checkerboard (f780-792, f902-918 of this cut-1 render offset; i.e. during the drain after the scoops); water near-opaque so the obsidian forming under it never shows until the drain; flowing-water front drawn as thick stepped slabs with lava seams between steps (f60-560). Stunt side OK.",

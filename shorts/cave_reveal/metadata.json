@@ -1,9 +1,9 @@
 {
   "name": "cave_reveal",
-  "caption": "never dig straight down \ud83d\udc80",
+  "caption": "never dig straight down 💀",
   "youtube": {
-    "title": "never dig straight down \ud83d\udc80 #minecraft #shorts",
-    "description": "never dig straight down \ud83d\udc80\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "never dig straight down 💀 #minecraft #shorts",
+    "description": "never dig straight down 💀\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,18 +29,32 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 4458773,
-    "sha256": "96f50fdd43f7979830a332711ec59cb7794c34cce5cf2ba91f0e09861321eaca"
+    "bytes": 4459086,
+    "sha256": "0c168c9e6e931e89a944eda522924800d93d19833b2212eed22178ad1e0ab92a",
+    "release": {
+      "tag": "pkg-cave_reveal",
+      "asset": "cave_reveal.short.0c168c9e6e931e89.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.0c168c9e6e931e89.mp4",
+      "sha256": "0c168c9e6e931e89a944eda522924800d93d19833b2212eed22178ad1e0ab92a",
+      "bytes": 4459086
+    },
+    "nosong_release": {
+      "tag": "pkg-cave_reveal",
+      "asset": "cave_reveal.short_nosong.2e19e3ef06d0a70a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.2e19e3ef06d0a70a.mp4",
+      "sha256": "2e19e3ef06d0a70a3d32a1980e26842e08ec4fa9e162878aec6a2c9d8a04db13",
+      "bytes": 4399790
+    }
   },
   "edit": {
-    "caption": "never dig straight down \ud83d\udc80",
+    "caption": "never dig straight down 💀",
     "red": "never",
     "song": "songs/misery.mp3",
     "dropAt": "reveal",
     "startAt": "reveal:-2.2",
     "args": [
       "--caption",
-      "never dig straight down \ud83d\udc80",
+      "never dig straight down 💀",
       "--red",
       "never",
       "--start_at",
@@ -126,7 +140,7 @@
     "gunzip -c shorts/cave_reveal/recording.json.gz > work/cave_reveal.rec.json",
     "node render.js work/cave_reveal.rec.json work/cave_reveal.frames 60 1080 1011",
     "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
-    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down \ud83d\udc80\" --red never --start_at reveal:-2.2 --song songs/misery.mp3 --song_drop_at reveal --out out/cave_reveal.mp4"
+    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --red never --start_at reveal:-2.2 --song songs/misery.mp3 --song_drop_at reveal --out out/cave_reveal.mp4"
   ],
   "status": "pending-qa",
   "notes": "not yet passed the frame-by-frame review (docs/qa.md); QA2: still dark; lavafall render gaps",

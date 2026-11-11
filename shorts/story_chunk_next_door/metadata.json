@@ -1,9 +1,9 @@
 {
   "name": "story_chunk_next_door",
-  "caption": "something walks out of the fog every night \ud83d\ude33",
+  "caption": "something walks out of the fog every night 😳",
   "youtube": {
-    "title": "something walks out of the fog every night \ud83d\ude33 #minecraft #shorts",
-    "description": "something walks out of the fog every night \ud83d\ude33\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "something walks out of the fog every night 😳 #minecraft #shorts",
+    "description": "something walks out of the fog every night 😳\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 34854718,
-    "sha256": "7df5f3635cc1634a07a93de5e14f8e38ab48a13eb76ba4af4fb49d74811ea62b"
+    "bytes": 34927344,
+    "sha256": "d314ed6e3f87a95391958e44c19c2cdaddfc2d1002dd927e02ec84ce1a1365bd",
+    "release": {
+      "tag": "pkg-story_chunk_next_door",
+      "asset": "story_chunk_next_door.short.d314ed6e3f87a953.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_chunk_next_door/story_chunk_next_door.short.d314ed6e3f87a953.mp4",
+      "sha256": "d314ed6e3f87a95391958e44c19c2cdaddfc2d1002dd927e02ec84ce1a1365bd",
+      "bytes": 34927344
+    },
+    "nosong_release": {
+      "tag": "pkg-story_chunk_next_door",
+      "asset": "story_chunk_next_door.short_nosong.7df5f3635cc1634a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_chunk_next_door/story_chunk_next_door.short_nosong.7df5f3635cc1634a.mp4",
+      "sha256": "7df5f3635cc1634a07a93de5e14f8e38ab48a13eb76ba4af4fb49d74811ea62b",
+      "bytes": 34854718
+    }
   },
   "edit": {
-    "caption": "something walks out of the fog every night \ud83d\ude33",
+    "caption": "something walks out of the fog every night 😳",
     "red": "fog",
     "story": "stories/chunk_next_door",
     "startAt": "line:0",
@@ -59,7 +73,7 @@
     ],
     "args": [
       "--caption",
-      "something walks out of the fog every night \ud83d\ude33",
+      "something walks out of the fog every night 😳",
       "--red",
       "fog",
       "--punch",
@@ -326,7 +340,7 @@
     "gunzip -c shorts/story_chunk_next_door/recording.json.gz > work/story_chunk_next_door.rec.json",
     "node render.js work/story_chunk_next_door.rec.json work/story_chunk_next_door.frames 60 1080 1011",
     "python3 audio.py work/story_chunk_next_door.rec.json work/story_chunk_next_door.wav",
-    "python3 edit.py --frames work/story_chunk_next_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_chunk_next_door.rec.json --audio work/story_chunk_next_door.wav --caption \"something walks out of the fog every night \ud83d\ude33\" --red fog --punch [[\"name\",0,0.1]] --zoom [[\"line:0\",\"line:2.3\",1.3],[\"name:0.15\",\"name:1.5\",1.5]] --story stories/chunk_next_door --start_at line:0 --end_after name:1.5 --out out/story_chunk_next_door.mp4"
+    "python3 edit.py --frames work/story_chunk_next_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_chunk_next_door.rec.json --audio work/story_chunk_next_door.wav --caption \"something walks out of the fog every night 😳\" --red fog --punch [[\"name\",0,0.1]] --zoom [[\"line:0\",\"line:2.3\",1.3],[\"name:0.15\",\"name:1.5\",1.5]] --story stories/chunk_next_door --start_at line:0 --end_after name:1.5 --out out/story_chunk_next_door.mp4"
   ],
   "status": "ready",
   "notes": "story #4 (worker, branch claude/story-chunk-next-door): frame review ready; retention + minecraft audits passed after the fixes they asked for. Needs the zombie villager renderer entries on that branch (commit 00961de) to rebuild.",

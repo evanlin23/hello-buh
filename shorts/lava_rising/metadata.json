@@ -1,9 +1,9 @@
 {
   "name": "lava_rising",
-  "caption": "the lava stopped 1 block below me \ud83d\ude33",
+  "caption": "the lava stopped 1 block below me 😳",
   "youtube": {
-    "title": "the lava stopped 1 block below me \ud83d\ude33 #minecraft #shorts",
-    "description": "the lava stopped 1 block below me \ud83d\ude33\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the lava stopped 1 block below me 😳 #minecraft #shorts",
+    "description": "the lava stopped 1 block below me 😳\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 26986454,
-    "sha256": "a2fea0ea69e04e6be72d50ce3c0a7f51073c8db207634ad0e8cb7aaef731c018"
+    "bytes": 26983918,
+    "sha256": "7a93c3f8bd79f7c0901e4844b3d4b48619416c06906f0f9a4c05cc2ce71a805f",
+    "release": {
+      "tag": "pkg-lava_rising",
+      "asset": "lava_rising.short.7a93c3f8bd79f7c0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_rising/lava_rising.short.7a93c3f8bd79f7c0.mp4",
+      "sha256": "7a93c3f8bd79f7c0901e4844b3d4b48619416c06906f0f9a4c05cc2ce71a805f",
+      "bytes": 26983918
+    },
+    "nosong_release": {
+      "tag": "pkg-lava_rising",
+      "asset": "lava_rising.short_nosong.f22587e4f3f8f7a5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_rising/lava_rising.short_nosong.f22587e4f3f8f7a5.mp4",
+      "sha256": "f22587e4f3f8f7a51d835500144ee69ad2b223866dc8be6ad507ad34577ffda5",
+      "bytes": 26880892
+    }
   },
   "edit": {
-    "caption": "the lava stopped 1 block below me \ud83d\ude33",
+    "caption": "the lava stopped 1 block below me 😳",
     "red": "1 block",
     "song": "songs/misery.mp3",
     "dropAt": "stopped",
@@ -41,7 +55,7 @@
     "endAfter": "stopped:2.6",
     "args": [
       "--caption",
-      "the lava stopped 1 block below me \ud83d\ude33",
+      "the lava stopped 1 block below me 😳",
       "--red",
       "1 block",
       "--start_at",
@@ -153,7 +167,7 @@
     "gunzip -c shorts/lava_rising/recording.json.gz > work/lava_rising.rec.json",
     "node render.js work/lava_rising.rec.json work/lava_rising.frames 60 1080 1011",
     "python3 audio.py work/lava_rising.rec.json work/lava_rising.wav",
-    "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me \ud83d\ude33\" --red \"1 block\" --start_at rising:-0.3 --end_after stopped:2.6 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
+    "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me 😳\" --red \"1 block\" --start_at rising:-0.3 --end_after stopped:2.6 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
   ],
   "status": "dropped",
   "notes": "dropped (owner, 2026-11-11, r:rc5eaf0): repeats worse_lava's ending",

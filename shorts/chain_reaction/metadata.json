@@ -1,9 +1,9 @@
 {
   "name": "chain_reaction",
-  "caption": "the most satisfying chain reaction \ud83d\ude33",
+  "caption": "the most satisfying chain reaction 😳",
   "youtube": {
-    "title": "the most satisfying chain reaction \ud83d\ude33 #minecraft #shorts",
-    "description": "the most satisfying chain reaction \ud83d\ude33\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the most satisfying chain reaction 😳 #minecraft #shorts",
+    "description": "the most satisfying chain reaction 😳\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 54069002,
-    "sha256": "bb463893faa0772728c9446a33b68c8c9960dce8b95a51ea9ada6652c20fa536"
+    "bytes": 54166017,
+    "sha256": "8ec135b748004d68fc4a7e86210baab12c19c951aa8beb6c8b4fbb53858eabe4",
+    "release": {
+      "tag": "pkg-chain_reaction",
+      "asset": "chain_reaction.short.8ec135b748004d68.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-chain_reaction/chain_reaction.short.8ec135b748004d68.mp4",
+      "sha256": "8ec135b748004d68fc4a7e86210baab12c19c951aa8beb6c8b4fbb53858eabe4",
+      "bytes": 54166017
+    },
+    "nosong_release": {
+      "tag": "pkg-chain_reaction",
+      "asset": "chain_reaction.short_nosong.06db233559d308e7.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-chain_reaction/chain_reaction.short_nosong.06db233559d308e7.mp4",
+      "sha256": "06db233559d308e7b42c19fcbc424328fab45022959ea90385dabdd2def7b627",
+      "bytes": 54085712
+    }
   },
   "edit": {
-    "caption": "the most satisfying chain reaction \ud83d\ude33",
+    "caption": "the most satisfying chain reaction 😳",
     "red": "satisfying",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "giant",
@@ -41,7 +55,7 @@
     "endAfter": "giant_peak:0.8",
     "args": [
       "--caption",
-      "the most satisfying chain reaction \ud83d\ude33",
+      "the most satisfying chain reaction 😳",
       "--red",
       "satisfying",
       "--start_at",
@@ -555,7 +569,7 @@
     "gunzip -c shorts/chain_reaction/recording.json.gz > work/chain_reaction.rec.json",
     "node render.js work/chain_reaction.rec.json work/chain_reaction.frames 60 1080 1011",
     "python3 audio.py work/chain_reaction.rec.json work/chain_reaction.wav",
-    "python3 edit.py --frames work/chain_reaction.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/chain_reaction.rec.json --audio work/chain_reaction.wav --caption \"the most satisfying chain reaction \ud83d\ude33\" --red satisfying --start_at press:-0.5 --end_after giant_peak:0.8 --out out/chain_reaction.mp4"
+    "python3 edit.py --frames work/chain_reaction.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/chain_reaction.rec.json --audio work/chain_reaction.wav --caption \"the most satisfying chain reaction 😳\" --red satisfying --start_at press:-0.5 --end_after giant_peak:0.8 --out out/chain_reaction.mp4"
   ],
   "status": "ready",
   "notes": "worker 17: one continuous real-redstone chain (button, arrow, 14-note lamp line, 3 sand-on-torch collapses, cart + bells, rockets, anvil, glass piston wave, primed TNT cart + bells, TNT line -> 27 -> 125 -> 486). Passed frame review + minecraft audit (review 4) and retention re-audit. Re-edited with worker 10's static-gain loudness (f38b055): the build-up keeps its dynamics, the blast is the loudest moment. Nitpicks left: small cart at 9-11 s, obsidian watch floor visible at 9.5-11.9 s and the end",

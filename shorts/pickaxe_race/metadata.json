@@ -1,9 +1,9 @@
 {
   "name": "pickaxe_race",
-  "caption": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80",
+  "caption": "ranking every pickaxe ⛏️ 💀",
   "youtube": {
-    "title": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80 #minecraft #shorts",
-    "description": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "ranking every pickaxe ⛏️ 💀 #minecraft #shorts",
+    "description": "ranking every pickaxe ⛏️ 💀\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -31,11 +31,25 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 33545420,
-    "sha256": "35f0e9edf29e06f5556c362a12f3bd09e799bfd1987d2d4b799fcaf688161e9d"
+    "sha256": "35f0e9edf29e06f5556c362a12f3bd09e799bfd1987d2d4b799fcaf688161e9d",
+    "release": {
+      "tag": "pkg-pickaxe_race",
+      "asset": "pickaxe_race.short.35f0e9edf29e06f5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.35f0e9edf29e06f5.mp4",
+      "sha256": "35f0e9edf29e06f5556c362a12f3bd09e799bfd1987d2d4b799fcaf688161e9d",
+      "bytes": 33545420
+    },
+    "nosong_release": {
+      "tag": "pkg-pickaxe_race",
+      "asset": "pickaxe_race.short_nosong.0b7d0e457196f641.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.0b7d0e457196f641.mp4",
+      "sha256": "0b7d0e457196f641a6b4578b48065e4ddc81244e4f15d871d72ba96421b5fa6f",
+      "bytes": 33520053
+    }
   },
   "edit": {
     "subsY": 0.15,
-    "caption": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80",
+    "caption": "ranking every pickaxe ⛏️ 💀",
     "red": "every",
     "song": "songs/ncs/royalty_funk.mp3",
     "dropAt": "boom",
@@ -171,7 +185,7 @@
     ],
     "args": [
       "--caption",
-      "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80",
+      "ranking every pickaxe ⛏️ 💀",
       "--red",
       "every",
       "--subs",
@@ -8685,7 +8699,7 @@
     "gunzip -c shorts/pickaxe_race/recording.json.gz > work/pickaxe_race.rec.json",
     "node render.js work/pickaxe_race.rec.json work/pickaxe_race.frames 60 1080 1011",
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
-    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe \u26cf\ufe0f \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]] --start_at beat:-0.05 --end_after boom:0.98 --song songs/ncs/royalty_funk.mp3 --song_drop_at boom --out out/pickaxe_race.mp4"
+    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]] --start_at beat:-0.05 --end_after boom:0.98 --song songs/ncs/royalty_funk.mp3 --song_drop_at boom --out out/pickaxe_race.mp4"
   ],
   "status": "needs-fix",
   "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: 5 pickaxes mine 3x3 stone sections, real dig times as subs (Haste V, netherite eff V instamine) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +3.9 -> +6.3 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: no picture change on the payoff (29.08 s). Fix: a flash or punch on the payoff (edit-only), then add_song (bed is already -16).",

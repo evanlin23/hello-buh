@@ -1,9 +1,9 @@
 {
   "name": "boat_clutch",
-  "caption": "boat clutch \ud83d\udc80",
+  "caption": "boat clutch 💀",
   "youtube": {
-    "title": "boat clutch \ud83d\udc80 #minecraft #shorts",
-    "description": "boat clutch \ud83d\udc80\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "boat clutch 💀 #minecraft #shorts",
+    "description": "boat clutch 💀\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -31,10 +31,24 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 69380819,
-    "sha256": "b08c57467101ccb601ab36db9be54cc8250d37ef5dc199705a012451bc14d431"
+    "sha256": "b08c57467101ccb601ab36db9be54cc8250d37ef5dc199705a012451bc14d431",
+    "release": {
+      "tag": "pkg-boat_clutch",
+      "asset": "boat_clutch.short.b08c57467101ccb6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.b08c57467101ccb6.mp4",
+      "sha256": "b08c57467101ccb601ab36db9be54cc8250d37ef5dc199705a012451bc14d431",
+      "bytes": 69380819
+    },
+    "nosong_release": {
+      "tag": "pkg-boat_clutch",
+      "asset": "boat_clutch.short_nosong.bbe4bec2604cd6f1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short_nosong.bbe4bec2604cd6f1.mp4",
+      "sha256": "bbe4bec2604cd6f1fb3c17cce9b6d44d2290489815b51e03b9bf3dbb838dd870",
+      "bytes": 68629861
+    }
   },
   "edit": {
-    "caption": "boat clutch \ud83d\udc80",
+    "caption": "boat clutch 💀",
     "red": "boat",
     "song": "songs/misery.mp3",
     "dropAt": "final_place",
@@ -120,7 +134,7 @@
       "at": "final_place",
       "before": 1.4,
       "after": -0.05,
-      "text": "79 blocks \ud83d\udc80"
+      "text": "79 blocks 💀"
     },
     "slowmo": [
       [
@@ -132,7 +146,7 @@
     ],
     "args": [
       "--caption",
-      "boat clutch \ud83d\udc80",
+      "boat clutch 💀",
       "--red",
       "boat",
       "--subs",
@@ -142,7 +156,7 @@
       "--slowmo",
       "[[\"final_place\",0.15,0.3,0.5]]",
       "--hook",
-      "{\"at\":\"final_place\",\"before\":1.4,\"after\":-0.05,\"text\":\"79 blocks \ud83d\udc80\"}",
+      "{\"at\":\"final_place\",\"before\":1.4,\"after\":-0.05,\"text\":\"79 blocks 💀\"}",
       "--replay",
       "{\"at\":\"final\",\"before\":1.2,\"after\":0.4,\"cam\":\"back:6\",\"speed\":0.5}",
       "--start_at",
@@ -482,7 +496,7 @@
     "gunzip -c shorts/boat_clutch/recording.json.gz > work/boat_clutch.rec.json",
     "node render.js work/boat_clutch.rec.json work/boat_clutch.frames 60 1080 1011",
     "python3 audio.py work/boat_clutch.rec.json work/boat_clutch.wav",
-    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"boat clutch \ud83d\udc80\" --red boat --subs \"[[\\\"jump\\\",\\\"15 blocks\\\",2.261895003862225,0],[\\\"jump\\\",\\\"20 blocks\\\",2.4416407864998737,1],[\\\"jump\\\",\\\"30 blocks\\\",2.743167672515498,2],[\\\"jump\\\",\\\"40 blocks\\\",2.9973665961010276,3],[\\\"jump\\\",\\\"50 blocks\\\",3.2213203435596425,4],[\\\"jump\\\",\\\"64 blocks\\\",3.5,5],[\\\"jump\\\",\\\"79 blocks\\\",3.7664583251946766,6]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks \ud83d\udc80\\\"}\" --replay {\"at\":\"final\",\"before\":1.2,\"after\":0.4,\"cam\":\"back:6\",\"speed\":0.5} --start_at start:0 --end_after final:0.9 --out out/boat_clutch.mp4"
+    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"boat clutch 💀\" --red boat --subs \"[[\\\"jump\\\",\\\"15 blocks\\\",2.261895003862225,0],[\\\"jump\\\",\\\"20 blocks\\\",2.4416407864998737,1],[\\\"jump\\\",\\\"30 blocks\\\",2.743167672515498,2],[\\\"jump\\\",\\\"40 blocks\\\",2.9973665961010276,3],[\\\"jump\\\",\\\"50 blocks\\\",3.2213203435596425,4],[\\\"jump\\\",\\\"64 blocks\\\",3.5,5],[\\\"jump\\\",\\\"79 blocks\\\",3.7664583251946766,6]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks 💀\\\"}\" --replay {\"at\":\"final\",\"before\":1.2,\"after\":0.4,\"cam\":\"back:6\",\"speed\":0.5} --start_at start:0 --end_after final:0.9 --out out/boat_clutch.mp4"
   ],
   "status": "ready",
   "notes": "worker 4: independent review READY (no blockers, no visible). Seven drops 15-79 on natural terrain, real boat use + mount (reach nudged to 6.5), full hearts every landing, slow-mo final + third-person replay. Re-encoded under the size cap (78.9 MB). Nitpicks left: hotbar highlight lags 1-4 frames after some cuts; one repeated frame at the hook's end (engine); ~0.1 s hold on each pillar top; the boat is on screen ~3 frames before each normal-speed landing. | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +2.2 -> +3.3 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker): pace BLOCKed no sound hit on the payoff (the 79-block landing, final, 30.17 s) and the Short running 4.1 s past it (the behind-camera replay). Edit-only: the replay dropped (the Short ends 0.9 s after the landing, 34.3 -> 31.1 s; short_nosong.mp4 trimmed, no new render) and edit.sfx dip on final (the song drops out 0.35 s before the landing); remixed at the -16 LUFS bed, same track and drop event. ./hb pace OK (WARN no hit in the first 1.5 s), ./hb check OK, key_sounds n/a",

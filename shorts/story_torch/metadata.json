@@ -1,9 +1,9 @@
 {
   "name": "story_torch",
-  "caption": "there's a torch I never placed \ud83d\ude33",
+  "caption": "there's a torch I never placed 😳",
   "youtube": {
-    "title": "there's a torch I never placed \ud83d\ude33 #minecraft #shorts",
-    "description": "there's a torch I never placed \ud83d\ude33\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "there's a torch I never placed 😳 #minecraft #shorts",
+    "description": "there's a torch I never placed 😳\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 17140205,
-    "sha256": "d2488209d47f5765d6acbb7c11cd275174d1531be0e722be14c0e67f41759798"
+    "bytes": 17245304,
+    "sha256": "14a03aa57733ec0633d4d3efec8ee9a5a60c70e03db6b9793774075a68511fd1",
+    "release": {
+      "tag": "pkg-story_torch",
+      "asset": "story_torch.short.14a03aa57733ec06.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_torch/story_torch.short.14a03aa57733ec06.mp4",
+      "sha256": "14a03aa57733ec0633d4d3efec8ee9a5a60c70e03db6b9793774075a68511fd1",
+      "bytes": 17245304
+    },
+    "nosong_release": {
+      "tag": "pkg-story_torch",
+      "asset": "story_torch.short_nosong.d2488209d47f5765.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_torch/story_torch.short_nosong.d2488209d47f5765.mp4",
+      "sha256": "d2488209d47f5765d6acbb7c11cd275174d1531be0e722be14c0e67f41759798",
+      "bytes": 17140205
+    }
   },
   "edit": {
-    "caption": "there's a torch I never placed \ud83d\ude33",
+    "caption": "there's a torch I never placed 😳",
     "red": "torch",
     "story": "stories/torch",
     "startAt": "line:0",
@@ -54,7 +68,7 @@
     ],
     "args": [
       "--caption",
-      "there's a torch I never placed \ud83d\ude33",
+      "there's a torch I never placed 😳",
       "--red",
       "torch",
       "--zoom",
@@ -655,7 +669,7 @@
     "gunzip -c shorts/story_torch/recording.json.gz > work/story_torch.rec.json",
     "node render.js work/story_torch.rec.json work/story_torch.frames 60 1080 1011",
     "python3 audio.py work/story_torch.rec.json work/story_torch.wav",
-    "python3 edit.py --frames work/story_torch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_torch.rec.json --audio work/story_torch.wav --caption \"there's a torch I never placed \ud83d\ude33\" --red torch --zoom [[\"hook:0\",\"hook:2.9\",1.25],[\"broke:0\",\"death:1.6\",1.06]] --on_fire burn:death --death_screen death --story stories/torch --start_at line:0 --end_after death:1.6 --out out/story_torch.mp4"
+    "python3 edit.py --frames work/story_torch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_torch.rec.json --audio work/story_torch.wav --caption \"there's a torch I never placed 😳\" --red torch --zoom [[\"hook:0\",\"hook:2.9\",1.25],[\"broke:0\",\"death:1.6\",1.06]] --on_fire burn:death --death_screen death --story stories/torch --start_at line:0 --end_after death:1.6 --out out/story_torch.mp4"
   ],
   "status": "ready",
   "notes": "Story: the torch I never placed. Retention audit pass (31.6 s, no stills, death text 1.6 s), Minecraft audit pass (tamed dog, iron shovel/pickaxe dig speeds, lava death). Owner 2026-11-09: stories first.",

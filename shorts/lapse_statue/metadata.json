@@ -1,9 +1,9 @@
 {
   "name": "lapse_statue",
-  "caption": "building a statue in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+  "caption": "building a statue in 1 second vs 1 minute vs 1 hour 💀",
   "youtube": {
-    "title": "building a statue in 1 second vs 1 minute vs 1 hour \ud83d\udc80 #minecraft #shorts",
-    "description": "building a statue in 1 second vs 1 minute vs 1 hour \ud83d\udc80\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a statue in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
+    "description": "building a statue in 1 second vs 1 minute vs 1 hour 💀\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 36448145,
-    "sha256": "7b7719852f531716bd81fbbd773f6f25988a4b68c1187151e52da5c22eeac6cd"
+    "bytes": 36509555,
+    "sha256": "bce234e0f4a970aa3cd28e126e13c2f7c5e92da62d85ebd0e0fd8cc29769774f",
+    "release": {
+      "tag": "pkg-lapse_statue",
+      "asset": "lapse_statue.short.bce234e0f4a970aa.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short.bce234e0f4a970aa.mp4",
+      "sha256": "bce234e0f4a970aa3cd28e126e13c2f7c5e92da62d85ebd0e0fd8cc29769774f",
+      "bytes": 36509555
+    },
+    "nosong_release": {
+      "tag": "pkg-lapse_statue",
+      "asset": "lapse_statue.short_nosong.7b7719852f531716.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short_nosong.7b7719852f531716.mp4",
+      "sha256": "7b7719852f531716bd81fbbd773f6f25988a4b68c1187151e52da5c22eeac6cd",
+      "bytes": 36448145
+    }
   },
   "edit": {
-    "caption": "building a statue in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+    "caption": "building a statue in 1 second vs 1 minute vs 1 hour 💀",
     "red": "hour",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "big_done",
@@ -83,7 +97,7 @@
     ],
     "args": [
       "--caption",
-      "building a statue in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+      "building a statue in 1 second vs 1 minute vs 1 hour 💀",
       "--red",
       "hour",
       "--speed",
@@ -4032,7 +4046,7 @@
     "gunzip -c shorts/lapse_statue/recording.json.gz > work/lapse_statue.rec.json",
     "node render.js work/lapse_statue.rec.json work/lapse_statue.frames 60 1080 1011",
     "python3 audio.py work/lapse_statue.rec.json work/lapse_statue.wav",
-    "python3 edit.py --frames work/lapse_statue.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_statue.rec.json --audio work/lapse_statue.wav --caption \"building a statue in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_statue.mp4"
+    "python3 edit.py --frames work/lapse_statue.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_statue.rec.json --audio work/lapse_statue.wav --caption \"building a statue in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_statue.mp4"
   ],
   "status": "needs-fix",
   "notes": "1 s vs 1 min vs 1 h statue time-lapse (desert); 7 rounds; frame review + retention + minecraft audit ready (r7) | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: 5.7 s with nothing new (9.45-15.15 s, the 1 min round) and 6.95 s (22.9-29.85 s, the 1 h round), no picture change on the payoff (31.43 s); not remixed at -16 LUFS yet. Fix: speed up / cut the two lapse stretches + a flash or punch on the payoff (edit-only), then add_song.",

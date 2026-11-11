@@ -1,522 +1,536 @@
 {
- "name": "story_gold_for_the_portal",
- "caption": "why does grandma feed the nether portal 😶",
- "youtube": {
-  "title": "why does grandma feed the nether portal 😶 #minecraft #shorts",
-  "description": "why does grandma feed the nether portal 😶\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
-  "hashtags": [
-   "#minecraft",
-   "#shorts",
-   "#minecraftmemes",
-   "#funny"
-  ],
-  "made_for_kids": false
- },
- "song": {
-  "file": "songs/score/darkest_child.ogg",
-  "title": "Darkest Child",
-  "artist": "Kevin MacLeod",
-  "tracks": [
-   "darkest_child"
-  ],
-  "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
-  "mood": [
-   "eerie",
-   "sad"
-  ],
-  "payoff_in_short_s": 52.3,
-  "mix": "scripts/story_audio.py (docs/audio.md)"
- },
- "video": {
-  "file": "short.mp4",
-  "duration_s": 53.03,
-  "width": 1080,
-  "height": 1920,
-  "fps": "60/1",
-  "codec": "h264",
-  "bytes": 54325330,
-  "sha256": "fbbc6e4079c0712187c24c78d26f1b4cb2ba4a7748de2d90584951ab707e9162"
- },
- "edit": {
+  "name": "story_gold_for_the_portal",
   "caption": "why does grandma feed the nether portal 😶",
-  "red": "portal",
-  "story": "stories/gold_for_the_portal",
-  "startAt": "line:0",
-  "endAfter": "story_end:-0.17",
-  "punch": [
-   [
-    "look_at",
-    0,
-    0.08
-   ]
+  "youtube": {
+    "title": "why does grandma feed the nether portal 😶 #minecraft #shorts",
+    "description": "why does grandma feed the nether portal 😶\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "songs/score/darkest_child.ogg",
+    "title": "Darkest Child",
+    "artist": "Kevin MacLeod",
+    "tracks": [
+      "darkest_child"
+    ],
+    "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
+    "mood": [
+      "eerie",
+      "sad"
+    ],
+    "payoff_in_short_s": 52.3,
+    "mix": "scripts/story_audio.py (docs/audio.md)"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 53.03,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 54374540,
+    "sha256": "293d03576262b89638a3addde7fab36aedbc011efb8a3a3ad7f026f9877a2ec0",
+    "release": {
+      "tag": "pkg-story_gold_for_the_portal",
+      "asset": "story_gold_for_the_portal.short.293d03576262b896.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_gold_for_the_portal/story_gold_for_the_portal.short.293d03576262b896.mp4",
+      "sha256": "293d03576262b89638a3addde7fab36aedbc011efb8a3a3ad7f026f9877a2ec0",
+      "bytes": 54374540
+    },
+    "nosong_release": {
+      "tag": "pkg-story_gold_for_the_portal",
+      "asset": "story_gold_for_the_portal.short_nosong.fbbc6e4079c07121.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_gold_for_the_portal/story_gold_for_the_portal.short_nosong.fbbc6e4079c07121.mp4",
+      "sha256": "fbbc6e4079c0712187c24c78d26f1b4cb2ba4a7748de2d90584951ab707e9162",
+      "bytes": 54325330
+    }
+  },
+  "edit": {
+    "caption": "why does grandma feed the nether portal 😶",
+    "red": "portal",
+    "story": "stories/gold_for_the_portal",
+    "startAt": "line:0",
+    "endAfter": "story_end:-0.17",
+    "punch": [
+      [
+        "look_at",
+        0,
+        0.08
+      ]
+    ],
+    "args": [
+      "--caption",
+      "why does grandma feed the nether portal 😶",
+      "--red",
+      "portal",
+      "--punch",
+      "[[\"look_at\",0,0.08]]",
+      "--story",
+      "stories/gold_for_the_portal",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "story_end:-0.17"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": -132,
+      "y": 74,
+      "z": -943
+    },
+    "ticks": 1114,
+    "seconds": 55.7,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "f1_on"
+      },
+      {
+        "t": 0.75,
+        "event": "shot"
+      },
+      {
+        "t": 2.05,
+        "event": "vel"
+      },
+      {
+        "t": 2.3,
+        "event": "line"
+      },
+      {
+        "t": 7.2,
+        "event": "shot"
+      },
+      {
+        "t": 7.2,
+        "event": "time"
+      },
+      {
+        "t": 7.2,
+        "event": "line"
+      },
+      {
+        "t": 7.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 8.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 8.25,
+        "event": "mob_death"
+      },
+      {
+        "t": 8.35,
+        "event": "time"
+      },
+      {
+        "t": 8.35,
+        "event": "cut"
+      },
+      {
+        "t": 8.35,
+        "event": "f1_off"
+      },
+      {
+        "t": 8.35,
+        "event": "shot"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 8.85,
+        "event": "block_entity"
+      },
+      {
+        "t": 9.8,
+        "event": "vel"
+      },
+      {
+        "t": 10.4,
+        "event": "vel"
+      },
+      {
+        "t": 10.85,
+        "event": "vel"
+      },
+      {
+        "t": 10.95,
+        "event": "vel"
+      },
+      {
+        "t": 11.15,
+        "event": "vel"
+      },
+      {
+        "t": 11.35,
+        "event": "vel"
+      },
+      {
+        "t": 11.75,
+        "event": "vel"
+      },
+      {
+        "t": 11.85,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "cut"
+      },
+      {
+        "t": 11.95,
+        "event": "line"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 12.8,
+        "event": "vel"
+      },
+      {
+        "t": 13.15,
+        "event": "cut"
+      },
+      {
+        "t": 13.15,
+        "event": "vel"
+      },
+      {
+        "t": 14,
+        "event": "vel"
+      },
+      {
+        "t": 14.25,
+        "event": "cut"
+      },
+      {
+        "t": 14.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.75,
+        "event": "f1_on"
+      },
+      {
+        "t": 15.75,
+        "event": "shot"
+      },
+      {
+        "t": 15.75,
+        "event": "cut"
+      },
+      {
+        "t": 15.75,
+        "event": "pose"
+      },
+      {
+        "t": 17.95,
+        "event": "pose_off"
+      },
+      {
+        "t": 17.95,
+        "event": "shot"
+      },
+      {
+        "t": 17.95,
+        "event": "time"
+      },
+      {
+        "t": 17.95,
+        "event": "line"
+      },
+      {
+        "t": 18.35,
+        "event": "block_entity"
+      },
+      {
+        "t": 18.35,
+        "event": "block_entity"
+      },
+      {
+        "t": 18.55,
+        "event": "block_entity"
+      },
+      {
+        "t": 18.55,
+        "event": "block_entity"
+      },
+      {
+        "t": 19.5,
+        "event": "block_entity"
+      },
+      {
+        "t": 19.5,
+        "event": "block_entity"
+      },
+      {
+        "t": 20.5,
+        "event": "ent_swing"
+      },
+      {
+        "t": 22.25,
+        "event": "shot"
+      },
+      {
+        "t": 23.85,
+        "event": "shot"
+      },
+      {
+        "t": 23.85,
+        "event": "line"
+      },
+      {
+        "t": 25.5,
+        "event": "block_entity"
+      },
+      {
+        "t": 25.5,
+        "event": "block_entity"
+      },
+      {
+        "t": 26.95,
+        "event": "block_entity"
+      },
+      {
+        "t": 26.95,
+        "event": "block_entity"
+      },
+      {
+        "t": 27.4,
+        "event": "shot"
+      },
+      {
+        "t": 29.2,
+        "event": "cut"
+      },
+      {
+        "t": 29.8,
+        "event": "f1_off"
+      },
+      {
+        "t": 29.8,
+        "event": "shot"
+      },
+      {
+        "t": 29.8,
+        "event": "line"
+      },
+      {
+        "t": 29.8,
+        "event": "swing"
+      },
+      {
+        "t": 29.85,
+        "event": "container",
+        "type": "minecraft:generic_9x3"
+      },
+      {
+        "t": 32.1,
+        "event": "container_close"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "f1_on"
+      },
+      {
+        "t": 33.85,
+        "event": "shot"
+      },
+      {
+        "t": 33.85,
+        "event": "cut"
+      },
+      {
+        "t": 33.85,
+        "event": "line"
+      },
+      {
+        "t": 36.1,
+        "event": "block_entity"
+      },
+      {
+        "t": 36.1,
+        "event": "block_entity"
+      },
+      {
+        "t": 37.15,
+        "event": "f1_off"
+      },
+      {
+        "t": 37.15,
+        "event": "shot"
+      },
+      {
+        "t": 37.15,
+        "event": "line"
+      },
+      {
+        "t": 42.05,
+        "event": "cut"
+      },
+      {
+        "t": 42.05,
+        "event": "line"
+      },
+      {
+        "t": 43.5,
+        "event": "swing"
+      },
+      {
+        "t": 43.5,
+        "event": "vel"
+      },
+      {
+        "t": 47.8,
+        "event": "f1_on"
+      },
+      {
+        "t": 47.8,
+        "event": "shot"
+      },
+      {
+        "t": 47.8,
+        "event": "cut"
+      },
+      {
+        "t": 47.8,
+        "event": "pose"
+      },
+      {
+        "t": 47.8,
+        "event": "line"
+      },
+      {
+        "t": 47.9,
+        "event": "use"
+      },
+      {
+        "t": 51.1,
+        "event": "pose"
+      },
+      {
+        "t": 52.8,
+        "event": "shot"
+      },
+      {
+        "t": 52.8,
+        "event": "line"
+      },
+      {
+        "t": 54.35,
+        "event": "vel"
+      },
+      {
+        "t": 54.6,
+        "event": "look_at"
+      },
+      {
+        "t": 55.5,
+        "event": "story_end"
+      },
+      {
+        "t": 55.7,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "render/story_gold_for_the_portal",
+    "commit": "ffd261e017233b139dd9dbd3507a1284b0160079",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42845077951",
+    "rendered_at": "2026-11-10T15:52:05.700Z",
+    "head_at_publish": "bb0208a9ddb094790f9c317e713450a4d2e2bc57",
+    "stunt": "stunts/story_gold_for_the_portal.js",
+    "source_snapshot": [
+      "source/story_gold_for_the_portal.js",
+      "source/movie.js",
+      "source/world.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout ffd261e01723",
+    "gunzip -c shorts/story_gold_for_the_portal/recording.json.gz > work/story_gold_for_the_portal.rec.json",
+    "node render.js work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.frames 60 1080 1011",
+    "python3 audio.py work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.wav",
+    "python3 edit.py --frames work/story_gold_for_the_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_gold_for_the_portal.rec.json --audio work/story_gold_for_the_portal.wav --caption \"why does grandma feed the nether portal 😶\" --red portal --punch [[\"look_at\",0,0.08]] --story stories/gold_for_the_portal --start_at line:0 --end_after story_end:-0.17 --out out/story_gold_for_the_portal.mp4"
   ],
-  "args": [
-   "--caption",
-   "why does grandma feed the nether portal 😶",
-   "--red",
-   "portal",
-   "--punch",
-   "[[\"look_at\",0,0.08]]",
-   "--story",
-   "stories/gold_for_the_portal",
-   "--start_at",
-   "line:0",
-   "--end_after",
-   "story_end:-0.17"
-  ]
- },
- "recording": {
-  "file": "recording.json.gz",
-  "minecraft": "1.21.11",
-  "world": {
-   "seed": "hellobuh",
-   "level_type": "minecraft:normal"
-  },
-  "set": {
-   "x": -132,
-   "y": 74,
-   "z": -943
-  },
-  "ticks": 1114,
-  "seconds": 55.7,
-  "deaths": 0,
-  "events": [
-   {
-    "t": 0.75,
-    "event": "start"
-   },
-   {
-    "t": 0.75,
-    "event": "f1_on"
-   },
-   {
-    "t": 0.75,
-    "event": "shot"
-   },
-   {
-    "t": 2.05,
-    "event": "vel"
-   },
-   {
-    "t": 2.3,
-    "event": "line"
-   },
-   {
-    "t": 7.2,
-    "event": "shot"
-   },
-   {
-    "t": 7.2,
-    "event": "time"
-   },
-   {
-    "t": 7.2,
-    "event": "line"
-   },
-   {
-    "t": 7.2,
-    "event": "mob_hurt"
-   },
-   {
-    "t": 8.25,
-    "event": "mob_hurt"
-   },
-   {
-    "t": 8.25,
-    "event": "mob_death"
-   },
-   {
-    "t": 8.35,
-    "event": "time"
-   },
-   {
-    "t": 8.35,
-    "event": "cut"
-   },
-   {
-    "t": 8.35,
-    "event": "f1_off"
-   },
-   {
-    "t": 8.35,
-    "event": "shot"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 8.85,
-    "event": "block_entity"
-   },
-   {
-    "t": 9.8,
-    "event": "vel"
-   },
-   {
-    "t": 10.4,
-    "event": "vel"
-   },
-   {
-    "t": 10.85,
-    "event": "vel"
-   },
-   {
-    "t": 10.95,
-    "event": "vel"
-   },
-   {
-    "t": 11.15,
-    "event": "vel"
-   },
-   {
-    "t": 11.35,
-    "event": "vel"
-   },
-   {
-    "t": 11.75,
-    "event": "vel"
-   },
-   {
-    "t": 11.85,
-    "event": "vel"
-   },
-   {
-    "t": 11.95,
-    "event": "cut"
-   },
-   {
-    "t": 11.95,
-    "event": "line"
-   },
-   {
-    "t": 11.95,
-    "event": "vel"
-   },
-   {
-    "t": 12.8,
-    "event": "vel"
-   },
-   {
-    "t": 13.15,
-    "event": "cut"
-   },
-   {
-    "t": 13.15,
-    "event": "vel"
-   },
-   {
-    "t": 14,
-    "event": "vel"
-   },
-   {
-    "t": 14.25,
-    "event": "cut"
-   },
-   {
-    "t": 14.25,
-    "event": "vel"
-   },
-   {
-    "t": 15.1,
-    "event": "vel"
-   },
-   {
-    "t": 15.75,
-    "event": "f1_on"
-   },
-   {
-    "t": 15.75,
-    "event": "shot"
-   },
-   {
-    "t": 15.75,
-    "event": "cut"
-   },
-   {
-    "t": 15.75,
-    "event": "pose"
-   },
-   {
-    "t": 17.95,
-    "event": "pose_off"
-   },
-   {
-    "t": 17.95,
-    "event": "shot"
-   },
-   {
-    "t": 17.95,
-    "event": "time"
-   },
-   {
-    "t": 17.95,
-    "event": "line"
-   },
-   {
-    "t": 18.35,
-    "event": "block_entity"
-   },
-   {
-    "t": 18.35,
-    "event": "block_entity"
-   },
-   {
-    "t": 18.55,
-    "event": "block_entity"
-   },
-   {
-    "t": 18.55,
-    "event": "block_entity"
-   },
-   {
-    "t": 19.5,
-    "event": "block_entity"
-   },
-   {
-    "t": 19.5,
-    "event": "block_entity"
-   },
-   {
-    "t": 20.5,
-    "event": "ent_swing"
-   },
-   {
-    "t": 22.25,
-    "event": "shot"
-   },
-   {
-    "t": 23.85,
-    "event": "shot"
-   },
-   {
-    "t": 23.85,
-    "event": "line"
-   },
-   {
-    "t": 25.5,
-    "event": "block_entity"
-   },
-   {
-    "t": 25.5,
-    "event": "block_entity"
-   },
-   {
-    "t": 26.95,
-    "event": "block_entity"
-   },
-   {
-    "t": 26.95,
-    "event": "block_entity"
-   },
-   {
-    "t": 27.4,
-    "event": "shot"
-   },
-   {
-    "t": 29.2,
-    "event": "cut"
-   },
-   {
-    "t": 29.8,
-    "event": "f1_off"
-   },
-   {
-    "t": 29.8,
-    "event": "shot"
-   },
-   {
-    "t": 29.8,
-    "event": "line"
-   },
-   {
-    "t": 29.8,
-    "event": "swing"
-   },
-   {
-    "t": 29.85,
-    "event": "container",
-    "type": "minecraft:generic_9x3"
-   },
-   {
-    "t": 32.1,
-    "event": "container_close"
-   },
-   {
-    "t": 32.15,
-    "event": "vel"
-   },
-   {
-    "t": 33.85,
-    "event": "f1_on"
-   },
-   {
-    "t": 33.85,
-    "event": "shot"
-   },
-   {
-    "t": 33.85,
-    "event": "cut"
-   },
-   {
-    "t": 33.85,
-    "event": "line"
-   },
-   {
-    "t": 36.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 36.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 37.15,
-    "event": "f1_off"
-   },
-   {
-    "t": 37.15,
-    "event": "shot"
-   },
-   {
-    "t": 37.15,
-    "event": "line"
-   },
-   {
-    "t": 42.05,
-    "event": "cut"
-   },
-   {
-    "t": 42.05,
-    "event": "line"
-   },
-   {
-    "t": 43.5,
-    "event": "swing"
-   },
-   {
-    "t": 43.5,
-    "event": "vel"
-   },
-   {
-    "t": 47.8,
-    "event": "f1_on"
-   },
-   {
-    "t": 47.8,
-    "event": "shot"
-   },
-   {
-    "t": 47.8,
-    "event": "cut"
-   },
-   {
-    "t": 47.8,
-    "event": "pose"
-   },
-   {
-    "t": 47.8,
-    "event": "line"
-   },
-   {
-    "t": 47.9,
-    "event": "use"
-   },
-   {
-    "t": 51.1,
-    "event": "pose"
-   },
-   {
-    "t": 52.8,
-    "event": "shot"
-   },
-   {
-    "t": 52.8,
-    "event": "line"
-   },
-   {
-    "t": 54.35,
-    "event": "vel"
-   },
-   {
-    "t": 54.6,
-    "event": "look_at"
-   },
-   {
-    "t": 55.5,
-    "event": "story_end"
-   },
-   {
-    "t": 55.7,
-    "event": "end"
-   }
-  ]
- },
- "code": {
-  "repo": "evanlin23/hello-buh",
-  "branch": "render/story_gold_for_the_portal",
-  "commit": "ffd261e017233b139dd9dbd3507a1284b0160079",
-  "rendered": "actions",
-  "run": "https://github.com/evanlin23/hello-buh/actions/runs/42845077951",
-  "rendered_at": "2026-11-10T15:52:05.700Z",
-  "head_at_publish": "bb0208a9ddb094790f9c317e713450a4d2e2bc57",
-  "stunt": "stunts/story_gold_for_the_portal.js",
-  "source_snapshot": [
-   "source/story_gold_for_the_portal.js",
-   "source/movie.js",
-   "source/world.js",
-   "source/story.js"
-  ]
- },
- "rebuild": [
-  "git checkout ffd261e01723",
-  "gunzip -c shorts/story_gold_for_the_portal/recording.json.gz > work/story_gold_for_the_portal.rec.json",
-  "node render.js work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.frames 60 1080 1011",
-  "python3 audio.py work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.wav",
-  "python3 edit.py --frames work/story_gold_for_the_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_gold_for_the_portal.rec.json --audio work/story_gold_for_the_portal.wav --caption \"why does grandma feed the nether portal 😶\" --red portal --punch [[\"look_at\",0,0.08]] --story stories/gold_for_the_portal --start_at line:0 --end_after story_end:-0.17 --out out/story_gold_for_the_portal.mp4"
- ],
- "status": "held",
- "notes": "Gold for the Portal (re-edit 2026-11-10): captions re-aligned (caption_sync 0) + 0.1 s caption lead; no closing line (owner 'both are implied'): ends on the piglin turning after Grandma's ingot. Review READY (2 rounds + changed-span check). Panel not run (Gemini quota). Nitpicks: untinted fire-resistance potions, the 64-stack drawn as one ingot, a blue slab at S10's start, narrator 2.36 w/s, 53 s.",
- "published_at": "2026-11-10T15:56:49.201Z",
- "held_reason": "owner 2026-11-10: new stories don't go out until the owner OKs them"
+  "status": "held",
+  "notes": "Gold for the Portal (re-edit 2026-11-10): captions re-aligned (caption_sync 0) + 0.1 s caption lead; no closing line (owner 'both are implied'): ends on the piglin turning after Grandma's ingot. Review READY (2 rounds + changed-span check). Panel not run (Gemini quota). Nitpicks: untinted fire-resistance potions, the 64-stack drawn as one ingot, a blue slab at S10's start, narrator 2.36 w/s, 53 s.",
+  "published_at": "2026-11-10T15:56:49.201Z",
+  "held_reason": "owner 2026-11-10: new stories don't go out until the owner OKs them"
 }

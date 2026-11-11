@@ -1,9 +1,9 @@
 {
   "name": "story_nitwit",
-  "caption": "the nitwit finally said something \ud83d\ude33",
+  "caption": "the nitwit finally said something 😳",
   "youtube": {
-    "title": "the nitwit finally said something \ud83d\ude33 #minecraft #shorts",
-    "description": "the nitwit finally said something \ud83d\ude33\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the nitwit finally said something 😳 #minecraft #shorts",
+    "description": "the nitwit finally said something 😳\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 58717471,
-    "sha256": "5bd87466d2297e3ba3c10f3d328104bc316c8e25d88ce8cecc64e199f224a91a"
+    "bytes": 58885130,
+    "sha256": "987175ee837140eb86856f91368f64a44eec0398004ff4939c22a29ca16c2478",
+    "release": {
+      "tag": "pkg-story_nitwit",
+      "asset": "story_nitwit.short.987175ee837140eb.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_nitwit/story_nitwit.short.987175ee837140eb.mp4",
+      "sha256": "987175ee837140eb86856f91368f64a44eec0398004ff4939c22a29ca16c2478",
+      "bytes": 58885130
+    },
+    "nosong_release": {
+      "tag": "pkg-story_nitwit",
+      "asset": "story_nitwit.short_nosong.5bd87466d2297e3b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_nitwit/story_nitwit.short_nosong.5bd87466d2297e3b.mp4",
+      "sha256": "5bd87466d2297e3ba3c10f3d328104bc316c8e25d88ce8cecc64e199f224a91a",
+      "bytes": 58717471
+    }
   },
   "edit": {
-    "caption": "the nitwit finally said something \ud83d\ude33",
+    "caption": "the nitwit finally said something 😳",
     "red": "nitwit",
     "story": "stories/nitwit",
     "startAt": "line:0",
@@ -52,7 +66,7 @@
     ],
     "args": [
       "--caption",
-      "the nitwit finally said something \ud83d\ude33",
+      "the nitwit finally said something 😳",
       "--red",
       "nitwit",
       "--punch",
@@ -16259,7 +16273,7 @@
     "gunzip -c shorts/story_nitwit/recording.json.gz > work/story_nitwit.rec.json",
     "node render.js work/story_nitwit.rec.json work/story_nitwit.frames 60 1080 1011",
     "python3 audio.py work/story_nitwit.rec.json work/story_nitwit.wav",
-    "python3 edit.py --frames work/story_nitwit.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_nitwit.rec.json --audio work/story_nitwit.wav --caption \"the nitwit finally said something \ud83d\ude33\" --red nitwit --punch [\"name_word\",\"today_word\"] --cards [[\"hmm\",\"HMM.\",0.9,\"white\"]] --story stories/nitwit --start_at line:0 --end_after story_end:0 --out out/story_nitwit.mp4"
+    "python3 edit.py --frames work/story_nitwit.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_nitwit.rec.json --audio work/story_nitwit.wav --caption \"the nitwit finally said something 😳\" --red nitwit --punch [\"name_word\",\"today_word\"] --cards [[\"hmm\",\"HMM.\",0.9,\"white\"]] --story stories/nitwit --start_at line:0 --end_after story_end:0 --out out/story_nitwit.mp4"
   ],
   "status": "ready",
   "notes": "pipeline test (story_nitwit, lead's fresh-worker run): 2 review rounds, READY. Nitpicks: ruin wide shot dim; freshly placed lava in the well draws mostly dark (engine); burned room floor reads as netherrack.",

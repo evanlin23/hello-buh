@@ -1,9 +1,9 @@
 {
   "name": "lava_crossing",
-  "caption": "every way to cross lava (rated) \ud83d\udc80",
+  "caption": "every way to cross lava (rated) 💀",
   "youtube": {
-    "title": "every way to cross lava (rated) \ud83d\udc80 #minecraft #shorts",
-    "description": "every way to cross lava (rated) \ud83d\udc80\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "every way to cross lava (rated) 💀 #minecraft #shorts",
+    "description": "every way to cross lava (rated) 💀\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 22835517,
-    "sha256": "7274c2196e6eb2bde26c18092ddde297cefe9be538560da29704d2efc4fab13a"
+    "bytes": 22870273,
+    "sha256": "e7336e02d2493b09d3516d559e0761693253658e1af6fbd60dfc644f0a4d9a38",
+    "release": {
+      "tag": "pkg-lava_crossing",
+      "asset": "lava_crossing.short.e7336e02d2493b09.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.e7336e02d2493b09.mp4",
+      "sha256": "e7336e02d2493b09d3516d559e0761693253658e1af6fbd60dfc644f0a4d9a38",
+      "bytes": 22870273
+    },
+    "nosong_release": {
+      "tag": "pkg-lava_crossing",
+      "asset": "lava_crossing.short_nosong.7274c2196e6eb2bd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.7274c2196e6eb2bd.mp4",
+      "sha256": "7274c2196e6eb2bde26c18092ddde297cefe9be538560da29704d2efc4fab13a",
+      "bytes": 22835517
+    }
   },
   "edit": {
-    "caption": "every way to cross lava (rated) \ud83d\udc80",
+    "caption": "every way to cross lava (rated) 💀",
     "red": "every",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "in_lava",
@@ -99,7 +113,7 @@
     ],
     "args": [
       "--caption",
-      "every way to cross lava (rated) \ud83d\udc80",
+      "every way to cross lava (rated) 💀",
       "--red",
       "every",
       "--subs",
@@ -302,7 +316,7 @@
     "gunzip -c shorts/lava_crossing/recording.json.gz > work/lava_crossing.rec.json",
     "node render.js work/lava_crossing.rec.json work/lava_crossing.frames 60 1080 1011",
     "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
-    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --on_fire in_lava:death --death_screen death --start_at beat:-0.3 --end_after death:1.15 --out out/lava_crossing.mp4"
+    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --on_fire in_lava:death --death_screen death --start_at beat:-0.3 --end_after death:1.15 --out out/lava_crossing.mp4"
   ],
   "status": "pending-qa",
   "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen)",

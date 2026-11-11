@@ -1,10 +1,10 @@
 {
   "name": "tnt",
   "channel": "hellobuh",
-  "caption": "POV: you lit 75 TNT \ud83d\udc80",
+  "caption": "POV: you lit 75 TNT 💀",
   "youtube": {
-    "title": "POV: you lit 75 TNT \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you lit 75 TNT \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you lit 75 TNT 💀 #minecraft #shorts",
+    "description": "POV: you lit 75 TNT 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -30,11 +30,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 6263588,
-    "sha256": "73358ce6adc03a8e6f60fb83b22b70bfa0d09f28b5a601d4165adf860cedcfd0"
+    "bytes": 14377939,
+    "sha256": "9cc4577448dd27d022f546d0ebaa284a9bc76ea99db1bcc8d01d6139fb9e4e12",
+    "release": {
+      "tag": "pkg-tnt",
+      "asset": "tnt.short.9cc4577448dd27d0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt/tnt.short.9cc4577448dd27d0.mp4",
+      "sha256": "9cc4577448dd27d022f546d0ebaa284a9bc76ea99db1bcc8d01d6139fb9e4e12",
+      "bytes": 14377939
+    },
+    "nosong_release": {
+      "tag": "pkg-tnt",
+      "asset": "tnt.short_nosong.01c3e7552b3ac958.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt/tnt.short_nosong.01c3e7552b3ac958.mp4",
+      "sha256": "01c3e7552b3ac958fc27fe856200215cd471179b5ee40f966ba4b50f1ef84f61",
+      "bytes": 14215706
+    }
   },
   "edit": {
-    "caption": "POV: you lit 75 TNT \ud83d\udc80",
+    "caption": "POV: you lit 75 TNT 💀",
     "red": "75",
     "song": "songs/ncs/mortals_funk_remix.mp3",
     "dropAt": "boom",
@@ -82,7 +96,7 @@
     ],
     "args": [
       "--caption",
-      "POV: you lit 75 TNT \ud83d\udc80",
+      "POV: you lit 75 TNT 💀",
       "--red",
       "75",
       "--speed",
@@ -7133,7 +7147,7 @@
     "gunzip -c shorts/tnt/recording.json.gz > work/tnt.rec.json",
     "node render.js work/tnt.rec.json work/tnt.frames 60 1080 1011",
     "python3 audio.py work/tnt.rec.json work/tnt.wav",
-    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT \ud83d\udc80\" --red 75 --speed [[\"lit:0.5\",\"boom:-0.4\",1.5]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.5]] --sfx [[\"air\",\"start\",\"boom\",{\"gain\":0.6}],[\"riser\",\"lit\",\"boom\"],[\"boom\",\"boom\"]] --start_at lit:-1.3 --end_after boom:1.0 --song songs/ncs/mortals_funk_remix.mp3 --song_drop_at boom --out out/tnt.mp4"
+    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT 💀\" --red 75 --speed [[\"lit:0.5\",\"boom:-0.4\",1.5]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.5]] --sfx [[\"air\",\"start\",\"boom\",{\"gain\":0.6}],[\"riser\",\"lit\",\"boom\"],[\"boom\",\"boom\"]] --start_at lit:-1.3 --end_after boom:1.0 --song songs/ncs/mortals_funk_remix.mp3 --song_drop_at boom --out out/tnt.mp4"
   ],
   "status": "ready",
   "notes": "backlog worker A 2026-11-11: re-recorded on the current engine (plateau field, full health), short cut per the lead: walk up, light 75 TNT, back off through the fuse (x1.5, riser), ends 1 s into the chain: 5.3 s (pace's under-25 s length block ignored on the lead's word). The old 'ground dark' and 'bot stuck' are fixed. 1 review round (fresh-session reviewer), READY. Nitpicks: ~0.4 s at 0.75-1.2 s where the TNT texture fills the frame; the fuse bed is quiet (the song covers it); flat field to the horizon",

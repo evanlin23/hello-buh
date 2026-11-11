@@ -1,9 +1,9 @@
 {
   "name": "villager_fired",
-  "caption": "I gave the villager every job \ud83d\udc80",
+  "caption": "I gave the villager every job 💀",
   "youtube": {
-    "title": "I gave the villager every job \ud83d\udc80 #minecraft #shorts",
-    "description": "I gave the villager every job \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "I gave the villager every job 💀 #minecraft #shorts",
+    "description": "I gave the villager every job 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -31,10 +31,24 @@
     "fps": "60/1",
     "codec": "h264",
     "bytes": 35286567,
-    "sha256": "058f60c55ba9ce30de06878607cebd84e1c5656c18aa4253fbf457b42c4e7a25"
+    "sha256": "058f60c55ba9ce30de06878607cebd84e1c5656c18aa4253fbf457b42c4e7a25",
+    "release": {
+      "tag": "pkg-villager_fired",
+      "asset": "villager_fired.short.058f60c55ba9ce30.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.058f60c55ba9ce30.mp4",
+      "sha256": "058f60c55ba9ce30de06878607cebd84e1c5656c18aa4253fbf457b42c4e7a25",
+      "bytes": 35286567
+    },
+    "nosong_release": {
+      "tag": "pkg-villager_fired",
+      "asset": "villager_fired.short_nosong.1a749e71d9b4b155.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.1a749e71d9b4b155.mp4",
+      "sha256": "1a749e71d9b4b155cbaa2bfb5ce6d5d72f8035a69f6b5706b5b46db2e171eeb0",
+      "bytes": 35073059
+    }
   },
   "edit": {
-    "caption": "I gave the villager every job \ud83d\udc80",
+    "caption": "I gave the villager every job 💀",
     "red": "every",
     "song": "songs/payphone.mp3",
     "dropAt": "all_jobs",
@@ -182,7 +196,7 @@
     ],
     "args": [
       "--caption",
-      "I gave the villager every job \ud83d\udc80",
+      "I gave the villager every job 💀",
       "--red",
       "every",
       "--subs",
@@ -2084,7 +2098,7 @@
     "gunzip -c shorts/villager_fired/recording.json.gz > work/villager_fired.rec.json",
     "node render.js work/villager_fired.rec.json work/villager_fired.frames 60 1080 1011",
     "python3 audio.py work/villager_fired.rec.json work/villager_fired.wav",
-    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job \ud83d\udc80\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"fired_all\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"nitwit\\\",\\\"now he is unemployable\\\",2,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"]] --start_at beat:-0.05 --end_after nitwit:1.4 --out out/villager_fired.mp4"
+    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"fired_all\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"nitwit\\\",\\\"now he is unemployable\\\",2,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"]] --start_at beat:-0.05 --end_after nitwit:1.4 --out out/villager_fired.mp4"
   ],
   "status": "needs-fix",
   "notes": "worker 9: hired/fired x3, all 13 jobs faster and faster, all at once, then a TNT ring fires him from 13 jobs at once; alone on his pillar, nitwit. Frame review + retention + minecraft audits ready (independent reviewer). Nitpicks: becoming a nitwit isn't vanilla (joke), all-dirt crater walls. | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -0.1 -> +1.6 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 queue worker: NOT ready until fixed (./hb pace, the 1.5 s swipe rule; disk under 2 GB stopped the re-encodes). pace BLOCK: no picture change on the payoff (30.27 s); ./hb check BLOCK: lint nobody moves for 2.5 s (31.6-34.1 s scene time). Fix: a punch/flash on the payoff + trim or cut the still stretch (edit-only), then add_song.",

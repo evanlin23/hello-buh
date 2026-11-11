@@ -15,7 +15,7 @@
   "song": {
     "file": "intranet_crush.mp3",
     "title": "Intranet Crush",
-    "artist": "hir\u00e6th, Willix",
+    "artist": "hiræth, Willix",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "teleported",
     "drop_in_song_s": 3.0,
@@ -29,8 +29,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 7945888,
-    "sha256": "1a0648efa631b94e811a6170810006fdc689ad041ec32be40cc7cf3ee45fa275"
+    "bytes": 7947790,
+    "sha256": "ff6aca50e1254b846718333e8a5a77a4d42e2a7b2d52beffb2bcffddc6f6a357",
+    "release": {
+      "tag": "pkg-pearl_clutch",
+      "asset": "pearl_clutch.short.ff6aca50e1254b84.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pearl_clutch/pearl_clutch.short.ff6aca50e1254b84.mp4",
+      "sha256": "ff6aca50e1254b846718333e8a5a77a4d42e2a7b2d52beffb2bcffddc6f6a357",
+      "bytes": 7947790
+    },
+    "nosong_release": {
+      "tag": "pkg-pearl_clutch",
+      "asset": "pearl_clutch.short_nosong.273acbce29b98d5d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pearl_clutch/pearl_clutch.short_nosong.273acbce29b98d5d.mp4",
+      "sha256": "273acbce29b98d5d3e63f0494e6b0cfe74e9258d9d232dfbfcd3295d04a22b53",
+      "bytes": 7907440
+    }
   },
   "edit": {
     "caption": "POV: You Throw an Ender Pearl But...",

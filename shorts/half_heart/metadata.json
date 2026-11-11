@@ -1,9 +1,9 @@
 {
   "name": "half_heart",
-  "caption": "POV: you're on half a heart \ud83d\udc80",
+  "caption": "POV: you're on half a heart 💀",
   "youtube": {
-    "title": "POV: you're on half a heart \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you're on half a heart \ud83d\udc80\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you're on half a heart 💀 #minecraft #shorts",
+    "description": "POV: you're on half a heart 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,11 +29,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 11258027,
-    "sha256": "436f11229970df0e77c0e2c32fbf462495d066b156fdebc84521d41713a02df4"
+    "bytes": 11259203,
+    "sha256": "27384a4e3aebbfe2885b0b3063d178a3745022c10dae0a566b79c95f988ff52b",
+    "release": {
+      "tag": "pkg-half_heart",
+      "asset": "half_heart.short.27384a4e3aebbfe2.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.27384a4e3aebbfe2.mp4",
+      "sha256": "27384a4e3aebbfe2885b0b3063d178a3745022c10dae0a566b79c95f988ff52b",
+      "bytes": 11259203
+    },
+    "nosong_release": {
+      "tag": "pkg-half_heart",
+      "asset": "half_heart.short_nosong.748dffc90c9e8e5b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.748dffc90c9e8e5b.mp4",
+      "sha256": "748dffc90c9e8e5b4f9050dfc0c2c23fc74b916dbb39c5f1a7451345be1fe0ea",
+      "bytes": 11170709
+    }
   },
   "edit": {
-    "caption": "POV: you're on half a heart \ud83d\udc80",
+    "caption": "POV: you're on half a heart 💀",
     "red": "half",
     "song": "songs/misery.mp3",
     "dropAt": "placed",
@@ -41,7 +55,7 @@
     "endAfter": "placed:2.4",
     "args": [
       "--caption",
-      "POV: you're on half a heart \ud83d\udc80",
+      "POV: you're on half a heart 💀",
       "--red",
       "half",
       "--start_at",
@@ -106,7 +120,7 @@
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart \ud83d\udc80\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
   ],
   "status": "pending-qa",
   "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",

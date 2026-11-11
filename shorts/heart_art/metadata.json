@@ -1,9 +1,9 @@
 {
   "name": "heart_art",
-  "caption": "my gf asked what I was building \ud83d\ude2d",
+  "caption": "my gf asked what I was building 😭",
   "youtube": {
-    "title": "my gf asked what I was building \ud83d\ude2d #minecraft #shorts",
-    "description": "my gf asked what I was building \ud83d\ude2d\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "my gf asked what I was building 😭 #minecraft #shorts",
+    "description": "my gf asked what I was building 😭\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -29,18 +29,32 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 36749264,
-    "sha256": "909111e9a7345209fb406855f8b5b99ec9f4e36f6870f460f2775477cfa65b97"
+    "bytes": 36849567,
+    "sha256": "24b4b5729af4bb45bc15c93f9f8e0f3aa6a1a3af3e5b48bdd122058c8355e862",
+    "release": {
+      "tag": "pkg-heart_art",
+      "asset": "heart_art.short.24b4b5729af4bb45.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-heart_art/heart_art.short.24b4b5729af4bb45.mp4",
+      "sha256": "24b4b5729af4bb45bc15c93f9f8e0f3aa6a1a3af3e5b48bdd122058c8355e862",
+      "bytes": 36849567
+    },
+    "nosong_release": {
+      "tag": "pkg-heart_art",
+      "asset": "heart_art.short_nosong.827cd70b1727c138.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-heart_art/heart_art.short_nosong.827cd70b1727c138.mp4",
+      "sha256": "827cd70b1727c1381c4eb36b277f7d470a0997561d20f55ba93c20d9571f34e8",
+      "bytes": 36762763
+    }
   },
   "edit": {
-    "caption": "my gf asked what I was building \ud83d\ude2d",
+    "caption": "my gf asked what I was building 😭",
     "song": "songs/payphone.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
     "args": [
       "--caption",
-      "my gf asked what I was building \ud83d\ude2d",
+      "my gf asked what I was building 😭",
       "--start_at",
       "stage:-0.2",
       "--end_after",
@@ -803,7 +817,7 @@
     "gunzip -c shorts/heart_art/recording.json.gz > work/heart_art.rec.json",
     "node render.js work/heart_art.rec.json work/heart_art.frames 60 1080 1011",
     "python3 audio.py work/heart_art.rec.json work/heart_art.wav",
-    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building \ud83d\ude2d\" --start_at stage:-0.2 --end_after complete:0.9 --out out/heart_art.mp4"
+    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building 😭\" --start_at stage:-0.2 --end_after complete:0.9 --out out/heart_art.mp4"
   ],
   "status": "pending-qa",
   "notes": "worker: held for re-render (owner: remove the mid-build glance)",

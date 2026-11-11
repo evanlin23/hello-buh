@@ -1,10 +1,10 @@
 {
   "name": "creeper_art",
   "channel": "hellobuh",
-  "caption": "rate my pixel art 1-10 \ud83d\ude2d",
+  "caption": "rate my pixel art 1-10 😭",
   "youtube": {
-    "title": "rate my pixel art 1-10 \ud83d\ude2d #minecraft #shorts",
-    "description": "rate my pixel art 1-10 \ud83d\ude2d\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "rate my pixel art 1-10 😭 #minecraft #shorts",
+    "description": "rate my pixel art 1-10 😭\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -30,8 +30,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 30505419,
-    "sha256": "c712ec7e019364a3f29987947f813ed936f3a1c6f9d9d10387cd0706ebbb7ac5"
+    "bytes": 28817546,
+    "sha256": "41b780564f5481b696bce57c79062cdd919ac44333bd0c6ea68c88724f1ebeb9",
+    "release": {
+      "tag": "pkg-creeper_art",
+      "asset": "creeper_art.short.41b780564f5481b6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.41b780564f5481b6.mp4",
+      "sha256": "41b780564f5481b696bce57c79062cdd919ac44333bd0c6ea68c88724f1ebeb9",
+      "bytes": 28817546
+    },
+    "nosong_release": {
+      "tag": "pkg-creeper_art",
+      "asset": "creeper_art.short_nosong.b99c8ca5743f9e8a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.b99c8ca5743f9e8a.mp4",
+      "sha256": "b99c8ca5743f9e8a8741f739606beb0f640a13124f7db4e21429e2eab2b8f112",
+      "bytes": 28767950
+    }
   },
   "edit": {
     "punch": [
@@ -57,14 +71,14 @@
         0.45
       ]
     ],
-    "caption": "rate my pixel art 1-10 \ud83d\ude2d",
+    "caption": "rate my pixel art 1-10 😭",
     "song": "songs/misery.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
     "args": [
       "--caption",
-      "rate my pixel art 1-10 \ud83d\ude2d",
+      "rate my pixel art 1-10 😭",
       "--punch",
       "[[\"complete\",0,1.12]]",
       "--flash",
@@ -871,7 +885,7 @@
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
-    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 \ud83d\ude2d\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/misery.mp3 --song_drop_at complete --out out/creeper_art.mp4"
+    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/misery.mp3 --song_drop_at complete --out out/creeper_art.mp4"
   ],
   "status": "ready",
   "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium wall edge at left during the big build's backup; small reveal held briefly",
