@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing "Every Time I Snap" (caption "Why does my house always end up like this?", 11 s: from
+  inside a stone chimney past the campfire into a cosy wooden room, out the door, and the house outside is a small,
+  plain box that can't hold what was inside): "this one lends to replays, since its short and the inside differs from
+  the outside so its confusing and the cut is not obvious."** HelloBuh adds a bigger-on-the-inside format (family
+  `inside`): one continuous-looking walk from a detailed interior out to an exterior that can't contain it, the
+  cut hidden in a door or a dark frame, short (about 8-12 s) so viewers replay to find the trick.
 - **Owner, 2026-11-11, sharing an "aura" Short (caption "Bro just used all the luck left in his life": digging
   straight down hits diamonds, then lava saved by a water bucket, then an emerald vein, then breaks straight into a
   stronghold's end portal room beside the spawner; 19 s): "fake super lucky".** HelloBuh adds a staged-luck format
