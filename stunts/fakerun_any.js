@@ -58,8 +58,10 @@ module.exports = {
     red: 'EVER',
     record: 9.41,
     wr: ['NEW WORLD RECORD!!1', 'gold'],
-    end: 1.6,
-    extra: { armor: 20 }
+    end: 1.4,   // r:r188b46: the card's reading time, 1.4 s (was 1.6)
+    // r:r188b46: the still 0.45 s after the enderman's death reads (14.0-14.45 s on this take) at x3: 1.15 s from the
+    // death to the next label before (the turn after it peaks at 216 deg/s and stays x1); the format's 5 jump cuts as before
+    extra: { armor: 20, speed: [1, 2, 3, 4, 5].map(i => [`cut${i}a`, `cut${i}b`, 'cut']).concat([['ender_hit:1.0', 'ender_hit:1.45', 3]]) }
   }),
 
   async setup (ctx) {

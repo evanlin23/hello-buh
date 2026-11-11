@@ -1,0 +1,55 @@
+{
+ "seed": "hellobuh",
+ "about": "A test map for lib/world.js in the Nether (stunts/_test_camera_world_nether.js, lib/hb/test/camera_world.test.js): one Nether place, as Saving Up for a Bastion claims it, with a test stamp.",
+ "places": {
+  "portal_cottage_nether": {
+   "name": "The Nether below the Portal Cottage",
+   "kind": "nether",
+   "region": null,
+   "at": [
+    -16,
+    80,
+    -118
+   ],
+   "footprint": [
+    -40,
+    -140,
+    8,
+    -96
+   ],
+   "about": "NETHER DIMENSION (x, z are Nether coordinates: the Portal Cottage's cellar portal links here, Overworld / 8; unsurveyed). The portal that formed when Grandpa walked through on day ~175 stands on a netherrack shelf over a lava lake, under a netherrack cliff; the piglins of a bastion across the lake gather at it, because a gold ingot comes out of it every night (Grandma's). A player's barter tower (nether brick: a 7x7x4 base room with the output chest, a 3x3 column to about 11 high against the cliff, a 1x2 cell (the piglin's block under a downward dropper, a hopper beside it), a glass window facing west to the shelf, a catch hole on the cliff ledge chuting into the cell, a lava moat round the base) about 10 blocks east of the portal, finished day ~4998. From day ~4998 a baby piglin lives in the cell (Saving Up for a Bastion, day 5000); babies never grow up.",
+   "pieces": [],
+   "stamps": [
+    {
+     "id": "test_marker",
+     "do": "setblock",
+     "pos": [
+      -16,
+      100,
+      -118
+     ],
+     "block": "glowstone"
+    }
+   ],
+   "stories": [
+    "saving_up_bastion"
+   ],
+   "status": "test fixture (copied from claude/script-saving-up-bastion's claim, 2026-11-11)",
+   "dimension": "the_nether",
+   "links": {
+    "portal_cottage": "the cellar portal (Overworld (-126, 80, -938) / 8)"
+   }
+  }
+ },
+ "stories": {
+  "saving_up_bastion": {
+   "day": 5000,
+   "places": [
+    "portal_cottage_nether"
+   ],
+   "cameos": [],
+   "status": "claimed"
+  }
+ },
+ "cameos": {}
+}

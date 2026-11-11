@@ -139,7 +139,12 @@ module.exports = makeStunt({
   red: 'hitbox',
   reveals: 6,
   subs: SUBS,
-  edit: { sfx: [['pop', 'deeper', { gain: 0.45 }]] },
+  edit: { sfx: [['pop', 'deeper', { gain: 0.45 }]],
+    endAfter: 'payoff:0.7',   // r:r188b46: 0.7 s after the vault (the format's default is 1.0)
+    // r:r188b46: the second diamond's dig at x1.5, the turn from it at x1.3 (180 deg/s: under the whip cap) and the walk
+    // to the last banner at x2.8 (its 90 deg/s turns stay under the cap for all but a tick; was 1.05 s and 2.35 s from a break to the next thing). Offsets from 'payoff' (the
+    // diamond and reveal marks repeat): 25.65-26.4, 26.45-26.95, 26.95-28.75 s on this take, payoff 30.0
+    speed: [['payoff:-4.35', 'payoff:-3.6', 1.5], ['payoff:-3.55', 'payoff:-3.05', 1.3], ['payoff:-3.05', 'payoff:-1.25', 2.8]] },
   wall,
   pieces: { under },
   hotbar: ['diamond_pickaxe', ['white_banner', 16], ['red_banner', 16], ['lantern', 32], ['bookshelf', 64], ['torch', 64], ['cookie', 64], 'cake', ['oak_sign', 16]],
