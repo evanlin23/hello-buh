@@ -471,7 +471,7 @@
    "place": "cutaway",
    "size": "wide",
    "camera": "the reveal: the cutaway, tight on about 6 blocks, a short crane UP from the base room to the cell",
-   "frame": "start (L11): the player in the sneak pose (slumped) at the OPEN chest in the base room (he's still at it, so the lid stays open), the hopper line rising from the chest to the cell. On 'GOLD' (L12) crane up the hopper line to the cell: the baby on its block NEXT TO the top hopper, hugging its ingot, the dropper straight above the baby. Framed as an L: the chest and the slumped player bottom left, the hopper line up the left, the baby top right under the dropper. On 'SIX' (`drop`) the dropper clicks and the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
+   "frame": "start (L11): the player in the sneak pose (slumped) at the OPEN chest in the base room (he's still at it, so the lid stays open), the hopper line running DOWN from the cell into the chest (items go down; only the camera rises). On 'GOLD' (L12) crane up along the hopper line to the cell: the baby on its block NEXT TO the top hopper, hugging its ingot, the dropper straight above the baby. Framed as an L: the chest and the slumped player bottom left, the hopper line up the left, the baby top right under the dropper. On 'SIX' (`drop`) the dropper clicks and the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
    "marks": [
     "drop"
    ]
