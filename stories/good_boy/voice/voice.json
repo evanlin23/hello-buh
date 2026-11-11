@@ -3,25 +3,25 @@
   "L01": {
    "who": "N",
    "text": "My human has tried to lose me thirty-seven times.",
-   "dur": 4.147,
-   "onset": 0.36,
-   "end": 3.68,
+   "dur": 3.785,
+   "onset": 0.34,
+   "end": 3.3,
    "chunks": [
     [
-     0.36,
-     0.9
+     0.34,
+     0.94
     ],
     [
-     1.0,
+     1.02,
      1.46
     ],
     [
-     1.52,
-     2.04
+     1.5,
+     1.98
     ],
     [
-     2.4,
-     3.68
+     2.18,
+     3.3
     ]
    ],
    "captions": [
@@ -38,34 +38,34 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "d4a2f84ec6fe"
+   "aligned_wav": "60490499c936"
   },
   "L02": {
    "who": "N",
    "text": "He runs. I follow. Twelve blocks out, I pop up right next to him.",
-   "dur": 4.68,
-   "onset": 0.16,
-   "end": 4.28,
+   "dur": 4.355,
+   "onset": 0.12,
+   "end": 3.94,
    "chunks": [
     [
-     0.16,
-     0.64
+     0.12,
+     0.54
     ],
     [
-     0.98,
-     1.46
+     0.9,
+     1.32
     ],
     [
-     1.9,
-     2.86
+     1.82,
+     2.58
     ],
     [
-     3.0,
-     3.4
+     2.74,
+     3.16
     ],
     [
-     3.56,
-     4.28
+     3.34,
+     3.94
     ]
    ],
    "captions": [
@@ -80,29 +80,29 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 4.147,
+   "offset": 3.785,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "dbfff5ac3885"
+   "aligned_wav": "7635ae4ec9de"
   },
   "L03": {
    "who": "N",
    "text": "He tried the wheat. The hills. An island.",
-   "dur": 3.163,
-   "onset": 0.18,
-   "end": 2.72,
+   "dur": 2.725,
+   "onset": 0.16,
+   "end": 2.42,
    "chunks": [
     [
-     0.18,
-     0.92
+     0.16,
+     0.86
     ],
     [
-     1.28,
-     1.82
+     1.16,
+     1.62
     ],
     [
-     2.18,
-     2.72
+     1.8,
+     2.42
     ]
    ],
    "captions": [
@@ -115,33 +115,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 8.828,
+   "offset": 8.14,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "a43c996c8329"
+   "aligned_wav": "fa165b1754ae"
   },
   "L04": {
    "who": "N",
    "text": "But sitting? I stay put. He never makes me sit.",
-   "dur": 4.112,
+   "dur": 3.72,
    "onset": 0.12,
-   "end": 3.7,
+   "end": 3.24,
    "chunks": [
     [
      0.12,
-     0.66
+     0.58
     ],
     [
-     1.12,
+     1.16,
      1.72
     ],
     [
-     2.24,
-     2.8
+     2.06,
+     2.5
     ],
     [
-     3.02,
-     3.7
+     2.58,
+     3.24
     ]
    ],
    "captions": [
@@ -155,37 +155,37 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 11.99,
+   "offset": 10.865,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "9bcfdaf72c54"
+   "aligned_wav": "98921e05a365"
   },
   "L05": {
    "who": "N",
    "text": "He says a waiting dog is a sad dog. He wants me to forget him.",
-   "dur": 4.305,
-   "onset": 0.26,
-   "end": 3.94,
+   "dur": 4.393,
+   "onset": 0.24,
+   "end": 3.92,
    "chunks": [
     [
-     0.26,
+     0.24,
      0.56
     ],
     [
-     0.68,
-     1.42
+     0.74,
+     1.4
     ],
     [
-     1.6,
-     2.28
+     1.56,
+     2.36
     ],
     [
-     2.82,
-     3.28
+     2.8,
+     3.22
     ],
     [
-     3.34,
-     3.94
+     3.28,
+     3.92
     ]
    ],
    "captions": [
@@ -200,28 +200,28 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 16.102,
+   "offset": 14.585,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4e7bc9fb6844"
+   "aligned_wav": "32aafbc4f587"
   },
   "L06": {
    "who": "N",
    "text": "He keeps talking about college. Far away.",
-   "dur": 3.4,
-   "onset": 0.28,
+   "dur": 3.368,
+   "onset": 0.2,
    "end": 2.88,
    "chunks": [
     [
-     0.28,
-     1.0
+     0.2,
+     0.88
     ],
     [
-     1.06,
-     1.7
+     0.96,
+     1.76
     ],
     [
-     2.075,
+     2.22,
      2.88
     ]
    ],
@@ -235,37 +235,37 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 20.407,
+   "offset": 18.977,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "09759d1a251a"
+   "aligned_wav": "738fac878b29"
   },
   "L07": {
    "who": "N",
    "text": "Every night he says, sorry, buddy. I don't know what for.",
-   "dur": 4.088,
+   "dur": 3.81,
    "onset": 0.26,
-   "end": 3.54,
+   "end": 3.2,
    "chunks": [
     [
      0.26,
      0.64
     ],
     [
-     0.7,
+     0.72,
      1.02
     ],
     [
-     1.45,
-     2.06
+     1.255,
+     1.82
     ],
     [
-     2.78,
-     3.12
+     2.44,
+     2.76
     ],
     [
-     3.16,
-     3.54
+     2.8,
+     3.2
     ]
    ],
    "captions": [
@@ -280,33 +280,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 23.808,
+   "offset": 22.345,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "782d248f3786"
+   "aligned_wav": "bab4b7540dcd"
   },
   "L09": {
    "who": "N",
    "text": "This morning he walked me home, up the hill.",
-   "dur": 2.965,
-   "onset": 0.38,
-   "end": 2.54,
+   "dur": 2.763,
+   "onset": 0.28,
+   "end": 2.36,
    "chunks": [
     [
-     0.38,
-     0.9
+     0.28,
+     0.76
     ],
     [
-     0.98,
-     1.46
+     0.88,
+     1.34
     ],
     [
-     1.52,
-     1.7
+     1.4,
+     1.56
     ],
     [
-     2.12,
-     2.54
+     1.98,
+     2.36
     ]
    ],
    "captions": [
@@ -320,9 +320,9 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 27.895,
+   "offset": 26.155,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "2f17d3c30511"
+   "aligned_wav": "3781f250a6eb"
   },
   "L11": {
    "who": "Buh",
@@ -356,21 +356,21 @@
   "L12": {
    "who": "N",
    "text": "So I sat. Sitting dogs wait forever.",
-   "dur": 3.65,
-   "onset": 0.225,
-   "end": 3.4,
+   "dur": 3.292,
+   "onset": 0.32,
+   "end": 2.98,
    "chunks": [
     [
-     0.225,
-     0.86
+     0.32,
+     0.74
     ],
     [
-     1.565,
-     2.3
+     1.48,
+     2.14
     ],
     [
-     2.48,
-     3.4
+     2.4,
+     2.98
     ]
    ],
    "captions": [
@@ -385,7 +385,7 @@
    "beat": "L12",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "029274f4c4f4"
+   "aligned_wav": "4c6cf0d867c7"
   },
   "L13": {
    "who": "Buh",
@@ -438,30 +438,25 @@
     "L09"
    ],
    "file": "beat_L01.wav",
-   "dur": 30.86,
+   "dur": 28.918,
    "offsets": [
     0.0,
-    4.147,
-    8.828,
-    11.99,
-    16.102,
-    20.407,
-    23.808,
-    27.895
+    3.785,
+    8.14,
+    10.865,
+    14.585,
+    18.977,
+    22.345,
+    26.155
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "try": 1,
-   "tries": 1,
-   "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 2.14,
-     "len": 0.27,
-     "why": "0.27 s pause inside line 1 (limit 0.2 s, the opening)"
-    }
+   "try": 2,
+   "tries": 2,
+   "fixes": [
+    "one continuous take, no pauses between sentences"
    ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
    "rejected": [
     {
@@ -479,23 +474,18 @@
     "L12"
    ],
    "file": "beat_L12.wav",
-   "dur": 3.65,
+   "dur": 3.292,
    "offsets": [
     0.0
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "try": 1,
-   "tries": 1,
-   "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 2.14,
-     "len": 0.27,
-     "why": "0.27 s pause inside line 1 (limit 0.2 s, the opening)"
-    }
+   "try": 2,
+   "tries": 2,
+   "fixes": [
+    "one continuous take, no pauses between sentences"
    ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
    "rejected": [
     {
@@ -506,7 +496,7 @@
     }
    ],
    "take": "L01",
-   "take_at": 30.86
+   "take_at": 28.918
   },
   "L11": {
    "lines": [
@@ -545,5 +535,5 @@
    "rejected": []
   }
  },
- "total": 39.38
+ "total": 37.08
 }
