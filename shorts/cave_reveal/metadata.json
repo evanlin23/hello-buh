@@ -1,9 +1,10 @@
 {
   "name": "cave_reveal",
+  "channel": "hellobuh",
   "caption": "never dig straight down 💀",
   "youtube": {
     "title": "never dig straight down 💀 #minecraft #shorts",
-    "description": "never dig straight down 💀\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "never dig straight down 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,56 +14,143 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "the_redeemer.mp3",
-    "title": "THE REDEEMER",
-    "artist": "BVSSL7ON, ANIZYZ",
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "reveal",
-    "drop_in_song_s": 3.0,
-    "drop_in_short_s": 2.2,
-    "song_start_s": 0.8
+    "drop_on_event": "l5",
+    "drop_in_song_s": 36.75,
+    "drop_in_short_s": 28.95,
+    "song_start_s": 7.8
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 7.85,
+    "duration_s": 33.55,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 4459086,
-    "sha256": "0c168c9e6e931e89a944eda522924800d93d19833b2212eed22178ad1e0ab92a",
+    "bytes": 38085570,
+    "sha256": "b81c6d6c3966d684d15528c8506308b244a92ede863b762a3ded8e2ffbdd1a9e",
     "release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short.0c168c9e6e931e89.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.0c168c9e6e931e89.mp4",
-      "sha256": "0c168c9e6e931e89a944eda522924800d93d19833b2212eed22178ad1e0ab92a",
-      "bytes": 4459086
+      "asset": "cave_reveal.short.b81c6d6c3966d684.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.b81c6d6c3966d684.mp4",
+      "sha256": "b81c6d6c3966d684d15528c8506308b244a92ede863b762a3ded8e2ffbdd1a9e",
+      "bytes": 38085570
     },
     "nosong_release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short_nosong.2e19e3ef06d0a70a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.2e19e3ef06d0a70a.mp4",
-      "sha256": "2e19e3ef06d0a70a3d32a1980e26842e08ec4fa9e162878aec6a2c9d8a04db13",
-      "bytes": 4399790
+      "asset": "cave_reveal.short_nosong.9a0a4e599bfced19.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.9a0a4e599bfced19.mp4",
+      "sha256": "9a0a4e599bfced19aad7027c8f9ef8be26b78436f5ac7b6895297c1a2f69be72",
+      "bytes": 37889008
     }
   },
   "edit": {
     "caption": "never dig straight down 💀",
     "red": "never",
-    "song": "songs/misery.mp3",
-    "dropAt": "reveal",
-    "startAt": "reveal:-2.2",
+    "dropAt": "l5",
+    "onFire": "in_lava:death",
+    "deathScreen": true,
+    "endAfter": "death:1.6",
+    "startAt": "dig0:1.9",
+    "subs": [
+      [
+        "dig0",
+        "just digging down...",
+        3
+      ],
+      [
+        "l1",
+        "oh, a cave",
+        2.2
+      ],
+      [
+        "dig1",
+        "keep going",
+        2
+      ],
+      [
+        "l2",
+        "a mineshaft??",
+        2.4
+      ],
+      [
+        "dig2",
+        "keep going...",
+        2
+      ],
+      [
+        "l3",
+        "a DUNGEON",
+        2.2
+      ],
+      [
+        "dig3",
+        "one more...",
+        1.8
+      ],
+      [
+        "l4",
+        "a GEODE?!",
+        2.4
+      ],
+      [
+        "dig4",
+        "just one more",
+        1.8
+      ],
+      [
+        "l5",
+        "oh no",
+        3
+      ]
+    ],
+    "speed": [
+      [
+        "in_lava:1.0",
+        "death:-0.4",
+        2
+      ]
+    ],
+    "sfx": [
+      [
+        "pop",
+        "dig0:1.9"
+      ],
+      [
+        "dip",
+        "death",
+        0.4
+      ],
+      [
+        "impact",
+        "death",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
     "args": [
       "--caption",
       "never dig straight down 💀",
       "--red",
       "never",
+      "--subs",
+      "[[\"dig0\",\"just digging down...\",3],[\"l1\",\"oh, a cave\",2.2],[\"dig1\",\"keep going\",2],[\"l2\",\"a mineshaft??\",2.4],[\"dig2\",\"keep going...\",2],[\"l3\",\"a DUNGEON\",2.2],[\"dig3\",\"one more...\",1.8],[\"l4\",\"a GEODE?!\",2.4],[\"dig4\",\"just one more\",1.8],[\"l5\",\"oh no\",3]]",
+      "--speed",
+      "[[\"in_lava:1.0\",\"death:-0.4\",2]]",
+      "--sfx",
+      "[[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]]",
+      "--on_fire",
+      "in_lava:death",
+      "--death_screen",
+      "death",
       "--start_at",
-      "reveal:-2.2",
-      "--song",
-      "songs/misery.mp3",
-      "--song_drop_at",
-      "reveal"
+      "dig0:1.9",
+      "--end_after",
+      "death:1.6"
     ]
   },
   "recording": {
@@ -73,76 +161,844 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 364,
+      "x": 376,
       "y": 69,
-      "z": -49
+      "z": -50
     },
     "biome": "minecraft:plains",
-    "ticks": 203,
-    "seconds": 10.15,
-    "deaths": 0,
+    "ticks": 755,
+    "seconds": 37.75,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 2.4,
+        "t": 0.8,
+        "event": "dig0"
+      },
+      {
+        "t": 3.1,
+        "event": "dig"
+      },
+      {
+        "t": 3.1,
         "event": "swing"
       },
       {
-        "t": 2.7,
-        "event": "swing"
+        "t": 3.25,
+        "event": "dig_end"
       },
       {
-        "t": 3,
-        "event": "swing"
+        "t": 3.25,
+        "event": "vel"
       },
       {
-        "t": 3.3,
+        "t": 3.5,
+        "event": "dig"
+      },
+      {
+        "t": 3.5,
         "event": "swing"
       },
       {
         "t": 3.6,
+        "event": "dig_end"
+      },
+      {
+        "t": 3.6,
+        "event": "vel"
+      },
+      {
+        "t": 3.7,
+        "event": "collect"
+      },
+      {
+        "t": 3.85,
+        "event": "dig"
+      },
+      {
+        "t": 3.85,
         "event": "swing"
       },
       {
-        "t": 4,
+        "t": 3.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 3.95,
+        "event": "vel"
+      },
+      {
+        "t": 4.05,
+        "event": "collect"
+      },
+      {
+        "t": 4.3,
+        "event": "dig"
+      },
+      {
+        "t": 4.3,
         "event": "swing"
       },
       {
-        "t": 4.45,
-        "event": "reveal"
+        "t": 4.4,
+        "event": "collect"
       },
       {
-        "t": 5.4,
-        "event": "splash"
+        "t": 4.55,
+        "event": "dig_end"
       },
       {
-        "t": 10.15,
+        "t": 4.6,
+        "event": "vel"
+      },
+      {
+        "t": 4.8,
+        "event": "dig"
+      },
+      {
+        "t": 4.8,
+        "event": "swing"
+      },
+      {
+        "t": 5.05,
+        "event": "collect"
+      },
+      {
+        "t": 5.1,
+        "event": "dig_end"
+      },
+      {
+        "t": 5.1,
+        "event": "vel"
+      },
+      {
+        "t": 5.35,
+        "event": "dig"
+      },
+      {
+        "t": 5.35,
+        "event": "swing"
+      },
+      {
+        "t": 5.55,
+        "event": "collect"
+      },
+      {
+        "t": 5.6,
+        "event": "dig_end"
+      },
+      {
+        "t": 5.6,
+        "event": "l1"
+      },
+      {
+        "t": 5.65,
+        "event": "vel"
+      },
+      {
+        "t": 6.2,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 6.4,
+        "event": "collect"
+      },
+      {
+        "t": 8.65,
+        "event": "dig1"
+      },
+      {
+        "t": 9.15,
+        "event": "dig"
+      },
+      {
+        "t": 9.15,
+        "event": "swing"
+      },
+      {
+        "t": 9.4,
+        "event": "dig_end"
+      },
+      {
+        "t": 9.45,
+        "event": "vel"
+      },
+      {
+        "t": 9.65,
+        "event": "dig"
+      },
+      {
+        "t": 9.65,
+        "event": "swing"
+      },
+      {
+        "t": 9.9,
+        "event": "collect"
+      },
+      {
+        "t": 9.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 9.95,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "dig"
+      },
+      {
+        "t": 10.2,
+        "event": "swing"
+      },
+      {
+        "t": 10.4,
+        "event": "collect"
+      },
+      {
+        "t": 10.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 10.5,
+        "event": "vel"
+      },
+      {
+        "t": 10.7,
+        "event": "dig"
+      },
+      {
+        "t": 10.7,
+        "event": "swing"
+      },
+      {
+        "t": 10.95,
+        "event": "collect"
+      },
+      {
+        "t": 11,
+        "event": "dig_end"
+      },
+      {
+        "t": 11,
+        "event": "l2"
+      },
+      {
+        "t": 11,
+        "event": "vel"
+      },
+      {
+        "t": 11.5,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 11.65,
+        "event": "collect"
+      },
+      {
+        "t": 12.15,
+        "event": "minecart"
+      },
+      {
+        "t": 15.1,
+        "event": "dig2"
+      },
+      {
+        "t": 15.65,
+        "event": "dig"
+      },
+      {
+        "t": 15.65,
+        "event": "swing"
+      },
+      {
+        "t": 15.9,
+        "event": "dig_end"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "dig"
+      },
+      {
+        "t": 16.15,
+        "event": "swing"
+      },
+      {
+        "t": 16.4,
+        "event": "collect"
+      },
+      {
+        "t": 16.4,
+        "event": "collect"
+      },
+      {
+        "t": 16.4,
+        "event": "dig_end"
+      },
+      {
+        "t": 16.45,
+        "event": "vel"
+      },
+      {
+        "t": 16.65,
+        "event": "dig"
+      },
+      {
+        "t": 16.65,
+        "event": "swing"
+      },
+      {
+        "t": 16.9,
+        "event": "collect"
+      },
+      {
+        "t": 16.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 16.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.2,
+        "event": "dig"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.45,
+        "event": "collect"
+      },
+      {
+        "t": 17.5,
+        "event": "swing"
+      },
+      {
+        "t": 17.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 17.55,
+        "event": "l3"
+      },
+      {
+        "t": 17.6,
+        "event": "vel"
+      },
+      {
+        "t": 18.15,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 18.35,
+        "event": "collect"
+      },
+      {
+        "t": 18.55,
+        "event": "spawner"
+      },
+      {
+        "t": 20.55,
+        "event": "dig3"
+      },
+      {
+        "t": 21.35,
+        "event": "dig"
+      },
+      {
+        "t": 21.35,
+        "event": "swing"
+      },
+      {
+        "t": 21.7,
+        "event": "swing"
+      },
+      {
+        "t": 21.75,
+        "event": "dig_end"
+      },
+      {
+        "t": 21.75,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "dig"
+      },
+      {
+        "t": 22,
+        "event": "swing"
+      },
+      {
+        "t": 22.2,
+        "event": "collect"
+      },
+      {
+        "t": 22.3,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.55,
+        "event": "dig"
+      },
+      {
+        "t": 22.55,
+        "event": "swing"
+      },
+      {
+        "t": 22.75,
+        "event": "collect"
+      },
+      {
+        "t": 22.8,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.8,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "dig"
+      },
+      {
+        "t": 23.05,
+        "event": "swing"
+      },
+      {
+        "t": 23.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 23.2,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "collect"
+      },
+      {
+        "t": 23.45,
+        "event": "dig"
+      },
+      {
+        "t": 23.45,
+        "event": "swing"
+      },
+      {
+        "t": 23.65,
+        "event": "collect"
+      },
+      {
+        "t": 23.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 23.7,
+        "event": "l4"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.2,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 24.4,
+        "event": "collect"
+      },
+      {
+        "t": 26.95,
+        "event": "dig4"
+      },
+      {
+        "t": 27.75,
+        "event": "dig"
+      },
+      {
+        "t": 27.75,
+        "event": "swing"
+      },
+      {
+        "t": 28.05,
+        "event": "dig_end"
+      },
+      {
+        "t": 28.05,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "dig"
+      },
+      {
+        "t": 28.3,
+        "event": "swing"
+      },
+      {
+        "t": 28.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "collect"
+      },
+      {
+        "t": 28.7,
+        "event": "dig"
+      },
+      {
+        "t": 28.7,
+        "event": "swing"
+      },
+      {
+        "t": 28.9,
+        "event": "collect"
+      },
+      {
+        "t": 28.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 28.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.2,
+        "event": "dig"
+      },
+      {
+        "t": 29.2,
+        "event": "swing"
+      },
+      {
+        "t": 29.4,
+        "event": "collect"
+      },
+      {
+        "t": 29.5,
+        "event": "dig_end"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "dig"
+      },
+      {
+        "t": 29.75,
+        "event": "swing"
+      },
+      {
+        "t": 29.95,
+        "event": "collect"
+      },
+      {
+        "t": 30,
+        "event": "dig_end"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "dig"
+      },
+      {
+        "t": 30.25,
+        "event": "swing"
+      },
+      {
+        "t": 30.5,
+        "event": "collect"
+      },
+      {
+        "t": 30.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "dig"
+      },
+      {
+        "t": 30.8,
+        "event": "swing"
+      },
+      {
+        "t": 31,
+        "event": "collect"
+      },
+      {
+        "t": 31.1,
+        "event": "dig_end"
+      },
+      {
+        "t": 31.1,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "dig"
+      },
+      {
+        "t": 31.35,
+        "event": "swing"
+      },
+      {
+        "t": 31.55,
+        "event": "collect"
+      },
+      {
+        "t": 31.65,
+        "event": "dig_end"
+      },
+      {
+        "t": 31.65,
+        "event": "l5"
+      },
+      {
+        "t": 31.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.2,
+        "event": "in_lava"
+      },
+      {
+        "t": 32.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 32.55,
+        "event": "collect"
+      },
+      {
+        "t": 32.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 33.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 33.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 34.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 34.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 35.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 35.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "death"
+      },
+      {
+        "t": 35.7,
+        "event": "motion_start"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "motion_settled"
+      },
+      {
+        "t": 36.7,
+        "event": "settle"
+      },
+      {
+        "t": 37.75,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "799e77f934f35cf6754ce7a958ba1968e08abbff",
-    "rendered_at": "2026-11-06T13:40:27.719Z",
-    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
+    "branch": "render/cave_reveal",
+    "commit": "2f9550c8f3bb772a55e02f130725d53bb6983384",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43041644650",
+    "rendered_at": "2026-11-11T15:09:25.530Z",
+    "head_at_publish": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
     "stunt": "stunts/cave_reveal.js",
     "source_snapshot": [
-      "source/cave_reveal.js"
+      "source/cave_reveal.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 799e77f934f3",
+    "git checkout 2f9550c8f3bb",
     "gunzip -c shorts/cave_reveal/recording.json.gz > work/cave_reveal.rec.json",
     "node render.js work/cave_reveal.rec.json work/cave_reveal.frames 60 1080 1011",
     "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
-    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --red never --start_at reveal:-2.2 --song songs/misery.mp3 --song_drop_at reveal --out out/cave_reveal.mp4"
+    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --red never --subs \"[[\\\"dig0\\\",\\\"just digging down...\\\",3],[\\\"l1\\\",\\\"oh, a cave\\\",2.2],[\\\"dig1\\\",\\\"keep going\\\",2],[\\\"l2\\\",\\\"a mineshaft??\\\",2.4],[\\\"dig2\\\",\\\"keep going...\\\",2],[\\\"l3\\\",\\\"a DUNGEON\\\",2.2],[\\\"dig3\\\",\\\"one more...\\\",1.8],[\\\"l4\\\",\\\"a GEODE?!\\\",2.4],[\\\"dig4\\\",\\\"just one more\\\",1.8],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"in_lava:1.0\",\"death:-0.4\",2]] --sfx [[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig0:1.9 --end_after death:1.6 --out out/cave_reveal.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); QA2: still dark; lavafall render gaps",
-  "published_at": "2026-11-06T15:41:02.076Z"
+  "status": "ready",
+  "notes": "2026-11-11 backlog-finish worker: recorded at last (the landing wait read true before the fall: every take stopped after one block), five layers (cave, mineshaft, dungeon, geode, lava cavern) for 30 s+, looks capped at a hand's speed, burn at 2x, pop on the opening, dip + impact on the death; 33.6 s; mixcheck OK, pace 0 blockers, check OK. Reviews: round 1 NOT READY (cut pit wall + slow start), round 2 READY. Nitpicks: 180 deg swing past bare wall to the minecart, the cart's chest doesn't read, spawner at the frame's top edge, a purple item flash at the geode's left edge, rail under the feet, edge pixels on frame 0",
+  "published_at": "2026-11-11T15:25:54.118Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T15:26:40+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 33.56 s vs the reviewed render 33.55 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 6,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T14:50:22.849Z",
+      "report": "out/cave_reveal.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
