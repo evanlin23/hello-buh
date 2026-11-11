@@ -1,0 +1,744 @@
+{
+  "name": "story_light_sleeper",
+  "channel": "buhstories",
+  "caption": "My village is covered in 9,000 carpets",
+  "youtube": {
+    "title": "My village is covered in 9,000 carpets #minecraft #shorts",
+    "description": "My village is covered in 9,000 carpets\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "songs/score/darkest_child.ogg",
+    "title": "Darkest Child",
+    "artist": "Kevin MacLeod",
+    "tracks": [
+      "darkest_child"
+    ],
+    "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
+    "mood": [
+      "eerie",
+      "eerie"
+    ],
+    "payoff_in_short_s": null,
+    "mix": "scripts/story_audio.py (docs/audio.md)",
+    "mixed_in": "edit"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 52.3,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 76372449,
+    "sha256": "d9c2fb3e13de7613c93adaf13cb80f22351aaf8dfdbf3ca1938a6b1490a99ac8",
+    "release": {
+      "tag": "pkg-story_light_sleeper",
+      "asset": "story_light_sleeper.short.d9c2fb3e13de7613.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_light_sleeper/story_light_sleeper.short.d9c2fb3e13de7613.mp4",
+      "sha256": "d9c2fb3e13de7613c93adaf13cb80f22351aaf8dfdbf3ca1938a6b1490a99ac8",
+      "bytes": 76372449
+    },
+    "nosong_release": {
+      "tag": "pkg-story_light_sleeper",
+      "asset": "story_light_sleeper.short_nosong.d9c2fb3e13de7613.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_light_sleeper/story_light_sleeper.short_nosong.d9c2fb3e13de7613.mp4",
+      "sha256": "d9c2fb3e13de7613c93adaf13cb80f22351aaf8dfdbf3ca1938a6b1490a99ac8",
+      "bytes": 76372449
+    }
+  },
+  "edit": {
+    "caption": "My village is covered in 9,000 carpets",
+    "red": "carpets",
+    "story": "stories/light_sleeper",
+    "startAt": "line:0",
+    "endAfter": "story_end:0",
+    "flash": [
+      "roar"
+    ],
+    "punchStress": true,
+    "sfx": [
+      [
+        "impact",
+        "roar",
+        {
+          "nth": 0,
+          "gain": 1.4
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "My village is covered in 9,000 carpets",
+      "--red",
+      "carpets",
+      "--red_rgb",
+      "FFD640",
+      "--punch_stress",
+      "[[\"L01\",2.42,0.07],[\"L11\",3.4,0.07],[\"L16\",3.66,0.07]]",
+      "--flash",
+      "[\"roar\"]",
+      "--sfx",
+      "[[\"impact\",\"roar\",{\"nth\":0,\"gain\":1.4}]]",
+      "--chat_align",
+      "center",
+      "--story",
+      "stories/light_sleeper",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "story_end:0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": -162,
+      "y": 79,
+      "z": -860
+    },
+    "ticks": 1077,
+    "seconds": 53.85,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "shot"
+      },
+      {
+        "t": 0.85,
+        "event": "actor"
+      },
+      {
+        "t": 0.95,
+        "event": "actor"
+      },
+      {
+        "t": 0.95,
+        "event": "cut"
+      },
+      {
+        "t": 0.95,
+        "event": "f1_on"
+      },
+      {
+        "t": 0.95,
+        "event": "shot"
+      },
+      {
+        "t": 1.35,
+        "event": "line"
+      },
+      {
+        "t": 4.45,
+        "event": "shot"
+      },
+      {
+        "t": 4.5,
+        "event": "actor"
+      },
+      {
+        "t": 4.5,
+        "event": "line"
+      },
+      {
+        "t": 7.25,
+        "event": "shot"
+      },
+      {
+        "t": 9.15,
+        "event": "actor"
+      },
+      {
+        "t": 9.15,
+        "event": "cut"
+      },
+      {
+        "t": 9.15,
+        "event": "f1_off"
+      },
+      {
+        "t": 9.15,
+        "event": "shot"
+      },
+      {
+        "t": 9.25,
+        "event": "line"
+      },
+      {
+        "t": 11.45,
+        "event": "cut"
+      },
+      {
+        "t": 11.55,
+        "event": "line"
+      },
+      {
+        "t": 12.45,
+        "event": "line"
+      },
+      {
+        "t": 16.75,
+        "event": "cut"
+      },
+      {
+        "t": 16.75,
+        "event": "time"
+      },
+      {
+        "t": 16.85,
+        "event": "line"
+      },
+      {
+        "t": 16.95,
+        "event": "swing"
+      },
+      {
+        "t": 17.05,
+        "event": "dig"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.4,
+        "event": "swing"
+      },
+      {
+        "t": 17.45,
+        "event": "swing"
+      },
+      {
+        "t": 17.7,
+        "event": "swing"
+      },
+      {
+        "t": 17.75,
+        "event": "swing"
+      },
+      {
+        "t": 17.95,
+        "event": "swing"
+      },
+      {
+        "t": 18.05,
+        "event": "swing"
+      },
+      {
+        "t": 18.2,
+        "event": "swing"
+      },
+      {
+        "t": 18.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 18.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.3,
+        "event": "vel"
+      },
+      {
+        "t": 19.8,
+        "event": "f1_on"
+      },
+      {
+        "t": 19.8,
+        "event": "shot"
+      },
+      {
+        "t": 19.8,
+        "event": "line"
+      },
+      {
+        "t": 19.8,
+        "event": "vel"
+      },
+      {
+        "t": 20.15,
+        "event": "vel"
+      },
+      {
+        "t": 20.2,
+        "event": "vel"
+      },
+      {
+        "t": 20.35,
+        "event": "vel"
+      },
+      {
+        "t": 21.2,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.5,
+        "event": "actor"
+      },
+      {
+        "t": 22.6,
+        "event": "actor"
+      },
+      {
+        "t": 22.6,
+        "event": "cut"
+      },
+      {
+        "t": 22.6,
+        "event": "time"
+      },
+      {
+        "t": 22.6,
+        "event": "f1_off"
+      },
+      {
+        "t": 22.6,
+        "event": "shot"
+      },
+      {
+        "t": 22.6,
+        "event": "effect"
+      },
+      {
+        "t": 22.75,
+        "event": "line"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.4,
+        "event": "vel"
+      },
+      {
+        "t": 25.25,
+        "event": "vel"
+      },
+      {
+        "t": 25.4,
+        "event": "vel"
+      },
+      {
+        "t": 26.25,
+        "event": "vel"
+      },
+      {
+        "t": 26.4,
+        "event": "vel"
+      },
+      {
+        "t": 26.9,
+        "event": "cut"
+      },
+      {
+        "t": 26.9,
+        "event": "darkness_snap"
+      },
+      {
+        "t": 26.9,
+        "event": "effect_end"
+      },
+      {
+        "t": 26.9,
+        "event": "time"
+      },
+      {
+        "t": 27,
+        "event": "line"
+      },
+      {
+        "t": 27.2,
+        "event": "hurt",
+        "type": "arrow"
+      },
+      {
+        "t": 27.25,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.9,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 28,
+        "event": "vel"
+      },
+      {
+        "t": 28,
+        "event": "mob_death"
+      },
+      {
+        "t": 28.15,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.95,
+        "event": "vel"
+      },
+      {
+        "t": 29,
+        "event": "vel"
+      },
+      {
+        "t": 29.15,
+        "event": "vel"
+      },
+      {
+        "t": 29.15,
+        "event": "vel"
+      },
+      {
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.4,
+        "event": "cut"
+      },
+      {
+        "t": 29.4,
+        "event": "time"
+      },
+      {
+        "t": 29.5,
+        "event": "line"
+      },
+      {
+        "t": 32.7,
+        "event": "cut"
+      },
+      {
+        "t": 32.7,
+        "event": "f1_on"
+      },
+      {
+        "t": 32.7,
+        "event": "shot"
+      },
+      {
+        "t": 32.8,
+        "event": "line"
+      },
+      {
+        "t": 32.9,
+        "event": "swing"
+      },
+      {
+        "t": 33,
+        "event": "dig"
+      },
+      {
+        "t": 33,
+        "event": "swing"
+      },
+      {
+        "t": 33.15,
+        "event": "swing"
+      },
+      {
+        "t": 33.35,
+        "event": "swing"
+      },
+      {
+        "t": 33.4,
+        "event": "swing"
+      },
+      {
+        "t": 33.65,
+        "event": "swing"
+      },
+      {
+        "t": 33.65,
+        "event": "swing"
+      },
+      {
+        "t": 33.9,
+        "event": "swing"
+      },
+      {
+        "t": 34,
+        "event": "swing"
+      },
+      {
+        "t": 34.15,
+        "event": "swing"
+      },
+      {
+        "t": 34.15,
+        "event": "dig_end"
+      },
+      {
+        "t": 34.2,
+        "event": "vel"
+      },
+      {
+        "t": 34.65,
+        "event": "place_on"
+      },
+      {
+        "t": 34.65,
+        "event": "swing"
+      },
+      {
+        "t": 35.2,
+        "event": "vel"
+      },
+      {
+        "t": 35.3,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "shot"
+      },
+      {
+        "t": 35.6,
+        "event": "vel"
+      },
+      {
+        "t": 35.8,
+        "event": "vel"
+      },
+      {
+        "t": 36.2,
+        "event": "vel"
+      },
+      {
+        "t": 36.65,
+        "event": "line"
+      },
+      {
+        "t": 36.7,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 37.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "swing"
+      },
+      {
+        "t": 39.75,
+        "event": "cut"
+      },
+      {
+        "t": 39.75,
+        "event": "shot"
+      },
+      {
+        "t": 39.85,
+        "event": "line"
+      },
+      {
+        "t": 40.7,
+        "event": "darkness_phase"
+      },
+      {
+        "t": 40.7,
+        "event": "effect"
+      },
+      {
+        "t": 42.65,
+        "event": "shot"
+      },
+      {
+        "t": 42.65,
+        "event": "line"
+      },
+      {
+        "t": 44.2,
+        "event": "line"
+      },
+      {
+        "t": 46.65,
+        "event": "cut"
+      },
+      {
+        "t": 46.65,
+        "event": "f1_off"
+      },
+      {
+        "t": 46.65,
+        "event": "shot"
+      },
+      {
+        "t": 46.75,
+        "event": "line"
+      },
+      {
+        "t": 51.35,
+        "event": "actor"
+      },
+      {
+        "t": 51.35,
+        "event": "f1_on"
+      },
+      {
+        "t": 51.35,
+        "event": "shot"
+      },
+      {
+        "t": 52.65,
+        "event": "pose"
+      },
+      {
+        "t": 52.65,
+        "event": "roar"
+      },
+      {
+        "t": 53.65,
+        "event": "story_end"
+      },
+      {
+        "t": 53.85,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "render/story_light_sleeper",
+    "commit": "18112aa4c8017003ca6838c45a0bbf72ce4976c7",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43003799268",
+    "rendered_at": "2026-11-11T10:41:02.485Z",
+    "head_at_publish": "c8e071fb1af726f5a40fc9c4a19546bb333fa5ce",
+    "stunt": "stunts/story_light_sleeper.js",
+    "source_snapshot": [
+      "source/story_light_sleeper.js",
+      "source/story.js",
+      "source/motion.js",
+      "source/sight.js",
+      "source/act.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 18112aa4c801",
+    "gunzip -c shorts/story_light_sleeper/recording.json.gz > work/story_light_sleeper.rec.json",
+    "node render.js work/story_light_sleeper.rec.json work/story_light_sleeper.frames 60 1080 1011",
+    "python3 audio.py work/story_light_sleeper.rec.json work/story_light_sleeper.wav",
+    "python3 edit.py --frames work/story_light_sleeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_light_sleeper.rec.json --audio work/story_light_sleeper.wav --caption \"My village is covered in 9,000 carpets\" --red carpets --red_rgb FFD640 --punch_stress [[\"L01\",2.42,0.07],[\"L11\",3.4,0.07],[\"L16\",3.66,0.07]] --flash [\"roar\"] --sfx [[\"impact\",\"roar\",{\"nth\":0,\"gain\":1.4}]] --chat_align center --story stories/light_sleeper --start_at line:0 --end_after story_end:0 --out out/story_light_sleeper.mp4"
+  ],
+  "status": "held",
+  "notes": "short-review r1 READY (0 blockers, session_019n1tKH9GqLZrB3z4xapapH); Pip narrator (owner's pick; panel hears a girl, owner asked); held for the owner",
+  "published_at": "2026-11-11T10:46:12.075Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T10:46:29+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 52.30 s vs the reviewed render 52.30 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 3,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T10:28:39.740Z",
+      "report": "out/story_light_sleeper.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
