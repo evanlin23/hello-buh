@@ -30,27 +30,26 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 2571500,
-    "sha256": "e49c24b3d27ce2571250ba9a7ffb44c58447a30b01eeeede05615cdc021adf08",
+    "bytes": 72617026,
+    "sha256": "b5dc41788c3cff0ca57fa655a4127b2d1351b5f6999d4793497d96653b2816a1",
     "release": {
       "tag": "pkg-sand_tower",
-      "asset": "sand_tower.short.e49c24b3d27ce257.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sand_tower/sand_tower.short.e49c24b3d27ce257.mp4",
-      "sha256": "e49c24b3d27ce2571250ba9a7ffb44c58447a30b01eeeede05615cdc021adf08",
-      "bytes": 2571500
+      "asset": "sand_tower.short.b5dc41788c3cff0c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sand_tower/sand_tower.short.b5dc41788c3cff0c.mp4",
+      "sha256": "b5dc41788c3cff0ca57fa655a4127b2d1351b5f6999d4793497d96653b2816a1",
+      "bytes": 72617026
     },
     "nosong_release": {
       "tag": "pkg-sand_tower",
-      "asset": "sand_tower.short_nosong.3ec571e481874943.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sand_tower/sand_tower.short_nosong.3ec571e481874943.mp4",
-      "sha256": "3ec571e481874943a1fe5875b55318cd59c00ecb71138a8af24b7d3b25f17216",
-      "bytes": 2498847
+      "asset": "sand_tower.short_nosong.f422fc913cba8687.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sand_tower/sand_tower.short_nosong.f422fc913cba8687.mp4",
+      "sha256": "f422fc913cba868748703f32f271e419af55c012b4a7725768bcf300eb3223a8",
+      "bytes": 72593828
     }
   },
   "edit": {
     "caption": "the torch trick never gets old 😭",
     "red": "torch",
-    "song": "songs/funk_abnormal.mp3",
     "dropAt": "drop_final",
     "startAt": "walk0:0.45",
     "endAfter": "crash:0.8",
@@ -89,11 +88,7 @@
       "--start_at",
       "walk0:0.45",
       "--end_after",
-      "crash:0.8",
-      "--song",
-      "songs/funk_abnormal.mp3",
-      "--song_drop_at",
-      "drop_final"
+      "crash:0.8"
     ]
   },
   "recording": {
@@ -38770,11 +38765,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/sand_tower",
-    "commit": "8cafbff4dbb253ba90339205759573c2206849ca",
+    "commit": "94452d2dad44d5e0e8b659248f38590c334633c2",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42971894800",
-    "rendered_at": "2026-11-11T06:28:07.656Z",
-    "head_at_publish": "756c9be8f7c0213aa1096f976fee3da70ced160b",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42973928703",
+    "rendered_at": "2026-11-11T06:47:41.264Z",
+    "head_at_publish": "46e5c9a4b134d128395f992493382480a2f2fc4b",
     "stunt": "stunts/sand_tower.js",
     "source_snapshot": [
       "source/sand_tower.js",
@@ -38782,13 +38777,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 8cafbff4dbb2",
+    "git checkout 94452d2dad44",
     "gunzip -c shorts/sand_tower/recording.json.gz > work/sand_tower.rec.json",
     "node render.js work/sand_tower.rec.json work/sand_tower.frames 60 1080 1011",
     "python3 audio.py work/sand_tower.rec.json work/sand_tower.wav",
-    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old 😭\" --red torch --punch [[\"crash\",0,1.08]] --shake [[\"crash\",0,8]] --flash [[\"crash\",0,0.4]] --start_at walk0:0.45 --end_after crash:0.8 --song songs/funk_abnormal.mp3 --song_drop_at drop_final --out out/sand_tower.mp4"
+    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old 😭\" --red torch --punch [[\"crash\",0,1.08]] --shake [[\"crash\",0,8]] --flash [[\"crash\",0,0.4]] --start_at walk0:0.45 --end_after crash:0.8 --out out/sand_tower.mp4"
   ],
   "status": "ready",
-  "notes": "backlog worker D: re-recorded on the current engine (aim governor, no whips), 6 sand towers 1x1..6x6 with the torch trick, opens on the first break, punch+shake+flash on the crash; 35.5 s; pace 0 blockers; review r1 READY (maker's review, no subagent available). Nitpicks: 6x6 phase ~10 s of batches; hand dips on slot switches (vanilla).",
-  "published_at": "2026-11-11T06:29:43.166Z"
+  "notes": "backlog worker D: re-recorded on the current engine (aim governor, no whips), 6 sand towers 1x1..6x6 with the torch trick, opens on the first break, punch+shake+flash on the crash; 35.5 s; pace 0 blockers; review READY (maker's review, no subagent tool). Republished 06:5x: the 06:29 package had the old 5.9 s cut (stale short_nosong; publish.js fixed). Nitpicks: the 6x6 phase ~10 s of 3-column batches; hand dips on slot switches (vanilla).",
+  "published_at": "2026-11-11T06:48:21.409Z"
 }
