@@ -8,6 +8,9 @@ module.exports = guessSound({
   endAfter: 1.45,   // ends on the hint line: reading time
   caption: 'guess the mob from its sound pt 2 🔊',
   red: 'sound',
+  // frame 0 on the first countdown (the call already sounding, the 3-2-1 and the round's label up): it opened on 0.4 s
+  // of a dark bare wall (owner r:r0f3da0: never a bare wall or a still room)
+  edit: { startAt: 'cd3:-0.02' },
   rounds: [
     { mob: 'pig', room: 'farm', sound: 'entity.pig.ambient', label: 'EASY', answer: 'PIG', react: 'call', leanTicks: 5, lookY: 0.8 },
     { mob: 'zombie', room: 'cave', sound: 'entity.zombie.ambient', label: 'MEDIUM', answer: 'ZOMBIE', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'green' },

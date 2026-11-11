@@ -35,8 +35,10 @@ module.exports = {
   look: { mood: 'golden_hour', bloom: 0.35, bloomThreshold: 0.86, bloomPasses: 1, sharpen: 0.4, rays: 0.5, raysOverBlocks: 0.3, shadows: true, vignette: 0.3, grain: 0.01 },
   shots: {
     pov: { pov: true },
-    // 1. under the south-west corner looking up: the build fills the frame from frame 1, the camera craning up and back
-    rise: { path: [[0, -52, 9, 56], [2, -57, 19, 62]], lookPath: [[0, -18, 62, 18], [2, -10, 54, 10]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
+    // 1. under the south-west corner looking up, craning up FAST past the corner's edge (owner r:r0f3da0, 2026-11-11: frame 0
+    // shows the subject already moving by 0.5 s; the old slow crane read as a dark, still dome): ~14 blocks in 2 s, the
+    // look sliding from the lower face holes up the corner edge, so the fractal holes stream past from frame 0
+    rise: { path: [[0, -66, 5, 70], [2, -52, 26, 56]], lookPath: [[0, -26, 26, 26], [2, -12, 58, 12]], fov: 76, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 40, 41.5]] },
     // 1b. high off the south-east, looking DOWN across the top face to the far corner, the forest far below: rise looks up
     // from the ground at a corner, so a second low corner shot cut onto it read as the same frame twice (independent
     // review of the r:r52f94c fix: "a jump-cut stutter in the hook"); this one is a clearly different angle and height
@@ -65,7 +67,8 @@ module.exports = {
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
     // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
     // boosts alone left 3.1 s with nothing new)
-    sfx: [['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
+    // (an impact on frame 0: a sound hit by 0.3 s, r:r0f3da0)
+    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {
