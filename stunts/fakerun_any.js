@@ -15,12 +15,12 @@
 // breaks at the netherite pickaxe's vanilla speed; the blaze has 1 health (staged) and dies to one sword hit; the
 // rest is set dressing (/fill), shown through hard cuts.
 // Set (origin O = X, F, Z; F = the grass's top; every scene faces north, -z, along one field):
-//   spawn x 0 | portal x 36 | nether x 72 | stronghold x 110 | the end x 150 (an island at F+14)
+//   the end x -50 (an island at F+14) | spawn x 0 | portal x 36 | nether x 72 | stronghold x 110
 const M = require('../lib/movie')
 const R = require('../lib/fakerun')
 const { plateau } = require('../lib/plateau')
 
-const SX = { spawn: 0, portal: 36, nether: 72, hold: 110, end: 150 }
+const SX = { spawn: 0, portal: 36, nether: 72, hold: 110, end: -50 }   // all inside recordRadius (the end at +150 was outside 128: void)
 const ISLE = 14          // the end island's top, above F
 const LABELS = [
   ['0:00 spawned in ful netherite', 2.4],
@@ -68,7 +68,7 @@ module.exports = {
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
     const X = g.x, Z = g.z
-    const F = await plateau(ctx, { x0: X - 24, x1: X + 176, z0: Z - 30, z1: Z + 22, above: 36, biome: null, taper: 12, trees: 12 })
+    const F = await plateau(ctx, { x0: X - 74, x1: X + 126, z0: Z - 30, z1: Z + 22, above: 36, biome: null, taper: 12, trees: 12 })
     Object.assign(this, { X, Z, F })
     for (const c of ['/gamerule log_admin_commands false', '/difficulty normal', '/gamerule random_tick_speed 0',
       '/gamerule allow_entering_nether_using_portals false', '/gamerule block_drops false', '/gamerule mob_drops false',
