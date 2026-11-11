@@ -3,6 +3,30 @@
 Everything that cost real debugging time, so nobody has to rediscover it. Newest first within
 each section.
 
+## Process lessons (2026-11-11: numbers, mixes, disk and many workers at once)
+
+Owner, 2026-11-11: "what have we learned? are all lessons used to help streamline our process?" Each row says whether
+the lesson is enforced by a tool (built), only written down (rule), or still open (todo).
+
+| Lesson | Evidence | How it's used now | State |
+|---|---|---|---|
+| A Short lives or dies in its first 1.5 s | Viewed-vs-swiped 74-81 % got 9k-26k views, 56-61 % stalled under 3.3k; every retention curve drops hardest at 1.3-1.5 s | pace's hook check blocks a slow open; the queue was re-gated against it (12 Shorts pulled back) | built |
+| The API can't see what matters | Viewed-vs-swiped, retention curves and traffic exist only in Studio; the Analytics API lags 1-3 days | Claude in Chrome runs docs/studio-metrics-prompt.md; scripts/studio_import.py loads it into uploads/studio.json | built (run when the owner can) |
+| Rank by views x conversion, not conversion alone | respawn_tax converted well but reached 3.4k views (6 subs); story_runaway reached 24.8k (71) | family_scores ranks formats by expected subs per upload (r:rd56a20) | built |
+| Loops add views, not subscribers | 2025 looping Shorts: 0.50 subs per 1k views vs 0.77 for non-looping; about 10 subs per Short either way | No forced loops or shortening; length is what the Short needs | rule |
+| A flop is execution until proven format | spot_wrong 74 % viewed vs spot_wrong_2 58 %; guess_sound's music drowned the mob calls | Check the mix, the first 1.5 s and readability first; fix the same fault in queued siblings (r:rd56a20) | rule |
+| Music must sit under the game | Mob calls 2-11 dB under the music in guess_sound; the music over the biggest game hits in 15 of 18 queued Shorts | key_sounds.py blocks a key sound under +8 dB in add_song and pace; the stunt bed is -16 LUFS | built |
+| A new gate must re-check what is already "ready" | 12 "ready" Shorts predated pace and failed it; hide_seek, next to upload, opened on 4.5 s of dead air | Re-gated by hand today | **todo**: publish records the gate version; the uploader skips a package gated before the current version |
+| Git is not a video store | The videos branch history reached 5.4 GB and kept filling the disk; every remix added 30-80 MB for good | mp4s are GitHub Release assets; metadata carries url + sha256; the uploader verifies (r:rc5eaf0) | built |
+| Render branches still bring mp4s into .git | About 1 GB of render/* mp4s in the shared .git | | **todo** |
+| Never repack or gc on a full disk | repack filled the disk twice | gc.auto 0; repack only with pack size + 2 GB free | rule |
+| A shared index sweeps others' work | "Package tnt" committed another session's staged files; staged mp4 removals rode along in a package commit | publish.js commits through a private index with only its package | built |
+| A stale worktree publishes with old code | After the Releases change, an old publish.js would leave a Short with no video | Workers told to rebase before publishing | **todo**: publish.js refuses when HEAD doesn't contain origin/main |
+| Too many workers starve the one server and the disk | 9 workers at once: recordings queued for the one server, three workers stopped on disk | Start new workers only as others finish; check df before starting | rule |
+| A grade tuned for stories can break stunts | 'bright' blew the stunt sky to white (bloom over a brightened sky, blue channel clipping) | 'bright_stunt' with highlight roll-off; A/B stills on 5 scenes before switching a default | built |
+| Ask the owner before deleting, up front | The permission check blocked deleting stale scratch files, and recording stalled until the owner said yes | Ask for cleanup in the same message that reports the disk | rule |
+| Save every format the owner sends | 15 formats arrived in one session | docs/formats.md row + house rule in the same commit (r:rc43770) | built |
+
 ## Process lessons (2026-11-10: the day the owner found what our tools should have)
 
 The owner caught, by eye or ear, every one of these before any check did. Each one now has a fix built into the tool
