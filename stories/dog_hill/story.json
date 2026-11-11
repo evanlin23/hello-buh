@@ -40,10 +40,11 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "The DOG / on the HILL / hasn't MOVED / in nine-hundred DAYS.",
+   "text": "The DOG / on the HILL / hasn't MOVED / in nine-hundred / DAYS.",
    "say": "The dog on the hill hasn't moved in nine-hundred DAYS.",
    "beat": 1,
-   "shot": "S01"
+   "shot": "S01",
+   "punch": true
   },
   {
    "id": "L02",
@@ -139,7 +140,8 @@
    "text": "Then last NIGHT, / he STOOD up.",
    "say": "Then last night, he STOOD up.",
    "beat": 3,
-   "shot": "S11"
+   "shot": "S11",
+   "punch": true
   },
   {
    "id": "L14",
@@ -147,7 +149,8 @@
    "text": "A GUY / just APPEARED / on the PATCH.",
    "say": "A guy just appeared on the PATCH.",
    "beat": 3,
-   "shot": "S12"
+   "shot": "S12",
+   "punch": true
   },
   {
    "id": "L15",

@@ -4,31 +4,36 @@
    "who": "N",
    "text": "The dog on the hill hasn't moved in nine-hundred days.",
    "dur": 3.217,
-   "onset": 0.17,
-   "end": 3.18,
+   "onset": 0.24,
+   "end": 2.88,
    "chunks": [
     [
-     0.17,
-     0.583
+     0.24,
+     0.56
     ],
     [
-     0.583,
-     1.232
+     0.64,
+     0.98
     ],
     [
-     1.232,
-     1.941
+     1.06,
+     1.68
     ],
     [
-     1.941,
-     3.18
+     1.78,
+     2.5
+    ],
+    [
+     2.56,
+     2.88
     ]
    ],
    "captions": [
     "The DOG",
     "on the HILL",
     "hasn't MOVED",
-    "in nine-hundred DAYS."
+    "in nine-hundred",
+    "DAYS."
    ],
    "with": [
     "N"
@@ -36,30 +41,32 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "cb608cc69a94"
   },
   "L02": {
    "who": "N",
    "text": "Not for rain. Not for thunder. Not for creepers. Not even zombies.",
    "dur": 4.195,
-   "onset": 0.0,
-   "end": 3.96,
+   "onset": 0.06,
+   "end": 3.78,
    "chunks": [
     [
-     0.0,
-     0.817
+     0.06,
+     0.78
     ],
     [
-     0.817,
-     1.823
+     0.92,
+     1.62
     ],
     [
-     1.823,
-     2.891
+     1.74,
+     2.56
     ],
     [
-     2.891,
-     3.96
+     2.94,
+     3.78
     ]
    ],
    "captions": [
@@ -74,26 +81,28 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 3.217,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "dfad31fddfae"
   },
   "L03": {
    "who": "N",
    "text": "Kids throw sticks for him. He doesn't blink.",
    "dur": 2.645,
-   "onset": 0.09,
-   "end": 2.44,
+   "onset": 0.16,
+   "end": 2.16,
    "chunks": [
     [
-     0.09,
-     0.65
+     0.16,
+     0.6
     ],
     [
-     0.65,
-     1.489
+     0.565,
+     1.2
     ],
     [
-     1.489,
-     2.44
+     1.54,
+     2.16
     ]
    ],
    "captions": [
@@ -107,30 +116,32 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 7.412,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "af36434357e2"
   },
   "L04": {
    "who": "N",
    "text": "So every morning, I bring him a bone. He never looks.",
    "dur": 3.502,
-   "onset": 0.13,
-   "end": 3.38,
+   "onset": 0.17,
+   "end": 3.16,
    "chunks": [
     [
-     0.13,
-     1.235
+     0.17,
+     1.02
     ],
     [
-     1.235,
-     1.95
+     1.28,
+     1.66
     ],
     [
-     1.95,
-     2.405
+     1.72,
+     1.98
     ],
     [
-     2.405,
-     3.38
+     2.52,
+     3.16
     ]
    ],
    "captions": [
@@ -145,30 +156,32 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 10.057,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "fc0033fca84a"
   },
   "L05": {
    "who": "N",
    "text": "He's got a red collar. But nobody here owns him.",
    "dur": 3.558,
-   "onset": 0.17,
-   "end": 3.28,
+   "onset": 0.28,
+   "end": 3.18,
    "chunks": [
     [
-     0.17,
-     0.723
+     0.28,
+     0.54
     ],
     [
-     0.723,
-     1.621
+     0.58,
+     1.3
     ],
     [
-     1.621,
-     2.658
+     1.8,
+     2.62
     ],
     [
-     2.658,
-     3.28
+     2.76,
+     3.18
     ]
    ],
    "captions": [
@@ -183,34 +196,36 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 13.56,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "9b289827d61d"
   },
   "L06": {
    "who": "N",
    "text": "He just stares at one empty patch of grass. Maybe he likes the grass.",
    "dur": 4.832,
-   "onset": 0.15,
-   "end": 4.52,
+   "onset": 0.24,
+   "end": 4.36,
    "chunks": [
     [
-     0.15,
-     1.091
+     0.24,
+     0.96
     ],
     [
-     1.091,
-     1.898
+     1.08,
+     1.98
     ],
     [
-     1.898,
-     2.906
+     2.06,
+     2.66
     ],
     [
-     2.906,
-     3.848
+     3.4,
+     3.96
     ],
     [
-     3.848,
-     4.52
+     3.96,
+     4.36
     ]
    ],
    "captions": [
@@ -226,34 +241,36 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 17.117,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "4cc5540566f1"
   },
   "L07": {
    "who": "N",
    "text": "And behind him, an old dirt hut. Nobody knows who built it.",
    "dur": 4.438,
-   "onset": 0.41,
-   "end": 4.22,
+   "onset": 0.5,
+   "end": 4.02,
    "chunks": [
     [
-     0.41,
-     1.449
+     0.5,
+     1.0
     ],
     [
-     1.449,
-     1.865
+     1.5,
+     1.8
     ],
     [
-     1.865,
-     2.488
+     1.88,
+     2.3
     ],
     [
-     2.488,
-     3.319
+     2.94,
+     3.48
     ],
     [
-     3.319,
-     4.22
+     3.52,
+     4.02
     ]
    ],
    "captions": [
@@ -269,26 +286,28 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 21.95,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "c5e14635ccf3"
   },
   "L08": {
    "who": "N",
    "text": "I asked him to stand. I even begged.",
    "dur": 2.715,
-   "onset": 0.25,
-   "end": 2.48,
+   "onset": 0.4,
+   "end": 2.34,
    "chunks": [
     [
-     0.25,
-     0.971
+     0.4,
+     0.78
     ],
     [
-     0.971,
-     1.562
+     0.82,
+     1.16
     ],
     [
-     1.562,
-     2.48
+     1.66,
+     2.34
     ]
    ],
    "captions": [
@@ -302,18 +321,20 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 26.387,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "5e3eef16ec0b"
   },
   "L09": {
    "who": "N",
    "text": "Then Grandpa said:",
    "dur": 1.948,
-   "onset": 0.27,
-   "end": 1.74,
+   "onset": 0.32,
+   "end": 1.66,
    "chunks": [
     [
-     0.27,
-     1.74
+     0.32,
+     1.66
     ]
    ],
    "captions": [
@@ -324,22 +345,24 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 29.102
+   "offset": 29.102,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "ca67b9357fa9"
   },
   "L10": {
    "who": "Grandpa",
    "text": "Only one voice gets him UP.",
    "dur": 3.72,
-   "onset": 0.43,
-   "end": 3.32,
+   "onset": 0.66,
+   "end": 3.1,
    "chunks": [
     [
-     0.43,
-     1.986
+     0.66,
+     1.94
     ],
     [
-     1.986,
-     3.32
+     2.38,
+     3.1
     ]
    ],
    "captions": [
@@ -351,22 +374,24 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "beat": "L10",
-   "offset": 0.0
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "2c226a49426f"
   },
   "L11": {
    "who": "N",
    "text": "Somebody promised to come back.",
    "dur": 2.155,
-   "onset": 0.21,
-   "end": 1.9,
+   "onset": 0.245,
+   "end": 1.7,
    "chunks": [
     [
-     0.21,
-     1.168
+     0.245,
+     1.14
     ],
     [
-     1.168,
-     1.9
+     1.18,
+     1.7
     ]
    ],
    "captions": [
@@ -379,30 +404,32 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 0.0,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "0da3e0b56a94"
   },
   "L12": {
    "who": "N",
    "text": "So every night, I sit there. Nobody should wait alone.",
    "dur": 3.717,
-   "onset": 0.29,
-   "end": 3.48,
+   "onset": 0.34,
+   "end": 3.36,
    "chunks": [
     [
-     0.29,
-     1.228
+     0.34,
+     1.1
     ],
     [
-     1.228,
-     1.979
+     1.26,
+     1.72
     ],
     [
-     1.979,
-     2.792
+     2.34,
+     2.86
     ],
     [
-     2.792,
-     3.48
+     2.9,
+     3.36
     ]
    ],
    "captions": [
@@ -417,22 +444,24 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 2.155,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "106624021770"
   },
   "L13": {
    "who": "N",
    "text": "Then last night, he stood up.",
    "dur": 2.685,
-   "onset": 0.29,
-   "end": 2.46,
+   "onset": 0.34,
+   "end": 2.22,
    "chunks": [
     [
-     0.29,
-     1.53
+     0.34,
+     1.36
     ],
     [
-     1.53,
-     2.46
+     1.64,
+     2.22
     ]
    ],
    "captions": [
@@ -445,26 +474,28 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 5.872,
-   "gap": 0
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "55c8f2477c74"
   },
   "L14": {
    "who": "N",
    "text": "A guy just appeared on the patch.",
    "dur": 2.038,
-   "onset": 0.11,
-   "end": 1.84,
+   "onset": 0.22,
+   "end": 1.66,
    "chunks": [
     [
-     0.11,
-     0.389
+     0.22,
+     0.4
     ],
     [
-     0.389,
-     1.115
+     0.48,
+     1.12
     ],
     [
-     1.115,
-     1.84
+     1.18,
+     1.66
     ]
    ],
    "captions": [
@@ -477,22 +508,24 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
-   "offset": 8.558
+   "offset": 8.558,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "fdda148eb063"
   },
   "L15": {
    "who": "Buh",
    "text": "Hey BUDDY! SORRY, got busy.",
-   "dur": 16.18,
-   "onset": 0.25,
-   "end": 15.96,
+   "dur": 2.755,
+   "onset": 0.24,
+   "end": 2.4,
    "chunks": [
     [
-     0.25,
-     6.292
+     0.24,
+     0.72
     ],
     [
-     6.292,
-     15.96
+     1.275,
+     2.4
     ]
    ],
    "captions": [
@@ -504,18 +537,20 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "beat": "L15",
-   "offset": 0.0
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "dc8f880426bf"
   },
   "L16": {
    "who": "N",
    "text": "Then he said:",
    "dur": 1.055,
-   "onset": 0.27,
-   "end": 0.92,
+   "onset": 0.3,
+   "end": 0.82,
    "chunks": [
     [
-     0.27,
-     0.92
+     0.3,
+     0.82
     ]
    ],
    "captions": [
@@ -526,22 +561,24 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L16",
-   "offset": 0.0
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "8831f0a06aef"
   },
   "L17": {
    "who": "Buh",
    "text": "Sit, BOY. Be right BACK.",
-   "dur": 13.96,
-   "onset": 0.19,
-   "end": 13.82,
+   "dur": 1.475,
+   "onset": 0.07,
+   "end": 1.1,
    "chunks": [
     [
-     0.19,
-     5.523
+     0.07,
+     0.46
     ],
     [
-     5.523,
-     13.82
+     0.7,
+     1.1
     ]
    ],
    "captions": [
@@ -553,7 +590,9 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "beat": "L17",
-   "offset": 0.0
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "80c419674c6d"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -671,7 +710,7 @@
     "L15"
    ],
    "file": "beat_L15.wav",
-   "dur": 16.18,
+   "dur": 2.755,
    "offsets": [
     0.0
    ],
@@ -679,52 +718,19 @@
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 10.32,
-     "len": 2.25,
-     "why": "2.25 s pause inside line 1 (limit 1.0 s)"
-    },
-    {
-     "kind": "breath",
-     "at": 2.18,
-     "len": 0.25,
-     "why": "an audible breath (0.25 s)"
-    },
-    {
-     "kind": "words",
-     "at": 0.0,
-     "len": 0.0,
-     "why": "Whisper heard only 23% of the script (\"Our hero, played by the default Steve Skin, a 16 year old boy, friendly and quick, a little nervous, he jokes when he's \")"
-    },
-    {
-     "kind": "words",
-     "at": 0.0,
-     "len": 0.0,
-     "why": "extra words 'our hero played by the default steve skin a sixteen year old boy friendly and quick a little nervous he jokes when hes scared and goes quiet and serious when it matters' (a direction read aloud?)"
-    }
-   ],
-   "cut": "whole",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "2.25 s pause inside line 1 (limit 1.0 s)",
-      "an audible breath (0.25 s)",
-      "Whisper heard only 23% of the script (\"Our hero, played by the default Steve Skin, a 16 year old boy, friendly and quick, a little nervous, he jokes when he's \")",
-      "extra words 'our hero played by the default steve skin a sixteen year old boy friendly and quick a little nervous he jokes when hes scared and goes quiet and serious when it matters' (a direction read aloud?)"
-     ]
-    }
-   ]
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L15",
+   "take_at": 0.0
   },
   "L17": {
    "lines": [
     "L17"
    ],
    "file": "beat_L17.wav",
-   "dur": 13.96,
+   "dur": 1.475,
    "offsets": [
     0.0
    ],
@@ -732,39 +738,13 @@
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "breath",
-     "at": 0.25,
-     "len": 0.15,
-     "why": "an audible breath (0.15 s)"
-    },
-    {
-     "kind": "words",
-     "at": 0.0,
-     "len": 0.0,
-     "why": "Whisper heard only 20% of the script (\"Our hero, played by the default Steve skin. A 16 year old boy, friendly and quick, a little nervous. He jokes when he's \")"
-    },
-    {
-     "kind": "words",
-     "at": 0.0,
-     "len": 0.0,
-     "why": "extra words 'our hero played by the default steve skin a sixteen year old boy friendly and quick a little nervous he jokes when hes scared and goes quiet and serious when it matters' (a direction read aloud?)"
-    }
-   ],
-   "cut": "whole",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "an audible breath (0.15 s)",
-      "Whisper heard only 20% of the script (\"Our hero, played by the default Steve skin. A 16 year old boy, friendly and quick, a little nervous. He jokes when he's \")",
-      "extra words 'our hero played by the default steve skin a sixteen year old boy friendly and quick a little nervous he jokes when hes scared and goes quiet and serious when it matters' (a direction read aloud?)"
-     ]
-    }
-   ]
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L15",
+   "take_at": 2.755
   }
  },
- "total": 78.06
+ "total": 52.15
 }
