@@ -530,6 +530,41 @@ drift without processing, and the realism rule is "less processing is more" ("Re
 (GPL-3.0), kNN-VC (needs WavLM-Large, ~1.2 GB, more than this box's free disk). The A/B is
 `out/voice_drift/vc_ab.mp3` (not committed).
 
+## Prompt lint (2026-11-11: four requests wasted on directions read aloud)
+
+`scripts/tts.py` lints the exact prompt of every request before it is sent, and refuses (exit 3, nothing sent, the
+exact prompt and the reason printed) a **character** request (any speaker but the story's narrator) on a
+**flash-tts** model (`gemini-3.8-flash-tts`, `gemini-3.1-flash-tts`; not flash-lite) unless it is exactly:
+
+```
+[one clause, at most 14 words]
+
+the lines, separated by blank lines
+```
+
+Refused: a direction that is not one bracketed clause (a `;`, `:`, `(`, `)` or dash in it: that is a prose profile),
+more than one sentence, more than 14 words, any text outside the bracket (before it, or after the lines), a
+`[tag]` inside a line, and on 3.8 any multi-speaker / `# AUDIO PROFILE` layout (3.8 takes no direction block).
+Calibrated on that day's takes: 3.8 read aloud Dog on the Hill's Buh with the library `buh` profile in the bracket
+(31 words, `:` `;` `( )`) and Thirty-One Raids' Grandpa with "Lock the door, kid. An old man in his seventies. Tired.
+Low and a little rough..." (several sentences); it never read "[A warm, gentle grandmother]", "[A friendly teenage
+boy, casual]" or "[An old, tired man, low and slow]" (4-7 words).
+
+Not covered: the narrator (Pip's bracket on flash-lite, Orus's long recipe bracket on 3.8: voices/recipes/), any
+flash-lite request, and 3.1's structured layout (headings and notes not read aloud, "Realism" below). A 3.1 request in
+the bracket layout (a cast `bracket: true`) is linted like 3.8.
+
+How to pass: put the character's direction in its request's `direction` as one short bracket, e.g.
+`"direction": "[An old, tired man, low and slow]"` (it takes the profile's place). Most library profiles are prose
+and would be refused as a 3.8 bracket (`python3 scripts/tts.py --lint-cast` lists them: only `mom` and `grandma` pass).
+A take-gate re-take never adds its fix to such a bracket (the `;` would break it): it asks again with the same
+direction instead.
+
+Check before you voice: `./hb voice <stunt> --dry` prints every request the story would send (first takes), the model,
+the exact prompt and the verdict, and sends nothing (exit 3 when one is refused). The real run checks the same plan
+before its first request, and `raw_take` checks each request again (re-takes included) right before it is sent; a
+cached take is never refused (nothing is sent for it).
+
 ## Saving quota
 
 The free tier is about 10 requests a day per model and the owner's rule is "don't necessarily use the latest
