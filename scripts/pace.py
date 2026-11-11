@@ -20,6 +20,8 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
             else the biggest sound + picture hit in the last 40%: a sound hit and a picture change within 0.3 s,
             and the end <= 1.0 s after it (1.2-1.8 s for a text payoff: a death screen or a card).
   length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
+  keysound  a stunt with edit.keySounds (guess the mob: the call is the game), on a package's short.mp4 beside its
+            short_nosong.mp4: each key sound >= 8 dB over the music, else BLOCK (scripts/key_sounds.py).
 Exit 1 on a blocker, 2 when it can't run.
 """
 import argparse
@@ -519,6 +521,22 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             ls = [lid for t, lid in lines if a <= t < b]
             add("WARN", "picture", a, f"the same picture for {b - a:.1f} s ({a:.2f}-{b:.2f} s{': lines ' + ', '.join(ls) if ls else ''}): its cuts/moves don't change what we see",
                 "cut the middle line(s) to a different subject or size (a reaction, the detail the line names), or shorten the span")
+
+    # ---- key sounds over the music (scripts/key_sounds.py; owner 2026-11-11 on guess_sound: "had super loud music")
+    if edit.get("keySounds"):
+        nos = pathlib.Path(video).with_name("short_nosong.mp4")
+        if pathlib.Path(video).name == "short.mp4" and nos.exists():
+            import key_sounds
+            kt = sorted(m["out"] for m in marks if m["event"] in edit["keySounds"])
+            drop = next((m["out"] for m in marks if m["event"] == edit.get("dropAt")), None)
+            krows, kbad = key_sounds.check(video, nos, kt, drop)
+            if krows:
+                notes.append(f"key sounds over the music: worst {min(r['margin_db'] for r in krows):+.1f} dB over {len(krows)} clips (need >= {key_sounds.KEY_MIN_DB:.0f} dB)")
+            for r in kbad:
+                add("BLOCK", "keysound", r["t"], f"the music covers a key sound ({', '.join(edit['keySounds'])}): {r['margin_db']:+.1f} dB over the music (need >= {key_sounds.KEY_MIN_DB:.0f})",
+                    "remix the song: python3 scripts/add_song.py <name> --song songs/ncs/<its track> (ducks it under edit.keySounds)")
+        else:
+            notes.append("key sounds: no short_nosong.mp4 beside the video (the song goes in at publish: scripts/add_song.py ducks it and gates it)")
 
     # ---- 4. build-up
     end_b = payoff if payoff is not None and payoff > 9 else dur
