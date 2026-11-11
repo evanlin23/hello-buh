@@ -286,16 +286,17 @@ varied. Raids' title gives away less than its twist; check it against the final 
 5. Dog on the Hill: "He's waited 900 days and still has no name. What should we call him?"
 
 ## Description, tags, playlists
-- **Channel description:**
-  "Short Minecraft stories: a village that carpets every
-  road, a grandpa who has won every raid, a dog who never stops waiting. Most of them have a secret. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
+- **Channel description** (owner, 2026-11-11: the long one was "too specific"; no @HelloBuh tag, no Mojang
+  disclaimer): "Short Minecraft stories. New ones every week." Short and general: it says what the channel is and why
+  to subscribe, nothing per story.
 - **Video description template:** line 1 = the hook, then the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
 - **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
-- **Playlists:** "All Buh Stories", "Dog stories" (Good Boy, Dog on the Hill), "Grandpa and Grandma stories"
-  (Thirty-One Raids, Gold for the Portal): themes, not a timeline.
+- **Playlists:** one, "All Buh Stories", at launch (owner, 2026-11-11: theme playlists like "Grandpa and Grandma
+  stories" feel "too specific"). A series playlist is added only when a premise family has 3+ stories (a hit's
+  follow-ups); Shorts playlists mostly help binge-watching from the channel page and a series' "next" link, not reach.
 
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
 "We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a

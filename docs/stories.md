@@ -265,6 +265,26 @@ STANDARDS.md in the same commit.
   (no moody grade, little vignette or blur, day-lit where the story allows) and bigger, punchier motion within
   Minecraft (camera punches on key words, hops and quick turns on beats, faster pushes), shown next to the current
   cinematic look for the owner to pick.
+- **Owner, 2026-11-11, on following up a hit (research: a Short at 5x the channel median gets 2-3 new standalone
+  stories in the same premise family, different outcomes, within 7 days): "yes thats fine we should capitalize on
+  whatever is good. Also we dont know what is good yet tho".** Until the numbers say what works, the early stories
+  explore: different premise families, arcs and outcomes (no two in a row the same). Once a Short clearly beats the
+  channel median (5x), follow it up fast with standalone stories in its family. Judge by engaged views, stayed-to-watch,
+  average % viewed and subs per 1k (docs/research/buhstories_growth_2026-11-11.md).
+- **Owner, 2026-11-11: "Do we need the grandpa and grandma stories? That feels too specific. Maybe like if we start
+  doign series these could be good."** One playlist ("All Buh Stories") at launch; a series playlist only once a family
+  has 3+ stories.
+- **Owner, 2026-11-11: "channle is already created. I lwokey made a new google account fro this, si that fine?"** Buh
+  Stories is on its own Google account, not a Brand Account under HelloBuh's login. That's fine: uploads use a refresh
+  token from that account (docs/upload-setup.md "A second channel"); manual uploads for now.
+- **Owner, 2026-11-11, on the channel description ("Short Minecraft stories: a village that carpets every road... More
+  Minecraft chaos on @HelloBuh. NOT AN OFFICIAL MINECRAFT PRODUCT..."): "this descirption is too specific i think ight?
+  idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
+  description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
+  no Mojang disclaimer.
+- **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
+  better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
+  story from now on.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
