@@ -878,8 +878,8 @@
   "published_at": "2026-11-11T09:38:26.655Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:07:23+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-11T12:35:26+00:00",
+    "by": "scripts/gates.py",
     "package": {
       "ok": true,
       "summary": "short.mp4 34.52 s vs the reviewed render 34.50 s"
@@ -894,8 +894,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:35:16.940Z",
-      "report": "work/hb/creeper_art.check.json"
+      "at": "2026-11-11T09:32:04.350Z",
+      "report": "out/creeper_art.check.json"
     },
     "key_sounds": "n/a"
   }
