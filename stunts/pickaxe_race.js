@@ -34,22 +34,24 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [['woodcut_a', 'woodcut_b', 'cut'],
-      // on block boundaries of the lib/act.js recording (dig_end times, offsets from stonecut_b): each tier shorter on
-      // screen than the one before (wood 5.8, stone 4.5, iron 4.2, diamond 3.8, gold 3.6, instamine 3.1 s), and the
-      // look through the hole before each new pickaxe trimmed to 0.25 s
-      ['stonecut_a', 'stonecut_a:2.1', 'cut'], ['stonecut_b:1.75', 'stonecut_b:2.5', 'cut'],
-      ['stonecut_b:4.9', 'stonecut_b:6.0', 'cut'], ['stonecut_b:8.05', 'stonecut_b:8.85', 'cut'],
-      ['stonecut_b:11.1', 'stonecut_b:12.1', 'cut'], ['stonecut_b:13.95', 'stonecut_b:14.7', 'cut'],
-      ['stonecut_b:17.1', 'stonecut_b:17.5', 'cut'], ['stonecut_b:19.0', 'stonecut_b:19.8', 'cut'],
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [
+      // each tier's middle blocks jump-cut, edge to edge on the short rests the bot takes at those two blocks (blk<tier>_<n>:
+      // before block n; the whip check: a cut inside a turn reads as one snap, r:r38374d), each tier shorter on screen
+      // than the last (~1.1 / 0.7 / 0.55 / 0.5 / 0.4 s a block: 4, 5, 5, 5, 5 blocks shown; the instamine all 9)
+      ['blk0_3', 'blk0_8', 'cut'], ['blk1_3', 'blk1_7', 'cut'], ['blk2_3', 'blk2_7', 'cut'], ['blk3_3', 'blk3_7', 'cut'], ['blk4_3', 'blk4_7', 'cut'],
       ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
       ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
-      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
+      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
+      // gamedip: the chain's previous blast 0.54 s before the last (+ the limiter) flattened its hit in the NCS mix (pace)
       // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
         // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
-      punch: [['boom', 0, 1.12]], shake: [['boom', 0, 10]] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
+      punch: [['boom', 0, 1.12], ['boom:1.3', 0, 1.06], ['boom:2.76', 0, 1.06]], shake: [['boom', 0, 10], ['boom:1.3', 0, 6], ['boom:2.76', 0, 6]],
+      // (boom:1.3 / boom:2.76: the chain's 3rd and 5th blasts in output seconds of this take, 1.75x: a 3.6 s stretch of
+      // same-looking booms under the song had no new event, pace dead BLOCK (the punches alone don't register); a card on
+      // the 4th: the chain keeps going. Re-check the offsets after a re-record)
+      cards: [['boom:1.95', 'CHAIN REACTION', 1.0, 'yellow']] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {
@@ -125,11 +127,11 @@ module.exports = {
       if (fast) ctx.mark('instamine')
       let nb = 0
       for (const p of order) {
-        // wooden: blocks 4-7 jump-cut (nine identical 0.9 s digs were 8.6 s of the video; the ranking keeps the real speed)
-        if (i === 0 && nb === 3) ctx.mark('woodcut_a')
-        if (i === 0 && nb === 7) ctx.mark('woodcut_b')
-        if (i === 1 && nb === 3) ctx.mark('stonecut_a')   // stone too: nine identical digs took as long on screen as the cut wooden
-        if (i === 1 && nb === 7) ctx.mark('stonecut_b')
+        // a short rest on the dug block before turning to the next, marked in the middle: the edit's jump cuts over
+        // the middle blocks go edge to edge on these (nine identical digs were 8.6 s of the video; the ranking keeps
+        // the real speed), so no cut joins two turning views (whip check, r:r38374d)
+        // (only at the cut edges: 3 ticks still before the mark and 4 after, the whip check's window either side)
+        if (!fast && (nb === 3 || nb === (i === 0 ? 8 : 7))) { await bot.waitForTicks(3); ctx.mark(`blk${i}_${nb}`); await bot.waitForTicks(4) }
         nb++
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
@@ -170,8 +172,11 @@ module.exports = {
       ctx.log('boom', booms, 'tick', ctx.tick)
     }
     bot._client.on('explosion', onBoom)
+    // the TNT walk plays at 3x: its turns at <= 70 deg/s, so on screen they stay under 240 (whip check: 165 deg/s turns
+    // showed at ~495 deg/s, r:r38374d)
+    const AW = require('../lib/act')(ctx, { turnSpeed: 70, turnAccel: 500 })
     // the TNT on the grass at a pillar's foot, aimed by construction (lib/act.js)
-    const place = async (q) => { try { await A.place(new Vec3(q.x, floor + 1, q.z), { against: new Vec3(q.x, floor, q.z), sound: null }) } catch (e) { ctx.log('place', e.message) } }
+    const place = async (q) => { try { await AW.place(new Vec3(q.x, floor + 1, q.z), { against: new Vec3(q.x, floor, q.z), sound: null }) } catch (e) { ctx.log('place', e.message) } }
     ctx.select(T)
     ctx.mark('tntwalk')   // the whole walk at 2.2x (6 s of the same place-swing at 1.5x)
     // walk west along the wall 3 out, controls picked against the view each tick so the motion stays on the
@@ -186,8 +191,8 @@ module.exports = {
         const eye = e.offset(0, 1.62, 0), d = aim.minus(eye)
         const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
         let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-        const ny = bot.entity.yaw + dy * 0.35
-        await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.35, true)
+        await AW.view({ yaw: bot.entity.yaw + dy, pitch })   // one governed step toward the pillar (70 deg/s)
+        const ny = bot.entity.yaw
         const len = Math.hypot(dx, dzz), wx = dx / len, wzz = dzz / len
         const f = wx * -Math.sin(ny) + wzz * -Math.cos(ny), rr = wx * Math.cos(ny) + wzz * -Math.sin(ny)
         bot.setControlState('forward', f > 0.35); bot.setControlState('back', f < -0.35)

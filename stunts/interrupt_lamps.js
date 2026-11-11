@@ -30,8 +30,10 @@ module.exports = {
   edit: {
     caption: CAPTION, red: 'dance floor', dropAt: 'lit',
     startAt: 'hook:-0.1', endAfter: 'lit:1.0',
-    // the walk back keeps its start and end around a jump cut (all 3.8 s of it was a span with nothing new: pace)
-    speed: [['intr_back:1.2', 'intr_resume:-1.0', 'cut']],
+    // the walk back keeps its start and end around a jump cut (all 3.8 s of it was a span with nothing new: pace). Both
+    // edges sit in the straight walk, the view at rest (<= 9 deg/s; the old edges were mid-turn, 72 and 90 deg/s: the
+    // edit-cut whip check, r:r38374d)
+    speed: [['intr_back:1.4', 'intr_back:2.75', 'cut']],
     punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.4]],   // the payoff's picture change (the lights coming on), with the ripple and the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_gone'],   // the thunk, the crunches, the last bite: over the music
     // room tone from frame 1; the music dips before the lights and an impact lands on them (mixcheck: the payoff hit over the NCS bed)

@@ -95,7 +95,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
-   hearing (a grandma sounds like an older woman, not gravelly). Check: review (listen). r:r4b4332 r:raf72e0 r:rf8060c
+   hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
+   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
+   (listen), speaker distance to the narrator. r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -146,6 +148,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
+   **What the narration names is on screen while it's said** (story.json `shows` per line: the string on "a little
+   string"), readable at phone size. Check: rec_check `shows` (once built), review. r:r65ef27
 6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
    world (milk buckets, cake, 67 eggs: owner "make it 67 eggs"); never contradicting the story, the same between shots.
    story.json "hotbar" (the harness puts it on before the first frame; docs/engine_features.md "The story's hotbar").
@@ -343,17 +347,28 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
+- **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
+  (the genre's look); every other turn keeps the followable-camera rule. Check: review; the whip check lets one
+  look from/to straight down within 1 s of each landing mark (landed / placed<N>) or a ctx.mark('whip_ok') through as a
+  note. r:r258d1b
 - **A build never stalls on screen**: while a build is unfinished, new blocks appear every output second; no hold
   between stages or builds without a captioned beat. Check: pace (build stall: no placement for over 1 s of output
-  time mid-build), review. r:r478786
+  time mid-build, from a build's X_start mark to its last block), review. r:r478786
 - **No fart-like sounds**: the payoff hit is a clean impact, splash or vanilla sound; a sound the owner calls out is
-  banned everywhere (lib/hb/banned_sfx.json). Check: lint (banned sound), review. r:r4df33c
-- **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt. Check: lint (timer resets),
+  banned everywhere (lib/hb/banned_sfx.json). Check: lint (banned sound: `./hb check`, lib/hb/stunt_lint.js, every sound
+  audio.py plays from the recording plus edit.sfx), review. r:r4df33c
+- **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
+  (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
 - **A time-lapse holds one steady camera** (or one smooth move) across its shots: no jumps in angle, distance or
-  height between consecutive shots of the same build. Check: cuts (time-lapse camera jump), review. r:r200cfe
+  height between consecutive shots of the same build. Check: rec_check cuts (time-lapse camera jump: <= 6 deg, 3 blocks,
+  1.5 up/down across each jump cut; scripts/lapse_cuts.py, in `./hb check` and `./hb record`), review. r:r200cfe
 - **Followable camera**: no whip pans; view turns eased and speed-capped, settling long enough to read. Check:
-  motion lint / lint (turn speed), review. r:r38374d
+  the owner check 'whip' in ./hb check (lib/hb/owner.js whipCheck: BLOCK a turn over 240 deg/s ON SCREEN held > 3
+  ticks, WARN under 0.3 s of rest between big turns; the speed is the recording's x the edit's speed factor, so a x3
+  time-lapse of 220 deg/s turns is 660 deg/s: inside a lapse turn at <= 220/x deg/s, as lib/pixel_art.js does, or hold
+  one steady camera; hard cuts excluded; POV and known camera shots; an edit speed 'cut' inside one shot whose edges turn
+  over 30 deg/s blocks: its two pans read as one snap, so put both edges on rests), review. r:r38374d
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

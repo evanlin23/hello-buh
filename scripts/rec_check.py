@@ -13,7 +13,9 @@ Checks (ranked by how often reviews flagged them):
   1. cuts      around every hard cut (a teleport, a speed "cut" span, a respawn): the first frames after the cut
                must already be the new shot's pose (no second jump, no 1-3 frame snap of the aim or the position,
                no stand-up/crouch); no whip in the last frames before it; a time-of-day change lands ON a cut.
-               Also teleports under 4 blocks with no `cut` mark (the renderer glides them).
+               Also teleports under 4 blocks with no `cut` mark (the renderer glides them). And a time-lapse's jump cuts
+               (a speed "cut" between two sped-up spans, no teleport): the camera turns <= 6 deg, moves <= 3 blocks and
+               <= 1.5 up/down across each (owner r:r200cfe; scripts/lapse_cuts.py).
   1b. cast     a cast member that jumps over 0.5 block 1-4 ticks after a cut's frame (the new shot opens on it in the
                old spot), or moves in stair steps (holds 2+ ticks, then moves, again and again: under 20 Hz, it reads as
                teleporting). scripts/cast_motion.py; the kit (K.actor, K.cutShot) makes both right by construction.
@@ -374,6 +376,12 @@ def main():
 
     # ---------------------------------------------------------------- 1. cuts
     n = len(ks)
+    # a time-lapse holds one steady camera (or one smooth move) across its jump cuts (owner r:r200cfe, scripts/lapse_cuts.py)
+    import lapse_cuts
+    for r_ in lapse_cuts.lapse_cuts(warp.spans if warp else [], tl, P):
+        if r_["problems"]:
+            o_ = out_t(r_["a"])
+            R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["a"]), lapse_cuts.message(r_), near(r_["a"] * 20))
     # F1 windows (HUD hidden, render.js/edit.py): a cinematic drone camera, not a player
     f1, f1_on = [], None
     for e in tl:
@@ -880,19 +888,21 @@ def main():
     # ---------------------------------------------------------------- 5e. let the payoff settle (r:r24d99a)
     # the last frames before every hard cut and the end: falling blocks / debris / a death still moving in view
     tracks = OC.debris_tracks(rec)
+    tracks_end = OC.debris_tracks(rec, puffs=True)   # the end also waits out the rendered smoke and debris (which_door)
     cam_at = lambda k: cam.at(min(len(P) - 1, k))
-    settle_res = {"tracks": len(tracks), "ok": True, "findings": []}
-    if tracks:
+    settle_res = {"tracks": len(tracks_end), "ok": True, "findings": []}
+    if tracks_end:
         checks_at = [(j - 1, kind) for j, kind in cuts] + [(n - 1, "end")]
         for j, kind in checks_at:
             if j < 0 or kind == "respawn":   # (a respawn cut follows the death screen: the world isn't on screen)
                 continue
             k_out = src_tick[j]
             any_v = in_cam(k_out) or in_f1(k_out)   # (a camera shot: anything near the player)
-            mv = OC.moving(tracks, k_out, cam_at, any_v, seen=3) or OC.moving(tracks, k_out - 1, cam_at, any_v, seen=3)
+            trs = tracks_end if kind == "end" else tracks
+            mv = OC.moving(trs, k_out, cam_at, any_v, seen=3) or OC.moving(trs, k_out - 1, cam_at, any_v, seen=3)
             if not mv:
                 continue
-            k_set = OC.settle_after(tracks, k_out, cam_at, 400, any_v)
+            k_set = OC.settle_after(trs, k_out, cam_at, 400, any_v)
             more = (k_set - k_out) / 20 if k_set is not None else None   # (recording seconds: past a cut the edit never shows it)
             if more is not None and more <= OC.SETTLE_GRACE:
                 continue
@@ -901,9 +911,12 @@ def main():
             msg = (f"settle: the Short {what} while {OC.describe(mv)} still move{'s' if len(mv) == 1 else ''} in view ({when}): "
                    + ("end after it (endAfter on a mark after the settle, +1.0 s at most)" if kind == "end" else "cut after it lands")
                    + " (owner: let the last pillar of sand all fall before we end/cut; STANDARDS r:r24d99a)")
-            settle_res["findings"].append(("BLOCK", k_out, msg))
-            add("BLOCK", "settle", j, msg, tick=k_out)
-        settle_res["ok"] = not settle_res["findings"]
+            # only the rendered smoke left (PUFF_TICKS is an estimate): a WARN here; pace measures the finished mp4's last
+            # 0.6 s and blocks when the picture still moves
+            lvl = "WARN" if kind == "end" and all(t["kind"] == "puff" for t in mv) else "BLOCK"
+            settle_res["findings"].append((lvl, k_out, msg))
+            add(lvl, "settle", j, msg, tick=k_out)
+        settle_res["ok"] = not any(lvl == "BLOCK" for lvl, _, _ in settle_res["findings"])
 
     # ---------------------------------------------------------------- 6-9. the owner's notes (./hb owner, lib/hb/owner.js)
     owner_note = ""

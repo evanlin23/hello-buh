@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, after the lead sent every Short it called ready (and asked whether the clutch Shorts' quick
+  look-down flick counts as a whip, and whether to hold four approved story Shorts the new whip check flags): "All
+  ok".** The Shorts sent today are approved as they are; the new formats (cells, dilemma, race, mislabel, hack, desire,
+  inside, interrupt, mega) go first in the queue. A clutch Short's single quick look-down at the landing is allowed
+  (the genre's look; boat_clutch, clutch_harder); every other turn keeps the followable-camera rule. The approved
+  story experiments (sun_wont_set, respawn_voice, chunk_next_door, sheep_stares) ship as they are.
 - **Owner, 2026-11-11, reviewing the ready Shorts by hand: "when we're building the statue, so I guess lapsed
   statue, we pause for some reason when we're building the second one. Like for like what seems like more than just a
   while."** A build never stalls on screen: while a build is unfinished, blocks keep going on (in a time-lapse, every
@@ -498,6 +504,15 @@ STANDARDS.md in the same commit.
   pacing is the voice the owner chose: the narrator's take gate allows sentence breaks up to 0.95 s (cast `narrator`
   `max_pause.rest`). Takes are still never trimmed, and a longer pause, a breath or a wrong word is still re-taken. The
   opening rule (no gap over 0.6 s in the first 5 s) is unchanged.
+- **Owner, 2026-11-11, after watching the held cuts: "The moms voice is too similar to narrator, need a new voice.
+  Grandma sounds like a dude still. Can you explore options?"** A character voice must be told apart from the narrator
+  (Pip, a bright kid) at first hearing, and must read as its character's age and sex: Mom is recast (Sulafat sounds too
+  close to Pip) and Grandma recast again (Vindemiatrix still reads as a man), each chosen by the owner from an audition
+  of candidates saying the story's real line, measured against Pip (pitch and speaker distance).
+- **Owner, 2026-11-11, on Gold for the Portal: "when we say "string" in the piglin short, no string is on screen".**
+  Every thing the narration names is on screen, readable, while its words are said (the string on "a little string",
+  the pearls on "ender pearls"). Each line lists what it names (story.json `shows`), and the recording is checked for
+  each one in frame during that line.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
