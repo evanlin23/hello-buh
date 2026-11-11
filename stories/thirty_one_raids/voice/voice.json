@@ -325,7 +325,7 @@
    "beat": "L08",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "9bf470b993dd",
+   "aligned_wav": "bab01e9c7d89",
    "head_cut": {
     "s": 1.0,
     "why": "lead 2026-11-11: the slice starts at the quiet point 240 ms before 'Lock' (a non-script grunt at 0.25-0.6 s of the take)"
