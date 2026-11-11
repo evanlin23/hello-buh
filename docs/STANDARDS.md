@@ -148,6 +148,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
+   **What the narration names is on screen while it's said** (story.json `shows` per line: the string on "a little
+   string"), readable at phone size. Check: rec_check `shows` (once built), review. r:r65ef27
 6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
    world (milk buckets, cake, 67 eggs: owner "make it 67 eggs"); never contradicting the story, the same between shots.
    story.json "hotbar" (the harness puts it on before the first frame; docs/engine_features.md "The story's hotbar").

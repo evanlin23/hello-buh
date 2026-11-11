@@ -509,6 +509,10 @@ STANDARDS.md in the same commit.
   (Pip, a bright kid) at first hearing, and must read as its character's age and sex: Mom is recast (Sulafat sounds too
   close to Pip) and Grandma recast again (Vindemiatrix still reads as a man), each chosen by the owner from an audition
   of candidates saying the story's real line, measured against Pip (pitch and speaker distance).
+- **Owner, 2026-11-11, on Gold for the Portal: "when we say "string" in the piglin short, no string is on screen".**
+  Every thing the narration names is on screen, readable, while its words are said (the string on "a little string",
+  the pearls on "ender pearls"). Each line lists what it names (story.json `shows`), and the recording is checked for
+  each one in frame during that line.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
