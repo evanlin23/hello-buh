@@ -216,11 +216,11 @@ module.exports = L.makeLapse({
     // 1. close and low on the fountain (56e beside it), pulling back and up as the plaza spreads round it
     close: { path: [[0, 5.5, 3.2, 7.5], [2.5, 10.5, 6.5, 11]], lookPath: [[0, -1, 1.2, -1], [2.5, -1, 0.8, -1]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 4.5, 0]] },
     // 2. a three-quarter angle on the ring wall as it rises, its towers of two heights
-    ring: { path: [[0, 30, 18, 36], [2.2, 23, 17, 40]], lookPath: [[0, 0, 6, 0], [2.2, 0, 6, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[16, 15, 7]] },
+    ring: { path: [[0, 30, 18, 36], [2.2, 23, 17, 40]], lookPath: [[0, 0, 6, 0], [2.2, 0, 6, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[16, 25, 7]] },
     // 3. high, sliding round: the houses fill the ring outside the wall
     houses: { path: [[0, -44, 36, 30], [2.2, -50, 33, 16]], lookPath: [[0, 0, 3, 0], [2.2, 0, 3, 0]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[-20, 8, 14]] },
     // 4. outside on the real hillside, low: the terrace's arcade rises across the town, the forest round it
-    face: { path: [[0, 30, 22, 112], [2.2, 42, 24, 106]], lookPath: [[0, 6, 8, 40], [2.2, 10, 9, 40]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[0, 13, 75]] },
+    face: { path: [[0, 30, 22, 112], [2.2, 42, 24, 106]], lookPath: [[0, 6, 8, 40], [2.2, 10, 9, 40]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[0, 15.5, 75]] },
     // 5. high over the south-east corner: the garden town spreading over the terrace
     town: { path: [[0, 94, 56, 94], [1.8, 88, 52, 100]], lookPath: [[0, 30, 10, 30], [1.8, 28, 10, 32]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[46, 18, 46]] },
     // 6. high over the west side: the second terrace, the corner and gate towers rise in view
@@ -229,10 +229,10 @@ module.exports = L.makeLapse({
     roofs: { path: [[0, -30, 44, -100], [1.5, -10, 44, -100]], lookPath: [[0, -10, 26, -50], [1.5, 10, 26, -50]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 34, -57]] },
     // 8. from the plaza, 56e and the fountain in front: the great towers rise behind the walls
     giants: { path: [[0, -9.5, 5, -9.5], [1.5, -8.5, 4.6, -8.5]], lookPath: [[0, 24, 18, 24], [1.5, 24, 21, 24]], fov: 72, dof: false, drift: 0.3, scenery: true, subject: [[0, 4.5, 0]] },
-    // 9. out over the forest, low: the whole city against the hills, the great towers topping out
-    scale: { path: [[0, 110, 20, -60], [1.5, 106, 22, -72]], lookPath: [[0, 0, 40, 0], [1.5, 0, 42, 0]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[57, 70, -57]] },
+    // 9. far out over the forest and the river: the whole city against the hills, the great towers topping out
+    scale: { path: [[0, 150, 40, -118], [1.5, 142, 42, -130]], lookPath: [[0, 0, 36, 0], [1.5, 0, 38, 0]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: [[73, 57, -73]] },
     // 10. the reveal: the whole city from high on its south axis, the forest and hills round it (1x: the drift after)
-    reveal: { path: [[0, 0, 130, 110], [1.5, 0, 124, 103]], lookPath: [[0, 0, 8, -4], [1.5, 0, 8, -4]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] },
+    reveal: { path: [[0, 0, 112, 128], [1.5, 0, 107, 121]], lookPath: [[0, 0, 10, -2], [1.5, 0, 10, -2]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] },   // (under the clouds: at 130 up the frame was in them, a white haze)
     // 11. the close pass: low beside 56e and the fountain, sliding past, the towers over them (1x)
     pass: { path: [[0, -9, 2.2, -11.5], [2.0, -11.5, 2.4, -7.5]], lookPath: [[0, 6, 9, 7], [2.0, 7, 10, 5]], fov: 70, dof: false, drift: 0.3, scenery: true, subject: [[-4, 2.5, -5]] }
   }
