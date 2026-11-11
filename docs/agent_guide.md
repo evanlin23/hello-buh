@@ -144,12 +144,16 @@ and don't send the bot's raw calls yourself:
 - **Walking backwards: `await A.back(ticks)`.** It lets go of the back key before the player gets within 1 block
   of a solid block behind. Pixel art keeps 3 blocks clear, so a pull-back never ends pressed against an earlier
   build.
-- **Ending on a blast or a fall: `endAfter: 'settle:0.6'`.** After `perform`, the harness keeps recording until
-  nothing in the payoff is still moving: no lit TNT, no falling blocks, no blast debris in the air, no death animation
-  still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark. This is the
-  default for every blast or fall payoff: the motion lint warns on one that ends any other way. A blast counts as
-  moving for 44 ticks (2.2 s: the renderer's smoke and crumbs, not just the server's entities), the recording runs 2 s
-  past the mark, and `./hb pace` blocks an ending whose last 0.6 s still changes (blast smoke, debris, the camera).
+- **Ending on a blast or a fall: `endAfter: 'settle:0.5'`.** After `perform`, the harness keeps recording until
+  the payoff's action is over: no lit TNT, no falling blocks, no death animation still playing, and the last blast's
+  frame (0.3 s) done. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.5 s after that mark. Smoke,
+  particles and items drifting out of a blast never hold it (owner r:r188b46, 2026-11-11: "we blow up the TNT, wait
+  for what feels like forever, then we cut"). This is the default for every blast or fall payoff: the motion lint
+  warns on one that ends any other way. The recording runs 2 s past the mark. `./hb pace` blocks an end while the
+  recording shows a falling block, a dying mob or a blast frame in view, and its dwell check warns on any result held
+  over 1.0 s and on an end over 0.9 s after the payoff's result (a blocker over 1.2 s). Recordings made before
+  2026-11-11 23:00 carry the old `settle` (~1.9 s after the last blast): on those, end on the blast's own mark or a
+  negative settle offset (`docs/worker.md` "Ending a beat fast").
 - **The shared factories in lib/** (door_run, escalation, guess_sound, hide_seek, inside, nph, spot_wrong,
   time_lapse, pixel_art) send their packets through `A.click`, `A.breakStart`/`A.breakFinish`, `A.digNow` and
   `A.strike`. When the crosshair is already on the target (within 6 degrees), the packet goes out on the same tick as
