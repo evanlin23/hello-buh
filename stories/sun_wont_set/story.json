@@ -78,7 +78,7 @@
    "say": "The sun hasn't set in my village for three hundred DAYS.",
    "shot": "S01",
    "look": {
-    "what": "prop:sun_village",
+    "what": "entity:zombie",
     "word": "SUN"
    },
    "punch": true,
@@ -104,7 +104,7 @@
    "say": "And the zombies have been hiding under one TREE the whole time.",
    "shot": "S04",
    "look": {
-    "what": "prop:tree",
+    "what": "entity:zombie",
     "word": "ZOMBIES"
    }
   },
@@ -152,7 +152,7 @@
    "say": "Everyone thinks it's a curse. It's NOT.",
    "shot": "S07",
    "look": {
-    "what": "prop:sun_village",
+    "what": "entity:villager",
     "word": "CURSE"
    }
   },
@@ -181,7 +181,7 @@
    "shot": "S09",
    "look": [
     {
-     "what": "prop:tree",
+     "what": "entity:zombie",
      "word": "NIGHT"
     },
     {
@@ -197,10 +197,7 @@
    "text": "Me? I haven't slept / in 300 days / EITHER. / I'm not even TIRED!",
    "say": "Me? I haven't slept in three hundred days either. I'm not even TIRED!",
    "shot": "S10",
-   "look": {
-    "what": "item:white_bed",
-    "word": "TIRED"
-   },
+   "look": false,
    "note": "a plant, said proudly: the white bed in his hand (item name showing), never placed, next to Grandpa's red bed"
   },
   {
@@ -272,11 +269,11 @@
      "word": "DOWN"
     },
     {
-     "what": "prop:tree",
+     "what": "entity:zombie",
      "word": "OUT"
     },
     {
-     "what": "prop:grandpa_door",
+     "what": "entity:zombie",
      "word": "DOOR"
     }
    ],
@@ -436,7 +433,12 @@
  ],
  "props": {
   "sun_village": {
-   "note": "the square seen west toward the sun and Grandpa's cottage"
+   "at": [
+    -17,
+    6,
+    0
+   ],
+   "note": "Grandpa's cottage on the west rise, the sun behind it"
   },
   "lever": {
    "block": "lever",
@@ -449,7 +451,7 @@
   "tree": {
    "at": [
     27,
-    6,
+    2,
     2
    ],
    "h": 8

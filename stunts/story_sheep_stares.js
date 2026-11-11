@@ -334,7 +334,8 @@ function groundAt (ctx, x, z) {
   for (let y = 120; y > 40; y--) {
     const b = bot.blockAt(new ctx.Vec3(Math.floor(x), y, Math.floor(z)))
     if (!b) continue
-    if (b.boundingBox !== 'block' || /_leaves$|_log$|fence|lantern|torch|campfire|^barrier$|_slab$|_stairs$|planks$/.test(b.name)) { if (b.name === 'farmland' || b.name === 'dirt_path') return y; continue }
+    const low = y < F + 3   // a porch floor, a step or a path slab is ground; a roof (higher) is not
+    if ((b.boundingBox !== 'block' && !(low && /_slab$|_stairs$/.test(b.name))) || (!low && /_slab$|_stairs$|planks$/.test(b.name)) || /_leaves$|_log$|fence|lantern|torch|campfire|^barrier$/.test(b.name)) { if (b.name === 'farmland' || b.name === 'dirt_path') return y; continue }
     return y
   }
   return 70
