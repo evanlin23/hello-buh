@@ -5,9 +5,9 @@ const MID = ['.KK...KK.', 'KRRK.KRRK', 'KRRRKRRRK', 'KRRRRRRRK', '.KRRRRRK.', '.
 module.exports = pixelArt({
   name: 'heart_art',
   stages: [
-    { art: ['KK.KK', 'KRKRK', '.KRK.', '..K..'], order: 'random' },
-    { art: MID, order: 'random' },
-    { art: pixelArt.upscale(MID, 3), order: 'random', tpb: 1.1 }
+    { art: ['KK.KK', 'KRKRK', '.KRK.', '..K..'], order: 'random', patches: true },
+    { art: MID, order: 'random', patches: true },
+    { art: pixelArt.upscale(MID, 3), order: 'random', patches: true, tpb: 1.1 }
   ],
   palette: { K: 'black_wool', R: 'red_wool' },
   wall: 'white_wool',
