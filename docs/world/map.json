@@ -1407,17 +1407,34 @@
      ]
     },
     {
+     "id": "buh_yard_cold",
+     "since": 3400,
+     "what": "Buh's yard after he left: the chimney's campfire out, the eight lanterns (gate posts, yard, cottage) gone dark (removed). Before day 3400 the yard is lit as Good Boy built it",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -266 80 -358 campfire[lit=false]",
+      "/setblock -269 73 -365 air",
+      "/setblock -267 72 -365 air",
+      "/setblock -270 72 -362 air",
+      "/setblock -266 72 -362 air",
+      "/setblock -270 72 -357 air",
+      "/setblock -270 73 -372 air",
+      "/setblock -266 73 -372 air",
+      "/setblock -270 72 -370 air"
+     ]
+    },
+    {
      "id": "kid_house",
      "since": 3450,
-     "what": "the Bell in the Window family's two-storey stilt house on a plank boardwalk over the sea under Buh's yard's south-east bank: its north wall at z -340, his upstairs window (1 x 2, y 66-67) at x -263 facing north at the bank, a porch roof (walking surface y 66) east of it, the upstairs door east, the boardwalk at y 62. Origin O = (-263, 62, -340), bell_window's set-relative (0, 0, 0). The bell set's live gate may move it in half-blocks",
+     "what": "the Bell in the Window family's two-storey stilt house on a plank boardwalk over the sea under Buh's yard's south-east bank: its north wall at z -340, his upstairs window (1 x 2, y 66-67) at x -263 facing north at the bank, a porch roof (walking surface y 66) east of it, the upstairs door east at O + (4, 4, 2), the boardwalk at y 62. Inside 7 x 7 on both floors (the owner's interior minimum); the ground floor is y 63-64, the upstairs floor y 65. Origin O = (-263, 62, -340), bell_window's set-relative (0, 0, 0). The bell set's live gate may move it in half-blocks",
      "do": "cmds",
      "cmds": [
       "/fill -272 62 -346 -252 62 -328 spruce_planks replace water",
       "/fill -264 62 -343 -262 62 -343 cobblestone",
-      "/fill -266 40 -340 -266 61 -340 oak_log replace water",
-      "/fill -260 40 -340 -260 61 -340 oak_log replace water",
-      "/fill -266 40 -333 -266 61 -333 oak_log replace water",
-      "/fill -260 40 -333 -260 61 -333 oak_log replace water",
+      "/fill -267 40 -340 -267 61 -340 oak_log replace water",
+      "/fill -259 40 -340 -259 61 -340 oak_log replace water",
+      "/fill -267 40 -332 -267 61 -332 oak_log replace water",
+      "/fill -259 40 -332 -259 61 -332 oak_log replace water",
       "/fill -263 40 -336 -263 61 -336 oak_log replace water",
       "/fill -272 40 -346 -272 61 -346 oak_log replace water",
       "/fill -252 40 -346 -252 61 -346 oak_log replace water",
@@ -1426,22 +1443,22 @@
       "/fill -262 40 -346 -262 61 -346 oak_log replace water",
       "/fill -252 40 -337 -252 61 -337 oak_log replace water",
       "/fill -272 40 -337 -272 61 -337 oak_log replace water",
-      "/fill -266 63 -340 -260 70 -333 spruce_planks hollow",
-      "/fill -266 63 -340 -266 70 -340 stripped_spruce_log",
-      "/fill -260 63 -340 -260 70 -340 stripped_spruce_log",
-      "/fill -266 63 -333 -266 70 -333 stripped_spruce_log",
-      "/fill -260 63 -333 -260 70 -333 stripped_spruce_log",
-      "/fill -265 65 -339 -261 65 -334 spruce_planks",
+      "/fill -267 62 -340 -259 70 -332 spruce_planks hollow",
+      "/fill -267 63 -340 -267 70 -340 stripped_spruce_log",
+      "/fill -259 63 -340 -259 70 -340 stripped_spruce_log",
+      "/fill -267 63 -332 -267 70 -332 stripped_spruce_log",
+      "/fill -259 63 -332 -259 70 -332 stripped_spruce_log",
+      "/fill -266 65 -339 -260 65 -333 spruce_planks",
       "/fill -263 66 -340 -263 67 -340 air",
-      "/fill -265 63 -333 -265 64 -333 glass_pane",
-      "/fill -261 63 -333 -261 64 -333 glass_pane",
-      "/setblock -263 63 -333 spruce_door[half=lower,facing=south]",
-      "/setblock -263 64 -333 spruce_door[half=upper,facing=south]",
-      "/fill -260 66 -338 -260 66 -338 spruce_door[half=lower,facing=east]",
-      "/setblock -260 67 -338 spruce_door[half=upper,facing=east]",
-      "/fill -267 71 -341 -259 71 -332 dark_oak_slab[type=bottom]",
-      "/fill -262 65 -342 -256 65 -341 spruce_slab[type=top]",
-      "/fill -259 65 -340 -256 65 -336 spruce_slab[type=top]",
+      "/fill -265 63 -332 -265 64 -332 glass_pane",
+      "/fill -261 63 -332 -261 64 -332 glass_pane",
+      "/setblock -263 63 -332 spruce_door[half=lower,facing=south]",
+      "/setblock -263 64 -332 spruce_door[half=upper,facing=south]",
+      "/setblock -259 66 -338 spruce_door[half=lower,facing=east]",
+      "/setblock -259 67 -338 spruce_door[half=upper,facing=east]",
+      "/fill -268 71 -341 -258 71 -331 dark_oak_slab[type=bottom]",
+      "/fill -263 65 -342 -256 65 -341 spruce_slab[type=top]",
+      "/fill -258 65 -340 -256 65 -336 spruce_slab[type=top]",
       "/setblock -262 66 -335 lantern",
       "/setblock -264 63 -335 lantern"
      ]
@@ -2430,7 +2447,8 @@
   "buh_yard": {
    "place": "saltmouth",
    "needs": [
-    "buh_yard"
+    "buh_yard",
+    "buh_yard_cold"
    ],
    "since": 3400,
    "what": "Buh's empty yard on the bank above Saltmouth's south-east shore: the cottage, the fence, the old oak, no dog"
