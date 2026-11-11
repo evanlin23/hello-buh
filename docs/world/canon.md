@@ -84,7 +84,7 @@ coast at Tidewater.
 | **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing a lagoon and, across it, the low headland over the stronghold (Gullwick). Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
 | **Gullwick** | (-2301, 62, -566): the dock's end | A shore hamlet on the low headland west of Leo's lagoon, **over the world's only stronghold** (its pieces (-2313..-2272, -600..-534); never said, never dug on screen): the library hut, the dock flush at sea level pointing north-west, an empty oak boat. Grandpa (Gullwick) breaks the librarian's lectern here. | The Walk (4000, planned) |
 | **Grandma's Island** | (-2374, 62, -630) | A natural sand-and-grass islet (13 x 17, at sea level) 92 blocks north-west of Gullwick's dock across open cold ocean (never frozen: L08 holds by vanilla). Grandma's cottage with one lit window facing the dock, her boat on the beach, since about day 350. | The Walk (4000, planned) |
-| **Highwall** | (-1594, 133, -524): the plaza bell | The walled village on a snowy plateau in the middle of the White (y 133-141), 40 blocks off the line of the old road between Frostgate and Ravenford. A stone-brick wall 40 high on day 3700 (top ~y 175, the road's landmark), no gate; a player's trading hall (12 x 52, 100 cells) on level ground outside its north side. No rendered Short within 450 blocks (Ravenford 452 west, Frostgate 812 east). | The Wall Grows (3700, planned) |
+| **Highwall** | (-1594, 133, -524): the plaza bell | The walled village on a snowy plateau in the middle of the White (y 133-141), 40 blocks off the line of the old road between Frostgate and Ravenford. A stone-brick wall 40 high on day 3700 (top y 173, the road's landmark), no gate; a player's trading hall (12 x 52, 100 cells) on level ground outside its north side. No rendered Short within 450 blocks (Ravenford 452 west, Frostgate 812 east). | The Wall Grows (3700, planned) |
 | **Larkfield** | (-360, 116, -712): the bell | Jonah's village on the High Meadow's north-east top (built, not generated; a 90 x 90 box (-405..-316, -757..-668)). From day 4500 a torch on every sturdy top: **the glowing village**, seen from Dog Hill as a lit rim on the plateau's edge 185-190 blocks south-west. Every block is 181+ from D and 185+ from Hushwell's well, outside Dog on the Hill's, Good Boy's and Light Sleeper's render distance. | Six Thousand Torches (4500, planned) |
 | **The Portal Cottage** | (-128, 85, -940): the cottage | A spruce cottage on the hill's south-east slope north of Hushwell, its garden looking down to the plaza (the boxed bell in view). The cellar, sunk under it on a ladder shaft, has a lit Nether portal in its east wall, a barrel of 25 years of barters ("Grandpa's Gifts") and obsidian patching the walls. the grandson and his grandma live here (not Buh's family). | Gold for the Portal (9300) |
 
@@ -238,13 +238,13 @@ follow any Short.
     because Buh is gone.
 13. **The glowing village** (plant: Six Thousand Torches x Dog on the Hill). Larkfield is on the High Meadow's
     north-east top, 185-190 blocks south-west of Dog Hill, just past what Dog on the Hill's and Good Boy's renders
-    draw (render distance 10: 160-176 blocks). From day 4500 its torches are a permanent stamp: every later night shot
+    draw (render distance 10: 160-176 blocks). From day 4501 its torches are a permanent stamp (on 4500 the story dresses them itself): every later night shot
     from the hilltop with render distance 13+ shows the High Meadow's rim glowing on the south-west skyline. Torches'
-    S04 POV from Larkfield's north-east corner sees Pip and the dog on the hilltop, a pale speck 185 blocks out
+    S04 POV from Larkfield's north-east corner sees Pip and the dog on the hilltop, a speck 185 blocks out
     (cameo `pip_and_dog`). Jonah walks away the way Buh did; Pip sits with the dog who's still waiting.
 14. **The wall on the old road** (plant: The Wall Grows). Highwall stands on a plateau in the middle of the White,
     beside the old road between Frostgate and Ravenford: the road Buh walked to Grandpa's (~1550, when there was no
-    wall: it is 40 high on day 3700, one block a morning). Its top, ~y 175, is the highest thing in the White: a later
+    wall: it is 40 high on day 3700, one block a morning). Its top, y 173, is the highest thing in the White: a later
     story on the road can show it on the skyline, at 40 or more, never lower. No rendered Short can see it.
 15. **Grandma's island and the stronghold** (plant: The Walk x One More Eye x Put Back). Gullwick, where Grandpa
     breaks the lectern 300 times, stands on the low headland over the world's only stronghold, 100 blocks across the
@@ -316,7 +316,7 @@ of Hushwell, the lighthouse south of it, the Ridge's tower east of Ravenford.
 | `blue_flock`: Ravenford's blue sheep in the pasture by the east gate | Ravenford | 1900 on |
 | `buh_yard`: Buh's empty yard, cottage and old oak on the bank over Saltmouth's south-east shore, no dog | Saltmouth's shore and boardwalk | 3400 on (The Bell in the Window, 3800) |
 | `larkfield_glow`: the High Meadow's north-east rim glowing with 6,000 torches | Dog Hill and Hushwell's north road at night, south-west, 185+ blocks (render distance 13+) | 4500 on |
-| `pip_and_dog` from Larkfield: a pale speck on the hilltop 185 blocks north-east | Larkfield's north-east corner (Six Thousand Torches S04) | 4500 on |
+| `pip_and_dog` from Larkfield: a speck on the hilltop 185 blocks north-east (the dog and Pip side by side) | Larkfield's north-east corner (Six Thousand Torches S04) | 4500 on |
 
 ## How a story uses the world
 1. **Pitch** (`/story-write`): name the place (from `node scripts/world.js list`, or a new one in empty land) and

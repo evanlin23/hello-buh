@@ -1984,8 +1984,8 @@
    "stamps": [
     {
      "id": "six_thousand_torches",
-     "since": 4500,
-     "what": "a torch on every sturdy top in the 90 x 90 box (about 6,000-6,300): fences, roofs, hay, Jonah's 9 x 9 plot. Permanent: from Dog Hill at night the High Meadow's north-east rim glows on the south-west skyline, 185-190 blocks out (needs renderDistance 13+ there). Needs Larkfield's houses as pieces first (Six Thousand Torches' claim of its pieces); the stamp skips the story's growing row and door spot",
+     "since": 4501,
+     "what": "a torch on every sturdy top in the 90 x 90 box (about 6,000-6,300): fences, roofs, hay, Jonah's 9 x 9 plot. Permanent: from Dog Hill at night the High Meadow's north-east rim glows on the south-west skyline, 185-190 blocks out (needs renderDistance 13+ there). Needs Larkfield's houses as pieces first (Six Thousand Torches' claim of its pieces); on day 4500 itself the story dresses the box (its own skip list, and none in its flashback)",
      "do": "torches",
      "box": [
       -405,
@@ -2321,7 +2321,7 @@
     "hut"
    ],
    "since": 4300,
-   "what": "the dog and Pip sitting together on the hilltop at night (from Hushwell; from Larkfield's north-east rim, a pale speck 185 blocks north-east)"
+   "what": "the dog and Pip sitting together on the hilltop at night (from Hushwell; from Larkfield's north-east rim, a speck on the hilltop 185 blocks north-east, the dog and Pip side by side)"
   },
   "boxed_bell": {
    "place": "hushwell",
@@ -2440,7 +2440,7 @@
    "needs": [
     "six_thousand_torches"
    ],
-   "since": 4500,
+   "since": 4501,
    "what": "Larkfield's 6,000 torches: the High Meadow's north-east rim glowing on the skyline south-west of Dog Hill at night (from the hilltop, Hushwell's north road; 185+ blocks: renderDistance 13+)"
   }
  }
