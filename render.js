@@ -1676,6 +1676,9 @@ function bodyAfterDeath (d, t) {
 // bounce. A synced position snaps. A pickup ('collect') flies the item to the collector over 3 ticks
 // (ItemPickupParticle), then it's gone: they froze at the spawn and blinked out (fortune f1613).
 const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'lingering_potion', 'experience_bottle', 'potion'])
+// the throwables whose hit on a mob plays the red flash (Snowball / ThrownEgg / ThrownEnderpearl.onHitEntity: hurt(..., 0));
+// a potion or XP bottle breaks without hurting anyone (underdog_heal's weakness potion flashed the zombie villager red)
+const HIT_FLASH = new Set(['ender_pearl', 'snowball', 'egg'])
 // the living entity (id) whose hitbox the step from p by v passes through, or null: ProjectileUtil.getEntityHitResult
 // tests the mob's box inflated by 0.3 (a 0.6-wide humanoid: 0.6 a side). For the motion fixes' projectile hits.
 const NOT_LIVING = /^(item|experience_orb|falling_block|moving_block|egg|snowball|arrow|spectral_arrow|trident|ender_pearl|splash_potion|lingering_potion|experience_bottle|firework_rocket|armor_stand|painting|item_frame|glow_item_frame|marker|text_display|block_display|item_display|interaction|boat|minecart|lightning_bolt|player)$/
@@ -1749,7 +1752,7 @@ function simulateDrops (world) {
         // (ThrownEgg / Snowball.onHitEntity: hurt(..., 0), so the red flash still plays). The cast is Invulnerable and
         // sends no damage event, and the flight here ignored mobs: names_in_the_woods' eggs flew through Hugo and Pia
         // with no red ("the villagers dont have hte damage red when theyre hit")
-        if (MOTION_FIXES && vx * vx + vy * vy + vz * vz > 1e-6) {
+        if (MOTION_FIXES && HIT_FLASH.has(rows[0][2]) && vx * vx + vy * vy + vz * vz > 1e-6) {
           if (owner && owner.size) { const still = insideOf(ENT.get(tick), id, [x, y, z]); for (const o of [...owner]) if (!still.has(o)) owner.delete(o) }
           const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz], owner)
           if (hit !== null) {
@@ -1780,7 +1783,7 @@ function simulateDrops (world) {
     }
     // motion fixes: a projectile the server removed in flight (its last rows still flying) hit something the flight
     // above didn't reach in time (the server's own spawn point and tick differ a little): the mob ahead within 3 steps
-    if (thrown && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
+    if (thrown && HIT_FLASH.has(rows[0][2]) && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
       let q = [x, y, z], w = [vx, vy, vz]
       for (let k = 0; k < 3; k++) {
         const hit = projectileHit(ENT.get(t1), id, q, w)
