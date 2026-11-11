@@ -632,6 +632,12 @@ STANDARDS.md in the same commit.
   place, seen again: the same spot, the same build, the same thing left behind (Good Boy's last login is Dog on the
   Hill's first frame). Every new story looks for one: set it where an earlier story happened, or leave something
   that a later story will show on the skyline.
+- **Owner, 2026-11-11, on batch 3's first premise round: "theyre all ok, but we should review further... im not exactly
+  sure how these were created, but i want to be more creative".** Premises are made in two phases: diverge first
+  (several writers, each with one lens: strange narrators, player habits seen from the other side, game systems as
+  mysteries, new moods; no other rules), then a cold-read gate (keep only ideas a fresh player can't guess at the
+  midpoint, or guesses wrong), and only then the house rules, vanilla, place and build checks and the critic. The
+  owner sees a ranked top 8 plus a wild-cards list, and how each idea was made.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
