@@ -102,7 +102,7 @@ module.exports = {
 
     // 1. the zombie: walking at me from frame 0 (r:r0f3da0: the subject in motion by 0.5 s; the Short starts once it
     // moves: a fresh zombie stands ~1 s before it targets me)
-    await ctx.cmd(`/summon zombie ${x - 6.5} ${F} ${z + 0.5} {Tags:["fm_zombie"],PersistenceRequired:1b,Rotation:[-90f,0f]}`)
+    await ctx.cmd(`/summon zombie ${x - 4.8} ${F} ${z + 0.5} {Tags:["fm_zombie"],PersistenceRequired:1b,Rotation:[-90f,0f]}`)
     const zb = await grab('fm_zombie', 'zombie')
     const z0 = zb.position.clone()
     // the skeleton waits off to the right (north), frozen until its turn (it would shoot me in the back)
@@ -110,7 +110,7 @@ module.exports = {
     const sk = await grab('fm_skel', 'skeleton')
     for (let i = 0; i < 60 && zb.position.distanceTo(z0) < 0.25; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }
     ctx.mark('first')
-    for (let i = 0; i < 40 && dist(zb) > 3.4; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // framed under the centred popup
+    for (let i = 0; i < 12 && dist(zb) > 3.4; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // framed under the centred popup; it opens by ~0.6 s (pace r0: a far zombie read as a still opener)
     ctx.log('zombie at', dist(zb).toFixed(2), 'burning', burning(zb))
     await FM.ask(ctx, { k: 1, tag: 'fm_zombie', hover: ['Deny'], entity: zb, A })
     await kill(zb)
