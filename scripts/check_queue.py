@@ -26,6 +26,7 @@ FAMILIES = [
     ("cells", lambda n: n.startswith("cells_")),
     ("mislabel", lambda n: n.startswith("mislabel_")),
     ("race", lambda n: n.startswith("race_")),   # format race (lib/race.js, r:rbe60ef)
+    ("interrupt", lambda n: n.startswith("interrupt_")),   # owner's pick 2026-11-11 (r:re05b89): a normal video, a mob interrupts
 ]
 
 
