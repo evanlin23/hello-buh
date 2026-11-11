@@ -36,9 +36,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "60490499c936"
+   "aligned_wav": "60490499c936",
+   "gap": 0
   },
   "L02": {
    "who": "N",
@@ -81,9 +81,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 3.785,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "7635ae4ec9de"
+   "aligned_wav": "7635ae4ec9de",
+   "gap": 0
   },
   "L03": {
    "who": "N",
@@ -116,9 +116,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 8.14,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "fa165b1754ae"
+   "aligned_wav": "fa165b1754ae",
+   "gap": 0
   },
   "L04": {
    "who": "N",
@@ -156,9 +156,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 10.865,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "98921e05a365"
+   "aligned_wav": "98921e05a365",
+   "gap": 0
   },
   "L05": {
    "who": "N",
@@ -201,9 +201,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 14.585,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "32aafbc4f587"
+   "aligned_wav": "32aafbc4f587",
+   "gap": 0
   },
   "L06": {
    "who": "N",
@@ -236,9 +236,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 18.977,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "738fac878b29"
+   "aligned_wav": "738fac878b29",
+   "gap": 0
   },
   "L07": {
    "who": "N",
@@ -281,9 +281,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 22.345,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "bab4b7540dcd"
+   "aligned_wav": "bab4b7540dcd",
+   "gap": 0
   },
   "L09": {
    "who": "N",
@@ -390,17 +390,17 @@
   "L13": {
    "who": "Buh",
    "text": "I'll be right BACK.",
-   "dur": 1.9,
-   "onset": 0.78,
-   "end": 1.48,
+   "dur": 1.47,
+   "onset": 0.3,
+   "end": 1.0,
    "chunks": [
     [
-     0.78,
-     1.02
+     0.3,
+     0.52
     ],
     [
-     1.06,
-     1.48
+     0.56,
+     1.0
     ]
    ],
    "captions": [
@@ -414,7 +414,7 @@
    "beat": "L13",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "e1fc1790121a"
+   "aligned_wav": "257698417c77"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -521,7 +521,7 @@
     "L13"
    ],
    "file": "beat_L13.wav",
-   "dur": 1.9,
+   "dur": 1.47,
    "offsets": [
     0.0
    ],
@@ -535,5 +535,5 @@
    "rejected": []
   }
  },
- "total": 37.08
+ "total": 36.65
 }

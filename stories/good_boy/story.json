@@ -140,5 +140,14 @@
  "hotbar_note": "Buh's hotbar (STANDARDS 3.6): his dog things first (bones, a lead, food, a name tag), then the ridiculous (milk, 67 eggs, a cake). Not on screen in this story: every POV is the wolf's (hud: false).",
  "one_take": [
   "N"
+ ],
+ "requests": [
+  {
+   "id": "buh_L13",
+   "lines": [
+    "L13"
+   ],
+   "direction": "[A sixteen-year-old boy, low voice, choked up]"
+  }
  ]
 }
