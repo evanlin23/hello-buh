@@ -39,7 +39,7 @@ module.exports = {
     // at rest on the log (sway off while digging)
     speed: [['dig2:0.5', 'dig2:2.3', 'cut']],
     dropAt: 'reveal',
-    punch: [['reveal', 0, 1.06]],
+    punch: [['reveal', 0, 1.06]], flash: [['reveal', 0, 0.3]],   // the payoff's picture change (pace: the turn itself starts before the mark)
     keySounds: ['friend_vanish'],
     // room tone from frame 1; the music dips before the reveal and an impact lands on it (the game track is busy:
     // breaks, pops, building noise)
