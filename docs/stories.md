@@ -504,6 +504,11 @@ STANDARDS.md in the same commit.
   pacing is the voice the owner chose: the narrator's take gate allows sentence breaks up to 0.95 s (cast `narrator`
   `max_pause.rest`). Takes are still never trimmed, and a longer pause, a breath or a wrong word is still re-taken. The
   opening rule (no gap over 0.6 s in the first 5 s) is unchanged.
+- **Owner, 2026-11-11, after watching the held cuts: "The moms voice is too similar to narrator, need a new voice.
+  Grandma sounds like a dude still. Can you explore options?"** A character voice must be told apart from the narrator
+  (Pip, a bright kid) at first hearing, and must read as its character's age and sex: Mom is recast (Sulafat sounds too
+  close to Pip) and Grandma recast again (Vindemiatrix still reads as a man), each chosen by the owner from an audition
+  of candidates saying the story's real line, measured against Pip (pitch and speaker distance).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

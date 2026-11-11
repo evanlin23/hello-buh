@@ -95,7 +95,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
-   hearing (a grandma sounds like an older woman, not gravelly). Check: review (listen). r:r4b4332 r:raf72e0 r:rf8060c
+   hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
+   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
+   (listen), speaker distance to the narrator. r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
