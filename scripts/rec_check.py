@@ -236,7 +236,7 @@ def sight_findings_msgs(res):
         if f.get("source") == "inferred":
             lvl = "WARN"
             msg += " (a place guessed from a swing and a new block: K.place marks its own)"
-        out.append((lvl, f["tick"], msg + ": stand where the eye sees it, or let K.dig / K.place pick the face (STANDARDS 3b.4)"))
+        out.append((lvl, f["tick"], msg + ": stand where the eye sees it, or let A.place / A.dig (lib/act.js) or K.dig / K.place pick the face (STANDARDS 3b.4)"))
     return out
 
 
