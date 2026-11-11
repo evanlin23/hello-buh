@@ -37,8 +37,10 @@ module.exports = {
     caption: CAPTION, red: 'already',
     chatScale: 5,   // the advancement flood readable on a phone (independent review round 1; vanilla GUI 3 was ~16 px glyphs)
     startAt: 'dig1:0.55',   // frame 0 = his first advancement in chat and his tree going (r:r0f3da0: the joke's subject at frame 0)
-    endAfter: 'reveal:0.9',
-    // no cut: the second log plays whole (owner r:r52f94c: no cut mid-action; a bare-hand dig is one action)
+    endAfter: 'reveal:0.7',
+    // fast cuts (r:r188b46): 0.4 s after my first log is in the hotbar (the collect, log1 + 0.5) straight to the second
+    // dig; never inside a dig (r:r52f94c: the second log plays whole). bro's warp and his gear change fall in the cut
+    speed: [['log1:0.9', 'dig2:-0.05', 'cut']],
     dropAt: 'reveal',
     punch: [['reveal', 0, 1.06]], flash: [['reveal', 0, 0.3]],   // the payoff's picture change (pace: the turn itself starts before the mark)
     keySounds: ['friend_vanish'],
@@ -135,11 +137,12 @@ module.exports = {
     broRun = null
     const tl2 = FR.timeline(ctx, K, [
       [0, () => FR.buildNoise(ctx, { n: 10, every: 2, vol: [0.25, 0.45] })],
-      [3, adv('Suit Up')],
-      [24, adv('Hot Stuff')],
-      [42, adv("Isn't It Iron Pick")],
+      // (dig2 starts ~19 ticks in, after the warp: the edit cuts the time before it, so the chat waits for the dig)
+      [22, adv('Suit Up')],
+      [36, adv('Hot Stuff')],
+      [50, adv("Isn't It Iron Pick")],
       [22, () => FR.buildNoise(ctx, { n: 12, every: 2, vol: [0.45, 0.65] })],
-      [58, adv('Diamonds!')],
+      [64, adv('Diamonds!')],
       [44, () => FR.buildNoise(ctx, { n: 10, every: 2, vol: [0.65, 0.8], mats: ['wood', 'wood', 'stone'] })]
     ])
     // bro, off screen: warped far out of view (east of me, behind my shoulder, over 8 blocks away: a jump nearer reads
