@@ -41,6 +41,10 @@ adds songs.
   one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
   Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
   as soon as the payoff comes" / "I would prefer like 30 seconds at least".
+- **Gate the final mix, not the no-song render**: `./hb mixcheck <name>` builds the exact NCS mix publish makes and
+  runs the publish gate's `./hb pace` on it (`./hb review` runs it too, as a blocker). Under the music, game sounds
+  stop counting as hits: a payoff with no hit and a stretch carried only by game sounds both BLOCK at publish. Fixes:
+  the drop on the payoff, a 0.4 s dip + impact, a picture or caption beat in any quiet stretch. (lessons 2026-11-11)
 - Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
   anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
 
