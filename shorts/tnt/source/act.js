@@ -14,6 +14,7 @@
 //   await A.useOn(entity, o)     right-click a mob (dye, shears, a name tag, a lead, a bucket on a cow)
 //   await A.hit(entity, o)       left-click a mob
 //   await A.aimAt(target, o)     just the turn: a Vec3 point, { block: pos }, or an entity
+//   await A.turnTo(to, o)        a look round to angles { yaw, pitch } or a point, governed (o.hold: ticks resting on it)
 //   A.snake(cells, row, col)     an order for many targets that turns the least: rows, every other one reversed
 //   A.roomBehind(n) / await A.back(ticks)   walking backwards never ends within 1 block of a solid block behind
 // Options for every action: o.max ticks to land the turn (40), o.delay ticks since the last action (vanilla: 4 for a
@@ -32,6 +33,7 @@ const aimAngles = (eye, p) => {
   return { yaw: Math.atan2(-dx, -dz), pitch: Math.atan2(dy, Math.hypot(dx, dz)) }
 }
 const flo = (p) => ({ x: Math.floor(p.x), y: Math.floor(p.y), z: Math.floor(p.z) })
+const FACE_N = [[0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1], [-1, 0, 0], [1, 0, 0]]   // the protocol's faces 0-5
 const DIRNUM = { '0,-1,0': 0, '0,1,0': 1, '0,0,-1': 2, '0,0,1': 3, '-1,0,0': 4, '1,0,0': 5 }
 
 // many targets in an order that turns the least: grouped into rows by row(c), each row along col(c), every other
@@ -121,7 +123,7 @@ function act (ctx, opts = {}) {
       let on
       if (isEnt) on = SIGHT.crosshairBox([e.x, e.y, e.z], c.yaw, c.pitch, SIGHT.entityBox(target), shapes, { reach: o.reach ?? 6, shrink: 0.05 }).on
       else if (!blks) on = true
-      else on = SIGHT.crosshair([e.x, e.y, e.z], c.yaw, c.pitch, blks.map(b => [b.x, b.y, b.z]), shapes, { reach: o.reach ?? 6, shrink: 0.05, skip: o.skip }).on
+      else on = SIGHT.crosshair([e.x, e.y, e.z], c.yaw, c.pitch, blks.map(b => [b.x, b.y, b.z]), shapes, { reach: o.reach ?? 6, shrink: o.shrink ?? 0.05, skip: o.skip }).on
       if (!on && o.deg) {
         const w = aimAngles(e, point())
         on = Math.hypot(MOTION.wrap(w.yaw - c.yaw) * Math.cos(c.pitch), w.pitch - c.pitch) <= o.deg * MOTION.DEG
@@ -155,7 +157,12 @@ function act (ctx, opts = {}) {
     // A turn that doesn't land in o.max (20) ticks acts anyway with an 'off_aim' mark and a log line (o.strict: throws),
     // so the aim check in ./hb check blocks the take. Returns a Promise; the fast path sends before returning.
     gate (target, fn, o = {}) {
-      const g = { deg: GATE_DEG, tol: Infinity, max: 20, strict: false, ...o }
+      // a block counts as on when the crosshair's ray reaches it first, edge included (shrink 0: what the sight check,
+      // scripts/rec_sight.js, tests). With the aimers' 0.05 margin, lapse_statue's pillar-top clicks on grazing top faces
+      // - on the face, nowhere near the block's centre - missed the fast path, waited, and went out 1-3 ticks later off
+      // the crosshair (the bot falling from its jump, the view on the next block) and out of order (a block clicked onto a
+      // support whose own click was still waiting: refused, wrong blocks)
+      const g = { deg: GATE_DEG, tol: Infinity, max: 20, strict: false, shrink: 0, ...o }
       if (o.also) { const f0 = fn; fn = () => { f0(); o.also() } }   // what goes with the action (its sound, a mark)
       if (A.onTarget(target, g)) { fn(); return Promise.resolve(true) }
       if (g.turn === false && !g.max) return Promise.resolve(A._offAim(target, g, fn))
@@ -169,13 +176,16 @@ function act (ctx, opts = {}) {
       return false
     },
     // a right-click on a block face as a raw packet (ref: the block clicked, dir: the protocol face, cursor on it)
+    // (the gate's point is the middle of the clicked face, not the block's centre: from above a block, a crosshair on
+    // its top face is 10-20 deg off its centre)
     click (ref, dir, cursor = [0.5, 0.5, 0.5], o = {}) {
-      const r = flo(ref)
+      const r = flo(ref), n = FACE_N[dir] || [0, 0, 0]
+      const point = o.point || new ctx.Vec3(r.x + 0.5 + n[0] * 0.5, r.y + 0.5 + n[1] * 0.5, r.z + 0.5 + n[2] * 0.5)
       return A.gate(o.target || { block: r }, () => {
         bot._client.write('block_place', { hand: 0, location: { x: r.x, y: r.y, z: r.z }, direction: dir, cursorX: cursor[0], cursorY: cursor[1], cursorZ: cursor[2], insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: gated
         if (o.swing) bot.swingArm()
         A.lastUse = now()
-      }, o)
+      }, { ...o, point })
     },
     // a break's start / finish packets (status 0 / 2), gated on the block
     breakStart (pos, face = 1, o = {}) { const p = flo(pos); return A.gate(o.target || { block: p }, () => bot._client.write('block_dig', { status: 0, location: { x: p.x, y: p.y, z: p.z }, face, sequence: 0 }), o) },   // motion-ok: gated
@@ -271,6 +281,21 @@ function act (ctx, opts = {}) {
     // a factory's own per-tick loop (a walk that looks where it goes): one governed tick of the turn toward a point
     // (Vec3) or angles ({ yaw, pitch }); the caller waits the tick
     view (to) { return view(to && to.x !== undefined ? aimAngles(eye(), to) : to) },
+    // a look round with no action on it: the governed, eased turn to angles ({ yaw, pitch }, mineflayer radians) or a
+    // point (Vec3), until the view is within o.tol rad (0.02) of it or o.max ticks (60) pass; then o.hold ticks resting
+    // on it. -> true when it landed (r:r38374d: never a raw bot.look / ctx.easeLook for a big turn)
+    async turnTo (to, o = {}) {
+      const want = () => to && to.x !== undefined ? aimAngles(eye(), to) : to
+      const tol = o.tol ?? 0.02, max = o.max ?? 60
+      let ok = false
+      for (let k = 0; k < max; k++) {
+        const w = want(), c = cur()
+        if (Math.hypot(MOTION.wrap(w.yaw - c.yaw), w.pitch - c.pitch) < tol) { ok = true; break }
+        await step(w)
+      }
+      for (let k = 0; k < (o.hold ?? 0); k++) await step(want())
+      return ok
+    },
     snake,
     roomBehind: (n = 4) => roomBehind(bot.entity.position, bot.entity.yaw, solid, n),
     // walk backwards for up to `ticks`, the view kept (o.look: a point to keep the crosshair on, governed). It never

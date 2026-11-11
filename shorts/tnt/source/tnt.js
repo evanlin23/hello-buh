@@ -11,7 +11,8 @@ module.exports = {
     // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
     speed: [['lit:0.5', 'boom:-0.4', 1.5]],
-    sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.4 }]],
+    // (mixcheck r1: 2.95 s after the boom with no new hit under the NCS bed: a second blast of the chain at +1.4 s)
+    sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['boom', 'boom:1.4', { gain: 0.8 }], ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.4 }]],
     flash: [['boom', 0, 0.5], ['crater', 0, 0.35]],   // pace r2: the crater reveal needs a picture change on the mark (the look-down is still easing)
     shake: [['boom', 0, 10]], punch: [['crater', 0, 1.08]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 
@@ -46,7 +47,7 @@ module.exports = {
     await ctx.tpCheck(x + 0.5, floor + 1, this.pz + 6.5, 180, 10)
     await ctx.cmd('/effect give @s instant_health 1 10 true')
     await ctx.cmd('/gamemode survival')
-    ctx.select(2)
+    ctx.select(1)   // flint and steel from frame 1 (review: a TNT in the hand read as a stray 76th block)
     await bot.waitForTicks(20)
     return { x, y: floor, z }
   },
@@ -73,24 +74,45 @@ module.exports = {
     let boomed = false
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.once('explosion', onBoom)
+    // every look is paced by its size (owner r:r38374d, the whip check: on screen <= ~220 deg/s; an ease-in-out peaks at
+    // twice its average): `rate` is the average in the recording, 66 deg/s inside the fuse's x1.5 span (review: the
+    // first glance pulled back at 267 deg/s, and a glance still running when the chain went off fought the ride: a jerk)
+    const glide = (yaw, pitch, ms, rate) => {
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      const deg = Math.hypot(dy * Math.cos(pitch), pitch - bot.entity.pitch) * 180 / Math.PI
+      return ctx.easeLook(yaw, pitch, Math.max(ms, deg / rate * 1000))
+    }
     const glances = [[0.35, 0.12], [-0.3, 0.05], [0.0, 0.25], [0.25, 0.0], [-0.2, 0.15], [0.0, 0.05]]
+    let gi = 0, glance = null
     for (let i = 0; i < 120 && !boomed; i++) {
       if (i === 64) bot.setControlState('back', false)     // ~14 blocks back: far enough to watch
-      if (i % 14 === 0) ctx.easeLook(glances[(i / 14) % glances.length][0], glances[(i / 14) % glances.length][1], 450)
+      if (!glance) { const g = glances[gi++ % glances.length]; glance = glide(g[0], g[1], 450, 66).then(() => bot.waitForTicks(4)).then(() => { glance = null }) }
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false)
+    let lastBoom = ctx.tick
+    bot._client.on('explosion', () => { lastBoom = ctx.tick })
+    if (glance) await glance                                  // one look at a time
     // the chain goes off: the look rides up with the blast and back down (a still 2 s wait was lint's 'nobody moves')
-    await ctx.easeLook(0.12, 0.3, 600)
-    await ctx.easeLook(-0.1, 0.1, 700)
-    await ctx.easeLook(0, 0.05, 500)
+    await glide(0.12, 0.3, 600, 100)
+    await glide(-0.1, 0.1, 700, 100)
+    await glide(0, 0.05, 500, 100)
     // walk up to the rim and look down INTO the crater (the old ending stayed level on the grass)
     bot.setControlState('forward', true); await bot.waitForTicks(14); bot.setControlState('forward', false)
     ctx.mark('crater_look')
-    await ctx.easeLook(0, -0.95, 800)
+    // the payoff settles before the Short ends (owner r:r24d99a): the look-down lands only once the last blast's
+    // rendered smoke and crumbs are gone (lib/settle.js: 44 ticks) and no primed TNT is left; the wait tilts the view
+    // down gently (no frozen hold), then the look into the crater, one short pan along it that lands, and a still rest
+    const primed = () => Object.values(bot.entities).some(e => e.name === 'tnt')
+    const tiltFrom = bot.entity.pitch
+    for (let k = 0; k < 60 && (ctx.tick - lastBoom < 26 || primed()); k++) {
+      await bot.look(bot.entity.yaw, Math.max(-0.35, tiltFrom - k * 0.012), true)   // motion-ok: a slow tilt (0.012 rad a tick, 14 deg/s)
+      await bot.waitForTicks(1)
+    }
+    await ctx.easeLook(0, -0.95, 1000)
     ctx.mark('crater'); ctx.sound('entity.generic.explode', 0.15, 0.6)   // the second payoff: the hole it left
-    ctx.easeLook(0.4, -0.85, 1600)
-    await bot.waitForTicks(28)
+    await ctx.easeLook(0.22, -0.9, 350)                     // a short pan along the crater that comes to rest
+    await bot.waitForTicks(40)                              // still: the Short ends 0.6 s into this rest (endAfter crater:1.0)
     return boomed && !ctx.died
   }
 }
