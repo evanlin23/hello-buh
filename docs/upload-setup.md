@@ -111,3 +111,7 @@ upload: `./hb paste <story>` prints the whole block.
 
 Day to day it is the same as HelloBuh, in `uploads/buhstories/` (queue.txt, uploads.json, PAUSED); the weekly report
 and the "nothing left" and "paused" issues are titled "Buh Stories ...". Stop it with `YT_ENABLED_BUHSTORIES` = `false`.
+
+**While uploads are manual:** record each upload with `./hb uploaded <story> <video id or link> [time]` and feed Studio
+numbers 48 h after each upload, then weekly; `./hb stories-report` applies the research doc's decision rules
+(docs/buhstories-metrics.md).
