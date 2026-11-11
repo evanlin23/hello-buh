@@ -20,17 +20,18 @@
     "drop_on_event": "big_done",
     "drop_in_song_s": 113.75,
     "drop_in_short_s": 31.53,
-    "song_start_s": 82.22
+    "song_start_s": 82.22,
+    "bed_lufs": -16.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 32.03,
+    "duration_s": 32.04,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 26920887,
-    "sha256": "d98bfb9b8d4c002749eaec76d9501aaf8f1be2ea8f6acb9ab17724bcd82593f7"
+    "bytes": 26970755,
+    "sha256": "9e96308b16df20c676f26f2c51e519ef5afbfe82d901557f415bd23a86592518"
   },
   "edit": {
     "caption": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
@@ -7315,6 +7316,6 @@
     "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
   ],
   "status": "ready",
-  "notes": "1 s vs 1 min vs 1 h rocket time-lapse (badlands launch complex); 4 rounds; frame review + retention + minecraft audit ready (r4)",
+  "notes": "1 s vs 1 min vs 1 h rocket time-lapse (badlands launch complex); 4 rounds; frame review + retention + minecraft audit ready (r4) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +17.2 -> +17.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture",
   "published_at": "2026-11-07T14:15:11.286Z"
 }
