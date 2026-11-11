@@ -15,6 +15,16 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 1. **Line 1 is the title and the hook**: one strange, concrete image or threat to me, with something countable, said
    flatly in first person over the picture it describes, in the first second ("why tf is this sheep staring at this
    block?"). Then quick escalating examples, the twist, the loop. Check: review, pace (hook). r:rc07fa1 r:rb1b445 r:raf72e0
+1b. **The opening shot shows the subject, centred, big and moving** (owner on Good Boy: "The opening scene is not very
+   exciting? Also not centered."): for the first 1.5 s the shot's `subject` (stunt.shots[name].subject, its first
+   entry; else story shots[].subject, line 1's look, a key word, or the narrator seen from a camera) is in frame and
+   unhidden from frame 1, its median screen-x in the middle third (33-67%), and at least 8% of the frame height
+   (a WS or closer) within the 1.5 s (BLOCK); a speck on frame 1 that a push or swoop brings up later WARNs (frame 1 is
+   the thumbnail); nothing moving in the first 0.5 s (camera < 0.4 blocks/s, turn < 4 deg/s, push < 0.15/s, subject
+   and cast < 0.6 blocks/s, no swing / throw / placed block) WARNs. A bare [dx, dy, dz] subject is checked for centre
+   only. Calibrated 2026-11-11 on the five held stories: Good Boy v7 wolf 25% across (BLOCK), Gold's Grandma 17%
+   (BLOCK), Dog Hill's dog 5% -> 12% in its swoop (WARN), 31 Raids' Grandpa 50% / 46% tall, Light Sleeper's crane
+   point 51% (OK). Check: owner (`opening`, in check). r:r47e14b
 2. **The twist turns the whole story over**, planted at least twice where a rewatch catches it, said in one short line
    or shown by the game itself (runaway ends on the blast + "blown up by Creeper", no spoken reveal). Check: review. r:r9f677e
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
@@ -100,7 +110,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
    (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
-   (listen), speaker distance to the narrator. r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
+   (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
+   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
