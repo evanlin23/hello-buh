@@ -24,7 +24,7 @@
   "place": "saltmouth (canonical): the stilt house on the boardwalk under the south-east bank of Buh's old yard (map.json stamps kid_house, belfry_bell, skeleton, buh_yard). Origin O = (-263, 62, -340): the boardwalk block under his window; his window O + (0, 4, 0) facing north at the bank; the bell O + (0, 7, -3); the skeleton's feet O + (0, 9, -12) on the yard's corner (y 71); Buh's old oak at O + (2, 9, -13) (Good Boy's oak, -261, 71, -353). The bank is Good Boy's pad: level at y 70, its south-east corner 8 over the sea on four steps. The rest as before: convention x, z block centres, y the block floor; S08 he stands at O + (2, 4, -1) on the porch roof. The live-AI gate in set.md decides the final numbers. The village bell is Saltmouth's own, re-hung here.",
   "day": 3800,
   "canon": "A Saltmouth family (not Buh's). The kid is a player, Saltmouth's only one since Buh left on day 3400; Mom is a villager. Canon: the house and belfry from day 3450, the skeleton under Buh's old oak from day 3500 (300 nights), Buh's yard empty above. docs/world/canon.md link 12 (two bells).",
-  "easter_egg": "buh_yard: Buh's empty yard on the bank above, in S04's background by day (the cottage, the fence, no dog). Never named. (The old egg, Saltmouth's ruined portal, is buried under Buh's yard since Good Boy, day 3300.)"
+  "easter_egg": "buh_yard: Buh's empty yard on the bank above, in S05's background by day (left of and behind the oak) (the cottage, the fence, no dog). Never named. (The old egg, Saltmouth's ruined portal, is buried under Buh's yard since Good Boy, day 3300.)"
  },
  "voice": {
   "engine": "gemini",
@@ -302,8 +302,8 @@
    ],
    "place": "bedroom",
    "size": "wide",
-   "camera": "pov at the 1x2 window: the hand opens the spruce-trapdoor shutters on 'WINDOW'; on 'VILLAGE' the pov tilts down to the square",
-   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) the villagers in the square below (staged within ~15 deg of the bell axis) run for their doors, doors slam. bg: the dark cliff and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
+   "camera": "pov at the 1x2 window: the hand opens the spruce-trapdoor shutters on 'WINDOW'; on 'VILLAGE' the pov tilts down to the boardwalk",
+   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) the villagers on the boardwalk below (staged within ~15 deg of the bell axis) run west along it, out of frame left toward the shore houses; doors slam off screen. bg: the dark bank and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    }
@@ -313,8 +313,8 @@
    "line": "L03",
    "place": "square",
    "size": "ews",
-   "camera": "at: high behind his house (0, 20, 14), over the roof ridge, looking north along x = 0 at the bell (0, 7, -3), slow push",
-   "frame": "THE AXIS, the single wide: his roof lower-centre with the warm light of his open window spilling onto the bell just beyond it, the bell still swinging, the dark bank and the oak beyond that (Buh's old yard's corner; his cottage roof dark behind it): three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at dusk). The empty square, every door shut. Dusk 12600 (sun down, sky deep blue).",
+   "camera": "at: high behind his house (0, 20, 14), over the flat roof, looking north along x = 0 at the bell (0, 7, -3), slow push",
+   "frame": "THE AXIS, the single wide: his roof lower-centre with the warm light of his open window spilling onto the bell just beyond it, the bell still swinging, the dark bank and the oak beyond that (Buh's old yard's corner; his cottage roof dark behind it): three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at dusk). The empty boardwalk, every door shut. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -343,8 +343,8 @@
    "line": "L07",
    "place": "square",
    "size": "wide",
-   "camera": "at: on the boardwalk south-east of his house, about (10, 1.6, 12), looking north-west at his house, the bank and the village's shore houses, still",
-   "frame": "subject: the village by day, every window's spruce-trapdoor shutters open (stamped on the shore houses in frame: generated houses have bare glass panes) but his, shut, the bell right in front of his; villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). The easter egg: up on the bank behind his house, Buh's empty yard (`buh_yard`): the cottage with a cold chimney, the spruce fence, no dog; small, frame top-left, never the subject. Day 6000.",
+   "camera": "at: on the boardwalk's east end beside the belfry, about (11, 2.6, -4), looking ~5 deg south of west along his house's north wall, still (the skeleton's spot ~40 deg right, out of frame)",
+   "frame": "subject: the village by day: his north wall at frame left, his upstairs shutters shut, the bell on its belfry beside them; beyond, west along the shore, the shore houses with every window's spruce-trapdoor shutters open (stamped: generated houses have bare glass panes), villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). Day 6000.",
    "look": {
     "time": 6000
    },
@@ -357,8 +357,8 @@
    "line": "L08",
    "place": "cliff",
    "size": "ews",
-   "camera": "at: (8, 14, 20) beyond the square, about 32 blocks from the oak, looking north up at it, slow push",
-   "frame": "subject: the oak on the corner of the high bank (the yard above the shore) in full sun; in its dark shade a pale white figure standing still: a white speck about 4.5% of frame height (not readable as a skeleton, no bow visible); his house and the bell small in the foreground on the same line. Day 6000.",
+   "camera": "at: (8, 14, 20) beyond the boardwalk, about 32 blocks from the oak, looking north up at it, slow push",
+   "frame": "subject: the oak on the corner of the high bank (the yard above the shore) in full sun; in its dark shade a pale white figure standing still: a white speck about 4.5% of frame height (not readable as a skeleton, no bow visible); his house and the bell small in the foreground on the same line. Centre the plain old oak (the taller fancy oak sits ~19 deg left). The easter egg: Buh's empty yard and cottage on the bank just left of and behind the oak (`buh_yard`), cold chimney, no dog; never the subject. Day 6000.",
    "look": {
     "time": 6000
    },
@@ -386,7 +386,7 @@
    "place": "bedroom",
    "size": "ms",
    "camera": "pov at the open window; on 'CLIMBED' he steps out through the 1x2 window onto the porch roof and walks two blocks east to (2, 4, -1), facing the cliff",
-   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'CLIMBED' the pov climbs out over the sill onto the porch roof two blocks east; on 'PAST' the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
+   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam off screen (no arrow seen: it sticks in the bell's far, north face); on 'CLIMBED' the pov climbs out over the sill onto the porch roof two blocks east; on 'PAST' the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -436,7 +436,7 @@
     9,
     -13
    ],
-   "note": "on the edge of a sheer stone cliff face"
+   "note": "Buh's old oak (Good Boy's, -261, 71, -353) on the corner of Buh's yard's bank"
   },
   "skeleton": {
    "at": [
@@ -446,18 +446,10 @@
    ]
   },
   "village": {
-   "at": [
-    0,
-    1,
-    -8
-   ]
+   "at": [0, 1, -5]
   },
   "door": {
-   "at": [
-    3,
-    4,
-    2
-   ],
+   "at": [4, 4, 2],
    "note": "his bedroom door, east wall"
   }
  },

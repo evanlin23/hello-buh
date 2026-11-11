@@ -15,8 +15,8 @@
   (day 1400); Saltmouth's bell catches arrows. The yard above is Buh's, empty: the cottage, the fence, the oak, no dog.
 - **Never:** say "skeleton" aloud; show the skeleton readably before S08 (S05: a white shape in shade only); name the
   yard, Buh or the dog.
-- **Easter egg:** `buh_yard` (map.json cameo, since 3400): Buh's empty yard and cottage on the bank, in S04's
-  background by day, small at the frame's top left. Never named. (The old egg, Saltmouth's ruined portal at
+- **Easter egg:** `buh_yard` (map.json cameo, since 3400): Buh's empty yard and cottage on the bank, in S05's
+  background by day, just left of and behind the oak. Never named. (The old egg, Saltmouth's ruined portal at
   (-269, -366), has been buried under Buh's pad since Good Boy: canon conflict 21.)
 
 ## Scenes and time
@@ -47,11 +47,11 @@
 | his shutters | spruce trapdoors; open S01, S03 (then shut on L06), S07; shut by day S04 | |
 | everyone else's shutters | open by day | S04 |
 | the oak | Buh's old oak on the corner of the yard's bank, its trunk at (2, 9, -13), off the skeleton's block, dense shade under it (Good Boy's /place feature oak: if its shape won't shade the skeleton's block at 6000, replace it with a fixed oak of the same size, trunk on the same block) | S01 bg, S02 bg, S05, S08 |
-| Buh's yard | the bank above: the cottage (cold chimney, dark windows), the spruce fence, the fancy oak; empty, no dog, no bowl | S02 bg (roof), S04 bg (the easter egg) |
+| Buh's yard | the bank above: the cottage (cold chimney, dark windows), the spruce fence, the fancy oak; empty, no dog, no bowl | S02 bg (roof), S05 bg (the easter egg) |
 | the boardwalk | spruce planks at sea level round the house and belfry; his front door south | S04 (fg), S05 (small) |
 
 ## Positions and screen direction
-The bank (the yard's corner) and the oak are north and high; the bell 3 blocks north of his window; all on x = 0 (numbers: set.md). His door is in the east wall at (3, 4-5, 2). S01 and S07 look north from the window (the bell centred, the cliff behind it). S02 looks north from high behind the house (the axis down the middle). S03 looks north-east inside his room (the window at frame left, Mom at the door just right of centre). S04 looks north-west at the house from the boardwalk south-east of it (Buh's yard on the bank above, top left). S05 looks north up at the oak from ~32 blocks south. S06 looks down at the bell from above the east post (the arrow's fletching to frame right, toward the cliff). S08 looks south down the axis from behind the skeleton (the reverse of S02). In S07 he walks east (screen right), so the bell slides left; in S08 (reversed) he is at frame left of the bell.
+The bank (the yard's corner) and the oak are north and high; the bell 3 blocks north of his window; all on x = 0 (numbers: set.md). His door is in the east wall at (4, 4-5, 2). S01 and S07 look north from the window (the bell centred, the cliff behind it). S02 looks north from high behind the house (the axis down the middle). S03 looks north-east inside his room (the window at frame left, Mom at the door just right of centre). S04 looks ~5 deg south of west along his north wall from the boardwalk's east end beside the belfry (the shore houses beyond). S05 looks north up at the oak from ~32 blocks south. S06 looks down at the bell from above the east post (the arrow's fletching to frame right, toward the cliff). S08 looks south down the axis from behind the skeleton (the reverse of S02). In S07 he walks east (screen right), so the bell slides left; in S08 (reversed) he is at frame left of the bell.
 
 ## Who knows what
 - **Mom** knows (L06). She never says why.

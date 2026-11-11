@@ -12,7 +12,7 @@ background. Saltmouth is flat (y 69-70); its only bank is Buh's pad, whose south
 the house stands on the water below it (a boardwalk; Saltmouth already has piers at village + (51..63, 25..27)). The
 bank is stepped (y 69, 68, 67, 66 over the sea to z -347), not sheer: the arrow line still clears it (at z -347, y
 ~71.8 over a top of 67), and the house's own bulk hides the boardwalk south of it from the skeleton (the front door is
-on the south side). The strip north of the house (the belfry) is in its view: nobody walks there in the Short.
+on the south side). The strip north of the house (the belfry) is in its view: only S01's villagers, running home west along it. The skeleton also sees the boardwalk east of the house (about O + (5, 1, 2)): the house hides only what's directly south of it.
 
 ## The narration's claims, and what makes each true
 | claim (line) | true because | check |
@@ -25,7 +25,7 @@ on the south side). The strip north of the house (the belfry) is in its view: no
 | he climbed out past the bell to wave hi (L10) | he climbs two blocks east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S07, S08 |
 
 ## The line-up check (the audit's must-changes 1 and 2), before anything else
-Convention: x and z are block centres, y is the block floor (a half-block shift makes the line miss the 0.375-wide bell). Origin = the square's ground block under his window; the window faces north (-z). Numbers from r3-continuity's simulated vanilla arrow (eye -0.1, aimed at the target's feet +0.6 with a lift of 0.2 x distance, 1.6 blocks/tick, drag 0.99, gravity 0.05).
+Convention: x and z are block centres, y is the block floor (a half-block shift makes the line miss the 0.375-wide bell). Origin = the boardwalk block, O = (-263, 62, -340) under his window; the window faces north (-z). Numbers from r3-continuity's simulated vanilla arrow (eye -0.1, aimed at the target's feet +0.6 with a lift of 0.2 x distance, 1.6 blocks/tick, drag 0.99, gravity 0.05).
 - **His window:** 1 wide x 2 high (y 4-5) in the north wall at z 0, so he can step out of it. He stands at feet (0, 4, 0.8), eye 5.62. The porch roof's walking surface: y 4, east of the window, from z -1.
 - **The bell:** block (0, 7, -3), attached on the x axis (double_wall) between two posts at x +-1: oak fence y 1-6 capped with an oak log at y 7 (a bell needs a sturdy face beside it, the log cap gives it; the thin fence below keeps ~0.4 clearance on the S08 line, where full log posts left 0.05), nothing above it, on a cobblestone base. It is Saltmouth's own meeting-point bell, re-hung here: one bell in the village.
 - **The skeleton:** feet (0, 9, -12) on the bank **9 high, 12 blocks from the window**: Buh's pad's south-east corner (its edge at z -9.5 is the pad's south face, -351 + 0.5; the steps below it run to z -7, y 4..7: both lines clear them). The oak's trunk off its block, at (2, 9, -13); its lowest leaves above the S08 sight line.
@@ -41,7 +41,8 @@ Summoned under the oak with `PersistenceRequired`, no AI wandering off the shade
 
 ## Set dressing
 - The neighbours' windows in S04: stamp open spruce-trapdoor shutters (generated houses have bare glass panes), so "every window is open" reads.
-- S04 from the boardwalk south-east of the house, about O + (10, 1.6, 12), looking north-west: his house (shutters shut), the bell, the village's shore houses west (open shutters), and on the bank above Buh's empty yard and cottage, small at the top left (the easter egg, `buh_yard`). The ruined portal is gone (buried under the pad since day 3300).
+- S04 from the boardwalk's east end beside the belfry, about O + (11, 2.6, -4), looking ~5 deg south of west along his north wall: his shut shutters, the bell, the shore houses west with open shutters, villagers working. The easter egg (`buh_yard`) moved to S05: Buh's cottage on the bank just left of and behind the oak, its chimney cold (map.json `buh_yard_cold`, lanterns dark from 3401). The ruined portal is gone (buried under the pad since day 3300).
+- Still the stunt's to add (no stamp): remove Saltmouth's generated plaza bell (one bell in the village), his window's spruce-trapdoor shutters, his bed. Check stills: the bank's steps over the sea (if they read as a floating shelf, `/fill -279 50 -379 -256 65 -347 dirt replace water`), S08's camera near the oak's leaves. The house is 7 x 7 inside on both floors (map.json `kid_house`, widened 2026-11-11); his door at O + (4, 4-5, 2); the porch roof runs from under the window (x 0) east.
 - The skeleton stamp runs 3500-3800 (`until: 3801`), so it never builds into Good Boy (3300-3400) and stops after this Short.
 - Villagers for L02: Saltmouth's houses within 48 blocks of the bell (-263, 69, -343) are the shore houses at village + (10..16, 29..35) and (12..18, 42..51) (about 29-31 blocks); keep the running villagers among those, not the far plaza.
 
