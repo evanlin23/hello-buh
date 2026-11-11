@@ -31,6 +31,7 @@ module.exports = {
   hideBoxes: [[-6, 60, -6, 6, 64, 6]],   // the cast's waiting room (barrier floor F+60, stone roof F+64) is not drawn: its roof read as a black square in the dusk sky
   near: [VX, VZ],
   caption: CAPTION,
+  channel: 'buhstories',   // the Buh Stories channel: the title band's key word in Buh gold (main 9cb8fbef), packaged for buhstories
   time: GOLD,
   botTimeout: 480,
   renderDistance: 10, recordRadius: 700,   // Dog Hill is 514 blocks north of the set (its chunks: chunkStops)
