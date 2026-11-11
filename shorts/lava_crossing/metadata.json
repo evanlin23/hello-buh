@@ -1,10 +1,10 @@
 {
   "name": "lava_crossing",
   "channel": "hellobuh",
-  "caption": "every way to cross lava (rated) 💀",
+  "caption": "every way to cross lava (rated) \ud83d\udc80",
   "youtube": {
-    "title": "every way to cross lava (rated) 💀 #minecraft #shorts",
-    "description": "every way to cross lava (rated) 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "every way to cross lava (rated) \ud83d\udc80 #minecraft #shorts",
+    "description": "every way to cross lava (rated) \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "every way to cross lava (rated) 💀",
+    "caption": "every way to cross lava (rated) \ud83d\udc80",
     "red": "every",
     "dropAt": "in_lava",
     "onFire": "in_lava:death",
@@ -164,7 +164,7 @@
     ],
     "args": [
       "--caption",
-      "every way to cross lava (rated) 💀",
+      "every way to cross lava (rated) \ud83d\udc80",
       "--red",
       "every",
       "--subs",
@@ -440,9 +440,9 @@
     "gunzip -c shorts/lava_crossing/recording.json.gz > work/lava_crossing.rec.json",
     "node render.js work/lava_crossing.rec.json work/lava_crossing.frames 60 1080 1011",
     "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
-    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"bridged\",\"crossed\",2]] --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:1.15 --out out/lava_crossing.mp4"
+    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"bridged\",\"crossed\",2]] --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:1.15 --out out/lava_crossing.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "lava crossing ratings re-take (r:r38374d): governed look-backs (<=220 deg/s), the bridge placed aimed via A.place, keep_inventory (nothing floats on the lava), 2x bank walk; independent review round 2 READY (0 blockers).",
   "published_at": "2026-11-11T15:28:09.151Z",
   "gates": {
@@ -467,5 +467,6 @@
       "report": "work/hb/lava_crossing.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@20.3s): \"says hellobuh\" (the player must be 56e)"
 }

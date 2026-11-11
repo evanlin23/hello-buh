@@ -1,10 +1,10 @@
 {
   "name": "half_heart",
   "channel": "hellobuh",
-  "caption": "POV: you're on half a heart 💀",
+  "caption": "POV: you're on half a heart \ud83d\udc80",
   "youtube": {
-    "title": "POV: you're on half a heart 💀 #minecraft #shorts",
-    "description": "POV: you're on half a heart 💀\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you're on half a heart \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you're on half a heart \ud83d\udc80\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "POV: you're on half a heart 💀",
+    "caption": "POV: you're on half a heart \ud83d\udc80",
     "red": "half",
     "dropAt": "placed",
     "startAt": "jump:-0.5",
@@ -134,7 +134,7 @@
     ],
     "args": [
       "--caption",
-      "POV: you're on half a heart 💀",
+      "POV: you're on half a heart \ud83d\udc80",
       "--red",
       "half",
       "--subs",
@@ -363,9 +363,9 @@
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart \ud83d\udc80\" --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker whip: a followable camera (r:r38374d): the look up the pillar on lib/act.js's eased governor (water_clutch, <=220 deg/s, was 533) and a hard cut to the course instead of a 749 deg/s whip north; re-recorded, check clean, mixcheck OK; independent review READY",
   "published_at": "2026-11-11T13:03:18.540Z",
   "gates": {
@@ -390,5 +390,6 @@
       "report": "out/half_heart.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@15.3s): \"says hello buh\" (the player must be 56e)"
 }

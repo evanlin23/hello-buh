@@ -1,10 +1,10 @@
 {
   "name": "cave_reveal",
   "channel": "hellobuh",
-  "caption": "never dig straight down 💀",
+  "caption": "never dig straight down \ud83d\udc80",
   "youtube": {
-    "title": "never dig straight down 💀 #minecraft #shorts",
-    "description": "never dig straight down 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "never dig straight down \ud83d\udc80 #minecraft #shorts",
+    "description": "never dig straight down \ud83d\udc80\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "never dig straight down 💀",
+    "caption": "never dig straight down \ud83d\udc80",
     "red": "never",
     "dropAt": "l5",
     "onFire": "in_lava:death",
@@ -134,7 +134,7 @@
     ],
     "args": [
       "--caption",
-      "never dig straight down 💀",
+      "never dig straight down \ud83d\udc80",
       "--red",
       "never",
       "--subs",
@@ -973,9 +973,9 @@
     "gunzip -c shorts/cave_reveal/recording.json.gz > work/cave_reveal.rec.json",
     "node render.js work/cave_reveal.rec.json work/cave_reveal.frames 60 1080 1011",
     "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
-    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --red never --subs \"[[\\\"dig0\\\",\\\"just digging down...\\\",3],[\\\"l1\\\",\\\"oh, a cave\\\",2.2],[\\\"dig1\\\",\\\"keep going\\\",2],[\\\"l2\\\",\\\"a mineshaft??\\\",2.4],[\\\"dig2\\\",\\\"keep going...\\\",2],[\\\"l3\\\",\\\"a DUNGEON\\\",2.2],[\\\"dig3\\\",\\\"one more...\\\",1.8],[\\\"l4\\\",\\\"a GEODE?!\\\",2.4],[\\\"dig4\\\",\\\"just one more\\\",1.8],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"in_lava:1.0\",\"death:-0.4\",2]] --sfx [[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig0:1.9 --end_after death:1.6 --out out/cave_reveal.mp4"
+    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down \ud83d\udc80\" --red never --subs \"[[\\\"dig0\\\",\\\"just digging down...\\\",3],[\\\"l1\\\",\\\"oh, a cave\\\",2.2],[\\\"dig1\\\",\\\"keep going\\\",2],[\\\"l2\\\",\\\"a mineshaft??\\\",2.4],[\\\"dig2\\\",\\\"keep going...\\\",2],[\\\"l3\\\",\\\"a DUNGEON\\\",2.2],[\\\"dig3\\\",\\\"one more...\\\",1.8],[\\\"l4\\\",\\\"a GEODE?!\\\",2.4],[\\\"dig4\\\",\\\"just one more\\\",1.8],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"in_lava:1.0\",\"death:-0.4\",2]] --sfx [[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig0:1.9 --end_after death:1.6 --out out/cave_reveal.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "2026-11-11 backlog-finish worker: recorded at last (the landing wait read true before the fall: every take stopped after one block), five layers (cave, mineshaft, dungeon, geode, lava cavern) for 30 s+, looks capped at a hand's speed, burn at 2x, pop on the opening, dip + impact on the death; 33.6 s; mixcheck OK, pace 0 blockers, check OK. Reviews: round 1 NOT READY (cut pit wall + slow start), round 2 READY. Nitpicks: 180 deg swing past bare wall to the minecart, the cart's chest doesn't read, spawner at the frame's top edge, a purple item flash at the geode's left edge, rail under the feet, edge pixels on frame 0",
   "published_at": "2026-11-11T15:25:54.118Z",
   "gates": {
@@ -1000,5 +1000,6 @@
       "report": "out/cave_reveal.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@33.6s): \"still says hellobuh\" (the player must be 56e)"
 }

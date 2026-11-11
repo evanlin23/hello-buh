@@ -1,9 +1,9 @@
 {
   "name": "story_nitwit",
-  "caption": "the nitwit finally said something 😳",
+  "caption": "the nitwit finally said something \ud83d\ude33",
   "youtube": {
-    "title": "the nitwit finally said something 😳 #minecraft #shorts",
-    "description": "the nitwit finally said something 😳\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the nitwit finally said something \ud83d\ude33 #minecraft #shorts",
+    "description": "the nitwit finally said something \ud83d\ude33\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -47,7 +47,7 @@
     }
   },
   "edit": {
-    "caption": "the nitwit finally said something 😳",
+    "caption": "the nitwit finally said something \ud83d\ude33",
     "red": "nitwit",
     "story": "stories/nitwit",
     "startAt": "line:0",
@@ -66,7 +66,7 @@
     ],
     "args": [
       "--caption",
-      "the nitwit finally said something 😳",
+      "the nitwit finally said something \ud83d\ude33",
       "--red",
       "nitwit",
       "--punch",
@@ -16273,10 +16273,11 @@
     "gunzip -c shorts/story_nitwit/recording.json.gz > work/story_nitwit.rec.json",
     "node render.js work/story_nitwit.rec.json work/story_nitwit.frames 60 1080 1011",
     "python3 audio.py work/story_nitwit.rec.json work/story_nitwit.wav",
-    "python3 edit.py --frames work/story_nitwit.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_nitwit.rec.json --audio work/story_nitwit.wav --caption \"the nitwit finally said something 😳\" --red nitwit --punch [\"name_word\",\"today_word\"] --cards [[\"hmm\",\"HMM.\",0.9,\"white\"]] --story stories/nitwit --start_at line:0 --end_after story_end:0 --out out/story_nitwit.mp4"
+    "python3 edit.py --frames work/story_nitwit.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_nitwit.rec.json --audio work/story_nitwit.wav --caption \"the nitwit finally said something \ud83d\ude33\" --red nitwit --punch [\"name_word\",\"today_word\"] --cards [[\"hmm\",\"HMM.\",0.9,\"white\"]] --story stories/nitwit --start_at line:0 --end_after story_end:0 --out out/story_nitwit.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "pipeline test (story_nitwit, lead's fresh-worker run): 2 review rounds, READY. Nitpicks: ruin wide shot dim; freshly placed lava in the well draws mostly dark (engine); burned room floor reads as netherrack.",
   "published_at": "2026-11-10T04:48:31.006Z",
-  "channel": "hellobuh"
+  "channel": "hellobuh",
+  "needs_fix": "owner's open Review Room notes (2026-11-10): voice, superflat"
 }

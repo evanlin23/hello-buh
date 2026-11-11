@@ -1,10 +1,10 @@
 {
   "name": "creeper",
   "channel": "hellobuh",
-  "caption": "POV: you hear tssss 💀",
+  "caption": "POV: you hear tssss \ud83d\udc80",
   "youtube": {
-    "title": "POV: you hear tssss 💀 #minecraft #shorts",
-    "description": "POV: you hear tssss 💀\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you hear tssss \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you hear tssss \ud83d\udc80\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "POV: you hear tssss 💀",
+    "caption": "POV: you hear tssss \ud83d\udc80",
     "red": "tssss",
     "dropAt": "hiss",
     "startAt": "first:-0.1",
@@ -78,7 +78,7 @@
     ],
     "args": [
       "--caption",
-      "POV: you hear tssss 💀",
+      "POV: you hear tssss \ud83d\udc80",
       "--red",
       "tssss",
       "--sfx",
@@ -250,9 +250,9 @@
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:-0.1 --end_after settle:0.6 --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss \ud83d\udc80\" --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:-0.1 --end_after settle:0.6 --out out/creeper.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +15.1 dB; picture unchanged; audio fix-check READY",
   "published_at": "2026-11-11T19:03:25.526Z",
   "gates": {
@@ -277,5 +277,6 @@
       "report": "work/hb/creeper.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@9.7s): \"says hellobuh, also we can cut a little earlier\""
 }

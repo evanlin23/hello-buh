@@ -2867,7 +2867,7 @@
     "python3 audio.py work/cells_lab.rec.json work/cells_lab.wav",
     "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --red nobody --shake [[\"slam\",0,8]] --flash [[\"slam\",0,0.5]] --sfx [[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]] --start_at open:0 --end_after slam:1.0 --out out/cells_lab.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "cells #1: six mobs in vanilla contraptions down a glass lab corridor, iron golem launch finale. Independent review r1: finale pad hidden (fixed); r2 READY. Payoff fix (edit only, same recording): NCS drop lands on the slam, 0.4 s dip + impact, riser removed. Nitpicks: wool pile reads grey-brown; ~1 s hold on the sheared sheep; snow golem pumpkin partly out of frame; cow framed close.",
   "published_at": "2026-11-11T08:55:32.657Z",
   "gates": {
@@ -2892,5 +2892,6 @@
       "report": "work/hb/cells_lab.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@5.8s): \"the opening should look down the hallway, then go to the first.\""
 }

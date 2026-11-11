@@ -1,9 +1,9 @@
 {
   "name": "story_sheep_stares",
-  "caption": "why is my sheep staring at this block 💀",
+  "caption": "why is my sheep staring at this block \ud83d\udc80",
   "youtube": {
-    "title": "why is my sheep staring at this block 💀 #minecraft #shorts",
-    "description": "why is my sheep staring at this block 💀\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "why is my sheep staring at this block \ud83d\udc80 #minecraft #shorts",
+    "description": "why is my sheep staring at this block \ud83d\udc80\n\nSong: ANIZYZ & BVSSL7ON - The Redeemer\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/TheRedeemer\nWatch: http://ncs.lnk.to/TheRedeemerAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -47,7 +47,7 @@
     }
   },
   "edit": {
-    "caption": "why is my sheep staring at this block 💀",
+    "caption": "why is my sheep staring at this block \ud83d\udc80",
     "red": "staring",
     "story": "stories/sheep_stares",
     "startAt": "line:0",
@@ -102,7 +102,7 @@
     ],
     "args": [
       "--caption",
-      "why is my sheep staring at this block 💀",
+      "why is my sheep staring at this block \ud83d\udc80",
       "--red",
       "staring",
       "--zoom",
@@ -489,10 +489,11 @@
     "gunzip -c shorts/story_sheep_stares/recording.json.gz > work/story_sheep_stares.rec.json",
     "node render.js work/story_sheep_stares.rec.json work/story_sheep_stares.frames 60 1080 1011",
     "python3 audio.py work/story_sheep_stares.rec.json work/story_sheep_stares.wav",
-    "python3 edit.py --frames work/story_sheep_stares.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sheep_stares.rec.json --audio work/story_sheep_stares.wav --caption \"why is my sheep staring at this block 💀\" --red staring --zoom [[\"slain:0.10\",\"slain:3\",1.07],[\"slain:0.30\",\"slain:3\",1.07],[\"slain:0.50\",\"slain:3\",1.07],[\"slain:0.70\",\"slain:3\",1.07],[\"slain:0.90\",\"slain:3\",1.07],[\"slain:1.10\",\"slain:3\",1.07],[\"slain:1.30\",\"slain:3\",1.07],[\"slain:1.50\",\"slain:3\",1.07],[\"slain:1.70\",\"slain:3\",1.07]] --death_screen death --story stories/sheep_stares --start_at line:0 --end_after slain:1.9 --out out/story_sheep_stares.mp4"
+    "python3 edit.py --frames work/story_sheep_stares.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sheep_stares.rec.json --audio work/story_sheep_stares.wav --caption \"why is my sheep staring at this block \ud83d\udc80\" --red staring --zoom [[\"slain:0.10\",\"slain:3\",1.07],[\"slain:0.30\",\"slain:3\",1.07],[\"slain:0.50\",\"slain:3\",1.07],[\"slain:0.70\",\"slain:3\",1.07],[\"slain:0.90\",\"slain:3\",1.07],[\"slain:1.10\",\"slain:3\",1.07],[\"slain:1.30\",\"slain:3\",1.07],[\"slain:1.50\",\"slain:3\",1.07],[\"slain:1.70\",\"slain:3\",1.07]] --death_screen death --story stories/sheep_stares --start_at line:0 --end_after slain:1.9 --out out/story_sheep_stares.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "story premise 3 (The Sheep That Stares). Frame review, retention audit, Minecraft audit: ready. Nitpicks: caption switches a few frames before the two mid-line day/night cuts; sheep floats high in the river (0.4 s); death-screen item name upright, hearts blink (engine).",
   "published_at": "2026-11-09T23:25:14.787Z",
-  "channel": "hellobuh"
+  "channel": "hellobuh",
+  "needs_fix": "owner's open Review Room notes (2026-11-10): superflat, delivery"
 }

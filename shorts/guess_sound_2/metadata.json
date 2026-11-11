@@ -1,10 +1,10 @@
 {
   "name": "guess_sound_2",
   "channel": "hellobuh",
-  "caption": "guess the mob from its sound pt 2 🔊",
+  "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
   "youtube": {
-    "title": "guess the mob from its sound pt 2 🔊 #minecraft #shorts",
-    "description": "guess the mob from its sound pt 2 🔊\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "guess the mob from its sound pt 2 \ud83d\udd0a #minecraft #shorts",
+    "description": "guess the mob from its sound pt 2 \ud83d\udd0a\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "guess the mob from its sound pt 2 🔊",
+    "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
     "red": "sound",
     "dropAt": "final_reveal",
     "keySounds": [
@@ -222,7 +222,7 @@
     "subsY": 0.77,
     "args": [
       "--caption",
-      "guess the mob from its sound pt 2 🔊",
+      "guess the mob from its sound pt 2 \ud83d\udd0a",
       "--red",
       "sound",
       "--subs",
@@ -736,9 +736,9 @@
     "gunzip -c shorts/guess_sound_2/recording.json.gz > work/guess_sound_2.rec.json",
     "node render.js work/guess_sound_2.rec.json work/guess_sound_2.frames 60 1080 1011",
     "python3 audio.py work/guess_sound_2.rec.json work/guess_sound_2.wav",
-    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
+    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 \ud83d\udd0a\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker whip: a followable camera (r:r38374d): the turn round to the sound and the tilt onto the mob on lib/act.js's eased governor (<=220 deg/s, was ~700), the torch placed with the crosshair on the floor block; re-recorded, check clean (whip, aim 6/6), mixcheck OK; independent review round 1 READY",
   "published_at": "2026-11-11T12:32:06.579Z",
   "gates": {
@@ -769,5 +769,6 @@
       ],
       "summary": "key sounds over the music: worst +12.6 dB over 12 clips (need >= 8 dB)"
     }
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@13.7s): \"when we look over at the mob, we arent looking directly at it.\""
 }

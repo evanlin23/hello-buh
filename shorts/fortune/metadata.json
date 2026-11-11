@@ -1,9 +1,9 @@
 {
   "name": "fortune",
-  "caption": "POV: fortune 1000 💀",
+  "caption": "POV: fortune 1000 \ud83d\udc80",
   "youtube": {
-    "title": "POV: fortune 1000 💀 #minecraft #shorts",
-    "description": "POV: fortune 1000 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: fortune 1000 \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: fortune 1000 \ud83d\udc80\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -49,7 +49,7 @@
   },
   "edit": {
     "subsY": 0.15,
-    "caption": "POV: fortune 1000 💀",
+    "caption": "POV: fortune 1000 \ud83d\udc80",
     "red": "1000",
     "song": "songs/ncs/montagem_favela.mp3",
     "dropAt": "finale",
@@ -77,7 +77,7 @@
     ],
     "args": [
       "--caption",
-      "POV: fortune 1000 💀",
+      "POV: fortune 1000 \ud83d\udc80",
       "--red",
       "1000",
       "--subs",
@@ -9472,9 +9472,9 @@
     "gunzip -c shorts/fortune/recording.json.gz > work/fortune.rec.json",
     "node render.js work/fortune.rec.json work/fortune.frames 60 1080 1011",
     "python3 audio.py work/fortune.rec.json work/fortune.wav",
-    "python3 edit.py --frames work/fortune.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fortune.rec.json --audio work/fortune.wav --caption \"POV: fortune 1000 💀\" --red 1000 --subs \"[[\\\"ore\\\",\\\"64 emeralds\\\",1.3,7],[\\\"ore\\\",\\\"128\\\",1.3,8],[\\\"ore\\\",\\\"192 emeralds\\\",1.6,9]]\" --subs_y 0.15 --start_at mine:-0.1 --end_after collected:0.9 --song songs/ncs/montagem_favela.mp3 --song_drop_at finale --out out/fortune.mp4"
+    "python3 edit.py --frames work/fortune.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fortune.rec.json --audio work/fortune.wav --caption \"POV: fortune 1000 \ud83d\udc80\" --red 1000 --subs \"[[\\\"ore\\\",\\\"64 emeralds\\\",1.3,7],[\\\"ore\\\",\\\"128\\\",1.3,8],[\\\"ore\\\",\\\"192 emeralds\\\",1.6,9]]\" --subs_y 0.15 --start_at mine:-0.1 --end_after collected:0.9 --song songs/ncs/montagem_favela.mp3 --song_drop_at finale --out out/fortune.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": " | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +2.9 -> +4.8 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker): pace BLOCKed no picture change on the payoff (collected, 29.85 s). Edit-only: a white flash (0.6) as the 192 emeralds land in the inventory (edit.flash, stunts/fortune.js), drawn on short_nosong.mp4 (no new render); remixed at the -16 LUFS bed, same track and drop. ./hb pace OK (WARN 2.2/2.5 s spans, build-up loudness dip), ./hb check OK, key_sounds n/a",
   "published_at": "2026-11-07T19:05:52.933Z",
   "gates": {
@@ -9499,5 +9499,6 @@
       "report": "work/hb/fortune.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11 (@1.5s): \"The items are all upsidedown?? Also we should have more drop.\""
 }
