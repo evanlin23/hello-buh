@@ -2,7 +2,7 @@
 // sunset. Every hostile mob that comes for you stops dead and a popup asks you first (lib/fakemod.js, the overlay is
 // scripts/popup.py: our own Minecraft-style GUI):
 //   1. a zombie walks up: "A Zombie is asking for permission to attack you." Deny: it stands there, frozen. You kill it.
-//   2. a skeleton raises its bow: "...permission to shoot you." The cursor nearly hits Allow, then Deny. Frozen, killed.
+//   2. a skeleton with a bow: "...permission to shoot you." The cursor nearly hits Allow, then Deny. Frozen, killed.
 //   3. you turn round and a creeper is right behind you: "...permission to explode." The cursor goes for Deny... then
 //      clicks Roll. ALLOW / DENY / ALLOW ... it lands on ALLOW. It lights, swells and goes off. Death screen.
 // The mechanics are vanilla: the "mod" only sets NoAI while it waits for an answer (a mob with NoAI stands still), and
@@ -20,7 +20,7 @@ module.exports = {
   time: 12950,     // sunset: undead don't burn (the sky is too dark for it) and the sky goes orange
   caption: CAPTION,
   edit: {
-    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'settle:0.6',
+    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'boom:1.7',   // settle-ok: r1 review: the smoke clears ~1.05 s after the blast; settle:0.6 held a still death screen 1.8 s
     dropAt: 'boom',
     sfx: [['air', 'first', 'boom', { gain: 0.4 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }],
       ['pop', 'fm1_open'], ['pop', 'fm2_open'], ['pop', 'fm3_open'],   // a hit as each popup opens (mixcheck: under the NCS bed the toast sound wasn't one)
@@ -119,8 +119,8 @@ module.exports = {
     bot.setControlState('forward', false); bot.setControlState('sprint', false)   // motion-ok: the sprint's end
     // the creeper creeps up on my left (west, off screen, against the sunset) while I fight and waits there for
     // permission: NoAI from the start (a walking creeper inside 3 blocks starts its own fuse; take 1 blew up first)
-    const behind = bot.entity.position.plus(new Vec3(-3.0, 0, 0.6))
-    const face = Math.atan2(bot.entity.position.x - behind.x, behind.z - bot.entity.position.z) * 180 / Math.PI   // MC yaw toward me
+    const behind = bot.entity.position.plus(new Vec3(-3.0, 0, -0.6))
+    const face = Math.atan2(-(bot.entity.position.x - behind.x), bot.entity.position.z - behind.z) * 180 / Math.PI   // MC yaw toward me: atan2(-dx, dz) (r1: the sign was flipped, it faced away)
     await ctx.cmd(`/summon creeper ${behind.x.toFixed(2)} ${F} ${behind.z.toFixed(2)} {Tags:["fm_creeper"],PersistenceRequired:1b,NoAI:1b,Rotation:[${face.toFixed(1)}f,0f]}`)
     const cr = await grab('fm_creeper', 'creeper')
     await kill(sk)
@@ -130,8 +130,9 @@ module.exports = {
     await A.turnTo(cr.position.offset(0, 2.5, 0), { max: 50, hold: 4 })
     ctx.log('creeper at', dist(cr).toFixed(2))
     await FM.ask(ctx, { k: 3, tag: 'fm_creeper', hover: ['Deny', 'Roll'], roll: 'Allow' })
-    // allowed: it lights (vanilla's ignited flag: the 30-tick fuse), swells, goes off
-    await ctx.cmd('/data merge entity @e[tag=fm_creeper,limit=1] {NoAI:0b,ignited:1b}')
+    // allowed: it lights (vanilla's ignited flag: the 30-tick fuse), swells, goes off. The fuse runs in Creeper.tick,
+    // not its AI, so it keeps NoAI and stays put facing me (r1: freed, it stepped closer while swelling)
+    await ctx.cmd('/data merge entity @e[tag=fm_creeper,limit=1] {ignited:1b}')
     ctx.mark('ignite')
     ctx.sound('entity.creeper.primed', 1, 1)
     const h0 = bot.health
