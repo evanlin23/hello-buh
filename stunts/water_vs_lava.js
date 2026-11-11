@@ -16,7 +16,7 @@ module.exports = {
   caption: 'can ONE water bucket delete a lava lake? 😳',
   edit: {
     subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', dropAt: 'end_look',
-    startAt: 'pour:-0.4', endAfter: 'end_look:1.05',
+    startAt: 'pour:-0.05', endAfter: 'end_look:1.05', sfx: [['dip', 'end_look', 0.35], ['impact', 'end_look']],   // sound on frame 0 (the first pour), a hit on the black lake (pace)
     // the long side-pour runs at 1.8x (about 12 s of the Short was a blue water sheet) and the walk between the stops at 2x
     speed: [...[...Array(12).keys()].map(i => [`run${i}a`, `run${i}b`, 1.8]), ['walk_a', 'walk_b', 2],
       ...[...Array(4).keys()].map(m => [`mop${m}a`, `mop${m}b`, 2]), ['cross_a', 'finale', 2], ['drain_a', 'end_look', 2]]   // the walks to the mop-up pours (3.3-3.5 s gaps)
