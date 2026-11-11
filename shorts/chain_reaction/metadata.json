@@ -573,5 +573,24 @@
   ],
   "status": "ready",
   "notes": "worker 17: one continuous real-redstone chain (button, arrow, 14-note lamp line, 3 sand-on-torch collapses, cart + bells, rockets, anvil, glass piston wave, primed TNT cart + bells, TNT line -> 27 -> 125 -> 486). Passed frame review + minecraft audit (review 4) and retention re-audit. Re-edited with worker 10's static-gain loudness (f38b055): the build-up keeps its dynamics, the blast is the loudest moment. Nitpicks left: small cart at 9-11 s, obsidian watch floor visible at 9.5-11.9 s and the end",
-  "published_at": "2026-11-07T14:54:23.701Z"
+  "published_at": "2026-11-07T14:54:23.701Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:23:33+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 30.72 s vs the reviewed render 30.70 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 2,
+      "warnings": 5,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
+  }
 }

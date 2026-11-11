@@ -568,5 +568,24 @@
   ],
   "status": "ready",
   "notes": "worker 12: find the mistake #2 (lighthouse, cottage, storage room; sign typo payoff). Retention, Minecraft and frame reviews: ready (4 review rounds)",
-  "published_at": "2026-11-07T12:32:29.298Z"
+  "published_at": "2026-11-07T12:32:29.298Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:27:25+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 31.35 s vs the reviewed render 31.25 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 7,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
+  }
 }

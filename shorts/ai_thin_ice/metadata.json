@@ -51,5 +51,24 @@
   ],
   "status": "ready",
   "notes": "AI-dilemma Short 1 (docs/ai_dilemma.md). Independent audit of v4 (not ready: rescue unreadable, dead frames) -> fixes in v5-v6 checked on frames; owner's note on the late last line fixed in v6; listening check v6: no glitches, all lines clear, ready. Rendered on Actions run 42594373170.",
-  "published_at": "2026-11-09T09:49:24.000Z"
+  "published_at": "2026-11-09T09:49:24.000Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:23:03+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 50.00 s vs the reviewed render 50.00 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 2,
+      "warnings": 0,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff; payoff: the video runs 2.28 s past the payoff (owner: end as soon as it lands; max 1.0 s)"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
+  }
 }

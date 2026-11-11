@@ -7128,5 +7128,24 @@
   ],
   "status": "ready",
   "notes": "1 s vs 1 min vs 1 h house time-lapse; frame review + retention + minecraft audit passed (round 4)",
-  "published_at": "2026-11-07T10:03:35.707Z"
+  "published_at": "2026-11-07T10:03:35.707Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:25:52+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 30.52 s vs the reviewed render 30.48 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 3,
+      "summary": "payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
+  }
 }

@@ -588,5 +588,24 @@
   ],
   "status": "ready",
   "notes": "orchestrator: 8 escalating clutches, 31 s; independent review v6 PASS (frame review, retention incl. camera check, minecraft). Nitpicks: label wraps, ~0.4 s near-still at the 131 opening, night opening mostly dark treeline",
-  "published_at": "2026-11-07T15:50:07.341Z"
+  "published_at": "2026-11-07T15:50:07.341Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:23:45+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 31.10 s vs the reviewed render 31.08 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 1,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
+  }
 }

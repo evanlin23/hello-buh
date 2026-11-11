@@ -299,25 +299,25 @@
   "notes": "2026-11-11 finishing worker (backlog C's half-heart course): re-rendered on the current engine (bright look, no reference song); 'almost there...' moved onto the bridge's last blocks (it sat over the death screen), the held look up the pillar cut to 0.45 s, whoosh on 'almost there', song dip + impact on the death; 14.9 s (stunt floor 8 s); pace 0 blockers; self-review READY | independent review 2026-11-11: READY. Hook moves from frame 1 (water clutch from the pillar), every placement on the crosshair (r:rffba12 ok), death screen held 1.6 s after the berry-bush hit with a song dip + impact (r:r24d99a ok); vanilla: magma sneak, 3-block drop = 0 damage, sweet berry bush death message correct. The pace BLOCK on the package (4.45 s dead 8.63-13.08 s) is a false positive: pace counts 0 caption chunks (the edit subs aren't read), and on the frames 'lava bridge' arrives at 8.75 s and 'almost there...' at 11.5 s, so the longest empty span is ~2.75 s (WARN). The gate still reads blocked, so the uploader skips it until the lead waives or re-gates it. Nitpicks: one held aim down the bridge 8.6-13.0 s (tension, but slow); no line/hit in the first 1.5 s beyond the bucket; mix -10.2 LUFS, true peak +1.0 dBTP (house-wide for stunts).",
   "published_at": "2026-11-11T07:43:34.921Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:43:56+00:00",
-    "by": "publish.js",
+    "version": 3,
+    "at": "2026-11-11T08:24:58+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 14.93 s vs the reviewed render 14.93 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 1,
-      "warnings": 3,
-      "summary": "dead: 4.45 s with nothing new (8.63-13.08 s, after the bridge; no line on screen)"
+      "ok": true,
+      "blockers": 0,
+      "warnings": 5,
+      "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:38:40.064Z",
-      "report": "out/half_heart.check.json"
+      "at": "2026-11-11T07:50:34.261Z",
+      "report": "work/hb/half_heart.check.json"
     },
     "key_sounds": "n/a"
   },

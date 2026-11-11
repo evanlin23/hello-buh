@@ -4186,9 +4186,9 @@
   "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); jump cuts every ~1.6 s through the 1-hour round (was 5.7 s / 6.95 s dead), flash + punch + song dip + impact on 60:00; 27.9 s; pace 0 blockers (WARN build-up); self-review READY | independent review 2026-11-11: READY. Hook: the 1-second build moves from frame 1, timer card readable; 1-minute round placements on the crosshair (r:rffba12), the 1-hour time-lapse is a third-person build with no player (format convention); payoff 60:00 wide with flash + impact (+16 dB over the music), end 0.5 s after it on a still result (r:r24d99a ok); pace 0 blockers. Nitpicks: the 1-minute round at 3x is shaky and spends ~2 s looking straight down at the dirt scaffold (5.4-6.2 s); mix -10.2 LUFS (house-wide).",
   "published_at": "2026-11-11T07:41:14.470Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:41:39+00:00",
-    "by": "publish.js",
+    "version": 3,
+    "at": "2026-11-11T08:26:14+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 27.95 s vs the reviewed render 27.93 s"
@@ -4196,15 +4196,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 0,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:26:01.695Z",
-      "report": "out/lapse_statue.check.json"
+      "at": "2026-11-11T07:25:11.744Z",
+      "report": "work/hb/lapse_statue.check.json"
     },
     "key_sounds": "n/a"
   },

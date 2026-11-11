@@ -2012,9 +2012,9 @@
   "notes": "not yet passed the frame-by-frame review (docs/qa.md);  | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; same track, drop and picture. ./hb pace OK (0 blockers), ./hb check OK (lint clean once it skips footage the edit cuts), key_sounds --hits worst -0.1 dB (report only)",
   "published_at": "2026-11-08T02:05:14.222Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:02:28+00:00",
-    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "version": 3,
+    "at": "2026-11-11T08:26:51+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 29.20 s vs the reviewed render 29.20 s"
@@ -2022,7 +2022,7 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 6,
       "summary": "OK"
     },
     "check": {

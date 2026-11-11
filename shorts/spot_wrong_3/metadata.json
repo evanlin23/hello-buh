@@ -1148,5 +1148,24 @@
   ],
   "status": "ready",
   "notes": "worker 12: find the mistake #3 (pumpkin patch, bridge, nether portal room; crying obsidian payoff with tears). Retention, Minecraft and frame reviews: ready (6 review rounds)",
-  "published_at": "2026-11-07T14:03:58.747Z"
+  "published_at": "2026-11-07T14:03:58.747Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:27:37+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 30.65 s vs the reviewed render 30.55 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 7,
+      "summary": "payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
+  }
 }

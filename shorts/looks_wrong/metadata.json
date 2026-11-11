@@ -938,9 +938,9 @@
   "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
   "published_at": "2026-11-11T07:22:24.782Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:28:54+00:00",
-    "by": "scripts/gates.py",
+    "version": 3,
+    "at": "2026-11-11T08:26:30+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 37.27 s vs the reviewed render 37.25 s"
@@ -948,15 +948,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:11:46.793Z",
-      "report": "out/looks_wrong.check.json"
+      "at": "2026-11-11T05:41:00.522Z",
+      "report": "work/hb/looks_wrong.check.json"
     },
     "key_sounds": "n/a"
   }

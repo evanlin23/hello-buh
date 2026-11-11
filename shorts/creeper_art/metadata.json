@@ -886,9 +886,9 @@
   "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
   "published_at": "2026-11-11T07:21:13.428Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:28:34+00:00",
-    "by": "scripts/gates.py",
+    "version": 3,
+    "at": "2026-11-11T08:23:57+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 34.60 s vs the reviewed render 34.60 s"
@@ -896,15 +896,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 5,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:11:02.763Z",
-      "report": "out/creeper_art.check.json"
+      "at": "2026-11-11T08:13:36.638Z",
+      "report": "work/hb/creeper_art.check.json"
     },
     "key_sounds": "n/a"
   }

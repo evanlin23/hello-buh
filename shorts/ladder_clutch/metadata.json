@@ -448,9 +448,9 @@
   "notes": "worker 4: independent review READY (no blockers, no visible). Re-rendered on main with the stairs fix (bc25696; 8 spruce stairs ~45 blocks south now drawn), height labels end before each ladder goes up. Eight walls 20-80 on natural terrain, real ladder placements within reach 3.4-4.2, first one deliberately late (17 dmg, natural regen after). Nitpicks left: same clutch repeats 7x; ladder briefly out of frame right after landing; long falls mostly wall. | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -4.2 -> +4.4 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture",
   "published_at": "2026-11-07T07:17:33.840Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:04:05+00:00",
-    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "version": 3,
+    "at": "2026-11-11T08:25:34+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 31.55 s vs the reviewed render 31.55 s"
@@ -458,7 +458,7 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {

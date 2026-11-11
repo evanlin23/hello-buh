@@ -610,5 +610,24 @@
     "date": "2026-11-08",
     "platform": "YouTube Shorts",
     "by": "owner (manual upload)"
+  },
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:27:15+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 33.15 s vs the reviewed render 33.05 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 5,
+      "summary": "OK"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": "n/a"
   }
 }

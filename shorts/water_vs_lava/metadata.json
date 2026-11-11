@@ -965,9 +965,9 @@
   "notes": "backlog worker D: re-recorded on the current engine; aim through the motion governor (raw looks whipped at up to 850 deg/s); 15x21 lava lake crossed on its own obsidian with one water bucket, two long side pours, mop-up pours, payoff on the black lake with a song dip + impact; 41.6 s; pace 0 blockers; review READY (maker's review, no subagent tool). Water sheets hiding the obsidian, the checkerboard drain and stepped flow fronts are vanilla (docs/lessons.md). Nitpicks: repetitive pour/scoop rhythm in the middle; the turns back after scoops sweep over the dirt rim for ~1 s; hearts flash once ~26 s. | independent review 2026-11-11: READY (owner OK on the black-lake ending). Pours and scoops land on the crosshair (r:rffba12); obsidian/checkerboard drain vanilla; ends on the settled black lake (r:r24d99a ok); pace 0 blockers on the package with marks. Nitpicks: the middle pour/scoop rhythm repeats (~8 cycles, 14-36 s) with little escalation; at 23.5-24.1 s the hearts drop ~1.5 with no visible cause while the view sweeps the dirt rim (looks like an unseen lava touch); key hits only +1.2 dB median over the music (31.35 s scoop -5.8 dB); true peak +1.0 dBTP (house-wide).",
   "published_at": "2026-11-11T07:32:35.284Z",
   "gates": {
-    "version": 2,
-    "at": "2026-11-11T07:33:09+00:00",
-    "by": "publish.js",
+    "version": 3,
+    "at": "2026-11-11T08:29:02+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 41.58 s vs the reviewed render 41.57 s"
@@ -975,15 +975,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:21:55.339Z",
-      "report": "out/water_vs_lava.check.json"
+      "at": "2026-11-11T07:06:16.974Z",
+      "report": "work/hb/water_vs_lava.check.json"
     },
     "key_sounds": "n/a"
   },

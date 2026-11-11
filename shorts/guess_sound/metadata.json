@@ -692,5 +692,30 @@
   ],
   "status": "ready",
   "notes": "worker 13: guess the mob from its sound (cow, llama, polar bear, enderman, warden, then a parrot imitating a creeper); independent review r5 ready on retention, minecraft and frame review. Post before pt 2 and pt 3 (they call back to the parrot).",
-  "published_at": "2026-11-07T15:06:09.294Z"
+  "published_at": "2026-11-07T15:06:09.294Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:24:29+00:00",
+    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 33.07 s vs the reviewed render 33.05 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 13,
+      "warnings": 2,
+      "summary": "keysound: the music covers a key sound (hear): +4.9 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -3.3 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -11.3 dB over the music (need >= 8); keysound: the music covers a key sound (hear): +1.4 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -3.2 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -4.1 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -5.2 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -2.6 dB over the music (need >= 8); keysound: the music covers a key sound (hear): +0.3 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -1.6 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -0.0 dB over the music (need >= 8); keysound: the music covers a key sound (hear): +1.7 dB over the music (need >= 8); payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "label": "no ./hb check report on this box"
+    },
+    "key_sounds": {
+      "ok": false,
+      "keys": [
+        "hear"
+      ],
+      "summary": "key sounds over the music: worst -11.3 dB over 12 clips (need >= 8 dB)"
+    }
+  }
 }
