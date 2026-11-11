@@ -53,12 +53,12 @@ function makeStunt (S) {
   const BIG_Z = -45
   return {
     name: S.name,
-    renderDistance: S.renderDistance, recordRadius: S.recordRadius,   // wide shots (render.js, harness)
+    renderDistance: S.renderDistance, recordRadius: S.recordRadius, botTimeout: S.botTimeout,   // wide shots (render.js, harness)
     biome: process.env.BIOME || S.biomeSearch || 'minecraft:plains',   // where the harness looks for the site
     caption: S.caption,
     edit: {
       caption: S.caption, red: S.red,
-      song: 'songs/funk_abnormal.mp3', dropAt: 'big_done',
+      song: S.song === undefined ? 'songs/funk_abnormal.mp3' : S.song, dropAt: 'big_done',   // S.song null: no reference song (publish adds NCS)
       // the payoff is the big build completing (60:00 and the drop): the camera's pull-back lands on
       // it, and the Short ends 0.8 s later with the camera still moving (the song's drop gets a moment
       // before the fade-out)
@@ -67,8 +67,10 @@ function makeStunt (S) {
       // dark ceiling there, turning to a new block every frame (it strobed at 6x, lapse_house)
       speed: [['cut1_a', 'cut1_b', 'cut']].concat(S.mid.roofY !== undefined
         ? [['mid_start', 'roof_start', S.mid.speed || 2], ['roof_start', 'roof_end', S.mid.roofSpeed || 8], ['roof_end', 'mid_done', S.mid.speed || 2]]
-        : [['mid_start', 'mid_done', S.mid.speed || 2]], [['cut2_a', 'cut2_b', 'cut'], ['big_start', 'big_done', 3]]),
-      clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR']]
+        : midSpeed(S.mid), [['cut2_a', 'cut2_b', 'cut']], bigSpeed(S.bigCuts)),
+      clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR']],
+      // the payoff (60:00) gets a white flash + a zoom punch and a song dip + impact: pace wants a picture change and a hit on it (the drop alone didn't count in the packaged mix) (lapse_statue, lapse_rocket)
+      ...(S.payoffFlash ? { flash: [['big_done', 0, 0.5]], punch: [['big_done', 0, 1.08]], sfx: [['dip', 'big_done', 0.3], ['impact', 'big_done']] } : {})
     },
 
     async setup (ctx) {
@@ -98,13 +100,25 @@ function makeStunt (S) {
       for (let i = 0; i < 40 && !bot.blockAt(new ctx.Vec3(X1, floor, Z1)); i++) await bot.waitForTicks(5)
       await bot.waitForTicks(20)
       // top down: cleared bottom-up, gravel and sand fell back onto the field as heaps
-      for (let y0 = floor + 56; y0 >= floor + 1; y0--) await fill(y0, y0, 'air')
+      // (to floor + 72: a retried attempt's 64-high launch tower top stayed floating in the sky at +56)
+      for (let y0 = floor + 72; y0 >= floor + 1; y0--) await fill(y0, y0, 'air')
       // the edge: ring k blocks out is cleared down to floor + 1.3k, so the terrain beyond steps down
       // to the field like a hillside instead of standing as a cut wall
       for (let k = 1; k <= TAPER; k++) {
-        const h = floor + Math.ceil(k * 1.3), top = floor + 56
+        const h = floor + Math.ceil(k * 1.3), top = floor + 72
         for (const box of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
           bot.chat(`/fill ${box[0]} ${h} ${box[1]} ${box[2]} ${top} ${box[3]} air`); await bot.waitForTicks(1)
+        }
+      }
+      // and where the land beyond is lower, the field's edge steps down to it the same way (it stood as a
+      // flat slab over a beach and the sea: lapse_rocket)
+      for (let k = 1; k <= TAPER; k++) {
+        const h = floor - Math.ceil(k * 1.3)
+        for (const box of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
+          for (const what of ['air', 'water']) {
+            bot.chat(`/fill ${box[0]} ${floor - 30} ${box[1]} ${box[2]} ${h - 1} ${box[3]} ${F.under} replace ${what}`); await bot.waitForTicks(1)
+            bot.chat(`/fill ${box[0]} ${h} ${box[1]} ${box[2]} ${h} ${box[3]} ${F.top} replace ${what}`); await bot.waitForTicks(1)
+          }
         }
       }
       await ctx.cmd('/kill @e[type=!player]')            // falling blocks, and mobs of the old biome (polar bears on plains)
@@ -122,7 +136,7 @@ function makeStunt (S) {
         bot.chat(`/fillbiome ${bx} ${by} ${bz} ${bx + 63} ${by + 7} ${bz + 63} ${F.biome}`); await bot.waitForTicks(1)
       }
       await ctx.hotbar(S.hotbar)
-      await ctx.tpCheck(x - 4.5, floor + 1, z - 0.5, 180, 25)
+      await ctx.tpCheck(x - 4.5, floor + 1, z - 1.3, 180, 25)   // (from z - 0.5 the top block of a 3-high build was 4.57 away)
       await ctx.cmd('/gamemode survival')
       ctx.select(S.small.slots[S.small.blocks[0][3]])
       await bot.waitForTicks(20)
@@ -131,6 +145,7 @@ function makeStunt (S) {
 
     async perform (ctx) {
       const { bot, Vec3 } = ctx
+      const A = require('./act')(ctx)   // the aimed actions (lib/act.js: gated on the crosshair)
       const { x, z, floor } = this
       const placed = new Set()
       const key = (p) => `${p.x},${p.y},${p.z}`
@@ -138,6 +153,16 @@ function makeStunt (S) {
       // the camera eases toward aimTarget on every physics tick, so a slow loop pass never freezes
       // the shot for a tick (duplicate frames); look() only sets the target
       let aim = null, aimTarget = null, aimK = 0.3
+      // the most the view turns in a tick (rad): 0.2 (~230 deg/s, a quick player's turn), eased (aimK). Inside the sped-up
+      // 1-minute round the edit multiplies it on screen (x3: ~690 deg/s), and that is the look the owner wants there
+      // (r:r66efa4, 2026-11-11: "it's okay to have like a really fast movement here because it's like, what, a time
+      // lapse, right? Like right now, it's like I places and I take forever to turn"): no 220/speed cap in that round
+      // (the 180/speed one of bb213c7d is gone); the round is marked turns_fast .. turns_fast_end so the whip check
+      // (lib/hb/owner.js, r:r38374d) lets it through. The aim still lands on every block before the click (r:rffba12).
+      const turnCap = 0.2
+      // aiming for a jump: the eye the turn aims from is the jump's top (apexEye: its height), so the view is already
+      // there when the jump arrives and doesn't swing up with it (a capped turn lagged the rise: forced placements)
+      let apexEye = null
       let steerTo = null   // walk toward this spot (strafing, whatever way the camera faces)
       const aimTick = () => {
         if (steerTo) {
@@ -147,9 +172,27 @@ function makeStunt (S) {
           bot.setControlState('right', r > 0.25); bot.setControlState('left', r < -0.25)
         }
         if (!aimTarget) return
-        aim = aim ? aim.plus(aimTarget.minus(aim).scaled(aimK)) : aimTarget
-        const eye = bot.entity.position.offset(0, 1.62, 0), d = aim.minus(eye)
-        bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+        // ease the yaw and the pitch themselves (easing a point through space spun the yaw 100 deg in a
+        // tick when the point passed under the eye: looking up from a dig-down, lapse_statue)
+        aim = aimTarget
+        // from where the eye will be next tick (mid-jump it rises ~0.4 a tick: the pitch lagged and the
+        // 1-second pumpkin click had the crosshair just over the hay, lapse_statue)
+        // (in the air only: walking, the lead put the ray off grazing faces - two forced placements)
+        const lead = bot.entity.onGround ? new Vec3(0, 0, 0) : bot.entity.velocity
+        const eye0 = bot.entity.position.plus(lead).offset(0, 1.62, 0)
+        const eye = apexEye !== null ? new Vec3(eye0.x, apexEye, eye0.z) : eye0, d = aimTarget.minus(eye)
+        // (a point almost straight below: keep the yaw, its atan2 swung the view round 200 deg)
+        const ty = Math.hypot(d.x, d.z) < 0.3 ? bot.entity.yaw : Math.atan2(-d.x, -d.z), tp = Math.atan2(d.y, Math.hypot(d.x, d.z))
+        const cy = bot.entity.yaw, cp = bot.entity.pitch
+        const dy = ((ty - cy + 3 * Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI
+        // at most ~11 deg a tick: at 3x a tick is a frame, and k 0.5-0.6 turned 50-60 % of a 90 deg look
+        // down to the pillar in one frame (a snap, lapse_statue)
+        // the cap is on the turn as the screen shows it (the whip check: hypot(yaw x cos pitch, pitch))
+        const cap0 = turnCap
+        let sy = dy * aimK, sp = (tp - cp) * aimK
+        const m = Math.hypot(sy * Math.cos(cp), sp), lim = Math.min(cap0, 0.2)
+        if (m > lim) { sy *= lim / m; sp *= lim / m }
+        bot.look(cy + sy, cp + sp, true)
       }
       bot.on('physicsTick', aimTick)
       const look = async (target, k = 0.3) => { aimTarget = target; aimK = k }
@@ -207,6 +250,11 @@ function makeStunt (S) {
         return side || below || ok[0] || FACES[0]
       }
       const inSight = (b) => FACES.some(f => solid({ x: b.x + f[0], y: b.y + f[1], z: b.z + f[2] }) && seen(b, f))
+      // the first block the crosshair's ray hits
+      const crossRay = () => {
+        const yw = bot.entity.yaw, pt = bot.entity.pitch
+        return rayHit(eyePos(), new Vec3(-Math.sin(yw) * Math.cos(pt), Math.sin(pt), -Math.cos(yw) * Math.cos(pt)), 4.5)
+      }
       // the crosshair's own ray lands on the face place() will click
       const aimedAt = (b) => {
         const yw = bot.entity.yaw, pt = bot.entity.pitch
@@ -232,11 +280,12 @@ function makeStunt (S) {
         const f = solid({ x: b.x + supportOf(b)[0], y: b.y + supportOf(b)[1], z: b.z + supportOf(b)[2] }) ? supportOf(b) : null
         if (!f) return false
         const [dx, dy, dz, face] = f
-        bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
-          cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+        // gated on the crosshair (lib/act.js): the build's own look governor turns the view, so it waits up to 3 ticks.
+        // -> the click's promise: buildOne waits for it, so a click that had to wait can't go out after the build has
+        // moved on to the next block (off the crosshair, and before its support's own click: lapse_statue's pillar top)
         placed.add(key(b))
-        ctx.mark('place', { x: b.x, y: b.y, z: b.z })   // client prediction: the block and the stack count change this tick (render.js, edit.py)
-        return true
+        return A.click({ x: b.x + dx, y: b.y + dy, z: b.z + dz }, face, [0.5, 0.5, 0.5], { turn: false, max: 3,
+          also: () => ctx.mark('place', { x: b.x, y: b.y, z: b.z }) })   // client prediction: the block and the stack count change this tick (render.js, edit.py)
       }
       const check = (list, what) => {
         let bad = 0
@@ -262,7 +311,7 @@ function makeStunt (S) {
       let j = 0
       while (ctx.tick - t0 < 20) {
         const el = ctx.tick - t0
-        while (j < sm.length && el >= j * every) {
+        while (j < sm.length && el >= j * every && (aimedAt(sm[j]) || el >= j * every + 3)) {   // the crosshair on it (up to 3 ticks late)
           const b = sm[j]
           if (bot.quickBarSlot !== S.small.slots[b.name]) ctx.select(S.small.slots[b.name])
           if (place(b)) { swing(); ctx.sound(SOUND(b.name), 1, 0.9 + (j % 3) * 0.05) }
@@ -290,7 +339,12 @@ function makeStunt (S) {
       const mdCenter = new Vec3(mo.x + md.w / 2, mo.y + 1 + Math.max(0, mdTop - 4) * 0.6, mo.z + md.d / 2)   // tall builds: aim higher (a statue's face was above the frame)
       // survival-legal: the bot walks round the build and works each side from ~2 blocks out (within
       // vanilla reach, on faces it can see), jumping for rows above its eye
-      const sideOf = (bx, bz) => bz === md.d - 1 ? 'S' : bz === 0 ? 'N' : bx === md.w - 1 ? 'E' : 'W'
+      // (inside the footprint, not on its edge: 'IN', built with the first side, deepest first: a rocket's
+      // core column was hidden behind its own outer blocks once they were in, lapse_rocket)
+      // md.oneSide ('S'...): every block from that one side, the ones behind first (as 'IN' blocks are): a 2-deep build
+      // needs no walk round its back (lapse_statue, r:r478786: the walk round was a 1.3-1.6 s stall, and a 180 deg turn
+      // at a followable on-screen speed can't be shorter; a jump cut across it is a lapse camera jump, r:r200cfe)
+      const sideOf = (bx, bz) => md.oneSide ? md.oneSide : bz === md.d - 1 ? 'S' : bz === 0 ? 'N' : bx === md.w - 1 ? 'E' : bx === 0 ? 'W' : 'IN'
       const OUT = md.out ?? 2.6   // further out (within reach) keeps more of a small build in frame
       const SPOT = {
         S: new Vec3(mo.x + md.w / 2, mo.y, mo.z + md.d + OUT), E: new Vec3(mo.x + md.w + OUT, mo.y, mo.z + md.d / 2),
@@ -302,8 +356,8 @@ function makeStunt (S) {
       // side with blocks: walking past empty sides was 1.5 s of nothing, lapse_statue)
       const mdList = md.blocks.map(([bx, by, bz, name]) => ({ x: mo.x + bx, y: mo.y + by, z: mo.z + bz, name, side: sideOf(bx, bz), roof: md.roofY !== undefined && by >= md.roofY, tower: md.towerY !== undefined && by >= md.towerY }))
       const ALL = ['E', 'N', 'W', 'S']
-      const first = ALL.findIndex(sd => mdList.some(b => b.side === sd && !b.roof && !b.tower))
-      const SIDES = ALL.slice(Math.max(0, first))
+      const first = Math.max(0, ALL.findIndex(sd => mdList.some(b => b.side === sd && !b.roof && !b.tower)))
+      const SIDES = ALL.slice(first)
       const YAW = { E: 90, N: 0, W: -90, S: 180 }
       await ctx.tpCheck(+SPOT[SIDES[0]].x.toFixed(2), floor + 1, +SPOT[SIDES[0]].z.toFixed(2), YAW[SIDES[0]], 10)
       aim = null; aimTarget = null
@@ -311,10 +365,14 @@ function makeStunt (S) {
       ctx.select(Array.isArray(firstSlot) ? firstSlot[0] : firstSlot)
       await look(mdCenter.offset(0, -0.5, 0))   // the build's spot
       await bot.waitForTicks(3)
+      // inside the cut: landed, still, and the view on the build before the shot starts (a slide of 0.3 blocks and a
+      // turn still finishing showed in the first frames after the cut)
+      for (let i = 0; i < 30 && (!bot.entity.onGround || Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.005 || offAim(mdCenter.offset(0, -0.5, 0)) > 2); i++) await bot.waitForTicks(1)
       ctx.mark('cut1_b')
 
       // ---- 1 minute: block by block for real, a time-lapse in the edit ----
       ctx.mark('mid_start')
+      ctx.mark('turns_fast')   // the sped-up build: fast turns between placements (r:r66efa4; the whip check skips it)
       const used = {}
       const walkTo = async (spot, maxTicks = 60) => {
         steerTo = spot
@@ -338,27 +396,34 @@ function makeStunt (S) {
         const eyeTo = (q) => eyePos().distanceTo(q)
         // ready: within reach of the face (corner merlons went in from 5.1 blocks) and the crosshair's ray
         // on it (a 2.5 deg aim window let grazing clicks through, and clicks through blocks)
-        const ok = () => { fp = facePoint(b); aimTarget = fp; return eyeTo(fp) <= 4.2 && aimedAt(b) }
-        for (let attempt = 0; attempt < 3 && !ok(); attempt++) {
+        const ok = () => { fp = facePoint(b); aimTarget = fp; return eyeTo(fp) <= 4.4 && aimedAt(b) }
+        for (let attempt = 0; attempt < 6 && !ok(); attempt++) {
           const topFace = supportOf(b)[1] === -1
           if (topFace && fp.y + 0.3 > eyeY()) {                // jump: the crosshair on it at the top
             for (let i = 0; i < 12 && !bot.entity.onGround; i++) await bot.waitForTicks(1)
+            // aim from the jump's top first (1.25 up), then jump: the view hardly moves on the way up
+            apexEye = bot.entity.position.y + 1.25 + 1.62
+            const fromTop = () => { const e = bot.entity.position; const d = fp.minus(new Vec3(e.x, apexEye, e.z)).normalize(); const yw = bot.entity.yaw, pt = bot.entity.pitch; return Math.acos(Math.max(-1, Math.min(1, d.dot(new Vec3(-Math.sin(yw) * Math.cos(pt), Math.sin(pt), -Math.cos(yw) * Math.cos(pt)))))) * 180 / Math.PI }
+            for (let i = 0; i < 40 && fromTop() > 1.5; i++) await bot.waitForTicks(1)
             bot.setControlState('jump', true)
             for (let i = 0; i < 14 && !ok(); i++) {
               await bot.waitForTicks(1)
               if (!bot.entity.onGround && bot.entity.velocity.y < 0 && eyeY() < fp.y + 0.05) break
             }
             bot.setControlState('jump', false)
-          } else for (let i = 0; i < 16 && !ok(); i++) await bot.waitForTicks(1)
+            apexEye = null
+          } else for (let i = 0; i < 30 && !ok(); i++) await bot.waitForTicks(1)   // (up to 1.5 s: a far turn and a step)
         }
         if (!ok()) ctx.log('forced placement (face not in sight or not aimed)', b.x - x, b.y - floor, b.z - z, b.name)
-        place(b); swing()
+        await place(b); swing()
         ctx.sound(SOUND(b.name), 1, 0.8 + (guard % 3) * 0.05)
         for (let k = 0; k < md.perTick; k++) await bot.waitForTicks(1)
       }
       // the lowest row first; along it, one with a face in sight first, nearest the bot (walking a side)
       // or farthest (from a fixed spot like the pillar top: a near block first hides the ones behind it)
-      const nextReady = (todo, far = false) => {
+      const depthOf = (p, side) => side === 'S' ? mo.z + md.d - 1 - p.z : side === 'N' ? p.z - mo.z : side === 'E' ? mo.x + md.w - 1 - p.x : side === 'W' ? p.x - mo.x : 0
+      // on a side, the deepest blocks first (from that side): a block in front goes in after the ones behind it
+      const nextReady = (todo, far = false, side = null) => {
         const me = bot.entity.position
         const ready = todo.filter(b => FACES.some(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz })))
         if (!ready.length) return null
@@ -366,23 +431,40 @@ function makeStunt (S) {
         const row = ready.filter(q => q.y === lo)
         const vis = row.filter(inSight)
         const d = (p) => me.distanceTo(new Vec3(p.x + 0.5, p.y, p.z + 0.5))
-        return (vis.length ? vis : row).sort((p, q) => far ? d(q) - d(p) : d(p) - d(q))[0]
+        const depth = (p) => depthOf(p, side)
+        // (from a fixed spot, far: the farthest first, in sight or not yet - it comes into sight at the top of a jump;
+        // preferring the ones in sight from mid-jump put a front block in before the one behind it, which it then hid:
+        // a forced placement on lapse_statue's pillar top)
+        return (vis.length && !far ? vis : row).sort((p, q) => depth(q) - depth(p) || (far ? d(q) - d(p) : d(p) - d(q)))[0]
+      }
+      // the walk between two sides with blocks (round any empty side between them) is marked mid_walk<n>_a .. _b:
+      // with md.walkSpeed the edit plays it faster than the build (midSpeed), so blocks keep appearing every output
+      // second (owner r:r478786, lapse_statue: "we pause ... when we're building the second one": a 2-deep statue's
+      // walk from its back round to its front was 4.7 s of the recording, 1.6 s of the Short with no block)
+      let walkN = 0, walkOpen = false, sideDone = false
+      const standFor = (b, side) => {   // in front of it: along the side toward the block, a step in by its depth
+        const dp = Math.min(depthOf(b, side), OUT - 1.2)
+        return side === 'S' || side === 'N' ? new Vec3(Math.max(mo.x + 1.5, Math.min(mo.x + md.w - 1.5, b.x + 0.5)), mo.y, SPOT[side].z + (side === 'S' ? -dp : dp))
+          : new Vec3(SPOT[side].x + (side === 'E' ? -dp : dp), mo.y, Math.max(mo.z + 1.5, Math.min(mo.z + md.d - 1.5, b.z + 0.5)))
       }
       for (const side of SIDES) {
-        const todo = mdList.filter(b => b.side === side && !b.roof && !b.tower)   // roof and tower rows come after
+        const todo = mdList.filter(b => (b.side === side || (b.side === 'IN' && side === SIDES[0])) && !b.roof && !b.tower)   // roof and tower rows come after
         if (side !== SIDES[0]) {                             // round the corner, eyes on the next side
+          if (sideDone && !walkOpen) { walkN++; walkOpen = true; ctx.mark(`mid_walk${walkN}_a`) }
           await look(mdCenter, 0.15)                         // the build stays in frame (an empty field read as dead)
           await walkTo(CORNER[side], 40)
         }
         if (!todo.length) continue                           // nothing on this side: on round the next corner
         await walkTo(SPOT[side], 40)
+        if (walkOpen) { walkOpen = false; ctx.mark(`mid_walk${walkN}_b`) }
+        sideDone = true
         while (todo.length && guard++ < 1000) {
-          const b = nextReady(todo)
+          const b = nextReady(todo, false, side)
           if (!b) { ctx.log('mid stuck on side', side, 'with', todo.length, 'left'); break }
           todo.splice(todo.indexOf(b), 1)
           // stay in front of it: slide along the side toward the block
-          await buildOne(b, side === 'S' || side === 'N' ? new Vec3(Math.max(mo.x + 1.5, Math.min(mo.x + md.w - 1.5, b.x + 0.5)), mo.y, SPOT[side].z)
-            : new Vec3(SPOT[side].x, mo.y, Math.max(mo.z + 1.5, Math.min(mo.z + md.d - 1.5, b.z + 0.5))))
+          // (a block deeper in: a step in by its depth, or the first core block was 4.4 away)
+          await buildOne(b, standFor(b, side))
         }
       }
       // rows from md.towerY up are out of reach from the ground: the bot towers up beside the build the
@@ -399,19 +481,22 @@ function makeStunt (S) {
         for (let k = 0; k < md.towerH; k++) {
           const below = new Vec3(col.x, mo.y - 1 + k, col.z)           // the block the feet stand on
           await look(new Vec3(col.x + 0.5, mo.y + k + 0.02, col.z + 0.5), 0.6)   // straight down at it
-          await bot.waitForTicks(2)
+          // the crosshair on its top face before the jump (with the turn cap a fixed 2 ticks clicked
+          // while still turning down: the first dirt went in under a crosshair on the sand)
+          for (let i = 0; i < 60 && !isFace(crossRay(), { x: col.x, y: below.y + 1, z: col.z }, [0, -1, 0, 1]); i++) await bot.waitForTicks(1)   // (until it's there)
+          await bot.waitForTicks(1)
           bot.setControlState('jump', true)
           for (let i = 0; i < 12 && bot.entity.position.y < mo.y + k + 1.05; i++) await bot.waitForTicks(1)
           bot.setControlState('jump', false)
-          bot._client.write('block_place', { hand: 0, location: { x: below.x, y: below.y, z: below.z }, direction: 1,
-            cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
           placed.add(key({ x: col.x, y: mo.y + k, z: col.z })); pillar.push({ x: col.x, y: mo.y + k, z: col.z })
-          ctx.mark('place', { x: col.x, y: mo.y + k, z: col.z }); swing(); ctx.sound(SOUND('dirt'), 1, 0.9)
+          await A.click(below, 1, [0.5, 1, 0.5], { turn: false, max: 3,
+            also: () => { ctx.mark('place', { x: col.x, y: mo.y + k, z: col.z }); swing(); ctx.sound(SOUND('dirt'), 1, 0.9) } })
           for (let i = 0; i < 10 && !bot.entity.onGround; i++) await bot.waitForTicks(1)
         }
         steerTo = null
         for (const c of ['forward', 'back', 'left', 'right']) bot.setControlState(c, false)
         while (tall.length && guard++ < 1000) {
+          for (let i = 0; i < 14 && !bot.entity.onGround; i++) await bot.waitForTicks(1)   // choose from where it stands
           const b = nextReady(tall, true)
           if (!b) { ctx.log('mid tower rows stuck with', tall.length, 'left'); break }
           tall.splice(tall.indexOf(b), 1)
@@ -422,9 +507,10 @@ function makeStunt (S) {
         if (md.digSlot !== undefined) ctx.select(md.digSlot)   // a shovel: the dig-down takes ticks, not seconds of looking at dirt
         for (const q of pillar.reverse()) {
           await look(new Vec3(q.x + 0.5, q.y + 1.02, q.z + 0.5), 0.6)
-          await bot.waitForTicks(2)
+          // the crosshair on the block before digging it (the first dig started looking at the statue's face)
+          for (let i = 0; i < 60; i++) { const h = crossRay(); if (h && h.x === q.x && h.y === q.y && h.z === q.z) break; await bot.waitForTicks(1) }   // (until it's there)
           const bl = bot.blockAt(new Vec3(q.x, q.y, q.z))
-          if (bl && bl.name !== 'air') { try { await bot.dig(bl, 'ignore') } catch (e) { ctx.log('dig failed', e.message) } }
+          if (bl && bl.name !== 'air') { try { await A.digNow(bl, { turn: false, max: 4 }) } catch (e) { ctx.log('dig failed', e.message) } }
           placed.delete(key(q))
           // fall and land on the next one before digging it (onGround was still true from before the
           // block broke: the next dig started mid-fall, at the airborne x5 dig time)
@@ -477,6 +563,7 @@ function makeStunt (S) {
         }
       }
       ctx.mark('mid_done')
+      ctx.mark('turns_fast_end')
       // back off from the front, the whole build in view at 1:00 (a wall close-up read as nothing)
       // (a tall build: the eye on its middle, the head was above the frame at 1:00)
       await look(mdTop > 4 ? new Vec3(mdCenter.x, mo.y + mdTop * 0.8, mdCenter.z) : mdCenter.offset(0, -0.5, 0), 0.15)   // (its head under the clock at mdTop / 2)
@@ -494,9 +581,11 @@ function makeStunt (S) {
       const W = (p) => [C.x + 0.5 + p[0], C.y + p[1], C.z + 0.5 + p[2]]
       // every stage gets its own share of the beat (stageTicks), so a big stage can't eat it all
       const T = Object.values(BG.stageTicks).reduce((a, b) => a + b, 0) + 8
-      const keys = BG.keys.map(([t, p, l]) => [t, W(p), W(l)])
+      // BG.angles: several steady angles joined by hard cuts (owner r:r66efa4), else one rail through BG.keys + reveal
+      const AN = BG.angles ? angleShots(BG.angles, T, S.bigCuts, BG.tail ?? 16) : null
+      const keys = AN ? [[0], [AN[AN.length - 1].t1]] : BG.keys.map(([t, p, l]) => [t, W(p), W(l)])
         .concat(BG.reveal.map(([dt, p, l]) => [T + dt, W(p), W(l)]))
-      const cam = rail(keys)
+      const cam = AN ? (t) => { const a = angleAt(AN, t), c = a.cam(t); return { pos: W(c.pos), look: W(c.look), n: a.n } } : rail(keys)
       await ctx.cmd('/gamemode creative')
       await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 64')   // the flying camera builds from afar
       bot.creative.startFlying()
@@ -512,8 +601,20 @@ function makeStunt (S) {
       }
       // the rail moves the camera every physics tick, whatever the build loop is doing (a slow
       // pass of /fill commands froze the camera for a tick: duplicate frames)
-      let railT0 = null
-      const railTick = () => { setCam(railT0 === null ? 0 : Math.min(keys[keys.length - 1][0], ctx.tick - railT0)) }
+      let railT0 = null, angleN = 0
+      const railTick = () => {
+        const t = railT0 === null ? 0 : Math.min(keys[keys.length - 1][0], ctx.tick - railT0)
+        // a new angle: a hard cut (the 'cut' mark: render.js snaps, never glides; 'angle': a new shot for the lapse
+        // camera-jump check, scripts/lapse_cuts.py), and a /tp so the server has the camera where the client puts it
+        const n = cam(t).n || 0
+        if (n !== angleN) {
+          angleN = n
+          const p = cam(t).pos
+          ctx.mark('cut'); ctx.mark('angle', { n, name: AN[n].name || null })
+          bot.chat(`/tp @s ${p[0].toFixed(3)} ${(p[1] - 1.62).toFixed(3)} ${p[2].toFixed(3)}`)
+        }
+        setCam(t)
+      }
       bot.on('physicsTick', railTick)
       await bot.waitForTicks(3)
       ctx.mark('cut2_b')
@@ -577,4 +678,65 @@ function makeStunt (S) {
   }
 }
 
-module.exports = { makeStunt, rail }
+// the 1-minute round's speed spans: md.speed (default 2x) for the build; with md.walkSpeed, the walks between its
+// sides (mid_walk<n>_a .. _b, one per pair of consecutive sides with blocks, as setup marks them) at that speed
+function midWalks (md) {
+  const sideOf = (bx, bz) => md.oneSide ? md.oneSide : bz === md.d - 1 ? 'S' : bz === 0 ? 'N' : bx === md.w - 1 ? 'E' : bx === 0 ? 'W' : 'IN'
+  const has = new Set(md.blocks.filter(b => !(md.roofY !== undefined && b[1] >= md.roofY) && !(md.towerY !== undefined && b[1] >= md.towerY)).map(b => sideOf(b[0], b[2])))
+  const ALL = ['E', 'N', 'W', 'S']
+  const first = Math.max(0, ALL.findIndex(sd => has.has(sd)))
+  return Math.max(0, ALL.slice(first).filter((sd, i) => i === 0 || has.has(sd)).length - 1)
+}
+function midSpeed (md) {
+  const sp = md.speed || 2
+  const n = md.walkSpeed ? midWalks(md) : 0
+  if (!n) return [['mid_start', 'mid_done', sp]]
+  const out = []
+  let a = 'mid_start'
+  for (let i = 1; i <= n; i++) { out.push([a, `mid_walk${i}_a`, sp], [`mid_walk${i}_a`, `mid_walk${i}_b`, md.walkSpeed]); a = `mid_walk${i}_b` }
+  out.push([a, 'mid_done', sp])
+  return out
+}
+
+// S.bigCuts = [EVERY, GAP, UPTO]: jump cuts through the 1-hour round, one every EVERY scene seconds dropping GAP
+// seconds (up to UPTO s after big_start), the clock jumping with them. At 3x a build with no cut for 5+ s read as
+// dead air (pace: lapse_statue 5.7 s, lapse_rocket 3.4 s); a cut every ~1.6 s of output keeps it moving.
+function bigSpeed (c) {
+  if (!c) return [['big_start', 'big_done', 3]]
+  const [every, gap, upto] = c, out = []
+  const at = (x) => x ? `big_start:${+x.toFixed(2)}` : 'big_start'
+  let a = 0
+  for (let t = every; t + gap <= upto; t += every) { out.push([at(a), at(t), 3], [at(t), at(t + gap), 'cut']); a = t + gap }
+  out.push([at(a), 'big_done', 3])
+  return out
+}
+
+// S.big.angles: the 1-hour round from several clearly different steady angles, joined by hard cuts (owner r:r66efa4,
+// 2026-11-11: "we should have more angles when we're showing the last thing"), e.g. a low front three-quarter, a side,
+// a close detail, a high wide, then 2-3 for the finished build's showcase.
+//   [[at, [pos0, look0], [pos1, look1], name], ...]: the angle starts at tick `at` of the build (the first at 0) and
+//   moves in a straight line at an even speed from pos0/look0 to pos1/look1 by the next angle's start (the last one by
+//   T + tail, the drift after 60:00). Local coordinates, as big.keys. Within an angle the move is slow and steady, so
+//   across the bigCuts jump cuts it carries on (r:r200cfe: <= 6 deg, 3 blocks, 1.5 up/down a jump cut).
+//   An `at` within 30 ticks of a bigCuts gap moves to the gap's middle: the change of angle hides in the dropped time.
+// -> [{ n, name, t0, t1, cam(t) -> { pos, look } }]
+function angleShots (angles, T, bigCuts, tail = 16) {
+  const gaps = []
+  if (bigCuts) { const [every, gap, upto] = bigCuts; for (let t = every; t + gap <= upto; t += every) gaps.push([t * 20, (t + gap) * 20]) }
+  const snap = (at) => {
+    if (!at) return 0
+    const g = gaps.map(([a, b]) => [a, b, Math.abs((a + b) / 2 - at)]).sort((p, q) => p[2] - q[2])[0]
+    return g && (at >= g[0] - 30 && at <= g[1] + 30) ? Math.round((g[0] + g[1]) / 2) : at
+  }
+  const starts = angles.map(a => snap(a[0]))
+  for (let i = 1; i < starts.length; i++) if (!(starts[i] > starts[i - 1])) throw new Error(`big.angles: angle ${i} starts at ${starts[i]}, not after ${starts[i - 1]}`)
+  const end = T + tail
+  return angles.map(([, [p0, l0], [p1, l1], name], n) => {
+    const t0 = starts[n], t1 = n + 1 < starts.length ? starts[n + 1] : end
+    const lerp = (a, b, u) => a.map((v, j) => v + (b[j] - v) * u)
+    return { n, name, t0, t1, cam: (t) => { const u = Math.max(0, Math.min(1, (t - t0) / (t1 - t0))); return { pos: lerp(p0, p1, u), look: lerp(l0, l1, u) } } }
+  })
+}
+const angleAt = (AN, t) => { let a = AN[0]; for (const x of AN) if (t >= x.t0) a = x; return a }
+
+module.exports = { makeStunt, rail, midSpeed, midWalks, angleShots, angleAt }
