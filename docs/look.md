@@ -161,6 +161,31 @@ look with bloom and grain off (section 8).
 What the grade can't fix (the stills show it): the zombies under the tree stay at 0.18 with any grade, because the
 tree's shade is in the world. That is lighting and staging, below.
 
+### Stunts: look `bright_stunt`, the default (owner, 2026-11-11, r:r8fa348)
+Owner: "I think hello buh should use the bright grading as well." **Every stunt without its own `look` renders
+`'bright_stunt'`** (`renderer/looks.js` stuntLook, read by render.js); `look: null` keeps a stunt ungraded, any other
+`look` is used as before. Stories (`story_*`, or `edit.story`) are not touched: they keep their explicit look, and the
+old ones without one render as published (0 pixels differ: story_nitwit 1.5 s and 24.2 s, story_dog_hill 3 s, and
+story_nitwit with `--look bright`, main vs this change).
+- **Why not plain `'bright'`.** On speed_build at 3 s it blew the day sky to near-white and lost the clouds. Two causes:
+  (1) a look with no `bloom` gets the cinematic default, bloom 0.6 over threshold 0.7, and an exposed sky is all over
+  the threshold, so the whole sky glowed white; (2) exposure x1.23 clipped the sky's blue channel while green kept
+  rising, then saturation 1.3 and the S-curve pushed it to cyan-white (vanilla sky 120,167,255 -> 143,222,255 with
+  bloom 0). Terrain, under the clip, was fine: warmer and more saturated.
+- **What `'bright_stunt'` is:** `'bright'`'s grade frame by frame (exposure, saturation ~1.3, contrast, white balance,
+  vignette 0.1, nights lifted), plus `bloom: 0`, `grain: 0` (stunts never had either), `rolloff: 0.8` and
+  `pushes: false` (camera pushes keep the stunt's own speed: the grade only). `{ mood: 'bright_stunt', rolloff: 0.9 }`
+  overrides any field.
+- **`look.rolloff` (any look; off unless set):** a highlight shoulder in the finishing pass (renderer/page.js, mirrored in
+  `scripts/grade_preview.py`), after lift/gamma/gain and before saturation: above the knee the brightest channel eases
+  into 1 (`k + (1-k)(1 - e^(-(m-k)/(1-k)))`) and the pixel is scaled whole, so its hue holds. The sky comes out
+  109,171,245 (bluer than vanilla) and the clouds 233,232,229 (white, apart from it). Under the knee nothing changes.
+- **A/B** (old ungraded vs new, 540x506 stills): speed_build 3 s and 7 s, tnt 2 s and the blast, villager_job 3 s and
+  8 s, water_clutch top-down and looking up the pillar, dig_up's torch-lit tunnel (subject luma 0.19 -> 0.23, p1 0.11
+  -> 0.12: brighter, not washed out), lava_rising (lava stays orange). Every sky blue with visible clouds.
+- For the stories' lead: a story on `'bright'` has the same pale sky (bloom 0.6 on an exposed sky); `{ mood: 'bright',
+  rolloff: 0.8 }` or a higher `bloomThreshold` would fix it there too. Not changed here.
+
 ### Lighting in the world
 - **Time of day per mood:** the table above. Golden hour: the sun low in the west, so the camera sits west of a face to
   light it (east of it to backlight). Avoid noon for faces: the sun straight down lights tops, not fronts.
@@ -262,8 +287,9 @@ the camera effects that film uses, sparingly; they exist already in edit.py's re
   and grain off differs by 0.001 levels on average (99th percentile 0); `look: 'auto'` in one render graded the day
   frame as village_day and the night frame as eerie_night (mean difference 0.0001).
 - `./hb still <stunt> T --look golden_hour` (or `--look '{"mood": "tense", "vignette": 0.5}'`): the real thing.
-- Non-story Shorts and stunts whose `look` has no `mood` render exactly as before: boat_clutch and tnt at 2 s and 6 s,
-  and story_good_boy (its own look) at 15.5 s, rendered on main and on this branch: 0 pixels differ.
+- Stunts whose `look` has no `mood` render exactly as before: story_good_boy (its own look) at 15.5 s, rendered on
+  main and on this branch: 0 pixels differ. Since 2026-11-11 (r:r8fa348) a stunt with no `look` at all renders
+  `'bright_stunt'` (section 3); `LOOK=0 ./hb still ...` shows it ungraded.
 
 ## 9. Open questions for the owner
 1. **Font:** Poppins Black is the new caption default (most legible for its width). Keep, or prefer Montserrat Black

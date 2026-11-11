@@ -1,0 +1,57 @@
+# Finished Short mp4s -> GitHub Release assets (owner rule r:rc5eaf0: the videos branch keeps metadata only).
+# scripts/release_assets.py pushes a throwaway branch upload/<name>-<commit> (or <prefix>/upload-...): origin/main plus
+# release-upload/job.json and the mp4s (or, for a migration, pointers into a videos commit). This run uploads each
+# asset to the release pkg-<name> (created on main if new), checks its sha256, and deletes the branch.
+# release_assets.py waits for each asset's download URL, then writes metadata.json on the videos branch.
+name: release-assets
+on:
+  push:
+    branches: ['upload/**', '*/upload-*']
+    paths: ['release-upload/job.json']
+permissions:
+  contents: write
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: release-upload
+          sparse-checkout-cone-mode: true
+      - name: upload the assets
+        run: |
+          set -euo pipefail
+          python3 - <<'EOF'
+          import hashlib, json, os, subprocess, sys
+          job = json.load(open("release-upload/job.json"))
+          def sh(*a, check=True):
+              return subprocess.run(a, check=check, capture_output=True, text=True)
+          for name, pkg in job["packages"].items():
+              tag = pkg["tag"]
+              if sh("gh", "release", "view", tag, check=False).returncode:
+                  r = sh("gh", "release", "create", tag, "--target", "main", "--latest=false", "--title", f"{name} (HelloBuh package)",
+                         "--notes", f"Finished mp4s of shorts/{name} (videos branch metadata.json video.release). Asset names carry the sha256.", check=False)
+                  if r.returncode and sh("gh", "release", "view", tag, check=False).returncode:   # (a parallel run made it: fine)
+                      sys.exit(r.stderr)
+              for a in pkg["assets"]:
+                  f = a["asset"]
+                  if "videos" in a:   # migration: the mp4 already on the videos branch
+                      v = a["videos"]
+                      subprocess.run(["git", "fetch", "-q", "--depth", "1", "--filter=blob:none", "origin", v["commit"]], check=True)
+                      with open(f, "wb") as out:
+                          subprocess.run(["git", "cat-file", "blob", f"{v['commit']}:{v['path']}"], stdout=out, check=True)
+                  else:
+                      os.replace(a["path"], f)
+                  s = hashlib.sha256(open(f, "rb").read()).hexdigest()
+                  if s != a["sha256"]:
+                      sys.exit(f"{f}: sha256 {s} != {a['sha256']}")
+                  sh("gh", "release", "upload", tag, f, "--clobber")
+                  os.remove(f)
+                  print(f"{tag}/{f} uploaded", flush=True)
+          EOF
+      - name: delete the throwaway branch
+        if: ${{ success() }}
+        run: git push origin --delete "$GITHUB_REF_NAME"

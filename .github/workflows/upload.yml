@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "upload | report | scores | dry-run"
+        description: "upload | report | scores | dry-run | verify (download + sha256-check the Short named below, no upload)"
         required: false
         default: "upload"
       short:
@@ -53,18 +53,18 @@ jobs:
       ON: ${{ inputs.channel == 'buhstories' && (vars.YT_ENABLED_BUHSTORIES == 'true' && 'true' || 'false') || vars.YT_ENABLED }}
     steps:
       - name: off unless enabled
-        if: ${{ env.ON != 'true' && inputs.mode != 'dry-run' }}
+        if: ${{ env.ON != 'true' && inputs.mode != 'dry-run' && inputs.mode != 'verify' }}
         run: echo "uploads are off for ${YT_CHANNEL} (its YT_ENABLED variable is not 'true'). Nothing done."
       - uses: actions/checkout@v4
-        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' }}
+        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         with: { ref: main }
       - uses: actions/setup-python@v5
-        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' }}
+        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         with: { python-version: "3.12" }
-      - if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' }}
+      - if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         run: pip install -q google-api-python-client google-auth
       - name: upload
-        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' }}
+        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         run: |
           git config user.name evanlin23
           git config user.email 113861384+evanlin23@users.noreply.github.com
@@ -75,6 +75,7 @@ jobs:
           case "${{ inputs.mode }}" in
             report)  python3 scripts/youtube_upload.py --report ;;
             dry-run) python3 scripts/youtube_upload.py --dry-run ;;
+            verify)  python3 scripts/youtube_upload.py --verify "${{ inputs.short }}" ;;
             scores)  python3 scripts/youtube_upload.py --scores ;;
             *)       python3 scripts/youtube_upload.py --short "${{ inputs.short }}" ;;
           esac
