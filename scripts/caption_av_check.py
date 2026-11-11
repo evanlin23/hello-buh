@@ -15,7 +15,13 @@ For every caption word it compares when the caption appears with when that word 
 offset = shown - heard (negative: the caption is early). The target is the caption appearing on the frame in which
 its word starts: offset between -1 frame and 0.
 
-BLOCK (exit 1) when |median offset| > 33 ms or over 10% of words are more than 100 ms off. Prints the median,
+Coverage (owner 2026-11-11: "should we have captions on all of the words, not just some of them?"; STANDARDS 6.1):
+  every word of every line (narrator and characters, voice/words.json placed where the edit lays the line) has its
+  line's caption on screen while it is spoken (its middle, +-40 ms); every caption word of the line (voice.json
+  captions) appears in the caption events; and the take says the caption text (Whisper on each line's wav, the take
+  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words). Any miss is a BLOCK.
+
+BLOCK (exit 1) when |median offset| > 33 ms or over 10% of words are more than 100 ms off, or on any coverage miss. Prints the median,
 p10/p90, a per-line table (a constant offset, drift along the Short, or one bad line) and the worst words. Exit 2:
 could not run. --json prints the numbers as JSON on the last line.
 
@@ -135,7 +141,7 @@ def heard_words(track, story_dir, timeline, start, dur, tmp):
             print(f"note: {lid}: the aligner could not fit the words to the track (left out)")
             continue
         out[lid] = [(w, i0 / 16000 + a, i0 / 16000 + b) for w, a, b in r]
-    return out, x
+    return out, x, vs
 
 
 def caption_frames(mp4, events, s_video, track, story_dir, tmp):
@@ -189,6 +195,115 @@ def caption_frames(mp4, events, s_video, track, story_dir, tmp):
     return out
 
 
+COVER_TOL = 0.04   # s: a word counts as captioned if its middle falls inside one of its line's captions, +-40 ms
+
+
+def uncaptioned(spoken, events, tol=COVER_TOL):
+    """spoken: [(line id, word, start s, end s)] in the edit's time; events: [(t0, t1, text, line id)] (the caption
+    track). -> the spoken words with no caption of their own line on screen at their middle."""
+    by = {}
+    for t0, t1, _, lid in events:
+        by.setdefault(lid, []).append((t0, t1))
+    out = []
+    for lid, w, a, b in spoken:
+        mid = (a + b) / 2
+        if not any(t0 - tol <= mid < t1 + tol for t0, t1 in by.get(lid, [])):
+            out.append((lid, w, a, b))
+    return out
+
+
+def letters(t):
+    return "".join(ctc_align.spoken_words(t)).replace("'", "")
+
+
+def missing_caption_words(captions, events):
+    """captions: {line id: [chunk text, ...]} (voice.json); events as above. -> {line id: [caption tokens never shown]},
+    matched by letters in order (a dropped chunk, a line with no events)."""
+    import difflib
+    shown = {}
+    for _, _, text, lid in events:
+        shown.setdefault(lid, []).extend(text.split())
+    out = {}
+    for lid, chunks in captions.items():
+        want = [t for c in chunks for t in c.split() if letters(t)]
+        got = [t for t in shown.get(lid, []) if letters(t)]
+        sm = difflib.SequenceMatcher(None, [letters(t) for t in want], [letters(t) for t in got], autojunk=False)
+        miss = [want[i] for op, i1, i2, _, _ in sm.get_opcodes() if op in ("delete", "replace") for i in range(i1, i2)]
+        if miss:
+            out[lid] = miss
+    return out
+
+
+def take_word_fails(captions, heard):
+    """captions: {line id: [chunk text]}; heard: {line id: [(word, a, b)]} (Whisper on the line's wav). -> {line id:
+    [reason]} where the take doesn't say its caption text (take_gate's matcher: the take gate's own words check)."""
+    import take_gate
+    out = {}
+    for lid, chunks in captions.items():
+        if lid not in heard:
+            continue
+        f = take_gate.words_check([" ".join(chunks)], heard[lid])
+        if f:
+            out[lid] = [x["why"] for x in f]
+    return out
+
+
+def whisper_lines(wavs):
+    """{line id: [(word, a, b)]} from Whisper (align.words) on each wav, in this process if transformers is here, else
+    through the TTS venv; None when neither can run."""
+    try:
+        import align
+        return {lid: align.words(str(w)) for lid, w in wavs.items()}
+    except ImportError:
+        pass
+    py = os.path.expanduser("~/.hb-tts/bin/python")
+    if not os.path.exists(py):
+        return None
+    code = ("import sys, json; sys.path.insert(0, sys.argv[1]); import align; "
+            "print(json.dumps({k: align.words(v) for k, v in json.loads(sys.argv[2]).items()}))")
+    r = subprocess.run([py, "-c", code, str(HERE), json.dumps({k: str(v) for k, v in wavs.items()})], capture_output=True, text=True)
+    if r.returncode:
+        return None
+    return {k: [tuple(x) for x in v] for k, v in json.loads(r.stdout.strip().splitlines()[-1]).items()}
+
+
+def coverage(story_dir, vs, events, verbose=True, listen=True):
+    """The coverage BLOCK (module doc): every spoken word captioned, every caption word shown, the take says the
+    captions. vs: {line id: where the edit lays the line's wav (s)}. -> {"block", "uncaptioned", "missing", "words"}."""
+    sd = pathlib.Path(story_dir)
+    voice = json.loads((sd / "voice" / "voice.json").read_text())
+    wj = sd / "voice" / "words.json"
+    words = json.loads(wj.read_text()) if wj.exists() else {}
+    lines = {lid: v for lid, v in voice["lines"].items() if lid in vs}
+    spoken = [(lid, w, vs[lid] + a, vs[lid] + b) for lid in lines for w, a, b in words.get(lid, [])]
+    unc = uncaptioned(spoken, events)
+    no_words = [lid for lid in lines if not words.get(lid)]
+    miss = missing_caption_words({lid: v.get("captions", []) for lid, v in lines.items()}, events)
+    wf, listened = {}, False
+    if listen:
+        heard = whisper_lines({lid: sd / "voice" / f"{lid}.wav" for lid in lines if (sd / "voice" / f"{lid}.wav").exists()})
+        if heard is not None:
+            listened = True
+            wf = take_word_fails({lid: v.get("captions", []) for lid, v in lines.items()}, heard)
+    block = bool(unc or miss or wf or no_words)
+    if verbose:
+        print(("BLOCK" if block else "OK") + f": caption coverage ({len(spoken)} spoken words in {len(lines)} lines: "
+              f"{len(unc)} with no caption on screen, {sum(map(len, miss.values()))} caption words never shown, "
+              f"{len(wf)} line(s) whose take doesn't say its captions" + ("" if listened else "; the take's words not checked: no Whisper") + ")")
+        for lid, w, a, b in unc[:10]:
+            print(f"  uncaptioned: {lid} {w!r} spoken {a:.2f}-{b:.2f} s")
+        for lid in no_words:
+            print(f"  uncaptioned: {lid} has no word times (voice/words.json): run scripts/align.py {story_dir}")
+        for lid, ws in miss.items():
+            print(f"  never shown: {lid} {' '.join(ws)!r}")
+        for lid, why in wf.items():
+            print(f"  take vs captions: {lid}: {'; '.join(why)}")
+        if block:
+            print(f"fix: re-align (scripts/align.py {story_dir}) and re-edit; a take that says other words than story.json is a re-take, "
+                  "or change the line's text to what was said")
+    return {"block": block, "uncaptioned": [list(u) for u in unc], "no_words": no_words, "missing": miss, "words": wf, "listened": listened}
+
+
 def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
     track = import_track(track_path)
     rec = load_rec(rec_path)
@@ -196,8 +311,9 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
     dur = max([len(rec.get("poses") or []) / 20] + [e["t"] / 1000 + 1 for e in timeline])
     tmp = tempfile.mkdtemp(prefix="hb-capav-")
     try:
-        heard, narr = heard_words(track, story_dir, timeline, 0.0, dur, tmp)
+        heard, narr, vs = heard_words(track, story_dir, timeline, 0.0, dur, tmp)
         ev = track.caption_events(story_dir, timeline, 0.0, dur, who=True)
+        cov = coverage(story_dir, vs, ev, verbose)
         # each caption's words, in order per line: the first word's heard start is the caption's target
         used, rows = {}, []
         for k, (t0, t1, text, lid) in enumerate(ev):
@@ -235,7 +351,7 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
         subprocess.run(["rm", "-rf", tmp])
     if not rows:
         print("could not measure: no caption word matched an aligned word")
-        return 2, {}
+        return (1 if cov["block"] else 2), {"coverage": cov}
     off = np.array([r["off"] for r in rows])
     med = float(np.median(off))
     miss = float(np.mean(np.abs(off) > WORD_MAX))
@@ -246,7 +362,9 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
     t = np.array([r["heard_v"] for r in rows])
     if len(rows) > 5 and np.ptp(t) > 1:
         res["drift_ms_per_10s"] = float(np.polyfit(t, off, 1)[0] * 10 * 1000)
-    blk = abs(med) > MEDIAN_MAX or miss > MISS_MAX
+    res["coverage"] = cov
+    timing_blk = abs(med) > MEDIAN_MAX or miss > MISS_MAX
+    blk = timing_blk or cov["block"]
     if verbose:
         if mp4:
             print(f"video: the Short starts {s_audio:.3f} s into the recording (narration vs final mix match {peak:.2f}); caption frames found "
@@ -263,9 +381,9 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
         print("worst words:")
         for r in sorted(rows, key=lambda r: -abs(r["off"]))[:8]:
             print(f"  {r['line']} {r['word']!r:18s} shown {r['shown_v']:6.2f} s, heard {r['heard_v']:6.2f} s: {r['off'] * 1000:+5.0f} ms")
-        print(("BLOCK" if blk else "OK") + f": caption timing (|median| <= {MEDIAN_MAX * 1000:.0f} ms and <= {MISS_MAX:.0%} of words over "
+        print(("BLOCK" if timing_blk else "OK") + f": caption timing (|median| <= {MEDIAN_MAX * 1000:.0f} ms and <= {MISS_MAX:.0%} of words over "
               f"{WORD_MAX * 1000:.0f} ms)")
-        if blk:
+        if timing_blk:
             print(f"fix: python3 scripts/align.py {story_dir}   (forced-aligned word times), then re-edit: ./hb render <stunt> --reuse")
     res["rows"] = [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()} for r in rows]
     return (1 if blk else 0), res

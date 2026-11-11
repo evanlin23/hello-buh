@@ -199,7 +199,10 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
 ## 6. Captions
 1. **2-3 word chunks** (the script's " / " splits), one CAPS key word per chunk in the key colour, Poppins Black 96 px,
    centred at 0.70 of the game view, max 840 px wide; each chunk pops in and cuts out hard on the next; quotes keep
-   their quote marks. (`"captions": "word"` gives one word at a time.) r:r61d371 (supersedes r:rbd7cb6)
+   their quote marks. (`"captions": "word"` gives one word at a time.) **Every spoken word is captioned**, narrator and
+   characters: its line's caption is on screen while it's said, every caption word is shown, and the take says the
+   caption text. Check: `scripts/caption_av_check.py` coverage (BLOCK; in `./hb check`, before the render with
+   `--events`). r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).

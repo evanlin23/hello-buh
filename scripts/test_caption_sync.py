@@ -176,3 +176,36 @@ class Hiss(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Coverage(unittest.TestCase):
+    """caption_av_check's coverage BLOCK (owner 2026-11-11: captions on all of the words): every spoken word has its
+    line's caption on screen, every caption word is shown, and the take says the caption text."""
+
+    def setUp(self):
+        import caption_av_check as C
+        self.C = C
+
+    def test_every_spoken_word_has_a_caption_on_screen(self):
+        ev = [(1.00, 1.60, "The DOG", "L01"), (1.60, 2.40, "on the HILL", "L01"), (3.00, 3.50, "Walk SOFT", "L02")]
+        spoken = [("L01", "The", 1.02, 1.20), ("L01", "dog", 1.25, 1.55), ("L01", "hill", 2.10, 2.35),
+                  ("L01", "today", 2.50, 2.80),                 # said after the line's last caption went off
+                  ("L02", "Walk", 3.02, 3.20), ("L02", "soft", 3.30, 3.48),
+                  ("L03", "Sweetie", 4.0, 4.4)]                  # a line with no captions at all
+        miss = [(lid, w) for lid, w, _, _ in self.C.uncaptioned(spoken, ev)]
+        self.assertEqual(miss, [("L01", "today"), ("L03", "Sweetie")])
+        # another line's caption on screen doesn't count: the word must be under its own line's caption
+        self.assertEqual(len(self.C.uncaptioned([("L02", "Walk", 1.1, 1.3)], ev)), 1)
+
+    def test_every_caption_word_is_shown(self):
+        caps = {"L01": ["The DOG", "on the HILL", "hasn't MOVED"], "L02": ["Walk SOFT"]}
+        ev = [(1.0, 1.6, "The DOG", "L01"), (1.6, 2.4, "on the HILL", "L01"), (3.0, 3.5, "Walk SOFT", "L02")]
+        self.assertEqual(self.C.missing_caption_words(caps, ev), {"L01": ["hasn't", "MOVED"]})
+        self.assertEqual(self.C.missing_caption_words({"L02": ["Walk SOFT"]}, ev), {})
+
+    def test_the_take_must_say_its_captions(self):
+        caps = {"L01": ["The DOG", "on the HILL", "hasn't MOVED", "in 900 DAYS."]}
+        good = {"L01": [(w, 0, 0) for w in "The dog on the hill hasn't moved in nine hundred days".split()]}
+        bad = {"L01": [(w, 0, 0) for w in "My village is covered in nine thousand carpets".split()]}
+        self.assertEqual(self.C.take_word_fails(caps, good), {})
+        self.assertIn("L01", self.C.take_word_fails(caps, bad))
