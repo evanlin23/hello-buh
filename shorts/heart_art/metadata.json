@@ -1,9 +1,10 @@
 {
   "name": "heart_art",
+  "channel": "hellobuh",
   "caption": "my gf asked what I was building 😭",
   "youtube": {
     "title": "my gf asked what I was building 😭 #minecraft #shorts",
-    "description": "my gf asked what I was building 😭\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "my gf asked what I was building 😭\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,48 +14,76 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "royalty_funk.mp3",
-    "title": "Royalty Funk",
-    "artist": "LXNGVX",
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 47.5,
-    "drop_in_short_s": 31.3,
-    "song_start_s": 16.2
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 31.6,
+    "song_start_s": 6.65
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 32.2,
+    "duration_s": 32.5,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 36849567,
-    "sha256": "24b4b5729af4bb45bc15c93f9f8e0f3aa6a1a3af3e5b48bdd122058c8355e862",
+    "bytes": 50020343,
+    "sha256": "8cf4c92213238c88c9219e079e38834e0a4046bf174d748603a2c5c107c68b31",
     "release": {
       "tag": "pkg-heart_art",
-      "asset": "heart_art.short.24b4b5729af4bb45.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-heart_art/heart_art.short.24b4b5729af4bb45.mp4",
-      "sha256": "24b4b5729af4bb45bc15c93f9f8e0f3aa6a1a3af3e5b48bdd122058c8355e862",
-      "bytes": 36849567
+      "asset": "heart_art.short.8cf4c92213238c88.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-heart_art/heart_art.short.8cf4c92213238c88.mp4",
+      "sha256": "8cf4c92213238c88c9219e079e38834e0a4046bf174d748603a2c5c107c68b31",
+      "bytes": 50020343
     },
     "nosong_release": {
       "tag": "pkg-heart_art",
-      "asset": "heart_art.short_nosong.827cd70b1727c138.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-heart_art/heart_art.short_nosong.827cd70b1727c138.mp4",
-      "sha256": "827cd70b1727c1381c4eb36b277f7d470a0997561d20f55ba93c20d9571f34e8",
-      "bytes": 36762763
+      "asset": "heart_art.short_nosong.8b9256f4b37bd8d4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-heart_art/heart_art.short_nosong.8b9256f4b37bd8d4.mp4",
+      "sha256": "8b9256f4b37bd8d4839d25bb85f3cb206fac3cd34e9b0de0ebaa8b8a30eeb5c3",
+      "bytes": 49979221
     }
   },
   "edit": {
+    "punch": [
+      [
+        "complete",
+        0,
+        1.12
+      ]
+    ],
+    "sfx": [
+      [
+        "impact",
+        "complete",
+        {
+          "gain": 0.8
+        }
+      ]
+    ],
+    "flash": [
+      [
+        "complete",
+        0,
+        0.45
+      ]
+    ],
     "caption": "my gf asked what I was building 😭",
-    "song": "songs/payphone.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
     "args": [
       "--caption",
       "my gf asked what I was building 😭",
+      "--punch",
+      "[[\"complete\",0,1.12]]",
+      "--flash",
+      "[[\"complete\",0,0.45]]",
+      "--sfx",
+      "[[\"impact\",\"complete\",{\"gain\":0.8}]]",
       "--start_at",
       "stage:-0.2",
       "--end_after",
@@ -69,13 +98,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 387,
-      "y": 72,
-      "z": -38
+      "x": 358,
+      "y": 70,
+      "z": -40
     },
     "biome": "minecraft:plains",
-    "ticks": 682,
-    "seconds": 34.1,
+    "ticks": 688,
+    "seconds": 34.4,
     "deaths": 0,
     "events": [
       {
@@ -87,40 +116,56 @@
         "event": "stage"
       },
       {
-        "t": 0.95,
+        "t": 0.8,
+        "event": "build0"
+      },
+      {
+        "t": 0.85,
         "event": "swing"
       },
       {
-        "t": 1.2,
+        "t": 1.1,
         "event": "swing"
       },
       {
-        "t": 1.5,
+        "t": 1.35,
         "event": "swing"
       },
       {
-        "t": 1.75,
+        "t": 1.6,
         "event": "swing"
       },
       {
-        "t": 2.05,
+        "t": 1.85,
         "event": "swing"
       },
       {
-        "t": 2.3,
+        "t": 2.1,
         "event": "swing"
       },
       {
-        "t": 2.55,
+        "t": 2.35,
         "event": "swing"
       },
       {
-        "t": 2.65,
+        "t": 2.45,
+        "event": "built0"
+      },
+      {
+        "t": 2.45,
         "event": "reveal"
       },
       {
-        "t": 3.7,
+        "t": 3.5,
         "event": "stage"
+      },
+      {
+        "t": 3.5,
+        "event": "build1"
+      },
+      {
+        "t": 3.55,
+        "event": "swing"
       },
       {
         "t": 3.75,
@@ -163,7 +208,7 @@
         "event": "swing"
       },
       {
-        "t": 5.7,
+        "t": 5.75,
         "event": "swing"
       },
       {
@@ -215,39 +260,47 @@
         "event": "swing"
       },
       {
-        "t": 8.3,
-        "event": "swing"
+        "t": 8.2,
+        "event": "built1"
       },
       {
-        "t": 8.4,
+        "t": 8.2,
         "event": "reveal"
       },
       {
-        "t": 9.45,
+        "t": 9.25,
         "event": "stage"
       },
       {
-        "t": 9.5,
+        "t": 9.25,
+        "event": "build2"
+      },
+      {
+        "t": 9.3,
         "event": "swing"
       },
       {
-        "t": 9.65,
+        "t": 9.45,
         "event": "swing"
       },
       {
-        "t": 9.8,
+        "t": 9.6,
         "event": "swing"
       },
       {
-        "t": 9.95,
+        "t": 9.75,
         "event": "swing"
       },
       {
-        "t": 10.1,
+        "t": 9.9,
         "event": "swing"
       },
       {
-        "t": 10.25,
+        "t": 10.05,
+        "event": "swing"
+      },
+      {
+        "t": 10.2,
         "event": "swing"
       },
       {
@@ -279,35 +332,31 @@
         "event": "swing"
       },
       {
-        "t": 11.45,
+        "t": 11.5,
         "event": "swing"
       },
       {
-        "t": 11.6,
+        "t": 11.65,
         "event": "swing"
       },
       {
-        "t": 11.75,
+        "t": 11.85,
         "event": "swing"
       },
       {
-        "t": 11.9,
+        "t": 12,
         "event": "swing"
       },
       {
-        "t": 12.05,
+        "t": 12.15,
         "event": "swing"
       },
       {
-        "t": 12.2,
+        "t": 12.3,
         "event": "swing"
       },
       {
-        "t": 12.35,
-        "event": "swing"
-      },
-      {
-        "t": 12.5,
+        "t": 12.45,
         "event": "swing"
       },
       {
@@ -339,63 +388,59 @@
         "event": "swing"
       },
       {
-        "t": 13.7,
+        "t": 13.75,
         "event": "swing"
       },
       {
-        "t": 13.85,
+        "t": 13.9,
         "event": "swing"
       },
       {
-        "t": 14,
+        "t": 14.05,
         "event": "swing"
       },
       {
-        "t": 14.15,
+        "t": 14.2,
         "event": "swing"
       },
       {
-        "t": 14.3,
+        "t": 14.35,
         "event": "swing"
       },
       {
-        "t": 14.45,
+        "t": 14.5,
         "event": "swing"
       },
       {
-        "t": 14.6,
+        "t": 14.65,
         "event": "swing"
       },
       {
-        "t": 14.75,
+        "t": 14.85,
         "event": "swing"
       },
       {
-        "t": 14.9,
+        "t": 15,
         "event": "swing"
       },
       {
-        "t": 15.05,
+        "t": 15.15,
         "event": "swing"
       },
       {
-        "t": 15.2,
+        "t": 15.3,
         "event": "swing"
       },
       {
-        "t": 15.35,
+        "t": 15.45,
         "event": "swing"
       },
       {
-        "t": 15.5,
+        "t": 15.6,
         "event": "swing"
       },
       {
-        "t": 15.65,
-        "event": "swing"
-      },
-      {
-        "t": 15.8,
+        "t": 15.75,
         "event": "swing"
       },
       {
@@ -411,19 +456,19 @@
         "event": "swing"
       },
       {
-        "t": 16.45,
+        "t": 16.4,
         "event": "swing"
       },
       {
-        "t": 16.6,
+        "t": 16.55,
         "event": "swing"
       },
       {
-        "t": 16.75,
+        "t": 16.7,
         "event": "swing"
       },
       {
-        "t": 16.9,
+        "t": 16.85,
         "event": "swing"
       },
       {
@@ -455,84 +500,120 @@
         "event": "swing"
       },
       {
-        "t": 18.1,
+        "t": 18.15,
         "event": "swing"
       },
       {
-        "t": 18.25,
+        "t": 18.3,
         "event": "swing"
       },
       {
-        "t": 18.4,
+        "t": 18.45,
         "event": "swing"
       },
       {
-        "t": 18.55,
+        "t": 18.6,
         "event": "swing"
       },
       {
-        "t": 18.7,
+        "t": 18.75,
         "event": "swing"
       },
       {
-        "t": 18.85,
+        "t": 18.9,
         "event": "swing"
       },
       {
-        "t": 19,
+        "t": 19.05,
         "event": "swing"
       },
       {
-        "t": 19.15,
+        "t": 19.25,
         "event": "swing"
       },
       {
-        "t": 19.3,
+        "t": 19.4,
         "event": "swing"
       },
       {
-        "t": 19.45,
+        "t": 19.5,
+        "event": "backup"
+      },
+      {
+        "t": 19.55,
         "event": "swing"
       },
       {
-        "t": 19.6,
+        "t": 19.7,
         "event": "swing"
       },
       {
-        "t": 19.75,
+        "t": 19.85,
         "event": "swing"
       },
       {
-        "t": 19.9,
+        "t": 20,
         "event": "swing"
       },
       {
-        "t": 20.05,
+        "t": 20.15,
         "event": "swing"
       },
       {
-        "t": 20.2,
+        "t": 20.3,
         "event": "swing"
       },
       {
-        "t": 20.35,
+        "t": 20.45,
         "event": "swing"
       },
       {
-        "t": 20.5,
+        "t": 20.6,
         "event": "swing"
       },
       {
-        "t": 20.65,
+        "t": 20.75,
         "event": "swing"
       },
       {
-        "t": 20.8,
+        "t": 20.95,
         "event": "swing"
       },
       {
-        "t": 20.85,
-        "event": "glance"
+        "t": 21.1,
+        "event": "swing"
+      },
+      {
+        "t": 21.25,
+        "event": "swing"
+      },
+      {
+        "t": 21.4,
+        "event": "swing"
+      },
+      {
+        "t": 21.55,
+        "event": "swing"
+      },
+      {
+        "t": 21.7,
+        "event": "swing"
+      },
+      {
+        "t": 21.85,
+        "event": "swing"
+      },
+      {
+        "t": 22.05,
+        "event": "swing"
+      },
+      {
+        "t": 22.2,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "swing"
       },
       {
         "t": 22.5,
@@ -551,63 +632,59 @@
         "event": "swing"
       },
       {
-        "t": 23.1,
+        "t": 23.15,
         "event": "swing"
       },
       {
-        "t": 23.25,
+        "t": 23.3,
         "event": "swing"
       },
       {
-        "t": 23.4,
+        "t": 23.45,
         "event": "swing"
       },
       {
-        "t": 23.55,
+        "t": 23.6,
         "event": "swing"
       },
       {
-        "t": 23.7,
+        "t": 23.75,
         "event": "swing"
       },
       {
-        "t": 23.85,
+        "t": 23.9,
         "event": "swing"
       },
       {
-        "t": 24,
+        "t": 24.05,
         "event": "swing"
       },
       {
-        "t": 24.15,
+        "t": 24.25,
         "event": "swing"
       },
       {
-        "t": 24.3,
+        "t": 24.4,
         "event": "swing"
       },
       {
-        "t": 24.45,
+        "t": 24.55,
         "event": "swing"
       },
       {
-        "t": 24.6,
+        "t": 24.7,
         "event": "swing"
       },
       {
-        "t": 24.75,
+        "t": 24.85,
         "event": "swing"
       },
       {
-        "t": 24.9,
+        "t": 25,
         "event": "swing"
       },
       {
-        "t": 25.05,
-        "event": "swing"
-      },
-      {
-        "t": 25.2,
+        "t": 25.15,
         "event": "swing"
       },
       {
@@ -639,67 +716,59 @@
         "event": "swing"
       },
       {
-        "t": 26.4,
+        "t": 26.45,
         "event": "swing"
       },
       {
-        "t": 26.55,
+        "t": 26.6,
         "event": "swing"
       },
       {
-        "t": 26.7,
+        "t": 26.75,
         "event": "swing"
       },
       {
-        "t": 26.85,
+        "t": 26.9,
         "event": "swing"
       },
       {
-        "t": 27,
+        "t": 27.05,
         "event": "swing"
       },
       {
-        "t": 27.15,
+        "t": 27.2,
         "event": "swing"
       },
       {
-        "t": 27.3,
+        "t": 27.35,
         "event": "swing"
       },
       {
-        "t": 27.45,
+        "t": 27.55,
         "event": "swing"
       },
       {
-        "t": 27.6,
+        "t": 27.7,
         "event": "swing"
       },
       {
-        "t": 27.65,
-        "event": "backup"
-      },
-      {
-        "t": 27.75,
+        "t": 27.85,
         "event": "swing"
       },
       {
-        "t": 27.9,
+        "t": 28,
         "event": "swing"
       },
       {
-        "t": 28.05,
+        "t": 28.15,
         "event": "swing"
       },
       {
-        "t": 28.2,
+        "t": 28.3,
         "event": "swing"
       },
       {
-        "t": 28.35,
-        "event": "swing"
-      },
-      {
-        "t": 28.5,
+        "t": 28.45,
         "event": "swing"
       },
       {
@@ -731,19 +800,19 @@
         "event": "swing"
       },
       {
-        "t": 29.7,
+        "t": 29.75,
         "event": "swing"
       },
       {
-        "t": 29.85,
+        "t": 29.9,
         "event": "swing"
       },
       {
-        "t": 30,
+        "t": 30.05,
         "event": "swing"
       },
       {
-        "t": 30.15,
+        "t": 30.2,
         "event": "swing"
       },
       {
@@ -759,53 +828,63 @@
         "event": "swing"
       },
       {
-        "t": 30.8,
+        "t": 30.85,
         "event": "swing"
       },
       {
-        "t": 30.95,
+        "t": 31,
         "event": "swing"
       },
       {
-        "t": 31.1,
+        "t": 31.15,
         "event": "swing"
       },
       {
-        "t": 31.25,
+        "t": 31.3,
         "event": "swing"
       },
       {
-        "t": 31.4,
+        "t": 31.45,
         "event": "swing"
       },
       {
-        "t": 31.55,
+        "t": 31.6,
         "event": "swing"
       },
       {
-        "t": 31.7,
-        "event": "swing"
-      },
-      {
-        "t": 31.85,
+        "t": 31.75,
         "event": "swing"
       },
       {
         "t": 31.9,
+        "event": "swing"
+      },
+      {
+        "t": 32.05,
+        "event": "swing"
+      },
+      {
+        "t": 32.2,
+        "event": "built2"
+      },
+      {
+        "t": 32.2,
         "event": "complete"
       },
       {
-        "t": 34.1,
+        "t": 34.4,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "2f059349adc044bb259197f642fd141987cb65ab",
-    "rendered_at": "2026-11-07T02:02:46.684Z",
-    "head_at_publish": "f8416ac638717e4cc54497ed1c8b0946d206cdd5",
+    "branch": "render/heart_art",
+    "commit": "6750f103ecb56293cbc343df83139e96be2b4aff",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42975764522",
+    "rendered_at": "2026-11-11T07:00:34.468Z",
+    "head_at_publish": "733f96f4743c033eaf698163d0e4f63d0f5965fe",
     "stunt": "stunts/heart_art.js",
     "source_snapshot": [
       "source/heart_art.js",
@@ -813,13 +892,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 2f059349adc0",
+    "git checkout 6750f103ecb5",
     "gunzip -c shorts/heart_art/recording.json.gz > work/heart_art.rec.json",
     "node render.js work/heart_art.rec.json work/heart_art.frames 60 1080 1011",
     "python3 audio.py work/heart_art.rec.json work/heart_art.wav",
-    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building 😭\" --start_at stage:-0.2 --end_after complete:0.9 --out out/heart_art.mp4"
+    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building 😭\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/heart_art.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
-  "published_at": "2026-11-07T06:15:51.721Z"
+  "status": "ready",
+  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks in the review notes",
+  "published_at": "2026-11-11T07:02:18.922Z"
 }
