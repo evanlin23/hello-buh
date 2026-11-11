@@ -1,0 +1,1015 @@
+{
+  "name": "stages_friends",
+  "channel": "hellobuh",
+  "caption": "minecraft friendships in 3 stages 💀",
+  "youtube": {
+    "title": "minecraft friendships in 3 stages 💀 #minecraft #shorts",
+    "description": "minecraft friendships in 3 stages 💀\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "fearless_funk.mp3",
+    "title": "Fearless Funk",
+    "artist": "DR MØB, Chris Linton",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "crater",
+    "drop_in_song_s": 29.5,
+    "drop_in_short_s": 16.98,
+    "song_start_s": 12.52
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 17.98,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 30310129,
+    "sha256": "edc63ea2f3f8e7936dd1f232192992ca2df851421fdc03342cb79ec915ccb89a",
+    "release": {
+      "tag": "pkg-stages_friends",
+      "asset": "stages_friends.short.edc63ea2f3f8e793.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short.edc63ea2f3f8e793.mp4",
+      "sha256": "edc63ea2f3f8e7936dd1f232192992ca2df851421fdc03342cb79ec915ccb89a",
+      "bytes": 30310129
+    },
+    "nosong_release": {
+      "tag": "pkg-stages_friends",
+      "asset": "stages_friends.short_nosong.6dd1faa3726938b8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short_nosong.6dd1faa3726938b8.mp4",
+      "sha256": "6dd1faa3726938b8b91d5522d85ad9403801bfaa002dce2b75bb24fa4a0309a4",
+      "bytes": 30304216
+    }
+  },
+  "edit": {
+    "caption": "minecraft friendships in 3 stages 💀",
+    "red": "3 stages",
+    "startAt": "ch1:0",
+    "endAfter": "crater:1.0",
+    "dropAt": "crater",
+    "tags": [
+      [
+        "ch1",
+        "death",
+        "1. BETRAYAL",
+        "red"
+      ],
+      [
+        "ch2",
+        "ch3",
+        "2. RISE",
+        "blue"
+      ],
+      [
+        "ch3",
+        null,
+        "3. REVENGE",
+        "gold"
+      ]
+    ],
+    "sfx": [
+      [
+        "whoosh",
+        "ch1",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "whoosh",
+        "ch2",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "whoosh",
+        "ch3",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "air",
+        "ch2",
+        "crater",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "dip",
+        "push",
+        0.3
+      ],
+      [
+        "hit",
+        "push",
+        {
+          "gain": 1.6
+        }
+      ],
+      [
+        "boom",
+        "boom",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "ding",
+        "loot",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "boom",
+        "crater",
+        {
+          "gain": 0.8
+        }
+      ],
+      [
+        "dip",
+        "crater",
+        0.6
+      ],
+      [
+        "gamedip",
+        "crater",
+        0.6
+      ],
+      [
+        "impact",
+        "crater",
+        {
+          "gain": 1.2
+        }
+      ]
+    ],
+    "flash": [
+      "crater"
+    ],
+    "shake": [
+      "crater"
+    ],
+    "speed": [
+      [
+        "burn",
+        "death",
+        2
+      ],
+      [
+        "respawn",
+        "ch2",
+        "cut"
+      ],
+      [
+        "vein",
+        "vein_end",
+        2
+      ],
+      [
+        "chain_end",
+        "crater",
+        2
+      ],
+      [
+        "notice",
+        "boom",
+        1.5
+      ]
+    ],
+    "deathScreen": true,
+    "punch": [
+      [
+        "push",
+        0,
+        1.06
+      ],
+      [
+        "lever",
+        0,
+        1.05
+      ]
+    ],
+    "itemNames": {},
+    "args": [
+      "--caption",
+      "minecraft friendships in 3 stages 💀",
+      "--self_name",
+      "56e",
+      "--red",
+      "3 stages",
+      "--speed",
+      "[[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"chain_end\",\"crater\",2],[\"notice\",\"boom\",1.5]]",
+      "--punch",
+      "[[\"push\",0,1.06],[\"lever\",0,1.05]]",
+      "--tags",
+      "[[\"ch1\",\"death\",\"1. BETRAYAL\",\"red\"],[\"ch2\",\"ch3\",\"2. RISE\",\"blue\"],[\"ch3\",null,\"3. REVENGE\",\"gold\"]]",
+      "--shake",
+      "[\"crater\"]",
+      "--flash",
+      "[\"crater\"]",
+      "--sfx",
+      "[[\"whoosh\",\"ch1\",{\"gain\":0.45}],[\"whoosh\",\"ch2\",{\"gain\":0.5}],[\"whoosh\",\"ch3\",{\"gain\":0.5}],[\"air\",\"ch2\",\"crater\",{\"gain\":0.5}],[\"dip\",\"push\",0.3],[\"hit\",\"push\",{\"gain\":1.6}],[\"boom\",\"boom\",{\"gain\":0.9}],[\"ding\",\"loot\",{\"gain\":0.6}],[\"boom\",\"crater\",{\"gain\":0.8}],[\"dip\",\"crater\",0.6],[\"gamedip\",\"crater\",0.6],[\"impact\",\"crater\",{\"gain\":1.2}]]",
+      "--death_screen",
+      "death",
+      "--item_names",
+      "{}",
+      "--start_at",
+      "ch1:0",
+      "--end_after",
+      "crater:1.0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 379,
+      "y": 78,
+      "z": -47
+    },
+    "biome": "minecraft:plains",
+    "ticks": 544,
+    "seconds": 27.2,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell 56e "
+          },
+          "insertion": "56e",
+          "text": "56e",
+          "hover_event": {
+            "name": "56e",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1501766631,
+              -1382728230,
+              -1353399714,
+              429653331
+            ]
+          }
+        },
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell ur_bestfriend "
+          },
+          "insertion": "ur_bestfriend",
+          "text": "ur_bestfriend",
+          "hover_event": {
+            "name": "ur_bestfriend",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -185301103,
+              -176801430,
+              -1942234626,
+              -623003908
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava.player"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "f1_on"
+      },
+      {
+        "t": 0.75,
+        "event": "shot"
+      },
+      {
+        "t": 0.75,
+        "event": "ch1"
+      },
+      {
+        "t": 1.1,
+        "event": "hurt",
+        "type": "player_attack"
+      },
+      {
+        "t": 1.1,
+        "event": "ent_swing"
+      },
+      {
+        "t": 1.25,
+        "event": "push"
+      },
+      {
+        "t": 1.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 1.85,
+        "event": "lava_in"
+      },
+      {
+        "t": 2.15,
+        "event": "burn"
+      },
+      {
+        "t": 2.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 2.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 3.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 3.65,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 4.15,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 4.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 4.7,
+        "event": "death"
+      },
+      {
+        "t": 4.7,
+        "event": "motion_start"
+      },
+      {
+        "t": 5.7,
+        "event": "motion_settled"
+      },
+      {
+        "t": 5.85,
+        "event": "xp"
+      },
+      {
+        "t": 5.9,
+        "event": "respawn"
+      },
+      {
+        "t": 5.9,
+        "event": "xp"
+      },
+      {
+        "t": 5.9,
+        "event": "f1_off"
+      },
+      {
+        "t": 5.9,
+        "event": "shot"
+      },
+      {
+        "t": 6.05,
+        "event": "ch2"
+      },
+      {
+        "t": 6.35,
+        "event": "vein"
+      },
+      {
+        "t": 6.7,
+        "event": "dig"
+      },
+      {
+        "t": 6.7,
+        "event": "swing"
+      },
+      {
+        "t": 7,
+        "event": "swing"
+      },
+      {
+        "t": 7.1,
+        "event": "dig_end"
+      },
+      {
+        "t": 7.15,
+        "event": "vel"
+      },
+      {
+        "t": 7.15,
+        "event": "vel"
+      },
+      {
+        "t": 7.35,
+        "event": "collect"
+      },
+      {
+        "t": 7.35,
+        "event": "xp"
+      },
+      {
+        "t": 7.55,
+        "event": "dig"
+      },
+      {
+        "t": 7.55,
+        "event": "swing"
+      },
+      {
+        "t": 7.65,
+        "event": "vel"
+      },
+      {
+        "t": 7.85,
+        "event": "swing"
+      },
+      {
+        "t": 7.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 7.95,
+        "event": "vel"
+      },
+      {
+        "t": 7.95,
+        "event": "vel"
+      },
+      {
+        "t": 7.95,
+        "event": "vel"
+      },
+      {
+        "t": 8.1,
+        "event": "collect"
+      },
+      {
+        "t": 8.1,
+        "event": "xp"
+      },
+      {
+        "t": 8.3,
+        "event": "dig"
+      },
+      {
+        "t": 8.3,
+        "event": "swing"
+      },
+      {
+        "t": 8.4,
+        "event": "collect"
+      },
+      {
+        "t": 8.4,
+        "event": "xp"
+      },
+      {
+        "t": 8.45,
+        "event": "vel"
+      },
+      {
+        "t": 8.6,
+        "event": "swing"
+      },
+      {
+        "t": 8.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.8,
+        "event": "vel"
+      },
+      {
+        "t": 8.8,
+        "event": "vel"
+      },
+      {
+        "t": 8.8,
+        "event": "vel"
+      },
+      {
+        "t": 9,
+        "event": "vel"
+      },
+      {
+        "t": 9.05,
+        "event": "dig"
+      },
+      {
+        "t": 9.05,
+        "event": "swing"
+      },
+      {
+        "t": 9.1,
+        "event": "vel"
+      },
+      {
+        "t": 9.1,
+        "event": "collect"
+      },
+      {
+        "t": 9.1,
+        "event": "xp"
+      },
+      {
+        "t": 9.15,
+        "event": "vel"
+      },
+      {
+        "t": 9.2,
+        "event": "collect"
+      },
+      {
+        "t": 9.2,
+        "event": "xp"
+      },
+      {
+        "t": 9.3,
+        "event": "vel"
+      },
+      {
+        "t": 9.35,
+        "event": "vel"
+      },
+      {
+        "t": 9.35,
+        "event": "swing"
+      },
+      {
+        "t": 9.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 9.5,
+        "event": "vel"
+      },
+      {
+        "t": 9.5,
+        "event": "vel"
+      },
+      {
+        "t": 9.5,
+        "event": "vel"
+      },
+      {
+        "t": 9.55,
+        "event": "collect"
+      },
+      {
+        "t": 9.55,
+        "event": "xp"
+      },
+      {
+        "t": 9.65,
+        "event": "collect"
+      },
+      {
+        "t": 9.65,
+        "event": "xp"
+      },
+      {
+        "t": 9.8,
+        "event": "dig"
+      },
+      {
+        "t": 9.8,
+        "event": "swing"
+      },
+      {
+        "t": 9.8,
+        "event": "vel"
+      },
+      {
+        "t": 9.9,
+        "event": "vel"
+      },
+      {
+        "t": 9.95,
+        "event": "collect"
+      },
+      {
+        "t": 10,
+        "event": "vel"
+      },
+      {
+        "t": 10.1,
+        "event": "vel"
+      },
+      {
+        "t": 10.15,
+        "event": "swing"
+      },
+      {
+        "t": 10.15,
+        "event": "vel"
+      },
+      {
+        "t": 10.25,
+        "event": "dig_end"
+      },
+      {
+        "t": 10.25,
+        "event": "vel"
+      },
+      {
+        "t": 10.25,
+        "event": "vel"
+      },
+      {
+        "t": 10.45,
+        "event": "collect"
+      },
+      {
+        "t": 10.45,
+        "event": "xp"
+      },
+      {
+        "t": 10.6,
+        "event": "dig"
+      },
+      {
+        "t": 10.6,
+        "event": "swing"
+      },
+      {
+        "t": 10.75,
+        "event": "vel"
+      },
+      {
+        "t": 10.8,
+        "event": "vel"
+      },
+      {
+        "t": 10.8,
+        "event": "vel"
+      },
+      {
+        "t": 10.9,
+        "event": "swing"
+      },
+      {
+        "t": 10.95,
+        "event": "vel"
+      },
+      {
+        "t": 11,
+        "event": "vel"
+      },
+      {
+        "t": 11,
+        "event": "dig_end"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.25,
+        "event": "vel"
+      },
+      {
+        "t": 11.3,
+        "event": "vel"
+      },
+      {
+        "t": 11.3,
+        "event": "vel"
+      },
+      {
+        "t": 11.35,
+        "event": "collect"
+      },
+      {
+        "t": 11.35,
+        "event": "xp"
+      },
+      {
+        "t": 11.45,
+        "event": "collect"
+      },
+      {
+        "t": 11.45,
+        "event": "xp"
+      },
+      {
+        "t": 11.5,
+        "event": "vel"
+      },
+      {
+        "t": 11.5,
+        "event": "collect"
+      },
+      {
+        "t": 11.55,
+        "event": "dig"
+      },
+      {
+        "t": 11.55,
+        "event": "swing"
+      },
+      {
+        "t": 11.8,
+        "event": "vel"
+      },
+      {
+        "t": 11.85,
+        "event": "swing"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 11.95,
+        "event": "vein_end"
+      },
+      {
+        "t": 12,
+        "event": "vel"
+      },
+      {
+        "t": 12,
+        "event": "vel"
+      },
+      {
+        "t": 12,
+        "event": "vel"
+      },
+      {
+        "t": 12,
+        "event": "vel"
+      },
+      {
+        "t": 12.05,
+        "event": "collect"
+      },
+      {
+        "t": 12.05,
+        "event": "xp"
+      },
+      {
+        "t": 12.1,
+        "event": "vel"
+      },
+      {
+        "t": 12.1,
+        "event": "vel"
+      },
+      {
+        "t": 12.15,
+        "event": "collect"
+      },
+      {
+        "t": 12.15,
+        "event": "xp"
+      },
+      {
+        "t": 12.25,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "collect"
+      },
+      {
+        "t": 12.55,
+        "event": "loot"
+      },
+      {
+        "t": 12.55,
+        "event": "vel"
+      },
+      {
+        "t": 12.55,
+        "event": "collect"
+      },
+      {
+        "t": 12.55,
+        "event": "collect"
+      },
+      {
+        "t": 12.55,
+        "event": "collect"
+      },
+      {
+        "t": 13.15,
+        "event": "rich"
+      },
+      {
+        "t": 13.65,
+        "event": "effect"
+      },
+      {
+        "t": 13.85,
+        "event": "cut"
+      },
+      {
+        "t": 13.85,
+        "event": "f1_on"
+      },
+      {
+        "t": 13.85,
+        "event": "shot"
+      },
+      {
+        "t": 13.85,
+        "event": "ch3"
+      },
+      {
+        "t": 15.35,
+        "event": "f1_off"
+      },
+      {
+        "t": 15.35,
+        "event": "shot"
+      },
+      {
+        "t": 15.4,
+        "event": "swing"
+      },
+      {
+        "t": 15.4,
+        "event": "lever"
+      },
+      {
+        "t": 15.45,
+        "event": "motion_start"
+      },
+      {
+        "t": 15.7,
+        "event": "f1_on"
+      },
+      {
+        "t": 15.7,
+        "event": "shot"
+      },
+      {
+        "t": 15.7,
+        "event": "tnt_lit"
+      },
+      {
+        "t": 16.8,
+        "event": "shot"
+      },
+      {
+        "t": 16.8,
+        "event": "notice"
+      },
+      {
+        "t": 19.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.45,
+        "event": "boom"
+      },
+      {
+        "t": 19.5,
+        "event": "shot"
+      },
+      {
+        "t": 19.5,
+        "event": "wide"
+      },
+      {
+        "t": 19.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.95,
+        "event": "syschat"
+      },
+      {
+        "t": 19.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 20.85,
+        "event": "hurt",
+        "type": "explosion"
+      },
+      {
+        "t": 22,
+        "event": "chain_end"
+      },
+      {
+        "t": 23.6,
+        "event": "motion_settled"
+      },
+      {
+        "t": 23.6,
+        "event": "settle"
+      },
+      {
+        "t": 23.7,
+        "event": "f1_off"
+      },
+      {
+        "t": 23.7,
+        "event": "shot"
+      },
+      {
+        "t": 23.7,
+        "event": "crater"
+      },
+      {
+        "t": 27.2,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "def2885d723717b06281e4a796bca112b8a04416",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T22:19:32.019Z",
+    "head_at_publish": "a5e22f7e296f44a5fe8a1af6a43d05826d5a3f40",
+    "stunt": "stunts/stages_friends.js",
+    "source_snapshot": [
+      "source/stages_friends.js",
+      "source/movie.js",
+      "source/stages.js",
+      "source/plateau.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout def2885d7237",
+    "gunzip -c shorts/stages_friends/recording.json.gz > work/stages_friends.rec.json",
+    "node render.js work/stages_friends.rec.json work/stages_friends.frames 60 1080 1011",
+    "python3 audio.py work/stages_friends.rec.json work/stages_friends.wav",
+    "python3 edit.py --frames work/stages_friends.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/stages_friends.rec.json --audio work/stages_friends.wav --caption \"minecraft friendships in 3 stages 💀\" --self_name 56e --red \"3 stages\" --speed [[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"chain_end\",\"crater\",2],[\"notice\",\"boom\",1.5]] --punch [[\"push\",0,1.06],[\"lever\",0,1.05]] --tags \"[[\\\"ch1\\\",\\\"death\\\",\\\"1. BETRAYAL\\\",\\\"red\\\"],[\\\"ch2\\\",\\\"ch3\\\",\\\"2. RISE\\\",\\\"blue\\\"],[\\\"ch3\\\",null,\\\"3. REVENGE\\\",\\\"gold\\\"]]\" --shake [\"crater\"] --flash [\"crater\"] --sfx [[\"whoosh\",\"ch1\",{\"gain\":0.45}],[\"whoosh\",\"ch2\",{\"gain\":0.5}],[\"whoosh\",\"ch3\",{\"gain\":0.5}],[\"air\",\"ch2\",\"crater\",{\"gain\":0.5}],[\"dip\",\"push\",0.3],[\"hit\",\"push\",{\"gain\":1.6}],[\"boom\",\"boom\",{\"gain\":0.9}],[\"ding\",\"loot\",{\"gain\":0.6}],[\"boom\",\"crater\",{\"gain\":0.8}],[\"dip\",\"crater\",0.6],[\"gamedip\",\"crater\",0.6],[\"impact\",\"crater\",{\"gain\":1.2}]] --death_screen death --item_names {} --start_at ch1:0 --end_after crater:1.0 --out out/stages_friends.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: stages format ep 1 (lib/stages.js); 3 independent review rounds (r1 5 blockers fixed, r2 diamond colour fixed, r3 fix-check READY); pace 0/0, mixcheck OK",
+  "published_at": "2026-11-11T22:21:34.516Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T22:22:01+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 17.98 s vs the reviewed render 17.98 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 0,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T22:19:49.964Z",
+      "report": "work/hb/stages_friends.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
