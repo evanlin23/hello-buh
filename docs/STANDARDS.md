@@ -229,6 +229,8 @@ actions left silent). r:rc85ccc r:r36632d
 ## 10. Publish
 - **Stories go to the second channel, "Buh Stories"**, never @HelloBuh; uploads wait for the owner to set that channel
   up. Check: owner. r:r732bc0
+- **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
+  Check: owner. r:rca5363
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. Check: owner. r:r77977b
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
