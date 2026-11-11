@@ -26,7 +26,7 @@ S01-S07 at the hive and the field's south edge; S08-S10 out over the wing and up
 | glass bottle -> honey bottle | main hand at the hive (S01, S02); fills on 'CLINK' (S03), then in his offhand (S03-S06) | S01-S06 |
 | dandelions | placed one per block, rows east-west, at the head's crown | S03, S04, S10 |
 | poppy | one placed at the heart's edge | S01 |
-| the heart | rose bushes + poppies round the post, point south | S02, S07, S10 |
+| the heart | rose bushes + poppies around the post, point south | S02, S07, S10 |
 | the bee picture | complete except the crown: row 51 planted in S03-S04, row 52 in S10 | S08-S10 |
 | hotbar (his) | glass bottles, dandelions x64, poppies, oxeye daisies, rose bushes, campfire, milk bucket, 67 eggs, cake | his POV never shown; consistent if seen |
 

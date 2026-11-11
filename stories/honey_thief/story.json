@@ -2,7 +2,7 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
   "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
@@ -20,7 +20,7 @@
  "logline": "A worker bee complains that the giant who keeps stealing her hive's honey plants a row of flowers every time; the flowers spread until she gets lost, and from straight above the meadow is a giant bee with her hive as its heart.",
  "question": "why does the giant plant more flowers every time he steals the honey?",
  "premise": "A lone beehive on the High Meadow. A giant (a player) has taken its honey 52 times: he lights a campfire under it so the bees stay calm, bottles the honey, then plants a row of flowers. The narrator, a worker bee, thinks he feels bad about stealing. He tells the bees they're his favorite; she's sure he means the honey. He only plants red around the hive (he thinks bees like red). The field keeps growing, the bees fly farther every day, and today she flew so far she couldn't see home.",
- "twist": "He isn't paying for the honey: he's drawing them. One row per bottle, 52 rows, the meadow is one huge bee seen from above, and the red ring round the hive is its heart. 'You're my FAVORITE' meant the bees. Cut on the top-down picture.",
+ "twist": "He isn't paying for the honey: he's drawing them. One row per bottle, 52 rows, the meadow is one huge bee seen from above, and the red ring around the hive is its heart. 'You're my FAVORITE' meant the bees. Cut on the top-down picture.",
  "family": "secret_kindness",
  "key_color": "#FFD640",
  "mood": [
@@ -249,8 +249,8 @@
   {
    "id": "L07",
    "who": "N",
-   "text": "He plants RED ones / round our DOOR, / so we can / find HOME. / Like we'd EVER / get LOST.",
-   "say": "He plants red ones round our door, so we can find home. Like we'd ever get lost.",
+   "text": "He plants RED ones / around our DOOR, / so we can / find HOME. / Like we'd EVER / get LOST.",
+   "say": "He plants red ones around our door, so we can find home. Like we'd ever get lost.",
    "shot": "S07",
    "shows": [
     {
@@ -369,7 +369,7 @@
    "place": "hive",
    "size": "ms",
    "camera": "low, 3 blocks south-east of the hive, 1 block up, still; then a slow push",
-   "frame": "the hive on its post over the pit campfire, smoke rising past its face (vanilla calms bees within 5 below); three bees drifting slowly round it; the giant's bottle hand at frame edge; the red ring round the post.",
+   "frame": "the hive on its post over the pit campfire, smoke rising past its face (vanilla calms bees within 5 below); three bees drifting slowly around it; the giant's bottle hand at frame edge; the red ring around the post.",
    "look": {
     "time": 3000
    }
@@ -438,8 +438,8 @@
    ],
    "place": "hive",
    "size": "ws",
-   "camera": "high-ish orbit 8 blocks out, 5 up, round the hive (one smooth quarter turn)",
-   "frame": "the ring of red round the hive: rose bushes and poppies, the campfire pit and post at its middle; outside the red, yellow in every direction (no shape readable at this height); the orbit ends facing east, with Larkfield's west roofs small on the skyline 50-75 blocks away (the easter egg, never named).",
+   "camera": "high-ish orbit 8 blocks out, 5 up, around the hive (one smooth quarter turn)",
+   "frame": "the ring of red around the hive: rose bushes and poppies, the campfire pit and post at its middle; outside the red, yellow in every direction (no shape readable at this height); the orbit ends facing east, with Larkfield's west roofs small on the skyline 50-75 blocks away (the easter egg, never named).",
    "look": {
     "time": 3000
    }
@@ -507,7 +507,7 @@
    "note": "lit, open, in a 1-deep pit: 2 below the hive (vanilla: within 5 below)"
   },
   "heart": {
-   "note": "rose bushes (2 tall) and poppies, a heart 11 wide x 10 deep round the post, its point south"
+   "note": "rose bushes (2 tall) and poppies, a heart 11 wide x 10 deep around the post, its point south"
   },
   "bee_picture": {
    "note": "52 rows (z), head north; set.md has the plan"

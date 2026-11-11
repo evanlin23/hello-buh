@@ -18,7 +18,7 @@ block; read the real ground y off the survey before building and move O in whole
   between; the stripe at z +3..+5 stops at the heart's edge.
 - **Hive:** the campfire sits in a 1-deep pit at O + (0, -1, 0) (open above), the beehive on a 1-block oak fence post at
   O + (0, 1, 0), 2 above the campfire (vanilla: within 5 below), face south; its top is at ground + 2, the same height
-  as the rose-bush ring round it. Four bees home to it.
+  as the rose-bush ring around it. Four bees home to it.
 - Outside the picture: the meadow as generated, but no yellow, red or white flowers within 6 blocks of its edge.
 
 ## Gates before any recording (the critic's r1 must-fixes 3-4)
@@ -38,7 +38,7 @@ block; read the real ground y off the survey before building and move O in whole
 | 52 thefts, a row each (L01, L03) | 52 flower rows (61 rows less 9 stripe rows); S10 is row 52, the head's crown, being planted | count rows on the top-down still |
 | smoke makes us sleepy and nice (L02) | a lit campfire within 5 blocks below a hive keeps bees from getting angry at a harvest ([Beehive#Harvesting](https://minecraft.wiki/w/Beehive), [Bee#Attacking](https://minecraft.wiki/w/Bee)); the smoke passes the hive's face | S02: smoke visible over the hive |
 | clink, honey gone (L03) | a glass bottle on a full hive gives a honey bottle and resets it to level 0 | S01/S03 item swap |
-| red ones round our door (L07) | the heart's poppies and rose bushes ring the post on every side | S07 orbit |
+| red ones around our door (L07) | the heart's poppies and rose bushes ring the post on every side | S07 orbit |
 | the flowers never end; she goes to find the edge (L08) | bees roam ~22 blocks from the hive, farther if needed ([Bee#Behavior](https://minecraft.wiki/w/Bee)); the wingtips are 30 blocks out | S08 path length |
 | I couldn't see home (L09) | bees hover only a few blocks up (Bee wiki); at the left wingtip (O + (-29, ~1.5, -5)) the meadow's rise and the heart's 2-tall rose bushes hide the 3-block hive; campfire smoke has faded by ~8 blocks up. **Live gate:** if the hive or smoke shows from S09's eye, lower the eye to 1.0 or turn the 180 away from it | a still from S09's eye toward O |
 | the giant still planting, way out there (L10) | he's at row 52, the crown (O + (0, 0, -33)), ~40 blocks from the wingtip | S10 first frame |

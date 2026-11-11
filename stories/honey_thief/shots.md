@@ -11,7 +11,7 @@ text is in story.json `shots`; this is the editor's view.
 | S04 | L04 | crown | WS | 10 out, eye height | him crouched planting |
 | S05 | L05 | hive_edge | MCU | bee POV at his face | he looks at the bee, waves, speaks |
 | S06 | L06 | hive_edge | CU | bee POV | the honey bottle in his hand |
-| S07 | L07 | hive | WS | orbit, 8 out 5 up, one quarter turn, ending east | the red ring round the hive; Larkfield's roofs at the end (egg) |
+| S07 | L07 | hive | WS | orbit, 8 out 5 up, one quarter turn, ending east | the red ring around the hive; Larkfield's roofs at the end (egg) |
 | S08 | L08 | wing | EWS | bee POV fast and low, heading west for the edge | yellow, a dark stripe, white |
 | S09 | L09 | wing | WS | bee POV slow eased look north-east-south | white flowers every way, no hive |
 | S10 | L10, L11 | bee_picture | EWS | bee POV finds him (fov ~28) and flies at him; on TELL lift straight up to ~90, tilt down, settle ~1 s after ENOUGH | the whole bee, the heart, the hive; mark `top`, cut 1.0 s |
