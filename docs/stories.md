@@ -282,6 +282,17 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11: "I think hello buh should use the bright grading as well."** HelloBuh's stunt Shorts get the
+  bright look by default (a stunt with no `look`), tuned so the daytime sky doesn't blow out to white (the story
+  'bright' grade, unchanged on a plain stunt, washed the sky out in the first A/B).
+- **Owner, 2026-11-11, sharing Glowe's "Makes no sense" ("Minecraft logic 💀": a minute of rapid vanilla quirks, one
+  after another): "Do we have any formats like this? like 'minevraft logic'".** We had the ideas (docs/ideas.md
+  "Physics and minecraft logic") but no format; HelloBuh adds one (family `logic`): real vanilla quirks, fast, one
+  caption, each quirk set up and paid off in a few seconds.
+- **Owner, 2026-11-11, sharing reo's "Low control minecraft" (a fake mod: "The best mod i've ever downloaded", a
+  creeper walks up and a GUI asks "A creeper is asking for permission to explode" with Allow / Deny / Roll): "this
+  could be like a fake mod".** HelloBuh adds a fake-mod format (family `fakemod`): normal gameplay, an absurd fake mod
+  menu or popup appears at the key moment, the choice plays out. Our own mods and menus, drawn in the edit.
 - **Owner, 2026-11-11, sharing a "Top 5 things I found under ur dad's bed" Short (a parkour + dropper fall as the hook,
   then giant builds seen on the way down, each with a wrong, innocent-sounding label): "the gimmick with thsi one is
   that it starts with a very trick like parkour and dropper, so its very hook grabbing. but then it shows things that

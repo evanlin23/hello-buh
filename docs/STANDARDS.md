@@ -284,6 +284,12 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
   list of giant builds with funny wrong labels; always clean (no innuendo, nothing crude). Check: owner, review. r:r05c651
+- **HelloBuh stunts use the bright look by default**, tuned for daytime gameplay (no blown-out sky). Check: owner
+  A/B stills. r:r8fa348
+- **Format "logic"**: rapid real vanilla quirks, each set up and paid off in seconds, one caption. Check: owner,
+  minecraft-audit (every quirk must be true vanilla). r:r40f7c7
+- **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
+  mods and menus. Check: owner. r:rd551de
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
