@@ -142,7 +142,8 @@ function face () {
 function dress () {
   const d = [], rnd = (i, k) => { const v = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return v - Math.floor(v) }
   const W = 120, D = 54                                // the field's half-size (shifted coordinates), inside the taper
-  const clearOf = (x, z, r) => Math.hypot(x - PLAYER[0], z - PLAYER[1]) > r && !(x < -112 && z < -10)   // 56e, the opening's camera
+  // clear of 56e, the line from him to the snout (the pass looks along it) and the opening's camera (shifted -100..-110, -50)
+  const clearOf = (x, z, r) => Math.hypot(x - PLAYER[0], z - PLAYER[1]) > r && !(x < -60 && Math.abs(z - PLAYER[1]) < r + 4) && Math.hypot(x + 106, z + 54) > r + 14
   for (let i = 0; i < 70; i++) {
     const x = Math.round((rnd(i, 1) * 2 - 1) * W), z = Math.round((rnd(i, 2) * 2 - 1) * D), r = 2 + Math.floor(rnd(i, 3) * 4)
     d.push([x - r, 0, z - r, x + r, 0, z + r, (i % 3 ? 'podzol' : 'coarse_dirt') + ' replace grass_block'])
@@ -206,11 +207,11 @@ module.exports = L.makeLapse({
     // 1. low and close off the north paw: the paws and the snout rise from the first frame, the drone easing back and up
     close: { path: [cam(0, P(-124, 3.5, -42)), cam(2.2, P(-134, 9, -48))], lookPath: [cam(0, P(-98, 5, -14)), cam(2.2, P(-100, 9, -6))], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [P(-96, 4, -31), P(-113, 8, 0)] },
     // 2. out in front and to the north: the head rises behind the snout, 56e a speck in front of it
-    front: { path: [cam(0, P(-150, 28, -64)), cam(2.5, P(-156, 34, -68))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.5, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-89, 30, -10)] },
+    front: { path: [cam(0, P(-150, 28, -64)), cam(2.5, P(-156, 34, -68))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.5, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-94, 34, -10)] },
     // 3. high behind it, the forest round the clearing: the long body fills in behind the head
     back: { path: [cam(0, P(120, 74, -86)), cam(2.8, P(112, 78, -96))], lookPath: [cam(0, P(-14, 14, 0)), cam(2.8, P(-18, 14, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(10, 41, 0)] },
     // 4. over the spruces on the south side: the tail curls round across the frame
-    forest: { path: [cam(0, P(30, 46, 160)), cam(2.2, P(14, 48, 162))], lookPath: [cam(0, P(-12, 12, 36)), cam(2.2, P(-20, 12, 36))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-10, 15, 58)] },
+    forest: { path: [cam(0, P(30, 46, 160)), cam(2.2, P(14, 48, 162))], lookPath: [cam(0, P(-12, 12, 36)), cam(2.2, P(-20, 12, 36))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-10, 16, 63)] },
     // 5. the reveal: high to the south-west over the forest (under the clouds), the whole fox and the taiga, a slow push
     reveal: { path: [cam(0, P(-150, 104, 104)), cam(1.8, P(-143, 99, 98))], lookPath: [cam(0, P(-30, 12, 8)), cam(1.8, P(-30, 12, 8))], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [P(-30, 41, 0)] },
     // 6. the close pass: low behind 56e, sliding from his left to his right, the fox's whole face towering over him
