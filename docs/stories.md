@@ -292,6 +292,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, on hide_seek: "the camera moves around so quickly some of the time. It's a little bit confusing
+  to try and follow."** Camera and view turns stay followable on a phone: no whip pans; looks ease in and out at a
+  capped speed (searching or glancing included), and the view settles on something long enough to read it.
 - **Owner, 2026-11-11, on desire_town and inside_library: "For the desired town, it should show like the path, like
   breaking the obstacles that it's being put in. Not what we have right now. Then also for the inside library, like
   the cut is very, very obvious, because one, it shifts, and two, we like pause before we open the door. It'd be as if
