@@ -51,7 +51,7 @@ function inTail (x, y, z) {
 
 // 1. the front legs and paws: orange forelegs from the chest, black paws with toes, either side of the snout
 function paws () {
-  return vox('paws', 18, [-106, -38, 1, 11, -32, 32], (x, y, z) => {
+  return vox('paws', 16, [-106, -38, 1, 11, -32, 32], (x, y, z) => {
     const az = Math.abs(z)
     if (az < 18 || az > 31) return null
     if (x <= -92) return (y <= 7 && (x > -105 || (az % 4) !== 1)) ? BK : null   // toes: a notch every 4
@@ -61,12 +61,12 @@ function paws () {
 
 // 2. the snout: white, rounded, resting on the ground between the paws
 function snout () {
-  return vox('snout', 26, [-114, -86, 1, 17, -17, 17], (x, y, z) => inSnout(x, y, z) ? WH : null, (y) => 20 + y)
+  return vox('snout', 22, [-114, -86, 1, 17, -17, 17], (x, y, z) => inSnout(x, y, z) ? WH : null, (y) => 20 + y)
 }
 
 // 3. the head: orange, a white face and cheeks, cheek tufts flaring out, a brow over the eyes, a darker crown
 function head () {
-  return vox('head', 50, [-92, -36, 1, 45, -40, 40], (x, y, z) => {
+  return vox('head', 44, [-92, -36, 1, 45, -40, 40], (x, y, z) => {
     const az = Math.abs(z)
     if (inHead(x, y, z)) {
       if (y >= 37 && az < 9) return DK                             // the crown
@@ -84,7 +84,7 @@ function head () {
 // 4. the body: a long rounded loaf, the haunch bulging on the north side with its black paw, a white chest, a darker
 // spine with tufts of fur standing up along it
 function body () {
-  return vox('body', 56, [-44, 52, 1, 46, -38, 26], (x, y, z) => {
+  return vox('body', 48, [-44, 52, 1, 46, -38, 26], (x, y, z) => {
     const inB = inBody(x, y, z), inH = inHaunch(x, y, z)
     if (inB || inH) {
       if (x < -28 && y <= 22 && Math.abs(z) > 14) return WH         // the chest
@@ -102,7 +102,7 @@ function body () {
 
 // 5. the tail: a fat brush curled round the south side to the paws, darker rings along it, a white ragged tip
 function tail () {
-  return vox('tail', 44, [-96, 64, 1, 33, 4, 60], (x, y, z) => {
+  return vox('tail', 38, [-96, 64, 1, 33, 4, 60], (x, y, z) => {
     if (!inTail(x, y, z)) return null
     if (x < -64 + ((y + z) % 3)) return WH
     if (x <= 40 && ((x + 400) % 26) < 3) return DK                  // the rings
@@ -189,22 +189,23 @@ module.exports = L.makeLapse({
   dress: dress(),
   // the head first: the Short opens on it already 16 blocks up and rising behind 56e (openAt, r:r0f3da0)
   stages: [head(), paws(), snout(), body(), tail(), face()],
-  openAt: 0.9,
+  openAt: 0.8,
   perTick: 60,
   angles: [['head', 'rise'], ['paws', 'front'], ['body', 'back'], ['tail', 'forest']],
-  payoff: { stage: 'face', shot: 'reveal', hold: 36, sound: 'block.beacon.activate' },
+  payoff: { stage: 'face', shot: 'reveal', hold: 16,   // (r:r188b46: cut ~0.6 s after the face reads)
+    sound: 'block.beacon.activate' },
   // the close pass beside the tiny player, the face towering over him; the fox snores (a vanilla sleeping fox's sound)
   outro: [{
-    shot: 'pass', mark: 'pass', ticks: 40,
+    shot: 'pass', mark: 'pass', ticks: 30,
     async at (ctx) { ctx.sound('entity.fox.sleep', 1, 0.55); ctx.sound('entity.fox.sleep', 0.8, 0.5) }
   }],
-  endAfter: 1.6,
+  endAfter: 0.8,                         // r:r188b46: end 0.5-0.8 s after the payoff ("SMALL" is one word)
   edit: {
     // the payoff's hit on the final mix (mixcheck): the drop on the reveal with a dip and an impact; on the pass a
     // second dip and impact under the snore (the snore alone is no hit: pace r1), and the punchline card
     sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.4], ['impact', 'pass', { gain: 1.4 }]],
     dropAt: 'pass',                      // the NCS drop on the last payoff (mixcheck r1: under the bed the pass had no hit)
-    cards: [['pass', 'SMALL', 1.6, 'yellow', 0, null, { y: 0.24 }]]
+    cards: [['pass', 'SMALL', 0.8, 'yellow', 0, null, { y: 0.24 }]]
   },
   shots: {
     // (every point in the fox's own coordinates; 56e stands at (-140, 1, 0), facing east up at the snout)
