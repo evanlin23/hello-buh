@@ -43,7 +43,8 @@ module.exports = {
     keySounds: ['friend_vanish'],
     // room tone from frame 1; the music dips before the reveal and an impact lands on it (the game track is busy:
     // breaks, pops, building noise)
-    sfx: [['air', 'start', 'reveal', { gain: 0.5 }], ['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.2 }]]
+    sfx: [['air', 'start', 'reveal', { gain: 0.5 }], ['impact', 'friend_vanish', { gain: 0.9 }],   // the hook's hit: his tree gone in a blink (mixcheck: a hit in the first 1.5 s over the music)
+           ['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.2 }]]
   },
 
   async setup (ctx) {
