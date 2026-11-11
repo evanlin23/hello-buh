@@ -22,7 +22,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'jeb',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'jeb',
     startAt: 'dye:-0.45',
     // the short cut (lead 2026-11-11: as short as it reads): the seven dyes, the rainbow, then the jeb_ tag turns
     // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)

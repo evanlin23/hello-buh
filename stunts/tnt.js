@@ -7,7 +7,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/ncs/mortals_funk_remix.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:1.0',
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:1.0',
     // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
     speed: [['lit:0.5', 'boom:-0.4', 1.5]],
