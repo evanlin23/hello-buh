@@ -1,32 +1,27 @@
 {
- "voice": "am_adam",
- "tempo": 1.03,
- "rate": 1.45,
- "sr": 24000,
- "gap": 0.1,
- "model": "hexgrad/Kokoro-82M (Apache 2.0)",
  "lines": {
   "L01": {
-   "text": "The nitwit in my village has said hmm 4,096 times.",
-   "dur": 2.931,
-   "onset": 0.172,
-   "end": 2.741,
+   "who": "N",
+   "text": "The nitwit in my village has said hmm four thousand and ninety-six times.",
+   "dur": 4.133,
+   "onset": 0.3,
+   "end": 3.78,
    "chunks": [
     [
-     0.172,
-     0.422
+     0.3,
+     0.8
     ],
     [
-     0.422,
-     0.836
+     0.86,
+     1.5
     ],
     [
-     0.836,
-     1.207
+     1.56,
+     2.16
     ],
     [
-     1.207,
-     2.741
+     2.44,
+     3.78
     ]
    ],
    "captions": [
@@ -34,54 +29,72 @@
     "in my village",
     "has said HMM",
     "4,096 TIMES."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "09af19d53d15"
   },
   "L02": {
+   "who": "N",
    "text": "Today, he said my name.",
-   "dur": 1.483,
-   "onset": 0.172,
-   "end": 1.293,
+   "dur": 1.68,
+   "onset": 0.05,
+   "end": 1.38,
    "chunks": [
     [
-     0.172,
-     0.414
+     0.05,
+     0.43
     ],
     [
-     0.44,
-     0.681
+     0.43,
+     0.873
     ],
     [
-     0.681,
-     1.293
+     0.873,
+     1.38
     ]
    ],
    "captions": [
     "Today,",
     "he said",
     "my NAME."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 4.133,
+   "gap": 0
   },
   "L03": {
+   "who": "N",
    "text": "He's always standing somewhere weird.",
-   "dur": 1.845,
-   "onset": 0.155,
-   "end": 1.638,
+   "dur": 1.923,
+   "onset": 0.01,
+   "end": 1.92,
    "chunks": [
     [
-     0.155,
-     0.517
+     0.01,
+     0.628
     ],
     [
-     0.517,
-     0.836
+     0.628,
+     1.077
     ],
     [
-     0.836,
-     1.112
+     1.077,
+     1.583
     ],
     [
-     1.112,
-     1.638
+     1.583,
+     1.92
     ]
    ],
    "captions": [
@@ -89,29 +102,37 @@
     "standing",
     "somewhere",
     "WEIRD."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 5.812,
+   "gap": 0
   },
   "L04": {
+   "who": "N",
    "text": "Under a tree. That night, lightning split it.",
-   "dur": 2.034,
-   "onset": 0.172,
-   "end": 1.845,
+   "dur": 3.005,
+   "onset": 0.45,
+   "end": 2.68,
    "chunks": [
     [
-     0.172,
-     0.672
+     0.45,
+     1.14
     ],
     [
-     0.741,
-     0.983
+     1.14,
+     1.724
     ],
     [
-     1.017,
-     1.284
+     1.724,
+     2.202
     ],
     [
-     1.284,
-     1.845
+     2.202,
+     2.68
     ]
    ],
    "captions": [
@@ -119,29 +140,37 @@
     "That night,",
     "LIGHTNING",
     "split it."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 7.735,
+   "gap": 0
   },
   "L05": {
+   "who": "N",
    "text": "In the wheat. A creeper walked in and boom.",
-   "dur": 2.017,
-   "onset": 0.172,
-   "end": 1.828,
+   "dur": 2.853,
+   "onset": 0.19,
+   "end": 2.48,
    "chunks": [
     [
-     0.172,
-     0.517
+     0.19,
+     0.934
     ],
     [
-     0.569,
-     0.897
+     0.934,
+     1.45
     ],
     [
-     0.897,
-     1.216
+     1.45,
+     1.965
     ],
     [
-     1.216,
-     1.828
+     1.965,
+     2.48
     ]
    ],
    "captions": [
@@ -149,29 +178,37 @@
     "A CREEPER",
     "walked in",
     "and BOOM."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 10.74,
+   "gap": 0
   },
   "L06": {
+   "who": "N",
    "text": "By the well. The water turned to lava.",
-   "dur": 1.983,
-   "onset": 0.155,
-   "end": 1.759,
+   "dur": 2.308,
+   "onset": 0.15,
+   "end": 2.0,
    "chunks": [
     [
-     0.155,
-     0.569
+     0.15,
+     0.784
     ],
     [
-     0.621,
-     0.948
+     0.784,
+     1.26
     ],
     [
-     0.948,
-     1.241
+     1.26,
+     1.736
     ],
     [
-     1.241,
-     1.759
+     1.736,
+     2.0
     ]
    ],
    "captions": [
@@ -179,29 +216,37 @@
     "The water",
     "turned to",
     "LAVA."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 13.592,
+   "gap": 0
   },
   "L07": {
+   "who": "N",
    "text": "On my roof. The next day, it rained anvils.",
-   "dur": 2.19,
-   "onset": 0.172,
-   "end": 2.0,
+   "dur": 3.075,
+   "onset": 0.05,
+   "end": 2.8,
    "chunks": [
     [
-     0.172,
-     0.655
+     0.05,
+     0.806
     ],
     [
-     0.707,
-     1.086
+     0.806,
+     1.7
     ],
     [
-     1.112,
-     1.362
+     1.7,
+     2.319
     ],
     [
-     1.362,
-     2.0
+     2.319,
+     2.8
     ]
    ],
    "captions": [
@@ -209,29 +254,37 @@
     "The next day,",
     "it rained",
     "ANVILS."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 15.9,
+   "gap": 0
   },
   "L08": {
+   "who": "N",
    "text": "The other villagers walk away when he comes.",
-   "dur": 2.086,
-   "onset": 0.172,
-   "end": 1.879,
+   "dur": 2.135,
+   "onset": 0.15,
+   "end": 2.04,
    "chunks": [
     [
-     0.172,
-     0.431
+     0.15,
+     0.565
     ],
     [
-     0.431,
-     0.741
+     0.565,
+     0.98
     ],
     [
-     0.741,
-     1.147
+     0.98,
+     1.395
     ],
     [
-     1.147,
-     1.879
+     1.395,
+     2.04
     ]
    ],
    "captions": [
@@ -239,74 +292,98 @@
     "villagers",
     "WALK AWAY",
     "when he comes."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 18.975,
+   "gap": 0
   },
   "L09": {
+   "who": "N",
    "text": "Even the iron golem goes around him.",
-   "dur": 2.017,
-   "onset": 0.172,
-   "end": 1.828,
+   "dur": 2.312,
+   "onset": 0.09,
+   "end": 2.22,
    "chunks": [
     [
-     0.172,
-     0.422
+     0.09,
+     0.591
     ],
     [
-     0.422,
-     0.983
+     0.591,
+     1.218
     ],
     [
-     0.983,
-     1.828
+     1.218,
+     2.22
     ]
    ],
    "captions": [
     "Even the",
     "IRON GOLEM",
     "goes AROUND him."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 21.11,
+   "gap": 0
   },
   "L10": {
+   "who": "N",
    "text": "So one night, I followed him.",
-   "dur": 1.655,
-   "onset": 0.172,
-   "end": 1.466,
+   "dur": 1.82,
+   "onset": 0.07,
+   "end": 1.54,
    "chunks": [
     [
-     0.172,
-     0.655
+     0.07,
+     0.752
     ],
     [
-     0.681,
-     1.466
+     0.752,
+     1.54
     ]
    ],
    "captions": [
     "So one night,",
     "I FOLLOWED him."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 23.422,
+   "gap": 0
   },
   "L11": {
+   "who": "N",
    "text": "Past the last torch was another village.",
-   "dur": 2.0,
-   "onset": 0.172,
-   "end": 1.793,
+   "dur": 1.933,
+   "onset": 0.09,
+   "end": 1.86,
    "chunks": [
     [
-     0.172,
-     0.414
+     0.09,
+     0.473
     ],
     [
-     0.414,
-     0.897
+     0.473,
+     0.951
     ],
     [
-     0.897,
-     1.259
+     0.951,
+     1.477
     ],
     [
-     1.259,
-     1.793
+     1.477,
+     1.86
     ]
    ],
    "captions": [
@@ -314,54 +391,70 @@
     "last torch",
     "was ANOTHER",
     "village."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 25.242,
+   "gap": 0
   },
   "L12": {
-   "text": "My village. burned. empty.",
-   "dur": 1.621,
-   "onset": 0.172,
-   "end": 1.414,
+   "who": "N",
+   "text": "my village. burned. empty.",
+   "dur": 2.605,
+   "onset": 0.13,
+   "end": 2.32,
    "chunks": [
     [
-     0.172,
-     0.517
+     0.13,
+     1.134
     ],
     [
-     0.552,
-     0.81
+     1.134,
+     1.772
     ],
     [
-     0.845,
-     1.414
+     1.772,
+     2.32
     ]
    ],
    "captions": [
     "MY village.",
     "BURNED.",
     "EMPTY."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 27.175,
+   "gap": 0
   },
   "L13": {
+   "who": "N",
    "text": "The tree. The wheat. The well. All gone.",
-   "dur": 1.897,
-   "onset": 0.172,
-   "end": 1.69,
+   "dur": 3.027,
+   "onset": 0.03,
+   "end": 2.7,
    "chunks": [
     [
-     0.172,
-     0.483
+     0.03,
+     0.679
     ],
     [
-     0.517,
-     0.724
+     0.679,
+     1.401
     ],
     [
-     0.759,
-     1.017
+     1.401,
+     2.051
     ],
     [
-     1.043,
-     1.69
+     2.051,
+     2.7
     ]
    ],
    "captions": [
@@ -369,29 +462,37 @@
     "The WHEAT.",
     "The WELL.",
     "All GONE."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 29.78,
+   "gap": 0
   },
   "L14": {
+   "who": "N",
    "text": "He's not from here. His world already ended.",
-   "dur": 2.276,
-   "onset": 0.172,
-   "end": 2.069,
+   "dur": 2.967,
+   "onset": 0.13,
+   "end": 2.88,
    "chunks": [
     [
-     0.172,
-     0.466
+     0.13,
+     0.667
     ],
     [
-     0.466,
-     0.845
+     0.667,
+     1.337
     ],
     [
-     0.914,
-     1.293
+     1.337,
+     1.941
     ],
     [
-     1.293,
-     2.069
+     1.941,
+     2.88
     ]
    ],
    "captions": [
@@ -399,79 +500,103 @@
     "FROM here.",
     "His world",
     "already ENDED."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 32.807,
+   "gap": 0
   },
   "L15": {
+   "who": "N",
    "text": "They sent him back to warn us.",
-   "dur": 1.586,
-   "onset": 0.155,
-   "end": 1.397,
+   "dur": 1.985,
+   "onset": 0.05,
+   "end": 1.78,
    "chunks": [
     [
-     0.155,
-     0.517
+     0.05,
+     0.853
     ],
     [
-     0.517,
-     0.724
+     0.853,
+     1.1
     ],
     [
-     0.724,
-     1.397
+     1.1,
+     1.78
     ]
    ],
    "captions": [
     "They sent him",
     "BACK",
     "to WARN us."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 35.775,
+   "gap": 0
   },
   "L16": {
+   "who": "N",
    "text": "But a nitwit can only say one word.",
-   "dur": 1.914,
-   "onset": 0.155,
-   "end": 1.707,
+   "dur": 2.905,
+   "onset": 0.11,
+   "end": 2.78,
    "chunks": [
     [
-     0.155,
-     0.586
+     0.11,
+     1.081
     ],
     [
-     0.586,
-     0.888
+     1.081,
+     1.728
     ],
     [
-     0.888,
-     1.707
+     1.728,
+     2.78
     ]
    ],
    "captions": [
     "But a NITWIT",
     "can only",
     "say one word."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 37.76,
+   "gap": 0
   },
   "L17": {
+   "who": "N",
    "text": "And today, he's standing right next to me.",
-   "dur": 1.983,
-   "onset": 0.155,
-   "end": 1.793,
+   "dur": 2.268,
+   "onset": 0.07,
+   "end": 2.12,
    "chunks": [
     [
-     0.155,
-     0.534
+     0.07,
+     0.596
     ],
     [
-     0.569,
-     0.966
+     0.596,
+     1.279
     ],
     [
-     0.966,
-     1.336
+     1.279,
+     1.805
     ],
     [
-     1.336,
-     1.793
+     1.805,
+     2.12
     ]
    ],
    "captions": [
@@ -479,29 +604,37 @@
     "he's standing",
     "right next",
     "to ME."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 40.665,
+   "gap": 0
   },
   "L18": {
+   "who": "N",
    "text": "He said my name. Then the date of the end.",
-   "dur": 2.121,
-   "onset": 0.155,
-   "end": 1.914,
+   "dur": 2.772,
+   "onset": 0.17,
+   "end": 2.62,
    "chunks": [
     [
-     0.155,
-     0.388
+     0.17,
+     0.61
     ],
     [
-     0.388,
-     0.845
+     0.61,
+     1.112
     ],
     [
-     0.914,
-     1.267
+     1.112,
+     1.929
     ],
     [
-     1.267,
-     1.914
+     1.929,
+     2.62
     ]
    ],
    "captions": [
@@ -509,23 +642,146 @@
     "my NAME.",
     "Then the DATE",
     "of the END."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 42.932
   },
   "L19": {
+   "who": "N",
    "text": "It's today.",
-   "dur": 1.034,
-   "onset": 0.155,
-   "end": 0.81,
+   "dur": 1.65,
+   "onset": 0.4,
+   "end": 1.32,
    "chunks": [
     [
-     0.155,
-     0.81
+     0.4,
+     1.32
     ]
    ],
    "captions": [
     "It's TODAY."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L19",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "339c91134da3"
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14",
+    "L15",
+    "L16",
+    "L17",
+    "L18"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 45.705,
+   "offsets": [
+    0.0,
+    4.133,
+    5.812,
+    7.735,
+    10.74,
+    13.592,
+    15.9,
+    18.975,
+    21.11,
+    23.422,
+    25.242,
+    27.175,
+    29.78,
+    32.807,
+    35.775,
+    37.76,
+    40.665,
+    42.932
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 3,
+   "tries": 3,
+   "fixes": [
+    "one continuous take, no pauses between sentences",
+    "no audible breaths"
+   ],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.38 s pause inside line 1 (limit 0.2 s, the opening)",
+      "1.20 s pause between lines 2-3 (limit 0.95 s)"
+     ]
+    },
+    {
+     "try": 2,
+     "why": [
+      "an audible breath (0.16 s)"
+     ]
+    }
+   ]
+  },
+  "L19": {
+   "lines": [
+    "L19"
+   ],
+   "file": "beat_L19.wav",
+   "dur": 1.65,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 2,
+   "tries": 2,
+   "fixes": [
+    "one continuous take, no pauses between sentences",
+    "read every word exactly as written, nothing added or skipped"
+   ],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "1.10 s pause inside line 1 (limit 0.95 s)",
+      "Whisper heard only 20% of the script (\"A nine -year -old kid, the moment it sinks in, slower and clear, not whisper your soft. It's today!\")",
+      "extra words 'a nine year old kid the moment it sinks in slower and clear not whisper your soft' (a direction read aloud?)"
+     ]
+    }
    ]
   }
  },
- "total": 38.57
+ "total": 47.86
 }
