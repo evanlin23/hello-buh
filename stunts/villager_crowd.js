@@ -28,12 +28,17 @@ module.exports = {
     startAt: 'beat:-0.05', endAfter: 'behind:0.7',   // fast end (owner r:r188b46): 0.7 s after every head snaps round
     // the short cut (lead 2026-11-11: as short as it reads, ~8-20 s): 1, 10, 100, 200 and the crowd behind; the 5,
     // 20 (emerald) and 50 crowds are recorded but cut out whole
-    speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5], ['pillar', 'overhead', 3]],   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
+    speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5], ['pillar', 'overhead', 3],
+      // fast cuts (owner r:r188b46; pace: 2.4 s and 2.2 s with nothing new): the sidestep after the 100's and the 200's
+      // heads turn plays x2.2 (the heads still follow it; no cut inside the sidestep)
+      ['cut6a:-1.9', 'cut6a', 2.2], ['pillar:-2.2', 'pillar', 2.2]],   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
     subs: [...[0, 2, 5, 6].map(i => ['beat', CROWDS[i].sub, 1.6, i]), ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]],
     punch: [['behind', 0, 1.08]], flash: [['behind', 0, 0.5]],
     zoom: [['overhead', 'behind:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead
       // the payoff: every head snaps round (pace: a picture change on it; the punch alone didn't register)
-    sfx: [['air', 'start', 'behind', { gain: 0.5 }]],   // room tone from frame 1 (the first sound was at 0.8 s)
+    // room tone from frame 1 (the first sound was at 0.8 s); a pop on the look over the 200, so the hook (which opens
+    // on it) has a hit on frame 0 (pace: none by 0.5 s)
+    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.02', { gain: 1.4 }]],
     // the opening (owner r:r0f3da0): frame 0 is the mass of 200 staring villagers, not the one. The look over the 200
     // from the pillar (moving, the crowd filling the frame) flashes first, then the count-up from 1
     hook: { at: 'overhead', before: 0, after: 1.2, text: 'wait for the 200 💀' }
