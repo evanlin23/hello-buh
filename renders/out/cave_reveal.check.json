@@ -1,0 +1,202 @@
+{
+ "stunt": "cave_reveal",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/cave_reveal.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "player: the old 'HelloBuh' bot is drawn as 56e (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT cave_reveal: 1 shots, scene 0.0-34.6 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-34.6  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 1 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (grass_block)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 8 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 0,
+     "tick": 54,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 6.25,
+     "tick": 179,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 12.75,
+     "tick": 309,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 16.3,
+     "tick": 380,
+     "line": null,
+     "msg": "the view whips at 247 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 18.6,
+     "tick": 426,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 23.65,
+     "tick": 527,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 153 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 24.75,
+     "tick": 549,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 26.8,
+     "tick": 590,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    11.65s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "    16.40s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    16.40s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    16.85s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    16.90s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    17.40s  digging mossy_cobblestone          -> block.moss.hit                     2.1 blocks in view  ",
+    "    17.45s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    18.35s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    21.55s  digging mossy_cobblestone          -> block.moss.hit                     2.1 blocks in view  ",
+    "    22.20s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    22.20s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    22.75s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    23.25s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    23.65s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    24.40s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    27.95s  digging amethyst_block             -> block.amethyst_block.hit           2.1 blocks in view  ",
+    "    28.50s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    28.90s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    29.40s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    29.40s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    29.95s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    30.45s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    30.50s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    31.00s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    31.00s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    31.55s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    31.55s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    32.55s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "ambience per shot: -0.20-37.75s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T19:54:44.122Z"
+}
