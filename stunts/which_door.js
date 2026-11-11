@@ -18,7 +18,10 @@ module.exports = R.makeStunt({
     caption: 'which door would you pick? 🚪', red: 'door', dropAt: 'reveal',
     // ends 0.6 s after the last blast's debris settles (lib/settle.js: the recording runs until it does): owner
     // r:r24d99a, never end while the payoff is moving (independent review)
-    endAfter: 'settle:0.6', deathScreen: true, onFire: 'lava_in:death',
+    // (settle:-0.15: the settle waits out the renderer's smoke conservatively, 2.2 s; on this take the last debris lands
+    // ~1.45 s after the second wave, and settle:0.6 held a frozen death screen 1.25 s: independent review 2026-11-11.
+    // pace's last-0.6 s check still sees a still ending)
+    endAfter: 'settle:-0.15', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
       ['intro', 'PICK A DOOR', 1.8, 'yellow'],   // (no 👇: it sat over door 5 and read as a hint)
