@@ -178,7 +178,7 @@ module.exports = {
     // L03 (S04): three mornings, one gift each, picked up on its word (the hotbar fills slot by slot); then (S05) the
     // garden: the grandson at the gate drinking the fire resistance potion, Hushwell's plaza far off down the slope
     say('/kill @e[type=item,tag=gift]')
-    const morning = [['obsidian', [9.85, 1.05, 6.15], 1, [8.3, 5.9]], ['string', [9.6, 1.05, 6.6], 1, [8.2, 6.9]], ['ender_pearl', [9.75, 1.05, 6.45], 3, [8.4, 6.1]]]   // the same spot, a little moved each morning
+    const morning = [['obsidian', [9.85, 1.05, 6.15], 1, [8.3, 5.9]], ['string', [9.25, 1.05, 6.65], 1, [8.2, 6.9]], ['ender_pearl', [9.75, 1.05, 6.45], 3, [8.4, 6.1]]]   // the same spot, a little moved each morning
     const pickUp = (i) => { say(`/kill @e[type=item,tag=gift]`); say(`/give @s ${morning[i][0]} ${morning[i][2]}`); ctx.sound('entity.item.pickup', 0.5, 1.1 + i * 0.1) }
     const aimG = (i) => P(9.55 + 0.15 * (morning[i][1][0] - 9.75), 1.3, 6.45)   // the gifts' spot (cellar block 9,1,6), the portal's foot above it
     await K.cut(morning[0][3][0], morning[0][3][1], aimG(0), 1, { after: () => gift(...morning[0].slice(0, 3)) })
@@ -379,7 +379,7 @@ module.exports.shots = {
   s07b: { at: [5.0, 2.7 + DOWN, 7.6], look: [9.0, 2.3 + DOWN, 4.4], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
   // S04's middle gift: low at the portal's foot, the string on the floor and me kneeling behind it (audit B6)
   // S04b's subject: the string on the floor (the boy kneels behind it, at the top of the frame)
-  s04b: { at: [10.5, 1.45, 6.3], look: [9.2, 1.25, 6.62], fov: 72, dof: false, eyeTrace: false, subject: [[9.5, 1.1, 6.6]] },
+  s04b: { at: [10.55, 1.5, 6.25], look: [9.0, 1.5, 6.7], fov: 72, push: 0, dof: false, eyeTrace: false, subject: [[9.25, 1.1, 6.65]] },   // the lens >= 1.2 from the string: render.js hides a dropped item nearer the camera
   // S08: over my shoulder at the barrel, before the screen (audit B6)
   s08ots: { at: [6.6, 3.0, 4.6], look: [9.0, 2.3, 3.45], fov: 55, push: 0, dof: false, subject: ['self'] },
   // the stairs, high: the ladder's top looking down the cellar to the portal (audit B6)
