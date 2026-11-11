@@ -13,7 +13,7 @@
 // Commands build the stations only; on camera: digs, places and uses through lib/act.js.
 const { makeLogic } = require('../lib/logic')
 
-const SLOT = { axe: 0, shovel: 1, pick: 2, sponge: 3, pumpkin: 4, flint: 5, glow: 6, hand: 7 }
+const SLOT = { axe: 0, shovel: 1, pick: 2, sponge: 3, pumpkin: 4, flint: 5, glow: 6 }
 
 const quirks = [
   {
@@ -34,7 +34,7 @@ const quirks = [
       await L.A.dig(L.block(0, 2, -3))
       L.quirk()
       // step back, eyes on the gap: the whole tree hanging over the stump
-      await L.A.back(12, { look: L.at(0.5, 3.6, -2.5) })
+      await L.A.back(7, { look: L.at(0.5, 3.0, -2.5) })
       await L.hold(8, L.at(0.5, 3.6, -2.5))
     },
     hold: 4
@@ -46,11 +46,11 @@ const quirks = [
     start: { z: 1.5, pitch: 4 },
     async build (L) {
       await L.fill(-1, -3, -4, 1, 0, -2, 'air')          // a 3x3 pit, 4 deep, its floor the pad's dirt
-      await L.set(0, 0, -3, 'dirt')                       // one dirt block floating over it...
-      await L.fill(0, 1, -3, 0, 4, -3, 'sand')            // ...holding a sand pillar
+      await L.set(0, 1, -3, 'dirt')                       // one dirt block floating over it, a block up (it reads as floating)...
+      await L.fill(0, 2, -3, 0, 5, -3, 'sand')            // ...holding a sand pillar
     },
     async perform (ctx, L) {
-      await L.A.dig(L.block(0, 0, -3))
+      await L.A.dig(L.block(0, 1, -3))
       L.quirk()
       // the pillar drops 4 blocks into the pit (~11 ticks); the thud as it lands
       await L.hold(11, L.at(0.5, 0.6, -2.5))
@@ -92,11 +92,11 @@ const quirks = [
   },
   {
     key: 'golem',
-    label: '4 iron + a pumpkin = a bodyguard',
+    label: '4 iron + a carved pumpkin = a bodyguard',
     slot: SLOT.pumpkin,
     start: { y: 2, pitch: 6 },
     async build (L) {
-      await L.fill(-1, 1, -1, 1, 1, 1, 'grass_block')       // a little mound to stand on (the pumpkin goes on from above)
+      await L.fill(-2, 1, -1, 2, 1, 4, 'grass_block')       // a mound to stand on (the pumpkin goes on from above; room to step back)
       await L.set(0, 1, -3, 'iron_block'); await L.fill(-1, 2, -3, 1, 2, -3, 'iron_block')
     },
     async perform (ctx, L) {
@@ -108,9 +108,12 @@ const quirks = [
       }
       L.quirk()
       ctx.sound('entity.iron_golem.repair', 1, 1)
-      await L.hold(8, L.at(0.5, 3.2, -2.5))
+      // step back: the whole golem under the caption band (review 1: the label sat on its head)
+      const golem = L.at(0.5, 2.3, -2.5)
+      await L.A.back(14, { look: golem })
+      await L.hold(6, golem)
     },
-    hold: 14
+    hold: 8
   },
   {
     key: 'anchor',
@@ -130,7 +133,7 @@ const quirks = [
       await L.A.use(L.pos(0, 1, -3), { sound: 'block.respawn_anchor.charge' })
       ctx.mark('anchor_charged')
       await L.hold(8)
-      ctx.select(SLOT.hand)
+      ctx.select(SLOT.shovel)                                 // any item but glowstone sets it off (never the bare hand: review 1)
       await L.hold(4)
       await L.A.use(L.pos(0, 1, -3))
       for (let k = 0; k < 10 && !boom; k++) await bot.waitForTicks(1)
@@ -193,6 +196,7 @@ module.exports = makeLogic({
   name: 'logic_minecraft',
   caption: 'minecraft logic 💀',
   red: 'logic',
-  hotbar: ['diamond_axe', 'diamond_shovel', 'diamond_pickaxe', 'sponge', 'carved_pumpkin', 'flint_and_steel', ['glowstone', 4]],
+  // two of each block placed: the hand is never empty (review 1: the bare arm drew wrong)
+  hotbar: ['diamond_axe', 'diamond_shovel', 'diamond_pickaxe', ['sponge', 2], ['carved_pumpkin', 2], 'flint_and_steel', ['glowstone', 4]],
   quirks
 })
