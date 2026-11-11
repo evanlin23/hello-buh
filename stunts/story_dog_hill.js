@@ -54,7 +54,7 @@ module.exports = {
     beg: { subject: ['actor:pip'], path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
     gramps: { subject: ['actor:gramps'], path: [[0, -1.3, 0.3, 9.4], [4, -1.5, 0.25, 9.6]], look: [-5, -0.4, 11.8], fov: 50 },   // his face, 3/4 from his right (he looks north up at Pip)
-    rightback: { subject: ['actor:gramps'], path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.4, 11.5], fov: 48 },
+    rightback: { subject: ['actor:gramps'], path: [[0, -1.6, 3.6, 8.6], [4, -1.8, 3.7, 8.8]], look: [-5, -0.4, 11.8], fov: 54 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night, the dog in the crop (F6)
     dusk: { subject: ['actor:pip', 'actor:dog'], path: [[0, 5.6, 3.2, 2.6], [3, 5.2, 3.1, 2.4]], look: [0.0, 1.7, 1.0], fov: 50 },
     night: { subject: ['actor:dog'], path: [[0, 2.8, 1.6, 3.0], [3, 2.5, 1.55, 2.8]], look: [0.3, 1.6, 0.8], fov: 46 },
