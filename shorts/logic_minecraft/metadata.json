@@ -1,0 +1,788 @@
+{
+  "name": "logic_minecraft",
+  "channel": "hellobuh",
+  "caption": "minecraft logic 💀",
+  "youtube": {
+    "title": "minecraft logic 💀 #minecraft #shorts",
+    "description": "minecraft logic 💀\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "com_bota.mp3",
+    "title": "COM BOTA",
+    "artist": "cape, crysstales",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "q6",
+    "drop_in_song_s": 16.75,
+    "drop_in_short_s": 12.58,
+    "song_start_s": 4.17
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 15.33,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 29824056,
+    "sha256": "f2ecf3c811bffb7749c78d64261a3dba2fb6cffae4f682e490fa093ea1283267",
+    "release": {
+      "tag": "pkg-logic_minecraft",
+      "asset": "logic_minecraft.short.f2ecf3c811bffb77.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-logic_minecraft/logic_minecraft.short.f2ecf3c811bffb77.mp4",
+      "sha256": "f2ecf3c811bffb7749c78d64261a3dba2fb6cffae4f682e490fa093ea1283267",
+      "bytes": 29824056
+    },
+    "nosong_release": {
+      "tag": "pkg-logic_minecraft",
+      "asset": "logic_minecraft.short_nosong.7633403317cd25a9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-logic_minecraft/logic_minecraft.short_nosong.7633403317cd25a9.mp4",
+      "sha256": "7633403317cd25a9fee4df0afd90ada06551c7e81632265824cf4d177231cb0e",
+      "bytes": 29785892
+    }
+  },
+  "edit": {
+    "caption": "minecraft logic 💀",
+    "red": "logic",
+    "startAt": "s0:-0.05",
+    "endAfter": "settle:0.6",
+    "dropAt": "q6",
+    "subsY": 0.1,
+    "speed": [
+      [
+        "e0",
+        "s1",
+        "cut"
+      ],
+      [
+        "e1",
+        "s2",
+        "cut"
+      ],
+      [
+        "e2",
+        "s3",
+        "cut"
+      ],
+      [
+        "e3",
+        "s4",
+        "cut"
+      ],
+      [
+        "e4",
+        "s5",
+        "cut"
+      ],
+      [
+        "e5",
+        "s6",
+        "cut"
+      ],
+      [
+        "tnt_fuse:0.1",
+        "tnt_boom:-0.6",
+        "cut"
+      ]
+    ],
+    "subs": [
+      [
+        "q0",
+        "trees: float",
+        1.4,
+        0
+      ],
+      [
+        "q1",
+        "sand: falls",
+        1.4,
+        0
+      ],
+      [
+        "q2",
+        "break ice: get water",
+        1.4,
+        0
+      ],
+      [
+        "q3",
+        "1 sponge vs a whole pool",
+        1.4,
+        0
+      ],
+      [
+        "q4",
+        "iron + carved pumpkin = golem",
+        1.4,
+        0
+      ],
+      [
+        "q5",
+        "nope",
+        1.4,
+        0
+      ],
+      [
+        "anchor_charged",
+        "respawn anchor in the overworld:",
+        0.8,
+        0
+      ],
+      [
+        "q6",
+        "TNT under water: no crater",
+        3,
+        0
+      ],
+      [
+        "tnt_lit",
+        "TNT under water...",
+        1,
+        0
+      ]
+    ],
+    "flash": [
+      [
+        "q6",
+        0,
+        0.4
+      ]
+    ],
+    "punch": [
+      [
+        "q6",
+        0,
+        1.06
+      ]
+    ],
+    "sfx": [
+      [
+        "pop",
+        "s0",
+        {
+          "gain": 1
+        }
+      ],
+      [
+        "pop",
+        "q0",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "q1",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "q2",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "q3",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "q4",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
+        "q5",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "dip",
+        "q6",
+        0.4
+      ],
+      [
+        "impact",
+        "q6",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "minecraft logic 💀",
+      "--self_name",
+      "56e",
+      "--red",
+      "logic",
+      "--subs",
+      "[[\"q0\",\"trees: float\",1.4,0],[\"q1\",\"sand: falls\",1.4,0],[\"q2\",\"break ice: get water\",1.4,0],[\"q3\",\"1 sponge vs a whole pool\",1.4,0],[\"q4\",\"iron + carved pumpkin = golem\",1.4,0],[\"q5\",\"nope\",1.4,0],[\"anchor_charged\",\"respawn anchor in the overworld:\",0.8,0],[\"q6\",\"TNT under water: no crater\",3,0],[\"tnt_lit\",\"TNT under water...\",1,0]]",
+      "--subs_y",
+      "0.1",
+      "--speed",
+      "[[\"e0\",\"s1\",\"cut\"],[\"e1\",\"s2\",\"cut\"],[\"e2\",\"s3\",\"cut\"],[\"e3\",\"s4\",\"cut\"],[\"e4\",\"s5\",\"cut\"],[\"e5\",\"s6\",\"cut\"],[\"tnt_fuse:0.1\",\"tnt_boom:-0.6\",\"cut\"]]",
+      "--punch",
+      "[[\"q6\",0,1.06]]",
+      "--flash",
+      "[[\"q6\",0,0.4]]",
+      "--sfx",
+      "[[\"pop\",\"s0\",{\"gain\":1}],[\"pop\",\"q0\",{\"gain\":0.45}],[\"pop\",\"q1\",{\"gain\":0.45}],[\"pop\",\"q2\",{\"gain\":0.45}],[\"pop\",\"q3\",{\"gain\":0.45}],[\"pop\",\"q4\",{\"gain\":0.45}],[\"pop\",\"q5\",{\"gain\":0.45}],[\"dip\",\"q6\",0.4],[\"impact\",\"q6\",{\"gain\":1.4}]]",
+      "--start_at",
+      "s0:-0.05",
+      "--end_after",
+      "settle:0.6"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 301.5,
+      "y": 63,
+      "z": -43.5
+    },
+    "biome": "minecraft:plains",
+    "ticks": 660,
+    "seconds": 33,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.85,
+        "event": "s0"
+      },
+      {
+        "t": 1.1,
+        "event": "dig"
+      },
+      {
+        "t": 1.1,
+        "event": "swing"
+      },
+      {
+        "t": 1.45,
+        "event": "swing"
+      },
+      {
+        "t": 1.5,
+        "event": "dig_end"
+      },
+      {
+        "t": 1.8,
+        "event": "dig"
+      },
+      {
+        "t": 1.8,
+        "event": "swing"
+      },
+      {
+        "t": 2.1,
+        "event": "swing"
+      },
+      {
+        "t": 2.15,
+        "event": "dig_end"
+      },
+      {
+        "t": 2.15,
+        "event": "q0"
+      },
+      {
+        "t": 3.1,
+        "event": "e0"
+      },
+      {
+        "t": 3.7,
+        "event": "cut"
+      },
+      {
+        "t": 5,
+        "event": "s1"
+      },
+      {
+        "t": 5.15,
+        "event": "dig"
+      },
+      {
+        "t": 5.15,
+        "event": "swing"
+      },
+      {
+        "t": 5.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 5.2,
+        "event": "q1"
+      },
+      {
+        "t": 5.3,
+        "event": "motion_start"
+      },
+      {
+        "t": 6.4,
+        "event": "motion_settled"
+      },
+      {
+        "t": 6.45,
+        "event": "e1"
+      },
+      {
+        "t": 7.05,
+        "event": "cut"
+      },
+      {
+        "t": 8.35,
+        "event": "s2"
+      },
+      {
+        "t": 8.45,
+        "event": "dig"
+      },
+      {
+        "t": 8.45,
+        "event": "swing"
+      },
+      {
+        "t": 8.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.55,
+        "event": "q2"
+      },
+      {
+        "t": 9.75,
+        "event": "e2"
+      },
+      {
+        "t": 10.35,
+        "event": "cut"
+      },
+      {
+        "t": 11.65,
+        "event": "s3"
+      },
+      {
+        "t": 11.9,
+        "event": "place_on"
+      },
+      {
+        "t": 11.9,
+        "event": "swing"
+      },
+      {
+        "t": 11.9,
+        "event": "q3"
+      },
+      {
+        "t": 13.1,
+        "event": "e3"
+      },
+      {
+        "t": 13.7,
+        "event": "cut"
+      },
+      {
+        "t": 15,
+        "event": "s4"
+      },
+      {
+        "t": 15.1,
+        "event": "place_on"
+      },
+      {
+        "t": 15.1,
+        "event": "swing"
+      },
+      {
+        "t": 15.15,
+        "event": "q4"
+      },
+      {
+        "t": 16.55,
+        "event": "e4"
+      },
+      {
+        "t": 17.15,
+        "event": "cut"
+      },
+      {
+        "t": 18.45,
+        "event": "s5"
+      },
+      {
+        "t": 18.55,
+        "event": "swing"
+      },
+      {
+        "t": 18.55,
+        "event": "anchor_charged"
+      },
+      {
+        "t": 19.25,
+        "event": "swing"
+      },
+      {
+        "t": 19.3,
+        "event": "motion_start"
+      },
+      {
+        "t": 19.35,
+        "event": "q5"
+      },
+      {
+        "t": 21.5,
+        "event": "motion_settled"
+      },
+      {
+        "t": 21.65,
+        "event": "e5"
+      },
+      {
+        "t": 21.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 21.75,
+        "event": "vel"
+      },
+      {
+        "t": 21.75,
+        "event": "vel"
+      },
+      {
+        "t": 21.75,
+        "event": "mob_death"
+      },
+      {
+        "t": 21.75,
+        "event": "motion_start"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "cut"
+      },
+      {
+        "t": 22.65,
+        "event": "vel"
+      },
+      {
+        "t": 22.75,
+        "event": "vel"
+      },
+      {
+        "t": 22.75,
+        "event": "vel"
+      },
+      {
+        "t": 22.75,
+        "event": "motion_settled"
+      },
+      {
+        "t": 22.8,
+        "event": "vel"
+      },
+      {
+        "t": 22.85,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "vel"
+      },
+      {
+        "t": 23.45,
+        "event": "vel"
+      },
+      {
+        "t": 23.55,
+        "event": "s6"
+      },
+      {
+        "t": 23.7,
+        "event": "swing"
+      },
+      {
+        "t": 23.7,
+        "event": "tnt_lit"
+      },
+      {
+        "t": 23.7,
+        "event": "motion_start"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.8,
+        "event": "vel"
+      },
+      {
+        "t": 23.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.2,
+        "event": "tnt_fuse"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 26.75,
+        "event": "vel"
+      },
+      {
+        "t": 26.75,
+        "event": "vel"
+      },
+      {
+        "t": 26.8,
+        "event": "vel"
+      },
+      {
+        "t": 26.85,
+        "event": "vel"
+      },
+      {
+        "t": 27.7,
+        "event": "tnt_boom"
+      },
+      {
+        "t": 27.7,
+        "event": "q6"
+      },
+      {
+        "t": 27.75,
+        "event": "vel"
+      },
+      {
+        "t": 27.75,
+        "event": "vel"
+      },
+      {
+        "t": 27.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.85,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 28.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "motion_settled"
+      },
+      {
+        "t": 29.85,
+        "event": "settle"
+      },
+      {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.75,
+        "event": "vel"
+      },
+      {
+        "t": 31.75,
+        "event": "vel"
+      },
+      {
+        "t": 31.8,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "feb3ffdc0d99a1625c3c3e3c0be821948d56fd12",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T21:38:45.419Z",
+    "head_at_publish": "feb3ffdc0d99a1625c3c3e3c0be821948d56fd12",
+    "stunt": "stunts/logic_minecraft.js",
+    "source_snapshot": [
+      "source/logic_minecraft.js",
+      "source/logic.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout feb3ffdc0d99",
+    "gunzip -c shorts/logic_minecraft/recording.json.gz > work/logic_minecraft.rec.json",
+    "node render.js work/logic_minecraft.rec.json work/logic_minecraft.frames 60 1080 1011",
+    "python3 audio.py work/logic_minecraft.rec.json work/logic_minecraft.wav",
+    "python3 edit.py --frames work/logic_minecraft.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/logic_minecraft.rec.json --audio work/logic_minecraft.wav --caption \"minecraft logic 💀\" --self_name 56e --red logic --subs \"[[\\\"q0\\\",\\\"trees: float\\\",1.4,0],[\\\"q1\\\",\\\"sand: falls\\\",1.4,0],[\\\"q2\\\",\\\"break ice: get water\\\",1.4,0],[\\\"q3\\\",\\\"1 sponge vs a whole pool\\\",1.4,0],[\\\"q4\\\",\\\"iron + carved pumpkin = golem\\\",1.4,0],[\\\"q5\\\",\\\"nope\\\",1.4,0],[\\\"anchor_charged\\\",\\\"respawn anchor in the overworld:\\\",0.8,0],[\\\"q6\\\",\\\"TNT under water: no crater\\\",3,0],[\\\"tnt_lit\\\",\\\"TNT under water...\\\",1,0]]\" --subs_y 0.1 --speed [[\"e0\",\"s1\",\"cut\"],[\"e1\",\"s2\",\"cut\"],[\"e2\",\"s3\",\"cut\"],[\"e3\",\"s4\",\"cut\"],[\"e4\",\"s5\",\"cut\"],[\"e5\",\"s6\",\"cut\"],[\"tnt_fuse:0.1\",\"tnt_boom:-0.6\",\"cut\"]] --punch [[\"q6\",0,1.06]] --flash [[\"q6\",0,0.4]] --sfx [[\"pop\",\"s0\",{\"gain\":1}],[\"pop\",\"q0\",{\"gain\":0.45}],[\"pop\",\"q1\",{\"gain\":0.45}],[\"pop\",\"q2\",{\"gain\":0.45}],[\"pop\",\"q3\",{\"gain\":0.45}],[\"pop\",\"q4\",{\"gain\":0.45}],[\"pop\",\"q5\",{\"gain\":0.45}],[\"dip\",\"q6\",0.4],[\"impact\",\"q6\",{\"gain\":1.4}]] --start_at s0:-0.05 --end_after settle:0.6 --out out/logic_minecraft.mp4"
+  ],
+  "status": "ready",
+  "notes": "logic #1: 7 real vanilla quirks back to back (tree floats, sand falls, ice->water, sponge drains a pool, iron+carved pumpkin golem, respawn anchor explodes in the Overworld, TNT under water: no crater); 2 review rounds + a lead-approved round-3 label fix-check READY; nitpicks: golem label grazes its head ~6.7-6.9 s, 'sand: falls' crosses the falling block ~0.2 s, 'nope' label low-contrast over smoke",
+  "published_at": "2026-11-11T21:40:24.539Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T21:40:50+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 15.34 s vs the reviewed render 15.33 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T21:39:02.177Z",
+      "report": "work/hb/logic_minecraft.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
