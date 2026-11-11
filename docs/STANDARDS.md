@@ -231,8 +231,9 @@ actions left silent). r:rc85ccc r:r36632d
   up. Check: owner. r:r732bc0
 - **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
   Check: owner. r:rca5363
-- **The channel says "stories"**: "short minecraft stories", not "mysteries" or "twists", in the channel's own copy and
-  art. Check: owner. r:rae1fcc
+- **The channel says "stories"; the stories are mysteries**: the channel's name, tagline and description are general
+  ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
+  pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. Check: owner. r:r77977b
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.

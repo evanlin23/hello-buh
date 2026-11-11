@@ -245,6 +245,10 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the revised Buh Stories kit (banner "short minecraft / mysteries", promise "mysteries ...
   with a twist"): "just do stories".** The channel calls itself plain "stories": "short minecraft stories", no
   "mysteries" or "twist" pitch in the banner, promise, descriptions or cross-promo.
+- **Owner, 2026-11-11, clarifying: "Short minecraft stories, but these can be mysteries, i think thats what works. But
+  the name of the channel should be generally stories".** The channel's name and tagline stay general ("Buh Stories",
+  "short minecraft stories"); the stories themselves stay mysteries (the mystery test is what works). A story's own
+  title, description or pinned question may set up its mystery.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
