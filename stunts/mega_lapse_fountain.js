@@ -205,18 +205,20 @@ module.exports = L.makeLapse({
   perTick: 60,
   // each stage its own steady drone angle, joined by hard cuts (r:r66efa4); every move slow and even
   angles: [['plaza', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['town1', 'town'], ['tier2', 'far'], ['town2', 'roofs'], ['giants', 'giants'], ['giants2', 'scale']],
-  payoff: { stage: 'lights', shot: 'reveal', hold: 40, toast: false },   // (no toast fanfare: it rang over the pass, no hit there)
+  // the reveal holds 0.6 s, then straight to the pass (owner r:r188b46: cut 0.3-0.6 s after a result reads); a short
+  // firework blast on it, not the beacon's chime or the toast's fanfare (they rang over the pass: no hit there)
+  payoff: { stage: 'lights', shot: 'reveal', hold: 12, toast: false, sound: 'entity.firework_rocket.blast' },
   // the close pass beside 56e and the small fountain, the city towering over them (r:rf8524b); the water splashes
   outro: [{
-    shot: 'pass', mark: 'pass', ticks: 40,
+    shot: 'pass', mark: 'pass', ticks: 30,
     async at (ctx) { ctx.sound('entity.generic.splash', 1, 1.0); ctx.sound('block.water.ambient', 1, 1.1) }
   }],
-  endAfter: 1.6,
+  endAfter: 0.8,                          // the end 0.8 s after the pass lands (r:r188b46: 0.5-0.8 s)
   edit: {
     // the reveal's drop with a dip and an impact; the pass (the last beat, the payoff pace and mixcheck measure) its own dip
     // and a loud impact (at 1.0 it rose only ~7 dB over the reveal's ringing beacon: pace wants 10)
     sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5], ['impact', 'pass', { gain: 1.8 }]],
-    cards: [['pass', 'SMALL', 1.6, 'yellow', 0, null, { y: 0.24 }]]
+    cards: [['pass', 'SMALL', 0.8, 'yellow', 0, null, { y: 0.24 }]]
   },
   shots: {
     // 1. close and low on the fountain (56e beside it), pulling back and up as the plaza spreads round it
