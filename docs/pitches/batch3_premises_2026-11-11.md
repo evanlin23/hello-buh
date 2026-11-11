@@ -80,7 +80,7 @@ jump scare, warm-eerie, bittersweet. **None touches Buh.**
   3. Check that a lead on a boat records and draws.
 
 ### 2. The Hungry Field
-- **Line 1:** "The snow round our village has EATEN thirty-one monsters. It never eats US."
+- **Line 1:** "The snow around our village has EATEN thirty-one monsters. It never eats US."
 - **Twist:** it isn't magic snow. It's powder snow, which only holds up leather boots. The family's "ugly brown
   BOOTS" were the rule all along, and she has just swapped hers for shiny iron ones.
 - **Misreadings:**
@@ -91,7 +91,7 @@ jump scare, warm-eerie, bittersweet. **None touches Buh.**
 - **Reveal:** she runs out onto the field to show them off and sinks, and frost creeps in from the edges of the
   screen. Cut on the frost.
 - **Place, day, link:** **Frostgate**, day 3100.
-  - **Leaves canon:** a player-made powder-snow ring round Frostgate, from about day 3000 (after More Golems). Stamp it.
+  - **Leaves canon:** a player-made powder-snow ring around Frostgate, from about day 3000 (after More Golems). Stamp it.
 - **Vanilla:** [Powder_Snow](https://minecraft.wiki/w/Powder_Snow) (leather boots walk on it; placeable from a
   bucket; it only generates in groves and snowy slopes, so the ring is player-made) and
   [Damage#Freezing](https://minecraft.wiki/w/Damage#Freezing).
