@@ -7,7 +7,7 @@ module.exports = fakeworld.make({
   name: 'fakeworld_diamond',
   block: 'diamond_block',
   treasure: 'dirt',
-  caption: 'day 214 in the all diamond world',
-  red: 'diamond',
+  caption: "bro hasn't seen dirt in 214 days 💀",
+  red: 'dirt',
   near: [136, 22]   // /locate from here: the river at (520, 22), the bank at (512, 62, 22)
 })
