@@ -36,6 +36,7 @@ FAMILIES = [
     ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
     ("herobrine", lambda n: n.startswith("herobrine_")),   # secret herobrine: the "lag" that never was (lib/herobrine.js, r:r047388)
     ("lucky", lambda n: n.startswith("lucky_")),   # fake super lucky: a dig where every block is luckier (r:r934ea4)
+    ("dropper", lambda n: n.startswith("dropper_")),   # a huge first-person dropper: quick fails, the clean landing (lib/dropper.js, r:r304cb5)
     ("mobpov", lambda n: n.startswith("mobpov_")),   # a mob's annoying trait as an absurd POV chase (lib/mobpov.js, r:r8048f1)
 ]
 
