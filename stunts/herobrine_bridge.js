@@ -19,7 +19,10 @@ module.exports = makeStunt({
   hotbar: ['stone_sword', 'shears', ['blue_wool', 48], ['golden_apple', 3]],
   select: 0,
   pitch: 8,
-  edit: { sfx: [['gamedip', 'payoff', 0.4], ['impact', 'payoff', { gain: 1.4 }]] },   // the logout is silent in vanilla: an impact, with the cave ambience ducked under it (mixcheck)
+  edit: {
+    subsY: 0.12,    // up in the sky: at mid view the sub sat on his feet over the gap (independent review round 1)
+    chatScale: 5,   // 'Herobrine left the game' is the punchline: readable on a phone
+    sfx: [['gamedip', 'payoff', 0.4], ['impact', 'payoff', { gain: 1.4 }]] },   // the logout is silent in vanilla: an impact, with the cave ambience ducked under it (mixcheck)
   hisStart: { x: 0.5, y: 1, z: 4.6, yaw: 180, pitch: 4 },
 
   async perform (ctx, H) {
