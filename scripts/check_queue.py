@@ -30,6 +30,7 @@ FAMILIES = [
     ("hack", lambda n: n.startswith("hack_")),   # one real block trick per Short (docs/formats.md, r:rc15847)
     ("mega", lambda n: n.startswith("mega_")),   # huge generated builds, flown round (owner 2026-11-11, r:r8bb1e3)
     ("cooked", lambda n: n.startswith("cooked_")),   # an impossible feat, then "X joined the game" on the drop (lib/cooked.js, r:r5ee125)
+    ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
 ]
 
 
