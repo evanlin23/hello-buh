@@ -1,0 +1,581 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "My sheep has stared at the same dirt block for 412 days.",
+   "dur": 2.983,
+   "onset": 0.172,
+   "end": 2.793,
+   "chunks": [
+    [
+     0.172,
+     0.457
+    ],
+    [
+     0.457,
+     0.802
+    ],
+    [
+     0.802,
+     1.103
+    ],
+    [
+     1.103,
+     1.552
+    ],
+    [
+     1.552,
+     2.793
+    ]
+   ],
+   "captions": [
+    "My SHEEP",
+    "has stared at",
+    "the SAME",
+    "dirt block",
+    "for 412 DAYS."
+   ]
+  },
+  "L02": {
+   "text": "He doesn't eat. He doesn't sleep. He doesn't even blink.",
+   "dur": 2.431,
+   "onset": 0.172,
+   "end": 2.224,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.431,
+     0.569
+    ],
+    [
+     0.595,
+     0.853
+    ],
+    [
+     0.853,
+     1.19
+    ],
+    [
+     1.259,
+     1.509
+    ],
+    [
+     1.509,
+     2.224
+    ]
+   ],
+   "captions": [
+    "He doesn't",
+    "EAT.",
+    "He doesn't",
+    "SLEEP.",
+    "He doesn't",
+    "even BLINK."
+   ]
+  },
+  "L03": {
+   "text": "I pushed him into the river. He walked right back.",
+   "dur": 2.293,
+   "onset": 0.155,
+   "end": 2.086,
+   "chunks": [
+    [
+     0.155,
+     0.509
+    ],
+    [
+     0.509,
+     1.034
+    ],
+    [
+     1.103,
+     1.431
+    ],
+    [
+     1.431,
+     2.086
+    ]
+   ],
+   "captions": [
+    "I pushed him",
+    "into the RIVER.",
+    "He WALKED",
+    "right BACK."
+   ]
+  },
+  "L04": {
+   "text": "Wolves showed up. They took one look at him and left.",
+   "dur": 2.466,
+   "onset": 0.19,
+   "end": 2.259,
+   "chunks": [
+    [
+     0.19,
+     0.44
+    ],
+    [
+     0.44,
+     0.862
+    ],
+    [
+     0.931,
+     1.19
+    ],
+    [
+     1.19,
+     1.474
+    ],
+    [
+     1.474,
+     1.672
+    ],
+    [
+     1.672,
+     2.259
+    ]
+   ],
+   "captions": [
+    "WOLVES",
+    "showed up.",
+    "They took",
+    "one LOOK",
+    "at him",
+    "and LEFT."
+   ]
+  },
+  "L05": {
+   "text": "I put a block of gold on top. He stared through it.",
+   "dur": 2.448,
+   "onset": 0.155,
+   "end": 2.259,
+   "chunks": [
+    [
+     0.155,
+     0.319
+    ],
+    [
+     0.319,
+     0.56
+    ],
+    [
+     0.56,
+     0.853
+    ],
+    [
+     0.853,
+     1.31
+    ],
+    [
+     1.379,
+     1.716
+    ],
+    [
+     1.716,
+     2.259
+    ]
+   ],
+   "captions": [
+    "I put",
+    "a block",
+    "of GOLD",
+    "on top.",
+    "He stared",
+    "THROUGH it."
+   ]
+  },
+  "L06": {
+   "text": "Sometimes the block groans. I figured dirt just does that.",
+   "dur": 2.793,
+   "onset": 0.172,
+   "end": 2.586,
+   "chunks": [
+    [
+     0.172,
+     0.543
+    ],
+    [
+     0.543,
+     0.81
+    ],
+    [
+     0.81,
+     1.241
+    ],
+    [
+     1.31,
+     1.672
+    ],
+    [
+     1.672,
+     1.991
+    ],
+    [
+     1.991,
+     2.586
+    ]
+   ],
+   "captions": [
+    "Sometimes",
+    "the block",
+    "GROANS.",
+    "I figured",
+    "dirt just",
+    "DOES that."
+   ]
+  },
+  "L07": {
+   "text": "Honestly, I don't remember getting a sheep. Or dyeing him blue.",
+   "dur": 2.741,
+   "onset": 0.19,
+   "end": 2.534,
+   "chunks": [
+    [
+     0.19,
+     0.483
+    ],
+    [
+     0.509,
+     0.698
+    ],
+    [
+     0.698,
+     0.914
+    ],
+    [
+     0.914,
+     1.095
+    ],
+    [
+     1.095,
+     1.483
+    ],
+    [
+     1.569,
+     1.905
+    ],
+    [
+     1.905,
+     2.534
+    ]
+   ],
+   "captions": [
+    "Honestly,",
+    "I don't",
+    "remember",
+    "GETTING",
+    "a sheep.",
+    "Or dyeing",
+    "him BLUE."
+   ]
+  },
+  "L08": {
+   "text": "I woke up in this house 412 days ago. No tools. No memories. Just him, already staring.",
+   "dur": 4.569,
+   "onset": 0.172,
+   "end": 4.379,
+   "chunks": [
+    [
+     0.172,
+     0.491
+    ],
+    [
+     0.491,
+     0.81
+    ],
+    [
+     0.81,
+     1.862
+    ],
+    [
+     1.974,
+     2.569
+    ],
+    [
+     2.647,
+     3.121
+    ],
+    [
+     3.155,
+     3.466
+    ],
+    [
+     3.491,
+     4.379
+    ]
+   ],
+   "captions": [
+    "I woke up",
+    "in this house",
+    "412 days ago.",
+    "No TOOLS.",
+    "No MEMORIES.",
+    "Just HIM,",
+    "already STARING."
+   ]
+  },
+  "L09": {
+   "text": "The house was already built. There's a line of torches from my door to that block.",
+   "dur": 3.431,
+   "onset": 0.172,
+   "end": 3.224,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.845
+    ],
+    [
+     0.845,
+     1.224
+    ],
+    [
+     1.293,
+     1.422
+    ],
+    [
+     1.422,
+     1.681
+    ],
+    [
+     1.681,
+     2.052
+    ],
+    [
+     2.052,
+     2.466
+    ],
+    [
+     2.466,
+     3.224
+    ]
+   ],
+   "captions": [
+    "The house",
+    "was already",
+    "BUILT.",
+    "There's",
+    "a line",
+    "of TORCHES",
+    "from my door",
+    "to that BLOCK."
+   ]
+  },
+  "L10": {
+   "text": "The villagers call me the new one.",
+   "dur": 1.621,
+   "onset": 0.172,
+   "end": 1.431,
+   "chunks": [
+    [
+     0.172,
+     0.578
+    ],
+    [
+     0.578,
+     0.802
+    ],
+    [
+     0.802,
+     1.431
+    ]
+   ],
+   "captions": [
+    "The villagers",
+    "call me",
+    "the NEW one."
+   ]
+  },
+  "L11": {
+   "text": "They keep asking what happened to the old one. I say, who?",
+   "dur": 2.552,
+   "onset": 0.155,
+   "end": 2.276,
+   "chunks": [
+    [
+     0.155,
+     0.431
+    ],
+    [
+     0.431,
+     0.664
+    ],
+    [
+     0.664,
+     0.974
+    ],
+    [
+     0.974,
+     1.534
+    ],
+    [
+     1.603,
+     1.914
+    ],
+    [
+     1.948,
+     2.276
+    ]
+   ],
+   "captions": [
+    "They keep",
+    "asking",
+    "what happened",
+    "to the OLD one.",
+    "I say,",
+    "WHO?"
+   ]
+  },
+  "L12": {
+   "text": "So today I got curious.",
+   "dur": 1.5,
+   "onset": 0.172,
+   "end": 1.31,
+   "chunks": [
+    [
+     0.172,
+     0.491
+    ],
+    [
+     0.491,
+     0.724
+    ],
+    [
+     0.724,
+     1.31
+    ]
+   ],
+   "captions": [
+    "So today",
+    "I got",
+    "CURIOUS."
+   ]
+  },
+  "L13": {
+   "text": "And for the first time in 412 days, he looked at me.",
+   "dur": 2.724,
+   "onset": 0.155,
+   "end": 2.534,
+   "chunks": [
+    [
+     0.155,
+     0.302
+    ],
+    [
+     0.302,
+     0.733
+    ],
+    [
+     0.733,
+     1.741
+    ],
+    [
+     1.793,
+     2.052
+    ],
+    [
+     2.052,
+     2.534
+    ]
+   ],
+   "captions": [
+    "And for",
+    "the FIRST time",
+    "in 412 days,",
+    "he LOOKED",
+    "at ME."
+   ]
+  },
+  "L14": {
+   "text": "I broke the block.",
+   "dur": 1.241,
+   "onset": 0.172,
+   "end": 1.034,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     1.034
+    ]
+   ],
+   "captions": [
+    "I broke",
+    "the BLOCK."
+   ]
+  },
+  "L15": {
+   "text": "There's a hole under it. It goes straight down.",
+   "dur": 2.086,
+   "onset": 0.155,
+   "end": 1.879,
+   "chunks": [
+    [
+     0.155,
+     0.267
+    ],
+    [
+     0.267,
+     0.483
+    ],
+    [
+     0.483,
+     0.81
+    ],
+    [
+     0.862,
+     1.121
+    ],
+    [
+     1.121,
+     1.879
+    ]
+   ],
+   "captions": [
+    "There's",
+    "a HOLE",
+    "under it.",
+    "It goes",
+    "STRAIGHT down."
+   ]
+  },
+  "L16": {
+   "text": "Who digs straight down?",
+   "dur": 1.379,
+   "onset": 0.172,
+   "end": 1.172,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.69
+    ],
+    [
+     0.69,
+     1.172
+    ]
+   ],
+   "captions": [
+    "Who digs",
+    "STRAIGHT",
+    "DOWN?"
+   ]
+  }
+ },
+ "total": 40.86
+}
