@@ -895,6 +895,15 @@ export class EntityLayer {
         if (bones.waterPatch) for (const m of bones.waterPatch.children) if (m.isMesh) { m.material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); m.renderOrder = 0.5 }
         poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
       }
+    } else if (name === 'leash_knot') {
+      // LeashKnotModel (32x32): one 6x8x6 cube; LeashKnotRenderer: scale(-1, -1, 1), so it hangs 0..0.5 above the
+      // entity's position (LeashFenceKnotEntity: the fence post's centre, 0.375 up)
+      const t = await texture(['entity/lead_knot'])
+      if (t) {
+        const b = buildPlayer(t, [['knot', null, [0, 0, 0], [[[-3, -8, -3], [6, 8, 6], [0, 0], 0]]]], 1); obj = b.root; bones = b.bones; mat = b.mat
+        obj.children[0].matrix.makeScale(-1, -1, 1).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
+        bones.knot = true
+      }
     } else if (name === 'spider' || name === 'cave_spider') {
       // SpiderEyesLayer: the eyes full bright (RenderType.eyes); CaveSpiderRenderer scales by 0.7
       const t = await texture([name === 'spider' ? 'entity/spider/spider' : 'entity/spider/cave_spider']), te = await texture(['entity/spider_eyes'])
@@ -1242,7 +1251,7 @@ export class EntityLayer {
         const dt = tick - r.last.t
         if (dt > 0) {
           const per = Math.hypot(s.x - r.last.x, s.z - r.last.z) / dt
-          const target = s.swell !== undefined || (s.mobScale !== undefined && s.mobScale < 1) ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation); a held (scaled-down) mob isn't walking
+          const target = s.swell !== undefined || (s.mobScale !== undefined && s.mobScale < 1) || (s.extra && s.extra.ride) ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation); a held (scaled-down) mob isn't walking; a rider doesn't walk (harness extra.ride)
           r.amt = (r.amt || 0) + (target - (r.amt || 0)) * Math.min(1, 0.4 * dt)
           r.walk += (r.amt || 0) * dt
         }
@@ -1262,6 +1271,7 @@ export class EntityLayer {
         poseBoatPaddle(B.leftPaddle, r.row[0], false); poseBoatPaddle(B.rightPaddle, r.row[1], true)
         continue
       }
+      if (B.knot) continue
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
       if (B.wolf) { poseWolf(r, s, r.walk, r.amt || 0, tick); continue }
       if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }

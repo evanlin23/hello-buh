@@ -8,6 +8,7 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 | 2026-11-11 | the_walk | merchant (villager trade) screen in edit.py, with the vanilla item tooltip on hover ("Frost Walker II") | done (claude/engine-gui-tags: K.trade / K.pick / K.hover, `merchant` marks; docs/engine_features.md "Trade screen, tooltip, caption chunks, hidden name tags") |
 | 2026-11-11 | the_walk | a non-spoken caption chunk (on-screen text in the band captions' style and key colour, timed to a shot) | done (claude/engine-gui-tags: K.onscreen, `onscreen` marks) |
 | 2026-11-11 | honey_thief | hide one player actor's name tag (Jonah: cast "name_tag": false) | done (claude/engine-gui-tags: story.json cast "name_tag": false / stunt.hideNameTags) |
+| 2026-11-11 | pulled_away, the_walk, runaway | lead ropes and knots; a leashed boat following on grass and water; passengers moving with their boat; an actor rowing a boat along a path with animated oars | DONE (engine-boats-leads): docs/engine_features.md "Boats, leads and passengers" (K.leash / K.board / K.row) |
 | 2026-11-10 | thirty_one_raids | actor sit pose; drink/use pose; off-hand item | building (agent/ergonomics) |
 | 2026-11-10 | thirty_one_raids | chest contents (as the vanilla chest GUI on open) | building (agent/ergonomics) |
 | 2026-11-10 | thirty_one_raids | campfire smoke | building (agent/ergonomics) |

@@ -1060,6 +1060,19 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
     if (!k && cur) { cur[1] = row[0]; run.delete(row[1]) }
   }
 }
+// leads (harness 'leash' marks { id, holder }, 'self' = the recording bot): id -> [[from, to, holder]]; drawn per frame
+// from the leashed entity's lead point to the holder's hand (lib/riding.js: LeashFeatureRenderer's rope)
+const RIDING = require('./lib/riding')
+const LEASH_RUNS = new Map()
+let LEASH_KNOTS = false
+for (const m of rec.timeline || []) {
+  if (m.event !== 'leash' || m.id === undefined) continue
+  const runs = LEASH_RUNS.get(m.id) || [], last = runs[runs.length - 1]
+  if (last && last[1] === Infinity) last[1] = m.t / 50
+  if (m.holder !== null && m.holder !== undefined) runs.push([m.t / 50, Infinity, m.holder])
+  LEASH_RUNS.set(m.id, runs)
+  LEASH_KNOTS = true
+}
 // TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
 const CART_PRIMED = new Map()
 for (const e of rec.timeline || []) if (e.event === 'cart_primed' && !CART_PRIMED.has(e.id)) CART_PRIMED.set(e.id, e.t / 50)
@@ -1121,11 +1134,12 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
       }
       if (sw.some(s => r[0] >= s && r[0] - s < 6)) target = look
       if (d2 >= 16) body = look
+      if (r[9] && r[9].ride) { body = look; target = look }   // a rider (harness extra.ride) sits facing where it looks, turned with its boat (positionRider)
       body += wrap(target - body) * 0.3
       const off = wrap(look - body), MAX = 50 * Math.PI / 180
       if (Math.abs(off) > MAX) body += off - Math.sign(off) * MAX
       body = wrap(body)
-      if (d2 < 16) { wspd += (Math.min(1, Math.sqrt(d2) * 4) - wspd) * 0.4; wpos += wspd }
+      if (d2 < 16) { wspd += ((r[9] && r[9].ride ? 0 : Math.min(1, Math.sqrt(d2) * 4)) - wspd) * 0.4; wpos += wspd }
       ticks.set(r[0], [body, wpos, wspd])
       prev = r
     }
@@ -2887,6 +2901,13 @@ else:
     }
     prof('camera+target')
     const ents = entitiesAt(t, mesher)
+    // leash knots (LeashFenceKnotEntity: the fence post's centre, 0.375 up; mineflayer keeps the block corner) are drawn
+    // only in recordings with lead marks (the harness from 2026-11-11): older ones never drew them (rule zero)
+    for (let i = ents.length - 1; i >= 0; i--) {
+      const e = ents[i]; if (e.name !== 'leash_knot') continue
+      if (!LEASH_KNOTS) { ents.splice(i, 1); continue }
+      e.x = Math.floor(e.x) + 0.5; e.y = Math.floor(e.y) + 0.375; e.z = Math.floor(e.z) + 0.5
+    }
     // first-person held item
     const hd = HIDE_HAND || third || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
     if (hd) {
@@ -3162,6 +3183,7 @@ else:
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a
         if (a) { e.headYaw = e.headYaw ?? e.yaw; e.yaw = lerpAngle(a[0], b[0], f); wp = a[1] + (b[1] - a[1]) * f; ws = a[2] + (b[2] - a[2]) * f }
       }
+      if (e.extra.ride) { wp = 0; ws = 0 }   // a rider's legs don't walk (the boat moves it: harness extra.ride)
       let held = null
       const n = e.extra.held
       if (n) {
@@ -3194,8 +3216,10 @@ else:
           if (t >= a && k > 0) { const ez = k * k * (3 - 2 * k); poses.push({ ...q, k: ez }) }
         }
       }
+      // riding (harness extra.ride: a passenger of a boat or a cart): HumanoidModel's riding limbs, under any staged pose
+      if (e.extra.ride && POSES.POSES.ride) poses.unshift({ name: 'ride', k: 1 })
       // using an item, recorded (harness extra.using: LivingEntity's using-item flag): drink or eat, that hand
-      if (e.extra.using && !poses.length) { const it = (e.extra.usingOff ? e.extra.offhand : n) || ''; poses.push({ name: /potion|bottle|milk|stew|soup/.test(it) ? 'drink' : /horn|spyglass/.test(it) ? 'use' : 'eat', off: !!e.extra.usingOff, k: 1 }) }
+      if (e.extra.using && !poses.some(q => q.name !== 'ride')) { const it = (e.extra.usingOff ? e.extra.offhand : n) || ''; poses.push({ name: /potion|bottle|milk|stew|soup/.test(it) ? 'drink' : /horn|spyglass/.test(it) ? 'use' : 'eat', off: !!e.extra.usingOff, k: 1 }) }
       if (poses.length) e.player.poses = poses
       // idle life (standing still: a slow head drift) and the talking head (lines marked with this name)
       const still = Math.max(0, 1 - ws * 8), nz = idleNoise(e.id, t), tk = talkMotion(user, t)
@@ -3334,6 +3358,17 @@ else:
       }
     }
     prof('particles+weather')
+    if (LEASH_RUNS.size) {
+      const byId = new Map(ents.map(e => [e.id, e])), list = []
+      const lightAt = (e) => mesher.world.getLight(new Vec3(Math.floor(e.x), Math.floor(e.y), Math.floor(e.z)))
+      for (const [id, runs] of LEASH_RUNS) {
+        const run = runs.find(([a, b]) => t >= a && t < b); if (!run) continue
+        const e = byId.get(id), h = byId.get(run[2] === 'self' ? -1 : run[2])
+        if (!e || !h || e.hidden || h.hidden) continue   // (the holder's first-person hand: not drawn)
+        list.push(RIDING.leashMesh(RIDING.leashPoint(e), RIDING.ropeHold(h), lightAt(e), lightAt(h), (sk, bl) => lightmap(sk, bl)))
+      }
+      if (list.length) cam.leashes = list
+    }
     // nameplates (EntityRenderer.renderNameTag): a custom-named mob under the crosshair, or any with
     // CustomNameVisible, within 64 blocks; anchored 0.5 above its hitbox top
     for (const e of ents) {

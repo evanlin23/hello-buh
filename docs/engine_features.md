@@ -531,6 +531,53 @@ draws its model in camera shots: the bee is the yellow dot). Also on any camera 
   fov narrowing, the crane to 90 straight down; the meadow is the flower readability patch:
   `python3 scripts/flower_readability.py <top still> --set X,Y,Z`).
 
+## Boats, leads and passengers (2026-11-11, engine-boats-leads)
+For Pulled Away (a boat led over grass and water) and The Walk (Grandma rowing away). Everything goes through the real
+server; the numbers are from the 1.21.11 client jar (Mojang mappings, `javap` on the classes named below) and measured on
+the server. `lib/riding.js` holds the shared numbers, `lib/boats.js` the kit.
+- **Passengers move with their vehicle** (the recorder): the server sends no moves for passengers, so mineflayer left a
+  rider where it mounted (stories/runaway's workaround: teleport both). The harness now tracks `set_passengers` itself
+  and records each rider where `Entity.positionRider` puts it: vehicle + `AbstractBoat.getPassengerAttachmentPoint`
+  ((0, height / 3, f), f 0.2 / -0.6 for two riders, + 0.2 for an animal; a bamboo raft height x 0.889) - the rider's
+  vehicle attachment (a player 0.6, a villager 0: measured, kid y = boat y + 0.1875, a player boat y - 0.4125), with
+  `extra.ride = vehicle id`. Boats and rafts only (other vehicles, a jockey's spider, a horse, record as before). render.js eases rider and boat the same way (the client's 3-tick lerp), so they stay
+  together. A rider doesn't walk (its leg swing is 0); a player rider takes HumanoidModel's riding limbs (pose `ride`,
+  under any staged pose) and faces where it looks. (mineflayer reads `attach_entity` as a mount: since 1.9 it is the
+  LEAD packet, so the harness keeps its own maps; don't trust `entity.vehicle`.)
+- **Leads** (`LeashFeatureRenderer`): the harness marks `leash` { id, holder } from `attach_entity` (holder `'self'` for the
+  recording bot, null when untied; the leads already tied when the recording starts are marked on tick 0), and the
+  renderer draws the rope each frame from the leashed entity's lead point (a boat's bow: (0, 0.88 h, 0.64 w); others
+  (0, eyeHeight, 0.4 w), turned by its yaw) to the holder's (`Player.getRopeHoldPosition`: the right hand, 0.8 up, 0.07
+  forward, crouching 0.5 / -0.2; a knot 0.2 over its centre): two crossed ribbons 0.05 wide of 24 segments, brown
+  (0.5, 0.4, 0.3) x 0.7 on every other one, sagging dy t^2 (flat at the lower end), lit by the light levels lerped from
+  end to end (`cam.leashes` -> page.js `drawLeashes`). The fence **knot** (`LeashKnotModel`, a 6x8x6 cube over the post,
+  `entity/lead_knot`) is drawn in recordings that have lead marks (older ones never drew one: rule zero). The holder's
+  first-person hand isn't a rope end (a narrator holding a lead shows it only in camera shots).
+- **A leashed boat follows** (vanilla 1.21: boats can be leashed, the server pulls them, `Leashable.tickLeash`): on grass
+  at a walk (0.24 blocks/tick: it followed at 0.24, ~6 blocks back) and on water behind a rowing holder. At the full 0.4
+  row it lags then catches up in a yank (0.65 blocks/tick for a few ticks): row at `speed: 0.3` for a steady tow. Leads
+  break past 10-12 blocks.
+- **The kit** (`lib/boats.js`, on K):
+  - `K.leash('Man', K.entity('oak_boat', [dx, dy, dz]))`: the actor right-clicks the boat holding a lead (vanilla: within
+    3 blocks; survival uses the lead up). `K.leash('Man', 'tag')` ties it by the server's leash NBT (any time, any
+    distance under 10), `K.leash([x, y, z], 'tag')` to a fence post (the server ties a knot there).
+  - `K.board('Man', 'boat_tag')` / `K.board('kid', 'boat_tag')`: `/ride`. An actor the kit was walking (K.actor) stops
+    being moved and its client stops simulating. Summon a boat at the water's surface (it settles 0.48 under it); summoned
+    under the surface it sinks and throws its riders out. A mob can be summoned in it (`Passengers:[{...}]`).
+  - `await K.row('Man', [[x, z], ...], { speed, stop, look, sound })` (or `K.rowing(...)` to row while the scene goes on):
+    the first rider steers. The row is planned (`planRow`, unit-tested): a smooth curve through the points, the bow along
+    its tangent (at most 9 deg a tick: a sharper corner is logged), vanilla's speed (a held key in water: v = 0.9 v +
+    0.04, 0.4 blocks/tick top; the oars shipped 9 v before the end, gliding onto it). It is sent the way a player's client
+    sends it (`vehicle_move` + `steer_boat`): the server moves the boat and sets its paddle states, so the oars animate in
+    the recording (`BoatModel.animatePaddle`, already drawn) and a lead tied to the rower pulls its boat behind. Each
+    stroke plays `entity.boat.paddle_water` (pitch 0.8-1.2). `speed` under 0.4 scales the thrust (a steady row; the oars
+    keep their stroke).
+- Checks: rec_check's mob ground-speed check skips riders, and the visible-jump check doesn't flag getting into or out of
+  a boat (vanilla's mount is a one-tick move).
+- Test: `./hb record _test_boats_leads && ./hb still _test_boats_leads t_walk+2 t_board+0.3 t_row+2.5 t_row+5` (a man
+  leads a boat with a baby villager in it over grass, boards his own boat and rows an S-bend, the led boat following;
+  a third boat tied to a fence; proof stills in docs/engine_proofs/boats_leads/). `node --test lib/hb/test/boats.test.js`.
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

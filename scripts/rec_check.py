@@ -798,6 +798,8 @@ def main():
         name = row[2]
         if name in NOT_MOBS or name.endswith(("minecart", "boat", "raft", "_arrow")):
             continue
+        if isinstance(row[9] if len(row) > 9 else None, dict) and row[9].get("ride") is not None:
+            continue   # a rider: its boat or cart moves it (harness extra.ride), not its legs
         tracks.setdefault(row[1], []).append(row)
     flagged = set()
     for eid, rows in tracks.items():
