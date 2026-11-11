@@ -35,3 +35,5 @@ creeper_art
 sand_tower
 water_vs_lava
 rainbow_sheep
+desire_town   # first: new format (owner, 2026-11-11, r:r2e0a32)
+inside_library   # first: new format (owner, 2026-11-11, r:r9a54b2)
