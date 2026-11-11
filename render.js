@@ -2768,6 +2768,7 @@ else:
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
       if (cam.target && cam.target.entity !== undefined) { cam.targetEntity = cam.target.entity; cam.target = null }
+      if (STUNT_MOD.outline === false) cam.target = null   // stunt.outline false: no targeted-block box (a mob's POV, F1 throughout: lib/mobpov.js)
       if (third) cam.target = null   // (the hit outline is a first-person thing: a camera shot drew the player's targeted block, a box over the hole: ai_thin_ice)
       // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
       // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
