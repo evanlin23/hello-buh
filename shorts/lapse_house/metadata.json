@@ -1,9 +1,9 @@
 {
   "name": "lapse_house",
-  "caption": "building a house in 1 second vs 1 minute vs 1 hour 💀",
+  "caption": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
   "youtube": {
-    "title": "building a house in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
-    "description": "building a house in 1 second vs 1 minute vs 1 hour 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80 #minecraft #shorts",
+    "description": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -47,7 +47,7 @@
     }
   },
   "edit": {
-    "caption": "building a house in 1 second vs 1 minute vs 1 hour 💀",
+    "caption": "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
     "red": "hour",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "big_done",
@@ -107,7 +107,7 @@
     ],
     "args": [
       "--caption",
-      "building a house in 1 second vs 1 minute vs 1 hour 💀",
+      "building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
       "--red",
       "hour",
       "--speed",
@@ -7124,9 +7124,9 @@
     "gunzip -c shorts/lapse_house/recording.json.gz > work/lapse_house.rec.json",
     "node render.js work/lapse_house.rec.json work/lapse_house.frames 60 1080 1011",
     "python3 audio.py work/lapse_house.rec.json work/lapse_house.wav",
-    "python3 edit.py --frames work/lapse_house.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_house.rec.json --audio work/lapse_house.wav --caption \"building a house in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start\",3],[\"roof_start\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_house.mp4"
+    "python3 edit.py --frames work/lapse_house.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_house.rec.json --audio work/lapse_house.wav --caption \"building a house in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start\",3],[\"roof_start\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_house.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "1 s vs 1 min vs 1 h house time-lapse; frame review + retention + minecraft audit passed (round 4)",
   "published_at": "2026-11-07T10:03:35.707Z",
   "gates": {
@@ -7147,5 +7147,6 @@
       "label": "no ./hb check report on this box"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "on-screen whip check (r:r38374d): 3 whips at 1.77/3.43/4.70 s (~380-410 deg/s on screen in the x3 mid build) + an edit-cut snap at 6.27 s; re-record with time_lapse's turn cap (220/speed) and still cut edges"
 }
