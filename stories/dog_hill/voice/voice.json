@@ -1,104 +1,450 @@
 {
+ "voice": "PLACEHOLDER (silent, 5.25 words/s): visuals preview before voicing",
+ "sr": 24000,
+ "gap": 0.08,
  "lines": {
-  "L15": {
-   "who": "Buh",
-   "text": "Hey BUDDY! SORRY, got busy.",
-   "dur": 4.74,
-   "onset": 0.21,
-   "end": 4.4,
+  "L01": {
+   "text": "The DOG on the HILL hasn't MOVED in nine-hundred DAYS.",
+   "who": "N",
+   "dur": 2.15,
+   "onset": 0.1,
+   "end": 2.0,
    "chunks": [
     [
-     0.21,
-     1.822
+     0.1,
+     0.48
     ],
     [
-     1.822,
-     4.4
+     0.48,
+     1.05
+    ],
+    [
+     1.05,
+     1.43
+    ],
+    [
+     1.43,
+     2.0
+    ]
+   ],
+   "captions": [
+    "The DOG",
+    "on the HILL",
+    "hasn't MOVED",
+    "in nine-hundred DAYS."
+   ]
+  },
+  "L02": {
+   "text": "Not for RAIN. Not for THUNDER. Not for CREEPERS. Not even ZOMBIES.",
+   "who": "N",
+   "dur": 2.54,
+   "onset": 0.1,
+   "end": 2.39,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.24
+    ],
+    [
+     1.24,
+     1.81
+    ],
+    [
+     1.81,
+     2.39
+    ]
+   ],
+   "captions": [
+    "Not for RAIN.",
+    "Not for THUNDER.",
+    "Not for CREEPERS.",
+    "Not even ZOMBIES."
+   ]
+  },
+  "L03": {
+   "text": "Kids THROW STICKS for him. He doesn't BLINK.",
+   "who": "N",
+   "dur": 1.77,
+   "onset": 0.1,
+   "end": 1.62,
+   "chunks": [
+    [
+     0.1,
+     0.48
+    ],
+    [
+     0.48,
+     1.05
+    ],
+    [
+     1.05,
+     1.62
+    ]
+   ],
+   "captions": [
+    "Kids THROW",
+    "STICKS for him.",
+    "He doesn't BLINK."
+   ]
+  },
+  "L04": {
+   "text": "So every MORNING, I BRING him a BONE. He never LOOKS.",
+   "who": "N",
+   "dur": 2.35,
+   "onset": 0.1,
+   "end": 2.2,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.24
+    ],
+    [
+     1.24,
+     1.62
+    ],
+    [
+     1.62,
+     2.2
+    ]
+   ],
+   "captions": [
+    "So every MORNING,",
+    "I BRING him",
+    "a BONE.",
+    "He never LOOKS."
+   ]
+  },
+  "L05": {
+   "text": "He's GOT a red COLLAR. But NOBODY here OWNS him.",
+   "who": "N",
+   "dur": 2.15,
+   "onset": 0.1,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.1,
+     0.48
+    ],
+    [
+     0.48,
+     1.05
+    ],
+    [
+     1.05,
+     1.62
+    ],
+    [
+     1.62,
+     2.0
+    ]
+   ],
+   "captions": [
+    "He's GOT",
+    "a red COLLAR.",
+    "But NOBODY here",
+    "OWNS him."
+   ]
+  },
+  "L06": {
+   "text": "He just STARES at one EMPTY patch of GRASS. Maybe he LIKES the GRASS.",
+   "who": "N",
+   "dur": 2.92,
+   "onset": 0.1,
+   "end": 2.77,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.24
+    ],
+    [
+     1.24,
+     1.81
+    ],
+    [
+     1.81,
+     2.39
+    ],
+    [
+     2.39,
+     2.77
+    ]
+   ],
+   "captions": [
+    "He just STARES",
+    "at one EMPTY",
+    "patch of GRASS.",
+    "Maybe he LIKES",
+    "the GRASS."
+   ]
+  },
+  "L07": {
+   "text": "And BEHIND him, an OLD dirt HUT. Nobody KNOWS who BUILT it.",
+   "who": "N",
+   "dur": 2.54,
+   "onset": 0.1,
+   "end": 2.39,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.05
+    ],
+    [
+     1.05,
+     1.43
+    ],
+    [
+     1.43,
+     1.81
+    ],
+    [
+     1.81,
+     2.39
+    ]
+   ],
+   "captions": [
+    "And BEHIND him,",
+    "an OLD",
+    "dirt HUT.",
+    "Nobody KNOWS",
+    "who BUILT it."
+   ]
+  },
+  "L08": {
+   "text": "I ASKED him to STAND. I even BEGGED.",
+   "who": "N",
+   "dur": 1.77,
+   "onset": 0.1,
+   "end": 1.62,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.05
+    ],
+    [
+     1.05,
+     1.62
+    ]
+   ],
+   "captions": [
+    "I ASKED him",
+    "to STAND.",
+    "I even BEGGED."
+   ]
+  },
+  "L09": {
+   "text": "Then GRANDPA said:",
+   "who": "N",
+   "dur": 0.82,
+   "onset": 0.1,
+   "end": 0.67,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ]
+   ],
+   "captions": [
+    "Then GRANDPA said:"
+   ]
+  },
+  "L10": {
+   "text": "Only ONE voice gets him UP.",
+   "who": "Grandpa",
+   "dur": 1.39,
+   "onset": 0.1,
+   "end": 1.24,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.24
+    ]
+   ],
+   "captions": [
+    "Only ONE voice",
+    "gets him UP."
+   ]
+  },
+  "L11": {
+   "text": "Somebody PROMISED to come BACK.",
+   "who": "N",
+   "dur": 1.2,
+   "onset": 0.1,
+   "end": 1.05,
+   "chunks": [
+    [
+     0.1,
+     0.48
+    ],
+    [
+     0.48,
+     1.05
+    ]
+   ],
+   "captions": [
+    "Somebody PROMISED",
+    "to come BACK."
+   ]
+  },
+  "L12": {
+   "text": "So every NIGHT, I SIT there. NOBODY should wait ALONE.",
+   "who": "N",
+   "dur": 2.15,
+   "onset": 0.1,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.24
+    ],
+    [
+     1.24,
+     1.62
+    ],
+    [
+     1.62,
+     2.0
+    ]
+   ],
+   "captions": [
+    "So every NIGHT,",
+    "I SIT there.",
+    "NOBODY should",
+    "wait ALONE."
+   ]
+  },
+  "L13": {
+   "text": "Then last NIGHT, he STOOD up.",
+   "who": "N",
+   "dur": 1.39,
+   "onset": 0.1,
+   "end": 1.24,
+   "chunks": [
+    [
+     0.1,
+     0.67
+    ],
+    [
+     0.67,
+     1.24
+    ]
+   ],
+   "captions": [
+    "Then last NIGHT,",
+    "he STOOD up."
+   ]
+  },
+  "L14": {
+   "text": "A GUY just APPEARED on the PATCH.",
+   "who": "N",
+   "dur": 1.58,
+   "onset": 0.1,
+   "end": 1.43,
+   "chunks": [
+    [
+     0.1,
+     0.48
+    ],
+    [
+     0.48,
+     0.86
+    ],
+    [
+     0.86,
+     1.43
+    ]
+   ],
+   "captions": [
+    "A GUY",
+    "just APPEARED",
+    "on the PATCH."
+   ]
+  },
+  "L15": {
+   "text": "Hey BUDDY! Sorry, got BUSY.",
+   "who": "Buh",
+   "dur": 1.2,
+   "onset": 0.1,
+   "end": 1.05,
+   "chunks": [
+    [
+     0.1,
+     0.48
+    ],
+    [
+     0.48,
+     1.05
     ]
    ],
    "captions": [
     "Hey BUDDY!",
     "Sorry, got BUSY."
-   ],
-   "with": [
-    "Buh"
-   ],
-   "model": "gemini-3.1-flash-tts-preview",
-   "beat": "L15",
-   "offset": 0.0
+   ]
   },
-  "L17": {
-   "who": "Buh",
-   "text": "Sit, BOY. Be right BACK.",
-   "dur": 3.76,
-   "onset": 0.07,
-   "end": 3.46,
+  "L16": {
+   "text": "Then he SAID:",
+   "who": "N",
+   "dur": 0.82,
+   "onset": 0.1,
+   "end": 0.67,
    "chunks": [
     [
-     0.07,
-     1.397
+     0.1,
+     0.67
+    ]
+   ],
+   "captions": [
+    "Then he SAID:"
+   ]
+  },
+  "L17": {
+   "text": "Sit, BOY. Be right BACK.",
+   "who": "Buh",
+   "dur": 1.2,
+   "onset": 0.1,
+   "end": 1.05,
+   "chunks": [
+    [
+     0.1,
+     0.48
     ],
     [
-     1.397,
-     3.46
+     0.48,
+     1.05
     ]
    ],
    "captions": [
     "Sit, BOY.",
     "Be right BACK."
-   ],
-   "with": [
-    "Buh"
-   ],
-   "model": "gemini-3.1-flash-tts-preview",
-   "beat": "L17",
-   "offset": 0.0
+   ]
   }
  },
- "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
- "sr": 24000,
- "gap": 0.25,
- "models": {
-  "Buh": "gemini-3.1-flash-tts-preview"
- },
- "voice_takes": "beat",
- "beats": {
-  "L15": {
-   "lines": [
-    "L15"
-   ],
-   "file": "beat_L15.wav",
-   "dur": 4.74,
-   "offsets": [
-    0.0
-   ],
-   "model": "gemini-3.1-flash-tts-preview",
-   "try": 1,
-   "tries": 1,
-   "fixes": [],
-   "ok": true,
-   "gate": [],
-   "cut": "whole",
-   "rejected": []
-  },
-  "L17": {
-   "lines": [
-    "L17"
-   ],
-   "file": "beat_L17.wav",
-   "dur": 3.76,
-   "offsets": [
-    0.0
-   ],
-   "model": "gemini-3.1-flash-tts-preview",
-   "try": 1,
-   "tries": 1,
-   "fixes": [],
-   "ok": true,
-   "gate": [],
-   "cut": "whole",
-   "rejected": []
-  }
- },
- "total": 9.0
+ "total": 29.94
 }
