@@ -34,7 +34,8 @@ module.exports = {
     speed: [['intr_back:1.2', 'intr_resume:-1.0', 'cut']],
     punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.4]],   // the payoff's picture change (the lights coming on), with the ripple and the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_gone'],   // the thunk, the crunches, the last bite: over the music
-    sfx: [['air', 'start', 'lit', { gain: 0.5 }]]          // room tone from frame 1
+    // room tone from frame 1; the music dips before the lights and an impact lands on them (mixcheck: the payoff hit over the NCS bed)
+    sfx: [['air', 'start', 'lit', { gain: 0.5 }], ['dip', 'lit', 0.4], ['impact', 'lit', { gain: 1.4 }]]
   },
 
   async setup (ctx) {
