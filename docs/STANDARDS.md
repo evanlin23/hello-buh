@@ -290,6 +290,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   minecraft-audit (every quirk must be true vanilla). r:r40f7c7
 - **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
   mods and menus. Check: owner. r:rd551de
+- **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
+  vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

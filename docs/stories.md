@@ -282,6 +282,12 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, sharing Mevys's "Maddest End Ever" ("Nobody Knows That! 😱": a lit nether portal carried
+  around by pistons and redstone, then refitted into a gold-block frame, all impossible in vanilla but shown as a
+  secret trick): "this is like fake minecraft gimmick".** HelloBuh adds a fake-trick format (family `faketrick`): an
+  impossible "secret" played completely straight as if it were real. The fake is the bait (comments say "this doesn't
+  work"), so the minecraft-audit's vanilla rule is waived for the trick itself only; everything around it stays
+  vanilla-correct.
 - **Owner, 2026-11-11: "I think hello buh should use the bright grading as well."** HelloBuh's stunt Shorts get the
   bright look by default (a stunt with no `look`), tuned so the daytime sky doesn't blow out to white (the story
   'bright' grade, unchanged on a plain stunt, washed the sky out in the first A/B).
