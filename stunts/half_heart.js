@@ -27,7 +27,7 @@ module.exports = {
     subs: [
       ['jump', 'water clutch', 2.4], ['magma', 'magma: sneak', 2.0],
       ['drop', '3 blocks = 0 damage', 1.6], ['bridge', 'lava bridge', 2.8],
-      ['bush', 'almost there...', 1.2]
+      ['bush', 'almost there...', 0.9]
     ]
   },
 
