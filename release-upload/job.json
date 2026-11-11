@@ -1,0 +1,20 @@
+{
+  "repo": "evanlin23/hello-buh",
+  "packages": {
+    "fakerun_any": {
+      "tag": "pkg-fakerun_any",
+      "assets": [
+        {
+          "asset": "fakerun_any.short.143bff53574b7855.mp4",
+          "sha256": "143bff53574b78555c4a6959a02d85574d4809db651fd2474890575ca489a8c3",
+          "path": "release-upload/fakerun_any.short.143bff53574b7855.mp4"
+        },
+        {
+          "asset": "fakerun_any.short_nosong.f7ce19d0568ab917.mp4",
+          "sha256": "f7ce19d0568ab9179959997fddc11f7c254869a96b01b065f576f4d3e1cb59f1",
+          "path": "release-upload/fakerun_any.short_nosong.f7ce19d0568ab917.mp4"
+        }
+      ]
+    }
+  }
+}
