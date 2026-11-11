@@ -1,10 +1,10 @@
 {
   "name": "cave_reveal",
   "channel": "hellobuh",
-  "caption": "never dig straight down \ud83d\udc80",
+  "caption": "never dig straight down 💀",
   "youtube": {
-    "title": "never dig straight down \ud83d\udc80 #minecraft #shorts",
-    "description": "never dig straight down \ud83d\udc80\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "never dig straight down 💀 #minecraft #shorts",
+    "description": "never dig straight down 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -30,25 +30,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 38085570,
-    "sha256": "b81c6d6c3966d684d15528c8506308b244a92ede863b762a3ded8e2ffbdd1a9e",
+    "bytes": 38083195,
+    "sha256": "e2efe3c346be8611c571969ac800cdb30279c7355e3109ed7163e29474dac6cc",
     "release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short.b81c6d6c3966d684.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.b81c6d6c3966d684.mp4",
-      "sha256": "b81c6d6c3966d684d15528c8506308b244a92ede863b762a3ded8e2ffbdd1a9e",
-      "bytes": 38085570
+      "asset": "cave_reveal.short.e2efe3c346be8611.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.e2efe3c346be8611.mp4",
+      "sha256": "e2efe3c346be8611c571969ac800cdb30279c7355e3109ed7163e29474dac6cc",
+      "bytes": 38083195
     },
     "nosong_release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short_nosong.9a0a4e599bfced19.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.9a0a4e599bfced19.mp4",
-      "sha256": "9a0a4e599bfced19aad7027c8f9ef8be26b78436f5ac7b6895297c1a2f69be72",
-      "bytes": 37889008
+      "asset": "cave_reveal.short_nosong.eda13e476f8346ba.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.eda13e476f8346ba.mp4",
+      "sha256": "eda13e476f8346ba9bbe78bbf65d911e3f7f99f9708f02b5503868614508fdc5",
+      "bytes": 37888985
     }
   },
   "edit": {
-    "caption": "never dig straight down \ud83d\udc80",
+    "caption": "never dig straight down 💀",
     "red": "never",
     "dropAt": "l5",
     "onFire": "in_lava:death",
@@ -134,7 +134,9 @@
     ],
     "args": [
       "--caption",
-      "never dig straight down \ud83d\udc80",
+      "never dig straight down 💀",
+      "--self_name",
+      "56e",
       "--red",
       "never",
       "--subs",
@@ -954,12 +956,12 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/cave_reveal",
-    "commit": "2f9550c8f3bb772a55e02f130725d53bb6983384",
+    "branch": "render/56e-cave_reveal",
+    "commit": "8808b55b46e9b584c710e65f34aa9b667ea49666",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43041644650",
-    "rendered_at": "2026-11-11T15:09:25.530Z",
-    "head_at_publish": "9ee7bd45a9cbb7588dd7a231087b0d5025b954f4",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43091379374",
+    "rendered_at": "2026-11-11T20:05:12.531Z",
+    "head_at_publish": "304dc3369c27e12bb9da99376536c9430838e419",
     "stunt": "stunts/cave_reveal.js",
     "source_snapshot": [
       "source/cave_reveal.js",
@@ -969,18 +971,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 2f9550c8f3bb",
+    "git checkout 8808b55b46e9",
     "gunzip -c shorts/cave_reveal/recording.json.gz > work/cave_reveal.rec.json",
     "node render.js work/cave_reveal.rec.json work/cave_reveal.frames 60 1080 1011",
     "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
-    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down \ud83d\udc80\" --red never --subs \"[[\\\"dig0\\\",\\\"just digging down...\\\",3],[\\\"l1\\\",\\\"oh, a cave\\\",2.2],[\\\"dig1\\\",\\\"keep going\\\",2],[\\\"l2\\\",\\\"a mineshaft??\\\",2.4],[\\\"dig2\\\",\\\"keep going...\\\",2],[\\\"l3\\\",\\\"a DUNGEON\\\",2.2],[\\\"dig3\\\",\\\"one more...\\\",1.8],[\\\"l4\\\",\\\"a GEODE?!\\\",2.4],[\\\"dig4\\\",\\\"just one more\\\",1.8],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"in_lava:1.0\",\"death:-0.4\",2]] --sfx [[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig0:1.9 --end_after death:1.6 --out out/cave_reveal.mp4"
+    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --self_name 56e --red never --subs \"[[\\\"dig0\\\",\\\"just digging down...\\\",3],[\\\"l1\\\",\\\"oh, a cave\\\",2.2],[\\\"dig1\\\",\\\"keep going\\\",2],[\\\"l2\\\",\\\"a mineshaft??\\\",2.4],[\\\"dig2\\\",\\\"keep going...\\\",2],[\\\"l3\\\",\\\"a DUNGEON\\\",2.2],[\\\"dig3\\\",\\\"one more...\\\",1.8],[\\\"l4\\\",\\\"a GEODE?!\\\",2.4],[\\\"dig4\\\",\\\"just one more\\\",1.8],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"in_lava:1.0\",\"death:-0.4\",2]] --sfx [[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig0:1.9 --end_after death:1.6 --out out/cave_reveal.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "2026-11-11 backlog-finish worker: recorded at last (the landing wait read true before the fall: every take stopped after one block), five layers (cave, mineshaft, dungeon, geode, lava cavern) for 30 s+, looks capped at a hand's speed, burn at 2x, pop on the opening, dip + impact on the death; 33.6 s; mixcheck OK, pace 0 blockers, check OK. Reviews: round 1 NOT READY (cut pit wall + slow start), round 2 READY. Nitpicks: 180 deg swing past bare wall to the minecart, the cart's chest doesn't read, spawner at the frame's top edge, a purple item flash at the geode's left edge, rail under the feet, edge pixels on frame 0",
-  "published_at": "2026-11-11T15:25:54.118Z",
+  "status": "ready",
+  "notes": "re-render (r:r52f94c): the player is 56e (death screen '56e tried to swim in lava'), picture otherwise unchanged; independent fix-check READY",
+  "published_at": "2026-11-11T21:03:59.515Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T15:26:40+00:00",
+    "at": "2026-11-11T21:04:43+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -996,10 +998,9 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T14:50:22.849Z",
+      "at": "2026-11-11T19:54:44.122Z",
       "report": "out/cave_reveal.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "owner 2026-11-11 (@33.6s): \"still says hellobuh\" (the player must be 56e)"
+  }
 }
