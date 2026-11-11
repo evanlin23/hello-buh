@@ -48,7 +48,8 @@ module.exports = {
     // source; 0.45 s in the take before): a flash on the death, then the big flash + punch and the song dip + impact on
     // that last blast (on the death they were early and the payoff had no hit: pace BLOCK). Re-check after a re-record.
     flash: [['mob_death', 0, 0.6], ['mob_death:0.6', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death:0.6', 0, 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'mob_death:0.6', 0.4], ['impact', 'mob_death:0.6', { gain: 1.3 }], ['pop', 'gone']]
+    // (+ the game audio ducked 0.35 s before it: the ring's blasts 0.15-0.45 s earlier flattened its hit, as on pickaxe_race)
+    sfx: [['pop', 'beat'], ['dip', 'mob_death:0.6', 0.4], ['gamedip', 'mob_death:0.6', 0.35], ['impact', 'mob_death:0.6', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {
