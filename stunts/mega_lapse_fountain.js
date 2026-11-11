@@ -209,7 +209,8 @@ module.exports = L.makeLapse({
   }],
   endAfter: 1.6,
   edit: {
-    sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5]],
+    // the reveal's drop with a dip and an impact; the pass (the last beat, the payoff pace and mixcheck measure) its own dip and impact
+    sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5], ['impact', 'pass', { gain: 1.0 }]],
     cards: [['pass', 'SMALL', 1.6, 'yellow', 0, null, { y: 0.24 }]]
   },
   shots: {
