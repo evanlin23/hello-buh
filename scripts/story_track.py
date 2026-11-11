@@ -260,7 +260,50 @@ def caption_events(story_dir, timeline, start, dur, who=False):
         if c is not None and ev[k - 1][1] == t0:
             ev[k - 1] = (ev[k - 1][0], c, *ev[k - 1][2:])
             ev[k] = (c, *ev[k][1:])
-    return [e if who else e[:3] for e in ev if e[1] > e[0]]
+    ev = min_show([e for e in ev if e[1] > e[0]])
+    return [e if who else e[:3] for e in ev]
+
+
+MIN_SHOW = 0.30   # s: a caption shorter than this can't be read (dog_hill: "Kids THROW" flashed for 0.1 s and looked uncaptioned)
+
+
+def _fits(text):
+    """Does a merged caption still fit MAX_W the way caption_image draws it (wrapped into at most two balanced lines,
+    each inside MAX_W less its stroke)?"""
+    f = ImageFont.truetype(str(FONT), CAP_PX)
+    sp = f.getlength(" ")
+    return all(sum(f.getlength(w) for w in ln) + sp * (len(ln) - 1) <= MAX_W - 16 for ln in _wrap(text.split(), f, MAX_W - 16))
+
+
+def min_show(ev, min_s=MIN_SHOW, fits=None):
+    """Every caption on screen for at least min_s (Buh Stories lead, 2026-11-11). A shorter one merges with a touching
+    neighbour of its own line (the next first, else the previous) when the joined text still fits one line; otherwise it
+    keeps its start (never before its own first word) and borrows time from the next caption of its line, as long as
+    that one keeps min_s too. ev: [(t0, t1, text, line id)] in order. Whatever still can't reach min_s is left for the
+    check (caption_av_check BLOCKs any caption under 0.25 s)."""
+    fits = fits or _fits
+    ev = [list(e) for e in ev]
+    changed = True
+    while changed:
+        changed = False
+        for k, e in enumerate(ev):
+            if e[1] - e[0] >= min_s - 1e-9:
+                continue
+            nx = ev[k + 1] if k + 1 < len(ev) and ev[k + 1][3] == e[3] and abs(ev[k + 1][0] - e[1]) < 1e-6 else None
+            pv = ev[k - 1] if k and ev[k - 1][3] == e[3] and abs(ev[k - 1][1] - e[0]) < 1e-6 else None
+            if nx is not None and fits(e[2] + " " + nx[2]):
+                ev[k] = [e[0], nx[1], e[2] + " " + nx[2], *e[3:]]
+                del ev[k + 1]
+            elif pv is not None and fits(pv[2] + " " + e[2]):
+                ev[k - 1] = [pv[0], e[1], pv[2] + " " + e[2], *pv[3:]]
+                del ev[k]
+            elif nx is not None and nx[1] - (e[0] + min_s) >= min_s - 1e-9:
+                e[1] = nx[0] = e[0] + min_s
+            else:
+                continue
+            changed = True
+            break
+    return [tuple(e) for e in ev]
 
 
 def _one_word(ev, story_dir, marks):
