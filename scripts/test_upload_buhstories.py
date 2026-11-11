@@ -102,6 +102,7 @@ class BuhStoriesUpload(unittest.TestCase):
         self.assertIn('"Darkest Child" Kevin MacLeod', y["description"])
         body = bs.upload_body(y, y["title"], y["description"], "2026-11-12T15:00:00Z")
         self.assertIn("minecraft story", body["snippet"]["tags"])
+        self.assertNotIn("minecraft warden", body["snippet"]["tags"])
         self.assertIn("minecraft nether portal", body["snippet"]["tags"])
         self.assertIs(body["status"]["selfDeclaredMadeForKids"], False)
         self.assertIs(body["status"]["containsSyntheticMedia"], False)   # altered content: No

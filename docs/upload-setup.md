@@ -101,8 +101,8 @@ the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner
 
 **The upload text is built, never hand-written** (owner: "Stuff should be front loaded"): each story's `story.json`
 `upload` block (title from docs/brand.md's table, the pinned question, story tags; a stunt's `edit.youtube` overrides
-it) -> lib/buhstories_upload.js -> title, description (hook / question / music credit / `#minecraft #shorts
-#minecraftstory #buhstories`), tags (the brand keywords + the story's), pinned comment (question + " 👇"), playlist
+it) -> lib/buhstories_upload.js -> title, description (hook sentence / question / music credit / `#minecraft #shorts
+#minecraftstory #buhstories`), tags (a general base + the story's own), pinned comment (question + " 👇"), playlist
 "All Buh Stories", not made for kids, altered content "No". publish.js writes it into the package; the uploader
 rebuilds it from main at upload time (a corrected title needs no re-packaging) and skips a package that BLOCKs
 (HelloBuh hashtags #minecraftmemes/#funny, no music credit, no title or question). It adds the video to the playlist

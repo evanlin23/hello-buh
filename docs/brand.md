@@ -293,8 +293,10 @@ varied. Raids' title was checked against the final script (2026-11-11): "he star
 - **Video description template:** line 1 = the hook, then the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
-- **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
+- **Keywords (channel tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
+- **Video tags:** the general base (minecraft story, minecraft stories, minecraft shorts, minecraft mystery, buh
+  stories) plus the story's own `upload.tags`; village / dog / warden / raid only where they fit the story.
 - **Playlists:** one, "All Buh Stories", at launch (owner, 2026-11-11: theme playlists like "Grandpa and Grandma
   stories" feel "too specific"). A series playlist is added only when a premise family has 3+ stories (a hit's
   follow-ups); Shorts playlists mostly help binge-watching from the channel page and a series' "next" link, not reach.
