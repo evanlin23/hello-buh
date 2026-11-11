@@ -26,6 +26,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `lucky` | an "aura" Short ("Bro just used all the luck left in his life") | Digging straight down: diamonds, then lava saved by a water bucket, then emeralds, then right into the end portal room; every block luckier than the last | "fake super lucky" | r:r934ea4 | idea |
 | `inside` | "Every Time I Snap" ("Why does my house always end up like this?") | One walk from a detailed interior out the door to a small plain house that cannot hold it; the cut is hidden, it is 11 s long, and the mismatch makes people replay to find the trick | "this one lends to replays, since its short and the inside differs from the outside so its confusing and the cut is not obvious" | r:r9a54b2 | idea |
 | `desire` | YalkyGM: "Who tf is doing this" | One locked top-down shot: a dirt shortcut keeps appearing between two houses across a road; the town answers with a crosswalk, bush, tree, railway, walls, a boulder, a pond, lava, and the path always comes back | "desire paths format" | r:r2e0a32 | idea |
+| `herobrine` | Galaxscat: "Minecraft meme" ("I thougt he was just lagging") | A bridge fight over the void with a Steve-like player who stutters and rubber-bands like lag; his bridge breaks and he keeps standing on air, the white-eyed reveal, he drifts away | "secret herobrine" | r:r047388 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.

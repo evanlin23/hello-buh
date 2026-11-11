@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing Galaxscat's "Minecraft meme" (caption "I thougt he was just lagging": a bridge fight
+  over the void with a Steve-looking player who stutters and rubber-bands like lag; his bridge breaks under him and
+  he just keeps standing on air, the white-eyed reveal, then he drifts off into the sky): "secret herobrine".**
+  HelloBuh adds a secret-Herobrine format (family `herobrine`): an ordinary-seeming player whose "lag" (stutters,
+  rubber-banding, standing on nothing) grows until the reveal that it was never lag; the caption plays it as a normal
+  complaint.
 - **Owner, 2026-11-11, sharing YalkyGM's "Who tf is doing this" (one fixed top-down shot of two houses either side
   of a road: a dirt shortcut keeps wearing across the grass, the "town" answers with a crosswalk, a bush, a tree,
   railway tracks, walls, barriers, a boulder, a pond, then lava, and the path comes back around every one): "desire
