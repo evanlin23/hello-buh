@@ -90,7 +90,13 @@ for (const name of names) {
     let e0 = {}
     try { e0 = require(path.join(ROOT, 'stunts', `${name}.js`)).edit || {} } catch (e) {}
     if (!e0.song || !fs.existsSync(path.join(ROOT, e0.song))) fs.copyFileSync(mp4, path.join(dir, 'short_nosong.mp4'))
-    else console.error(`no-song version of ${name}: no work/${name}.frames (rendered elsewhere?) and out/ has its reference song`)
+    else {
+      // an older package's short_nosong.mp4 / game_audio.flac (and work/<name>.wav from an older local render) are of
+      // an OLD cut: add_song.py would bake the new song onto the old video (sand_tower 2026-11-11 went out as its 5.9 s
+      // Nov 6 cut). No song-less version of this render exists, so stop: render it without the reference song.
+      console.error(`skip ${name}: out/${name}.mp4 has its reference song (${e0.song}) and there is no song-less version of this render; drop edit.song from stunts/${name}.js (the upload gets an NCS track anyway) and render again`)
+      continue
+    }
   }
 
   // stunt module + the local stunt/lib modules it requires
@@ -134,7 +140,9 @@ for (const name of names) {
     }
   }
   const wav = path.join(ROOT, 'work', `${name}.wav`)
-  if (fs.existsSync(wav)) sh('ffmpeg', ['-loglevel', 'error', '-y', '-i', wav, path.join(dir, 'game_audio.flac')])
+  // only a wav of this render (an older local render's wav would package the old cut's sound)
+  if (fs.existsSync(wav) && (!fs.existsSync(recF) || fs.statSync(wav).mtimeMs >= fs.statSync(recF).mtimeMs)) sh('ffmpeg', ['-loglevel', 'error', '-y', '-i', wav, path.join(dir, 'game_audio.flac')])
+  else if (fs.existsSync(path.join(dir, 'game_audio.flac')) && fs.statSync(path.join(dir, 'game_audio.flac')).mtimeMs < fs.statSync(mp4).mtimeMs) fs.rmSync(path.join(dir, 'game_audio.flac'))
 
   // build log, without the per-frame progress lines
   const logF = path.join(ROOT, 'work', `${name}.log`)
