@@ -129,7 +129,10 @@ module.exports = {
       if (mark) ctx.mark(mark)
       ctx.select(1)
       // the torch into the gap, on the top face of the ground block the crosshair is already on, 5 ticks after the break
-      while (ctx.tick < tb + 4) await bot.waitForTicks(1)   // (a torch in before the sand starts to fall holds it up)
+      // the crosshair down onto the ground in the gap while the sand starts to fall, so the torch goes in at once at tb + 4
+      // (a torch in before the sand starts to fall holds it up; one after ~tb + 9 is too late: the sand has landed)
+      await A.aimAt(new Vec3(cx + 0.5, floor + 1.0, cz + 0.85), { on: new Vec3(cx, floor, cz), max: 4, strict: false })
+      while (ctx.tick < tb + 4) await bot.waitForTicks(1)
       try { await A.place(new Vec3(cx, floor + 1, cz), { against: new Vec3(cx, floor, cz), block: 'torch', delay: 4, max: 6, sound: 'block.wood.place' }) } catch (e) { ctx.log('torch', cx, cz, e.message) }
       gov.cur = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }; gov.vel = { yaw: 0, pitch: 0 }
       aim = bottom(cx, cz)
