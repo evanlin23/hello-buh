@@ -1,9 +1,10 @@
 {
   "name": "water_vs_lava",
-  "caption": "pouring water on a lava lake 😳",
+  "channel": "hellobuh",
+  "caption": "can ONE water bucket delete a lava lake? 😳",
   "youtube": {
-    "title": "pouring water on a lava lake 😳 #minecraft #shorts",
-    "description": "pouring water on a lava lake 😳\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "can ONE water bucket delete a lava lake? 😳 #minecraft #shorts",
+    "description": "can ONE water bucket delete a lava lake? 😳\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,55 +14,169 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "vem_lenta.mp3",
-    "title": "VEM LENTA!",
-    "artist": "KPHK, Eluvo, Sayfalse",
+    "file": "royalty_funk.mp3",
+    "title": "Royalty Funk",
+    "artist": "LXNGVX",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "reveal",
-    "drop_in_song_s": 36.75,
-    "drop_in_short_s": 13.35,
-    "song_start_s": 23.4
+    "drop_on_event": "end_look",
+    "drop_in_song_s": 47.5,
+    "drop_in_short_s": 40.6,
+    "song_start_s": 6.9
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 18.55,
+    "duration_s": 41.57,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19782289,
-    "sha256": "9c73a9e637ed38c9cfdbaf9de37c6d85bcaf3105c172f4b74f2ac8d6b2393cfd",
+    "bytes": 70928176,
+    "sha256": "eacc21ea60de89ed62ebb84348d39c1d574dd76f60dd15040f1df95f5fcdac93",
     "release": {
       "tag": "pkg-water_vs_lava",
-      "asset": "water_vs_lava.short.9c73a9e637ed38c9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_vs_lava/water_vs_lava.short.9c73a9e637ed38c9.mp4",
-      "sha256": "9c73a9e637ed38c9cfdbaf9de37c6d85bcaf3105c172f4b74f2ac8d6b2393cfd",
-      "bytes": 19782289
+      "asset": "water_vs_lava.short.eacc21ea60de89ed.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_vs_lava/water_vs_lava.short.eacc21ea60de89ed.mp4",
+      "sha256": "eacc21ea60de89ed62ebb84348d39c1d574dd76f60dd15040f1df95f5fcdac93",
+      "bytes": 70928176
     },
     "nosong_release": {
       "tag": "pkg-water_vs_lava",
-      "asset": "water_vs_lava.short_nosong.134de2100e1eddf4.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_vs_lava/water_vs_lava.short_nosong.134de2100e1eddf4.mp4",
-      "sha256": "134de2100e1eddf40d72d8f460200b9eabe779167e4ae3d98923d3efef279e53",
-      "bytes": 19619452
+      "asset": "water_vs_lava.short_nosong.b7174a46f1604488.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-water_vs_lava/water_vs_lava.short_nosong.b7174a46f1604488.mp4",
+      "sha256": "b7174a46f1604488abcc5d5ac693e8c35aaa62dc4945a63302222bcdc2f0f2c3",
+      "bytes": 70772845
     }
   },
   "edit": {
-    "caption": "pouring water on a lava lake 😳",
+    "subsY": 0.15,
+    "caption": "can ONE water bucket delete a lava lake? 😳",
     "red": "lava",
-    "song": "songs/misery.mp3",
-    "dropAt": "reveal",
-    "startAt": "pour:-0.35",
-    "endAfter": "end_look:1.7",
+    "dropAt": "end_look",
+    "startAt": "pour:-0.05",
+    "endAfter": "end_look:1.05",
+    "sfx": [
+      [
+        "dip",
+        "end_look",
+        0.35
+      ],
+      [
+        "impact",
+        "end_look"
+      ]
+    ],
+    "speed": [
+      [
+        "run0a",
+        "run0b",
+        1.8
+      ],
+      [
+        "run1a",
+        "run1b",
+        1.8
+      ],
+      [
+        "run2a",
+        "run2b",
+        1.8
+      ],
+      [
+        "run3a",
+        "run3b",
+        1.8
+      ],
+      [
+        "run4a",
+        "run4b",
+        1.8
+      ],
+      [
+        "run5a",
+        "run5b",
+        1.8
+      ],
+      [
+        "run6a",
+        "run6b",
+        1.8
+      ],
+      [
+        "run7a",
+        "run7b",
+        1.8
+      ],
+      [
+        "run8a",
+        "run8b",
+        1.8
+      ],
+      [
+        "run9a",
+        "run9b",
+        1.8
+      ],
+      [
+        "run10a",
+        "run10b",
+        1.8
+      ],
+      [
+        "run11a",
+        "run11b",
+        1.8
+      ],
+      [
+        "walk_a",
+        "walk_b",
+        2
+      ],
+      [
+        "mop0a",
+        "mop0b",
+        2
+      ],
+      [
+        "mop1a",
+        "mop1b",
+        2
+      ],
+      [
+        "mop2a",
+        "mop2b",
+        2
+      ],
+      [
+        "mop3a",
+        "mop3b",
+        2
+      ],
+      [
+        "cross_a",
+        "finale",
+        2
+      ],
+      [
+        "drain_a",
+        "end_look",
+        2
+      ]
+    ],
     "args": [
       "--caption",
-      "pouring water on a lava lake 😳",
+      "can ONE water bucket delete a lava lake? 😳",
       "--red",
       "lava",
+      "--subs_y",
+      "0.15",
+      "--speed",
+      "[[\"run0a\",\"run0b\",1.8],[\"run1a\",\"run1b\",1.8],[\"run2a\",\"run2b\",1.8],[\"run3a\",\"run3b\",1.8],[\"run4a\",\"run4b\",1.8],[\"run5a\",\"run5b\",1.8],[\"run6a\",\"run6b\",1.8],[\"run7a\",\"run7b\",1.8],[\"run8a\",\"run8b\",1.8],[\"run9a\",\"run9b\",1.8],[\"run10a\",\"run10b\",1.8],[\"run11a\",\"run11b\",1.8],[\"walk_a\",\"walk_b\",2],[\"mop0a\",\"mop0b\",2],[\"mop1a\",\"mop1b\",2],[\"mop2a\",\"mop2b\",2],[\"mop3a\",\"mop3b\",2],[\"cross_a\",\"finale\",2],[\"drain_a\",\"end_look\",2]]",
+      "--sfx",
+      "[[\"dip\",\"end_look\",0.35],[\"impact\",\"end_look\"]]",
       "--start_at",
-      "pour:-0.35",
+      "pour:-0.05",
       "--end_after",
-      "end_look:1.7"
+      "end_look:1.05"
     ]
   },
   "recording": {
@@ -72,136 +187,804 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 375,
-      "y": 70,
-      "z": -49
+      "x": 383,
+      "y": 71,
+      "z": -57
     },
     "biome": "minecraft:plains",
-    "ticks": 399,
-    "seconds": 19.95,
+    "ticks": 1011,
+    "seconds": 50.55,
     "deaths": 0,
     "events": [
       {
         "t": 0,
+        "event": "vel"
+      },
+      {
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.4,
-        "event": "go"
+        "t": 1.2,
+        "event": "vel"
       },
       {
-        "t": 0.95,
+        "t": 1.35,
         "event": "swing"
       },
       {
-        "t": 0.95,
+        "t": 1.35,
         "event": "pour"
       },
       {
-        "t": 3.85,
+        "t": 1.5,
+        "event": "vel"
+      },
+      {
+        "t": 1.8,
+        "event": "vel"
+      },
+      {
+        "t": 1.95,
         "event": "swing"
       },
       {
-        "t": 3.85,
-        "event": "pour"
-      },
-      {
-        "t": 6.35,
-        "event": "swing"
-      },
-      {
-        "t": 6.35,
-        "event": "pour"
-      },
-      {
-        "t": 8.25,
-        "event": "swing"
-      },
-      {
-        "t": 8.25,
-        "event": "pour"
-      },
-      {
-        "t": 9.35,
-        "event": "swing"
-      },
-      {
-        "t": 9.35,
-        "event": "pour"
-      },
-      {
-        "t": 10.95,
-        "event": "swing"
-      },
-      {
-        "t": 10.95,
+        "t": 1.95,
         "event": "scoop"
+      },
+      {
+        "t": 2,
+        "event": "vel"
+      },
+      {
+        "t": 2.4,
+        "event": "vel"
+      },
+      {
+        "t": 2.5,
+        "event": "vel"
+      },
+      {
+        "t": 2.6,
+        "event": "vel"
+      },
+      {
+        "t": 2.95,
+        "event": "swing"
+      },
+      {
+        "t": 2.95,
+        "event": "pour"
+      },
+      {
+        "t": 3.5,
+        "event": "vel"
+      },
+      {
+        "t": 3.6,
+        "event": "swing"
+      },
+      {
+        "t": 3.6,
+        "event": "scoop"
+      },
+      {
+        "t": 3.6,
+        "event": "vel"
+      },
+      {
+        "t": 4.5,
+        "event": "vel"
+      },
+      {
+        "t": 4.6,
+        "event": "vel"
+      },
+      {
+        "t": 5.55,
+        "event": "vel"
+      },
+      {
+        "t": 5.65,
+        "event": "vel"
+      },
+      {
+        "t": 6.05,
+        "event": "swing"
+      },
+      {
+        "t": 6.05,
+        "event": "pour"
+      },
+      {
+        "t": 6.55,
+        "event": "vel"
+      },
+      {
+        "t": 6.65,
+        "event": "swing"
+      },
+      {
+        "t": 6.65,
+        "event": "scoop"
+      },
+      {
+        "t": 6.65,
+        "event": "vel"
+      },
+      {
+        "t": 7.5,
+        "event": "vel"
+      },
+      {
+        "t": 7.6,
+        "event": "vel"
+      },
+      {
+        "t": 7.7,
+        "event": "swing"
+      },
+      {
+        "t": 7.7,
+        "event": "pour"
+      },
+      {
+        "t": 8.3,
+        "event": "swing"
+      },
+      {
+        "t": 8.3,
+        "event": "scoop"
+      },
+      {
+        "t": 8.5,
+        "event": "vel"
+      },
+      {
+        "t": 8.6,
+        "event": "vel"
+      },
+      {
+        "t": 9.5,
+        "event": "vel"
+      },
+      {
+        "t": 9.6,
+        "event": "vel"
+      },
+      {
+        "t": 10.5,
+        "event": "vel"
+      },
+      {
+        "t": 10.6,
+        "event": "vel"
+      },
+      {
+        "t": 10.7,
+        "event": "swing"
+      },
+      {
+        "t": 10.7,
+        "event": "pour"
+      },
+      {
+        "t": 11.3,
+        "event": "swing"
+      },
+      {
+        "t": 11.3,
+        "event": "scoop"
+      },
+      {
+        "t": 11.5,
+        "event": "vel"
       },
       {
         "t": 11.6,
+        "event": "vel"
+      },
+      {
+        "t": 12.5,
+        "event": "vel"
+      },
+      {
+        "t": 12.6,
         "event": "swing"
       },
       {
-        "t": 11.6,
-        "event": "scoop"
+        "t": 12.6,
+        "event": "pour"
       },
       {
-        "t": 12.3,
+        "t": 12.6,
+        "event": "vel"
+      },
+      {
+        "t": 13.2,
         "event": "swing"
       },
       {
-        "t": 12.3,
+        "t": 13.2,
         "event": "scoop"
       },
       {
-        "t": 13,
+        "t": 13.35,
+        "event": "cross_a"
+      },
+      {
+        "t": 13.5,
+        "event": "vel"
+      },
+      {
+        "t": 13.6,
+        "event": "vel"
+      },
+      {
+        "t": 14.05,
+        "event": "finale"
+      },
+      {
+        "t": 14.55,
+        "event": "vel"
+      },
+      {
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 15.55,
+        "event": "vel"
+      },
+      {
+        "t": 15.65,
+        "event": "vel"
+      },
+      {
+        "t": 16.5,
+        "event": "vel"
+      },
+      {
+        "t": 16.7,
+        "event": "vel"
+      },
+      {
+        "t": 17.4,
         "event": "swing"
       },
       {
-        "t": 13,
-        "event": "scoop"
+        "t": 17.4,
+        "event": "pour"
       },
       {
-        "t": 13.7,
+        "t": 17.5,
+        "event": "vel"
+      },
+      {
+        "t": 17.55,
+        "event": "run0a"
+      },
+      {
+        "t": 17.6,
+        "event": "vel"
+      },
+      {
+        "t": 18.55,
+        "event": "vel"
+      },
+      {
+        "t": 18.65,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "run0b"
+      },
+      {
+        "t": 19.55,
+        "event": "vel"
+      },
+      {
+        "t": 19.65,
         "event": "swing"
       },
       {
-        "t": 13.7,
+        "t": 19.65,
         "event": "scoop"
       },
       {
-        "t": 13.95,
-        "event": "reveal"
+        "t": 19.65,
+        "event": "vel"
       },
       {
-        "t": 17.45,
+        "t": 20.5,
+        "event": "vel"
+      },
+      {
+        "t": 20.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.5,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 22.5,
+        "event": "vel"
+      },
+      {
+        "t": 22.6,
+        "event": "vel"
+      },
+      {
+        "t": 22.7,
+        "event": "swing"
+      },
+      {
+        "t": 22.7,
+        "event": "pour"
+      },
+      {
+        "t": 22.85,
+        "event": "run1a"
+      },
+      {
+        "t": 23.5,
+        "event": "vel"
+      },
+      {
+        "t": 23.6,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.55,
+        "event": "run1b"
+      },
+      {
+        "t": 24.6,
+        "event": "vel"
+      },
+      {
+        "t": 24.9,
+        "event": "swing"
+      },
+      {
+        "t": 24.9,
+        "event": "scoop"
+      },
+      {
+        "t": 25.5,
+        "event": "vel"
+      },
+      {
+        "t": 25.6,
+        "event": "vel"
+      },
+      {
+        "t": 25.95,
+        "event": "walk_a"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 26.6,
+        "event": "vel"
+      },
+      {
+        "t": 27.5,
+        "event": "vel"
+      },
+      {
+        "t": 27.6,
+        "event": "vel"
+      },
+      {
+        "t": 27.95,
+        "event": "walk_b"
+      },
+      {
+        "t": 28.05,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.3,
+        "event": "swing"
+      },
+      {
+        "t": 31.3,
+        "event": "pour"
+      },
+      {
+        "t": 31.45,
+        "event": "run2a"
+      },
+      {
+        "t": 31.45,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 31.5,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.15,
+        "event": "run2b"
+      },
+      {
+        "t": 33.4,
+        "event": "swing"
+      },
+      {
+        "t": 33.4,
+        "event": "scoop"
+      },
+      {
+        "t": 33.45,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.55,
+        "event": "vel"
+      },
+      {
+        "t": 34.65,
+        "event": "vel"
+      },
+      {
+        "t": 35.5,
+        "event": "vel"
+      },
+      {
+        "t": 35.6,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "swing"
+      },
+      {
+        "t": 36.15,
+        "event": "pour"
+      },
+      {
+        "t": 36.3,
+        "event": "run3a"
+      },
+      {
+        "t": 36.5,
+        "event": "vel"
+      },
+      {
+        "t": 36.6,
+        "event": "vel"
+      },
+      {
+        "t": 37.5,
+        "event": "vel"
+      },
+      {
+        "t": 37.6,
+        "event": "vel"
+      },
+      {
+        "t": 38,
+        "event": "run3b"
+      },
+      {
+        "t": 38.35,
+        "event": "swing"
+      },
+      {
+        "t": 38.35,
+        "event": "scoop"
+      },
+      {
+        "t": 38.5,
+        "event": "vel"
+      },
+      {
+        "t": 38.6,
+        "event": "vel"
+      },
+      {
+        "t": 39.5,
+        "event": "vel"
+      },
+      {
+        "t": 39.6,
+        "event": "vel"
+      },
+      {
+        "t": 39.9,
+        "event": "mop0a"
+      },
+      {
+        "t": 40.5,
+        "event": "vel"
+      },
+      {
+        "t": 40.6,
+        "event": "vel"
+      },
+      {
+        "t": 41.5,
+        "event": "vel"
+      },
+      {
+        "t": 41.6,
+        "event": "vel"
+      },
+      {
+        "t": 42,
+        "event": "mop0b"
+      },
+      {
+        "t": 42.35,
+        "event": "swing"
+      },
+      {
+        "t": 42.35,
+        "event": "pour"
+      },
+      {
+        "t": 42.5,
+        "event": "vel"
+      },
+      {
+        "t": 42.6,
+        "event": "vel"
+      },
+      {
+        "t": 43,
+        "event": "swing"
+      },
+      {
+        "t": 43,
+        "event": "scoop"
+      },
+      {
+        "t": 43.4,
+        "event": "mop1a"
+      },
+      {
+        "t": 43.5,
+        "event": "vel"
+      },
+      {
+        "t": 43.6,
+        "event": "vel"
+      },
+      {
+        "t": 44.5,
+        "event": "vel"
+      },
+      {
+        "t": 44.6,
+        "event": "vel"
+      },
+      {
+        "t": 45.5,
+        "event": "vel"
+      },
+      {
+        "t": 45.6,
+        "event": "vel"
+      },
+      {
+        "t": 46.5,
+        "event": "mop1b"
+      },
+      {
+        "t": 46.55,
+        "event": "vel"
+      },
+      {
+        "t": 46.65,
+        "event": "vel"
+      },
+      {
+        "t": 46.8,
+        "event": "swing"
+      },
+      {
+        "t": 46.8,
+        "event": "pour"
+      },
+      {
+        "t": 47.55,
+        "event": "vel"
+      },
+      {
+        "t": 47.6,
+        "event": "vel"
+      },
+      {
+        "t": 47.8,
+        "event": "swing"
+      },
+      {
+        "t": 47.8,
+        "event": "scoop"
+      },
+      {
+        "t": 48.2,
+        "event": "drain_a"
+      },
+      {
+        "t": 48.55,
+        "event": "vel"
+      },
+      {
+        "t": 48.6,
+        "event": "vel"
+      },
+      {
+        "t": 48.65,
+        "event": "vel"
+      },
+      {
+        "t": 49.35,
+        "event": "vel"
+      },
+      {
+        "t": 49.5,
+        "event": "vel"
+      },
+      {
+        "t": 49.55,
         "event": "end_look"
       },
       {
-        "t": 19.95,
+        "t": 49.6,
+        "event": "vel"
+      },
+      {
+        "t": 49.65,
+        "event": "vel"
+      },
+      {
+        "t": 49.8,
+        "event": "vel"
+      },
+      {
+        "t": 49.9,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 50.55,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "de075fa1600adbf1a5a0f3ec4f2976ae949df1e8",
-    "rendered_at": "2026-11-06T19:53:48.976Z",
-    "head_at_publish": "4a932ffd3da9868bc5eb3a7e196ce608193e3f8d",
+    "branch": "render/water_vs_lava",
+    "commit": "e2cd792d4df8a53ea153f72fa3b658cbcd7f9973",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42978667684",
+    "rendered_at": "2026-11-11T07:29:53.504Z",
+    "head_at_publish": "4d5ee8c018c5053e42a871bae58ec29013c6c252",
     "stunt": "stunts/water_vs_lava.js",
     "source_snapshot": [
-      "source/water_vs_lava.js"
+      "source/water_vs_lava.js",
+      "source/motion.js"
     ]
   },
   "rebuild": [
-    "git checkout de075fa1600a",
+    "git checkout e2cd792d4df8",
     "gunzip -c shorts/water_vs_lava/recording.json.gz > work/water_vs_lava.rec.json",
     "node render.js work/water_vs_lava.rec.json work/water_vs_lava.frames 60 1080 1011",
     "python3 audio.py work/water_vs_lava.rec.json work/water_vs_lava.wav",
-    "python3 edit.py --frames work/water_vs_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_vs_lava.rec.json --audio work/water_vs_lava.wav --caption \"pouring water on a lava lake 😳\" --red lava --start_at pour:-0.35 --end_after end_look:1.7 --out out/water_vs_lava.mp4"
+    "python3 edit.py --frames work/water_vs_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_vs_lava.rec.json --audio work/water_vs_lava.wav --caption \"can ONE water bucket delete a lava lake? 😳\" --red lava --subs_y 0.15 --speed [[\"run0a\",\"run0b\",1.8],[\"run1a\",\"run1b\",1.8],[\"run2a\",\"run2b\",1.8],[\"run3a\",\"run3b\",1.8],[\"run4a\",\"run4b\",1.8],[\"run5a\",\"run5b\",1.8],[\"run6a\",\"run6b\",1.8],[\"run7a\",\"run7b\",1.8],[\"run8a\",\"run8b\",1.8],[\"run9a\",\"run9b\",1.8],[\"run10a\",\"run10b\",1.8],[\"run11a\",\"run11b\",1.8],[\"walk_a\",\"walk_b\",2],[\"mop0a\",\"mop0b\",2],[\"mop1a\",\"mop1b\",2],[\"mop2a\",\"mop2b\",2],[\"mop3a\",\"mop3b\",2],[\"cross_a\",\"finale\",2],[\"drain_a\",\"end_look\",2]] --sfx [[\"dip\",\"end_look\",0.35],[\"impact\",\"end_look\"]] --start_at pour:-0.05 --end_after end_look:1.05 --out out/water_vs_lava.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "worker frame QA: NOT ready, engine blockers: water drains as a checkerboard (f780-792, f902-918 of this cut-1 render offset; i.e. during the drain after the scoops); water near-opaque so the obsidian forming under it never shows until the drain; flowing-water front drawn as thick stepped slabs with lava seams between steps (f60-560). Stunt side OK.",
-  "published_at": "2026-11-06T19:55:07.821Z"
+  "status": "ready",
+  "notes": "backlog worker D: re-recorded on the current engine; aim through the motion governor (raw looks whipped at up to 850 deg/s); 15x21 lava lake crossed on its own obsidian with one water bucket, two long side pours, mop-up pours, payoff on the black lake with a song dip + impact; 41.6 s; pace 0 blockers; review READY (maker's review, no subagent tool). Water sheets hiding the obsidian, the checkerboard drain and stepped flow fronts are vanilla (docs/lessons.md). Nitpicks: repetitive pour/scoop rhythm in the middle; the turns back after scoops sweep over the dirt rim for ~1 s; hearts flash once ~26 s.",
+  "published_at": "2026-11-11T07:32:35.284Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:33:09+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 41.58 s vs the reviewed render 41.57 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T07:21:55.339Z",
+      "report": "out/water_vs_lava.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
