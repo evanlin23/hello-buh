@@ -301,17 +301,17 @@
   "L08": {
    "who": "Grandpa",
    "text": "Lock the door, kid, they're coming.",
-   "dur": 4.65,
-   "onset": 1.24,
-   "end": 4.14,
+   "dur": 3.65,
+   "onset": 0.24,
+   "end": 3.14,
    "chunks": [
     [
-     1.24,
-     1.96
+     0.24,
+     0.96
     ],
     [
-     2.18,
-     4.14
+     1.18,
+     3.14
     ]
    ],
    "captions": [
@@ -325,7 +325,11 @@
    "beat": "L08",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "9bf470b993dd"
+   "aligned_wav": "9bf470b993dd",
+   "head_cut": {
+    "s": 1.0,
+    "why": "lead 2026-11-11: the slice starts at the quiet point 240 ms before 'Lock' (a non-script grunt at 0.25-0.6 s of the take)"
+   }
   },
   "L09": {
    "who": "N",
@@ -535,7 +539,7 @@
     "L08"
    ],
    "file": "beat_L08.wav",
-   "dur": 4.65,
+   "dur": 3.65,
    "offsets": [
     0.0
    ],
@@ -543,15 +547,8 @@
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "whisper",
-     "at": 0.0,
-     "len": 0.78,
-     "why": "0.78 s whispered or dropped far under the take"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "whole",
    "rejected": [
     {
@@ -560,8 +557,17 @@
       "0.78 s whispered or dropped far under the take"
      ]
     }
-   ]
+   ],
+   "gate_before_head_cut": [
+    {
+     "kind": "whisper",
+     "at": 0.0,
+     "len": 0.78,
+     "why": "0.78 s whispered or dropped far under the take"
+    }
+   ],
+   "regated": "2026-11-11: re-gated after the head cut (take_gate.gate, Grandpa's limits): pass"
   }
  },
- "total": 42.26
+ "total": 41.26
 }
