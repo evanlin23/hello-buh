@@ -265,6 +265,12 @@ STANDARDS.md in the same commit.
   (no moody grade, little vignette or blur, day-lit where the story allows) and bigger, punchier motion within
   Minecraft (camera punches on key words, hops and quick turns on beats, faster pushes), shown next to the current
   cinematic look for the owner to pick.
+- **Owner, 2026-11-11, on following up a hit (research: a Short at 5x the channel median gets 2-3 new standalone
+  stories in the same premise family, different outcomes, within 7 days): "yes thats fine we should capitalize on
+  whatever is good. Also we dont know what is good yet tho".** Until the numbers say what works, the early stories
+  explore: different premise families, arcs and outcomes (no two in a row the same). Once a Short clearly beats the
+  channel median (5x), follow it up fast with standalone stories in its family. Judge by engaged views, stayed-to-watch,
+  average % viewed and subs per 1k (docs/research/buhstories_growth_2026-11-11.md).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
