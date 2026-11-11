@@ -7,7 +7,7 @@
 // low pass beside the tiny player, the fox's face towering over him, as it snores.
 // Our own design: a sleeping fox (not a grass block, not a golem, not a nether boss); lib/mega_lapse.js does the work.
 //
-// Beats (Short seconds, ~13.6 s): 0 low behind 56e, the paws and the snout rise in front of him | 2.2 the head, from
+// Beats (Short seconds, ~13.1 s): 0 low by the paws, the paws and the snout rise | 2.2 the head, from
 // the front and to the side | 4.7 the body, high from behind | 7.5 the tail, over the forest | 9.7 the reveal: the
 // face lands, high over the forest (the drop) | 11.5 the close pass beside 56e (a snore; "SMALL") | end 1.6 s later.
 const L = require('../lib/mega_lapse')
@@ -141,8 +141,8 @@ module.exports = L.makeLapse({
   },
   shots: {
     // (every point in the fox's own coordinates; 56e stands at (-140, 1, 0), facing east up at the snout)
-    // 1. low, beside and behind 56e: the paws and the snout rise past him, the drone easing back and up
-    close: { path: [cam(0, P(-152, 4, -30)), cam(2.2, P(-160, 10, -38))], lookPath: [cam(0, P(-108, 4, 0)), cam(2.2, P(-104, 10, 0))], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [P(-140, 1.8, 0), P(-113, 8, 0)] },
+    // 1. low and close off the north paw: the paws and the snout rise from the first frame, the drone easing back and up
+    close: { path: [cam(0, P(-124, 3.5, -42)), cam(2.2, P(-134, 9, -48))], lookPath: [cam(0, P(-98, 5, -14)), cam(2.2, P(-100, 9, -6))], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [P(-96, 4, -31), P(-113, 8, 0)] },
     // 2. out in front and to the north: the head rises behind the snout, 56e a speck in front of it
     front: { path: [cam(0, P(-150, 28, -64)), cam(2.5, P(-156, 34, -68))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.5, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-89, 30, -10)] },
     // 3. high behind it, the forest round the clearing: the long body fills in behind the head
@@ -152,6 +152,6 @@ module.exports = L.makeLapse({
     // 5. the reveal: high to the south-west over the forest (under the clouds), the whole fox and the taiga, a slow push
     reveal: { path: [cam(0, P(-150, 104, 104)), cam(1.8, P(-143, 99, 98))], lookPath: [cam(0, P(-30, 12, 8)), cam(1.8, P(-30, 12, 8))], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [P(-30, 41, 0)] },
     // 6. the close pass: low behind 56e, sliding from his left to his right, the fox's whole face towering over him
-    pass: { path: [cam(0, P(-147, 2.6, -6)), cam(2.0, P(-147, 2.8, 6))], lookPath: [cam(0, P(-100, 20, -2)), cam(2.0, P(-100, 20, 2))], fov: 74, dof: false, drift: 0.2, scenery: true, subject: [P(-140, 1.8, 0), P(-89, 30, -10)] }
+    pass: { path: [cam(0, P(-147, 2.6, -3)), cam(2.0, P(-147, 2.8, 4))], lookPath: [cam(0, P(-100, 20, -1)), cam(2.0, P(-100, 20, 1))], fov: 74, dof: false, drift: 0.2, scenery: true, subject: [P(-140, 1.8, 0), P(-89, 30, -10)] }
   }
 })
