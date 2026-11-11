@@ -2035,7 +2035,10 @@ function camAtLive (t) {
       }
       lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
     }
-    process.stdout.write(lines.join('\n') + '\n')
+    // (a synchronous write: through a pipe, process.exit cut a long recording's output mid-line, ~64 KB in:
+    // race_grass_mycelium's 2000 ticks, and hb check died parsing it)
+    const out = Buffer.from(lines.join('\n') + '\n')
+    for (let o = 0; o < out.length;) { try { o += fs.writeSync(1, out, o) } catch (e) { if (e.code !== 'EAGAIN') throw e } }
     process.exit(0)
   }
 

@@ -61,6 +61,7 @@ if (e.countdowns) out.push('--countdowns', JSON.stringify(e.countdowns))   // li
 if (e.ring) out.push('--ring', JSON.stringify(e.ring))
 if (e.tags) out.push('--tags', JSON.stringify(e.tags))
 if (e.chat) out.push('--chat', JSON.stringify(e.chat))
+if (e.score) out.push('--score', JSON.stringify(e.score))   // a live two-sided score bar (format race: lib/race.js)
 if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
