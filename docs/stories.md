@@ -292,6 +292,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11: "maybe we should use my real minecraft username: 56e".** HelloBuh stunts play as `56e` (the
+  harness's default bot name; it shows in death messages, chat and command feedback). Stories keep their character
+  names (botName 'Buh', 'Milo'). Already-uploaded Shorts are unchanged; Shorts re-recorded from now on carry it.
 - **Owner, 2026-11-11, on the time-lapse Shorts (lapse_statue, lapse_rocket): "for the time lapse stuff, like we should
   have more angles when we're showing the last thing, and then also... the second one, like I think our smoother camera
   movement is like too slow. I think it's okay to have like a really fast movement here because it's like, what, a
