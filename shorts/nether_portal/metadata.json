@@ -30,8 +30,22 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19439458,
-    "sha256": "854b08a8865b45606f27b455ad9c1f078086cb142cad7aa07136a91cd9bb835d"
+    "bytes": 19444887,
+    "sha256": "32fd52325840850f8a96aaabbf353c45532e24b42b193dd014bde37b6701be34",
+    "release": {
+      "tag": "pkg-nether_portal",
+      "asset": "nether_portal.short.32fd52325840850f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.32fd52325840850f.mp4",
+      "sha256": "32fd52325840850f8a96aaabbf353c45532e24b42b193dd014bde37b6701be34",
+      "bytes": 19444887
+    },
+    "nosong_release": {
+      "tag": "pkg-nether_portal",
+      "asset": "nether_portal.short_nosong.854b08a8865b4560.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.854b08a8865b4560.mp4",
+      "sha256": "854b08a8865b45606f27b455ad9c1f078086cb142cad7aa07136a91cd9bb835d",
+      "bytes": 19439458
+    }
   },
   "edit": {
     "subsY": 0.15,
