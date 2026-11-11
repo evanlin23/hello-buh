@@ -33,7 +33,10 @@ module.exports = {
     punch: [['behind', 0, 1.08]], flash: [['behind', 0, 0.5]],
     zoom: [['overhead', 'behind:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead
       // the payoff: every head snaps round (pace: a picture change on it; the punch alone didn't register)
-    sfx: [['air', 'start', 'behind', { gain: 0.5 }]]   // room tone from frame 1 (the first sound was at 0.8 s)
+    sfx: [['air', 'start', 'behind', { gain: 0.5 }]],   // room tone from frame 1 (the first sound was at 0.8 s)
+    // the opening (owner r:r0f3da0): frame 0 is the mass of 200 staring villagers, not the one. The look over the 200
+    // from the pillar (moving, the crowd filling the frame) flashes first, then the count-up from 1
+    hook: { at: 'overhead', before: 0, after: 1.2, text: 'wait for the 200 💀' }
   },
 
   async setup (ctx) {
