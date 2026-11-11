@@ -22,5 +22,5 @@ module.exports = pixelArt({
   palette: { K: 'black_wool', C: 'light_blue_wool', B: 'brown_wool', G: 'green_wool', L: 'lime_wool' },
   wall: 'oak_planks',
   caption: "can you guess what I'm building? 🤔",
-  edit: { caption: "can you guess what I'm building? 🤔", red: 'guess', song: 'songs/misery.mp3', dropAt: 'complete', startAt: 'stage:0.1' }
+  edit: { caption: "can you guess what I'm building? 🤔", red: 'guess', song: 'songs/misery.mp3', dropAt: 'complete', startAt: 'stage:0.1', endAfter: 'complete:0.9' }
 })
