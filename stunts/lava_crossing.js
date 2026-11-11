@@ -137,8 +137,8 @@ module.exports = {
     for (let k = 0; k < RIVER_W; k++) {
       const ref = new Vec3(lx, floor, zS - k)                     // the block the new one goes against
       for (let w = 0; w < 60 && bot.entity.position.z - ref.z > 1.6; w++) await bot.waitForTicks(1)
-      bot._client.write('block_place', { hand: 0, location: ref, direction: 2, cursorX: 0.5, cursorY: 0.5, cursorZ: 0, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound('block.stone.place', 1, 0.8)
+      // gated on the crosshair (lib/act.js: it is on the edge block underfoot ahead; r:rffba12)
+      await A.click(ref, 2, [0.5, 0.5, 0], { swing: true, also: () => ctx.sound('block.stone.place', 1, 0.8) })
       await bot.waitForTicks(2)
       const b = bot.blockAt(ref.offset(0, 0, -1))
       if (!b || b.name !== 'cobblestone') { ctx.log('bridge block', k, 'not placed:', b && b.name); bot.clearControlStates(); return false }
