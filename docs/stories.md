@@ -282,6 +282,95 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, on the cells format: "for the cells, it only works bc its forcing mobs specifically to do
+  it".** Every cell traps a MOB (never the player, never a block machine) in its loop; the joke is the mob being made
+  to do one thing forever.
+- **Owner, 2026-11-11, sharing KRIZZIT's "Clear winner" (a huge square of dirt, grass spreading from one corner and
+  mycelium from another, a top-down time-lapse race; caption "Grass vs Fungus"): "timelapse grass vs fungus".**
+  HelloBuh adds a spread-race format (family `race`): two vanilla things that spread (grass, mycelium, moss, sculk,
+  vines, fire...) race across one big field in a top-down time-lapse; viewers pick a side and wait for the winner.
+- **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
+  meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
+  war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing "Every Time I Snap" (caption "Why does my house always end up like this?", 11 s: from
+  inside a stone chimney past the campfire into a cosy wooden room, out the door, and the house outside is a small,
+  plain box that can't hold what was inside): "this one lends to replays, since its short and the inside differs from
+  the outside so its confusing and the cut is not obvious."** HelloBuh adds a bigger-on-the-inside format (family
+  `inside`): one continuous-looking walk from a detailed interior out to an exterior that can't contain it, the
+  cut hidden in a door or a dark frame, short (about 8-12 s) so viewers replay to find the trick.
+- **Owner, 2026-11-11, sharing an "aura" Short (caption "Bro just used all the luck left in his life": digging
+  straight down hits diamonds, then lava saved by a water bucket, then an emerald vein, then breaks straight into a
+  stronghold's end portal room beside the spawner; 19 s): "fake super lucky".** HelloBuh adds a staged-luck format
+  (family `lucky`): a dig, fall or run where every next block is impossibly lucky, each luckier than the last, all
+  vanilla mechanics, staged by the set.
+- **Owner, 2026-11-11: "another one i saw is like fake secret chest in desert pyramid that takes like the entire
+  video to get to and theres like parkour and tunnels etc."** HelloBuh adds a quest format (family `quest`): a
+  "secret chest" hidden under a desert pyramid (or similar), and the whole Short is the escalating way down to it:
+  hidden buttons, tunnels, parkour, traps, each stage harder, the chest opened only at the very end.
+- **Owner, 2026-11-11, sharing a "Send This To Someone You Love Most 😍💗" Short (a redstone-and-lamp heart laid out
+  in a cherry grove, the night falls, the heart lights up and fireworks burst around it in a ring): "This is another
+  one thats like a heart and its cute and lovey".** HelloBuh adds a love format (family `love`): a cute, wholesome
+  build with a heart reveal at night (lamps, fireworks), captioned to be sent to someone; made to be shared.
+- **Owner, 2026-11-11, sharing ThreexyMC's "Yeah its over bro" (caption "Am i cooked?": the player mines down through
+  a diamond vein and through bedrock into the dark, then the chat fills with "[Notch] joined the game", "[Microsoft]",
+  "[Mojang]", "[FBI]", "[Interpol]", "[IRS]", "[Herobrine]", "[NASA]"... over a war-movie soldier image with a
+  dramatic track): "this one is like doing something impossible, and then having like creators of minecraft join on
+  like the war image in the backgorund, and this is music speciifc too, need to sue their music".** HelloBuh adds a
+  "cooked" format (family `cooked`): an impossible feat, then an escalating flood of "X joined the game" as the
+  consequences arrive, over a dramatic still, cut to one specific dramatic track.
+- **Owner, 2026-11-11, sharing KingTEC's "POV: You Made FUNCTIONAL Cabinets in Minecraft" (caption "POV: You
+  realized you can use doors and cushions to make functional gates and cabinets"; a quick first-person demo of the
+  trick in a real kitchen and library, 16 s): "another format, cool minecraft gimmicks".** HelloBuh adds a build-hack
+  format (family `hack`): one clever, real block trick per Short, a "POV: you realized..." caption, shown working in
+  a lived-in build within the first 1.5 s.
+- **Owner, 2026-11-11, on moving finished videos out of git history to GitHub Releases (permanent, no expiry, only
+  metadata in the repo) and dropping anvil_rain / lava_rising (they repeat it_rains and worse_lava): "sure we can do
+  that".** Finished Short mp4s live as GitHub Release assets; the videos branch keeps metadata; the uploader downloads
+  from the release. anvil_rain and lava_rising are dropped (status `dropped`), never uploaded.
+- **Owner, 2026-11-11: "please tell me ur saving all of the formats im sending you".** Every format the owner sends
+  is saved in docs/formats.md (what the reference does, the owner's words, our family name, status), alongside its
+  house rule here.
+- **Owner, 2026-11-11, sharing ItsMeMx's Minas Tirith time-lapse (caption "We need a small castle to mark the
+  spawn", then a drone-style time-lapse as arches, a plateau and a whole tiered white city rise over 21 s): "this
+  gimmick is like ridiculous megabuild".** Part of the `mega` family (r:r8bb1e3): the second variant is a time-lapse
+  build-up, an understated request in the caption and the build escalating far past it, ending on the full reveal.
+- **Owner, 2026-11-11, sharing hazypapa's "Monsters can't sleep, I am nearby" (a slow walk down a white lab corridor
+  of glass cells, each holding a mob stuck in a contraption doing one thing forever; caption "i think bro is doing it
+  for fun"): "here is another format. its like a bunch of cells where mobs are forced to do things repeitively
+  forever."** HelloBuh adds a cells format (family `cells`): a walk-past of glass cells, each a mob in its own endless
+  loop (vanilla mechanics: minecart loops, pistons, water streams, redstone clocks), a deadpan caption.
+- **Owner, 2026-11-11, sharing Mevys's "Maddest End Ever" ("Nobody Knows That! 😱": a lit nether portal carried
+  around by pistons and redstone, then refitted into a gold-block frame, all impossible in vanilla but shown as a
+  secret trick): "this is like fake minecraft gimmick".** HelloBuh adds a fake-trick format (family `faketrick`): an
+  impossible "secret" played completely straight as if it were real. The fake is the bait (comments say "this doesn't
+  work"), so the minecraft-audit's vanilla rule is waived for the trick itself only; everything around it stays
+  vanilla-correct.
+- **Owner, 2026-11-11: "I think hello buh should use the bright grading as well."** HelloBuh's stunt Shorts get the
+  bright look by default (a stunt with no `look`), tuned so the daytime sky doesn't blow out to white (the story
+  'bright' grade, unchanged on a plain stunt, washed the sky out in the first A/B).
+- **Owner, 2026-11-11, sharing Glowe's "Makes no sense" ("Minecraft logic 💀": a minute of rapid vanilla quirks, one
+  after another): "Do we have any formats like this? like 'minevraft logic'".** We had the ideas (docs/ideas.md
+  "Physics and minecraft logic") but no format; HelloBuh adds one (family `logic`): real vanilla quirks, fast, one
+  caption, each quirk set up and paid off in a few seconds.
+- **Owner, 2026-11-11, sharing reo's "Low control minecraft" (a fake mod: "The best mod i've ever downloaded", a
+  creeper walks up and a GUI asks "A creeper is asking for permission to explode" with Allow / Deny / Roll): "this
+  could be like a fake mod".** HelloBuh adds a fake-mod format (family `fakemod`): normal gameplay, an absurd fake mod
+  menu or popup appears at the key moment, the choice plays out. Our own mods and menus, drawn in the edit.
+- **Owner, 2026-11-11, sharing a "Top 5 things I found under ur dad's bed" Short (a parkour + dropper fall as the hook,
+  then giant builds seen on the way down, each with a wrong, innocent-sounding label): "the gimmick with thsi one is
+  that it starts with a very trick like parkour and dropper, so its very hook grabbing. but then it shows things that
+  are mislabeled, but here its. alittle bit innapropirate so i dont like that, but its itneresting."** HelloBuh tries
+  an original, CLEAN take (family `mislabel`): a parkour/dropper hook in the first second, then a numbered list of
+  giant builds with funny wrong labels. No innuendo, nothing sexual or crude; the joke is the label, kid-safe.
+- **Owner, 2026-11-11, sharing TECHSIN PLAYZ's "Finally, a CRAZY Minecraft illusion" Short: "the gimmick with this is
+  its a normal video with a skeleton shooting and he goes over and eats it and then pretneds nothing happened and goes
+  back tot eh video".** HelloBuh tries an original take (family `interrupt`): a Short that plays straight as a normal
+  video, a mob interrupts, the player deals with it in an absurd way, then carries on as if nothing happened.
+- **Owner, 2026-11-11, sharing KRIZZIT's "Daylight Edition" Short (a giant fractal pyramid, an elytra fly-around
+  and dive inside, captioned "7 seconds of my life went into this build"): "new format to try".** HelloBuh tries an
+  original take on the format (family `mega`): an absurdly big generated build shown from frame 1, an understated
+  ironic caption on top the whole time, an elytra fly-around that ends diving inside. Our own structures, caption
+  wording and music; never a copy of that Short.
 - **Owner, 2026-11-11, on the music sitting over the game sounds in most queued Shorts (music 1-12 dB above the
   biggest game sounds; only 3 of 18 had the game on top): "fix all i think".** The music bed comes down for every
   stunt Short (about 3 dB, so the game's own hits carry the payoff), and every ready, not-yet-uploaded Short is

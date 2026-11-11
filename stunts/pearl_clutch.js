@@ -11,9 +11,11 @@ const LEDGE_UP = Number(process.env.LEDGE_UP || 8)     // ledge height above the
 module.exports = {
   name: 'pearl_clutch',
   biome: process.env.BIOME || 'minecraft:forest',
-  caption: 'POV: You Throw an Ender Pearl But...',
+  caption: 'POV: the block under you vanishes over lava 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'POV: You Throw an Ender Pearl But...', red: 'Throw', song: 'songs/misery.mp3', dropAt: 'teleported', startAt: 'fall:-0.7', endAfter: 'teleported:2.2' },
+  // the caption says the stunt (the old "You Throw an Ender Pearl But..." promised a twist that never came); the
+  // end is 1.2 s after the teleport, mid-turn back toward the lava you just escaped (owner: end on the payoff)
+  edit: { caption: 'POV: the block under you vanishes over lava 💀', red: 'lava', song: 'songs/ncs/intranet_crush.mp3', dropAt: 'teleported', startAt: 'fall:-0.7', endAfter: 'teleported:1.2' },
 
   async setup (ctx) {
     const { bot } = ctx

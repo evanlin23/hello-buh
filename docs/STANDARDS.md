@@ -277,6 +277,41 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   expected subscribers per upload; a Short that stalls gets its execution checked (music level vs voice/key sound,
   the first 1.5 s, readability) and the same fault fixed in queued Shorts of its format. Check: youtube_upload.py
   (scores), the numbers check. r:rd56a20
+- **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
+  caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
+  reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
+  escalating to the full reveal. r:r4449f0
+- **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
+  player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
+- **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
+  list of giant builds with funny wrong labels; always clean (no innuendo, nothing crude). Check: owner, review. r:r05c651
+- **HelloBuh stunts use the bright look by default**, tuned for daytime gameplay (no blown-out sky). Check: owner
+  A/B stills. r:r8fa348
+- **Format "logic"**: rapid real vanilla quirks, each set up and paid off in seconds, one caption. Check: owner,
+  minecraft-audit (every quirk must be true vanilla). r:r40f7c7
+- **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
+  mods and menus. Check: owner. r:rd551de
+- **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
+  vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
+- **Format "cells"**: a walk past glass cells, each a mob stuck in an endless vanilla-built loop, a deadpan caption.
+  Check: owner. r:r07d791 Every cell traps a mob (never the player or a machine). r:rce72cb
+- **Format "race"**: two vanilla spreaders race across one field, top-down time-lapse. Check: owner. r:rbe60ef
+- **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
+  the same commit as its house rule. Check: owner. r:rc43770
+- **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
+  downloads each mp4 from its release (keeps the disk from filling). Check: owner. r:rc5eaf0
+- **Format "hack"**: one real, clever block trick per Short, a "POV: you realized..." caption, working on screen in
+  the first 1.5 s. Check: owner, minecraft-audit (the trick must really work). r:rc15847
+- **Format "cooked"**: an impossible feat, then a flood of "X joined the game" as the consequences arrive, over a
+  dramatic still, timed to one specific track. Check: owner. r:r5ee125
+  Music: a similar NCS track; the still: the real meme photo, cached from a logged URL, never committed. r:r12cb71
+- **Format "quest"**: the whole Short is the escalating way down to one secret chest, opened only at the end.
+  Check: owner. r:r4b458d
+- **Format "love"**: a cute heart build revealed at night (lamps, fireworks), made to be shared. Check: owner. r:rf91fef
+- **Format "lucky"**: every next block impossibly luckier than the last, vanilla mechanics staged by the set.
+  Check: owner. r:r934ea4
+- **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
+  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

@@ -6,7 +6,7 @@
 
 It is renderer/page.js's finishing pass (exposure, lift/gamma/gain, saturation, the clamp, the S-curve, the vignette)
 in numpy, on the same 8-bit values (the renderer writes linear passthrough), so it matches a render of the same look
-with bloom 0 and grain 0 to within a level or two. Bloom, god rays, haze, depth of field and grain are not modelled:
+with bloom 0 and grain 0 to within a level or two (look.rolloff, the highlight shoulder, included). Bloom, god rays, haze, depth of field and grain are not modelled:
 the moods (renderer/looks.js) don't set them. --side writes before|after side by side.
 """
 import argparse
@@ -38,6 +38,11 @@ def grade(img, look):
     c = c * g.get("exposure", 1)
     lift, gam, gain = (np.array(g[k], dtype=np.float32) for k in ("lift", "gamma", "gain"))
     c = np.power(np.maximum(0, c * gain + lift * (1 - c)), 1 / gam)
+    k = look.get("rolloff") or 0
+    if 0 < k < 1:   # look.rolloff: the highlight shoulder (page.js), hue kept: the brightest channel eases into 1
+        m = c.max(axis=-1, keepdims=True)
+        r = np.where(m > k, k + (1 - k) * (1 - np.exp(-(m - k) / (1 - k))), m)
+        c = c * r / np.maximum(m, 1e-6)
     lum = c @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
     c = lum[..., None] + (c - lum[..., None]) * g["sat"]
     c = np.clip(c, 0, 1)

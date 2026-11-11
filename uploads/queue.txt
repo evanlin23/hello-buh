@@ -29,3 +29,6 @@ worse_tnt
 fortune
 boat_clutch
 speed_build
+tnt
+villager_crowd
+creeper_art
