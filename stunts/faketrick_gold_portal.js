@@ -27,7 +27,10 @@ module.exports = makeStunt({
   hotbar: [[GOLD, 64], 'flint_and_steel', ['bread', 12], 'diamond_pickaxe', ['torch', 32]],
   select: 0,
   // mixcheck r1: under the NCS bed the gold's place sounds stopped counting as hits in the hook: a pop on every 4th block
-  edit: { sfx: [0, 4, 8, 12].map(n => ['pop', 'gold', { nth: n, gain: 0.8 }]) },
+  // the opening (owner r:r0f3da0): frame 0 is the impossible thing. The lit gold portal (its first 1.1 s, the player
+  // stepping back from it, the swirl going) flashes first, then the tutorial from step 1
+  edit: { sfx: [0, 4, 8, 12].map(n => ['pop', 'gold', { nth: n, gain: 0.8 }]),
+    hook: { at: 'payoff', before: -0.1, after: 1.2, text: 'how is this working?? 😳' } },
   start: [0.5, 4, 2.4, 180, 45],
 
   async build (ctx, F) {
