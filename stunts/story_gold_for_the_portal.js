@@ -370,7 +370,7 @@ module.exports.shots = {
   // S04b's subject: the string on the floor (the boy kneels behind it, at the top of the frame)
   s04b: { at: [10.5, 1.45, 6.3], look: [9.2, 1.25, 6.62], fov: 72, dof: false, eyeTrace: false, subject: [[9.5, 1.1, 6.6]] },
   // S08: over my shoulder at the barrel, before the screen (audit B6)
-  s08ots: { at: [6.6, 3.0, 4.6], look: [10.3, 1.6, 3.3], fov: 55, push: 0.15, dof: false, subject: ['self'] },
+  s08ots: { at: [6.6, 3.0, 4.6], look: [9.0, 2.3, 3.45], fov: 55, push: 0, dof: false, subject: ['self'] },
   // the stairs, high: the ladder's top looking down the cellar to the portal (audit B6)
   s_high_portal: { at: [1.6, 3.9, 2.2], look: [10.0, 1.6, 5.8], fov: 60, push: 0.1, dof: false, subject: ['self'] },
   s_high_gma: { at: [1.6, 3.9, 2.2], look: [8.0, 1.8, 4.6], fov: 60, push: 0.1, dof: false, subject: [[6.1, 2.6, 3.1]] },
