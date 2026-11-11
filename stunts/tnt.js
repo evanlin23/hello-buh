@@ -6,7 +6,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:5.2' },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/ncs/mortals_funk_remix.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:1.2' },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 
   async setup (ctx) {
     const { bot } = ctx

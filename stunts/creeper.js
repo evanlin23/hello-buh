@@ -6,7 +6,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/funk_abnormal.mp3', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8' },
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/ncs/intranet_crush.mp3', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8' },
   expectDeath: true,
 
   async setup (ctx) {
