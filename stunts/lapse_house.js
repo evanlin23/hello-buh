@@ -142,7 +142,7 @@ module.exports = makeStunt({
   name: 'lapse_house',
   recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
   endAfter: 'big_done:0.5',
-  bigCuts: [6, 1.2, 57],   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
+  bigCuts: [6, 0.6, 57],   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
   caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
@@ -159,7 +159,7 @@ module.exports = makeStunt({
     // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
     // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the mansion
     angles: [
-      [0, [[-36, 5, 44], [0, 4, 5]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],      // the pool, floors 1-3
+      [0, [[-20, 12, 34], [0, 0, 14]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],      // the pool, floors 1-3
       [372, [[62, 16, 10], [0, 8, 0]], [[58, 20, 2], [0, 10, 0]], 'side'],                          // floor 3, the wings
       [612, [[0, 4, 33], [0, 7, 10]], [[0, 5, 28], [0, 7, 10]], 'down the road to the door'],       // the garden, the facade
       [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
