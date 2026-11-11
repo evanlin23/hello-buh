@@ -22,7 +22,7 @@ module.exports = {
   edit: {
     caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'drop_final',
     // opens on the first break (sound on frame 0: pace), a punch + shake as the 6x6 crashes (the payoff's picture change)
-    startAt: 'walk0:0.45', endAfter: 'crash:0.8', punch: [['crash', 0, 1.08]], shake: [['crash', 0, 8]]
+    startAt: 'walk0:0.45', endAfter: 'crash:0.8', punch: [['crash', 0, 1.08]], shake: [['crash', 0, 8]], flash: [['crash', 0, 0.4]]
   },
 
   async setup (ctx) {
