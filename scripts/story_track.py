@@ -220,8 +220,11 @@ def _rgba(h):
 def caption_events(story_dir, timeline, start, dur, who=False):
     """[(t0, t1, text)] in seconds of the Short: each chunk from its first word until the next chunk starts.
     A line's first chunk appears on its cut (the line's mark), and its last chunk holds until the next line's cut
-    (0.3 s past its last word only when the next line is over 1.2 s away)."""
+    (0.3 s past its last word only when the next line is over 1.2 s away; a line's story.json "caption_clear": S ends
+    it S s past its last word whatever the gap: a hold the picture has to be seen in, thirty_one_raids' L08 before the
+    raid horn, where the held "kid. They're COMING." covered Grandpa's turn and its drop read as a snap)."""
     story, voice = _lines(story_dir)
+    clear = {l["id"]: float(l["caption_clear"]) for l in story["lines"] if l.get("caption_clear") is not None}
     marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
     # a line's words are timed from where its audio starts: its mark, or its place in a continuous take (voice_starts)
     vs, _ = voice_starts(voice, marks)
@@ -234,7 +237,7 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             t0 = t + max(0.0, min(a, v.get("onset") or 0.0)) if i == 0 else t + a   # first chunk on the speech, not the lead silence
             # the last chunk holds to the next line's cut (the caption changes on the cut frame; dropping it 0.3 s after
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
-            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
+            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (min(nxt, t + b + clear[lid]) if lid in clear else nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text, lid))
     # owner 2026-11-10 (later, on the reference Roblox Short): "the captions can be 2-3 words thats fine": the 2-3 word
     # chunks (the script's " / " splits, one CAPS key word each) are the default again; story.json "captions": "word"

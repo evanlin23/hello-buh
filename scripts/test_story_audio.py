@@ -88,6 +88,26 @@ class Score(unittest.TestCase):
         self.assertEqual(meta["score"]["tracks"], ["t"])
         self.assertIn("bed", meta["levels_lufs_premaster"])
 
+    def test_the_score_ducks_under_a_key_sound(self):
+        # thirty_one_raids, 2026-11-11: the L09 raid horn sat 10 dB under the score (nothing ducked a story's bed)
+        sd, tl = story(self.td.name, payoff=None)
+        tl = tl + [{"t": 3300, "event": "horn"}]
+        nar, game = pathlib.Path(self.td.name) / "nar.wav", pathlib.Path(self.td.name) / "game.wav"
+        A.write(nar, np.zeros((9 * SR, 2), np.float32))
+        g = np.zeros((9 * SR, 2), np.float32)
+        g[int(3.3 * SR):int(4.3 * SR)] = tone(1.0, 300, 0.3)
+        A.write(game, g)
+        for marks, sub in ((None, "plain"), (["horn"], "keyed")):
+            A.mix_story(nar, str(game), 0.0, sd, tl, 0.0, 9.0, pathlib.Path(self.td.name) / f"{sub}.wav", name="story_x",
+                        stems=pathlib.Path(self.td.name) / sub, key_marks=marks)
+        plain, keyed = (A.read(pathlib.Path(self.td.name) / s / "bed.wav") for s in ("plain", "keyed"))
+        a, b = int(3.6 * SR), int(4.2 * SR)
+        self.assertAlmostEqual(A.lufs(plain[a:b]) - A.lufs(keyed[a:b]), A.KEY_DUCK_DB, delta=2.0)   # under the horn
+        c = int(7.5 * SR)
+        self.assertAlmostEqual(A.lufs(plain[c:c + SR // 2]), A.lufs(keyed[c:c + SR // 2]), delta=0.5)   # back up after it
+        meta = json.loads(pathlib.Path(str(pathlib.Path(self.td.name) / "keyed.wav") + ".json").read_text())
+        self.assertEqual(len(meta["key_duck"]), 1)
+
 
 class Design(unittest.TestCase):
     def test_no_whoosh_by_default_and_a_soft_riser(self):
