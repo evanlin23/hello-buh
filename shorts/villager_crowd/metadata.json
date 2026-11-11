@@ -1969,7 +1969,7 @@
     "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"1 vs 10 vs 100 vs 200 villagers staring at me 💀\" --red 200 --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,2],[\\\"beat\\\",\\\"100 villagers\\\",1.6,5],[\\\"beat\\\",\\\"200 villagers\\\",1.6,6],[\\\"back\\\",\\\"nope\\\",0.5,0],[\\\"turnaround\\\",\\\"wait...\\\",0.8,0],[\\\"behind\\\",\\\"BEHIND ME TOO\\\",1,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"overhead\",\"back\",1.5],[\"pillar\",\"overhead\",3]] --punch [[\"behind\",0,1.08]] --zoom [[\"overhead\",\"behind:1.0\",1.3]] --flash [[\"behind\",0,0.5]] --sfx [[\"air\",\"start\",\"behind\",{\"gain\":0.5}]] --start_at beat:-0.05 --end_after behind:1.0 --out out/villager_crowd.mp4"
   ],
   "status": "ready",
-  "notes": "backlog worker A 2026-11-11 (republished from the reviewed cut; re-rendered without a baked song, on the bright_stunt look): re-recorded on the current engine, short cut per the lead (1, 10, 100, 200, then 40 behind: 16.2 s; stunt floor 8 s). 2 review rounds (fresh-session reviewer), READY. Nitpicks: held emerald cut off at the right edge; two leaf blocks floating top right ~14.9-16.1 s; a cow wanders through the 200; the 40 behind show their backs ~0.3 s before the snap; pace WARNs 2.2 s spans on the 100 and 200 sidesteps (heads moving)",
+  "notes": "backlog worker A 2026-11-11 (republished from the reviewed cut; re-rendered without a baked song, on the bright_stunt look): re-recorded on the current engine, short cut per the lead (1, 10, 100, 200, then 40 behind: 16.2 s; stunt floor 8 s). 2 review rounds (fresh-session reviewer), READY. Nitpicks: held emerald cut off at the right edge; two leaf blocks floating top right ~14.9-16.1 s; a cow wanders through the 200; the 40 behind show their backs ~0.3 s before the snap; pace WARNs 2.2 s spans on the 100 and 200 sidesteps (heads moving) | independent review 2026-11-11: READY. Hook: the villager turns to stare at 0.5 s, captions escalate 1/10/100/200, the pillar-up blocks are placed with the crosshair on them (r:rffba12), 'BEHIND ME TOO' payoff with a hit, end 0.96 s after it on the crowd (r:r24d99a ok); 16.2 s (stunt floor 8 s); pace 0 blockers. Nitpicks as before (emerald cut at the right edge, floating leaves top right ~14.9-16.1 s, a cow in the 200, the backs ~0.3 s before the snap); the 100/200 sidesteps are 2.35 s spans (WARN).",
   "published_at": "2026-11-11T07:27:11.974Z",
   "gates": {
     "version": 2,
@@ -1993,5 +1993,10 @@
       "report": "out/villager_crowd.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "review_independent": {
+    "verdict": "READY",
+    "at": "2026-11-11",
+    "notes": "independent review 2026-11-11"
   }
 }
