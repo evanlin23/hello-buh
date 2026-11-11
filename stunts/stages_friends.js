@@ -65,7 +65,7 @@ module.exports = {
     caption: 'minecraft friendships in 3 stages 💀',
     red: '3 stages',
     payoff: 'crater',      // your eyes on the crater, after the chain has settled
-    endAfter: 'crater:1.2',   // settle-ok: the crater cut comes after the chain has settled (a text payoff: his death line)
+    endAfter: 'crater:1.0',   // settle-ok: the crater cut comes after the chain has settled
     speed: [
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
       ['respawn', 'ch2', 'cut'],     // the respawn's first ticks (the camera switching to your eyes)
