@@ -330,5 +330,6 @@
   ],
   "status": "ready",
   "notes": "story #4 (worker, branch claude/story-chunk-next-door): frame review ready; retention + minecraft audits passed after the fixes they asked for. Needs the zombie villager renderer entries on that branch (commit 00961de) to rebuild.",
-  "published_at": "2026-11-09T22:50:52.744Z"
+  "published_at": "2026-11-09T22:50:52.744Z",
+  "channel": "hellobuh"
 }

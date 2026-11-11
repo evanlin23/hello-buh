@@ -451,5 +451,6 @@
   ],
   "status": "ready",
   "notes": "worker (respawn voice): 'Who do you trust?' format; frame review, retention and Minecraft audits ready; intended answer (voice 1) is in the stunt file; stunt lives on branch claude/story-respawn-voice",
-  "published_at": "2026-11-09T22:32:38.362Z"
+  "published_at": "2026-11-09T22:32:38.362Z",
+  "channel": "hellobuh"
 }

@@ -16263,5 +16263,6 @@
   ],
   "status": "ready",
   "notes": "pipeline test (story_nitwit, lead's fresh-worker run): 2 review rounds, READY. Nitpicks: ruin wide shot dim; freshly placed lava in the well draws mostly dark (engine); burned room floor reads as netherrack.",
-  "published_at": "2026-11-10T04:48:31.006Z"
+  "published_at": "2026-11-10T04:48:31.006Z",
+  "channel": "hellobuh"
 }

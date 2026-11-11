@@ -421,5 +421,6 @@
   ],
   "status": "ready",
   "notes": "story #10 (the sun won't set): frame review ready (nitpicks), retention ready, Minecraft audit ready; clouds off (engine: dusk clouds fogged orange/grey by view direction); knockback applied in the stunt (mineflayer drops entity_velocity on 1.21.11)",
-  "published_at": "2026-11-09T22:59:23.906Z"
+  "published_at": "2026-11-09T22:59:23.906Z",
+  "channel": "hellobuh"
 }
