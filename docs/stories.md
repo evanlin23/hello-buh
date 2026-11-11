@@ -638,6 +638,10 @@ STANDARDS.md in the same commit.
   mysteries, new moods; no other rules), then a cold-read gate (keep only ideas a fresh player can't guess at the
   midpoint, or guesses wrong), and only then the house rules, vanilla, place and build checks and the critic. The
   owner sees a ranked top 8 plus a wild-cards list, and how each idea was made.
+- **Owner, 2026-11-11, on the batch-3 premises (round 1 and round 2): "do whatever you think is the best".** Batch 3's
+  scripts: Pulled Away (round 1), Saving Up for a Bastion, The Singing Box Next Door, The Honey Thief (round 2), one
+  session each (briefs: docs/pitches/batch3_script_briefs/); a round 3 of premises from the moods lens only (the lens
+  readers couldn't predict). A Ghost for Five Minutes (hardcore, outside the shared world) is banked, not made.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
