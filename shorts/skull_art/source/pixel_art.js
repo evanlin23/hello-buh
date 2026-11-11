@@ -135,8 +135,11 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
       // "the head jerking around")
       const VMAX = 11 * Math.PI / 180, ACC = 6 * Math.PI / 180   // per tick, per tick per tick
       let yaw = bot.entity.yaw, pitch = bot.entity.pitch, vy = 0, vp = 0
+      const home = new Vec3(this.x + 0.5, 0, this.z + 0.5)
       const lookToward = async (target, ticks, k = 0.45) => {
         for (let i = 0; i < ticks; i++) {
+          // never back into the first wall (12 blocks out): heart_art's pull-back stopped dead against it
+          if (bot.controlState.back && Math.hypot(bot.entity.position.x - home.x, bot.entity.position.z - home.z) >= 10.8) bot.setControlState('back', false)
           const want = aim ? aim.plus(target.minus(aim).scaled(k)) : target.clone()
           const eye = bot.entity.position.offset(0, 1.62, 0), d = want.minus(eye)
           let dy = Math.atan2(-d.x, -d.z) - yaw
@@ -243,7 +246,7 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
         const tpb = st.tpb || (cells.length >= 120 ? 1.45 : cells.length >= 30 ? 2 : 2.5)
         await placeSeq(seq, tpb, st.order === 'random' ? 0.15 : 0.45, lastStage && k > 0)
         async function placeSeq (seq, tpb, follow, withBackup) {
-        let budget = 0, ci = 0, ci2 = 0, ci3 = 0   // (no mid-build glance: owner, the turn away from the big one was weird)
+        let budget = 0, ci = 0, ci2 = 0, ci3 = 0, lastAccent = -99   // (no mid-build glance: owner, the turn away from the big one was weird)
         let backing = 0, prevTarget = null
         for (const cell of seq) {
           // partway through the big one (at 80% the close-up laps round its rings ran 12 s: worker QA): walk back while still placing (a new shot, the face grows in view)
@@ -265,8 +268,11 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
           // a dense build (a block a tick) is one steady hiss: accent the first block of each run and every
           // 6th, the rest softer, so the build keeps a beat (pace read 3.6 s of heart_art's big one as dead)
-          const accent = tpb >= 1.3 || newRun || (ci3++ % 6) === 0
-          ctx.sound(`block.${ctx.soundGroup(palette[cell.ch])}.place`, accent ? 1.0 : 0.3, 0.8 + ((used[cell.ch] || 0) % 3) * 0.05)
+          // (several blocks a tick: an accent every 8 ticks at most, the rest near-silent; sword_art's big one
+          // still read as 4.3 s dead)
+          const accent = tpb >= 1.3 || (tpb >= 1 ? newRun || (ci3++ % 6) === 0 : ctx.tick - lastAccent >= 8)
+          if (accent) lastAccent = ctx.tick
+          ctx.sound(`block.${ctx.soundGroup(palette[cell.ch])}.place`, accent ? 1.0 : tpb >= 1 ? 0.3 : 0.1, 0.8 + ((used[cell.ch] || 0) % 3) * 0.05)
           usedOne(cell.ch)
           budget += Math.max(0, tpb - 1)
           while (budget >= 1) { budget -= 1; await lookToward(target, 1, follow) }

@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 34201744,
-    "sha256": "f340d79c98a2d25cfdaad676c89342c472599b9d48dc22c8c893577bee1d603b",
+    "bytes": 48713151,
+    "sha256": "6b3582ce53a3d9dd02465c17988012abe7e71def035480ec16d2ab042c0675ef",
     "release": {
       "tag": "pkg-skull_art",
-      "asset": "skull_art.short.f340d79c98a2d25c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.f340d79c98a2d25c.mp4",
-      "sha256": "f340d79c98a2d25cfdaad676c89342c472599b9d48dc22c8c893577bee1d603b",
-      "bytes": 34201744
+      "asset": "skull_art.short.6b3582ce53a3d9dd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.6b3582ce53a3d9dd.mp4",
+      "sha256": "6b3582ce53a3d9dd02465c17988012abe7e71def035480ec16d2ab042c0675ef",
+      "bytes": 48713151
     },
     "nosong_release": {
       "tag": "pkg-skull_art",
-      "asset": "skull_art.short_nosong.c62ee5c26aede1e3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short_nosong.c62ee5c26aede1e3.mp4",
-      "sha256": "c62ee5c26aede1e3464ce6095dce0d827321c08d6c06b98ab4bcb8ab317aa32d",
-      "bytes": 34142636
+      "asset": "skull_art.short_nosong.3fc28c2df5a5267c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short_nosong.3fc28c2df5a5267c.mp4",
+      "sha256": "3fc28c2df5a5267c32a96f3ea0898d0c5ad7be8705b2cdc0e58895a613215e04",
+      "bytes": 48671120
     }
   },
   "edit": {
@@ -72,7 +72,6 @@
       ]
     ],
     "caption": "why is he building THIS 😨",
-    "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
@@ -88,11 +87,7 @@
       "--start_at",
       "stage:-0.2",
       "--end_after",
-      "complete:0.9",
-      "--song",
-      "songs/funk_abnormal.mp3",
-      "--song_drop_at",
-      "complete"
+      "complete:0.9"
     ]
   },
   "recording": {
@@ -869,11 +864,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/skull_art",
-    "commit": "7ff82738aa0dc1bb6d4ef2fcc88454233e333d87",
+    "commit": "c8348da868032fd11f1d617bad8a729b9c9fa044",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42968574499",
-    "rendered_at": "2026-11-11T06:02:39.976Z",
-    "head_at_publish": "ae457fa4c807a18bcf6927e39e125155d84061ed",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977496516",
+    "rendered_at": "2026-11-11T07:20:48.280Z",
+    "head_at_publish": "f8de94b14a3b4b371fde4ddc93ad3fcc9c7f8a50",
     "stunt": "stunts/skull_art.js",
     "source_snapshot": [
       "source/skull_art.js",
@@ -881,35 +876,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 7ff82738aa0d",
+    "git checkout c8348da86803",
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
-    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS 😨\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
+    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS 😨\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
   ],
   "status": "ready",
-  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium picture peeks in at the left edge during the big build's backup; short hold on the medium reveal",
-  "published_at": "2026-11-11T06:20:27.677Z",
+  "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
+  "published_at": "2026-11-11T07:23:27.588Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:05:12+00:00",
-    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "at": "2026-11-11T07:23:55+00:00",
+    "by": "publish.js",
     "package": {
-      "ok": false,
-      "summary": "short.mp4 30.46 s vs the reviewed render 33.20 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
+      "ok": true,
+      "summary": "short.mp4 33.22 s vs the reviewed render 33.20 s"
     },
     "pace": {
       "ok": false,
-      "blockers": 4,
-      "warnings": 9,
-      "summary": "dead: 3.16 s with nothing new (17.60-20.76 s, after the motion; no line on screen); dead: 7.17 s with nothing new (22.15-29.32 s, after the motion; no line on screen); payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+      "blockers": 3,
+      "warnings": 5,
+      "summary": "dead: 3.44 s with nothing new (12.24-15.68 s, after the sound hit; no line on screen); dead: 5.27 s with nothing new (15.68-20.95 s, after the sound hit; no line on screen); dead: 8.42 s with nothing new (20.95-29.37 s, after the backup; no line on screen)"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:52:24.393Z",
-      "report": "work/hb/skull_art.check.json"
+      "at": "2026-11-11T07:10:55.452Z",
+      "report": "out/skull_art.check.json"
     },
     "key_sounds": "n/a"
   }
