@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28817546,
-    "sha256": "41b780564f5481b696bce57c79062cdd919ac44333bd0c6ea68c88724f1ebeb9",
+    "bytes": 38967631,
+    "sha256": "43cf636634a3358ecd8f0788b976fd62161de9e40d4e4d665835fa10d992f49c",
     "release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short.41b780564f5481b6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.41b780564f5481b6.mp4",
-      "sha256": "41b780564f5481b696bce57c79062cdd919ac44333bd0c6ea68c88724f1ebeb9",
-      "bytes": 28817546
+      "asset": "creeper_art.short.43cf636634a3358e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.43cf636634a3358e.mp4",
+      "sha256": "43cf636634a3358ecd8f0788b976fd62161de9e40d4e4d665835fa10d992f49c",
+      "bytes": 38967631
     },
     "nosong_release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short_nosong.b99c8ca5743f9e8a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.b99c8ca5743f9e8a.mp4",
-      "sha256": "b99c8ca5743f9e8a8741f739606beb0f640a13124f7db4e21429e2eab2b8f112",
-      "bytes": 28767950
+      "asset": "creeper_art.short_nosong.e8febc8515cf7821.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.e8febc8515cf7821.mp4",
+      "sha256": "e8febc8515cf7821fa1a47a293333c2f168a77b824fa3429fdfaf14633169537",
+      "bytes": 38937151
     }
   },
   "edit": {
@@ -72,7 +72,6 @@
       ]
     ],
     "caption": "rate my pixel art 1-10 😭",
-    "song": "songs/misery.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
@@ -88,11 +87,7 @@
       "--start_at",
       "stage:-0.2",
       "--end_after",
-      "complete:0.9",
-      "--song",
-      "songs/misery.mp3",
-      "--song_drop_at",
-      "complete"
+      "complete:0.9"
     ]
   },
   "recording": {
@@ -869,11 +864,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/creeper_art",
-    "commit": "69fb60b6ee29b5e273c9b75de8f5fce760f765c7",
+    "commit": "fabc3b1f06dc340654498c1e3c19531095871a6e",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42968476182",
-    "rendered_at": "2026-11-11T05:59:54.620Z",
-    "head_at_publish": "ae457fa4c807a18bcf6927e39e125155d84061ed",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977476129",
+    "rendered_at": "2026-11-11T07:18:34.440Z",
+    "head_at_publish": "bf94a9952e2fdab83dd777e3adf991d4fa6fda5c",
     "stunt": "stunts/creeper_art.js",
     "source_snapshot": [
       "source/creeper_art.js",
@@ -881,35 +876,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 69fb60b6ee29",
+    "git checkout fabc3b1f06dc",
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
-    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/misery.mp3 --song_drop_at complete --out out/creeper_art.mp4"
+    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/creeper_art.mp4"
   ],
   "status": "ready",
-  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium wall edge at left during the big build's backup; small reveal held briefly",
-  "published_at": "2026-11-11T06:19:19.044Z",
+  "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
+  "published_at": "2026-11-11T07:21:13.428Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:04:40+00:00",
-    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "at": "2026-11-11T07:21:39+00:00",
+    "by": "publish.js",
     "package": {
-      "ok": false,
-      "summary": "short.mp4 31.85 s vs the reviewed render 34.60 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
+      "ok": true,
+      "summary": "short.mp4 34.60 s vs the reviewed render 34.60 s"
     },
     "pace": {
       "ok": false,
       "blockers": 4,
       "warnings": 5,
-      "summary": "dead: 4.00 s with nothing new (6.35-10.35 s, after the motion; no line on screen); dead: 3.65 s with nothing new (26.25-29.90 s, after the motion; no line on screen); payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+      "summary": "dead: 7.05 s with nothing new (3.30-10.35 s, after the stage; no line on screen); dead: 7.11 s with nothing new (11.45-18.56 s, after the stage; no line on screen); dead: 4.85 s with nothing new (21.10-25.95 s, after the backup; no line on screen); dead: 5.75 s with nothing new (25.95-31.70 s, after the motion; no line on screen)"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:30:54.188Z",
-      "report": "work/hb/creeper_art.check.json"
+      "at": "2026-11-11T07:11:02.763Z",
+      "report": "out/creeper_art.check.json"
     },
     "key_sounds": "n/a"
   }
