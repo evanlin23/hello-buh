@@ -61,7 +61,8 @@ function makeRace (S) {
     edit: {
       caption: S.caption, red: S.red, colors: S.colors, song: null,
       startAt: 'race_start:0',
-      endAfter: 'done:1.6',                         // a text payoff (the WINS card): 1.2-1.8 s to read it
+      endAfter: 'done:1.2',                         // a text payoff (the WINS card): 1.2 s to read it (pace: 1.6 ran long)
+      dropAt: 'done',                               // the NCS bed's drop on the win (publish's mix: it landed at 0 s)
       // the hunt for the last few dirt blocks takes ~8 s of game time with almost nothing changing: it plays three times as fast
       speed: [['race_start', 'last', sp], ['last', 'done', S.tailSpeed || sp * 3]],
       score: { event: 'score', a: [A.label, A.color], b: [B.label, B.color] },
@@ -74,9 +75,11 @@ function makeRace (S) {
         ['win_a', `${A.label} WINS`, 2.5, A.color, 0, 'stamp'], ['win_b', `${B.label} WINS`, 2.5, B.color, 0, 'stamp']],
       flash: [['done', 0, 0.55]],
       sfx: [['air', 'race_start', 'done', { gain: 0.3 }], ['ding', 'race_start'], ['whoosh', 'race_start'], ['pop', 'landed', { gain: 1.0 }], ['pop', 'half'], ...MILES.map((_, k) => ['pop', 'mile', { nth: k, gain: 0.8 }]), ['pop', 'meet'], ...[0, 1, 2, 3, 4, 5].map(k => ['pop', 'lead', { nth: k }]),
-        ['pop', 'clinch_a'], ['pop', 'clinch_b'], ['whoosh', 'last'], ['impact', 'done']],
+        ['pop', 'clinch_a'], ['pop', 'clinch_b'], ['whoosh', 'last'],
+        // the win cuts through the NCS bed: the song dips 0.4 s before it, then a loud impact (v3 gate on publish's mix)
+        ['dip', 'done', 0.4], ['impact', 'done', { gain: 1.4 }]],
       punch: [...MILES.map((_, k) => ['mile', k, 1.04]), ['half', 0, 1.05], ['last', 0, 1.06], ['done', 0, 1.08]],
-      keySounds: ['done'],
+      // (no keySounds: the win is the song's drop, and add_song measures key sounds only before the drop)
       ...(S.edit || {})
     },
 
