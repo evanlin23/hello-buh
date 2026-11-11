@@ -87,6 +87,20 @@ How the work itself went wrong, and the rule now:
 - **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
   they depend on.
 
+## Love (lib/love.js, love_cherry_heart, 2026-11-11)
+- **Cherry leaves are untinted.** Their model carries tintindex 0 (the leaves parent), but vanilla's BlockColors never
+  registers cherry_leaves, so they are drawn as the pink texture. The renderer tinted every `*leaves` with the biome's
+  foliage colour: a cherry grove came out olive grey (renderer/models.js UNTINTED).
+- **A firework's flash is a glow, not a plate.** FireworkParticles.OverlayParticle: the first explosion's first colour,
+  quad size 7.1 x sin((age - 1) x pi/4), alpha 0.6 fading 1/8 a tick. It was an opaque white 2-block disc; a ring of
+  bursts read as white plates. Several bursts at once wash the screen in their colour, as in vanilla: 7 is plenty.
+- **A cherry grove can sit next to ice spikes**: a packed-ice spike stood over the trees 50 blocks off. lib/love.js
+  clears packed/blue ice round the set (unchecked fills: a box with none answers "No blocks were filled").
+- **rec_check's held check ignores the sky**: a time-lapse sunset with a still camera is a held pause. Keep the camera
+  drifting (>= ~5 deg/s) through it.
+- **A per-tick loop around `A.turnTo(x, { max: 1 })` must not wait again**: the step already waits its tick, so an extra
+  waitForTicks doubled the sunset (5.5 s instead of 3.8).
+
 ## Cells (lib/cells.js, cells_lab, 2026-11-11)
 - **A slime-block launcher needs an immovable collar.** Slime sticks to every pushable neighbour, so a 2x2 slime pad in a
   concrete tube took the walls along and the push failed (more than 12 blocks): nothing launched. Obsidian round the
