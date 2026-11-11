@@ -204,10 +204,10 @@ module.exports = {
     // the red-collared wolf runs after him 13 blocks back, small; at 0.4 s it is gone from there and at his heel
     await scut(43.5, -4.2, P(10, gy(10, -4.2) + 0.6, -4.2), gy(43.5, -4.2), { shot: 'run_ahead', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 30.5, z: -5.0, y: gy(30.5, -5.0), yaw: 90, pitch: 5 }) })
     K.ctl('sprint', true); K.go(true)
-    await K.preroll(10, () => { walkG(buh, -0.14, 0); autoJump() })   // (L01's pace: about 10 blocks over the voiced line)
+    await K.preroll(10, () => { walkG(buh, -0.215, 0); autoJump() })   // (L01's walk)
     await line('L01', async (k, at, n) => {
-      walkG(buh, -Math.min(0.27, 10 / Math.max(1, n)), 0); buh.pitch = 5   // about 10 blocks over the line, whatever its length: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
-      if (once('L01pop', k >= 8)) await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y)
+      walkG(buh, -Math.min(0.215, 16 / Math.max(1, n)), 0); buh.pitch = 5   // a walk (vanilla 0.215 a tick: the wolf walks beside him after its pop, K.go), at most 16 blocks over the line: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
+      if (once('L01pop', k >= 8)) { await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y); K.ctl('sprint', false); K.go(true) }   // then it walks beside him (standing, the follow camera left it behind: lint)
       autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.2)); look(k)   // (a block south of his line: right behind him his body hid it)
     })
 
