@@ -127,3 +127,27 @@ per-line request, branch only), docs/stories.md (premise status).
 - **Tool notes:** a reveal inside a line's `extra` was squeezed to nothing when the picture ran late (now its own fixed
   ticks after the line); `ctx.hotbar` clears and refills all 9 slots over ~1 s (use one `/item replace` mid-story);
   `ground()` must skip slabs (the gate roof); piping `hb record` into `head` kills the recording.
+
+## 2026-11-11: voiced, reviewed, packaged HELD
+- **Voice (r-cast, house narrator Pip):** the narrator's 10 lines in ONE flash-lite request (`one_take`); takes 1-2
+  failed the pause gate (the hook's 0.43/0.84 s breaks), take 3 passed with "run straight on from the first line into
+  the next; no pause at a full stop". Grandpa (3.8-flash-tts) read his long elder profile aloud; a one-clause bracket
+  "[An old, tired man, low and slow]" fixed it; his slice starts at the quiet point 240 ms before "Lock" (a non-script
+  grunt before it; lead-approved). TTS today: 3 narrator + 2 Grandpa requests (plus yesterday's spent quota).
+- **Shared fix on main (4c002903):** voice_drift scores WOBBLE only on voiced windows (a breath or silent gap read as
+  "the voice changed"), with a unittest.
+- **Picture fixes found by the gates:** in-line cuts switch the shot on the landing tick (a K.shot before the cut was a
+  second cut: a jump-cut lint); no waits before the L10/L11 cuts (their marks ran behind the take: an uncaptioned
+  "So"); 0.15 s after L07 before Grandpa (pace: overlap); the farmers cleared 1 s into the table scene, not on its cut.
+- **Owner/brand:** bright look + rolloff, punches on L01/L08/L11 only, the brand cover title with "home" in Buh gold,
+  channel buhstories, key colour Buh gold, Grandpa sky blue; chest open/close sounds (owner note), no whooshes.
+- **Renders:** Actions runs 42990551276, 42995160426, 42998249809 (gold title re-edit), 43002818513 (final, 41.9 s).
+  `./hb check` OK, `./hb drift` 0 blockers, `./hb review`: pace OK, caption coverage and timing OK (median -11 ms).
+- **Review:** independent session session_019n1tKHZw9eftzBtUsVjnYa: READY, 0 blockers; 7 nitpicks listed on the
+  review page for the owner (the raid horn doesn't read on the reveal cut; Grandpa's 1.1 s beat with the caption up
+  early; the 6.2 s gate shot; the bright grade at dusk; no Bad Omen icon; no bottle readable in S07).
+- **Package:** videos 16920df0, status held, channel buhstories, release pkg-story_thirty_one_raids asset
+  story_thirty_one_raids.short.9d552d45ea16d81b.mp4 (sha256 9d552d45..., 61.1 MB, uploaded). The first publish attempt
+  hit a 403 and then a stale local videos worktree (a day behind: a conflict on our own metadata); reset that local
+  worktree to origin/videos and re-ran publish.js. Review page: shorts/thirty_one_raids_voiced (order 3), the bright
+  preview archived, the chest note fixed.
