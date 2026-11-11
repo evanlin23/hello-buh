@@ -1,10 +1,10 @@
 {
   "name": "desire_town",
   "channel": "hellobuh",
-  "caption": "the town REALLY hates this shortcut 💀",
+  "caption": "the town REALLY hates this shortcut \ud83d\udc80",
   "youtube": {
-    "title": "the town REALLY hates this shortcut 💀 #minecraft #shorts",
-    "description": "the town REALLY hates this shortcut 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the town REALLY hates this shortcut \ud83d\udc80 #minecraft #shorts",
+    "description": "the town REALLY hates this shortcut \ud83d\udc80\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "the town REALLY hates this shortcut 💀",
+    "caption": "the town REALLY hates this shortcut \ud83d\udc80",
     "red": "REALLY",
     "song": null,
     "startAt": "start:0",
@@ -138,7 +138,7 @@
       ],
       [
         "ob_lava",
-        "LAVA 🔥",
+        "LAVA \ud83d\udd25",
         1,
         "red",
         0,
@@ -171,13 +171,13 @@
     ],
     "args": [
       "--caption",
-      "the town REALLY hates this shortcut 💀",
+      "the town REALLY hates this shortcut \ud83d\udc80",
       "--red",
       "REALLY",
       "--punch",
       "[\"flood\",\"final\"]",
       "--cards",
-      "[[\"ob_fence\",\"FENCE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_bush\",\"BUSHES\",0.75,\"white\",0,null,{\"y\":0.17}],[\"ob_tree\",\"A TREE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_boulder\",\"A BOULDER\",0.75,\"yellow\",0,null,{\"y\":0.17}],[\"ob_pond\",\"A POND\",0.75,\"yellow\",0,null,{\"y\":0.8}],[\"ob_walls\",\"WALLS\",0.75,\"orange\",0,null,{\"y\":0.14}],[\"ob_shed\",\"A WHOLE SHED\",0.75,\"orange\",0,null,{\"y\":0.17}],[\"ob_lava\",\"LAVA 🔥\",1,\"red\",0,null,{\"y\":0.36}]]",
+      "[[\"ob_fence\",\"FENCE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_bush\",\"BUSHES\",0.75,\"white\",0,null,{\"y\":0.17}],[\"ob_tree\",\"A TREE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_boulder\",\"A BOULDER\",0.75,\"yellow\",0,null,{\"y\":0.17}],[\"ob_pond\",\"A POND\",0.75,\"yellow\",0,null,{\"y\":0.8}],[\"ob_walls\",\"WALLS\",0.75,\"orange\",0,null,{\"y\":0.14}],[\"ob_shed\",\"A WHOLE SHED\",0.75,\"orange\",0,null,{\"y\":0.17}],[\"ob_lava\",\"LAVA \ud83d\udd25\",1,\"red\",0,null,{\"y\":0.36}]]",
       "--sfx",
       "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"boom\",\"final\"],[\"ding\",\"final\"]]",
       "--start_at",
@@ -354,10 +354,10 @@
     "gunzip -c shorts/desire_town/recording.json.gz > work/desire_town.rec.json",
     "node render.js work/desire_town.rec.json work/desire_town.frames 60 1080 1011",
     "python3 audio.py work/desire_town.rec.json work/desire_town.wav",
-    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --red REALLY --punch [\"flood\",\"final\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}]]\" --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"boom\",\"final\"],[\"ding\",\"final\"]] --start_at start:0 --end_after final:1 --out out/desire_town.mp4"
+    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut \ud83d\udc80\" --red REALLY --punch [\"flood\",\"final\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA \ud83d\udd25\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}]]\" --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"boom\",\"final\"],[\"ding\",\"final\"]] --start_at start:0 --end_after final:1 --out out/desire_town.mp4"
   ],
-  "status": "ready",
-  "notes": "desire ep 1: locked top-down, 7 obstacles then a lava flood, the path comes back straight; independent review 2 rounds READY (session_019n1tKGFphywAiSBsKjBjxW); nitpicks: fence reads as a ladder from above, tree looks like the bushes",
+  "status": "needs-fix",
+  "notes": "owner 2026-11-11: the path should visibly break through each obstacle the town puts in its way, not reroute around them | desire ep 1: locked top-down, 7 obstacles then a lava flood, the path comes back straight; independent review 2 rounds READY (session_019n1tKGFphywAiSBsKjBjxW); nitpicks: fence reads as a ladder from above, tree looks like the bushes",
   "published_at": "2026-11-11T08:35:59.792Z",
   "gates": {
     "version": 3,

@@ -1,10 +1,10 @@
 {
   "name": "inside_library",
   "channel": "hellobuh",
-  "caption": "rate my tiny house 🏠",
+  "caption": "rate my tiny house \ud83c\udfe0",
   "youtube": {
-    "title": "rate my tiny house 🏠 #minecraft #shorts",
-    "description": "rate my tiny house 🏠\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "rate my tiny house \ud83c\udfe0 #minecraft #shorts",
+    "description": "rate my tiny house \ud83c\udfe0\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "rate my tiny house 🏠",
+    "caption": "rate my tiny house \ud83c\udfe0",
     "red": "tiny",
     "startAt": "beat:-0.05",
     "endAfter": "reveal:1.0",
@@ -79,7 +79,7 @@
     ],
     "args": [
       "--caption",
-      "rate my tiny house 🏠",
+      "rate my tiny house \ud83c\udfe0",
       "--red",
       "tiny",
       "--punch",
@@ -166,10 +166,10 @@
     "gunzip -c shorts/inside_library/recording.json.gz > work/inside_library.rec.json",
     "node render.js work/inside_library.rec.json work/inside_library.frames 60 1080 1011",
     "python3 audio.py work/inside_library.rec.json work/inside_library.wav",
-    "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house 🏠\" --red tiny --punch [[\"reveal\",0,0.8]] --sfx [[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:1.0 --out out/inside_library.mp4"
+    "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house \ud83c\udfe0\" --red tiny --punch [[\"reveal\",0,0.8]] --sfx [[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:1.0 --out out/inside_library.mp4"
   ],
-  "status": "ready",
-  "notes": "inside #1: library hall walk out to a 5x5 hut, hidden cut on the closed door; independent review r1 READY (session_019n1tKDmWotxs7qKsSgcmqC); nitpicks: 1.0 s tail, entry nook",
+  "status": "needs-fix",
+  "notes": "owner 2026-11-11: the cut is very obvious: the view shifts at the cut and we pause before opening the door; walk straight out without stopping | inside #1: library hall walk out to a 5x5 hut, hidden cut on the closed door; independent review r1 READY (session_019n1tKDmWotxs7qKsSgcmqC); nitpicks: 1.0 s tail, entry nook",
   "published_at": "2026-11-11T08:37:11.365Z",
   "gates": {
     "version": 3,
