@@ -107,42 +107,31 @@ module.exports = makeStunt({
   caption: 'building a statue in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   recordRadius: 200,
+  botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 4 of 5 tries on a busy box
   endAfter: 'big_done:0.5',
   bigCuts: [6, 1.2, 63], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'sand', under: 'sandstone', biome: 'minecraft:desert' },
   hotbar: [['hay_block', 64], ['carved_pumpkin', 64], ['stone_bricks', 64], ['brown_concrete', 64], ['terracotta', 64], ['emerald_block', 64], ['dark_oak_planks', 64], ['dirt', 64], 'diamond_shovel'],
   small,
-  mid: { blocks: mini(), w: 3, d: 2, towerY: 3, towerH: 3, towerSlot: 7, digSlot: 8, perTick: 2, speed: 3, backTicks: 12, out: 3.0,
+  mid: { blocks: mini(), w: 3, d: 2, towerY: 3, towerH: 3, towerSlot: 7, digSlot: 8, perTick: 2, speed: 3, oneSide: 'S', backTicks: 12, out: 3.0,   // oneSide: all from the front, the back row first: no walk round its back (r:r478786: it stalled 1.3-1.6 s)
     slots: { stone_bricks: 2, brown_concrete: 3, terracotta: 4, emerald_block: 5, dark_oak_planks: 6 } },
   big: {
     blocks: giant(),
     hold: 'terracotta', slot: 4,
     // plinth, legs, robe, arms, head, face, obelisks + oases, the pyramid, crown
     stageTicks: { 0: 100, 1: 100, 2: 140, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 80 },
+    // one smooth move for the whole round (owner r:r200cfe, on lapse_rocket's lapse: "a ton of jerking around between
+    // shots"; this round's own rail swung 8-28 deg and moved 6-18 blocks across its jump cuts): a slow crane-out from
+    // low in front of the plinth to the wide of the finished statue, the look rising with the build so the head stays
+    // under the clock. Across a 1.2 s jump cut the camera moves under a block and turns under a degree.
     keys: [
-      [0, [-16, 9, 30], [0, 0, 6]],          // close on the plinth from the cut, then a pass across it
-      [60, [-4, 11, 26], [0, 1, 4]],
-      [100, [-20, 12, 32], [0, 6, 0]],       // the legs
-      [200, [-20, 22, 40], [0, 20, 0]],
-      [270, [-6, 26, 44], [0, 24, 0]],       // round the front while the robe rises (a slow stretch)
-      [340, [18, 30, 36], [0, 28, 4]],
-      [460, [26, 40, 30], [0, 40, 0]],
-      [540, [-16, 44, 34], [0, 42, 0]],      // an orbit round the blank head (the slowest stretch)
-      [620, [10, 46, 34], [0, 44, 6]],       // the face going on
-      [800, [4, 43, 27], [0, 44, 6]],        // pushing in on it
-      [910, [-44, 24, 30], [-24, 6, 0]],     // the obelisks and the west oasis
-      [975, [2, 26, 62], [0, 22, 0]],        // round the front (straight across went through the statue)
-      [1050, [48, 18, -4], [24, 6, -34]],    // the pyramid rising, low from the side (from above it read as flat slabs)
-      [1130, [46, 22, -12], [24, 8, -34]],   // held low while it climbs, to its gold top (a crane over the head while it
-      [1215, [42, 26, -18], [24, 10, -34]],  // still rose showed its top half from above, flat)
-      [1255, [24, 58, 22], [0, 50, 0]],      // up to the head as the crown goes on
-      [1282, [-12, 62, 26], [0, 52, 0]],
-      [1300, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
-      [1318, [0, 16, 94], [0, 31, 0]]
+      [0, [-8, 12, 52], [0, 8, 0]],
+      [660, [-4, 15, 74], [0, 26, 0]],
+      [1318, [0, 17, 96], [0, 31, 0]]          // the pull-back lands on 60:00: the crown under the clock, the pyramid beside
     ],
     reveal: [
-      [8, [-3, 17, 90], [0, 31, 0]],
-      [16, [-7, 18, 86], [-1, 31, 0]]
+      [8, [0.05, 17.03, 96.27], [0, 31, 0]],   // on along the same line, as slowly
+      [16, [0.1, 17.06, 96.54], [0, 31, 0]]
     ]
   }
 })

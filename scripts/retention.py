@@ -576,6 +576,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
     cds = []                                         # cards: (t0, t1, text, color, tilt, y)
     for j, cd in enumerate(_load(cards)):
         ts = event_times(timeline, cd[0])
+        if not ts and event_at(timeline, cd[0]) is not None:   # 'EVENT:OFFSET_S', as pace already counts it (it was dropped)
+            ts = [event_at(timeline, cd[0])]
         nth = int(cd[4]) if len(cd) > 4 else 0
         if len(ts) > nth:
             t0 = ts[nth] - start

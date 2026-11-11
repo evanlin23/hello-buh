@@ -150,7 +150,8 @@
    "say": "A guy just appeared on the PATCH.",
    "beat": 3,
    "shot": "S12",
-   "punch": true
+   "punch": true,
+   "caption_y": 0.22
   },
   {
    "id": "L15",
@@ -247,5 +248,9 @@
    ],
    "direction": "[A friendly teenage boy, casual]"
   }
+ ],
+ "mood": [
+  "sad",
+  "sad"
  ]
 }

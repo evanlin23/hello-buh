@@ -103,8 +103,12 @@ module.exports = {
     // was. The slow version stared at the pad, and the series cut landed mid-tilt (review, check 7)
     await bot.waitForTicks(this.fast ? 0 : 6)
     const dx = this.x + 0.5 - bot.entity.position.x, dz = this.z + 0.5 - bot.entity.position.z
-    await ctx.easeLook(Math.atan2(-dx, -dz), 1.0, this.fast ? 800 : 1200)   // look up the pillar
-    await bot.waitForTicks(30)
+    // look up the pillar: lib/act.js's governed turn, eased, <= 220 deg/s (owner r:r38374d: the 0.8 s ease turned at
+    // ~530-750 deg/s, "confusing to follow"); 'up' when it lands on the top
+    const A = require('../lib/act')(ctx)
+    await A.turnTo({ yaw: Math.atan2(-dx, -dz), pitch: 1.0 }, { max: 80 })
+    ctx.mark('up')
+    await bot.waitForTicks(this.upHold ?? 30)
     return placed && bot.health > 0
   }
 }

@@ -10,8 +10,9 @@ Short READY; it changes nothing in the videos branch.
 It copies every package's metadata.json (so pick_ncs picks the same track publish would) into a scratch videos dir,
 adds this Short's render as short_nosong.mp4 and work/<name>.rec.json as its recording, runs add_song.main(--ncs)
 there, then `./hb pace <name> --video <mix>` exactly as gates.py stamps it. Exit 1 on any pace BLOCK. Fix: land the drop on the payoff (edit.dropAt),
-a song dip + impact at the payoff mark (edit.sfx ['dip', mark, 0.4], ['impact', mark, {gain: 1.4}]), no riser over the
-dip.
+a song dip at the payoff mark (edit.sfx ['dip', mark, 0.4]) plus, only on a busy game track, ['impact', mark, {gain: 1.4}]
+(on a quiet stunt the impact dominates the track's loudness normalisation and pushes everything else ~28 dB down:
+mislabel_grandma 2026-11-11), no riser over the dip. Always re-run ./hb check on the no-song render after an sfx change.
 """
 from __future__ import annotations
 
@@ -57,6 +58,16 @@ def main() -> int:
         meta = json.loads(old.read_text()) if old.exists() else {}
         meta.setdefault("youtube", {}).setdefault("hashtags", [])
         meta.setdefault("caption", n)
+        # the edit as it stands (publish.js writes it): the published package's older edit hid a new card from pace's
+        # caption events (pickaxe_race's mid-chain card, 2026-11-11)
+        cur = subprocess.run(["node", "-e", f"const s=require('./stunts/{n}.js'); process.stdout.write(JSON.stringify(s.edit || null))"],
+                             cwd=ROOT, capture_output=True, text=True)
+        try:
+            ed = json.loads(cur.stdout or "null")
+        except ValueError:
+            ed = None
+        if isinstance(ed, dict):
+            meta["edit"] = {**(meta.get("edit") or {}), **ed}
         (d / "metadata.json").write_text(json.dumps(meta))
         shutil.copy(src, d / "short_nosong.mp4")
         (d / "recording.json.gz").write_bytes(gzip.compress(rec.read_bytes()))

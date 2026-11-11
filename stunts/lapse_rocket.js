@@ -143,26 +143,18 @@ module.exports = makeStunt({
     hold: 'white_concrete', slot: 0,
     // pad, stage 1, stage 2, stage 3, nose, tower, tanks + masts, the hall, ignition
     stageTicks: { 0: 150, 1: 190, 2: 150, 3: 130, 4: 120, 5: 170, 6: 200, 7: 170, 8: 90 },
+    // one smooth move for the whole round (owner r:r200cfe: "The rocket time lapse has a ton for jerking around between
+    // shots": the rail swung round the pad, the tower and the hall, so every 1.2 s jump cut jumped 5-15 deg and 4-15
+    // blocks): a slow crane-out from low over the pad to the wide of the whole site, the look rising with the rocket so
+    // its nose and the tower stay under the clock. Across a jump cut the camera moves under a block and turns under a degree.
     keys: [
-      [0, [-14, 8, 30], [0, 0, 4]],          // low over the pad from the cut
-      [150, [-28, 12, 30], [0, 8, 0]],
-      [340, [-22, 22, 40], [0, 20, 0]],      // stage 1
-      [490, [20, 30, 42], [0, 30, 0]],       // stage 2
-      [620, [28, 40, 34], [0, 42, 0]],       // stage 3
-      [740, [12, 50, 40], [0, 46, 0]],       // the nose cone (lower: the tip sat under the clock)
-      [830, [32, 40, 52], [8, 32, 0]],       // the launch tower, from the south (from the east it hid the rocket)
-      [910, [46, 24, 20], [10, 28, 0]],
-      [960, [-6, 30, 66], [-4, 20, 0]],      // wide round the front (straight across skimmed the rocket)
-      [1010, [-12, 22, 42], [-36, 6, 0]],    // the fuel tanks and masts, from the front
-      [1110, [-18, 18, 46], [-38, 8, -4]],
-      [1200, [-22, 30, 50], [-56, 14, 17]],  // the hall rising out to the left
-      [1280, [-14, 34, 62], [0, 24, 0]],     // round to the front as the engines light (wide of the rocket)
-      [1340, [-8, 21, 84], [0, 26, 0]],      // the pull-back lands, smoke rolling round the pad
-      [1378, [0, 20, 80], [0, 27, 0]]
+      [0, [-10, 10, 48], [-6, 8, 0]],
+      [690, [-8, 18, 76], [-6, 30, 0]],
+      [1378, [-6, 22, 92], [-6, 31, 0]]        // the pull-back lands on 60:00: the hall, the tanks and the tower in frame
     ],
     reveal: [
-      [8, [-2, 20, 76], [0, 27, 0]],
-      [16, [-6, 21, 72], [-1, 27, 0]]
+      [8, [-5.97, 22.02, 92.18], [-6, 31, 0]], // on along the same line, as slowly
+      [16, [-5.94, 22.04, 92.36], [-6, 31, 0]]
     ]
   }
 })

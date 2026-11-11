@@ -9,6 +9,7 @@
     ['boom', 'splash5'],              // the big one: deep boom with a long tail
     ['heart', 'beat0h'],              // a heartbeat: two low thumps (tension under a slow-motion freeze)
     ['dip', 'splash5', 0.3],          // the SONG ducks to near silence for 0.3 s before the mark
+    ['gamedip', 'splash5', 0.3],      // the GAME audio ducks the same way (a loud game sound over the dip)
     ['pop', 'look2'], ['ding', 'x'],  // UI pop / ding on a mark
     ['pops'],                         // a pop on every impact card and counter change
     ['scratch', 'twist'],             // record scratch stinger (story twists)
@@ -175,7 +176,15 @@ def plan(spec, timeline, start, cards=None, counter=None):
 
     def at(ev, nth=0):
         ts = [e["t"] / 1000 for e in timeline if e["event"] == ev]
-        return ts[nth] - start if len(ts) > nth else None
+        off = 0.0
+        if not ts and ":" in str(ev):   # 'EVENT:OFFSET_S', as flash/punch take it (retention.event_at)
+            k, _, o = str(ev).rpartition(":")
+            try:
+                off = float(o)
+                ts = [e["t"] / 1000 for e in timeline if e["event"] == k]
+            except ValueError:
+                pass
+        return ts[nth] + off - start if len(ts) > nth else None
     for s in _load(spec):
         s = list(s)
         opts = s.pop() if s and isinstance(s[-1], dict) else {}
@@ -202,7 +211,7 @@ def plan(spec, timeline, start, cards=None, counter=None):
                 print(f"sfx {kind} {s[1:]} skipped (span empty)")
                 continue
             out.append((kind, t0, t1, opts))
-        elif kind == "dip":
+        elif kind in ("dip", "gamedip"):
             out.append((kind, t0 - float(s[2] if len(s) > 2 else 0.3), t0, opts))
         elif kind == "file":
             out.append((kind, t0, t0, {**opts, "path": s[2], "gain": s[3] if len(s) > 3 else opts.get("gain", GAIN["file"])}))
@@ -216,6 +225,12 @@ def dips(spec, timeline, start, shift=0.0):
     return [(a + shift, b + shift) for k, a, b, _ in plan(spec, timeline, start) if k == "dip"]
 
 
+def game_dips(spec, timeline, start):
+    """[(a, b)] windows where the GAME audio ducks ('gamedip', like 'dip' for the song): the hit after it reads as a hit
+    over a loud game sound (end_portal_job: the portal's hum ran through the dip before IT NEVER ENDS)."""
+    return [(a, b) for k, a, b, _ in plan(spec, timeline, start) if k == "gamedip"]
+
+
 def duck_filter(windows, depth=0.06):
     """An ffmpeg volume filter that ducks to `depth` inside each window (20 ms ramps)."""
     if not windows:
@@ -226,7 +241,7 @@ def duck_filter(windows, depth=0.06):
 
 def build_track(spec, timeline, start, dur, out_wav, cards=None, counter=None):
     """Mix every sfx event into one stereo wav of `dur` seconds. Returns the path, or None."""
-    events = [e for e in plan(spec, timeline, start, cards, counter) if e[0] != "dip"]
+    events = [e for e in plan(spec, timeline, start, cards, counter) if e[0] not in ("dip", "gamedip")]
     if not events:
         return None
     n = int(math.ceil(dur * SR)) + SR

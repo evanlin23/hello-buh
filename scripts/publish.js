@@ -263,8 +263,26 @@ checked out at \`../hb-videos\`.
 ${rows.join('\n')}
 `)
 
+// the RUNNING session's trailer (Dog on the Hill's package carried the HelloBuh lead's, hard-coded here): none outside a session
+function sessionTrailer () {
+  const id = (process.env.CLAUDE_CODE_REMOTE_SESSION_ID || '').replace(/^cse_/, '')
+  return /^[A-Za-z0-9]+$/.test(id) ? `\nClaude-Session: https://claude.ai/code/session_${id}` : ''
+}
 if (push && packaged.length) {
   // only these packages (+ README, .gitignore), through a private index: another session's staged files are never swept
   // into this commit ("Package tnt" took someone else's), and never unstaged
-  execFileSync('python3', ['scripts/release_assets.py', 'commit', ...packaged, '-m', `Package ${packaged.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_019n1tKFAZAV7uPEWDxhJzEt`], { cwd: ROOT, stdio: 'inherit' })
+  execFileSync('python3', ['scripts/release_assets.py', 'commit', ...packaged, '-m', `Package ${packaged.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>${sessionTrailer()}`], { cwd: ROOT, stdio: 'inherit' })
+  // the local copies are now in GitHub Releases: drop the ones whose sha256 matches (the disk filled 5 times on
+  // 2026-11-11 with ~5 GB of these; gates.py and the uploader download them again when they need them)
+  const crypto = require('crypto')
+  for (const n of packaged) {
+    const d = path.join(VID, 'shorts', n)
+    let v = {}
+    try { v = JSON.parse(fs.readFileSync(path.join(d, 'metadata.json'), 'utf8')).video || {} } catch (e) { continue }
+    const shas = new Set(Object.values(v).filter((x) => x && typeof x === 'object' && x.sha256).map((x) => x.sha256))
+    for (const f of ['short.mp4', 'short_nosong.mp4']) {
+      const fp = path.join(d, f)
+      if (fs.existsSync(fp) && shas.has(crypto.createHash('sha256').update(fs.readFileSync(fp)).digest('hex'))) fs.unlinkSync(fp)
+    }
+  }
 }
