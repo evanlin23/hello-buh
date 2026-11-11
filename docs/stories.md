@@ -421,6 +421,11 @@ STANDARDS.md in the same commit.
   for smoke, particles or drifting debris to clear. This narrows the settle rule (r:r24d99a): still no cut while the
   thing itself is happening (a block mid-fall, a mob mid-death, the blast still going off), but smoke and particles
   no longer hold a cut or the end. The end comes about 0.5-0.8 s after the payoff's result.
+- **Owner, 2026-11-11, on underdog_heal: "For the one where we're feeding like the health, like we started to show
+  like their health overhead, like with like hearts and like empty hearts and stuff."** In the `underdog` (healing)
+  format, each hurt mob shows its health above its head as a row of Minecraft hearts (full, half and empty, the HUD
+  heart style), and the row fills up as it's healed, so the heal reads at a glance. The hearts track the mob's real
+  health from the recording.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

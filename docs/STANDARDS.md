@@ -394,6 +394,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   away from its main colour, with no mob in view in the recording) and nothing moving by 0.5 s; WARN a slow
   opening, no sound hit within 6 dB of the peak by 0.5 s, no caption on frame 0, a caption over 10 words, a still
   hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
+- **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
+  (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
