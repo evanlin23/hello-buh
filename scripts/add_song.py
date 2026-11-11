@@ -21,18 +21,20 @@ def song_drop(path):
     return float(subprocess.run(["python3", str(ROOT / "scripts" / "song_drop.py"), str(path)], capture_output=True, text=True, check=True).stdout.split()[0])
 
 
-def pick_ncs(name, at=0.0):
+def pick_ncs(name, at=0.0, mood=None):
     """The NCS track used least across the packages so far (ties: a fixed per-Short choice), among
     the tracks whose drop comes at or after the Short's drop event: an earlier drop can't line up
-    (song_start clamps to 0) and played the drop seconds before the payoff (clutch_harder review)."""
+    (song_start clamps to 0) and played the drop seconds before the payoff (clutch_harder review).
+    mood (the stunt's edit.ncsMood, e.g. 'sad' for the underdog format's soft sung track): only the tracks
+    music/ncs.json tags with it; without one, only the untagged phonk beds (a sad track never lands on a stunt)."""
     used = {}
     for m in (VID / "shorts").glob("*/metadata.json"):
         f = (json.loads(m.read_text()).get("song") or {}).get("file")
         if m.parent.name != name and f in NCS:
             used[f] = used.get(f, 0) + 1
-    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists() and not NCS[f].get("pin_only")]   # (pin_only: a format's own track, edit.ncs)
+    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists() and not NCS[f].get("pin_only") and NCS[f].get("mood") == mood]   # (pin_only: a format's own track, edit.ncs; mood: edit.ncsMood)
     if not have:
-        sys.exit("no NCS tracks downloaded: python3 scripts/ncs.py --download")
+        sys.exit(f"no NCS tracks downloaded{' with mood ' + mood if mood else ''}: python3 scripts/ncs.py --download")
     late = [f for f in have if song_drop(ROOT / "songs" / "ncs" / f) >= at - 0.05]
     if late:
         have = late
@@ -124,7 +126,7 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         else:
             if pin:   # (another track would land the wrong drop: the joke is this one)
                 sys.exit(f"{name}: edit.ncs '{pin}' is not in songs/ncs: python3 scripts/ncs.py --download")
-            song_override = pick_ncs(name, at)
+            song_override = pick_ncs(name, at, stunt.get("ncsMood"))
     song = song_override or stunt.get("song")
     if not gen and (not song or not (ROOT / song).exists()):
         print(name, "no song file"); return
