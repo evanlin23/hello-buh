@@ -1,4 +1,4 @@
-# Adding to the engine: poses, particles, block entities, mob animations, GUI screens
+# Adding to the engine: poses, particles, block entities, mob animations, GUI screens, skins
 
 The owner (2026-11-10): "why cant we build the renderer out to allow all of these? and more when they come up?"
 A story that needs something the renderer can't draw is a story the renderer should learn, not a scene to rewrite.
@@ -409,6 +409,25 @@ List every waiting room a stunt builds. `./hb describe` shows mobs parked far ab
   cos(age x 3.25) x PI x 0.4 degrees each frame. A NoAI mob never converts in vanilla, so stage it.
 - Test: `node scripts/pose_fixture.js --armor` (a trimmed-helmet piglin, shaking; a zombie in iron with a trimmed
   chestplate; a skeleton in a chain helmet; the Grandpa actor in the trimmed helmet).
+
+## Original player skins (scripts/make_story_skins.py)
+Every jar skin (steve, alex, ari, efe, kai, makena, noor, sunny, zuri) and `hellobuh` already belongs to a character
+(STANDARDS 7a: one look per character), so new player characters get skins we draw ourselves. They are pixel data in
+`scripts/make_story_skins.py` (an 8x8 face string per skin plus hair, clothes and shoe parameters; no Mojang or
+skin-site pixels), written to `skins/<name>.png` (64x64, wide arms). render.js already serves `skins/` beside the
+jar's skins, so a stunt casts one by name like a jar skin: `cast: { Grandpa: 'grandpa_gullwick' }`. No renderer change.
+- The ten (canon notes in docs/world/canon.md "Original skins"): `grandpa_gullwick`, `grandma_island`, `walk_kid`,
+  `pulled_man`, `hall_player`, `miner_girl`, `neighbour`, `barter_player`, `spare_boy`, `spare_girl`.
+- A new one: add a spec to `SKINS` (copy the closest), run `python3 scripts/make_story_skins.py` (same bytes every
+  run: the shading noise is seeded by the name), and check it beside the others and the taken skins:
+  `node scripts/pose_fixture.js --skins --stunt _test_skins --src ../hb-videos/shorts/creeper/recording.json.gz --out work/_test_skins.rec.json`
+  then `./hb still _test_skins tick:5 tick:25 tick:145 --size 1080x1011` (ticks 0-19 all new ones facing, 20-39 at
+  3/4, 40-119 five at a time, 120-139 the neighbour with and without diamond armour and the barter player in iron,
+  140-159 the taken skins). Add its name to `NAMES` in both the fixture and `stunts/_test_skins.js`.
+- Faces carry identity under armour: a story whose player wears a chestplate (Singing Box's neighbour, Saving Up's
+  barter player) must still read from the head alone (glasses, moustache, beanie). Avoid a jar skin's colour scheme
+  (Steve's cyan shirt and blue trousers read as Buh).
+- Proofs: docs/engine_proofs/skins/ (line-ups at 1080 and 300 px, phone stills, armour, taken vs new).
 
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
