@@ -204,7 +204,7 @@ records anyway, for a one-off look.
 `--look`/`--day-time`), `RECORD_ONLY=1` + `REC_CHECK_STRICT=1` (`hb record`), `TRIES=` (`--tries`), `RESUME=1`
 (`scripts/resume.sh`), `PREVIEW_FPS`/`PREVIEW_W`/`PREVIEW_JOBS`/`KEEP` (preview.py), `EDIT_EXTRA='{...}'` (try an edit
 change in a preview), `STUNT_OPTIONAL=1` (render without a broken stunt module), `PROFILE=1` (render.js timings),
-`MESH_WORKERS`, `BRIGHTNESS`, `WEATHER`, `DIMENSION`, `RENDER_DISTANCE`, `SKIN`, `SHOW_PLAYER` (render.js overrides).
+`MESH_WORKERS`, `BRIGHTNESS`, `WEATHER`, `DIMENSION`, `RENDER_DISTANCE`, `SKIN`, `HB_SELF_USER` (draw the bot as that username's real skin: lib/skins.js), `SHOW_PLAYER` (render.js overrides).
 
 ## How it's built (for changing hb)
 `hb` -> `lib/hb/cli.js` (commands), `lib/hb/make.js` (`hb make`'s stages and state), `lib/hb/fixes.js` (known errors
