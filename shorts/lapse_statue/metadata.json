@@ -4183,7 +4183,7 @@
     "python3 edit.py --frames work/lapse_statue.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_statue.rec.json --audio work/lapse_statue.wav --caption \"building a statue in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:7.2\",\"cut\"],[\"big_start:7.2\",\"big_start:12\",3],[\"big_start:12\",\"big_start:13.2\",\"cut\"],[\"big_start:13.2\",\"big_start:18\",3],[\"big_start:18\",\"big_start:19.2\",\"cut\"],[\"big_start:19.2\",\"big_start:24\",3],[\"big_start:24\",\"big_start:25.2\",\"cut\"],[\"big_start:25.2\",\"big_start:30\",3],[\"big_start:30\",\"big_start:31.2\",\"cut\"],[\"big_start:31.2\",\"big_start:36\",3],[\"big_start:36\",\"big_start:37.2\",\"cut\"],[\"big_start:37.2\",\"big_start:42\",3],[\"big_start:42\",\"big_start:43.2\",\"cut\"],[\"big_start:43.2\",\"big_start:48\",3],[\"big_start:48\",\"big_start:49.2\",\"cut\"],[\"big_start:49.2\",\"big_start:54\",3],[\"big_start:54\",\"big_start:55.2\",\"cut\"],[\"big_start:55.2\",\"big_start:60\",3],[\"big_start:60\",\"big_start:61.2\",\"cut\"],[\"big_start:61.2\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_statue.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); jump cuts every ~1.6 s through the 1-hour round (was 5.7 s / 6.95 s dead), flash + punch + song dip + impact on 60:00; 27.9 s; pace 0 blockers (WARN build-up); self-review READY",
+  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); jump cuts every ~1.6 s through the 1-hour round (was 5.7 s / 6.95 s dead), flash + punch + song dip + impact on 60:00; 27.9 s; pace 0 blockers (WARN build-up); self-review READY | independent review 2026-11-11: READY. Hook: the 1-second build moves from frame 1, timer card readable; 1-minute round placements on the crosshair (r:rffba12), the 1-hour time-lapse is a third-person build with no player (format convention); payoff 60:00 wide with flash + impact (+16 dB over the music), end 0.5 s after it on a still result (r:r24d99a ok); pace 0 blockers. Nitpicks: the 1-minute round at 3x is shaky and spends ~2 s looking straight down at the dirt scaffold (5.4-6.2 s); mix -10.2 LUFS (house-wide).",
   "published_at": "2026-11-11T07:41:14.470Z",
   "gates": {
     "version": 2,
@@ -4207,5 +4207,10 @@
       "report": "out/lapse_statue.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "review_independent": {
+    "verdict": "READY",
+    "at": "2026-11-11",
+    "notes": "independent review 2026-11-11"
   }
 }
