@@ -106,7 +106,7 @@ module.exports = {
     // set and the tick (take 1: every other recorded tick was back on the roof)
     let want = null
     const clock = setInterval(() => {
-      if (want) { bot.entity.position.set(want.x, want.y, want.z); bot.entity.velocity.set(0, 0, 0); bot.entity.yaw = want.yaw; bot.entity.pitch = want.pitch }
+      if (want) { bot.entity.position.set(want.x, want.y, want.z); bot.entity.velocity.set(0, 0, 0); bot.entity.yaw = want.yaw; bot.entity.pitch = want.pitch }   // motion-ok: the elytra flight is a scripted, arc-length eased path applied on the tick (no story kit here)
       bot.emit('physicsTick')
     }, 50)
     const park = () => { want = { x: X + 0.5, y: F - 20, z: Z + 0.5, yaw: 0, pitch: 0 } }   // in the ground, out of the camera shots
