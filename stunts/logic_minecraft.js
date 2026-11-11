@@ -166,13 +166,16 @@ const quirks = [
       bot._client.removeListener('explosion', on)
       if (!boom) throw new Error('logic anchor: no explosion')
       L.quirk()
-      // eyes on the crater, then a slow drift to the end. He stays put: the blast's fire lands at random on the ground
-      // round it (a step back walked into it on take 4), and a take where it lands on him (a hurt flash, burning) is
+      // eyes on the crater, a step back (never into the blast's fire: it lands at random round him, and take 4 backed
+      // into it), then a slow drift to the end; a take where the fire lands on him anyway (a hurt flash, burning) is
       // thrown away so run.sh records another
       let hurt = false
       const onHurt = () => { if (bot.health < 20) hurt = true }
       bot.on('health', onHurt)
-      await L.hold(56, L.mid(0, 0, -3), { drift: 0.009 })
+      const crater = L.mid(0, 0, -3)
+      await L.hold(6, crater)                         // the blast, the knockback
+      await L.backOff(12, crater)                     // a step back from the flames: the whole crater in view
+      await L.hold(44, crater, { drift: 0.0075 })
       bot.removeListener('health', onHurt)
       if (hurt) throw new Error('logic anchor: the blast\'s fire caught him (a hurt flash): take again')
     }
