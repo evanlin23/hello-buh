@@ -2,7 +2,7 @@
  "name": "sun_wont_set",
  "stunt": "story_sun_wont_set",
  "version": 2,
- "revision": "r2 (2026-11-11): the owner's Review Room notes (2026-11-10): new plot that survives 'why?' (Grandpa's advice points at who is really in danger; the ending is only what the kid sees), acted Gemini cast, the key line given room, Stillwater's real terrain (no superflat)",
+ "revision": "r3 (2026-11-11): critic r1 must-fixes (S01 opens on the zombies under the tree, L06/L13 wording, L09 direction, L03 cut, S16/S17 cameras) and the cold reader's 'why does he stay outside' (L15 'stood guard at his door')",
  "caption": "the sun hasn't set in 300 days 💀",
  "logline": "A kid has held the sun up over Stillwater for 300 days with a lever, because at night the zombies come out and Grandpa is too slow to run. Grandpa keeps asking for the night, and finally says the kid needs sleep. The kid thinks he means himself, walks him to bed, pulls the lever back and stands guard at the door. Then the sky screams: phantoms come for whoever hasn't slept, and he hasn't slept in 300 days.",
  "question": "why tf hasn't the sun set in 300 days?",
@@ -10,12 +10,27 @@
  "family": "grandparent_secret",
  "twist": "The kid protected the wrong person. Phantoms come at night for any player who hasn't slept in three days, and villagers never count. Grandpa knew: 'Let it come. YOU need sleep, kid.' The kid hears it as Grandpa being tired, walks him to bed, pulls the lever back and stands guard at Grandpa's door with his sword against the zombies. The zombies were never the danger. The sky fills with phantoms, and the game says who they came for: slain by Phantom.",
  "key_color": "#FFB52E",
- "mood": ["eerie", "tense"],
+ "mood": [
+  "eerie",
+  "tense"
+ ],
  "payoff": "death",
  "voice_takes": "beat",
- "look": {"time": "day (frozen at 11000, the sun low in the west) until L15's lever; dusk to night over L16; night with a moon for L17"},
+ "look": {
+  "time": "day (frozen at 11000, the sun low in the west) until L15's lever; dusk to night over L16; night with a moon for L17"
+ },
  "weather": "clear",
- "hotbar": ["iron_sword", "torch", "bread", "white_bed", "lever", "milk_bucket", "milk_bucket", "cake", "egg"],
+ "hotbar": [
+  "iron_sword",
+  "torch",
+  "bread",
+  "white_bed",
+  "lever",
+  "milk_bucket",
+  "milk_bucket",
+  "cake",
+  "egg"
+ ],
  "hotbar_note": "the sword is the guard (S15-S17); the white bed he never sleeps in (a plant, never mentioned); two milk buckets, a cake and the eggs are the ridiculous ones",
  "world": {
   "place": "stillwater",
@@ -24,7 +39,10 @@
   "canon": "Day 1100, the last day of the Long Day (800-1100). The lever goes back, the sun sets, the zombies under the one tree come out, the narrator (the Stillwater grandson) is slain by phantoms at Grandpa's door. Grandpa is in his bed. Gary the farmer is taken that night (not on screen). Changes canon: Grandpa is safe in bed (was 'already gone'); the narrator's killer is Phantom (was Zombie).",
   "easter_egg": "none new on day 1100 (dog_on_hill is from 3400): the lever on its post is this story's own canon object"
  },
- "voice": {"engine": "gemini", "model_hint": "the cast locks each speaker's model: narrator gemini-3.8-flash-lite-tts; Grandpa gemini-3.8-flash-tts"},
+ "voice": {
+  "engine": "gemini",
+  "model_hint": "the cast locks each speaker's model: narrator gemini-3.8-flash-lite-tts; Grandpa gemini-3.8-flash-tts"
+ },
  "cast": {
   "N": {
    "role": "narrator",
@@ -40,68 +58,559 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#F0C987",
    "direction": "[An old village grandpa, tired and kind, slow]",
-   "reads_as": {"sex": "male", "age": [60, 85]},
-   "on_screen": "plains villager, librarian outfit, no name tag; on screen for both his lines (S05-S06, S12). New voice for Stillwater's Grandpa (one voice per grandpa: Charon is Ravenford's, Algenib Hushwell's, Iapetus proposed for Gullwick): Rasalgethi, a proposal for the owner's audition with this Short"
+   "reads_as": {
+    "sex": "male",
+    "age": [
+     60,
+     85
+    ]
+   },
+   "on_screen": "plains villager, librarian outfit, no name tag; on screen for both his lines (S05-S06, S12). New voice for Stillwater's Grandpa (one voice per grandpa: Charon is Ravenford's, Algenib Hushwell's, Iapetus proposed for Gullwick): Rasalgethi, a proposal for the owner's audition with this Short",
+   "profile": "an old village grandpa, tired and kind, slow"
   }
  },
  "lines": [
-  {"id": "L01", "who": "N", "beat": "a", "text": "The SUN / hasn't SET / in my village / for 300 DAYS.", "say": "The sun hasn't set in my village for three hundred DAYS.", "shot": "S01", "look": {"what": "prop:sun_village", "word": "SUN"}, "punch": true, "note": "a bright, amazed opening; one breath"},
-  {"id": "L02", "who": "N", "beat": "a", "text": "Nobody has SLEPT. / The FARMER / keeps walking / into his own FENCE.", "say": "Nobody has slept. The farmer keeps walking into his own FENCE.", "shot": "S02", "look": {"what": "actor:farmer", "word": "FENCE"}},
-  {"id": "L03", "who": "N", "beat": "a", "text": "Every BED / in the village / is still MADE.", "say": "Every bed in the village is still MADE.", "shot": "S03", "look": {"what": "prop:beds", "word": "BED"}},
-  {"id": "L04", "who": "N", "beat": "a", "text": "And the ZOMBIES / have been HIDING / under ONE tree / the whole time.", "say": "And the zombies have been hiding under one TREE the whole time.", "shot": "S04", "look": {"what": "prop:tree", "word": "ZOMBIES"}},
-  {"id": "L05", "who": "N", "beat": "b", "text": "Every day, / GRANDPA / asks me / the same THING.", "say": "Every day, Grandpa asks me the same THING.", "shot": "S05", "look": {"what": "actor:grandpa", "word": "GRANDPA"}},
-  {"id": "L06", "who": "Grandpa", "text": "Is TONIGHT / the night?", "say": "Is tonight the night?", "shot": "S05", "look": {"what": "actor:grandpa", "word": "TONIGHT"}, "direction": "hopeful and tired, an old man asking the same thing again"},
-  {"id": "L07", "who": "N", "beat": "c", "text": "And every day / I tell him, / NOT YET.", "say": "And every day I tell him, not YET.", "shot": "S06", "look": {"what": "actor:grandpa", "word": "NOT YET"}},
-  {"id": "L08", "who": "N", "beat": "c", "text": "Everyone thinks / it's a CURSE. / It's NOT.", "say": "Everyone thinks it's a curse. It's NOT.", "shot": "S07", "look": {"what": "prop:sun_village", "word": "CURSE"}},
-  {"id": "L09", "who": "N", "beat": "d", "text": "It's a LEVER. / And I / PULLED it.", "say": "It's a LEVER. And I PULLED it.", "shot": "S08", "look": {"what": "prop:lever", "word": "LEVER", "size": "ms"}, "punch": true, "direction": "a proud little secret told slowly, every word clear", "note": "the owner: 'too quickly delivered'. Its own beat, its own take, room before it (the cut to the lever) and after it (the hand on the lever)"},
-  {"id": "L10", "who": "N", "beat": "e", "text": "Because at NIGHT, / zombies come OUT. / And Grandpa / is way too SLOW / to RUN.", "say": "Because at night, zombies come out. And Grandpa is way too slow to RUN.", "shot": "S09", "look": [{"what": "prop:tree", "word": "NIGHT"}, {"what": "actor:grandpa", "word": "SLOW"}]},
-  {"id": "L11", "who": "N", "beat": "e", "text": "Me? I haven't slept / in 300 days / EITHER. / I'm not even TIRED!", "say": "Me? I haven't slept in three hundred days either. I'm not even TIRED!", "shot": "S10", "look": {"what": "prop:bed_mine", "word": "TIRED"}, "note": "a plant, said proudly: the kid's own bed, still made"},
-  {"id": "L12", "who": "N", "beat": "f", "text": "But TODAY, / Grandpa SAID,", "say": "But today, Grandpa SAID,", "shot": "S11", "look": {"what": "actor:grandpa", "word": "TODAY"}},
-  {"id": "L13", "who": "Grandpa", "text": "Let it COME. / YOU need SLEEP, / kid.", "say": "Let it come. You need sleep, kid.", "shot": "S11", "look": {"what": "actor:grandpa", "word": "SLEEP", "size": "ms"}, "direction": "gentle and serious, an old man who knows something"},
-  {"id": "L14", "who": "N", "beat": "g", "text": "ME? / HE'S the one / who's TIRED.", "say": "Me? HE'S the one who's tired.", "shot": "S12", "look": {"what": "actor:grandpa", "word": "TIRED"}, "note": "a laugh in it: the kid's misreading"},
-  {"id": "L15", "who": "N", "beat": "g", "text": "So I walked him / to his BED. / Then I pulled / the lever BACK.", "say": "So I walked him to his bed. Then I pulled the lever BACK.", "shot": "S13", "look": [{"what": "prop:grandpa_bed", "word": "BED"}, {"what": "prop:lever", "word": "BACK"}]},
-  {"id": "L16", "who": "N", "beat": "h", "text": "The sun went DOWN. / The zombies / came OUT. / But Grandpa / was SAFE.", "say": "The sun went down. The zombies came out. But Grandpa was SAFE.", "shot": "S14", "look": [{"what": "prop:sun_village", "word": "DOWN"}, {"what": "prop:tree", "word": "OUT"}, {"what": "prop:grandpa_door", "word": "SAFE"}], "direction": "brave and proud, standing guard"},
-  {"id": "L17", "who": "N", "beat": "h", "text": "Then something / SCREAMED / up in the SKY.", "say": "Then something screamed up in the SKY.", "shot": "S16", "look": {"what": "sky", "word": "SKY"}, "punch": true, "note": "puzzled, not scared: he doesn't know what it is"}
+  {
+   "id": "L01",
+   "who": "N",
+   "beat": "a",
+   "text": "The SUN / hasn't SET / in my village / for 300 DAYS.",
+   "say": "The sun hasn't set in my village for three hundred DAYS.",
+   "shot": "S01",
+   "look": {
+    "what": "prop:sun_village",
+    "word": "SUN"
+   },
+   "punch": true,
+   "note": "a bright, amazed opening; one breath"
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "beat": "a",
+   "text": "Nobody has SLEPT. / The FARMER / keeps walking / into his own FENCE.",
+   "say": "Nobody has slept. The farmer keeps walking into his own FENCE.",
+   "shot": "S02",
+   "look": {
+    "what": "actor:farmer",
+    "word": "FENCE"
+   }
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "beat": "a",
+   "text": "And the ZOMBIES / have been HIDING / under ONE tree / the whole time.",
+   "say": "And the zombies have been hiding under one TREE the whole time.",
+   "shot": "S04",
+   "look": {
+    "what": "prop:tree",
+    "word": "ZOMBIES"
+   }
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "beat": "b",
+   "text": "Every day, / GRANDPA / asks me / the same THING.",
+   "say": "Every day, Grandpa asks me the same THING.",
+   "shot": "S05",
+   "look": {
+    "what": "actor:grandpa",
+    "word": "GRANDPA"
+   }
+  },
+  {
+   "id": "L05",
+   "who": "Grandpa",
+   "text": "Will the SUN / go DOWN / today?",
+   "say": "Will the sun go DOWN today?",
+   "shot": "S05",
+   "look": {
+    "what": "actor:grandpa",
+    "word": "TONIGHT"
+   },
+   "direction": "hopeful and tired, an old man asking again"
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "beat": "c",
+   "text": "And every day / I tell him, / NOT YET.",
+   "say": "And every day I tell him, not YET.",
+   "shot": "S06",
+   "look": {
+    "what": "actor:grandpa",
+    "word": "NOT YET"
+   }
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "beat": "c",
+   "text": "Everyone thinks / it's a CURSE. / It's NOT.",
+   "say": "Everyone thinks it's a curse. It's NOT.",
+   "shot": "S07",
+   "look": {
+    "what": "prop:sun_village",
+    "word": "CURSE"
+   }
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "beat": "d",
+   "text": "It's a LEVER. / And I / PULLED it.",
+   "say": "It's a LEVER. And I PULLED it.",
+   "shot": "S08",
+   "look": {
+    "what": "prop:lever",
+    "word": "LEVER",
+    "size": "ms"
+   },
+   "punch": true,
+   "direction": "proud and bright, slower, every word clear, full voice",
+   "note": "the owner: 'too quickly delivered'. Its own beat, its own take, room before it (the cut to the lever) and after it (the hand on the lever)"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "beat": "e",
+   "text": "Because at NIGHT, / zombies come OUT. / And Grandpa / is way too SLOW / to RUN.",
+   "say": "Because at night, zombies come out. And Grandpa is way too slow to RUN.",
+   "shot": "S09",
+   "look": [
+    {
+     "what": "prop:tree",
+     "word": "NIGHT"
+    },
+    {
+     "what": "actor:grandpa",
+     "word": "SLOW"
+    }
+   ]
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "beat": "e",
+   "text": "Me? I haven't slept / in 300 days / EITHER. / I'm not even TIRED!",
+   "say": "Me? I haven't slept in three hundred days either. I'm not even TIRED!",
+   "shot": "S10",
+   "look": {
+    "what": "item:white_bed",
+    "word": "TIRED"
+   },
+   "note": "a plant, said proudly: the white bed in his hand (item name showing), never placed, next to Grandpa's red bed"
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "beat": "f",
+   "text": "But TODAY, / Grandpa SAID,",
+   "say": "But today, Grandpa SAID,",
+   "shot": "S11",
+   "look": {
+    "what": "actor:grandpa",
+    "word": "TODAY"
+   }
+  },
+  {
+   "id": "L12",
+   "who": "Grandpa",
+   "text": "Let the night COME. / YOU need SLEEP, / kid.",
+   "say": "Let the night come. You need sleep, kid.",
+   "shot": "S11",
+   "look": {
+    "what": "actor:grandpa",
+    "word": "SLEEP",
+    "size": "ms"
+   },
+   "direction": "warm and firm, he means it, full voice"
+  },
+  {
+   "id": "L13",
+   "who": "N",
+   "beat": "g",
+   "text": "ME? / HE'S the one / who's TIRED.",
+   "say": "Me? HE'S the one who's tired.",
+   "shot": "S12",
+   "look": {
+    "what": "actor:grandpa",
+    "word": "TIRED"
+   },
+   "note": "a laugh in it: the kid's misreading"
+  },
+  {
+   "id": "L14",
+   "who": "N",
+   "beat": "g",
+   "text": "So I walked him / HOME. / Then I pulled / the lever BACK.",
+   "say": "So I walked him home. Then I pulled the lever BACK.",
+   "shot": "S13",
+   "look": [
+    {
+     "what": "prop:grandpa_door",
+     "word": "HOME"
+    },
+    {
+     "what": "prop:lever",
+     "word": "BACK"
+    }
+   ]
+  },
+  {
+   "id": "L15",
+   "who": "N",
+   "beat": "h",
+   "text": "The sun went DOWN. / The zombies / came OUT. / So I stood GUARD / at his DOOR.",
+   "say": "The sun went down. The zombies came out. So I stood guard at his DOOR.",
+   "shot": "S14",
+   "look": [
+    {
+     "what": "prop:sun_village",
+     "word": "DOWN"
+    },
+    {
+     "what": "prop:tree",
+     "word": "OUT"
+    },
+    {
+     "what": "prop:grandpa_door",
+     "word": "DOOR"
+    }
+   ],
+   "direction": "brave and proud, standing guard"
+  },
+  {
+   "id": "L16",
+   "who": "N",
+   "beat": "h",
+   "text": "Then something / SCREAMED / up in the SKY.",
+   "say": "Then something screamed up in the SKY.",
+   "shot": "S16",
+   "look": {
+    "what": "sky",
+    "word": "SKY"
+   },
+   "punch": true,
+   "note": "puzzled, not scared: he doesn't know what it is"
+  }
  ],
  "ending": {
   "after": "L17",
-  "beats": ["S17 (no line): the view tips up to a night sky with six phantoms circling; one screeches and dives; the hit (camera jolt, red), a second from behind, the third: 'the Stillwater grandson' dies. Death screen 'HelloBuh was slain by Phantom' (the mark `death` is the payoff: the hit sound and the screen). End 1.0 s after."],
+  "beats": [
+   "S17 (no line): the view tips up to the moon behind six circling phantoms; one dives (a third of the frame), two hits, the narrator dies. Death screen 'slain by Phantom' (the mark `death` is the payoff). End 1.0 s after."
+  ],
   "loop": "L01 changes: the sun never set because the kid was guarding the wrong person; the only one in danger at night was the one who never slept."
  },
  "shots": [
-  {"id": "S01", "line": "L01", "place": "square", "size": "ews", "camera": "a slow crane down from 14 blocks over the square's east side, looking west over the lever post and the roofs to the low sun", "frame": "fg: the lever post (moving up into the lower third); subject: the low sun over Grandpa's cottage on the west rise, the village's roofs on the real slope; bg: the hills and the sea to the north. Day 11000 (sun low in the west, gold)."},
-  {"id": "S02", "line": "L02", "place": "gary_field", "size": "full", "camera": "4 blocks from Gary's field fence, eye height, a slow push", "frame": "subject: the farmer (Gary, not yet a zombie) bumping into his own fence again and again, full figure, centred; bg: the wheat and the field's slope"},
-  {"id": "S03", "line": "L03", "place": "grandpa_house", "size": "ms", "camera": "POV inside Grandpa's cottage, a slow pan across the two beds", "frame": "subject: two made beds (Grandpa's red, the kid's white), the sun through the window"},
-  {"id": "S04", "line": "L04", "place": "the_tree", "size": "ws", "camera": "12 blocks west of the one tree, a slow push, the sun behind the camera", "frame": "subject: seven zombies packed in the tree's shade, one hand sticking out into the sun and pulling back from the smoke; bg: the shore and the sea"},
-  {"id": "S05", "line": "L05-L06", "place": "grandpa_house", "size": "full", "camera": "POV on Grandpa's porch, Grandpa at his door, 3 blocks away", "frame": "subject: Grandpa, centred, looks at the kid; he says L06 (on screen)"},
-  {"id": "S06", "line": "L07", "place": "grandpa_house", "size": "ms", "camera": "the same POV, a step closer", "frame": "Grandpa turns and shuffles back inside, slow"},
-  {"id": "S07", "line": "L08", "place": "square", "size": "ws", "camera": "a camera shot across the square: villagers staring up at the sun", "frame": "four villagers in the square, faces up at the sun; the lever post at the frame's edge"},
-  {"id": "S08", "line": "L09", "place": "square", "size": "ms", "camera": "POV, a slow push onto the lever on its stone post, then the hand rests on it", "frame": "subject: the lever, ON, centred and big; the sun behind it"},
-  {"id": "S09", "line": "L10", "place": "square", "size": "ws", "camera": "POV from the square: the tree to the east, then Grandpa crossing the square very slowly", "frame": "the zombies under the tree far off; Grandpa crossing at an old man's shuffle"},
-  {"id": "S10", "line": "L11", "place": "grandpa_house", "size": "ms", "camera": "POV, the kid's own white bed, made, untouched", "frame": "subject: the kid's white bed"},
-  {"id": "S11", "line": "L12-L13", "place": "grandpa_house", "size": "ms", "camera": "POV, Grandpa at the door, close, looking at the kid", "frame": "subject: Grandpa, centred, eye level; he says L13 (on screen)"},
-  {"id": "S12", "line": "L14", "place": "grandpa_house", "size": "full", "camera": "camera behind the kid: Grandpa yawns/shuffles inside", "frame": "Grandpa going in"},
-  {"id": "S13", "line": "L15", "place": "grandpa_house", "size": "ms", "camera": "POV: Grandpa lies down in his red bed; cut to the lever, the hand pulls it back", "frame": "the bed, then the lever going OFF"},
-  {"id": "S14", "line": "L16", "place": "square", "size": "ews", "camera": "a camera shot: the sun sinking fast behind Grandpa's cottage, the sky going red then dark; the zombies walk out from under the tree", "frame": "the time-lapse sunset over the real hills; the zombies stepping out into the dusk"},
-  {"id": "S15", "line": "L16", "place": "grandpa_house", "size": "ws", "camera": "POV at Grandpa's door, sword out, the zombies coming up the slope", "frame": "the kid's sword; zombies at a walk; a lantern by the door"},
-  {"id": "S16", "line": "L17", "place": "grandpa_house", "size": "ws", "camera": "camera behind and below the kid at the door, the night sky above", "frame": "the kid small at the door, the sky over him; a screech; specks moving among the stars"},
-  {"id": "S17", "line": "-", "place": "grandpa_house", "size": "pov", "camera": "POV tips up: six phantoms circling; one dives; hits; death screen", "frame": "phantoms against the moon; the dive; the death screen 'slain by Phantom'"}
+  {
+   "id": "S01",
+   "line": "L01",
+   "place": "square",
+   "size": "ews",
+   "camera": "10 blocks east of the one tree, eye height, looking west, a slow push",
+   "frame": "fg: seven zombies packed in the tree's shade, one arm out in the sun, smoking; mid: the lever post in the square; bg: the low sun over Grandpa's cottage on the west rise. Day 11000."
+  },
+  {
+   "id": "S02",
+   "line": "L02",
+   "place": "gary_field",
+   "size": "full",
+   "camera": "4 blocks from Gary's field fence, eye height, a slow push",
+   "frame": "subject: the farmer (Gary, not yet a zombie) bumping into his own fence again and again, full figure, centred; bg: the wheat and the field's slope"
+  },
+  {
+   "id": "S04",
+   "line": "L03",
+   "place": "the_tree",
+   "size": "ws",
+   "camera": "12 blocks west of the one tree, a slow push, the sun behind the camera",
+   "frame": "subject: seven zombies packed in the tree's shade, one hand sticking out into the sun and pulling back from the smoke; bg: the shore and the sea"
+  },
+  {
+   "id": "S05",
+   "line": "L04-L05",
+   "place": "grandpa_house",
+   "size": "full",
+   "camera": "POV on Grandpa's porch, Grandpa at his door, 3 blocks away",
+   "frame": "subject: Grandpa, centred, looks at the kid; he says L06 (on screen)"
+  },
+  {
+   "id": "S06",
+   "line": "L06",
+   "place": "grandpa_house",
+   "size": "ms",
+   "camera": "the same POV, a step closer",
+   "frame": "Grandpa turns and shuffles back inside, slow"
+  },
+  {
+   "id": "S07",
+   "line": "L07",
+   "place": "square",
+   "size": "ws",
+   "camera": "a camera shot across the square: villagers staring up at the sun",
+   "frame": "four villagers in the square, faces up at the sun; the lever post at the frame's edge"
+  },
+  {
+   "id": "S08",
+   "line": "L08",
+   "place": "square",
+   "size": "ms",
+   "camera": "POV, a slow push onto the lever on its stone post, then the hand rests on it",
+   "frame": "subject: the lever, ON, centred and big; the sun behind it"
+  },
+  {
+   "id": "S09",
+   "line": "L09",
+   "place": "square",
+   "size": "ws",
+   "camera": "POV from the square: the tree to the east, then Grandpa crossing the square very slowly",
+   "frame": "the zombies under the tree far off; Grandpa crossing at an old man's shuffle"
+  },
+  {
+   "id": "S10",
+   "line": "L10",
+   "place": "grandpa_house",
+   "size": "ms",
+   "camera": "POV in Grandpa's cottage: the white bed held in his hand (its item name showing), Grandpa's red bed beside him, both made",
+   "frame": "subject: the white bed item in hand; the red bed made"
+  },
+  {
+   "id": "S11",
+   "line": "L11-L12",
+   "place": "grandpa_house",
+   "size": "ms",
+   "camera": "POV, Grandpa at the door, close, looking at the kid",
+   "frame": "subject: Grandpa, centred, eye level; he says L13 (on screen)"
+  },
+  {
+   "id": "S12",
+   "line": "L13",
+   "place": "grandpa_house",
+   "size": "full",
+   "camera": "POV: Grandpa looks at the lever post, walks past it, shuffles home",
+   "frame": "Grandpa doesn't flip it himself: it's the kid's lever"
+  },
+  {
+   "id": "S13",
+   "line": "L14",
+   "place": "grandpa_house",
+   "size": "ms",
+   "camera": "POV: Grandpa goes in and the door shuts; cut to the lever, the hand pulls it back",
+   "frame": "the door closing, then the lever going OFF"
+  },
+  {
+   "id": "S14",
+   "line": "L15",
+   "place": "square",
+   "size": "ews",
+   "camera": "a camera shot: the sun sinking fast behind Grandpa's cottage, the sky going red then dark; the zombies walk out from under the tree",
+   "frame": "the time-lapse sunset over the real hills; the zombies stepping out into the dusk"
+  },
+  {
+   "id": "S15",
+   "line": "L15",
+   "place": "grandpa_house",
+   "size": "ws",
+   "camera": "POV at Grandpa's door, sword out, the zombies coming up the slope",
+   "frame": "the kid's sword; zombies at a walk; a lantern by the door"
+  },
+  {
+   "id": "S16",
+   "line": "L16",
+   "place": "grandpa_house",
+   "size": "ws",
+   "camera": "4 blocks east of the kid and 2 down the slope, looking up at him on Grandpa's porch and the night sky",
+   "frame": "the kid at the door, sword out, the sky over him; a screech; specks moving among the stars"
+  },
+  {
+   "id": "S17",
+   "line": "-",
+   "place": "grandpa_house",
+   "size": "pov",
+   "camera": "POV tips up: the moon behind a circle of six phantoms; one dives and fills a third of the frame",
+   "frame": "one dive, two hits, the death screen within 3 s of the first phantom"
+  }
  ],
  "props": {
-  "sun_village": {"note": "the square seen west toward the sun and Grandpa's cottage"},
-  "lever": {"block": "lever", "at": [0, 1, 0]},
-  "tree": {"note": "the one tree, 26 blocks east of the lever (-188, -1058)"},
-  "beds": {"block": "red_bed"},
-  "bed_mine": {"block": "white_bed"},
-  "grandpa_bed": {"block": "red_bed"},
-  "grandpa_door": {"note": "Grandpa's cottage door (faces east)"}
+  "sun_village": {
+   "note": "the square seen west toward the sun and Grandpa's cottage"
+  },
+  "lever": {
+   "block": "lever",
+   "at": [
+    0,
+    1,
+    0
+   ]
+  },
+  "tree": {
+   "note": "the one tree, 26 blocks east of the lever (-188, -1058)"
+  },
+  "bed_mine": {
+   "item": "white_bed",
+   "note": "in his hand, never placed"
+  },
+  "grandpa_door": {
+   "note": "Grandpa's cottage door (faces east)"
+  }
  },
  "bible": "stories/sun_wont_set/bible.md",
  "sfx": [
-  {"under": "S04", "sound": "entity.zombie.ambient", "note": "low groans from the shade"},
-  {"under": "S08", "sound": "block.lever.click", "note": "the hand on the lever (no click: it stays on)"},
-  {"under": "S13", "sound": "block.lever.click", "note": "the lever goes back"},
-  {"under": "S16", "sound": "entity.phantom.ambient", "note": "the scream in the sky on 'SCREAMED'"},
-  {"under": "S17", "sound": "entity.phantom.swoop", "note": "the dive, then entity.player.hurt x3, the death"}
+  {
+   "under": "S04",
+   "sound": "entity.zombie.ambient",
+   "note": "low groans from the shade"
+  },
+  {
+   "under": "S08",
+   "sound": "block.lever.click",
+   "note": "the hand on the lever (no click: it stays on)"
+  },
+  {
+   "under": "S13",
+   "sound": "block.lever.click",
+   "note": "the lever goes back"
+  },
+  {
+   "under": "S16",
+   "sound": "entity.phantom.ambient",
+   "note": "the scream in the sky on 'SCREAMED'"
+  },
+  {
+   "under": "S17",
+   "sound": "entity.phantom.swoop",
+   "note": "the dive, then entity.player.hurt x3, the death"
+  }
+ ],
+ "requests": [
+  {
+   "id": "r_a",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L01",
+    "L02",
+    "L03"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_b",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L04"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_gp_L05",
+   "speakers": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "voice": "Rasalgethi",
+   "lines": [
+    "L05"
+   ],
+   "direction": "[An old village grandpa, tired and kind, slow]"
+  },
+  {
+   "id": "r_c",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L06",
+    "L07"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_d",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L08"
+   ],
+   "direction": "[A proud nine-year-old kid telling his big secret, bright, slower, every word clear; not whispery or soft]"
+  },
+  {
+   "id": "r_e",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L09",
+    "L10"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_f",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L11"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_gp_L12",
+   "speakers": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "voice": "Rasalgethi",
+   "lines": [
+    "L12"
+   ],
+   "direction": "[An old village grandpa, tired and kind, slow]"
+  },
+  {
+   "id": "r_g",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L13",
+    "L14"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_h",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L15",
+    "L16"
+   ],
+   "direction": "[A brave nine-year-old kid standing guard, bright and proud, then puzzled; not whispery or soft]"
+  }
  ]
 }
