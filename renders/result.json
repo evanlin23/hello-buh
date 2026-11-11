@@ -1,0 +1,17 @@
+{
+ "name": "midas_touch",
+ "stunt": "midas_touch",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/42993219679",
+ "source": "795db933",
+ "queued": "2026-11-11T09:12:25Z",
+ "finished": "2026-11-11T09:23:01Z",
+ "mp4": "renders/out/midas_touch.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

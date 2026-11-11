@@ -1,0 +1,133 @@
+{
+ "stunt": "midas_touch",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/midas_touch.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "2 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 83,
+     "col": 20,
+     "text": "if (a < 1.2) bot.setControlState('forward', true); else if (a > 1.95) bot.setControlState('back', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 84,
+     "col": 36,
+     "text": "if (rel > 0.4 && rel < 2.75) bot.setControlState('left', true); else if (rel < -0.4 && rel > -2.75) bot.setControlState('right', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT midas_touch: 1 shots, scene 0.0-13.3 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-13.3  pov    ",
+    "verdict: clean"
+   ]
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 1 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 47% of the frame is within 3 blocks (grass_block, dirt)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "24 visible sound-making events (break 5, death 1, hurt 17, voice 1), 0 with a sound mark, 24 without (audio.py adds those for a story)",
+    "     0.00s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.70s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     1.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     1.75s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     2.05s  leaf_litter broke                  -> block.leaf_litter.break            3.2 blocks in view  ",
+    "     2.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     2.70s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     3.25s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     3.75s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     4.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     4.55s  oak_leaves broke                   -> block.grass.break                 14.7 blocks in view  ",
+    "     4.70s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     4.75s  wolf idle voice                    -> entity.wolf.pant                  14.7 blocks          ",
+    "     5.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     5.65s  leaf_litter broke                  -> block.leaf_litter.break            5.1 blocks in view  ",
+    "     5.70s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     6.10s  short_grass broke                  -> block.grass.break                  6.7 blocks in view  ",
+    "     6.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     6.70s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     7.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     7.70s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     8.20s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     8.20s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "    19.25s  oak_leaves broke                   -> block.grass.break                 13.0 blocks          ",
+    "ambience per shot: -0.25-23.05s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T09:17:11.156Z"
+}
