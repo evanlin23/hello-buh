@@ -41,7 +41,7 @@ module.exports = {
       ['tntwalk', 'lit', 2.2], ['lit', 'boom:-1.6', 2],
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
-      ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
+      ['boom:0.85', 'boom:1.6', 'cut'], ['boom:1.6', 'lastboom:-0.4', 1.75]], subs: subs(),
       flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['impact', 'lastboom']],
       // ends on the second TNT's blast once its debris settles, never on a lit TNT (r:r24d99a, independent review)
         // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
