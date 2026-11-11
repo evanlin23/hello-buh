@@ -1,0 +1,17 @@
+{
+ "name": "chain_reaction",
+ "stunt": "chain_reaction",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43069981405",
+ "source": "94466f55",
+ "queued": "2026-11-11T17:37:33Z",
+ "finished": "2026-11-11T17:45:58Z",
+ "mp4": "renders/out/chain_reaction.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

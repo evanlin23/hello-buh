@@ -1,0 +1,13 @@
+chain_reaction: CHECK OK
+ok   motion lint: 3 raw motion / own-clock call(s): use the K. primitives
+ok   rec_check: no blockers
+ok   lint: clean
+ok   continuity: 0 problem(s), 2 warning(s), 0 note(s)
+ok   framing: 1 warning(s) over 1 shots
+ok   owner: 0 blocker(s), 2 warning(s)
+ok   cuts: 0 blocker(s), 0 warning(s) over 0 cuts
+ok   caption sync: skipped (not a story)
+ok   voice contrast: skipped (not a story)
+ok   on-screen sound: every visible action has its sound
+ok   pace: skipped: no rendered Short yet (runs after ./hb render --fetch)
+ok   audible sound: skipped: no fresh rendered Short (the levels are rec_check's)

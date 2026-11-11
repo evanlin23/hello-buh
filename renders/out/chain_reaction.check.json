@@ -1,0 +1,191 @@
+{
+ "stunt": "chain_reaction",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/chain_reaction.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "3 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 286,
+     "col": 7,
+     "text": "bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 296,
+     "col": 9,
+     "text": "bot.setControlState('forward', far && fw); bot.setControlState('back', far && bk)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 297,
+     "col": 9,
+     "text": "bot.setControlState('right', far && rt); bot.setControlState('left', far && lt)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT chain_reaction: 1 shots, scene 0.0-32.6 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-32.6  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 2 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "minecart #305 glides 1.2 blocks in one tick in view at 9.30 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "vanish",
+     "msg": "tnt_minecart #306 vanishes in the middle of the frame 25.40 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 1 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 49% of the frame is within 3 blocks (grass_block, polished_andesite)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 0.1,
+     "tick": 38,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 204 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 1.45,
+     "tick": 65,
+     "line": null,
+     "msg": "walking forward, the player slows from 5.2 to 0.9 blocks/s for 1.05 s: it is sliding along a block it walked into. Owner: \"Gets stuck on the block while walking forward\": K.walkTo with a point around it"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "     9.90s  placed sand                        -> block.sand.place                  15.3 blocks in view  ",
+    "    10.00s  placed sand                        -> block.sand.place                  15.4 blocks in view  ",
+    "    10.10s  placed sand                        -> block.sand.place                  15.6 blocks in view  ",
+    "    18.25s  piston_head broke                  -> block.stone.break                 15.2 blocks in view  ",
+    "    18.35s  placed orange_stained_glass        -> block.glass.place                 14.7 blocks in view  ",
+    "    18.65s  piston_head broke                  -> block.stone.break                 13.1 blocks in view  ",
+    "    18.75s  placed yellow_stained_glass        -> block.glass.place                 12.8 blocks in view  ",
+    "    19.15s  placed lime_stained_glass          -> block.glass.place                 11.1 blocks in view  ",
+    "    19.45s  piston_head broke                  -> block.stone.break                  9.6 blocks in view  ",
+    "    19.55s  placed green_stained_glass         -> block.glass.place                  9.7 blocks in view  ",
+    "    19.85s  piston_head broke                  -> block.stone.break                  8.2 blocks in view  ",
+    "    19.95s  placed cyan_stained_glass          -> block.glass.place                  8.6 blocks in view  ",
+    "    20.25s  piston_head broke                  -> block.stone.break                  7.1 blocks in view  ",
+    "    20.35s  placed light_blue_stained_glass    -> block.glass.place                  7.7 blocks in view  ",
+    "    20.65s  piston_head broke                  -> block.stone.break                  6.6 blocks in view  ",
+    "    20.75s  placed blue_stained_glass          -> block.glass.place                  7.4 blocks in view  ",
+    "    21.05s  piston_head broke                  -> block.stone.break                  6.7 blocks in view  ",
+    "    21.15s  placed purple_stained_glass        -> block.glass.place                  7.5 blocks in view  ",
+    "    21.45s  piston_head broke                  -> block.stone.break                  6.6 blocks in view  ",
+    "    21.55s  placed magenta_stained_glass       -> block.glass.place                  7.3 blocks in view  ",
+    "    21.85s  piston_head broke                  -> block.stone.break                  6.5 blocks in view  ",
+    "    21.95s  placed pink_stained_glass          -> block.glass.place                  7.2 blocks in view  ",
+    "    22.25s  piston_head broke                  -> block.stone.break                  6.1 blocks in view  ",
+    "    22.35s  placed red_stained_glass           -> block.glass.place                  6.8 blocks in view  ",
+    "    22.55s  placed redstone_block              -> block.stone.place                 10.2 blocks in view  ",
+    "    27.20s  TNT lit                            -> entity.tnt.primed                 14.8 blocks in view  ",
+    "    27.20s  TNT lit                            -> entity.tnt.primed                 13.7 blocks in view  ",
+    "    27.20s  TNT lit                            -> entity.tnt.primed                 12.8 blocks in view  ",
+    "ambience per shot: -0.20-43.05s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T17:38:28.773Z"
+}
