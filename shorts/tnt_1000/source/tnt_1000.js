@@ -29,6 +29,9 @@ module.exports = {
   edit: {
     caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'boom4',
     startAt: 'tier1:-0.05', endAfter: 'death:1.4', deathScreen: true,
+    // the song drops out 0.35 s before the death so the 1000-TNT blast lands as a hit (pace: no sound hit on the payoff,
+    // the bed covered it)
+    sfx: [['dip', 'death', 0.35]],
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },

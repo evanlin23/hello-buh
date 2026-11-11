@@ -20,8 +20,7 @@
     "drop_on_event": "portal",
     "drop_in_song_s": 9.0,
     "drop_in_short_s": 5.23,
-    "song_start_s": 3.77,
-    "bed_lufs": -16.0
+    "song_start_s": 3.77
   },
   "video": {
     "file": "short.mp4",

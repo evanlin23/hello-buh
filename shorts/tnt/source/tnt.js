@@ -2,28 +2,34 @@
 // steel (a real use on the block), sprints away, turns round for the chain reaction, then walks
 // up to the edge of the crater and looks in. Explosions come from the server's explosion packets
 // (particles + sound), primed TNT is rendered flashing like TntRenderer.
+const { plateau } = require('../lib/plateau')
 module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', start: 0.4 },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/ncs/mortals_funk_remix.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:1.0',
+    // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
+    // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
+    speed: [['lit:0.5', 'boom:-0.4', 1.5]],
+    sfx: [['air', 'start', 'boom', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom']],
+    flash: [['boom', 0, 0.5]], shake: [['boom', 0, 10]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 
   async setup (ctx) {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
     await ctx.defaultRules()
-    // a flat field (each /fill under the 32768-block cap)
-    await ctx.cmd(`/fill ${x - 20} ${floor + 1} ${z - 36} ${x + 20} ${floor + 12} ${z + 6} air`)
-    await ctx.cmd(`/fill ${x - 20} ${floor - 6} ${z - 36} ${x + 20} ${floor - 1} ${z + 6} dirt`)
-    await ctx.cmd(`/fill ${x - 20} ${floor} ${z - 36} ${x + 20} ${floor} ${z + 6} grass_block`)
+    // a big field levelled at the terrain's high percentile (lib/plateau), deep dirt below (a crater that reached
+    // the sea or groundwater flooded): a box cleared down to the start height left cut walls in view
+    const floor = await plateau(ctx, { x0: x - 34, x1: x + 34, z0: z - 66, z1: z + 18, above: 30, below: 16, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    this.x = x; this.z = z; this.floor = floor
     this.pz = z - 24                                          // pile centre
     await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${this.pz - 2} ${x + 2} ${floor + 3} ${this.pz + 2} tnt`)
     await ctx.hotbar(['diamond_sword', 'flint_and_steel', ['tnt', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, floor + 1, this.pz + 6.5, 180, 10)
+    await ctx.cmd('/effect give @s instant_health 1 10 true')
     await ctx.cmd('/gamemode survival')
     ctx.select(2)
     await bot.waitForTicks(20)
@@ -34,8 +40,7 @@ module.exports = {
     const { bot, Vec3 } = ctx
     const { x, floor, pz } = this
     await bot.waitForTicks(8)
-    await ctx.easeLook(0.5, 0.05, 600)                        // look at all that TNT
-    await ctx.easeLook(-0.4, -0.1, 700)
+    await ctx.easeLook(0.3, 0.05, 450)                        // look at all that TNT
     // walk up and light the front block
     bot.setControlState('forward', true)
     for (let i = 0; i < 60 && bot.entity.position.z > pz + 4.6; i++) await bot.waitForTicks(1)
@@ -47,25 +52,26 @@ module.exports = {
     bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     await bot.waitForTicks(6)
-    // RUN
-    await ctx.easeLook(Math.PI, 0, 350)
-    bot.setControlState('sprint', true); bot.setControlState('forward', true); bot.setControlState('jump', true)
-    await bot.waitForTicks(34)
-    bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('jump', false)
-    await ctx.easeLook(0, 0.05, 500)                          // turn round to watch
-    // the blast: wait for the first explosion
+    // back away the whole fuse while FACING the flashing pile (turning to sprint off hid the TNT for
+    // 1.7 s of the 4 s fuse), with clear nervous glances that come back to it
+    bot.setControlState('back', true)
     let boomed = false
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.once('explosion', onBoom)
-    for (let i = 0; i < 120 && !boomed; i++) await bot.waitForTicks(1)
-    await bot.waitForTicks(50)                                // the chain goes off
-    // walk up to the crater
-    bot.setControlState('forward', true)
-    for (let i = 0; i < 80 && bot.entity.position.z > pz + 7; i++) await bot.waitForTicks(1)
-    bot.setControlState('forward', false)
-    await ctx.easeLook(0, -0.75, 900)
-    await ctx.easeLook(0.5, -0.6, 900)
-    await bot.waitForTicks(10)
+    const glances = [[0.35, 0.12], [-0.3, 0.05], [0.0, 0.25], [0.25, 0.0], [-0.2, 0.15], [0.0, 0.05]]
+    for (let i = 0; i < 120 && !boomed; i++) {
+      if (i === 64) bot.setControlState('back', false)     // ~14 blocks back: far enough to watch
+      if (i % 14 === 0) ctx.easeLook(glances[(i / 14) % glances.length][0], glances[(i / 14) % glances.length][1], 450)
+      await bot.waitForTicks(1)
+    }
+    bot.setControlState('back', false)
+    await ctx.easeLook(0, 0.08, 300)
+    await bot.waitForTicks(40)                                // the chain goes off
+    // walk up to the rim and look down INTO the crater (the old ending stayed level on the grass)
+    bot.setControlState('forward', true); await bot.waitForTicks(14); bot.setControlState('forward', false)
+    await ctx.easeLook(0, -0.95, 800)
+    ctx.easeLook(0.4, -0.85, 1600)
+    await bot.waitForTicks(28)
     return boomed && !ctx.died
   }
 }

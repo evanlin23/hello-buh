@@ -20,17 +20,18 @@
     "drop_on_event": "boom4",
     "drop_in_song_s": 29.5,
     "drop_in_short_s": 20.08,
-    "song_start_s": 9.42
+    "song_start_s": 9.42,
+    "bed_lufs": -16.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 31.38,
+    "duration_s": 31.4,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 53823792,
-    "sha256": "594e04de726a753204917dab4997679408ed420533c3498907c68f6a1c32ba11"
+    "bytes": 54050566,
+    "sha256": "1ba7c3fb3600b722edc8ac28165fe7f8d031bf38d2d34bb273aa9538b1e84582"
   },
   "edit": {
     "caption": "1 TNT vs 10 vs 100 vs 1000 \ud83d\udc80",
@@ -139,6 +140,13 @@
       "tier1:-0.05",
       "--end_after",
       "death:1.4"
+    ],
+    "sfx": [
+      [
+        "dip",
+        "death",
+        0.35
+      ]
     ]
   },
   "recording": {
@@ -27453,6 +27461,6 @@
     "python3 edit.py --frames work/tnt_1000.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt_1000.rec.json --audio work/tnt_1000.wav --caption \"1 TNT vs 10 vs 100 vs 1000 \ud83d\udc80\" --red 1000 --subs \"[[\\\"tier1\\\",\\\"1 TNT\\\",2.6,0],[\\\"tier2\\\",\\\"10 TNT\\\",2.6,0],[\\\"tier3\\\",\\\"100 TNT\\\",2.6,0],[\\\"tier4\\\",\\\"1000 TNT\\\",2.6,0],[\\\"tier5\\\",\\\"1000 TNT... but I'm ON it\\\",3.5,0]]\" --speed [[\"fuse1a\",\"fuse1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fuse2a\",\"fuse2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"fuse3a\",\"fuse3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"fuse4a\",\"fuse4b\",\"cut\"],[\"rim4a\",\"rim4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse5a\",\"fuse5b\",\"cut\"]] --death_screen death --start_at tier1:-0.05 --end_after death:1.4 --out out/tnt_1000.mp4"
   ],
   "status": "ready",
-  "notes": "worker 9: 1 vs 10 vs 100 vs 1000 TNT, finale standing ON 1000 TNT; frame review + retention + minecraft audits ready (independent reviewer). Nitpicks: point-blank TNT texture opening tiers 2-4, smoke-filled frames at the big blasts.",
+  "notes": "worker 9: 1 vs 10 vs 100 vs 1000 TNT, finale standing ON 1000 TNT; frame review + retention + minecraft audits ready (independent reviewer). Nitpicks: point-blank TNT texture opening tiers 2-4, smoke-filled frames at the big blasts. | 2026-11-11 pace fix (queue worker): pace BLOCKed no sound hit on the payoff (death at 29.98 s: the -13 bed covered the 1000-TNT blast). Edit-only: edit.sfx dip on death (the song drops out 0.35 s before it; stunts/tnt_1000.js), remixed at the new -16 LUFS stunt bed (r:r662041), same track and drop, picture unchanged. ./hb pace OK (WARN 2.3 s spans at 22.7/25.2), ./hb check OK (primed TNT is no teleport, 7d5c691), key_sounds n/a",
   "published_at": "2026-11-07T18:59:28.495Z"
 }
