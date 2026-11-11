@@ -282,6 +282,11 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, sharing KRIZZIT's "Daylight Edition" Short (a giant fractal pyramid, an elytra fly-around
+  and dive inside, captioned "7 seconds of my life went into this build"): "new format to try".** HelloBuh tries an
+  original take on the format (family `mega`): an absurdly big generated build shown from frame 1, an understated
+  ironic caption on top the whole time, an elytra fly-around that ends diving inside. Our own structures, caption
+  wording and music; never a copy of that Short.
 - **Owner, 2026-11-11, on the music sitting over the game sounds in most queued Shorts (music 1-12 dB above the
   biggest game sounds; only 3 of 18 had the game on top): "fix all i think".** The music bed comes down for every
   stunt Short (about 3 dB, so the game's own hits carry the payoff), and every ready, not-yet-uploaded Short is
