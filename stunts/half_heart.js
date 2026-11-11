@@ -27,8 +27,12 @@ module.exports = {
     subs: [
       ['jump', 'water clutch', 2.4], ['magma', 'magma: sneak', 2.0],
       ['drop', '3 blocks = 0 damage', 1.6], ['bridge', 'lava bridge', 2.8],
-      ['bush', 'almost there...', 0.9]
-    ]
+      // on the bridge's last blocks (the 15th sound: a lava pop, 0.3 s before the bush), so it's gone before the
+      // death screen; on 'bush' it ran 0.25 s and then sat over "You Died!" (re-record: give it its own mark)
+      ['sound', 'almost there...', 1.6, 14]
+    ],
+    // the look up the pillar holds 1.45 s (the camera parked: review); 1.0 s of it cut, an invisible cut on the same view
+    speed: [['placed:1.25', 'placed:2.25', 'cut']]
   },
 
   async setup (ctx) {
