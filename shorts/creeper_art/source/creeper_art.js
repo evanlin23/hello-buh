@@ -12,5 +12,5 @@ module.exports = pixelArt({
   palette: { G: 'green_concrete', L: 'lime_concrete', K: 'black_concrete' },
   wall: 'smooth_stone',
   caption: 'rate my pixel art 1-10 😭',
-  edit: { caption: 'rate my pixel art 1-10 😭', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
+  edit: { caption: 'rate my pixel art 1-10 😭', dropAt: 'complete', startAt: 'stage:-0.1', endAfter: 'complete:0.9' }
 })

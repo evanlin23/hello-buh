@@ -14,6 +14,11 @@
 //           like that, then the blocks that don't belong are cleared with shears and the real
 //           picture is built (a misdirect: "it's a sword... no, a pickaxe")
 // upscale(art, k) makes the big version of a picture.
+const SIGHT = require('./sight')
+const { roomBehind } = require('./act')
+// the clear room kept behind the player while it backs away from a build (owner 2026-11-11, creeper_art: "it walks all
+// the way back into like the other one ... halfway against the wall"): the back key is let go before this
+const ROOM = 3
 const DIRS = [[-1, 0], [0, -1], [1, 0]]           // west, north, east: left, ahead, right
 const FACE = { '-1,0': 5, '0,-1': 3, '1,0': 4 }   // protocol face of the wall block that faces the bot, by direction
 
@@ -88,6 +93,13 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
         this.walls.push({ fx, fz, rx, rz, cx, cz, ybase, H, W })
         reach = Math.max(reach, Math.hypot(dist + 1, W / 2 + 1, Math.max(ybase + H - eyeY, eyeY - ybase) + 1))   // pictures stand on the ground: the top is far above the eye
       }
+      // the room behind each build spot (facing wall k, backing away from it): the walk back stops ROOM blocks short of
+      // whatever is there (perform), so a lane shorter than the walk back just makes a shorter pull-back. Logged.
+      {
+        const solid = (bx, by, bz) => { const q = bot.blockAt(new ctx.Vec3(bx, by, bz)); return !!(q && q.boundingBox === 'block') }
+        this.lanes = this.walls.map(w => +roomBehind({ x: x + 0.5, y: floor + RISE + 1, z: z + 0.5 }, Math.atan2(-w.fx, -w.fz), solid, 24).toFixed(1))
+        ctx.log(`pixel art: clear room behind each build spot ${this.lanes.join(' / ')} blocks (the walk back stops ${ROOM} short)`)
+      }
       await ctx.cmd(`/attribute @s minecraft:block_interaction_range base set ${Math.ceil(reach) + 13}`)   // + the walk back (~9 blocks)   // the big art's far corners
       // the hotbar: as many stacks of each colour as the three pictures need
       const need = {}
@@ -135,11 +147,21 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
       // "the head jerking around")
       const VMAX = 11 * Math.PI / 180, ACC = 6 * Math.PI / 180   // per tick, per tick per tick
       let yaw = bot.entity.yaw, pitch = bot.entity.pitch, vy = 0, vp = 0
-      const home = new Vec3(this.x + 0.5, 0, this.z + 0.5)
+      const solid = (bx, by, bz) => { const q = bot.blockAt(new Vec3(bx, by, bz)); return !!(q && q.boundingBox === 'block') }
+      let stopped = false, curK = 0
       const lookToward = async (target, ticks, k = 0.45) => {
         for (let i = 0; i < ticks; i++) {
-          // never back into the first wall (12 blocks out): heart_art's pull-back stopped dead against it
-          if (bot.controlState.back && Math.hypot(bot.entity.position.x - home.x, bot.entity.position.z - home.z) >= 10.8) bot.setControlState('back', false)
+          // never back into an earlier wall (heart_art's pull-back stopped dead against the first one; creeper_art's
+          // walked "halfway against the wall"): the back key goes up ROOM blocks (+ the 0.26-block coast) short of it
+          // (and along the wall's own axis: the back key follows the yaw, which tracks the blocks, so the walk drifts
+          // sideways and the ray along the yaw slid past the narrow first wall's edge: creeper_art re-take, eye 0.9
+          // blocks from its plane)
+          const pos = bot.entity.position, cw = this.walls[curK]
+          const along = cw && this.lanes ? (pos.x - this.x - 0.5) * -cw.fx + (pos.z - this.z - 0.5) * -cw.fz : -Infinity
+          if (bot.controlState.back && (roomBehind(pos, yaw, solid, ROOM + 2) <= ROOM + 0.5 || (this.lanes && along >= this.lanes[curK] - ROOM - 0.5))) {
+            bot.setControlState('back', false)
+            if (!stopped) { stopped = true; ctx.log(`pixel art: the walk back stopped ${ROOM} blocks short of a wall`) }
+          }
           const want = aim ? aim.plus(target.minus(aim).scaled(k)) : target.clone()
           const eye = bot.entity.position.offset(0, 1.62, 0), d = want.minus(eye)
           let dy = Math.atan2(-d.x, -d.z) - yaw
@@ -158,12 +180,28 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           await bot.waitForTicks(1)
         }
       }
-      const place = (wl, cell) => bot._client.write('block_place', {
+      const place = (wl, cell) => bot._client.write('block_place', {   // motion-ok: every call is after landOn (the crosshair in the cell)
         hand: 0, location: cell.p.offset(wl.fx, 0, wl.fz), direction: FACE[`${wl.fx},${wl.fz}`],
         cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0
       })
+      // the crosshair on the cell (owner r:rffba12: the aim lagged the blocks at 18-20 a second): a block is only placed
+      // or broken once the ray from the eye along the current view enters its cell; the camera keeps turning (at most
+      // 220 deg/s, eased) until it does, and those ticks come out of the build's tick budget. So the build goes no faster
+      // than the aim can follow.
+      const onCell = (p) => {
+        const e = bot.entity.position.offset(0, 1.62, 0)
+        return SIGHT.crosshairBox([e.x, e.y, e.z], yaw, pitch, [p.x, p.y, p.z, p.x + 1, p.y + 1, p.z + 1], () => null, { reach: 128 }).on
+      }
+      let offAim = 0
+      const landOn = async (p, max = 12) => {
+        let n = 0
+        while (!onCell(p) && n < max) { await lookToward(p.offset(0.5, 0.5, 0.5), 1, 1); n++ }
+        if (!onCell(p)) { offAim++; ctx.mark('off_aim', { x: p.x, y: p.y, z: p.z }); ctx.log('pixel art: the crosshair did not reach', p.toString()) }
+        return n
+      }
       let lastSwing = -99, ok = 0, total = 0
       for (let k = 0; k < stages.length; k++) {
+        curK = k
         const st = stages[k], wl = this.walls[k], { H, W } = wl
         const mkCells = (art) => {
           const out = []
@@ -231,9 +269,10 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           await bot.waitForTicks(4)
           for (const c of wrong) {
             await lookToward(c.p.offset(0.5, 0.5, 0.5), 1, 0.3)
+            await landOn(c.p)
             const loc = { x: c.p.x, y: c.p.y, z: c.p.z }
-            bot._client.write('block_dig', { status: 0, location: loc, face: FACE[`${wl.fx},${wl.fz}`], sequence: 0 })
-            bot._client.write('block_dig', { status: 2, location: loc, face: FACE[`${wl.fx},${wl.fz}`], sequence: 0 })
+            bot._client.write('block_dig', { status: 0, location: loc, face: FACE[`${wl.fx},${wl.fz}`], sequence: 0 })   // motion-ok: after landOn
+            bot._client.write('block_dig', { status: 2, location: loc, face: FACE[`${wl.fx},${wl.fz}`], sequence: 0 })   // motion-ok: after landOn
             if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }
             ctx.sound('block.wool.break', 0.8, 1)
             ctx.particles('block', c.p, { block: palette[c.ch] })
@@ -264,6 +303,7 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           prevTarget = target
           if (tpb >= 1 || (ci2++ % Math.round(1 / tpb)) === 0) await lookToward(target, 1, follow)   // tpb < 1: several blocks a tick
           for (let i = 0; jump && i < 3 && aim.distanceTo(target) > 1.2; i++) await lookToward(target, 1, 0.5)
+          const waited = await landOn(cell.p)
           place(wl, cell)
           if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
           // a dense build (a block a tick) is one steady hiss: accent the first block of each run and every
@@ -274,7 +314,7 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           if (accent) lastAccent = ctx.tick
           ctx.sound(`block.${ctx.soundGroup(palette[cell.ch])}.place`, accent ? 1.0 : tpb >= 1 ? 0.3 : 0.1, 0.8 + ((used[cell.ch] || 0) % 3) * 0.05)
           usedOne(cell.ch)
-          budget += Math.max(0, tpb - 1)
+          budget += Math.max(0, tpb - 1) - waited   // the ticks spent landing the aim are part of this block's time
           while (budget >= 1) { budget -= 1; await lookToward(target, 1, follow) }
         }
         }
@@ -286,6 +326,7 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           ctx.log('redo', cell.ch, cell.p.toString(), 'was', b && b.name)
           ctx.select(slotFor(cell.ch))
           await lookToward(cell.p.offset(0.5, 0.5, 0.5), 1)
+          await landOn(cell.p)
           place(wl, cell); bot.swingArm(); usedOne(cell.ch)
         }
         // the reveal: on the completing tick, a short step back while recentring on the whole picture
@@ -309,8 +350,8 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
           await lookToward(nc, 6, 0.35)
         }
       }
-      ctx.log(`correct ${ok}/${total}`)
-      return ok >= total - 2
+      ctx.log(`correct ${ok}/${total}${offAim ? `, ${offAim} placed with the crosshair off the block` : ''}`)
+      return ok >= total - 2 && offAim <= 2   // a take with blocks going down off the crosshair is a failed take
     }
   }
 }
