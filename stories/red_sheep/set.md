@@ -11,7 +11,7 @@ top. No site search and no clearing (STANDARDS 3.5).
 | sheep (can't see that good) | L04 | S04: one blue sheep, full figure, staring at the lens |
 | he counts them every night | L05 | S05 is at nightfall (13000), the flock filing past him |
 | one came back from the woods red | L06 | S06: one red sheep, the birch treeline visible behind it |
-| Dad sat at the gate with his crossbow | L07 | S07: the crossbow reads at 300 px on his knees |
+| Dad sat at the gate with his crossbow | L07 | S07: the crossbow, in his hand on the camera's side, reads at 300 px past his body |
 | the trees went snap x3 | L08 | three fang snaps in the mix, nothing seen |
 | I forgot to shut the gate, my lamb got out | L09 | S09: the gate open in frame, the lamb outside it |
 | Dad says never go in the woods | L10 | S10: Dad and the woods both in frame |
@@ -30,11 +30,12 @@ top. No site search and no clearing (STANDARDS 3.5).
   spell: summon it with AI where the lamb is its only blue sheep in range and the camera player is hidden from it
   until the cast begins. If AI can't be cued on time, `NoAI` + pose and set the lamb's colour with `/data` at the
   cue, with the sounds and particles placed by hand on vanilla's timing (bible "The mechanic").
-- **The fangs:** `evoker_fangs` in a line toward the camera, 1.25 blocks apart, `Warmup` 0, 1, 2, ... ticks.
+- **The birch:** check the seed has birch at +45..+54 next to the tower's slope (+44, +40); stamp birch trunks there if not.
+- **No fangs and no vexes on screen:** the shot cuts at +1.3 s. Real AI would summon vexes next; if real AI is used, the cut lands before they appear.
 
 ## Engine checks before building (see the engine gaps in reviews/r3-engine.md)
 - Sheep colour change mid-shot read per frame.
-- The evoker's raised spellcasting arms, the spell particles, the fangs' rise-and-bite animation.
+- The evoker's raised spellcasting arms and the spell particles at its hands.
 
 ## Scale
 - The pasture at full scale, 60 sheep in one EWS (S01).

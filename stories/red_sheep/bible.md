@@ -22,10 +22,11 @@
 - Timing (SpellcasterIllager.SpellcasterUseSpellGoal): the "prepare wololo" sound and the raised, waving arms at the
   start; the colour changes after the 40-tick warm-up (with the cast-spell sound); the arms stay up until the 60-tick
   cast ends (so they drop ~1 s AFTER the colour change). The evoker looks at the sheep while casting.
-- Then it targets the kid (players are in its target list; it hadn't seen her: she came up behind trunks) and casts
-  fangs: prepare-attack sound, arms up, 20-tick warm-up, then 16 fangs in a line toward the target (she is >3 blocks
-  away), one per tick, 1.25 blocks apart, each snapping up out of the ground ("Fangs snap").
-- Particles: wololo brownish-orange (spell colour 0.7, 0.5, 0.2); fangs purplish-grey.
+- Then it has a target (the kid: players are on its list; it hadn't seen her, she came up behind trunks): the cast
+  ends at tick 60, its arms drop and it looks at her. **The Short cuts there** (S13 +1.3 s). Nothing after: real AI
+  would summon vexes next (EvokerSummonSpellGoal, priority 4, beats the fangs at 5), so no fangs are shown.
+- No particle puff on the sheep: the wool just changes on the cast tick; the spell particles are at the evoker's hands.
+- Particles: wololo brownish-orange (spell colour 0.7, 0.5, 0.2), from the hands. (L08's snaps a year ago were its fangs: sound only.)
 - L07's snaps a year ago: the evoker attacking something in the woods (a wandering trader, never shown or said).
 
 ## Scenes and time
@@ -48,7 +49,7 @@
 
 ## Cast and costume
 - **The kid (narrator):** a player, `alex` skin, never named. POV in S09, S11, S12; small from behind, crossing the ford, in S10; her shoulder in S13. Hearts full,
-  no armour, shears selected (held low), the same 9-slot bar in every POV shot (story.json `hotbar`).
+  no armour, the lead selected (held: she means to bring the lamb back), the same 9-slot bar in every POV shot (story.json `hotbar`).
 - **Dad:** a player actor, `kai` skin. Blue dye in hand S02-S03; crossbow S06 (legs and crossbow only) and S07; a
   lantern on the post in S05 (not in his hand); empty-handed, mending the fence in S10.
 - **The lamb:** a baby sheep, `Color:11` blue from S01 (unsingled) to S12; red only from S13 +0.3 s. `PersistenceRequired`.
@@ -73,7 +74,7 @@
   S10 (the high wide over the pasture gate, east-north-east).
 - S13: the kid faces east; the lamb 2.5 blocks ahead; the evoker 8 blocks beyond the lamb (10.5 from the kid: inside
   its 16-block spell range for the lamb and its 12-block follow range for the kid), at the same height (spell box ±4).
-  The fangs come straight at the camera.
+  At the cut its head has turned to the lens (to her).
 
 ## Who knows what
 - **Dad** knows what red means from L03. He never says it.

@@ -2,8 +2,7 @@
 
 **Ending first (the reveal frame, S13):** a low wide over the kid's shoulder in the birch woods. The blue lamb 2.5
 blocks ahead; 8 blocks beyond it an evoker with its arms raised, brown-orange particles at its hands. The lamb turns
-RED (the red one she came to find). The arms drop, it turns to us, a line of fangs snaps up out of the ground toward
-the camera. Cut.
+RED (the red one she came to find). The arms drop and its head turns to us: it sees her. Cut.
 
 **Spine.** Every day Dad dyes every sheep blue and counts them every night, and his kid thinks he just loves blue.
 One spring a sheep came back from the woods red, the prettiest one ever, and Dad sat at the gate with a crossbow
@@ -28,7 +27,7 @@ to the last word; she never hints, fears or explains. The viewer sees past every
 | 10 | L10 Dad says NEVER go in the WOODS. Dad's so BORING. | high wide: Dad's back, the kid crossing the ford after the lamb | the woods are dangerous | Dad is boring |
 | 11 | L11 So I went in to find MORE red ones! | POV into the birches | (she wants what red means) | an adventure |
 | 12 | L12 Then she STOPPED. Like she was LISTENING. | the lamb stopped, still blue; a faint "wololo" | the spell starting (players know the sound) | the lamb listening |
-| 13 | (no line) | S13 the reveal; cut 1.0 s after the first fang | the answer to line 1 | none: the picture says it |
+| 13 | (no line) | S13 the reveal; cut 1.0 s after the colour change, on the evoker's look | the answer to line 1 | none: the picture says it |
 
 **Where the attentive viewer gets ahead:** L07 (a crossbow for a week is not about wanting more red sheep): "red means
 danger in the woods". Players may get the evoker at L08 (the fang snaps) or L12 (the wololo). Nobody can be sure what

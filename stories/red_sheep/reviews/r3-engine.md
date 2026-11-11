@@ -13,11 +13,11 @@ lib/harness.js and docs/engine_features.md. Nothing was built.
 | **evoker model** | S13 | **exists, check the arms** | entity_models.json `evoker` (bones head, nose, body, arms, leg0/1, rightArm, leftArm). IllagerModel shows EITHER the crossed `arms` OR the separate arms; nothing in entities.js picks one for the evoker, so it may draw both. Check on a line-up (`node scripts/pose_fixture.js --mobs`) |
 | **evoker spellcasting pose** (both arms raised and waving: IllagerModel.setupAnim, IllagerArmPose.SPELLCASTING) | S13 | **MISSING** | the harness does not record SpellcasterIllager's DATA_SPELL_CASTING_ID (metadata 17), and no pose draws it. Needs: record the spell id per sample, show the separate arms and hide the crossed ones while casting, the SPELLCASTING angles (zRot ±2.356 with a cos(age*0.6667)*0.25 wave) |
 | **spell particles** (wololo brownish-orange 0.7/0.5/0.2, fangs purplish-grey 0.4/0.3/0.35, from the hands) | S13 | **MISSING** | particles.js has splash/block/portal/happy/angry/heart/poof/smoke/dust/potion/explosion/firework, no `entity_effect` spell kind. The client spawns these itself, so they must come from the spell id above |
-| **evoker fangs: the rise-and-bite animation** | S13 | **MISSING (model only)** | entity_models.json `evoker_fangs` exists; no code for the warm-up (invisible), entity event 4 (the attack) or EvokerFangsModel's jaws rising out of the ground and snapping over its 22-tick life |
+| evoker fangs: the rise-and-bite animation | none (r4.1 cut the fangs from S13) | **not needed now** (MISSING: model only) | entity_models.json `evoker_fangs` exists; no code for the warm-up (invisible), entity event 4 (the attack) or EvokerFangsModel's jaws rising out of the ground and snapping over its 22-tick life |
 | evoker head turning to the camera | S13 | **probably exists** | generic head yaw from the recording |
-| sounds: prepare_wololo, cast_spell, prepare_attack, evoker_fangs.attack, sheep ambient | S08, S12, S13 | **check** | vanilla sound events; confirm the audio mixer has them (docs/audio.md) |
-| AI timing (the real wololo then fangs) vs staged | S13 | **staging choice** | prefer real AI (set.md); fallback NoAI + `/data` colour + hand-placed sounds on vanilla timing |
+| sounds: prepare_wololo, cast_spell, evoker_fangs.attack (S08, off screen), dye use, sheep ambient | S08, S12, S13 | **check** | vanilla sound events; confirm the audio mixer has them (docs/audio.md) |
+| AI timing (the real wololo, then the look) vs staged | S13 | **staging choice** | prefer real AI (set.md); fallback NoAI + `/data` colour + hand-placed sounds on vanilla timing |
 
-**Missing, plainly:** the evoker's casting arms (plus recording its spell state), the spell particles, and the fangs'
-bite animation. To verify: the colour change mid-shot (S02's undercoat) and the evoker's crossed-vs-free arms.
-Without the three missing pieces the reveal frame doesn't read (no raised arms, no particles, static fangs).
+**Missing, plainly:** the evoker's casting arms (plus recording its spell state) and the spell particles. (The fangs'
+bite animation is missing too but r4.1 no longer shows fangs.) To verify: the colour change mid-shot (S02's undercoat) and the evoker's crossed-vs-free arms.
+Without the two missing pieces the reveal frame doesn't read (no raised arms, no particles at the hands).

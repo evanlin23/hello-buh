@@ -2,11 +2,11 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r4 (2026-11-11): owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
+  "revision": "r4.1 (2026-11-11): r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
   "caption": "why is every sheep in our village blue 🐑",
   "upload": {
     "title": "every sheep in our village is blue. all sixty of them 🐑 #minecraft #shorts",
-    "pinned": "What would YOU use as an alarm in your village?",
+    "pinned": "Would YOU have followed the lamb?",
     "tags": [
       "minecraft sheep",
       "minecraft blue sheep",
@@ -20,7 +20,7 @@
   "question": "why tf is every sheep in the village blue?",
   "premise": "Every sheep in Ravenford is blue, all sixty: Dad won't let a white one through the gate ('He really likes blue') and counts them every night. 'They're our EYES, kid.' (Sheep can't even see that good.) Last spring one came back from the woods red, the prettiest one ever; Dad sat at the gate with his crossbow for a week (she thinks he wanted more red ones); one night the trees went snap, snap, snap, like clapping. Today she forgets to shut the gate, her lamb gets out, Dad is boring about the woods, so she goes in happily to find more red ones.",
   "family": "mob_alarm",
-  "twist": "The sheep are an alarm. In vanilla Java an evoker with no target casts its 'wololo' spell on a BLUE sheep within 16 blocks and turns it RED (Evoker.EvokerWololoSpellGoal; only blue ones, which is why Dad dyes every white one). One lives in the woods. She went in to find more red ones. In the trees the lamb stops; a faint 'wololo'; the lamb turns red in a puff of spell particles in front of an evoker with its arms raised; the arms drop, it turns to the kid, and a line of fangs snaps out of the ground toward her. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near.",
+  "twist": "The sheep are an alarm. In vanilla Java an evoker that isn't fighting casts its 'wololo' spell on a BLUE sheep within 16 blocks and turns it RED (minecraft.wiki/w/Evoker 'Sheep color conversion spell'; Evoker.EvokerWololoSpellGoal; mobGriefing on; only blue ones, which is why Dad dyes every white one). One lives in the woods. She went in to find more red ones. In the trees the lamb stops; a faint 'wololo'; beyond the lamb an evoker with its arms raised, and the lamb's wool turns red. The arms drop and its head turns to her. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near. The snaps a year ago were its fangs.",
   "key_color": "#3B6CF0",
   "mood": [
     "tense",
@@ -52,7 +52,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "a Ravenford kid (a player, `alex` skin, never named, not Buh): POV in S09, S11, S12; seen small from behind in S10 and as the shoulder in S13. Shears selected; full hotbar per `hotbar`. Pip's voice (cast `narrator`)."
+      "on_screen": "a Ravenford kid (a player, `alex` skin, never named, not Buh): POV in S09, S11, S12; seen small from behind in S10 and as the shoulder in S13. The lead selected (held); full hotbar per `hotbar`. Pip's voice (cast `narrator`)."
     },
     "Dad": {
       "role": "character",
@@ -113,9 +113,9 @@
     }
   ],
   "hotbar": [
+    "lead",
     "blue_dye",
     "shears",
-    "lead",
     "wheat",
     "lantern",
     "bread",
@@ -126,7 +126,7 @@
     ],
     "pufferfish"
   ],
-  "hotbar_note": "The kid's bar, seen only in POV (S09, S11, S12): the shepherd's kit first (blue dye, shears, lead, wheat, lantern), bread, then the ridiculous ones (a milk bucket, 67 eggs, a pufferfish). The selected slot is shears (held low, never used); the same bar in every POV shot.",
+  "hotbar_note": "The kid's bar, seen only in POV (S09, S11, S12): the lead selected (slot 1, held: she means to bring the lamb back), then the shepherd's kit (blue dye, shears, wheat, lantern), bread, then the ridiculous ones (a milk bucket, 67 eggs, a pufferfish). The same bar in every POV shot.",
   "sfx": [
     {
       "under": "S02",
@@ -151,17 +151,7 @@
     {
       "under": "S13",
       "sound": "entity.evoker.cast_spell",
-      "note": "+0.3 s: the lamb turns red (the hit)"
-    },
-    {
-      "under": "S13",
-      "sound": "entity.evoker.prepare_attack",
-      "note": "+1.4 s: arms up again"
-    },
-    {
-      "under": "S13",
-      "sound": "entity.evoker_fangs.attack",
-      "note": "+2.4 s on: the fangs' snaps racing at the camera; cut 1.0 s after the first"
+      "note": "+0.3 s: the lamb turns red on the cast tick (the hit)"
     }
   ],
   "lines": [
@@ -174,7 +164,7 @@
       "punch": true,
       "shows": [
         "sheep (sixty, all blue)",
-        "village (the palisade and roofs)"
+        "village (the palisade around the pasture)"
       ],
       "look": {
         "what": "entity:sheep",
@@ -421,7 +411,7 @@
       "size": "wide",
       "time": 12300,
       "camera": "at: (-10, 5, -4) behind Dad, aimed at the outpost (131, 20, 92), still",
-      "frame": "subject: Dad's back, sitting on a log in the east gateway, crossbow across his knees, facing the woods; mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk."
+      "frame": "subject: Dad's back, sitting on a log in the east gateway, crossbow held in his right hand, on the camera's side, angled out so it reads past his body, facing the woods; mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk."
     },
     {
       "id": "S08",
@@ -475,7 +465,7 @@
       "size": "wide",
       "time": 12200,
       "camera": "at: low behind and left of the kid's shoulder (-1.5, 1.6, 2) looking past the lamb at the evoker 8 blocks beyond it, FOV 35 (the evoker about a quarter of the frame height); the cut lands at the end of L12",
-      "frame": "The reveal, one continuous wide (vanilla timing, Evoker.WololoSpellGoal: warm-up 40 ticks, cast 60). fg: the kid's shoulder; mid: the lamb; subject: the evoker between the trunks, ARMS RAISED (spellcasting pose), brown-orange spell particles at its hands. +0.3 s: the lamb turns from blue to RED in a puff of particles (cast-spell sound) = THE REVEAL. +1.3 s: its arms come down and its head turns to us (it has a target now). +1.4 s: arms up again (prepare-attack sound). +2.4 s: a line of evoker fangs snaps up out of the ground from the evoker toward the camera, one every tick, 1.25 blocks apart. CUT 1.0 s after the first fang (~+3.4 s). No line."
+      "frame": "The reveal, one continuous wide (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, cast 60). fg: the kid's shoulder; mid: the lamb; subject: the evoker between the trunks, ARMS RAISED and waving (spellcasting pose), brownish-orange spell particles at its hands only, looking at the lamb. +0.3 s: the lamb's wool turns from blue to RED on the cast tick (cast-spell sound; no puff on the sheep) = THE REVEAL. +1.3 s: the cast ends, its arms come down and its head turns to the lens: it sees her. CUT there (~1.0 s after the reveal). No line. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
     }
   ],
   "props": {
@@ -503,7 +493,7 @@
   "ending": {
     "after": "L12",
     "beats": [
-      "S13 (no line): the evoker, arms raised, beyond the lamb; +0.3 s the lamb turns red (the reveal, and her wish for a red one granted); +1.3 s its arms drop and it turns to the kid; +2.4 s a line of fangs snaps toward the camera; cut 1.0 s after the first fang."
+      "S13 (no line): the evoker, arms raised, beyond the lamb; +0.3 s the lamb's wool turns red (the reveal, and her wish for a red one granted); +1.3 s its arms drop and its head turns to the lens; cut."
     ],
     "loop": "line 1 again: sixty blue sheep are sixty alarms"
   },
