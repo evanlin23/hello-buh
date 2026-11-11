@@ -1,0 +1,26 @@
+# The owner's OK per Short, bound to the exact cut they watched (scripts/owner_ok.py; youtube_upload.py)
+ai_dirk_willems  0db9021130eae667  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+boat_clutch  298edef5754d6bdb  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+creeper_art  68f0d6e4655f53a4  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+desire_town  5883717d5523c9e2  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+dilemma_mace  52e380063133d97d  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+end_portal_job  8f11ca43f9072752  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+faketrick_gold_portal  551f72a84f8cdf3c  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+hack_banner_door  43fad54af3989625  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+heart_art  cb6e43568cc09dae  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+inside_library  13b73d3b44a9c6ff  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+ladder_clutch  e710068cc121edef  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+lapse_rocket  90232e1e32bbde83  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+lapse_statue  f16d41ecce372ba3  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+looks_wrong  416d9b9d1ef28212  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+love_cherry_heart  08c2cfce0cddcec8  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+midas_touch  ba89270c834b403e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+nether_portal  32fd52325840850f  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+one_in_a_million  5df9f64bf48c09b5  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+race_grass_mycelium  b57c0f301ac1557b  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+rainbow_sheep  07a2c2a88884a166  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+skull_art  90fb02c533792bde  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+sword_art  371a726d38ca931c  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+tnt  94a8290be1534cae  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+villager_crowd  0313230f22df513e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+villager_fired  ac9c6fb47e9dd85e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
