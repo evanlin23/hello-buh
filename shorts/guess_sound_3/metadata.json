@@ -1,9 +1,9 @@
 {
   "name": "guess_sound_3",
-  "caption": "guess the mob from its sound pt 3 🔊",
+  "caption": "guess the mob from its sound pt 3 \ud83d\udd0a",
   "youtube": {
-    "title": "guess the mob from its sound pt 3 🔊 #minecraft #shorts",
-    "description": "guess the mob from its sound pt 3 🔊\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "guess the mob from its sound pt 3 \ud83d\udd0a #minecraft #shorts",
+    "description": "guess the mob from its sound pt 3 \ud83d\udd0a\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -58,7 +58,7 @@
     }
   },
   "edit": {
-    "caption": "guess the mob from its sound pt 3 🔊",
+    "caption": "guess the mob from its sound pt 3 \ud83d\udd0a",
     "red": "sound",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "final_reveal",
@@ -224,7 +224,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "guess the mob from its sound pt 3 🔊",
+      "guess the mob from its sound pt 3 \ud83d\udd0a",
       "--red",
       "sound",
       "--subs",
@@ -980,9 +980,9 @@
     "gunzip -c shorts/guess_sound_3/recording.json.gz > work/guess_sound_3.rec.json",
     "node render.js work/guess_sound_3.rec.json work/guess_sound_3.frames 60 1080 1011",
     "python3 audio.py work/guess_sound_3.rec.json work/guess_sound_3.wav",
-    "python3 edit.py --frames work/guess_sound_3.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_3.rec.json --audio work/guess_sound_3.wav --caption \"guess the mob from its sound pt 3 🔊\" --red sound --subs [] --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"CHICKEN\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"SNIFFER\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"MAGMA CUBE\\\",1.25,\\\"orange\\\",2],[\\\"lit\\\",\\\"SKELETON\\\",1.25,\\\"white\\\",3],[\\\"lit\\\",\\\"BLAZE\\\",1.25,\\\"gold\\\",4],[\\\"lit\\\",\\\"NOT A PARROT\\\",0.8,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --death_screen death --start_at round:-0.05 --end_after death:1.2 --out out/guess_sound_3.mp4"
+    "python3 edit.py --frames work/guess_sound_3.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_3.rec.json --audio work/guess_sound_3.wav --caption \"guess the mob from its sound pt 3 \ud83d\udd0a\" --red sound --subs [] --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"CHICKEN\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"SNIFFER\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"MAGMA CUBE\\\",1.25,\\\"orange\\\",2],[\\\"lit\\\",\\\"SKELETON\\\",1.25,\\\"white\\\",3],[\\\"lit\\\",\\\"BLAZE\\\",1.25,\\\"gold\\\",4],[\\\"lit\\\",\\\"NOT A PARROT\\\",0.8,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --death_screen death --start_at round:-0.05 --end_after death:1.2 --out out/guess_sound_3.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker 13: guess the mob from its sound pt 3 (chicken, sniffer, magma cube, skeleton, blaze, then a real creeper after two parrot fake-outs); independent review r5 ready on retention, minecraft and frame review | 2026-11-11 remix (owner on guess_sound: \"had super loud music\"): the song now ducks to -24 dB under each mob call (scripts/key_sounds.py: each call +11.7 dB over the music at worst, was -7.0 dB); same track, drop and picture; the song dips 0.3 s before the creeper blast so the payoff lands as a hit (pace BLOCK cleared) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +16.6 -> +14.2 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11: ends 1.0 s after the death (endAfter death:1.0, was 1.2; tail trimmed from the same picture, short_nosong re-encoded crf 18): lint 'nobody moves' cleared (the death screen now counts as a screen in renderer/lint.js)",
   "published_at": "2026-11-07T14:49:45.966Z",
   "gates": {
@@ -1013,5 +1013,6 @@
       ],
       "summary": "key sounds over the music: worst +14.6 dB over 12 clips (need >= 8 dB)"
     }
-  }
+  },
+  "needs_fix": "whip check (r:r38374d): 6 BLOCKs up to 776 deg/s; also v4 aim gate blocked"
 }

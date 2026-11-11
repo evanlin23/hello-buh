@@ -1,10 +1,10 @@
 {
   "name": "half_heart",
   "channel": "hellobuh",
-  "caption": "POV: you're on half a heart 💀",
+  "caption": "POV: you're on half a heart \ud83d\udc80",
   "youtube": {
-    "title": "POV: you're on half a heart 💀 #minecraft #shorts",
-    "description": "POV: you're on half a heart 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you're on half a heart \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you're on half a heart \ud83d\udc80\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "POV: you're on half a heart 💀",
+    "caption": "POV: you're on half a heart \ud83d\udc80",
     "red": "half",
     "dropAt": "placed",
     "startAt": "jump:-0.5",
@@ -125,7 +125,7 @@
     ],
     "args": [
       "--caption",
-      "POV: you're on half a heart 💀",
+      "POV: you're on half a heart \ud83d\udc80",
       "--red",
       "half",
       "--subs",
@@ -293,9 +293,9 @@
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --speed [[\"placed:1.25\",\"placed:2.25\",\"cut\"]] --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"whoosh\",\"sound\",{\"nth\":14}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart \ud83d\udc80\" --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --speed [[\"placed:1.25\",\"placed:2.25\",\"cut\"]] --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"whoosh\",\"sound\",{\"nth\":14}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "2026-11-11 finishing worker (backlog C's half-heart course): re-rendered on the current engine (bright look, no reference song); 'almost there...' moved onto the bridge's last blocks (it sat over the death screen), the held look up the pillar cut to 0.45 s, whoosh on 'almost there', song dip + impact on the death; 14.9 s (stunt floor 8 s); pace 0 blockers; self-review READY | independent review 2026-11-11: READY. Hook moves from frame 1 (water clutch from the pillar), every placement on the crosshair (r:rffba12 ok), death screen held 1.6 s after the berry-bush hit with a song dip + impact (r:r24d99a ok); vanilla: magma sneak, 3-block drop = 0 damage, sweet berry bush death message correct. The pace BLOCK on the package (4.45 s dead 8.63-13.08 s) is a false positive: pace counts 0 caption chunks (the edit subs aren't read), and on the frames 'lava bridge' arrives at 8.75 s and 'almost there...' at 11.5 s, so the longest empty span is ~2.75 s (WARN). The gate still reads blocked, so the uploader skips it until the lead waives or re-gates it. Nitpicks: one held aim down the bridge 8.6-13.0 s (tension, but slow); no line/hit in the first 1.5 s beyond the bucket; mix -10.2 LUFS, true peak +1.0 dBTP (house-wide for stunts).",
   "published_at": "2026-11-11T07:43:34.921Z",
   "gates": {
@@ -325,5 +325,6 @@
     "verdict": "READY",
     "at": "2026-11-11",
     "notes": "independent review 2026-11-11"
-  }
+  },
+  "needs_fix": "whip check (r:r38374d): 2 BLOCKs, turns up to 749 deg/s"
 }
