@@ -1090,16 +1090,38 @@
     },
     {
      "id": "lever",
-     "what": "the Long Day lever on a stone post in the square (pulled back since day 1100)",
+     "what": "the Long Day lever on a stone post in the square, OFF (pulled back since day 1100; and before day 800)",
      "do": "cmds",
      "cmds": [
       "/setblock -214 69 -1062 stone_bricks",
       "/setblock -214 70 -1062 lever[face=floor,facing=north,powered=false]"
-     ]
+     ],
+     "until": 800
+    },
+    {
+     "id": "lever_long_day",
+     "what": "the Long Day lever ON (days 800-1100): the sun held up",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -214 69 -1062 stone_bricks",
+      "/setblock -214 70 -1062 lever[face=floor,facing=north,powered=true]"
+     ],
+     "since": 800,
+     "until": 1101
+    },
+    {
+     "id": "lever_after",
+     "what": "the Long Day lever on a stone post in the square, OFF (pulled back since day 1100; and before day 800)",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -214 69 -1062 stone_bricks",
+      "/setblock -214 70 -1062 lever[face=floor,facing=north,powered=false]"
+     ],
+     "since": 1101
     },
     {
      "id": "gary",
-     "since": 1100,
+     "since": 1101,
      "live": true,
      "night": true,
      "what": "Gary: a zombie villager farmer (straw hat), name tag \"Gary\", at the fog line by his field; nights only",
