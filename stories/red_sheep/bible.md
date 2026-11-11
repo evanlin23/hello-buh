@@ -41,7 +41,7 @@
 | place | where (from the east gate, canonical; x east, z south) | establishing shot |
 |---|---|---|
 | pasture | inside the palisade south of the east gate, ~40 x 30, oak fence, 60 sheep | S01 (EWS) |
-| pasture gate | a fence gate in the east palisade at (0, 0, 15), a lantern post | S02, S05, S06, S09 |
+| pasture gate | a fence gate in the east palisade at (0, 0, 15), a lantern post | S02, S03, S05, S06, S09, S10 |
 | east gate | canonical, logs, at (0, 0, 0) | S07, S08 |
 | fields and ford | east of the gates: fields, the ford at +40 | S07-S09 |
 | the birch woods | past the ford from +45; the clearing staged at +45..+56 (widen the footprint east to x <= -1975); birch stamped if the seed has none | S11-S13 |
@@ -63,7 +63,7 @@
 | blue dye | Dad's hand | S02, S03 |
 | crossbow | Dad's | S06, S07 |
 | the red sheep | one, last spring | S06 only (gone today: Dad re-dyed it, never said) |
-| the pasture gate | shut except S02 (Dad lets the stray in), S06 (open), S09 (open) | |
+| the pasture gate | open in S02-S03 (Dad lets the stray in), S06 and S09-S10; shut in S05 | |
 | lantern | on the pasture gate post; on the palisade every 8 blocks | S05, S08 |
 | the old tower | on the Ridge, skyline (the easter egg) | S01 |
 | pillager outpost | far on the horizon (canon (-1913, -393)) | S07, never named |
