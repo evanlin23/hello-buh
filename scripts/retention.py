@@ -192,6 +192,9 @@ def apply_frame_fx(args, timeline):
     caption and overlays are drawn later, so they stay still (like a FOV kick in the game)."""
     # punch SCALE: an increment (0.12) or an absolute zoom (1.12); 1.08 used to mean a 2.08x zoom
     punches = [(m, v - 1 if v >= 1 else v) for m, v in _marks(args.punch, timeline, 0.12)]
+    # the spoken stress (edit.punchStress): a line's mark + the word's start in it; short: 0.06 s in, 0.2 s back
+    lines_at = {e.get("id"): e["t"] / 1000 for e in timeline if e.get("event") == "line"}
+    stress = [(lines_at[l] + float(off), float(pk)) for l, off, pk in _load(getattr(args, "punch_stress", None)) if l in lines_at]
     shakes = _marks(args.shake, timeline, 16.0)
     flashes = _marks(args.flash, timeline, 0.7)
     pushes = [(ts[0], float(f[1]) if len(f) > 1 else 0.6) for f in _load(args.freeze)
@@ -203,7 +206,7 @@ def apply_frame_fx(args, timeline):
             zooms.append((a_, b_, float(zs[2]) if len(zs) > 2 else 1.5))
         else:
             print(f"zoom {zs} skipped (event missing or empty)")
-    if not (punches or shakes or flashes or pushes or zooms):
+    if not (punches or stress or shakes or flashes or pushes or zooms):
         return
     src = pathlib.Path(args.frames)
     files = sorted(src.parent.glob("*" + src.suffix))
@@ -215,7 +218,7 @@ def apply_frame_fx(args, timeline):
         except ValueError:
             continue
         t = i / args.fps
-        z = max([punch_curve(t - m, peak) for m, peak in punches] + [1.0])
+        z = max([punch_curve(t - m, peak) for m, peak in punches] + [punch_curve(t - m, pk, attack=0.06, decay=0.2) for m, pk in stress] + [1.0])
         for a_, b_, sc in zooms:   # composes with punches and shakes: the scales multiply
             z *= zoom_curve(t, a_, b_, sc)
         for m, secs in pushes:   # freeze: a slow push-in so the held frame never sits still

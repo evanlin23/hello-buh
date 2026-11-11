@@ -1,6 +1,6 @@
 # Story standards: the current checklist
 
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 Every rule a story Short must meet **today**, once, by stage, with its number and the check that enforces it. The
 newest owner decision wins; superseded rules are listed at the end and must not be applied. The dated history (the
@@ -186,7 +186,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
   measured checks. r:rb9aa2d
 
 ## 5. Look
-Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinematic is the default (`look: 'auto'`).
+- **Bright and punchy is the story look** (the owner picked it over the cinematic grade): every story stunt sets
+  `look: 'bright'` and `edit.punchStress: true`. Check: owner; review. r:rcae995 r:rd13834
+Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stories use `look: 'bright'` (above); other Shorts keep the cinematic default (`look: 'auto'`).
 - Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
 - Sharp: bloom threshold >= 0.7, no DoF on wide/establishing shots, crf <= 18.
 - No onomatopoeia or emoji; punch-in 0.06-0.10 at most twice, shake 6-10 px only on a visible impact.
@@ -227,6 +229,27 @@ actions left silent). r:rc85ccc r:r36632d
 - A finding that has happened before becomes a rule (cinematic-style "Mistakes already solved", or the house rules).
 
 ## 10. Publish
+- **Playlists**: one ("All Buh Stories") at launch; a series playlist only once a family has 3+ stories. Check: owner.
+  r:r118f0b
+- **Explore first, then double down**: early stories vary premise family, arc and outcome (never two in a row the
+  same); a Short at 5x the channel median gets 2-3 standalone follow-ups in its family within 7 days. Check: owner,
+  the weekly numbers. r:r1bebb1
+- **Stories go to the second channel, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**, never @HelloBuh; uploads wait for the owner to set that channel
+  up. Check: owner. r:r732bc0
+- **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
+  Check: owner. r:rca5363
+- **No series number**: no "BUH STORY #N" on the video or in the title; frame 1 shows only the story's hook.
+  Check: owner. r:rc0d90d
+- **No "told by someone who lived it"** in the channel description or promise. Check: owner. r:r808cba
+- **Buh Stories uploads are manual for now**: an OK'd story goes to the owner as the mp4 plus a paste-ready title,
+  description, tags and pinned comment; the Buh Stories uploader stays off. Check: owner. r:r09130c
+- **Buh Stories is on its own Google account**: its upload token comes from that account (docs/upload-setup.md).
+  Check: owner. r:r8269ea
+- **The channel description is short and general**: no per-story details, no @HelloBuh tag, no Mojang disclaimer.
+  Check: owner. r:r111d46
+- **The channel says "stories"; the stories are mysteries**: the channel's name, tagline and description are general
+  ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
+  pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. Check: owner. r:r77977b
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.

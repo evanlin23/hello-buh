@@ -158,6 +158,7 @@ for (const name of names) {
   const prev = fs.existsSync(path.join(dir, 'metadata.json')) ? JSON.parse(fs.readFileSync(path.join(dir, 'metadata.json'), 'utf8')) : {}
   const meta = {
     name,
+    channel: require('../lib/channel').channelFor(name, stunt, prev),   // the YouTube channel it goes to (lib/channel.js)
     caption,
     youtube: {
       title: `${caption} ${HASHTAGS.slice(0, 2).join(' ')}`.slice(0, 100),
