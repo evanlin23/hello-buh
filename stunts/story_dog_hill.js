@@ -49,7 +49,7 @@ module.exports = {
     // L06: the one empty patch, flowers all round it (audit B6)
     patch: { subject: [[3.5, 1.0, 0.5]], path: [[0, 0.2, 3.2, 4.4], [4, 0.5, 3.0, 4.0]], look: [4.0, 1.4, -1.6], fov: 52 },   // high 3/4 down on the bare block in its flower ring, the hut behind it (a flat top-down failed the owner gate)
     // L07: the hut, wide, the dog small in the foreground
-    hut: { subject: [[5, 2, -3.6]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
+    hut: { subject: [[5, 4.5, -6]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
     beg: { subject: ['actor:pip'], path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
@@ -286,7 +286,7 @@ module.exports = {
     })
     // ---- L03 (r-cast): kids throw sticks: Pip, beside the dog, throws one high past his nose on STICKS; he doesn't blink
     await cut('bone', { time: 1000 }, () => { place('pip', { x: -1.4, y: 1, z: 3.4, yaw: -150 }); for (const t of ['cr', 'z1', 'z2']) place(t, { ...OFF }) })   // the night's monsters leave inside the cut (it waits until they land)
-    for (const t of ['cr', 'z1', 'z2']) { K.park(t); say(`/kill @e[tag=${t}]`) }
+    for (const t of ['cr', 'z1', 'z2']) { K.actors.delete(t); say(`/kill @e[tag=${t}]`) }   // (no K.park: its whole-number /tp re-centres them 0.71 blocks off where they landed)
     await line('L03', (k, at) => {
       Object.assign(pip, { yaw: k < at(1) ? -150 : -135, pitch: k < at(1) ? 10 : -10 })
       if (at1('stick', k >= at(1))) say(`/summon item ${X - 1.0} ${F + 1.9} ${Z + 3.0} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.2d,0.3d,-0.24d]}`)   // high past his nose, on STICKS
