@@ -689,6 +689,13 @@ STANDARDS.md in the same commit.
   (Nico). From now on every script's cold read includes a CASUAL viewer (plays a little, not a Java expert, watching
   once at phone speed): the twist must land for them in one step from the picture, with no name or mechanic they
   weren't shown. A script the casual viewer can't explain in one sentence goes back to the writer.
+- **Owner, 2026-11-11, asking how the Roblox story Shorts set up the mystery, then: "Yes, please rewrite all the
+  stories as needed. We should be following the format, the tried and true format that already works for the Roblox
+  stories, but now we're doing Minecraft stories instead."** Every script follows docs/story_format.md: the impossible
+  fact and its "why?" said out loud in line 1, 3-5 two-way clues, the narrator as the one who wants to know, someone
+  loved at stake, the rule turned against itself, the reveal SAID in one plain sentence (the naive narrator says what
+  they see), one beat, cut, the last line echoing line 1. All 10 approved scripts are rewritten to it, one session
+  each, and come back to the owner.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
