@@ -47,7 +47,7 @@ module.exports = {
     // L05: the collar, close
     collar: { subject: ['actor:dog'], dof: { aperture: 0.6 }, path: [[0, 2.0, 1.55, -0.4], [4, 1.9, 1.5, -0.2]], look: [0.7, 1.45, 0.5], fov: 45 },
     // L06: the one empty patch, flowers all round it (audit B6)
-    patch: { subject: [3.5, 1.0, 0.5], path: [[0, 2.8, 6.2, 1.6], [4, 3.0, 5.6, 1.3]], look: [3.5, 1.0, 0.5], fov: 50 },   // high top-down: the bare block in its ring of flowers (addendum)
+    patch: { subject: [3.5, 1.0, 0.5], path: [[0, 0.2, 3.2, 4.4], [4, 0.5, 3.0, 4.0]], look: [4.0, 1.4, -1.6], fov: 52 },   // high 3/4 down on the bare block in its flower ring, the hut behind it (a flat top-down failed the owner gate)
     // L07: the hut, wide, the dog small in the foreground
     hut: { subject: [5, 2, -5.5], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
