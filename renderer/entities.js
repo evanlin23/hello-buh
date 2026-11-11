@@ -1224,6 +1224,7 @@ export class EntityLayer {
         if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
         if (r.mat?.userData.white) r.mat.userData.white.value = 0
       }
+      if (s.mobScale !== undefined && s.mobScale !== 1) r.obj.scale.multiplyScalar(Math.max(0.001, s.mobScale))   // render.js mob_scale marks
       if (s.extra && s.extra.baby && !B_isBlock(s.name)) poseBaby(r, s.name)
       // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
       // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so
