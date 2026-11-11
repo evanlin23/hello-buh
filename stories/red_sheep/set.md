@@ -30,6 +30,7 @@ top. No site search and no clearing (STANDARDS 3.5).
   until the cast begins. If AI can't be cued on time, `NoAI` + pose and set the lamb's colour with `/data` at the
   cue, with the sounds and particles placed by hand on vanilla's timing (bible "The mechanic").
 - **The birch:** check the seed has birch at +45..+54 next to the tower's slope (+44, +40); stamp birch trunks there if not.
+- **The order matters:** the colour spell only fires while the evoker has NO target, and the kid at 10.4 blocks in view would be targeted first. Either keep her out of its sight until the cast starts (the trunk; `/team` or a later spawn of the camera player), or script it: `NoAI` + the raised-arms pose, the lamb's colour set with `/data` on the cast tick, the sounds placed on vanilla's timing.
 - **No fangs and no vexes on screen:** the shot cuts at +1.3 s. Real AI would summon vexes next; if real AI is used, the cut lands before they appear.
 
 ## Engine checks before building (see the engine gaps in reviews/r3-engine.md)

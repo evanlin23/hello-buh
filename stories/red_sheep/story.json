@@ -2,7 +2,7 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r4.1 (2026-11-11): r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
+  "revision": "r4.3 (2026-11-11): r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
   "caption": "why is every sheep in our village blue 🐑",
   "upload": {
     "title": "every sheep in our village is blue. all sixty of them 🐑 #minecraft #shorts",
@@ -222,8 +222,8 @@
     {
       "id": "L05",
       "who": "N",
-      "text": "He COUNTS them / every NIGHT. / Blue, blue, BLUE.",
-      "say": "He counts them every NIGHT. Blue, blue, BLUE.",
+      "text": "He COUNTS them / every NIGHT. / Blue, blue, BLUE. / I think it helps / him SLEEP.",
+      "say": "He counts them every NIGHT. Blue, blue, BLUE. I think it helps him SLEEP.",
       "shot": "S05",
       "shows": [
         "Dad",
@@ -233,7 +233,7 @@
         "what": "actor:Dad",
         "word": "COUNTS"
       },
-      "note": "copying Dad's counting, playful, the last BLUE firm"
+      "note": "copying Dad's counting, playful, then sure of her own sweet explanation (the misreading)"
     },
     {
       "id": "L06",

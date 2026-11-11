@@ -17,9 +17,9 @@ to the last word; she never hints, fears or explains. The viewer sees past every
 |---|---|---|---|---|
 | 1 | L01 Every SHEEP in our VILLAGE is BLUE. All SIXTY of them. | crane over 60 blue sheep | the question: why blue? | proud of it |
 | 2 | L02 Dad won't LET a WHITE one through the GATE. He REALLY likes BLUE. | Dad dyes a white stray | only BLUE will do | "He really likes blue" |
-| 3 | L03 Dad: They're our EYES, kid. | Dad in his doorway | the sheep are an alarm | (Dad's line) |
+| 3 | L03 Dad: They're our EYES, kid. | Dad at the pasture gate, turning to us | the sheep are an alarm | (Dad's line) |
 | 4 | L04 Sheep can't even SEE that good. But OKAY. | a blue sheep stares blankly | "eyes" is literal | she takes it as eyesight |
-| 5 | L05 He COUNTS them every NIGHT. Blue, blue, BLUE. | the lantern count | he's checking for a change | a game she copies |
+| 5 | L05 He COUNTS them every NIGHT. Blue, blue, BLUE. I think it helps him SLEEP. | the lantern count | he's checking for a change | "it helps him sleep" |
 | 6 | L06 Then last SPRING, one came BACK from the woods RED! The PRETTIEST one EVER. | a red sheep, the woods behind | red came from the woods | a rare, pretty pet |
 | 7 | L07 Dad SAT at the GATE with his CROSSBOW for a WEEK. I think he wanted MORE red ones. | Dad's back, crossbow, the outpost far off | he's guarding against something | he wanted more red ones |
 | 8 | L08 One NIGHT, the TREES went SNAP, SNAP, SNAP. Like they were CLAPPING. | black treeline, fang sounds | the evoker's fangs (their real sound) | the trees clapping |

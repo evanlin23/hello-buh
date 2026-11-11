@@ -26,8 +26,8 @@
   ends at tick 60, its arms drop and it looks at her. **The Short cuts there** (S13 +1.3 s). Nothing after: real AI
   would summon vexes next (EvokerSummonSpellGoal, priority 4, beats the fangs at 5), so no fangs are shown.
 - No particle puff on the sheep: the wool just changes on the cast tick; the spell particles are at the evoker's hands.
-- Particles: wololo brownish-orange (spell colour 0.7, 0.5, 0.2), from the hands. (L08's snaps a year ago were its fangs: sound only.)
-- L07's snaps a year ago: the evoker attacking something in the woods (a wandering trader, never shown or said).
+- Particles: wololo brownish-orange (spell colour 0.7, 0.5, 0.2), from the hands.
+- L08's snaps a year ago were its fangs (it was fighting something in the woods; never shown or said).
 
 ## Scenes and time
 | scene | lines | time | light |
