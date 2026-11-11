@@ -90,12 +90,12 @@ module.exports = {
     }
     await ctx.cmd(`/forceload remove ${XL} ${z - 40} ${XR} ${z + 24}`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6')
-    // blast protection IV netherite (the armour bar shows it): the anchor's blast leaves a few hearts. Dead, the
+    await ctx.hotbar([['obsidian', 10], 'flint_and_steel', ['fire_charge', 3], 'tnt', 'lava_bucket', ['glowstone', 4], null, ['bread', 12], 'diamond_pickaxe'])
+    // (after the hotbar: its /clear took the armour off too) blast protection IV netherite (the armour bar shows it): the anchor's blast leaves a few hearts. Dead, the
     // client never saw the blast's fire land in the frame (5 tries: the opening stayed air under the death screen)
     for (const [slot, item] of [['head', 'netherite_helmet'], ['chest', 'netherite_chestplate'], ['legs', 'netherite_leggings'], ['feet', 'netherite_boots']]) {
       await ctx.cmd(`/item replace entity @s armor.${slot} with ${item}[enchantments={blast_protection:4}]`)
     }
-    await ctx.hotbar([['obsidian', 10], 'flint_and_steel', ['fire_charge', 3], 'tnt', 'lava_bucket', ['glowstone', 4], null, ['bread', 12], 'diamond_pickaxe'])
     const t0 = this.st[0]
     await ctx.tpCheck(t0.xc + 0.01, floor + 1, pz + 3.6, 180, 10)
     await ctx.cmd('/gamemode survival')
