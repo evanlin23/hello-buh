@@ -27,7 +27,7 @@ module.exports = {
   name: 'mega_sponge',
   biome: 'minecraft:flower_forest',
   near: [-2757, -206],                  // the flower forest the first take found (ground 63-83): the same site every try
-  time: 12150,                          // golden hour: a low sun on the west face, a warm sky behind the east
+  time: 11300,                          // late afternoon, a low warm sun on the west face (12150's sunset glow drew over the build's lower half)
   renderDistance: 12, recordRadius: 176,
   botTimeout: 900,
   eyeTrace: false,                      // a flight montage: every cut is a deliberate jump to a new angle
@@ -35,16 +35,16 @@ module.exports = {
   shots: {
     pov: { pov: true },
     // 1. under the south-west corner looking up: the build fills the frame from frame 1, the camera craning up and back
-    rise: { path: [[0, -55, 3, 60], [3.5, -60, 22, 66]], lookPath: [[0, -18, 62, 18], [3.5, -6, 48, 6]], fov: 74, dof: false, drift: 0.6, subject: [[0, 41, 0]] },
+    rise: { path: [[0, -52, 9, 56], [3.5, -60, 26, 66]], lookPath: [[0, -18, 62, 18], [3.5, -6, 48, 6]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
     // 3. wide: the whole sponge over the forest, orbiting from the south-east
-    orbit: { orbit: [0, 41, 0], radius: 112, height: 12, startDeg: 20, degPerSec: 9, fov: 56, dof: false, drift: 0.4, subject: [[0, 41, 0]] },
+    orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 9, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
     // 5. the west face head-on, pushing in: the face hole, and the core glowing deep inside it
-    face: { path: [[0, -150, 47, 0.5], [3.5, -108, 44, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [3.5, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, subject: [[0, 41.5, 0.5]] }
+    face: { path: [[0, -150, 47, 0.5], [3.5, -108, 44, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [3.5, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
   },
   edit: {
     caption: 'rate my starter house',
-    song: 'songs/ncs/sky_verse.mp3', dropAt: 'thread',
-    startAt: 'start', endAfter: 'thread:0.8',
+    dropAt: 'thread',                   // (no reference song: publish adds the NCS bed at -16 LUFS with its drop here)
+    startAt: 'start:0', endAfter: 'thread:0.8',
     flash: [['inside', 1, 0.45]]
   },
 
@@ -69,6 +69,9 @@ module.exports = {
     await ctx.cmd(`/fill ${X - H - 2} ${F} ${Z - H - 2} ${X + H + 2} ${F} ${Z + H + 2} grass_block`)
     await ctx.cmd('/kill @e[type=!player,distance=..120]', { mayFail: true })   // animals and drops in the clearing
     await mega.place(ctx, SPONGE, { x: X - H, y: F + 1, z: Z - H })
+    // let the server finish lighting 160,000 blocks before the chunks are snapshotted (take 1: the lower half of the
+    // east faces was still unlit, and drew dark and see-through)
+    await bot.waitForTicks(600)
     // the rider: an elytra on, rockets in hand
     await ctx.hotbar([['firework_rocket', 64]])
     await ctx.cmd('/item replace entity @s armor.chest with elytra')
@@ -88,13 +91,18 @@ module.exports = {
     const { X, Z, F } = this
     const W = (d) => ({ x: X + d[0], y: F + d[1], z: Z + d[2] })
     bot.physicsEnabled = false                   // the flight is a scripted path: physics off, our own tick clock
-    const clock = setInterval(() => bot.emit('physicsTick'), 50)
-    const park = () => { bot.entity.position.set(X + 0.5, F - 20, Z + 0.5); bot.entity.velocity.set(0, 0, 0) }   // in the ground, out of the camera shots
+    // the pose is applied by the clock itself, right before each tick is recorded: the server keeps re-sending the
+    // spot it last saw (no movement packets with physics off), and mineflayer moved the bot back there between our
+    // set and the tick (take 1: every other recorded tick was back on the roof)
+    let want = null
+    const clock = setInterval(() => {
+      if (want) { bot.entity.position.set(want.x, want.y, want.z); bot.entity.velocity.set(0, 0, 0); bot.entity.yaw = want.yaw; bot.entity.pitch = want.pitch }
+      bot.emit('physicsTick')
+    }, 50)
+    const park = () => { want = { x: X + 0.5, y: F - 20, z: Z + 0.5, yaw: 0, pitch: 0 } }   // in the ground, out of the camera shots
     const setEye = (p, look) => {
-      bot.entity.position.set(p.x, p.y - EYE, p.z)
       const d = { x: look.x - p.x, y: look.y - p.y, z: look.z - p.z }
-      bot.entity.yaw = Math.atan2(-d.x, -d.z)
-      bot.entity.pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      want = { x: p.x, y: p.y - EYE, z: p.z, yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
     }
     const boost = () => {
       this.rockets--
@@ -102,7 +110,7 @@ module.exports = {
       ctx.sound('entity.firework_rocket.launch', 1, 1)
       ctx.sound('item.elytra.flying', 0.8, 1)
       bot.chat(`/item replace entity @s hotbar.0 with firework_rocket ${this.rockets}`)
-      const p = bot.entity.position
+      const p = want || bot.entity.position
       for (let k = 0; k < 6; k++) ctx.particles('firework_trail', { x: p.x + (Math.random() - 0.5) * 0.4, y: p.y + 0.4, z: p.z + (Math.random() - 0.5) * 0.4 }, { vy: -0.05 })
     }
     // a run along a Catmull-Rom curve through `keys` (local eye points), at `speed(i)` blocks a tick, looking at
