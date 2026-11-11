@@ -1,12 +1,28 @@
-# wall_grows: continuity bible (r2)
+# wall_grows: continuity bible (r2; world pass 2026-11-11: Highwall, day 3700)
 
 The script is `story.json`; shots are in `shots.md` (generated from story.json `shots`); the set and the narration's
 claims are in `set.md`.
 
 ## World
-- Where: a plains village in a shallow valley, enclosed by one square stone-brick wall; outside its north side, a
-  player's trading hall. A standalone place (each story stands alone, r:rca5363): no canon place, no easter egg.
-- Weather: clear throughout. The look: the stunt's `look: 'bright'` + `edit.punchStress` (owner, r:r on the Gold A/B).
+- Where: **Highwall** (docs/world/map.json `highwall`, claimed on main 2026-11-11): a village on a snowy plateau in
+  the middle of the White (y 133-141), enclosed by one square stone-brick wall; outside its north side, on level
+  ground, a player's trading hall. The plaza bell O = (-1594, 133, -524); the village ground y0 = 133 (follow the
+  terrain: the wall's top is level at y0 + 40 = 173). The old road between Frostgate and Ravenford passes 40 blocks
+  south. Still a standalone story (r:rca5363): no line names a place, no easter egg.
+- **Day:** 3700 (canon timeline). The wall is 40 high that morning. It is not in sight of any rendered Short
+  (Ravenford 452 blocks west, Frostgate 812 east), so its height binds only later stories: 40 or more, never lower.
+- **The White (set dressing, canon conflict 24):** snowy plains: snow layers on the ground and roofs outside the paths,
+  spruce instead of oak in the hills north of the hall, a frozen stream for the river. Every villager is the **snowy**
+  type (Tomas a snowy mason, the kids snowy babies, the 100 in the hall mixed snowy). Every line, the wall, the hall,
+  the numbers and the shots are unchanged. Weather stays clear (no snowfall: keep the dirt pillar readable).
+- **Canon this Short plants (docs/world/canon.md links 14, 17; never said):** the wall on the old road is the White's
+  landmark from day 3700; Highwall's old Tomas came from a trading hall (Oakend's Tomas, converted ~2500, is the fan
+  theory: never confirmed, and Highwall's Tomas has **no name tag**, which is the fans' counter-evidence).
+- **Open questions:** who built the hall? Does Tomas keep building after the kid's climb? Never answered.
+- **The player (canon conflict 18):** the script gives him the default Steve skin, which reads as Buh; day 3700 is in
+  Buh's gap (3400-4300), so it isn't him, but a viewer can't know. Recommended: a non-Steve default skin no one else
+  wears (`ari`, `efe` or `noor`). Lead's/owner's call; nothing here changes until then.
+- Weather: clear throughout (snowy plains: no snowfall in any shot). The look: the stunt's `look: 'bright'` + `edit.punchStress` (owner, r:r on the Gold A/B).
 
 | scene | shots | time (ticks) | light | notes |
 |---|---|---|---|---|

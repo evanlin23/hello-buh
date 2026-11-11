@@ -1,7 +1,11 @@
-# wall_grows: set brief and the narration's claims (r2)
+# wall_grows: set brief and the narration's claims (r2; world pass 2026-11-11)
 
-Two sides of one wall: the village inside (S01-S10) and the trading hall outside (S11-S12). Built on real terrain (a
-shallow plains valley, STANDARDS 3.1: no superflat), at full scale with `/fill`. Every build follows
+Two sides of one wall: the village inside (S01-S10) and the trading hall outside (S11-S12). Built on real terrain at
+**Highwall** (map.json `highwall`: O = (-1594, 133, -524), footprint (-1634..-1554, -624..-484); a snowy plateau,
+interior mostly y 132-140 (a dip to 118 at the south-west corner: the wall is taller there), the hall's strip (O + (-6..5, -46..-97)) at y 130-136:
+survey 2026-11-11), at full scale with `/fill`. `world.build(ctx, { story: 'wall_grows' })` builds nothing there yet:
+the wall, the village and the hall are this set (map.json `highwall.story_builds`); write the wall back as a stamp
+when it's built. Snowy villagers; snow layers stay on the ground outside the paths and the farm. Every build follows
 `docs/building_guide.md` (7+, the wall 8+ as the focal build). Coordinates: bible.md "Places".
 
 ## Pieces
