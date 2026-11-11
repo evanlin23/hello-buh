@@ -10,6 +10,16 @@ session (or save it as a file and run `python3 scripts/studio_import.py <file>`)
 Collect YouTube Studio analytics for my channel @HelloBuh. Only read; don't change any setting, video, title or comment.
 Stop and ask me if anything needs a password or a code. Make sure the channel switcher (top right) says "Hello Buh".
 
+0. ALWAYS THE LATEST NUMBERS
+   - Reload every page before reading it; never reuse numbers from an earlier run or an earlier tab.
+   - Prefer the live sources: each Short's own Analytics page (Overview, Engagement, Reach, Audience) and its
+     "Realtime" card, and the Content list's view/comment/like columns. YouTube's Advanced mode table lags 1-2 days:
+     use it only for a number the live pages don't show, and say so in couldnt_read.
+   - Period "Lifetime" for each Short, with the end date set to today (not "since published" up to yesterday).
+   - When two places show different values for the same number, take the newer one (usually the larger).
+   - For each Short, record "data_through": the last date the Studio page's numbers cover (Studio says e.g.
+     "Nov 10 - Nov 11, 2026" or "Updated ... ago"); for realtime figures, the time you read them.
+
 1. LIST THE SHORTS
    - Open https://studio.youtube.com → Content → Shorts tab. Note every public or scheduled Short: its video ID (the
      part after /video/ in its link), title, publish date and time.
@@ -51,7 +61,7 @@ Stop and ask me if anything needs a password or a code. Make sure the channel sw
   },
   "videos": [
     {
-      "id": "VIDEO_ID", "title": "...", "published": "YYYY-MM-DDTHH:MM",
+      "id": "VIDEO_ID", "title": "...", "published": "YYYY-MM-DDTHH:MM", "data_through": "YYYY-MM-DDTHH:MM",
       "views": 0, "watch_hours": 0, "subs_gained": 0,
       "viewed_pct": 0, "avg_view_s": 0, "avg_pct_viewed": 0,
       "retention_pct": {"1s": 0, "3s": 0, "mid": 0, "end": 0}, "retention_notes": "dip at 4s to 40%",
