@@ -147,7 +147,9 @@ and don't send the bot's raw calls yourself:
 - **Ending on a blast or a fall: `endAfter: 'settle:0.6'`.** After `perform`, the harness keeps recording until
   nothing in the payoff is still moving: no lit TNT, no falling blocks, no blast debris in the air, no death animation
   still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark. This is the
-  default for every blast or fall payoff: the motion lint warns on one that ends any other way.
+  default for every blast or fall payoff: the motion lint warns on one that ends any other way. A blast counts as
+  moving for 44 ticks (2.2 s: the renderer's smoke and crumbs, not just the server's entities), the recording runs 2 s
+  past the mark, and `./hb pace` blocks an ending whose last 0.6 s still changes (blast smoke, debris, the camera).
 - **The shared factories in lib/** (door_run, escalation, guess_sound, hide_seek, inside, nph, spot_wrong,
   time_lapse, pixel_art) send their packets through `A.click`, `A.breakStart`/`A.breakFinish`, `A.digNow` and
   `A.strike`. When the crosshair is already on the target (within 6 degrees), the packet goes out on the same tick as
