@@ -25,26 +25,26 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 36.23,
+    "duration_s": 35.78,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20197484,
-    "sha256": "0a9c3562d2b98a56559103985452f54d5bf7841a2f72e2a176ad6cbe1de32e64",
+    "bytes": 19942240,
+    "sha256": "1353b7f268fc46b49c0b67bc8f522563c1529e4e909987474d71046a59aae423",
     "release": {
       "tag": "pkg-guess_sound_2",
-      "asset": "guess_sound_2.short.0a9c3562d2b98a56.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.0a9c3562d2b98a56.mp4",
-      "sha256": "0a9c3562d2b98a56559103985452f54d5bf7841a2f72e2a176ad6cbe1de32e64",
-      "bytes": 20197484
+      "asset": "guess_sound_2.short.1353b7f268fc46b4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.1353b7f268fc46b4.mp4",
+      "sha256": "1353b7f268fc46b49c0b67bc8f522563c1529e4e909987474d71046a59aae423",
+      "bytes": 19942240
     },
     "nosong_release": {
       "tag": "pkg-guess_sound_2",
-      "asset": "guess_sound_2.short_nosong.d8b9bdeef5e5428f.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short_nosong.d8b9bdeef5e5428f.mp4",
-      "sha256": "d8b9bdeef5e5428fbbb8fd8638f7527884f42d6f1b5bc44058d829dc4effcde5",
-      "bytes": 19782256
+      "asset": "guess_sound_2.short_nosong.131490aa3f8029d2.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short_nosong.131490aa3f8029d2.mp4",
+      "sha256": "131490aa3f8029d23d4774fae1c4b6b9af731f6ad0bf09e8a58fcb8ebc18d68c",
+      "bytes": 19532698
     }
   },
   "edit": {
@@ -55,7 +55,7 @@
       "hear"
     ],
     "startAt": "cd3:-0.02",
-    "endAfter": "final_reveal:1.45",
+    "endAfter": "final_reveal:1",
     "counter": {
       "at": [
         [
@@ -185,7 +185,7 @@
       [
         "lit",
         "THE PARROT AGAIN",
-        1.75,
+        1.3,
         "red",
         5,
         null,
@@ -252,13 +252,13 @@
       "--counter",
       "{\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6}",
       "--cards",
-      "[[\"lit\",\"PIG\",1.25,\"green\",0,null],[\"lit\",\"ZOMBIE\",1.25,\"green\",1,null],[\"lit\",\"SPIDER\",1.25,\"red\",2,null],[\"lit\",\"WITCH\",1.25,\"blue\",3,null,{\"y\":0.3}],[\"lit\",\"ALLAY\",1.25,\"blue\",4,null,{\"y\":0.3}],[\"lit\",\"THE PARROT AGAIN\",1.75,\"red\",5,null,{\"y\":0.2,\"size\":92}]]",
+      "[[\"lit\",\"PIG\",1.25,\"green\",0,null],[\"lit\",\"ZOMBIE\",1.25,\"green\",1,null],[\"lit\",\"SPIDER\",1.25,\"red\",2,null],[\"lit\",\"WITCH\",1.25,\"blue\",3,null,{\"y\":0.3}],[\"lit\",\"ALLAY\",1.25,\"blue\",4,null,{\"y\":0.3}],[\"lit\",\"THE PARROT AGAIN\",1.3,\"red\",5,null,{\"y\":0.2,\"size\":92}]]",
       "--countdowns",
       "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
       "--start_at",
       "cd3:-0.02",
       "--end_after",
-      "final_reveal:1.45"
+      "final_reveal:1"
     ]
   },
   "recording": {
@@ -947,11 +947,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/guess_sound_2",
-    "commit": "8035806194564dad86cdf2cf05ccd23aa707ec38",
+    "commit": "4707ab5bb001b55e24eb1028debe763fdb76cc95",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43114520004",
-    "rendered_at": "2026-11-11T22:55:27.135Z",
-    "head_at_publish": "818bdef552902b06c92a1b9676180775714c3d1a",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43120156876",
+    "rendered_at": "2026-11-11T23:53:27.628Z",
+    "head_at_publish": "8feec492b14cdadb1841f8ee2582c25ce8199bda",
     "stunt": "stunts/guess_sound_2.js",
     "source_snapshot": [
       "source/guess_sound_2.js",
@@ -962,34 +962,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 803580619456",
+    "git checkout 4707ab5bb001",
     "gunzip -c shorts/guess_sound_2/recording.json.gz > work/guess_sound_2.rec.json",
     "node render.js work/guess_sound_2.rec.json work/guess_sound_2.frames 60 1080 1011",
     "python3 audio.py work/guess_sound_2.rec.json work/guess_sound_2.wav",
-    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1,null],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2,null],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5,null,{\\\"y\\\":0.2,\\\"size\\\":92}]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at cd3:-0.02 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
+    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1,null],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2,null],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.3,\\\"red\\\",5,null,{\\\"y\\\":0.2,\\\"size\\\":92}]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at cd3:-0.02 --end_after final_reveal:1 --out out/guess_sound_2.mp4"
   ],
   "status": "ready",
-  "notes": "r:r52f94c owner note (@13.7 s 'when we look over at the mob, we arent looking directly at it'): the reveal turn lands on the mob's live eye point (lib/guess_sound.js A.turnTo, look_at mark) and the reaction sway stays on it; the aim check now blocks a look-at beat over 6 deg (all six here within 2.9). Answer cards moved off the mobs' heads; opens on the first countdown (r:r0f3da0). Independent review READY (round 2).",
-  "published_at": "2026-11-11T23:24:41.164Z",
+  "notes": "r:r52f94c owner note (@13.7 s 'when we look over at the mob, we arent looking directly at it'): the reveal turn lands on the mob's live eye point (lib/guess_sound.js A.turnTo + look_at mark), the sway stays on it; the aim check now blocks a look-at beat over 6 deg (all six here within 2.9). Cards off the mobs' heads; opens on the first countdown (r:r0f3da0); ends 1.0 s after the reveal (r:r188b46). Independent review READY (round 2). WARNs: opening sound = the mob's call itself; the end 1.0 s on a text payoff (the hint line).",
+  "published_at": "2026-11-11T23:57:10.016Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T23:25:18+00:00",
+    "at": "2026-11-11T23:57:49+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 36.24 s vs the reviewed render 36.23 s"
+      "summary": "short.mp4 35.80 s vs the reviewed render 35.78 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 1,
+      "ok": true,
+      "blockers": 0,
       "warnings": 1,
-      "summary": "dwell: the Short runs 1.46 s past the payoff's result (34.78 s): over 1.2 s (owner r:r188b46: the end lands 0.5-0.8 s after the"
+      "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:48:26.342Z",
+      "at": "2026-11-11T23:33:07.151Z",
       "report": "out/guess_sound_2.check.json"
     },
     "key_sounds": {

@@ -5,7 +5,7 @@
 const guessSound = require('../lib/guess_sound')
 module.exports = guessSound({
   name: 'guess_sound_2',
-  endAfter: 1.45,   // ends on the hint line: reading time
+  endAfter: 1.0,   // ends on the hint line (owner r:r188b46: the end 0.5-0.8 s after the result, 1.2 s max; 1.45 blocked)
   caption: 'guess the mob from its sound pt 2 🔊',
   red: 'sound',
   // frame 0 on the first countdown (the call already sounding, the 3-2-1 and the round's label up): it opened on 0.4 s
