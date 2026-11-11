@@ -58,6 +58,16 @@ def main() -> int:
         meta = json.loads(old.read_text()) if old.exists() else {}
         meta.setdefault("youtube", {}).setdefault("hashtags", [])
         meta.setdefault("caption", n)
+        # the edit as it stands (publish.js writes it): the published package's older edit hid a new card from pace's
+        # caption events (pickaxe_race's mid-chain card, 2026-11-11)
+        cur = subprocess.run(["node", "-e", f"const s=require('./stunts/{n}.js'); process.stdout.write(JSON.stringify(s.edit || null))"],
+                             cwd=ROOT, capture_output=True, text=True)
+        try:
+            ed = json.loads(cur.stdout or "null")
+        except ValueError:
+            ed = None
+        if isinstance(ed, dict):
+            meta["edit"] = {**(meta.get("edit") or {}), **ed}
         (d / "metadata.json").write_text(json.dumps(meta))
         shutil.copy(src, d / "short_nosong.mp4")
         (d / "recording.json.gz").write_bytes(gzip.compress(rec.read_bytes()))
