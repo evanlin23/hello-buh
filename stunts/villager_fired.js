@@ -24,7 +24,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', song: 'songs/payphone.mp3', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'nitwit:1.1',
+    startAt: 'beat:-0.05', endAfter: 'nitwit:1.0',
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -43,7 +43,9 @@ module.exports = {
     // the still wait on the pillar before he turns nitwit is cut (lint: nobody moves 31.6-34.1 s); a flash, punch and a
     // held push-in on the change (pace: the payoff's picture change; he's small at 13 blocks)
     speed: [['fuse_a', 'fuse_b', 'cut'], ['close_a', 'close_b', 'cut'], ['fired_all:0.45', 'nitwit', 'cut']],
-    flash: [['nitwit', 0, 0.5]], punch: [['nitwit', 0, 1.1]], zoom: [['nitwit', 'end', 1.4]]
+    flash: [['nitwit', 0, 0.5]], punch: [['nitwit', 0, 1.1]], zoom: [['nitwit', 'end', 1.4]],
+    // pace: a pop on the opening (game sound starts at 2 s), a song dip + impact on the change
+    sfx: [['pop', 'beat'], ['dip', 'nitwit', 0.3], ['impact', 'nitwit']]
   },
 
   async setup (ctx) {
