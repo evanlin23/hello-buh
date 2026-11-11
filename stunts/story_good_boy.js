@@ -202,11 +202,11 @@ module.exports = {
     // L01 "My HUMAN has TRIED to LOSE me thirty-seven TIMES." (the first frame is the mechanic, visual audit): a
     // camera ahead of Buh as he sprints west down the road toward it (the low sun behind the lens lights his face);
     // the red-collared wolf runs after him 13 blocks back, small; at 0.4 s it is gone from there and at his heel
-    await scut(43.5, -4.2, P(10, gy(10, -4.2) + 0.6, -4.2), gy(43.5, -4.2), { shot: 'run_ahead', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 30.5, z: -5.0, y: gy(30.5, -5.0), yaw: 90, pitch: 5 }) })
+    await scut(47.5, -4.2, P(10, gy(10, -4.2) + 0.6, -4.2), gy(47.5, -4.2), { shot: 'run_ahead', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 36.5, z: -5.0, y: gy(36.5, -5.0), yaw: 90, pitch: 5 }) })   // (voiced: he starts 6 blocks further east so the walk ends near x 18 and the wolf's L02 sprint stops short of the village tree at x 5)
     K.ctl('sprint', true); K.go(true)
     await K.preroll(10, () => { walkG(buh, -0.215, 0); autoJump() })   // (L01's walk)
     await line('L01', async (k, at, n) => {
-      walkG(buh, -Math.min(0.215, 16 / Math.max(1, n)), 0); buh.pitch = 5   // a walk (vanilla 0.215 a tick: the wolf walks beside him after its pop, K.go), at most 16 blocks over the line: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
+      walkG(buh, -Math.min(0.215, 18 / Math.max(1, n)), 0); buh.pitch = 5   // a walk (vanilla 0.215 a tick: the wolf walks beside him after its pop, K.go), at most 16 blocks over the line: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
       if (once('L01pop', k >= 8)) { await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y); K.ctl('sprint', false); K.go(true) }   // then it walks beside him (standing, the follow camera left it behind: lint)
       autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.2)); look(k)   // (a block south of his line: right behind him his body hid it)
     })
