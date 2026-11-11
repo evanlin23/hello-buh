@@ -3,9 +3,10 @@
 ## World
 - **Place:** a new place to claim, `gullwick` ("Gullwick"): a shore hamlet on the West March coast, within ~200
   blocks of the Ridge tower (-2000, -445), clear of Leo's House and the stronghold islets.
-  - The library hut (a librarian, a lectern, an anvil), a dock with a tied oak boat, a short shingle shore at the
+  - The library hut (a librarian, a lectern, an anvil), a dock with an oak boat floating empty beside it, a short shingle shore at the
     dock's foot, and an island **60 blocks** out across open cold ocean (not frozen: Frost Walker needs water).
 - **Day:** 4000 (the flashback, "ten years" before, is about day 350: canon counts 365 days a year; outside the Long Day 800-1100).
+- **Actor height:** outside, an actor at y 0 stands on the deck, feet at y 1; in the hut y 0 is the floor.
 - **Coordinates:** outside, dock-relative. (0, 0, 0) is the dock's end, its deck flush at sea level (stand at sea
   level + 1); -z is out to sea (west). Grandma's window is (0, 3, -60). The hut's door is about 20 blocks inland.
 - **Hut coordinates are hut-local:** (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) facing +z; Grandpa at (-0.6, 0, 1.0) at the counter, (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the tally wall at z -3; the door at (0, 0, 6) facing the bay. The hut is a `room` from lib/sets (15x13x13).
@@ -25,10 +26,10 @@
 ## Cast and costume
 | who | what | voice | shots |
 |---|---|---|---|
-| the kid (narrator) | player, a default skin that is not Steve and not zuri; never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; small next to Mom S08 |
+| the kid (narrator) | player, the default `kai` skin (not Steve, not zuri); never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; small next to Mom S08 |
 | Grandpa | player actor, a grey-haired old-man skin (to make); iron axe in the hut (S01-S03, S09), empty-handed on the dock and in the flashback; **no boots** until S11, put on at the dock's end, leather with the enchant glint | Iapetus directed old (not `elder`: canon conflict 11), one clause; to audition | S01-S09, S11 |
 | Grandma | player actor, a grey-haired old-woman skin (to make) | `grandma` (Autonoe) | in the boat S06-S07; head to toe in the window (sill at floor level) S04, S08, S11 |
-| Mom | player actor, a woman's default skin | silent | S08 |
+| Mom | player actor, the default `makena` skin | silent | S08 |
 | the librarian | plains villager; librarian outfit while a lectern stands, plain after each break (plain in S03) | none | S01-S03, S09 |
 
 ## Props

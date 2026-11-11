@@ -23,7 +23,7 @@
 | L02 | the librarian holds up a book | the villager holding a glinting enchanted book, in frame |
 | L03b | he really hates that librarian | (a misreading: nothing to build) the librarian in frame, jobless |
 | L04 | Grandma lives on the island across the bay; her window's lit every night | the island across open water, 60 blocks; the window lit; Grandma's figure in it, readable at phone size (FOV 20 in S04) |
-| L05 | he won't take a boat or build a bridge | a boat tied and unused; no bridge, no pillar, no blocks between the dock and the island |
+| L05 | he won't take a boat or build a bridge | a boat floating empty and unused; no bridge, no pillar, no blocks between the dock and the island |
 | L07 | walk the water to me | open water between them; no ice anywhere before S11 |
 | L08 | Mom says never | Mom on screen while she's named |
 | L09 | a new book | the same set-up as S02, the book glinting, at dawn |
