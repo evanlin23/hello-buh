@@ -78,7 +78,7 @@ module.exports = {
         glanced2 = true
         const c2 = Object.values(bot.entities).find(e => e.name === 'creeper')
         ctx.mark('glance2')
-        if (c2) { await ctx.easeLookAt(c2.position.offset(0, 1.2, 0), 380); await bot.waitForTicks(10) }
+        if (c2) { await A.aimAt(c2, { strict: false, reach: 20, max: 30 }); await bot.waitForTicks(10) }   // governed (<=220 deg/s): an eased 380 ms turn whipped at 746 deg/s (rec_check)
       }
       await A.place(new Vec3(bx, by, bz), { sound: 'block.wood.place' })   // aimed by construction (lib/act.js)
       await bot.waitForTicks(6)
@@ -91,9 +91,9 @@ module.exports = {
       if (near() < 3.2) hissed = true
     }
     ctx.mark('hiss'); ctx.sound('entity.creeper.primed', 1, 1)
-    await bot.waitForTicks(8)                                   // ...what's that sound
+    await bot.waitForTicks(3)                                   // ...what's that sound
     const c = Object.values(bot.entities).find(e => e.name === 'creeper')
-    if (c) await ctx.easeLookAt(c.position.offset(0, 0.9, 0), 300)   // spin round: oh no
+    if (c) await A.aimAt(c, { strict: false, reach: 20, max: 22 })   // spin round: oh no (governed, <=220 deg/s: the 300 ms ease whipped at 777 deg/s; the 30-tick fuse leaves ~0.4 s of it swelling in frame)
     // stumble back a step or two so the whole creeper (legs, swelling, white flashes) is in frame
     bot.setControlState('back', true)
     // (9 ticks back: the blast left 4 hearts even on hard)
