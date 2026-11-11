@@ -292,6 +292,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, sharing an "aura" Short (caption "Bro just used all the luck left in his life": digging
+  straight down hits diamonds, then lava saved by a water bucket, then an emerald vein, then breaks straight into a
+  stronghold's end portal room beside the spawner; 19 s): "fake super lucky".** HelloBuh adds a staged-luck format
+  (family `lucky`): a dig, fall or run where every next block is impossibly lucky, each luckier than the last, all
+  vanilla mechanics, staged by the set.
 - **Owner, 2026-11-11: "another one i saw is like fake secret chest in desert pyramid that takes like the entire
   video to get to and theres like parkour and tunnels etc."** HelloBuh adds a quest format (family `quest`): a
   "secret chest" hidden under a desert pyramid (or similar), and the whole Short is the escalating way down to it:

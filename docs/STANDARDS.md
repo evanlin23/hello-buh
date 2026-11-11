@@ -308,6 +308,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "quest"**: the whole Short is the escalating way down to one secret chest, opened only at the end.
   Check: owner. r:r4b458d
 - **Format "love"**: a cute heart build revealed at night (lamps, fireworks), made to be shared. Check: owner. r:rf91fef
+- **Format "lucky"**: every next block impossibly luckier than the last, vanilla mechanics staged by the set.
+  Check: owner. r:r934ea4
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
