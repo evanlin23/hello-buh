@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 37690522,
-    "sha256": "c44d58726e00743b208ceb2e04f741a20d10b49e958cdef01febd6479ca04e26",
+    "bytes": 55665073,
+    "sha256": "bbdb8cedbbf00b48fa6c22d9538e3ab2d025fe691ec0ca62fd98aabf6832e18e",
     "release": {
       "tag": "pkg-looks_wrong",
-      "asset": "looks_wrong.short.c44d58726e00743b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.c44d58726e00743b.mp4",
-      "sha256": "c44d58726e00743b208ceb2e04f741a20d10b49e958cdef01febd6479ca04e26",
-      "bytes": 37690522
+      "asset": "looks_wrong.short.bbdb8cedbbf00b48.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.bbdb8cedbbf00b48.mp4",
+      "sha256": "bbdb8cedbbf00b48fa6c22d9538e3ab2d025fe691ec0ca62fd98aabf6832e18e",
+      "bytes": 55665073
     },
     "nosong_release": {
       "tag": "pkg-looks_wrong",
-      "asset": "looks_wrong.short_nosong.a03368820f189392.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short_nosong.a03368820f189392.mp4",
-      "sha256": "a03368820f1893929bcea19814a7d2deb91ab70f6f90fdd531a1b61c5877597d",
-      "bytes": 37635843
+      "asset": "looks_wrong.short_nosong.75f0210590789e35.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short_nosong.75f0210590789e35.mp4",
+      "sha256": "75f0210590789e3544c4bd05154085db9bd2f2a32744dc8863e25c9d1b0d9336",
+      "bytes": 55626399
     }
   },
   "edit": {
@@ -72,7 +72,6 @@
       ]
     ],
     "caption": "Bro this looks wrong?",
-    "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
     "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
@@ -88,11 +87,7 @@
       "--start_at",
       "stage:-0.2",
       "--end_after",
-      "complete:0.9",
-      "--song",
-      "songs/funk_abnormal.mp3",
-      "--song_drop_at",
-      "complete"
+      "complete:0.9"
     ]
   },
   "recording": {
@@ -921,11 +916,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/looks_wrong",
-    "commit": "a28787d18141ce00e552c92ee6356f6780c55cff",
+    "commit": "f67e7b7f479943b9e87fde661d019ee8975aa576",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42968466649",
-    "rendered_at": "2026-11-11T05:58:39.436Z",
-    "head_at_publish": "ae457fa4c807a18bcf6927e39e125155d84061ed",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977486813",
+    "rendered_at": "2026-11-11T07:20:42.128Z",
+    "head_at_publish": "8469d0bbe4888ff4c4e837fe00423ab983c6f32d",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
@@ -933,35 +928,35 @@
     ]
   },
   "rebuild": [
-    "git checkout a28787d18141",
+    "git checkout f67e7b7f4799",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
-    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/looks_wrong.mp4"
+    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
   ],
   "status": "ready",
-  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium picture peeks in at the left edge during the big build's backup; short hold on the medium reveal",
-  "published_at": "2026-11-11T06:19:58.531Z",
+  "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
+  "published_at": "2026-11-11T07:22:24.782Z",
   "gates": {
     "version": 2,
-    "at": "2026-11-11T07:04:50+00:00",
-    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "at": "2026-11-11T07:22:51+00:00",
+    "by": "publish.js",
     "package": {
-      "ok": false,
-      "summary": "short.mp4 32.00 s vs the reviewed render 37.25 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
+      "ok": true,
+      "summary": "short.mp4 37.27 s vs the reviewed render 37.25 s"
     },
     "pace": {
       "ok": false,
-      "blockers": 7,
-      "warnings": 4,
-      "summary": "dead: 4.62 s with nothing new (6.98-11.60 s, after the sound hit; no line on screen); dead: 3.03 s with nothing new (12.85-15.88 s, after the motion; no line on screen); dead: 6.75 s with nothing new (15.90-22.65 s, after the motion; no line on screen); dead: 3.24 s with nothing new (25.85-29.09 s, after the motion; no line on screen); dead: 4.35 s with nothing new (32.00-36.35 s, after the end; no line on screen); payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+      "blockers": 6,
+      "warnings": 3,
+      "summary": "dead: 4.60 s with nothing new (7.00-11.60 s, after the sound hit; no line on screen); dead: 3.60 s with nothing new (12.65-16.25 s, after the stage; no line on screen); dead: 8.54 s with nothing new (16.25-24.79 s, after the sound hit; no line on screen); dead: 4.12 s with nothing new (25.05-29.17 s, after the backup; no line on screen); dead: 3.01 s with nothing new (29.17-32.18 s, after the sound hit; no line on screen); dead: 3.49 s with nothing new (32.39-35.88 s, after the sound hit; no line on screen)"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:41:00.522Z",
-      "report": "work/hb/looks_wrong.check.json"
+      "at": "2026-11-11T07:11:46.793Z",
+      "report": "out/looks_wrong.check.json"
     },
     "key_sounds": "n/a"
   }
