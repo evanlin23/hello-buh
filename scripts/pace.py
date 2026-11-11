@@ -566,7 +566,8 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         if ev == "settle":   # endAfter 'settle:0.6' (lib/settle.js): the payoff is where that last motion began (the
             # blast, the fall, the death); the tail counts from the settle (the settle check below)
             st_ = mark_time("settle")
-            starts = [m["out"] for m in marks if m["event"] == "motion_start" and st_ is not None and m["out"] is not None and m["out"] <= st_ + 1e-6]
+            starts = sorted(o for o in (clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and e["event"] == "motion_start")
+                            if o is not None and st_ is not None and o <= st_ + 1e-6)   # (motion_start is preview NOISE: not in marks)
             if starts:
                 payoff, how = starts[-1], "the edit's endAfter 'settle': where the last payoff motion began"
                 # inside that window, the last blast or death (a lit fuse opens the window: the payoff is the bang)

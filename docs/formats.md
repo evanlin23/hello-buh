@@ -18,8 +18,8 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `fakemod` | reo: "Low control minecraft" | Normal gameplay; a fake mod popup ("A creeper is asking for permission to explode": Allow / Deny / Roll); the choice plays out | "this could be like a fake mod" | r:rd551de | idea |
 | `faketrick` | Mevys: "Maddest End Ever" ("Nobody Knows That! 😱") | An impossible "secret trick" played straight (pistons carry a lit portal); the fake is the bait for comments | "this is like fake minecraft gimmick" | r:rfcab11 | idea |
 | `cells` | hazypapa: "Monsters can't sleep, I am nearby" | A slow walk past glass lab cells; each MOB is forced into a contraption doing one thing forever; caption "i think bro is doing it for fun" | "a bunch of cells where mobs are forced to do things repeitively forever"; "it only works bc its forcing mobs specifically to do it" | r:r07d791 r:rce72cb | built: lib/cells.js, cells_lab |
-| `race` | KRIZZIT: "Clear winner" ("Grass vs Fungus") | A huge dirt square, two spreading things race from opposite corners, top-down time-lapse; viewers pick a side | "timelapse grass vs fungus" | r:rbe60ef | idea |
-| `hack` | KingTEC: "POV: You Made FUNCTIONAL Cabinets in Minecraft" | One clever real block trick (doors + cushions as cabinets and gates), a "POV: you realized..." caption, shown working in a lived-in room right away | "another format, cool minecraft gimmicks" | r:rc15847 | idea |
+| `race` | KRIZZIT: "Clear winner" ("Grass vs Fungus") | A huge dirt square, two spreading things race from opposite corners, top-down time-lapse; viewers pick a side | "timelapse grass vs fungus" | r:rbe60ef | building (race_grass_mycelium: lib/race.js, a live score bar `edit.score`) |
+| `hack` | KingTEC: "POV: You Made FUNCTIONAL Cabinets in Minecraft" | One clever real block trick (doors + cushions as cabinets and gates), a "POV: you realized..." caption, shown working in a lived-in room right away | "another format, cool minecraft gimmicks" | r:rc15847 | building (hack_banner_door: lib/hack.js) |
 | `cooked` | ThreexyMC: "Yeah its over bro" ("Am i cooked?") | Something impossible (mining through bedrock), the screen goes dark, then the chat floods with "[Notch] / [Mojang] / [FBI] / [Interpol] / [NASA] joined the game" over a war-movie soldier still; the music is the joke and is track-specific | "doing something impossible, and then having like creators of minecraft join on like the war image... this is music speciifc too, need to sue their music" | r:r5ee125 | idea (decided r:r12cb71: a similar NCS track; the real meme photo, fetched at render, never committed) |
 | `quest` | (seen by the owner; no file) a "secret chest in a desert pyramid" Short | The whole video is the way down to one secret chest: hidden buttons, tunnels, parkour, traps, each stage harder; opened only at the end | "fake secret chest in desert pyramid that takes like the entire video to get to and theres like parkour and tunnels etc." | r:r4b458d | idea |
 | `love` | "Send This To Someone You Love Most 😍💗" | A heart laid out in redstone and lamps in a cherry grove; night falls, it lights up, fireworks ring it; made to be sent to someone | "its like a heart and its cute and lovey" | r:rf91fef | idea |
@@ -37,6 +37,11 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
+  Built (lib/race.js): a floating 64x64 field over a deep ocean (nothing outside can spread in), seeds in opposite
+  corners, random_tick_speed 300, the edit at 3x (6x for the last dirt). Grass and mycelium spread by the same vanilla
+  rule, so the winner is luck: two takes went 54-46 mycelium and 56-44 grass, ~92-97 s of game time. Only grass and
+  mycelium spread onto dirt by random ticks; moss and nylium spread only with bone meal, sculk only from a catalyst
+  when mobs die, so those pairs need their own driver (makeRace takes the blocks; the spreading is the server's).
 - **cells**: a zombie on an endless minecart loop chasing a villager it never reaches, a creeper on a piston treadmill,
   a skeleton forever shooting a target that resets, a pillager stuck in a water elevator, a chicken laying into a hopper.
   Built kinds (lib/cells.js CELLS): cow_pingpong (two pistons), chicken_eggs (an egg dispenser: chicks hatch in there),

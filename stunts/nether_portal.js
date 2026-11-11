@@ -133,7 +133,7 @@ module.exports = {
     const A = require('../lib/act')(ctx)
     const place = async (loc, face, cur) => {
       await A.aimAt(new Vec3(loc.x + cur[0], loc.y + cur[1], loc.z + cur[2]), { on: loc, strict: false })
-      bot._client.write('block_place', { hand: 0, location: loc, direction: face, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })
+      bot._client.write('block_place', { hand: 0, location: loc, direction: face, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: aimed above (A.aimAt lands on this exact point; the face matters: fire on top)
       bot.swingArm()
     }
     // one smooth aim step toward a point (callers loop it every tick)

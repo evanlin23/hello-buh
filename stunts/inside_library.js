@@ -39,7 +39,7 @@ async function room (ctx, A) {
   await set([3, 1, -14], 'spruce_stairs[facing=north]')
   await set([3, 1, -10], 'spruce_stairs[facing=south]')
   // ---- the long red runner down the middle (it stops at the entry: the hut has bare boards)
-  await fill([-1, 1, -20], [1, 1, -5], 'red_carpet')
+  await fill([-1, 1, -21], [1, 1, -5], 'red_carpet')
   // ---- a dining table on the west side: slab top, stair chairs, a cake and candles
   await fill([-5, 1, -11], [-4, 1, -9], 'spruce_slab[type=top]')
   await fill([-6, 1, -11], [-6, 1, -9], 'spruce_stairs[facing=west]')

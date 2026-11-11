@@ -93,6 +93,24 @@ const P = rec.poses
   }
   if (fixed.length) console.log(`filled ${fixed.length} dropped pose tick(s): ${fixed.slice(0, 20).join(' ')}${fixed.length > 20 ? ' ...' : ''}`)
 }
+// A 'seamless' cut ({ dx, dy, dz }: lib/inside.js's hidden cut, a relative /tp mid-stride): the server teleports from
+// its own last position, a fraction of a tick behind the client's, so the step on the teleport tick comes out short
+// (0.14 blocks of a 0.22 walk) and the camera hitches. Over +-6 ticks the camera's path, with the offset taken out,
+// goes on a straight line at an even pace (the walk there is straight; only the camera moves, the world doesn't).
+for (const e of (rec.timeline || []).filter(e => e.event === 'seamless')) {
+  const d = [e.dx || 0, e.dy || 0, e.dz || 0], t = Math.round(e.t / 50)
+  let k = -1
+  for (let i = Math.max(1, t); i <= Math.min(P.length - 1, t + 6) && k < 0; i++) if (Math.hypot(P[i][1] - P[i - 1][1] - d[0], P[i][2] - P[i - 1][2] - d[1], P[i][3] - P[i - 1][3] - d[2]) < 1) k = i
+  const W = 6, i0 = k - W, i1 = k + W
+  if (k < 0 || i0 < 0 || i1 >= P.length) continue
+  const u = (i) => [1, 2, 3].map(c => P[i][c] - (i >= k ? d[c - 1] : 0))
+  const A = u(i0), B = u(i1)
+  for (let i = i0 + 1; i < i1; i++) {
+    const f = (i - i0) / (i1 - i0)
+    for (let c = 1; c <= 3; c++) P[i][c] = +(A[c - 1] + (B[c - 1] - A[c - 1]) * f + (i >= k ? d[c - 1] : 0)).toFixed(4)
+  }
+  console.log(`seamless cut at tick ${k}: the camera path evened over ticks ${i0}-${i1}`)
+}
 // client-side placement prediction: a stunt can mark('place', {x, y, z}) on the tick it uses an item
 // on a block. The block change the server sends back 1-3 ticks later is moved to that tick, as
 // BlockItem.place predicts on the client; an eye of ender is not predicted (EnderEyeItem.useOn returns
@@ -132,14 +150,19 @@ function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.
 const bobState = []
 {
   let walk = 0, bob = 0
+  // a 'seamless' mark ({ dx, dy, dz }: lib/inside.js's hidden cut) is a relative /tp mid-stride: the walk goes on, so
+  // the step that tick is the move minus the offset (the bob's phase and amplitude carry straight across the cut)
+  const SEAMLESS = (rec.timeline || []).filter(e => e.event === 'seamless').map(e => ({ t: e.t / 50, d: [e.dx || 0, e.dy || 0, e.dz || 0] }))
   for (let i = 0; i < P.length; i++) {
     const a = P[Math.max(0, i - 1)], b = P[i]
+    const s = SEAMLESS.find(s => i >= s.t && i <= s.t + 6 && Math.hypot(b[1] - a[1] - s.d[0], b[2] - a[2] - s.d[1], b[3] - a[3] - s.d[2]) < 1)
+    const d = s ? s.d : [0, 0, 0]
     // a teleport (a cut: over a block in one tick, faster than any sprint) moves the player without
     // move(), so vanilla adds no walkDist; counting it bobbed the view for a few ticks after every cut
     // and the whole frame swayed (worker 5, story_runaway f297-300, f939-942)
-    let h = Math.hypot(b[1] - a[1], b[3] - a[3])
+    let h = Math.hypot(b[1] - a[1] - d[0], b[3] - a[3] - d[2])
     if (h > 1) h = 0
-    const onGround = Math.abs(b[2] - a[2]) < 1e-4
+    const onGround = Math.abs(b[2] - a[2] - d[1]) < 1e-4
     walk += h * 0.6
     bob += ((onGround ? Math.min(0.1, h) : 0) - bob) * 0.4
     bobState.push({ walk, bob })
@@ -2035,7 +2058,10 @@ function camAtLive (t) {
       }
       lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
     }
-    process.stdout.write(lines.join('\n') + '\n')
+    // (a synchronous write: through a pipe, process.exit cut a long recording's output mid-line, ~64 KB in:
+    // race_grass_mycelium's 2000 ticks, and hb check died parsing it)
+    const out = Buffer.from(lines.join('\n') + '\n')
+    for (let o = 0; o < out.length;) { try { o += fs.writeSync(1, out, o) } catch (e) { if (e.code !== 'EAGAIN') throw e } }
     process.exit(0)
   }
 
