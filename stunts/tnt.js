@@ -7,12 +7,12 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:1.0',
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'crater:1.0',   // (lead 2026-11-11: 8 s+ with a real beat: after the chain, walk to the rim and look into the crater)
     // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
     speed: [['lit:0.5', 'boom:-0.4', 1.5]],
-    sfx: [['air', 'start', 'boom', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom']],
-    flash: [['boom', 0, 0.5]], shake: [['boom', 0, 10]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
+    sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['impact', 'crater']],
+    flash: [['boom', 0, 0.5]], shake: [['boom', 0, 10]], punch: [['crater', 0, 1.08]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -69,7 +69,9 @@ module.exports = {
     await bot.waitForTicks(40)                                // the chain goes off
     // walk up to the rim and look down INTO the crater (the old ending stayed level on the grass)
     bot.setControlState('forward', true); await bot.waitForTicks(14); bot.setControlState('forward', false)
+    ctx.mark('crater_look')
     await ctx.easeLook(0, -0.95, 800)
+    ctx.mark('crater'); ctx.sound('entity.generic.explode', 0.15, 0.6)   // the second payoff: the hole it left
     ctx.easeLook(0.4, -0.85, 1600)
     await bot.waitForTicks(28)
     return boomed && !ctx.died

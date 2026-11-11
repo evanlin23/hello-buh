@@ -38,13 +38,13 @@ module.exports = {
     const { x, z, floor } = this
     await bot.waitForTicks(6)
     // the creeper, well behind the bot (south)
-    await ctx.cmd(`/summon creeper ${x + 0.5} ${floor + 1} ${z + 9.5} {PersistenceRequired:1b}`)
+    await ctx.cmd(`/summon creeper ${x + 0.5} ${floor + 1} ${z + 15.5} {PersistenceRequired:1b}`)   // far back: two glances as it closes in (lead 2026-11-11: the hiss build-up, 8 s+)
     // building a little wall in front: 4 planks wide, 2 high
     const wall = []
     for (const dy of [0, 1]) for (const dx of [-2, -1, 0, 1]) wall.push([x + dx, floor + 1 + dy, z - 2])
     // the hook: a glance over the shoulder at the start shows it walking up (the viewer knows, the
-    // player doesn't), then back to building until the hiss
-    for (let i = 0; i < 40; i++) { const c = Object.values(bot.entities).find(e => e.name === 'creeper'); if (c && c.position.distanceTo(bot.entity.position) < 8.5) break; await bot.waitForTicks(1) }
+    // player doesn't), back to building, a second glance (much closer), building again until the hiss
+    for (let i = 0; i < 40; i++) { const c = Object.values(bot.entities).find(e => e.name === 'creeper'); if (c && c.position.distanceTo(bot.entity.position) < 14) break; await bot.waitForTicks(1) }
     const c0 = Object.values(bot.entities).find(e => e.name === 'creeper')
     ctx.mark('glance')
     if (c0) { await ctx.easeLookAt(c0.position.offset(0, 1.2, 0), 350); await bot.waitForTicks(14) }
@@ -53,7 +53,15 @@ module.exports = {
       const c = Object.values(bot.entities).find(e => e.name === 'creeper')
       return c ? c.position.distanceTo(bot.entity.position) : 99
     }
+    let glanced2 = false
     for (const [bx, by, bz] of wall) {
+      if (!glanced2 && near() < 7.5) {
+        // the second glance: it's much closer now (still walking, not hissing yet)
+        glanced2 = true
+        const c2 = Object.values(bot.entities).find(e => e.name === 'creeper')
+        ctx.mark('glance2')
+        if (c2) { await ctx.easeLookAt(c2.position.offset(0, 1.2, 0), 380); await bot.waitForTicks(10) }
+      }
       await ctx.easeLookAt(new Vec3(bx + 0.5, by + 0.5, bz + 0.5), 250)
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: by - 1, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('block.wood.place', 1, 0.9)
