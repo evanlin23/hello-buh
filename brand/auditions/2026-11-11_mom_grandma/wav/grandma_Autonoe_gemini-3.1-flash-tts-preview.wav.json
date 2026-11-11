@@ -1,0 +1,7 @@
+{
+ "role": "grandma",
+ "voice": "Autonoe",
+ "model": "gemini-3.1-flash-tts-preview",
+ "prompt": "[An old grandmother in her seventies, warm, slow and a little dry]\n\nAnna: One's plenty, sweetie.\nBeth: One's plenty, sweetie.",
+ "speaker": "Beth"
+}
