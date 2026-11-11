@@ -18,7 +18,8 @@ const path = require('path')
 const { storyLines, storyKit, setKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'light_sleeper')
-const CAPTION = 'why is my whole village carpeted 😶'
+const CAPTION = 'my village is covered in 9,000 carpets 😶'   // docs/brand.md, Buh Stories release 1 (publish.js titles from edit.caption + 2 hashtags)
+const BAND = 'My village is covered in 9,000 carpets'   // the title band: white, the key word in Buh gold, no emoji (docs/brand.md)
 const WX = -162, WZ = -860, F = 79      // the well's centre block, and the village terrace's ground (top block)
 const MORNING = 1000, AFTERNOON = 9000, DUSK = 12000, NIGHT = 18000
 const WAIT = 60                           // the cast's waiting room: a barrier floor this high over the set
@@ -35,7 +36,7 @@ module.exports = {
   idleLife: true,
   hideHand: false,
   look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11: bright and punchy (main e58c77d); rolloff 0.8 keeps the sky blue (the story default); night shots keep their shot moods
-  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'], punchStress: true },   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
+  edit: { caption: BAND, red: 'carpets', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'], punchStress: true },   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
 
   async setup (ctx) {
     const { bot } = ctx
