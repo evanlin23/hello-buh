@@ -38,7 +38,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `fakerun` | (via the Buh Connects operator) "Fastest Speedrun Ever" | An obviously impossible speedrun in jump cuts (a portal missing corners lit anyway, full netherite already, lava in the end portal, typo labels), one banner, music only, 67 s; comment bait | "obviously fake, badly made, with typos and everything" | r:r9105ba | building (own session, 2026-11-11) (also track comments per 1k views) |
 | `sandart` | Technoblade: "Sand Art" | A giant pixel picture poured from the sky in concrete powder: the blocks fall and pile into pyramids, the camera rides down the slopes of colour, then the whole picture shows | "huge sand art" | r:r718ec5 | building (sandart_tnt: lib/sandart.js, an episode gives a pixel picture and a palette) |
 | `dropper` | (owner upload "fananimation") | A towering yellow dropper in first person, "Attempt #1, #3, #15" on screen, quick fails, the clean landing on the target far below | "Huge dropper?" | r:r304cb5 | building (own session, 2026-11-11) |
-| `fakeworld` | "Minecraft Dirt Moment" ("bro found dirt for ONCE") | A whole world made of one wrong block, played as normal survival; finding one patch of real dirt is the treasure | "fake world?" | r:r62f46d | building (own session, 2026-11-11) |
+| `fakeworld` | "Minecraft Dirt Moment" ("bro found dirt for ONCE") | A whole world made of one wrong block, played as normal survival; finding one patch of real dirt is the treasure | "fake world?" | r:r62f46d | built: lib/fakeworld.js, fakeworld_diamond (2026-11-11) |
 | `trap` | NoschiTech: "#memeanimation" ("a diabolical trap that made my friend hate me...") | A glass-roofed "underwater base" as bait; the friend dives in, the base is a fake, a hidden drop ends in a glass cage | "trapping friend" | r:refc733 | building: `lib/trap.js` (a bait over a real vanilla trap, the friend a second player bot on his own physics), first Short `trap_free_diamonds` (a trapped chest opens the trapdoor he stands on) |
 
 ## Ideas for each (to start from, not to copy)
@@ -95,3 +95,10 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   that pulls the floor with sticky pistons; a fake bed in a hole (sleep = the drop); a tripwire across a diamond-ore
   vein that drops sand on him; a fake end portal frame over a water drop into a glass cage. Every one a real vanilla
   mechanism the friend sets off himself.
+- **fakeworld**: built (lib/fakeworld.js): `fakeworld.swap(ctx, { block, x, z, R })` turns every chunk within R of a set
+  into one block (ground, stone, sand, logs, leaves and lake beds -> block; plants -> air; water plants -> water; from
+  4 under the lowest ground to over the tallest leaves), and `fakeworld.make({ name, block, treasure, caption, red,
+  words, near })` is the whole survival episode: a tree of the block mined for "wood", the ground under it dug,
+  the turn to a lone treasure block on the shore, dug by hand and held (the challenge sound, dip and flash).
+  A new episode only names the block: gold, sponge, melon, glass, TNT (never lit), honey, slime, sculk, pumpkins.
+  `near` pins /locate (the seed is fixed): fakeworld_diamond uses near [136, 22] -> the river bank at (512, 62, 22).
