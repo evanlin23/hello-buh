@@ -53,3 +53,4 @@ herobrine_bridge   # first: owner's new format (herobrine); uploads only after t
 lucky_dig   # first: owner's new format (lucky); uploads only after the owner's OK
 mega_lapse_fountain  # first
 fakerun_any  # first
+cooked_bedrock  # first
