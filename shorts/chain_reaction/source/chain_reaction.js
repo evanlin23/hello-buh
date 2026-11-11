@@ -53,8 +53,14 @@ module.exports = {
   caption: 'the most satisfying chain reaction 😳',
   botTimeout: 360,
   edit: {
-    caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
-    startAt: 'press:-0.5', endAfter: 'giant_peak:0.8'
+    caption: 'the most satisfying chain reaction 😳', red: 'satisfying', dropAt: 'giant',   // (no reference song: the upload gets an NCS track; publish refuses a reference song on an Actions render)
+    startAt: 'press:-0.1', endAfter: 'settle:-1.2',   // (end 1.0 s after the payoff's last blast: at settle:-0.4 the last 0.8 s was a still frame (review 2026-11-11); start on the press: the button's click is too soft for pace's hook, the dispenser 0.15 s later is the first sound; the pile's blasts and debris done; the eyes drift until 1.5 s after the last blast, the settle waits 2.2 s: ending later parked the camera)
+    // the payoff pace times is the pile's LAST blast, 1.05 s after giant_peak on this take: a flash, a punch, the song
+    // dipped, the game ducked and an impact there (pace: no hit and no picture change on it). Re-check after a re-record
+    flash: [['giant_peak:1.05', 0, 0.7]], punch: [['giant_peak:1.05', 0, 1.12]],
+    // (the impact is back: audio.py now plays the TNT at vanilla's clamped gain and edit.py caps the sfx at +4 dB of the
+    // game track's loudness; before, the 4x blasts and the impact pushed the game track ~45 dB down: silent until 26 s)
+    sfx: [['dip', 'giant_peak:1.05', 0.4], ['gamedip', 'giant_peak:1.05', 0.35], ['impact', 'giant_peak:1.05', { gain: 1.4 }]]
   },
 
   async setup (ctx) {
@@ -258,9 +264,10 @@ module.exports = {
     const at = (name) => w.done.get(name)
     const markOnce = (name) => { if (!at(name)) { w.done.set(name, ctx.tick); ctx.mark(name) } }
     // explosions: the cart, the line, the cubes and the pile
-    let booms = 0, giantBooms = 0
+    let booms = 0, giantBooms = 0, lastBoomTick = 0
     const onBoom = (p) => {
       booms++
+      lastBoomTick = ctx.tick
       const x = +(p.center || {}).x - X, z = Z - +(p.center || {}).z
       if (booms === 1) markOnce('cart_boom')
       if (z > nH - 3 && x > -2.5 && x < 2.5) markOnce('cube')
@@ -304,8 +311,9 @@ module.exports = {
     ctx.mark('go')
     focus = W(-0.44, 1.5, 2); steer = W(0, 0, 0.3)      // the button's face (it sits on the west edge)
     await bot.waitForTicks(14); k = 0.35; await bot.waitForTicks(8); k = 0.16
-    bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 4, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm()
+    // the press through lib/act.js (r:rffba12): the stunt's own look is already on the button's face, so it goes out
+    // on this tick; off it, it waits for that look (turn: false) and marks off_aim if it never lands
+    await require('../lib/act')(ctx).click(B(0, 1, 2), 4, [0.1, 0.5, 0.5], { target: { block: B(0, 1, 2) }, turn: false, max: 20, swing: true })
     ctx.sound('block.stone_button.click_on', 1, 0.6)   // the presser's own client plays it (the server sends it to others)
     ctx.mark('press')
     focus = W(1.5, 1.4, 6)                              // the arrow crosses
@@ -394,7 +402,12 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     focus = W(27, 5, nH + 3)
-    await bot.waitForTicks(24)
+    // keep watching (the eyes drifting over the pile) until the last cube has gone off and its smoke is thinning: the
+    // Short ends on the settle now (it ended at giant_peak + 0.8 s with 4.5% of the view still flying: r:r24d99a)
+    for (let i = 0; i < 240 && ctx.tick - lastBoomTick < 30; i++) {
+      focus = W(27 + 3 * Math.sin(i / 40), 5 + 0.8 * Math.sin(i / 23), nH + 3)
+      await bot.waitForTicks(1)
+    }
     steer = null
     await bot.waitForTicks(2)
     bot.removeListener('physicsTick', onTick)

@@ -1,9 +1,10 @@
 {
   "name": "chain_reaction",
-  "caption": "the most satisfying chain reaction \ud83d\ude33",
+  "channel": "hellobuh",
+  "caption": "the most satisfying chain reaction 😳",
   "youtube": {
-    "title": "the most satisfying chain reaction \ud83d\ude33 #minecraft #shorts",
-    "description": "the most satisfying chain reaction \ud83d\ude33\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the most satisfying chain reaction 😳 #minecraft #shorts",
+    "description": "the most satisfying chain reaction 😳\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -19,49 +20,87 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "giant",
     "drop_in_song_s": 36.75,
-    "drop_in_short_s": 28.85,
-    "song_start_s": 7.9
+    "drop_in_short_s": 29.65,
+    "song_start_s": 7.1
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.7,
+    "duration_s": 32.65,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 54166017,
-    "sha256": "8ec135b748004d68fc4a7e86210baab12c19c951aa8beb6c8b4fbb53858eabe4",
+    "bytes": 69637230,
+    "sha256": "5fd94e6bd96795ba90fcf70a474bd0b857300dd4728dd0f9fe0031d73353a8a0",
     "release": {
       "tag": "pkg-chain_reaction",
-      "asset": "chain_reaction.short.8ec135b748004d68.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-chain_reaction/chain_reaction.short.8ec135b748004d68.mp4",
-      "sha256": "8ec135b748004d68fc4a7e86210baab12c19c951aa8beb6c8b4fbb53858eabe4",
-      "bytes": 54166017
+      "asset": "chain_reaction.short.5fd94e6bd96795ba.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-chain_reaction/chain_reaction.short.5fd94e6bd96795ba.mp4",
+      "sha256": "5fd94e6bd96795ba90fcf70a474bd0b857300dd4728dd0f9fe0031d73353a8a0",
+      "bytes": 69637230
     },
     "nosong_release": {
       "tag": "pkg-chain_reaction",
-      "asset": "chain_reaction.short_nosong.06db233559d308e7.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-chain_reaction/chain_reaction.short_nosong.06db233559d308e7.mp4",
-      "sha256": "06db233559d308e7b42c19fcbc424328fab45022959ea90385dabdd2def7b627",
-      "bytes": 54085712
+      "asset": "chain_reaction.short_nosong.1b96507e41167e62.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-chain_reaction/chain_reaction.short_nosong.1b96507e41167e62.mp4",
+      "sha256": "1b96507e41167e62a29c3a87f022062f1c6ab4c91a8032c3a3ae26e6706e67f3",
+      "bytes": 69577154
     }
   },
   "edit": {
-    "caption": "the most satisfying chain reaction \ud83d\ude33",
+    "caption": "the most satisfying chain reaction 😳",
     "red": "satisfying",
-    "song": "songs/funk_abnormal.mp3",
     "dropAt": "giant",
-    "startAt": "press:-0.5",
-    "endAfter": "giant_peak:0.8",
+    "startAt": "press:-0.1",
+    "endAfter": "settle:-1.2",
+    "flash": [
+      [
+        "giant_peak:1.05",
+        0,
+        0.7
+      ]
+    ],
+    "punch": [
+      [
+        "giant_peak:1.05",
+        0,
+        1.12
+      ]
+    ],
+    "sfx": [
+      [
+        "dip",
+        "giant_peak:1.05",
+        0.4
+      ],
+      [
+        "gamedip",
+        "giant_peak:1.05",
+        0.35
+      ],
+      [
+        "impact",
+        "giant_peak:1.05",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
     "args": [
       "--caption",
-      "the most satisfying chain reaction \ud83d\ude33",
+      "the most satisfying chain reaction 😳",
       "--red",
       "satisfying",
+      "--punch",
+      "[[\"giant_peak:1.05\",0,1.12]]",
+      "--flash",
+      "[[\"giant_peak:1.05\",0,0.7]]",
+      "--sfx",
+      "[[\"dip\",\"giant_peak:1.05\",0.4],[\"gamedip\",\"giant_peak:1.05\",0.35],[\"impact\",\"giant_peak:1.05\",{\"gain\":1.4}]]",
       "--start_at",
-      "press:-0.5",
+      "press:-0.1",
       "--end_after",
-      "giant_peak:0.8"
+      "settle:-1.2"
     ]
   },
   "recording": {
@@ -72,13 +111,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 382,
-      "y": 64,
-      "z": -98
+      "x": 359,
+      "y": 70,
+      "z": -81
     },
     "biome": "minecraft:plains",
-    "ticks": 653,
-    "seconds": 32.65,
+    "ticks": 861,
+    "seconds": 43.05,
     "deaths": 0,
     "events": [
       {
@@ -102,11 +141,11 @@
         "event": "arrow_hit"
       },
       {
-        "t": 2.7,
+        "t": 2.65,
         "event": "block_action"
       },
       {
-        "t": 2.75,
+        "t": 2.7,
         "event": "lamp0"
       },
       {
@@ -164,6 +203,10 @@
       {
         "t": 5.5,
         "event": "lamp7"
+      },
+      {
+        "t": 5.55,
+        "event": "motion_start"
       },
       {
         "t": 5.85,
@@ -266,27 +309,27 @@
         "event": "block_action"
       },
       {
-        "t": 10.75,
+        "t": 10.7,
         "event": "block_action"
       },
       {
-        "t": 10.8,
+        "t": 10.75,
         "event": "bell0"
       },
       {
-        "t": 11.4,
+        "t": 11.35,
         "event": "block_action"
       },
       {
-        "t": 11.45,
+        "t": 11.4,
         "event": "bell1"
       },
       {
-        "t": 12.05,
+        "t": 12,
         "event": "block_action"
       },
       {
-        "t": 12.1,
+        "t": 12.05,
         "event": "bell2"
       },
       {
@@ -294,19 +337,19 @@
         "event": "cart_end"
       },
       {
-        "t": 12.7,
+        "t": 12.65,
         "event": "rocket0"
       },
       {
-        "t": 13.1,
+        "t": 13.05,
         "event": "rocket1"
       },
       {
-        "t": 13.5,
+        "t": 13.45,
         "event": "rocket2"
       },
       {
-        "t": 13.9,
+        "t": 13.85,
         "event": "rocket3"
       },
       {
@@ -370,7 +413,7 @@
         "event": "block_action"
       },
       {
-        "t": 19.1,
+        "t": 19.15,
         "event": "wave3"
       },
       {
@@ -398,63 +441,63 @@
         "event": "wave5"
       },
       {
-        "t": 20.25,
+        "t": 20.2,
         "event": "block_action"
       },
       {
-        "t": 20.25,
+        "t": 20.2,
         "event": "block_action"
       },
       {
-        "t": 20.35,
+        "t": 20.3,
         "event": "wave6"
       },
       {
-        "t": 20.65,
+        "t": 20.6,
         "event": "block_action"
       },
       {
-        "t": 20.65,
+        "t": 20.6,
         "event": "block_action"
       },
       {
-        "t": 20.75,
+        "t": 20.7,
         "event": "wave7"
       },
       {
-        "t": 21.05,
+        "t": 21,
         "event": "block_action"
       },
       {
-        "t": 21.05,
+        "t": 21,
         "event": "block_action"
       },
       {
-        "t": 21.15,
+        "t": 21.1,
         "event": "wave8"
       },
       {
-        "t": 21.45,
+        "t": 21.4,
         "event": "block_action"
       },
       {
-        "t": 21.45,
+        "t": 21.4,
         "event": "block_action"
       },
       {
-        "t": 21.55,
+        "t": 21.5,
         "event": "wave9"
       },
       {
-        "t": 21.85,
+        "t": 21.8,
         "event": "block_action"
       },
       {
-        "t": 21.85,
+        "t": 21.8,
         "event": "block_action"
       },
       {
-        "t": 21.95,
+        "t": 21.9,
         "event": "wave10"
       },
       {
@@ -490,7 +533,7 @@
         "event": "cart_primed"
       },
       {
-        "t": 23.3,
+        "t": 23.35,
         "event": "primed"
       },
       {
@@ -526,72 +569,200 @@
         "event": "tbell3"
       },
       {
-        "t": 27.25,
+        "t": 27.2,
         "event": "cart_boom"
       },
       {
-        "t": 28.8,
+        "t": 29.45,
         "event": "cube"
       },
       {
-        "t": 29.4,
+        "t": 30.8,
         "event": "big"
       },
       {
-        "t": 30.25,
+        "t": 31.45,
         "event": "giant"
       },
       {
-        "t": 31.3,
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
         "event": "giant_peak"
       },
       {
-        "t": 32.65,
+        "t": 33.2,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.75,
+        "event": "vel"
+      },
+      {
+        "t": 34.75,
+        "event": "vel"
+      },
+      {
+        "t": 35.65,
+        "event": "motion_settled"
+      },
+      {
+        "t": 35.65,
+        "event": "settle"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.75,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.7,
+        "event": "vel"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 38.7,
+        "event": "vel"
+      },
+      {
+        "t": 38.75,
+        "event": "vel"
+      },
+      {
+        "t": 39.7,
+        "event": "vel"
+      },
+      {
+        "t": 39.75,
+        "event": "vel"
+      },
+      {
+        "t": 40.7,
+        "event": "vel"
+      },
+      {
+        "t": 40.75,
+        "event": "vel"
+      },
+      {
+        "t": 41.7,
+        "event": "vel"
+      },
+      {
+        "t": 41.75,
+        "event": "vel"
+      },
+      {
+        "t": 42.7,
+        "event": "vel"
+      },
+      {
+        "t": 42.75,
+        "event": "vel"
+      },
+      {
+        "t": 43.05,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "29a21caf9fda6ebfaa77bf76f247941b555dd6ff",
-    "rendered_at": "2026-11-07T14:52:59.358Z",
-    "head_at_publish": "f38b055c3c3b561596763e410347c9c4bf02a37d",
+    "branch": "render/chain_reaction",
+    "commit": "2b08de40e09e315a9c4a3aff72644836f05220d7",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43069981405",
+    "rendered_at": "2026-11-11T17:46:54.338Z",
+    "head_at_publish": "ba990654a82792a95b27831bf4a745e89718f3e3",
     "stunt": "stunts/chain_reaction.js",
     "source_snapshot": [
       "source/chain_reaction.js",
       "source/chain.js",
-      "source/_site.js"
+      "source/_site.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 29a21caf9fda",
+    "git checkout 2b08de40e09e",
     "gunzip -c shorts/chain_reaction/recording.json.gz > work/chain_reaction.rec.json",
     "node render.js work/chain_reaction.rec.json work/chain_reaction.frames 60 1080 1011",
     "python3 audio.py work/chain_reaction.rec.json work/chain_reaction.wav",
-    "python3 edit.py --frames work/chain_reaction.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/chain_reaction.rec.json --audio work/chain_reaction.wav --caption \"the most satisfying chain reaction \ud83d\ude33\" --red satisfying --start_at press:-0.5 --end_after giant_peak:0.8 --out out/chain_reaction.mp4"
+    "python3 edit.py --frames work/chain_reaction.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/chain_reaction.rec.json --audio work/chain_reaction.wav --caption \"the most satisfying chain reaction 😳\" --red satisfying --punch [[\"giant_peak:1.05\",0,1.12]] --flash [[\"giant_peak:1.05\",0,0.7]] --sfx [[\"dip\",\"giant_peak:1.05\",0.4],[\"gamedip\",\"giant_peak:1.05\",0.35],[\"impact\",\"giant_peak:1.05\",{\"gain\":1.4}]] --start_at press:-0.1 --end_after settle:-1.2 --out out/chain_reaction.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "worker 17: one continuous real-redstone chain (button, arrow, 14-note lamp line, 3 sand-on-torch collapses, cart + bells, rockets, anvil, glass piston wave, primed TNT cart + bells, TNT line -> 27 -> 125 -> 486). Passed frame review + minecraft audit (review 4) and retention re-audit. Re-edited with worker 10's static-gain loudness (f38b055): the build-up keeps its dynamics, the blast is the loudest moment. Nitpicks left: small cart at 9-11 s, obsidian watch floor visible at 9.5-11.9 s and the end",
-  "published_at": "2026-11-07T14:54:23.701Z",
+  "status": "ready",
+  "notes": "audio fix worker: re-rendered with vanilla-clamped game audio (audio.py: min(volume x file volume, 1) + pile-up limiter), the payoff impact back (edit.py caps the sfx at +4 dB of the game track), start on the press, end 1.0 s after the last blast, no reference song. Independent review READY in round 2 (round 1: still 1.8 s tail). Nitpicks: far anvil landing near-inaudible (vanilla falloff), 0.10 s pan could ease, long shots, smoke still drifting at the cut (settle WARN).",
+  "published_at": "2026-11-11T17:49:12.340Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:23:33+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T17:49:48+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.72 s vs the reviewed render 30.70 s"
+      "summary": "short.mp4 32.66 s vs the reviewed render 32.65 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 2,
+      "ok": true,
+      "blockers": 0,
       "warnings": 5,
-      "summary": "payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
+      "summary": "OK"
     },
     "check": {
-      "label": "no ./hb check report on this box"
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T17:47:57.176Z",
+      "report": "work/hb/chain_reaction.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "on-screen settle check (r:r24d99a): 4.5% of the view still moving in the last 0.6 s (30.12-30.72 s): end after the debris settles"
+  }
 }
