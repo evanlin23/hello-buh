@@ -207,6 +207,9 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
    r:r62de46
+4. **Join/leave chat lines are centred** ("Buh joined/left the game", any payoff system chat): horizontally centred
+   near caption height, vanilla yellow chat font and strip at `chatScale`, never over the shot's subject. Check:
+   review (stills). r:r0d7fd3
 
 ## 7. Audio
 The lead's mix (docs/audio.md), all of it in `edit.py --story` (previews included: what the owner reviews is what

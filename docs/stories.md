@@ -315,6 +315,10 @@ STANDARDS.md in the same commit.
   older woman, not gravelly or sexless. Cast from the voice list to the character's age and sex.
 - **Owner, 2026-11-11 (review page, Dog on the Hill at 0:27.9): "we should cut as soon as the guy leaves. end of
   short".** The Short ends the moment its last story beat lands (in Dog on the Hill: Buh leaving); no shots after it.
+- **Owner, 2026-11-11, asked whether "Buh joined the game" / "Buh left the game" should be in the middle of the screen
+  (recommended: centred, vanilla chat style, off the dog): "sure".** In story Shorts the join/leave chat lines (and any
+  payoff system chat) are centred horizontally near the caption height, in the vanilla yellow chat font and strip at
+  `chatScale` size, placed so they never cover the shot's subject.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
