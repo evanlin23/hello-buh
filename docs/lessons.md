@@ -3,6 +3,22 @@
 Everything that cost real debugging time, so nobody has to rediscover it. Newest first within
 each section.
 
+## Process lessons (2026-11-11: defects fixed by construction)
+
+Owner, 2026-11-11: "There seems to be so many bugs in our engine. Can we like fix it?" Most of the day's defects were
+stunt scripts, not the renderer. Each stunt hand-wrote its own actions and repeated the same few mistakes. The shared
+helpers now make those mistakes impossible, and the motion lint stops a stunt that goes around them. Detection (the
+aim-error and payoff-settle checks in ./hb check and pace) is the checks worker's job; these rows are about
+prevention.
+
+| Lesson | Evidence | How it's used now | State |
+|---|---|---|---|
+| An action off-aim reads as hacking | sand_tower's torch, rainbow_sheep's dye on the wrong sheep, places and breaks off the crosshair; pixel art's aim lagging at 18-20 blocks/s (r:rffba12) | lib/act.js (A.place / A.dig / A.use / A.useOn / A.hit, and K.use / K.useOn in the story kit) turns the view to the exact target at up to 220 deg/s, eased, and acts only once the crosshair is on it and the vanilla delay has passed. If it can't land, it throws. pixel_art places a block only when the crosshair is in its cell, and the ticks spent waiting come out of the build's budget. Tests: act.test.js, pixel_art_aim.test.js | built |
+| Make the mistake impossible, not just detectable | 41 stunts hand-write a place, break or use (73 raw calls) | The motion lint marks raw bot.dig / placeBlock / activateBlock / activateEntity and raw block_place / block_dig / use_entity packets as errors (kind 'action') that name the helper. `./hb record` refuses a stunt that has one, and `./hb check` blocks one recorded since the gate (rec.act). `// motion-ok: <reason>` lets a line stay raw | built |
+| The payoff ends when the motion settles, not when the script says | which_door, villager_fired, pickaxe_race and sand_tower ended or cut with TNT, debris or sand still moving (r:r24d99a) | After perform, the harness waits until nothing is moving (up to 6 s), then marks motion_start / motion_settled around every window and one `settle` at the last (lib/settle.js). endAfter 'settle:0.6' ends 0.6 s after that mark. The motion lint warns on a blast or fall stunt that ends on anything else (`// settle-ok: <reason>` for a reviewed hand-timed end). Test: settle.test.js | built |
+| A pull-back needs room behind it | creeper_art walked "halfway against the wall" of the earlier build (r:r650840) | A.back() stops 1 block short of anything solid behind (it allows for the 0.26-block coast). pixel_art keeps 3 blocks clear and logs the clear lane behind each build spot | built |
+| Vanilla facts get misremembered | villager_fired's jobless villager became a nitwit | The minecraft-audit skill lists the easy-to-get-wrong facts (unemployed, never nitwit; TNT point blank; Feather Falling; mace smash) | rule |
+
 ## Process lessons (2026-11-11: numbers, mixes, disk and many workers at once)
 
 Owner, 2026-11-11: "what have we learned? are all lessons used to help streamline our process?" Each row says whether
