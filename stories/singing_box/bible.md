@@ -4,7 +4,7 @@
 - **Place:** the lowland under Torch Hill by the Digger's House (canon). Two new players' cottages. Her mine is a ladder
   shaft beside the old torch shaft (Torch, day 300) down to a tunnel at y -54; his secret room is behind its north
   wall. set.md has the numbers.
-- **Days:** day one 1489 (S02); the night before, 1499 (S09, S10); today, 1500 (S01, S03-S08 as "any day", S11-S13b).
+- **Days:** day one 1489 (S02); any day 1489-1499 (S01, S03-S08: the diamonds there are among the 31); the night before, 1499 (S09, S10); today, 1500 (S11-S13b).
   Day 1500 is outside the Long Day (800-1100), so dusk is allowed.
 - **Canon:** the Digger is not seen or named; his house stands dark in S09's background.
 - **Never:** say "note block", "lava", "TNT" or "neighbor's room" aloud (the allay says singing box, glowy orange water,
@@ -25,8 +25,8 @@
 | who | look | voice | shots |
 |---|---|---|---|
 | the allay (narrator) | vanilla allay, her diamond in its hands throughout | Pip (cast `narrator`, one_take, plain_say) | S01-S09, S11-S13b |
-| the miner (her) | player, default `noor` skin, iron pickaxe, no armour | audition: Zephyr / Despina (`storyteller`) | S02, S03, S06 (small), S09 (L10), S10 (shoulder), S11 |
-| the neighbor | player, default `efe` skin; plain in S10; in S13b no helmet, diamond chestplate, leggings, boots, pickaxe, sword | audition: Umbriel / Algieba | S10 (L11), S13b |
+| the miner (her) | player, default `noor` skin, iron pickaxe (main hand empty in S09, S10), no armour | audition: Zephyr / Despina (`storyteller`) | S02, S03, S06 (small), S09 (L10), S10 (shoulder), S11 |
+| the neighbor | player, default `efe` skin; plain in S10; in S13b no helmet, diamond chestplate, leggings, boots, pickaxe (main hand), sword (off hand) | audition: Umbriel / Algieba | S10 (L11), S13b |
 
 ## Props
 | prop | state | shots |
@@ -37,12 +37,12 @@
 | the lava pool | north wall, 2 x 6 | S01 (glow), S03, S06, S07 (glow), S11 |
 | TNT | one (S03), three (S11) | |
 | diamond items | S01: one; S04/S05: two blasted, two picked up; S08: two dropped, then gone; S12: exactly one (#32); S13b: it lands | |
-| ladders | hers beside the old torch shaft; his in the room's north-west corner | S03 (behind camera), S06, S09, S13b |
+| ladders | hers beside the old torch shaft; his in the room's south-west corner | S03 (behind camera), S06, S09, S13b |
 | his armour | none in S10; S13b as above | |
 
 ## Positions and screen direction
 Every tunnel shot looks east from the ladder end: the north wall (lava, hole) at frame left, the face ahead, the ladder
-behind the camera, so going home is toward the camera (S03, S11). S13a follows the allay north through the hole; S13b
+behind the camera, so going home is toward and past the camera at frame right (S03, S11: shot 5-6 blocks off the face). S13a follows the allay north through the hole; S13b
 looks south from the room's north wall back at the hole. S09 looks south-south-east from north-west of the shaft
 mouths; S10 looks north-east over her shoulder to his window.
 
