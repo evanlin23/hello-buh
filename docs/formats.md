@@ -19,6 +19,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `faketrick` | Mevys: "Maddest End Ever" ("Nobody Knows That! 😱") | An impossible "secret trick" played straight (pistons carry a lit portal); the fake is the bait for comments | "this is like fake minecraft gimmick" | r:rfcab11 | idea |
 | `cells` | hazypapa: "Monsters can't sleep, I am nearby" | A slow walk past glass lab cells; each MOB is forced into a contraption doing one thing forever; caption "i think bro is doing it for fun" | "a bunch of cells where mobs are forced to do things repeitively forever"; "it only works bc its forcing mobs specifically to do it" | r:r07d791 r:rce72cb | idea |
 | `race` | KRIZZIT: "Clear winner" ("Grass vs Fungus") | A huge dirt square, two spreading things race from opposite corners, top-down time-lapse; viewers pick a side | "timelapse grass vs fungus" | r:rbe60ef | idea |
+| `hack` | KingTEC: "POV: You Made FUNCTIONAL Cabinets in Minecraft" | One clever real block trick (doors + cushions as cabinets and gates), a "POV: you realized..." caption, shown working in a lived-in room right away | "another format, cool minecraft gimmicks" | r:rc15847 | idea |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -27,4 +28,6 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 - **logic**: water bucket vs everything, "gravity is fake" (sand falls, a dirt island floats), boats on ice, beds in
   the Nether (docs/ideas.md "Physics and minecraft logic").
 - **fakemod**: "a creeper asks permission", "mobs need a ticket", "your pickaxe has feelings", "villagers unionise".
+- **hack**: trapdoor shutters, a hidden piston door behind a painting, a stair-and-sign sofa, a cauldron sink,
+  a hidden staircase; each a real trick, demoed in a cosy build.
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.

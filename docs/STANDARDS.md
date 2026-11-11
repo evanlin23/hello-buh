@@ -300,6 +300,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   the same commit as its house rule. Check: owner. r:rc43770
 - **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
   downloads each mp4 from its release (keeps the disk from filling). Check: owner. r:rc5eaf0
+- **Format "hack"**: one real, clever block trick per Short, a "POV: you realized..." caption, working on screen in
+  the first 1.5 s. Check: owner, minecraft-audit (the trick must really work). r:rc15847
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

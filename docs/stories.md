@@ -289,6 +289,11 @@ STANDARDS.md in the same commit.
   mycelium from another, a top-down time-lapse race; caption "Grass vs Fungus"): "timelapse grass vs fungus".**
   HelloBuh adds a spread-race format (family `race`): two vanilla things that spread (grass, mycelium, moss, sculk,
   vines, fire...) race across one big field in a top-down time-lapse; viewers pick a side and wait for the winner.
+- **Owner, 2026-11-11, sharing KingTEC's "POV: You Made FUNCTIONAL Cabinets in Minecraft" (caption "POV: You
+  realized you can use doors and cushions to make functional gates and cabinets"; a quick first-person demo of the
+  trick in a real kitchen and library, 16 s): "another format, cool minecraft gimmicks".** HelloBuh adds a build-hack
+  format (family `hack`): one clever, real block trick per Short, a "POV: you realized..." caption, shown working in
+  a lived-in build within the first 1.5 s.
 - **Owner, 2026-11-11, on moving finished videos out of git history to GitHub Releases (permanent, no expiry, only
   metadata in the repo) and dropping anvil_rain / lava_rising (they repeat it_rains and worse_lava): "sure we can do
   that".** Finished Short mp4s live as GitHub Release assets; the videos branch keeps metadata; the uploader downloads
