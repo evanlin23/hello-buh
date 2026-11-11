@@ -92,7 +92,7 @@ const quirks = [
   },
   {
     key: 'golem',
-    label: '4 iron + a carved pumpkin = a bodyguard',
+    label: 'iron + carved pumpkin = golem',
     slot: SLOT.pumpkin,
     start: { y: 2, pitch: 6 },
     async build (L) {
