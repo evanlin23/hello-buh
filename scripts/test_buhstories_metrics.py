@@ -255,5 +255,75 @@ class HelloBuhUnchanged(unittest.TestCase):
             self.assertFalse((t / "uploads" / "buhstories").exists())
 
 
+def load_hellobuh_uploader():
+    old = dict(os.environ)
+    os.environ.pop("HB_ROOT", None)
+    os.environ["YT_CHANNEL"] = "hellobuh"
+    try:
+        sys.modules.pop("youtube_upload", None)
+        return importlib.import_module("youtube_upload")
+    finally:
+        os.environ.clear(); os.environ.update(old)
+
+
+class HelloBuhUploaderUnchanged(unittest.TestCase):
+    """The HelloBuh uploader with a Buh Stories ledger and store next to it: the family_scores ranking, "# first"
+    pins, the score order and gates/stale skipping are what they were (youtube_upload.py is untouched by this branch;
+    these pin its behaviour so a later change to the shared code can't drift HelloBuh)."""
+
+    def setUp(self):
+        self.td = tempfile.TemporaryDirectory()
+        self.t = pathlib.Path(self.td.name)
+        self.yu = load_hellobuh_uploader()
+        self.assertEqual(self.yu.CHANNEL, "hellobuh")
+        self.assertEqual(self.yu.UP, REPO / "uploads")              # HelloBuh's records stay in uploads/
+        up = self.t / "uploads"
+        (up / "buhstories").mkdir(parents=True)
+        self.yu.UP, self.yu.SCORES, self.yu.QUEUE = up, up / "scores.json", up / "queue.txt"
+        self.yu.video_analytics = lambda ya, ids, s, e: ({}, "")    # no network: Studio numbers only
+
+    def tearDown(self):
+        sys.modules.pop("youtube_upload", None)
+        self.td.cleanup()
+
+    def test_family_scores_ranking(self):
+        done = {"alpha_x": {"video_id": "AAAAAAAAAAA", "uploaded": "2026-01-01", "publish_at": "2026-01-01T12:00:00Z"},
+                "beta_y": {"video_id": "BBBBBBBBBBB", "uploaded": "2026-01-02", "publish_at": "2026-01-02T12:00:00Z"}}
+        (self.yu.UP / "studio.json").write_text(json.dumps({"alpha_x": {"views": 10000, "subs": 30},
+                                                           "beta_y": {"views": 2000, "subs": 2}}))
+        # a Buh Stories ledger and store with a huge hit must not leak into HelloBuh's scores
+        (self.yu.UP / "buhstories" / "uploads.json").write_text(json.dumps({"story_z": {"video_id": "ZZZZZZZZZZZ"}}))
+        (self.yu.UP / "buhstories" / "studio.json").write_text(json.dumps({"story_z": {"views": 10**7, "subs": 10**5}}))
+        out = self.yu.family_scores(None, done)
+        # mean rate 32/12000 = 2.667/1k, mean reach 6000; alpha: (30+8)/13000 x (10000+12000)/3; beta: (2+8)/5000 x 14000/3
+        self.assertEqual(out["family"], {"alpha_x": 21.44, "beta_y": 9.33})
+        self.assertEqual(out["mean"], 16.0)
+        self.assertNotIn("story_z", json.dumps(out))
+        self.assertEqual(json.loads(self.yu.SCORES.read_text())["family"], out["family"])
+
+    def test_first_pins_score_order_and_gate_skips(self):
+        vd = self.t / "videos"
+        g = {"version": __import__("gates").current(), "pace": {"ok": True, "summary": "OK"},
+             "check": {"ok": True, "label": "CHECK OK"}, "key_sounds": "n/a"}
+        for name, gates_ in (("aa_one", g), ("bb_two", g), ("cc_three", g), ("dd_old", {**g, "version": g["version"] - 1}),
+                             ("story_light_sleeper", None)):
+            d = vd / "shorts" / name
+            d.mkdir(parents=True)
+            meta = {"name": name, "status": "ready", "published_at": "2026-11-01", **({"gates": gates_} if gates_ else {})}
+            if name.startswith("story_"):
+                meta["channel"] = "buhstories"
+            (d / "metadata.json").write_text(json.dumps(meta))
+        self.yu.QUEUE.write_text("dd_old # first\ncc_three\nbb_two # first\naa_one\nstory_light_sleeper\n")
+        scores = {"mean": 1, "family": {"aa_one": 9, "cc_three": 5}}
+        name, why = self.yu.pick(vd, {}, scores)
+        self.assertEqual(name, "bb_two")                       # "# first" wins; the stale-gated pin is skipped
+        self.assertIn("dd_old: gated at v", why)
+        self.assertEqual(self.yu.pick(vd, {"bb_two": {"uploaded": "1"}}, scores)[0], "aa_one")   # then by score
+        self.assertEqual(self.yu.pick(vd, {"bb_two": {"uploaded": "1"}, "aa_one": {"uploaded": "2"}}, scores)[0], "cc_three")
+        name, why = self.yu.pick(vd, {"bb_two": {"uploaded": "1"}, "aa_one": {"uploaded": "2"}, "cc_three": {"uploaded": "3"}}, scores)
+        self.assertIsNone(name)                                # a Buh Stories package never goes to HelloBuh
+        self.assertIn("story_light_sleeper: belongs to the buhstories channel", why)
+
+
 if __name__ == "__main__":
     unittest.main()
