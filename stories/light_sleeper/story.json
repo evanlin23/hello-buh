@@ -297,5 +297,7 @@
  "beats": "stories/light_sleeper/beats.md",
  "set": "stories/light_sleeper/set.md",
  "voice_takes": "beat",
- "narrator_take": "one"
+ "one_take": [
+  "N"
+ ]
 }

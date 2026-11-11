@@ -2,22 +2,22 @@
  "lines": {
   "L01": {
    "who": "N",
-   "text": "My village is covered in nine thousand CARPETS.",
-   "dur": 3.18,
-   "onset": 0.3,
-   "end": 2.98,
+   "text": "My village is covered in nine thousand carpets.",
+   "dur": 3.12,
+   "onset": 0.21,
+   "end": 3.06,
    "chunks": [
     [
-     0.3,
-     0.8
+     0.21,
+     0.843
     ],
     [
-     0.92,
-     1.46
+     0.843,
+     1.667
     ],
     [
-     1.6,
-     2.98
+     1.667,
+     3.06
     ]
    ],
    "captions": [
@@ -31,32 +31,30 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "12c98f7b480e"
+   "gap": 0
   },
   "L02": {
    "who": "N",
-   "text": "The road? CARPET. The stairs? CARPET. The DOGHOUSE? Also CARPET.",
-   "dur": 4.365,
-   "onset": 0.1,
-   "end": 4.0,
+   "text": "The road? carpet. The stairs? carpet. The doghouse? Also carpet.",
+   "dur": 4.593,
+   "onset": 0.13,
+   "end": 4.48,
    "chunks": [
     [
-     0.1,
-     1.12
+     0.13,
+     1.342
     ],
     [
-     1.38,
-     2.36
+     1.342,
+     2.697
     ],
     [
-     2.58,
-     3.12
+     2.697,
+     3.624
     ],
     [
-     3.32,
-     4.0
+     3.624,
+     4.48
     ]
    ],
    "captions": [
@@ -70,25 +68,23 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 3.18,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "a86c006beb03"
+   "offset": 3.12,
+   "gap": 0
   },
   "L03": {
    "who": "N",
-   "text": "Even the bell wears a SWEATER.",
-   "dur": 1.768,
-   "onset": 0.14,
-   "end": 1.44,
+   "text": "Even the bell wears a sweater.",
+   "dur": 2.39,
+   "onset": 0.13,
+   "end": 2.2,
    "chunks": [
     [
-     0.14,
-     0.68
+     0.13,
+     1.058
     ],
     [
-     0.74,
-     1.44
+     1.058,
+     2.2
     ]
    ],
    "captions": [
@@ -100,21 +96,19 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 7.545,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "16ec9bcd36bb"
+   "offset": 7.713,
+   "gap": 0
   },
   "L04": {
    "who": "N",
    "text": "Mom says:",
-   "dur": 0.998,
-   "onset": 0.14,
-   "end": 0.74,
+   "dur": 1.09,
+   "onset": 0.15,
+   "end": 1.09,
    "chunks": [
     [
-     0.14,
-     0.74
+     0.15,
+     1.09
     ]
    ],
    "captions": [
@@ -125,9 +119,7 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 9.312,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "ce4b7145b3cb"
+   "offset": 10.102
   },
   "L05": {
    "who": "Mom",
@@ -165,26 +157,26 @@
   },
   "L06": {
    "who": "N",
-   "text": "But one time, I pulled the wool off the WELL.",
-   "dur": 2.295,
-   "onset": 0.2,
-   "end": 2.04,
+   "text": "But one time, I pulled the wool off the well.",
+   "dur": 2.93,
+   "onset": 0.0,
+   "end": 2.74,
    "chunks": [
     [
-     0.2,
-     0.68
+     0.0,
+     0.848
     ],
     [
-     0.94,
-     1.22
+     0.848,
+     1.37
     ],
     [
-     1.24,
-     1.52
+     1.37,
+     1.892
     ],
     [
-     1.6,
-     2.04
+     1.892,
+     2.74
     ]
    ],
    "captions": [
@@ -199,28 +191,26 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
    "offset": 0.0,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "f90b278f9cd8"
+   "gap": 0
   },
   "L07": {
    "who": "N",
-   "text": "Then something down the well just SCREAMED.",
-   "dur": 2.717,
-   "onset": 0.1,
-   "end": 2.38,
+   "text": "Then something down the well just screamed.",
+   "dur": 2.635,
+   "onset": 0.19,
+   "end": 2.34,
    "chunks": [
     [
-     0.1,
-     0.56
+     0.19,
+     0.924
     ],
     [
-     0.6,
-     1.04
+     0.924,
+     1.606
     ],
     [
-     1.12,
-     2.38
+     1.606,
+     2.34
     ]
    ],
    "captions": [
@@ -233,37 +223,35 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 2.295,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "320a788eecfa"
+   "offset": 2.93,
+   "gap": 0
   },
   "L08": {
    "who": "N",
-   "text": "Mom said it was a FOX. I didn't know foxes lived in WELLS.",
-   "dur": 3.572,
-   "onset": 0.18,
-   "end": 3.12,
+   "text": "Mom said it was a fox. I didn't know foxes lived in wells.",
+   "dur": 4.46,
+   "onset": 0.15,
+   "end": 4.04,
    "chunks": [
     [
-     0.18,
-     0.58
+     0.15,
+     0.942
     ],
     [
-     0.6,
-     1.04
+     0.942,
+     1.663
     ],
     [
-     1.56,
-     1.94
+     1.663,
+     2.599
     ],
     [
-     1.95,
-     2.58
+     2.599,
+     3.392
     ],
     [
-     2.62,
-     3.12
+     3.392,
+     4.04
     ]
    ],
    "captions": [
@@ -278,29 +266,27 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 5.013,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4ebbe67d01d5"
+   "offset": 5.565,
+   "gap": 0
   },
   "L09": {
    "who": "N",
-   "text": "Then I found a music disc by the FARM.",
-   "dur": 2.35,
-   "onset": 0.34,
-   "end": 2.14,
+   "text": "Then I found a music disc by the farm.",
+   "dur": 2.54,
+   "onset": 0.21,
+   "end": 2.48,
    "chunks": [
     [
-     0.34,
-     0.98
+     0.21,
+     0.967
     ],
     [
-     1.04,
-     1.52
+     0.967,
+     1.723
     ],
     [
-     1.58,
-     2.14
+     1.723,
+     2.48
     ]
    ],
    "captions": [
@@ -313,29 +299,27 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 8.585,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "1206928fbd67"
+   "offset": 10.025,
+   "gap": 0
   },
   "L10": {
    "who": "N",
-   "text": "A real SONG. Nobody here has HEARD one.",
-   "dur": 3.058,
-   "onset": 0.06,
-   "end": 2.66,
+   "text": "A real song. Nobody here has heard one.",
+   "dur": 3.263,
+   "onset": 0.07,
+   "end": 3.12,
    "chunks": [
     [
-     0.06,
-     0.96
+     0.07,
+     1.059
     ],
     [
-     1.4,
-     1.84
+     1.059,
+     1.966
     ],
     [
-     1.88,
-     2.66
+     1.966,
+     3.12
     ]
    ],
    "captions": [
@@ -348,41 +332,39 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 10.935,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "2ce473833314"
+   "offset": 12.565,
+   "gap": 0
   },
   "L11": {
    "who": "N",
-   "text": "So tonight, I put a jukebox on the WELL. Wells echo, you KNOW.",
-   "dur": 3.958,
-   "onset": 0.135,
-   "end": 3.6,
+   "text": "So tonight, I put a jukebox on the well. Wells echo, you know.",
+   "dur": 3.855,
+   "onset": 0.11,
+   "end": 3.66,
    "chunks": [
     [
-     0.135,
-     0.56
+     0.11,
+     0.795
     ],
     [
-     0.9,
-     1.1
+     0.795,
+     1.106
     ],
     [
-     1.16,
-     1.58
+     1.106,
+     1.667
     ],
     [
-     1.8,
-     2.26
+     1.667,
+     2.414
     ],
     [
-     2.74,
-     3.22
+     2.414,
+     3.099
     ],
     [
-     3.3,
-     3.6
+     3.099,
+     3.66
     ]
    ],
    "captions": [
@@ -398,33 +380,31 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 13.992,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "e2aa159d3bf6"
+   "offset": 15.827,
+   "gap": 0
   },
   "L12": {
    "who": "N",
-   "text": "The fox screamed AGAIN. It loved the MUSIC.",
-   "dur": 3.018,
-   "onset": 0.14,
-   "end": 2.56,
+   "text": "The fox screamed again. It loved the music.",
+   "dur": 3.152,
+   "onset": 0.21,
+   "end": 3.02,
    "chunks": [
     [
-     0.14,
-     0.42
+     0.21,
+     0.702
     ],
     [
-     0.425,
-     1.18
+     0.702,
+     1.756
     ],
     [
-     1.66,
-     2.1
+     1.756,
+     2.318
     ],
     [
-     2.18,
-     2.56
+     2.318,
+     3.02
     ]
    ],
    "captions": [
@@ -438,33 +418,31 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 17.95,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "9b3b85cca0f7"
+   "offset": 19.682,
+   "gap": 0
   },
   "L13": {
    "who": "N",
-   "text": "Then the lights went DARK. Just like a PARTY.",
-   "dur": 2.4,
-   "onset": 0.22,
-   "end": 2.16,
+   "text": "Then the lights went dark. Just like a party.",
+   "dur": 2.953,
+   "onset": 0.09,
+   "end": 2.72,
    "chunks": [
     [
-     0.22,
-     0.66
+     0.09,
+     1.029
     ],
     [
-     0.7,
-     1.06
+     1.029,
+     1.655
     ],
     [
-     1.38,
-     1.66
+     1.655,
+     2.219
     ],
     [
-     1.7,
-     2.16
+     2.219,
+     2.72
     ]
    ],
    "captions": [
@@ -478,25 +456,23 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 20.968,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "fbfc230254d0"
+   "offset": 22.835,
+   "gap": 0
   },
   "L14": {
    "who": "N",
-   "text": "Mom froze in the DOOR.",
-   "dur": 1.542,
-   "onset": 0.38,
-   "end": 1.3,
+   "text": "Mom froze in the door.",
+   "dur": 2.033,
+   "onset": 0.23,
+   "end": 1.62,
    "chunks": [
     [
-     0.38,
-     0.84
+     0.23,
+     0.826
     ],
     [
-     0.86,
-     1.3
+     0.826,
+     1.62
     ]
    ],
    "captions": [
@@ -508,9 +484,49 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 23.367,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "77ca7b801b80"
+   "offset": 25.787
+  },
+  "L16": {
+   "who": "N",
+   "text": "But I'd never danced before. So I stepped off the carpet onto the stone.",
+   "dur": 4.263,
+   "onset": 0.15,
+   "end": 4.1,
+   "chunks": [
+    [
+     0.15,
+     0.905
+    ],
+    [
+     0.905,
+     1.718
+    ],
+    [
+     1.718,
+     2.415
+    ],
+    [
+     2.415,
+     3.229
+    ],
+    [
+     3.229,
+     4.1
+    ]
+   ],
+   "captions": [
+    "But I'd NEVER",
+    "danced BEFORE.",
+    "So I STEPPED",
+    "off the CARPET",
+    "onto the STONE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L16",
+   "offset": 0.0
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -530,25 +546,65 @@
     "L04"
    ],
    "file": "beat_L01.wav",
-   "dur": 10.31,
-   "tempo": 1.1,
-   "rate": 1.0,
-   "semitones": 1.0,
-   "stretch": "rubberband",
+   "dur": 11.193,
    "offsets": [
     0.0,
-    3.18,
-    7.545,
-    9.312
+    3.12,
+    7.713,
+    10.102
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 1,
    "tries": 1,
    "fixes": [],
-   "ok": true,
-   "gate": [],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 9.52,
+     "len": 0.78,
+     "why": "0.78 s pause between lines 2-3 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 16.35,
+     "len": 0.62,
+     "why": "0.62 s pause between lines 5-6 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 20.58,
+     "len": 0.91,
+     "why": "0.91 s pause between lines 6-7 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 33.56,
+     "len": 0.62,
+     "why": "0.62 s pause between lines 10-11 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 36.63,
+     "len": 0.63,
+     "why": "0.63 s pause between lines 11-12 (limit 0.6 s)"
+    }
+   ],
    "cut": "aligned",
-   "rejected": []
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.78 s pause between lines 2-3 (limit 0.6 s)",
+      "0.62 s pause between lines 5-6 (limit 0.6 s)",
+      "0.91 s pause between lines 6-7 (limit 0.6 s)",
+      "0.62 s pause between lines 10-11 (limit 0.6 s)",
+      "0.63 s pause between lines 11-12 (limit 0.6 s)"
+     ]
+    }
+   ],
+   "take": "L01",
+   "take_at": 0.0
   },
   "L05": {
    "lines": [
@@ -593,21 +649,17 @@
     "L14"
    ],
    "file": "beat_L06.wav",
-   "dur": 24.91,
-   "tempo": 1.1,
-   "rate": 1.0,
-   "semitones": 1.0,
-   "stretch": "rubberband",
+   "dur": 27.82,
    "offsets": [
     0.0,
-    2.295,
-    5.013,
-    8.585,
-    10.935,
-    13.992,
-    17.95,
-    20.968,
-    23.367
+    2.93,
+    5.565,
+    10.025,
+    12.565,
+    15.827,
+    19.682,
+    22.835,
+    25.787
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 1,
@@ -617,21 +669,33 @@
    "gate": [
     {
      "kind": "pause",
-     "at": 8.23,
-     "len": 0.71,
-     "why": "0.71 s pause between lines 3-4 (limit 0.6 s)"
+     "at": 9.52,
+     "len": 0.78,
+     "why": "0.78 s pause between lines 2-3 (limit 0.6 s)"
     },
     {
      "kind": "pause",
-     "at": 20.6,
-     "len": 0.61,
-     "why": "0.61 s pause between lines 6-7 (limit 0.6 s)"
+     "at": 16.35,
+     "len": 0.62,
+     "why": "0.62 s pause between lines 5-6 (limit 0.6 s)"
     },
     {
      "kind": "pause",
-     "at": 23.1,
-     "len": 0.67,
-     "why": "0.67 s pause between lines 8-9 (limit 0.6 s)"
+     "at": 20.58,
+     "len": 0.91,
+     "why": "0.91 s pause between lines 6-7 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 33.56,
+     "len": 0.62,
+     "why": "0.62 s pause between lines 10-11 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 36.63,
+     "len": 0.63,
+     "why": "0.63 s pause between lines 11-12 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -639,13 +703,79 @@
     {
      "try": 1,
      "why": [
-      "0.71 s pause between lines 3-4 (limit 0.6 s)",
-      "0.61 s pause between lines 6-7 (limit 0.6 s)",
-      "0.67 s pause between lines 8-9 (limit 0.6 s)"
+      "0.78 s pause between lines 2-3 (limit 0.6 s)",
+      "0.62 s pause between lines 5-6 (limit 0.6 s)",
+      "0.91 s pause between lines 6-7 (limit 0.6 s)",
+      "0.62 s pause between lines 10-11 (limit 0.6 s)",
+      "0.63 s pause between lines 11-12 (limit 0.6 s)"
      ]
     }
-   ]
+   ],
+   "take": "L01",
+   "take_at": 11.193
+  },
+  "L16": {
+   "lines": [
+    "L16"
+   ],
+   "file": "beat_L16.wav",
+   "dur": 4.263,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 9.52,
+     "len": 0.78,
+     "why": "0.78 s pause between lines 2-3 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 16.35,
+     "len": 0.62,
+     "why": "0.62 s pause between lines 5-6 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 20.58,
+     "len": 0.91,
+     "why": "0.91 s pause between lines 6-7 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 33.56,
+     "len": 0.62,
+     "why": "0.62 s pause between lines 10-11 (limit 0.6 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 36.63,
+     "len": 0.63,
+     "why": "0.63 s pause between lines 11-12 (limit 0.6 s)"
+    }
+   ],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.78 s pause between lines 2-3 (limit 0.6 s)",
+      "0.62 s pause between lines 5-6 (limit 0.6 s)",
+      "0.91 s pause between lines 6-7 (limit 0.6 s)",
+      "0.62 s pause between lines 10-11 (limit 0.6 s)",
+      "0.63 s pause between lines 11-12 (limit 0.6 s)"
+     ]
+    }
+   ],
+   "take": "L01",
+   "take_at": 39.013
   }
  },
- "total": 40.46
+ "total": 48.77
 }
