@@ -96,6 +96,12 @@ How the work itself went wrong, and the rule now:
   through as a red sliver; a redstone torch two below strongly powers the floor block, which powers what stands on it.
 - **A sealed lab lit only by block light reads brown**; a glass roof (sky light) makes it the clean white lab.
 - **A dispenser shooting eggs at a chicken hatches chicks** (vanilla's 1 in 8): 6 in 25 s, a free running gag.
+- **A projectile never hits its shooter on the way out** (Projectile.leftOwner). render.js's hit simulation flashed a
+  snow golem red on every snowball it threw; it now skips the mobs whose box holds the spawn point until it has left.
+- **Mob AI that works behind glass**: a snow golem on a 2-high ledge pelts a husk below for good (glass blocks a mob's
+  line of sight, so shooter and target share the open cell); a husk can't climb the ledge. A husk, not a zombie: the
+  glass roof's sun would set a zombie on fire.
+- **A /kill by type list kills the cast you add later**: tag every cell mob (`cells`) and kill `tag=!cells`.
 
 ## Owner preferences and format
 - Owner decisions live in README "Owner decisions". Highlights: "close match is fine"; skip the
