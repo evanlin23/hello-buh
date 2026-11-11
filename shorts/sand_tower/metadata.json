@@ -1,10 +1,10 @@
 {
   "name": "sand_tower",
   "channel": "hellobuh",
-  "caption": "the torch trick never gets old 😭",
+  "caption": "the torch trick never gets old \ud83d\ude2d",
   "youtube": {
-    "title": "the torch trick never gets old 😭 #minecraft #shorts",
-    "description": "the torch trick never gets old 😭\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the torch trick never gets old \ud83d\ude2d #minecraft #shorts",
+    "description": "the torch trick never gets old \ud83d\ude2d\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -16,7 +16,7 @@
   "song": {
     "file": "fearless_funk.mp3",
     "title": "Fearless Funk",
-    "artist": "DR MØB, Chris Linton",
+    "artist": "DR M\u00d8B, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "drop_final",
     "drop_in_song_s": 29.5,
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "the torch trick never gets old 😭",
+    "caption": "the torch trick never gets old \ud83d\ude2d",
     "red": "torch",
     "dropAt": "drop_final",
     "startAt": "walk0:0.45",
@@ -87,7 +87,7 @@
     ],
     "args": [
       "--caption",
-      "the torch trick never gets old 😭",
+      "the torch trick never gets old \ud83d\ude2d",
       "--red",
       "torch",
       "--punch",
@@ -38794,10 +38794,10 @@
     "gunzip -c shorts/sand_tower/recording.json.gz > work/sand_tower.rec.json",
     "node render.js work/sand_tower.rec.json work/sand_tower.frames 60 1080 1011",
     "python3 audio.py work/sand_tower.rec.json work/sand_tower.wav",
-    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old 😭\" --red torch --punch [[\"crash\",0,1.08]] --shake [[\"crash\",0,8]] --flash [[\"crash\",0,0.4]] --sfx [[\"dip\",\"crash\",0.35],[\"impact\",\"crash\"]] --start_at walk0:0.45 --end_after crash:0.8 --out out/sand_tower.mp4"
+    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old \ud83d\ude2d\" --red torch --punch [[\"crash\",0,1.08]] --shake [[\"crash\",0,8]] --flash [[\"crash\",0,0.4]] --sfx [[\"dip\",\"crash\",0.35],[\"impact\",\"crash\"]] --start_at walk0:0.45 --end_after crash:0.8 --out out/sand_tower.mp4"
   ],
-  "status": "ready",
-  "notes": "backlog worker D: re-recorded on the current engine (aim governor, no whips), 6 sand towers 1x1..6x6 with the torch trick, opens on the first break; payoff: punch+shake+flash, song dip + impact on the crash; 35.5 s; pace 0 blockers; review READY (maker's review, no subagent tool). Nitpicks: the 6x6 phase ~10 s of 3-column batches; hand dips on slot switches (vanilla).",
+  "status": "needs-fix",
+  "notes": "owner 2026-11-11 (r:rffba12): the torch trick's places/breaks happen off-aim, 'looks like hacking'; look at each block as it's placed/broken | backlog worker D: re-recorded on the current engine (aim governor, no whips), 6 sand towers 1x1..6x6 with the torch trick, opens on the first break; payoff: punch+shake+flash, song dip + impact on the crash; 35.5 s; pace 0 blockers; review READY (maker's review, no subagent tool). Nitpicks: the 6x6 phase ~10 s of 3-column batches; hand dips on slot switches (vanilla).",
   "published_at": "2026-11-11T07:17:09.979Z",
   "gates": {
     "version": 2,
