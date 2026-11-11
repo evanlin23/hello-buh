@@ -71,3 +71,10 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold (faketrick_gold_portal). The kit: lib/faketrick.js
   (makeStunt: a graded pad, steps as subs, F.fake marks the staged result; every visible action through lib/act.js).
   Anything built above the eye goes from a step or a rise: a top face above the eye can't be clicked (act refuses it).
+- **psycho**: the lava mansion (psycho_lava_mansion); a "cosy" treehouse whose rope bridges cross a ravine of
+  magma and pointed dripstone; an underwater house whose rooms are all open to the drowned; a TNT cottage (a floor
+  of TNT under the rug, redstone torches for candles); a tiny-flat tour on a one-wide skybridge at build height.
+  Built (lib/psycho.js): makeStunt({ rooms: [kinds], finale }) builds the burning yard, the fire-ringed door, the
+  hall over the lava and each room kind (living_room, kitchen, bathroom, study) on its island; the finale bed_jump is
+  a walking jump over a one-block lava gap onto the bed. Fire stays only on netherrack or on a flammable face
+  (BaseFireBlock.onPlace drops fire over farmland at once; fire_spread_radius_around_player 0 stops the spread).
