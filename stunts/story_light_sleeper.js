@@ -221,7 +221,7 @@ module.exports = {
     // ---- L02: the crane up the carpet street ('est'); on "The DOGHOUSE?" the insert on the doghouse (audit B2)
     K.actor('wolf', { x: this.dog.x, y: this.dog.y, z: this.dog.z, yaw: -40 })   // the doghouse's wolf: the insert's subject
     await K.cutShot('est')
-    await line('L02', async (k, at) => { if (k === at.cut(2)) await K.cutShot('dog'); K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
+    await line('L02', async (k, at) => { if (k === at.cut(2) && K.shotName !== 'dog') await K.cutShot('dog'); K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
     away('walk1'); away('walk2')
 
     // ---- L03: POV walking east past the well toward the bell in its wool box ("Even the BELL wears a SWEATER")
@@ -260,7 +260,8 @@ module.exports = {
     await line('L06', async (k, at) => {
       if (k === 4) { Object.assign(mom, { x: 0.5, z: -13.5, y: 3.07, yaw: 0, pitch: 20 }); K.warp('mom') }   // inside for L08, while she is behind him (off screen)
       if (k === 0 && !digging) { digging = true; digRow([[0, 0]]).then(() => { digging = false }) }   // "I PULLED the WOOL off the WELL"
-      if (!digging && dug === 0) K.base = K.aim(C(0, 2.0, 0))   // before the dig; after it, hold the last look
+      if (!digging && dug === 0) K.base = K.aim(C(0, 2.0, 0))   // before the dig
+      if (!digging && dug > 0) K.base = K.aim(C(Math.sin(k / 7) * 0.5, 0.6, Math.cos(k / 9) * 0.3))   // after it: peering down the open slot
       if (digging && k % 5 === 2) swing()   // the arm works the shears (a player's dig swings)
       if (!digging) look(k)
     })
@@ -322,7 +323,7 @@ module.exports = {
       if (k === at(2) - 4) bot.setQuickBarSlot(1)
       if (k >= at(2) && !placed && !digging) { placed = true; K.place(new ctx.Vec3(X - 1, F + 2, Z), 'jukebox', { against: new ctx.Vec3(X - 1, F + 1, Z) }).then(() => { say('/item replace entity @s hotbar.1 with white_carpet 64'); jbAt = k; from11 = { ...K.base } }) }
       if (jbAt !== null && from11) { const t = k - jbAt; K.turnTo(from11, C(Math.sin(t / 7) * 0.6, 0.4, Math.cos(t / 9) * 0.3), Math.min(1, t / 24)) }   // then down into the open slot: "Wells ECHO"
-      if (k === at.cut(4)) { shriek(); craneAt = ctx.tick; await K.cutShot('crane') }   // ECHO
+      if (k === at.cut(4) && craneAt === null) { shriek(); craneAt = ctx.tick; await K.cutShot('crane') }   // ECHO
       if (!digging) {
         if (!placed && dug === 0) K.base = K.aim(C(0, 2.0, 0))
         look(k)
@@ -349,7 +350,7 @@ module.exports = {
         ctx.sound('block.wooden_door.open', 0.6, 0.9)
       }
       if (k === at(2) && !song) {
-        K.place(new ctx.Vec3(X - 1, F + 2, Z), 'jukebox[has_record=true]', { against: new ctx.Vec3(X - 1, F + 2, Z), sound: null }).then(() => say('/item replace entity @s hotbar.2 with cyan_carpet 64'))
+        swing(); say(`/setblock ${X - 1} ${F + 2} ${Z} jukebox[has_record=true]`); say('/item replace entity @s hotbar.2 with cyan_carpet 64')   // the disc goes in (a use on the jukebox, not a placement)
         song = startSong(ctx, K, C(-1, 3.1, 0))
       }
       if (k === at(2) + 10) shriek()
@@ -376,6 +377,7 @@ module.exports = {
     let onRim = false
     await line('L16', async (k, at, n) => {
       if (k === Math.max(10, at(3) - 4)) { K.go(true); K.ctl('jump', true) }   // "So I STEPPED off the CARPET, onto the STONE"
+      if (k < Math.max(10, at(3) - 4)) { K.base = K.aim(C(Math.sin(k / 5) * 1.1, 0.9 + Math.abs(Math.sin(k / 5)) * 0.4, 2.5)); look(k); return }   // bobbing to the song before the step
       if (!onRim && bot.entity.position.y > F + 1.5) K.go(false)
       if (!onRim && bot.entity.onGround && bot.entity.position.y > F + 1.9) { onRim = true; K.go(false); shriek() }
       K.base = K.aim(C(0, 0.6, 4)); look(k)
@@ -602,5 +604,5 @@ module.exports.shots = {
   // L13: the reverse: 1 block east of him at his eye height, looking north at Mom in our doorway
   mom: { subject: ['actor:mom'], mood: 'eerie_night', grade: { exposure: 1.2 }, vignette: 0.45, at: [1.0, 2.7, -2.9], look: [0.5, 4.6, -7.35], fov: 42, push: 0.3, dof: { aperture: 0.8 } },   // the post clears her (F7)
   // S16: low behind him (2-3 blocks north-west), looking south past him at the burst carpet and the rising warden
-  s16: { subject: [[0.5, 3.8, 4.2]], mood: 'eerie_night', grade: { contrast: 0.22 }, vignette: 0.48, at: [2.0, 3.0, -5.0], look: [0.3, 3.5, 4.5], fov: 40, push: 0.2, dof: false }   // B3: the warden ~45% of the frame, his shoulder at the right edge, the jukebox out of the line
+  s16: { subject: [[0.5, 3.8, 4.2]], mood: 'eerie_night', grade: { contrast: 0.22 }, vignette: 0.48, at: [2.3, 3.3, -4.4], look: [0.3, 3.5, 4.5], fov: 40, push: 0.2, dof: false }   // B3: the warden ~45% of the frame, his shoulder at the right edge, the jukebox out of the line
 }
