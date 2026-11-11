@@ -24,6 +24,7 @@ module.exports = {
     const { bot } = ctx
     await ctx.defaultRules()
     for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing false', 'fire_damage false']) await ctx.cmd(`/gamerule ${g}`)
+    await ctx.cmd('/difficulty normal')   // a canon stamp may summon a monster (Stillwater's Gary): refused on peaceful
     await ctx.cmd('/kill @e[type=!player]')
     const c = AT || [world.origin(PLACES[0]).x, world.origin(PLACES[0]).z]
     const W = await world.build(ctx, { places: PLACES, day: DAY })
