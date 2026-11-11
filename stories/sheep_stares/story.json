@@ -1,0 +1,239 @@
+{
+ "name": "sheep_stares",
+ "stunt": "story_sheep_stares",
+ "version": 2,
+ "revision": "r2 (2026-11-11): the owner's Review Room notes (2026-11-10): an acted Gemini voice (Pip), the 'WHO?' delivered as a real question; the Digger's House on its real terrain (no superflat)",
+ "caption": "why is my sheep staring at this block 💀",
+ "premise": "The narrator's blue sheep has stared at one dirt block for 412 days. It won't eat, wolves leave it alone, and at night the block groans. He woke up in this house 412 days ago with no tools and no memories, there's a line of torches from his door to the block, and the villagers call him the new one.",
+ "twist": "He breaks the block: a shaft straight down. He falls in, and at the bottom a zombie kills him with a diamond sword. The death message says it: HelloBuh was slain by Zombie using [HelloBuh's Sword]. He dug down there 412 days ago, sealed the hole behind him, died, and respawned with nothing. The zombie kept his sword; the sheep watched him go in and has waited at that block ever since. The death loops into line 1.",
+ "key_color": "#FFB13B",
+ "hotbar": [
+  "wooden_shovel",
+  "torch",
+  "bread",
+  "shears",
+  "blue_dye",
+  "milk_bucket",
+  "milk_bucket",
+  "cake",
+  "egg"
+ ],
+ "world": {
+  "place": "digger_house",
+  "where": "The Digger's House (map.json digger_house) on the lowland under the High Meadow's east slope, the blue sheep's dirt block on the rise behind it, Torch Hill above",
+  "day": 1112
+ },
+ "voice": {
+  "engine": "gemini",
+  "model_hint": "narrator gemini-3.8-flash-lite-tts (Pip, voices/recipes/pip.md)"
+ },
+ "voice_takes": "beat",
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "color": "#FFFFFF",
+   "on_screen": "POV (hand and hotbar), default Steve skin"
+  }
+ },
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "beat": "a",
+   "text": "My SHEEP / has stared at / the SAME / dirt block / for 412 DAYS.",
+   "say": "My sheep has stared at the same dirt block for four hundred and twelve DAYS."
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "beat": "a",
+   "text": "He doesn't / EAT. / He doesn't / SLEEP. / He doesn't / even BLINK.",
+   "say": "He doesn't EAT. He doesn't SLEEP. He doesn't even BLINK."
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "beat": "b",
+   "text": "I pushed him / into the RIVER. / He WALKED / right BACK.",
+   "say": "I pushed him into the RIVER. He walked right BACK."
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "beat": "b",
+   "text": "WOLVES / showed up. / They took / one LOOK / at him / and LEFT.",
+   "say": "WOLVES showed up. They took one look at him and LEFT."
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "beat": "b",
+   "text": "I put / a block / of GOLD / on top. / He stared / THROUGH it.",
+   "say": "I put a block of GOLD on top. He stared THROUGH it."
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "beat": "b",
+   "text": "Sometimes / the block / GROANS. / I figured / dirt just / DOES that.",
+   "say": "Sometimes the block GROANS. I figured dirt just DOES that."
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "beat": "c",
+   "text": "Honestly, / I don't / remember / GETTING / a sheep. / Or dyeing / him BLUE.",
+   "say": "Honestly, I don't remember GETTING a sheep. Or dyeing him BLUE."
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "beat": "c",
+   "text": "I woke up / in this house / 412 days ago. / No TOOLS. / No MEMORIES. / Just HIM, / already STARING.",
+   "say": "I woke up in this house four hundred and twelve days ago. No TOOLS. No MEMORIES. Just him, already STARING."
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "beat": "c",
+   "text": "The house / was already / BUILT. / There's / a line / of TORCHES / from my door / to that BLOCK.",
+   "say": "The house was already BUILT. There's a line of torches from my door to that BLOCK."
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "beat": "d",
+   "text": "The villagers / call me / the NEW one.",
+   "say": "The villagers call me the NEW one."
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "beat": "d",
+   "text": "They keep / asking / what happened / to the OLD one. / I say, / WHO?",
+   "say": "They keep asking what happened to the OLD one. I say, WHO?",
+   "note": "the owner: 'who needs to be like better delivered'. Its own beat: a real, puzzled question"
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "beat": "e",
+   "text": "So today / I got / CURIOUS.",
+   "say": "So today I got CURIOUS."
+  },
+  {
+   "id": "L13",
+   "who": "N",
+   "beat": "e",
+   "text": "And for / the FIRST time / in 412 days, / he LOOKED / at ME.",
+   "say": "And for the first time in four hundred and twelve days, he looked at ME."
+  },
+  {
+   "id": "L14",
+   "who": "N",
+   "beat": "e",
+   "text": "I broke / the BLOCK.",
+   "say": "I broke the BLOCK."
+  },
+  {
+   "id": "L15",
+   "who": "N",
+   "beat": "f",
+   "text": "There's / a HOLE / under it. / It goes / STRAIGHT down.",
+   "say": "There's a HOLE under it. It goes STRAIGHT down."
+  },
+  {
+   "id": "L16",
+   "who": "N",
+   "beat": "f",
+   "text": "Who digs / STRAIGHT / DOWN?",
+   "say": "Who digs straight DOWN?",
+   "note": "the last line: baffled, not a punchline"
+  }
+ ],
+ "requests": [
+  {
+   "id": "r_a",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L01",
+    "L02"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_b",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L03",
+    "L04",
+    "L05",
+    "L06"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_c",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L07",
+    "L08",
+    "L09"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_d",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L10",
+    "L11"
+   ],
+   "direction": "[A nine-year-old kid, honestly confused, a real puzzled 'who?' at the end; not whispery]"
+  },
+  {
+   "id": "r_e",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L12",
+    "L13",
+    "L14"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_f",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L15",
+    "L16"
+   ],
+   "direction": "[A nine-year-old kid, staring down a hole, baffled and a bit scared, slower; not whispery]"
+  }
+ ]
+}

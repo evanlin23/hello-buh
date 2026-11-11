@@ -1,100 +1,281 @@
 {
-  "name": "nitwit",
-  "stunt": "story_nitwit",
-  "caption": "the nitwit finally said something 😳",
-  "premise": "The village nitwit only ever says 'hmm'. He always stands exactly where something bad is about to happen (a tree before lightning, the wheat before a creeper, the well before it turns to lava), and every other villager walks away from him. The narrator follows him one night past the last torch and finds a burned, empty copy of his own village.",
-  "twist": "The nitwit is from a world that already ended, sent back to warn this one, and 'hmm' is all the game lets a nitwit say. Today he stands right next to the narrator: the bad thing is about to happen to him. He says the date of the end, and it's today.",
-  "mood": [
-    "eerie",
-    "eerie"
-  ],
-  "payoff": "today_word",
-  "voice": {
-    "voice": "am_adam",
-    "tempo": 1.03,
-    "rate": 1.45
+ "name": "nitwit",
+ "stunt": "story_nitwit",
+ "version": 2,
+ "revision": "r2 (2026-11-11): the owner's Review Room notes (2026-11-10): an acted Gemini voice (Pip) with the ending given room; Fernbank's real terrain (no superflat)",
+ "caption": "the nitwit finally said something 😳",
+ "premise": "The village nitwit only ever says 'hmm'. He always stands exactly where something bad is about to happen (a tree before lightning, the wheat before a creeper, the well before it turns to lava), and every other villager walks away from him. The narrator follows him one night past the last torch and finds a burned, empty copy of his own village.",
+ "twist": "The nitwit is from a world that already ended, sent back to warn this one, and 'hmm' is all the game lets a nitwit say. Today he stands right next to the narrator: the bad thing is about to happen to him. He says the date of the end, and it's today.",
+ "key_color": "#B4F03C",
+ "mood": [
+  "eerie",
+  "eerie"
+ ],
+ "payoff": "today_word",
+ "meter": {
+  "label": "HMMS"
+ },
+ "hotbar": [
+  "torch",
+  "oak_sapling",
+  "wheat_seeds",
+  "bucket",
+  "bread",
+  "milk_bucket",
+  "milk_bucket",
+  "cake",
+  "egg"
+ ],
+ "world": {
+  "place": "fernbank",
+  "where": "Fernbank (map.json fernbank) and the Burned Copy past the last torch (burned_copy)",
+  "day": 470
+ },
+ "voice": {
+  "engine": "gemini",
+  "model_hint": "narrator gemini-3.8-flash-lite-tts (Pip, voices/recipes/pip.md)"
+ },
+ "voice_takes": "beat",
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "color": "#FFFFFF",
+   "on_screen": "POV (hand and hotbar), default Steve skin"
+  }
+ },
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "beat": "a",
+   "text": "The NITWIT / in my village / has said HMM / 4,096 TIMES.",
+   "say": "The nitwit in my village has said hmm four thousand and ninety-six TIMES."
   },
-  "gap": 0.1,
-  "key_color": "#B4F03C",
-  "meter": {
-    "label": "HMMS"
+  {
+   "id": "L02",
+   "who": "N",
+   "beat": "a",
+   "text": "Today, / he said / my NAME.",
+   "say": "Today, he said my NAME."
   },
-  "lines": [
-    {
-      "id": "L01",
-      "text": "The NITWIT / in my village / has said HMM / 4,096 TIMES."
-    },
-    {
-      "id": "L02",
-      "text": "Today, / he said / my NAME."
-    },
-    {
-      "id": "L03",
-      "text": "He's ALWAYS / standing / somewhere / WEIRD."
-    },
-    {
-      "id": "L04",
-      "text": "Under a TREE. / That night, / LIGHTNING / split it."
-    },
-    {
-      "id": "L05",
-      "text": "In the WHEAT. / A CREEPER / walked in / and BOOM."
-    },
-    {
-      "id": "L06",
-      "text": "By the WELL. / The water / turned to / LAVA."
-    },
-    {
-      "id": "L07",
-      "text": "On MY roof. / The next day, / it rained / ANVILS."
-    },
-    {
-      "id": "L08",
-      "text": "The other / villagers / WALK AWAY / when he comes."
-    },
-    {
-      "id": "L09",
-      "text": "Even the / IRON GOLEM / goes AROUND him."
-    },
-    {
-      "id": "L10",
-      "text": "So one night, / I FOLLOWED him."
-    },
-    {
-      "id": "L11",
-      "text": "Past the / last torch / was ANOTHER / village."
-    },
-    {
-      "id": "L12",
-      "text": "MY village. / BURNED. / EMPTY."
-    },
-    {
-      "id": "L13",
-      "text": "The TREE. / The WHEAT. / The WELL. / All GONE."
-    },
-    {
-      "id": "L14",
-      "text": "He's not / FROM here. / His world / already ENDED."
-    },
-    {
-      "id": "L15",
-      "text": "They sent him / BACK / to WARN us."
-    },
-    {
-      "id": "L16",
-      "text": "But a NITWIT / can only / say one word."
-    },
-    {
-      "id": "L17",
-      "text": "And today, / he's standing / right next / to ME."
-    },
-    {
-      "id": "L18",
-      "text": "He said / my NAME. / Then the DATE / of the END."
-    },
-    {
-      "id": "L19",
-      "text": "It's TODAY."
-    }
-  ]
+  {
+   "id": "L03",
+   "who": "N",
+   "beat": "b",
+   "text": "He's ALWAYS / standing / somewhere / WEIRD.",
+   "say": "He's always standing somewhere WEIRD."
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "beat": "b",
+   "text": "Under a TREE. / That night, / LIGHTNING / split it.",
+   "say": "Under a TREE. That night, LIGHTNING split it."
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "beat": "b",
+   "text": "In the WHEAT. / A CREEPER / walked in / and BOOM.",
+   "say": "In the WHEAT. A creeper walked in and BOOM."
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "beat": "b",
+   "text": "By the WELL. / The water / turned to / LAVA.",
+   "say": "By the WELL. The water turned to LAVA."
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "beat": "b",
+   "text": "On MY roof. / The next day, / it rained / ANVILS.",
+   "say": "On MY roof. The next day, it rained ANVILS."
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "beat": "c",
+   "text": "The other / villagers / WALK AWAY / when he comes.",
+   "say": "The other villagers walk AWAY when he comes."
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "beat": "c",
+   "text": "Even the / IRON GOLEM / goes AROUND him.",
+   "say": "Even the iron golem goes AROUND him."
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "beat": "c",
+   "text": "So one night, / I FOLLOWED him.",
+   "say": "So one night, I FOLLOWED him."
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "beat": "d",
+   "text": "Past the / last torch / was ANOTHER / village.",
+   "say": "Past the last torch was ANOTHER village."
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "beat": "d",
+   "text": "MY village. / BURNED. / EMPTY.",
+   "say": "MY village. BURNED. EMPTY."
+  },
+  {
+   "id": "L13",
+   "who": "N",
+   "beat": "d",
+   "text": "The TREE. / The WHEAT. / The WELL. / All GONE.",
+   "say": "The TREE. The WHEAT. The WELL. All GONE."
+  },
+  {
+   "id": "L14",
+   "who": "N",
+   "beat": "e",
+   "text": "He's not / FROM here. / His world / already ENDED.",
+   "say": "He's not FROM here. His world already ENDED."
+  },
+  {
+   "id": "L15",
+   "who": "N",
+   "beat": "e",
+   "text": "They sent him / BACK / to WARN us.",
+   "say": "They sent him back to WARN us."
+  },
+  {
+   "id": "L16",
+   "who": "N",
+   "beat": "e",
+   "text": "But a NITWIT / can only / say one word.",
+   "say": "But a NITWIT can only say one word."
+  },
+  {
+   "id": "L17",
+   "who": "N",
+   "beat": "f",
+   "text": "And today, / he's standing / right next / to ME.",
+   "say": "And today, he's standing right next to ME."
+  },
+  {
+   "id": "L18",
+   "who": "N",
+   "beat": "f",
+   "text": "He said / my NAME. / Then the DATE / of the END.",
+   "say": "He said my NAME. Then the date of the END."
+  },
+  {
+   "id": "L19",
+   "who": "N",
+   "beat": "g",
+   "text": "It's TODAY.",
+   "say": "It's TODAY.",
+   "note": "the owner: 'need the voice to be better'. Its own beat, its own take, room before it"
+  }
+ ],
+ "requests": [
+  {
+   "id": "r_a",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L01",
+    "L02"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_b",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_c",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L08",
+    "L09",
+    "L10"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_d",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L11",
+    "L12",
+    "L13"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_e",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L14",
+    "L15",
+    "L16"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r_f",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L17",
+    "L18"
+   ],
+   "direction": "[A nine-year-old kid, a little scared now, slower, every word clear; not whispery or soft]"
+  },
+  {
+   "id": "r_g",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L19"
+   ],
+   "direction": "[A nine-year-old kid, the moment it sinks in, slower and clear; not whispery or soft]"
+  }
+ ]
 }
