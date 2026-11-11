@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, on the newly published Shorts: "for the torch, we need to look where we are placing/breaking,
+  its fine to be fast but right now it just looks like hacking. also, the lava lake lowkey like ragebait but thats ok.
+  the rainbow sheep we are not looking at the right sheep when we dye..."** Every place, break, use and dye happens
+  under the crosshair, on every stunt: speed is fine, but the view must be on the block or mob being acted on when it
+  happens (no acting off-screen or off-aim; that reads as hacking). sand_tower's torch trick and rainbow_sheep's dyeing
+  get fixed to this; water_vs_lava's black-lake ending stays.
 - **Owner, 2026-11-11, on the re-made pixel-art Shorts: "here the creeper tracks where we're placing the blocks the
   best, which I think is good, but it does this weird thing where it walks all the way back into like the other one,
   and it's like halfway against the wall when it's like building the last one, which I think is a little bit
