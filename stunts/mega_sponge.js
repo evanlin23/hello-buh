@@ -35,17 +35,25 @@ module.exports = {
   shots: {
     pov: { pov: true },
     // 1. under the south-west corner looking up: the build fills the frame from frame 1, the camera craning up and back
-    rise: { path: [[0, -52, 9, 56], [3.5, -60, 26, 66]], lookPath: [[0, -18, 62, 18], [3.5, -6, 48, 6]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
+    rise: { path: [[0, -52, 9, 56], [2, -57, 19, 62]], lookPath: [[0, -18, 62, 18], [2, -10, 54, 10]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
+    // 1b. close under the south face, on the pad (off it the camera sat in the hillside), looking up it into the sky
+    rise2: { path: [[0, 2, 3, 43.5], [1.6, 9, 8, 43.5]], lookPath: [[0, 2, 84, 33], [1.6, 12, 84, 33]], fov: 72, dof: false, drift: 0.5, scenery: true, subject: [[14, 60, 42]] },
     // 3. wide: the whole sponge over the forest, orbiting from the south-east
-    orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 9, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
+    orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 11, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
+    // 3b. high over the top face (under the clouds at y 192: above them the frame went white), sliding across it: the fractal from above, the top hole in the middle
+    top: { path: [[0, 40, 118, 50], [2.1, 22, 112, 34]], lookPath: [[0, 4, 81, 4], [2.1, 0, 81, 0]], fov: 58, dof: false, drift: 0.4, scenery: true, subject: [[0, 84, 0]] },
     // 5. the west face head-on, pushing in: the face hole, and the core glowing deep inside it
-    face: { path: [[0, -150, 47, 0.5], [3.8, -106, 44, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [3.8, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
+    face: { path: [[0, -150, 47, 0.5], [2, -122, 45, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [2, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] },
+    // 5b. closer, on the hole's line: the tunnel, the core, the far exit
+    face2: { path: [[0, -96, 43, 0.5], [1.9, -74, 42, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 56, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
   },
   edit: {
     caption: 'rate my starter house',
     dropAt: 'thread',                   // (no reference song: publish adds the NCS bed at -16 LUFS with its drop here)
     startAt: 'start:0', endAfter: 'thread:0.8',
-    flash: [['inside', 1, 0.45]]
+    flash: [['inside', 1, 0.45]],
+    punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
+    sfx: [['impact', 'thread', { nth: 0 }]]
   },
 
   async setup (ctx) {
@@ -148,37 +156,44 @@ module.exports = {
     const ease = (a, b, i, n) => { const t = Math.min(1, Math.max(0, i / n)); return a + (b - a) * t * t * (3 - 2 * t) }
     const mix = (p, q, w) => ({ x: p.x + (q.x - p.x) * w, y: p.y + (q.y - p.y) * w, z: p.z + (q.z - p.z) * w })
     try {
-      // 1. under the corner, craning up (camera shot)
+      // 1. under the corner, craning up; then close under the south face (camera shots, ~1.8 s each)
       park(); M.shot(ctx, 'rise'); ctx.mark('start')
       ctx.sound('item.elytra.flying', 0.45, 0.9)
-      await bot.waitForTicks(70)
-      // 2. first person: a boost, then a run along the south face, the face on the left, looking ahead along it
+      await bot.waitForTicks(40)
+      M.shot(ctx, 'rise2'); ctx.mark('rise2')
+      await bot.waitForTicks(32)
+      // 2. first person: a boost, then a run along the south face, the face on the left, looking ahead along it; a
+      // second boost halfway
       M.shot(ctx, 'pov'); ctx.mark('cut'); ctx.mark('pass')
-      await run([[-82, 26, 49], [-30, 34, 48], [20, 44, 49], [62, 52, 54]], 90, (i) => ease(1.2, 1.55, i, 20),
-        (p, a, i) => mix(a, { x: a.x + 6, y: a.y - 2, z: Z + 41 }, ease(0.55, 0.75, i, 90)), { 2: boost })
-      // 3. wide orbit (camera shot)
+      await run([[-82, 26, 49], [-30, 34, 48], [20, 44, 49], [62, 52, 54], [90, 58, 60]], 96, (i) => ease(1.2, 1.55, i, 20),
+        (p, a, i) => mix(a, { x: a.x + 6, y: a.y - 2, z: Z + 41 }, ease(0.55, 0.75, i, 90)), { 2: boost, 48: boost })
+      // 3. wide orbit, then high over the top (camera shots)
       park(); M.shot(ctx, 'orbit'); ctx.mark('cut'); ctx.mark('wide')
       ctx.sound('item.elytra.flying', 0.4, 0.85)
-      await bot.waitForTicks(86)
+      await bot.waitForTicks(46)
+      M.shot(ctx, 'top'); ctx.mark('top')
+      await bot.waitForTicks(42)
       // 4. first person: a boost up the east face and over the top, ending looking down the top hole at the core
       M.shot(ctx, 'pov'); ctx.mark('cut'); ctx.mark('climb')
-      await run([[84, 36, 14], [58, 62, 7], [34, 88, 3], [14, 97, 0.5], [0, 99, 0.5]], 90, (i) => ease(1.6, 0.9, i, 90),
-        (p, a, i) => mix(W([0, 74, 0.5]), W([0, 41, 0.5]), ease(0, 1, i - 40, 45)), { 2: boost })   // the east face and its top edge, then down the top hole
-      // 5. the west face head-on (camera shot)
+      await run([[84, 36, 14], [58, 62, 7], [34, 88, 3], [14, 97, 0.5], [0, 99, 0.5], [-10, 100, 0.5]], 96, (i) => ease(1.5, 0.8, i, 96),
+        (p, a, i) => mix(W([0, 74, 0.5]), W([0, 41, 0.5]), ease(0, 1, i - 42, 46)), { 2: boost, 46: boost })   // the east face and its top edge, then down the top hole
+      // 5. the west face head-on, then closer on the hole's line (camera shots)
       park(); M.shot(ctx, 'face'); ctx.mark('cut'); ctx.mark('face')
       ctx.sound('item.elytra.flying', 0.4, 0.9)
-      await bot.waitForTicks(76)
+      await bot.waitForTicks(40)
+      M.shot(ctx, 'face2'); ctx.mark('face2')
+      await bot.waitForTicks(38)
       // 6. first person: boost, dive into the face hole, ease off inside, thread the core's hole (the payoff)
       M.shot(ctx, 'pov'); ctx.mark('cut'); ctx.mark('dive')
-      const path = [[-104, 47, 0.5], [-75, 43, 0.5], [-48, 41.5, 0.5], [-20, 41.5, 0.5], [0, 41.5, 0.5], [30, 41.5, 0.5]]
-      // distance along: the face (x -40.5) is ~64 in, the core's face (x -4) ~100, its far side (x 5) ~109
+      const path = [[-72, 44, 0.5], [-48, 41.5, 0.5], [-20, 41.5, 0.5], [0, 41.5, 0.5], [30, 41.5, 0.5]]
+      // distance along: the face (x -40.5) is ~32 in, the core's face (x -4) ~68, its far side (x 5) ~77
       let dist = 0
-      const marks = { 64: 'inside', 100: 'thread', 109: 'threaded' }
+      const marks = { 32: 'inside', 68: 'thread', 77: 'threaded' }
       const done = new Set()
-      await run(path, 118, (i) => {
-        const v = dist < 56 ? 1.55 : dist < 76 ? ease(1.55, 0.85, dist - 56, 20) : 0.85
+      await run(path, 100, (i) => {
+        const v = dist < 26 ? 1.5 : dist < 46 ? ease(1.5, 0.8, dist - 26, 20) : 0.8
         dist += v
-        for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); if (name === 'inside') ctx.sound('item.elytra.flying', 0.7, 1.1) }
+        for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); if (name === 'inside') { ctx.sound('item.elytra.flying', 0.7, 1.1) } }
         return v
       }, (p, a) => a, { 2: boost })
       ctx.mark('end')
