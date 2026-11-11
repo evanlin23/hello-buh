@@ -314,9 +314,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "lucky"**: every next block impossibly luckier than the last, vanilla mechanics staged by the set.
   Check: owner. r:r934ea4
 - **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
-  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2 The walk never stops (no pause before the door); no jump or shift at the cut. r:r81cb9c
 - **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
-  round a beat, the path always wins. Check: owner. r:r2e0a32
+  round a beat, the path always wins. Check: owner. r:r2e0a32 The path breaks through each obstacle, never around it. r:r81cb9c
 - **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
   the caption plays it as a normal complaint. Check: owner. r:r047388
 - **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the

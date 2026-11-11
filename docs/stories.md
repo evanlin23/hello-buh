@@ -292,6 +292,13 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, on desire_town and inside_library: "For the desired town, it should show like the path, like
+  breaking the obstacles that it's being put in. Not what we have right now. Then also for the inside library, like
+  the cut is very, very obvious, because one, it shifts, and two, we like pause before we open the door. It'd be as if
+  we just like walk straight out, and it's like without like stopping."** desire: the path visibly breaks through each
+  obstacle the town puts in its way (it doesn't reroute around them). inside: the walk never stops: no pause before
+  the door, the door opens mid-stride, and the view must not jump or shift at the hidden cut (position, look and speed
+  identical on both sides).
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
