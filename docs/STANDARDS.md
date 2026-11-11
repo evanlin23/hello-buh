@@ -186,6 +186,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
   measured checks. r:rb9aa2d
 
 ## 5. Look
+- **Bright and punchy is being tested** against the cinematic look (the big channels are bright with exaggerated
+  movement); the owner picks. Check: owner. r:rcae995
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinematic is the default (`look: 'auto'`).
 - Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
 - Sharp: bloom threshold >= 0.7, no DoF on wide/establishing shots, crf <= 18.

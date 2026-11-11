@@ -260,6 +260,11 @@ STANDARDS.md in the same commit.
   Buh Stories uploads are manual for now: when the owner OKs a story by name, the lead sends them the final mp4 plus a
   ready-to-paste block (title, description, tags, pinned comment). The Buh Stories uploader stays off
   (YT_ENABLED_BUHSTORIES unset) until the owner asks to automate it.
+- **Owner, 2026-11-11, looking at the biggest Minecraft story channels (Kamui Animation, Michazike, Skytro, Milo and
+  Chip...): "All of them seem to have very bright, exagerated movements".** Being tested: a bright, saturated look
+  (no moody grade, little vignette or blur, day-lit where the story allows) and bigger, punchier motion within
+  Minecraft (camera punches on key words, hops and quick turns on beats, faster pushes), shown next to the current
+  cinematic look for the owner to pick.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
