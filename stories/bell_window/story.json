@@ -21,10 +21,10 @@
  },
  "weather": "clear",
  "world": {
-  "place": "saltmouth (canonical). Convention: x and z are block centres, y is the block floor; origin = the square's ground block under his window, his window in the house's north wall facing north (-z). His window: 1 wide x 2 high (y 4-5) in the wall at z 0; he stands at feet (0, 4, 0.8), eye 5.62. The porch roof's walking surface at y 4 runs east of the window from z -1. The bell: block (0, 7, -3), attached on the x axis (double_wall) between two posts at x +-1: oak fence y 1-6 capped with an oak log at y 7 (the log's sturdy face holds the bell; the thin fence keeps ~0.4 clearance for S08), nothing above it. The skeleton: feet (0, 9, -12) on the cliff top (a sheer stone face whose top edge is no further south than z -9.5), the oak's trunk off its block at (2, 9, -13), lowest leaves above the S08 sight line. Simulated vanilla arrow (eye -0.1, aimed at feet +0.6 with a lift of 0.2 x distance, 1.6 b/t, drag 0.99, gravity 0.05) crosses z -3 at y 7.46, inside the bell's ring zone (7.25-7.81); the eye-to-eye sight line crosses at 7.14, under the bell's lip, so it still sees him. In S08 he stands at (2, 4, -1) on the porch roof: clear of the bell and the east post. The live-AI gate in set.md decides the final numbers. The village bell: Saltmouth's generated meeting-point bell is re-hung on this belfry (one bell in the village, never two in a shot).",
-  "day": 2000,
-  "canon": "A Saltmouth family (not Buh's). The kid is a player; Mom is a villager. New canon fact: a skeleton lives under the oak on Saltmouth's north cliff from about day 1700 (the stamp: the oak and its shade).",
-  "easter_egg": "saltmouth_portal (register as a cameo, since 0): Saltmouth's ruined portal at (-269, -366), framed in a daytime shot that looks south-east (S05)"
+  "place": "saltmouth (canonical): the stilt house on the boardwalk under the south-east bank of Buh's old yard (map.json stamps kid_house, belfry_bell, skeleton, buh_yard). Origin O = (-263, 62, -340): the boardwalk block under his window; his window O + (0, 4, 0) facing north at the bank; the bell O + (0, 7, -3); the skeleton's feet O + (0, 9, -12) on the yard's corner (y 71); Buh's old oak at O + (2, 9, -13) (Good Boy's oak, -261, 71, -353). The bank is Good Boy's pad: level at y 70, its south-east corner 8 over the sea on four steps. The rest as before: convention x, z block centres, y the block floor; S08 he stands at O + (2, 4, -1) on the porch roof. The live-AI gate in set.md decides the final numbers. The village bell is Saltmouth's own, re-hung here.",
+  "day": 3800,
+  "canon": "A Saltmouth family (not Buh's). The kid is a player, Saltmouth's only one since Buh left on day 3400; Mom is a villager. Canon: the house and belfry from day 3450, the skeleton under Buh's old oak from day 3500 (300 nights), Buh's yard empty above. docs/world/canon.md link 12 (two bells).",
+  "easter_egg": "buh_yard: Buh's empty yard on the bank above, in S04's background by day (the cottage, the fence, no dog). Never named. (The old egg, Saltmouth's ruined portal, is buried under Buh's yard since Good Boy, day 3300.)"
  },
  "voice": {
   "engine": "gemini",
@@ -314,7 +314,7 @@
    "place": "square",
    "size": "ews",
    "camera": "at: high behind his house (0, 20, 14), over the roof ridge, looking north along x = 0 at the bell (0, 7, -3), slow push",
-   "frame": "THE AXIS, the single wide: his roof lower-centre with the warm light of his open window spilling onto the bell just beyond it, the bell still swinging, the dark stone cliff and the oak beyond that: three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at dusk). The empty square, every door shut. Dusk 12600 (sun down, sky deep blue).",
+   "frame": "THE AXIS, the single wide: his roof lower-centre with the warm light of his open window spilling onto the bell just beyond it, the bell still swinging, the dark bank and the oak beyond that (Buh's old yard's corner; his cottage roof dark behind it): three things in one vertical line down the middle of the frame (hidden in plain sight; nothing on the cliff readable at dusk). The empty square, every door shut. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -343,8 +343,8 @@
    "line": "L07",
    "place": "square",
    "size": "wide",
-   "camera": "at: in the square looking at his house and its neighbours (aim re-set once the house is placed, so Saltmouth's ruined portal at (-269, -366) is in frame), still",
-   "frame": "subject: the village by day, every window's spruce-trapdoor shutters open (stamped on the neighbours in frame: generated houses have bare glass panes) but his, shut, the bell right in front of his; villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house. Day 6000.",
+   "camera": "at: on the boardwalk south-east of his house, about (10, 1.6, 12), looking north-west at his house, the bank and the village's shore houses, still",
+   "frame": "subject: the village by day, every window's spruce-trapdoor shutters open (stamped on the shore houses in frame: generated houses have bare glass panes) but his, shut, the bell right in front of his; villagers working, unarmed (a picture plant, never said: skeletons ignore villagers, so only he is a target). The easter egg: up on the bank behind his house, Buh's empty yard (`buh_yard`): the cottage with a cold chimney, the spruce fence, no dog; small, frame top-left, never the subject. Day 6000.",
    "look": {
     "time": 6000
    },
@@ -358,7 +358,7 @@
    "place": "cliff",
    "size": "ews",
    "camera": "at: (8, 14, 20) beyond the square, about 32 blocks from the oak, looking north up at it, slow push",
-   "frame": "subject: the oak on the edge of the stone cliff in full sun; in its dark shade a pale white figure standing still: a white speck about 4.5% of frame height (not readable as a skeleton, no bow visible); his house and the bell small in the foreground on the same line. Day 6000.",
+   "frame": "subject: the oak on the corner of the high bank (the yard above the shore) in full sun; in its dark shade a pale white figure standing still: a white speck about 4.5% of frame height (not readable as a skeleton, no bow visible); his house and the bell small in the foreground on the same line. Day 6000.",
    "look": {
     "time": 6000
    },
