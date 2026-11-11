@@ -1,18 +1,16 @@
-// "the torch trick never gets old 😭" (~30 s): six sand towers in a row, each bigger: 1x1 up to a
-// 6x6 giant 28 high (five towers came to 24.9 s). The bot runs up to each, breaks bottom blocks and puts a torch in each
-// gap, so the column falls onto the torch and every block pops into an item. It works a few columns at
-// a time (break, break, break, then torch, torch, torch), sidestepping along the big ones, and backs
-// off as each comes down; it ends just after the 6x6 pours down. An Efficiency V shovel insta-breaks
-// sand (vanilla: speed 34 >= 30 x hardness 0.5), so each column is one click.
+// "the torch trick never gets old 😭": four sand towers in a row, each bigger, 1x1 up to a 4x4 26 high. The bot runs
+// up to each and does the torch trick one column at a time with the crosshair on it (owner r:rffba12): break the
+// bottom block, a torch into the gap, so the column falls onto the torch and every block pops into an item; it
+// sidesteps along the wide ones and backs off as each comes down, and the Short ends once the last block of the
+// 4x4 has landed (owner r:r24d99a). An Efficiency V shovel insta-breaks sand (vanilla: speed 34 >= 30 x hardness
+// 0.5), so each column is one click.
 const MOTION = require('../lib/motion')
 const D = 8                  // it backs off to this far in front of the towers
-const TOWERS = [
-  { dx: -28, w: 1, h: 8, near: 4 },
-  { dx: -23, w: 2, h: 12, near: 3.5 },
-  { dx: -17, w: 3, h: 15, near: 3 },
-  { dx: -10, w: 4, h: 18, near: 2.5 },
-  { dx: -1, w: 5, h: 22, near: 2.5 },
-  { dx: 9, w: 6, h: 28, near: 2.5, slot: 2 }   // a second torch stack for the last one
+const TOWERS = [   // one column at a time with the crosshair on each (r:rffba12): 30 columns, not 91
+  { dx: -20, w: 1, h: 8, near: 3.5 },
+  { dx: -15, w: 2, h: 12, near: 3 },
+  { dx: -9, w: 3, h: 16, near: 3 },
+  { dx: -1, w: 4, h: 26, near: 3 }
 ]
 
 module.exports = {
@@ -22,8 +20,10 @@ module.exports = {
   edit: {
     caption: 'the torch trick never gets old 😭', red: 'torch', dropAt: 'drop_final',
     // opens on the first break (sound on frame 0: pace), a punch + shake as the 6x6 crashes (the payoff's picture change)
-    startAt: 'walk0:0.45', endAfter: 'crash:0.8', punch: [['crash', 0, 1.08]], shake: [['crash', 0, 8]], flash: [['crash', 0, 0.4]],
-    sfx: [['dip', 'crash', 0.35], ['impact', 'crash']]   // the song ducks before the crash and a hit lands on it (gates: pace payoff sound)
+    // the end counts from the last block landing (r:r24d99a): a shake as the 4x4 crashes down, then the hit, a punch and
+    // the song's dip on 'settled' (the payoff: pace wants a sound and a picture change on it), out 0.6 s later
+    startAt: 'walk0:0.45', endAfter: 'settled:0.6', shake: [['crash', 0, 8]], punch: [['settled', 0, 1.06]],
+    sfx: [['dip', 'settled', 0.35], ['impact', 'settled']]
   },
 
   async setup (ctx) {
@@ -54,7 +54,7 @@ module.exports = {
       await ctx.cmd(`/fill ${t.x0} ${floor + 1} ${t.z0} ${t.x0 + t.w - 1} ${floor + t.h} ${t.z0 + t.w - 1} sand`)
     }
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 20')
-    await ctx.hotbar(['diamond_shovel[enchantments={efficiency:5}]', ['torch', 64], ['torch', 64], ['bread', 12]])
+    await ctx.hotbar(['diamond_shovel[enchantments={efficiency:5}]', ['torch', 64], ['bread', 12], 'water_bucket'])
     // two blocks back from the first tower, looking at its base: it walks in from frame 0
     const t0 = TOWERS[0]
     await ctx.tpCheck(t0.x0 + 0.5, floor + 1, this.tz + 1 + t0.near + 2.5, 180, 5)
@@ -73,7 +73,7 @@ module.exports = {
     // between columns (rec_check, 2026-11-11)
     let aim = null
     const gov = { cur: { yaw: bot.entity.yaw, pitch: bot.entity.pitch }, vel: { yaw: 0, pitch: 0 }, target: null }
-    const LIM = { speed: 170 * MOTION.DEG / 20, accel: 800 * MOTION.DEG / 400 }
+    const LIM = { speed: 200 * MOTION.DEG / 20, accel: 1500 * MOTION.DEG / 400 }
     const govTick = () => {
       if (!gov.target) return
       const r = MOTION.stepTurn(gov.cur, gov.vel, gov.target, LIM)
@@ -120,37 +120,28 @@ module.exports = {
       bot.swingArm()
       ctx.sound('block.wood.place', 1)
     }
-    // a few columns: break them one a tick, switch to the torches at once (the hand needs ~3 ticks to
-    // come back up, or the swing happens below the frame), then each torch 6 ticks after its own break:
-    // sand only falls 2 ticks after the update (a torch in the gap before then holds it up), and the
-    // falling block needs ~7 more ticks to drop a whole block, so the torch is in before it lands
-    const batch = async (cols, slot, first) => {
-      const ticks = []
-      ctx.select(0)
-      // one aim for the whole batch, the middle of its columns: aiming at each column in turn and back again for
-      // its torch zig-zagged the view (rec_check jitter); the batch is 2-3 neighbouring blocks, all in the crosshair's reach
-      const c = bottom(cols.reduce((a, q) => a + q[0], 0) / cols.length, cols.reduce((a, q) => a + q[1], 0) / cols.length)
-      aim = c.clone(); await look(c, 1)
-      for (let i = 0; i < 12 && !settled(); i++) await bot.waitForTicks(1)
-      for (const [cx, cz] of cols) {
-        ticks.push(await breakCol(cx, cz))
-        if (first && ticks.length === 1) ctx.mark('drop_final')
-        await bot.waitForTicks(1)
-      }
-      ctx.select(slot)
-      for (let i = 0; i < cols.length; i++) {
-        while (ctx.tick < ticks[i] + 6) await bot.waitForTicks(1)
-        if (ctx.tick > ticks[i] + 7) ctx.log('late torch', ctx.tick - ticks[i])
-        torch(cols[i][0], cols[i][1])
-        await bot.waitForTicks(1)
-      }
-      const [cx, cz] = cols[cols.length - 1]
-      setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name), 500)
-    }
+    // one column at a time, the crosshair on it the whole time (owner 2026-11-11, r:rffba12: "we need to look where we
+    // are placing/breaking ... right now it just looks like hacking"): aim at the bottom block, break it, switch to the
+    // torches while the aim stays, and the torch goes into the same gap 5 ticks after the break (sand falls 2 ticks
+    // after the update and lands ~9 ticks later: the torch is in before it does), then back to the shovel
     const sandLeft = (t) => {
       let n = 0
       for (let ix = 0; ix < t.w; ix++) for (let iz = 0; iz < t.w; iz++) for (let y = 1; y <= t.h; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, t.z0 + iz)).name === 'sand') n++
       return n
+    }
+    const falling = () => Object.values(bot.entities).filter(e => e.name === 'falling_block').length
+    const column = async (cx, cz, mark) => {
+      ctx.select(0)
+      await look(bottom(cx, cz), 1)
+      for (let i = 0; i < 10 && !settled(); i++) await bot.waitForTicks(1)
+      const tb = await breakCol(cx, cz)
+      if (mark) ctx.mark(mark)
+      await bot.waitForTicks(1)
+      ctx.select(1)
+      while (ctx.tick < tb + 5) await bot.waitForTicks(1)
+      torch(cx, cz)
+      await bot.waitForTicks(1)
+      setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name), 500)
     }
 
     for (let ti = 0; ti < TOWERS.length; ti++) {
@@ -165,37 +156,39 @@ module.exports = {
       for (let i = 0; i < 70 && !arrived(); i++) { await look(ti > 0 && i < 14 ? mid : firstCol, 0.14); await bot.waitForTicks(1) }
       run = false
       ctx.mark(`tower${ti}`)
-      // the bottom layer, front row first, a few columns at a time; on the wide ones it sidesteps along
-      // the row so it's in front of what it's breaking
-      const cols = []
-      for (let iz = t.w - 1; iz >= 0; iz--) for (let ix = 0; ix < t.w; ix++) cols.push([t.x0 + ix, t.z0 + iz])
-      const per = t.w >= 3 ? 3 : 2
-      for (let k = 0; k < cols.length; k += per) {
-        const b = cols.slice(k, k + per)
-        if (t.w >= 4) goal = new Vec3(b[0][0] + 0.5, 0, nearZ)
-        await batch(b, t.slot || 1, last && k === 0)
+      // the bottom layer, front row first, left to right; on the wide ones it sidesteps along the row so it's in
+      // front of what it's breaking
+      let k = 0
+      for (let iz = t.w - 1; iz >= 0; iz--) {
+        for (let ix = 0; ix < t.w; ix++) {
+          if (t.w >= 3) goal = new Vec3(t.x0 + ix + 0.5, 0, nearZ)
+          await column(t.x0 + ix, t.z0 + iz, last && k === 0 ? 'drop_final' : null)
+          k++
+        }
       }
-      // back off while it comes down onto the torches, the camera up the tower and back down; the
-      // run to the next one starts while the last few blocks are still falling
+      // back off while it comes down onto the torches, the camera up the tower and back down. The last one: every
+      // block lands before the end (owner, r:r24d99a: "let the last pillar of sand all fall before we end/cut")
       goal = new Vec3(cx, 0, farZ)
       const top = Math.min(t.h * 0.5, 10), total = t.w * t.w * t.h
-      for (let i = 0; i < 200; i++) {
-        const k = Math.min(1, i / (22 + t.h))
-        await look(new Vec3(cx, floor + 2 + top * Math.sin(k * Math.PI), this.tz - t.w / 2 + 1), 0.12)
+      let crashed = false
+      for (let i = 0; i < 300; i++) {
+        const kk = Math.min(1, i / (22 + t.h))
+        await look(new Vec3(cx, floor + 2 + top * (last ? Math.max(0.15, Math.sin(kk * Math.PI)) : Math.sin(kk * Math.PI)), this.tz - t.w / 2 + 1), 0.12)
         await bot.waitForTicks(1)
-        if (i % 3 === 0) {
+        if (i % 2 === 0) {
           const left = sandLeft(t)
-          if (last && left < total * 0.3) { ctx.mark('crash', { left }); break }   // the mass of it has come down
+          if (last && !crashed && left < total * 0.3) { crashed = true; ctx.mark('crash', { left }) }
+          if (last && left === 0 && !falling()) { ctx.mark('settled'); break }
           if (!last && i > 16 && left < total * 0.12) break
         }
       }
-      ctx.log('tower', ti, 'sand left', sandLeft(t))
+      ctx.log('tower', ti, 'sand left', sandLeft(t), 'falling', falling())
     }
-    // a moment more on the pile as the rest of it pours down (the Short ends 0.8 s after 'crash')
-    for (let i = 0; i < 40; i++) { await look(new Vec3(TOWERS[TOWERS.length - 1].x0 + 3, floor + 3, this.tz - 2), 0.08); await bot.waitForTicks(1) }
+    // the settled pile: the Short ends ~0.6 s after 'settled'
+    for (let i = 0; i < 24; i++) { await look(new Vec3(TOWERS[TOWERS.length - 1].x0 + 2, floor + 1.5, this.tz - 1), 0.08); await bot.waitForTicks(1) }
     bot.removeListener('physicsTick', steer); bot.removeListener('physicsTick', govTick)
     for (const c of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(c, false)
-    await bot.waitForTicks(30)
+    await bot.waitForTicks(10)
     let left = 0
     for (const t of TOWERS) left += sandLeft(t)
     ctx.log('sand left at the end', left)
