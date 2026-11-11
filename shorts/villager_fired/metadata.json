@@ -2152,8 +2152,8 @@
     "python3 audio.py work/villager_fired.rec.json work/villager_fired.wav",
     "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"ring_boom\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"nitwit\\\",\\\"now he is unemployable\\\",2,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"],[\"fired_all:0.45\",\"nitwit\",\"cut\"]] --punch [[\"nitwit\",0,1.1]] --zoom [[\"nitwit\",\"end\",1.4]] --flash [[\"nitwit\",0,0.5]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"nitwit\",0.3],[\"impact\",\"nitwit\"]] --start_at beat:-0.05 --end_after nitwit:1.0 --out out/villager_fired.mp4"
   ],
-  "status": "ready",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); still wait before the nitwit change cut (lint), flash + punch + push-in and a song dip + impact on it, pop on the opening; 30.5 s; pace 0 blockers; self-review READY",
+  "status": "needs-fix",
+  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); still wait before the nitwit change cut (lint), flash + punch + push-in and a song dip + impact on it, pop on the opening; 30.5 s; pace 0 blockers; self-review READY | independent review 2026-11-11: NOT READY, 2 blockers. (1) r:r24d99a (owner: never cut while the payoff is still moving): at 29.08 s (frame 1745) the edit hard-cuts from the blast (smoke, debris and primed TNT still in the air, 28.4-29.05 s) straight to the settled crater (speed cut fired_all:0.45 -> nitwit). Fix: let the blast settle on camera (cut later, after the debris lands) or hold the wide through it. (2) un-vanilla payoff (minecraft-audit): 'now he is unemployable' turns him into a nitwit (green robe, 29.5 s). In vanilla a villager whose job sites are gone reverts to unemployed (brown robe); nothing turns a villager into a nitwit, so this is the top comment. Also unexplained: he survives point-blank TNT with no visible reason (resistance by command, no particles). Fix: re-record the ending keeping him unemployed (brown robe) with a vanilla-true line ('0 jobs again'), or show the cause. Checked OK: job sites placed and broken with the crosshair on them, flint and steel on the TNT (r:rffba12); 30.5 s; pace 0 blockers. Nitpick: some job-site placements in the fast run happen just out of frame (butcher ~11.3 s: the smoker is never seen).",
   "published_at": "2026-11-11T07:36:31.240Z",
   "gates": {
     "version": 2,
@@ -2177,5 +2177,10 @@
       "report": "out/villager_fired.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "review_independent": {
+    "verdict": "NOT READY",
+    "at": "2026-11-11",
+    "notes": "independent review 2026-11-11"
   }
 }
