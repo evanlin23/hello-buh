@@ -363,7 +363,7 @@ module.exports.shots = {
   // S01's subject: her eye (y 1.9 sat in the carpet's block, which the lint read as hidden)
   // S01b: 'nine thousand GOLD / into a PORTAL': behind the gold stack, low, the purple beyond it (owner: what the line
   // names is on screen while it's said)
-  s01b: { at: [7.2, 2.4, 6.4], look: [11.0, 2.1, 6.8], fov: 70, push: 0, dof: false, subject: [[9.5, 1.5, 7.5]] },
+  s01b: { at: [7.2, 2.4, 6.4], look: [11.0, 2.1, 6.8], fov: 70, push: 0, dof: false, subject: [[8.95, 1.6, 7.4]] },   // just outside the stack's face (inside it, the lint read it as hidden)
   s01: { at: [6.5, 2.0, 7.8], look: [10.2, 2.0, 5.3], fov: 62, push: 0.12, dof: false, subject: ['actor:gma'] },
   // S02: the ridge at night, an extreme-wide crane down from over the slope south-east of the cottage to the gate
   s02: { path: [[0, 10, 19, 18], [1.3, 7.5, 16.5, 15.5]], look: [3.5, 13.3, 3.5], ease: true, fov: 60, dof: false, subject: [[4.4, 12.6, 7.4]] },   // the carrot bed (in view all the way down): eyeTrace takes the cut from S01's Grandma
