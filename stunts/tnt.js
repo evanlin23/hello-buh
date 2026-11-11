@@ -65,8 +65,10 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false)
-    await ctx.easeLook(0, 0.08, 300)
-    await bot.waitForTicks(40)                                // the chain goes off
+    // the chain goes off: the look rides up with the blast and back down (a still 2 s wait was lint's 'nobody moves')
+    await ctx.easeLook(0.12, 0.3, 600)
+    await ctx.easeLook(-0.1, 0.1, 700)
+    await ctx.easeLook(0, 0.05, 500)
     // walk up to the rim and look down INTO the crater (the old ending stayed level on the grass)
     bot.setControlState('forward', true); await bot.waitForTicks(14); bot.setControlState('forward', false)
     ctx.mark('crater_look')
