@@ -29,6 +29,7 @@ const POCKET = [6, -12, 5]                // where the narrator waits while he's
 
 module.exports = {
   name: 'story_gold_for_the_portal',
+  channel: 'buhstories',   // lib/channel.js; also keys the title band's Buh gold (scripts/edit_args.js)
   caption: CAPTION,
   time: NIGHT,
   botTimeout: 600,
