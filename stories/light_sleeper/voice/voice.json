@@ -511,11 +511,31 @@
    "chunks": [
     [
      0.05,
+     0.918
+    ],
+    [
+     0.918,
+     1.496
+    ],
+    [
+     1.496,
+     2.364
+    ],
+    [
+     2.364,
+     3.232
+    ],
+    [
+     3.232,
      4.1
     ]
    ],
    "captions": [
-    "But I'd never DANCED before. So I stepped off the carpet onto the STONE."
+    "But I'd NEVER",
+    "danced BEFORE.",
+    "So I STEPPED",
+    "off the CARPET",
+    "onto the STONE."
    ],
    "gap": 0.25,
    "placeholder": true
