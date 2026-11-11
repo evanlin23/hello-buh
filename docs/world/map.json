@@ -2089,6 +2089,29 @@
    ],
    "status": "claimed 2026-11-11 by the_walk",
    "story_builds": "Grandma's cottage (one 3 x 2 glass-pane window facing the dock, lit) and her boat on the beach: the_walk's set, since about day 350"
+  },
+  "honey_meadow": {
+   "name": "The Honey Meadow",
+   "kind": "landmark",
+   "region": "the_green",
+   "at": [
+    -452,
+    118,
+    -716
+   ],
+   "footprint": [
+    -484,
+    -746,
+    -420,
+    -686
+   ],
+   "about": "The High Meadow's top, west of Larkfield (meadow, y 116-120): a lone beehive over a campfire, and around it a flower field one player planted one row per honey bottle until, seen from straight above, it is a bee 52 rows long (dandelion body, bare podzol stripes, oxeye-daisy and lily-of-the-valley wings, poppy-and-rose heart round the hive). From day 4200 a permanent stamp seen from the plateau.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "honey_thief"
+   ],
+   "status": "claimed 2026-11-11 by honey_thief"
   }
  },
  "stories": {
@@ -2314,6 +2337,14 @@
     "boxed_bell"
    ],
    "status": "made"
+  },
+  "honey_thief": {
+   "day": 4200,
+   "places": [
+    "honey_meadow"
+   ],
+   "cameos": [],
+   "status": "claimed"
   }
  },
  "cameos": {

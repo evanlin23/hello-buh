@@ -1,0 +1,544 @@
+{
+ "name": "honey_thief",
+ "stunt": "story_honey_thief",
+ "version": 2,
+ "revision": "r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "caption": "why does he plant flowers every time he steals 🐝",
+ "upload": {
+  "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
+  "pinned": "What would YOU plant for your bees?",
+  "tags": [
+   "minecraft bee",
+   "minecraft bees",
+   "minecraft honey",
+   "minecraft flowers",
+   "minecraft wholesome",
+   "minecraft story"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): built by lib/buhstories_upload.js; pinned = the question, without the 👇.",
+ "logline": "A worker bee complains that the giant who keeps stealing her hive's honey plants a row of flowers every time; the flowers spread until she gets lost, and from straight above the meadow is a giant bee with her hive as its heart.",
+ "question": "why does the giant plant more flowers every time he steals the honey?",
+ "premise": "A lone beehive on the High Meadow. A giant (a player) has taken its honey 52 times: he lights a campfire under it so the bees stay calm, bottles the honey, then plants a row of flowers. The narrator, a worker bee, thinks he feels bad about stealing. He tells the bees they're his favorite; she's sure he means the honey. He only plants red around the hive (he thinks bees like red). The field keeps growing, the bees fly farther every day, and today she flew so far she couldn't see home.",
+ "twist": "He isn't paying for the honey: he's drawing them. One row per bottle, 52 rows, the meadow is one huge bee seen from above, and the red ring round the hive is its heart. 'You're my FAVORITE' meant the bees. Cut on the top-down picture.",
+ "family": "secret_kindness",
+ "key_color": "#FFD640",
+ "mood": [
+  "funny",
+  "heroic"
+ ],
+ "payoff": "top",
+ "payoff_note": "`top`: the stunt mark when the rising camera settles straight down over the whole bee (S10); the Short ends <= 1.0 s after (owner: cut right on the reveal). No line after L11.",
+ "punch_note": "hook L01, turn L08 (the flowers never end), the line into the reveal L11",
+ "look": {
+  "time": 3000,
+  "fog": false,
+  "grade": "bright",
+  "note": "one late morning (time 3000 to ~4000 across S01-S10, never backwards); bees are out by day and in at night/rain (Bee wiki), so it must be day and clear"
+ },
+ "weather": "clear",
+ "world": {
+  "place": "honey_meadow (claimed on this branch, docs/world/map.json): the High Meadow's top west of Larkfield, footprint (-484, -746, -420, -686), O = (-452, 118, -716): the hive's campfire block (read the ground y off the survey before build: the meadow top is y 116-120). The bee runs north-south: head at z ~ -742, tail at z ~ -690 (52 rows), the hive at the heart about (-452, -716), wings to x ~ -482 and -422.",
+  "day": 4200,
+  "canon": "The giant is a player who lives close by; in canon he is Larkfield's one player, Jonah (kai skin), 300 days before he leaves (Six Thousand Torches, 4500). He is never named here (owner decision, see bible 'Open'). From day 4200 the bee meadow is a permanent stamp on the plateau's top. Nothing here contradicts Torches (the meadow lies west of Larkfield's box, outside it).",
+  "easter_egg": "Larkfield's west roofs, small on the east skyline in S08 (pre-torch: day 4200). Never named."
+ },
+ "voice": {
+  "engine": "gemini",
+  "model_hint": "narrator gemini-3.8-flash-lite-tts (Pip); the giant gemini-3.8-flash-tts, voice by owner audition"
+ },
+ "voice_takes": "beat",
+ "one_take": [
+  "N"
+ ],
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "color": "#FFFFFF",
+   "plain_say": true,
+   "on_screen": "a worker bee (vanilla bee), unnamed; POV in S01, S03, S05, S06, S08, S09, S10 (stunt.self = { model: 'bee', eye ~0.3, hover bob }, hud: false, hideHand: true); a yellow dot on the wingtip in the reveal. Pip's voice (cast `narrator`, Leda, flash-lite, plain_say), the house narrator voice as Good Boy's dog."
+  },
+  "Giant": {
+   "role": "character",
+   "ref": "friend",
+   "name": "the giant",
+   "voice": "Fenrir",
+   "model": "gemini-3.8-flash-tts",
+   "color": "#4FD8E6",
+   "skin": "kai",
+   "on_screen": "a player actor, `kai` skin (NOT Steve: Steve is Buh's), no name tag shown (the bees don't know his name); glass bottles, honey bottles and flowers in hand; one voiced line (L05), on screen in S05 while he says it.",
+   "note": "In canon this is Jonah (Larkfield's one player, Six Thousand Torches): if the owner keeps that, the giant takes whatever voice Jonah's audition picks (Zubenelgenubi / Sadachbia / Fenrir), and `friend`/Fenrir is only the placeholder so the lint runs. If the owner wants a new player instead, audition the two unused voices below.",
+   "audition": {
+    "line": "L05 \"You're my FAVORITE, you know.\"",
+    "bracket": "[warm and easy, smiling up at a tiny bee]",
+    "candidates": [
+     {
+      "voice": "Umbriel",
+      "why": "Gemini's 'easy-going': relaxed, warm young man; no character uses it (Torches lists it only as a spare)"
+     },
+     {
+      "voice": "Algieba",
+      "why": "Gemini's 'smooth': a soft-spoken grown-up, clearly not a kid; no character uses it or is planned for it"
+     }
+    ],
+    "not": "Leda (Pip), Achird (Buh), Charon, Orus, Algenib, Schedar, Fenrir unless he is Jonah, and the planned Iapetus, Alnilam, Sadaltager, Rasalgethi, Zubenelgenubi, Sadachbia"
+   }
+  }
+ },
+ "requests": [
+  {
+   "id": "rN",
+   "speakers": [
+    "N"
+   ],
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "rG",
+   "speakers": [
+    "Giant"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "lines": [
+    "L05"
+   ],
+   "direction": "[A friendly young man, warm and easy]"
+  }
+ ],
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "text": "The GIANT / has stolen / our HONEY / FIFTY-TWO times. / And every TIME, / he PLANTS / more FLOWERS.",
+   "say": "The giant has stolen our honey fifty-two times. And every time, he plants more flowers.",
+   "shot": "S01",
+   "shows": [
+    {
+     "what": [
+      "player"
+     ],
+     "word": "GIANT"
+    },
+    {
+     "what": [
+      "honey_bottle"
+     ],
+     "word": "HONEY"
+    },
+    {
+     "what": [
+      "dandelion"
+     ],
+     "word": "FLOWERS"
+    }
+   ],
+   "punch": true,
+   "direction": "a bubbly complaint, like telling on him; one breath",
+   "look": {
+    "what": "actor:Giant",
+    "word": "GIANT"
+   }
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "text": "First he / brings SMOKE. / It makes us / all SLEEPY / and NICE. / We HATE that.",
+   "say": "First he brings smoke. It makes us all sleepy and nice. We hate that.",
+   "shot": "S02",
+   "shows": [
+    {
+     "what": [
+      "campfire"
+     ],
+     "word": "SMOKE"
+    },
+    {
+     "what": [
+      "bee"
+     ],
+     "word": "SLEEPY"
+    }
+   ],
+   "direction": "outraged and giggly at once",
+   "look": {
+    "what": "block:campfire",
+    "word": "SMOKE"
+   }
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "Then CLINK, / honey GONE. / One BOTTLE, / one ROW / of FLOWERS.",
+   "say": "Then clink, honey gone. One bottle, one row of flowers.",
+   "shot": "S03",
+   "shows": [
+    {
+     "what": [
+      "glass_bottle",
+      "honey_bottle"
+     ],
+     "word": "BOTTLE"
+    },
+    {
+     "what": [
+      "dandelion"
+     ],
+     "word": "ROW"
+    }
+   ],
+   "direction": "quick and matter-of-fact, counting it off",
+   "look": {
+    "what": "actor:Giant",
+    "word": "ROW"
+   }
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "I think / he feels BAD.",
+   "say": "I think he feels bad.",
+   "shot": "S04",
+   "direction": "a little sorry for him, sure of it",
+   "look": {
+    "what": "actor:Giant"
+   }
+  },
+  {
+   "id": "L05",
+   "who": "Giant",
+   "text": "You're my FAVORITE, / you know.",
+   "say": "You're my FAVORITE, you know.",
+   "shot": "S05",
+   "direction": "warm and easy, smiling up at a tiny bee",
+   "look": {
+    "what": "actor:Giant"
+   }
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "text": "He means / our HONEY. / OBVIOUSLY.",
+   "say": "He means our honey. Obviously.",
+   "shot": "S06",
+   "shows": [
+    {
+     "what": [
+      "honey_bottle"
+     ],
+     "word": "HONEY"
+    }
+   ],
+   "direction": "a know-it-all eye-roll",
+   "look": {
+    "what": "item:honey_bottle",
+    "word": "HONEY"
+   }
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "He plants RED ones / round our DOOR, / so we can / find HOME. / Like we'd EVER / get LOST.",
+   "say": "He plants red ones round our door, so we can find home. Like we'd ever get lost.",
+   "shot": "S07",
+   "shows": [
+    {
+     "what": [
+      "poppy",
+      "rose_bush"
+     ],
+     "word": "RED"
+    },
+    {
+     "what": [
+      "beehive"
+     ],
+     "word": "DOOR"
+    }
+   ],
+   "direction": "amused, a bit superior, the last word up",
+   "look": {
+    "what": "block:beehive",
+    "word": "DOOR"
+   }
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "text": "But the flowers / never END now. / We fly FARTHER / every DAY.",
+   "say": "But the flowers never end now. We fly farther every day.",
+   "shot": "S08",
+   "shows": [
+    {
+     "what": [
+      "dandelion",
+      "oxeye_daisy"
+     ],
+     "word": "FLOWERS"
+    }
+   ],
+   "punch": true,
+   "direction": "the first little puzzle in it, still bright",
+   "look": {
+    "what": "block:dandelion",
+    "word": "FLOWERS"
+   }
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "Today I flew / SO far, / I couldn't / see HOME.",
+   "say": "Today I flew so far, I couldn't see home.",
+   "shot": "S09",
+   "direction": "surprised at herself, not scared",
+   "look": {
+    "what": "block:oxeye_daisy"
+   }
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "text": "Just FLOWERS, / every WAY. / And way out THERE, / the GIANT, / still PLANTING.",
+   "say": "Just flowers, every way. And way out there, the giant, still planting.",
+   "shot": "S10",
+   "shows": [
+    {
+     "what": [
+      "oxeye_daisy",
+      "lily_of_the_valley",
+      "dandelion"
+     ],
+     "word": "FLOWERS"
+    },
+    {
+     "what": [
+      "player"
+     ],
+     "word": "GIANT"
+    }
+   ],
+   "direction": "looking around, then a fond huff",
+   "look": {
+    "what": "actor:Giant",
+    "word": "GIANT"
+   }
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "Somebody should / TELL him / we have ENOUGH.",
+   "say": "Somebody should tell him we have enough.",
+   "shot": "S10",
+   "punch": true,
+   "direction": "bossy and fond, the last word up",
+   "look": {
+    "what": "actor:Giant"
+   }
+  }
+ ],
+ "shots": [
+  {
+   "id": "S01",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "hive",
+   "size": "ms",
+   "camera": "bee pov hovering 1.5 blocks out from the hive's front face, eye at the hive's middle; a slow drift left-right (bee hover bob)",
+   "frame": "frame 1: the giant's head and arm big and centred, the glass bottle on the hive's face already moving (0.0 s); on 'HONEY' it fills to a honey bottle (the hive's honey drips stop); on 'FLOWERS' he turns and places one dandelion at his feet, under his crosshair, the pov tilting down after it. bg: bright noon sky, the meadow.",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S02",
+   "line": "L02",
+   "lines": [
+    "L02"
+   ],
+   "place": "hive",
+   "size": "ws",
+   "camera": "low, 6 blocks south-east of the hive, 1 block up, still; then a slow push",
+   "frame": "the hive on its oak-fence post, 2 blocks above a lit campfire (smoke rising past the hive's face: vanilla calms bees within 5 blocks below); four bees drifting slowly round it; the giant standing beside with a glass bottle; the red ring (poppies, rose bushes) round the post; yellow dandelions behind to the rise.",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S03",
+   "line": "L03",
+   "lines": [
+    "L03"
+   ],
+   "place": "hive_edge",
+   "size": "ws",
+   "camera": "bee pov following the giant 3 blocks behind and 2 up as he walks from the hive to the field's growing edge",
+   "frame": "on 'CLINK' the honey bottle in his hand (raised to look at it); on 'ROW' he walks along the edge placing dandelions one per block in a straight row, fast but each under his crosshair; the half-finished field behind: dandelions, a band of bare podzol, dandelions (the stripes: never said).",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S04",
+   "line": "L04",
+   "lines": [
+    "L04"
+   ],
+   "place": "hive_edge",
+   "size": "mcu",
+   "camera": "side-on, 3 blocks off, at his eye height",
+   "frame": "the giant crouched at the end of his row, placing a dandelion (under his crosshair); flowers fill the frame's lower third.",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S05",
+   "line": "L05",
+   "lines": [
+    "L05"
+   ],
+   "place": "hive_edge",
+   "size": "mcu",
+   "camera": "bee pov hovering in front of his face, 1.5 blocks out",
+   "frame": "he stands, looks straight at the bee (the camera), a little wave of the empty hand. He's on screen while he says L05.",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S06",
+   "line": "L06",
+   "lines": [
+    "L06"
+   ],
+   "place": "hive_edge",
+   "size": "cu",
+   "camera": "bee pov, closer",
+   "frame": "the honey bottle held up in his hand, centred, glowing in the sun (the item shown on 'HONEY').",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S07",
+   "line": "L07",
+   "lines": [
+    "L07"
+   ],
+   "place": "hive",
+   "size": "ws",
+   "camera": "high-ish orbit 8 blocks out, 5 up, round the hive (one smooth quarter turn)",
+   "frame": "the ring of red round the hive: poppies and rose bushes 4-6 blocks deep, the campfire and post at its middle; outside the red, yellow in every direction (no shape readable at this height).",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S08",
+   "line": "L08",
+   "lines": [
+    "L08"
+   ],
+   "place": "wing",
+   "size": "ews",
+   "camera": "bee pov flying fast and low (1.5 blocks up) south-west over the field, the camera ahead of her",
+   "frame": "dandelions, then a podzol stripe flashing under, then white (oxeye daisies, lilies of the valley: the wing); flowers to the horizon; Larkfield's west roofs small on the east skyline (the easter egg, never named).",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S09",
+   "line": "L09",
+   "lines": [
+    "L09"
+   ],
+   "place": "wing",
+   "size": "ws",
+   "camera": "bee pov hovering on the left wingtip, a slow 180-degree look round (eased, followable)",
+   "frame": "white flowers every way; the hive is hidden behind the meadow's rise (the wingtip is 28-30 blocks from it, the ground rising 2-3 blocks between); the campfire's smoke is already faded at that range.",
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S10",
+   "line": "L10",
+   "lines": [
+    "L10",
+    "L11"
+   ],
+   "place": "bee_picture",
+   "size": "ews",
+   "camera": "bee pov finds the giant far off (a small figure at the bottom edge of the field, planting); on 'ENOUGH' the camera lifts off the bee straight up, tilting to straight down, rising to ~55 blocks over the hive at a fast smooth ease, holding at the top",
+   "frame": "the reveal: from straight above, the meadow is one huge bee, 52 rows long, head north: dandelion body, bare podzol stripes, white wings, two dark antennae of podzol; where its heart would be, a red heart of poppies and rose bushes with the tiny hive in it. The giant is a speck at the tail, planting the 52nd row; our bee a yellow dot on the left wingtip. Payoff mark `top` when the camera settles; cut 1.0 s after. No line.",
+   "look": {
+    "time": 3000
+   },
+   "payoff_mark": "top"
+  }
+ ],
+ "props": {
+  "hive": {
+   "at": [
+    0,
+    2,
+    0
+   ],
+   "note": "beehive (crafted) on an oak fence post, its face south; honey level 5 at each harvest"
+  },
+  "campfire": {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "lit, open (no carpet): 2 blocks below the hive (vanilla: within 5 below)"
+  },
+  "heart": {
+   "note": "poppies + rose bushes, a heart 11 wide x 10 deep round the post"
+  },
+  "bee_picture": {
+   "note": "52 rows (z), head north; set.md has the plan"
+  },
+  "giant": {
+   "note": "player actor, kai skin, hotbar: glass bottles, dandelions x64, poppies, oxeye daisies, rose bushes, a campfire, a bucket of milk, 67 eggs, a cake"
+  }
+ },
+ "ending": {
+  "after": "L11",
+  "beats": [
+   "S10: the camera rises off the bee to straight above: the bee picture; mark `top`; cut 1.0 s after. No line."
+  ],
+  "loop": "cause and effect: the reveal answers line 1's 'he plants MORE flowers'"
+ },
+ "hotbar": [
+  "glass_bottle",
+  "dandelion",
+  "poppy",
+  "oxeye_daisy",
+  "rose_bush",
+  "campfire",
+  "milk_bucket",
+  "egg:67",
+  "cake"
+ ],
+ "bible": "stories/honey_thief/bible.md",
+ "beats": "stories/honey_thief/beats.md",
+ "set": "stories/honey_thief/set.md",
+ "shotlist": "stories/honey_thief/shots.md"
+}
