@@ -36,8 +36,8 @@ Checks (ranked by how often reviews flagged them):
                hitting another block first
   5d. aim     the crosshair on every action (r:rffba12, scripts/owner_checks.py + lib/aim.js): a place, break, block or
                entity use (dye, shear, name tag) over 15 deg off its target or off-screen, or over 10% of them past 6 deg
-  5e. settle  no hard cut or end while falling blocks, explosion debris or a dying mob still move in view
-               (r:r24d99a, scripts/owner_checks.py)
+  5e. settle  no hard cut or end while falling blocks or a dying mob still move in view (or a blast goes off at the
+               end); smoke, particles and drifting debris never hold a cut (r:r24d99a, r:r188b46, scripts/owner_checks.py)
   6-9. the owner's notes (2026-11-10), from `./hb owner` (lib/hb/owner.js; --no-owner skips them):
      flat      a story shot whose visible world is mostly a flat cleared plain (and the set's footprint and relief)
      subject   a line names a subject (lines[].look, or TORCH / MOM / LIBRARIAN...) and the camera isn't on it
@@ -892,10 +892,11 @@ def main():
         for lvl, tick, msg in aim_res["findings"]:
             add(lvl, "aim", min(n - 1, max(0, int(round(out_t(tick / 20) * FPS)) - k0)), msg, tick=tick)
 
-    # ---------------------------------------------------------------- 5e. let the payoff settle (r:r24d99a)
-    # the last frames before every hard cut and the end: falling blocks / debris / a death still moving in view
+    # ---------------------------------------------------------------- 5e. let the action finish (r:r24d99a, r:r188b46)
+    # the last frames before every hard cut and the end: a falling block or a death still moving in view (smoke,
+    # particles and drifting debris never hold a cut: r:r188b46)
     tracks = OC.debris_tracks(rec)
-    tracks_end = OC.debris_tracks(rec, puffs=True)   # the end also waits out the rendered smoke and debris (which_door)
+    tracks_end = OC.debris_tracks(rec, puffs=True)   # the end also never lands on a blast going off (its first 0.3 s)
     cam_at = lambda k: cam.at(min(len(P) - 1, k))
     settle_res = {"tracks": len(tracks_end), "ok": True, "findings": []}
     if tracks_end:
@@ -918,9 +919,7 @@ def main():
             msg = (f"settle: the Short {what} while {OC.describe(mv)} still move{'s' if len(mv) == 1 else ''} in view ({when}): "
                    + ("end after it (endAfter on a mark after the settle, +1.0 s at most)" if kind == "end" else "cut after it lands")
                    + " (owner: let the last pillar of sand all fall before we end/cut; STANDARDS r:r24d99a)")
-            # only the rendered smoke left (PUFF_TICKS is an estimate): a WARN here; pace measures the finished mp4's last
-            # 0.6 s and blocks when the picture still moves
-            lvl = "WARN" if kind == "end" and all(t["kind"] == "puff" for t in mv) else "BLOCK"
+            lvl = "BLOCK"
             settle_res["findings"].append((lvl, k_out, msg))
             add(lvl, "settle", j, msg, tick=k_out)
         settle_res["ok"] = not any(lvl == "BLOCK" for lvl, _, _ in settle_res["findings"])
