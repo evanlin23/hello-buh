@@ -32,6 +32,24 @@ function project (cam, p, vfov) {
   return { x: (d[0] * r[0] + d[1] * r[1] + d[2] * r[2]) / z / th, y: (d[0] * u[0] + d[1] * u[1] + d[2] * u[2]) / z / tv, z }
 }
 const fmt = (t) => t.toFixed(1)
+// The renderer's near plane (renderer/page.js: PerspectiveCamera(fov, W / H, 0.05, ...)). shotCam pushes the camera's
+// CENTRE out of blocks, so "camera inside a block" (the centre) almost never fires; but a camera left a few
+// centimetres off a block face still clips it: the near plane's corners reach into the block and its culled faces
+// show the inside (owner, 2026-11-11, Good Boy at 0.6 s: "the camera is inside of the block, so we can see inside
+// of it"; a follow camera dipping toward the road). True when any corner of the near plane (or its centre) is in a
+// solid block. aspect: the widest the frame gets (16:9 covers the square and portrait renders too).
+const NEAR = 0.05
+function nearPlaneClips (cam, solidAt, aspect = 16 / 9) {
+  const { f, r, u } = basis(cam.yaw, cam.pitch)
+  const tv = Math.tan(((cam.fov || 70) * Math.PI / 180) / 2), hv = NEAR * tv, hh = hv * aspect
+  for (const [a, b] of [[0, 0], [-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+    const x = cam.x + f[0] * NEAR + r[0] * hh * a + u[0] * hv * b
+    const y = cam.y + f[1] * NEAR + r[1] * hh * a + u[1] * hv * b
+    const z = cam.z + f[2] * NEAR + r[2] * hh * a + u[2] * hv * b
+    if (solidAt(x, y, z)) return true
+  }
+  return false
+}
 
 function run (h) {
   const { rec, stunt, marks, shots, shotCam, camAt, targetAt, actorsAt, lines, mesher, Vec3 } = h
@@ -88,6 +106,7 @@ function run (h) {
       if (!cam) { hit('no camera (a target is missing)', t); continue }
       const vf = (cam.fov || 70) * Math.PI / 180
       if (!sp.pov && solidAt(cam.x, cam.y, cam.z)) hit('camera inside a block', t)
+      else if (!sp.pov && nearPlaneClips(cam, solidAt)) hit('camera inside a block (grazing a face: the near plane clips into it and shows the inside)', t)
       if (prevCam) { const mv = Math.hypot(cam.x - prevCam.x, cam.y - prevCam.y, cam.z - prevCam.z) + Math.abs(cam.yaw - prevCam.yaw) + Math.abs(cam.pitch - prevCam.pitch); if (mv < 0.002) still++ }
       prevCam = cam
       const others = actorsAt(t)
@@ -163,16 +182,18 @@ function run (h) {
   let deadFrom = null, lastMe = null
   const lineAt = (t) => lines.some(l => t >= l.t0 && t < l.t1)
   const dead = []
-  const flushDead = (t) => { if (deadFrom !== null) { const l = dead[dead.length - 1]; if (l && deadFrom <= l[1]) l[1] = Math.max(l[1], t); else dead.push([deadFrom, t]) } deadFrom = null }
+  let CUTS = []   // (set below: edit.speed cuts; a still ends where the edit cuts away)
+  const flushDead = (t) => { if (deadFrom !== null) { for (const [a] of CUTS) if (a > deadFrom && a < t) t = a; const l = dead[dead.length - 1]; if (l && deadFrom <= l[1]) l[1] = Math.max(l[1], t); else dead.push([deadFrom, t]) } deadFrom = null }
   // (summed over 4-tick steps inside the window, not end to end: a nod that dips and comes back is motion)
   const poseMove = (t0) => { let m = 0; for (let k = 0; k < 24; k += 4) { const a = nearest(POSE, Math.round(t0 + k)), b = nearest(POSE, Math.round(t0 + k + 4)); if (a && b) m += Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) + Math.abs(wrap(b[4] - a[4])) * 1.5 + Math.abs(b[5] - a[5]) } return m }
   const entMove = (m, t0) => { let s = 0; for (let k = 0; k < 24; k += 4) { const ra = nearest(m, Math.round(t0 + k)), rb = nearest(m, Math.round(t0 + k + 4)); if (ra && rb) s += Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) + Math.max(Math.abs(wrap((rb[8] ?? rb[6]) - (ra[8] ?? ra[6]))), Math.abs(wrap(rb[6] - ra[6]))) * 1.5 + Math.abs((rb[7] || 0) - (ra[7] || 0)) } return s }
   const swingsAt = new Set(tl.filter(e => e.event === 'ent_swing' || e.event === 'swing').map(e => Math.round(e.t / 50)))
   // a container window is up (the harness's container..container_close, the kit's gui_freeze..gui_thaw): the view holds
   // still by rule (docs/engine_features.md "Motion by construction": vanilla's mouse drives the cursor) and the screen
-  // itself is the action (the items, the hand on them), so that stretch is not "nobody moves"
+  // itself is the action (the items, the hand on them), so that stretch is not "nobody moves". The same for the
+  // vanilla death screen (death -> respawn): its text is the payoff a stunt ends on, and a dead player can't move
   const GUI = []
-  for (const [o, c] of [['container', 'container_close'], ['gui_freeze', 'gui_thaw']]) {
+  for (const [o, c] of [['container', 'container_close'], ['gui_freeze', 'gui_thaw'], ['death', 'respawn']]) {
     let a = null
     for (const e of tl) {
       if (e.event === o && a === null) a = e.t / 50
@@ -182,9 +203,19 @@ function run (h) {
   }
   // the death screen too: the view is dead still by rule and the screen ("You died!") is the payoff (guess_sound_3)
   for (const e of tl) if (e.event === 'death') { const r = tl.find(x => x.event === 'respawn' && x.t > e.t); GUI.push([e.t / 50, r ? r.t / 50 : Infinity]) }
+  // a stunt's hard cuts (edit.speed [A, B, 'cut']) are not on screen: the off-camera wait inside one isn't "nobody moves"
+  for (const s of ed.speed || []) {
+    if (!Array.isArray(s) || s[2] !== 'cut') continue
+    const a = parseAt(s[0]), b = parseAt(s[1])
+    if (a !== null && b !== null && b > a) GUI.push([a + 1, b - 1])
+  }
   const inGui = (t) => GUI.some(([a, b]) => t >= a - 1 && t <= b + 1)
+  // footage the edit drops (edit.speed [A, B, "cut"]) is never seen: a still there isn't on screen, and the cut itself
+  // is a new picture (hide_seek's seeker waits out the hiding time inside its cuts)
+  CUTS = (ed.speed || []).filter(s => s[2] === 'cut').map(s => [parseAt(s[0]), parseAt(s[1])]).filter(([a, b]) => a !== null && b !== null && b > a)
+  const inCut = (t) => CUTS.some(([a, b]) => t >= a && t < b)
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
-    if (inGui(t) || inGui(t + 12)) { flushDead(t); continue }
+    if (inGui(t) || inGui(t + 12) || inCut(t)) { flushDead(t); continue }
     let mv = poseMove(t)
     let me = nearest(POSE, Math.round(t)); if (me) lastMe = me; else me = lastMe   // dead: the last place we stood
     for (const [id, m] of ent) {
@@ -229,4 +260,4 @@ function run (h) {
   return problems.length
 }
 
-module.exports = { run, project }
+module.exports = { run, project, nearPlaneClips }

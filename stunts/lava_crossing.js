@@ -8,6 +8,7 @@
 // Between beats the bot is teleported back to the south bank at the next spot (a hard cut).
 const RIVER_W = 5
 const LANES = [-18, -6, 6, 18]       // x offsets of the four crossings (water spreads 7 blocks)
+const { plateau } = require('../lib/plateau')
 
 module.exports = {
   name: 'lava_crossing',
@@ -31,13 +32,13 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z, y: floor } = g
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
     await ctx.defaultRules()
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
-    await ctx.cmd(`/fill ${x - 30} ${floor + 1} ${z - 18} ${x + 30} ${floor + 12} ${z + 10} air`)
-    await ctx.cmd(`/fill ${x - 30} ${floor} ${z - 18} ${x + 30} ${floor} ${z + 10} grass_block`)
-    await ctx.cmd(`/fill ${x - 30} ${floor - 3} ${z - 18} ${x + 30} ${floor - 1} ${z + 10} dirt`)
+    // a levelled field on the real terrain: its edges drop away or rise as slopes (the old flat
+    // clearing showed cut walls and a superflat plain)
+    const floor = await plateau(ctx, { x0: x - 30, x1: x + 30, z0: z - 18, z1: z + 10, above: 24, below: 6, pct: 0.6, trees: 6 })
+    this.x = x; this.z = z; this.floor = floor
     // the river: lava one deep on stone, z-1 .. z-RIVER_W, running east-west
     this.zS = z                     // last row of the south bank
     this.zN = z - RIVER_W - 1       // first row of the north bank

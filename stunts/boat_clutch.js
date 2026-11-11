@@ -18,7 +18,9 @@ module.exports = {
     speed: PILLARS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     hook: { at: 'final_place', before: 1.4, after: -0.05, text: '79 blocks 💀' },
     slowmo: [['final_place', 0.15, 0.3, 0.5]],   // real in-between frames (render_replay.py), no blending
-    replay: { at: 'final', before: 1.2, after: 0.4, cam: 'back:6', speed: 0.5 }
+    // no replay after the landing (2026-11-11, pace BLOCK: it ran the Short 4.1 s past the payoff; end ~1 s after it), and
+    // the song drops out 0.35 s before the 79-block landing so it lands as a hit
+    sfx: [['dip', 'final', 0.35]]
   },
 
   async setup (ctx) {

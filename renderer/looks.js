@@ -1,8 +1,8 @@
 // The HelloBuh grade per mood (owner, 2026-11-10: "the best color grading and visuals ... the best lighting").
 // A stunt sets `look: 'auto'` (the grade follows the time of day: the default for stories), `look: 'golden_hour'`
 // (one mood for every frame), a shot `mood: 'tense'` (that camera shot's grade), or `look: { mood: 'eerie_night', bloom: 0.3, grade: { exposure: 1.3 } }`
-// (the mood, then any field overridden; `grade` merges field by field). A look without `mood` is used as written, so
-// every existing stunt renders exactly as before. Numbers, reasons and the before/after stills: docs/look.md and
+// (the mood, then any field overridden; `grade` merges field by field). A look without `mood` is used as written. A
+// stunt with no `look` at all renders 'bright_stunt' (stuntLook below; owner 2026-11-11, r:r8fa348). Numbers, reasons and the before/after stills: docs/look.md and
 // .claude/skills/cinematic-style/SKILL.md "Standards".
 //
 // A mood sets only colour: exposure, contrast, saturation, temperature (lift/gamma/gain) and the vignette, plus two
@@ -98,10 +98,30 @@ function gradeAt (L, dayTime, shotMood, shot) {
   return g
 }
 
+// look 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "I think hello buh should use the bright grading as well"): the
+// default for every stunt without its own `look` (render.js STUNT_LOOK; `look: null` keeps a stunt ungraded). It is
+// 'bright' (the same grade, frame by frame) made for gameplay in open daylight: 'bright' alone blew the stunt sky to
+// near-white, its clouds gone (speed_build at 3 s), because the cinematic look's default bloom (0.6 over threshold 0.7)
+// glowed the whole exposed sky and exposure x1.23 clipped its blue channel while green kept rising (sky 120,167,255
+// -> 143,222,255, cyan-white). So: no bloom and no grain (stunts never had either), a highlight shoulder (rolloff 0.8:
+// the brightest channel eases into 1, hue kept, so the sky stays blue and the clouds white), and the camera pushes
+// left at the stunt's own speed (pushes: false). Story stunts keep their explicit look ('bright'), unchanged.
+const BRIGHT_STUNT = { bloom: 0, grain: 0, rolloff: 0.8, pushes: false }
+
+// the look a stunt renders with before resolveLook: its own `look` if it has the key (null/false: ungraded), else
+// 'bright_stunt'; stories (story_*, or edit.story) without one stay ungraded, as published (the stories lead owns them)
+function stuntLook (mod, name) {
+  mod = mod || {}
+  if (mod.look !== undefined) return mod.look
+  const story = /^story_/.test(name || '') || !!(mod.edit && mod.edit.story)
+  return story ? undefined : 'bright_stunt'
+}
+
 function resolveLook (L) {
   if (!L) return L
   if (typeof L === 'string') L = { mood: L }
   if (!L.mood) return L
+  if (L.mood === 'bright_stunt') L = { ...BRIGHT_STUNT, ...L, mood: 'bright' }
   if (L.mood === 'auto' || L.mood === 'bright') {
     const { mood, ...rest } = L
     const b = mood === 'bright' || rest.bright
@@ -115,4 +135,4 @@ function resolveLook (L) {
   return out
 }
 
-module.exports = { MOODS, resolveLook, gradeAt, autoGrade, brighten }
+module.exports = { MOODS, BRIGHT_STUNT, stuntLook, resolveLook, gradeAt, autoGrade, brighten }
