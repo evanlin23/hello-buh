@@ -45,7 +45,9 @@ module.exports = {
     // room tone from frame 1; the music dips before the reveal and an impact lands on it (the game track is busy:
     // breaks, pops, building noise)
     sfx: [['air', 'start', 'reveal', { gain: 0.5 }], ['impact', 'friend_vanish', { gain: 1.2 }],   // the hook's hit: his tree gone in a blink (mixcheck: a hit in the first 1.5 s over the music)
-           ['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.4 }]]
+           ['dip', 'reveal', 0.4], ['gamedip', 'reveal', 0.35], ['impact', 'reveal', { gain: 1.4 }]]
+    // (gamedip: the song before its drop is a quiet intro, so publish's master lifts the game ~16 dB and the true-peak
+    // limit flattened the impact to +4 dB over the turn's ambience: mixcheck BLOCK; the game ducks too, as chain_reaction)
   },
 
   async setup (ctx) {
