@@ -98,7 +98,7 @@ of the last few days. Every count happens before bed (sleep skips the night).
 | prop | state | shots |
 |---|---|---|
 | the lid (grass block, (-2057, 71, -492)) | shut S04, S08, S13, S15; open S05, S06, S09-S12, S14, S16; put back at the end of S12 and S16 | |
-| the bed | red bed, head north at (-2058, 73, -500), foot (-2058, 73, -499) | S03, S08 |
+| the bed | red bed, head north at (-2058, 73, -500), foot (-2058, 73, -499) (no window behind it) | S03, S08 |
 | his crossbow | in his hand across his knees on the bench | S04 |
 | the blue flock | lying down in the pasture | S15 (the easter egg) |
 | windows | lit at night (the house's glowstone ceiling, the lanterns) | S13, S15 |
@@ -106,8 +106,11 @@ of the last few days. Every count happens before bed (sleep skips the night).
 ## Positions and screen direction
 - The room's long axis runs north (under the house) to south (under the yard); the hole is near its south-west end at
   (-2057, -492), with three rows of the room south of it. Room cameras sit south-east of the hole looking north-west
-  into the crowd's faces (S01, S09, S10, S11), at the north end looking south down the length (S07), or nearly
+  into the crowd's faces (S01, S09, S10, S11); the baby stands in the cell under the hole in S01-S02 and the cell east
+  of it in S05/S16, whose lens takes the hole's column (kept clear of zombies), at the north end looking south down the length (S07), or nearly
   straight up the shaft (S05, S16; S06 and S12 inside it). The general is always above: up-frame in room shots.
+- **The general at the hole:** he stands at its north edge, feet (-2056.5, 72, -491.75), head pitched 90 degrees down, so
+  his head hangs over the shaft and reads from below (S05, S06, S12, S16).
 - Yard shots look north at the house (S04 north-east, S13, S15) or east across the hole (S14). The general enters S14
   from frame right; the zombie follows him from frame right.
 
