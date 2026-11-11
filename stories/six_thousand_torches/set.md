@@ -10,17 +10,16 @@ the dressing skips the growing row's cells and the door spot; the easter egg is 
 
 ## The world (2026-11-11)
 - **Site:** `larkfield` on main (bell (-360, 116, -712), box (-405..-316, -757..-668), the High Meadow's north-east
-  top, meadow at y 116-119; the box's south-east corner is 6 blocks from the Digger's House footprint: keep the dressing
+  top, meadow at y 116-119; the box's south-east corner is 16 blocks from the Digger's House footprint: keep the dressing
   inside the box). Build the village from library pieces and write them to map.json `larkfield.pieces` before
   recording (the canon's torches stamp `six_thousand_torches` dresses the box after the pieces, so later stories get
-  the same glowing village; this story's own dressing keeps its skip list for the growing row and the door spot).
+  the same glowing village; it is live from 4501, so on 4500 this story's own dressing keeps its skip list for the growing row and the door spot).
   There's no dark oak on the plateau: the "forest" in S04 is the dark lowland below the rim; the west hills in S05,
   S10 and S14 are the High Meadow's west top.
 - **The cameo (S04):** `world.build(ctx, { story: 'six_thousand_torches' })` builds Dog Hill's cameo needs (meadow,
   dog, Pip, patch, hut). S04's POV at bell + (39, 0.81, -44), facing north-east (yaw toward D (-202, 109, -898), about
   40 degrees east of north). Dog Hill is 185 blocks out: set `renderDistance: 14` and a chunk stop / recordRadius that
-  holds Dog Hill's chunks. Pip and the dog are 3-4 px at the default FOV: a speck, as intended; check on the still that
-  they read as two pale points on the hilltop and nothing more.
+  holds Dog Hill's chunks. Pip and the dog are 3-4 px at the default FOV, side by side (they overlap from here): one speck, as intended. The line clears the ground by only 0.7-0.8 blocks: pin the POV to the surveyed ground, keep fence posts, lamps and roofs off the sightline at the corner, add the kid's cell (-321, -756) to the dressing skip, pitch the POV ~12 degrees down, and check on a still. Torch Hill's lone torch (-290, -684) is canon: keep it out of the count. Check the west hills (the High Meadow's west top, y 115-123) don't read flat on stills.
 - **From Dog Hill (later stories):** the cameo `larkfield_glow` (renderDistance 13+ from the hill, south-west).
 
 ## The narration's claims (owner rule: the set matches every claim; check on stills from every shot angle)
@@ -62,7 +61,7 @@ Jonah's birch cottage in B only; our chest with the 11 items; the growing-row st
 | shot | fg | mid | bg |
 |---|---|---|---|
 | S01 | ridge torches and fence posts under the lens | the whole box: thousands of torches, darker path lines | the High Meadow's east rim falling to the dark lowland and the sea, the dawn band (Dog Hill off frame left) |
-| S04 | the last torch row | open unlit grass to the plateau's rim | the dark lowland, Dog Hill on the far skyline north-east with Pip and the dog (two pale specks: the cameo), blue dawn sky |
+| S04 | the last torch row | open unlit grass to the plateau's rim | the dark lowland, Dog Hill on the far skyline north-east with Pip and the dog (one speck: the cameo), blue dawn sky |
 | S05 | Jonah's garden fence and gate lanterns | Jonah at his gate; two villagers on the street | west hills, golden sky |
 | S10 | the torched street fence | the 9 x 9 torch square | west hills (S05's skyline) |
 | S14 | the torched street | Jonah walking away west | the plot's torch square, the west hills in sunrise light | Jonah walking away down the torched street | the east edge of the village, the hills, the sunrise glow |

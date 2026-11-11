@@ -20,7 +20,7 @@ ending is Jonah setting his own torch down by our door, waving and walking away,
   story never says mobs can't spawn (audit #6.2).
 - **Why today:** never said. The real-life reason (he's quitting) stays off screen.
 - **The ending:** Jonah places his own torch, the last one, on the grass one east of our doorstep (the **door spot**),
-  waves, and walks away east empty-handed. **No quit, no chat line, no "left the game"** (audit #6.1). The kid thinks
+  waves, and walks away west down the street, empty-handed. **No quit, no chat line, no "left the game"** (audit #6.1). The kid thinks
   he forgot to say "see you tomorrow".
 - **The place and the day:** `larkfield`, claimed on main 2026-11-11 (docs/world/map.json): the High Meadow's
   north-east top (meadow, y 116-119; built, not generated), the bell at (-360, 116, -712), the 90 x 90 box
@@ -33,7 +33,7 @@ ending is Jonah setting his own torch down by our door, waving and walking away,
   is Hushwell's kid; this one only shares the brand voice). Jonah: a player, not Buh. **Stands alone:** no line names
   a place or another story.
 - **Easter egg:** `pip_and_dog` (map.json cameo, since 4300): from the box's north-east corner, bell + (39, -44), S04's
-  POV looks north-east over the rim and Pip and the dog sit on Dog Hill's top, two pale specks on the far skyline,
+  POV looks north-east over the rim and Pip and the dog sit on Dog Hill's top, a speck on the far skyline (the dog and Pip side by side),
   185 blocks out (survey: the line clears the ground by 0.7-0.8 at the kid's eye; true at 23185, they sit there every
   night). Never named, never the subject. The dog is hidden by Dog Hill's own ridge only from the west; from here the
   line passes south of the ridge.
