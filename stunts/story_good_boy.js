@@ -184,14 +184,13 @@ module.exports = {
     // mark read as stepped motion: rec_check). POV cuts stay K.cut (the camera must land already aimed)
     const scut = async (dx, dz, target, dy, o = {}) => {
       if (o.stop !== false) K.stop()
-      const jump = () => { if (o.self) K.self(o.self[0], o.self[1]); K.blink('self', { x: dx, y: dy, z: dz }) }
+      // the wolf moves WITH the cut (K.cutShot { self }: its /tp goes out with the moves and the shot mark waits for it to
+      // land, so no shot shows it gone or arriving). A K.blink beside the cut (in the moves, or on the shot change) left
+      // the old shot 2 ticks early or landed 2 ticks into the new one: owner, "we can see the dog teleport"
       const w = await K.cutShot(o.shot, () => {
         if (o.after) o.after()
-        if (o.selfFirst) jump()   // a cut to a set far from the bot (the island): it goes first so the client tracks the cast there (moved on the shot change, Buh was out of range and a tick late: lint)
-      }, { time: o.time, max: 10, at: o.selfFirst ? null : () => {   // the wolf's jump goes with the shot change itself: in the moves it left the old shot 1-3 ticks before every cut (owner: "we can see the dog teleport")
         if (o.self) K.self(o.self[0], o.self[1])
-        K.blink('self', { x: dx, y: dy, z: dz })
-      } })
+      }, { time: o.time, max: 10, self: { x: dx, y: dy, z: dz } })
       await bot.waitForTicks(1); K._clock++
       K.base = K.aim(target); await K.look(0)
       return w
@@ -261,7 +260,7 @@ module.exports = {
       if (k > at.cut(1) && k < at.cut(2)) { walkG(buh, 0, -0.14); K.base = K.aim(P(8.4, 1.4, buh.z - 6)); look(k) }
       if (once('L03cut2', k >= at.cut(2))) {
         K.go(false)
-        await scut(67.6, 14.2, P(70.6, 64.5 - F, 13.6), 64 - F, { shot: 'beach', time: GOLD, selfFirst: true, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // the wolf already on the sand, 3 blocks from where he climbs out
+        await scut(67.6, 14.2, P(70.6, 64.5 - F, 13.6), 64 - F, { shot: 'beach', time: GOLD, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // the wolf already on the sand, 3 blocks from where he climbs out
       }
       if (k > at.cut(2)) { if (buh.x > 68.6) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
     })
