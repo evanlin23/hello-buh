@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, on the re-made pixel-art Shorts: "here the creeper tracks where we're placing the blocks the
+  best, which I think is good, but it does this weird thing where it walks all the way back into like the other one,
+  and it's like halfway against the wall when it's like building the last one, which I think is a little bit
+  weird."** Pixel-art builds follow creeper_art's look: the view tracks where each block lands. The player never backs
+  into an earlier wall: the set leaves enough clear room behind every build position, and the camera is never pressed
+  against or inside another build.
 - **Owner, 2026-11-11, sharing Beazle's "BRO" (caption "Genuinely gotta check if everything is okay at home after ts",
   subtitle "the type of house that your one actually psycho homie builds": a front door ringed by fire, a burning
   wheat field, then inside a nether-brick mansion whose floors are open lava, a bed and furnaces perched on one-wide
