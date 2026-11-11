@@ -12,5 +12,5 @@ module.exports = pixelArt({
   palette: { K: 'black_wool', R: 'red_wool' },
   wall: 'white_wool',
   caption: 'my gf asked what I was building 😭',
-  edit: { caption: 'my gf asked what I was building 😭', song: 'songs/payphone.mp3', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
+  edit: { caption: 'my gf asked what I was building 😭', song: 'songs/payphone.mp3', dropAt: 'complete', startAt: 'stage:-0.2' }
 })
