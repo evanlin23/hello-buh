@@ -23,7 +23,7 @@ module.exports = {
     const floor = await plateau(ctx, { x0: x - 34, x1: x + 34, z0: z - 34, z1: z + 34, biome: null, pct: 0.995, taper: 14, trees: 16 })   // (review r1: a ±32 field painted plains left a straight biome seam and a dirt face behind the creeper: tapered, the biome left as it is; ±48 took in a hill and stood 25 blocks up)
     this.x = x; this.z = z; this.floor = floor
     await ctx.cmd('/kill @e[type=!player]')
-    await ctx.cmd('/difficulty normal')
+    await ctx.cmd('/difficulty hard')   // full hearts (vanilla start) + the step back: on normal the blast left 3 hearts; hard kills, as the old 1.5-heart start did
     await ctx.hotbar([['oak_planks', 64], 'diamond_sword', ['bread', 16], ['torch', 32]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 25)       // facing north, looking at the ground ahead
     await ctx.cmd('/effect give @s instant_health 1 10 true')   // full hearts (the last render started on 1.5 hearts)
