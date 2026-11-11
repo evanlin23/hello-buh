@@ -124,6 +124,7 @@ module.exports = {
   async perform (ctx) {
     const { bot, Vec3 } = ctx
     const { x, z, floor: F } = this
+    const A = require('../lib/act')(ctx)
     // dig the block underfoot until there's air under it, then drop into what's below
     const digDown = async (n) => {
       for (let k = 0; k < 12; k++) {
@@ -133,7 +134,7 @@ module.exports = {
         if (!b || /air/.test(b.name)) break
         const tool = /grass|dirt/.test(b.name) ? 0 : 1
         if (bot.quickBarSlot !== tool) { ctx.select(tool); await bot.waitForTicks(2) }
-        try { await bot.dig(b, 'ignore') } catch (e) { ctx.log('dig', e.message) }
+        try { await A.dig(b, { sound: null }) } catch (e) { ctx.log('dig', e.message) }   // aimed by construction (lib/act.js)
         ctx.sound(`block.${ctx.soundGroup(b.name)}.break`, 1, 0.9); ctx.particles('block', p.offset(0.5, 0.5, 0.5), { block: b.name })
         // into the room under it, or down onto the next block (wait for the landing: a 1-block drop
         // takes ~6 ticks, and the next dig read the air we were still falling through)

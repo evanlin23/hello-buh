@@ -207,7 +207,8 @@ module.exports = {
         const [dx, dy, dz, face] = FACES.find(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz }))
         used[b.name] = (used[b.name] || 0) + 1
         if (bot.quickBarSlot !== slotFor(b.name)) ctx.select(slotFor(b.name))   // next stack once one runs out
-        await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5))
+        // the crosshair on the block as it's placed (rec_check aim, r:rffba12: at 0.3 a tick the view lagged, 46% over 6 deg)
+        await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5), 0.55)
         bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
           cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
         // one continuous swing loop, not a swing restarted every tick (that strobed the hand)

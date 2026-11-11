@@ -28,7 +28,9 @@ adds songs.
   If you find an engine bug, describe it with a reproduction in your final report instead.
 - One run at a time in your container (the server port is fixed). Never edit `run.sh` while it runs.
 - Copy the patterns of existing stunts: `tnt_scale.js`, `every_clutch.js`, `creeper.js`,
-  `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action, `subs`
+  `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action (a payoff that is a blast or
+  a fall ends on `endAfter: 'settle:0.6'`: 0.6 s after the harness's `settle` mark, once the TNT, debris and falling
+  blocks have stopped; lib/settle.js), `subs`
   for beat labels (no emoji in subs), `deathScreen` + `expectDeath` for deaths.
 - 1.21.11 game rules are snake_case (`immediate_respawn`, `spawn_mobs`...). `/fill` is capped
   at 32768 blocks. Check logs for `COMMAND ERROR:`. During set-up (before the recording starts) a command error
@@ -39,6 +41,10 @@ adds songs.
   one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
   Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
   as soon as the payoff comes" / "I would prefer like 30 seconds at least".
+- **Gate the final mix, not the no-song render**: `./hb mixcheck <name>` builds the exact NCS mix publish makes and
+  runs the publish gate's `./hb pace` on it (`./hb review` runs it too, as a blocker). Under the music, game sounds
+  stop counting as hits: a payoff with no hit and a stretch carried only by game sounds both BLOCK at publish. Fixes:
+  the drop on the payoff, a 0.4 s dip + impact, a picture or caption beat in any quiet stretch. (lessons 2026-11-11)
 - Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
   anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
 

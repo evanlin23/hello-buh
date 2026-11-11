@@ -47,6 +47,21 @@ ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`,
 | the cast | `K.actor(tag, {x, z, yaw})` (a mob /tp'd every tick from the object; `K.step(a, dx, dz)` walks and faces it, `K.bury(tag)`), `K.tp(tag, dx, dy, dz, yaw)`, `K.flee(tag, speed)`, tag idle mobs `warm` (nudged every tick), `K.every(fn)` for ambient motion |
 | the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
 
+## Cinematic story Shorts (movie engine + Gemini cast): `dog_hill` is the worked example
+The 2026-11-10 direction (real voices, cinematic sets) on the channel's story edit (edit.py --story: black bands, the
+title on top, the 1080x1011 game view cropped from a `wideMaster` 16:9 render):
+```bash
+# 1. stories/<name>/story.json v2 (docs/story_craft.md section 6) + bible.md; run the story-critic before voicing
+# 2. voices: one Gemini request per speaker pair (scripts/tts.py). Its auto-split cuts at the longest pauses, which land
+#    INSIDE lines written with "..." pauses: cut by Whisper word timings instead (scripts/align.py on main, or
+#    faster-whisper base.en): cut at the silence before each line's first word. -> stories/<name>/voice/<id>.wav +
+#    voice.json ({lines: {id: {text, who, dur, onset, end, chunks: [[start, end]...], captions: [...]}}})
+# 3. the stunt: movie-engine `shots` (hand-placed `path` cameras), NoAI mobs moved by /tp per tick, `line` marks {id},
+#    `chat` marks {text, hold} for "X joined the game" (edit.py draws the chat line), `time` marks on cuts and
+#    `weather` marks with `cut: true` (render.js lands them at once); `wideMaster: true`; edit.story
+STUNT=story_<name> ./scripts/record.sh && ./hb check story_<name>
+# 4. check frames: two per shot at 360x640 (render.js FRAMES=, ~2-4 min); fix cameras without re-recording
+# 5. render on Actions (~15 min): RENDER_BRANCH=<your branch> scripts/render_on_actions.sh story_<name> (+ --wait)
 ## Cinematic stories (the default look from 2026-11-10)
 Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie engine (docs/movie_engine.md) is on
 main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
@@ -58,52 +73,24 @@ shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPat
 self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
 hud: false,                                                               // ...who has no HUD either
 ```
-- **The look on every frame** (POV too): grade, bloom, vignette, grain, sun shadows, god rays. No letterbox (the game
-  view is the frame). Depth of field applies to camera shots. Costs ~0.25 s a frame at 1080: fine on Actions.
-- **Camera shots** with `K.shot(name)` (lib/story.js): from this tick the picture is `stunt.shots[name]`, a pure
-  function of time, so a camera is re-tuned and re-rendered without re-recording (`scripts/shot_sheet.py` for one
-  frame per shot in ~30 s, `scripts/try_shots.py` for candidates). `K.shot('pov')` goes back to first person.
-  Camera shots hide the HUD and draw the narrator from outside (the player with `cast.self`'s skin, or
-  `stunt.self.model`). Specs: `path`/`lookPath` (cranes, pull-outs), `follow` + `offset` + `lag`, `orbit`,
-  `at` + `look` (+ `push`), the auto-framed `two`/`single`/`ots` (movie_engine.md has them all).
-- **The format is always the Short** (owner, 2026-11-10: "the same title and then gameplay in the middle"): the
-  channel's 1080x1920 layout from edit.py, the game view 1080x1011. Set `wideMaster: true` on the stunt to render
-  each frame as a 16:9 master at the game view's height (1797x1011) and crop the game view from it: the centre, or a
-  camera shot's `cropX` (-1 = the master's left edge, 1 = its right) to keep a subject in. The crop is the same picture
-  (scale, field of view, the hand) as a plain 1080x1011 render (checked: 0 pixels differ). `WIDE_DIR=dir` also keeps
-  the masters for trailers and 16:9 cuts. Compose for the crop: the shot sheet is 16:9, so judge its middle 60%.
-- **Which shots, when** (from the pilot):
-  - POV carries the narrator's experience and the mystery (what "I" see, the low eye, the clues that live in the
-    first person). Camera shots carry the world and the truth: the establishing crane, the follow, the night wide.
-  - **The camera can show what the narrator can't.** In good_boy every camera shot shows the "dog" beside the guy:
-    that's the narrator. The POV hides who I am, the cameras show it all along, and the reveal is the first shot
-    that starts inside my head and pulls out (`reveal`: a path whose first key is the POV eye). Rewatchable.
-  - An establishing shot after a run of POV lines resets the viewer (where we are, what time it is); a camera shot
-    on a story beat (the zombie hits him) reads better than POV, which can't see the hit.
-  - Keep camera shots 1-3 s, one per line at most; the 9:16-ish game view (1080x1011) is nearly square: frame two
-    subjects side by side or one big; keep the faces in the upper half (the captions sit at 70%).
-  - Cuts between POV and camera shots are free (the camera director switches on the mark's tick), but the cast
-    still has to be in place before the shot's first frame: move them in the line before, or with a >64-block hop.
-- **rec_check** skips its POV checks (cuts, held, turns, set) inside camera shots and says so; check those cameras
-  with `LINT=1 node render.js work/<name>.rec.json` (camera in a block, subject hidden or too small, frozen shots).
-- **A narrator who isn't a player** (`stunt.self`): `eye` puts the POV camera at that height (a wolf 0.68, sitting
-  0.5), `model`/`extra` draw them in camera shots; `K.self({ sitting: true }, 0.5)` changes it on a word.
-  The wolf model is Java-accurate (sitting, tail, tame/angry eyes, dyed collar); other mobs draw from their
-  converted models.
-- **The pilot's whole recipe** (`story_good_boy`, 2026-11-10; stage timings in its commit log):
-  1. Script as story.json v2 (docs/story_craft.md): a narrator plus voiced characters, `requests` pairing speakers.
-  2. Voices: `python3 scripts/voice_cast.py stories/<name>` (Gemini via scripts/tts.py, one request per pair of
-     speakers, short directions; takes cached in voice/*_take.f32, `--only r2 --fresh` re-asks one), then
-     `~/.hb-tts/bin/python scripts/voice_check.py stories/<name>` (Whisper transcript + pitch per line: catches a word
-     split into the wrong line and two voices too alike) and `--words` + `voice_cast.py --timing` (captions on
-     Whisper's word times). Pilot: 2 requests, 57 s of lines, one split fixed by hand.
-  3. Site: a real generated place, not a clearing. `STUNT=scout_village ./scripts/record.sh` records the nearest
-     plains village (seed fixed: centre (-304, -384)); `scripts/still.py` top-down plus a grid to plan positions;
-     build only the focal set (the cottage, docs/building_guide.md) on a levelled pad; read ground heights at run time.
-  4. `RECORD_ONLY=1 STUNT=story_<name> ./run.sh` (rec_check runs), `scripts/shot_sheet.py` for every camera
-     (~1 min), fix cameras in `stunt.shots` without re-recording, `scripts/render_on_actions.sh story_<name>`.
-- **Channel art and thumbnails** from any recording: `scripts/still.py REC out.png --at S --size WxH --shot '{...}'
-  [--look '{...}'] [--time N] [--ss 2]`, text with `scripts/channel_art.py`.
+A made score instead of the NCS bed: `python3 scripts/story_short.py stories/<name> --score-only stories/<name>/score.wav`
+(a note-block lullaby in a hall, silent over `hush`..`hush_end`, a swell on `swell`; encode to .ogg), then
+`edit.song: 'stories/<name>/score.ogg'` (edit.py lays it as the -31 LUFS bed) and `edit.ownScore: true` (publish.js /
+add_song.py then add no NCS track). `scripts/story_short.py` without `--score-only` is a standalone full-frame 9:16
+editor (render-story workflow); the channel layout above is the one that ships.
+Lessons from dog_hill:
+- **Scout a real place:** a village scout (/locate village_plains from 10 starts, the highest ground 20-70 blocks
+  out) found a village with a 28-block hill; `stunts/probe_dog_hill.js` prints a heightmap and renders test cameras.
+  Level only a small disc (r 9) and fill holes deep (`replace air` down 14), or the disc's rim floats.
+- **Park cast in loaded chunks:** a park 300 blocks away is unloaded (every /tp "No entity was found"). In the sky
+  ~70 blocks away is loaded and far enough (>64) that hops through it don't glide. Mobs parked inside stone in a chunk
+  that the harness refreshes crashed the server twice (LongOpenHashSet in chunk ticking). Zombies burn in a daytime
+  park: summon them in their own night shot and kill them after (park first, so the death fall isn't on screen).
+- **A retried attempt reruns setup in the same world:** kill the cast by tag at the top of setup, or the duplicates stay.
+- **Low cameras sit in the flowers:** keep cameras 2.3+ blocks up in a meadow, or keep the blocks under them clear.
+- **Wolves:** renderer/entities.js draws WolfModel (standing, sitting, tame skin, dyed collar) from `extra`; the harness
+  now records a real wolf's `sitting`, `tame` and `collar` from its metadata. `/data merge entity @e[tag=dog,limit=1]
+  {Sitting:0b}` stands a NoAI wolf up.
 
 ## Setup (once per container)
 ```bash
@@ -292,6 +279,32 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, on hide_seek: "the camera moves around so quickly some of the time. It's a little bit confusing
+  to try and follow."** Camera and view turns stay followable on a phone: no whip pans; looks ease in and out at a
+  capped speed (searching or glancing included), and the view settles on something long enough to read it.
+- **Owner, 2026-11-11, on desire_town and inside_library: "For the desired town, it should show like the path, like
+  breaking the obstacles that it's being put in. Not what we have right now. Then also for the inside library, like
+  the cut is very, very obvious, because one, it shifts, and two, we like pause before we open the door. It'd be as if
+  we just like walk straight out, and it's like without like stopping."** desire: the path visibly breaks through each
+  obstacle the town puts in its way (it doesn't reroute around them). inside: the walk never stops: no pause before
+  the door, the door opens mid-stride, and the view must not jump or shift at the hidden cut (position, look and speed
+  identical on both sides).
+- **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
+  build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
+  "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, reviewing the ready Shorts by hand: "when we're building the statue, so I guess lapsed
+  statue, we pause for some reason when we're building the second one. Like for like what seems like more than just a
+  while."** A build never stalls on screen: while a build is unfinished, blocks keep going on (in a time-lapse, every
+  output second shows new blocks); no hold between stages or builds unless it is a beat with a caption.
+- **Owner, 2026-11-11: "The sound effect at the end of boat clutch sounds like a fart, change it out".** No sound
+  that can read as a fart (low, buzzy, pitched-down blurts, squelches, low brass): the payoff hit is a clean impact,
+  splash or vanilla sound. A sound the owner calls out is banned for every Short, not only that one.
+- **Owner, 2026-11-11: "the timer should reset every single time like we start a new ender portal."** An on-screen
+  timer times ONE attempt: it resets to 0 at the start of each new build or attempt (each portal in end_portal_job),
+  never runs on across them.
+- **Owner, 2026-11-11: "The rocket time lapse has a ton for jerking around between shots".** A time-lapse holds one
+  steady camera (or one smooth move) across its shots: no jumps in angle, distance or height between consecutive
+  shots of the same build; the viewer's eye stays on the build.
 - **Owner, 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall before we
   end/cut"; "our processes must cover all of these."** A Short never cuts or ends while its payoff is still moving:
   every falling block has landed, the blast debris has settled, the mob's death puff is done. The payoff moment is when
@@ -845,6 +858,9 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 23 | **The Bell in the Window** | "Every time I open my WINDOW, the whole village RUNS inside." | the bell rings, nobody's there; "Shutters SHUT, honey."; an arrow in the bell post every morning; the only lit window; something white under the oak on the cliff | a skeleton in the oak's shade shoots at the only player's window; the bell hangs in the way and every arrow rings it | from behind the skeleton: the arrow rings the bell, doors slam, it draws again at him; cut | **script approved** (critic r2 7.7, 8/8/8), build-ready after its pre-build checklist (`stories/bell_window/`); not voiced |
 | 24 | **Forty-One Cats** | "My grandma keeps FORTY-ONE cats on the WALL. All facing OUT." | none allowed inside; "They keep the QUIET ones out."; the first came "the week I CAME here"; nobody locks a door; a hiss Grandma said was a cat | creepers hunt only players and flee cats: the wall is for him | he takes his window's cat to bed; a creeper walks through the gap, past the villagers, to his window; cut on the hiss | **parked** (critic r2 7.4, Twist 7: Light Sleeper's shape with runaway's creeper; cold read 65 %) (`stories/forty_one_cats/`) |
 | 25 | **The Walk** | "My grandpa has broken the same LECTERN three thousand TIMES." | "Not THAT one."; Grandma's lit window on the island; no boat, "that's CHEATING"; she said "WALK the WATER to me, or don't COME" | he's re-rolled the librarian for Frost Walker to keep her word literally | the tooltip reads Frost Walker II; he walks off the dock and the sea freezes toward her window; cut | **script approved** (critic r2 7.9, 8/9/8, the critic's top pick; its one text fix applied) (`stories/the_walk/`); not voiced |
+| 21 | **The Scarecrow** | "SIXTY-THREE mornings in a row, a trail of SNOW runs from our SCARECROW to my WINDOW." | the trail ends in a trampled patch facing my window; groaning at night; rotten flesh under the window "a GROSS little GIFT"; Mom said Grandpa built that scarecrow out of snow, the week before he died | the scarecrow is a snow golem Grandpa built: every night it walks to my wall and knocks the zombies off it with snowballs; they burn at dawn | Toby opens the shutters on the stalker and sees the golem holding the line: "It wasn't STARING at me. It was keeping an EYE OUT for me." | script approved, build-ready RESERVE: critic r2 approve at 7.7/10, under the 8/10 bar (`claude/writers-room`, `stories/scarecrow/`) |
+| 15 | **Thirty-One Raids** | "Grandpa has saved our village from thirty-one raids." | 31 totems and one empty frame; every raid started the night he came home; villagers throw him bread; grey bottles from the tower, "his courage", drunk at the gate; "Lock the door, kid. They're coming."; since Grandma died it's the only time anyone's glad to see him | the courage is an ominous bottle (Bad Omen starts a raid in a village): he brings every raid himself. Tonight he's too tired, so the boy drinks it; the horn, pillagers and a ravager up the road | Grandpa beside him, loading his crossbow: "Now they'll love you too, kid." (the 32nd frame) | script approved, ready to build (r2: `agent/scripts-revised`, `stories/thirty_one_raids/`) |
+| 22 | **The Dog on the Hill** | "The dog on the hill hasn't moved in NINE HUNDRED days." (a tamed wolf sitting on a hilltop above a village, facing one empty patch of grass) | my bone every morning and he never looks (he's already tamed: the red collar); an overgrown dirt starter hut beside him; the empty patch the villagers never build on; Grandpa: "He said he'd be RIGHT back." | a sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago: "Milo joined the game", the player appears on the patch, the dog stands for the first time | "Sit, boy. I'll be RIGHT back." "Milo left the game." The dog sits. Loops into line 1 | made (`story_dog_hill`, 2026-11-10: cinematic engine, Gemini cast with Pip = the reference narrator, own score; review 2 rounds; docs/runs/2026-11-10_dog_hill.md) |
 
 ## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
 Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in

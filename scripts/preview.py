@@ -38,7 +38,8 @@ from timewarp import Warp, edit_spans  # noqa: E402
 FPS = 60
 # timeline events too frequent or too dull to name a frame after
 NOISE = {"sound", "vel", "aim", "hotbar", "slot", "particles", "swing", "health", "effect", "effect_end", "hurt_dir",
-         "time", "weather", "block_action", "block_entity", "collect", "death_message", "line_end"}
+         "time", "weather", "block_action", "block_entity", "collect", "death_message", "line_end",
+         "motion_start", "motion_settled", "off_aim"}   # lib/settle.js windows, pixel art's off-aim log
 
 
 def edit_parse(argv):

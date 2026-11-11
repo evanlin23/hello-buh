@@ -80,7 +80,7 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 - **Characters speak their own short lines in their own voices** (STANDARDS 2.00: "the narrator does all of it essentially, plus short lines from other characters"). The narrator's lead-ins stay short ("Mom SAYS:"). Each character line is 6 words or fewer; Light Sleeper's "Walk SOFT, sweetie..." (8) is the allowed exception.
 - **Spoken stress:** the caption still colours one key word per chunk, but the voice stresses ONE word per sentence, its last key word, shown in **bold**. The delivery note says to hit only the bold words and keep the rest level and quick.
 
-**Voices:** Grandpa: Hushwell's grandpa, Algenib (canon); Buh: `milo`/`buh` (Achird), canon. Narrator: the house narrator (STANDARDS 2.0-2.1).
+**Voices:** Grandpa: `elder` (Charon), the one the owner has heard (lead 2026-11-10; was "Hushwell's grandpa, Algenib"); Buh: `milo`/`buh` (Achird), canon. Narrator: the house narrator (STANDARDS 2.0-2.1).
 
 **Length:** 135 words, ~26 s spoken at 5.25 words/s, plus ~2 s of reveal.
 
