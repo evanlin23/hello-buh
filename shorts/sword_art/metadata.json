@@ -10263,5 +10263,28 @@
   ],
   "status": "ready",
   "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks in the review notes",
-  "published_at": "2026-11-11T07:01:02.843Z"
+  "published_at": "2026-11-11T07:01:02.843Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:08:01+00:00",
+    "by": "gates.py back-fill 2026-11-11 (guards worker)",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 33.22 s vs the reviewed render 33.20 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 2,
+      "warnings": 5,
+      "summary": "dead: 3.41 s with nothing new (3.99-7.40 s, after the sound hit; no line on screen); dead: 4.95 s with nothing new (9.60-14.55 s, after the dig_end; no line on screen)"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T06:37:28.054Z",
+      "report": "work/hb/sword_art.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
