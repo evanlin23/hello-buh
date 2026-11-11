@@ -35,9 +35,9 @@ module.exports = {
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
     return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [
-      // each tier's middle blocks jump-cut, edge to edge on the 0.2 s rests the bot takes between digs (blk<tier>_<n>:
+      // each tier's middle blocks jump-cut, edge to edge on the short rests the bot takes at those two blocks (blk<tier>_<n>:
       // before block n; the whip check: a cut inside a turn reads as one snap, r:r38374d), each tier shorter on screen
-      // than the last (~1.3 / 0.9 / 0.75 / 0.7 / 0.6 s a block with the rest: 4, 5, 5, 5, 5 blocks shown; the instamine all 9)
+      // than the last (~1.1 / 0.7 / 0.55 / 0.5 / 0.4 s a block: 4, 5, 5, 5, 5 blocks shown; the instamine all 9)
       ['blk0_3', 'blk0_8', 'cut'], ['blk1_3', 'blk1_7', 'cut'], ['blk2_3', 'blk2_7', 'cut'], ['blk3_3', 'blk3_7', 'cut'], ['blk4_3', 'blk4_7', 'cut'],
       ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
@@ -127,10 +127,11 @@ module.exports = {
       if (fast) ctx.mark('instamine')
       let nb = 0
       for (const p of order) {
-        // a 0.2 s rest on the dug block before turning to the next, marked in the middle: the edit's jump cuts over
+        // a short rest on the dug block before turning to the next, marked in the middle: the edit's jump cuts over
         // the middle blocks go edge to edge on these (nine identical digs were 8.6 s of the video; the ranking keeps
         // the real speed), so no cut joins two turning views (whip check, r:r38374d)
-        if (!fast && nb > 0) { await bot.waitForTicks(2); ctx.mark(`blk${i}_${nb}`); await bot.waitForTicks(2) }
+        // (only at the cut edges: 3 ticks still before the mark and 4 after, the whip check's window either side)
+        if (!fast && (nb === 3 || nb === (i === 0 ? 8 : 7))) { await bot.waitForTicks(3); ctx.mark(`blk${i}_${nb}`); await bot.waitForTicks(4) }
         nb++
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
