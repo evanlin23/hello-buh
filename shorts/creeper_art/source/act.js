@@ -14,6 +14,7 @@
 //   await A.useOn(entity, o)     right-click a mob (dye, shears, a name tag, a lead, a bucket on a cow)
 //   await A.hit(entity, o)       left-click a mob
 //   await A.aimAt(target, o)     just the turn: a Vec3 point, { block: pos }, or an entity
+//   await A.turnTo(to, o)        a look round to angles { yaw, pitch } or a point, governed (o.hold: ticks resting on it)
 //   A.snake(cells, row, col)     an order for many targets that turns the least: rows, every other one reversed
 //   A.roomBehind(n) / await A.back(ticks)   walking backwards never ends within 1 block of a solid block behind
 // Options for every action: o.max ticks to land the turn (40), o.delay ticks since the last action (vanilla: 4 for a
@@ -271,6 +272,21 @@ function act (ctx, opts = {}) {
     // a factory's own per-tick loop (a walk that looks where it goes): one governed tick of the turn toward a point
     // (Vec3) or angles ({ yaw, pitch }); the caller waits the tick
     view (to) { return view(to && to.x !== undefined ? aimAngles(eye(), to) : to) },
+    // a look round with no action on it: the governed, eased turn to angles ({ yaw, pitch }, mineflayer radians) or a
+    // point (Vec3), until the view is within o.tol rad (0.02) of it or o.max ticks (60) pass; then o.hold ticks resting
+    // on it. -> true when it landed (r:r38374d: never a raw bot.look / ctx.easeLook for a big turn)
+    async turnTo (to, o = {}) {
+      const want = () => to && to.x !== undefined ? aimAngles(eye(), to) : to
+      const tol = o.tol ?? 0.02, max = o.max ?? 60
+      let ok = false
+      for (let k = 0; k < max; k++) {
+        const w = want(), c = cur()
+        if (Math.hypot(MOTION.wrap(w.yaw - c.yaw), w.pitch - c.pitch) < tol) { ok = true; break }
+        await step(w)
+      }
+      for (let k = 0; k < (o.hold ?? 0); k++) await step(want())
+      return ok
+    },
     snake,
     roomBehind: (n = 4) => roomBehind(bot.entity.position, bot.entity.yaw, solid, n),
     // walk backwards for up to `ticks`, the view kept (o.look: a point to keep the crosshair on, governed). It never

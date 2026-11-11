@@ -851,12 +851,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/creeper_art",
-    "commit": "ea2372656dd58c617891d80d73eca4bc37513950",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42995878194",
-    "rendered_at": "2026-11-11T09:37:33.161Z",
-    "head_at_publish": "7f5f4eca5ca4774904ec64b629821998055a9da3",
+    "branch": "main",
+    "commit": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T12:53:33.349Z",
+    "head_at_publish": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
     "stunt": "stunts/creeper_art.js",
     "source_snapshot": [
       "source/creeper_art.js",
@@ -867,19 +866,19 @@
     ]
   },
   "rebuild": [
-    "git checkout ea2372656dd5",
+    "git checkout f3bfd331b0fc",
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
     "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.1 --end_after complete:0.9 --out out/creeper_art.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "awaiting independent review. worker B 2026-11-11 re-take (r:r650840): lib/pixel_art.js aims every block (ad926e79) and stops the walk back on the wall axis (69b283e1); aim 189 actions median 0.0 deg p90 0.3 (was p90 4.5); walk back ends ~2.5 blocks short of the small picture's plane, beside its edge (was through it); pace OK",
-  "published_at": "2026-11-11T09:38:26.655Z",
+  "status": "ready",
+  "notes": "re-take for the owner's note (r:r650840: the walk back on the last build stopped halfway into the earlier wall; now ~2.5 blocks short, beside its edge) and aim (r:rffba12: 1/189 placements over 6 deg); independent review READY (0 blockers). Nitpick: the huge build is 22 s in one shot (x1.5 in the middle would tighten it).",
+  "published_at": "2026-11-11T12:54:31.126Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:35:26+00:00",
-    "by": "scripts/gates.py",
+    "at": "2026-11-11T12:55:08+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
       "summary": "short.mp4 34.52 s vs the reviewed render 34.50 s"
@@ -894,8 +893,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:32:04.350Z",
-      "report": "out/creeper_art.check.json"
+      "at": "2026-11-11T12:53:50.491Z",
+      "report": "work/hb/creeper_art.check.json"
     },
     "key_sounds": "n/a"
   }
