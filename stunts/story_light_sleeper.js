@@ -236,7 +236,8 @@ module.exports = {
 
     // ---- L04 "Mom SAYS:" / L05 Mom (her own voice): our doorway, 2 steps up; the camera low, 3 blocks out
     await K.cut(0.5, -3.2, C(0, 4.6, -7.4), PLAZA)
-    await line('L04', async (k) => { mom.pitch = 25; mom.yaw = Math.sin(k / 9) * 6; K.base = K.aim(C(0, 4.5, -7.4)); look(k) }, 0.15)   // a beat before Mom speaks (her take started on the tail of "SAYS": pace)
+    await line('L04', async (k) => { mom.pitch = 25; mom.yaw = Math.sin(k / 9) * 6; K.base = K.aim(C(0, 4.5, -7.4)); look(k) })
+    await bot.waitForTicks(2)   // Mom's own take starts clear of "SAYS:" (pace measures L04 from its mark, which lands ~2 ticks behind the take after the cut)
     await line('L05', async (k) => {
       mom.pitch = 18 + Math.sin(k / 5) * 8; mom.yaw = Math.sin(k / 6) * 14   // she says it: a mom's 'how many times' nod
       K.base = K.aim(C(0, 4.5, -7.4)); look(k)
