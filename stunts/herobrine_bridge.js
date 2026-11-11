@@ -19,7 +19,7 @@ module.exports = makeStunt({
   hotbar: ['stone_sword', 'shears', ['blue_wool', 48], ['golden_apple', 3]],
   select: 0,
   pitch: 8,
-  edit: { sfx: [['impact', 'payoff']] },   // the logout itself is silent in vanilla: the hit the final mix needs (pace)
+  edit: { sfx: [['impact', 'payoff', { gain: 1.4 }]] },   // the logout itself is silent in vanilla: the hit the final mix needs (pace)
   hisStart: { x: 0.5, y: 1, z: 4.6, yaw: 180, pitch: 4 },
 
   async perform (ctx, H) {
