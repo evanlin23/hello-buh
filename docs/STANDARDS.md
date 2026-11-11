@@ -166,6 +166,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 2. **Cast move only through the kit** (`K.actor`: every tick, at mob speed), placed before the shot mark so the new
    shot's first frame already has them in place; never a stunt's own `/tp @e` loop (dog_hill's hop read as a teleport).
    Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
+   **Nothing on screen jumps while the camera holds**: no entity, the narrator included (a wolf narrator is the
+   recording bot), moves over 0.6 block in a tick in the frame unless the camera itself cuts on that tick; a teleport
+   that is the story (K.blink, `teleport_ok`) still lands on the cut (`K.cutShot(name, moves, { self })` moves the
+   narrator with it; the shot mark waits for the landing). Check: owner (glitch: visible jump, in the frame BLOCK, just
+   out of it WARN; lib/hb/motion.js visibleJumps on the track as render.js draws it). r:rfa229d
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
    (eye-trace: jump <= 15 % of the frame; > 20 % WARN, > 33 % BLOCK), and the cut lands in the pause 33-150 ms before
    the line's first word, never after it nor off the line's voice. Built in: render.js `eyeTrace` re-aims each camera
