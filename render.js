@@ -1121,6 +1121,9 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
 // look target can name them as 'actor:TAG' (dog_hill: subject ['actor:pip']), like a movie's player actors
 const KIT_TAG = new Map()   // id -> tag
 for (const m of rec.timeline || []) if (m.event === 'actor' && m.tag && m.id !== undefined) { KIT_TAG.set(m.id, m.tag); if (!ACTOR_ID.has(m.tag)) ACTOR_ID.set(m.tag, m.id) }
+// a cast member's skin from a tick on (cast_skin marks { user, skin }: the herobrine format's white eyes, lib/herobrine.js)
+const CAST_SKIN = (rec.timeline || []).filter(m => m.event === 'cast_skin' && m.user && m.skin).map(m => ({ t: m.t / 50, user: m.user, skin: m.skin })).sort((a, b) => a.t - b.t)
+const castSkinAt = (user, t) => { let s = null; for (const c of CAST_SKIN) if (c.user === user && c.t <= t) s = c.skin; return s }
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
@@ -3049,6 +3052,8 @@ else:
       if ((e.name !== 'player' && e.name !== 'mannequin') || e.id === -1) continue
       const A = ACTOR.get(e.id), user = (e.extra && (e.extra.user || e.extra.name)) || (A && A.user)
       e.extra = { ...(e.extra || {}), ...skinExtra(SKINS.actorSkin({ cast: STUNT_MOD.cast, user })) }
+      const swapSkin = castSkinAt(user, t)
+      if (swapSkin) e.extra.skin = swapSkin
       let wp = 0, ws = 0
       if (A) {
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a
