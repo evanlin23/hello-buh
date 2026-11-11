@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:-0.9',   // 1.3 s after the last blast: the visible debris is down ~0.7 s after it; settle:0.6 held a still frame 2 s (independent review)
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.3',   // (the camera drifts through it: settle:0.6 on a parked camera held a still frame 2 s, independent review)
       speed: [
       // each tier's middle blocks jump-cut, edge to edge on the short rests the bot takes at those two blocks (blk<tier>_<n>:
       // before block n; the whip check: a cut inside a turn reads as one snap, r:r38374d), each tier shorter on screen
@@ -253,9 +253,16 @@ module.exports = {
     for (const c of ['back', 'forward', 'left', 'right']) bot.setControlState(c, false)
     ctx.log('booms', booms, 'of', NP)
     if (booms < NP) { ctx.log('chain broke'); return false }
-    await bot.waitForTicks(24)
+    // the eyes keep drifting over the smoke and the broken wall until well past the settle (the blast's rendered smoke:
+    // 44 ticks), so the ending never parks the camera (a ~2 s still frame at the end: independent review)
+    for (let k = 0; k < 70; k++) {
+      const goal = boomAt.offset(-1.5 + 3 * k / 70, 0.4 * Math.sin(k / 11), 0)
+      look = look.plus(goal.minus(look).scaled(0.08))
+      const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
+      await A.view({ yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) })
+      await bot.waitForTicks(1)
+    }
     bot.removeListener('physicsTick', onTick)
-    await bot.waitForTicks(10)
     return !ctx.died
   }
 }
