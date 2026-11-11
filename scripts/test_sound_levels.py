@@ -15,8 +15,8 @@ def snd(t, sound, volume=1.0, **kw):
     return {"event": "sound", "t": int(t * 1000), "sound": sound, "volume": volume, "pitch": 1.0, **kw}
 
 
-def rec(*marks):
-    return {"timeline": sorted(marks, key=lambda e: e["t"]), "poses": []}
+def rec(*marks, stunt="story_thirty_one_raids"):
+    return {"timeline": sorted(marks, key=lambda e: e["t"]), "poses": [], "stunt": stunt}
 
 
 class Levels(unittest.TestCase):
@@ -37,6 +37,13 @@ class Levels(unittest.TestCase):
         self.assertEqual([(round(f["t"], 1), f["sound"]) for f in blocks], [(31.6, "event.raid.horn"), (41.0, "event.raid.horn")])
         self.assertIn("ctx.vanillaSound('event.raid.horn')", blocks[1]["msg"])
         self.assertEqual([f for f in fs if f["level"] != "BLOCK"], [])
+
+    def test_a_stunt_warns_on_quiet_relayed_sounds_but_blocks_a_quiet_key_sound(self):
+        # cells_lab / chain_reaction relay the server's sounds distance-attenuated: quiet on purpose
+        r = rec(snd(9.2, "block.piston.extend", 0.035), snd(17.4, "entity.snow_golem.ambient", 1.0),
+                snd(20.0, "entity.allay.ambient_with_item", 0.03), {"event": "hear", "t": 20000}, stunt="cells_lab")
+        _, fs = L.findings(r, {"keySounds": ["hear"]})
+        self.assertEqual(sorted((round(f["t"], 1), f["level"]) for f in fs), [(9.2, "WARN"), (20.0, "BLOCK")])   # no golem: no files
 
     def test_the_fixed_horns_pass(self):
         _, fs = L.findings(rec(snd(31.65, "event.raid.horn", 40), snd(41.05, "event.raid.horn", 64)))

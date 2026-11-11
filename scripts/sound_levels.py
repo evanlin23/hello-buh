@@ -8,8 +8,10 @@ it. This one does, from the recording alone (before any render):
   effective level = the mark's play volume x the event's sounds.json file volume (the mean over its variants)
                     (vanilla clamps the product to 1.0; audio.py's Mixer doesn't distance-attenuate a `sound` mark)
 
-- BLOCK: any `sound` mark under FLOOR (0.04, -28 dB), ambience aside (weather / ambient loops: the harness fades rain
-  in from 0). Calibrated on the five stories of 2026-11-11: the old horns were 0.012 and 0.022; the quietest sound a
+- BLOCK: any `sound` mark under FLOOR (0.04, -28 dB) in a story Short, ambience aside (weather / ambient loops: the
+  harness fades rain in from 0) and events with no files. In a HelloBuh stunt a WARN: chain / cells stunts relay the
+  server's own sounds, distance-attenuated like vanilla (cells_lab's far pistons and mob steps at 0.02-0.04,
+  chain_reaction's anvil landing at 0.03: all 76 packages of 2026-11-11 checked, those two the only hits). Calibrated on the five stories of 2026-11-11: the old horns were 0.012 and 0.022; the quietest sound a
   stunt meant to play is gold_for_the_portal's portal trigger at 0.08 (its file is loud); steps are 0.15.
 - a KEY sound: a mark flagged `key` (ctx.sound(..., { key: true }) / ctx.vanillaSound), a sound within KEY_WIN of an
   edit.keySounds mark, or one within KEY_WIN of the story's payoff (story.json `payoff`, scripts/story_audio.py):
@@ -147,10 +149,18 @@ def key_times(rec, edit=None, story_dir=None):
     return out
 
 
+def is_story(rec, edit=None, story_dir=None):
+    """A story Short (a narrated story_*): its stunt name, its edit's story, a story dir, or `line` marks."""
+    return bool(story_dir or (edit or {}).get("story") or str(rec.get("stunt") or "").startswith("story_")
+                or any(e["event"] == "line" for e in rec.get("timeline", [])))
+
+
 def findings(rec, edit=None, story_dir=None):
     """Every sound mark checked -> (rows, findings). A row: {t, sound, volume, file, gain, key}; a finding:
-    {level, t, sound, msg}."""
+    {level, t, sound, msg}. Under the floor: a BLOCK in a story; in a HelloBuh stunt a WARN (they relay the server's own
+    sounds, already distance-attenuated: far pistons and mob steps are quiet on purpose), but a key sound BLOCKs anywhere."""
     keys = key_times(rec, edit, story_dir)
+    story = is_story(rec, edit, story_dir)
     rows, out = [], []
     marks = [e for e in rec.get("timeline", []) if e["event"] == "sound" and e.get("sound")]
     # each key moment's sound: the (non-ambient) sound mark nearest it inside KEY_WIN
@@ -165,14 +175,14 @@ def findings(rec, edit=None, story_dir=None):
         why = "a key sound (flagged)" if e.get("key") else nearest.get(id(e))
         g = gain(s, vol)
         rows.append({"t": round(t, 3), "sound": s, "volume": vol, "pitch": float(e.get("pitch", 1.0)), "file": file_volume(s), "gain": round(g, 4), "key": why})
-        if AMBIENT.match(s) and not why:
+        if (AMBIENT.match(s) and not why) or file_volume(s) == 0:   # no files (snow golem ambient): vanilla plays nothing
             continue
         vv = vanilla_volume(s)
         fix = (f"play it as the game does: ctx.vanillaSound('{s}') (volume {vv:g})" if vv * file_volume(s) >= FLOOR
                else f"raise its volume to >= {FLOOR / max(file_volume(s), 1e-6):.2g}")
         what = f"{s} at volume {vol:g} x file volume {file_volume(s):g} = {g:.3f} ({db(g):.0f} dB)"
         if g < FLOOR:
-            out.append({"level": "BLOCK", "t": t, "sound": s, "gain": g, "key": why,
+            out.append({"level": "BLOCK" if story or why else "WARN", "t": t, "sound": s, "gain": g, "key": why,
                         "msg": f"inaudible{' ' + why.upper() if why else ''}: {what}, under the floor {FLOOR:g} ({db(FLOOR):.0f} dB): {fix}"})
         elif why and g < KEY_WARN:
             out.append({"level": "WARN", "t": t, "sound": s, "gain": g, "key": why,

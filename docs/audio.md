@@ -132,7 +132,9 @@ reference.
    2, explosion 4, thunder 10000; lib/sound_level.js), `ctx.sound(event, vol, pitch, { key: true })` flags the sound a
    moment hangs on (raised to at least that volume) and `ctx.sound` logs a WARN at record time for anything inaudible.
    **The gate** (`scripts/sound_levels.py`, in rec_check, so `./hb record` stops and `./hb check` fails): any sound mark
-   under **0.04 effective (-28 dB)** BLOCKs (ambience aside); a key sound (edit `keySounds`, the story's `payoff`, a
+   under **0.04 effective (-28 dB)** BLOCKs in a story Short (ambience and file-less events aside; in a HelloBuh stunt it's a WARN:
+   chain / cells stunts relay the server's own sounds distance-attenuated, cells_lab's far pistons and mob steps sit at
+   0.02-0.04 on purpose, the only hits in all 76 packages); a key sound (edit `keySounds`, the story's `payoff`, a
    flagged one) under 0.15 WARNs. Calibrated on the five stories: the old horns 0.012 / 0.022, the quietest intended
    sound 0.08 (gold's portal trigger), steps 0.15. On a rendered Short, `./hb check`'s "audible sound" step looks for
    each key / payoff sound's own waveform in the mix (a matched filter; a WARN to listen, never a blocker). The table
