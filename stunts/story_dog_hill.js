@@ -29,10 +29,7 @@ module.exports = {
   cast: { self: 'steve' },
   selfName: 'Buh',
   idleLife: true,
-  // visual audit 2026-11-10 F1: sharp (no DoF on wides, low bloom), the grade follows the time of day; smoothLight:
-  // the THUNDER bolt lights the world, moonlight lifts the night faces (audit F2)
-  look: { mood: 'auto', bloom: 0.35, bloomThreshold: 0.9, bloomPasses: 1, rays: 0.35, raysOverBlocks: 0.35, sharpen: 0.4,
-    grain: 0.012, vignette: 0.38, shadows: true, smoothLight: true, moonlight: 0.35 },
+  look: 'bright',   // owner 2026-11-11: every story bright and punchy (main e58c77d; the audit's sharp look is in the preset)
   // subject: what the eye is on (the lint checks it; eyeTrace puts it where the last shot's subject was): the kit's
   // actors by tag ('actor:dog'), 'self' (Buh), or a point. Without one the village horse beside the dog won the eye.
   // offsets from D (dy from the ground's top: the dog's feet at dy 1, his sitting head ~1.6, Pip's eyes ~1.8, Buh's
@@ -73,7 +70,7 @@ module.exports = {
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
   // 16:9 master); the bed is our own score (scripts/story_short.py --score-only, as .ogg), so publish adds no NCS track
   wideMaster: true,
-  edit: { story: 'stories/dog_hill', startAt: 'start:0', endAfter: 'end_scene:0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?' },
+  edit: { story: 'stories/dog_hill', startAt: 'start:0', endAfter: 'end_scene:0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?', punchStress: true },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -265,7 +262,7 @@ module.exports = {
     const once = new Set(), at1 = (key, cond) => cond && !once.has(key) && once.add(key)
     await line('L02', async (k, at) => {
       if (at1('storm', k >= at.cut(1))) await cut('storm', { time: 18000, weather: 'thunder' })
-      // the bolt behind the hut, inside the crop (audit F3); smoothLight lights the world with it
+      // the bolt behind the hut, inside the crop (audit F3); it lights the night scene (engine-3)
       if (at1('bolt', k >= at(1) + 2)) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
       // a mob just summoned needs 2 ticks to reach the client: summon it 2 ticks before the cut; the cut on at.cut(i)
       // (it lands just before the word: at(i) split words by 60-323 ms in Gold)
