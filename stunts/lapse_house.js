@@ -154,20 +154,20 @@ module.exports = makeStunt({
     hold: 'quartz_block', slot: 5,
     // ticks each stage gets: pool + road, floors 1-3 (short, each its own camera move), wings + garden,
     // roof + penthouse, the rooftop pool, the helipad, the wall round the grounds, the crown
-    stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 390, 5: 180, 6: 110, 7: 80, 8: 150, 9: 50 },
+    stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 390, 5: 180, 6: 110, 7: 100, 8: 200, 9: 70 },   // (30 s: helipad, wall, crown longer; the faster 1-minute round came in at 28.7 s)
     // several clearly different steady angles joined by hard cuts (owner r:r66efa4, 2026-11-11: "we should have more
     // angles when we're showing the last thing"), each one slow and straight so its own jump cuts carry it on
     // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
     // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the mansion
     angles: [
-      [0, [[-20, 12, 34], [0, 0, 14]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],      // the pool, floors 1-3
-      [372, [[62, 16, 10], [0, 8, 0]], [[58, 20, 2], [0, 10, 0]], 'side'],                          // floor 3, the wings
+      [0, [[-10, 9, 27], [0, -1, 16]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],      // the pool, floors 1-3
+      [372, [[46, 12, 10], [0, 7, 0]], [[44, 16, 2], [0, 9, 0]], 'side'],                          // floor 3, the wings
       [612, [[0, 4, 33], [0, 7, 10]], [[0, 5, 28], [0, 7, 10]], 'down the road to the door'],       // the garden, the facade
       [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
       // the showcase: the finished mansion from three angles, the helipad, the wall and the crown going on
       [1092, [[55, 12, 30], [8, 14, 0]], [[52, 13, 32], [8, 14, 0]], 'low right'],
-      [1180, [[70, 45, -55], [0, 5, 5]], [[66, 46, -50], [0, 5, 5]], 'high from the back corner'],
-      [1260, [[-2, 11, 72], [0, 10, 0]], [[-4, 11.5, 62], [0, 10, 0]], 'the hero wide, through the gates']
+      [1210, [[50, 34, -38], [0, 6, 4]], [[47, 35, -34], [0, 6, 4]], 'high from the back corner'],
+      [1330, [[-2, 11, 72], [0, 10, 0]], [[-4, 11.5, 62], [0, 10, 0]], 'the hero wide, through the gates']
     ]
   }
 })
