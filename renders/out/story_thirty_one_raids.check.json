@@ -1,0 +1,968 @@
+{
+ "stunt": "story_thirty_one_raids",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_thirty_one_raids.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (57ca7c9d3207)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  13 camera shot(s), 44.5s: POV checks skipped there; run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/story_thirty_one_raids.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "motion fixes: 2 cast members moved with a cut land on it",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "motion fixes: the view holds still through 1 container window",
+    "LINT story_thirty_one_raids: 15 shots, scene 0.0-42.8 s (scene seconds from edit.startAt, before slow motion)",
+    "  s01            0.0-3.5   path   (no subject: add subject: [...] to check its framing)",
+    "  s02            3.5-5.8   at     (no subject: add subject: [...] to check its framing)",
+    "  s03            5.8-8.6   at     (no subject: add subject: [...] to check its framing)",
+    "  s04            8.6-10.3  at     (no subject: add subject: [...] to check its framing)",
+    "  s05           10.3-11.9  at     (no subject: add subject: [...] to check its framing)",
+    "  s10           11.9-14.4  at     (no subject: add subject: [...] to check its framing)",
+    "  s10b          14.4-16.6  at     (no subject: add subject: [...] to check its framing)",
+    "  s06           16.6-18.7  at     (no subject: add subject: [...] to check its framing)",
+    "  s07           18.7-20.7  at     (no subject: add subject: [...] to check its framing)",
+    "  pov           20.7-24.0  pov    ",
+    "  s08           24.0-26.2  at     (no subject: add subject: [...] to check its framing)",
+    "  s09           26.2-34.9  at     (no subject: add subject: [...] to check its framing)",
+    "  s11           34.9-37.3  at     (no subject: add subject: [...] to check its framing)",
+    "  pov           37.3-40.5  pov    ",
+    "  s13           40.5-42.8  at     (no subject: add subject: [...] to check its framing)",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 8 warning(s), 10 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 3.5,
+     "shot": 2,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 23500 (dawn) -> 12500 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 5.85,
+     "shot": 3,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 12500 (sunset) -> 12600 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.55,
+     "shot": 4,
+     "line": "L03",
+     "kind": "appear",
+     "msg": "item_frame #409 appears in the middle of the frame 0.40 s into the shot (16.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.55,
+     "shot": 4,
+     "line": "L03",
+     "kind": "appear",
+     "msg": "item_frame #417 appears in the middle of the frame 0.70 s into the shot (16.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.55,
+     "shot": 4,
+     "line": "L03",
+     "kind": "appear",
+     "msg": "item_frame #425 appears in the middle of the frame 0.70 s into the shot (16.5 blocks)"
+    },
+    {
+     "level": "NOTE",
+     "out": 10.25,
+     "shot": 5,
+     "line": "L04",
+     "kind": "time",
+     "msg": "time cut 12600 (sunset) -> 23800 (dawn) (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 11.9,
+     "shot": 6,
+     "line": "L05",
+     "kind": "time",
+     "msg": "time cut 23800 (dawn) -> 14000 (night) (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 16.6,
+     "shot": 8,
+     "line": "L06",
+     "kind": "time",
+     "msg": "time cut 14000 (night) -> 12000 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 18.7,
+     "shot": 9,
+     "line": "L06",
+     "kind": "time",
+     "msg": "time cut 12000 (sunset) -> 14000 (night) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 24,
+     "shot": 11,
+     "line": "L07",
+     "kind": "time",
+     "msg": "time cut 14000 (night) -> 13000 (night) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 34.85,
+     "shot": 13,
+     "line": "L10",
+     "kind": "appear",
+     "msg": "item_frame #431 appears in the middle of the frame 1.25 s into the shot (9.9 blocks)"
+    },
+    {
+     "level": "NOTE",
+     "out": 34.85,
+     "shot": 13,
+     "line": "L10",
+     "kind": "time",
+     "msg": "time cut 13000 (night) -> 12300 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 37.25,
+     "shot": 14,
+     "line": "L11",
+     "kind": "time",
+     "msg": "time cut 12300 (sunset) -> 12400 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 40.5,
+     "shot": 15,
+     "line": "L11",
+     "kind": "appear",
+     "msg": "pillager #392 appears in the middle of the frame 0.50 s into the shot (21.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 40.5,
+     "shot": 15,
+     "line": "L11",
+     "kind": "appear",
+     "msg": "ravager #391 appears in the middle of the frame 0.80 s into the shot (18.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 40.5,
+     "shot": 15,
+     "line": "L11",
+     "kind": "appear",
+     "msg": "player Gramps #436 appears in the middle of the frame 0.95 s into the shot (4.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 40.5,
+     "shot": 15,
+     "line": "L11",
+     "kind": "appear",
+     "msg": "pillager #396 appears in the middle of the frame 1.45 s into the shot (23.1 blocks)"
+    },
+    {
+     "level": "NOTE",
+     "out": 40.5,
+     "shot": 15,
+     "line": "L11",
+     "kind": "time",
+     "msg": "time cut 12400 (sunset) -> 12500 (sunset) at the same place (on its time mark)"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "14 warning(s) over 15 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": "L01",
+     "kind": "tight",
+     "msg": "tighter than planned: S01 is planned WS wide, the recording is MS medium (player Grandpa 46%)"
+    },
+    {
+     "level": "WARN",
+     "out": 3.5,
+     "shot": 2,
+     "line": "L02",
+     "kind": "tight",
+     "msg": "tighter than planned: S02 is planned EWS extreme wide, the recording is WS wide (player Gramps 11%)"
+    },
+    {
+     "level": "WARN",
+     "out": 5.85,
+     "shot": 3,
+     "line": "L02",
+     "kind": "tight",
+     "msg": "tighter than planned: S02 is planned EWS extreme wide, the recording is WS wide (player Grandpa 13%)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.55,
+     "shot": 4,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "tighter than planned: S03 is planned WS wide, the recording is FS full (player Grandpa 34%)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.25,
+     "shot": 5,
+     "line": "L04",
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (WS wide on player Gramps, median depth 4.2 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 11.9,
+     "shot": 6,
+     "line": "L05",
+     "kind": "tight",
+     "msg": "tighter than planned: S10 is planned FS full, the recording is MS medium (player Grandpa 51%)"
+    },
+    {
+     "level": "WARN",
+     "out": 14.45,
+     "shot": 7,
+     "line": "L05",
+     "kind": "tight",
+     "msg": "too tight (MS medium): player Grandpa #435 fills 72% of the frame height, 2.7 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 14.45,
+     "shot": 7,
+     "line": "L05",
+     "kind": "tight",
+     "msg": "tighter than planned: S10 is planned FS full, the recording is MS medium (player Grandpa 62%)"
+    },
+    {
+     "level": "WARN",
+     "out": 16.6,
+     "shot": 8,
+     "line": "L06",
+     "kind": "tight",
+     "msg": "tighter than planned: S06 is planned EWS extreme wide, the recording is FS full (player Gramps 27%)"
+    },
+    {
+     "level": "WARN",
+     "out": 18.7,
+     "shot": 9,
+     "line": "L06",
+     "kind": "tight",
+     "msg": "tighter than planned: S06 is planned EWS extreme wide, the recording is MS medium (player Grandpa 41%)"
+    },
+    {
+     "level": "WARN",
+     "out": 20.7,
+     "shot": 10,
+     "line": "L06",
+     "kind": "tight",
+     "msg": "camera against the set: 60% of the frame is within 3 blocks (spruce_planks, brown_carpet)"
+    },
+    {
+     "level": "WARN",
+     "out": 24,
+     "shot": 11,
+     "line": "L07",
+     "kind": "tight",
+     "msg": "tighter than planned: S08 is planned WS wide, the recording is MS medium (player Gramps 42%)"
+    },
+    {
+     "level": "WARN",
+     "out": 34.85,
+     "shot": 13,
+     "line": "L10",
+     "kind": "tight",
+     "msg": "tighter than planned: S11 is planned WS wide, the recording is FS full (player Grandpa 26%)"
+    },
+    {
+     "level": "WARN",
+     "out": 40.5,
+     "shot": 15,
+     "line": "L11",
+     "kind": "tight",
+     "msg": "tighter than planned: S12 is planned FS full, the recording is MS medium (the narrator (player) 53%)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 56 x 37 blocks (ground y 71; its edge 12 blocks from the set's origin); built footprint 49 x 27; terrain relief around it sd 3.5 blocks",
+     "world": {
+      "level": 71,
+      "area": 877,
+      "w": 56,
+      "d": 37,
+      "edge": 12,
+      "built": 275,
+      "footprint": {
+       "w": 49,
+       "d": 27,
+       "x0": -18,
+       "z0": -18
+      },
+      "relief": 3.5,
+      "outside": 2236
+     }
+    },
+    {
+     "level": "NOTE",
+     "check": "opening",
+     "out": 0,
+     "tick": 24,
+     "line": "L01",
+     "msg": "opening OK: Grandpa (L01 look) player Grandpa #435: 50% across (middle third 33%-67%), 46% of the frame height on frame 1, 49% at most (readable from 8%), first 1.5 s; camera 0.08 blocks/s, turn 1.19 deg/s, push 0.02/s, subject 0 blocks/s, anything else in frame 0 blocks/s, 1 action(s)",
+     "opening": {
+      "subject": "Grandpa",
+      "src": "L01 look",
+      "n": 31,
+      "motion": {
+       "cam": 0.08,
+       "turn": 1.19,
+       "grow": 0.02,
+       "sub": 0,
+       "other": 0,
+       "actions": 1
+      },
+      "seen": 1,
+      "x": 0.5,
+      "h0": 0.457,
+      "hMax": 0.493,
+      "label": "player Grandpa #435"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 40.75,
+     "tick": 839,
+     "line": "L11",
+     "msg": "the story kit refused a 1.01-block jump of p1 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 41.65,
+     "tick": 857,
+     "line": "L11",
+     "msg": "the story kit refused a 1-block jump of p5 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 41.75,
+     "tick": 859,
+     "line": "L11",
+     "msg": "the story kit refused a 1-block jump of p3 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 42.1,
+     "tick": 866,
+     "line": "L11",
+     "msg": "the story kit refused a 1-block jump of p2 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s) over 15 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 10.65,
+     "tick": 229,
+     "line": "L04",
+     "msg": "s04 -> s05 opens L04 133 ms after its voice starts (the picture is behind the words): time the stunt with K.line (lib/story.js: marks on the take's own offsets, the line before a cut ended early by the cut's landing time); a stunt clock of its own (dur + a gap per line) drifts later every line"
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 24.4,
+     "tick": 504,
+     "line": "L07",
+     "msg": "pov -> s08 opens L07 136 ms after its voice starts (the picture is behind the words): time the stunt with K.line (lib/story.js: marks on the take's own offsets, the line before a cut ended early by the cut's landing time); a stunt clock of its own (dur + a gap per line) drifts later every line"
+    }
+   ],
+   "rows": [
+    {
+     "tick": 22,
+     "out": 0.3,
+     "line": null,
+     "from": "pov",
+     "to": "s01",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.52,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.021,
+     "timing": {
+      "next": "THIRTY-ONE",
+      "lead": 0.42,
+      "prev": null,
+      "sincePrev": null,
+      "pause": null,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 94,
+     "out": 3.9,
+     "line": "L01",
+     "from": "s01",
+     "to": "s02",
+     "before": {
+      "x": 0.24,
+      "y": 0.49,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.3,
+      "y": 0.46,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.07,
+     "timing": {
+      "next": "Raid",
+      "lead": 0.118,
+      "prev": "HOME.",
+      "sincePrev": 0.28,
+      "pause": 0.398,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.058
+    },
+    {
+     "tick": 141,
+     "out": 6.25,
+     "line": "L02",
+     "from": "s02",
+     "to": "s03",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.51,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.005,
+     "timing": {
+      "next": "He",
+      "lead": 0.048,
+      "prev": "THIRTY-ONE.",
+      "sincePrev": 0.352,
+      "pause": 0.4,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 195,
+     "out": 8.95,
+     "line": "L03",
+     "from": "s03",
+     "to": "s04",
+     "before": {
+      "x": 0.44,
+      "y": 0.49,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.44,
+      "y": 0.5,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.009,
+     "timing": {
+      "next": "They",
+      "lead": 0.11,
+      "prev": "him.",
+      "sincePrev": 0.13,
+      "pause": 0.24,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 229,
+     "out": 10.65,
+     "line": "L03",
+     "from": "s04",
+     "to": "s05",
+     "before": {
+      "x": 0.5,
+      "y": 0.38,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.36,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.02,
+     "timing": {
+      "next": "So",
+      "lead": -0.023,
+      "prev": "them.",
+      "sincePrev": 0.45,
+      "pause": 0.427,
+      "inside": "So"
+     },
+     "optOut": false,
+     "lineDrift": 0.133
+    },
+    {
+     "tick": 262,
+     "out": 12.3,
+     "line": "L04",
+     "from": "s05",
+     "to": "s10",
+     "before": {
+      "x": 0.43,
+      "y": 0.47,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.42,
+      "y": 0.49,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.021,
+     "timing": {
+      "next": "Since",
+      "lead": 0.125,
+      "prev": "BREAD.",
+      "sincePrev": 0.343,
+      "pause": 0.468,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.02
+    },
+    {
+     "tick": 313,
+     "out": 14.85,
+     "line": "L05",
+     "from": "s10",
+     "to": "s10b",
+     "before": {
+      "x": 0.38,
+      "y": 0.13,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.38,
+      "y": 0.31,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.168,
+     "timing": {
+      "next": "But",
+      "lead": 0.05,
+      "prev": "ALONE.",
+      "sincePrev": 0.35,
+      "pause": 0.4,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 356,
+     "out": 17,
+     "line": "L05",
+     "from": "s10b",
+     "to": "s06",
+     "before": {
+      "x": 0.46,
+      "y": 0.32,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.51,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "dist": 0.184,
+     "timing": {
+      "next": "Every",
+      "lead": 0.38,
+      "prev": "HIM.",
+      "sincePrev": 0.04,
+      "pause": 0.42,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 398,
+     "out": 19.1,
+     "line": "L06",
+     "from": "s06",
+     "to": "s07",
+     "before": {
+      "x": 0.48,
+      "y": 0.4,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.48,
+      "y": 0.41,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.009,
+     "timing": {
+      "next": "He",
+      "lead": 0.12,
+      "prev": "TOWER.",
+      "sincePrev": 0.18,
+      "pause": 0.3,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 438,
+     "out": 21.1,
+     "line": "L06",
+     "from": "s07",
+     "to": "pov",
+     "before": {
+      "x": 0.36,
+      "y": 0.46,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.141,
+     "timing": {
+      "next": "OMINOUS",
+      "lead": 0.12,
+      "prev": "bottles.",
+      "sincePrev": 0.42,
+      "pause": 0.54,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 504,
+     "out": 24.4,
+     "line": "L06",
+     "from": "pov",
+     "to": "s08",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.52,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "dist": 0.019,
+     "timing": {
+      "next": "He",
+      "lead": 0.044,
+      "prev": "LUCK.",
+      "sincePrev": 0.48,
+      "pause": 0.524,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.136
+    },
+    {
+     "tick": 548,
+     "out": 26.6,
+     "line": "L07",
+     "from": "s08",
+     "to": "s09",
+     "before": {
+      "x": 0.39,
+      "y": 0.55,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.39,
+      "y": 0.55,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "dist": 0.009,
+     "timing": {
+      "next": "Lock",
+      "lead": 0.34,
+      "prev": "SAYS:",
+      "sincePrev": 0.176,
+      "pause": 0.516,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 721,
+     "out": 35.25,
+     "line": "L09",
+     "from": "s09",
+     "to": "s11",
+     "before": {
+      "x": 0.5,
+      "y": 0.46,
+      "what": "player Gramps",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.45,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "dist": 0.009,
+     "timing": {
+      "next": "Tonight",
+      "lead": 0.255,
+      "prev": "RAIDS.",
+      "sincePrev": 0.44,
+      "pause": 0.695,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.005
+    },
+    {
+     "tick": 769,
+     "out": 37.65,
+     "line": "L10",
+     "from": "s11",
+     "to": "pov",
+     "before": {
+      "x": 0.51,
+      "y": 0.35,
+      "what": "player Grandpa",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.142,
+     "timing": {
+      "next": "So",
+      "lead": 0.09,
+      "prev": "FIGHT.",
+      "sincePrev": 0.345,
+      "pause": 0.435,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    },
+    {
+     "tick": 834,
+     "out": 40.9,
+     "line": "L11",
+     "from": "pov",
+     "to": "s13",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.41,
+      "y": 0.48,
+      "what": "the narrator",
+      "kind": "cast"
+     },
+     "dist": 0.096,
+     "timing": {
+      "next": null,
+      "lead": null,
+      "prev": "FIGHT.",
+      "sincePrev": 0.23,
+      "pause": null,
+      "inside": null
+     },
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 1 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "WARN  L08: the aligner starts the first word at 0.24 s, the sound starts at 0.06 s (+0.18 s): a breath or a hum before the word? listen",
+    "OK: 0 blocker(s), 1 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "30 visible sound-making events (chest 15, step 11, voice 4), 4 with a sound mark, 26 without (audio.py adds those for a story)",
+    "    12.95s  player step on grass_block         -> block.grass.step                  13.0 blocks in view  key word",
+    "    22.20s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    22.45s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    22.70s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    22.95s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    23.20s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    23.45s  chest opened                       -> block.chest.open                   3.0 blocks in view  ",
+    "    23.70s  chest opened                       -> block.chest.open                   3.0 blocks in view  ",
+    "    23.95s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    24.20s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    24.45s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    24.70s  chest opened                       -> block.chest.open                   3.0 blocks in view  key word",
+    "    42.40s  ravager step on dirt_path          -> entity.ravager.step               14.7 blocks in view  ",
+    "    42.40s  pillager step on grass_block       -> block.grass.step                  15.3 blocks in view  ",
+    "    42.45s  player step on grass_block         -> block.grass.step                   3.9 blocks          ",
+    "    42.55s  player step on grass_block         -> block.grass.step                   2.9 blocks          ",
+    "    42.65s  player step on grass_block         -> block.grass.step                   2.1 blocks          ",
+    "    42.95s  player step on grass_block         -> block.grass.step                   2.6 blocks          ",
+    "    43.65s  ravager step on dirt_path          -> entity.ravager.step               13.4 blocks in view  ",
+    "    43.65s  pillager step on grass_block       -> block.grass.step                  15.7 blocks in view  ",
+    "    43.65s  pillager step on grass_block       -> block.grass.step                  13.8 blocks in view  ",
+    "    43.65s  pillager step on grass_block       -> block.grass.step                  15.3 blocks in view  ",
+    "    44.30s  pillager idle voice                -> entity.pillager.ambient           15.4 blocks in view  ",
+    "    46.40s  ravager idle voice                 -> entity.ravager.ambient            13.0 blocks in view  ",
+    "    48.95s  pillager idle voice                -> entity.pillager.ambient           15.0 blocks in view  ",
+    "    50.80s  ravager idle voice                 -> entity.ravager.ambient            13.0 blocks in view  ",
+    "ambience per shot: -0.20-1.10s day, 1.10-4.70s day, 4.70-7.05s dusk, 7.05-9.75s dusk, 9.75-11.45s dusk, 11.45-13.10s day, 13.10-17.80s night, 17.80-19.90s dusk, 19.90-21.90s night, 21.90-25.20s indoor_night, 25.20-27.40s night, 27.40-36.05s night, 36.05-38.45s dusk, 38.45-41.70s indoor_day, 41.70-52.15s dusk",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T22:44:10.132Z"
+}
