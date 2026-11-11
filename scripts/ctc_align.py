@@ -274,18 +274,24 @@ def greedy_letters(lp, vocab, blank):
     return "".join(out)
 
 
+GREEDY_MATCH = 0.8   # the greedy reading's letters against the script's (difflib ratio) for the low-score rescue
+
+
 def fits(score, lp, groups, vocab, blank):
     """Does the take say the script? The mean letter log-prob over MIN_SCORE, or, for a take whose mean is dragged under
     it by a few weak frames (a 2-word lead-in like "Mom says:" scored -2.87: too few letters to average out one soft
-    vowel), the model's own greedy reading spelling exactly the script's letters. A take that says something else never
-    passes the second test, so this only rescues takes the model already hears correctly."""
+    vowel), the model's own greedy reading matching the script's letters at GREEDY_MATCH or better (Light Sleeper's kid
+    says "Mom" so it reads "maamsays": 0.80). A take that says other words fails this (and caption_av_check's Whisper
+    check catches a wrong take anyway); this only rescues takes the model already hears as the script."""
     if score >= MIN_SCORE:
         return True
     if score < -99 + 1:
         return False
+    import difflib
     inv = {v: k for k, v in vocab.items()}
     want = "".join(inv.get(i, "") for g in groups for i in g).lower().replace("'", "")
-    return bool(want) and greedy_letters(lp, vocab, blank) == want
+    got = greedy_letters(lp, vocab, blank)
+    return bool(want) and difflib.SequenceMatcher(None, want, got, autojunk=False).ratio() >= GREEDY_MATCH
 
 
 def align(wav, tokens, model=MODEL):
