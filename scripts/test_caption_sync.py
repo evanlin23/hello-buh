@@ -154,10 +154,18 @@ class ShortLines(unittest.TestCase):
     def test_wrong_words_are_still_refused(self):
         V = self.VOCAB
         groups = [[V["M"], V["O"], V["M"]], [V["S"], V["A"], V["Y"], V["S"]]]
-        lp = self.take([(5, "M"), (8, "O"), (11, "X"), (14, "|"), (17, "S"), (21, "A"), (22, "Y"), (25, "S")], weak=(8, 21, 25))
+        lp = self.take([(5, "X"), (8, "Y"), (11, "X"), (14, "|"), (17, "X"), (21, "O"), (22, "X")], weak=(8, 21))
         spans, score = A.viterbi(lp, groups, 0, 1)
         self.assertLess(score, A.MIN_SCORE)
         self.assertFalse(A.fits(score, lp, groups, V, 0))
+
+    def test_an_accent_still_fits(self):
+        V = dict(self.VOCAB)   # the kid's "Mom" heard as "maam": close enough to the script
+        groups = [[V["M"], V["O"], V["M"]], [V["S"], V["A"], V["Y"], V["S"]]]
+        lp = self.take([(5, "M"), (8, "A"), (9, "A"), (11, "M"), (14, "|"), (17, "S"), (21, "A"), (22, "Y"), (25, "S")], weak=(8, 9, 21, 25))
+        spans, score = A.viterbi(lp, groups, 0, 1)
+        self.assertLess(score, A.MIN_SCORE)
+        self.assertTrue(A.fits(score, lp, groups, V, 0))
 
 
 class Hiss(unittest.TestCase):
