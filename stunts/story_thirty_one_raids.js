@@ -327,14 +327,14 @@ module.exports = {
         const s = G[GB]; const d = Math.hypot(s.x - 6.5, s.z - 0.6)
         if (d > 0.3) { s.x -= 0.075 * (s.x - 6.5) / d; s.z -= 0.075 * (s.z - 0.6) / d; s.yaw = yawTo(s.x, s.z, 0.5, 0.5); s.y = gy(s.x, s.z) }
       }
-      if (k === at.cut(3)) { K.shot('s03'); await cutG(-24, -4.5, P(-6, 2, -4.5), { time: TIMES.S03 }); park(GB) }
+      if (k === at.cut(3)) { await cutG(-24, -4.5, P(-6, 2, -4.5), { time: TIMES.S03, shot: 's03' }); park(GB) }   // the shot switches on the landing tick (K.shot before the cut made a second cut)
       if (k > at(3)) grind(k)
       look(k)
     })
     // ---- L03 (S03 -> S04): "He SAYS they FOLLOW him"; on "They KNOW" the cut in, closer; he doesn't look up
     put(GB, -76.0, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side
     await K.line('L03', async (k, at) => {
-      if (k === at.cut(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6)) }
+      if (k === at.cut(2)) { await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6), { shot: 's04' }) }
       grind(k); if (k >= at(3)) G[GA].pitch = 25   // a range: after the awaited cut, k jumps ahead (K.line on the recording clock)
       look(k)
     })
@@ -387,14 +387,13 @@ module.exports = {
     const l06 = {}
     await K.line('L06', async (k, at) => {
       if (k < at(3)) { const s = G[GB]; if (s.z < 13) { s.x += 0.045; s.z += 0.045; s.yaw = yawTo(0, 0, 1, 1); s.y = gy(s.x, s.z) } }
-      if (k >= at.cut(3) && !l06.s07) { l06.s07 = true; K.shot('s07'); await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07 }); park(GB) }
+      if (k >= at.cut(3) && !l06.s07) { l06.s07 = true; await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07, shot: 's07' }); park(GB) }
       // ranges with flags: after the awaited cut to S07, k jumps ahead (K.line on the recording clock)
       if (k >= at(3) + 2 && !l06.swung) { l06.swung = true; swing(GA) }
       if (k >= at(3) + 6 && !l06.bottle) { l06.bottle = true; hold(GA, 'ominous_bottle'); G[GA].pitch = 10; G[GA].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
       if (k >= at.cut(5) && !l06.pov) {   // first person beside him; I open his chest (the vanilla chest screen), aimed at the block centre K.open uses
         l06.pov = true
-        K.shot('pov')
-        await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)
+        await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2, { shot: 'pov' })
         K.open(P(-6, 2, -13)).then(w => { chest = w; sound('block.chest.open', 0.9, 1) }).catch(e => ctx.log('chest', e.message))   // the lid's sound on the screen (owner: "the chest opening is too fast": it now holds ~1.8 s)
       }
       look(k)
