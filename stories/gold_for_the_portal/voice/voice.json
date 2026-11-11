@@ -36,9 +36,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "ba3beb401bfd"
+   "aligned_wav": "ba3beb401bfd",
+   "gap": 0
   },
   "L02": {
    "who": "N",
@@ -71,9 +71,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 4.178,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "799648186b32"
+   "aligned_wav": "799648186b32",
+   "gap": 0
   },
   "L03": {
    "who": "N",
@@ -111,9 +111,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 8.053,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "a6245db88655"
+   "aligned_wav": "a6245db88655",
+   "gap": 0
   },
   "L04": {
    "who": "N",
@@ -141,9 +141,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 13.47,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "f91b8823b4b9"
+   "aligned_wav": "f91b8823b4b9",
+   "gap": 0
   },
   "L05": {
    "who": "N",
@@ -191,9 +191,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 15.627,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "823157c30836"
+   "aligned_wav": "823157c30836",
+   "gap": 0
   },
   "L06": {
    "who": "N",
@@ -241,9 +241,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 21.05,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "bbfbdd2b7300"
+   "aligned_wav": "bbfbdd2b7300",
+   "gap": 0
   },
   "L07": {
    "who": "N",
@@ -271,9 +271,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 25.09,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4885f2e77fb8"
+   "aligned_wav": "4885f2e77fb8",
+   "gap": 0
   },
   "L08": {
    "who": "N",
@@ -331,9 +331,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 26.935,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "ea03ed5c08cb"
+   "aligned_wav": "ea03ed5c08cb",
+   "gap": 0
   },
   "L09": {
    "who": "N",
@@ -367,17 +367,17 @@
   "L10": {
    "who": "Grandma",
    "text": "One's plenty, sweetie.",
-   "dur": 2.675,
-   "onset": 0.5,
-   "end": 2.38,
+   "dur": 2.51,
+   "onset": 0.52,
+   "end": 2.14,
    "chunks": [
     [
-     0.5,
-     1.64
+     0.52,
+     1.46
     ],
     [
-     1.735,
-     2.38
+     1.495,
+     2.14
     ]
    ],
    "captions": [
@@ -387,11 +387,11 @@
    "with": [
     "Grandma"
    ],
-   "model": "gemini-3.8-flash-tts",
+   "model": "gemini-3.1-flash-tts-preview",
    "beat": "L10",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "285cb440788b"
+   "aligned_wav": "15a11528368a"
   },
   "L11": {
    "who": "N",
@@ -444,9 +444,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 0.0,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "41dfbd887524"
+   "aligned_wav": "41dfbd887524",
+   "gap": 0
   },
   "L12": {
    "who": "N",
@@ -488,7 +488,7 @@
  "gap": 0.25,
  "models": {
   "N": "gemini-3.8-flash-lite-tts",
-  "Grandma": "gemini-3.8-flash-tts"
+  "Grandma": "gemini-3.1-flash-tts-preview"
  },
  "voice_takes": "beat",
  "beats": {
@@ -555,11 +555,11 @@
     "L10"
    ],
    "file": "beat_L10.wav",
-   "dur": 2.675,
+   "dur": 2.51,
    "offsets": [
     0.0
    ],
-   "model": "gemini-3.8-flash-tts",
+   "model": "gemini-3.1-flash-tts-preview",
    "try": 1,
    "tries": 1,
    "fixes": [],
@@ -569,5 +569,5 @@
    "rejected": []
   }
  },
- "total": 49.92
+ "total": 49.75
 }

@@ -42,11 +42,10 @@
    "name": "Grandma",
    "color": "#F2C66B",
    "on_screen": "villager (plains, librarian outfit), no name tag; speaks L10 in her own voice (r-cast); the narrator quotes her elsewhere",
-   "ref": null,
-   "voice": "Vindemiatrix",
-   "profile": "Grandma: a warm, gentle grandmother in her seventies, soft and kind, clearly a woman's voice, never gravelly or rough; a little amused, she has said this a thousand times",
-   "model": "gemini-3.8-flash-tts",
-   "note": "owner 2026-11-11 (preview_gold_3, 41.8 s): Gacrux read gravelly; recast to Vindemiatrix (gentle), not Sulafat (Buh's mom)"
+   "model": "gemini-3.1-flash-tts-preview",
+   "ref": "grandma",
+   "bracket": true,
+   "note": "owner 2026-11-11: grandma J = Autonoe (r:r3dabdb), voiced as the audition was: gemini-3.1-flash-tts-preview, the one-clause bracket verbatim"
   },
   "Grandpa": {
    "role": "character",
@@ -90,7 +89,7 @@
    "lines": [
     "L10"
    ],
-   "direction": "[A warm, gentle grandmother]"
+   "direction": "[An old grandmother in her seventies, warm, slow and a little dry]"
   }
  ],
  "sfx": [
