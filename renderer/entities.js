@@ -1095,7 +1095,9 @@ export class EntityLayer {
       if (r.bones.flashMat) r.bones.flashMat.color.setRGB(...LL)
       // on fire (EntityRenderDispatcher.renderFlame): fire_0 / fire_1 layers facing the camera, scale
       // 1.4 x width, each 1 x 1.4 of that, 0.45 higher and 0.9 x smaller than the last, up the height
-      if (s.extra && s.extra.fire && !s.player) {
+      // (players too: EntityRenderDispatcher.renderFlame runs for every burning entity; stages_friends review r1: the
+      // narrator burned in lava with no flames)
+      if (s.extra && s.extra.fire) {
         if (!r.fire) {
           r.fire = new THREE.Group(); r.fireMats = []
           const strips = [await texture(['anim/fire_0']), await texture(['anim/fire_1'])]

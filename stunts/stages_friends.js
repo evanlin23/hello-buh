@@ -24,7 +24,7 @@
 //   cave (absolute, deep): a 7x4x6 deepslate room under (20, 14), the diamond vein in its north wall
 //   mansion x -5..5, z -12..-4 (2 floors, gable roof), door at (0, -4) facing south, porch z -3..-1; a crawlspace
 //   x -4..4, z -11..-5 under it: TNT at y -4..-3, air at -2..-1; the lever at (0, 1, 13), dust north along x = 0, a
-//   repeater at z 5, a trench stepping down at z -2..-4 into the crawlspace, dust on the TNT to z -10.
+//   repeater at z 5, a trench stepping down at z -2..-4 into the crawlspace, pointing into a TNT standing at z -5.
 const M = require('../lib/movie')
 const S = require('../lib/stages')
 const { plateau } = require('../lib/plateau')
@@ -54,7 +54,7 @@ module.exports = {
     // his mansion, the friend on the porch, the dust line running to it across the lawn
     house: { at: [5.5, 3.2, 8.5], look: [0.5, 3.0, -5.5], fov: 64, push: 0.3, subject: [`actor:${FRIEND}`] },
     // in the crawlspace: a floor of TNT, the dust line glowing on it, the primed row flashing
-    basement: { at: [-3.4, -1.35, -5.4], look: [1.2, -2.4, -10.4], fov: 72, push: 0.15, dof: false, subject: [[0.5, -1.9, -7.5]] },
+    basement: { at: [-1.6, -1.12, -8.0], look: [0.5, -1.9, -4.8], fov: 62, push: 0.2, dof: false, subject: [[0.5, -1.4, -4.5]] },
     // close on the friend: he stops, looks down
     porch: { at: [3.6, 2.4, 1.2], look: [1.6, 2.0, -2.2], fov: 55, push: 0.2, subject: [`actor:${FRIEND}`] },
     // the whole house from the south-east, high: the chain
@@ -70,9 +70,10 @@ module.exports = {
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
       ['respawn', 'ch2', 'cut'],     // the respawn's first ticks (the camera switching to your eyes)
       ['vein', 'vein_end', 2],       // the vein at 2x (the aim at <= 100 deg/s)
-      ['chain_end', 'crater', 2]     // the smoke settling at 2x (no turns: the wide is a fixed camera)
+      ['chain_end', 'crater', 2],
+      ['notice', 'boom', 1.5]        // his look down, at you and the run (the fuse: no turns of ours, fixed cameras)     // the smoke settling at 2x (no turns: the wide is a fixed camera)
     ],
-    sfx: [['hit', 'push', { gain: 1.4 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
+    sfx: [['air', 'ch2', 'crater', { gain: 0.5 }], ['hit', 'push', { gain: 1.4 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
     extra: {
       deathScreen: true,
       punch: [['push', 0, 1.06], ['lever', 0, 1.05]],
@@ -116,7 +117,11 @@ module.exports = {
       await c(`/setblock ${cx + x} ${cy + y} ${cz + z} ${b}`)
     }
     await c(`/fill ${cx + 2} ${cy - 1} ${cz + 2} ${cx + 3} ${cy - 1} ${cz + 3} lava`)          // a little lava pool in the corner
-    for (const [x, y, z, f] of [[-3, 2, -1, 'east'], [3, 2, -1, 'west'], [0, 2, 3, 'north']]) await c(`/setblock ${cx + x} ${cy + y} ${cz + z} wall_torch[facing=${f}]`)
+    for (const [x, y, z, f] of [[-3, 2, -1, 'east'], [3, 2, -1, 'west'], [0, 2, 3, 'north'], [-2, 1, -2, 'north'], [2, 1, -2, 'north']]) await c(`/setblock ${cx + x} ${cy + y} ${cz + z} wall_torch[facing=${f}]`)
+    // light 15 on the vein (review r1: under dim torch light the diamonds rendered emerald green): glowstone in the
+    // ceiling over it and beside it
+    for (const x of [-2, 2]) await c(`/setblock ${cx + x} ${cy + 4} ${cz - 2} glowstone`)
+    await c(`/setblock ${cx} ${cy + 4} ${cz - 1} glowstone`)
     // the vein: north wall (z = cz - 3), right in front of the spawn point
     this.vein = [[-1, 2], [0, 2], [1, 2], [1, 1], [0, 1], [-1, 1], [0, 0]].map(([x, y]) => [cx + x, cy + y, cz - 3])
     for (const [x, y, z] of this.vein) await c(`/setblock ${x} ${y} ${z} deepslate_diamond_ore`)
@@ -178,7 +183,7 @@ module.exports = {
       await ctx.cmd(`/place feature minecraft:${f} ${A(dx, 1, dz)}`, { mayFail: true })
     }
     // the redstone: lever at z 13 (on the grass), dust north to z 6, a repeater at 5, dust to z -1; the trench steps
-    // down at z -2 (y 0), -3 (y -1), -4 (y -2, through the crawlspace wall), then dust on the TNT from z -5 to -10
+    // down at z -2 (y 0), -3 (y -1), -4 (y -2, through the crawlspace wall), into the first TNT at z -5
     await c(`/setblock ${A(0, 1, 13)} lever[face=floor,facing=north]`)
     await c(`/fill ${A(0, 1, 6)} ${A(0, 1, 12)} redstone_wire`)
     await c(`/setblock ${A(0, 1, 5)} repeater[facing=south]`)
@@ -192,7 +197,9 @@ module.exports = {
     await c(`/setblock ${A(0, 0, -2)} redstone_wire`)
     await c(`/setblock ${A(0, -1, -3)} redstone_wire`)
     await c(`/setblock ${A(0, -2, -4)} redstone_wire`)
-    await c(`/fill ${A(0, -2, -10)} ${A(0, -2, -5)} redstone_wire`)
+    // the first TNT stands on the TNT floor at the dust's end, in the open (review r1: dust laid on the floor primed one
+    // block sunk in it, unseen): the dust points into it, it primes, hops and flashes in full view
+    await c(`/setblock ${A(0, -2, -5)} tnt`)
     // the friend respawns far behind every camera
     this.cast = await M.spawnActors(ctx, [FRIEND])
     await c(`/gamemode survival ${FRIEND}`)
@@ -219,13 +226,21 @@ module.exports = {
     const at = (dx, dy, dz) => new Vec3(X + dx, F + dy, Z + dz)
     const me = () => fr.players['56e'] && fr.players['56e'].entity
     const sneak = (k, every = 3) => fr.setControlState('sneak', Math.floor(k / every) % 2 === 0)
+    // the game's own sounds for what the bot does by hand here (the harness logs only ctx.sound: review r1 heard
+    // digital silence through the whole cave and the lever)
+    const snd = (name, v = 1, p = 1) => ctx.sound(name, v, p)
+    const rp = () => 0.9 + Math.random() * 0.2
+    bot.on('playerCollect', (who) => { if (who === bot.entity) snd('entity.item.pickup', 0.2, (Math.random() - Math.random()) * 1.4 + 2) })
     const friendHead = () => { const e = bot.players[FRIEND] && bot.players[FRIEND].entity; return e ? e.position.offset(0, 1.6, 0) : at(PIT.x0 + 1.5, 2.6, PIT.z1 + 3.6) }
 
     // ---- 1. BETRAYAL: he steps up and punches you in
     S.chapter(ctx, 0, 'ch1')
     ctx.easeLookAt(friendHead(), 300)
     fr.setControlState('forward', true)
-    await bot.waitForTicks(5)
+    snd('block.grass.step', 0.3, rp())
+    await bot.waitForTicks(4)
+    snd('block.grass.step', 0.3, rp())
+    await bot.waitForTicks(1)
     fr.setControlState('forward', false)
     let inLava = false
     for (let tries = 0; tries < 3 && !inLava; tries++) {
@@ -234,6 +249,7 @@ module.exports = {
       // his punch: the swing, and the server's own player_attack from him (LivingEntity.hurt: the knockback away from
       // him, the kill credit). (The actor's own attack packet never landed on the recording bot.)
       M.swing(fr)
+      snd('entity.player.attack.knockback', 1, rp())
       bot.chat(`/damage @s 1 minecraft:player_attack by ${FRIEND}`)
       const z0 = bot.entity.position.z
       await bot.waitForTicks(3)
@@ -251,8 +267,10 @@ module.exports = {
     // you look up at him, struggling; he looks down at you and teabags
     ctx.easeLookAt(friendHead(), 400)
     const e0 = me(); if (e0) M.lookAt(fr, e0.position.offset(0, 1.2, 0), 300)
+    snd('entity.generic.burn', 0.6, rp())
     for (let k = 0; k < 120 && !ctx.died; k++) {
       if (k === 6) ctx.mark('burn')
+      if (k % 9 === 4) snd('block.lava.pop', 0.4, rp())
       sneak(k)
       if (k % 10 === 5) ctx.easeLookAt(friendHead(), 300)
       await bot.waitForTicks(1)
@@ -283,17 +301,25 @@ module.exports = {
     bot.chat(`/tp ${FRIEND} ${X + PORCH[0]} ${F + PORCH[1]} ${Z + PORCH[2]} 0 0`)
     for (const [x, y, z] of this.vein) {
       const b = bot.blockAt(new Vec3(x, y, z))
-      if (b && /diamond/.test(b.name)) await A2.dig(b, { ms: 450 })   // vanilla: iron pickaxe, Efficiency III (mineflayer counts a bare hand)
+      if (!b || !/diamond/.test(b.name)) continue
+      // the hits while it breaks (every 4 ticks, MultiPlayerGameMode.continueDestroyBlock) and the break
+      let digging = true
+      ;(async () => { await bot.waitForTicks(3); while (digging) { snd('block.deepslate.hit', 0.25, 0.5); await bot.waitForTicks(4) } })()
+      await A2.dig(b, { ms: 450 })   // vanilla: iron pickaxe, Efficiency III (mineflayer counts a bare hand)
+      digging = false
+      snd('block.deepslate.break', 1, 0.8)
     }
     ctx.mark('vein_end')
     await A2.turnTo(new Vec3(cv.cx + 0.5, cv.cy + 1.1, cv.cz - 2.5))
     bot.setControlState('forward', true)   // motion-ok: a step in to the wall, the view on the vein
+    snd('block.deepslate.step', 0.2, rp())
     for (let k = 0; k < 20 && bot.entity.position.z > cv.cz - 1.4; k++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)   // motion-ok: (the step's end)
     let dia = 0
-    for (let k = 0; k < 20; k++) {
+    ctx.easeLook(bot.entity.yaw + 0.25, 0.3, 700)   // a glance up the emptied vein while the drops fly in (rec_check r2: a held wall)
+    for (let k = 0; k < 12; k++) {   // (the stack lands in 2-6 ticks; review r1: 1.4 s on a dark wall closed the chapter)
       dia = bot.inventory.items().filter(i => i.name === 'diamond').reduce((a, i) => a + i.count, 0)
-      if (k === 0 || dia > 0) { if (dia > 0 && !this._loot) { this._loot = true; ctx.mark('loot') } }
+      if (dia > 0 && !this._loot) { this._loot = true; ctx.mark('loot') }
       await bot.waitForTicks(1)
     }
     ctx.log('diamonds', dia)
@@ -301,7 +327,7 @@ module.exports = {
     const slot = bot.inventory.slots.slice(36, 45).findIndex(i => i && i.name === 'diamond')
     if (slot >= 0) ctx.select(slot)
     ctx.mark('rich', { diamonds: dia })
-    await A2.turnTo({ yaw: bot.entity.yaw, pitch: 0.1 })
+    await bot.waitForTicks(6)   // the diamonds in your hand, "Diamond" over the hotbar
 
     // ---- 3. REVENGE: his house, the lever, the TNT
     await ctx.cmd('/gamerule block_drops false')
@@ -320,21 +346,26 @@ module.exports = {
     // the chain's last blast: the payoff waits for it to settle
     let lastBoom = -1
     bot._client.on('explosion', () => { lastBoom = ctx.tick })
-    await A.use(at(0, 1, 13))                // the lever
+    await A.use(at(0, 1, 13), { sound: null })   // the lever (its click below)
+    snd('block.lever.click', 0.3, 0.6)
     ctx.mark('lever')
-    await bot.waitForTicks(6)
+    await bot.waitForTicks(2)
+    snd('entity.tnt.primed', 1, 1)
+    await bot.waitForTicks(4)
+    // the crawlspace: on the TNT the dust powered (the first one primes and drops the dust line on it: review r1 had
+    // the camera 53 degrees off it, on a still floor)
     M.shot(ctx, 'basement'); ctx.mark('tnt_lit')
-    await bot.waitForTicks(30)
+    await bot.waitForTicks(22)
     M.shot(ctx, 'porch'); ctx.mark('notice')
     await M.lookAt(fr, at(PORCH[0] - 0.6, 0.2, PORCH[2] + 1.4), 250)   // he looks down at his feet (he hears it)
     await bot.waitForTicks(8)
     await M.lookAt(fr, at(ME3[0], 1.6, ME3[2]), 250)           // then at you
-    await bot.waitForTicks(4)
-    M.shot(ctx, 'wide'); ctx.mark('wide')
-    // too late: he turns and runs for it, off the porch and across the lawn
+    await bot.waitForTicks(6)
+    // too late: he turns and runs for it, off the porch and across the lawn (out of this shot); the wide on the blast
     fr.look(-Math.PI / 2 - 0.35, 0, true)   // (mineflayer yaw: -PI/2 = east, a little south)
     fr.setControlState('sprint', true); fr.setControlState('forward', true)
-    for (let k = 0; k < 60 && !boomed; k++) await bot.waitForTicks(1)
+    for (let k = 0; k < 80 && !boomed; k++) { if (k % 6 === 0) snd('block.wood.step', 0.25, rp()); await bot.waitForTicks(1) }
+    M.shot(ctx, 'wide'); ctx.mark('wide')
     // your eyes go to where the house was (unseen: the camera is the wide)
     ctx.easeLookAt(at(0, -1, -7), 600)
     for (let k = 0; k < 200 && (lastBoom < 0 || ctx.tick - lastBoom < 12); k++) await bot.waitForTicks(1)
