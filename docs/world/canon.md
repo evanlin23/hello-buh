@@ -106,7 +106,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 520 | Fernbank | **Respawn Tax.** Every respawn costs a villager. The fisherman's boat is found floating empty. The nitwit volunteers. In the end only the librarian is left. From here on Fernbank is empty but for her and the golem. |
 | 700 | Digger's House | The Digger (memoryless again) digs under a dirt block, dies to a zombie that keeps his sword, and wakes with nothing. His blue sheep starts staring at the block. |
 | 800-1100 | everywhere | **The Long Day.** A lever in Stillwater holds the sun up for 300 days. Time is global, so **no story may show a night in days 800-1100.** |
-| 1100 | Stillwater | **The Sun Won't Set.** The lever goes back, the sun sets, and the zombies from under the one tree come out. The narrator is slain. Gary the farmer is taken that night. |
+| 1100 | Stillwater | **The Sun Won't Set.** Grandpa asks for the night ("You need sleep, kid"). The kid walks him home, pulls the lever back and stands guard at Grandpa's door against the zombies from under the one tree. Phantoms come for him (300 days without sleep): the narrator is slain by Phantom. Grandpa is safe inside. Gary the farmer is taken by the zombies that night. |
 | 1112 | Digger's House | **Sheep Stares.** 412 days on, the Digger breaks the block, falls and dies to the same zombie. The hole stays open. |
 | 1300 | Cliff House | **Respawn Voice.** A first death, two voices. The Short leaves the question open (the intended answer is in the stunt file). |
 | 1300-1400 | Hushwell | Kid Buh builds his dirt hut on the hilltop. Hushwell finds the shrieker under its well and carpets everything, boxes the bell and lids the well (day 1400). |
@@ -140,7 +140,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | **Mom** | plains villager, farmer (straw hat) | `mom` (Pulcherrima from 2026-11-11; Sulafat before) | Buh's mom in Hushwell. "Walk soft, Buh. The ground's a light sleeper." |
 | **Grandpa (Ravenford)** | player actor, `zuri` skin; the slow walk | `elder` (Charon) | Buh's grandpa. Saved Ravenford from 31 raids that he brought himself with ominous bottles. Grandma died. Since raid 32 he and Buh fight together. |
 | **Grandpa (Hushwell)** | plains villager, cartographer (monocle) | Algenib (Dog on the Hill) | Hushwell's elder. He knows whose dog it is ("Only one voice gets him up", "Said he'd be right back"). |
-| **Grandpa (Stillwater)** | as in The Sun Won't Set | Kokoro (that Short) | Asked every day of the Long Day whether tonight was the night. "Already gone" when the sun set on day 1100. Never shown alive after it. |
+| **Grandpa (Stillwater)** | plains villager, librarian outfit, slow | Rasalgethi (gemini-3.8-flash-tts; proposed with the r3 remake, pending the owner's audition) | Asked every day of the Long Day whether the sun would go down. Knew the kid hadn't slept ("Let the night come. You need sleep, kid"). Safe in his cottage when the sun set on day 1100; never shown after it. |
 | **The nitwit** | plains nitwit (green coat) | "hmm" | Fernbank's. He stands where something bad is about to happen: near the creeper (Runaway), in the wheat before a creeper, by the well, on a roof (Nitwit), on the respawn point (Respawn Tax). Gone from day 520. |
 | **The iron golem** | iron golem | | Fernbank's. Follows the creeper everywhere (Runaway). Goes around the nitwit (Nitwit). Stands on the respawn point and keeps the line (Respawn Tax). Still by the well. |
 | **The librarian** | plains villager, librarian | | Fernbank's. Raised the respawner and gave him bread "just in case". The last villager in Fernbank. |
@@ -234,7 +234,7 @@ follow any Short.
    (Ravenford, day 1900) are kid Buh two years apart, on opposite sides of the White. After he woke the warden,
    he was sent to Grandpa's. Dog on the Hill's Buh is him at 18, back for a minute.
 9. **The HelloBuh graves** (theory). The early Shorts' death screens all say HelloBuh: Runaway "HelloBuh was blown up
-   by Creeper", Sheep Stares "slain by Zombie using [HelloBuh's Sword]", The Sun Won't Set "slain by Zombie",
+   by Creeper", Sheep Stares "slain by Zombie using [HelloBuh's Sword]", The Sun Won't Set "slain by Phantom",
    Respawn Tax, Torch and Respawn Voice. Fernbank's churchyard has a row of headstones that all say HELLOBUH. Same
    player, or every nameless player? Never answered.
 10. **Leo in the End** (plant, both unpublished). One More Eye's brother Leo went to the End six years ago. Put
@@ -313,6 +313,7 @@ follow any Short.
 | 22 | The Bell in the Window's set asked for "a sheer stone cliff"; Saltmouth is flat. The only bank over it is Buh's pad, whose south-east corner stands 8 over the sea on four steps | The bank is the cliff (Good Boy already calls it one: "the wolf behind the camera on the cliff"). The house stands on a boardwalk at sea level; the skeleton's spot, the bell and the window keep the script's offsets (bell_window set.md). The live-AI gate decides. |
 | 23 | An evoker left out of a raid is an ordinary mob and could despawn in 400 days | Never shown or said. Red Sheep's players live within its range; the canon doesn't explain it (fans may). |
 | 24 | Highwall is in the White, a snowy village; The Wall Grows' bible had a plains village | Set dressing: snowy villagers, snow on the ground; the wall, the hall and every line are unchanged. |
+| 25 | The Sun Won't Set's first cut (rendered 2026-11-09, held, never posted) had Grandpa "already gone" and the narrator slain by Zombie | **Resolved by the remake (2026-11-11, the owner's notes):** Grandpa is safe in bed and the narrator is slain by Phantom (300 days without sleep). The old render is never published. |
 
 ## Easter eggs
 **Rules:** one per story; in the background (out of focus, off centre, never the subject of a shot); on screen 1-3 s;
