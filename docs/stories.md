@@ -292,6 +292,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
   meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
   war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
+  build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
+  "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
 - **Owner, 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall before we
   end/cut"; "our processes must cover all of these."** A Short never cuts or ends while its payoff is still moving:
   every falling block has landed, the blast debris has settled, the mob's death puff is done. The payoff moment is when

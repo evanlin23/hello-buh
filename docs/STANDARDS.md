@@ -342,6 +342,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
+- **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
