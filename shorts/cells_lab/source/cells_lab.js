@@ -13,9 +13,10 @@ module.exports = C.makeStunt({
   finale: 'golem_launcher',
   edit: {
     caption: 'nobody remembers who built this place', red: 'nobody',
-    startAt: 'open:0', endAfter: 'slam:1.0', dropAt: 'finale',
-    // the payoff: the golem comes down on the slime. The song dips 0.3 s before it, then an impact and a short shake
-    sfx: [['riser', 'launch', 'slam'], ['dip', 'slam', 0.3], ['impact', 'slam']],
+    startAt: 'open:0', endAfter: 'slam:1.0', dropAt: 'slam',   // the song's drop lands with the slam (on 'finale' it hit 1.7 s early and buried the payoff under the bed)
+    // the payoff: the golem comes down on the slime. The song dips 0.4 s before it (no riser: it filled the dip and the
+    // slam rose only 5 dB over the NCS bed, pace on the package), then an impact and a short shake
+    sfx: [['dip', 'slam', 0.4], ['impact', 'slam', { gain: 1.4 }]],
     flash: [['slam', 0, 0.5]],
     shake: [['slam', 0, 8]]
   }

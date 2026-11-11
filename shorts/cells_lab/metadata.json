@@ -18,10 +18,10 @@
     "title": "Mortals Funk Remix",
     "artist": "Warriyo, LXNGVX",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "finale",
+    "drop_on_event": "slam",
     "drop_in_song_s": 113.75,
-    "drop_in_short_s": 27.35,
-    "song_start_s": 86.4
+    "drop_in_short_s": 29.0,
+    "song_start_s": 84.75
   },
   "video": {
     "file": "short.mp4",
@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19121372,
-    "sha256": "5b4e9c47928f7649c9be8882cb098aef308907ce74184453873e2b1c233a1300",
+    "bytes": 19128996,
+    "sha256": "f15c375e86ec235430fff03d0a653d89eb4c01715a910611654e64504cdd91a0",
     "release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short.5b4e9c47928f7649.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.5b4e9c47928f7649.mp4",
-      "sha256": "5b4e9c47928f7649c9be8882cb098aef308907ce74184453873e2b1c233a1300",
-      "bytes": 19121372
+      "asset": "cells_lab.short.f15c375e86ec2354.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.f15c375e86ec2354.mp4",
+      "sha256": "f15c375e86ec235430fff03d0a653d89eb4c01715a910611654e64504cdd91a0",
+      "bytes": 19128996
     },
     "nosong_release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short_nosong.99c97f9188723ad6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short_nosong.99c97f9188723ad6.mp4",
-      "sha256": "99c97f9188723ad6b39e9c28efb861025414c7a513494d6ebae30095d4c6920f",
-      "bytes": 19104936
+      "asset": "cells_lab.short_nosong.37ff666aede4fc83.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short_nosong.37ff666aede4fc83.mp4",
+      "sha256": "37ff666aede4fc832adb687046d0e762449d8c265d2e068a44e2476488018b69",
+      "bytes": 19110540
     }
   },
   "edit": {
@@ -52,21 +52,19 @@
     "red": "nobody",
     "startAt": "open:0",
     "endAfter": "slam:1.0",
-    "dropAt": "finale",
+    "dropAt": "slam",
     "sfx": [
-      [
-        "riser",
-        "launch",
-        "slam"
-      ],
       [
         "dip",
         "slam",
-        0.3
+        0.4
       ],
       [
         "impact",
-        "slam"
+        "slam",
+        {
+          "gain": 1.4
+        }
       ]
     ],
     "flash": [
@@ -93,7 +91,7 @@
       "--flash",
       "[[\"slam\",0,0.5]]",
       "--sfx",
-      "[[\"riser\",\"launch\",\"slam\"],[\"dip\",\"slam\",0.3],[\"impact\",\"slam\"]]",
+      "[[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]]",
       "--start_at",
       "open:0",
       "--end_after",
@@ -2850,10 +2848,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "616af42413c2e39dc67b6abeb90be111bf0af251",
+    "commit": "9863cb678c2323a3d4e83e006f53d40b38188e6c",
     "rendered": "local",
-    "rendered_at": "2026-11-11T08:40:04.668Z",
-    "head_at_publish": "616af42413c2e39dc67b6abeb90be111bf0af251",
+    "rendered_at": "2026-11-11T08:53:50.820Z",
+    "head_at_publish": "c48a6c3590d44afbb696bad50a5cf256e28f0e10",
     "stunt": "stunts/cells_lab.js",
     "source_snapshot": [
       "source/cells_lab.js",
@@ -2863,34 +2861,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 616af42413c2",
+    "git checkout 9863cb678c23",
     "gunzip -c shorts/cells_lab/recording.json.gz > work/cells_lab.rec.json",
     "node render.js work/cells_lab.rec.json work/cells_lab.frames 60 1080 1011",
     "python3 audio.py work/cells_lab.rec.json work/cells_lab.wav",
-    "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --red nobody --shake [[\"slam\",0,8]] --flash [[\"slam\",0,0.5]] --sfx [[\"riser\",\"launch\",\"slam\"],[\"dip\",\"slam\",0.3],[\"impact\",\"slam\"]] --start_at open:0 --end_after slam:1.0 --out out/cells_lab.mp4"
+    "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --red nobody --shake [[\"slam\",0,8]] --flash [[\"slam\",0,0.5]] --sfx [[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]] --start_at open:0 --end_after slam:1.0 --out out/cells_lab.mp4"
   ],
   "status": "ready",
-  "notes": "cells #1: six mobs in vanilla contraptions down a glass lab corridor, iron golem launch finale. Independent review r1: finale pad hidden (fixed); r2 READY. Nitpicks: wool pile reads grey-brown; ~1 s hold on the sheared sheep; snow golem pumpkin partly out of frame; cow framed close. pace WARN: quieter last third.",
-  "published_at": "2026-11-11T08:41:16.901Z",
+  "notes": "cells #1: six mobs in vanilla contraptions down a glass lab corridor, iron golem launch finale. Independent review r1: finale pad hidden (fixed); r2 READY. Payoff fix (edit only, same recording): NCS drop lands on the slam, 0.4 s dip + impact, riser removed. Nitpicks: wool pile reads grey-brown; ~1 s hold on the sheared sheep; snow golem pumpkin partly out of frame; cow framed close.",
+  "published_at": "2026-11-11T08:55:32.657Z",
   "gates": {
     "version": 3,
-    "at": "2026-11-11T08:41:54+00:00",
+    "at": "2026-11-11T08:56:11+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.02 s vs the reviewed render 30.00 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 1,
+      "ok": true,
+      "blockers": 0,
       "warnings": 1,
-      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+      "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T08:40:20.627Z",
+      "at": "2026-11-11T08:54:08.888Z",
       "report": "work/hb/cells_lab.check.json"
     },
     "key_sounds": "n/a"
