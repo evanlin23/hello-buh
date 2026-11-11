@@ -46,7 +46,7 @@ SILENCE_BEFORE_HIT = 0.45
 RISER_LEN = 1.9
 WHOOSH_MIN_GAP = 6.0
 WHOOSH_PEAK, RISER_PEAK, HIT_PEAK, SUB_PEAK, SCRATCH_PEAK = -32.0, -24.0, -6.0, -12.0, -18.0
-KEY_DUCK_DB = 18.0   # the score under a key sound (edit.keySounds): scripts/key_sounds.py's gate wants the sound >= 8 dB over it
+KEY_DUCK_DB = 24.0   # the score under a key sound (edit.keySounds), as add_song.py ducks a stunt's bed (key_sounds.DUCK): the gate wants the sound >= 8 dB over it
 CLEAR_DB, GUARD_MAX_DB = 9.0, 8.0   # the clarity guard: the sfx this far under the voice in the speech band, at most 8 dB down
 BED_CLEAR_DB, BED_GUARD_MAX_DB = 6.0, 4.0   # and the bed's swells (the reference's bed sits 16+ dB under in that band 90% of the time)
 MASTER_LUFS, MASTER_TP = -14.0, -1.0
