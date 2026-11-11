@@ -1,9 +1,10 @@
 {
   "name": "nether_portal",
-  "caption": "POV: your first nether portal \ud83d\ude33",
+  "channel": "hellobuh",
+  "caption": "rating every way to light a nether portal 😳",
   "youtube": {
-    "title": "POV: your first nether portal \ud83d\ude33 #minecraft #shorts",
-    "description": "POV: your first nether portal \ud83d\ude33\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "rating every way to light a nether portal 😳 #minecraft #shorts",
+    "description": "rating every way to light a nether portal 😳\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,56 +14,270 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "montagem_favela.mp3",
-    "title": "MONTAGEM FAVELA",
-    "artist": "CHASHKAKEFIRA",
+    "file": "sky_verse.mp3",
+    "title": "Sky Verse",
+    "artist": "Lieless, Luuna, Yarimov",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "lit",
-    "drop_in_song_s": 38.25,
-    "drop_in_short_s": 4.55,
-    "song_start_s": 33.7
+    "drop_on_event": null,
+    "drop_in_song_s": 4.0,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 4.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 6.95,
+    "duration_s": 16.78,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 7418250,
-    "sha256": "3d8a1583838cb141475c296362d182a340eef47b3d116806b198112d2e63f4df",
-    "release": {
-      "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short.3d8a1583838cb141.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.3d8a1583838cb141.mp4",
-      "sha256": "3d8a1583838cb141475c296362d182a340eef47b3d116806b198112d2e63f4df",
-      "bytes": 7418250
-    },
-    "nosong_release": {
-      "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short_nosong.14e0d0c8211e1dc3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.14e0d0c8211e1dc3.mp4",
-      "sha256": "14e0d0c8211e1dc336a244c1b2f7c671a224e85590dbcb33fe979586bf2cc62f",
-      "bytes": 7380409
-    }
+    "bytes": 19439458,
+    "sha256": "854b08a8865b45606f27b455ad9c1f078086cb142cad7aa07136a91cd9bb835d"
   },
   "edit": {
-    "caption": "POV: your first nether portal \ud83d\ude33",
-    "red": "nether",
-    "song": "songs/funk_abnormal.mp3",
-    "dropAt": "lit",
-    "endAfter": "lit:2.4",
+    "subsY": 0.15,
+    "caption": "rating every way to light a nether portal 😳",
+    "armor": 20,
+    "startAt": "st:-0.05",
+    "endAfter": "lit5:1.4",
+    "sfx": [
+      [
+        "air",
+        "start",
+        "lit5",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "dip",
+        "lit5",
+        0.4
+      ],
+      [
+        "impact",
+        "lit5",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ],
+      [
+        "cut3a",
+        "cut3b",
+        "cut"
+      ],
+      [
+        "cut4a",
+        "cut4b",
+        "cut"
+      ],
+      [
+        "cut5a",
+        "cut5b",
+        "cut"
+      ],
+      [
+        "fuse_a",
+        "fuse_b",
+        "cut"
+      ],
+      [
+        "lava_a",
+        "lava_b",
+        6
+      ]
+    ],
+    "subs": [
+      [
+        "st",
+        "flint and steel",
+        1.4,
+        0
+      ],
+      [
+        "st",
+        "fire charge",
+        1.4,
+        1
+      ],
+      [
+        "st",
+        "TNT",
+        1.4,
+        2
+      ],
+      [
+        "st",
+        "redstone",
+        1.4,
+        3
+      ],
+      [
+        "st",
+        "lava",
+        1.4,
+        4
+      ],
+      [
+        "st",
+        "respawn anchor",
+        1.4,
+        5
+      ],
+      [
+        "lava_a",
+        "x6",
+        0.8,
+        0
+      ]
+    ],
+    "cards": [
+      [
+        "lit0",
+        "1/10",
+        0.9,
+        "white"
+      ],
+      [
+        "lit1",
+        "3/10",
+        0.9,
+        "white"
+      ],
+      [
+        "lit2",
+        "0/10",
+        0.9,
+        "red"
+      ],
+      [
+        "lit3",
+        "5/10",
+        0.9,
+        "yellow"
+      ],
+      [
+        "lit4",
+        "8/10",
+        0.9,
+        "yellow"
+      ],
+      [
+        "lit5",
+        "11/10",
+        1.4,
+        "gold"
+      ]
+    ],
+    "punch": [
+      [
+        "lit0",
+        0,
+        1.06
+      ],
+      [
+        "lit1",
+        0,
+        1.06
+      ],
+      [
+        "lit2",
+        0,
+        1.06
+      ],
+      [
+        "lit3",
+        0,
+        1.06
+      ],
+      [
+        "lit4",
+        0,
+        1.06
+      ],
+      [
+        "lit5",
+        0,
+        1.12
+      ]
+    ],
+    "shake": [
+      [
+        "boom",
+        0,
+        12
+      ],
+      [
+        "boom",
+        1,
+        20
+      ]
+    ],
+    "counter": {
+      "at": [
+        [
+          "st",
+          0
+        ],
+        [
+          "st",
+          1
+        ],
+        [
+          "st",
+          2
+        ],
+        [
+          "st",
+          3
+        ],
+        [
+          "st",
+          4
+        ],
+        [
+          "st",
+          5
+        ]
+      ],
+      "total": 6
+    },
     "args": [
       "--caption",
-      "POV: your first nether portal \ud83d\ude33",
-      "--red",
-      "nether",
+      "rating every way to light a nether portal 😳",
+      "--subs",
+      "[[\"st\",\"flint and steel\",1.4,0],[\"st\",\"fire charge\",1.4,1],[\"st\",\"TNT\",1.4,2],[\"st\",\"redstone\",1.4,3],[\"st\",\"lava\",1.4,4],[\"st\",\"respawn anchor\",1.4,5],[\"lava_a\",\"x6\",0.8,0]]",
+      "--subs_y",
+      "0.15",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse_a\",\"fuse_b\",\"cut\"],[\"lava_a\",\"lava_b\",6]]",
+      "--punch",
+      "[[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]]",
+      "--counter",
+      "{\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6}",
+      "--cards",
+      "[[\"lit0\",\"1/10\",0.9,\"white\"],[\"lit1\",\"3/10\",0.9,\"white\"],[\"lit2\",\"0/10\",0.9,\"red\"],[\"lit3\",\"5/10\",0.9,\"yellow\"],[\"lit4\",\"8/10\",0.9,\"yellow\"],[\"lit5\",\"11/10\",1.4,\"gold\"]]",
+      "--shake",
+      "[[\"boom\",0,12],[\"boom\",1,20]]",
+      "--sfx",
+      "[[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"lit5\",0.4],[\"impact\",\"lit5\",{\"gain\":1.4}]]",
+      "--armor",
+      "20",
+      "--start_at",
+      "st:-0.05",
       "--end_after",
-      "lit:2.4",
-      "--song",
-      "songs/funk_abnormal.mp3",
-      "--song_drop_at",
-      "lit"
+      "lit5:1.4"
     ]
   },
   "recording": {
@@ -73,111 +288,584 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 416,
-      "y": 85,
-      "z": 13
+      "x": 357,
+      "y": 68,
+      "z": -44
     },
-    "biome": "minecraft:forest",
-    "ticks": 141,
-    "seconds": 7.05,
+    "biome": "minecraft:plains",
+    "ticks": 493,
+    "seconds": 24.65,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.7,
+        "t": 0.75,
+        "event": "st"
+      },
+      {
+        "t": 1.45,
         "event": "swing"
       },
       {
-        "t": 0.95,
+        "t": 1.5,
+        "event": "lit0"
+      },
+      {
+        "t": 2.8,
+        "event": "cut1a"
+      },
+      {
+        "t": 2.8,
+        "event": "cut"
+      },
+      {
+        "t": 3.4,
+        "event": "cut1b"
+      },
+      {
+        "t": 3.4,
+        "event": "st"
+      },
+      {
+        "t": 4.1,
         "event": "swing"
       },
       {
-        "t": 1.15,
+        "t": 4.15,
+        "event": "lit1"
+      },
+      {
+        "t": 5.45,
+        "event": "cut2a"
+      },
+      {
+        "t": 5.45,
+        "event": "cut"
+      },
+      {
+        "t": 6.05,
+        "event": "cut2b"
+      },
+      {
+        "t": 6.05,
+        "event": "st"
+      },
+      {
+        "t": 6.45,
         "event": "swing"
       },
       {
-        "t": 1.35,
+        "t": 7,
         "event": "swing"
       },
       {
-        "t": 1.6,
+        "t": 7,
+        "event": "primed"
+      },
+      {
+        "t": 7,
+        "event": "motion_start"
+      },
+      {
+        "t": 7.25,
+        "event": "fuse_a"
+      },
+      {
+        "t": 7.25,
+        "event": "cut"
+      },
+      {
+        "t": 9.8,
+        "event": "fuse_b"
+      },
+      {
+        "t": 10.95,
+        "event": "vel"
+      },
+      {
+        "t": 10.95,
+        "event": "vel"
+      },
+      {
+        "t": 10.95,
+        "event": "boom"
+      },
+      {
+        "t": 11.5,
+        "event": "vel"
+      },
+      {
+        "t": 11.5,
+        "event": "vel"
+      },
+      {
+        "t": 11.7,
+        "event": "lit2"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "motion_settled"
+      },
+      {
+        "t": 12,
+        "event": "vel"
+      },
+      {
+        "t": 12.15,
+        "event": "vel"
+      },
+      {
+        "t": 12.2,
+        "event": "vel"
+      },
+      {
+        "t": 12.55,
+        "event": "vel"
+      },
+      {
+        "t": 12.6,
+        "event": "cut3a"
+      },
+      {
+        "t": 12.6,
+        "event": "cut"
+      },
+      {
+        "t": 12.6,
+        "event": "vel"
+      },
+      {
+        "t": 12.95,
+        "event": "vel"
+      },
+      {
+        "t": 13,
+        "event": "vel"
+      },
+      {
+        "t": 13.2,
+        "event": "cut3b"
+      },
+      {
+        "t": 13.2,
+        "event": "st"
+      },
+      {
+        "t": 13.8,
         "event": "swing"
       },
       {
-        "t": 1.8,
+        "t": 13.8,
+        "event": "button"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 14,
+        "event": "vel"
+      },
+      {
+        "t": 14.2,
+        "event": "lit3"
+      },
+      {
+        "t": 14.95,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15.55,
+        "event": "cut4a"
+      },
+      {
+        "t": 15.55,
+        "event": "cut"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "cut4b"
+      },
+      {
+        "t": 16.15,
+        "event": "st"
+      },
+      {
+        "t": 16.4,
         "event": "swing"
       },
       {
-        "t": 2,
+        "t": 16.4,
+        "event": "poured"
+      },
+      {
+        "t": 16.9,
+        "event": "lava_a"
+      },
+      {
+        "t": 16.95,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17.25,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 18,
+        "event": "vel"
+      },
+      {
+        "t": 18,
+        "event": "vel"
+      },
+      {
+        "t": 18.25,
+        "event": "vel"
+      },
+      {
+        "t": 18.4,
+        "event": "vel"
+      },
+      {
+        "t": 18.6,
+        "event": "lava_b"
+      },
+      {
+        "t": 18.6,
+        "event": "vel"
+      },
+      {
+        "t": 18.8,
+        "event": "lit4"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.4,
+        "event": "vel"
+      },
+      {
+        "t": 20,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.15,
+        "event": "cut5a"
+      },
+      {
+        "t": 20.15,
+        "event": "cut"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.45,
+        "event": "vel"
+      },
+      {
+        "t": 20.75,
+        "event": "cut5b"
+      },
+      {
+        "t": 20.75,
+        "event": "st"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
         "event": "swing"
       },
       {
-        "t": 2.2,
+        "t": 21.35,
+        "event": "charge"
+      },
+      {
+        "t": 21.45,
+        "event": "vel"
+      },
+      {
+        "t": 21.65,
         "event": "swing"
       },
       {
-        "t": 2.4,
+        "t": 21.65,
+        "event": "charge"
+      },
+      {
+        "t": 21.95,
         "event": "swing"
       },
       {
-        "t": 2.65,
+        "t": 21.95,
+        "event": "charge"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
         "event": "swing"
       },
       {
-        "t": 2.85,
+        "t": 22.25,
+        "event": "charge"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 22.4,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
         "event": "swing"
       },
       {
-        "t": 3.05,
-        "event": "swing"
+        "t": 23.1,
+        "event": "hurt",
+        "type": "bad_respawn_point"
       },
       {
-        "t": 3.25,
-        "event": "swing"
+        "t": 23.1,
+        "event": "vel"
       },
       {
-        "t": 3.45,
-        "event": "swing"
+        "t": 23.1,
+        "event": "vel"
       },
       {
-        "t": 4.55,
-        "event": "swing"
+        "t": 23.1,
+        "event": "vel"
       },
       {
-        "t": 4.55,
-        "event": "lit"
+        "t": 23.1,
+        "event": "boom"
       },
       {
-        "t": 7.05,
+        "t": 23.1,
+        "event": "vel"
+      },
+      {
+        "t": 23.1,
+        "event": "motion_start"
+      },
+      {
+        "t": 23.15,
+        "event": "lit5"
+      },
+      {
+        "t": 23.15,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "vel"
+      },
+      {
+        "t": 23.45,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "hurt",
+        "type": "in_fire"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "hurt",
+        "type": "in_fire"
+      },
+      {
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.1,
+        "event": "motion_settled"
+      },
+      {
+        "t": 24.1,
+        "event": "settle"
+      },
+      {
+        "t": 24.15,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.4,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 24.65,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "38ccca975e4120387012207653a8f289aaf8e7ba",
-    "rendered_at": "2026-11-06T17:52:48.848Z",
-    "head_at_publish": "38ccca975e4120387012207653a8f289aaf8e7ba",
+    "branch": "render/nether_portal",
+    "commit": "9872b03b012d311cd322c343dbeba14d40006701",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43008456458",
+    "rendered_at": "2026-11-11T11:05:25.917Z",
+    "head_at_publish": "4e0353d759dc2cbda62820557d91b38e1976deaa",
     "stunt": "stunts/nether_portal.js",
     "source_snapshot": [
-      "source/nether_portal.js"
+      "source/nether_portal.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 38ccca975e41",
+    "git checkout 9872b03b012d",
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"rating every way to light a nether portal 😳\" --subs \"[[\\\"st\\\",\\\"flint and steel\\\",1.4,0],[\\\"st\\\",\\\"fire charge\\\",1.4,1],[\\\"st\\\",\\\"TNT\\\",1.4,2],[\\\"st\\\",\\\"redstone\\\",1.4,3],[\\\"st\\\",\\\"lava\\\",1.4,4],[\\\"st\\\",\\\"respawn anchor\\\",1.4,5],[\\\"lava_a\\\",\\\"x6\\\",0.8,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse_a\",\"fuse_b\",\"cut\"],[\"lava_a\",\"lava_b\",6]] --punch [[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]] --counter {\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6} --cards [[\"lit0\",\"1/10\",0.9,\"white\"],[\"lit1\",\"3/10\",0.9,\"white\"],[\"lit2\",\"0/10\",0.9,\"red\"],[\"lit3\",\"5/10\",0.9,\"yellow\"],[\"lit4\",\"8/10\",0.9,\"yellow\"],[\"lit5\",\"11/10\",1.4,\"gold\"]] --shake [[\"boom\",0,12],[\"boom\",1,20]] --sfx [[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"lit5\",0.4],[\"impact\",\"lit5\",{\"gain\":1.4}]] --armor 20 --start_at st:-0.05 --end_after lit5:1.4 --out out/nether_portal.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "backlog worker A 2026-11-11: needs-fix (unfinished). stunts/nether_portal.js (main) is the new format 'rating every way to light a nether portal' (~18 s): flint and steel, fire charge, TNT (0/10), a dispenser, lava in a pit, then the respawn anchor's blast lights it (blast protection IV netherite: dead, the client never saw the fire), every click aimed via lib/act.js. Recordings so far found and fixed: tp centring, the bucket hitting the basin rim (lava death), the armour wiped by the hotbar's /clear. The anchor beat is still unproven. Next: ./hb make nether_portal --from record; if the anchor still won't light it, end on lava (8/10).",
-  "published_at": "2026-11-06T17:56:46.539Z",
-  "qa_notes": [
-    "2026-11-06: held back - under the owner's 30 s minimum (single-stunt, ~10 s); needs a multi-beat format and both audits."
-  ]
+  "status": "ready",
+  "notes": "rating every way to light a nether portal, 16.8 s (lead's ~18 s): flint 1, fire charge 3, TNT 0, dispenser 5, lava 8, respawn anchor 11/10; the anchor lit the portal on camera on the first take (blast protection IV netherite, armour row on the HUD); r1 NOT READY (no armour bar) -> r2 READY; mixcheck OK; nitpicks: anchor shot opens on sky 13.0-13.45 (314 deg/s), 252 deg/s whip 14.85-15.1, blast smoke over the portal 15.5-15.9, wide flat field",
+  "published_at": "2026-11-11T11:35:15.288Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T11:35:42+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 16.79 s vs the reviewed render 16.78 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 0,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T11:01:56.374Z",
+      "report": "out/nether_portal.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
