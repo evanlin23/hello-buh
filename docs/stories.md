@@ -292,6 +292,14 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, on the time-lapse Shorts (lapse_statue, lapse_rocket): "for the time lapse stuff, like we should
+  have more angles when we're showing the last thing, and then also... the second one, like I think our smoother camera
+  movement is like too slow. I think it's okay to have like a really fast movement here because it's like, what, a
+  time lapse, right? Like right now, it's like I places and I take forever to turn."** In a lapse_* Short the 1-hour
+  build is shown from several clearly different angles (hard cuts between steady shots: a new angle, not a small jump
+  of the same view). In the sped-up 1-minute round the player turns fast between placements, as a sped-up player would;
+  the followable-camera speed cap does not apply inside a time-lapse's sped-up build spans (it still applies at normal
+  speed). Supersedes, for lapse_* builds, the 220/speed turn cap added to lib/time_lapse.js today.
 - **Owner, 2026-11-11, after the lead sent every Short it called ready (and asked whether the clutch Shorts' quick
   look-down flick counts as a whip, and whether to hold four approved story Shorts the new whip check flags): "All
   ok".** The Shorts sent today are approved as they are; the new formats (cells, dilemma, race, mislabel, hack, desire,
@@ -513,6 +521,10 @@ STANDARDS.md in the same commit.
   Every thing the narration names is on screen, readable, while its words are said (the string on "a little string",
   the pearls on "ender pearls"). Each line lists what it names (story.json `shows`), and the recording is checked for
   each one in frame during that line.
+- **Owner, 2026-11-11, from the Mom/Grandma audition (brand/auditions/2026-11-11_mom_grandma, branch
+  claude/audition-mom-grandma): "mom D / grandma J".** Mom is **Pulcherrima** (was Sulafat, too close to Pip);
+  Grandma is **Autonoe** (was Vindemiatrix, read as a man). Each is directed with one short bracketed clause and
+  voiced on the story's character model; Light Sleeper's two Mom lines and Gold's Grandma line are re-voiced.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

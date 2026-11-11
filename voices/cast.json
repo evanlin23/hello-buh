@@ -111,14 +111,25 @@
  },
  "mom": {
   "name": "Mom",
-  "voice": "Sulafat",
+  "voice": "Pulcherrima",
   "color": "#FFC2A8",
   "color_why": "warm peach: home, the hearth, the normal life before the strange thing",
-  "profile": "Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it",
+  "profile": "A warm mother around forty, low, calm and steady",
   "post": "",
   "fallback": "af_sarah",
-  "from": "new",
-  "notes": "Home scenes, the normal life before the strange thing. Her ordinary line is often the scariest one in the twist."
+  "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Pulcherrima, 176 Hz, 3.5 st under Pip",
+  "notes": "Home scenes, the normal life before the strange thing. Her ordinary line is often the scariest one in the twist. History: was Sulafat (\"Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it\") until 2026-11-11; the owner: \"The moms voice is too similar to narrator\" (r:rc31bfe): Sulafat sat at Pip's own 215 Hz, speaker similarity 0.85. The profile is the one-clause bracket the audition used, verbatim (3.8 reads a long bracket aloud)."
+ },
+ "grandma": {
+  "name": "Grandma",
+  "voice": "Autonoe",
+  "color": "#F2C66B",
+  "color_why": "warm gold: the family's elder (Gold for the Portal's Grandma colour)",
+  "profile": "An old grandmother in her seventies, warm, slow and a little dry",
+  "post": "",
+  "fallback": "af_nicole",
+  "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma: Autonoe, 237 Hz (heard as a woman of 65-85 by the blind listener; furthest from Pip of all candidates, 0.66)",
+  "notes": "An old woman, never a man: earlier Grandmas (Gacrux, Vindemiatrix) read low and gravelly, as a man (owner: \"Grandma sounds like a dude still\", r:rc31bfe). The profile is the audition's one-clause bracket, verbatim."
  },
  "friend": {
   "name": "Max",
