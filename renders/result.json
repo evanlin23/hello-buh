@@ -1,0 +1,17 @@
+{
+ "name": "lapse_statue",
+ "stunt": "lapse_statue",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43061215430",
+ "source": "986f4a99",
+ "queued": "2026-11-11T16:43:56Z",
+ "finished": "2026-11-11T16:57:10Z",
+ "mp4": "renders/out/lapse_statue.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

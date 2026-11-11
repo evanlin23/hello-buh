@@ -1,0 +1,144 @@
+{
+ "stunt": "lapse_statue",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/lapse_statue.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT lapse_statue: 1 shots, scene 0.0-95.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-95.7  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 2 warning(s), 3 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.3,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: carved_pumpkin -> stone_bricks"
+    },
+    {
+     "level": "WARN",
+     "out": 8.867,
+     "shot": 3,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: diamond_shovel -> terracotta"
+    },
+    {
+     "level": "NOTE",
+     "out": 8.867,
+     "shot": 3,
+     "line": null,
+     "kind": "blocks",
+     "msg": "45 block(s) in view changed during the cut (e.g. polished_blackstone_bricks, gold_block at -3506 63 -3520): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 10.867,
+     "shot": 4,
+     "line": null,
+     "kind": "blocks",
+     "msg": "22 block(s) in view changed during the cut (e.g. brown_concrete at -3512 68 -3521): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 19.867,
+     "shot": 9,
+     "line": null,
+     "kind": "blocks",
+     "msg": "9 block(s) in view changed during the cut (e.g. terracotta at -3505 104 -3513): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 14 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 0.1,
+     "tick": 25,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 159 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": [
+    "9 fast turn(s) inside the time-lapse's sped-up build (up to 692 deg/s on screen): allowed, owner r:r66efa4 (\"it's okay to have like a really fast movement here\")"
+   ]
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "48 visible sound-making events (break 3, pickup 2, place 43), 43 with a sound mark, 5 without (audio.py adds those for a story)",
+    "    22.65s  broke dirt                         -> block.grass.break                  2.0 blocks in view  ",
+    "    23.00s  broke dirt                         -> block.grass.break                  2.0 blocks in view  ",
+    "    23.35s  broke dirt                         -> block.grass.break                  2.0 blocks in view  ",
+    "    23.45s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    23.80s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "ambience per shot: -0.20-2.45s day, 2.45-26.05s day, 26.05-45.75s day, 45.75-57.75s day, 57.75-69.75s day, 69.75-81.75s day, 81.75-87.75s day, 87.75-91.95s day, 91.95-97.15s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T16:44:50.072Z"
+}
