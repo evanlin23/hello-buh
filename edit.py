@@ -1151,6 +1151,11 @@ def apply_speed(args):
     # work/<name>.slowmo (blends turned a placed boat into a 50% double exposure: worker 4)
     slow_dir = src_dir.with_suffix(".slowmo")
     slow_fps = json.loads((slow_dir / "slowmo.json").read_text())["fps"] if (slow_dir / "slowmo.json").exists() else None
+    seq_mode, _sizes = None, {}
+    def seq_size(f):
+        if f not in _sizes:
+            _sizes[f] = Image.open(f).size
+        return _sizes[f]
     while True:
         x = warp.src(k / args.fps) * args.fps
         i = warp.frame(k, args.fps)
@@ -1167,7 +1172,16 @@ def apply_speed(args):
             real = slow_dir / f"f{j:05d}.png"
             real = real if real.exists() else None
         if real:
-            (wd / (pat % k)).symlink_to(real.resolve())
+            # the same pixel format as the sequence: on Actions the 60 fps frames are decoded from the slices (RGB) and
+            # the slow pass is render.js PNGs; a format change mid-sequence makes ffmpeg re-init the graph, and that
+            # frame went out with no caption, cards or HUD (dilemma_mace r2: 5 blinks, one at the landing)
+            if seq_mode is None:
+                seq_mode = Image.open(src_dir / (pat % 0)).mode
+            im = Image.open(real)
+            if im.mode != seq_mode or im.size != seq_size(src_dir / (pat % 0)):
+                im.convert(seq_mode).resize(seq_size(src_dir / (pat % 0))).save(wd / (pat % k), compress_level=1)
+            else:
+                (wd / (pat % k)).symlink_to(real.resolve())
             rendered += 1
         elif step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # fallback: blend the two neighbours (fast things ghost)
             lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
