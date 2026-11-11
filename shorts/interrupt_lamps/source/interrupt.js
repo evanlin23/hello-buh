@@ -21,7 +21,8 @@
 // Mobs (MOBS): skeleton (an arrow into a block beside the player), creeper (the fuse hiss), zombie (knocks: groans and
 // door hits), phantom (a swoop overhead; summon it with { fly: true } and it hangs where put), or any other mob with
 // a cue of { sounds: [[sound, volume, pitch, delayTicks], ...] }.
-// Deals: 'eat' (the held food's vanilla use: 32 ticks of crunches every 4 ticks from tick 7, a burp; a golden apple
+// Deals: 'pickup' (owner's pick: the bare hand picks the mob up, it shrinks into a handful in front of the face and
+// the player eats IT bite by bite: crunches, bone crumbs, a burp), 'eat' (the held food's vanilla use: 32 ticks of crunches every 4 ticks from tick 7, a burp; a golden apple
 // eats at full hunger), 'drink' (a milk bucket: the gulps), 'punch' (one swing, the strong-attack sound).
 
 const NO_LINES = { gap: 0, lines: [], line (id) { throw new Error(`lib/interrupt: no story lines in this stunt (asked for ${id})`) } }
@@ -100,7 +101,31 @@ async function interrupt (ctx, K, o) {
 
   // 1. the cue
   const cue = o.cue || {}
-  if ((M.cue === 'arrow' || cue.target) && cue.target) {
+  if (M.cue === 'arrow' && (cue.hit || !cue.target)) {
+    // it shoots the player: an arrow solved onto the chest, a real hit (the server's damage: the hurt tilt and red,
+    // a heart or two gone from the HUD) and vanilla's knockback away from the shooter (mineflayer drops it: K.knockback)
+    const chest = bot.entity.position.offset(0, 1.1, 0)
+    const dir = chest.minus(mobFeet); dir.y = 0
+    const n = dir.scaled(1 / Math.hypot(dir.x, dir.z))
+    const from = mobFeet.offset(n.x * 0.9, 1.45, n.z * 0.9)
+    const s = arrowShot(from, chest, cue.speed || 1.6)
+    const kb = K.knockback(() => mobFeet)
+    const hp0 = bot.health
+    K.say(`/summon arrow ${from.x.toFixed(3)} ${from.y.toFixed(3)} ${from.z.toFixed(3)} {Motion:[${s.motion.map(v => v.toFixed(5) + 'd').join(',')}],pickup:0b,Tags:["${tag}_arrow"]}`)
+    ctx.mark('intr_cue', { mob })
+    ctx.sound(M.shoot || 'entity.skeleton.shoot', 0.6, 0.9)
+    let hit = false
+    for (let k = 0; k < Math.ceil(s.ticks) + 10 && !hit; k++) {
+      await bot.waitForTicks(1); look(k)
+      if (bot.health < hp0) hit = true
+    }
+    ctx.mark('intr_hit', { hit, health: bot.health })
+    ctx.sound('entity.player.hurt', 1, 1)
+    ctx.sound('entity.arrow.hit_player', 0.5, 1)
+    if (!hit) ctx.log('lib/interrupt: the arrow missed the player')
+    for (let k = 0; k < 8; k++) { look(k); await bot.waitForTicks(1) }   // the knockback plays out
+    kb()
+  } else if ((M.cue === 'arrow' || cue.target) && cue.target) {
     const dir = cue.target.minus(mobFeet); dir.y = 0
     const n = dir.scaled(1 / Math.hypot(dir.x, dir.z))
     const from = mobFeet.offset(n.x * 0.9, 1.45, n.z * 0.9)   // off the bow, clear of its own hitbox (no owner: it would hit it)
@@ -159,12 +184,77 @@ async function interrupt (ctx, K, o) {
     ctx.particles('poof', f, { w: M.w || 0.6, h: M.h || 1.8 })
     if (M.death) ctx.sound(M.death, 0.8, 1)
     follow()
-    // out of the world, at once: the renderer snaps a jump over 4 blocks (no streak), and the teleport check skips
-    // one over 16 (a park); /kill there, under the terrain, where nothing shows
-    K.say(`/tp @e[tag=${tag}] ${f.x.toFixed(2)} ${(f.y - 120).toFixed(2)} ${f.z.toFixed(2)}`)
-    K.say(`/kill @e[tag=${tag}]`)
+    // gone at once: 400 blocks away, past the recording's 64-block entity radius (lib/harness.js), so it leaves the
+    // recording on this tick like a despawn: no streak, no in-frame teleport (rec_check glitch), no death fall
+    K.say(`/tp @e[tag=${tag}] ${(f.x + 400).toFixed(2)} ${f.y.toFixed(2)} ${f.z.toFixed(2)}`)
   }
-  if (deal.how === 'punch') {
+  if (deal.how === 'pickup') {
+    // pick it up and eat it (owner, 2026-11-11: "picking it up and eating it"): a bare hand reaches out (a swing), the
+    // mob shrinks into a handful (render.js mob_scale marks) and comes up in front of the face, and the player eats it
+    // bite by bite: a crunch every 4 ticks from tick 7 (LivingEntity.triggerItemUseEffects), each with crumbs of
+    // deal.crumbs (bone) and the mob a size smaller and closer to the mouth, then the last bite, a burp, and it's gone.
+    // It moves at most ~0.3 blocks a tick (no teleport), NoGravity while held
+    const slot = deal.slot ?? 1, crumbs = deal.crumbs || 'bone'
+    ctx.select(slot)   // an empty slot: the bare hand
+    for (let k = 0; k < 5; k++) { look(k); await bot.waitForTicks(1) }
+    const m = ent() || e1, id = m.id
+    ctx.mark('intr_deal', { how: 'pickup' })
+    bot.swingArm('right')
+    follow()
+    K.say(`/data merge entity @e[tag=${tag},limit=1] {NoGravity:1b}`)
+    ctx.sound('entity.item.pickup', 0.6, 0.8)
+    const eyeNow = () => bot.entity.position.offset(0, K.eyeNow(), 0)
+    const fwd = () => { const y = bot.entity.yaw; return new ctx.Vec3(-Math.sin(y), 0, -Math.cos(y)) }
+    const H = M.h || 1.8
+    let pos = m.position.clone(), scale = 1
+    // where the held mob's feet go, in camera space: in the fist, where a held item sits (bottom right), `fw` out, `rt`
+    // right of centre, its middle `dn` under the eye (out in the field it read as a tiny mob standing on the grass: review)
+    const heldAt = (fw, rt, dn, sc) => {
+      const e = eyeNow(), f = fwd(), r = new ctx.Vec3(-f.z, 0, f.x)
+      return e.plus(f.scaled(fw)).plus(r.scaled(rt)).offset(0, -dn - H * sc * 0.5, 0)
+    }
+    K.say(`/item replace entity @e[tag=${tag},limit=1] weapon.mainhand with air`)   // it drops the bow when it's grabbed
+    // moved by the kit's actor (K.actor: every tick at <= 0.3 blocks, synced at 20 Hz; a /tp loop of our own reached the
+    // client in 3-tick stair steps: rec_check cast), set-relative, facing the player
+    const act = K.actor(tag, { x: pos.x - K.X, y: pos.y - K.F, z: pos.z - K.Z, yaw: m.yaw !== undefined ? 180 - m.yaw * 180 / Math.PI : 0 })
+    const step = (target) => {
+      pos = target
+      const me = bot.entity.position
+      Object.assign(act, { x: target.x - K.X, y: target.y - K.F, z: target.z - K.Z, yaw: K.mcYaw(me.x - target.x, me.z - target.z) })
+    }
+    const setScale = (v) => { scale = v; ctx.mark('mob_scale', { id, scale: +v.toFixed(3) }) }
+    ctx.mark('mob_scale', { id, scale: 1 })
+    // into the fist: 6 ticks, 1 -> 0.3
+    for (let k = 1; k <= 6; k++) { setScale(1 - 0.7 * k / 6); step(heldAt(0.62, 0.3, 0.42, scale)); await bot.waitForTicks(1); look(k) }
+    ctx.mark('intr_pickup', { mob })
+    // the bites, vanilla's eating rhythm (LivingEntity.triggerItemUseEffects: from tick 7, every 4 ticks): the fist comes
+    // in toward the mouth (centre, closer, higher) over the 32 ticks and bobs up on each bite (applyEatTransform's
+    // |cos| bob), a crunch, a few small bone crumbs out of its head, and it is a size smaller
+    const BITES = 32
+    for (let k = 1; k <= BITES; k++) {
+      const u = Math.min(1, k / 10), bite = k >= 7 && (k - 7) % 4 === 0, since = k >= 7 ? (k - 7) % 4 : 4
+      const bob = since < 2 ? 0.05 * (2 - since) : 0
+      const fw = 0.62 - 0.17 * u, rt = 0.3 - 0.2 * u, dn = 0.42 - 0.12 * u - bob
+      if (bite) {
+        setScale(Math.max(0.06, scale - 0.035))
+        ctx.sound('entity.generic.eat', 1, 0.85 + ((k * 7) % 5) * 0.08)
+        ctx.mark('intr_bite')
+        const head = heldAt(fw, rt, dn, scale).offset(0, H * scale * 0.85, 0)
+        ctx.mark('item_crumbs', { item: crumbs, x: +head.x.toFixed(3), y: +head.y.toFixed(3), z: +head.z.toFixed(3), n: 4, scale: 0.5 })
+      }
+      step(heldAt(fw, rt, dn, scale))
+      await bot.waitForTicks(1); look(k)
+    }
+    ctx.sound('entity.generic.eat', 1, 1); ctx.mark('intr_bite')
+    ctx.sound('entity.player.burp', 0.5, 0.95)
+    goneAt = ctx.tick
+    ctx.mark('intr_gone', { mob })
+    // gone at once: 400 blocks away, past the recording's 64-block entity radius (lib/harness.js): it leaves the
+    // recording on this tick like a despawn (no streak, no in-frame teleport)
+    K.actors.delete(tag)
+    K.say(`/tp @e[tag=${tag}] ${(pos.x + 400).toFixed(2)} ${pos.y.toFixed(2)} ${pos.z.toFixed(2)}`)
+    for (let k = 0; k < 4; k++) { look(k); await bot.waitForTicks(1) }
+  } else if (deal.how === 'punch') {
     ctx.select(deal.slot ?? 8)
     for (let k = 0; k < 6; k++) { look(k); await bot.waitForTicks(1) }
     ctx.mark('intr_deal', { how: 'punch' })
