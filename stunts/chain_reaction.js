@@ -54,7 +54,7 @@ module.exports = {
   botTimeout: 360,
   edit: {
     caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
-    startAt: 'press:-0.1', endAfter: 'settle:-0.4',   // (start on the press: the button's click is too soft for pace's hook, the dispenser 0.15 s later is the first sound; the pile's blasts and debris done; the eyes drift until 1.5 s after the last blast, the settle waits 2.2 s: ending later parked the camera)
+    startAt: 'press:-0.1', endAfter: 'settle:-1.2',   // (end 1.0 s after the payoff's last blast: at settle:-0.4 the last 0.8 s was a still frame (review 2026-11-11); start on the press: the button's click is too soft for pace's hook, the dispenser 0.15 s later is the first sound; the pile's blasts and debris done; the eyes drift until 1.5 s after the last blast, the settle waits 2.2 s: ending later parked the camera)
     // the payoff pace times is the pile's LAST blast, 1.05 s after giant_peak on this take: a flash, a punch, the song
     // dipped, the game ducked and an impact there (pace: no hit and no picture change on it). Re-check after a re-record
     flash: [['giant_peak:1.05', 0, 0.7]], punch: [['giant_peak:1.05', 0, 1.12]],
