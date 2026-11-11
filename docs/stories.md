@@ -277,6 +277,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11: "channle is already created. I lwokey made a new google account fro this, si that fine?"** Buh
   Stories is on its own Google account, not a Brand Account under HelloBuh's login. That's fine: uploads use a refresh
   token from that account (docs/upload-setup.md "A second channel"); manual uploads for now.
+- **Owner, 2026-11-11, on the channel description ("Short Minecraft stories: a village that carpets every road... More
+  Minecraft chaos on @HelloBuh. NOT AN OFFICIAL MINECRAFT PRODUCT..."): "this descirption is too specific i think ight?
+  idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
+  description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
+  no Mojang disclaimer.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

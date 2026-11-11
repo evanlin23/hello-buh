@@ -286,9 +286,9 @@ varied. Raids' title gives away less than its twist; check it against the final 
 5. Dog on the Hill: "He's waited 900 days and still has no name. What should we call him?"
 
 ## Description, tags, playlists
-- **Channel description:**
-  "Short Minecraft stories: a village that carpets every
-  road, a grandpa who has won every raid, a dog who never stops waiting. Most of them have a secret. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
+- **Channel description** (owner, 2026-11-11: the long one was "too specific"; no @HelloBuh tag, no Mojang
+  disclaimer): "Short Minecraft stories. New ones every week." Short and general: it says what the channel is and why
+  to subscribe, nothing per story.
 - **Video description template:** line 1 = the hook, then the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).

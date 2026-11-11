@@ -245,6 +245,8 @@ actions left silent). r:rc85ccc r:r36632d
   description, tags and pinned comment; the Buh Stories uploader stays off. Check: owner. r:r09130c
 - **Buh Stories is on its own Google account**: its upload token comes from that account (docs/upload-setup.md).
   Check: owner. r:r8269ea
+- **The channel description is short and general**: no per-story details, no @HelloBuh tag, no Mojang disclaimer.
+  Check: owner. r:r111d46
 - **The channel says "stories"; the stories are mysteries**: the channel's name, tagline and description are general
   ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
