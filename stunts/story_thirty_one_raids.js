@@ -22,7 +22,7 @@ const M = require('../lib/movie')
 const { storyLines, storyKit, setKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'thirty_one_raids')
-const CAPTION = 'why do raiders always follow grandpa home 😶'
+const CAPTION = 'Thirty-one raids. Every one started the night Grandpa came home'   // the Buh Stories cover title (docs/brand.md release table #3): white, the key word in Buh gold, no emoji
 const X = -2044, Z = -485, F = 71
 const GA = 'Grandpa', GB = 'Gramps'          // two actors, one Grandpa (same skin): they take turns between shots
 const PARK = [0, 80, 140]                   // the off-stage Grandpa waits here on a barrier slab
@@ -49,7 +49,7 @@ module.exports = {
   idleLife: true,
   look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11 (main 2c6e5426: the story default, rolls off the brightest highlights): stories are bright and punchy (r:rd13834, STANDARDS); was the dusky grade
   shots: {},   // below (module.exports.shots)
-  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], punchStress: true },
+  edit: { caption: CAPTION, red: 'home', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], punchStress: true },
 
   async setup (ctx) {
     const { bot } = ctx
