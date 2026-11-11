@@ -25,6 +25,7 @@ FAMILIES = [
     ("desire", lambda n: n.startswith("desire_")),
     ("cells", lambda n: n.startswith("cells_")),
     ("mislabel", lambda n: n.startswith("mislabel_")),
+    ("race", lambda n: n.startswith("race_")),   # format race (lib/race.js, r:rbe60ef)
 ]
 
 
