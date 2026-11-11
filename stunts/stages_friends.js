@@ -66,12 +66,13 @@ module.exports = {
     red: '3 stages',
     payoff: 'crater',      // your eyes on the crater, after the chain has settled
     dip: 0.6,              // (mixcheck r3: the chain's tail still rang 0.4 s before the cut: a longer duck)
-    endAfter: 'crater:1.0',   // settle-ok: the crater cut comes after the chain has settled
+    endAfter: 'crater:0.6',   // r:r188b46: 0.6 s into the crater (was 1.0). settle-ok: the crater cut comes after the chain has settled
     speed: [
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
       ['respawn', 'ch2', 'cut'],     // the respawn's first ticks (the camera switching to your eyes)
       ['vein', 'vein_end', 2],       // the vein at 2x (the aim at <= 100 deg/s)
-      ['chain_end', 'crater', 2],
+      ['rich:0.35', 'ch3', 'cut'],   // r:r188b46: to chapter 3 as the diamonds come up in hand (was 1.3 s after the loot)
+      ['chain_end:0.4', 'crater', 'cut'],   // r:r188b46: the chain's smoke cut out (was x2: 1.2 s after the last blast)
       ['notice', 'boom', 1.5]        // his look down, at you and the run (the fuse: no turns of ours, fixed cameras)     // the smoke settling at 2x (no turns: the wide is a fixed camera)
     ],
     sfx: [['air', 'ch2', 'crater', { gain: 0.5 }], ['dip', 'push', 0.3], ['hit', 'push', { gain: 1.6 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }], ['boom', 'crater', { gain: 0.8 }]],

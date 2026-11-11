@@ -7,10 +7,10 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'crater:1.0',   // settle-ok: the crater look comes after the chain has settled. (lead 2026-11-11: 8 s+ with a real beat: after the chain, walk to the rim and look into the crater)
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'crater:0.6',   // (r:r188b46: 0.6 s into the crater, not 1.0) settle-ok: the crater look comes after the chain has settled. (lead 2026-11-11: 8 s+ with a real beat: after the chain, walk to the rim and look into the crater)
     // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
-    speed: [['lit:0.5', 'boom:-0.4', 1.5]],
+    speed: [['lit:0.5', 'boom:-0.4', 1.5], ['boom:2.4', 'crater:-1.0', 4], ['crater:-1.0', 'crater:-0.1', 2]],   // r:r188b46: the wait after the chain's last blast (smoke only) at x4, the look-down into the crater at x2 (its turn peaks at 105 deg/s: x2 keeps it under the whip cap)
     // (mixcheck r1: 2.95 s after the boom with no new hit under the NCS bed: a second blast of the chain at +1.4 s)
     sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['boom', 'boom:1.4', { gain: 0.8 }], ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.4 }]],
     flash: [['boom', 0, 0.5], ['crater', 0, 0.35]],   // pace r2: the crater reveal needs a picture change on the mark (the look-down is still easing)

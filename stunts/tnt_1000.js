@@ -16,13 +16,18 @@ const TIERS = [
 const XL = -100, XR = 140, ZB = -60, ZF = 60    // the cleared field around the piles (relative)
 
 const speed = []
+// r:r188b46 (owner: "boom, boom, boom, fast pace"): after each tier's last blast reads, the walk to the crater plays at
+// x4 and the cut to the next pile comes 0.6 s into the crater look (was: 1.6-4.0 s of smoke and walking per tier).
+// Each tier's last blast on this take, as an offset before its crater mark: tier 1 7.35 s / crater 9.3, tier 2 18.95 /
+// 20.2, tier 3 32.15 / 32.95 (re-check after a re-record: ./hb pace prints the dwell after each blast)
+const WALK = { 1: 'crater1:-0.85', 2: 'crater2:-0.75' }
 for (let i = 1; i <= TIERS.length; i++) {
-  if (i > 1) speed.push([`cut${i}a`, `cut${i}b`, 'cut'])        // to the next pile
+  if (i > 1 && i < 5) speed.push([i === 4 ? 'crater3:0.6' : `crater${i - 1}:0.6`, `cut${i}b`, 'cut'])   // to the next pile
+  if (i === 5) speed.push(['cut5a', 'cut5b', 'cut'])
   speed.push([`fuse${i}a`, `fuse${i}b`, 'cut'])                   // most of the 4 s fuse
-  // the waits for the flung dirt to land before the next cut (the settle rule) at 2x: 3.4 s after the 100 and 5.4 s
-  // after the 1000 had nothing new on screen (pace dead BLOCK)
-  if (i === 3) speed.push(['crater3:0.5', 'cut4a', 2])
-  if (i === 4) speed.push(['boom4:1.5', 'rim4a', 2], ['rim4a', 'rim4b', 'cut'])   // ...then to the rim of the big crater
+  if (i === 1) speed.push(['crater1:-1.35', 'crater1:-0.85', 1.4])   // tier 1's turn to the hole (164 deg/s) at x1.4: under the whip cap
+  if (WALK[i]) speed.push([WALK[i], `crater${i}`, 4])
+  if (i === 4) speed.push(['boom4:1.5', 'rim4a', 4], ['rim4a', 'rim4b', 'cut'])   // the 1000's chain tail and its smoke at x4, then to the rim of the big crater
 }
 
 module.exports = {
@@ -35,13 +40,13 @@ module.exports = {
     caption: '1 TNT vs 10 vs 100 vs 1000 vs SECRET 💀', red: 'SECRET', dropAt: 'boom4',
     // once the blast's debris settles (lib/settle.js, r:r24d99a), less 0.15 s: the conservative settle (the renderer's
     // smoke, 2.2 s) held a frozen death screen on which_door; pace's last-0.6 s check still wants a still ending
-    startAt: 'tier1:-0.05', endAfter: 'settle:-0.15',
+    startAt: 'tier1:-0.05', endAfter: 'settle:-0.8',   // r:r188b46: the death screen ~1.4 s after the last blast (was 1.7; this take's settle mark is the old smoke wait)
     deathScreen: true,
     // the payoff pace times is the 1000 pile's LAST blast, 1.85 s (output) after boom5 on this take: a flash, a punch,
     // the song dip, the game ducked and an impact there (no hit and no picture change on it: pace BLOCK); the song
     // also drops out 0.35 s before the death. Re-check the offset after a re-record
     sfx: [['pop', 'tier1'], ['dip', 'death', 0.35], ['dip', 'boom5:1.85', 0.4], ['gamedip', 'boom5:1.85', 0.35], ['impact', 'boom5:1.85', { gain: 1.4 }]],
-    flash: [['boom5:1.85', 0, 0.8]], punch: [['boom5:1.85', 0, 1.15]],
+    flash: [['boom5:1.85', 0, 0.8]], punch: [['boom5:1.85', 0, 1.15], ['crater1', 0, 1.04], ['crater2', 0, 1.04], ['crater3', 0, 1.04]],   // (a small punch on each crater reveal: the hole is the tier's result)
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },
