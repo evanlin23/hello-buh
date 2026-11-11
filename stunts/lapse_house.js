@@ -143,6 +143,7 @@ module.exports = makeStunt({
   recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
   endAfter: 'big_done:0.5',
   bigCuts: [6, 0.6, 57],
+  payoffFlash: true, song: null,   // pace: a flash + punch + dip/impact on 60:00 (no picture change on the payoff), NCS at publish
   botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 3 tries on a busy box   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
   caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
@@ -163,7 +164,7 @@ module.exports = makeStunt({
       [0, [[-2, 13, 27], [0, -1, 15]], [[-4, 13, 28], [0, -1, 14]], 'down on the pool'],          // the pool fills the frame
       [126, [[-29, 6, 39], [0, 5, 2]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3
       [372, [[46, 12, 10], [0, 7, 0]], [[44, 16, 2], [0, 9, 0]], 'side'],                          // floor 3, the wings
-      [612, [[0, 4, 33], [0, 7, 10]], [[0, 5, 28], [0, 7, 10]], 'down the road to the door'],       // the garden, the facade
+      [612, [[0, 24, 48], [0, 6, 0]], [[0, 26, 42], [0, 7, 0]], 'high front, over the garden'],     // the wings, the garden, the roof going on (a close facade angle showed a wall of windows while they rose out of frame: review)
       [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
       // the showcase: the finished mansion from three angles, the helipad, the wall and the crown going on
       [1092, [[55, 12, 30], [8, 14, 0]], [[52, 13, 32], [8, 14, 0]], 'low right'],

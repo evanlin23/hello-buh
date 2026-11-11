@@ -118,7 +118,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | **Buh** | default Steve skin; the bot name and death screens say Buh (owner, 2026-11-10) | `milo` (Achird, 16) for Buh himself. As a kid (about 10-11) he narrates in the house narrator voice (`narrator`, Leda). | Grew up in Hushwell with Mom (Light Sleeper), spent a year or more with Grandpa in Ravenford (Thirty-One Raids), lived in Saltmouth with his dog at 16 (Good Boy), stopped playing on day 3400, came back for a minute on day 4300 (Dog on the Hill). He's a player: he respawns and he logs out. |
 | **The dog** | pale wolf, tame, **red collar (CollarColor 14)**, Buh's | barks on screen; narrates Good Boy in the house narrator voice | Buh's dog since his Hushwell childhood. Doghouse on Hushwell's north slope (Light Sleeper). Buh tried to lose him 37 times, so he'd forget him, and he popped back every time (Good Boy: he narrates it, in the house narrator voice). Saved Buh from a zombie at Saltmouth. Has sat on Dog Hill's D since day 3400, facing the patch where Buh logged out. Never stands up for anyone else. |
 | **Pip** | baby plains villager, no profession | `narrator` (Leda) | Hushwell kid, about nine at day 4300. Brings the dog a bone every morning. Sits with him every night from Dog on the Hill on. Doesn't know who built the hut. |
-| **Mom** | plains villager, farmer (straw hat) | `mom` (Sulafat) | Buh's mom in Hushwell. "Walk soft, Buh. The ground's a light sleeper." |
+| **Mom** | plains villager, farmer (straw hat) | `mom` (Pulcherrima from 2026-11-11; Sulafat before) | Buh's mom in Hushwell. "Walk soft, Buh. The ground's a light sleeper." |
 | **Grandpa (Ravenford)** | player actor, `zuri` skin; the slow walk | `elder` (Charon) | Buh's grandpa. Saved Ravenford from 31 raids that he brought himself with ominous bottles. Grandma died. Since raid 32 he and Buh fight together. |
 | **Grandpa (Hushwell)** | plains villager, cartographer (monocle) | Algenib (Dog on the Hill) | Hushwell's elder. He knows whose dog it is ("Only one voice gets him up", "Said he'd be right back"). |
 | **Grandpa (Stillwater)** | as in The Sun Won't Set | Kokoro (that Short) | Asked every day of the Long Day whether tonight was the night. "Already gone" when the sun set on day 1100. Never shown alive after it. |
@@ -129,6 +129,23 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | **Gary** | zombie villager, farmer's straw hat, name tag "Gary" | | Stillwater's farmer. Taken the night the Long Day ended. Every night since, he walks out of the fog, works his field, pays an emerald, and knocks on his own door. The golem lets him pass. |
 | **The Digger** | Steve-like; his death screens say HelloBuh | | Digs straight down under Torch Hill, dies, forgets, and starts again. "Never dig straight down." "Who digs straight down?" |
 | **Leo** | never seen | | The brother who went to the End with a wooden sword six years before One More Eye (in progress) and Put Back (pilot). |
+| **The grandson (Portal Cottage)** | as in Gold for the Portal | `narrator` (Leda, Pip's voice) | Narrates Gold for the Portal (day 9300). Not Buh's family. |
+| **Grandma (Portal Cottage)** | as in Gold for the Portal | `grandma` (Autonoe) | Throws one gold ingot into the cellar portal every night for 25 years. Her husband walked in on day ~175 in her gold helmet. |
+
+### Planned characters (batch 2, scripts owner-audited 2026-11-11; not canon until made)
+| who | story | look | voice | status |
+|---|---|---|---|---|
+| the villager kid | The Wall Grows | baby villager | `narrator` (Leda) | cast |
+| Old Tomas | The Wall Grows | old villager, escaped a trading hall | `elder` (Charon) proposed: **clashes with Ravenford's Grandpa** (conflict 11 spirit), audition another | audition |
+| the kid | The Bell in the Window | baby villager, Saltmouth | `narrator` (Leda) | cast |
+| Mom (Saltmouth) | The Bell in the Window | villager | `mom` (Pulcherrima) shared with Hushwell's Mom: decide if she's the same Mom or needs her own voice | decide |
+| the grandchild | The Walk | | `narrator` (Leda) | cast |
+| Grandpa (Gullwick) | The Walk | grey-haired old man (new skin) | Iapetus proposed, audition (not Charon: Ravenford's) | audition |
+| Grandma (the island) | The Walk | grey-haired old woman (new skin) | `grandma` (Autonoe) shared with Gold's Grandma: decide | decide |
+| the villager kid | Six Thousand Torches | baby villager, Larkfield | `narrator` (Leda) | cast |
+| Jonah | Six Thousand Torches | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
+| the kid | Red Sheep | baby villager, Ravenford | `narrator` (Leda) | cast |
+| Dad | Red Sheep | villager, crossbow | Alnilam proposed, audition | audition |
 
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
