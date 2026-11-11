@@ -1,5 +1,5 @@
 // Format "mega", time-lapse variant (owner, 2026-11-11, r:r4449f0: "this gimmick is like ridiculous megabuild"),
-// Short 1: the caption asks for "a small fountain at spawn"; the fountain goes in beside 56e (1 s), then the drone
+// Short 1: the caption asks for "a small fountain at spawn"; it stands beside 56e at frame 0, then the drone
 // time-lapse keeps going: a plaza, a ring wall with towers of two heights, a ring of houses (some two storeys, the upper
 // one jutting out), a terrace with an arcade and buttresses round it all, gardens and houses on it, a second terrace set
 // back on the first, corner and gate towers, then four great towers of four heights with balconies; on the cut to the
@@ -60,7 +60,7 @@ function plaza () {
     const a = k * Math.PI / 4 + Math.PI / 8, x = Math.round(Math.cos(a) * 12), z = Math.round(Math.sin(a) * 12)
     c.push([x, 1, z, PAVE, 27], [x, 2, z, PAVE, 27], [x, 3, z, LAMP, 28])
   }
-  return { name: 'plaza', ticks: 24, cells: c }
+  return { name: 'plaza', ticks: 24, cells: c }   // (from tick 0: the first ring lands on frame 1)
 }
 
 // the ring wall: arched gates on the four streets, merlons, eight towers of two heights with balconies
@@ -197,10 +197,14 @@ module.exports = L.makeLapse({
   botTimeout: 1500,
   player: { at: PLAYER, yaw: -141, pitch: 0 },   // facing the fountain (mineflayer yaw: atan2(-dx, -dz))
   tally: 'blocks used',
-  stages: [fountain(), plaza(), walls(), houses(), tier1(), town1(), tier2(), town2(), giants(), giants2(), lights()],
+  // the small fountain is already standing at frame 0, 56e beside it in the flower forest, and the plaza starts
+  // spreading round it on the first tick (owner r:r0f3da0: the subject in view at frame 0, moving by 0.5 s; take 2
+  // opened on 1.3 s of an empty grass square while the fountain went in)
+  dress: L.steps(fountain()).flat().map(({ box, block }) => [...box, block]),
+  stages: [plaza(), walls(), houses(), tier1(), town1(), tier2(), town2(), giants(), giants2(), lights()],
   perTick: 60,
   // each stage its own steady drone angle, joined by hard cuts (r:r66efa4); every move slow and even
-  angles: [['fountain', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['town1', 'town'], ['tier2', 'far'], ['town2', 'roofs'], ['giants', 'giants'], ['giants2', 'scale']],
+  angles: [['plaza', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['town1', 'town'], ['tier2', 'far'], ['town2', 'roofs'], ['giants', 'giants'], ['giants2', 'scale']],
   payoff: { stage: 'lights', shot: 'reveal', hold: 40, toast: false },   // (no toast fanfare: it rang over the pass, no hit there)
   // the close pass beside 56e and the small fountain, the city towering over them (r:rf8524b); the water splashes
   outro: [{
@@ -216,7 +220,7 @@ module.exports = L.makeLapse({
   },
   shots: {
     // 1. close and low on the fountain (56e beside it), pulling back and up as the plaza spreads round it
-    close: { path: [[0, 5.5, 3.2, 7.5], [2.5, 10.5, 6.5, 11]], lookPath: [[0, -1, 1.2, -1], [2.5, -1, 0.8, -1]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 4.5, 0]] },
+    close: { path: [[0, 6.5, 3.6, 8.5], [1.2, 10.5, 6.5, 11]], lookPath: [[0, -1.5, 1.6, -1.5], [1.2, -1.5, 1.0, -1.5]], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [[0, 4.5, 0]] },
     // 2. a three-quarter angle on the ring wall as it rises, its towers of two heights
     ring: { path: [[0, 30, 18, 36], [2.2, 23, 17, 40]], lookPath: [[0, 0, 6, 0], [2.2, 0, 6, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[16, 25, 7]] },
     // 3. high, sliding round: the houses fill the ring outside the wall
