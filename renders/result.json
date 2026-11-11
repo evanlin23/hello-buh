@@ -1,0 +1,17 @@
+{
+ "name": "lava_crossing",
+ "stunt": "lava_crossing",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43109503504",
+ "source": "afcc5b25",
+ "queued": "2026-11-11T22:10:29Z",
+ "finished": "2026-11-11T22:22:47Z",
+ "mp4": "renders/out/lava_crossing.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

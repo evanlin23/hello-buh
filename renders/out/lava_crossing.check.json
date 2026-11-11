@@ -1,0 +1,143 @@
+{
+ "stunt": "lava_crossing",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/lava_crossing.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "3 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 136,
+     "col": 5,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 191,
+     "col": 5,
+     "text": "bot.setControlState('forward', true); bot.setControlState('sprint', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 220,
+     "col": 5,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "player: the old 'HelloBuh' bot is drawn as 56e (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT lava_crossing: 1 shots, scene 0.0-20.9 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-20.9  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 1 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 53% of the frame is within 3 blocks (lava, grass_block)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 19.283,
+     "tick": 416,
+     "line": null,
+     "msg": "the player walks into lava at 379 68 -45 and stops dead for 2.00 s (0.8 blocks/s -> 0): reads as stuck. Owner: \"when we walk out we keep getting stuck on the door\": open it first, path around it, or cut before contact"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "2 visible sound-making events (splash 1, swim 1), 0 with a sound mark, 2 without (audio.py adds those for a story)",
+    "    10.20s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    10.90s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "ambience per shot: -0.25-22.90s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T22:15:45.793Z"
+}
