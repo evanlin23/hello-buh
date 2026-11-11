@@ -6,9 +6,10 @@
 //   3. break ice, get water: ice broken without Silk Touch over a solid block turns into a water source (IceBlock)
 //   4. one sponge drinks a pool: a dry sponge placed in water soaks up to 65 blocks within 6 (SpongeBlock), and turns wet
 //   5. 4 iron + a pumpkin = a bodyguard: a carved pumpkin on a T of iron blocks spawns an iron golem (peaceful too)
-//   6. TNT under water breaks nothing: the blast starts inside water (resistance 100), so no block is destroyed
-//   7. a respawn anchor outside the Nether explodes (power 5, with fire) when used once charged (on peaceful the blast
+//   6. a respawn anchor outside the Nether explodes (power 5, with fire) when used once charged (on peaceful the blast
 //      itself does no damage to the player)
+//   7. (the punchline after the fireball) TNT under water breaks nothing: the blast starts inside water (resistance 100),
+//      so no block is destroyed
 // Commands build the stations only; on camera: digs, places and uses through lib/act.js.
 const { makeLogic } = require('../lib/logic')
 
@@ -112,42 +113,12 @@ const quirks = [
     hold: 14
   },
   {
-    key: 'tnt',
-    label: 'TNT under water: no crater',
-    slot: SLOT.flint,
-    start: { z: -0.5, pitch: 34 },
-    edit: { speed: [['tnt_fuse:0.1', 'tnt_boom:-0.6', 'cut']], subs: [['tnt_lit', 'TNT under water...', 1.0, 0]] },
-    async build (L) {
-      await L.fill(-2, -1, -6, 2, 0, -2, 'water')            // a 5x5 pool, 2 deep
-      await L.set(0, -1, -4, 'tnt')
-    },
-    async perform (ctx, L) {
-      const { bot } = ctx
-      let boom = false
-      const on = () => { boom = true }
-      bot._client.on('explosion', on)
-      const tnt = L.mid(0, -1, -4)
-      await L.A.use(L.pos(0, -1, -4), { sound: 'item.flintandsteel.use' })
-      ctx.sound('entity.tnt.primed', 1, 1)
-      ctx.mark('tnt_lit')
-      await L.A.back(18, { look: tnt })                        // step back, eyes on the pool
-      await L.hold(4)
-      ctx.mark('tnt_fuse')
-      for (let k = 0; k < 100 && !boom; k++) await bot.waitForTicks(1)
-      bot._client.removeListener('explosion', on)
-      if (!boom) throw new Error('logic tnt: no explosion')
-      ctx.mark('tnt_boom')
-      L.quirk()
-      await L.hold(24)                                         // the smoke clears: the pool and its floor, untouched
-    },
-    hold: 8
-  },
-  {
     key: 'anchor',
-    label: '',
+    label: 'nope',
     slot: SLOT.glow,
     start: { z: 1.3, pitch: 8 },                             // at the edge of reach: the blast throws him out past its fire
-    edit: { subs: [['anchor_charged', 'respawn anchor in the overworld:', 1.4, 0]] },
+    hold: 4,
+    edit: { subs: [['anchor_charged', 'respawn anchor in the overworld:', 0.8, 0]] },
     async build (L) {
       await L.set(0, 1, -3, 'respawn_anchor')
     },
@@ -175,11 +146,46 @@ const quirks = [
       const crater = L.mid(0, 0, -3)
       await L.hold(6, crater)                         // the blast, the knockback
       await L.backOff(12, crater)                     // a step back from the flames: the whole crater in view
-      await L.hold(44, crater, { drift: 0.0075 })
+      await L.hold(36, crater)                        // the debris and smoke settle (lib/settle.js: 44 ticks) before the cut
       bot.removeListener('health', onHurt)
       if (hurt) throw new Error('logic anchor: the blast\'s fire caught him (a hurt flash): take again')
     }
+  },
+  {
+    key: 'tnt',
+    label: 'TNT under water: no crater',
+    slot: SLOT.flint,
+    start: { z: 1.5, pitch: 26 },
+    edit: { speed: [['tnt_fuse:0.1', 'tnt_boom:-0.6', 'cut']], subs: [['tnt_lit', 'TNT under water...', 1.0, 0]] },
+    async build (L) {
+      await L.fill(-2, 0, -5, 2, 0, -1, 'water')             // a 5x5 pool, 1 deep (its floor the pad's dirt)
+      await L.set(0, 0, -2, 'tnt')                           // one TNT in it (a second one would be blown out of the
+                                                             // water by the first blast and leave a crater in the air)
+    },
+    async perform (ctx, L) {
+      const { bot } = ctx
+      let boom = false
+      const on = () => { boom = true }
+      bot._client.on('explosion', on)
+      const pool = L.mid(0, 0, -3)
+      await L.A.use(L.pos(0, 0, -2), { sound: 'item.flintandsteel.use' })
+      ctx.sound('entity.tnt.primed', 1, 1)
+      ctx.mark('tnt_lit')
+      await L.hold(10, pool)                                   // the lit TNT blinking under the water
+      ctx.mark('tnt_fuse')
+      for (let k = 0; k < 100 && !boom; k++) await bot.waitForTicks(1)
+      bot._client.removeListener('explosion', on)
+      if (!boom) throw new Error('logic tnt: no explosion')
+      ctx.mark('tnt_boom')
+      L.quirk()
+      // the last quirk: the blast (its knockback), then a sneak up to the pool to look: the floor untouched; the Short
+      // ends 0.6 s after the harness's settle mark
+      await L.hold(10, pool)
+      await L.approach(24, pool)
+      await L.hold(30, pool)
+    }
   }
+
 ]
 
 // settle-ok: lib/logic.js's edit ends on endAfter 'settle:0.6'
