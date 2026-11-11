@@ -107,6 +107,7 @@ module.exports = makeStunt({
   caption: 'building a statue in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   recordRadius: 200,
+  botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 4 of 5 tries on a busy box
   endAfter: 'big_done:0.5',
   bigCuts: [6, 1.2, 63], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'sand', under: 'sandstone', biome: 'minecraft:desert' },
