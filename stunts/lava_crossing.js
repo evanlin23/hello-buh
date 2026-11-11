@@ -141,7 +141,7 @@ module.exports = {
         const pz = bot.entity.position.z
         if (pz - ref.z < -0.2) break
         still = last !== null && Math.abs(pz - last) < 0.005 ? still + 1 : 0
-        if (still >= 2) break
+        if (still >= 2 && pz - ref.z < 0.3) break   // stopped by the sneak at the edge (not the walk's first ticks)
         last = pz
         await bot.waitForTicks(1)
       }
