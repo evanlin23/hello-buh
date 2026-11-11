@@ -39,7 +39,7 @@ module.exports = {
     const { bot } = ctx
     const { c, A, mob, vil } = setKit(ctx, { X, Z, F })
     await ctx.defaultRules()
-    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'natural_health_regeneration false', 'do_mob_spawning false']) await c(`/gamerule ${g}`)
+    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'natural_health_regeneration false', 'spawn_mobs false']) await c(`/gamerule ${g}`)
     await c('/difficulty normal')
     await c(`/setworldspawn ${X + 3} ${F + 1} ${Z + 6}`)
     // the day before he breaks it: the block still there (map.json: sheep_block until 1112, shaft_open from 1112)
