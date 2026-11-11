@@ -282,6 +282,10 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, on HelloBuh's views stalling under ~3k after the first three Shorts: "Check numbers... Maybe we
+  can have an exnteion gather all of the metrics you need?"** Studio numbers the API lacks (viewed vs swiped away, the
+  retention curve, traffic sources, busiest hours) come from Claude in Chrome with docs/studio-metrics-prompt.md, every
+  2-3 days; `scripts/studio_import.py` loads the answer into uploads/studio.json for the scores and the numbers check.
 - **Owner, 2026-11-11: "wait why cant hello buh still post these stories? we can use it sorta like experimentation?"**
   @HelloBuh may post story Shorts too, as experiments: the older ready stories (chunk_next_door, nitwit, respawn_voice,
   sheep_stares, sun_wont_set) stay on HelloBuh's queue (`channel: hellobuh`). A story package with no channel field

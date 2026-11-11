@@ -252,6 +252,9 @@ actions left silent). r:rc85ccc r:r36632d
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. Check: owner. r:r77977b
+- **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
+  swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
+  Check: owner. r:r1f2a80
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
