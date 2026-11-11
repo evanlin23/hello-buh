@@ -40,17 +40,17 @@ function under (b) {
     b.set(x, y, -3, 'deepslate_brick_stairs[facing=west]')
     b.fill(x, y + 1, -3, x, 4 - k, -3, 'air')
   }
-  for (const k of [2, 6]) b.hang(11 + k, 4 - k, -3, 0, 'lantern')   // two lanterns from the stair's ceiling
+  for (const k of [2, 4, 6, 8]) for (const z of [-4, -2]) b.set(11 + k, 3 - k, z, 'lantern')   // lanterns in niches in the stair's walls (a hanging one is in the head's way; shroomlights read as lava)
   // the bottom landing x 21..22 (floor -9, feet -8)
   b.fill(21, -10, -4, 22, -5, -2, rock); b.fill(21, -8, -3, 22, -6, -3, 'air'); b.fill(21, -9, -3, 22, -9, -3, 'polished_deepslate')
-  b.set(22, -6, -3, 'lantern[hanging=true]')
+  b.set(22, -7, -4, 'lantern')
 
   // ---- the farm: x 24..32, z -8..2, floor -9, inside -8..-4, ceiling -3; door C in its west wall (x 23)
   b.fill(23, -10, -9, 33, -3, 3, rock, 'hollow')
   b.fill(24, -9, -8, 32, -9, 2, 'grass_block')
   b.fill(24, -3, -8, 32, -3, 2, 'moss_block')
   for (let x = 25; x <= 31; x += 3) for (const z of [-6, -1]) b.set(x, -3, z, 'ochre_froglight')   // lit like day
-  b.fill(24, -9, -3, 32, -9, -3, 'dirt_path')                         // the walk
+  b.fill(24, -9, -3, 32, -9, -3, b.mix({ coarse_dirt: 2, rooted_dirt: 1, mud_bricks: 0 }))   // the walk (full blocks: a dirt path's 1/16 lip under a 2-high banner door stopped the walk)
   b.fill(24, -8, -4, 32, -8, -4, 'oak_fence'); b.fill(24, -8, -2, 32, -8, -2, 'oak_fence')
   // north: a pasture (cows and sheep, live); south: crops on farmland with a water channel
   b.fill(24, -9, -8, 32, -9, -5, b.mix({ grass_block: 6, moss_block: 1, coarse_dirt: 1 }))
@@ -68,7 +68,7 @@ function under (b) {
   b.fill(35, -8, -8, 41, -7, -8, 'bookshelf'); b.fill(34, -8, -7, 34, -7, -5, 'bookshelf')
   b.set(38, -8, -6, 'enchanting_table'); b.set(36, -8, -5, 'candle[candles=3,lit=true]')
   b.set(36, -8, 1, 'brewing_stand'); b.set(37, -8, 2, 'cauldron'); b.set(38, -8, 2, 'chest[facing=north]')
-  b.set(40, -8, 1, 'lectern[facing=north,has_book=true]'); b.set(41, -8, 2, 'anvil[facing=east]')
+  b.set(39, -8, 2, 'lectern[facing=north,has_book=true]'); b.set(35, -8, 1, 'anvil[facing=east]')
   b.set(35, -8, 2, 'bookshelf'); b.set(35, -7, 2, 'bookshelf')
   b.hang(36, -5, -3, 0); b.hang(40, -5, -3, 0)
   bannerDoor(b, 33, -8, -3, 'cyan', 4)
@@ -80,6 +80,7 @@ function under (b) {
 
   // ---- the mine tunnel: x 44..53, z 0..2 (walk z 1), floor -9, inside -8..-6; door F in the vault's wall (x 54)
   b.fill(44, -10, -1, 53, -5, 3, rock, 'hollow')
+  b.fill(44, -8, 0, 53, -6, 2, 'air')                                  // (the shell's ends are the library's and the vault's walls)
   b.fill(44, -9, 0, 53, -9, 2, b.mix({ deepslate: 3, cobbled_deepslate: 2, gravel: 1 }))
   const ORE = { 46: [-1, -7, 'deepslate_iron_ore'], 47: [3, -8, 'deepslate_coal_ore'], 49: [-1, -6, 'deepslate_gold_ore'], 51: [3, -6, 'deepslate_redstone_ore'], 52: [-1, -8, 'deepslate_lapis_ore'] }
   for (const [x, [z, y, o]] of Object.entries(ORE)) b.set(+x, y, z, o)
@@ -91,23 +92,26 @@ function under (b) {
 
   // ---- the vault: x 55..75, z -10..12, floor -17, inside -16..-2, ceiling -1; the balcony x 55..57, z 0..2 at -9
   b.fill(54, -17, -11, 76, -1, 13, rock, 'hollow')
-  b.fill(55, -17, -10, 75, -17, 12, b.mix({ polished_blackstone_bricks: 5, gilded_blackstone: 1, cracked_polished_blackstone_bricks: 1 }))
+  b.fill(55, -17, -10, 75, -17, 12, b.mix({ smooth_quartz: 4, quartz_bricks: 2, chiseled_quartz_block: 1 }))
+  for (let x = 57; x <= 73; x += 4) for (let z = -8; z <= 10; z += 4) b.set(x, -17, z, 'sea_lantern')
   b.fill(55, -1, -10, 75, -1, 12, 'polished_blackstone_bricks')
-  for (let x = 57; x <= 73; x += 4) for (let z = -8; z <= 10; z += 4) b.set(x, -1, z, 'shroomlight')
+  for (let x = 56; x <= 74; x += 3) for (let z = -9; z <= 11; z += 3) b.set(x, -1, z, 'shroomlight')
+  for (let z = -9; z <= 11; z += 4) for (const y of [-12, -6]) { b.set(75, y, z, 'shroomlight'); b.set(55, y, z, 'shroomlight') }
+  for (let x = 58; x <= 74; x += 4) for (const y of [-12, -6]) { b.set(x, y, -10, 'shroomlight'); b.set(x, y, 12, 'shroomlight') }
   b.fill(55, -17, 1, 75, -17, 1, 'gold_block')                              // a gold aisle down the middle
   // the balcony: a deepslate tower with a railed top
   b.fill(55, -16, -1, 57, -9, 3, DS); b.fill(55, -9, -1, 57, -9, 3, 'polished_deepslate')
-  b.fill(57, -8, -1, 57, -8, 3, 'dark_oak_fence'); b.fill(55, -8, -1, 56, -8, -1, 'dark_oak_fence'); b.fill(55, -8, 3, 56, -8, 3, 'dark_oak_fence')
-  b.set(57, -7, -1, 'lantern'); b.set(57, -7, 3, 'lantern')
+  b.fill(55, -8, -1, 56, -8, -1, 'dark_oak_fence'); b.fill(55, -8, 3, 56, -8, 3, 'dark_oak_fence')
+  b.set(56, -7, -1, 'lantern'); b.set(56, -7, 3, 'lantern')
   bannerDoor(b, 54, -8, 1, 'white', 4)
   // pillars with lanterns
-  for (const [x, z] of [[61, -6], [61, 8], [70, -6], [70, 8]]) b.fill(x, -16, z, x, -2, z, 'quartz_pillar[axis=y]')
+  for (const [x, z] of [[63, -9], [63, 11], [72, -9], [72, 11]]) b.fill(x, -16, z, x, -2, z, 'quartz_pillar[axis=y]')
   // the beacon on a gold / diamond / emerald pyramid (no beam: underground, as in vanilla)
   const tier = b.mix({ gold_block: 3, diamond_block: 2, emerald_block: 1, iron_block: 1 })
   b.fill(63, -16, -1, 67, -16, 3, tier); b.fill(64, -15, 0, 66, -15, 2, tier); b.set(65, -14, 1, 'beacon')
   // hoards: heaps of gold, diamonds, emeralds; netherite and ancient debris; chests along the walls
   const heap = (x, z, blk, r = 2) => { for (let y = 0; y <= r; y++) b.fill(x - r + y, -16 + y, z - r + y, x + r - y, -16 + y, z + r - y, blk) }
-  heap(59, -6, b.mix({ gold_block: 5, raw_gold_block: 1 })); heap(71, -6, 'diamond_block'); heap(59, 8, 'emerald_block'); heap(71, 8, b.mix({ gold_block: 3, diamond_block: 1 }))
+  heap(60, -5, b.mix({ gold_block: 5, raw_gold_block: 1 }), 3); heap(70, -5, 'diamond_block', 3); heap(60, 7, 'emerald_block', 3); heap(70, 7, b.mix({ gold_block: 3, diamond_block: 1 }), 3)
   heap(66, -8, 'gold_block', 1); heap(66, 10, 'diamond_block', 1); b.set(63, -16, 6, 'netherite_block'); b.set(68, -16, -4, 'ancient_debris')
   for (let x = 57; x <= 73; x += 2) { b.set(x, -16, -10, 'chest[facing=south]'); b.set(x, -16, 12, 'chest[facing=north]') }
   // a lit nether portal on the far wall
@@ -117,7 +121,7 @@ function under (b) {
 
 const SUBS = [
   ['reveal', 'secret room 1', 1.6, 0],
-  ['open_chest', 'banners have NO hitbox', 1.6, 0],
+  ['lookback', 'banners have NO hitbox', 1.6, 0],
   ['reveal', 'secret room 2', 1.6, 1],
   ['reveal', 'secret room 3', 1.6, 2],
   ['reveal', 'secret room 4', 1.4, 3],
@@ -145,7 +149,7 @@ module.exports = makeStunt({
     }
     // the farm's animals (live, in their pasture behind the fence)
     for (const [t, x, z] of [['cow', 26.5, -6.5], ['sheep', 29.5, -7.0], ['cow', 31.0, -5.5], ['chicken', 25.5, -5.0]]) {
-      await H.cmd(`/summon ${t} ${H.O.x + x} ${H.O.y - 8} ${H.O.z + z} {PersistenceRequired:1b,Rotation:[${t === 'cow' ? 90 : 200}f,0f]}`)
+      await H.cmd(`/summon ${t} ${H.O.x + x} ${H.O.y - 8} ${H.O.z + z} {PersistenceRequired:1b,NoAI:1b,Rotation:[${t === 'cow' ? 90 : 200}f,0f]}`)
     }
   },
 
@@ -167,29 +171,41 @@ module.exports = makeStunt({
     ctx.mark('open_chest')
     await bot.waitForTicks(26)
     K.close()
+    // the how: a look back at the door from inside (the banner's back, the den's light round it)
+    await H.look(6.5, 1.6, 0.5, { max: 30 })
+    ctx.mark('lookback')
+    await H.hold(8)
     // 2. the blue banner on the stash's east wall -> the stair down
-    await H.look(9.5, 1.8, -2.5, { max: 14 })
-    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.5, -2.5], [21.0, -7.5, -2.5], [21.6, -8, -2.5]], 9, -3)
+    await H.look(9.5, 1.8, -2.5, { max: 22 })
+    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.8, -7.4, -2.5]], 9, -3, { pitch: -0.55 })
     // 3. the lime banner at the bottom -> the farm
+    await H.look(24.5, -6.6, -2.5, { max: 12 })
     await through([[24.4, -8, -2.5], [27.5, -8, -2.5]], 23, -3)
     await H.look(28.5, -7.0, -6.5, { max: 16 })     // the pasture
+    await H.look(33.5, -6.6, -2.5, { max: 16 })   // eyes back down the walk
     await through([[33.4, -8, -2.5], [35.5, -8, -2.5]], 33, -3, { during: async (k) => { if (k === 6) ctx.mark('farm_walk') } })
     // 4. the library: the enchanting table, then the wall of five banners
     await H.look(38.5, -7.6, -5.5, { max: 14 })
+    await H.look(41.5, -6.6, -2.5, { max: 14 })
     await H.walk([[40.6, -8, -2.5]])
     ctx.mark('which')
     await H.look(43.5, -7.0, -6.5, { max: 18 })
     await H.look(43.5, -7.0, 0.5, { max: 22 })
-    await through([[41.6, -8, 1.5], [44.6, -8, 1.5]], 43, 1)
-    // 5. the mine: a diamond on the way
-    await H.walk([[47.3, -8, 1.5]])
+    // 5. through it into the mine (one walk: a stop at the door read as sliding on a block); a diamond on the way
+    await H.walk([[41.0, -8, 1.5]])                 // line up on the yellow one first (cutting the corner slid along the niche)
+    await H.look(44.5, -6.6, 1.5, { max: 12 })
+    await through([[44.6, -8, 1.5], [47.3, -8, 1.5]], 43, 1)
     ctx.select(0)
-    await K.dig(H.at(48, -7, 3))
+    // vanilla: deepslate diamond ore (hardness 4.5) with a diamond pickaxe (speed 8) breaks in 17 ticks
+    await K.dig(bot.blockAt(H.at(48, -7, 3)), 850)
     ctx.mark('diamond')
+    await K.dig(bot.blockAt(H.at(48, -6, 3)), 850)
+    ctx.mark('diamond')
+    await H.look(52.5, -6.6, 1.5, { max: 14 })
     await H.walk([[48.9, -8, 1.5]])
     // 6. the white banner -> the vault (the payoff), the look out over it from the balcony
     await H.look(54.5, -7.2, 1.5, { max: 10 })
-    await through([[52.5, -8, 1.5], [56.3, -8, 1.5]], 54, 1, { payoff: true })
+    await through([[52.5, -8, 1.5], [56.9, -8, 1.5]], 54, 1, { payoff: true })
     await H.look(66, -15, 1.5, { max: 24 })
     await H.hold(10)
     return true
