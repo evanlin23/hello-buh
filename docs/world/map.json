@@ -2314,6 +2314,16 @@
     "boxed_bell"
    ],
    "status": "made"
+  },
+  "seventy_below": {
+   "day": 2200,
+   "places": [
+    "ravenford"
+   ],
+   "cameos": [
+    "blue_flock"
+   ],
+   "status": "script r2 (batch 3 round 3): owner audit pending; story stamps (room, hole, bed) in stories/seventy_below/set.md, not yet in ravenford.stamps"
   }
  },
  "cameos": {
