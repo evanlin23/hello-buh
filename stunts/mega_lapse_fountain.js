@@ -218,7 +218,9 @@ module.exports = L.makeLapse({
     // the reveal's drop with a dip and an impact; the pass (the last beat, the payoff pace and mixcheck measure) its own dip
     // and a loud impact (at 1.0 it rose only ~7 dB over the reveal's ringing beacon: pace wants 10)
     sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5], ['impact', 'pass', { gain: 1.8 }]],
-    cards: [['pass', 'SMALL', 0.8, 'yellow', 0, null, { y: 0.24 }]]
+    // the NCS drop on the pass, the last beat (mixcheck: dropped on the reveal, the bed was at full level 0.6 s later
+    // and the pass's hit didn't stand out); no card: at 0.8 s it couldn't be read (r:r188b46 ends fast)
+    dropAt: 'pass'
   },
   shots: {
     // 1. close and low on the fountain (56e beside it), pulling back and up as the plaza spreads round it
