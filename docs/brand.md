@@ -240,8 +240,8 @@ The art is in `brand/buh_stories/`, the review page is linked from the session r
   3. @HelloBuhStories (ties it to the main channel, but it's long)
   4. "Tales from Hushwell" @HushwellTales (a world name instead of the hero; good if "Buh" is taken)
 - **Promise (one line):** *Short Minecraft stories, told by the kid who lived them.* Every story stands alone (owner,
-  2026-11-11: no shared-world or connected-stories framing, r:rca5363; "just do stories", no mystery or twist pitch,
-  r:rae1fcc).
+  2026-11-11: no shared-world or connected-stories framing, r:rca5363; "just do stories", r:rae1fcc). Each story can still be a
+  mystery: its own title, video description and pinned question set it up; the channel's own copy says "stories".
 - **Who's talking:** Pip's voice: a happy, bubbly kid who's figuring the world out and tells you the strange thing
   like it's a fun fact. Buh is the hero you keep meeting at different ages (kid in Hushwell, Grandpa's helper in
   Ravenford, the player who left his dog).
@@ -293,11 +293,11 @@ varied. Raids' title gives away less than its twist; check it against the final 
 ## Description, tags, playlists
 - **Channel description:**
   "Short Minecraft stories, each told by someone who lived it: a village that carpets every
-  road, a grandpa who has won every raid, a dog who never stops waiting. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
+  road, a grandpa who has won every raid, a dog who never stops waiting. Most of them have a secret. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
 - **Video description template:** line 1 = the hook, then "Buh Story #N.", the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
-- **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft animation,
+- **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
 - **Playlists:** "All Buh Stories", "Dog stories" (Good Boy, Dog on the Hill), "Grandpa and Grandma stories"
   (Thirty-One Raids, Gold for the Portal): themes, not a timeline.
