@@ -8,7 +8,7 @@
 // Beats (Short seconds, 25.5 s): 0 low under the south-west corner, craning up (the build fills the frame) | 2.0 the
 // south-east corner, wider | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
 // east end | 8.4 wide orbit over the forest | 10.7 high over the top face | 12.8 boost up the north face and over the top,
-// looking down the top hole at the core | 17.6 the west face head-on | 19.6 closer, on the hole's line | 21.5 boost,
+// looking down the top hole at the core | 17.6 the west face from its south-west corner, tracking | 19.6 head-on on the hole's line, pushing in | 21.5 boost,
 // dive into the face hole (flash), slow down inside | 24.65 thread the core's hole (punch, flash, impact, the drop)
 //
 // Minecraft-true: an elytra glide with rockets (~30 blocks/s with a boost, a rocket used per boost, the stack counts
@@ -45,10 +45,15 @@ module.exports = {
     orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 11, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
     // 3b. high over the top face (under the clouds at y 192: above them the frame went white), sliding across it: the fractal from above, the top hole in the middle
     top: { path: [[0, 40, 118, 50], [2.1, 22, 112, 34]], lookPath: [[0, 4, 81, 4], [2.1, 0, 81, 0]], fov: 58, dof: false, drift: 0.4, scenery: true, subject: [[0, 84, 0]] },
-    // 5. the west face head-on, pushing in: the face hole, and the core glowing deep inside it
-    face: { path: [[0, -150, 47, 0.5], [2, -122, 45, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [2, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] },
-    // 5b. closer, on the hole's line: the tunnel, the core, the far exit
-    face2: { path: [[0, -96, 43, 0.5], [1.9, -74, 42, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 56, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
+    // 5. the west face from high off its south-west corner, tracking sideways across it (owner 2026-11-11, r:r52f94c, @18.7 s:
+    // "the cuts are too jarring, it looks like we get stuck": face and face2 were the same head-on view on the hole's line,
+    // one pushed in a little further, and the dive went on down that line: three cuts onto a near-identical frame read as
+    // a stutter). Now each cut is a new angle: this 3/4 view moving across the face, then face2 head-on, then the dive
+    // carries face2's push on at its own speed
+    face: { path: [[0, -112, 74, 92], [2, -128, 64, 58]], lookPath: [[0, -40, 41.5, 4], [2, -40, 41.5, 0.5]], fov: 54, dof: false, drift: 0.3, scenery: true, subject: [[-40, 41.5, 0.5]] },
+    // 5b. head-on, low on the hole's line and pushing in at ~20 blocks/s: the tunnel, the core, the far exit; it ends where
+    // the dive starts (x -72), so the cut to first person carries the same move on (motion continues across the cut)
+    face2: { path: [[0, -110, 42, 0.5], [1.9, -73.5, 43.6, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 62, dof: false, drift: 0.2, scenery: true, subject: [[0, 41.5, 0.5]] }
   },
   edit: {
     caption: 'rate my starter house',
@@ -205,7 +210,8 @@ module.exports = {
       const marks = { 32: 'inside', 68: 'thread', 77: 'threaded' }
       const done = new Set()
       await run(path, 100, (i) => {
-        const v = dist < 26 ? 1.5 : dist < 46 ? ease(1.5, 0.8, dist - 26, 20) : 0.8
+        // (from face2's ~1.0 a tick up to the boost's 1.5: the same push on, then faster)
+        const v = dist < 8 ? ease(1.0, 1.5, dist, 8) : dist < 26 ? 1.5 : dist < 46 ? ease(1.5, 0.8, dist - 26, 20) : 0.8
         dist += v
         for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); }
         return v
