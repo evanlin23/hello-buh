@@ -8,11 +8,11 @@
  "twist": "He breaks the block: a shaft straight down. He falls in, and at the bottom a zombie kills him with a diamond sword. The death message says it: HelloBuh was slain by Zombie using [HelloBuh's Sword]. He dug down there 412 days ago, sealed the hole behind him, died, and respawned with nothing. The zombie kept his sword; the sheep watched him go in and has waited at that block ever since. The death loops into line 1.",
  "key_color": "#FFB13B",
  "hotbar": [
-  "wooden_shovel",
   "torch",
   "bread",
-  "shears",
+  "wheat",
   "blue_dye",
+  "string",
   "milk_bucket",
   "milk_bucket",
   "cake",
@@ -191,5 +191,6 @@
    ],
    "direction": "[A bubbly nine-year-old kid, honestly puzzled, real questions, getting curious, then baffled; not whispery or soft]"
   }
- ]
+ ],
+ "hotbar_note": "no tools anywhere (L08: 'No TOOLS'): torches (the line from his door), bread, wheat and blue dye for the sheep, string; two milk buckets, a cake and eggs are the ridiculous ones"
 }
