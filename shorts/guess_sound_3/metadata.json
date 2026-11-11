@@ -986,9 +986,9 @@
   "notes": "worker 13: guess the mob from its sound pt 3 (chicken, sniffer, magma cube, skeleton, blaze, then a real creeper after two parrot fake-outs); independent review r5 ready on retention, minecraft and frame review | 2026-11-11 remix (owner on guess_sound: \"had super loud music\"): the song now ducks to -24 dB under each mob call (scripts/key_sounds.py: each call +11.7 dB over the music at worst, was -7.0 dB); same track, drop and picture; the song dips 0.3 s before the creeper blast so the payoff lands as a hit (pace BLOCK cleared) | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +16.6 -> +14.2 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11: ends 1.0 s after the death (endAfter death:1.0, was 1.2; tail trimmed from the same picture, short_nosong re-encoded crf 18): lint 'nobody moves' cleared (the death screen now counts as a screen in renderer/lint.js)",
   "published_at": "2026-11-07T14:49:45.966Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:24:51+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:08:03+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 32.36 s vs the reviewed render 32.36 s"
@@ -997,13 +997,13 @@
       "ok": false,
       "blockers": 3,
       "warnings": 1,
-      "summary": "aim: placing block at 402 72 -57 with the target off-screen (23.1 deg off the crosshair) (aim before the action: K.dig / K.pl; aim: 3/6 actions (50%, max 10%) land over 6 deg off the crosshair (median 8.2): the view doesn't track the action. Worst: src; aim: placing block at 416 72 -57 with the target off-screen (28.8 deg off the crosshair) (aim before the action: K.dig / K.pl"
+      "summary": "aim: placing block at 402 72 -57 with the target off-screen (23.1 deg off the crosshair) (aim before the action: lib/act.js A; aim: 3/6 actions (50%, max 10%) land over 6 deg off the crosshair (median 8.2): the view doesn't track the action. Worst: src; aim: placing block at 416 72 -57 with the target off-screen (28.8 deg off the crosshair) (aim before the action: lib/act.js A"
     },
     "check": {
-      "ok": true,
-      "label": "CHECK OK",
-      "blockers": 0,
-      "at": "2026-11-11T05:50:47.285Z",
+      "ok": false,
+      "label": "CHECK FAILED: 1 blocker",
+      "blockers": 1,
+      "at": "2026-11-11T09:36:13.007Z",
       "report": "work/hb/guess_sound_3.check.json"
     },
     "key_sounds": {

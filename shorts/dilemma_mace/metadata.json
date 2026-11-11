@@ -386,9 +386,9 @@
   "notes": "dilemma format #1 (lib/dilemma.js): 37-block hardcore fall, mace vs dog, 5-angle real slow-mo, Feather Falling IV twist; review r1 3 blockers (stutter, late landing, dog not in hook) + r2 1 (overlay blink/snap at span ends: edit.py fix) fixed; payoff fix (edit only): drop + dip + impact on the reveal, no landing boom; nitpicks: faint glint (card carries it), card over the face",
   "published_at": "2026-11-11T09:21:38.372Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:22:07+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:07:31+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 13.59 s vs the reviewed render 13.58 s"
@@ -403,7 +403,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:19:49.521Z",
+      "at": "2026-11-11T09:35:33.411Z",
       "report": "work/hb/dilemma_mace.check.json"
     },
     "key_sounds": "n/a"

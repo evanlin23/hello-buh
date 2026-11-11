@@ -1972,9 +1972,9 @@
   "notes": "backlog worker A 2026-11-11 (republished from the reviewed cut; re-rendered without a baked song, on the bright_stunt look): re-recorded on the current engine, short cut per the lead (1, 10, 100, 200, then 40 behind: 16.2 s; stunt floor 8 s). 2 review rounds (fresh-session reviewer), READY. Nitpicks: held emerald cut off at the right edge; two leaf blocks floating top right ~14.9-16.1 s; a cow wanders through the 200; the 40 behind show their backs ~0.3 s before the snap; pace WARNs 2.2 s spans on the 100 and 200 sidesteps (heads moving) | independent review 2026-11-11: READY. Hook: the villager turns to stare at 0.5 s, captions escalate 1/10/100/200, the pillar-up blocks are placed with the crosshair on them (r:rffba12), 'BEHIND ME TOO' payoff with a hit, end 0.96 s after it on the crowd (r:r24d99a ok); 16.2 s (stunt floor 8 s); pace 0 blockers. Nitpicks as before (emerald cut at the right edge, floating leaves top right ~14.9-16.1 s, a cow in the 200, the backs ~0.3 s before the snap); the 100/200 sidesteps are 2.35 s spans (WARN).",
   "published_at": "2026-11-11T07:27:11.974Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:28:40+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:10:36+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 16.23 s vs the reviewed render 16.22 s"
@@ -1989,7 +1989,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T07:13:14.495Z",
+      "at": "2026-11-11T09:39:29.988Z",
       "report": "work/hb/villager_crowd.check.json"
     },
     "key_sounds": "n/a"

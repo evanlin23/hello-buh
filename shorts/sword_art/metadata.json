@@ -10265,9 +10265,9 @@
   "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks in the review notes",
   "published_at": "2026-11-11T07:01:02.843Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:27:58+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:10:05+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 33.22 s vs the reviewed render 33.20 s"
@@ -10276,13 +10276,13 @@
       "ok": false,
       "blockers": 7,
       "warnings": 4,
-      "summary": "aim: 61/89 actions (69%, max 10%) land over 6 deg off the crosshair (median 10.8): the view doesn't track the action. Worst: ; aim: placing brown_wool at 369 74 -42 18.9 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing black_wool at 369 81 -48 15.3 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing black_wool at 369 75 -44 21.0 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing brown_wool at 374 76 -57 23.2 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing black_wool at 385 83 -57 24.1 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: 28 more action(s) over 15 deg or off-screen (python3 scripts/owner_checks.py <rec> lists them all) (aim before the actio"
+      "summary": "aim: 61/89 actions (69%, max 10%) land over 6 deg off the crosshair (median 10.8): the view doesn't track the action. Worst: ; aim: placing brown_wool at 369 74 -42 18.9 deg off the crosshair (max 15): it reads as hacking (aim before the action: lib/ac; aim: placing black_wool at 369 81 -48 15.3 deg off the crosshair (max 15): it reads as hacking (aim before the action: lib/ac; aim: placing black_wool at 369 75 -44 21.0 deg off the crosshair (max 15): it reads as hacking (aim before the action: lib/ac; aim: placing brown_wool at 374 76 -57 23.2 deg off the crosshair (max 15): it reads as hacking (aim before the action: lib/ac; aim: placing black_wool at 385 83 -57 24.1 deg off the crosshair (max 15): it reads as hacking (aim before the action: lib/ac; aim: 28 more action(s) over 15 deg or off-screen (python3 scripts/owner_checks.py <rec> lists them all) (aim before the actio"
     },
     "check": {
-      "ok": true,
-      "label": "CHECK OK",
-      "blockers": 0,
-      "at": "2026-11-11T06:37:28.054Z",
+      "ok": false,
+      "label": "CHECK FAILED: 1 blocker",
+      "blockers": 1,
+      "at": "2026-11-11T09:38:46.509Z",
       "report": "work/hb/sword_art.check.json"
     },
     "key_sounds": "n/a"

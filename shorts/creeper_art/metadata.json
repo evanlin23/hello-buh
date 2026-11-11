@@ -877,9 +877,9 @@
   "notes": "awaiting independent review. worker B 2026-11-11 re-take (r:r650840): lib/pixel_art.js aims every block (ad926e79) and stops the walk back on the wall axis (69b283e1); aim 189 actions median 0.0 deg p90 0.3 (was p90 4.5); walk back ends ~2.5 blocks short of the small picture's plane, beside its edge (was through it); pace OK",
   "published_at": "2026-11-11T09:38:26.655Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:39:08+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:07:23+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 34.52 s vs the reviewed render 34.50 s"
@@ -894,8 +894,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:32:04.350Z",
-      "report": "out/creeper_art.check.json"
+      "at": "2026-11-11T09:35:16.940Z",
+      "report": "work/hb/creeper_art.check.json"
     },
     "key_sounds": "n/a"
   }

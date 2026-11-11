@@ -1,10 +1,10 @@
 {
   "name": "tnt",
   "channel": "hellobuh",
-  "caption": "POV: you lit 75 TNT \ud83d\udc80",
+  "caption": "POV: you lit 75 TNT 💀",
   "youtube": {
-    "title": "POV: you lit 75 TNT \ud83d\udc80 #minecraft #shorts",
-    "description": "POV: you lit 75 TNT \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you lit 75 TNT 💀 #minecraft #shorts",
+    "description": "POV: you lit 75 TNT 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "POV: you lit 75 TNT \ud83d\udc80",
+    "caption": "POV: you lit 75 TNT 💀",
     "red": "75",
     "song": "songs/ncs/mortals_funk_remix.mp3",
     "dropAt": "boom",
@@ -96,7 +96,7 @@
     ],
     "args": [
       "--caption",
-      "POV: you lit 75 TNT \ud83d\udc80",
+      "POV: you lit 75 TNT 💀",
       "--red",
       "75",
       "--speed",
@@ -7147,15 +7147,15 @@
     "gunzip -c shorts/tnt/recording.json.gz > work/tnt.rec.json",
     "node render.js work/tnt.rec.json work/tnt.frames 60 1080 1011",
     "python3 audio.py work/tnt.rec.json work/tnt.wav",
-    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT \ud83d\udc80\" --red 75 --speed [[\"lit:0.5\",\"boom:-0.4\",1.5]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.5]] --sfx [[\"air\",\"start\",\"boom\",{\"gain\":0.6}],[\"riser\",\"lit\",\"boom\"],[\"boom\",\"boom\"]] --start_at lit:-1.3 --end_after boom:1.0 --song songs/ncs/mortals_funk_remix.mp3 --song_drop_at boom --out out/tnt.mp4"
+    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT 💀\" --red 75 --speed [[\"lit:0.5\",\"boom:-0.4\",1.5]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.5]] --sfx [[\"air\",\"start\",\"boom\",{\"gain\":0.6}],[\"riser\",\"lit\",\"boom\"],[\"boom\",\"boom\"]] --start_at lit:-1.3 --end_after boom:1.0 --song songs/ncs/mortals_funk_remix.mp3 --song_drop_at boom --out out/tnt.mp4"
   ],
   "status": "needs-fix",
   "notes": "backlog worker A 2026-11-11: needs-fix (unfinished). This package is the OLD 15.4 s cut (publish.js re-cut it from stale frames; gates flag it stale), not the reviewed 5.27 s one. Following the lead's 8 s stunt floor, stunts/tnt.js (main) now adds a real beat (after the chain: walk to the rim, look into the crater; endAfter crater:1.0, ~9 s) and lights the TNT via lib/act.js. It is not re-recorded yet: the shared server was busy and the disk sat under 2 GB. Next: ./hb make tnt --from record, then render, then an independent review.",
   "published_at": "2026-11-11T06:04:42.794Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:28:08+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:10:14+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": false,
       "summary": "short.mp4 15.40 s vs the reviewed render 5.27 s: the package isn't the reviewed cut (a stale short_nosong.mp4 or old frames): publish it again from the current render"
@@ -7167,10 +7167,10 @@
       "summary": "payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash); payoff: the video runs 7.28 s past the payoff (owner: end as soon as it lands; max 1.0 s)"
     },
     "check": {
-      "ok": false,
-      "label": "CHECK FAILED: 1 blocker",
-      "blockers": 1,
-      "at": "2026-11-11T08:27:43.658Z",
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T09:38:56.443Z",
       "report": "work/hb/tnt.check.json"
     },
     "key_sounds": "n/a"

@@ -9478,9 +9478,9 @@
   "notes": " | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +2.9 -> +4.8 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker): pace BLOCKed no picture change on the payoff (collected, 29.85 s). Edit-only: a white flash (0.6) as the 192 emeralds land in the inventory (edit.flash, stunts/fortune.js), drawn on short_nosong.mp4 (no new render); remixed at the -16 LUFS bed, same track and drop. ./hb pace OK (WARN 2.2/2.5 s spans, build-up loudness dip), ./hb check OK, key_sounds n/a",
   "published_at": "2026-11-07T19:05:52.933Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:24:19+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:07:40+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.76 s vs the reviewed render 30.76 s"
@@ -9495,7 +9495,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:52:49.714Z",
+      "at": "2026-11-11T09:35:49.131Z",
       "report": "work/hb/fortune.check.json"
     },
     "key_sounds": "n/a"

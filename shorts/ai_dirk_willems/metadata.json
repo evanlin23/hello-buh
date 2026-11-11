@@ -53,9 +53,9 @@
   "notes": "AI dilemma episode 2 (Dirk Willems, 1569). Owner 2026-11-09: post the backlog and keep testing formats.",
   "published_at": "2026-11-09T19:37:04.000Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:22:47+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:07:03+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 46.60 s vs the reviewed render 46.60 s"

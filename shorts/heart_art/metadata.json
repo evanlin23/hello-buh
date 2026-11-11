@@ -902,24 +902,24 @@
   "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks in the review notes",
   "published_at": "2026-11-11T07:02:18.922Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:25:09+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:08:26+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 32.51 s vs the reviewed render 32.50 s"
     },
     "pace": {
       "ok": false,
-      "blockers": 7,
-      "warnings": 2,
-      "summary": "aim: 80/111 actions (72%, max 10%) land over 6 deg off the crosshair (median 11.1): the view doesn't track the action. Worst:; aim: placing black_wool at 362 75 -52 22.2 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing black_wool at 362 77 -52 21.0 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing black_wool at 357 72 -52 15.1 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig ; aim: placing red_wool at 361 76 -52 17.5 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig / ; aim: placing red_wool at 370 80 -47 15.2 deg off the crosshair (max 15): it reads as hacking (aim before the action: K.dig / ; aim: 42 more action(s) over 15 deg or off-screen (python3 scripts/owner_checks.py <rec> lists them all) (aim before the actio"
+      "blockers": 4,
+      "warnings": 4,
+      "summary": "dead: 9.34 s with nothing new (32.51-41.85 s, after the end; no line on screen); dead: 33.40 s with nothing new (41.85-75.25 s, after the backup; no line on screen); payoff: no sound hit within 0.3 s of the payoff; payoff: no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T06:39:54.017Z",
+      "at": "2026-11-11T09:36:33.706Z",
       "report": "work/hb/heart_art.check.json"
     },
     "key_sounds": "n/a"

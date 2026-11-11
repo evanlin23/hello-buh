@@ -2871,9 +2871,9 @@
   "notes": "cells #1: six mobs in vanilla contraptions down a glass lab corridor, iron golem launch finale. Independent review r1: finale pad hidden (fixed); r2 READY. Payoff fix (edit only, same recording): NCS drop lands on the slam, 0.4 s dip + impact, riser removed. Nitpicks: wool pile reads grey-brown; ~1 s hold on the sheared sheep; snow golem pumpkin partly out of frame; cow framed close.",
   "published_at": "2026-11-11T08:55:32.657Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:56:11+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:07:12+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.02 s vs the reviewed render 30.00 s"
@@ -2888,7 +2888,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T08:54:08.888Z",
+      "at": "2026-11-11T09:35:05.067Z",
       "report": "work/hb/cells_lab.check.json"
     },
     "key_sounds": "n/a"

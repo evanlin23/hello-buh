@@ -27478,9 +27478,9 @@
   "notes": "worker 9: 1 vs 10 vs 100 vs 1000 TNT, finale standing ON 1000 TNT; frame review + retention + minecraft audits ready (independent reviewer). Nitpicks: point-blank TNT texture opening tiers 2-4, smoke-filled frames at the big blasts. | 2026-11-11 pace fix (queue worker): pace BLOCKed no sound hit on the payoff (death at 29.98 s: the -13 bed covered the 1000-TNT blast). Edit-only: edit.sfx dip on death (the song drops out 0.35 s before it; stunts/tnt_1000.js), remixed at the new -16 LUFS stunt bed (r:r662041), same track and drop, picture unchanged. ./hb pace OK (WARN 2.3 s spans at 22.7/25.2), ./hb check OK (primed TNT is no teleport, 7d5c691), key_sounds n/a",
   "published_at": "2026-11-07T18:59:28.495Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:28:27+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:10:28+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 31.40 s vs the reviewed render 31.40 s"
@@ -27489,13 +27489,13 @@
       "ok": false,
       "blockers": 1,
       "warnings": 3,
-      "summary": "settle: the Short ends while 5 flying dirt (explosion debris) still move in view (it settles 0.22 s of recording later): owner, "
+      "summary": "settle: the Short ends while 5 flying dirt (explosion debris) still move in view (it settles 0.20 s of recording later): owner, "
     },
     "check": {
-      "ok": true,
-      "label": "CHECK OK",
-      "blockers": 0,
-      "at": "2026-11-11T05:56:22.581Z",
+      "ok": false,
+      "label": "CHECK FAILED: 1 blocker",
+      "blockers": 1,
+      "at": "2026-11-11T09:39:14.804Z",
       "report": "work/hb/tnt_1000.check.json"
     },
     "key_sounds": "n/a"

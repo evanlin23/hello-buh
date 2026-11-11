@@ -886,9 +886,9 @@
   "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
   "published_at": "2026-11-11T07:23:27.588Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:27:03+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:09:48+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 33.22 s vs the reviewed render 33.20 s"
@@ -903,7 +903,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:52:24.393Z",
+      "at": "2026-11-11T09:38:35.942Z",
       "report": "work/hb/skull_art.check.json"
     },
     "key_sounds": "n/a"

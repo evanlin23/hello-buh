@@ -66829,9 +66829,9 @@
   "notes": "race #1 (lib/race.js): grass vs mycelium, real vanilla spreading top-down; 2 review rounds (r1 beats + still ending, r2 tenths on the score bar); payoff fix (edit only): drop + dip + impact on the win, end 1.2 s after. Nitpicks: LEAD CHANGE! doesn't name the leader; LAST DIRT hidden under CAN'T LOSE NOW; dirt reads orange under bright_stunt; small mycelium seed at 0 s.",
   "published_at": "2026-11-11T09:33:03.313Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:33:41+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:09:33+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 31.87 s vs the reviewed render 31.87 s"
@@ -66846,7 +66846,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:29:46.333Z",
+      "at": "2026-11-11T09:38:26.157Z",
       "report": "work/hb/race_grass_mycelium.check.json"
     },
     "key_sounds": "n/a"

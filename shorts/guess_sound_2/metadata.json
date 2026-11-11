@@ -709,9 +709,9 @@
   "notes": "worker 13: guess the mob from its sound pt 2 (pig, zombie, spider, witch, allay, then the parrot again imitating a ghast); independent review r5 ready on retention, minecraft and frame review. Post after pt 1, before pt 3. | 2026-11-11 remix (owner on guess_sound: \"had super loud music\"): the song now ducks to -24 dB under each mob call (scripts/key_sounds.py: each call +12.2 dB over the music at worst, was -12.3 dB); same track, drop and picture | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -3.0 -> -1.2 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture",
   "published_at": "2026-11-07T15:44:47.075Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:24:40+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:07:52+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 33.41 s vs the reviewed render 33.41 s"
@@ -726,7 +726,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:49:36.485Z",
+      "at": "2026-11-11T09:36:01.017Z",
       "report": "work/hb/guess_sound_2.check.json"
     },
     "key_sounds": {
