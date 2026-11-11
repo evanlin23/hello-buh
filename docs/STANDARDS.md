@@ -205,7 +205,7 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
    their quote marks. (`"captions": "word"` gives one word at a time.) **Every spoken word is captioned**, narrator and
    characters: its line's caption is on screen while it's said, every caption word is shown, and the take says the
    caption text. Check: `scripts/caption_av_check.py` coverage (BLOCK; in `./hb check`, before the render with
-   `--events`). r:r61d371 (supersedes r:rbd7cb6)
+   `--events`; on the mp4 it also measures the caption holds from the frames and WARNs on any under 0.25 s). r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
