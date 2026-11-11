@@ -367,17 +367,17 @@
   "L10": {
    "who": "Grandma",
    "text": "One's plenty, sweetie.",
-   "dur": 3.115,
-   "onset": 0.68,
-   "end": 2.72,
+   "dur": 2.9,
+   "onset": 0.46,
+   "end": 2.5,
    "chunks": [
     [
-     0.68,
-     1.88
+     0.46,
+     1.66
     ],
     [
-     1.955,
-     2.72
+     1.74,
+     2.5
     ]
    ],
    "captions": [
@@ -385,14 +385,16 @@
     "sweetie."
    ],
    "with": [
-    "Grandma"
+    "Gacrux",
+    "Autonoe"
    ],
    "model": "gemini-3.1-flash-tts-preview",
    "beat": "L10",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4ef9d5acb0a4",
-   "source": "brand/auditions/2026-11-11_mom_grandma/J_grandma_Autonoe_gemini-3.1-flash-tts-preview.mp3 (claude/audition-mom-grandma): the owner's picked audition take, used as is (Buh Stories lead 2026-11-11), not a new request"
+   "aligned_wav": "0fe6ec859153",
+   "source": "brand/auditions/2026-11-11_mom_grandma/wav/grandma_Autonoe_gemini-3.1-flash-tts-preview.wav (claude/audition-mom-grandma 7cdefeaa): the owner's picked audition take J, the original 24 kHz wav, used as is (Buh Stories lead 2026-11-11), not a new request. It came from a two-speaker request on gemini-3.1-flash-tts-preview: Autonoe as speaker 'Beth' (second line), Gacrux as 'Anna'; direction '[An old grandmother in her seventies, warm, slow and a little dry]'",
+   "speaker": "Beth"
   },
   "L11": {
    "who": "N",
@@ -556,7 +558,7 @@
     "L10"
    ],
    "file": "beat_L10.wav",
-   "dur": 3.115,
+   "dur": 2.9,
    "offsets": [
     0.0
    ],
@@ -568,7 +570,12 @@
    "gate": [],
    "cut": "whole",
    "rejected": [],
-   "source": "brand/auditions/2026-11-11_mom_grandma/J_grandma_Autonoe_gemini-3.1-flash-tts-preview.mp3 (claude/audition-mom-grandma): the owner's picked audition take, used as is (Buh Stories lead 2026-11-11), not a new request"
+   "source": "brand/auditions/2026-11-11_mom_grandma/wav/grandma_Autonoe_gemini-3.1-flash-tts-preview.wav (claude/audition-mom-grandma 7cdefeaa): the owner's picked audition take J, the original 24 kHz wav, used as is (Buh Stories lead 2026-11-11), not a new request. It came from a two-speaker request on gemini-3.1-flash-tts-preview: Autonoe as speaker 'Beth' (second line), Gacrux as 'Anna'; direction '[An old grandmother in her seventies, warm, slow and a little dry]'",
+   "with": [
+    "Gacrux",
+    "Autonoe"
+   ],
+   "speaker": "Beth"
   }
  },
  "total": 49.75
