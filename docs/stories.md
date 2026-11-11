@@ -480,6 +480,11 @@ STANDARDS.md in the same commit.
   offered all / smaller / big moments only / none: "only the big ones i think".** `edit.punchStress` punches only the
   big moments: the hook, the turn and the reveal (story.json `"punch": true` on those lines, at most 4; none marked:
   the first and last line), one punch each on the line's stressed word. Supersedes one punch per sentence.
+- **Owner, 2026-11-11, after listening to Light Sleeper's raw Pip one_take (sentence breaks 0.62-0.91 s, rejected by
+  the 0.6 s gate; the v2 cut the voice was picked from measures 0.62-0.80 s inside its lines): "This is fine".** That
+  pacing is the voice the owner chose: the narrator's take gate allows sentence breaks up to 0.95 s (cast `narrator`
+  `max_pause.rest`). Takes are still never trimmed, and a longer pause, a breath or a wrong word is still re-taken. The
+  opening rule (no gap over 0.6 s in the first 5 s) is unchanged.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
