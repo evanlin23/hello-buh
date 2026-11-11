@@ -282,9 +282,47 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, on the music sitting over the game sounds in most queued Shorts (music 1-12 dB above the
+  biggest game sounds; only 3 of 18 had the game on top): "fix all i think".** The music bed comes down for every
+  stunt Short (about 3 dB, so the game's own hits carry the payoff), and every ready, not-yet-uploaded Short is
+  remixed to the new level.
+- **Owner, 2026-11-11: "We should be trying for high views and high conversion right?" (yes to ranking formats by
+  expected subscribers per upload); "low views might be the format, but it could also just be us not doing it well.
+  for example the guess the mob had super loud music..."** The uploader ranks formats by expected subscribers per
+  upload (typical views x subs per 1k views, both shrunk toward the channel average, so one weak Short doesn't sink a
+  format). A Short that flops gets a cause before its format is blamed: check its execution first (music over the
+  voice or the key sound, a slow first 1.5 s, an unreadable stunt), fix the same fault in its queued siblings.
+- **Owner, 2026-11-11, on HelloBuh's views stalling under ~3k after the first three Shorts: "Check numbers... Maybe we
+  can have an exnteion gather all of the metrics you need?"** Studio numbers the API lacks (viewed vs swiped away, the
+  retention curve, traffic sources, busiest hours) come from Claude in Chrome with docs/studio-metrics-prompt.md, every
+  2-3 days; `scripts/studio_import.py` loads the answer into uploads/studio.json for the scores and the numbers check.
+- **Owner, 2026-11-11: "wait why cant hello buh still post these stories? we can use it sorta like experimentation?"**
+  @HelloBuh may post story Shorts too, as experiments: the older ready stories (chunk_next_door, nitwit, respawn_voice,
+  sheep_stares, sun_wont_set) stay on HelloBuh's queue (`channel: hellobuh`). A story package with no channel field
+  defaults to Buh Stories; the lead sets `channel` per story. Story subs per 1k views on HelloBuh are data for both
+  channels.
 - **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
   better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
   story from now on.
+- **Owner, 2026-11-11 (review page, Thirty-One Raids and Good Boy): "The woosh is wierd and jarring. We should have
+  better soudn effects and sounde ngineering."; "the sound effect here is weird".** No whoosh or transition SFX on any
+  cut, and every sound in a story is one the viewer would expect from what's on screen (vanilla sounds, the mood score,
+  the payoff hit), mixed so none of them jumps out over the voice. A sound that makes the owner stop is a blocker.
+- **Owner, 2026-11-11 (review page, Good Boy at 0:00.6): "here the camera is inside of the block, so we can see inside
+  of it."** The camera never sits inside or clips through a block in any shot; the eye is always in air.
+- **Owner, 2026-11-11 (review page, Gold for the Portal): "grandma's voice is also gravelly, i think it can read as
+  like a woman more?"** Every character's voice reads as that character at first hearing: a grandma sounds like an
+  older woman, not gravelly or sexless. Cast from the voice list to the character's age and sex.
+- **Owner, 2026-11-11 (review page, Dog on the Hill at 0:27.9): "we should cut as soon as the guy leaves. end of
+  short".** The Short ends the moment its last story beat lands (in Dog on the Hill: Buh leaving); no shots after it.
+- **Owner, 2026-11-11, asked whether "Buh joined the game" / "Buh left the game" should be in the middle of the screen
+  (recommended: centred, vanilla chat style, off the dog): "sure".** In story Shorts the join/leave chat lines (and any
+  payoff system chat) are centred horizontally near the caption height, in the vanilla yellow chat font and strip at
+  `chatScale` size, placed so they never cover the shot's subject.
+- **Owner, 2026-11-11, on the bright previews' zoom punch on every sentence: "what are all of these bouncy zooms?";
+  offered all / smaller / big moments only / none: "only the big ones i think".** `edit.punchStress` punches only the
+  big moments: the hook, the turn and the reveal (story.json `"punch": true` on those lines, at most 4; none marked:
+  the first and last line), one punch each on the line's stressed word. Supersedes one punch per sentence.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
