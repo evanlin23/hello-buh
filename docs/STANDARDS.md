@@ -401,6 +401,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
+- **Fast cuts after each action**: cut about 0.3-0.6 s after an action's result reads and go straight to the next
+  beat; the end lands about 0.5-0.8 s after the payoff's result. Smoke, particles and drifting debris never hold a cut
+  (this narrows r:r24d99a: only the action itself, a falling block, a dying mob or a blast in progress, holds a cut).
+  Check: the dwell check (pace), review, owner. r:r188b46
 - **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap

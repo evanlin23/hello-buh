@@ -413,6 +413,14 @@ STANDARDS.md in the same commit.
   bare wall or a still room. The caption reads like a person reacting ("I hate this job 😭", "Am I cooked?", "bro
   found dirt for ONCE 💀"), not a label ("ladder clutch"). Measured on the owner's 32 references: all show the subject
   at frame 0, nearly all with a reaction-style caption in the top band.
+- **Owner, 2026-11-11: "Generally, I think we need to have faster cuts. Like, after the stunt is done, we just cut.
+  After we have done something, like, we just cut, go to the next thing. ... it can't be too fast, but it can't be so
+  slow either. It's like, right now, we blow up the TNT, wait for, like, what feels like forever, then we cut. We
+  should need to, like, go boom, boom, boom, fast, fast pace."** Cut as soon as an action's result reads: about
+  0.3-0.6 s after the hit (the block lands, the boom's flash and blast), then straight to the next beat. Never wait
+  for smoke, particles or drifting debris to clear. This narrows the settle rule (r:r24d99a): still no cut while the
+  thing itself is happening (a block mid-fall, a mob mid-death, the blast still going off), but smoke and particles
+  no longer hold a cut or the end. The end comes about 0.5-0.8 s after the payoff's result.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
