@@ -143,6 +143,7 @@ module.exports = makeStunt({
   recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
   endAfter: 'big_done:0.5',
   bigCuts: [6, 0.6, 57],
+  payoffFlash: true, song: null,   // pace: a flash + punch + dip/impact on 60:00 (no picture change on the payoff), NCS at publish
   botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 3 tries on a busy box   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
   caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
