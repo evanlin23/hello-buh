@@ -38,6 +38,7 @@ FAMILIES = [
     ("herobrine", lambda n: n.startswith("herobrine_")),   # secret herobrine: the "lag" that never was (lib/herobrine.js, r:r047388)
     ("lucky", lambda n: n.startswith("lucky_")),   # fake super lucky: a dig where every block is luckier (r:r934ea4)
     ("fakeworld", lambda n: n.startswith("fakeworld_")),   # a whole world of one wrong block; one ordinary block is treasure (lib/fakeworld.js, r:r62f46d)
+    ("dropper", lambda n: n.startswith("dropper_")),   # a huge first-person dropper: quick fails, the clean landing (lib/dropper.js, r:r304cb5)
     ("mobpov", lambda n: n.startswith("mobpov_")),   # a mob's annoying trait as an absurd POV chase (lib/mobpov.js, r:r8048f1)
     ("trap", lambda n: n.startswith("trap_")),   # trapping a friend: a bait over a real vanilla trap (lib/trap.js, r:refc733)
     ("logic", lambda n: n.startswith("logic_")),   # rapid real vanilla quirks, one caption (lib/logic.js, r:r40f7c7)
