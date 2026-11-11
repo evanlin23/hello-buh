@@ -1,4 +1,4 @@
-// "boat clutch 💀" (~33 s, seven beats): the bot jumps off a cobblestone pillar looking straight down
+// "bro thinks a boat will save him 💀" (was the label "boat clutch 💀": reaction captions, r:r0f3da0) (~33 s, seven beats): the bot jumps off a cobblestone pillar looking straight down
 // the fall, places a boat on the grass right below a few ticks before the ground (real use_item with
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
 // into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
@@ -9,9 +9,9 @@ const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 })) 
 module.exports = {
   name: 'boat_clutch',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: 'boat clutch 💀',
+  caption: 'bro thinks a boat will save him 💀',
   edit: {
-    caption: 'boat clutch 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
+    caption: 'bro thinks a boat will save him 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
     // the label stays up through the fall
     subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.1 + Math.sqrt(p.h) * 0.3, i]),
     // the teleport between pillars is cut out (no hold around it)

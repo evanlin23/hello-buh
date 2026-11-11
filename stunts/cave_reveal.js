@@ -37,6 +37,9 @@ module.exports = {
     // opens 0.35 s before the first crack (from dig0 the first 2.3 s were the setup's cut pit wall and a slow tilt
     // down over grass under "just digging down...": independent review 2026-11-11)
     startAt: 'dig0:1.9',
+    // r:r0f3da0: frame 0 was plain grass. A 0.9 s flash of the bottom first: the floor breaks open onto the lava lake and
+    // the fall starts (cut before the death), then the dig from the top
+    hook: { at: 'l5', before: 0.0, after: 0.9, text: 'how it ends 💀' },
     subs: [
       ['dig0', 'just digging down...', 3], ['l1', 'oh, a cave', 2.2], ['dig1', 'keep going', 2],
       ['l2', 'a mineshaft??', 2.4], ['dig2', 'keep going...', 2], ['l3', 'a DUNGEON', 2.2], ['dig3', 'one more...', 1.8],

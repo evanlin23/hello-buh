@@ -12,5 +12,6 @@ module.exports = pixelArt({
   palette: { G: 'green_concrete', L: 'lime_concrete', K: 'black_concrete' },
   wall: 'smooth_stone',
   caption: 'rate my pixel art 1-10 😭',
-  edit: { caption: 'rate my pixel art 1-10 😭', dropAt: 'complete', startAt: 'stage:-0.1', endAfter: 'complete:0.9' }
+  // r:r0f3da0: frame 0 is the black face already on the wall (the eyes and mouth: a creeper at a glance), not the bare grey wall
+  edit: { caption: 'rate my pixel art 1-10 😭', dropAt: 'complete', startAt: 'stage:0.75', endAfter: 'complete:0.9' }
 })
