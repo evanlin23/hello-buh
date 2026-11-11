@@ -16,7 +16,7 @@ module.exports = R.makeStunt({
   caption: 'which door would you pick? 🚪',
   edit: {
     caption: 'which door would you pick? 🚪', red: 'door', song: 'songs/funk_abnormal.mp3', dropAt: 'reveal',
-    endAfter: 'last_death:0.97', deathScreen: true, onFire: 'lava_in:death',
+    endAfter: 'last_death:1.3', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
       ['intro', 'PICK A DOOR', 1.8, 'yellow'],   // (no 👇: it sat over door 5 and read as a hint)
@@ -33,6 +33,7 @@ module.exports = R.makeStunt({
     // the burn in the lava, sped up to the death; its middle 1.3 s cut (lint: nobody moves 12.4-13.6 s)
     speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5]],
     // pace: a hit on the payoff (the last death): the song dips 0.3 s before it, then an impact
-    sfx: [['dip', 'last_death', 0.3], ['impact', 'last_death']]
+    // and a whoosh + pop on the opening card and a pop on every card/counter (the hook: game sound starts with quiet steps)
+    sfx: [['whoosh', 'intro'], ['pops'], ['dip', 'last_death', 0.3], ['impact', 'last_death']]
   }
 })
