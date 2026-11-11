@@ -10,9 +10,9 @@ module.exports = lucky.make({
   red: 'luckiest',
   layers: [
     { kind: 'ore', block: 'diamond_ore', depth: 1, mine: ['n', 'e', 's'], sub: 'DIAMONDS??' },
-    { kind: 'lava', sub: 'LAVA', saved: 'water bucket', subDur: 0.7 },
+    { kind: 'lava', sub: 'LAVA', saved: 'WATER BUCKET', subDur: 0.7 },
     { kind: 'gap', n: 1 },
-    { kind: 'ore', block: 'emerald_ore', depth: 1, mine: ['w', 's', 'e', 'n'], sub: 'EMERALDS?!' },
-    { kind: 'portal', sub: 'a STRONGHOLD??', eyes: '11 EYES ALREADY IN?!', subDur: 1.0 }
+    { kind: 'ore', block: 'emerald_ore', depth: 1, mine: ['s', 'e', 'n'], sub: 'EMERALDS?!' },
+    { kind: 'portal', sub: 'a STRONGHOLD??', eyes: '11 EYES ALREADY IN?!', subDur: 0.6 }
   ]
 })
