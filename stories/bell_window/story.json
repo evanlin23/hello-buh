@@ -21,7 +21,7 @@
  },
  "weather": "clear",
  "world": {
-  "place": "saltmouth (canonical). Layout in local coordinates, origin = the square's ground under his window, his window in the house's north wall, facing north (-z): his eye at the open window (0, 5.6, 0) (upstairs floor y 4); the bell at block (0, 6, -3), double_wall-mounted between two oak-fence posts (x +-1, y 1-6), nothing above it; the skeleton's feet at (0, 10, -12) under the stamped oak on the north rise (10 high, since 1700), its eye (0, 11.7, -12), 13.7 blocks from his chest. The arrow's line (skeleton's eye to his chest (0, 5.0, 0)) crosses z -3 at y 6.7: through the bell's body (6.25-6.9). In S08 he stands on the porch roof one block east of the window, x +2: the line crosses z -3 at x 1.5, clear of the bell and the east post. One axis: oak, bell, window all on x = 0. If no rise lines up at Saltmouth, move the house (set.md).",
+  "place": "saltmouth (canonical). Layout in local coordinates, origin = the square's ground under his window, his window in the house's north wall, facing north (-z): his eye at the open window (0, 5.6, 0) (upstairs floor y 4); the bell at block (0, 6, -3), double_wall-mounted between two oak-fence posts (x +-1, y 1-6), nothing above it; the skeleton's feet at (0, 10, -12) under the stamped oak on the north rise (10 high, since 1700), its eye (0, 11.7, -12), 13.7 blocks from his chest. The arrow's line (skeleton's eye to his chest (0, 5.0, 0)) crosses z -3 at y 6.7: through the bell's body (6.25-6.9). In S08 he stands on the porch roof two blocks east of the window, x +2: the line crosses z -3 at x 1.5, clear of the bell and the east post. One axis: oak, bell, window all on x = 0. If no rise lines up at Saltmouth, move the house (set.md).",
   "day": 2000,
   "canon": "A Saltmouth family (not Buh's). The kid is a player; Mom is a villager. New canon fact: a skeleton lives under the oak on Saltmouth's north cliff from about day 1700 (the stamp: the oak and its shade).",
   "easter_egg": "saltmouth_portal (register as a cameo, since 0): Saltmouth's ruined portal at (-269, -366), framed in a daytime shot that looks south-east (S05)"
@@ -348,8 +348,8 @@
    "line": "L10",
    "place": "bedroom",
    "size": "full",
-   "camera": "pov at the open window; on 'CLIMBED' the pov climbs over the sill onto the porch roof one block east (x +2, eye 5.6) and faces the cliff",
-   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'CLIMBED' the pov climbs out over the sill onto the porch roof one block east; on 'PAST' and the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
+   "camera": "pov at the open window; on 'CLIMBED' the pov climbs over the sill onto the porch roof two blocks east (x +2, eye 5.6) and faces the cliff",
+   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'CLIMBED' the pov climbs out over the sill onto the porch roof two blocks east; on 'PAST' the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -362,8 +362,8 @@
    "line": null,
    "place": "cliff",
    "size": "wide",
-   "camera": "at: over the skeleton's right shoulder under the oak (0.6, 12.2, -13), looking down the axis at the window (0, 5, 0), FOV 30, still. The reveal, one shot, no line. Mark `draw` at full draw; cut 1.0 s after it",
-   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade (right third); mid the bell, swinging, centred on the axis, tonight's arrow stuck in its north face pointing straight at the camera (the shield, readable at 300 px), the lit window behind it; the kid on the porch roof beside the bell, just clear of it, waving up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
+   "camera": "at: over the skeleton's right shoulder under the oak (-0.6, 12.2, -13), about a block west of the axis so the stuck arrow's shaft reads side-on, looking down the axis at the window (0, 5, 0), FOV 30, still. The reveal, one shot, no line. Mark `draw` at full draw; cut 1.0 s after it",
+   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade (right third); mid the bell, swinging, centred on the axis, tonight's arrow stuck in its north face, its shaft and fletching angled toward the camera but seen a little from the side (the shield; check a 300 px still before locking the shot), the lit window behind it; the kid on the porch roof beside the bell, just clear of it, waving up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
    "look": {
     "time": 12600
    }
@@ -448,7 +448,7 @@
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js). pinned = the question, without the 👇",
  "family": "guardian_mistaken",
- "payoff_note": "`draw`: the stunt mark when the skeleton raises its bow at full draw in S08; the Short ends <= 1.0 s after it (owner: cut right on the reveal). No line after L09.",
+ "payoff_note": "`draw`: the stunt mark when the skeleton raises its bow at full draw in S08; the Short ends <= 1.0 s after it (owner: cut right on the reveal). No line after L10.",
  "one_take": [
   "N"
  ]

@@ -10,7 +10,7 @@
 | it only rings for his window (L03) | he's the only player in Saltmouth; skeletons don't target villagers, so their open windows are safe | S04 by day (every shutter open but his) |
 | the bell had a little feather sticking out; then poof, gone (L09) | an arrow sticks in the bell block (its fletching toward the cliff) and despawns after 1200 ticks (one minute) | S06 POV, a jump cut |
 | a super pale guy under the oak who never leaves the shade (L08) | skeletons shelter in shade from the sun; the oak's shade never moves off it | S05 at 6000: fully in shade, not burning |
-| he climbed out past the bell to wave hi (L10) | he steps one block east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S07, S08 |
+| he climbed out past the bell to wave hi (L10) | he climbs two blocks east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S07, S08 |
 
 ## The line-up check (the audit's must-changes 1 and 2), before anything else
 Local coordinates: origin = the square's ground under his window; the window faces north (-z).
