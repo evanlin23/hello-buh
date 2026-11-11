@@ -612,3 +612,28 @@ How the work itself went wrong, and the rule now:
   pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
   the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
   `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
+
+## Openings: frame 0 to 1.5 s (2026-11-11, owner r:r0f3da0)
+
+The data: Shorts where 74-81 % of viewers stay (Studio "viewed vs swiped away") get 9k-26k views; 56-61 % stall under
+3.3k. Paddy Galloway's study of 5,400 Shorts found the same line: under 60 % rarely performs, the best sit at 70-90 %
+(https://threadreaderapp.com/thread/1646898356419981315.html). YouTube defines the metric at
+https://support.google.com/youtube/answer/12942217. "Treat your intro like a thumbnail."
+
+What the owner's 32 reference Shorts do (frame 0 contact sheet, lead 2026-11-11):
+- Frame 0 already shows the subject or the payoff's setup: the lava house, the giant build, the trap pool, the
+  dropper target. Several are in motion at frame 0 (motion blur, a fall, falling blocks). None opens on an empty field.
+- The top band caption reads like a person reacting: "I hate this job 😭", "Am i cooked?", "Who tf is doing this
+  😭🙏", "bro found dirt for ONCE 💀", "Nobody Knows That! 😱". Ours read as labels ("ladder clutch 😳").
+- Same layout as ours (black band caption over gameplay), so the template isn't the problem.
+
+Rules (build them in; the opening check enforces what it can):
+1. Frame 0 = the subject in view: the mob, the trap, the TNT, the build, the danger. Never an empty field, plain
+   grass, a bare wall, a still room or sky.
+2. Something moves or changes by 0.5 s, and a sound hit lands within ~0.3 s (a hit, a place, a hiss, a voice line).
+3. Open a loop in the first 1-3 s: a question, a versus, a "wait for it", a danger the end resolves. Mumbo's top
+   Shorts are questions ("How many items fit in a chest?" 27M), Dream's are versus/paradox setups.
+4. Caption on screen from frame 0, short (aim 3-7 words, 10 max), reaction voice, inside the safe zone (top >= 200 px,
+   bottom >= 672 px at 1080x1920).
+5. No dead tail: nothing plays for more than ~0.7 s after the payoff settles (the settle rule's 0.6 s still is the end).
+6. Loops help when they come free (end frame matches the start), never forced.
