@@ -37,3 +37,4 @@ water_vs_lava
 rainbow_sheep
 desire_town
 inside_library
+dilemma_mace   # first: owner's new format (dilemma), 2026-11-11
