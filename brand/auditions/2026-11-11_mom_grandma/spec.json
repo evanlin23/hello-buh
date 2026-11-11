@@ -1,0 +1,93 @@
+[
+ {
+  "letter": "REF",
+  "name": "Pip (narrator)",
+  "sub": "Leda, 3.8-flash-lite: the kid every adult must stand apart from",
+  "text": "Not for rain, not for thunder, not for creepers, not even zombies.",
+  "audio": "out/audition/ref/pip_dog_hill_L02.mp3"
+ },
+ {
+  "letter": "REF",
+  "name": "Mom now: Sulafat",
+  "sub": "Light Sleeper L05, 3.8-flash: 'too similar to narrator'",
+  "text": "Walk soft, sweetie. The ground's a light sleeper.",
+  "audio": "out/audition/ref/sulafat_L05.mp3"
+ },
+ {
+  "letter": "REF",
+  "name": "Grandma now: Vindemiatrix",
+  "sub": "Gold L08, 3.1-flash: 'sounds like a dude'",
+  "text": "Just one, Nico. One's plenty.",
+  "audio": "out/audition/ref/vindemiatrix_gold_L08.mp3"
+ },
+ {
+  "letter": "A",
+  "name": "Mom A: Kore",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "Walk soft, sweetie. The ground's a light sleeper. / Sweetie, don't move.",
+  "audio": "out/audition/mom_Kore_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "B",
+  "name": "Mom B: Despina",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "Walk soft, sweetie. The ground's a light sleeper. / Sweetie, don't move.",
+  "audio": "out/audition/mom_Despina_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "C",
+  "name": "Mom C: Aoede",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "Walk soft, sweetie. The ground's a light sleeper. / Sweetie, don't move.",
+  "audio": "out/audition/mom_Aoede_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "D",
+  "name": "Mom D: Pulcherrima",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "Walk soft, sweetie. The ground's a light sleeper. / Sweetie, don't move.",
+  "audio": "out/audition/mom_Pulcherrima_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "E",
+  "name": "Mom E: Callirrhoe",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "Walk soft, sweetie. The ground's a light sleeper. / Sweetie, don't move.",
+  "audio": "out/audition/mom_Callirrhoe_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "F",
+  "name": "Mom F: Gacrux",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "Walk soft, sweetie. The ground's a light sleeper. / Sweetie, don't move.",
+  "audio": "out/audition/mom_Gacrux_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "G",
+  "name": "Grandma G: Gacrux",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "One's plenty, sweetie.",
+  "audio": "out/audition/grandma_Gacrux_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "H",
+  "name": "Grandma H: Erinome",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "One's plenty, sweetie.",
+  "audio": "out/audition/grandma_Erinome_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "I",
+  "name": "Grandma I: Kore",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "One's plenty, sweetie.",
+  "audio": "out/audition/grandma_Kore_gemini-3.1-flash-tts-preview.mp3"
+ },
+ {
+  "letter": "J",
+  "name": "Grandma J: Autonoe",
+  "sub": "gemini-3.1-flash-tts-preview, today's preview model",
+  "text": "One's plenty, sweetie.",
+  "audio": "out/audition/grandma_Autonoe_gemini-3.1-flash-tts-preview.mp3"
+ }
+]
