@@ -10,9 +10,9 @@ Short READY; it changes nothing in the videos branch.
 It copies every package's metadata.json (so pick_ncs picks the same track publish would) into a scratch videos dir,
 adds this Short's render as short_nosong.mp4 and work/<name>.rec.json as its recording, runs add_song.main(--ncs)
 there, then `./hb pace <name> --video <mix>` exactly as gates.py stamps it. Exit 1 on any pace BLOCK. Fix: land the drop on the payoff (edit.dropAt),
-a song dip at the payoff mark (edit.sfx ['dip', mark, 0.4]) plus, only on a busy game track, ['impact', mark, {gain: 1.4}]
-(on a quiet stunt the impact dominates the track's loudness normalisation and pushes everything else ~28 dB down:
-mislabel_grandma 2026-11-11), no riser over the dip. Always re-run ./hb check on the no-song render after an sfx change.
+a song dip at the payoff mark (edit.sfx ['dip', mark, 0.4]) plus ['impact', mark, {gain: 1.4}] (edit.py's
+cap_sfx_share keeps the sfx within +4 dB of the game track's loudness: on a quiet stunt an uncapped impact dominated the
+track's loudness normalisation and pushed everything else ~28 dB down, mislabel_grandma 2026-11-11), no riser over the dip. Always re-run ./hb check on the no-song render after an sfx change.
 """
 from __future__ import annotations
 
