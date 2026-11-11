@@ -22,7 +22,7 @@ module.exports = {
   expectDeath: true,
   edit: {
     caption: "POV: you're on half a heart 💀", red: 'half', dropAt: 'placed',
-    startAt: 'jump:-0.2', endAfter: 'death:0.8', deathScreen: true,   // r:r0f3da0: frame 0 is the drop (the lava course below, the half heart on the HUD), not the 0.3 s tilt down from the sky; r:r188b46: the end 0.8 s after the death (was 1.6)
+    startAt: 'jump:-0.2', endAfter: 'death:1.2', deathScreen: true,   // r:r0f3da0: frame 0 is the drop (the lava course below, the half heart on the HUD), not the 0.3 s tilt down from the sky; r:r188b46: the end 1.2 s after the death, a text payoff's reading time (lead; was 1.6)
     // sound from frame 0: the wind up on the pillar and the fall's rising wind (the 2.3 s fall is silent in vanilla)
     sfx: [['air', 'start', 'jump', { gain: 0.25 }], ['wind', 'jump', 'placed', { gain: 0.5 }],
       // over the NCS bed the bridge's lava pops don't count: pops on the bridge's lava pops (the 13th and 17th sounds) and a ding on 'almost there...' (the 15th; a whoosh didn't count as a hit), and a
