@@ -19,6 +19,7 @@ FAMILIES = [
     ("story", lambda n: n.startswith("story_")),
     ("dilemma", lambda n: n.startswith("dilemma_")),   # the mace and the dog... (docs/formats.md)
     ("psycho", lambda n: n.startswith("psycho_")),   # the fake psycho house tour (docs/formats.md, r:rc40696)
+    ("fakerun", lambda n: n.startswith("fakerun_")),   # an obviously fake speedrun in jump cuts (lib/fakerun.js, r:r9105ba)
     ("art", lambda n: n.endswith("_art") or n == "looks_wrong"),
     ("clutch", lambda n: "clutch" in n or n in ("one_in_a_million",)),
     ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
