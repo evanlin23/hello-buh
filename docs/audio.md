@@ -125,6 +125,19 @@ reference.
    Free License for the riser, impact and the ambience beds (`scripts/fetch_sfx.py cinematic/ transition/
    ambience/`); our numpy synths as the fallback for each; Kenney CC0. Freesound is unreachable from the container.
 
+6. **Audible levels** (2026-11-11, thirty_one_raids: the payoff raid horn was silent in the first package). A `sound`
+   mark is mixed at its play volume x the event's sounds.json **file** volume, and a few events have tiny file volumes
+   because the game plays them far louder than 1: the raid horn's is 0.01 (the game plays it at 64), so the stunt's
+   2.2 was 0.022 in the mix. The kit: `ctx.vanillaSound(event)` plays an event at the game's own volume (horn 64, bell
+   2, explosion 4, thunder 10000; lib/sound_level.js), `ctx.sound(event, vol, pitch, { key: true })` flags the sound a
+   moment hangs on (raised to at least that volume) and `ctx.sound` logs a WARN at record time for anything inaudible.
+   **The gate** (`scripts/sound_levels.py`, in rec_check, so `./hb record` stops and `./hb check` fails): any sound mark
+   under **0.04 effective (-28 dB)** BLOCKs (ambience aside); a key sound (edit `keySounds`, the story's `payoff`, a
+   flagged one) under 0.15 WARNs. Calibrated on the five stories: the old horns 0.012 / 0.022, the quietest intended
+   sound 0.08 (gold's portal trigger), steps 0.15. On a rendered Short, `./hb check`'s "audible sound" step looks for
+   each key / payoff sound's own waveform in the mix (a matched filter; a WARN to listen, never a blocker). The table
+   is `lib/sound_volumes.json` (`python3 scripts/sound_levels.py --gen` for a new Minecraft version).
+
 ## Re-editing only the sound
 `python3 edit.py --audio_only out/<name>.mp4 <the stunt's edit args> --timeline work/<name>.rec.json --audio
 work/<name>.wav --out <new>.mp4` remixes a story's sound onto a finished mp4's picture (stream copy: the frames,
@@ -140,6 +153,9 @@ on the last run's frames. `HB_STEMS=<dir>` writes every layer as a wav, for meas
   speech spans, the ambience per shot and the score track, without any audio.
 - `python3 scripts/key_sounds.py <name>`: each edit.keySounds clip vs the music on the package (>= 8 dB, else exit 1);
   `python3 -m unittest scripts/test_key_sounds.py` (in `npm test`).
+- `python3 scripts/sound_levels.py <rec> --stunt <name> [--video out/<name>.mp4] [--all]`: every sound mark's effective
+  level (BLOCK under 0.04), the key / payoff sounds, and with --video whether each is found in the mix;
+  `python3 -m unittest scripts/test_sound_levels.py` (in `npm test`).
 - `python3 -m unittest scripts/test_story_audio.py` (in `npm test`): the bed stops before the payoff and never comes
   back, sits ~13.5 dB under the voice, no whoosh by default, the clarity guard, the key-word rule, the silent-action
   check, vanilla's idle timer and step rate.
