@@ -1,4 +1,4 @@
-# the_walk: set plan (r4)
+# the_walk: set plan (r5)
 
 - Claim `gullwick` on the West March coast:
   - an open cold-ocean bay (not frozen) with a natural island **60 blocks** from the dock's end (from the survey;
@@ -24,7 +24,8 @@
 | L03b | he really hates that librarian | (a misreading: nothing to build) the librarian in frame, jobless |
 | L04 | Grandma lives on the island across the bay; her window's lit every night | the island across open water, 60 blocks; the window lit; Grandma's figure in it, readable at phone size (FOV 20 in S04) |
 | L05 | he won't take a boat or build a bridge | a boat floating empty and unused; no bridge, no pillar, no blocks between the dock and the island |
-| L07 | walk the water to me | open water between them; no ice anywhere before S11 |
+| L07 | come back when the sea freezes | open water between them; no ice anywhere before S11 |
+| L08 | it never freezes here | the bay is cold_ocean (never frozen_ocean); no ice, no snow layers, no snowfall in any shot before S11 |
 | L08 | Mom says never | Mom on screen while she's named |
 | L09 | a new book | the same set-up as S02, the book glinting, at dawn |
 | reveal | the sea freezes under each step toward her window | frosted ice under each step only; the window lit with her figure at the end of his line |

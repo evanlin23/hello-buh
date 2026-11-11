@@ -1,10 +1,10 @@
-# the_walk: continuity bible (r4)
+# the_walk: continuity bible (r5)
 
 ## World
 - **Place:** a new place to claim, `gullwick` ("Gullwick"): a shore hamlet on the West March coast, within ~200
   blocks of the Ridge tower (-2000, -445), clear of Leo's House and the stronghold islets.
   - The library hut (a librarian, a lectern, an anvil), a dock with an oak boat floating empty beside it, a short shingle shore at the
-    dock's foot, and an island **60 blocks** out across open cold ocean (not frozen: Frost Walker needs water).
+    dock's foot, and an island **60 blocks** out across open cold ocean: never frozen_ocean (L08: it never freezes here), no snow on the shore; Frost Walker needs liquid water.
 - **Day:** 4000 (the flashback, "ten years" before, is about day 350: canon counts 365 days a year; outside the Long Day 800-1100).
 - **Actor height:** outside, an actor at y 0 stands on the deck, feet at y 1; in the hut y 0 is the floor.
 - **Coordinates:** outside, dock-relative. (0, 0, 0) is the dock's end, its deck flush at sea level (stand at sea
@@ -58,8 +58,8 @@
 ## Who knows what
 - **Grandpa** knows all along what he's rolling for.
 - **The kid** knows the condition (L07) and Mom's reading (L08), and doesn't connect them to the book until S10.
-- **Mom** thinks it means never.
-- **The viewer** can connect "walk the WATER" and the book from L07 on.
+- **Mom** thinks it means never (the sea here never freezes).
+- **The viewer** can connect "the sea FREEZES" and the book from L07 on.
 
 ## The narration's claims (set.md checks each on stills)
 See set.md "Claims".
@@ -71,3 +71,25 @@ See set.md "Claims".
   (2/3 an enchanted book x 1/37 x 1/2), so 300 rolls without it is about a 7% streak (unlucky but real); 3,000 would
   be about 1 in 10^12. The tally wall shows about 300.
 - **Why II, not I:** Frost Walker freezes a radius of 2 + level (I: 3, II: 4): the wider path he wants for 60 blocks of open sea. Never said; the tooltip shows it. (With any level, 300 misses would be about 1 in 230.)
+
+## Voices (owner audit 2026-11-11: to audition, nothing voiced yet)
+Every candidate is a Gemini voice no other character uses (`voices/cast.json` and every story.json checked:
+Charon, Achird, Algenib, Schedar, Fenrir, Orus, Puck, Gacrux, Autonoe, Pulcherrima, Leda, Laomedeia, Despina and
+Aoede are taken; Alnilam is proposed for Red Sheep's Dad). Audition each saying its real line, measured against Pip
+(pitch and speaker distance), the owner picks (STANDARDS 7a).
+
+**Grandpa** ("Not THAT one."), direction "[An old man in his seventies, flat and tired]":
+1. **Iapetus** (recommended): "measured, polite man" (cast.json spares); a low adult male, far from Pip. Caveat:
+   it's the GPT voice in the AI Shorts, a different series.
+2. **Sadaltager** ("knowledgeable"): matched the old-man brief next to Iapetus and Schedar in the voice search
+   (docs/voice_search.md row 7, 0.50-0.51); used by no character.
+
+**Grandma** ("Come BACK when the SEA FREEZES."), direction "[An old woman, stubborn, a dare]":
+- **Does she need her own voice?** Recommended yes. `grandma` (Autonoe) is Gold for the Portal's Grandma, a
+  different woman in a different family; by canon conflict 11's rule for grandpas (one voice per grandpa) and
+  STANDARDS 7a ("never shared by two characters a viewer could confuse"), two grandmas a viewer may watch back to back
+  shouldn't share one voice. The catch: Autonoe was the only candidate that read as an old woman (Gacrux and
+  Vindemiatrix read as men), so a new pick must pass that test too. If none does, keep Autonoe.
+1. **Kore** (recommended): "crisp, firm woman" (cast.json spares), suits "stubborn, a dare". Caveat: the AI Shorts'
+   Gemini voice, a different series. Must read old, not just firm.
+2. **Callirrhoe** ("easy-going"): used by no character; a warmer reading, so the dare sounds fond.

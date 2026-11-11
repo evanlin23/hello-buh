@@ -2,12 +2,12 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r4 (2026-11-11): the r3 table read (reviews/r3-critic.md, r3-continuity.md, r3-coldread.md) and STANDARDS 0a (mystery through naivety): three HUNDRED (accuracy), the kid's innocent misreading on every clue, Grandma's line at 6 words, world day 4000, Grandpa off `elder` (canon conflict 11), every camera re-solved (hut-local coords in the hut, dock-relative outside), S10 cut on ANYTHING with a 1.3 s tooltip hold. r4.1: the r4 critic's should-fixes (S04 Grandpa at x 1.0, S02/S09 camera with Grandpa in frame, S08 Mom at x -2.5, why II).",
+  "revision": "r5 (2026-11-11): the owner's audit: Grandma 'Come back when the sea FREEZES.' and the kid 'Mom says it NEVER freezes here.' (replacing 'walk the water' / 'that means never'); three hundred kept; Grandpa and Grandma voices proposed for audition (bible.md 'Voices').",
   "caption": "grandpa broke the same lectern 300 times 📚",
-  "logline": "A grandpa has broken the same librarian's lectern three hundred times, rerolling her book; ten years ago Grandma rowed to the island across the bay and told him to walk the water to her or stay, and this morning the book is Frost Walker II.",
+  "logline": "A grandpa has broken the same librarian's lectern three hundred times, rerolling her book; ten years ago Grandma rowed to the island across the bay and told him to come back when the sea freezes, and the sea there never freezes, until this morning's book is Frost Walker II.",
   "question": "why tf has grandpa broken the same lectern 300 times?",
-  "premise": "Grandpa has broken the same lectern three hundred times: the librarian holds up a book, he reads it, 'Not THAT one', and breaks the lectern again. His grandkid thinks he just hates that librarian. Grandma lives on the island across the bay; her window is lit every night (the kid: she's scared of the dark). He won't take a boat or build a bridge, ten years (the kid: he's so stubborn). When she left, rowing away, she told him: 'Walk the water to me. Or stay.' Mom says that means never.",
-  "twist": "He's been rerolling the librarian for one book, Frost Walker (vanilla: breaking a librarian's lectern before you ever trade with her changes the book she offers; Frost Walker freezes water under your feet). Everyone, the kid too, heard 'never'; he took it literally. This morning the trade screen reads Frost Walker II, Grandpa says nothing, and he walks off the end of the dock as the sea freezes under every step, a white path toward Grandma in her lit window. Cut.",
+  "premise": "Grandpa has broken the same lectern three hundred times: the librarian holds up a book, he reads it, 'Not THAT one', and breaks the lectern again. His grandkid thinks he just hates that librarian. Grandma lives on the island across the bay; her window is lit every night (the kid: she's scared of the dark). He won't take a boat or build a bridge, ten years (the kid: he's so stubborn). When she left, rowing away, she told him: 'Come back when the sea freezes.' Mom says it never freezes here.",
+  "twist": "He's been rerolling the librarian for one book, Frost Walker (vanilla: breaking a librarian's lectern before you ever trade with her changes the book she offers; Frost Walker freezes the water under your feet). Grandma's 'when the sea freezes' meant never: Gullwick's bay is cold ocean, which never freezes (only frozen ocean does). He took it literally. This morning the trade screen reads Frost Walker II, Grandpa says nothing, and he walks off the end of the dock as the sea freezes under every step, white ice toward Grandma in her lit window. Her words come true. Cut.",
   "key_color": "#8FD8FF",
   "mood": [
     "funny",
@@ -21,7 +21,7 @@
   },
   "weather": "clear",
   "world": {
-    "place": "gullwick (to claim): a shore hamlet on the West March coast within ~200 blocks of the Ridge tower (-2000, -445), e.g. near (-2190, -380), away from Leo's House and the stronghold islets. The bay must be cold_ocean (not frozen) with a natural island 50-70 blocks out; the dock flush at sea level (Frost Walker freezes water one block below the feet). Coordinates in shots are dock-relative, -z = out to sea (the island is west).",
+    "place": "gullwick (to claim): a shore hamlet on the West March coast within ~200 blocks of the Ridge tower (-2000, -445), e.g. near (-2190, -380), away from Leo's House and the stronghold islets. The bay must be cold_ocean (NEVER frozen_ocean: L08's claim is that the sea never freezes here; no snow on the shore either) with a natural island 50-70 blocks out; the dock flush at sea level (Frost Walker freezes water one block below the feet). Coordinates in shots are dock-relative, -z = out to sea (the island is west).",
     "day": 4000,
     "canon": "A new family: the kid (a player, narrator), Grandpa and Grandma (players, apart since about day 350, ten years before), Mom (their daughter, a player), the librarian (a villager). Grandma is seen: in the flashback boat and in her lit window. One grandpa per Short (canon conflict 11): this Grandpa has his own voice and skin.",
     "easter_egg": "raven_tower: the old watchtower on the Ridge on the inland skyline in S05 (looking back from the dock)",
@@ -47,7 +47,7 @@
       "color": "#D9A066",
       "profile": "An old man in his seventies, flat and tired",
       "on_screen": "a player actor, a grey-haired old-man skin (to make: no old default skin exists; not zuri, not steve); iron axe in his main hand in the hut (S01-S03, S09), empty-handed on the dock; no boots until S11 (leather boots with the enchant glint, put on at the dock's end before the first step). One line, L03, on screen while he says it.",
-      "note": "Not `elder` (Charon): that is Ravenford's Grandpa (canon conflict 11). Iapetus (voices/cast.json _spares: a measured man) directed old, a low adult male far from Pip; audition before voicing and add a cast entry (owner to pick)."
+      "note": "Not `elder` (Charon): that is Ravenford's Grandpa (canon conflict 11). Iapetus here as the working pick; audition Iapetus vs Sadaltager (bible.md 'Voices'), the owner picks, then add a cast.json entry."
     },
     "Grandma": {
       "role": "character",
@@ -55,7 +55,7 @@
       "name": "Grandma",
       "color": "#F2C66B",
       "on_screen": "a player actor, a grey-haired old-woman skin (to make); in the flashback (S06-S07) in an oak boat a few blocks off the dock, facing back at Grandpa; in the present, standing in her lit window on the island, the sill at floor level so she shows head to toe (S04, S08, S11). One line, L07, on screen while she says it.",
-      "note": "cast `grandma` (Autonoe, the owner's pick 'grandma J', r:r3dabdb): reads as an older woman, far from Pip."
+      "note": "Working: `grandma` (Autonoe), shared with Gold for the Portal's Grandma. Recommended: her own voice, audition Kore vs Callirrhoe (bible.md 'Voices'); keep Autonoe only if neither reads as an old woman."
     },
     "Mom": {
       "role": "character",
@@ -224,7 +224,7 @@
         "word": "BOAT"
       },
       "direction": "baffled and a little funny; the last word lands, eye-roll fond",
-      "note": "0a: no boat, no bridge misread as plain stubbornness; 'bridge' is a thing he won't build: nothing to show, the open water is the picture"
+      "note": "0a: no boat, no bridge misread as plain stubbornness (she said the SEA must freeze: a boat or a bridge isn't that); 'bridge' is a thing he won't build: nothing to show, the open water is the picture"
     },
     {
       "id": "L06",
@@ -240,32 +240,32 @@
     {
       "id": "L07",
       "who": "Grandma",
-      "text": "Walk the WATER / to ME. / Or STAY.",
-      "say": "Walk the water to me. Or stay.",
+      "text": "Come BACK / when the SEA / FREEZES.",
+      "say": "Come back when the sea freezes.",
       "shot": "S07",
       "shows": [
         {
           "what": "water",
-          "word": "WATER"
+          "word": "SEA"
         }
       ],
       "look": {
         "what": "Grandma"
       },
-      "direction": "stubborn, a dare, not teasing; the last word lands"
+      "direction": "stubborn, a dare; the last word lands"
     },
     {
       "id": "L08",
       "who": "N",
-      "text": "MOM says / that means NEVER.",
-      "say": "Mom says that means never.",
+      "text": "MOM says / it NEVER / freezes HERE.",
+      "say": "Mom says it never freezes here.",
       "shot": "S08",
       "look": {
         "what": "Mom",
         "word": "MOM"
       },
       "direction": "matter-of-fact, a kid repeating what grown-ups say",
-      "note": "0a: the kid takes Mom at face value"
+      "note": "0a: the kid takes Mom at face value (and she's right: cold ocean never freezes)"
     },
     {
       "id": "L09",
@@ -397,7 +397,7 @@
       "place": "dock",
       "size": "full",
       "camera": "at: (-3, 1.6, 21) on the shore looking past Mom down the dock to the sea (0, 2, -60), still, FOV 30",
-      "frame": "subject: Mom at (-2.5, 0, 14.5), head to toe, frame right, shaking her head as Grandpa walks past her up the shore (out of frame left by the end); the kid small beside her; the empty dock running away from us; bg: the island 60 blocks from the dock's end, Grandma's lit window. Dusk 13000.",
+      "frame": "subject: Mom at (-2.5, 0, 14.5), head to toe, frame right, shaking her head as Grandpa walks past her up the shore (out of frame left by the end); the kid small beside her; the empty dock running away from us; the bay open and unfrozen, no ice anywhere; bg: the island 60 blocks from the dock's end, Grandma's lit window. Dusk 13000.",
       "look": {
         "time": 13000,
         "fov": 30
@@ -434,7 +434,7 @@
       "place": "dock",
       "size": "wide",
       "camera": "at: (0, 5, 14) behind Grandpa looking down the dock to the window (0, 3, -60), FOV 40, still. Opens on Grandpa at the dock's end in new leather boots, glinting; his first step off the end makes the first ice; the water freezes into a white disc under each step (frosted ice); cut 1.0 s after the first ice, on his third step",
-      "frame": "subject: Grandpa on the sea, the white ice behind him; bg: the island and Grandma's lit window, her figure in it (the window reads; she is small), at the end of his line of travel. Dawn 23500.",
+      "frame": "subject: Grandpa on the sea, a short trail of white frosted-ice discs under and behind him, three steps' worth (vanilla: it melts after a few seconds, after the cut; the first ice anywhere in the Short: the sea freezing); bg: the island and Grandma's lit window, her figure in it (the window reads; she is small), at the end of his line of travel. Dawn 23500.",
       "look": {
         "time": 23500,
         "fov": 40
