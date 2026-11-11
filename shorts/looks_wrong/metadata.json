@@ -931,12 +931,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/looks_wrong",
-    "commit": "7d44040dce7eaddef168e6c46bb55daccc64ed7f",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43014642738",
-    "rendered_at": "2026-11-11T11:56:14.221Z",
-    "head_at_publish": "f65d51c158cc76037692d5921fcbb8d19599dcb2",
+    "branch": "main",
+    "commit": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T12:49:15.885Z",
+    "head_at_publish": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
@@ -947,18 +946,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 7d44040dce7e",
+    "git checkout f3bfd331b0fc",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
     "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "awaiting independent review. worker B 2026-11-11 re-take (r:r650840, r:rffba12): aimed placement (ad926e79); aim 147 actions median 0.0 deg p90 0.3 worst 2.8 (was p90 3.2); walk back now stops ~2.4 blocks short of the small picture (was past its plane, -1.3); pace OK, 38.6 s",
-  "published_at": "2026-11-11T11:58:32.029Z",
+  "status": "ready",
+  "notes": "pixel art re-take for the owner's notes (r:r650840 no backing into the earlier wall: stops ~2.5 blocks short; r:rffba12 aim on every block: none over 6 deg); independent review READY (0 blockers). Nitpicks: the medium picture visible at the left edge during the last backup; the small reveal held ~0.5 s.",
+  "published_at": "2026-11-11T12:50:17.817Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T11:59:11+00:00",
+    "at": "2026-11-11T12:50:55+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -974,8 +973,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T11:47:11.737Z",
-      "report": "out/looks_wrong.check.json"
+      "at": "2026-11-11T12:49:36.689Z",
+      "report": "work/hb/looks_wrong.check.json"
     },
     "key_sounds": "n/a"
   }
