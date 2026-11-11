@@ -128,3 +128,21 @@ lint mob motion, scout_valley. The round-2 particle fix and the voice_check.py r
 - Story hotbar (STANDARDS 3.6): shears, white/cyan carpet x64, an empty hand, wool x2, milk, 67 eggs, a cake.
 - Shared code (branch, tested: npm test 51/51): renderer/looks.js `gradeAt` takes a shot's `grade`/`vignette` over its
   mood (the audit's night variants need it); inert for shots without them.
+
+## r-cast, final (2026-11-11)
+- Script: the r-cast (16 lines, Mom voiced on L05/L15). Voice from claude/ls-rcast 316182ab: Pip, one continuous
+  narrator take (the owner: "This is fine") + Mom (gemini-3.8-flash-tts), all lines ctc-aligned. My session used no
+  TTS for this voice.
+- Stunt: every cut through K.cutShot / K.cut({ shot }) / at.cut(i); a subject on every shot; digs from the wool lid
+  (rec_check sight); the cast moved only off screen; look { mood: 'bright', rolloff: 0.8 }; punch on L01/L11/L16;
+  channel 'buhstories' (gold title band "My village is covered in 9,000 carpets"); an impact on the roar.
+- Gates: ./hb check OK (0 blockers); ./hb review 0 blockers (captions median -6 ms, 133/133 words, speaker/edges OK);
+  pace OK (warns: 52.3 s, 3.3 w/s narrator, a 0.31 s opening pause). Viewer panel 9/8/9, all three explain the twist;
+  its one BLOCK (the narrator heard as a girl) is the owner's own voice pick, raised with the owner by the lead.
+- Independent short-review (session_019n1tKH9GqLZrB3z4xapapH), round 1: READY, 0 blockers. Took nitpick 1 (the quiet
+  payoff: an impact on the roar, edit-only); left 2-6 (S16 edge flicker, the boxed bell, the L14 doorway, the night ->
+  overhead brightness jump, a 1.1 s still overhead).
+- Shared code: renderer/looks.js shot grade/vignette overrides and scripts/caption_sync.py too_wide() (both taken to
+  main by the leads).
+- Packaged HELD: `videos` 2336e027, release pkg-story_light_sleeper (sha256 d9c2fb3e…), channel buhstories. Review
+  page: shorts/story_light_sleeper_v3 "Light Sleeper (voiced, held)"; the owner's 4 notes answered and marked fixed.
