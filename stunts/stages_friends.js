@@ -64,13 +64,13 @@ module.exports = {
     chapters: CHAPTERS,
     caption: 'minecraft friendships in 3 stages 💀',
     red: '3 stages',
-    payoff: 'boom',
+    payoff: 'boom_last',   // the chain's last blast (pace's payoff for a settle ending)
     speed: [
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
       ['respawn', 'ch2', 'cut'],     // the respawn's first ticks (the camera switching to your eyes)
       ['vein', 'vein_end', 2]        // the vein at 2x (the aim at <= 100 deg/s)
     ],
-    sfx: [['hit', 'push', { gain: 0.8 }], ['ding', 'loot', { gain: 0.6 }]],
+    sfx: [['hit', 'push', { gain: 1.4 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
     extra: {
       deathScreen: true,
       punch: [['push', 0, 1.06], ['lever', 0, 1.05]],
@@ -315,6 +315,10 @@ module.exports = {
     // his death line in the chat (the server's own message), the last thing on screen
     bot.on('messagestr', (m) => { if (m.includes(FRIEND) && !/joined|left/.test(m)) { ctx.mark('syschat', { text: m, color: 'white' }); ctx.log('chat', m) } })
     bot._client.once('explosion', () => { if (!boomed) { boomed = true; ctx.mark('boom') } })
+    // the chain's last blast is the payoff hit (pace reads the last blast before the settle as the payoff): marked at
+    // its own tick once the chain has gone quiet
+    let lastBoom = -1
+    bot._client.on('explosion', () => { lastBoom = ctx.tick })
     await A.use(at(0, 1, 13))                // the lever
     ctx.mark('lever')
     await bot.waitForTicks(6)
@@ -330,8 +334,10 @@ module.exports = {
     fr.look(-Math.PI / 2 - 0.35, 0, true)   // (mineflayer yaw: -PI/2 = east, a little south)
     fr.setControlState('sprint', true); fr.setControlState('forward', true)
     for (let k = 0; k < 60 && !boomed; k++) await bot.waitForTicks(1)
-    await bot.waitForTicks(40)
-    ctx.log('boomed', boomed)
+    for (let k = 0; k < 200 && (lastBoom < 0 || ctx.tick - lastBoom < 30); k++) await bot.waitForTicks(1)
+    if (lastBoom >= 0) ctx.mark('boom_last', { t: lastBoom * 50 })   // (mark's extra overrides t: the blast's own tick)
+    await bot.waitForTicks(10)
+    ctx.log('boomed', boomed, 'last blast tick', lastBoom)
     return boomed && !ctx.died
   }
 }
