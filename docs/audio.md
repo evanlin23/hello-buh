@@ -74,7 +74,11 @@ reference.
 - Turn a piece off per story with `"audio": {"riser": false, "hit": false, "score": false, "ambience": false}`;
   `"whoosh": true` brings the scene-cut whooshes back (at -32 dBFS peak, low-passed at 5 kHz, a 120 ms fade in). A
   stunt's own `edit.sfx` riser, scratch, boom or impact replaces the automatic one.
-- Stunt (non-story) Shorts keep their NCS phonk at -13 LUFS under a -10 LUFS master (unchanged).
+- Stunt (non-story) Shorts: their NCS phonk at **-16 LUFS** (`add_song.BED_LUFS`; was -13 until 2026-11-11) against
+  the game at -15, under a -10 LUFS master. Owner, 2026-11-11, after guess_sound's "had super loud music": **"fix all
+  i think"**: the bed went down ~3 dB on every stunt Short so the game's own hits carry the payoff, and every ready,
+  not-yet-uploaded stunt Short was remixed to it from its short_nosong.mp4 (r:r662041). Check: `python3
+  scripts/key_sounds.py <name> --hits` (the biggest game hits vs the music).
 - **Key sounds** (owner, 2026-11-11, on guess_sound: **"had super loud music"**; a guessing game you can't hear is
   broken): a stunt whose game is a sound names it, edit `keySounds: ['hear']` (lib/guess_sound.js does). At publish
   `scripts/add_song.py` ducks the NCS bed to -24 dB under each clip (from 0.05 s before it to 0.15 s after it ends;

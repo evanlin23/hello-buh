@@ -13,6 +13,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 VID = ROOT.parent / "hb-videos"
 NCS = {t["file"]: t for t in json.loads((ROOT / "music" / "ncs.json").read_text())} if (ROOT / "music" / "ncs.json").exists() else {}
+BED_LUFS = -16.0   # the stunt NCS bed, under the game at -15 (owner 2026-11-11, "fix all i think": was -13, too loud; STANDARDS 7 r:r662041)
 SONGS = {"misery.mp3": ("misery.", "pupsies"), "payphone.mp3": ("Payphone", "Radio Top Singers"), "funk_abnormal.mp3": ("FUNK ABNORMAL (ULTRA SLOWED)", "")}
 
 
@@ -143,7 +144,7 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         kwin = key_sounds.windows(key_sounds.pcm(src), keys, kstop) if keys else []
         duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)) + kwin, key_sounds.DUCK)
         import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
-        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, -13, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, BED_LUFS, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
                  f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
