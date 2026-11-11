@@ -293,10 +293,10 @@ module.exports = {
     })
 
     // L09 "This MORNING / he WALKED me / HOME, / up the HILL.": Dog Hill, morning. "This MORNING" on the wolf's own eyes
-    // looking east over the meadow (the wolf alone: Buh crosses 530 blocks while the camera is on the wolf, so no shot
+    // looking north up the meadow at his hut (east it stared into a dirt block: hb still 18.0) (the wolf alone: Buh crosses 530 blocks while the camera is on the wolf, so no shot
     // ever holds on an empty mark: moved under the dusk shot, he vanished from its last frames: lint, dry run 13); then
     // the crane down onto them walking north toward his old dirt hut
-    await K.cut(DX + 1.0, DZ + 5.0, P(DX + 20, HILL + 3.0, DZ + 4.0), HILL, { shot: 'pov', time: MORNING, self: [{ sitting: false, angry: false }, EYE] })
+    await K.cut(DX + 1.0, DZ + 5.0, P(DX + 1.5, HILL + 1.6, DZ - 8), HILL, { shot: 'pov', time: MORNING, self: [{ sitting: false, angry: false }, EYE] })
     Object.assign(buh, { x: DX - 1.5, z: DZ + 7.5, y: HILL, yaw: 180, pitch: 5 }); K.warp(TAG)   // behind the wolf, out of its view
     await line('L09', async (k, at) => {
       if (k < at.cut(1)) look(k)
