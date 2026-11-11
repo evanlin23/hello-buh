@@ -5,10 +5,10 @@
 // cinematic camera shots of the whole thing, getting closer each time, and ends threading the 3x3 hole of the small
 // glowing sponge hung in the big one's hollow middle ("a sponge inside the sponge").
 //
-// Beats (Short seconds, 25.5 s): 0 low under the south-west corner, craning up (the build fills the frame) | 2.0 the
-// south-east corner, wider | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
+// Beats (Short seconds, 25.5 s): 0 low under the south-west corner, craning up (the build fills the frame) | 2.0 high
+// off the south-east, down across the top | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
 // east end | 8.4 wide orbit over the forest | 10.7 high over the top face | 12.8 boost up the north face and over the top,
-// looking down the top hole at the core | 17.6 the west face head-on | 19.6 closer, on the hole's line | 21.5 boost,
+// looking down the top hole at the core | 17.6 the west face from its south-west corner, tracking | 19.6 head-on on the hole's line, pushing in | 21.5 boost,
 // dive into the face hole (flash), slow down inside | 24.65 thread the core's hole (punch, flash, impact, the drop)
 //
 // Minecraft-true: an elytra glide with rockets (~30 blocks/s with a boost, a rocket used per boost, the stack counts
@@ -35,20 +35,29 @@ module.exports = {
   look: { mood: 'golden_hour', bloom: 0.35, bloomThreshold: 0.86, bloomPasses: 1, sharpen: 0.4, rays: 0.5, raysOverBlocks: 0.3, shadows: true, vignette: 0.3, grain: 0.01 },
   shots: {
     pov: { pov: true },
-    // 1. under the south-west corner looking up: the build fills the frame from frame 1, the camera craning up and back
-    rise: { path: [[0, -52, 9, 56], [2, -57, 19, 62]], lookPath: [[0, -18, 62, 18], [2, -10, 54, 10]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
-    // 1b. the south-east corner from further out and higher: the whole height against the sky, the forest under it
-    rise2: { path: [[0, 66, 20, 70], [1.6, 58, 27, 62]], lookPath: [[0, 26, 52, 26], [1.6, 22, 56, 22]], fov: 70, dof: false, drift: 0.5, scenery: true, subject: [[41.5, 50, 41.5]] },
+    // 1. under the south-west corner looking up, craning up FAST past the corner's edge (owner r:r0f3da0, 2026-11-11: frame 0
+    // shows the subject already moving by 0.5 s; the old slow crane read as a dark, still dome): ~14 blocks in 2 s, the
+    // look sliding from the lower face holes up the corner edge, so the fractal holes stream past from frame 0
+    rise: { path: [[0, -66, 5, 70], [2, -52, 26, 56]], lookPath: [[0, -26, 26, 26], [2, -12, 58, 12]], fov: 76, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 40, 41.5]] },
+    // 1b. high off the south-east, looking DOWN across the top face to the far corner, the forest far below: rise looks up
+    // from the ground at a corner, so a second low corner shot cut onto it read as the same frame twice (independent
+    // review of the r:r52f94c fix: "a jump-cut stutter in the hook"); this one is a clearly different angle and height
+    rise2: { path: [[0, 96, 112, 78], [1.6, 88, 106, 70]], lookPath: [[0, 6, 70, 2], [1.6, 2, 66, -2]], fov: 64, dof: false, drift: 0.5, scenery: true, subject: [[0, 81, 0]] },
     // 2b. along the south face from its east end, the low sun raking across it
     south: { path: [[0, 72, 30, 76], [1.5, 64, 36, 70]], lookPath: [[0, -10, 40, 41], [1.5, -14, 46, 41]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 45, 42]] },
     // 3. wide: the whole sponge over the forest, orbiting from the south-east
     orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 11, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
     // 3b. high over the top face (under the clouds at y 192: above them the frame went white), sliding across it: the fractal from above, the top hole in the middle
     top: { path: [[0, 40, 118, 50], [2.1, 22, 112, 34]], lookPath: [[0, 4, 81, 4], [2.1, 0, 81, 0]], fov: 58, dof: false, drift: 0.4, scenery: true, subject: [[0, 84, 0]] },
-    // 5. the west face head-on, pushing in: the face hole, and the core glowing deep inside it
-    face: { path: [[0, -150, 47, 0.5], [2, -122, 45, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [2, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] },
-    // 5b. closer, on the hole's line: the tunnel, the core, the far exit
-    face2: { path: [[0, -96, 43, 0.5], [1.9, -74, 42, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 56, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
+    // 5. the west face from high off its south-west corner, tracking sideways across it (owner 2026-11-11, r:r52f94c, @18.7 s:
+    // "the cuts are too jarring, it looks like we get stuck": face and face2 were the same head-on view on the hole's line,
+    // one pushed in a little further, and the dive went on down that line: three cuts onto a near-identical frame read as
+    // a stutter). Now each cut is a new angle: this 3/4 view moving across the face, then face2 head-on, then the dive
+    // carries face2's push on at its own speed
+    face: { path: [[0, -112, 74, 92], [2, -128, 64, 58]], lookPath: [[0, -40, 41.5, 4], [2, -40, 41.5, 0.5]], fov: 54, dof: false, drift: 0.3, scenery: true, subject: [[-40, 41.5, 0.5]] },
+    // 5b. head-on, low on the hole's line and pushing in at ~20 blocks/s: the tunnel, the core, the far exit; it ends where
+    // the dive starts (x -72), so the cut to first person carries the same move on (motion continues across the cut)
+    face2: { path: [[0, -110, 42, 0.5], [1.9, -73.5, 43.6, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 62, dof: false, drift: 0.2, scenery: true, subject: [[0, 41.5, 0.5]] }
   },
   edit: {
     caption: 'rate my starter house',
@@ -58,7 +67,8 @@ module.exports = {
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
     // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
     // boosts alone left 3.1 s with nothing new)
-    sfx: [['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
+    // (an impact on frame 0: a sound hit by 0.3 s, r:r0f3da0)
+    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {
@@ -205,7 +215,8 @@ module.exports = {
       const marks = { 32: 'inside', 68: 'thread', 77: 'threaded' }
       const done = new Set()
       await run(path, 100, (i) => {
-        const v = dist < 26 ? 1.5 : dist < 46 ? ease(1.5, 0.8, dist - 26, 20) : 0.8
+        // (from face2's ~1.0 a tick up to the boost's 1.5: the same push on, then faster)
+        const v = dist < 8 ? ease(1.0, 1.5, dist, 8) : dist < 26 ? 1.5 : dist < 46 ? ease(1.5, 0.8, dist - 26, 20) : 0.8
         dist += v
         for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); }
         return v

@@ -52,3 +52,16 @@ psycho_lava_mansion   # first: owner's new format (psycho), OK'd 2026-11-11
 herobrine_bridge   # first: owner's new format (herobrine); uploads only after the owner's OK
 lucky_dig   # first: owner's new format (lucky); uploads only after the owner's OK
 mega_lapse_fountain  # first
+fakerun_any  # first
+cooked_bedrock  # first
+sandart_tnt  # first
+logic_minecraft  # first
+cave_reveal
+half_heart
+stages_friends  # first
+trap_free_diamonds  # first
+fakemod_permission  # first
+underdog_heal  # first
+lava_crossing
+fakeworld_diamond  # first
+mobpov_baby_zombie  # first

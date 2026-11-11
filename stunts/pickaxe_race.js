@@ -41,7 +41,8 @@ module.exports = {
     return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.3',   // (the camera drifts through it: settle:0.6 on a parked camera held a still frame 2 s, independent review)
       // a speedrun timer per tier (edit.splits, as end_portal_job: r:r32b983): 0:00.00 on each tier's 'beat', frozen
       // green on its 'mined' with n/6; real time, no cut inside a tier (subsY 0.2: the tier line clears the timer strip)
-      splits: { reset: 'beat', split: 'mined', of: TOOLS.length },
+      // (hidden from the finale: the TNT run is no timed attempt, and the frozen netherite split read as TNT's time, review)
+      splits: { reset: 'beat', split: 'mined', of: TOOLS.length, hide: 'finale' },
       speed: [
       ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast

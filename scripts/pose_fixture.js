@@ -10,6 +10,11 @@
 // --life (with --stunt _life_test): villagers asleep / shaking their heads, a line spoken (heads turn), a look_at mark.
 // --armor: armour on mobs (piglin, zombie, skeleton), armour trims, a converting (shaking) piglin.
 // --mobs: a line-up of the mobs drawn since the mob audit (bogged, parched, illusioner, glow squid, trader llama).
+// --skins: the original skins (scripts/make_story_skins.py) in a line-up, no other actors (stunt _test_skins): ticks
+//   0-19 all ten facing the camera, 20-39 all ten turned 3/4; 40-79 the first five closer (facing, then 3/4), 80-119 the
+//   other five; 120-139 the neighbour plain, the neighbour in diamond without a helmet, the barter player in iron and
+//   gold boots (the faces must match with and without armour); 140-159 the skins already taken (the jar's nine and
+//   hellobuh), framed as ticks 0-19, to compare.
 // --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
 // Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
@@ -25,7 +30,8 @@ const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i
 const STAGED = args.includes('--staged')
 const src = opt('src', path.join(ROOT, '..', 'hb-videos', 'shorts', 'story_nitwit', 'recording.json.gz'))
 const outPath = path.resolve(opt('out', path.join(ROOT, 'work', '_poses_test.rec.json')))
-const N = Number(opt('ticks', 80))
+const SKINS = args.includes('--skins')
+const N = Number(opt('ticks', SKINS ? 160 : 80))
 
 const rec = loadRec(src)
 const p0 = rec.poses[0]
@@ -40,7 +46,7 @@ const faceCam = Math.atan2(fx, fz)   // a yaw that looks back at the camera
 const out = { version: rec.version, engine: 2, stunt: opt('stunt', '_poses_test'), time: Number(opt('time', 6000)), weather: 'clear', columns: rec.columns, blocks: [], entities: [], timeline: [] }
 out.set = { x: Math.floor(p0[1]), y: Math.floor(p0[2]), z: Math.floor(p0[3]) }   // (CAM=dx,dy,dz,yaw,pitch is relative to it)
 out.poses = Array.from({ length: N }, (_, i) => [i, ...p0.slice(1)])
-const cast = [['Grandpa', 4, -1.6], ['Boy', 4.2, 0.2], ['Girl', 4, 1.8]].concat(STAGED ? [['Kid', 7, -2.6], ['Mum', 7.5, 2.6]] : [])
+const cast = SKINS ? [] : [['Grandpa', 4, -1.6], ['Boy', 4.2, 0.2], ['Girl', 4, 1.8]].concat(STAGED ? [['Kid', 7, -2.6], ['Mum', 7.5, 2.6]] : [])
 cast.forEach(([user, ahead, right], k) => {
   const [x, y, z] = at(ahead, right)
   for (let t = 0; t < N; t++) out.entities.push([t, 9001 + k, 'player', +x.toFixed(3), y, +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), { user, held: user === 'Boy' ? 'potion' : user === 'Grandpa' ? 'crossbow' : null, sneak: false }])
@@ -92,6 +98,27 @@ if (args.includes('--armor')) {   // armour on mobs and trims: a piglin in a sen
   for (const [id, n, ahead, right, ex] of ms) { const [x, y, z] = at(ahead, right); for (let t = 0; t < N; t++) out.entities.push([t, id, n, +x.toFixed(3), y, +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), ex]) }
   for (const e of out.entities) if (e[1] === 9001) e[9] = { ...e[9], armor: [null, null, null, 'golden_helmet'], trims: [null, null, null, 'sentry/lapis'] }
   out.timeline.push({ t: 0, event: 'pose', ids: [9400], converting: true })
+}
+if (SKINS) {   // the line-ups (see --skins above); the actors' usernames are the skin names (stunts/_test_skins.js casts them)
+  out.poses.forEach(p => { p[5] = 0 })   // a level camera (the faces at eye height)
+  const NAMES = ['grandpa_gullwick', 'grandma_island', 'walk_kid', 'pulled_man', 'hall_player', 'miner_girl', 'neighbour', 'barter_player', 'spare_boy', 'spare_girl']
+  const OLD = ['steve', 'alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri', 'hellobuh']   // the skins already taken
+  out.entities = out.entities.filter(e => e[2] !== 'warden')
+  const turn = 0.9   // the 3/4 view: bodies and heads turned this far from the camera (to the camera's left)
+  const put = (t, id, user, ahead, right, yaw, extra = {}) => { const [x, y, z] = at(ahead, right); out.entities.push([t, id, 'player', +x.toFixed(3), y, +z.toFixed(3), +yaw.toFixed(4), 0, +yaw.toFixed(4), { user, sneak: false, ...extra }]) }
+  const row = (t, names, ahead, gap, yaw, extras = []) => names.forEach((n, k) => put(t, 9500 + k, n, ahead, (k - (names.length - 1) / 2) * gap, yaw, extras[k]))
+  const DIAMOND = { armor: ['diamond_boots', 'diamond_leggings', 'diamond_chestplate', null], held: 'diamond_pickaxe' }
+  const BARTER = { armor: ['golden_boots', 'iron_leggings', 'iron_chestplate', null] }
+  for (let t = 0; t < N; t++) {
+    const yaw = faceCam + (Math.floor(t / 20) % 2 ? turn : 0)
+    if (t < 40) row(t, NAMES, 9, 1.05, yaw)
+    else if (t < 80) row(t, NAMES.slice(0, 5), 8, 1.05, yaw)
+    else if (t < 120) row(t, NAMES.slice(5), 8, 1.05, yaw)
+    else if (t < 140) row(t, ['neighbour', 'neighbour', 'barter_player'], 5.5, 1.2, faceCam + (t < 130 ? 0 : turn), [{}, DIAMOND, BARTER])
+    else row(t, OLD, 9, 1.05, faceCam)
+  }
+  // the second neighbour is another entity with the same username: give it its own id
+  for (const e of out.entities) if (e[0] >= 120 && e[0] < 140 && e[1] === 9501) e[1] = 9511
 }
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

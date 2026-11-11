@@ -8,12 +8,15 @@ module.exports = guessSound({
   endAfter: 1.45,   // ends on the hint line: reading time
   caption: 'guess the mob from its sound pt 2 🔊',
   red: 'sound',
+  // frame 0 on the first countdown (the call already sounding, the 3-2-1 and the round's label up): it opened on 0.4 s
+  // of a dark bare wall (owner r:r0f3da0: never a bare wall or a still room)
+  edit: { startAt: 'cd3:-0.02' },
   rounds: [
     { mob: 'pig', room: 'farm', sound: 'entity.pig.ambient', label: 'EASY', answer: 'PIG', react: 'call', leanTicks: 5, lookY: 0.8 },
     { mob: 'zombie', room: 'cave', sound: 'entity.zombie.ambient', label: 'MEDIUM', answer: 'ZOMBIE', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'green' },
     { mob: 'spider', room: 'mineshaft', sound: 'entity.spider.ambient', label: 'HARD', answer: 'SPIDER', react: 'call', lean: 0, back: 6, lookY: 0.6, color: 'red' },
-    { mob: 'witch', room: 'swamp_hut', sound: 'entity.witch.ambient', label: 'VERY HARD', answer: 'WITCH', react: 'call', reactSound: 'entity.witch.celebrate', lean: 0, back: 4, lookY: 1.7, color: 'blue' },
-    { mob: 'allay', room: 'outpost', sound: 'entity.allay.ambient_without_item', label: 'EXPERT', answer: 'ALLAY', react: 'hover', reactSound: 'entity.allay.ambient_with_item', leanTicks: 8, lookY: 0.3, mobDy: 0.9, mobDz: 2.0, nbt: 'NoGravity:1b', color: 'blue' },
-    { mob: 'parrot', room: 'jungle', sound: 'entity.ghast.ambient', pitch: 1.8, volume: 0.7, label: 'IMPOSSIBLE', answer: 'THE PARROT AGAIN', react: 'imitate', lean: 0, hint: 'parrots copy ghasts', lookY: 0.3, mobDx: 0, mobDy: 1, nbt: 'Variant:0', setup: (x, y, z) => [`/setblock ${x} ${y + 1} ${z + 2} jungle_log`], color: 'red' }
+    { mob: 'witch', room: 'swamp_hut', sound: 'entity.witch.ambient', label: 'VERY HARD', answer: 'WITCH', react: 'call', reactSound: 'entity.witch.celebrate', lean: 0, back: 4, lookY: 1.7, color: 'blue', cardY: 0.3 },
+    { mob: 'allay', room: 'outpost', sound: 'entity.allay.ambient_without_item', label: 'EXPERT', answer: 'ALLAY', react: 'hover', reactSound: 'entity.allay.ambient_with_item', leanTicks: 8, lookY: 0.3, mobDy: 0.9, mobDz: 2.0, nbt: 'NoGravity:1b', color: 'blue', cardY: 0.3 },
+    { mob: 'parrot', room: 'jungle', sound: 'entity.ghast.ambient', pitch: 1.8, volume: 0.7, label: 'IMPOSSIBLE', answer: 'THE PARROT AGAIN', react: 'imitate', lean: 0, hint: 'parrots copy ghasts', lookY: 0.3, mobDx: 0, mobDy: 1, nbt: 'Variant:0', cardY: 0.2, cardSize: 92, setup: (x, y, z) => [`/setblock ${x} ${y + 1} ${z + 2} jungle_log`], color: 'red' }
   ]
 })

@@ -593,9 +593,9 @@ def main():
     # "Motion by construction") and the screen with its items is what's on screen, so it is not a held pause
     win = None
     for e in tl:
-        if e["event"] == "container" and win is None:
+        if e["event"] in ("container", "merchant") and win is None:
             win = e["t"] / 50
-        elif e["event"] == "container_close" and win is not None:
+        elif e["event"] in ("container_close", "merchant_close") and win is not None:
             active.update(range(int(win), int(e["t"] / 50) + 2))
             win = None
     if win is not None:
@@ -798,6 +798,8 @@ def main():
         name = row[2]
         if name in NOT_MOBS or name.endswith(("minecart", "boat", "raft", "_arrow")):
             continue
+        if isinstance(row[9] if len(row) > 9 else None, dict) and row[9].get("ride") is not None:
+            continue   # a rider: its boat or cart moves it (harness extra.ride), not its legs
         tracks.setdefault(row[1], []).append(row)
     flagged = set()
     for eid, rows in tracks.items():
@@ -853,9 +855,9 @@ def main():
         if stunt_hud(a.stunt, a.stunt_file) is not False:
             conts, c_on = [], None
             for e in tl:
-                if e["event"] == "container" and c_on is None:
+                if e["event"] in ("container", "merchant") and c_on is None:
                     c_on = e["t"] / 50
-                elif e["event"] == "container_close" and c_on is not None:
+                elif e["event"] in ("container_close", "merchant_close") and c_on is not None:
                     conts.append((c_on, e["t"] / 50)); c_on = None
             if c_on is not None:
                 conts.append((c_on, 1e9))

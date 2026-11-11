@@ -37,8 +37,14 @@ FAMILIES = [
     ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
     ("herobrine", lambda n: n.startswith("herobrine_")),   # secret herobrine: the "lag" that never was (lib/herobrine.js, r:r047388)
     ("lucky", lambda n: n.startswith("lucky_")),   # fake super lucky: a dig where every block is luckier (r:r934ea4)
+    ("fakeworld", lambda n: n.startswith("fakeworld_")),   # a whole world of one wrong block; one ordinary block is treasure (lib/fakeworld.js, r:r62f46d)
     ("mobpov", lambda n: n.startswith("mobpov_")),   # a mob's annoying trait as an absurd POV chase (lib/mobpov.js, r:r8048f1)
     ("trap", lambda n: n.startswith("trap_")),   # trapping a friend: a bait over a real vanilla trap (lib/trap.js, r:refc733)
+    ("logic", lambda n: n.startswith("logic_")),   # rapid real vanilla quirks, one caption (lib/logic.js, r:r40f7c7)
+    ("underdog", lambda n: n.startswith("underdog_")),   # every mob gets X... but what about him? (lib/underdog.js, r:r8dcdb4)
+    ("stages", lambda n: n.startswith("stages_")),   # 3 titled chapters (lib/stages.js, r:redb7c0)
+    ("fakemod", lambda n: n.startswith("fakemod_")),   # a fake mod's popup, the choice plays out (lib/fakemod.js, r:rd551de)
+    ("friend", lambda n: n.startswith("friend_")),   # that one friend, from my POV (owner 2026-11-11, r:ra64f79; lib/friend.js)
 ]
 
 

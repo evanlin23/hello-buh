@@ -265,6 +265,12 @@ function look (name, extra, regs, engine = 0) {
     if (extra && extra.collar !== undefined && extra.collar !== null) layers.push(`entity/wolf/wolf_collar#${(DYE[extra.collar] ?? DYE[14]).toString(16).padStart(6, '0')}`)
     return { model: 'wolf', layers }
   }
+  // an iron golem's cracks (IronGolemCrackinessLayer, Crackiness.byFraction(health / 100): under 0.25 high, 0.5 medium,
+  // 0.75 low); extra.hp only when hurt (lib/harness.js), so it heals back to the plain texture
+  if (name === 'iron_golem' && extra && Number.isFinite(extra.hp)) {
+    const f = extra.hp / 100, c = f < 0.25 ? 'high' : f < 0.5 ? 'medium' : f < 0.75 ? 'low' : null
+    return { model: name, layers: ['entity/iron_golem/iron_golem', ...(c ? [`entity/iron_golem/iron_golem_crackiness_${c}`] : [])] }
+  }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
   // mobs that share another's model (scripts/mob_audit.js), drawn from recordings made from 2026-11-10 on (engine 2;
@@ -641,7 +647,8 @@ function poseWolf (r, s, walkPos, walkSpeed, tick = 0) {
   // extra.tail: the tail's angle (rad) when a scene sets it. Vanilla lowers a tamed wolf's tail with its health
   // ((0.55 - (20 - hp) * 0.02) pi): Good Boy's opening holds it low, a sad dog watching him go (held high toward a camera
   // behind it, it read as a 'long flat head')
-  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? 0.55 * Math.PI : Math.PI / 5
+  // (extra.hp, recorded when hurt: Wolf.getTailAngle, (0.55 - (40 - hp) / 40 * 0.4) pi for a tamed wolf's max health 40)
+  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? (0.55 - (Number.isFinite(x.hp) ? (40 - Math.min(40, x.hp)) / 40 * 0.4 : 0)) * Math.PI : Math.PI / 5
   // extra.wag: a happy wag (fast side to side), whatever the walk does
   B.tail.rotation.set(tail, x.angry ? 0 : x.wag ? Math.sin(tick * 1.6) * 0.7 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
   if (x.sitting) {
@@ -888,6 +895,15 @@ export class EntityLayer {
         if (bones.waterPatch) for (const m of bones.waterPatch.children) if (m.isMesh) { m.material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); m.renderOrder = 0.5 }
         poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
       }
+    } else if (name === 'leash_knot') {
+      // LeashKnotModel (32x32): one 6x8x6 cube; LeashKnotRenderer: scale(-1, -1, 1), so it hangs 0..0.5 above the
+      // entity's position (LeashFenceKnotEntity: the fence post's centre, 0.375 up)
+      const t = await texture(['entity/lead_knot'])
+      if (t) {
+        const b = buildPlayer(t, [['knot', null, [0, 0, 0], [[[-3, -8, -3], [6, 8, 6], [0, 0], 0]]]], 1); obj = b.root; bones = b.bones; mat = b.mat
+        obj.children[0].matrix.makeScale(-1, -1, 1).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
+        bones.knot = true
+      }
     } else if (name === 'spider' || name === 'cave_spider') {
       // SpiderEyesLayer: the eyes full bright (RenderType.eyes); CaveSpiderRenderer scales by 0.7
       const t = await texture([name === 'spider' ? 'entity/spider/spider' : 'entity/spider/cave_spider']), te = await texture(['entity/spider_eyes'])
@@ -1088,7 +1104,9 @@ export class EntityLayer {
       if (r.bones.flashMat) r.bones.flashMat.color.setRGB(...LL)
       // on fire (EntityRenderDispatcher.renderFlame): fire_0 / fire_1 layers facing the camera, scale
       // 1.4 x width, each 1 x 1.4 of that, 0.45 higher and 0.9 x smaller than the last, up the height
-      if (s.extra && s.extra.fire && !s.player) {
+      // (players too: EntityRenderDispatcher.renderFlame runs for every burning entity; stages_friends review r1: the
+      // narrator burned in lava with no flames)
+      if (s.extra && s.extra.fire) {
         if (!r.fire) {
           r.fire = new THREE.Group(); r.fireMats = []
           const strips = [await texture(['anim/fire_0']), await texture(['anim/fire_1'])]
@@ -1233,7 +1251,7 @@ export class EntityLayer {
         const dt = tick - r.last.t
         if (dt > 0) {
           const per = Math.hypot(s.x - r.last.x, s.z - r.last.z) / dt
-          const target = s.swell !== undefined ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation)
+          const target = s.swell !== undefined || (s.mobScale !== undefined && s.mobScale < 1) || (s.extra && s.extra.ride) ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation); a held (scaled-down) mob isn't walking; a rider doesn't walk (harness extra.ride)
           r.amt = (r.amt || 0) + (target - (r.amt || 0)) * Math.min(1, 0.4 * dt)
           r.walk += (r.amt || 0) * dt
         }
@@ -1253,6 +1271,7 @@ export class EntityLayer {
         poseBoatPaddle(B.leftPaddle, r.row[0], false); poseBoatPaddle(B.rightPaddle, r.row[1], true)
         continue
       }
+      if (B.knot) continue
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
       if (B.wolf) { poseWolf(r, s, r.walk, r.amt || 0, tick); continue }
       if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }

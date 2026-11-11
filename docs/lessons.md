@@ -99,6 +99,7 @@ How the work itself went wrong, and the rule now:
   stalls) and rec_check's sight check blocked it. Build from closer, so every ray goes in through the top face.
 - **A friend who walks the whole way in** waits at his entrance (ep.park), where the camera never looks before he
   joins. A /tp near the frame is a rec_check teleport warning. The turn into hiding goes round the side away from him.
+- **No emoji in subs:** subs draw text only (the caption draws Twemoji images); an emoji in a step sub rendered as a green NO GLYPH box for 3.8 s (review round 1). `trapEdit` now throws on emoji in steps.
 
 ## Love (lib/love.js, love_cherry_heart, 2026-11-11)
 - **Cherry leaves are untinted.** Their model carries tintindex 0 (the leaves parent), but vanilla's BlockColors never
@@ -611,3 +612,46 @@ How the work itself went wrong, and the rule now:
   pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
   the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
   `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
+
+## Openings: frame 0 to 1.5 s (2026-11-11, owner r:r0f3da0)
+
+The data: Shorts where 74-81 % of viewers stay (Studio "viewed vs swiped away") get 9k-26k views; 56-61 % stall under
+3.3k. Paddy Galloway's study of 5,400 Shorts found the same line: under 60 % rarely performs, the best sit at 70-90 %
+(https://threadreaderapp.com/thread/1646898356419981315.html). YouTube defines the metric at
+https://support.google.com/youtube/answer/12942217. "Treat your intro like a thumbnail."
+
+What the owner's 32 reference Shorts do (frame 0 contact sheet, lead 2026-11-11):
+- Frame 0 already shows the subject or the payoff's setup: the lava house, the giant build, the trap pool, the
+  dropper target. Several are in motion at frame 0 (motion blur, a fall, falling blocks). None opens on an empty field.
+- The top band caption reads like a person reacting: "I hate this job 😭", "Am i cooked?", "Who tf is doing this
+  😭🙏", "bro found dirt for ONCE 💀", "Nobody Knows That! 😱". Ours read as labels ("ladder clutch 😳").
+- Same layout as ours (black band caption over gameplay), so the template isn't the problem.
+
+Rules (build them in; the opening check enforces what it can):
+1. Frame 0 = the subject in view: the mob, the trap, the TNT, the build, the danger. Never an empty field, plain
+   grass, a bare wall, a still room or sky.
+2. Something moves or changes by 0.5 s, and a sound hit lands within ~0.3 s (a hit, a place, a hiss, a voice line).
+3. Open a loop in the first 1-3 s: a question, a versus, a "wait for it", a danger the end resolves. Mumbo's top
+   Shorts are questions ("How many items fit in a chest?" 27M), Dream's are versus/paradox setups.
+4. Caption on screen from frame 0, short (aim 3-7 words, 10 max), reaction voice, inside the safe zone (top >= 200 px,
+   bottom >= 672 px at 1080x1920).
+5. No dead tail: nothing plays for more than ~0.7 s after the payoff settles (the settle rule's 0.6 s still is the end).
+6. Loops help when they come free (end frame matches the start), never forced.
+
+The opening check (scripts/opening.py, run by `./hb pace`; calibrated 2026-11-11, numbers in
+lib/hb/test/fixtures/opening_calibration.json):
+- Measured on the game view (rows 455-1466, the hotbar rows left out) at 216x202. `centre` / `busy`: the share of 8x8
+  cells in the middle half / the whole view whose colour is far from the view's main colour (scaled by its
+  brightness), best frame of the first 0.25 s. Flat = centre < 0.20 and busy < 0.35: BLOCK (WARN when the recording has
+  a mob, a player, a falling block or lit TNT within 35 deg of the look at the first tick, or when the main colour is
+  lava/fire). Motion 0-0.5 s: mean grey change < 0.5 and < 1.5% of the view changed since frame 0: BLOCK; < 2.0 and
+  < 15%: WARN (slow).
+- All 32 owner references pass (4 WARN slow: a path drawn on a still shot, a dark item frame, two slow pans; the
+  slowest, "Who tf is doing this", moves 0.14 with 2.8% changed) and all 16 STRONG openers and the 12 stories. Of the
+  8 WEAK openers it blocks the 4 flat ones (creeper 0.03 centre, trap_free_diamonds, cave_reveal, faketrick_gold_portal)
+  and WARNs mega_sponge (slow push, motion 1.38); cells_lab (a white corridor), logic_minecraft (a tree) and
+  race_grass_mycelium (a flat two-colour card that moves) read as busy and moving to pixels: those still need the
+  review's eye. dilemma_mace's frame 0 is flat but the wolf on the pyramid is in view: WARN.
+- Elsewhere in the videos branch it blocks lapse_castle, lapse_house (a timer over plain grass before the build),
+  pickaxe_race (a bare stone wall), rainbow_wool (sky in the middle) and wrong_bucket (sky): re-renders of those need
+  a new opening. The sound hit is only a WARN: half the references open 6-15 dB under their peak.

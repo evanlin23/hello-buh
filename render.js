@@ -638,7 +638,9 @@ const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(_
 // the block under the crosshair within reach (4.5, survival): vanilla outlines it in black
 // hitbox [width, height] of mobs that can be targeted (EntityType sizes); an entity under the crosshair
 // within the 3-block entity reach is the target, and vanilla draws no outline for it
-const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], zombie_villager: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
+const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], zombie_villager: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95],
+  // (vanilla EntityType sizes; without them the crosshair passed through these mobs and outlined the block behind: underdog_heal's cat)
+  wolf: [0.6, 0.85], cat: [0.6, 0.7], ocelot: [0.6, 0.7], horse: [1.3965, 1.6], donkey: [1.3965, 1.5], mule: [1.3965, 1.6], snow_golem: [0.7, 1.9], fox: [0.6, 0.7], goat: [0.9, 1.3], llama: [0.9, 1.87] }
 // outline shapes (Block.getShape) where they differ from the collision shape: fences, walls and
 // gates outline 1 block tall (their collision is 1.5), and blocks you walk through still get targeted
 // and outlined: crops by age, plants, torches (a ray used to pass through wheat and outline the
@@ -1058,6 +1060,19 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
     if (!k && cur) { cur[1] = row[0]; run.delete(row[1]) }
   }
 }
+// leads (harness 'leash' marks { id, holder }, 'self' = the recording bot): id -> [[from, to, holder]]; drawn per frame
+// from the leashed entity's lead point to the holder's hand (lib/riding.js: LeashFeatureRenderer's rope)
+const RIDING = require('./lib/riding')
+const LEASH_RUNS = new Map()
+let LEASH_KNOTS = false
+for (const m of rec.timeline || []) {
+  if (m.event !== 'leash' || m.id === undefined) continue
+  const runs = LEASH_RUNS.get(m.id) || [], last = runs[runs.length - 1]
+  if (last && last[1] === Infinity) last[1] = m.t / 50
+  if (m.holder !== null && m.holder !== undefined) runs.push([m.t / 50, Infinity, m.holder])
+  LEASH_RUNS.set(m.id, runs)
+  LEASH_KNOTS = true
+}
 // TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
 const CART_PRIMED = new Map()
 for (const e of rec.timeline || []) if (e.event === 'cart_primed' && !CART_PRIMED.has(e.id)) CART_PRIMED.set(e.id, e.t / 50)
@@ -1119,11 +1134,12 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
       }
       if (sw.some(s => r[0] >= s && r[0] - s < 6)) target = look
       if (d2 >= 16) body = look
+      if (r[9] && r[9].ride) { body = look; target = look }   // a rider (harness extra.ride) sits facing where it looks, turned with its boat (positionRider)
       body += wrap(target - body) * 0.3
       const off = wrap(look - body), MAX = 50 * Math.PI / 180
       if (Math.abs(off) > MAX) body += off - Math.sign(off) * MAX
       body = wrap(body)
-      if (d2 < 16) { wspd += (Math.min(1, Math.sqrt(d2) * 4) - wspd) * 0.4; wpos += wspd }
+      if (d2 < 16) { wspd += ((r[9] && r[9].ride ? 0 : Math.min(1, Math.sqrt(d2) * 4)) - wspd) * 0.4; wpos += wspd }
       ticks.set(r[0], [body, wpos, wspd])
       prev = r
     }
@@ -1178,6 +1194,13 @@ const MOON_PHASE = (() => {
   return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
 })()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
+// hidden name tags (lib/name_tags.js: stunt.hideNameTags, story.json cast "name_tag": false): the plate is never drawn
+// for them, not under the crosshair, not with stunt.playerNames / nameTags. Nothing listed: unchanged.
+const NT = require('./lib/name_tags')
+const HIDE_NAMES = (() => {
+  try { const h = NT.hiddenNames(STUNT_MOD, __dirname); if (h.size) console.log(`name tags hidden: ${[...h].join(', ')}`); return h } catch (e) { console.warn('hideNameTags:', e.message); return new Set() }
+})()
+const nameHidden = (e) => NT.isHidden(HIDE_NAMES, [e.extra && e.extra.user, e.extra && e.extra.name, ACTOR.get(e.id) && ACTOR.get(e.id).user, KIT_TAG.get(e.id)])
 // Real skins (lib/skins.js): the bot's username (rec.user, HB_SELF_USER to override) and actors on lib/real_skins.json
 // draw the owner's own skin from work/skins/<name>.png (private assets, else Mojang via scripts/fetch_skin.py, else steve)
 const SKINS = require('./lib/skins')
@@ -1242,6 +1265,13 @@ function talkMotion (who, t) {
 //   fov: degrees (default 70), roll: degrees, push: blocks/s toward the subject on `at` shots (default 0.2), drift (default 1)
 //   two: [A, B] | ots: S, over: A | single: S, toward: B   auto-framed from where they stand (renderer/framing.js):
 //                                     side (compass), size (close|medium|wide), anchor (start|live), height
+//   fovPath: [[sec, deg], ...]        the lens keyed like path (eased in tan space: a zoom, not a lurch)
+//   crane: { from, to, yaw, pitch, fov, secs }   a crane OFF the view before it (docs/engine_features.md "Flying-mob
+//                                     POV, the crane, the Nether"): from 'pov' (the narrator's eyes, default) or 'prev'
+//                                     (the shot before), it carries that view's motion on and eases into the pose `to`
+//                                     ([dx, dy, dz] | TARGET), yaw/pitch deg (pitch -90: straight down, yaw = what's up
+//                                     in the frame, 0 north) and fov, settling in `secs` (2.5), the turn done in the
+//                                     first `tilt` (0.6) of it; no eye-trace, no drift
 //   subject: [TARGET, ...]            what the eye should be on (the lint checks it; eyeTrace puts it where the last
 //                                     shot's subject was); eyeTrace: false | { max, hold, settle } (see eyeTraceOffset)
 // TARGET is [dx, dy, dz] from the set origin, 'self' (the player's eye), 'actor:NAME' (that actor's eye)
@@ -1317,6 +1347,7 @@ function actorsAt (t) {
 const FRAME_HELP = (solidAt) => ({ targetAt, solidAt: solidAt || (() => false), actors: actorsAt, side: STUNT_MOD.coverage && STUNT_MOD.coverage.side })
 function shotCamBase (sh, t, solidAt) {
   const u = (t - sh.t0) / 20
+  if (sh.crane) return craneCam(sh, t, solidAt)
   let pos = null
   const auto = FRAMING.frame(sh, t, FRAME_HELP(solidAt))   // { two | ots | single }: placed from the actors (renderer/framing.js)
   if (auto) pos = { ...auto.pos }
@@ -1363,7 +1394,62 @@ function shotCamBase (sh, t, solidAt) {
   if (ft) { const f = targetAt(ft, t); if (f) focus = Math.hypot(f.x - pos.x, f.y - pos.y, f.z - pos.z) }
   else if (auto && auto.focus) focus = Math.hypot(auto.focus.x - pos.x, auto.focus.y - pos.y, auto.focus.z - pos.z)
   if (dr) { yaw += Math.sin(t * 0.041) * 0.0035 * dr; pitch += Math.sin(t * 0.035 + 1) * 0.0025 * dr }
-  return { x: pos.x, y: pos.y, z: pos.z, yaw, pitch, bobX: 0, bobY: 0, roll: (sh.roll || 0) * Math.PI / 180, bobPitch: 0, fov: sh.fov || (auto ? 50 : undefined), focusDist: focus }
+  return { x: pos.x, y: pos.y, z: pos.z, yaw, pitch, bobX: 0, bobY: 0, roll: (sh.roll || 0) * Math.PI / 180, bobPitch: 0, fov: sh.fovPath ? fovKeyed(sh.fovPath, u, sh.ease) : sh.fov || (auto ? 50 : undefined), focusDist: focus }
+}
+// fovPath [[sec, deg], ...] at u seconds: keyed like a path, in tan(fov / 2) (the picture's scale moves evenly)
+function fovKeyed (keys, u, ease) {
+  const k = keyed(keys.map(([s, f]) => [s, Math.tan(f * Math.PI / 360), 0, 0]), u, ease)
+  return Math.atan(k[0]) * 360 / Math.PI
+}
+// The narrator's first-person view at tick t as the frame shows it: the eye (stunt.self.eye), the fov with the
+// sprint fov and stunt.fovZoom (the frame loop's own maths)
+function povView (t) {
+  const c = camAt(Math.max(0, t)), s = selfAt(t)
+  return { x: c.x, y: s && s.eye ? c.y - (EYE - s.eye) : c.y, z: c.z, yaw: c.yaw, pitch: c.pitch, fov: fovZoomed(c.fov || 70, t) }
+}
+// stunt.fovZoom at tick t (the frame loop): eases in 0.4 s, out 0.25 s after the end
+function fovZoomed (fov, t) {
+  let z = 1
+  for (const [a0, b0, sc] of FOV_ZOOM) {
+    const u = t < a0 ? 0 : t < a0 + 8 ? (t - a0) / 8 : t <= b0 ? 1 : t < b0 + 5 ? 1 - (t - b0) / 5 : 0
+    z = Math.max(z, 1 + (sc - 1) * u * u * (3 - 2 * u))
+  }
+  return z > 1 ? 2 * Math.atan(Math.tan(fov * Math.PI / 360) / z) * 180 / Math.PI : fov
+}
+// The crane (shot.crane): its start is the view the frame showed on the tick before the shot (the POV, or the shot
+// before), moving as that view moved; a cubic Hermite carries that velocity (position, yaw, pitch, tan fov) into the end
+// pose at rest after `secs`: no stop on the take-off, no snap, no overshoot past the end. Memoised per shot.
+const CRANE_MEMO = new Map()
+function craneCam (sh, t, solidAt) {
+  const C = sh.crane, key = `${sh.name}@${sh.t0}`
+  let K = CRANE_MEMO.get(key)
+  if (!K) {
+    const view = (tt) => {
+      if (C.from === 'prev') { const p = shotAt(tt); if (p && !p.pov && !p.crane) { const c = shotCam(p, tt, solidAt); if (c) return { ...c, fov: c.fov || 70 } } }
+      return povView(tt)
+    }
+    const a = view(sh.t0 - 1), b = view(sh.t0)
+    const unwrap = (y0, y1) => { let d = y1 - y0; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return y0 + d }
+    const to = Array.isArray(C.to) && C.to.length === 3 && typeof C.to[0] === 'number' ? { x: rec.set.x + C.to[0], y: rec.set.y + C.to[1], z: rec.set.z + C.to[2] } : (targetAt(C.to, sh.t0) || { x: b.x, y: b.y + 30, z: b.z })
+    const yaw1 = unwrap(b.yaw, (C.yaw ?? 0) * Math.PI / 180), pitch1 = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, (C.pitch ?? -90) * Math.PI / 180))
+    const T = Math.max(1, (C.secs ?? 2.5) * 20), tf = (f) => Math.tan(f * Math.PI / 360)
+    const by = unwrap(a.yaw, b.yaw)
+    K = {
+      T,
+      p0: [b.x, b.y, b.z, by, b.pitch, tf(b.fov)], p1: [to.x, to.y, to.z, yaw1 + (by - b.yaw), pitch1, tf(C.fov ?? 70)],
+      v0: [b.x - a.x, b.y - a.y, b.z - a.z, by - a.yaw, b.pitch - a.pitch, tf(b.fov) - tf(a.fov)]
+    }
+    // the view before may have been a cut (a jump): then it starts from rest
+    if (Math.hypot(K.v0[0], K.v0[1], K.v0[2]) > 4) K.v0 = K.v0.map(() => 0)
+    CRANE_MEMO.set(key, K)
+  }
+  // the turn (yaw, pitch) finishes in the first `tilt` of the move (0.6): a tilt as slow as the rise looked at the
+  // horizon from 30 blocks up (the sky, then the sea) before it found the ground
+  const herm = (u, T, i) => { u = Math.min(1, Math.max(0, u)); const u2 = u * u, u3 = u2 * u; return (2 * u3 - 3 * u2 + 1) * K.p0[i] + (u3 - 2 * u2 + u) * T * K.v0[i] + (-2 * u3 + 3 * u2) * K.p1[i] }
+  const u = (t - sh.t0) / K.T, tilt = Math.max(0.1, Math.min(1, sh.crane.tilt ?? 0.6))
+  const v = K.p0.map((p, i) => i === 3 || i === 4 ? herm(u / tilt, K.T * tilt, i) : herm(u, K.T, i))
+  const pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, v[4]))
+  return { x: v[0], y: v[1], z: v[2], yaw: v[3], pitch, bobX: 0, bobY: 0, roll: 0, bobPitch: 0, fov: Math.atan(Math.max(1e-3, v[5])) * 360 / Math.PI, focusDist: Math.max(1, Math.abs(v[1] - (rec.set.y || 0))) }
 }
 // Eye-trace (docs/cinematic.md "Invisible cuts", STANDARDS 3b.3; owner 2026-11-10: "i keep noticing them"): a camera
 // shot starts with its subject where the previous shot's subject was on screen, so the eye doesn't search the new
@@ -1408,6 +1494,7 @@ const povCamAt = (t) => { const c = camAt(t), s = selfAt(t); return { ...c, y: s
 // sits where the camera shot's subject was, then eases back to the player's own aim (hold/settle as below). A cut from
 // first person to first person is the player's own turn: aim K.cut there (the ./hb cuts check still measures it).
 function eyeTraceOffset (sh, solidAt) {
+  if (sh.crane) return null   // a crane starts on the view before it: nothing to trace
   if (!ET.traced(sh, sh.pov ? shotAt(sh.t0 - 20 / FPS) : null, ET_ON)) return null
   const key = `${sh.name}@${sh.t0}`
   if (ET_MEMO.has(key)) return ET_MEMO.get(key)
@@ -1674,6 +1761,9 @@ function bodyAfterDeath (d, t) {
 // bounce. A synced position snaps. A pickup ('collect') flies the item to the collector over 3 ticks
 // (ItemPickupParticle), then it's gone: they froze at the spawn and blinked out (fortune f1613).
 const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'lingering_potion', 'experience_bottle', 'potion'])
+// the throwables whose hit on a mob plays the red flash (Snowball / ThrownEgg / ThrownEnderpearl.onHitEntity: hurt(..., 0));
+// a potion or XP bottle breaks without hurting anyone (underdog_heal's weakness potion flashed the zombie villager red)
+const HIT_FLASH = new Set(['ender_pearl', 'snowball', 'egg'])
 // the living entity (id) whose hitbox the step from p by v passes through, or null: ProjectileUtil.getEntityHitResult
 // tests the mob's box inflated by 0.3 (a 0.6-wide humanoid: 0.6 a side). For the motion fixes' projectile hits.
 const NOT_LIVING = /^(item|experience_orb|falling_block|moving_block|egg|snowball|arrow|spectral_arrow|trident|ender_pearl|splash_potion|lingering_potion|experience_bottle|firework_rocket|armor_stand|painting|item_frame|glow_item_frame|marker|text_display|block_display|item_display|interaction|boat|minecart|lightning_bolt|player)$/
@@ -1747,7 +1837,7 @@ function simulateDrops (world) {
         // (ThrownEgg / Snowball.onHitEntity: hurt(..., 0), so the red flash still plays). The cast is Invulnerable and
         // sends no damage event, and the flight here ignored mobs: names_in_the_woods' eggs flew through Hugo and Pia
         // with no red ("the villagers dont have hte damage red when theyre hit")
-        if (MOTION_FIXES && vx * vx + vy * vy + vz * vz > 1e-6) {
+        if (MOTION_FIXES && HIT_FLASH.has(rows[0][2]) && vx * vx + vy * vy + vz * vz > 1e-6) {
           if (owner && owner.size) { const still = insideOf(ENT.get(tick), id, [x, y, z]); for (const o of [...owner]) if (!still.has(o)) owner.delete(o) }
           const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz], owner)
           if (hit !== null) {
@@ -1778,7 +1868,7 @@ function simulateDrops (world) {
     }
     // motion fixes: a projectile the server removed in flight (its last rows still flying) hit something the flight
     // above didn't reach in time (the server's own spawn point and tick differ a little): the mob ahead within 3 steps
-    if (thrown && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
+    if (thrown && HIT_FLASH.has(rows[0][2]) && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
       let q = [x, y, z], w = [vx, vy, vz]
       for (let k = 0; k < 3; k++) {
         const hit = projectileHit(ENT.get(t1), id, q, w)
@@ -1982,8 +2072,8 @@ const GUI_WIN = []
 if (MOTION_FIXES) {
   let a = null
   for (const e of rec.timeline || []) {
-    if (e.event === 'container' && a === null) a = Math.round(e.t / 50)
-    if (e.event === 'container_close' && a !== null) { GUI_WIN.push([a, Math.round(e.t / 50)]); a = null }
+    if ((e.event === 'container' || e.event === 'merchant') && a === null) a = Math.round(e.t / 50)
+    if ((e.event === 'container_close' || e.event === 'merchant_close') && a !== null) { GUI_WIN.push([a, Math.round(e.t / 50)]); a = null }
   }
   if (a !== null) GUI_WIN.push([a, P.length - 1])
   const EASE = 8
@@ -2383,7 +2473,8 @@ else:
     const sp = name && spriteOf(name)
     const pose = P[Math.max(0, Math.min(P.length - 1, Math.floor(t0)))]
     if (!sp || !pose) continue
-    PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
+    if (Number.isFinite(ev.x)) PARTS.push(...particles.spawn({ type: 'crumbs', t: ev.t, tex: sp, x: ev.x, y: ev.y, z: ev.z, n: ev.n, scale: ev.scale }))   // at a held thing
+    else PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
   }
   // starting to mine redstone ore (RedStoneOreBlock.attack -> spawnParticles): one redstone dust speck
   // 0.5625 out from the centre of each face not against a solid block, at a random spot on that face
@@ -2729,12 +2820,8 @@ else:
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.
     // The first-person hand keeps its own camera, so it doesn't zoom. Not with CAM= (the replay pass).
     if (FOV_ZOOM.length && !process.env.CAM) {
-      let z = 1
-      for (const [a0, b0, sc] of FOV_ZOOM) {
-        const u = t < a0 ? 0 : t < a0 + 8 ? (t - a0) / 8 : t <= b0 ? 1 : t < b0 + 5 ? 1 - (t - b0) / 5 : 0
-        z = Math.max(z, 1 + (sc - 1) * u * u * (3 - 2 * u))
-      }
-      if (z > 1) cam.fov = 2 * Math.atan(Math.tan((cam.fov || 70) * Math.PI / 360) / z) * 180 / Math.PI
+      const f = fovZoomed(cam.fov || 70, t)
+      if (f !== (cam.fov || 70)) cam.fov = f
     }
     // CAM="dx,dy,dz,yawDeg,pitchDeg": a fixed camera relative to the set origin (no bob)
     // CAM=back[:dist] / CAM=front[:dist]: vanilla's F5 views (default 4 blocks), bob and hurt tilt kept
@@ -2814,6 +2901,13 @@ else:
     }
     prof('camera+target')
     const ents = entitiesAt(t, mesher)
+    // leash knots (LeashFenceKnotEntity: the fence post's centre, 0.375 up; mineflayer keeps the block corner) are drawn
+    // only in recordings with lead marks (the harness from 2026-11-11): older ones never drew them (rule zero)
+    for (let i = ents.length - 1; i >= 0; i--) {
+      const e = ents[i]; if (e.name !== 'leash_knot') continue
+      if (!LEASH_KNOTS) { ents.splice(i, 1); continue }
+      e.x = Math.floor(e.x) + 0.5; e.y = Math.floor(e.y) + 0.375; e.z = Math.floor(e.z) + 0.5
+    }
     // first-person held item
     const hd = HIDE_HAND || third || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
     if (hd) {
@@ -2865,11 +2959,13 @@ else:
         }
         const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
         // stunt.self.model: seen from a camera shot, the narrator is that mob (a wolf with its collar), not a player
-        if (selfNow && selfNow.model) ents.push({ id: -1, name: selfNow.model, x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: body, pitch: eye.pitch, headYaw: eye.yaw, extra: selfNow.extra || null, light: lightmap(ls, lb), hurt: HURTS.some(h => t >= h.t && t - h.t < 10) })
+        // a crane lifting off the narrator (shot.crane) leaves from inside its head: no model until the lens is clear
+        if (shotNow && shotNow.crane && Math.hypot(cam.x - eye.x, cam.y - (eye.y - EYE + ((selfNow && selfNow.eye) || EYE)), cam.z - eye.z) < 2.5) {}
+        else if (selfNow && selfNow.model) ents.push({ id: -1, name: selfNow.model, x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: body, pitch: eye.pitch, headYaw: eye.yaw, extra: selfNow.extra || null, light: lightmap(ls, lb), hurt: HURTS.some(h => t >= h.t && t - h.t < 10) })
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
+          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}), ...(P[i][7] & 4 ? { fire: true } : {}) }, light: lightmap(ls, lb),   // (pose flag 4: on fire) stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -3087,6 +3183,7 @@ else:
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a
         if (a) { e.headYaw = e.headYaw ?? e.yaw; e.yaw = lerpAngle(a[0], b[0], f); wp = a[1] + (b[1] - a[1]) * f; ws = a[2] + (b[2] - a[2]) * f }
       }
+      if (e.extra.ride) { wp = 0; ws = 0 }   // a rider's legs don't walk (the boat moves it: harness extra.ride)
       let held = null
       const n = e.extra.held
       if (n) {
@@ -3119,8 +3216,10 @@ else:
           if (t >= a && k > 0) { const ez = k * k * (3 - 2 * k); poses.push({ ...q, k: ez }) }
         }
       }
+      // riding (harness extra.ride: a passenger of a boat or a cart): HumanoidModel's riding limbs, under any staged pose
+      if (e.extra.ride && POSES.POSES.ride) poses.unshift({ name: 'ride', k: 1 })
       // using an item, recorded (harness extra.using: LivingEntity's using-item flag): drink or eat, that hand
-      if (e.extra.using && !poses.length) { const it = (e.extra.usingOff ? e.extra.offhand : n) || ''; poses.push({ name: /potion|bottle|milk|stew|soup/.test(it) ? 'drink' : /horn|spyglass/.test(it) ? 'use' : 'eat', off: !!e.extra.usingOff, k: 1 }) }
+      if (e.extra.using && !poses.some(q => q.name !== 'ride')) { const it = (e.extra.usingOff ? e.extra.offhand : n) || ''; poses.push({ name: /potion|bottle|milk|stew|soup/.test(it) ? 'drink' : /horn|spyglass/.test(it) ? 'use' : 'eat', off: !!e.extra.usingOff, k: 1 }) }
       if (poses.length) e.player.poses = poses
       // idle life (standing still: a slow head drift) and the talking head (lines marked with this name)
       const still = Math.max(0, 1 - ws * 8), nz = idleNoise(e.id, t), tk = talkMotion(user, t)
@@ -3259,13 +3358,24 @@ else:
       }
     }
     prof('particles+weather')
+    if (LEASH_RUNS.size) {
+      const byId = new Map(ents.map(e => [e.id, e])), list = []
+      const lightAt = (e) => mesher.world.getLight(new Vec3(Math.floor(e.x), Math.floor(e.y), Math.floor(e.z)))
+      for (const [id, runs] of LEASH_RUNS) {
+        const run = runs.find(([a, b]) => t >= a && t < b); if (!run) continue
+        const e = byId.get(id), h = byId.get(run[2] === 'self' ? -1 : run[2])
+        if (!e || !h || e.hidden || h.hidden) continue   // (the holder's first-person hand: not drawn)
+        list.push(RIDING.leashMesh(RIDING.leashPoint(e), RIDING.ropeHold(h), lightAt(e), lightAt(h), (sk, bl) => lightmap(sk, bl)))
+      }
+      if (list.length) cam.leashes = list
+    }
     // nameplates (EntityRenderer.renderNameTag): a custom-named mob under the crosshair, or any with
     // CustomNameVisible, within 64 blocks; anchored 0.5 above its hitbox top
     for (const e of ents) {
       if (!e.extra || !(e.extra.name || e.extra.jeb)) continue
       if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
       const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
-      if (near && (e.extra.nameVisible || e.id === cam.targetEntity)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+      if (near && (e.extra.nameVisible || e.id === cam.targetEntity) && !nameHidden(e)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
       // stunt.playerNames: a crouching player's plate sits on the 1.5-tall hitbox and its text is drawn at half alpha
       // (EntityRenderer.renderNameTag: isDiscrete -> 0x80FFFFFF, no see-through pass)
       if (STUNT_MOD.playerNames && e.nameTag && e.player) { const sn = !!e.extra.sneak; e.nameDim = sn; if (sn) e.nameY = 1.5 + 0.5 }
