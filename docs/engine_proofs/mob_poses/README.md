@@ -13,11 +13,12 @@ at phone size (the 1080 x 1011 game view in a 1080 x 1920 frame) and a 300 px-wi
 | evoker_real_wololo | the real wololo spell: arms up, spell particles at the hands, a sheep turned red | recorded: metadata 17 = 3 over ticks 42-101 |
 | evoker_staged_wololo | the same, staged | `pose { spell: 'wololo' }` at tick 506, `/data` Color:14b at +40 |
 
-## Rule zero: before (origin/main 28554cb2) vs after (this branch, rebased on it)
-`./hb still` on each, both trees, 30 frames: **every one 0 px different**.
-- HelloBuh: sandart_tnt (ticks 60, 200, 320), logic_minecraft (100, 400, 640), cooked_bedrock (50, 150, 250), creeper (40, 150),
+## Rule zero: before (origin/main 126d9259, with skins, camera_world, gui_tags and boats_leads merged) vs after (this branch, rebased on it)
+`./hb still` on each, both trees, 33 frames: **every one 0 px different**.
+- HelloBuh: fakemod_permission (ticks 100, 300, 430), sandart_tnt (ticks 60, 200, 320), logic_minecraft (100, 400, 640), cooked_bedrock (50, 150, 250), creeper (40, 150),
   guess_sound_2 (the allay: 611, 300), guess_sound_3 and interrupt_lamps (bow skeletons: 326; 253), rainbow_sheep (266).
-  edit.py is unchanged, so the `--still` meme overlays of sandart_tnt / logic_minecraft / cooked_bedrock are too.
+  edit.py is unchanged by this piece, so the `--still` meme overlays and fakemod_permission's `edit.popup` are too.
+  mobpov_baby_zombie: no recording on the videos branch or in work/, so not rendered.
 - Buh Stories: story_nitwit (120, 450, 800), story_light_sleeper (bow skeleton: 569, 600), story_gold_for_the_portal
   (piglins: 1006), story_thirty_one_raids (pillagers with crossbows: 864), story_dog_hill (actors: 300).
 - Fixtures: pose_fixture --staged (2, 40, 75), --armor (piglin, skeleton: 5, 40), --life (20).
