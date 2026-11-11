@@ -19,7 +19,7 @@ module.exports = makeStunt({
   hotbar: ['stone_sword', 'shears', ['blue_wool', 48], ['golden_apple', 3]],
   select: 0,
   pitch: 8,
-  edit: { sfx: [['impact', 'payoff', { gain: 1.4 }]] },   // the logout itself is silent in vanilla: the hit the final mix needs (pace)
+  edit: { sfx: [['gamedip', 'payoff', 0.4], ['impact', 'payoff', { gain: 1.4 }]] },   // the logout is silent in vanilla: an impact, with the cave ambience ducked under it (mixcheck)
   hisStart: { x: 0.5, y: 1, z: 4.6, yaw: 180, pitch: 4 },
 
   async perform (ctx, H) {
