@@ -1307,6 +1307,7 @@ def main():
     # retention toolkit (scripts/retention.py): all optional, from the stunt's `edit` block
     ap.add_argument("--slowmo", help='JSON list of [EVENT, BEFORE_S, AFTER_S, FACTOR=0.5] slow-motion windows')
     ap.add_argument("--punch", help='JSON list of EVENT or [EVENT, NTH, SCALE] zoom punches on the game view')
+    ap.add_argument("--punch_stress", help='JSON list of [LINE ID, S INTO THE LINE, PEAK]: short zoom punches on the spoken stress (edit.punchStress)')
     ap.add_argument("--counter", help='JSON {"at": [EVENT, ...], "total": N} "3/5" beat counter')
     ap.add_argument("--cards", help='JSON list of [EVENT, TEXT, SECONDS?, COLOR?, NTH?] impact cards')
     ap.add_argument("--zoom", help='JSON list of [START[:off], END[:off], SCALE] held push-ins on the game view')
@@ -1355,7 +1356,7 @@ def main():
     args.start = math.floor(args.start * args.fps + 1e-6) / args.fps
     sys.path.insert(0, str(HERE / "scripts"))
     import retention
-    if (args.punch or args.shake or args.flash or args.freeze or args.zoom) and args.timeline and args.frames:
+    if (args.punch or getattr(args, 'punch_stress', None) or args.shake or args.flash or args.freeze or args.zoom) and args.timeline and args.frames:
         retention.apply_frame_fx(args, json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))

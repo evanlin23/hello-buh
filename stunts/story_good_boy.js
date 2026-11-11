@@ -91,7 +91,7 @@ module.exports = {
     await c(`/setblock ${A(34, 1, 14)} spruce_fence`); await c(`/setblock ${A(34, 2, 14)} lantern`)   // lights his face in the night yard (L08), 3 blocks from him on the camera's side, off the camera's line (at (34, 17) it stood in the middle of the frame)
     await c(`/setblock ${A(38, 1, 19)} barrel[facing=up]`); await c(`/setblock ${A(39, 1, 19)} hay_block`)
     await c(`/place feature minecraft:fancy_oak ${A(31, 1, 31)}`); await c(`/place feature minecraft:oak ${A(43, 1, 31)}`)
-    for (const [f, dx, dz] of [['birch', 46, 10], ['oak', 27, 9], ['fancy_oak', 47, 22], ['birch', 26, 30]]) await c(`/place feature minecraft:${f} ${A(dx, 1, dz)}`)
+    for (const [f, dx, dz] of [['birch', 46, 10], ['oak', 27, 9], ['birch', 26, 30]])   // (a fancy oak at (47, 22) stood in the crane's path) await c(`/place feature minecraft:${f} ${A(dx, 1, dz)}`)
     for (const [dx, dz] of [[31, 15], [42, 23], [41, 13], [32, 25]]) await c(`/setblock ${A(dx, 1, dz)} azalea`)   // (42, 21) was the dog_sea camera's spot
     for (const [dx, dz] of [[44, 14], [45, 15], [28, 20], [28, 21]]) await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} mossy_cobblestone`)
     // a wheat field west of the yard: farmland on the natural ground, a water channel (L03 "He HID in the WHEAT")
@@ -176,6 +176,10 @@ module.exports = {
       K.ctl('jump', !!(b && b.boundingBox === 'block'))
     }
     const roadZ = -5.5
+    // an event that fires once, the first tick at or past its time (K.line runs on the recording clock: after an awaited
+    // cut k jumps ahead, and a `k === X` test could be skipped: kit b4cd314)
+    const did = new Set()
+    const once = (key, cond) => { if (!cond || did.has(key)) return false; did.add(key); return true }
 
     // the wolf's on-screen pop (vanilla: a tamed wolf more than 12 blocks from its owner appears beside him, in view,
     // no particles, no sound): K.blink when the story kit has it (visual audit blocker 2), else a cut of the wolf alone
@@ -209,23 +213,23 @@ module.exports = {
     await K.preroll(10, () => { walkG(buh, -0.27, 0); autoJump() })
     await line('L01', async (k) => {
       walkG(buh, -0.27, 0); buh.pitch = 5
-      if (k === 8) await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y)
+      if (once('L01pop', k >= 8)) await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y)
       autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.2)); look(k)   // (a block south of his line: right behind him his body hid it)
     })
 
     // L02 "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.": POV low behind his heels,
     // sprinting after him; on "Twelve BLOCKS out" he pulls away; on "APPEAR" the crane comes in from the sea over the
     // yard: he is home, catching his breath, and the wolf pops in beside him
-    await K.cut(buh.x + 2.6, roadZ, P(buh.x - 6, buh.y + 1.2, buh.z), gy(buh.x + 2.6, roadZ), { shot: 'pov' })
+    await K.cut(buh.x + 2.6, buh.z, P(buh.x - 6, buh.y + 1.2, buh.z), gy(buh.x + 2.6, buh.z), { shot: 'pov' })   // (in his lane: on roadZ it landed in the ditch by the road)
     K.ctl('sprint', true); K.go(true)
     await line('L02', async (k, at) => {
       if (k < at.cut(3)) {
         walkG(buh, k < at(2) ? -0.27 : -0.3, 0)
-        if (k === at(2)) K.go(false)   // he pulls away: twelve blocks
+        if (once('L02away', k >= at(2))) K.go(false)   // he pulls away: twelve blocks
         autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2, buh.z)); look(k)
       }
-      if (k === at.cut(3)) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
-      if (k === at(3) + 5) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
+      if (once('L02cut', k >= at.cut(3))) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
+      if (once('L02pop', k >= at(3) + 5)) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
       if (k > at(3)) { buh.pitch = 15 + Math.sin(k / 6) * 8; if (k > at(3) + 5) buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.15; look(k) }
     })
 
@@ -237,23 +241,23 @@ module.exports = {
     sneak(true)
     await line('L03', async (k, at) => {
       if (k < at.cut(2)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
-      if (k === at(1)) await blink(21.6, 20.3, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.6, 20.3))
-      if (k === at.cut(2)) {
+      if (once('L03pop1', k >= at(1))) await blink(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6))   // beside him, not in front of his face
+      if (once('L03cut2', k >= at.cut(2))) {
         sneak(false)
-        await scut(7.5, 12.5, P(7.5, 1.4, 20), 1, { shot: 'hills_night', time: NIGHT, after: moveWith({ x: 7.5, z: 26.0, y: gy(7.5, 26.0), yaw: 180, pitch: 0 }) })   // the wolf waits behind the camera
+        await scut(7.5, 12.5, P(7.5, 1.4, 20), 1, { shot: 'hills_night', time: NIGHT, after: moveWith({ x: 7.5, z: 27.5, y: gy(7.5, 27.5), yaw: 180, pitch: 0 }) })   // the wolf waits behind the camera
       }
-      if (k > at.cut(2) && k < at.cut(4)) { walkG(buh, 0, -0.17); look(k) }
-      if (k === at(3)) await blink(8.4, buh.z + 0.6, P(7.5, 1.4, buh.z - 5), gy(8.4, buh.z + 0.6))
+      if (k > at.cut(2) && k < at.cut(4)) { walkG(buh, 0, -0.14); look(k) }
+      if (once('L03pop3', k >= at(3))) await blink(8.4, buh.z + 0.6, P(7.5, 1.4, buh.z - 5), gy(8.4, buh.z + 0.6))
       if (k > at(3) && k < at.cut(4)) { K.go(true); K.base = K.aim(P(8.4, 1.4, buh.z - 6)) }
-      if (k === at.cut(4)) {
+      if (once('L03cut4', k >= at.cut(4))) {
         await scut(46.5, 17.0, P(60, 0.6, 15), gy(46.5, 17.0), { shot: 'swim_cam', time: GOLD, after: moveWith({ x: 57.5, z: 13.8, y: 62.2 - F, yaw: -90, pitch: 0 }) })   // the wolf behind the camera on the cliff
       }
       if (k > at.cut(4) && k < at.cut(6)) { K.step(buh, 0.12, 0); buh.y = 62.2 - F; look(k) }
-      if (k === at.cut(6)) {
+      if (once('L03cut6', k >= at.cut(6))) {
         await scut(62.6, 11.0, P(66, 64.5 - F, 13.5), 63 - F, { shot: 'beach', after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // (the wolf is behind the beach camera)
       }
       if (k > at.cut(6)) { if (buh.x > 68.2) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
-      if (k === at(6) + 6) await blink(67.6, 14.2, P(buh.x, buh.y + 1.5, buh.z), 64 - F)   // 4 blocks out (at 2.4 it was a huge blur at the frame edge)
+      if (once('L03pop6', k >= at(6) + 6)) await blink(67.6, 14.2, P(buh.x, buh.y + 1.5, buh.z), 64 - F)   // 4 blocks out (at 2.4 it was a huge blur at the frame edge)
     })
 
     // L04 "But SITTING? / I STAY put. / A SITTING dog / waits FOREVER.": the village road, another tamed wolf sitting
@@ -270,7 +274,8 @@ module.exports = {
     })
     K.go(true)
     await line('L05', async (k) => {
-      walkG(buh, -0.2, 0); buh.pitch = 5; autoJump()
+      if (buh.x > 16.8) { walkG(buh, -0.1, 0); buh.pitch = 5 } else { buh.yaw += (yawTo(buh.x, buh.z, 18.5, -6.4) - buh.yaw) * 0.1 }   // walks on, slowly: stays in frame
+      K.go(bot.entity.position.x - X > 17.5); autoJump()
       K.base = K.aim(P(bot.entity.position.x - X - 10, buh.y + 0.6, -4.3)); look(k)
     })
     K.stop()
@@ -287,7 +292,7 @@ module.exports = {
 
     // L07 "Every NIGHT / he SAYS, / SORRY, buddy. / I don't KNOW / what FOR.": dusk at the yard's sea edge, from behind
     // them over the sea (the moon coming up): he walks up to the wolf sitting there, looks out, then down at it, a pat
-    await scut(41.5, 16.6, P(60, eyeY(0.4), 16), H + 1, { shot: 'dog_sea', time: DUSK, self: [{ sitting: true }, SIT_EYE], after: moveWith({ x: 38.6, z: 15.4, y: H + 1, yaw: -70, pitch: 5 }) })
+    await scut(41.5, 16.6, P(60, eyeY(0.4), 16), H + 1, { shot: 'dog_sea', time: DUSK, self: [{ sitting: true }, SIT_EYE], after: moveWith({ x: 39.0, z: 15.2, y: H + 1, yaw: -70, pitch: 5 }) })
     await line('L07', async (k, at) => {
       const dx = 40.6 - buh.x, dz = 16.0 - buh.z, d = Math.hypot(dx, dz)
       if (d > 0.3) { const sp = Math.min(0.15, 0.04 + d * 0.05); K.step(buh, dx / d * sp, dz / d * sp); buh.pitch = 5 }
@@ -310,7 +315,7 @@ module.exports = {
         buh.yaw = yawTo(buh.x, buh.z, zom.x, zom.z)
         K.base = K.aim(P(zom.x, zom.y + 1.5, zom.z)); look(k)
       }
-      if (k === at.cut(3)) {
+      if (once('L08cut', k >= at.cut(3))) {
         K.actors.delete('zom')   // the real zombie from here: the wolf bites it
         await K.cut(36.4, 15.6, P(zom.x, zom.y + 1.6, zom.z), H + 1, { shot: 'pov', self: [{ sitting: false, angry: true }, EYE] })
         ctx.sound('entity.wolf.growl', 1, 1.1)
@@ -320,13 +325,14 @@ module.exports = {
         const [sy, sp] = shake(k, 0.03)
         const z = zEnt()
         if (z && bot.entity.position.distanceTo(z.position) < 2.4) K.go(false)
-        if (k === at(3) + 6 || k === at(4) + 2) { if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.15) }
-        if (k === n - 1) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
+        if (once('L08bite1', k >= at(3) + 6) || once('L08bite2', k >= at(4) + 2)) { if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.15) }
+        if (once('L08kill', k >= n - 1)) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
         if (k >= n - 1) say('/kill @e[type=experience_orb]')
         if (z) K.base = K.aim(z.position.offset(0, 1.5, 0))   // its head and chest in frame
         look(k, sy, sp)
       }
     })
+    if (once('L08kill', true)) say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s')   // (the line ended before its last tick ran)
     K.stop()
 
     // L09 "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.": Dog Hill, morning: a crane down as
@@ -426,7 +432,7 @@ const DXs = 102.5, DZs = -513.5, HL = 39   // Dog Hill's D, set-relative (as DX,
 module.exports.shots = {
   pov: { pov: true },
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
-  run_ahead: { subject: [`actor:${GUY}`, 'self'], follow: `actor:${GUY}`, offset: [-3.8, -0.6, 0.6], look: { of: `actor:${GUY}`, offset: [0, -0.1, 0] }, lag: 2, fov: 50 },
+  run_ahead: { subject: [`actor:${GUY}`, 'self'], follow: `actor:${GUY}`, offset: [-3.8, 0.1, 0.6], look: { of: `actor:${GUY}`, offset: [0, -0.2, 0] }, lag: 2, fov: 50 },
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
   // L03: over the wheat looking down the rows at him crouched in it (never inside the crop: visual audit)
@@ -436,20 +442,21 @@ module.exports.shots = {
   // L03: from the cliff top, Buh swimming out to the island
   swim_cam: { subject: [`actor:${GUY}`], at: [49.5, H - 1.2, 17.0], look: [60.5, H - 7.2, 14.0], fov: 50, push: 0.2, dof: false },
   // L03: on the island looking east over the open sea (the sunset behind the camera): he climbs out, the wolf pops up
-  beach: { subject: [`actor:${GUY}`, 'self'], at: [63.6, H - 4.4, 12.6], look: [70.5, H - 6.6, 14.0], fov: 52, push: 0.15, dof: false },
+  beach: { subject: [`actor:${GUY}`], at: [63.6, H - 4.0, 12.6], look: [70.5, H - 5.4, 14.0], fov: 52, push: 0.15, dof: false },
   // L04: the road: the other tamed wolf sitting alone outside the empty house; Buh and his wolf walk past
-  other_wolf: { subject: [`actor:${GUY}`, [18.5, 0.5, -6.4]], at: [14.6, H + 1.5, -1.5], look: [19.6, H + 1.0, -6.0], fov: 54, push: 0.2 },
+  other_wolf: { subject: [`actor:${GUY}`, [18.5, 1.3, -6.4]], at: [14.6, H + 1.5, -1.5], look: [19.6, H + 1.0, -6.0], fov: 54, push: 0.2 },
   // L05: the yard facing the sea (fence, sea horizon, the oak and birch: not the plain)
   yard_sea: { subject: [`actor:${GUY}`], at: [32.2, H + 1.6, 18.6], look: [44.0, H + 2.5, 16.6], fov: 50, push: 0.15, dof: false },
   // L06: medium at wolf-eye height, 3.6 blocks out: Buh crouched on the cottage step, the cottage behind him
   step: { subject: [`actor:${GUY}`], at: [36.6, H + 1.7, 15.4], look: [36.5, H + 1.9, 19.0], fov: 50, push: 0.15, dof: false },
   // L07: dusk, from behind them over the sea (sharp: the blur was the "blurry light" note)
-  dog_sea: { subject: [`actor:${GUY}`, 'self'], at: [37.0, H + 1.9, 17.6], look: [44.0, H + 1.7, 15.8], fov: 50, push: 0.15, dof: false },
+  dog_sea: { subject: [`actor:${GUY}`, 'self'], at: [35.4, H + 2.0, 18.4], look: [43.0, H + 1.8, 15.9], fov: 50, push: 0.15, dof: false },
   // L08: night, the yard from its south-west corner at face height, the lantern post between: the zombie walking in
   night_yard: { subject: [`actor:${GUY}`], at: [33.4, H + 1.7, 18.6], look: [37.5, H + 2.3, 13.5], fov: 56, push: 0.2, dof: false },
   // L09: Dog Hill, morning: a crane down from over the south rim as they walk up onto the meadow toward the hut
   hill_walk: { subject: [`actor:${GUY}`], path: [[0, DXs - 3.5, HL + 6, DZs + 11], [3.2, DXs - 2.5, HL + 2.2, DZs + 8.0]], lookPath: [[0, DXs, HL + 1, DZs + 3], [3.2, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
   // L10-L11: ONE locked camera south of D and the patch, low: the wolf a third in from the left facing right, Buh on
   // the patch in the right third, his hut behind; the logout is the same frame minus him (no push, no drift)
-  hill_lock: { subject: ['self', `actor:${GUY}`], at: [DXs + 2.5, HL + 1.5, DZs + 4.4], look: [DXs + 1.3, HL + 1.3, DZs - 2.0], fov: 58, dof: false, drift: 0 }   // (aimed down at the meadow it read superflat: level now, the hut behind Buh)
+  hill_lock: { subject: ['self'],   // (Buh leaves the frame at the end: the logout)
+    at: [DXs + 2.5, HL + 1.5, DZs + 4.4], look: [DXs + 1.3, HL + 1.3, DZs - 2.0], fov: 58, dof: false, drift: 0 }   // (aimed down at the meadow it read superflat: level now, the hut behind Buh)
 }
