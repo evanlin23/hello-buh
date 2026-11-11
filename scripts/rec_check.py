@@ -959,6 +959,26 @@ def main():
     except Exception as e:   # never block on this
         sound_note = f"on-screen sound check could not run: {e}"
 
+    # ---------------------------------------------------------------- audible sounds (scripts/sound_levels.py): a gate
+    # every sound mark's level = play volume x its sounds.json file volume; under the floor nobody hears it
+    # (thirty_one_raids' payoff horn at 2.2 x 0.01 = 0.022, 2026-11-11). Key sounds: edit.keySounds, the payoff.
+    try:
+        import sound_levels
+        _sd = None
+        if story_dir:
+            _sd = pathlib.Path(story_dir) if pathlib.Path(story_dir).is_absolute() else HERE / story_dir
+        _rows, _fs = sound_levels.findings(rec, ed, str(_sd) if _sd else None)
+        for f in _fs:
+            o_ = out_t(f["t"])
+            R.add(f["level"], "audible", (vt(o_), f["t"]), f["msg"])
+        _keys = [r for r in _rows if r["key"]]
+        sound_note = (sound_note + "\n  " if sound_note else "") + (
+            f"sound levels: {len(_rows)} sound marks, {len(_keys)} key/payoff"
+            + (" (" + ", ".join(f"{r['sound']} {r['gain']:.2f}" for r in _keys[:4]) + ")" if _keys else "")
+            + f", {sum(f['level'] == 'BLOCK' for f in _fs)} under the floor {sound_levels.FLOOR:g}")
+    except Exception as e:
+        not_run.append(f"sound levels ({e})")
+
     # ---------------------------------------------------------------- the report
     nb = sum(1 for it in R.items if it[0] == "BLOCK")
     nw = len(R.items) - nb
@@ -984,7 +1004,7 @@ def main():
         secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
         print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
               f"{' (' + ', '.join(f'{v} {k}' for k, v in skipped.items()) + ')' if skipped else ''}; run LINT=1 node render.js {rec_p} for the cameras")
-    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "sight": 5.7, "aim": 5.8, "settle": 5.9, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
+    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "sight": 5.7, "aim": 5.8, "settle": 5.9, "audible": 5.95, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
     for level, title in (("BLOCK", "BLOCKERS"), ("WARN", "WARNINGS")):
         items = sorted([it for it in R.items if it[0] == level], key=lambda it: (order.get(it[1], 9), it[2][0] if it[2] and it[2][0] is not None else -1))
         print(f"\n{title} ({len(items)}):" if items else f"\n{title}: none")

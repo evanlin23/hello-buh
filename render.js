@@ -242,6 +242,19 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
   }
   if (extra.length || (rec.timeline || []).some(e => e.event === 'slide_blocks')) { rec.blocks = blocks.concat(extra).sort((a, b) => a[0] - b[0]) }
 }
+// K.cutShot's moves land on its camera cut, never before (lib/hb/motion.js cutHolds; lead, Good Boy v21: the wolf's
+// /tp landed a tick after the moves and Buh's 1-2 ticks later, and the shot mark waited for the slowest, so the old
+// shot ran with the wolf already gone). Every mover that jumps between a cutShot's start mark ('cut_moves', or the
+// narrator's teleport_ok { cut }) and its shot mark is drawn at its pre-move spot until the cut, the narrator too.
+// Recordings without the marks: unchanged.
+const CUT_HOLDS = require('./lib/hb/motion').cutHolds(rec.timeline)
+const HOLD_SELF = []   // cut ticks the narrator now jumps on (isCutStep: a jump, never a glide)
+if (CUT_HOLDS.length) {
+  const MOh = require('./lib/hb/motion')
+  const n = MOh.holdEntities(ENT, CUT_HOLDS)
+  HOLD_SELF.push(...MOh.holdPoses(P, CUT_HOLDS))
+  if (n || HOLD_SELF.length) console.log(`cut holds: ${n} cast move${n === 1 ? '' : 's'} and ${HOLD_SELF.length} narrator move${HOLD_SELF.length === 1 ? '' : 's'} held to their cut`)
+}
 // Motion fixes (owner, 2026-11-10: "The movement sometimes still feels jerky and botlike"; docs/engine_features.md
 // "Motion by construction"): the renderer's half. On for recordings from engine 3 (lib/harness.js), or
 // stunt.motionFixes: true / MOTION_FIXES=1 for an older one (MOTION_FIXES=0: off). Older recordings render as before.
@@ -1812,6 +1825,7 @@ const isCutStep = (i, a, b) => {
   const d = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3])
   if (d > 4) return true
   if (BLINK_SELF.length && d > 0.8 && BLINK_SELF.some(c => i + 1 >= c && i + 1 <= c + 4)) return true   // K.blink('self'): a jump, never a glide
+  if (HOLD_SELF.length && d > 0.8 && HOLD_SELF.includes(i + 1)) return true   // a cutShot move held to its cut: a jump
   if (!CUT_TICKS.some(c => i + 1 >= c && i + 1 <= c + 4)) return false
   let dy = Math.abs(b[4] - a[4]) % (2 * Math.PI); if (dy > Math.PI) dy = 2 * Math.PI - dy
   return d > 0.8 || dy > 0.35 || Math.abs(b[5] - a[5]) > 0.35
