@@ -143,7 +143,9 @@ module.exports = {
           ctx.mark(`l${n}`)
           return true
         }
-        for (let w = 0; w < 20 && !(bot.entity.onGround && bot.entity.position.y < p.y + 1.05); w++) await bot.waitForTicks(1)
+        // (feet at p.y + 1 before the dig, at p.y once on the block below: `< p.y + 1.05` was already true before the
+        // fall, so the next dig read the air it was standing over and the take ended after one block, 2026-11-11)
+        for (let w = 0; w < 20 && !(bot.entity.onGround && bot.entity.position.y < p.y + 0.05); w++) await bot.waitForTicks(1)
       }
       return false
     }
