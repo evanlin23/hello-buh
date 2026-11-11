@@ -414,8 +414,8 @@ module.exports.shots = {
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
   // L01 frame 1 (owner: "not very exciting? Also not centered"): low behind the wolf, the wolf centred and big, Buh
   // sprinting away from it down the road toward the village
-  dog_start: { subject: ['self', `actor:${GUY}`], follow: 'self', offset: [2.2, 0.25, -1.0], look: { of: 'self', offset: [-1.8, 0.15, 0.3] }, lag: 0, fov: 60, dof: false },   // north of the wolf: Buh runs off beside it, not behind it (lint: face covered); low and level, the village not the road (flat)
-  run_ahead: { subject: [`actor:${GUY}`, 'self'], follow: `actor:${GUY}`, offset: [-3.8, 1.2, 0.9], look: { of: `actor:${GUY}`, offset: [0, 0.9, 0.45] }, lag: 2, fov: 52 },   // the pair centred (the wolf runs at his side, z +0.9); level, more village than road (flat 72%)
+  dog_start: { subject: ['self', `actor:${GUY}`], follow: 'self', offset: [1.6, 0.55, -0.75], look: { of: 'self', offset: [-1.2, -0.35, 0.25] }, lag: 0, fov: 58, dof: false },   // close behind the wolf's shoulder, the wolf centred and filling the lower frame (not the road: flat), Buh running off beside it (behind it his face was covered: lint)
+  run_ahead: { subject: ['self', `actor:${GUY}`], follow: `actor:${GUY}`, offset: [-2.7, 1.0, 0.9], look: { of: `actor:${GUY}`, offset: [0, 0.4, 0.5] }, lag: 2, fov: 52 },   // close on the pair, the wolf first (the cut from dog_start keeps the eye on it: cuts), filling the frame (flat 63%)
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
   // L02 "right NEXT to him": the two of them in the yard, the wolf already at his side (a cut, never an on-screen jump)
