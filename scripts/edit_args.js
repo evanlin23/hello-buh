@@ -21,6 +21,7 @@ if (e.captions) out.push('--captions', JSON.stringify(e.captions))   // the band
 if (e.subs) out.push('--subs', JSON.stringify(e.subs))
 if (e.subsY !== undefined) out.push('--subs_y', String(e.subsY))   // subtitle height: fraction of the game view (0.15 = top, default 0.42)
 if (e.timer) out.push('--timer', e.timer)
+if (e.splits) out.push('--splits', JSON.stringify(e.splits))   // a speedrun timer reset at every attempt (edit.py split_timer; r:r32b983)
 if (e.speed) out.push('--speed', JSON.stringify(e.speed))    // time-lapse spans / cuts (scripts/timewarp.py)
 if (e.clock) out.push('--clock', JSON.stringify(e.clock))    // clocks counting to a target time
 if (e.slowmo) out.push('--slowmo', JSON.stringify(e.slowmo))  // retention toolkit (scripts/retention.py)

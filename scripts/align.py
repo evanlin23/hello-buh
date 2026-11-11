@@ -23,15 +23,18 @@ from pathlib import Path
 import numpy as np
 
 SR = 16000
-_pipe = None
+WHISPER = "openai/whisper-base.en"
+WHISPER_CONFIRM = "openai/whisper-small.en"   # a second, bigger ear: caption_av_check confirms base's mishearings with it
+_pipes = {}
 
 
-def words(wav):
-    """[(word, start, end)] in seconds, from Whisper's word timestamps. wav: a file, or 16 kHz float32 samples."""
-    global _pipe
-    if _pipe is None:
+def words(wav, model=WHISPER):
+    """[(word, start, end)] in seconds, from Whisper's word timestamps. wav: a file, or 16 kHz float32 samples.
+    model: the Whisper checkpoint (base.en by default; WHISPER_CONFIRM to re-hear a line base got wrong)."""
+    if model not in _pipes:
         from transformers import pipeline
-        _pipe = pipeline("automatic-speech-recognition", model="openai/whisper-base.en", device="cpu")
+        _pipes[model] = pipeline("automatic-speech-recognition", model=model, device="cpu")
+    _pipe = _pipes[model]
     if isinstance(wav, np.ndarray):   # already 16 kHz mono float32 (tts.py's word cut)
         x = wav.astype(np.float32)
     else:

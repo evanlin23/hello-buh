@@ -21,6 +21,8 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
             and the end <= 1.0 s after it (1.2-1.8 s for a text payoff: a death screen or a card).
             The 1.0 s counts from when the payoff's motion settles (r:r24d99a: falling blocks, explosion debris, a
             dying mob in view: scripts/owner_checks.py), and the end while it still moves is a BLOCK (settle).
+  build     inside every marked build (X_start .. X_done), a block placed or broken at least every 1.0 s of output
+            time until its last block: BLOCK on a stall (r:r478786).
   aim       every player action in the Short (place, break, block/entity use) with the crosshair on its target
             (r:rffba12, scripts/owner_checks.py + lib/aim.js): BLOCK over 15 deg or off-screen, or over 10% past 6 deg.
   length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
@@ -215,6 +217,44 @@ def build_events(timeline, to_out, run=BUILD_RUN):
     return sorted(set(out))
 
 
+STALL_S = 1.0   # s of output time: a build mid-way with no new block for longer than this stalls (r:r478786)
+BUILD_END = ("_done", "_end")
+
+
+def build_spans(timeline):
+    """The marked builds in source seconds: each X_start mark with the first X_done / X_end after it (lib/time_lapse.js
+    small/mid/big_start .. _done, a speed build's build_start .. build_done) -> [(name, a, b)]."""
+    out = []
+    for e in timeline:
+        ev = str(e.get("event", ""))
+        if not ev.endswith("_start"):
+            continue
+        name, a = ev[: -len("_start")], e["t"] / 1000
+        b = next((x["t"] / 1000 for x in timeline if x["t"] / 1000 >= a and x.get("event") in (name + s for s in BUILD_END)), None)
+        if b is not None and name:
+            out.append((name, a, b))
+    return out
+
+
+def build_stalls(timeline, to_out, limit=STALL_S):
+    """r:r478786 (owner, lapse_statue: "we pause for some reason when we're building the second one... more than just a
+    while"): inside every marked build, from its start mark to its last block, blocks keep appearing: no stretch of over
+    `limit` s of OUTPUT time (after the edit's speed and cut spans) without a placement or a break.
+    -> [(name, out_a, out_b, length)], the stalls."""
+    src = sorted(e["t"] / 1000 for e in timeline
+                 if (e.get("event") == "sound" and BUILD_SOUND.match(str(e.get("sound", "")))) or e.get("event") in ("place", "dig_end"))
+    stalls = []
+    for name, a, b in build_spans(timeline):
+        inside = [t for t in src if a <= t <= b]
+        if len(inside) < 3:   # (a mark pair with a block or two: not a build)
+            continue
+        outs = [o for o in (to_out(t) for t in [a] + inside) if o is not None]
+        for x, y in zip(outs, outs[1:]):
+            if y - x > limit:
+                stalls.append((name, round(x, 2), round(y, 2), round(y - x, 2)))
+    return stalls
+
+
 def gaps(evs):
     """The spans between consecutive (time, label) events, longest first: (a, b, length, label a, label b)."""
     evs = sorted(evs)
@@ -389,6 +429,10 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     cap_times = sorted({round(t, 2) for t, _, _ in caps} | set(edit_caption_times(video, edit, rec, clock)))
     other_marks = [(round(m["out"], 2), m["event"]) for m in marks if m["event"] not in ("line", "cut", "shot", "self", "start", "end", "f1_on", "f1_off", "story_end")]
     builds = build_events(rec.get("timeline", []), clock.out_of_src) if rec and clock else []
+    for name, a, b, ln in (build_stalls(rec.get("timeline", []), clock.out_of_src) if rec and clock else []):
+        add("BLOCK", "build", a, f"build stall: the {name} build places no block for {ln:.2f} s ({a:.2f}-{b:.2f} s; max {STALL_S:g} s mid-build). "
+            f"Owner r:r478786: \"we pause ... when we're building the second one\"",
+            "speed up or cut the stretch with no block (a walk round the build: lib/time_lapse.js mid.walkSpeed), or place blocks through it")
     if builds:
         notes.append(f"{len(builds)} block placements/breaks in steady runs count as events (a build is never dead)")
 

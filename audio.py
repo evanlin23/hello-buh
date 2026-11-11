@@ -90,7 +90,19 @@ def main(rec_path, out_path, story_dir=None):
                 print(f"on-screen sound {t:6.2f}s {snd} ({what})")
         return finish(m, seconds, out_path)
     # (older recordings: rebuild the clutch sounds from the poses and events below)
+    for t, snd, vol in legacy_sounds(rec):
+        m.play(snd, t, volume=vol)
+    return finish(m, seconds, out_path)
 
+
+def legacy_sounds(rec):
+    """An old recording with no logged sounds: the water-bucket clutch's sounds rebuilt from the poses and events ->
+    [(t, sound, volume)]. A boat clutch (`mounted` marks: the player got into a boat) gets no bucket or splash: the bucket's
+    pour on the boat placement, slowed by the slow-mo, was the owner's "sounds like a fart" at the end of boat_clutch
+    (r:r4df33c; lib/hb/banned_sfx.json)."""
+    poses, tl = rec["poses"], rec["timeline"]
+    ev = {e["event"]: e for e in tl if e["event"] not in ("health",)}
+    out = []
     # Footsteps: vanilla plays a step every ~1.67 blocks walked on the ground (distance * 0.6 > 1).
     # On the pillar top the block underfoot is the snow cap; on the floor it's grass.
     walked, floor_y = 0.0, min(p[2] for p in poses)
@@ -101,26 +113,24 @@ def main(rec_path, out_path, story_dir=None):
         walked += 0.6 * ((b[1] - a[1]) ** 2 + (b[3] - a[3]) ** 2) ** 0.5
         if walked > 1.0:
             walked = 0.0
-            m.play("block.snow.step" if b[2] > floor_y + 2 else "block.grass.step", b[0] * TICK, volume=0.15)
+            out.append((b[0] * TICK, "block.snow.step" if b[2] > floor_y + 2 else "block.grass.step", 0.15))
     # Jump off the pillar: the client plays the step sound of the block you jump from.
     for a, b in zip(poses, poses[1:]):
         if b[2] - a[2] > 0.3:
-            m.play("block.snow.step", a[0] * TICK, volume=0.15)
+            out.append((a[0] * TICK, "block.snow.step", 0.15))
             break
-
-    if "placed" in ev:
-        m.play("item.bucket.empty", ev["placed"]["t"] / 1000)
-    # Entering the water at speed: vanilla's high-speed splash (player.splash.high_speed).
-    if "placed" in ev:
+    water = "placed" in ev and "mounted" not in ev
+    if water:
+        out.append((ev["placed"]["t"] / 1000, "item.bucket.empty", 1.0))
+        # Entering the water at speed: vanilla's high-speed splash (player.splash.high_speed).
         t_place = ev["placed"]["t"] / 1000
         for a, b in zip(poses, poses[1:]):
             if b[0] * TICK > t_place and b[2] < floor_y + 1.0:
-                m.play("entity.player.splash.high_speed", b[0] * TICK, volume=1.0, pitch=1.0)
+                out.append((b[0] * TICK, "entity.player.splash.high_speed", 1.0))
                 break
     if "scooped" in ev and ev["scooped"].get("ok"):
-        m.play("item.bucket.fill", ev["scooped"]["t"] / 1000)
-
-    return finish(m, seconds, out_path)
+        out.append((ev["scooped"]["t"] / 1000, "item.bucket.fill", 1.0))
+    return out
 
 
 EFFECT_SOUND = {"hurt": "entity.player.hurt", "burning": "entity.player.hurt_on_fire", "drowning": "entity.player.hurt_drown",
