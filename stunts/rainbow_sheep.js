@@ -21,11 +21,13 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'collected',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'jeb',
     startAt: 'dye:-0.45',
-    endAfter: 'collected:0.9',      // (the 30 s minimum: 29.9 at :0.4)
-    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
-      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'rainbow hotbar', 0.6, 0]]   // (not 'every colour': wool landing behind the sheep can't be reached)
+    // the short cut (lead 2026-11-11: as short as it reads): the seven dyes, the rainbow, then the jeb_ tag turns
+    // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)
+    endAfter: 'jeb:1.0',
+    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i])],   // (no 'jeb_' sub: it sat on the jeb_ nameplate)
+    punch: [['jeb', 0, 1.06]]
   },
 
   async setup (ctx) {
@@ -124,7 +126,8 @@ module.exports = {
       const e = bot.entity.position, d = mid.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      bot.look(bot.entity.yaw + dy * 0.4, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.4, true)   // (0.25 left the line in a corner)
+      const gain = Math.min(0.4, 0.05 + t * 0.04)   // eased in: a flat 0.4 whipped the first ticks at 800 deg/s
+      bot.look(bot.entity.yaw + dy * gain, bot.entity.pitch + (pitch - bot.entity.pitch) * gain, true)   // (0.25 left the line in a corner)
       if (t === 18) bot.setControlState('left', false)
     }
     bot.setControlState('back', false); bot.setControlState('left', false)
@@ -138,7 +141,7 @@ module.exports = {
     bot.setControlState('forward', true)
     for (let t = 0; t < 60 && bot.entity.position.distanceTo(new ctx.Vec3(lx, floor + 1, z + 0.5)) > 2.6; t++) {   // within 3 blocks: the jeb_ nameplate shows
       await bot.waitForTicks(1)
-      if (t > 10) { const e = bot.entity.position, d = p.minus(e.offset(0, 1.62, 0)); bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true) }
+      if (t > 10) { const e = bot.entity.position, d = p.minus(e.offset(0, 1.62, 0)); let dy = Math.atan2(-d.x, -d.z) - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; bot.look(bot.entity.yaw + dy * 0.3, bot.entity.pitch + (Math.atan2(d.y, Math.hypot(d.x, d.z)) - bot.entity.pitch) * 0.3, true) }   // (a hard set snapped 238 deg/s)
     }
     bot.setControlState('forward', false)
     await look
