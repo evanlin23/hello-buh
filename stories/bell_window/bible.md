@@ -28,14 +28,14 @@
 ## Props
 | prop | state | shots |
 |---|---|---|
-| the bell | double_wall between two oak-log posts on a cobblestone base, nothing above; swings after each ring | S01-S06, S07, S08 (S03: its top only) |
+| the bell | double_wall between two posts (oak fence y 1-6, oak-log caps at y 7) on a cobblestone base, nothing above; swings after each ring | S01-S06, S07, S08 (S03: its top only) |
 | the arrow | stuck in the bell's north face, fletching toward the cliff; the kid calls it a feather; gone after the jump cut | S06; tonight's, in the bell's north face, S08 (never seen in S07) |
 | his shutters | spruce trapdoors; open S01, S03 (then shut on L06), S07; shut by day S04 | |
 | everyone else's shutters | open by day | S04 |
 | the oak | lone oak on the edge of the sheer stone cliff, its trunk at (2, 9, -13), off the skeleton's block, dense shade under it | S01 bg, S02 bg, S05, S08 |
 
 ## Positions and screen direction
-The cliff and the oak are north and high; the bell 3 blocks north of his window; all on x = 0 (numbers: set.md). His door is in the east wall at (3, 4-5, 2). S01 and S07 look north from the window (the bell centred, the cliff behind it). S02 looks north from high behind the house (the axis down the middle). S03 looks north-east inside his room (the window at frame left, Mom at the door just right of centre). S04 looks at the house from the square (aim set so the portal is in frame). S05 looks north up at the oak from ~32 blocks south. S06 looks west at the bell from beside it (the arrow's fletching to frame right, toward the cliff). S08 looks south down the axis from behind the skeleton (the reverse of S02). In S07 he walks east (screen right), so the bell slides left; in S08 (reversed) he is at frame left of the bell.
+The cliff and the oak are north and high; the bell 3 blocks north of his window; all on x = 0 (numbers: set.md). His door is in the east wall at (3, 4-5, 2). S01 and S07 look north from the window (the bell centred, the cliff behind it). S02 looks north from high behind the house (the axis down the middle). S03 looks north-east inside his room (the window at frame left, Mom at the door just right of centre). S04 looks at the house from the square (aim set so the portal is in frame). S05 looks north up at the oak from ~32 blocks south. S06 looks down at the bell from above the east post (the arrow's fletching to frame right, toward the cliff). S08 looks south down the axis from behind the skeleton (the reverse of S02). In S07 he walks east (screen right), so the bell slides left; in S08 (reversed) he is at frame left of the bell.
 
 ## Who knows what
 - **Mom** knows (L06). She never says why.
