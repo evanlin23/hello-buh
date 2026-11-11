@@ -1,5 +1,6 @@
 {
   "name": "end_portal_job",
+  "channel": "hellobuh",
   "caption": "POV: your job is filling end portals",
   "youtube": {
     "title": "POV: your job is filling end portals #minecraft #shorts",
@@ -20,40 +21,58 @@
     "drop_on_event": "portal",
     "drop_in_song_s": 9.0,
     "drop_in_short_s": 5.23,
-    "song_start_s": 3.77,
-    "bed_lufs": -16.0
+    "song_start_s": 3.77
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 32.09,
+    "duration_s": 32.08,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 53365436,
-    "sha256": "f53936f2fd6b353b1f2c9701d73cb8ab3404486643dbc31ecf576147c35f10b5",
+    "bytes": 69897407,
+    "sha256": "8f11ca43f9072752890be7924ac2dc06ae0acfb22b800a3fecc430d98f98840f",
     "release": {
       "tag": "pkg-end_portal_job",
-      "asset": "end_portal_job.short.f53936f2fd6b353b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short.f53936f2fd6b353b.mp4",
-      "sha256": "f53936f2fd6b353b1f2c9701d73cb8ab3404486643dbc31ecf576147c35f10b5",
-      "bytes": 53365436
+      "asset": "end_portal_job.short.8f11ca43f9072752.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short.8f11ca43f9072752.mp4",
+      "sha256": "8f11ca43f9072752890be7924ac2dc06ae0acfb22b800a3fecc430d98f98840f",
+      "bytes": 69897407
     },
     "nosong_release": {
       "tag": "pkg-end_portal_job",
-      "asset": "end_portal_job.short_nosong.18acc1f402b96525.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short_nosong.18acc1f402b96525.mp4",
-      "sha256": "18acc1f402b9652562869be67c03a19b68fb57ee08e0805a690cf4948d03856d",
-      "bytes": 53344231
+      "asset": "end_portal_job.short_nosong.75f8579a9f15dc2c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short_nosong.75f8579a9f15dc2c.mp4",
+      "sha256": "75f8579a9f15dc2cc475a0097f6e3d1ac2e372b2a7cdba72843572bd9d4434be",
+      "bytes": 69877879
     }
   },
   "edit": {
     "caption": "POV: your job is filling end portals",
     "red": "job",
-    "song": "songs/payphone.mp3",
+    "song": null,
     "dropAt": "portal",
     "startAt": "start:0",
     "endAfter": "outro:1.4",
+    "sfx": [
+      [
+        "dip",
+        "outro",
+        0.4
+      ],
+      [
+        "gamedip",
+        "outro",
+        0.4
+      ],
+      [
+        "impact",
+        "outro",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
     "subsY": 0.15,
     "subs": [
       [
@@ -96,11 +115,18 @@
     "cards": [
       [
         "outro",
-        "IT NEVER ENDS \ud83d\udc80",
+        "IT NEVER ENDS 💀",
         1.4,
         "red"
       ]
     ],
+    "attempts": "ring",
+    "splits": {
+      "reset": "ring",
+      "split": "portal",
+      "of": 7,
+      "endless": "outro"
+    },
     "speed": [
       [
         "hopA0",
@@ -182,25 +208,18 @@
       "[[\"ring\",\"getting faster\",1.6,1],[\"ring\",\"speedrun\",1.6,2],[\"ring\",\"world record pace\",1.6,3],[\"ring\",\"overtime\",1.6,4],[\"ring\",\"double shift\",1.6,5],[\"ring\",\"no breaks\",1.6,6]]",
       "--subs_y",
       "0.15",
+      "--splits",
+      "{\"reset\":\"ring\",\"split\":\"portal\",\"of\":7,\"endless\":\"outro\"}",
       "--speed",
       "[[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]]",
       "--cards",
-      "[[\"outro\",\"IT NEVER ENDS \ud83d\udc80\",1.4,\"red\"]]",
+      "[[\"outro\",\"IT NEVER ENDS 💀\",1.4,\"red\"]]",
+      "--sfx",
+      "[[\"dip\",\"outro\",0.4],[\"gamedip\",\"outro\",0.4],[\"impact\",\"outro\",{\"gain\":1.4}]]",
       "--start_at",
       "start:0",
       "--end_after",
       "outro:1.4"
-    ],
-    "sfx": [
-      [
-        "dip",
-        "outro",
-        0.4
-      ],
-      [
-        "impact",
-        "outro"
-      ]
     ]
   },
   "recording": {
@@ -1188,10 +1207,12 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "b7346787a519aec072a474efb02cf23522d01489",
-    "rendered_at": "2026-11-07T18:02:58.087Z",
-    "head_at_publish": "b7346787a519aec072a474efb02cf23522d01489",
+    "branch": "render/end_portal_job",
+    "commit": "9c8a2f17a4f4a78dcbd06643f2d69835c8f72dcb",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42999114069",
+    "rendered_at": "2026-11-11T10:01:52.593Z",
+    "head_at_publish": "840a39e18fdc085413e8fa6f1a56629e7c36ec0b",
     "stunt": "stunts/end_portal_job.js",
     "source_snapshot": [
       "source/end_portal_job.js",
@@ -1199,38 +1220,36 @@
     ]
   },
   "rebuild": [
-    "git checkout b7346787a519",
+    "git checkout 9c8a2f17a4f4",
     "gunzip -c shorts/end_portal_job/recording.json.gz > work/end_portal_job.rec.json",
     "node render.js work/end_portal_job.rec.json work/end_portal_job.frames 60 1080 1011",
     "python3 audio.py work/end_portal_job.rec.json work/end_portal_job.wav",
-    "python3 edit.py --frames work/end_portal_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/end_portal_job.rec.json --audio work/end_portal_job.wav --caption \"POV: your job is filling end portals\" --red job --subs \"[[\\\"ring\\\",\\\"getting faster\\\",1.6,1],[\\\"ring\\\",\\\"speedrun\\\",1.6,2],[\\\"ring\\\",\\\"world record pace\\\",1.6,3],[\\\"ring\\\",\\\"overtime\\\",1.6,4],[\\\"ring\\\",\\\"double shift\\\",1.6,5],[\\\"ring\\\",\\\"no breaks\\\",1.6,6]]\" --subs_y 0.15 --speed [[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]] --cards \"[[\\\"outro\\\",\\\"IT NEVER ENDS \ud83d\udc80\\\",1.4,\\\"red\\\"]]\" --start_at start:0 --end_after outro:1.4 --out out/end_portal_job.mp4",
-    "python3 shorts/end_portal_job/source/timer_overlay.py strip 32.083 && ffmpeg -i short.mp4 -framerate 60 -i strip/t_%05d.png -filter_complex '[0:v][1:v]overlay=24:479:eof_action=repeat' -c:a copy -c:v libx264 -crf 18 -maxrate 18M -bufsize 36M (speedrun timer overlay, owner request)"
+    "python3 edit.py --frames work/end_portal_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/end_portal_job.rec.json --audio work/end_portal_job.wav --caption \"POV: your job is filling end portals\" --red job --subs \"[[\\\"ring\\\",\\\"getting faster\\\",1.6,1],[\\\"ring\\\",\\\"speedrun\\\",1.6,2],[\\\"ring\\\",\\\"world record pace\\\",1.6,3],[\\\"ring\\\",\\\"overtime\\\",1.6,4],[\\\"ring\\\",\\\"double shift\\\",1.6,5],[\\\"ring\\\",\\\"no breaks\\\",1.6,6]]\" --subs_y 0.15 --splits {\"reset\":\"ring\",\"split\":\"portal\",\"of\":7,\"endless\":\"outro\"} --speed [[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]] --cards \"[[\\\"outro\\\",\\\"IT NEVER ENDS 💀\\\",1.4,\\\"red\\\"]]\" --sfx [[\"dip\",\"outro\",0.4],[\"gamedip\",\"outro\",0.4],[\"impact\",\"outro\",{\"gain\":1.4}]] --start_at start:0 --end_after outro:1.4 --out out/end_portal_job.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "worker 4: v10, 7 rings each faster, eyes from inside the ring with the 12th from outside, spare-ring outro. Independent review ready, no blockers. Nitpicks left: a small pitch settle at each ring cut, the card briefly over the spare ring's far frames, the hand lowering 1-4 frames early on a stack's last eye (engine). | Owner request: speedrun timer overlay (top-left of the game area), splits green on each portal opening (measured in the video), red on the IT NEVER ENDS outro (8/\u221e). | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit -1.4 -> +4.3 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture | 2026-11-11 pace fix (queue worker): pace BLOCKed no sound hit on the payoff (the cut to the next empty ring + IT NEVER ENDS at 30.68 s; the portal hum and the bed ran through it). Edit-only, picture unchanged: edit.sfx dip + impact on outro (stunts/end_portal_job.js) and the game dropped 18 dB over the 0.4 s before it, mixed into short_nosong.mp4; remixed at the -16 LUFS bed, same track and drop. ./hb pace OK (0 blockers, 0 warnings), ./hb check OK, key_sounds n/a",
-  "published_at": "2026-11-07T18:19:44.417Z",
+  "status": "ready",
+  "notes": "owner r:r32b983 (2026-11-11, 'the timer should reset every single time like we start a new ender portal'): the speedrun timer was an overlay added after publish (source/timer_overlay.py) counting the whole Short; now built in the edit (edit.splits, edit.py split_timer): 0:00.00 on every ring, green n/7 when its portal opens, red 8/inf on the spare ring; the game dip + impact before IT NEVER ENDS now in the edit too (sfx gamedip). Independent review READY round 1; nitpicks: green ~4 frames before the portal shows on rings 3,4,5,7; subs nearly touch the timer box",
+  "published_at": "2026-11-11T10:16:12.284Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:24:10+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-11T10:16:54+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 32.09 s vs the reviewed render 32.09 s"
+      "summary": "short.mp4 32.09 s vs the reviewed render 32.08 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 0,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T05:50:38.357Z",
-      "report": "work/hb/end_portal_job.check.json"
+      "at": "2026-11-11T09:55:09.917Z",
+      "report": "out/end_portal_job.check.json"
     },
     "key_sounds": "n/a"
-  },
-  "needs_fix": "owner 2026-11-11: \"the timer should reset every single time like we start a new ender portal\""
+  }
 }

@@ -28,10 +28,17 @@ module.exports = {
     // the song drops out 0.4 s before the outro card and an impact lands the cut to the next empty ring (pace: no sound hit
     // on the payoff). The 2026-11-11 package also drops the game 18 dB over those 0.4 s (the portal's hum covered the hit);
     // edit.py has no game dip yet
-    sfx: [['dip', 'outro', 0.4], ['impact', 'outro']],
+    // (since 2026-11-11 in the edit itself: 'gamedip' ducks the game over the same 0.4 s, and a louder impact)
+    sfx: [['dip', 'outro', 0.4], ['gamedip', 'outro', 0.4], ['impact', 'outro', { gain: 1.4 }]],
     subsY: 0.15,   // up in the sky, off the frames being filled
     subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
     cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']],
+    // the speedrun timer (owner request, 2026-11-07) times one portal (owner r:r32b983, 2026-11-11: "the timer should reset
+    // every single time like we start a new ender portal"): 0:00.00 on each ring, green with "n/7" when its portal opens,
+    // then red and running from 0 on the spare ring ("8/∞"). Built in the edit (edit.py split_timer), so ./hb check's lint
+    // sees it (the old timer was an overlay added after publish, counting the whole Short)
+    attempts: 'ring',
+    splits: { reset: 'ring', split: 'portal', of: 7, endless: 'outro' },
     // the walks between rings are cut, and from ring 5 on the hop out too (the shift speeds up)
     speed: [...[0, 1, 2, 3, 4, 5, 6].flatMap(r => [...(r ? [[`walk${r}`, `in${r}`, 'cut']] : []), [`hopA${r}`, `hopB${r}`, 'cut']]), ['outroA', 'outroB', 'cut']]
   },
