@@ -294,8 +294,9 @@ varied. Raids' title gives away less than its twist; check it against the final 
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
 - **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
-- **Playlists:** "All Buh Stories", "Dog stories" (Good Boy, Dog on the Hill), "Grandpa and Grandma stories"
-  (Thirty-One Raids, Gold for the Portal): themes, not a timeline.
+- **Playlists:** one, "All Buh Stories", at launch (owner, 2026-11-11: theme playlists like "Grandpa and Grandma
+  stories" feel "too specific"). A series playlist is added only when a premise family has 3+ stories (a hit's
+  follow-ups); Shorts playlists mostly help binge-watching from the channel page and a series' "next" link, not reach.
 
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
 "We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a

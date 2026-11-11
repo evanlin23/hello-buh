@@ -229,6 +229,8 @@ actions left silent). r:rc85ccc r:r36632d
 - A finding that has happened before becomes a rule (cinematic-style "Mistakes already solved", or the house rules).
 
 ## 10. Publish
+- **Playlists**: one ("All Buh Stories") at launch; a series playlist only once a family has 3+ stories. Check: owner.
+  r:r118f0b
 - **Explore first, then double down**: early stories vary premise family, arc and outcome (never two in a row the
   same); a Short at 5x the channel median gets 2-3 standalone follow-ups in its family within 7 days. Check: owner,
   the weekly numbers. r:r1bebb1
