@@ -71,6 +71,22 @@ module.exports = {
     return Object.values(ctx.bot.entities).find(e => e.name === 'sheep' && Math.abs(e.position.x - px) < 0.3 && Math.abs(e.position.z - pz) < 0.3)
   },
 
+  // ease the crosshair onto the middle of this sheep's body from where I stand, and check it landed (within 3 deg)
+  async aimAt (ctx, sheep) {
+    const { bot } = ctx
+    const c = sheep.position.offset(0, 0.85, 0)
+    await ctx.easeLookAt(c, 200)
+    for (let k = 0; k < 3; k++) {
+      const e = bot.entity.position.offset(0, 1.62, 0), d = c.minus(e)
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      if (Math.abs(dy) < 0.05 && Math.abs(pitch - bot.entity.pitch) < 0.05) return
+      await bot.look(bot.entity.yaw + dy * 0.6, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.6, true)
+      await bot.waitForTicks(1)
+    }
+    ctx.log('aim off the sheep by', (Math.abs(bot.entity.yaw - Math.atan2(-(c.x - bot.entity.position.x), -(c.z - bot.entity.position.z))) * 57.3).toFixed(1), 'deg')
+  },
+
   async use (ctx, sheep) {
     const { bot } = ctx
     bot._client.write('use_entity', { target: sheep.id, mouse: 0, sneaking: false, hand: 0, location: new ctx.Vec3(0, 0, 0) })
@@ -104,6 +120,9 @@ module.exports = {
         await ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.7, z + 0.5), 300)
       }
       if (i === N - 1) break                         // the name tag comes after the reveal
+      // the crosshair on THIS sheep when the dye goes on (owner, r:rffba12: "we are not looking at the right sheep
+      // when we dye"): the look above was aimed from where the strafe started, so settle it from where I stand now
+      await this.aimAt(ctx, s)
       await this.use(ctx, s)
       ctx.mark('dye', { n: i })
       ctx.sound('item.dye.use', 1, 1)
@@ -147,7 +166,7 @@ module.exports = {
     }
     bot.setControlState('forward', false)
     await look
-    await ctx.easeLookAt(p, 200)
+    await this.aimAt(ctx, last)
     await this.use(ctx, last)
     ctx.mark('jeb')
     ctx.sound('entity.sheep.ambient', 1, 1.3)
