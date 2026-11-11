@@ -282,6 +282,11 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, sharing hazypapa's "Monsters can't sleep, I am nearby" (a slow walk down a white lab corridor
+  of glass cells, each holding a mob stuck in a contraption doing one thing forever; caption "i think bro is doing it
+  for fun"): "here is another format. its like a bunch of cells where mobs are forced to do things repeitively
+  forever."** HelloBuh adds a cells format (family `cells`): a walk-past of glass cells, each a mob in its own endless
+  loop (vanilla mechanics: minecart loops, pistons, water streams, redstone clocks), a deadpan caption.
 - **Owner, 2026-11-11, sharing Mevys's "Maddest End Ever" ("Nobody Knows That! 😱": a lit nether portal carried
   around by pistons and redstone, then refitted into a gold-block frame, all impossible in vanilla but shown as a
   secret trick): "this is like fake minecraft gimmick".** HelloBuh adds a fake-trick format (family `faketrick`): an
