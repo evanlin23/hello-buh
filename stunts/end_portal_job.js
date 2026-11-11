@@ -24,7 +24,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: your job is filling end portals',
   edit: {
-    caption: 'POV: your job is filling end portals', red: 'job', song: 'songs/payphone.mp3', dropAt: 'portal', startAt: 'start:0', endAfter: 'outro:1.4',
+    caption: 'POV: your job is filling end portals', red: 'job', song: null, dropAt: 'portal', startAt: 'start:0', endAfter: 'outro:1.4',
     // the song drops out 0.4 s before the outro card and an impact lands the cut to the next empty ring (pace: no sound hit
     // on the payoff). The 2026-11-11 package also drops the game 18 dB over those 0.4 s (the portal's hum covered the hit);
     // edit.py has no game dip yet

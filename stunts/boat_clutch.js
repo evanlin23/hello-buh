@@ -11,7 +11,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'boat clutch 💀',
   edit: {
-    caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
+    caption: 'boat clutch 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
     // the label stays up through the fall
     subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.1 + Math.sqrt(p.h) * 0.3, i]),
     // the teleport between pillars is cut out (no hold around it)
