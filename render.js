@@ -1030,18 +1030,27 @@ const ACT_POSE = new Map()  // id -> [[a, b, [{ name, ...params }]]]
 const POSES = require('./renderer/poses.js')
 // a warden's emerge / dig (Pose.EMERGING / DIGGING): recorded, or staged with ctx.mark('pose', { ids, emerge: true })
 const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
+// mob poses and held items (docs/engine_features.md "Mob poses and held items")
+const MP = require('./lib/mob_poses')
+const { SKELETON_BOW, PIGLIN_LOVED, runStart } = MP
+let MOB_USE = new Map(), MOB_SPELL = new Map()   // id -> [[first tick, last tick]] (recorded runs)
 {
   const open = new Map(), openA = new Map()
   for (const e of rec.timeline || []) {
     if (e.event === 'pose') {
       const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
       if (e.sleep) fl.sleep = true; if (e.shake) fl.shake = true; if (e.converting) fl.converting = true   // a piglin/hoglin zombifying in the Overworld (LivingEntityRenderer.isShaking)   // any mob lying asleep; a villager shaking its head no (entities.js)
+      // mob poses (docs/engine_features.md "Mob poses"): a skeleton aiming its bow, drawing from the mark (bowT);
+      // an evoker casting a spell from the mark (spellT): 60 ticks (EvokerWololoSpellGoal.getCastingTime) unless a
+      // pose_off ends it first
+      if (e.bow) { fl.bow = true; fl.bowT = e.t / 50; if (e.drawn) fl.bowT -= 20 }
+      if (e.spell) { const sp = MP.spellId(e.spell); if (sp) { fl.spell = sp; fl.spellT = e.t / 50 } else console.log(`pose mark at tick ${e.t / 50}: no spell '${e.spell}' (${Object.keys(MP.SPELL_IDS).join(', ')})`) }
       if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
       // { pose: 'wave' | ['sit', 'drink'], ...params }, or the flags sit / drink / use (ground: sit on the floor)
       const names = [].concat(e.pose || [])
       if (e.sit) names.push(e.ground ? 'sit_ground' : 'sit')
       if (e.drink) names.push('drink'); else if (e.use) names.push('use')
-      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, converting: _cv, ...params } = e
+      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, converting: _cv, bow: _bw, drawn: _dw, spell: _sp, ...params } = e
       const ap = names.filter(n => { if (POSES.POSES[n]) return true; console.log(`pose mark at tick ${e.t / 50}: no pose '${n}' in renderer/poses.js (${POSES.POSE_NAMES.join(', ')})`); return false }).map(name => ({ name, ...params }))
       if (ap.length) for (const id of e.ids || []) { if (openA.has(id)) openA.get(id)[1] = e.t / 50; const run = [e.t / 50, Infinity, ap]; if (!ACT_POSE.has(id)) ACT_POSE.set(id, []); ACT_POSE.get(id).push(run); openA.set(id, run) }
       for (const k of ['emerge', 'dig']) if (e[k]) for (const id of e.ids || []) { if (!WARDEN_ANIM.has(id)) WARDEN_ANIM.set(id, []); WARDEN_ANIM.get(id).push([e.t / 50, e.t / 50 + (k === 'emerge' ? 134 : 100), k]) }
@@ -1051,6 +1060,10 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
       if (openA.has(id)) { openA.get(id)[1] = e.t / 50; openA.delete(id) }
     }
   }
+  // a staged spell with no pose_off: the cast's 60 ticks (the arms drop 20 ticks after the spell lands at +40)
+  for (const runs of STAGED.values()) for (const r of runs) if (r[2].spell && r[1] === Infinity) r[1] = r[2].spellT + MP.CAST_TICKS
+  // recorded mob poses: a skeleton using its bow, an evoker casting (harness extra.usingItem / extra.spell): their runs
+  MOB_USE = MP.recordedRuns(rec.entities, (x) => !!x.usingItem); MOB_SPELL = MP.recordedRuns(rec.entities, (x) => !!x.spell)
   // recorded: the entity's pose (harness: extra.emerge / extra.dig while Pose is EMERGING / DIGGING)
   const run = new Map()
   for (const row of rec.entities || []) {
@@ -2368,6 +2381,20 @@ else:
       }
     }
   }
+  // an evoker casting (SpellcasterIllager.tick, client side): two spell particles a tick, 1.8 up and 0.6 to either side
+  // of the body, swinging with cos(tickCount x 0.6662) x 0.25 rad, in the spell's colour; recorded (extra.spell) or
+  // staged (a pose mark { spell }). Only recordings with a cast get any
+  {
+    const casts = []
+    for (const [id, runs] of STAGED) for (const [a, b, fl] of runs) if (fl.spell) casts.push([id, a, b, fl.spell])
+    for (const [id, runs] of MOB_SPELL) for (const [a, b] of runs) { const row = ENT.get(a) && ENT.get(a).get(id); casts.push([id, a, b + 1, row && row[9] && row[9].spell]) }
+    for (const [id, a, b, sp] of casts) {
+      for (let tk = Math.ceil(a); tk < b && tk < P.length; tk++) {
+        const row = ENT.get(tk) && ENT.get(tk).get(id); if (!row) continue
+        for (const [x, y, z] of MP.spellHands(row[3], row[4], row[5], row[6], tk + (id % 97) * 3)) DIG_EVENTS.push({ event: 'particles', type: 'spell', t: tk * 50, x, y, z, color: MP.SPELL_COLORS[sp] || MP.SPELL_COLORS[3] })
+      }
+    }
+  }
   for (let ev of (rec.timeline || []).filter(e => e.event === 'particles').concat(DIG_EVENTS)) {
     // a drip (obsidian tear) falls to the first solid block below its face
     if (ev.type === 'obsidian_tear' && ev.floorY === undefined) {
@@ -3301,6 +3328,24 @@ else:
       const st = STAGED.get(e.id); if (!st) continue
       const run = st.find(([a, b]) => t >= a && t < b)
       if (run) e.extra = { ...(e.extra || {}), ...run[2] }
+    }
+    // mob poses (docs/engine_features.md "Mob poses"): new extra keys only, so older recordings render as before
+    for (const e of ents) {
+      if (!e.extra) continue
+      // a bow skeleton aiming (SkeletonModel: aggressive with a bow -> ArmPose.BOW_AND_ARROW), its bow drawn by how long
+      // it has been using it (items/bow.json: use_duration x 0.05 >= 0.65 pulling_1, >= 0.9 pulling_2, else pulling_0)
+      if (SKELETON_BOW.test(e.name) && (e.extra.bow || e.extra.aggressive)) {
+        e.extra = { ...e.extra, aim: true }
+        const t0 = e.extra.bow ? e.extra.bowT : e.extra.usingItem ? runStart(MOB_USE, e.id, t) : null
+        if (t0 != null && e.mobHeld && e.extra.held === 'bow') {
+          const n = MP.bowPull(t - t0)
+          e.mobHeld = { ...e.mobHeld, tex: `item/bow_pulling_${n}`, key: `bow|pulling_${n}` }
+        }
+      }
+      // a recorded spell's start (staged ones carry spellT): the casting arms wave from it
+      if (e.extra.spell && e.extra.spellT === undefined) e.extra = { ...e.extra, spellT: runStart(MOB_SPELL, e.id, t) ?? t }
+      // a piglin holding a loved item in its off hand admires it (Piglin.getArmPose -> PiglinArmPose.ADMIRING_ITEM)
+      if (e.name === 'piglin' && e.extra.offhand && PIGLIN_LOVED.test(e.extra.offhand)) e.extra = { ...e.extra, admire: true }
     }
     for (const e of ents) {
       if (e.name !== 'warden' || !WARDEN_ANIM.has(e.id)) continue
