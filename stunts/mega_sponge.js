@@ -51,7 +51,7 @@ module.exports = {
     caption: 'rate my starter house',
     dropAt: 'thread',                   // (no reference song: publish adds the NCS bed at -16 LUFS with its drop here)
     startAt: 'start:0', endAfter: 'thread:0.8',
-    flash: [['inside', 1, 0.45]],
+    flash: [['inside', 0, 0.45], ['thread', 0, 0.3]],   // into the build, into the core
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
     sfx: [['impact', 'thread', { nth: 0 }]]
   },
