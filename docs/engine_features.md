@@ -1,4 +1,4 @@
-# Adding to the engine: poses, particles, block entities, mob animations, GUI screens
+# Adding to the engine: poses, particles, block entities, mob animations, GUI screens, skins
 
 The owner (2026-11-10): "why cant we build the renderer out to allow all of these? and more when they come up?"
 A story that needs something the renderer can't draw is a story the renderer should learn, not a scene to rewrite.
@@ -365,6 +365,42 @@ lib/hb/test/engine2.test.js.
   blocks: BLOCK; just off the frame (a quarter each side) or behind blocks under 32 blocks, or within 8 blocks of the
   camera: WARN; anything else is no finding.
 
+## Trade screen, tooltip, caption chunks, hidden name tags
+From The Walk (S10: the librarian's book reads Frost Walker II) and The Honey Thief (Jonah: "no name tag"), 2026-11-11.
+All off unless a recording has the new marks or a story asks: story_nitwit (tick 120, 450), creeper (40, 150) and
+story_torch (L02, L05, L08) render pixel-identical before/after; the caption PNG streams of gold_for_the_portal, nitwit
+and torch and the chest screens of gold_for_the_portal and thirty_one_raids are byte-identical.
+- **The villager trade screen** (MerchantScreen, 1.21.11): `const v = await K.trade(villagerEntity)` turns onto its
+  face and opens it (bot.openVillager; the view holds still while it's open, as for chests), `await K.pick(v, i)`
+  selects offer i (the server moves the price into the payment slots: a whole stack, as vanilla), `await
+  K.takeResult(v)` completes it once (a plain click into the inventory; `{ shift: true }` trades as often as the
+  payment lasts; mineflayer's `v.trade` would fail after K.pick), `K.close(v)`. The harness marks `merchant` (the
+  trade_list offers: costs with demand/special price, results, xp, out-of-stock; the trader's level and xp; every slot;
+  each item's tooltip lines from `lib/tooltip.js`) on open and every slot change, and `merchant_close`. edit.py
+  `merchant_png` draws gui/container/villager.png at 276 x 166, "Librarian - Novice" (the level names for a villager),
+  "Trades" / "Inventory", the experience bar (with the selected offer's xp as the result part), up to 7 offer buttons
+  (a discount struck through), arrows, the scroller, the payment/result slots and the inventory (MerchantMenu slot
+  positions), enchanted items glinting, leather armour in its default dye (the merchant screen only).
+- **Tooltips**: `K.hover('result')` (or `'a'`, `'b'`, `'trade:N'`, a window slot number; `null` to move off; a
+  `{ tooltip: [[text, '#RRGGBB']] }` option overrides the lines) marks `gui_hover`: the slot's 1.21.6 highlight sprites
+  and the tooltip box (tooltip/background + tooltip/frame nine-slices, +12/-12 from the cursor, flipped left at the
+  screen's edge as DefaultTooltipPositioner does, 2 px under the title line). Lines (`lib/tooltip.js`, ItemStack
+  tooltips): the name in its rarity colour (an enchanted book yellow, an enchanted sword aqua), then the enchantments
+  (stored ones on a book) gray, curses red, no numeral for a max-level-1 enchantment. The cursor itself isn't drawn.
+- **A non-spoken caption chunk**: `K.onscreen('Frost Walker II', { hold: 1.3 })` (mark `onscreen`; no hold: to the next
+  cut or line, 1.5 s at most; `caption_y` as for lines) draws the words in the story's word-chunk caption style
+  (scripts/story_track.py), every word in the key colour, from the mark's frame (no lead); a spoken caption under it
+  is cut back for its window. The default height (0.70) sits over the merchant screen's lower inventory: The Walk can
+  set `caption_y`.
+- **A hidden name tag**: a story.json cast entry with `"name_tag": false` (matched by its cast id, `user`, `tag`, and
+  its `name`'s first word: The Honey Thief's "Giant" / "Jonah ...") or `stunt.hideNameTags: ['Jonah']`
+  (`lib/name_tags.js`): render.js never draws that entity's plate, not with `playerNames`, `nameTags` or the
+  crosshair on it (vanilla: a team with nametagVisibility never).
+Test: `./hb record _test_gui_tags --no-strict && PREVIEW_W=1080 PREVIEW_FPS=20 scripts/preview.sh _test_gui_tags`
+(the fixture lib/hb/test/fixtures/gui_tags_story: Pia's plate shows, Jonah's doesn't; a librarian's Frost Walker II
+trade opened, picked, hovered, captioned and taken). Stills: docs/engine_proofs/gui_tags/. `npm test`:
+lib/hb/test/gui_tags.test.js.
+
 ## Faster stills: the mesh cache
 `./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
 still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are
@@ -409,6 +445,184 @@ List every waiting room a stunt builds. `./hb describe` shows mobs parked far ab
   cos(age x 3.25) x PI x 0.4 degrees each frame. A NoAI mob never converts in vanilla, so stage it.
 - Test: `node scripts/pose_fixture.js --armor` (a trimmed-helmet piglin, shaking; a zombie in iron with a trimmed
   chestplate; a skeleton in a chain helmet; the Grandpa actor in the trimmed helmet).
+
+## Original player skins (scripts/make_story_skins.py)
+Every jar skin (steve, alex, ari, efe, kai, makena, noor, sunny, zuri) and `hellobuh` already belongs to a character
+(STANDARDS 7a: one look per character), so new player characters get skins we draw ourselves. They are pixel data in
+`scripts/make_story_skins.py` (an 8x8 face string per skin plus hair, clothes and shoe parameters; no Mojang or
+skin-site pixels), written to `skins/<name>.png` (64x64, wide arms). render.js already serves `skins/` beside the
+jar's skins, so a stunt casts one by name like a jar skin: `cast: { Grandpa: 'grandpa_gullwick' }`. No renderer change.
+- The ten (canon notes in docs/world/canon.md "Original skins"): `grandpa_gullwick`, `grandma_island`, `walk_kid`,
+  `pulled_man`, `hall_player`, `miner_girl`, `neighbour`, `barter_player`, `spare_boy`, `spare_girl`.
+- A new one: add a spec to `SKINS` (copy the closest), run `python3 scripts/make_story_skins.py` (same bytes every
+  run: the shading noise is seeded by the name), and check it beside the others and the taken skins:
+  `node scripts/pose_fixture.js --skins --stunt _test_skins --src ../hb-videos/shorts/creeper/recording.json.gz --out work/_test_skins.rec.json`
+  then `./hb still _test_skins tick:5 tick:25 tick:145 --size 1080x1011` (ticks 0-19 all new ones facing, 20-39 at
+  3/4, 40-119 five at a time, 120-139 the neighbour with and without diamond armour and the barter player in iron,
+  140-159 the taken skins). Add its name to `NAMES` in both the fixture and `stunts/_test_skins.js`.
+- Faces carry identity under armour: a story whose player wears a chestplate (Singing Box's neighbour, Saving Up's
+  barter player) must still read from the head alone (glasses, moustache, beanie). Avoid a jar skin's colour scheme
+  (Steve's cyan shirt and blue trousers read as Buh).
+- Proofs: docs/engine_proofs/skins/ (line-ups at 1080 and 300 px, phone stills, armour, taken vs new).
+
+## Flying-mob POV, the crane, the Nether (camera_world, 2026-11-11)
+Brief: docs/engine_briefs/camera_world.md (The Honey Thief's bee, The Singing Box's allay, Saving Up for a Bastion).
+Proof: docs/engine_proofs/camera_world/ (stills, the flower readability table, the Nether survey).
+
+**A flying narrator** (`lib/mobpov.js`, the rusher: the narrator's client position driven a tick at a time; stunt.self
+gives the model and eye: a bee `{ model: 'bee', eye: 0.3 }`)
+- `R.hover('bee' | 'allay' | { rate, amp, nod, drift }, { scale, nod, drift, ramp })`: from now on every hold, turn,
+  dash and fly bobs like the model's body (BeeModel.setupAnim: bone.y -= cos(age x 0.18) x 0.9 px, xRot 0.1 + cos x
+  PI x 0.025; AllayModel: root.y += cos(age x 9 deg) x 0.25 px), with a slow horizontal drift. Defaults: height x1.6
+  (the bee's own 0.056 blocks read as still), nod x0.35 (+-1.6 deg; the body's +-4.5 tipped the whole frame), drift
+  0.05 blocks; it ramps in over 10 ticks. `R.hover(null)` stops it. While hovering the narrator is not on the ground,
+  so the renderer adds no walking view-bob.
+- `await R.fly([p1, p2, ...], o)`: a centripetal Catmull-Rom curve through the points (no stops, no loops or cusps),
+  `speed` blocks a tick (0.5 = 10 blocks/s; a bee's real cruise is ~0.3-0.5), eased in over `accel` ticks and out over
+  `decel` (0: arrive at speed and go on into the next leg; `v0` is the last leg's speed, so legs join). The view looks
+  `lead` blocks ahead along the curve (`pitchFollow` 0.5 of the climb), or at `look: Vec3` (flying at someone), easing
+  from the view it had over `blend` ticks. `above: 1.5` keeps it 1.5 over the ground (read under the path and `lead`
+  ahead, smoothed over 7 ticks: it lifts before a rise; flowers and grass are not ground). It throws before flying when
+  a turn would pass `R.maxTurn` (150 deg/s): widen the curve, slow down, look further ahead, or cut. The planner is
+  pure (`flightPlan`, tests in lib/hb/test/camera_world.test.js).
+
+**The crane off a view** (render.js camera director, a shot spec; opt-in, nothing else changes)
+```js
+crane: { crane: { from: 'pov', to: [0, 90, 0], yaw: 0, pitch: -90, fov: 70, secs: 2.5 } }
+```
+Mark the shot where the lift starts (`R.shot('crane')` on 'TELL'). Its first frame IS the view before it (the POV, with
+its stunt.fovZoom fov and stunt.self eye; `from: 'prev'` takes the camera shot before), and a cubic Hermite carries
+that view's own motion (position, yaw, pitch, tan of the fov) into the end pose at rest: no stop on take-off, no
+snap, no overshoot. `pitch: -90` is straight down with `yaw` the frame's up (0 = north up), the turn done in the first `tilt` (0.6) of the move so it finds the ground early; `to` is set-relative or a
+TARGET. No eye-trace (it starts on the frame before it) and no handheld drift. The narrator flies on below (stunt.self
+draws its model in camera shots: the bee is the yellow dot). Also on any camera shot: `fovPath: [[sec, deg], ...]`
+(keyed like `path`, eased in tan space).
+- Render distance: a top-down from 90 up sees ground 90-115 blocks from the lens; `renderDistance: 8` (chunks) fogs
+  its edges. Use 12.
+- The narrator's own model is not drawn while a crane's lens is within 2.5 blocks of its eye (it leaves from inside
+  the bee's head; the first frames were all bee).
+- **Flowers from straight above** (90 up, fov 70, 7x7 patches, CIE76 delta E against the grass round each patch, on a
+  300 px-wide thumbnail; docs/engine_proofs/camera_world/flower_readability.md): bare podzol 52, pink_petals 35,
+  lilac 19, rose_bush 18, wildflowers 11, peony 11, sunflower 8; every cross-sprite flower (dandelion, poppy, oxeye
+  daisy, lily of the valley, tulips, cornflower, allium, bluet, orchid, torchflower) 1-6: seen edge-on they vanish into
+  the grass. A picture meant to read from above is drawn in flat covers (pink_petals, wildflowers), 2-tall bushes
+  (rose bush red, lilac) and bare ground stripes, not in single flowers. The ~75 degree alternative (`tilt75` in the
+  test) reads the bushes a little better and the single flowers no better.
+
+**The Nether in the world tools** (`lib/world.js`, `scripts/world.js`)
+- A place says `"dimension": "the_nether"` (or `"the_end"`; none = the Overworld); its `at`/`footprint` are that
+  dimension's coordinates. `world.check` only clashes footprints in the same dimension (and checks the name);
+  `world.at(x, z, dim)`; `./hb world where X Z --dimension the_nether`; `./hb world claim ... --dimension the_nether`;
+  the world map skips other dimensions' places.
+- `world.build` takes the bot there first (`world.enter(ctx, dim, x, y, z)`: `/execute in minecraft:<dim> run tp`,
+  waits for the client's respawn into it and the chunks), forceloads the footprint there, and reads the ground under
+  the roof: `ctx.groundTop` (place y + 24) makes `lib/sets/site.js` column read the first floor with open space over
+  it (netherrack, soul sand, basalt, blackstone, nylium...) instead of the bedrock roof. Pieces, stamps and the ground
+  check then work as in the Overworld. Every command after it runs in the Nether, and the harness records
+  `rec.dimension` from the bot (render.js draws the Nether's sky, fog and light).
+- The survey round the Portal Cottage's Nether side (-16, -118): **basalt deltas** (basalt and blackstone floors broken
+  by lava pools at every height, the lava sea at y 31; at the origin the floors are y 82 and y 33); the nearest
+  bastion remnant is at (-160, -608), 510 blocks off, the nearest fortress at (-320, -144). A bastion "across the lake"
+  has to be placed (`/place structure minecraft:bastion_remnant`) or built.
+- `HB_WORLD_MAP=file` points lib/world at a test map (lib/hb/test/fixtures/world_nether_map.json).
+- Test: `./hb record _test_camera_world_nether` (builds the fixture's Nether place, surveys the Nether round it:
+  `/locate` bastion and fortress, every column's floors and lava -> work/nether_survey.json ->
+  `python3 scripts/nether_survey.py`), and `./hb record _test_camera_world` (the bee: hover, low curving flight, the
+  fov narrowing, the crane to 90 straight down; the meadow is the flower readability patch:
+  `python3 scripts/flower_readability.py <top still> --set X,Y,Z`).
+
+## Boats, leads and passengers (2026-11-11, engine-boats-leads)
+For Pulled Away (a boat led over grass and water) and The Walk (Grandma rowing away). Everything goes through the real
+server; the numbers are from the 1.21.11 client jar (Mojang mappings, `javap` on the classes named below) and measured on
+the server. `lib/riding.js` holds the shared numbers, `lib/boats.js` the kit.
+- **Passengers move with their vehicle** (the recorder): the server sends no moves for passengers, so mineflayer left a
+  rider where it mounted (stories/runaway's workaround: teleport both). The harness now tracks `set_passengers` itself
+  and records each rider where `Entity.positionRider` puts it: vehicle + `AbstractBoat.getPassengerAttachmentPoint`
+  ((0, height / 3, f), f 0.2 / -0.6 for two riders, + 0.2 for an animal; a bamboo raft height x 0.889) - the rider's
+  vehicle attachment (a player 0.6, a villager 0: measured, kid y = boat y + 0.1875, a player boat y - 0.4125), with
+  `extra.ride = vehicle id`. Boats and rafts only (other vehicles, a jockey's spider, a horse, record as before). render.js eases rider and boat the same way (the client's 3-tick lerp), so they stay
+  together. A rider doesn't walk (its leg swing is 0); a player rider takes HumanoidModel's riding limbs (pose `ride`,
+  under any staged pose) and faces where it looks. (mineflayer reads `attach_entity` as a mount: since 1.9 it is the
+  LEAD packet, so the harness keeps its own maps; don't trust `entity.vehicle`.)
+- **Leads** (`LeashFeatureRenderer`): the harness marks `leash` { id, holder } from `attach_entity` (holder `'self'` for the
+  recording bot, null when untied; the leads already tied when the recording starts are marked on tick 0), and the
+  renderer draws the rope each frame from the leashed entity's lead point (a boat's bow: (0, 0.88 h, 0.64 w); others
+  (0, eyeHeight, 0.4 w), turned by its yaw) to the holder's (`Player.getRopeHoldPosition`: the right hand, 0.8 up, 0.07
+  forward, crouching 0.5 / -0.2; a knot 0.2 over its centre): two crossed ribbons 0.05 wide of 24 segments, brown
+  (0.5, 0.4, 0.3) x 0.7 on every other one, sagging dy t^2 (flat at the lower end), lit by the light levels lerped from
+  end to end (`cam.leashes` -> page.js `drawLeashes`). The fence **knot** (`LeashKnotModel`, a 6x8x6 cube over the post,
+  `entity/lead_knot`) is drawn in recordings that have lead marks (older ones never drew one: rule zero). The holder's
+  first-person hand isn't a rope end (a narrator holding a lead shows it only in camera shots).
+- **A leashed boat follows** (vanilla 1.21: boats can be leashed, the server pulls them, `Leashable.tickLeash`): on grass
+  at a walk (0.24 blocks/tick: it followed at 0.24, ~6 blocks back) and on water behind a rowing holder. At the full 0.4
+  row it lags then catches up in a yank (0.65 blocks/tick for a few ticks): row at `speed: 0.3` for a steady tow. Leads
+  break past 10-12 blocks.
+- **The kit** (`lib/boats.js`, on K):
+  - `K.leash('Man', K.entity('oak_boat', [dx, dy, dz]))`: the actor right-clicks the boat holding a lead (vanilla: within
+    3 blocks; survival uses the lead up). `K.leash('Man', 'tag')` ties it by the server's leash NBT (any time, any
+    distance under 10), `K.leash([x, y, z], 'tag')` to a fence post (the server ties a knot there).
+  - `K.board('Man', 'boat_tag')` / `K.board('kid', 'boat_tag')`: `/ride`. An actor the kit was walking (K.actor) stops
+    being moved and its client stops simulating. Summon a boat at the water's surface (it settles 0.48 under it); summoned
+    under the surface it sinks and throws its riders out. A mob can be summoned in it (`Passengers:[{...}]`).
+  - `await K.row('Man', [[x, z], ...], { speed, stop, look, sound })` (or `K.rowing(...)` to row while the scene goes on):
+    the first rider steers. The row is planned (`planRow`, unit-tested): a smooth curve through the points, the bow along
+    its tangent (at most 9 deg a tick: a sharper corner is logged), vanilla's speed (a held key in water: v = 0.9 v +
+    0.04, 0.4 blocks/tick top; the oars shipped 9 v before the end, gliding onto it). It is sent the way a player's client
+    sends it (`vehicle_move` + `steer_boat`): the server moves the boat and sets its paddle states, so the oars animate in
+    the recording (`BoatModel.animatePaddle`, already drawn) and a lead tied to the rower pulls its boat behind. Each
+    stroke plays `entity.boat.paddle_water` (pitch 0.8-1.2). `speed` under 0.4 scales the thrust (a steady row; the oars
+    keep their stroke).
+- Checks: rec_check's mob ground-speed check skips riders, and the visible-jump check doesn't flag getting into or out of
+  a boat (vanilla's mount is a one-tick move).
+- Test: `./hb record _test_boats_leads && ./hb still _test_boats_leads t_walk+2 t_board+0.3 t_row+2.5 t_row+5` (a man
+  leads a boat with a baby villager in it over grass, boards his own boat and rows an S-bend, the led boat following;
+  a third boat tied to a fence; proof stills in docs/engine_proofs/boats_leads/). `node --test lib/hb/test/boats.test.js`.
+
+## Mob poses and held items (skeleton bow draw, evoker spellcasting, piglin admiring, allay held item)
+For the Buh Stories batch (The Bell in the Window, Red Sheep, Saving Up for a Bastion, The Singing Box Next Door).
+Code: `renderer/entities.js` (the bone angles), `lib/mob_poses.js` (the node side: spell ids and colours, the bow's pull,
+the piglin_loved tag, the recorded runs), `render.js` (marks -> `extra`), `lib/harness.js` (the recorded flags),
+`renderer/particles.js` (`spell`). Rule zero: every key is new (a staged mark or a new recorded `extra` key), and the
+evoker's crossed arms change only from engine 2; the published Shorts with skeletons (light_sleeper, guess_sound_3,
+interrupt_lamps), the allay (guess_sound_2), piglins (gold_for_the_portal), pillagers (thirty_one_raids) and sheep
+render pixel-identical (docs/engine_proofs/mob_poses/README.md).
+- **A skeleton drawing its bow** (stray, bogged, parched too): staged `ctx.mark('pose', { ids: [id], bow: true })` ...
+  `ctx.mark('pose_off', { ids })`, or recorded (a skeleton with AI aiming: Mob flags bit 4 aggressive -> `extra.aggressive`,
+  LivingEntity flags bit 1 using -> `extra.usingItem`). SkeletonModel's BOW_AND_ARROW: both arms straight out along
+  the head's look (right yRot -0.1, left +0.5, xRot -90 deg + head pitch) with bobModelPart's idle sway; the bow pulls
+  over the mark's first second (items/bow.json: `bow_pulling_0`, `_1` from 13 ticks, `_2` from 18 = full draw). `{ bow:
+  true, drawn: true }` starts fully drawn. The arms follow the head: aim a NoAI skeleton with its `Rotation` pitch.
+  For The Bell in the Window: mark `pose { bow }` 18 ticks before the story's `draw` mark, so `draw` lands on full draw.
+- **An evoker casting** (IllagerArmPose.SPELLCASTING): recorded from SpellcasterIllager metadata 17 (`extra.spell`: 1 vex,
+  2 fangs, 3 wololo, 4 disappear, 5 blindness), or staged `ctx.mark('pose', { ids: [id], spell: 'wololo' })`. Both
+  free arms up and out (zRot +-135 deg) waving with cos(age 0.6662) x 0.25, and two ENTITY_EFFECT particles a tick at
+  the hands (SpellcasterIllager.tick: 1.8 up, 0.6 either side; SpellParticle effect_7 -> effect_0, rising) in the
+  spell's colour (wololo 0.7 0.5 0.2, fangs 0.4 0.3 0.35). Vanilla's wololo (EvokerWololoSpellGoal) lasts 60 ticks and
+  turns the sheep red 40 ticks in, so the arms drop 1 s after the change: a staged spell with no `pose_off` ends 60
+  ticks after its mark. Stage it as vanilla times it: the mark (and `entity.evoker.prepare_wololo`) at T, `/data merge
+  entity <sheep> {Color:14b}` at T + 40 ticks (and `entity.evoker.cast_spell`), nothing else. A real cast needs
+  `mob_griefing` on, a blue sheep within 16 blocks and no target (a player in survival in its sight is targeted first).
+  The crossed arms: IllagerModel draws the crossed `arms` OR the free arms, never both; recordings from engine 2 on
+  draw an idle evoker with only its crossed arms, tilted -0.75 on IllagerModel's pivot (the converted model drew both).
+- **A sheep changing colour mid-shot** (white -> blue, blue -> red) already worked: the colour is recorded per sample,
+  and a change rebuilds the model with the undercoat in the new colour (checked on the fixture).
+- **A piglin admiring** (baby or adult): vanilla's own client rule, nothing to stage: a piglin with a piglin_loved item
+  (a gold ingot, gold block, golden tools...) in its OFF hand takes PiglinArmPose.ADMIRING_ITEM: head down (xRot 0.5,
+  yRot 0), the left arm up to the face (xRot -0.9, yRot 0.5) holding the item. `/summon piglin ~ ~ ~ {IsBaby:1b,
+  IsImmuneToZombification:1b,equipment:{offhand:{id:"minecraft:gold_ingot",count:1}}}` (Overworld: immune, or it
+  zombifies in 15 s), or `/item replace entity <piglin> weapon.offhand with gold_ingot` on cue. Piglins' main-hand and
+  off-hand items now draw at all (the converted bones are lower case: `rightarm`, `leftarm`).
+- **An allay holding an item** (AllayRenderer's ItemInHandLayer): `/summon allay ~ ~ ~ {equipment:{mainhand:{id:
+  "minecraft:diamond",count:1}}}` or a real pickup. The arms take AllayModel's holding pose (reaching forward, xRot
+  -60 deg, spread round the item) and the item sits in front of the chest (AllayModel.translateToHand: the body,
+  T(0, 1/16, 3/16), Rx(arm), S(0.7), then the third-person right-hand display). An empty allay is unchanged.
+- Test: `node scripts/pose_fixture.js --mobposes` (a staged and a recorded skeleton, three evokers, two sheep changing
+  colour, three piglins, two allays) and `./hb still _poses_test tick:5 tick:30 tick:52 --cam 1.5,1.4,1.2,180,0`; live:
+  `./hb record _test_mob_poses --no-strict` (an AI skeleton shooting a golem, a real wololo, the staged draw, the allay
+  and the baby piglin). Stills: docs/engine_proofs/mob_poses/. `npm test` (lib/hb/test/mob_poses.test.js).
+- Not done: the evoker's fangs (EvokerFangsModel's rise and bite; no story shows them), the vex, a pillager's crossbow
+  (its converted bones are lower case too: published pillagers show none, so it stays off), the allay's body tilt
+  while flying fast.
 
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.

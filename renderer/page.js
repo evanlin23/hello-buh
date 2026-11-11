@@ -923,6 +923,21 @@ async function drawShadows (list) {
   shadowMesh = new THREE.Mesh(g, shadowMat); shadowMesh.frustumCulled = false; shadowMesh.renderOrder = 1
   scene.add(shadowMesh)
 }
+// Leads (LeashFeatureRenderer, RenderType.leash: untextured, both sides, vertex colours lit per segment): render.js sends
+// each rope's triangles (lib/riding.js leashMesh) as cam.leashes; nothing is built without one
+let leashMesh = null
+const leashMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, fog: true })
+function drawLeashes (list) {
+  if (leashMesh) { scene.remove(leashMesh); leashMesh.geometry.dispose(); leashMesh = null }
+  if (!list || !list.length) return
+  const pos = [], col = []
+  for (const l of list) { for (const v of l.pos) pos.push(v); for (const v of l.col) col.push(v) }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3))
+  leashMesh = new THREE.Mesh(g, leashMat); leashMesh.frustumCulled = false
+  scene.add(leashMesh)
+}
 async function drawParticles (parts) {
   for (const m of partMeshes) { scene.remove(m); m.geometry.dispose() }
   partMeshes.length = 0
@@ -1189,6 +1204,7 @@ window.HB = {
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawShadows(cam.shadows)
+    if (cam.leashes || leashMesh) drawLeashes(cam.leashes)
     drawBolts(cam.bolts)
     await drawParticles(parts)
     await drawWeather(cam)

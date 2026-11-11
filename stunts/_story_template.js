@@ -38,8 +38,9 @@ module.exports = {
   caption: CAPTION,
   // red: the caption word drawn in red. startAt/endAfter: from the first line to the end mark.
   // Optional: deathScreen + expectDeath (a death ending), zoom/punch (push-ins on marks), story.json "meter".
-  // A payoff that is a blast or a fall (TNT, falling sand, a death): endAfter: 'settle:0.6', 0.6 s after the harness's
-  // settle mark, once nothing in it still moves (lib/settle.js, owner r:r24d99a); story_end must not come before it.
+  // A payoff that is a blast or a fall (TNT, falling sand, a death): endAfter: 'settle:0.5', 0.5 s after the harness's
+  // settle mark, once the action is over (lib/settle.js: smoke and particles don't count, owner r:r24d99a, r:r188b46);
+  // story_end must not come before it.
   edit: { caption: CAPTION, red: 'sheep', story: 'stories/<name>', startAt: 'line:0', endAfter: 'story_end:0', punchStress: true },
   hideHand: true,          // the narrator isn't Steve: no first-person arm
   // time: 18000,          // the opening time of day (night); change it later with K.cut(..., { time }) or K.setTime
