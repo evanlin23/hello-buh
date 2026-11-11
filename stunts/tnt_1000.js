@@ -38,7 +38,7 @@ module.exports = {
     // the payoff pace times is the 1000 pile's LAST blast, 1.85 s (output) after boom5 on this take: a flash, a punch,
     // the song dip, the game ducked and an impact there (no hit and no picture change on it: pace BLOCK); the song
     // also drops out 0.35 s before the death. Re-check the offset after a re-record
-    sfx: [['dip', 'death', 0.35], ['dip', 'boom5:1.85', 0.4], ['gamedip', 'boom5:1.85', 0.35], ['impact', 'boom5:1.85', { gain: 1.4 }]],
+    sfx: [['pop', 'tier1'], ['dip', 'death', 0.35], ['dip', 'boom5:1.85', 0.4], ['gamedip', 'boom5:1.85', 0.35], ['impact', 'boom5:1.85', { gain: 1.4 }]],
     flash: [['boom5:1.85', 0, 0.8]], punch: [['boom5:1.85', 0, 1.15]],
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
