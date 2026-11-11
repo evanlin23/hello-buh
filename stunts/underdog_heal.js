@@ -3,7 +3,8 @@
 // up), a tamed cat eats cod, a horse eats a whole hay bale, a cracked iron golem gets three iron ingots (the cracks go
 // one level each), a zombie villager is cured (weakness, a golden apple, the shaking, a villager). Then the flip:
 // "...but who heals him?" over a snow golem alone in the desert sun. Offered a snow block, nothing happens; the desert
-// melts it (vanilla: snow golems take damage in hot biomes), on a soft sad NCS track.
+// melts it (vanilla: snow golems take damage in hot biomes), on a soft sad NCS track. (No pumpkin: the renderer has no
+// SnowGolemHeadLayer yet, so it is summoned sheared, which vanilla allows, and shows its face.)
 const { makeStunt } = require('../lib/underdog')
 
 module.exports = makeStunt({
@@ -30,5 +31,5 @@ module.exports = makeStunt({
     { id: 'zombie', card: 'ZOMBIE VILLAGER + GOLDEN APPLE', mob: 'zombie_villager', nbt: '{NoAI:1b,Silent:1b,VillagerData:{type:"minecraft:desert",profession:"minecraft:farmer",level:1}}',
       dist: 3.4, aimY: 0.6, roof: true, cure: true, color: 'orange', later: '5 minutes later...' }
   ],
-  forgotten: { mob: 'snow_golem', nbt: '{NoAI:1b,Pumpkin:1b}', dist: 3.4, tryItem: 'snow_block', calm: 26 }
+  forgotten: { mob: 'snow_golem', nbt: '{NoAI:1b,Pumpkin:0b}', dist: 3.4, tryItem: 'snow_block', calm: 20 }
 })
