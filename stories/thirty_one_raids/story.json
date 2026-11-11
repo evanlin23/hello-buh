@@ -355,6 +355,14 @@
   "one_take_note": "the narrator's 10 lines in ONE request across Grandpa's L08 (tts.py one_take); say: only the spoken-stress word in caps (cast narrator profile: 'punching only the capitalised key word')",
   "requests": [
     {
+      "id": "N",
+      "speakers": [
+        "N"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; run straight on from the first line into the next; no pause at a full stop]",
+      "note": "lead 2026-11-11: the house profile byte for byte plus the one fix (the 0.84 s after the hook, pace's opening rule)"
+    },
+    {
       "id": "G",
       "speakers": [
         "Grandpa"
