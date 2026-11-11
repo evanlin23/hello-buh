@@ -18,6 +18,7 @@ const SLOT = { axe: 0, shovel: 1, pick: 2, sponge: 3, pumpkin: 4, flint: 5, glow
 const quirks = [
   {
     key: 'tree',
+    dwell: 1.0,
     label: 'trees: float',
     slot: SLOT.axe,
     start: { pitch: -6 },
@@ -44,6 +45,7 @@ const quirks = [
   },
   {
     key: 'sand',
+    dwell: 1.1,                                               // the pillar lands (a falling block holds a cut)
     label: 'sand: falls',
     slot: SLOT.shovel,
     start: { z: 1.5, pitch: 4 },
@@ -63,6 +65,7 @@ const quirks = [
   },
   {
     key: 'ice',
+    dwell: 0.6,
     label: 'break ice: get water',
     slot: SLOT.pick,
     start: { pitch: 14 },
@@ -79,6 +82,7 @@ const quirks = [
   },
   {
     key: 'sponge',
+    dwell: 0.55,
     label: '1 sponge vs a whole pool',
     slot: SLOT.sponge,
     start: { z: -0.5, pitch: 8 },
@@ -95,6 +99,7 @@ const quirks = [
   },
   {
     key: 'golem',
+    dwell: 0.9,
     label: 'iron + carved pumpkin = golem',
     slot: SLOT.pumpkin,
     start: { y: 2, pitch: 6 },
@@ -120,6 +125,7 @@ const quirks = [
   },
   {
     key: 'anchor',
+    dwell: 0.75,
     label: 'nope',
     slot: SLOT.glow,
     start: { z: 1.3, pitch: 8 },                             // at the edge of reach: the blast throws him out past its fire
@@ -194,7 +200,7 @@ const quirks = [
 
 ]
 
-// settle-ok: lib/logic.js's edit ends on endAfter 'settle:0.6'
+// settle-ok: lib/logic.js ends 0.7 s after the last payoff (owner r:r188b46 fast cuts: smoke never holds the end)
 module.exports = makeLogic({
   name: 'logic_minecraft',
   caption: 'minecraft logic 💀',
