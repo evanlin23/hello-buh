@@ -2,7 +2,7 @@
  "name": "nitwit",
  "stunt": "story_nitwit",
  "version": 2,
- "revision": "r2 (2026-11-11): the owner's Review Room notes (2026-11-10): an acted Gemini voice (Pip) with the ending given room; Fernbank's real terrain (no superflat)",
+ "revision": "r3 (2026-11-11): review round 2 (independent): the 18-line take read breathy/whispery (panel 3/3): re-voiced as three takes with a full-voice direction, the night lines urgent, not hushed",
  "caption": "the nitwit finally said something 😳",
  "premise": "The village nitwit only ever says 'hmm'. He always stands exactly where something bad is about to happen (a tree before lightning, the wheat before a creeper, the well before it turns to lava), and every other villager walks away from him. The narrator follows him one night past the last torch and finds a burned, empty copy of his own village.",
  "twist": "The nitwit is from a world that already ended, sent back to warn this one, and 'hmm' is all the game lets a nitwit say. Today he stands right next to the narrator: the bad thing is about to happen to him. He says the date of the end, and it's today.",
@@ -123,14 +123,14 @@
   {
    "id": "L10",
    "who": "N",
-   "beat": "a",
+   "beat": "b",
    "text": "So one night, / I FOLLOWED him.",
    "say": "So one night, I FOLLOWED him."
   },
   {
    "id": "L11",
    "who": "N",
-   "beat": "a",
+   "beat": "b",
    "text": "Past the / last torch / was ANOTHER / village.",
    "say": "Past the last torch was ANOTHER village.",
    "look": {
@@ -141,35 +141,35 @@
   {
    "id": "L12",
    "who": "N",
-   "beat": "a",
+   "beat": "b",
    "text": "MY village. / BURNED. / EMPTY.",
    "say": "MY village. BURNED. EMPTY."
   },
   {
    "id": "L13",
    "who": "N",
-   "beat": "a",
+   "beat": "b",
    "text": "The TREE. / The WHEAT. / The WELL. / All GONE.",
    "say": "The TREE. The WHEAT. The WELL. All GONE."
   },
   {
    "id": "L14",
    "who": "N",
-   "beat": "a",
+   "beat": "c",
    "text": "He's not / FROM here. / His world / already ENDED.",
    "say": "He's not FROM here. His world already ENDED."
   },
   {
    "id": "L15",
    "who": "N",
-   "beat": "a",
+   "beat": "c",
    "text": "They sent him / BACK / to WARN us.",
    "say": "They sent him back to WARN us."
   },
   {
    "id": "L16",
    "who": "N",
-   "beat": "a",
+   "beat": "c",
    "text": "But a NITWIT / can only / say one word.",
    "say": "But a NITWIT can only say one word.",
    "look": {
@@ -180,14 +180,14 @@
   {
    "id": "L17",
    "who": "N",
-   "beat": "a",
+   "beat": "c",
    "text": "And today, / he's standing / right next / to ME.",
    "say": "And today, he's standing right next to ME."
   },
   {
    "id": "L18",
    "who": "N",
-   "beat": "a",
+   "beat": "c",
    "text": "He said / my NAME. / Then the DATE / of the END.",
    "say": "He said my NAME. Then the date of the END."
   },
@@ -217,18 +217,9 @@
     "L06",
     "L07",
     "L08",
-    "L09",
-    "L10",
-    "L11",
-    "L12",
-    "L13",
-    "L14",
-    "L15",
-    "L16",
-    "L17",
-    "L18"
+    "L09"
    ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+   "direction": "[A bubbly nine-year-old kid, loud and clear, fast and bright, telling a friend an amazing story; full voice, never whispery, breathy or soft]"
   },
   {
    "id": "r_b",
@@ -238,9 +229,40 @@
    "model": "gemini-3.8-flash-lite-tts",
    "voice": "Leda",
    "lines": [
+    "L10",
+    "L11",
+    "L12",
+    "L13"
+   ],
+   "direction": "[A nine-year-old kid telling the spooky part to a friend, urgent and excited, loud and clear; full voice, never whispery, hushed or breathy]"
+  },
+  {
+   "id": "r_c",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L14",
+    "L15",
+    "L16",
+    "L17",
+    "L18"
+   ],
+   "direction": "[A nine-year-old kid, a little scared now but loud and clear, every word clear; full voice, never whispery, hushed or breathy]"
+  },
+  {
+   "id": "r_d",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
     "L19"
    ],
-   "direction": "[A nine-year-old kid, the moment it sinks in, slower and clear; not whispery or soft]"
+   "direction": "[A nine-year-old kid, the moment it sinks in, slower, loud and clear; full voice, never whispery, breathy or soft]"
   }
  ]
 }
