@@ -8,13 +8,14 @@
 // Between beats the bot is teleported back to the south bank at the next spot (a hard cut).
 const RIVER_W = 5
 const LANES = [-18, -6, 6, 18]       // x offsets of the four crossings (water spreads 7 blocks)
+const { plateau } = require('../lib/plateau')
 
 module.exports = {
   name: 'lava_crossing',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every way to cross lava (rated) 💀',
   edit: {
-    caption: 'every way to cross lava (rated) 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'in_lava',
+    caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
     onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:-0.3', endAfter: 'death:1.15',
     subs: [
       ['beat', 'bridging...', 9, 0], ['crossed', 'bridging: 6/10', 9, 0],
@@ -22,7 +23,10 @@ module.exports = {
       ['beat', 'ender pearl...', 9, 2], ['crossed', 'ender pearl: 10/10', 9, 2],
       ['beat', 'walking...', 9, 3], ['in_lava', 'walking: 0/10', 9, 0],
       ['death', ' ', 0.05, 0]       // blank: ends the rating as the death screen opens (it drew over the buttons)
-    ]
+    ],
+    // pace: sound by 0.3 s (a whoosh into the first beat), a pop on each rating, a song dip + impact on the death
+    sfx: [['whoosh', 'beat'], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
+      ['dip', 'death', 0.3], ['impact', 'death']]
   },
   expectDeath: true,
 
@@ -31,13 +35,13 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z, y: floor } = g
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
     await ctx.defaultRules()
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
-    await ctx.cmd(`/fill ${x - 30} ${floor + 1} ${z - 18} ${x + 30} ${floor + 12} ${z + 10} air`)
-    await ctx.cmd(`/fill ${x - 30} ${floor} ${z - 18} ${x + 30} ${floor} ${z + 10} grass_block`)
-    await ctx.cmd(`/fill ${x - 30} ${floor - 3} ${z - 18} ${x + 30} ${floor - 1} ${z + 10} dirt`)
+    // a levelled field on the real terrain: its edges drop away or rise as slopes (the old flat
+    // clearing showed cut walls and a superflat plain)
+    const floor = await plateau(ctx, { x0: x - 30, x1: x + 30, z0: z - 18, z1: z + 10, above: 24, below: 6, pct: 0.6, trees: 6 })
+    this.x = x; this.z = z; this.floor = floor
     // the river: lava one deep on stone, z-1 .. z-RIVER_W, running east-west
     this.zS = z                     // last row of the south bank
     this.zN = z - RIVER_W - 1       // first row of the north bank
