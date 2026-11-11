@@ -282,6 +282,10 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, on the music sitting over the game sounds in most queued Shorts (music 1-12 dB above the
+  biggest game sounds; only 3 of 18 had the game on top): "fix all i think".** The music bed comes down for every
+  stunt Short (about 3 dB, so the game's own hits carry the payoff), and every ready, not-yet-uploaded Short is
+  remixed to the new level.
 - **Owner, 2026-11-11: "We should be trying for high views and high conversion right?" (yes to ranking formats by
   expected subscribers per upload); "low views might be the format, but it could also just be us not doing it well.
   for example the guess the mob had super loud music..."** The uploader ranks formats by expected subscribers per

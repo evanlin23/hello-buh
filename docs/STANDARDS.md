@@ -215,6 +215,9 @@ actions left silent). r:rc85ccc r:r36632d
 Stunt Shorts (NCS bed): a sound the game hinges on (edit `keySounds`, e.g. guess the mob's call) is **>= 8 dB over
 the music** (owner, 2026-11-11, guess_sound: "had super loud music"); the song ducks to -24 dB under it at publish.
 Check: `python3 scripts/key_sounds.py <name>` (BLOCK in add_song.py and in pace on the package).
+Stunt Shorts' NCS bed sits **about 3 dB lower than before (-16 LUFS against the game's -15)** so the game's own hits
+carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `python3 scripts/key_sounds.py <name>
+--hits` (the game's biggest hits vs the music). r:r662041
 
 ## 8. Pacing (pace, on the finished mp4)
 - **Hook**: the first word by **0.2 s** (BLOCK after 0.4 s); the picture moving from frame 1 (frozen first 0.3 s:
