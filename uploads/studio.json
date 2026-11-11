@@ -1,6 +1,448 @@
 {
- "_": "Subscribers gained per Short as YouTube Studio shows them (owner, by hand). YouTube Analytics' API lags 1-3 days; family_scores uses whichever count is higher. views: the public count on the same day.",
- "story_runaway": {"subs": 71, "views": 22390, "date": "2026-11-09"},
- "spot_wrong": {"subs": 50, "views": 20533, "date": "2026-11-09"},
- "lapse_castle": {"subs": 12, "views": 15769, "date": "2026-11-09"}
+ "_": "Per Short, from YouTube Studio via Claude in Chrome (docs/studio-metrics-prompt.md, scripts/studio_import.py) or by hand. subs/views feed family_scores (Studio's count beats the lagging API); the rest is for the numbers check.",
+ "story_runaway": {
+  "published": "2026-11-07T11:10",
+  "views": 24820,
+  "watch_hours": 134.4,
+  "subs_gained": 71,
+  "viewed_pct": 80.0,
+  "avg_view_s": 34,
+  "avg_pct_viewed": 93.7,
+  "retention_pct": {
+   "1s": 148,
+   "3s": 126,
+   "mid": 90,
+   "end": 73
+  },
+  "retention_notes": "starts ~172%; drop 7pts at 1.5s, 5pts at 2.2s; strong hold to end (73%)",
+  "likes": 433,
+  "comments": 14,
+  "shares": 4,
+  "traffic_pct": {
+   "shorts_feed": 97.1,
+   "search": 2.2,
+   "channel_pages": 0.2,
+   "browse": 0,
+   "external": 0,
+   "other": 0.5
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": 96,
+  "subscribed_pct": 0.0,
+  "top_countries": {
+   "US": 31.4,
+   "PH": 19.9,
+   "IN": 7.3
+  },
+  "top_age": "35-44",
+  "subs": 71,
+  "date": "2026-11-10"
+ },
+ "spot_wrong": {
+  "published": "2026-11-07T20:23",
+  "views": 25597,
+  "watch_hours": 116.3,
+  "subs_gained": 52,
+  "viewed_pct": 73.7,
+  "avg_view_s": 30,
+  "avg_pct_viewed": 89.7,
+  "retention_pct": {
+   "1s": 148,
+   "3s": 119,
+   "mid": 81,
+   "end": 59
+  },
+  "retention_notes": "starts ~165%; biggest drop 12pts at 1.4s (to 136%), then 5pts at 1.6s",
+  "likes": 308,
+  "comments": 10,
+  "shares": 1,
+  "traffic_pct": {
+   "shorts_feed": 97.8,
+   "search": 1.8,
+   "channel_pages": 0.2,
+   "browse": 0,
+   "external": 0,
+   "other": 0.2
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": 88,
+  "subscribed_pct": 0.1,
+  "top_countries": {
+   "ID": 19.0,
+   "US": 12.3,
+   "PH": 9.0
+  },
+  "top_age": "25-34",
+  "subs": 52,
+  "date": "2026-11-10"
+ },
+ "lapse_castle": {
+  "published": "2026-11-07T00:13",
+  "views": 16174,
+  "watch_hours": 69.0,
+  "subs_gained": 13,
+  "viewed_pct": 79.4,
+  "avg_view_s": 25,
+  "avg_pct_viewed": 80.4,
+  "retention_pct": {
+   "1s": 133,
+   "3s": 118,
+   "mid": 76,
+   "end": 56
+  },
+  "retention_notes": "starts ~155%; drops 4pts at 5.0s and 6.0s (to ~98%)",
+  "likes": 173,
+  "comments": 5,
+  "shares": 4,
+  "traffic_pct": {
+   "shorts_feed": 95.7,
+   "search": 3.5,
+   "channel_pages": 0.2,
+   "browse": 0,
+   "external": 0,
+   "other": 0.6
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": 98,
+  "subscribed_pct": 0.1,
+  "top_countries": {
+   "US": 17.4,
+   "ID": 13.5,
+   "IN": 7.4
+  },
+  "top_age": "25-34",
+  "subs": 13,
+  "date": "2026-11-10"
+ },
+ "spot_wrong_3": {
+  "published": "2026-11-10T18:54",
+  "views": 1184,
+  "watch_hours": 5.2,
+  "subs_gained": 1,
+  "viewed_pct": 56.4,
+  "avg_view_s": 28,
+  "avg_pct_viewed": 92.9,
+  "retention_pct": {
+   "1s": null,
+   "3s": null,
+   "mid": null,
+   "end": null
+  },
+  "retention_notes": "Studio: retention not ready yet (processing up to 2 days)",
+  "likes": 10,
+  "comments": 0,
+  "shares": null,
+  "traffic_pct": {
+   "shorts_feed": 96.4,
+   "search": 2.1,
+   "channel_pages": 0.3,
+   "browse": 0,
+   "external": 0,
+   "other": 1.3
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.0,
+  "top_countries": {},
+  "top_age": null,
+  "notes": "external = 0.2% (Creator Studio) is inside 'other'",
+  "subs": 1,
+  "date": "2026-11-10"
+ },
+ "story_torch": {
+  "published": "2026-11-10T15:15",
+  "views": 2306,
+  "watch_hours": 9.7,
+  "subs_gained": 3,
+  "viewed_pct": 76.5,
+  "avg_view_s": 22,
+  "avg_pct_viewed": null,
+  "retention_pct": {
+   "1s": null,
+   "3s": null,
+   "mid": null,
+   "end": null
+  },
+  "retention_notes": "Studio: retention not ready yet (processing up to 2 days)",
+  "likes": 43,
+  "comments": 0,
+  "shares": null,
+  "traffic_pct": {
+   "shorts_feed": 97.9,
+   "search": 1.6,
+   "channel_pages": 0.2,
+   "browse": 0,
+   "external": 0,
+   "other": 0.3
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.5,
+  "top_countries": {},
+  "top_age": null,
+  "subs": 3,
+  "date": "2026-11-10"
+ },
+ "spot_wrong_2": {
+  "published": "2026-11-10T10:25",
+  "views": 1822,
+  "watch_hours": 7.2,
+  "subs_gained": 0,
+  "viewed_pct": 58.5,
+  "avg_view_s": 24,
+  "avg_pct_viewed": null,
+  "retention_pct": {
+   "1s": null,
+   "3s": null,
+   "mid": null,
+   "end": null
+  },
+  "retention_notes": "Studio: retention not ready yet (processing up to 2 days)",
+  "likes": 28,
+  "comments": 7,
+  "shares": null,
+  "traffic_pct": {
+   "shorts_feed": 96.6,
+   "search": 1.8,
+   "channel_pages": 0.4,
+   "browse": 0,
+   "external": 0,
+   "other": 1.1
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.4,
+  "top_countries": {},
+  "top_age": null,
+  "subs": 0,
+  "date": "2026-11-10"
+ },
+ "story_respawn_tax": {
+  "published": "2026-11-09T18:29",
+  "views": 3436,
+  "watch_hours": 19.9,
+  "subs_gained": 6,
+  "viewed_pct": 77.6,
+  "avg_view_s": 34,
+  "avg_pct_viewed": 74.7,
+  "retention_pct": {
+   "1s": null,
+   "3s": null,
+   "mid": null,
+   "end": null
+  },
+  "retention_notes": "Studio: retention not ready yet (processing up to 2 days)",
+  "likes": 48,
+  "comments": 0,
+  "shares": 0,
+  "traffic_pct": {
+   "shorts_feed": 97.7,
+   "search": 1.8,
+   "channel_pages": 0.2,
+   "browse": 0,
+   "external": 0,
+   "other": 0.3
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.4,
+  "top_countries": {
+   "US": 78.3,
+   "PH": 4.6,
+   "IN": 3.9
+  },
+  "top_age": "13-17",
+  "subs": 6,
+  "date": "2026-11-10"
+ },
+ "chain_reaction": {
+  "published": "2026-11-09T14:12",
+  "views": 3222,
+  "watch_hours": 10.7,
+  "subs_gained": 4,
+  "viewed_pct": 59.2,
+  "avg_view_s": 27,
+  "avg_pct_viewed": 90.9,
+  "retention_pct": {
+   "1s": null,
+   "3s": null,
+   "mid": null,
+   "end": null
+  },
+  "retention_notes": "Studio: retention not ready yet (processing up to 2 days)",
+  "likes": 37,
+  "comments": 2,
+  "shares": 0,
+  "traffic_pct": {
+   "shorts_feed": 97.4,
+   "search": 1.7,
+   "channel_pages": 0.6,
+   "browse": 0,
+   "external": 0,
+   "other": 0.3
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.1,
+  "top_countries": {
+   "US": 27.6,
+   "ID": 16.0,
+   "PH": 9.0
+  },
+  "top_age": "25-34",
+  "subs": 4,
+  "date": "2026-11-10"
+ },
+ "ai_thin_ice": {
+  "published": "2026-11-09T10:09",
+  "views": 2518,
+  "watch_hours": 18.2,
+  "subs_gained": 0,
+  "viewed_pct": 60.9,
+  "avg_view_s": 43,
+  "avg_pct_viewed": null,
+  "retention_pct": {
+   "1s": null,
+   "3s": null,
+   "mid": null,
+   "end": null
+  },
+  "retention_notes": "Studio: retention not ready yet (processing up to 2 days)",
+  "likes": 41,
+  "comments": 3,
+  "shares": null,
+  "traffic_pct": {
+   "shorts_feed": 94.1,
+   "search": 3.8,
+   "channel_pages": 0.4,
+   "browse": 0,
+   "external": 0,
+   "other": 1.8
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.0,
+  "top_countries": {
+   "US": 55.2,
+   "PH": 4.2,
+   "GB": 2.9
+  },
+  "top_age": "13-17",
+  "subs": 0,
+  "date": "2026-11-10"
+ },
+ "lapse_house": {
+  "published": "2026-11-08T20:06",
+  "views": 3056,
+  "watch_hours": 15.2,
+  "subs_gained": 1,
+  "viewed_pct": 70.3,
+  "avg_view_s": 31,
+  "avg_pct_viewed": 102,
+  "retention_pct": {
+   "1s": 168,
+   "3s": 155,
+   "mid": 103,
+   "end": 85
+  },
+  "retention_notes": "starts ~184% (loops); drops 3pts at 1.8s and 5pts at 4.2s; ends 85%",
+  "likes": 30,
+  "comments": 0,
+  "shares": null,
+  "traffic_pct": {
+   "shorts_feed": 94.3,
+   "search": 4.8,
+   "channel_pages": 0.4,
+   "browse": 0,
+   "external": 0,
+   "other": 0.5
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.2,
+  "top_countries": {
+   "US": 62.8,
+   "ID": 5.8,
+   "IN": 5.5
+  },
+  "top_age": "13-17",
+  "subs": 1,
+  "date": "2026-11-10"
+ },
+ "guess_sound": {
+  "published": "2026-11-08T14:46",
+  "views": 1699,
+  "watch_hours": 5.9,
+  "subs_gained": 1,
+  "viewed_pct": 59.3,
+  "avg_view_s": 20,
+  "avg_pct_viewed": 60,
+  "retention_pct": {
+   "1s": 116,
+   "3s": 111,
+   "mid": 50,
+   "end": 17
+  },
+  "retention_notes": "steady slide all the way; drop 7pts at 5.0s to 96%; falls to ~17% by end (weakest ending)",
+  "likes": 18,
+  "comments": 4,
+  "shares": null,
+  "traffic_pct": {
+   "shorts_feed": 94.2,
+   "search": 3.6,
+   "channel_pages": 1.5,
+   "browse": 0,
+   "external": 0,
+   "other": 0.8
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.2,
+  "top_countries": {
+   "US": 84.6,
+   "IN": 1.3,
+   "PH": 1.2
+  },
+  "top_age": "13-17",
+  "subs": 1,
+  "date": "2026-11-10"
+ },
+ "clutch_harder": {
+  "published": "2026-11-08T12:14",
+  "views": 9432,
+  "watch_hours": 21.6,
+  "subs_gained": 6,
+  "viewed_pct": 81.0,
+  "avg_view_s": 26,
+  "avg_pct_viewed": 83,
+  "retention_pct": {
+   "1s": 135,
+   "3s": 113,
+   "mid": 74,
+   "end": 54
+  },
+  "retention_notes": "starts ~160%; drop 7pts at 1.3s; drop 9pts in final second to ~52%",
+  "likes": 37,
+  "comments": 6,
+  "shares": 0,
+  "traffic_pct": {
+   "shorts_feed": 97.1,
+   "search": 1.8,
+   "channel_pages": 0.5,
+   "browse": 0,
+   "external": 0,
+   "other": 0.6
+  },
+  "shown_in_feed": null,
+  "new_viewers_pct": null,
+  "subscribed_pct": 0.2,
+  "top_countries": {
+   "US": 35.5,
+   "IN": 10.3,
+   "ID": 9.0
+  },
+  "top_age": "25-34",
+  "subs": 6,
+  "date": "2026-11-10"
+ }
 }
