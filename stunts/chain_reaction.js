@@ -54,7 +54,7 @@ module.exports = {
   botTimeout: 360,
   edit: {
     caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
-    startAt: 'press:-0.5', endAfter: 'settle:0.3',   // (once the whole pile's blasts and smoke are done: lib/settle.js)
+    startAt: 'press:-0.5', endAfter: 'settle:-0.4',   // (the pile's blasts and debris done; the eyes drift until 1.5 s after the last blast, the settle waits 2.2 s: ending later parked the camera)
     // the payoff pace times is the pile's LAST blast, 1.05 s after giant_peak on this take: a flash, a punch, the song
     // dipped, the game ducked and an impact there (pace: no hit and no picture change on it). Re-check after a re-record
     flash: [['giant_peak:1.05', 0, 0.7]], punch: [['giant_peak:1.05', 0, 1.12]],
