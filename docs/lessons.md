@@ -83,6 +83,20 @@ How the work itself went wrong, and the rule now:
 - **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
   they depend on.
 
+## Cells (lib/cells.js, cells_lab, 2026-11-11)
+- **A slime-block launcher needs an immovable collar.** Slime sticks to every pushable neighbour, so a 2x2 slime pad in a
+  concrete tube took the walls along and the push failed (more than 12 blocks): nothing launched. Obsidian round the
+  slime's two heights (slime ignores immovable blocks); glass sticks too.
+- **Whole-number /summon coordinates are centred on the block.** A golem summoned at `362 112 -72` for a 2x2 tube landed
+  at 362.5/-71.5, half inside the wall, and suffocated. Write decimals (`362.00`) for a corner.
+- **The server moves a mob every 3rd tick; the vanilla client eases it.** A launched golem flew in 2.4-block steps at
+  6.7 Hz (rec_check: teleport), a piston-shoved cow jumped a block. `stunt.lerpMobs: true` records mobs as the client
+  draws them (lib/motion.js lerpStep). Opt-in: older stunts stay as recorded.
+- **Power a machine from under the floor with a torch.** A redstone block swapped into the floor under a piston showed
+  through as a red sliver; a redstone torch two below strongly powers the floor block, which powers what stands on it.
+- **A sealed lab lit only by block light reads brown**; a glass roof (sky light) makes it the clean white lab.
+- **A dispenser shooting eggs at a chicken hatches chicks** (vanilla's 1 in 8): 6 in 25 s, a free running gag.
+
 ## Owner preferences and format
 - Owner decisions live in README "Owner decisions". Highlights: "close match is fine"; skip the
   real Minecraft client (no account/login anywhere); bake recognisable songs in (Shorts stay

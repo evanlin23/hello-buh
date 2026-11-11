@@ -22,6 +22,7 @@ FAMILIES = [
     ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
     ("inside", lambda n: n.startswith("inside_")),
     ("desire", lambda n: n.startswith("desire_")),
+    ("cells", lambda n: n.startswith("cells_")),
 ]
 
 
