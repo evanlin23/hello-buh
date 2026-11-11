@@ -39,13 +39,13 @@ module.exports = {
       ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
       ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast
-      ['gone', 'permanently 💀', 1.5, 0]
+      ['gone', 'permanently', 1.5, 0]   // (the subtitle font has no emoji: it drew a box)
     ],
-    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch and push-in on his
-    // death puff, a song dip + impact on it, a pop on the opening (pace)
-    speed: [['fuse_a', 'fuse_b', 'cut']],
-    flash: [['ring_boom', 0, 0.5], ['gone', 0, 0.4]], punch: [['ring_boom', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'ring_boom', 0.3], ['impact', 'ring_boom'], ['pop', 'gone']]
+    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
+    // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
+    flash: [['mob_death', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death', 0, 1.3]],   // (a 0.5 flash and a 1.1 punch were lost in the smoke: pace) zoom: [['ring_boom', 'end', 1.3]],
+    sfx: [['pop', 'beat'], ['dip', 'mob_death', 0.4], ['impact', 'mob_death', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {
