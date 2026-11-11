@@ -13,5 +13,5 @@ module.exports = pixelArt({
   wall: 'smooth_stone',
   caption: 'rate my pixel art 1-10 😭',
   // r:r0f3da0: frame 0 is the black face already on the wall (the eyes and mouth: a creeper at a glance), not the bare grey wall
-  edit: { caption: 'rate my pixel art 1-10 😭', dropAt: 'complete', startAt: 'stage:0.75', endAfter: 'complete:0.9' }
+  edit: { caption: 'rate my pixel art 1-10 😭', dropAt: 'complete', startAt: 'stage:0.75', endAfter: 'complete:0.7' }   // r:r188b46: 0.7 s after the last block (was 0.9)
 })

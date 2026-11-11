@@ -33,7 +33,7 @@ module.exports = {
   expectDeath: true,
   edit: {
     caption: 'never dig straight down 💀', red: 'never', dropAt: 'l5',
-    onFire: 'in_lava:death', deathScreen: true, endAfter: 'death:1.6',
+    onFire: 'in_lava:death', deathScreen: true, endAfter: 'death:0.8',   // r:r188b46 (was 1.6)
     // opens 0.35 s before the first crack (from dig0 the first 2.3 s were the setup's cut pit wall and a slow tilt
     // down over grass under "just digging down...": independent review 2026-11-11)
     startAt: 'dig0:1.9',
