@@ -65,6 +65,7 @@ module.exports = {
     caption: 'minecraft friendships in 3 stages 💀',
     red: '3 stages',
     payoff: 'crater',      // your eyes on the crater, after the chain has settled
+    dip: 0.6,              // (mixcheck r3: the chain's tail still rang 0.4 s before the cut: a longer duck)
     endAfter: 'crater:1.0',   // settle-ok: the crater cut comes after the chain has settled
     speed: [
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
@@ -73,7 +74,7 @@ module.exports = {
       ['chain_end', 'crater', 2],
       ['notice', 'boom', 1.5]        // his look down, at you and the run (the fuse: no turns of ours, fixed cameras)     // the smoke settling at 2x (no turns: the wide is a fixed camera)
     ],
-    sfx: [['air', 'ch2', 'crater', { gain: 0.5 }], ['dip', 'push', 0.3], ['hit', 'push', { gain: 1.6 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
+    sfx: [['air', 'ch2', 'crater', { gain: 0.5 }], ['dip', 'push', 0.3], ['hit', 'push', { gain: 1.6 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }], ['boom', 'crater', { gain: 0.8 }]],
     extra: {
       deathScreen: true,
       punch: [['push', 0, 1.06], ['lever', 0, 1.05]],
