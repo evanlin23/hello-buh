@@ -63,7 +63,7 @@ function course (b) {
   b.fill(28, 1, -6, 28, 1, 6, 'oak_fence'); b.fill(40, 1, -6, 40, 1, 6, 'oak_fence')
   b.set(28, 1, 4, 'oak_fence_gate[facing=west]')
   b.fill(29, 0, -5, 39, 0, 5, b.mix({ coarse_dirt: 2, dirt: 1, grass_block: 2 }))
-  b.set(34, 1, -5, 'hay_block'); b.set(35, 1, -5, 'hay_block'); b.set(34, 2, -5, 'hay_block')
+  b.set(38, 1, 4, 'hay_block'); b.set(38, 1, 3, 'hay_block'); b.set(38, 2, 4, 'hay_block')   // (the back corner: out of the pen shot's line)
   b.fill(31, 0, 4, 33, 0, 4, 'water'); b.set(30, 1, 4, 'composter')
   // the road and its lamp posts
   b.fill(46, 0, -1, 70, 0, 1, b.mix({ dirt_path: 5, coarse_dirt: 1 }))
@@ -167,7 +167,7 @@ module.exports = {
     // the hook: low in the grass beside the start, on the baby zombie; it bolts past the lens
     intro: { at: [6.2, 1.35, 1.9], look: [2.4, 1.15, 0.5], fov: 55, push: 0, drift: 0.4 },
     // the pen from the side, high: a tiny zombie through a pen of pigs
-    pen: { at: [34.5, 3.6, -12.5], look: [34.5, 1.0, 0.5], fov: 72, push: 0, drift: 0.3 }
+    pen: { at: [34.5, 3.4, -8.8], look: [34.5, 0.6, 0.5], fov: 70, push: 0, drift: 0.3 }
   },
   edit: mobpovEdit({
     caption: CAPTION,
@@ -234,9 +234,10 @@ module.exports = {
     // 1. the hook: it sees you, it squeaks, it's gone
     R.cut(at(2.5, 1, 0.5), EAST, 0)
     R.shot('intro')
+    await R.hold(2)                                // (the edit opens 1 frame before 'go': keep the parked view out of it)
     ctx.mark('go')
     ctx.sound('entity.zombie.ambient', 1, 1.75, { key: true })
-    await R.hold(6)
+    await R.hold(5)
     await R.dash(at(5.0, 1, 0.5), { speed: 1.25, accel: 4, bore: null })
     // 2. its eyes: straight through the wall
     R.shot('pov')
@@ -251,16 +252,19 @@ module.exports = {
     ctx.mark('leg'); R.cut(at(98.5, 4.6, 0.5), EAST, -62 * DEG)
     await R.hold(3)
     ctx.sound('entity.zombie.ambient', 1, 1.9)
-    await R.dash(at(98.5, -46, 0.5), { speed: 1.4, accel: 3, decel: 7, bore: { w: 3, lead: 2.0 }, knock: false, steps: 0, faceIt: false })
+    // once through the cave's ceiling (y -31) it starts lifting its eyes off the floor: the pitch rate builds 1.5 deg a
+    // tick up to 6 (120 deg/s), toward -30
+    let lift = 0
+    const lookUp = (k, p) => { if (p.y < O.y - 31) { lift = Math.min(6, lift + 1.5); R.pitch = Math.min(-30 * DEG, R.pitch + lift * DEG) } }
+    await R.dash(at(98.5, -46, 0.5), { speed: 1.4, accel: 3, decel: 4, bore: { w: 3, lead: 2.0 }, knock: false, steps: 0, faceIt: false, onTick: lookUp })
     ctx.mark('landed')
     ctx.sound('entity.generic.big_fall', 1, 1.3)
     ctx.sound('block.netherrack.break', 0.8, 0.8)
     ctx.particles('block', at(98, -47, 0), { block: 'netherrack' })
-    await R.hold(4)
     // 6. it looks up: 56e, by his portal (a little to the right: the look-up turns onto him, eased)
     const land = at(98.5, -46, 0.5), guy = at(GUY.x, -46, GUY.z), toGuy = guy.minus(land)
     const yawGuy = Math.atan2(-toGuy.x, -toGuy.z)
-    await R.turn(yawGuy, -4 * DEG, 16)
+    await R.turn(yawGuy, -4 * DEG, 10)
     ctx.mark('found')
     ctx.sound('entity.zombie.ambient', 1, 1.8, { key: true })
     await R.hold(10)
