@@ -26,9 +26,12 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
-    speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
-    // 'nope' and 'wait...' both sat on 28.4 s and drew over each other: nope first, wait... on its own mark
-    subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['gem', 'emerald?', 1.0, 0], ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]]
+    // the short cut (lead 2026-11-11: as short as it reads, ~8-20 s): 1, 10, 100, 200 and the crowd behind; the 5,
+    // 20 (emerald) and 50 crowds are recorded but cut out whole
+    speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut']],
+    subs: [...[0, 2, 5, 6].map(i => ['beat', CROWDS[i].sub, 1.6, i]), ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]],
+    punch: [['behind', 0, 1.08]],                 // the payoff: every head snaps round (pace: a picture change on it)
+    sfx: [['air', 'start', 'behind', { gain: 0.5 }]]   // room tone from frame 1 (the first sound was at 0.8 s)
   },
 
   async setup (ctx) {
