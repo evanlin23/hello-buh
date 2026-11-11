@@ -1,0 +1,27 @@
+{
+ "stunt_b": {
+  "published": "2026-11-09T12:00",
+  "views": 1204,
+  "subs_gained": 3,
+  "viewed_pct": "71.5%",
+  "avg_pct_viewed": 88,
+  "retention_pct": {
+   "3s": 110
+  },
+  "traffic_pct": {
+   "shorts_feed": 95.5
+  },
+  "subs": 3,
+  "date": "2026-11-11"
+ },
+ "stunt_a": {
+  "published": "2026-11-08T09:00",
+  "views": 3400,
+  "subs_gained": 10,
+  "viewed_pct": 80,
+  "avg_pct_viewed": null,
+  "subs": 10,
+  "date": "2026-11-11"
+ },
+ "_": "Per Short, from YouTube Studio via Claude in Chrome (docs/studio-metrics-prompt.md, scripts/studio_import.py) or by hand. subs/views feed family_scores (Studio's count beats the lagging API); the rest is for the numbers check."
+}
