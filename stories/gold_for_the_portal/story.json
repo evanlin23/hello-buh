@@ -141,7 +141,8 @@
     "word": "PORTAL"
    },
    "direction": "hit only PORTAL; the rest level and quick",
-   "note": "one continuous phrase: no breath or stop before 'nine thousand' (owner v2 note)"
+   "note": "one continuous phrase: no breath or stop before 'nine thousand' (owner v2 note)",
+   "punch": true
   },
   {
    "id": "L02",
@@ -219,7 +220,8 @@
     "what": "Grandma",
     "word": "NEVER"
    },
-   "direction": "hit only BACK; the rest level and quick"
+   "direction": "hit only BACK; the rest level and quick",
+   "punch": true
   },
   {
    "id": "L08",
@@ -279,7 +281,8 @@
      "word": "ALL"
     }
    ],
-   "direction": "hit only WAITED and OUT; the rest level and quick"
+   "direction": "hit only WAITED and OUT; the rest level and quick",
+   "punch": true
   }
  ],
  "shots": [
