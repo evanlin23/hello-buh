@@ -7,8 +7,8 @@ const dropper = require('../lib/dropper')
 
 module.exports = dropper.make({
   name: 'dropper_rainbow',
-  caption: 'the tallest dropper in Minecraft 😳',
-  red: 'tallest',
+  caption: "I'm NEVER beating this dropper 😭",   // a reaction, not a label (owner r:r0f3da0); attempt #47 answers it
+  red: 'NEVER',
   walls: ['cyan_concrete', 'light_blue_concrete', 'blue_concrete', 'purple_concrete', 'magenta_concrete', 'pink_concrete'],
   layers: [
     { depth: 50, block: 'white_concrete', holes: [[-1, -4, 1, -2]] },
