@@ -50,7 +50,7 @@ module.exports = {
   idleLife: true,
   look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11 (main 2c6e5426: the story default, rolls off the brightest highlights): stories are bright and punchy (r:rd13834, STANDARDS); was the dusky grade
   shots: {},   // below (module.exports.shots)
-  edit: { caption: CAPTION, red: 'home', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], punchStress: true },
+  edit: { caption: CAPTION, red: 'home', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], flash: ['raidbar'], punchStress: true, keySounds: ['horn'] },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -428,7 +428,7 @@ module.exports = {
     await K.line('L09', async (k, at) => {
       const s = G[GB]
       if (k === 2) { put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle'); M.pose(ctx, GA, 'sit') }   // S11's Grandpa on his bench (out of this shot)
-      if (k === at(1) - 2) sound('event.raid.horn', 1.2, 1)
+      if (k === at(1) - 2) { sound('event.raid.horn', 40, 1); ctx.mark('horn') }   // a raid horn off up the road (vanilla's file volume is 0.01: the game plays the horn at 64; 40 = farther off)
       if (k >= at(1) && k < at(2)) s.yaw = Math.max(gate.yaw, s.yaw - 10)
       if (k >= at(2) && k < at(3)) { s.yaw = Math.min(gate.yaw + 100, s.yaw + 12); s.pitch = Math.sin((k - at(2)) / 10 * Math.PI) * 10 }
       if (k === at(3) + 2) swing(GB)
@@ -497,7 +497,7 @@ module.exports = {
       if (k === E) {   // S13: the cut (on the spot, a step forward) to the road; the horn on its frame
         say('/effect clear @s')
         await K.cut(0.9, 0.55, P(19, 2.0, 5.5), 1, { time: TIMES.S13, shot: 's13' })   // S13: over my shoulder (not a second POV in a row: audit addendum)
-        sound('event.raid.horn', 2.2, 1)
+        sound('event.raid.horn', 64, 1); ctx.mark('horn')   // THE payoff sound: vanilla's raid volume (64 x the file's 0.01), a key sound over the music
         K.go(true)   // a step forward through the gate, toward them
         put(GB, 2.6, 6.2, 180, 0); hold(GB, 'crossbow')            // Grandpa, outside the palisade south of the gate, off frame right
       }

@@ -25,7 +25,7 @@
       "heroic",
       "heroic"
     ],
-    "payoff_in_short_s": 40.9,
+    "payoff_in_short_s": 40.85,
     "mix": "scripts/story_audio.py (docs/audio.md)",
     "mixed_in": "edit"
   },
@@ -36,21 +36,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 61146841,
-    "sha256": "9d552d45ea16d81b5346bbaa401b0af98e610b2f392acf40112fca3749ce2bae",
+    "bytes": 60519149,
+    "sha256": "68936f0c0590a42b4b1870e93e4b0472ec12561c046d98f319d91441974aade8",
     "release": {
       "tag": "pkg-story_thirty_one_raids",
-      "asset": "story_thirty_one_raids.short.9d552d45ea16d81b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short.9d552d45ea16d81b.mp4",
-      "sha256": "9d552d45ea16d81b5346bbaa401b0af98e610b2f392acf40112fca3749ce2bae",
-      "bytes": 61146841
+      "asset": "story_thirty_one_raids.short.68936f0c0590a42b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short.68936f0c0590a42b.mp4",
+      "sha256": "68936f0c0590a42b4b1870e93e4b0472ec12561c046d98f319d91441974aade8",
+      "bytes": 60519149
     },
     "nosong_release": {
       "tag": "pkg-story_thirty_one_raids",
-      "asset": "story_thirty_one_raids.short_nosong.9d552d45ea16d81b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short_nosong.9d552d45ea16d81b.mp4",
-      "sha256": "9d552d45ea16d81b5346bbaa401b0af98e610b2f392acf40112fca3749ce2bae",
-      "bytes": 61146841
+      "asset": "story_thirty_one_raids.short_nosong.68936f0c0590a42b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short_nosong.68936f0c0590a42b.mp4",
+      "sha256": "68936f0c0590a42b4b1870e93e4b0472ec12561c046d98f319d91441974aade8",
+      "bytes": 60519149
     }
   },
   "edit": {
@@ -62,7 +62,13 @@
     "punch": [
       "raidbar"
     ],
+    "flash": [
+      "raidbar"
+    ],
     "punchStress": true,
+    "keySounds": [
+      "horn"
+    ],
     "args": [
       "--caption",
       "Thirty-one raids. Every one started the night Grandpa came home",
@@ -74,6 +80,8 @@
       "[\"raidbar\"]",
       "--punch_stress",
       "[[\"L01\",3.04,0.07],[\"L08\",2.82,0.07],[\"L11\",2.74,0.07]]",
+      "--flash",
+      "[\"raidbar\"]",
       "--chat_align",
       "center",
       "--story",
@@ -96,8 +104,8 @@
       "y": 71,
       "z": -485
     },
-    "ticks": 986,
-    "seconds": 49.3,
+    "ticks": 988,
+    "seconds": 49.4,
     "deaths": 0,
     "events": [
       {
@@ -121,124 +129,120 @@
         "event": "time"
       },
       {
-        "t": 1.2,
+        "t": 1.3,
         "event": "line"
       },
       {
-        "t": 1.55,
+        "t": 1.65,
         "event": "ent_swing"
       },
       {
-        "t": 4.7,
+        "t": 4.75,
         "event": "shot"
       },
       {
-        "t": 4.7,
+        "t": 4.75,
         "event": "cut"
       },
       {
-        "t": 4.7,
+        "t": 4.75,
         "event": "time"
       },
       {
-        "t": 4.8,
+        "t": 4.85,
         "event": "pose"
       },
       {
-        "t": 4.8,
+        "t": 4.85,
         "event": "line"
       },
       {
-        "t": 7.05,
+        "t": 7.1,
         "event": "cut"
       },
       {
-        "t": 7.05,
+        "t": 7.1,
         "event": "time"
       },
       {
-        "t": 7.05,
+        "t": 7.1,
         "event": "shot"
       },
       {
-        "t": 7.2,
+        "t": 7.25,
         "event": "ent_swing"
       },
       {
-        "t": 7.8,
-        "event": "ent_swing"
-      },
-      {
-        "t": 8.4,
+        "t": 7.85,
         "event": "ent_swing"
       },
       {
         "t": 8.45,
+        "event": "ent_swing"
+      },
+      {
+        "t": 8.55,
         "event": "line"
       },
       {
-        "t": 9.05,
-        "event": "ent_swing"
-      },
-      {
-        "t": 9.65,
+        "t": 9.15,
         "event": "ent_swing"
       },
       {
         "t": 9.75,
-        "event": "cut"
-      },
-      {
-        "t": 9.75,
-        "event": "shot"
-      },
-      {
-        "t": 10.25,
         "event": "ent_swing"
       },
       {
-        "t": 10.85,
-        "event": "ent_swing"
-      },
-      {
-        "t": 11.4,
-        "event": "actor"
-      },
-      {
-        "t": 11.4,
-        "event": "actor"
-      },
-      {
-        "t": 11.4,
-        "event": "actor"
-      },
-      {
-        "t": 11.4,
-        "event": "actor"
-      },
-      {
-        "t": 11.45,
-        "event": "shot"
-      },
-      {
-        "t": 11.45,
+        "t": 9.85,
         "event": "cut"
       },
       {
-        "t": 11.45,
+        "t": 9.85,
+        "event": "shot"
+      },
+      {
+        "t": 10.35,
+        "event": "ent_swing"
+      },
+      {
+        "t": 10.95,
+        "event": "ent_swing"
+      },
+      {
+        "t": 11.5,
+        "event": "actor"
+      },
+      {
+        "t": 11.55,
+        "event": "actor"
+      },
+      {
+        "t": 11.55,
+        "event": "actor"
+      },
+      {
+        "t": 11.55,
+        "event": "actor"
+      },
+      {
+        "t": 11.55,
+        "event": "shot"
+      },
+      {
+        "t": 11.55,
+        "event": "cut"
+      },
+      {
+        "t": 11.55,
         "event": "time"
       },
       {
-        "t": 11.55,
+        "t": 11.65,
         "event": "pose_off"
       },
       {
-        "t": 11.55,
+        "t": 11.65,
         "event": "line"
-      },
-      {
-        "t": 12.25,
-        "event": "vel"
       },
       {
         "t": 12.35,
@@ -257,36 +261,28 @@
         "event": "vel"
       },
       {
-        "t": 13.1,
+        "t": 12.75,
+        "event": "vel"
+      },
+      {
+        "t": 13.2,
         "event": "shot"
       },
       {
-        "t": 13.1,
+        "t": 13.2,
         "event": "cut"
       },
       {
-        "t": 13.1,
+        "t": 13.2,
         "event": "time"
       },
       {
-        "t": 13.2,
+        "t": 13.3,
         "event": "pose"
       },
       {
-        "t": 13.2,
-        "event": "line"
-      },
-      {
-        "t": 13.2,
-        "event": "vel"
-      },
-      {
-        "t": 13.25,
-        "event": "vel"
-      },
-      {
         "t": 13.3,
-        "event": "vel"
+        "event": "line"
       },
       {
         "t": 13.35,
@@ -318,22 +314,26 @@
       },
       {
         "t": 13.7,
-        "event": "ent_swing"
+        "event": "vel"
+      },
+      {
+        "t": 13.7,
+        "event": "vel"
+      },
+      {
+        "t": 13.75,
+        "event": "vel"
       },
       {
         "t": 13.8,
+        "event": "ent_swing"
+      },
+      {
+        "t": 13.95,
         "event": "vel"
       },
       {
-        "t": 13.85,
-        "event": "vel"
-      },
-      {
-        "t": 14,
-        "event": "vel"
-      },
-      {
-        "t": 14.1,
+        "t": 14.05,
         "event": "vel"
       },
       {
@@ -341,372 +341,380 @@
         "event": "vel"
       },
       {
-        "t": 14.2,
+        "t": 14.25,
         "event": "vel"
       },
       {
-        "t": 14.9,
+        "t": 15,
         "event": "ent_swing"
       },
       {
-        "t": 15.65,
+        "t": 15.75,
         "event": "shot"
-      },
-      {
-        "t": 17.8,
-        "event": "shot"
-      },
-      {
-        "t": 17.8,
-        "event": "cut"
-      },
-      {
-        "t": 17.8,
-        "event": "time"
       },
       {
         "t": 17.9,
+        "event": "shot"
+      },
+      {
+        "t": 17.9,
+        "event": "cut"
+      },
+      {
+        "t": 17.9,
+        "event": "time"
+      },
+      {
+        "t": 18,
         "event": "pose_off"
       },
       {
-        "t": 17.9,
+        "t": 18,
         "event": "line"
       },
       {
-        "t": 19.9,
+        "t": 20,
         "event": "cut"
       },
       {
-        "t": 19.9,
+        "t": 20,
         "event": "time"
       },
       {
-        "t": 19.9,
+        "t": 20,
         "event": "shot"
       },
       {
-        "t": 20.1,
+        "t": 20.2,
         "event": "ent_swing"
       },
       {
-        "t": 21.9,
+        "t": 22,
         "event": "cut"
       },
       {
-        "t": 21.9,
+        "t": 22,
         "event": "f1_off"
       },
       {
-        "t": 21.9,
+        "t": 22,
         "event": "shot"
       },
       {
-        "t": 22,
+        "t": 22.1,
         "event": "swing"
       },
       {
-        "t": 22,
+        "t": 22.1,
         "event": "container",
         "type": "minecraft:generic_9x3"
       },
       {
-        "t": 22,
+        "t": 22.1,
         "event": "block_action"
       },
       {
-        "t": 22.05,
+        "t": 22.15,
         "event": "gui_freeze"
       },
       {
-        "t": 22.2,
+        "t": 22.3,
         "event": "block_action"
       },
       {
-        "t": 22.45,
+        "t": 22.55,
         "event": "block_action"
       },
       {
-        "t": 22.7,
+        "t": 22.8,
         "event": "block_action"
       },
       {
-        "t": 22.95,
+        "t": 23.05,
         "event": "block_action"
       },
       {
-        "t": 23.2,
+        "t": 23.3,
         "event": "block_action"
       },
       {
-        "t": 23.45,
+        "t": 23.55,
         "event": "block_action"
       },
       {
-        "t": 23.7,
+        "t": 23.8,
         "event": "block_action"
       },
       {
-        "t": 23.95,
+        "t": 24.05,
         "event": "block_action"
       },
       {
-        "t": 24.2,
+        "t": 24.25,
         "event": "block_action"
       },
       {
-        "t": 24.45,
+        "t": 24.5,
         "event": "block_action"
       },
       {
-        "t": 24.7,
+        "t": 24.75,
         "event": "block_action"
       },
       {
-        "t": 24.95,
+        "t": 25,
         "event": "block_action"
       },
       {
-        "t": 25.05,
+        "t": 25.15,
         "event": "container_close"
       },
       {
-        "t": 25.1,
+        "t": 25.15,
+        "event": "block_action"
+      },
+      {
+        "t": 25.2,
         "event": "gui_thaw"
       },
       {
-        "t": 25.1,
+        "t": 25.25,
         "event": "block_action"
-      },
-      {
-        "t": 25.2,
-        "event": "f1_on"
-      },
-      {
-        "t": 25.2,
-        "event": "shot"
-      },
-      {
-        "t": 25.2,
-        "event": "cut"
-      },
-      {
-        "t": 25.2,
-        "event": "block_action"
-      },
-      {
-        "t": 25.2,
-        "event": "time"
       },
       {
         "t": 25.3,
-        "event": "line"
-      },
-      {
-        "t": 25.6,
-        "event": "pose"
-      },
-      {
-        "t": 26.7,
-        "event": "pose_off"
-      },
-      {
-        "t": 27.4,
-        "event": "shot"
-      },
-      {
-        "t": 27.4,
-        "event": "cut"
-      },
-      {
-        "t": 27.55,
-        "event": "line"
-      },
-      {
-        "t": 30.75,
-        "event": "line"
-      },
-      {
-        "t": 30.85,
-        "event": "pose"
-      },
-      {
-        "t": 33.9,
-        "event": "ent_swing"
-      },
-      {
-        "t": 35.25,
-        "event": "shot"
-      },
-      {
-        "t": 35.25,
-        "event": "cut"
-      },
-      {
-        "t": 35.25,
-        "event": "time"
-      },
-      {
-        "t": 35.35,
-        "event": "line"
-      },
-      {
-        "t": 37.65,
-        "event": "cut"
-      },
-      {
-        "t": 37.65,
-        "event": "time"
-      },
-      {
-        "t": 37.65,
-        "event": "f1_off"
-      },
-      {
-        "t": 37.65,
-        "event": "shot"
-      },
-      {
-        "t": 37.75,
-        "event": "line"
-      },
-      {
-        "t": 37.95,
-        "event": "use_start"
-      },
-      {
-        "t": 39.5,
-        "event": "effect"
-      },
-      {
-        "t": 39.55,
-        "event": "use_stop"
-      },
-      {
-        "t": 39.65,
-        "event": "effect_end"
-      },
-      {
-        "t": 40.7,
-        "event": "actor"
-      },
-      {
-        "t": 40.7,
-        "event": "actor"
-      },
-      {
-        "t": 40.7,
-        "event": "actor"
-      },
-      {
-        "t": 40.7,
-        "event": "actor"
-      },
-      {
-        "t": 40.7,
-        "event": "actor"
-      },
-      {
-        "t": 40.7,
-        "event": "actor"
-      },
-      {
-        "t": 40.9,
-        "event": "cut"
-      },
-      {
-        "t": 40.9,
-        "event": "effect_end"
-      },
-      {
-        "t": 40.9,
-        "event": "effect_end"
-      },
-      {
-        "t": 40.9,
-        "event": "time"
-      },
-      {
-        "t": 40.9,
         "event": "f1_on"
       },
       {
-        "t": 40.9,
+        "t": 25.3,
         "event": "shot"
       },
       {
-        "t": 41.1,
-        "event": "bossbar"
+        "t": 25.3,
+        "event": "cut"
       },
       {
-        "t": 41.15,
-        "event": "motion_warn"
+        "t": 25.3,
+        "event": "time"
       },
       {
-        "t": 41.2,
-        "event": "bossbar"
+        "t": 25.4,
+        "event": "line"
       },
       {
-        "t": 41.3,
-        "event": "bossbar"
+        "t": 25.7,
+        "event": "pose"
       },
       {
-        "t": 41.4,
-        "event": "bossbar"
+        "t": 26.8,
+        "event": "pose_off"
       },
       {
-        "t": 41.5,
-        "event": "bossbar"
+        "t": 27.5,
+        "event": "shot"
       },
       {
-        "t": 41.6,
-        "event": "bossbar"
+        "t": 27.5,
+        "event": "cut"
       },
       {
-        "t": 41.7,
-        "event": "bossbar"
+        "t": 27.6,
+        "event": "line"
       },
       {
-        "t": 41.8,
-        "event": "bossbar"
+        "t": 30.8,
+        "event": "line"
       },
       {
-        "t": 41.9,
-        "event": "bossbar"
+        "t": 30.9,
+        "event": "pose"
       },
       {
-        "t": 42,
-        "event": "motion_warn"
+        "t": 31.65,
+        "event": "horn"
       },
       {
-        "t": 42,
-        "event": "bossbar"
-      },
-      {
-        "t": 42,
+        "t": 33.95,
         "event": "ent_swing"
       },
       {
-        "t": 42.1,
-        "event": "motion_warn"
+        "t": 35.3,
+        "event": "shot"
       },
       {
-        "t": 42.1,
+        "t": 35.3,
+        "event": "cut"
+      },
+      {
+        "t": 35.3,
+        "event": "time"
+      },
+      {
+        "t": 35.4,
+        "event": "line"
+      },
+      {
+        "t": 37.7,
+        "event": "cut"
+      },
+      {
+        "t": 37.7,
+        "event": "time"
+      },
+      {
+        "t": 37.7,
+        "event": "f1_off"
+      },
+      {
+        "t": 37.7,
+        "event": "shot"
+      },
+      {
+        "t": 37.8,
+        "event": "line"
+      },
+      {
+        "t": 38,
+        "event": "use_start"
+      },
+      {
+        "t": 39.55,
+        "event": "effect"
+      },
+      {
+        "t": 39.6,
+        "event": "use_stop"
+      },
+      {
+        "t": 39.7,
+        "event": "effect_end"
+      },
+      {
+        "t": 40.75,
+        "event": "actor"
+      },
+      {
+        "t": 40.75,
+        "event": "actor"
+      },
+      {
+        "t": 40.75,
+        "event": "actor"
+      },
+      {
+        "t": 40.75,
+        "event": "actor"
+      },
+      {
+        "t": 40.75,
+        "event": "actor"
+      },
+      {
+        "t": 40.75,
+        "event": "actor"
+      },
+      {
+        "t": 40.95,
+        "event": "cut"
+      },
+      {
+        "t": 40.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 40.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 40.95,
+        "event": "time"
+      },
+      {
+        "t": 40.95,
+        "event": "f1_on"
+      },
+      {
+        "t": 40.95,
+        "event": "shot"
+      },
+      {
+        "t": 41.05,
+        "event": "horn"
+      },
+      {
+        "t": 41.15,
         "event": "bossbar"
       },
       {
-        "t": 42.1,
-        "event": "raidbar"
-      },
-      {
-        "t": 42.45,
+        "t": 41.2,
         "event": "motion_warn"
       },
       {
-        "t": 43.1,
+        "t": 41.25,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.35,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.45,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.55,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.65,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.75,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.85,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.95,
+        "event": "bossbar"
+      },
+      {
+        "t": 42.05,
+        "event": "motion_warn"
+      },
+      {
+        "t": 42.05,
+        "event": "bossbar"
+      },
+      {
+        "t": 42.05,
+        "event": "ent_swing"
+      },
+      {
+        "t": 42.15,
+        "event": "motion_warn"
+      },
+      {
+        "t": 42.15,
+        "event": "bossbar"
+      },
+      {
+        "t": 42.15,
+        "event": "raidbar"
+      },
+      {
+        "t": 42.5,
+        "event": "motion_warn"
+      },
+      {
+        "t": 43.2,
         "event": "story_end"
       },
       {
-        "t": 49.3,
+        "t": 49.4,
         "event": "end"
       }
     ]
@@ -714,11 +722,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/story_thirty_one_raids",
-    "commit": "ee9820e688cdfb44f6a4dfbcff9b60a3fcd8bc40",
+    "commit": "75c6e695da02623f347a7c29a45d036fd159c8b5",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43002818513",
-    "rendered_at": "2026-11-11T10:44:06.527Z",
-    "head_at_publish": "d2a0c1f721a86637db6e56eb796eb5f15afe61d5",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43014567000",
+    "rendered_at": "2026-11-11T11:58:43.233Z",
+    "head_at_publish": "ecc515d57a82f754179e4b38257f816a907dc903",
     "stunt": "stunts/story_thirty_one_raids.js",
     "source_snapshot": [
       "source/story_thirty_one_raids.js",
@@ -730,18 +738,18 @@
     ]
   },
   "rebuild": [
-    "git checkout ee9820e688cd",
+    "git checkout 75c6e695da02",
     "gunzip -c shorts/story_thirty_one_raids/recording.json.gz > work/story_thirty_one_raids.rec.json",
     "node render.js work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.frames 60 1080 1011",
     "python3 audio.py work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.wav",
-    "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"Thirty-one raids. Every one started the night Grandpa came home\" --red home --red_rgb FFD640 --punch [\"raidbar\"] --punch_stress [[\"L01\",3.04,0.07],[\"L08\",2.82,0.07],[\"L11\",2.74,0.07]] --chat_align center --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
+    "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"Thirty-one raids. Every one started the night Grandpa came home\" --red home --red_rgb FFD640 --punch [\"raidbar\"] --punch_stress [[\"L01\",3.04,0.07],[\"L08\",2.82,0.07],[\"L11\",2.74,0.07]] --flash [\"raidbar\"] --chat_align center --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
   ],
   "status": "held",
-  "notes": "Buh Stories #3, voiced r-cast build (Pip one take + Grandpa), bright look, gold title; independent review READY (session_019n1tKHZw9eftzBtUsVjnYa), 0 blockers; HELD for the owner's OK",
-  "published_at": "2026-11-11T11:05:52.761Z",
+  "notes": "Buh Stories #3, voiced r-cast build; independent review READY + the lead's horn blocker fixed (vanilla raid volume, a key sound over the music) and a flash on the payoff; HELD for the owner's OK",
+  "published_at": "2026-11-11T12:03:14.640Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T11:06:07+00:00",
+    "at": "2026-11-11T12:03:31+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -757,9 +765,15 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T10:21:38.636Z",
+      "at": "2026-11-11T11:46:30.315Z",
       "report": "out/story_thirty_one_raids.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": {
+      "ok": true,
+      "keys": [
+        "horn"
+      ],
+      "summary": "key sounds over the music: worst +106.5 dB over 2 clips (need >= 8 dB)"
+    }
   }
 }
