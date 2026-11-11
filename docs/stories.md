@@ -235,6 +235,36 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-10, on the daily story producer (the scheduled task that starts one new story a day): "keep off
   until more are done".** The producer is switched off until the held stories are finished; switch it back on only
   when the owner says so.
+- **Owner, 2026-11-10: "Is it really okay to have the two formats? They feel like they have very different audiences.
+  I meant above buh stories as like a second channel."** The story Shorts go to a second channel, "Buh Stories", not
+  @HelloBuh (which keeps its Minecraft shitposts and "spot what's wrong"). Nothing is uploaded to either until the
+  owner creates the channel, authorises uploads to it, and OKs each story by name.
+- **Owner, 2026-11-11, on the Buh Stories brand kit: "Dont need the "one world" one dog wo waits every story connects
+  etc".** No shared-world / connected-stories framing anywhere in the channel's copy or art (banner tagline, promise,
+  descriptions, release-order reasoning): each story stands alone.
+- **Owner, 2026-11-11, on the revised Buh Stories kit (banner "short minecraft / mysteries", promise "mysteries ...
+  with a twist"): "just do stories".** The channel calls itself plain "stories": "short minecraft stories", no
+  "mysteries" or "twist" pitch in the banner, promise, descriptions or cross-promo.
+- **Owner, 2026-11-11, clarifying: "Short minecraft stories, but these can be mysteries, i think thats what works. But
+  the name of the channel should be generally stories".** The channel's name and tagline stay general ("Buh Stories",
+  "short minecraft stories"); the stories themselves stay mysteries (the mystery test is what works). A story's own
+  title, description or pinned question may set up its mystery.
+- **Owner, 2026-11-11, on the cover's gold "BUH STORY #5" pill: "Do we need BUH STORY #5? It can just be in the title?
+  or idk".** No series pill or number on the video (frame 1 is the thumbnail: only the story's hook). No number in the
+  title either (each story stands alone, r:rca5363); the channel name under the Short and `#buhstories` carry the brand.
+- **Owner, 2026-11-11: "I dont like the channel description, specifcally the "each told by someone who lived it:"".** No
+  "told by someone/the kid who lived it" framing in the channel description or the promise.
+- **Owner, 2026-11-11: "BuhStoriesMC"** (after "Buh Stories is taken"). The second channel is named "Buh Stories", handle
+  @BuhStoriesMC (names needn't be unique on YouTube, handles must).
+- **Owner, 2026-11-11: "I can do the uploads manually for the first few for buh stories, then we can set it up later."**
+  Buh Stories uploads are manual for now: when the owner OKs a story by name, the lead sends them the final mp4 plus a
+  ready-to-paste block (title, description, tags, pinned comment). The Buh Stories uploader stays off
+  (YT_ENABLED_BUHSTORIES unset) until the owner asks to automate it.
+- **Owner, 2026-11-11, looking at the biggest Minecraft story channels (Kamui Animation, Michazike, Skytro, Milo and
+  Chip...): "All of them seem to have very bright, exagerated movements".** Being tested: a bright, saturated look
+  (no moody grade, little vignette or blur, day-lit where the story allows) and bigger, punchier motion within
+  Minecraft (camera punches on key words, hops and quick turns on beats, faster pushes), shown next to the current
+  cinematic look for the owner to pick.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
