@@ -202,11 +202,11 @@ module.exports = {
     // L01 "My HUMAN has TRIED to LOSE me thirty-seven TIMES." (the first frame is the mechanic, visual audit): a
     // camera ahead of Buh as he sprints west down the road toward it (the low sun behind the lens lights his face);
     // the red-collared wolf runs after him 13 blocks back, small; at 0.4 s it is gone from there and at his heel
-    await scut(47.5, -4.2, P(10, gy(10, -4.2) + 0.6, -4.2), gy(47.5, -4.2), { shot: 'run_ahead', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 36.5, z: -5.0, y: gy(36.5, -5.0), yaw: 90, pitch: 5 }) })   // (voiced: he starts 6 blocks further east so the walk ends near x 18 and the wolf's L02 sprint stops short of the village tree at x 5)
+    await scut(44.5, -4.2, P(10, gy(10, -4.2) + 0.6, -4.2), gy(44.5, -4.2), { shot: 'run_ahead', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 33.5, z: -5.0, y: gy(33.5, -5.0), yaw: 90, pitch: 5 }) })   // (voiced: 3 blocks further east than r6 so the walk ends near x 17 and the wolf's L02 sprint stops short of the village tree at x 5; from 36.5 the opening looked back over the plain: flat)
     K.ctl('sprint', true); K.go(true)
     await K.preroll(10, () => { walkG(buh, -0.215, 0); autoJump() })   // (L01's walk)
     await line('L01', async (k, at, n) => {
-      walkG(buh, -Math.min(0.215, 18 / Math.max(1, n)), 0); buh.pitch = 5   // a walk (vanilla 0.215 a tick: the wolf walks beside him after its pop, K.go), at most 16 blocks over the line: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
+      walkG(buh, -Math.min(0.215, 15 / Math.max(1, n)), 0); buh.pitch = 5   // a walk (vanilla 0.215 a tick: the wolf walks beside him after its pop, K.go), at most 16 blocks over the line: at 0.27 a tick the voiced L01 (3.4 s) took him 20 blocks, and in L02 the wolf ran into the village tree at x 5 (stuck 1.6 s on bark: voiced preview)
       if (once('L01pop', k >= 8)) { await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y); K.ctl('sprint', false); K.go(true) }   // then it walks beside him (standing, the follow camera left it behind: lint)
       autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.2)); look(k)   // (a block south of his line: right behind him his body hid it)
     })
@@ -214,13 +214,13 @@ module.exports = {
     // L02 "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.": POV low behind his heels,
     // sprinting after him; on "Twelve BLOCKS out" he pulls away; on "APPEAR" the crane comes in from the sea over the
     // yard: he is home, catching his breath, and the wolf pops in beside him
-    await K.cut(buh.x + 2.6, buh.z, P(buh.x - 6, buh.y + 1.2, buh.z), gy(buh.x + 2.6, buh.z), { shot: 'pov' })   // (in his lane: on roadZ it landed in the ditch by the road)
+    await K.cut(buh.x + 2.6, buh.z, P(buh.x - 6, buh.y + 3.0, buh.z), gy(buh.x + 2.6, buh.z), { shot: 'pov' })   // aimed above him: he lands low in frame where run_ahead left him (at +1.2 the eye jumped 34%: cuts)   // (in his lane: on roadZ it landed in the ditch by the road)
     K.ctl('sprint', true); K.go(true)
     await line('L02', async (k, at) => {
       if (k < at.cut(3)) {
         walkG(buh, k < at(2) ? -0.27 : -0.3, 0)
         if (once('L02away', k >= at(2))) K.go(false)   // he pulls away: twelve blocks
-        autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2, buh.z)); look(k)
+        autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2 + 1.8 * Math.max(0, 1 - k / 16), buh.z)); look(k)   // (from the cut's high aim down to his back over 0.8 s)
       }
       if (once('L02cut', k >= at.cut(3))) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
       if (once('L02pop', k >= at(3) + 10)) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
