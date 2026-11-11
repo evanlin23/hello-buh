@@ -20,7 +20,8 @@
     "drop_on_event": "tnt",
     "drop_in_song_s": 9.0,
     "drop_in_short_s": 8.65,
-    "song_start_s": 0.35
+    "song_start_s": 0.35,
+    "bed_lufs": -16.0
   },
   "video": {
     "file": "short.mp4",
@@ -29,8 +30,8 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 38697792,
-    "sha256": "540e9dc32aa0b8e45319190381a8fff6a2d953e296b7b4f25554784f3d0d68da"
+    "bytes": 38717280,
+    "sha256": "c6ea2d6f6c4e688b23d74d923898b99792839abc493eed9322705ffb04e80c86"
   },
   "edit": {
     "caption": "minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80",
@@ -305,6 +306,6 @@
     "python3 edit.py --frames work/it_rains.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/it_rains.rec.json --audio work/it_rains.wav --caption \"minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80\" --red creepers --subs \"[[\\\"hook\\\",\\\"it rains anvils\\\",2,0],[\\\"wall\\\",\\\"uhh\\\",1.2,0],[\\\"ring\\\",\\\"they are surrounding me\\\",1.6,0],[\\\"above\\\",\\\"wait...\\\",1.2,0],[\\\"dodged\\\",\\\"TOO close\\\",1.4,0],[\\\"tnt\\\",\\\"then TNT\\\",2,0],[\\\"tnt_wall\\\",\\\"a TNT wall??\\\",1.6,0],[\\\"close_tnt\\\",\\\"ow\\\",1,0],[\\\"creepers\\\",\\\"then CREEPERS\\\",2,0],[\\\"more\\\",\\\"MORE of them\\\",1.4,0],[\\\"run\\\",\\\"nope nope nope\\\",1.6,0],[\\\"keep\\\",\\\"they keep coming\\\",1.6,0],[\\\"everything\\\",\\\"then EVERYTHING\\\",2.4,0],[\\\"hiss\\\",\\\"tssss\\\",1.2,0]]\" --death_screen death --start_at hook:-0.05 --end_after death:1.2 --out out/it_rains.mp4"
   ],
   "status": "ready",
-  "notes": "worker 9: 4-phase escalating rain (anvils, TNT, creepers, everything); frame review + retention + minecraft audits ready (independent reviewer). Nitpick: ring spin shows ~0.7 s of sky before the ring drops in.",
+  "notes": "worker 9: 4-phase escalating rain (anvils, TNT, creepers, everything); frame review + retention + minecraft audits ready (independent reviewer). Nitpick: ring spin shows ~0.7 s of sky before the ring drops in. | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; biggest game hit +1.6 -> +5.3 dB over the music (scripts/key_sounds.py --hits); same track, drop and picture",
   "published_at": "2026-11-07T14:56:42.843Z"
 }
