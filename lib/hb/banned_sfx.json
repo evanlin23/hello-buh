@@ -1,5 +1,5 @@
 {
-  "_": "Sounds the owner called out (docs/STANDARDS.md 'No fart-like sounds', r:r4df33c). lib/hb/stunt_lint.js checks every stunt in ./hb check (step 'lint'): the sounds its recording plays (logged sound events, or audio.py's old-recording rebuild), its edit.sfx kinds and files. An entry bans its sound events and files everywhere; `unless` names the one situation where vanilla itself plays that sound and it stays allowed: 'bucket' (a bucket in the hotbar within a second of it: a real bucket pour) or 'water' (water within a block of the player in the second after it). Add an entry, with the owner's words and the date, whenever the owner calls a sound out.",
+  "_": "Sounds the owner called out (docs/STANDARDS.md 'No fart-like sounds', r:r4df33c). lib/hb/stunt_lint.js checks every stunt in ./hb check (step 'lint'): the sounds its recording plays (logged sound events, or audio.py's old-recording rebuild), its edit.sfx kinds and files. An entry bans its sound events and files everywhere; `unless` names the situations where vanilla itself plays that sound, so it stays allowed: 'bucket' (a bucket in the hotbar within a second of it: a real pour), 'liquid' (water or lava placed within a second of it: a pond filling) or 'water' (water within a block of the player in the second after it). Add an entry, with the owner's words and the date, whenever the owner calls a sound out.",
   "banned": [
     {
       "id": "bucketless_pour",
@@ -11,7 +11,10 @@
         "minecraft/sounds/item/bucket/empty2.ogg",
         "minecraft/sounds/item/bucket/empty3.ogg"
       ],
-      "unless": "bucket",
+      "unless": [
+        "bucket",
+        "liquid"
+      ],
       "date": "2026-11-11",
       "owner": "The sound effect at the end of boat clutch sounds like a fart, change it out",
       "rule": "r:r4df33c",
