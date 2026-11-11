@@ -21,11 +21,11 @@
 | who | look | voice | shots |
 |---|---|---|---|
 | the kid (narrator) | player, default `alex` skin (not Steve: Steve reads as Buh); empty hand | Pip (cast `narrator`, one_take) | POV S01, S07; from behind at the shutters in S03; small on the porch roof in S08 (waving) |
-| Mom | plains villager, no profession, unarmed, no name tag | **needs her own voice** (see below); `mom` (Pulcherrima) is a placeholder | S03 (speaks L06) |
+| Mom | plains villager, no profession, unarmed, no name tag | cast `mom_saltmouth` (Kore), one-clause bracket | S03 (speaks L06) |
 | the skeleton | vanilla, bow, persistent | none (no sound line; its bow creak in S08) | S05 (white shape in shade), S08 (clear, drawing) |
 | villagers | unarmed, various professions | ambient | S01 (running), S04 (working) |
 
-**Mom is Saltmouth's Mom, not Hushwell's.** A different family and a different villager from Buh's Mom in Light Sleeper (a straw-hat farmer, cast `mom`, Pulcherrima). STANDARDS 7a: one voice is never shared by two characters a viewer could confuse, so she needs her own voice before L06 is voiced. Candidates from the 2026-11-11 Mom audition (already rendered there, no new TTS): **A Kore** (f0 180, 0.755 to Pip, the furthest from Pip) or **E Callirrhoe** (f0 162, 4.9 st under Pip, 1.4 st under Pulcherrima). Both were heard as "woman, 30-45, mother". The owner picks; then add a voices/cast.json entry (e.g. `mom_saltmouth`) and set cast.Mom.ref.
+**Mom is Saltmouth's Mom, not Hushwell's.** A different family and a different villager from Buh's Mom in Light Sleeper (a straw-hat farmer, cast `mom`, Pulcherrima). Her own voice (STANDARDS 7a): cast `mom_saltmouth` (Kore, f0 180, 0.755 to Pip; the owner's pick, "A is fine").
 
 ## Props
 | prop | state | shots |

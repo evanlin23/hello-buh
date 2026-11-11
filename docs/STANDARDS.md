@@ -116,7 +116,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
    (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
    (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
-   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
+   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb; Saltmouth's Mom Kore, r:rd8f6ce)
 7a. **Every character is tracked** (owner: "we need to keep track of our characters"): every speaking or recurring
    character is a row in docs/world/canon.md "Recurring characters" (who, look/skin, cast id + voice, stories) before
    their lines are voiced; a new voice is auditioned against Pip and picked by the owner; one voice is never shared by

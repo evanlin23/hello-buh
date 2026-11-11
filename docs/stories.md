@@ -576,6 +576,8 @@ STANDARDS.md in the same commit.
   leaves at once needs a word on why: Buh says why he came and that he can't stay before "Sit, BOY. Be right BACK."
   (L15 "Hey, BUDDY! I just wanted to SEE you again." L17 "But I gotta GO already. Sit, BOY. Be right BACK."). The
   OK'd package goes back to held until the owner re-OKs it.
+- **Owner, 2026-11-11, on The Bell in the Window's Mom (Saltmouth, not Buh's Mom), candidates A Kore / E Callirrhoe
+  from the Mom/Grandma audition: "A is fine".** Saltmouth's Mom is cast `mom_saltmouth`, Kore.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

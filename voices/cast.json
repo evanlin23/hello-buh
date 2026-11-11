@@ -188,6 +188,24 @@
   "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Pulcherrima, 176 Hz, 3.5 st under Pip",
   "notes": "Home scenes, the normal life before the strange thing. Her ordinary line is often the scariest one in the twist. History: was Sulafat (\"Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it\") until 2026-11-11; the owner: \"The moms voice is too similar to narrator\" (r:rc31bfe): Sulafat sat at Pip's own 215 Hz, speaker similarity 0.85. The profile is the one-clause bracket the audition used, verbatim (3.8 reads a long bracket aloud)."
  },
+ "mom_saltmouth": {
+  "name": "Mom",
+  "voice": "Kore",
+  "color": "#F2B8C6",
+  "color_why": "soft rose: a different home from Hushwell's Mom",
+  "profile": "A warm mother around forty, low, calm and steady",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    30,
+    50
+   ]
+  },
+  "post": "",
+  "fallback": "af_sarah",
+  "from": "owner 2026-11-11: \"A is fine\" (r:rd8f6ce), candidate A of the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Kore, f0 180 Hz, 0.755 similarity to Pip, the furthest Mom from Pip",
+  "notes": "Saltmouth's Mom (The Bell in the Window), not Buh's Mom in Hushwell (`mom`): one voice per character (STANDARDS 7a)."
+ },
  "grandma": {
   "name": "Grandma",
   "voice": "Autonoe",
