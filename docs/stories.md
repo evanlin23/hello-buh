@@ -282,6 +282,16 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, on the cells format: "for the cells, it only works bc its forcing mobs specifically to do
+  it".** Every cell traps a MOB (never the player, never a block machine) in its loop; the joke is the mob being made
+  to do one thing forever.
+- **Owner, 2026-11-11, sharing KRIZZIT's "Clear winner" (a huge square of dirt, grass spreading from one corner and
+  mycelium from another, a top-down time-lapse race; caption "Grass vs Fungus"): "timelapse grass vs fungus".**
+  HelloBuh adds a spread-race format (family `race`): two vanilla things that spread (grass, mycelium, moss, sculk,
+  vines, fire...) race across one big field in a top-down time-lapse; viewers pick a side and wait for the winner.
+- **Owner, 2026-11-11: "please tell me ur saving all of the formats im sending you".** Every format the owner sends
+  is saved in docs/formats.md (what the reference does, the owner's words, our family name, status), alongside its
+  house rule here.
 - **Owner, 2026-11-11, sharing ItsMeMx's Minas Tirith time-lapse (caption "We need a small castle to mark the
   spawn", then a drone-style time-lapse as arches, a plateau and a whole tiered white city rise over 21 s): "this
   gimmick is like ridiculous megabuild".** Part of the `mega` family (r:r8bb1e3): the second variant is a time-lapse

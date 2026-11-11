@@ -294,7 +294,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
   vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
 - **Format "cells"**: a walk past glass cells, each a mob stuck in an endless vanilla-built loop, a deadpan caption.
-  Check: owner. r:r07d791
+  Check: owner. r:r07d791 Every cell traps a mob (never the player or a machine). r:rce72cb
+- **Format "race"**: two vanilla spreaders race across one field, top-down time-lapse. Check: owner. r:rbe60ef
+- **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
+  the same commit as its house rule. Check: owner. r:rc43770
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
