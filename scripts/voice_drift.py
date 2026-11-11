@@ -395,16 +395,35 @@ def ref_for(cid, c, lib):
 
 # ---- the check ----
 
+# a window is scored for WOBBLE only when it is voiced speech: at least VOICED_MIN of its 20 ms frames carry a pitch
+# (YIN) and its loud frames reach within LEVEL_DB of the line's own speech level. A silent gap (0 Hz) or a breath
+# passed the speech mask (35 dB under the loud frames) and was scored as "the voice changed" (Thirty-One Raids L08,
+# Grandpa's single line: windows 0.0 s "Lock the door" + a breath, 1.5 s the silent pause after "kid,"). Buh Stories lead,
+# 2026-11-11.
+VOICED_MIN, LEVEL_DB = 0.4, 20.0
+
+
+def voiced(w, line_db):
+    """Is window w voiced speech (see VOICED_MIN / LEVEL_DB)? line_db: the line's speech level (frame_db, 90th pct)."""
+    f = yin(w)
+    if not len(f) or (f > 0).mean() < VOICED_MIN:
+        return False
+    db = frame_db(w)
+    return bool(len(db)) and np.percentile(db, 90) >= line_db - LEVEL_DB
+
+
 def windows(x):
-    """(start s, samples) of the 1.5 s windows (hop 0.75 s) that are mostly speech; one window for a short line."""
+    """(start s, samples) of the 1.5 s windows (hop 0.75 s) that are mostly voiced speech; one window for a short
+    line (or when no window is voiced enough: the line as a whole)."""
     n, h = int(WIN * SR), int(HOP * SR)
     if len(x) < n * 1.3:
         return [(0.0, x)]
     sp = speech_mask(x)
+    ldb = np.percentile(frame_db(x), 90) if len(frame_db(x)) else 0.0
     out = []
     for a in range(0, len(x) - n + 1, h):
         s = sp[a // 160:(a + n) // 160]
-        if len(s) and s.mean() >= 0.6:
+        if len(s) and s.mean() >= 0.6 and voiced(x[a:a + n], ldb):
             out.append((a / SR, x[a:a + n]))
     return out or [(0.0, x)]
 
