@@ -1,0 +1,159 @@
+{
+ "0fe6ec859153": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "woman",
+  "age": [
+   40.0,
+   60.0
+  ],
+  "role": "mother",
+  "confidence": 8,
+  "voice": null,
+  "could_be_mistaken_for": "witch",
+  "reversed": true,
+  "clip": "gold_for_the_portal/L10",
+  "at": "2026-11-11T16:28:03Z"
+ },
+ "257698417c77": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "unsure",
+  "age": [
+   20.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 3,
+  "voice": "breathy, soft, medium, smooth, light",
+  "could_be_mistaken_for": "woman",
+  "reversed": true,
+  "clip": "good_boy/L13",
+  "at": "2026-11-11T16:28:54Z"
+ },
+ "285cb440788b": {
+  "model": "gemini-3.6-flash",
+  "sex": "man",
+  "age": [
+   55.0,
+   75.0
+  ],
+  "role": "grandfather",
+  "confidence": 8,
+  "voice": "raspy, gravelly, low, breathy, theatrical",
+  "could_be_mistaken_for": "a fantasy monster or creature",
+  "reversed": true,
+  "clip": "gold_vindemiatrix/L10",
+  "at": "2026-11-11T16:27:57Z"
+ },
+ "2c226a49426f": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "man",
+  "age": [
+   40.0,
+   50.0
+  ],
+  "role": "father",
+  "confidence": 8,
+  "voice": [
+   "deep",
+   "rough",
+   "low",
+   "gravelly",
+   "monotone"
+  ],
+  "could_be_mistaken_for": "no",
+  "reversed": true,
+  "clip": "dog_hill/L10",
+  "at": "2026-11-11T16:28:39Z"
+ },
+ "6cfc75c0f25f": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "woman",
+  "age": [
+   20.0,
+   40.0
+  ],
+  "role": "young woman",
+  "confidence": 7,
+  "voice": null,
+  "could_be_mistaken_for": "teenager",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-11T16:28:13Z"
+ },
+ "80c419674c6d": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "man",
+  "age": [
+   40.0,
+   50.0
+  ],
+  "role": "father",
+  "confidence": 7,
+  "voice": null,
+  "could_be_mistaken_for": "no",
+  "reversed": true,
+  "clip": "dog_hill/L17",
+  "at": "2026-11-11T16:28:36Z"
+ },
+ "9bb1a0ba0425": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "man",
+  "age": [
+   20.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 8,
+  "voice": "deep, raspy, low, warm",
+  "could_be_mistaken_for": "no",
+  "reversed": true,
+  "clip": "good_boy/L11",
+  "at": "2026-11-11T16:28:52Z"
+ },
+ "_about": "scripts/who.py: the blind listener's answer per take, keyed by the wav's sha1[:12] (':fwd' = played forwards); scripts/voice_contrast.py reads it so ./hb check never asks twice about the same take",
+ "bab01e9c7d89": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "man",
+  "age": [
+   40.0,
+   60.0
+  ],
+  "role": "father",
+  "confidence": 9,
+  "voice": null,
+  "could_be_mistaken_for": "no",
+  "reversed": true,
+  "clip": "thirty_one_raids/L08",
+  "at": "2026-11-11T16:28:45Z"
+ },
+ "c2cd863ec020": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "man",
+  "age": [
+   20.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 6,
+  "voice": "deep, clear, rich, low",
+  "could_be_mistaken_for": "no",
+  "reversed": true,
+  "clip": "light_sleeper/L05",
+  "at": "2026-11-11T16:28:09Z"
+ },
+ "dc8f880426bf": {
+  "model": "gemini-3.5-flash-lite",
+  "sex": "man",
+  "age": [
+   40.0,
+   50.0
+  ],
+  "role": "father",
+  "confidence": 9,
+  "voice": null,
+  "could_be_mistaken_for": "no",
+  "reversed": true,
+  "clip": "dog_hill/L15",
+  "at": "2026-11-11T16:28:35Z"
+ }
+}

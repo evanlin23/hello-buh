@@ -34,6 +34,12 @@ let STUNT_MOD = {}
     }
   }
 }
+// A HelloBuh stunt's recording from before the bot became 56e (no rec.user, or 'HelloBuh'): drawn as 56e, its skin and
+// every name in the recording's texts (lib/legacy_player.js, owner 2026-11-11 r:r52f94c). Stories keep their names.
+{
+  const to = require('./lib/legacy_player').applyToRec(rec, { name: rec.stunt, stunt: STUNT_MOD })
+  if (to) console.log(`player: the old 'HelloBuh' bot is drawn as ${to} (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)`)
+}
 // Hidden boxes (stunt.hideBoxes: [[dx0, dy0, dz0, dx1, dy1, dz1], ...] from the set origin, corners inclusive): a
 // cast's waiting room (a barrier floor and a stone roof 60 blocks up, story_good_boy) is a real build the camera can
 // see: a dark slab in the sky over the librarian. Its blocks are left out of the drawn world (and the light), and the
@@ -241,6 +247,19 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
     }
   }
   if (extra.length || (rec.timeline || []).some(e => e.event === 'slide_blocks')) { rec.blocks = blocks.concat(extra).sort((a, b) => a[0] - b[0]) }
+}
+// K.cutShot's moves land on its camera cut, never before (lib/hb/motion.js cutHolds; lead, Good Boy v21: the wolf's
+// /tp landed a tick after the moves and Buh's 1-2 ticks later, and the shot mark waited for the slowest, so the old
+// shot ran with the wolf already gone). Every mover that jumps between a cutShot's start mark ('cut_moves', or the
+// narrator's teleport_ok { cut }) and its shot mark is drawn at its pre-move spot until the cut, the narrator too.
+// Recordings without the marks: unchanged.
+const CUT_HOLDS = require('./lib/hb/motion').cutHolds(rec.timeline)
+const HOLD_SELF = []   // cut ticks the narrator now jumps on (isCutStep: a jump, never a glide)
+if (CUT_HOLDS.length) {
+  const MOh = require('./lib/hb/motion')
+  const n = MOh.holdEntities(ENT, CUT_HOLDS)
+  HOLD_SELF.push(...MOh.holdPoses(P, CUT_HOLDS))
+  if (n || HOLD_SELF.length) console.log(`cut holds: ${n} cast move${n === 1 ? '' : 's'} and ${HOLD_SELF.length} narrator move${HOLD_SELF.length === 1 ? '' : 's'} held to their cut`)
 }
 // Motion fixes (owner, 2026-11-10: "The movement sometimes still feels jerky and botlike"; docs/engine_features.md
 // "Motion by construction"): the renderer's half. On for recordings from engine 3 (lib/harness.js), or
@@ -462,6 +481,14 @@ const PRE_FACE = new Map()   // entity id -> [tick, yaw, headYaw, pitch] last se
 // mobs hit and killed (harness mob_hurt / mob_death marks): the red flash lasts 10 ticks
 // (hurtTime), the death animation runs from the death on (deathTime, removed at 20)
 const MOB_HURT = new Map(), MOB_DEATH = new Map()
+// a stunt's `mob_scale` marks ({ id, scale }): the mob drawn scaled about its feet, linear between marks, the last held
+// (lib/interrupt.js: the skeleton picked up and eaten bite by bite). Recordings without them are unchanged
+const MOB_SCALE = new Map()
+for (const e of rec.timeline || []) if (e.event === 'mob_scale' && e.id !== undefined) { if (!MOB_SCALE.has(e.id)) MOB_SCALE.set(e.id, []); MOB_SCALE.get(e.id).push([e.t / 50, +e.scale]) }
+function mobScaleAt (id, t) {
+  const k = MOB_SCALE.get(id); if (!k || t < k[0][0]) return undefined
+  for (let i = k.length - 1; i >= 0; i--) if (t >= k[i][0]) { const n = k[i + 1]; return n ? k[i][1] + (n[1] - k[i][1]) * (t - k[i][0]) / (n[0] - k[i][0]) : k[i][1] }
+}
 for (const e of rec.timeline || []) {
   if (e.event === 'mob_hurt') { if (!MOB_HURT.has(e.id)) MOB_HURT.set(e.id, []); MOB_HURT.get(e.id).push(e.t / 50) }
   if (e.event === 'mob_death' && !MOB_DEATH.has(e.id)) MOB_DEATH.set(e.id, e.t / 50)
@@ -558,19 +585,21 @@ const HAND = []          // per tick: [shownItem, height]
 }
 // eating / drinking (harness use_start / use_stop marks): [startTick, stopTick, useDuration]
 const EAT_ITEMS = /^(.*_stew|.*_soup|apple|golden_apple|enchanted_golden_apple|bread|.*cookie|cake|melon_slice|.*carrot|.*potato|beetroot|.*_beef|.*_porkchop|.*_mutton|.*_chicken|.*_rabbit|.*_cod|.*_salmon|tropical_fish|pufferfish|sweet_berries|glow_berries|dried_kelp|chorus_fruit|pumpkin_pie|rotten_flesh|spider_eye|poisonous_potato|suspicious_stew|potion|milk_bucket|honey_bottle|ominous_bottle)$/
+// A stunt's own `use_start` with { eat: true } (lib/interrupt.js: the player "eats" the skeleton it picked up, a
+// skull that vanilla can't eat) plays the eating hand for any held item; recordings without it are unchanged.
 const USES = []
 {
-  let open = null
+  let open = null, eat = false
   for (const e of rec.timeline || []) {
-    if (e.event === 'use_start') open = e.t / 50
-    if ((e.event === 'use_stop' || e.event === 'death') && open !== null) { USES.push([open, e.t / 50]); open = null }
+    if (e.event === 'use_start') { open = e.t / 50; eat = !!e.eat }
+    if ((e.event === 'use_stop' || e.event === 'death') && open !== null) { USES.push([open, e.t / 50, eat]); open = null }
   }
-  if (open !== null) USES.push([open, Infinity])
+  if (open !== null) USES.push([open, Infinity, eat])
 }
 function useAt (t, name) {
-  if (!name || !EAT_ITEMS.test(name)) return null
+  if (!name) return null
   const u = USES.find(([a, b]) => t >= a && t < b)
-  if (!u) return null
+  if (!u || !(EAT_ITEMS.test(name) || u[2])) return null
   return { e: t - u[0], d: name === 'honey_bottle' ? 40 : name === 'dried_kelp' ? 16 : 32 }
 }
 function handAt (t) {
@@ -1108,6 +1137,9 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
 // look target can name them as 'actor:TAG' (dog_hill: subject ['actor:pip']), like a movie's player actors
 const KIT_TAG = new Map()   // id -> tag
 for (const m of rec.timeline || []) if (m.event === 'actor' && m.tag && m.id !== undefined) { KIT_TAG.set(m.id, m.tag); if (!ACTOR_ID.has(m.tag)) ACTOR_ID.set(m.tag, m.id) }
+// a cast member's skin from a tick on (cast_skin marks { user, skin }: the herobrine format's white eyes, lib/herobrine.js)
+const CAST_SKIN = (rec.timeline || []).filter(m => m.event === 'cast_skin' && m.user && m.skin).map(m => ({ t: m.t / 50, user: m.user, skin: m.skin })).sort((a, b) => a.t - b.t)
+const castSkinAt = (user, t) => { let s = null; for (const c of CAST_SKIN) if (c.user === user && c.t <= t) s = c.skin; return s }
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
@@ -1146,6 +1178,14 @@ const MOON_PHASE = (() => {
   return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
 })()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
+// Real skins (lib/skins.js): the bot's username (rec.user, HB_SELF_USER to override) and actors on lib/real_skins.json
+// draw the owner's own skin from work/skins/<name>.png (private assets, else Mojang via scripts/fetch_skin.py, else steve)
+const SKINS = require('./lib/skins')
+const SELF_USER = process.env.HB_SELF_USER || rec.user || null
+SKINS.ensureSkins(SKINS.wantedSkins({ user: SELF_USER, cast: STUNT_MOD.cast, actors: [...ACTOR.values()].map(a => a.user) }))
+const SELF_SKIN = SKINS.selfSkin({ env: process.env, cast: STUNT_MOD.cast, user: SELF_USER })
+const skinExtra = (k) => ({ skin: k.skin, ...(k.slim ? { slim: true } : {}), ...(k.model ? { model: k.model } : {}) })
+if (SELF_SKIN.real) console.log(`skin: the player is ${SELF_SKIN.real}'s own skin (arms: ${SELF_SKIN.model || (SELF_SKIN.slim ? 'slim' : 'auto')})`)
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
 // a stunt with no `look` gets 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "hello buh should use the bright grading as
@@ -1804,6 +1844,7 @@ const isCutStep = (i, a, b) => {
   const d = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3])
   if (d > 4) return true
   if (BLINK_SELF.length && d > 0.8 && BLINK_SELF.some(c => i + 1 >= c && i + 1 <= c + 4)) return true   // K.blink('self'): a jump, never a glide
+  if (HOLD_SELF.length && d > 0.8 && HOLD_SELF.includes(i + 1)) return true   // a cutShot move held to its cut: a jump
   if (!CUT_TICKS.some(c => i + 1 >= c && i + 1 <= c + 4)) return false
   let dy = Math.abs(b[4] - a[4]) % (2 * Math.PI); if (dy > Math.PI) dy = 2 * Math.PI - dy
   return d > 0.8 || dy > 0.35 || Math.abs(b[5] - a[5]) > 0.35
@@ -2073,9 +2114,11 @@ function camAtLive (t) {
   app.get('/entities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entities.js')))
   app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
   app.get('/poses.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'poses.js')))
+  app.get('/skin_layout.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'skin_layout.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
+  app.use('/assets/env/entity/player/wide/real', express.static(path.join(__dirname, 'work', 'skins')))   // real skins (lib/skins.js)
   app.use('/assets/env/entity/player/wide', express.static(path.join(__dirname, 'skins')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
   const server = http.createServer(app)
@@ -2327,6 +2370,16 @@ else:
     const t0 = ev.t / 50
     let name = null; for (const [tk, n] of HELD) { if (tk <= t0) name = n; else break }
     if (!name) for (const [tk, n] of HELD) if (tk < t0 + 2 && n) { name = n; break }
+    const sp = name && spriteOf(name)
+    const pose = P[Math.max(0, Math.min(P.length - 1, Math.floor(t0)))]
+    if (!sp || !pose) continue
+    PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
+  }
+  // eating crumbs (LivingEntity.triggerItemUseEffects -> spawnItemParticles(stack, 5), the same throw as a break):
+  // a stunt's `item_crumbs` mark ({ item }: whose sprite; default the held item), from in front of the eye
+  for (const ev of (rec.timeline || []).filter(e => e.event === 'item_crumbs')) {
+    const t0 = ev.t / 50
+    let name = ev.item || null; if (!name) for (const [tk, n] of HELD) { if (tk <= t0) name = n; else break }
     const sp = name && spriteOf(name)
     const pose = P[Math.max(0, Math.min(P.length - 1, Math.floor(t0)))]
     if (!sp || !pose) continue
@@ -2741,6 +2794,7 @@ else:
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
       if (cam.target && cam.target.entity !== undefined) { cam.targetEntity = cam.target.entity; cam.target = null }
+      if (STUNT_MOD.outline === false) cam.target = null   // stunt.outline false: no targeted-block box (a mob's POV, F1 throughout: lib/mobpov.js)
       if (third) cam.target = null   // (the hit outline is a first-person thing: a camera shot drew the player's targeted block, a box over the hole: ai_thin_ice)
       // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
       // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
@@ -2771,6 +2825,8 @@ else:
       // midnight sky light 15 is about (0.22, 0.22, 0.45): reel 1's bucket read as a dark sleeve, review v2 B2)
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb).map(v => v + (1 - v) * lift), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
+      // the bare arm in the player's real skin (the jar's Steve otherwise, as published Shorts drew it)
+      if (SELF_SKIN.real) { cam.hand.skin = SELF_SKIN.skin; if (SELF_SKIN.slim) cam.hand.slim = true; if (SELF_SKIN.model) cam.hand.model = SELF_SKIN.model }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
@@ -2813,7 +2869,7 @@ else:
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve', ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
+          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -2853,7 +2909,8 @@ else:
       // motion fixes: the item's own model (the 1/16-thick extruded sprite), standing, right side up, with its
       // 'ground' display, bobbing and spinning like a block item (ItemEntityRenderer). The camera-facing sprite drew
       // it upside down ("String is upsidedown on the floor", gold_for_the_portal 11 s)
-      if (spriteOf(it) && MOTION_FIXES) {
+      // (no longer gated on MOTION_FIXES: lib/item_stack.js droppedItemForm, r:r52f94c)
+      if (require('./lib/item_stack').droppedItemForm({ sprite: !!spriteOf(it) }) === 'model') {
         const d = thirdPersonDisplay(it, false, 'ground') || { translation: [0, 2, 0], scale: [0.5, 0.5, 0.5] }, gs = d.scale || [1, 1, 1]
         e.shadowName = 'item'; e.shadowY = e.y
         e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
@@ -3022,7 +3079,9 @@ else:
     for (const e of ents) {
       if ((e.name !== 'player' && e.name !== 'mannequin') || e.id === -1) continue
       const A = ACTOR.get(e.id), user = (e.extra && (e.extra.user || e.extra.name)) || (A && A.user)
-      e.extra = { ...(e.extra || {}), skin: (STUNT_MOD.cast && user && STUNT_MOD.cast[user]) || 'steve' }
+      e.extra = { ...(e.extra || {}), ...skinExtra(SKINS.actorSkin({ cast: STUNT_MOD.cast, user })) }
+      const swapSkin = castSkinAt(user, t)
+      if (swapSkin) e.extra.skin = swapSkin
       let wp = 0, ws = 0
       if (A) {
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a
@@ -3214,6 +3273,7 @@ else:
     for (const e of ents) {
       const hs = MOB_HURT.get(e.id); if (hs && hs.some(h => t >= h && t < h + 10)) e.hurt = true
       const dt = MOB_DEATH.get(e.id); if (dt !== undefined && t >= dt) e.deathTime = t - dt + 1
+      if (MOB_SCALE.size) { const sc = mobScaleAt(e.id, t); if (sc !== undefined) e.mobScale = sc }
     }
     // entity shadows (EntityRenderDispatcher: within 16 blocks of the camera, strength 1 - d^2/256;
     // ShadowRenderer: on the ground up to 2 blocks below, alpha (strength - drop / 2) x 0.5)

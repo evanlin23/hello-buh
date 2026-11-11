@@ -16,7 +16,7 @@ prevention.
 | An action off-aim reads as hacking | sand_tower's torch, rainbow_sheep's dye on the wrong sheep, places and breaks off the crosshair; pixel art's aim lagging at 18-20 blocks/s (r:rffba12) | lib/act.js (A.place / A.dig / A.use / A.useOn / A.hit, and K.use / K.useOn in the story kit) turns the view to the exact target at up to 220 deg/s, eased, and acts only once the crosshair is on it and the vanilla delay has passed. If it can't land, it throws. pixel_art places a block only when the crosshair is in its cell, and the ticks spent waiting come out of the build's budget. Tests: act.test.js, pixel_art_aim.test.js | built |
 | Make the mistake impossible, not just detectable | 41 stunts hand-write a place, break or use (73 raw calls) | The motion lint marks raw bot.dig / placeBlock / activateBlock / activateEntity and raw block_place / block_dig / use_entity packets as errors (kind 'action') that name the helper. `./hb record` refuses a stunt that has one, and `./hb check` blocks one recorded since the gate (rec.act). `// motion-ok: <reason>` lets a line stay raw | built |
 | The payoff ends when the motion settles, not when the script says | which_door, villager_fired, pickaxe_race and sand_tower ended or cut with TNT, debris or sand still moving (r:r24d99a) | After perform, the harness waits until nothing is moving (up to 6 s), then marks motion_start / motion_settled around every window and one `settle` at the last (lib/settle.js). endAfter 'settle:0.6' ends 0.6 s after that mark. The motion lint warns on a blast or fall stunt that ends on anything else (`// settle-ok: <reason>` for a reviewed hand-timed end). Test: settle.test.js | built |
-| The picture settles later than the entities | which_door ended on 'settle:0.6' with debris still falling past "You Died!" (3.3% of the game view changing every frame), villager_fired with 7.4%: the harness settled 20 ticks after the last blast while the renderer's smoke, poof clouds and crumbs live up to 40-84 ticks, and stopped recording 0.15 s after the mark, so the edit's 0.6 s tail was cut to 0.11 s (independent review) | lib/settle.js waits 44 ticks after a blast (tied to renderer/particles.js by lib/hb/test/settle.test.js) and the harness records 2 s past the settle mark; owner_checks/rec_check/pace count each blast's rendered smoke at the end (`puff` tracks, PUFF_TICKS); pace measures the last 0.6 s of the mp4 itself (`tail_motion`: % of the game view changing per frame, WARN 0.3, BLOCK 0.6; a still death screen is ~0) on every blast/fall/settle ending. Recordings made before this need a re-record | built |
+| The picture settles later than the entities | which_door ended on 'settle:0.6' with debris still falling past "You Died!" (3.3% of the game view changing every frame), villager_fired with 7.4%: the harness settled 20 ticks after the last blast while the renderer's smoke, poof clouds and crumbs live up to 40-84 ticks, and stopped recording 0.15 s after the mark, so the edit's 0.6 s tail was cut to 0.11 s (independent review) | lib/settle.js waits 44 ticks after a blast (tied to renderer/particles.js by lib/hb/test/settle.test.js) and the harness records 2 s past the settle mark; owner_checks/rec_check/pace count each blast's rendered smoke at the end (`puff` tracks, PUFF_TICKS); pace measures the last 0.6 s of the mp4 itself (`tail_motion`: % of the game view changing per frame with the camera's drift taken out, WARN 0.15, BLOCK 0.4; which_door 1.77, a slow tilt or a still death screen ~0) on every blast/fall/settle ending. Recordings made before this need a re-record | built |
 | A pull-back needs room behind it | creeper_art walked "halfway against the wall" of the earlier build (r:r650840) | A.back() stops 1 block short of anything solid behind (it allows for the 0.26-block coast). pixel_art keeps 3 blocks clear and logs the clear lane behind each build spot | built |
 | A camera you can't follow loses the viewer | hide_seek's searching looks turned at up to 1104 deg/s (a walk's turn capped at 367 deg/s, a face-look 0.35 of the way a tick); owner: "confusing to try and follow" (r:r38374d) | The owner check 'whip' blocks a turn over 240 deg/s held more than 3 ticks and warns on under 0.3 s of rest between big turns (tuned: creeper_art / lapse_statue clean). lib/hide_seek.js turns on lib/act.js's governor at 180 deg/s and rests 0.3 s per look. lib/act.js's governor itself had crawled at 24 deg/s on mineflayer's quantized look (fixed, tested). The edit can still make a whip: hide_seek's speed cuts r1 1.3..4.3 and r3 1.8..4.4 joined a 180 deg/s pan one way to one the other way (review 2026-11-11); 'whip' now also blocks an edit cut inside one shot with either edge (2 ticks) over 30 deg/s (lib/hb/owner.js editCutSnaps; the ready Shorts' still edges: 0-25 deg/s; same-way cuts within 35 deg of view warn; a camera cut mark or 16+ blocks away is another shot) | built |
 | Vanilla facts get misremembered | villager_fired's jobless villager became a nitwit | The minecraft-audit skill lists the easy-to-get-wrong facts (unemployed, never nitwit; TNT point blank; Feather Falling; mace smash) | rule |
@@ -55,6 +55,7 @@ and a check behind it (STANDARDS r:keys in brackets).
 | What the owner saw | Why our process missed it | Fixed by construction | Safety net |
 |---|---|---|---|
 | "the villager keeps teleporting" | the server only sends a mob's move every 3rd tick, so a per-tick /tp reaches the client as 6.7 Hz steps; cast placed on a cut landed 1-3 ticks late; the story hand-rolled its own /tp | K.actor (air-supply nudge: moves every tick), K.cutShot (the shot mark waits until the cast has landed) [rfa229d] | motion lint (raw tp, execute tp, data Pos); rec_check cast-jump + stepped-motion BLOCKs |
+| "we can see the dog teleport" (Good Boy) | the wolf is the narrator (the recording bot, no entity row), so rec_check's cast checks and the owner's teleport check never looked at it; its K.blink counted as a cut wherever it landed (63 blocks out of the hills_night shot 2 ticks before the beach cut); jumps under 1.5 blocks and non-cast mobs went unchecked | `K.cutShot(name, moves, { self })`: the narrator's /tp goes with the moves and the shot mark waits for its landing [rfa229d] | owner `visible jump`: any entity or the narrator over 0.6 block in a tick in the frame while the camera holds (the track as render.js draws it; teleport_ok exempts nothing) |
 | "i keep noticing the cuts" / "are our timings correct?" | nobody measured where the eye is across a cut; cuts sat on the line start; dog_hill ran its own clock and drifted 1.4 s behind the voice | render.js eyeTrace; K.line cuts 33 ms before the next word [rfa229d] | `./hb cuts` (eye jump > 33 % / cut off its word: BLOCK) |
 | "a block in the way" of a dig | the kit aimed at block centres | K.dig/K.place aim at a visible face, or refuse naming the blocker [rd0b2b1] | rec_check `sight` |
 | "captions some earlier some after" | a session silently fell back to Whisper word times | forced alignment only [r919ea3] | caption_sync BLOCKs Whisper times; doctor fails without the aligner |
@@ -86,6 +87,33 @@ How the work itself went wrong, and the rule now:
 - **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
   they depend on.
 
+## Trap (lib/trap.js, trap_free_diamonds, 2026-11-11)
+- **A trapped chest opens a trapdoor beside the block it stands on, for real.** Opened, it strongly powers the block
+  under it, and that block powers the trapdoor next to it. No redstone dust, nothing hidden: the friend's own
+  right-click sets it off, and he falls because his own client's physics has nothing under him.
+- **You can stand on an open trapdoor's edge.** The open panel fills 3/16 of the cell on its hinge side, full height.
+  Take 1's friend stopped 0.17 past the middle, his 0.6-wide box over the panel, and he stayed standing on it. Stop him
+  on the far side of the cell's middle (z 0.6 with the hinge at z 0), with a crouched shuffle to land within 0.06.
+- **The kit aims K.place at the CENTRE of the block it goes against.** For a floor block a few blocks ahead, that ray
+  grazes in through the block in front of it (the trapdoor, the next grass block), so the turn never "landed" (40-tick
+  stalls) and rec_check's sight check blocked it. Build from closer, so every ray goes in through the top face.
+- **A friend who walks the whole way in** waits at his entrance (ep.park), where the camera never looks before he
+  joins. A /tp near the frame is a rec_check teleport warning. The turn into hiding goes round the side away from him.
+
+## Love (lib/love.js, love_cherry_heart, 2026-11-11)
+- **Cherry leaves are untinted.** Their model carries tintindex 0 (the leaves parent), but vanilla's BlockColors never
+  registers cherry_leaves, so they are drawn as the pink texture. The renderer tinted every `*leaves` with the biome's
+  foliage colour: a cherry grove came out olive grey (renderer/models.js UNTINTED).
+- **A firework's flash is a glow, not a plate.** FireworkParticles.OverlayParticle: the first explosion's first colour,
+  quad size 7.1 x sin((age - 1) x pi/4), alpha 0.6 fading 1/8 a tick. It was an opaque white 2-block disc; a ring of
+  bursts read as white plates. Several bursts at once wash the screen in their colour, as in vanilla: 7 is plenty.
+- **A cherry grove can sit next to ice spikes**: a packed-ice spike stood over the trees 50 blocks off. lib/love.js
+  clears packed/blue ice round the set (unchecked fills: a box with none answers "No blocks were filled").
+- **rec_check's held check ignores the sky**: a time-lapse sunset with a still camera is a held pause. Keep the camera
+  drifting (>= ~5 deg/s) through it.
+- **A per-tick loop around `A.turnTo(x, { max: 1 })` must not wait again**: the step already waits its tick, so an extra
+  waitForTicks doubled the sunset (5.5 s instead of 3.8).
+
 ## Cells (lib/cells.js, cells_lab, 2026-11-11)
 - **A slime-block launcher needs an immovable collar.** Slime sticks to every pushable neighbour, so a 2x2 slime pad in a
   concrete tube took the walls along and the push failed (more than 12 blocks): nothing launched. Obsidian round the
@@ -105,6 +133,19 @@ How the work itself went wrong, and the rule now:
   line of sight, so shooter and target share the open cell); a husk can't climb the ledge. A husk, not a zombie: the
   glass roof's sun would set a zombie on fire.
 - **A /kill by type list kills the cast you add later**: tag every cell mob (`cells`) and kill `tag=!cells`.
+
+## Fake tricks (lib/faketrick.js, faketrick_gold_portal, 2026-11-11)
+- **A player can't build a column above their eye from the ground.** A block goes against a face the eye can see, and a
+  column's top face above the eye can't be seen: lib/act.js refused the 3rd block of a portal frame's side ("no face
+  ... is visible"). Build tall things from a step or a rise (the gold portal: a 3-high grass step behind the frame,
+  looking down at it), or top-down against bottom faces. Keep every click within the reach the stunt sets (act's
+  crosshair counts 6 blocks): a 5x6 frame from a 4-high step put the far base corner at 6.7 and the aim never landed.
+- **Wait for the server before the next place.** A place against the block placed a tick earlier failed ("nothing to
+  place against"): the bot's world hadn't had the block back yet. F.place waits up to 8 ticks for it.
+- **A portal in a frame vanilla wouldn't accept**: `/fill ... nether_portal[axis=x] strict` (no neighbour updates) over
+  the fire the flint and steel really made; it stays lit while nothing next to it changes.
+- **A fast build runs short.** 16 aimed places at vanilla's 4-tick floor took 3.2 s and the Short 6.3 s (floor 8 s);
+  a 6-tick delay (~3 blocks/s, a player's pace) and a "step 3: wait..." beat with the fire burning made 8.1 s.
 
 ## Owner preferences and format
 - Owner decisions live in README "Owner decisions". Highlights: "close match is fine"; skip the
@@ -478,6 +519,7 @@ How the work itself went wrong, and the rule now:
 - **Hard difficulty for a creeper kill:** a 3-block creeper blast is ~17 damage on normal (survivable), ~25 on hard.
 - **Round answer cards must end before the cut** (they spilled into the next dark room): hold the round until the card is gone.
 - **Never single-pass loudnorm a build-up.** ffmpeg's one-pass loudnorm is a dynamic compressor: it lifted chain_reaction's quiet start by ~45 dB and left the 486-TNT payoff no louder than the bells (worker 17). Stems get a static gain from their measured loudness and the master a static gain plus a true-peak limiter, re-measured to target (`scripts/loud.py`; edit.py game-only/song/late-song paths, the sfx premix, the replay, add_song.py).
+- **A sound plays at min(volume x file volume, 1), like vanilla** (2026-11-11, the Buh Stories lead). audio.py mixed explosions (volume 4), story shriekers and roars at their raw volume and then peak-normalised the track to the pile-up: chain_reaction's game audio sat at -56 to -68 dB for 26 s under 554 blasts. Now each sound's gain is clamped (SoundEngine.calculateVolume; a volume over 1 only widens the hearing range) and a pile-up over full scale is limited (like the game's OpenAL Soft output limiter) instead of turning the track down. Measured on the published tnt / tnt_1000 / villager_fired stems (at -18 LUFS): quiet parts +21 / +31 / +22 dB, the loudest blast -1 / -2 / +1 dB. And an edit sfx may lift the game track's integrated loudness by at most 4 dB (edit.py cap_sfx_share): one impact on a quiet track had set the loudness every later stage measures (mislabel_grandma: the steps -10 dB with the impact, -4 dB capped). Tests: scripts/test_audio_gain.py.
 
 ## Engine bugs to fix later (reported by worker 3, 2026-11-07; status 2026-11-10, branch agent/engine-fixes)
 - FIXED: red_bed (and every special item model: beds, chests, ender/trapped chests, shulker boxes, mob heads, banners) is drawn in the hotbar slot (renderer/icons.js, display.gui), the first-person hand, third-person hands, item frames and as a dropped item (renderer/specialitems.js + the block-entity models). Shields still draw nothing.

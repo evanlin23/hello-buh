@@ -4,6 +4,7 @@
 import * as THREE from 'three'
 import { nameTagTexture } from '/blockentities.js'
 import { applyPoses } from '/poses.js'
+import { isSlimLayout, slimToWide, opaqueBase } from '/skin_layout.js'
 
 // box-UV layout per face (same as prismarine-viewer's Entity.js, Bedrock/Java box mapping)
 const FACES = {
@@ -49,6 +50,56 @@ async function texture (layers) {
   t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
   t.colorSpace = THREE.NoColorSpace
   const out = { tex: t, w: c.width, h: c.height }
+  texCache.set(key, out)
+  return out
+}
+
+// The eyes of the jar's wide skins (the face is u 8..15, v 8..15; both eyes are on row 12: steve's white + iris at
+// u 9-10 and iris + white at u 13-14) painted pure white: the base texture, or (glow) a layer with only those pixels,
+// drawn full bright over it like EnderEyesLayer so they read in any light. -> { tex, w, h }
+export const WHITE_EYE_PX = [[9, 12], [10, 12], [13, 12], [14, 12]]
+export async function whiteEyesTexture (skin, glow = false) {
+  const key = `white_eyes|${skin}|${glow}`
+  if (texCache.has(key)) return texCache.get(key)
+  const im = await img(`/assets/env/entity/player/wide/${skin}.png`)
+  if (!im) { texCache.set(key, null); return null }
+  const c = document.createElement('canvas'); c.width = im.width; c.height = im.height
+  const g = c.getContext('2d')
+  if (!glow) g.drawImage(im, 0, 0)
+  const k = im.width / 64
+  g.fillStyle = '#ffffff'
+  for (const [u, v] of WHITE_EYE_PX) g.fillRect(u * k, v * k, k, k)
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
+  t.colorSpace = THREE.NoColorSpace
+  const out = { tex: t, w: c.width, h: c.height }
+  texCache.set(key, out)
+  return out
+}
+
+// A real player skin (render.js 'real/<name>', lib/skins.js), for the entity and the first-person arm. `model` is
+// the arm model: 'wide' or 'slim' when lib/real_skins.json chooses one (56e: wide, owner 2026-11-11 "i want it to be
+// regular arms"), else 'auto': slim when the profile says slim (`profileSlim`) or the art is slim-painted
+// (skin_layout.js isSlimLayout). Slim art drawn on wide arms is first converted to the wide layout (slimToWide: the
+// middle column doubled), where the game would show black stripes down the arms. The base layer is then made opaque
+// like the game's; the overlays stay cut out by alpha. -> { tex, w, h, slim }
+export async function skinTexture (skin, model = 'auto', profileSlim = false) {
+  const key = `skin|${skin}|${model}|${profileSlim}`
+  if (texCache.has(key)) return texCache.get(key)
+  const im = await img(`/assets/env/entity/player/wide/${skin}.png`)
+  if (!im) { texCache.set(key, null); return null }
+  const c = document.createElement('canvas'); c.width = im.width; c.height = im.height
+  const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0)
+  const px = g.getImageData(0, 0, c.width, c.height)
+  const slimArt = isSlimLayout(px)
+  const slim = model === 'slim' || (model !== 'wide' && (profileSlim || slimArt))
+  if (!slim && slimArt) slimToWide(px)
+  opaqueBase(px)
+  g.putImageData(px, 0, 0)
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
+  t.colorSpace = THREE.NoColorSpace
+  const out = { tex: t, w: c.width, h: c.height, slim }
   texCache.set(key, out)
   return out
 }
@@ -281,6 +332,13 @@ const PLAYER_PARTS = [
   ['leftLeg', null, [1.9, 12, 0], [[[-2, 0, -2], [4, 12, 4], [16, 48], 0]]],
   ['leftPants', 'leftLeg', [0, 0, 0], [[[-2, 0, -2], [4, 12, 4], [0, 48], 0.25]]]
 ]
+// PlayerModel with slim arms (a skin whose profile says model "slim"): 3 px wide, half a pixel lower
+// (PlayerModel.createMesh(slim): arms addBox(-2|-1, -2, -2, 3, 12, 4) at offset (-+5, 2.5, 0))
+const PLAYER_PARTS_SLIM = PLAYER_PARTS.map(p => {
+  if (p[0] === 'rightArm' || p[0] === 'rightSleeve') return [p[0], p[1], p[0] === 'rightArm' ? [-5, 2.5, 0] : p[2], [[[-2, -2, -2], [3, 12, 4], p[3][0][2], p[3][0][3]]]]
+  if (p[0] === 'leftArm' || p[0] === 'leftSleeve') return [p[0], p[1], p[0] === 'leftArm' ? [5, 2.5, 0] : p[2], [[[-1, -2, -2], [3, 12, 4], p[3][0][2], p[3][0][3]]]]
+  return p
+})
 function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null) {
   const root = new THREE.Group()            // world: position + Ry + death Rz
   const model = new THREE.Group()           // S(-1,-1,1) S(0.9375) T(0,-1.501,0) S(1/16)
@@ -580,7 +638,10 @@ function poseWolf (r, s, walkPos, walkSpeed, tick = 0) {
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
   r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
   B.head.rotation.set(-(s.pitch || 0), net, 0)
-  const tail = x.tame ? 0.55 * Math.PI : Math.PI / 5
+  // extra.tail: the tail's angle (rad) when a scene sets it. Vanilla lowers a tamed wolf's tail with its health
+  // ((0.55 - (20 - hp) * 0.02) pi): Good Boy's opening holds it low, a sad dog watching him go (held high toward a camera
+  // behind it, it read as a 'long flat head')
+  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? 0.55 * Math.PI : Math.PI / 5
   // extra.wag: a happy wag (fast side to side), whatever the walk does
   B.tail.rotation.set(tail, x.angry ? 0 : x.wag ? Math.sin(tick * 1.6) * 0.7 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
   if (x.sitting) {
@@ -913,11 +974,18 @@ export class EntityLayer {
         bones = { orb: true }
       }
     } else if (name === 'player' || name === 'mannequin') {   // (a Mannequin is the player model: movie extras)
-      const skin = (extra && extra.skin) || 'steve'
-      const t = await texture([`entity/player/wide/${skin}`])
+      let skin = (extra && extra.skin) || 'steve'
+      // '<jar skin>+white_eyes' (the herobrine format, lib/herobrine.js): the jar's own skin with its eyes painted white
+      // in memory and lit full bright; no third-party skin file
+      const whiteEyes = skin.endsWith('+white_eyes')
+      if (whiteEyes) skin = skin.slice(0, -'+white_eyes'.length)
+      const real = skin.startsWith('real/')
+      const t = whiteEyes ? await whiteEyesTexture(skin) : real ? await skinTexture(skin, extra.model || 'auto', !!extra.slim) : await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
-      const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
-      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
+      const glow = whiteEyes ? await whiteEyesTexture(skin, true) : skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
+      // a real skin (render.js: skin 'real/<name>', lib/skins.js): its own slim or wide arms; the hat, jacket,
+      // sleeves and pants overlays are PLAYER_PARTS' grown cubes, cut out by the skin's alpha like vanilla
+      if (t) { const b = buildPlayer(t, real ? (t.slim ? PLAYER_PARTS_SLIM : undefined) : (extra && extra.slim ? PLAYER_PARTS_SLIM : undefined), undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
     } else if (name === 'item' && extra && extra.special && this.itemFactory) {
       // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
       // display, turned about y by the spin (render.js)
@@ -942,8 +1010,9 @@ export class EntityLayer {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
         // the entity textures load unflipped (the models' UVs run top-down), so a sprite showed the item upside down;
-        // ThrownItemRenderer draws it upright (motion fixes only: older Shorts stay as published)
-        if (this.motionFixes) obj.scale.y *= -1
+        // ThrownItemRenderer draws it upright
+        // (every recording since r:r52f94c "dropped items right way up": a re-render of an older one too)
+        obj.scale.y *= -1
       }
     } else {
       const l = look(name, extra, this.regs, this.engine)
@@ -1155,6 +1224,7 @@ export class EntityLayer {
         if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
         if (r.mat?.userData.white) r.mat.userData.white.value = 0
       }
+      if (s.mobScale !== undefined && s.mobScale !== 1) r.obj.scale.multiplyScalar(Math.max(0.001, s.mobScale))   // render.js mob_scale marks
       if (s.extra && s.extra.baby && !B_isBlock(s.name)) poseBaby(r, s.name)
       // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
       // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so

@@ -224,6 +224,17 @@ for (const name of names) {
   // (that one stays in out/ for review only): see README "Music"
   if (!fs.existsSync(path.join(ROOT, 'songs', 'ncs')) || !fs.readdirSync(path.join(ROOT, 'songs', 'ncs')).length) execFileSync('python3', ['scripts/ncs.py', '--download'], { cwd: ROOT, stdio: 'inherit' })
   execFileSync('python3', ['scripts/add_song.py', name, '--ncs'], { cwd: ROOT, stdio: 'inherit' })
+  // Buh Stories: the upload text from the story.json `upload` block (title, description with the credit add_song just
+  // wrote into metadata.song, tags, pinned comment, playlist). lib/buhstories_upload.js; HelloBuh packages untouched
+  if (meta.channel === 'buhstories') {
+    const BS = require('../lib/buhstories_upload')
+    const mf = path.join(dir, 'metadata.json')
+    const m = BS.apply(JSON.parse(fs.readFileSync(mf, 'utf8')), BS.uploadOf(name, meta, stunt))
+    fs.writeFileSync(mf, JSON.stringify(m, null, 2) + '\n')
+    const bl = BS.check(m)
+    if (bl.length) console.error(`${name}: upload text BLOCKED (the uploader skips it; fix the story.json upload block, then publish again):\n${bl.map(b => '  BLOCK ' + b).join('\n')}`)
+    else console.log(`${name}: upload text built (./hb paste ${name} prints it)`)
+  }
   // the gates on the finished package (pace + key sounds on short.mp4 beside short_nosong.mp4, the latest ./hb check):
   // metadata gates {version, pace, check, key_sounds, waived}; exit 1 only says the uploader will skip it
   try {

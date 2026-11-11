@@ -4,9 +4,22 @@
  "version": 2,
  "revision": "r-cast (2026-11-10): script_vNext.md 'r-cast' adopted (16 lines; Mom's two lines in her own voice; one spoken stress per sentence, in CAPS in `say`); the brand kid narrator (cast `narrator`); one continuous narrator take (narrator_take: one); S01, S03 and S17 dropped; the reveal cuts 1.0 s after the warden's roar",
  "caption": "why is my whole village carpeted 😶",
+ "upload": {
+  "title": "my village is covered in 9,000 carpets 😶 #minecraft #shorts",
+  "pinned": "What do you think is under the well? Wrong answers only",
+  "tags": [
+   "minecraft village",
+   "minecraft warden",
+   "minecraft carpet",
+   "minecraft well",
+   "minecraft light sleeper"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste light_sleeper prints it). pinned = the question, without the 👇",
  "logline": "A boy in a village where every inch is carpeted, the bell is wrapped in wool and the well wears a wool lid wants everyone to hear one song, so he puts a jukebox on the well.",
  "question": "why tf is the whole village covered in carpet?",
  "premise": "Every road, stair and doghouse in the boy's village is carpeted, 300 sheep are sheared every morning, the bell is boxed in wool and the well wears a white wool lid. Mom says 'walk soft, the ground's a light sleeper'. Once he pulled the wool off the well and the bottom of the well screamed; Mom said it was a fox. Then a skeleton, shooting at him, hits a creeper, and he gets a music disc in a village where nobody has ever heard a song.",
+ "family": "village_custom",
  "twist": "The carpet is silence (vanilla: walking on wool and carpet makes no vibration, and wool blocks stop vibrations). The village sits on an ancient city and the bottom of the well is a sculk shrieker. Tonight he pulls the lid off again because wells echo, puts a jukebox on the well, puts the disc in, and steps off the carpet onto the well's bare stone rim to dance: four shrieks, the Darkness pulsing ('like a real party'), and the warden rises out of the square. He was obliterated by a sonically-charged shriek.",
  "key_color": "#3FD0D4",
  "voice": {

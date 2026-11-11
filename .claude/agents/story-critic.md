@@ -58,6 +58,10 @@ the top 3 and one sentence each on what would make them as good as runaway.
    - **Twist**: the checklist in `docs/story_craft.md` section 3, box by box. Name the line whose meaning flips.
    - **Fairness**: list every clue with its line and how it's misread; is everything the twist needs shown first?
    - **Rewatch**: name three lines that sound different the second time.
+   - **Naivety** (owner 2026-11-11, "sense of mystery. And naivety", STANDARDS 0a): does the kid trust what they see
+     and say each clue's innocent misreading out loud, in their own words? Blocker: a clue with no misreading, a kid
+     who hints or foreshadows ("little did I know", "I should have"), sounds afraid before the reveal, or explains the
+     twist.
    - **Agency**: does the character want something and try? Any accident without a visible in-game cause is an
      automatic must-fix (owner: "you can't really 'Trip' in minecraft").
    - **Character and dialogue**: distinct voices (swap test), subtext, few words, every character line carries a

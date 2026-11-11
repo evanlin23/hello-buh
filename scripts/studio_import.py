@@ -3,6 +3,9 @@
 
   python3 scripts/studio_import.py answer.json      # or a file holding the whole answer text with the ```json block
   python3 scripts/studio_import.py answer.json --report-only
+  python3 scripts/studio_import.py --channel buhstories answer.json   # Buh Stories (docs/studio-metrics-prompt-buhstories.md):
+                        # matched through uploads/buhstories/uploads.json (./hb uploaded), into uploads/buhstories/studio.json,
+                        # one snapshot per import; scripts/buhstories_metrics.py, ./hb stories-report
 
 Writes, per uploaded Short (matched by video id through uploads/uploads.json):
   uploads/studio.json   {name: {subs, views, date, ...the rest of Studio's numbers}} -- youtube_upload.family_scores
@@ -44,7 +47,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("answer")
     ap.add_argument("--report-only", action="store_true")
+    ap.add_argument("--channel", default="hellobuh", choices=("hellobuh", "buhstories"),
+                    help="hellobuh (default: unchanged) or buhstories (its own store, scripts/buhstories_metrics.py)")
     a = ap.parse_args()
+    if a.channel == "buhstories":
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import buhstories_metrics
+        code, msg = buhstories_metrics.cmd_import(load_answer(a.answer), a.report_only)
+        print(msg)
+        return code
     ans = load_answer(a.answer)
     done = json.loads((UP / "uploads.json").read_text())
     by_id = {v["video_id"]: k for k, v in done.items() if v.get("video_id")}

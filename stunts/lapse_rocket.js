@@ -132,7 +132,7 @@ module.exports = makeStunt({
   red: 'hour',
   recordRadius: 200,
   endAfter: 'big_done:0.5',
-  bigCuts: [6, 1.2, 67.5], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
+  bigCuts: [6, 0.6, 57], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'red_sand', under: 'terracotta', biome: 'minecraft:badlands' },
   hotbar: [['white_concrete', 64], ['red_concrete', 64], ['blue_concrete', 64], ['dirt', 64], 'diamond_shovel'],
   small,
@@ -143,18 +143,19 @@ module.exports = makeStunt({
     hold: 'white_concrete', slot: 0,
     // pad, stage 1, stage 2, stage 3, nose, tower, tanks + masts, the hall, ignition
     stageTicks: { 0: 150, 1: 190, 2: 150, 3: 130, 4: 120, 5: 170, 6: 200, 7: 170, 8: 90 },
-    // one smooth move for the whole round (owner r:r200cfe: "The rocket time lapse has a ton for jerking around between
-    // shots": the rail swung round the pad, the tower and the hall, so every 1.2 s jump cut jumped 5-15 deg and 4-15
-    // blocks): a slow crane-out from low over the pad to the wide of the whole site, the look rising with the rocket so
-    // its nose and the tower stay under the clock. Across a jump cut the camera moves under a block and turns under a degree.
-    keys: [
-      [0, [-10, 10, 48], [-6, 8, 0]],
-      [690, [-8, 18, 76], [-6, 30, 0]],
-      [1378, [-6, 22, 92], [-6, 31, 0]]        // the pull-back lands on 60:00: the hall, the tanks and the tower in frame
-    ],
-    reveal: [
-      [8, [-5.97, 22.02, 92.18], [-6, 31, 0]], // on along the same line, as slowly
-      [16, [-5.94, 22.04, 92.36], [-6, 31, 0]]
+    // several clearly different steady angles joined by hard cuts (owner r:r66efa4, 2026-11-11: "we should have more
+    // angles when we're showing the last thing"), each one slow and straight so its own jump cuts carry it on
+    // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
+    // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the pad
+    angles: [
+      [0, [[-22, 14, 30], [0, 1, 0]], [[-31, 12, 40], [0, 20, 0]], 'low front three-quarter'],    // the pad, stage 1
+      [372, [[52, 18, 6], [0, 26, 0]], [[50, 26, -2], [0, 38, 0]], 'side'],                       // stages 2 and 3
+      [612, [[-12, 52, 26], [0, 50, 0]], [[-9, 54, 22], [0, 52, 0]], 'the nose, close'],          // the nose, the tower
+      [852, [[-60, 70, 70], [-10, 15, -5]], [[-54, 72, 64], [-12, 16, -8]], 'high wide'],         // tanks and masts
+      // the showcase: the finished rocket from three angles, the hall and the ignition going on
+      [1086, [[30, 6, 50], [-18, 20, 3]], [[26, 6, 52], [-20, 21, 3]], 'low right, across the pad'],
+      [1206, [[-30, 90, 30], [-10, 40, 0]], [[-26, 92, 26], [-10, 42, 0]], 'over the nose'],
+      [1270, [[-6, 21, 99], [-6, 30, 0]], [[-6, 22.5, 91], [-6, 31, 0]], 'the hero wide']         // 60:00: the hall, the tanks and the tower in frame
     ]
   }
 })

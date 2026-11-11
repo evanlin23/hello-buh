@@ -4,9 +4,22 @@
   "version": 2,
   "revision": "vNext r-cast (2026-11-10, main stories/thirty_one_raids/script_vNext.md 'r-cast': the writers' r-ear lines with Grandpa's 'Lock the DOOR, kid. They're COMING.' in his own voice (elder, Charon); spoken stress on one word per sentence (lines[].stress); the house narrator (voices/cast.json narrator: Leda, the sleepover direction, 3.8-flash-lite, rubberband 1.1 / +1); owner-approved rewrite r69e712)",
   "caption": "why do raiders always follow grandpa home 😶",
+  "upload": {
+    "title": "thirty-one raids. every one started the night grandpa came home 😳 #minecraft #shorts",
+    "pinned": "Should anyone ever tell Grandpa where raid 32 came from?",
+    "tags": [
+      "minecraft raid",
+      "minecraft village",
+      "minecraft grandpa",
+      "minecraft bad omen",
+      "minecraft pillager"
+    ]
+  },
+  "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste thirty_one_raids prints it). pinned = the question, without the 👇",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
   "premise": "Grandpa keeps a totem from every raid he has saved the village from: 31 on his wall, and one empty frame. Every raid started the night he came home; he says they follow him because he beats them. The villagers throw him bread when he walks by. He hunts at the old pillager tower on the hill and brings back grey bottles, a whole chest of them; he calls it his courage and drinks it at the gate, then tells the boy to lock the door. Since Grandma died, a raid is the only time anyone is glad to see him.",
+  "family": "grandparent_secret",
   "twist": "The 'courage' is an ominous bottle: drinking it gives Bad Omen, and a player with it in a village starts a raid. Grandpa has been bringing every raid himself, so the village will need him. Tonight he comes home too tired to fight and leaves the bottle undrunk; the boy, sure a raid is coming anyway, drinks it so somebody can fight. The raid horn sounds, pillagers and a ravager come up the road, and Grandpa stands beside him loading his crossbow: 'Now they'll love you too, kid.'",
   "key_color": "#FFD640",
   "cast": {

@@ -209,6 +209,9 @@ function run (h) {
     const a = parseAt(s[0]), b = parseAt(s[1])
     if (a !== null && b !== null && b > a) GUI.push([a + 1, b - 1])
   }
+  // edit.still (format cooked, lib/cooked.js): from its dark mark the game view is covered (black, then the meme photo
+  // the chat floods over): what the player does under it isn't on screen
+  if (ed.still) { const a = markT(String(ed.still.dark || ed.still.at).split(':')[0]); if (a !== null) GUI.push([a, Infinity]) }
   // the hold after the payoff (edit.endAfter's event to the end) is pace's to judge (its payoff tail: <= 1.0 s, 1.8 s
   // for a text payoff); a time-lapse ends on a finished picture that no longer changes
   const payoffT = ed.endAfter ? markT(String(ed.endAfter).split(':')[0]) : null
@@ -222,8 +225,11 @@ function run (h) {
   // 3+ block changes in the window count as motion
   const bt = (rec.blocks || []).map(b => b[0]).sort((a, b) => a - b)
   const blocksIn = (a, b) => { let lo = 0, hi = bt.length; while (lo < hi) { const m = (lo + hi) >> 1; if (bt[m] < a) lo = m + 1; else hi = m } let n = 0; for (let i = lo; i < bt.length && bt[i] < b; i++) n++; return n }
+  // a scenery shot (`scenery: true`: a moving camera over a build, the build itself the subject, format "mega") has
+  // no cast to move: its camera move is the motion
+  const sceneryAt = (t) => { let s = null; for (const m of marks) { if (m.t <= t) s = m; else break } return !!(s && shots[s.name] && shots[s.name].scenery) }
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
-    if (inGui(t) || inGui(t + 12) || inCut(t)) { flushDead(t); continue }
+    if (inGui(t) || inGui(t + 12) || inCut(t) || sceneryAt(t) || sceneryAt(t + 12)) { flushDead(t); continue }
     if (blocksIn(t, t + 24) >= 3) { flushDead(t + 12); continue }
     let mv = poseMove(t)
     let me = nearest(POSE, Math.round(t)); if (me) lastMe = me; else me = lastMe   // dead: the last place we stood

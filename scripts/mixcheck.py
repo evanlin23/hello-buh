@@ -10,9 +10,9 @@ Short READY; it changes nothing in the videos branch.
 It copies every package's metadata.json (so pick_ncs picks the same track publish would) into a scratch videos dir,
 adds this Short's render as short_nosong.mp4 and work/<name>.rec.json as its recording, runs add_song.main(--ncs)
 there, then `./hb pace <name> --video <mix>` exactly as gates.py stamps it. Exit 1 on any pace BLOCK. Fix: land the drop on the payoff (edit.dropAt),
-a song dip at the payoff mark (edit.sfx ['dip', mark, 0.4]) plus, only on a busy game track, ['impact', mark, {gain: 1.4}]
-(on a quiet stunt the impact dominates the track's loudness normalisation and pushes everything else ~28 dB down:
-mislabel_grandma 2026-11-11), no riser over the dip. Always re-run ./hb check on the no-song render after an sfx change.
+a song dip at the payoff mark (edit.sfx ['dip', mark, 0.4]) plus ['impact', mark, {gain: 1.4}] (edit.py's
+cap_sfx_share keeps the sfx within +4 dB of the game track's loudness: on a quiet stunt an uncapped impact dominated the
+track's loudness normalisation and pushed everything else ~28 dB down, mislabel_grandma 2026-11-11), no riser over the dip. Always re-run ./hb check on the no-song render after an sfx change.
 """
 from __future__ import annotations
 
@@ -58,6 +58,16 @@ def main() -> int:
         meta = json.loads(old.read_text()) if old.exists() else {}
         meta.setdefault("youtube", {}).setdefault("hashtags", [])
         meta.setdefault("caption", n)
+        # the edit as it stands (publish.js writes it): the published package's older edit hid a new card from pace's
+        # caption events (pickaxe_race's mid-chain card, 2026-11-11)
+        cur = subprocess.run(["node", "-e", f"const s=require('./stunts/{n}.js'); process.stdout.write(JSON.stringify(s.edit || null))"],
+                             cwd=ROOT, capture_output=True, text=True)
+        try:
+            ed = json.loads(cur.stdout or "null")
+        except ValueError:
+            ed = None
+        if isinstance(ed, dict):
+            meta["edit"] = {**(meta.get("edit") or {}), **ed}
         (d / "metadata.json").write_text(json.dumps(meta))
         shutil.copy(src, d / "short_nosong.mp4")
         (d / "recording.json.gz").write_bytes(gzip.compress(rec.read_bytes()))
@@ -71,7 +81,14 @@ def main() -> int:
                            capture_output=True, text=True)
         out = r.stdout + r.stderr
         print(out.rstrip())
-        blocked = "BLOCK" in out and "0 blocker" not in out
+        import re as _re
+        verdict = _re.search(r"^(OK|FAIL): (\d+) blocker", out, _re.M)
+        if r.returncode not in (0, 1) or not verdict:
+            # pace never ran (e.g. no node_modules: `./hb` refuses), so there is NO verdict: never report OK
+            # (a reviewer caught mixcheck printing OK with pace silently skipped, 2026-11-11)
+            print(f"mixcheck {n}: COULD NOT RUN pace on the final mix (exit {r.returncode}): fix the setup (npm ci), then run again")
+            return 2
+        blocked = verdict.group(1) == "FAIL" or int(verdict.group(2)) > 0
         print(f"mixcheck {n}: {'BLOCKED on the final mix (fix before calling it READY)' if blocked else 'OK on the final mix'}")
         if a.keep:
             keep = ROOT / "work" / f"{n}.mixcheck.mp4"

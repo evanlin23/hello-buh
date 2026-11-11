@@ -18,7 +18,10 @@ module.exports = R.makeStunt({
     caption: 'which door would you pick? 🚪', red: 'door', dropAt: 'reveal',
     // ends 0.6 s after the last blast's debris settles (lib/settle.js: the recording runs until it does): owner
     // r:r24d99a, never end while the payoff is moving (independent review)
-    endAfter: 'settle:0.6', deathScreen: true, onFire: 'lava_in:death',
+    // (settle:-0.15: the settle waits out the renderer's smoke conservatively, 2.2 s; on this take the last debris lands
+    // ~1.45 s after the second wave, and settle:0.6 held a frozen death screen 1.25 s: independent review 2026-11-11.
+    // pace's last-0.6 s check still sees a still ending)
+    endAfter: 'settle:-0.15', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
       ['intro', 'PICK A DOOR', 1.8, 'yellow'],   // (no 👇: it sat over door 5 and read as a hint)
@@ -29,13 +32,17 @@ module.exports = R.makeStunt({
       ['safe', 'THE SAFE ONE 😇', 1.0, 'green'],
       ['death', 'THE WORST ONE 💀', 1.0, 'red', 2]
     ],
-    punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2]],
-    flash: [['death', 2, 0.8]],
+    // the payoff pace times is the TNT floor's second wave (big_blast), 0.6 s after his death: the flash and a punch there too
+    punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2], ['big_blast', 0, 1.15]],
+    flash: [['death', 2, 0.6], ['big_blast', 0, 0.8]],
     shake: [['death', 2, 24]],
     // the burn in the lava, sped up to the death; its middle 1.3 s cut (lint: nobody moves 12.4-13.6 s)
     speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5]],
     // pace: a hit on the payoff (the last death): the song dips 0.3 s before it, then an impact
     // and a whoosh + pop on the opening card and a pop on every card/counter (the hook: game sound starts with quiet steps)
-    sfx: [['whoosh', 'intro'], ['pops'], ['dip', 'last_death', 0.3], ['impact', 'last_death']]
+    sfx: [['whoosh', 'intro'], ['pops'], ['dip', 'last_death', 0.3], ['impact', 'last_death'],
+      // the payoff pace times (big_blast): with audio.py's vanilla clamp (5530388b) the blasts before it sit ~28 dB higher
+      // and flattened its hit in the NCS mix, so the song and the game duck 0.35 s before it (as pickaxe_race's lastboom)
+      ['dip', 'big_blast', 0.35], ['gamedip', 'big_blast', 0.35]]
   }
 })

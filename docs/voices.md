@@ -270,6 +270,28 @@ Setup (once): `~/.hb-tts/bin/pip install transformers && ~/.hb-tts/bin/pip insta
 (`./hb doctor` checks both). Only Resemblyzer's weights and network shape are used; the mel spectrogram is computed
 in speaker_check.py, so librosa and webrtcvad aren't needed. `scripts/voice_check.py` is the quick transcript view.
 
+## Voice contrast (`scripts/voice_contrast.py`, STANDARDS 2.7)
+
+The owner caught two casts by ear: Light Sleeper's Mom (Sulafat) "is too similar to narrator" (r:rc31bfe) and Gold's
+Grandma (Vindemiatrix) "sounds like a dude still" (r:rf8060c). Both are now a check that runs in `./hb voice` (after
+the take gate, speaker and drift checks) and in `./hb check` (pre-record and full), in the TTS venv:
+
+- **Contrast.** Each character's lines (mean Resemblyzer embedding, as speaker_check) against the narrator's, plus
+  the median pitch. The bar is the narrator against itself (each narrator line vs the rest, 10th percentile, held to
+  0.82-0.90). At or over the bar = BLOCK; within 0.03 of it at under 2 semitones from the narrator = BLOCK; within
+  0.03 but apart in pitch = WARN. Light Sleeper's Sulafat Mom: 0.864 (bar 0.846, 1.4 st), BLOCK. The audition's Mom
+  candidates sit 0.755-0.799 to Pip, 3-5 st under: pass.
+- **Read.** `reads_as: {sex, age: [lo, hi]}` on every voices/cast.json entry (or a story's cast entry; else the
+  role's name: Grandma, Grandpa, Mom, Dad...). Each character line goes to the blind listener (scripts/who.py,
+  gemini-3-flash-preview, falling back on a 429) **played backwards**, so it judges the voice and not the words:
+  forwards, "One's plenty, sweetie" made Vindemiatrix a grandmother (9/10); backwards she is "a man, raspy,
+  gravelly". The pitch is the second witness (female >= 180 Hz agrees, 150-180 can't tell, < 150 disagrees; male
+  <= 150 agrees, a teen <= 180). BLOCK only when the listener hears the other sex AND the pitch doesn't confirm the
+  intended one; one witness alone, or an age range more than 10 years off, is a WARN. No listener answer = pitch only.
+- **Cache.** Answers are kept in `voices/who_cache.json` by the take's sha1, so a check never asks twice about a take
+  (and the same take on another branch is a cache hit). A re-take is a new hash and is heard again.
+- **Fix.** A re-take doesn't fix a cast: re-cast from an audition of the real line (brand/auditions/, the owner picks).
+
 ## Caption colours
 
 Owner, 2026-11-10: "Maybe we can have color coded captions?" and "It should generally just "match" the vibe of the
@@ -529,6 +551,41 @@ pushed a clean Pip line AWAY from Pip (0.67 -> 1.04: the converter's own sound).
 drift without processing, and the realism rule is "less processing is more" ("Realism" above). Not tried: seed-vc
 (GPL-3.0), kNN-VC (needs WavLM-Large, ~1.2 GB, more than this box's free disk). The A/B is
 `out/voice_drift/vc_ab.mp3` (not committed).
+
+## Prompt lint (2026-11-11: four requests wasted on directions read aloud)
+
+`scripts/tts.py` lints the exact prompt of every request before it is sent, and refuses (exit 3, nothing sent, the
+exact prompt and the reason printed) a **character** request (any speaker but the story's narrator) on a
+**flash-tts** model (`gemini-3.8-flash-tts`, `gemini-3.1-flash-tts`; not flash-lite) unless it is exactly:
+
+```
+[one clause, at most 14 words]
+
+the lines, separated by blank lines
+```
+
+Refused: a direction that is not one bracketed clause (a `;`, `:`, `(`, `)` or dash in it: that is a prose profile),
+more than one sentence, more than 14 words, any text outside the bracket (before it, or after the lines), a
+`[tag]` inside a line, and on 3.8 any multi-speaker / `# AUDIO PROFILE` layout (3.8 takes no direction block).
+Calibrated on that day's takes: 3.8 read aloud Dog on the Hill's Buh with the library `buh` profile in the bracket
+(31 words, `:` `;` `( )`) and Thirty-One Raids' Grandpa with "Lock the door, kid. An old man in his seventies. Tired.
+Low and a little rough..." (several sentences); it never read "[A warm, gentle grandmother]", "[A friendly teenage
+boy, casual]" or "[An old, tired man, low and slow]" (4-7 words).
+
+Not covered: the narrator (Pip's bracket on flash-lite, Orus's long recipe bracket on 3.8: voices/recipes/), any
+flash-lite request, and 3.1's structured layout (headings and notes not read aloud, "Realism" below). A 3.1 request in
+the bracket layout (a cast `bracket: true`) is linted like 3.8.
+
+How to pass: put the character's direction in its request's `direction` as one short bracket, e.g.
+`"direction": "[An old, tired man, low and slow]"` (it takes the profile's place). Most library profiles are prose
+and would be refused as a 3.8 bracket (`python3 scripts/tts.py --lint-cast` lists them: only `mom` and `grandma` pass).
+A take-gate re-take never adds its fix to such a bracket (the `;` would break it): it asks again with the same
+direction instead.
+
+Check before you voice: `./hb voice <stunt> --dry` prints every request the story would send (first takes), the model,
+the exact prompt and the verdict, and sends nothing (exit 3 when one is refused). The real run checks the same plan
+before its first request, and `raw_take` checks each request again (re-takes included) right before it is sent; a
+cached take is never refused (nothing is sent for it).
 
 ## Saving quota
 

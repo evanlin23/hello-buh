@@ -23,6 +23,9 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
   flash:   [EVENT | [EVENT, NTH, ALPHA]]          white flash on the game view (0.7, ~0.2 s)
   freeze:  [[EVENT, SECONDS, TEXT?, COLOR?]]      freeze frame on a mark with a slow push-in and a
                                                    stamped label ("1 IN A MILLION"); it adds SECONDS
+  tally:   {"event": "blocks", "label": "blocks used", "done": EVENT}   a live running total (top right) from the
+                                                   marks' "n" (linear between them, so it ticks every frame), gold from
+                                                   the "done" event on (format mega: lib/mega_lapse.js, r:rce78c5)
   fallen:  [[EVENT_A, EVENT_B, LABEL?]]           live "blocks fallen" counter (top right) from the
                                                    recorded altitude, turning green on EVENT_B
   hook:    {"at": EVENT, "before": 1.5, "after": 0.0, "text": "wait for the last one"}
@@ -453,6 +456,31 @@ def score_track(spec, timeline, start):
     return pts, sp
 
 
+def tally_track(spec, timeline, start):
+    """[(t, n)] in Short time for edit.tally = {"event": "blocks", "label": ..., "done": EVENT} (the marks' n), and
+    the done time (None without one)."""
+    sp = _load(spec)
+    if not sp:
+        return [], None, None
+    ev = sp.get("event", "blocks")
+    pts = sorted((e["t"] / 1000 - start, float(e["n"])) for e in timeline if e["event"] == ev and "n" in e)
+    done = event_times(timeline, sp["done"]) if sp.get("done") else []
+    return pts, sp, (done[0] - start if done else None)
+
+
+def tally_at(pts, t):
+    """The running total at Short time t: linear between marks, 0 before the first, held after the last."""
+    if not pts or t < pts[0][0]:
+        return 0
+    k = 0
+    while k + 1 < len(pts) and pts[k + 1][0] <= t:
+        k += 1
+    if k + 1 >= len(pts):
+        return int(pts[-1][1])
+    (t0, a), (t1, b) = pts[k], pts[k + 1]
+    return int(a + (b - a) * (t - t0) / max(1e-6, t1 - t0))
+
+
 def score_at(pts, t):
     """The two shares at Short time t, linear between marks (held before the first and after the last)."""
     if not pts:
@@ -557,7 +585,7 @@ def chat_img(typed, cursor, feedback, fb_alpha=1.0):
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None):
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None, tally=None):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -576,6 +604,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
     cds = []                                         # cards: (t0, t1, text, color, tilt, y)
     for j, cd in enumerate(_load(cards)):
         ts = event_times(timeline, cd[0])
+        if not ts and event_at(timeline, cd[0]) is not None:   # 'EVENT:OFFSET_S', as pace already counts it (it was dropped)
+            ts = [event_at(timeline, cd[0])]
         nth = int(cd[4]) if len(cd) > 4 else 0
         if len(ts) > nth:
             t0 = ts[nth] - start
@@ -588,7 +618,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
     tgw = tag_windows(tags, timeline, start, dur)
     chw = chat_windows(chat, timeline, start)
     scp, scs = score_track(score, timeline, start)
-    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp:
+    tlp, tls, tl_done = tally_track(tally, timeline, start)
+    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp and not tlp:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -655,7 +686,10 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             sk = (int(math.floor(sa * 1000 + 1e-6)), int(math.floor(sb * 1000 + 1e-6)))
             if sa + sb >= 0.9999:            # all taken: the two add to 100.0
                 ra = int(round(sa * 1000)); sk = (ra, 1000 - ra)
-        key = (ck, cc, fk, cwk, rk, tk, chk, sk)
+        tak = None
+        if tlp and t >= tlp[0][0] - 1e-6:    # the blocks-used total, ticking up; gold once the build is done
+            tak = (tally_at(tlp, t), tl_done is not None and t >= tl_done - 1e-6)
+        key = (ck, cc, fk, cwk, rk, tk, chk, sk, tak)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if sk:
@@ -694,6 +728,13 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 img.alpha_composite(tag_img(*tk))
             if chk:
                 img.alpha_composite(chat_img(*chk))
+            if tak:
+                v, done = tak
+                num = rich_text(f"{v:,}", 92, COLORS["gold"] if done else COLORS["white"])
+                lab = rich_text(tls.get("label", "blocks used"), 48, COLORS["white"])
+                x1 = W - 40
+                img.alpha_composite(num, (x1 - num.width, BAND + 22))
+                img.alpha_composite(lab, (x1 - lab.width, BAND + 22 + num.height - 14))
             if fk:
                 v, label, done = fk
                 num = rich_text(f"{v}", 92, COLORS["green"] if done else COLORS["white"])

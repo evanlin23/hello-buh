@@ -1,5 +1,5 @@
 // "ranking every pickaxe ⛏️ 💀" (~30 s, six beats + a finale): a stone wall in a field; wooden, stone,
-// iron and diamond pickaxe each mine a fresh 3x3 section of it (side by side), with real survival
+// iron and diamond pickaxe each mine a fresh 3x2 section of it (side by side), with real survival
 // digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the tier per tool.
 // Gold (fastest plain pickaxe) breaks on its last block; netherite + efficiency V (with the Haste)
 // instamines; then a TNT at every pillar chains down the wall and takes it out: "TNT: ??? tier".
@@ -11,10 +11,14 @@ const TOOLS = [   // six beats + the TNT run, ~30 s (owner: 30 s minimum; nether
   { item: 'stone_pickaxe', label: 'stone', result: 'stone: C tier' },
   { item: 'iron_pickaxe', label: 'iron', result: 'iron: B tier' },
   { item: 'diamond_pickaxe', label: 'diamond', result: 'diamond: A tier' },
-  { item: 'golden_pickaxe[damage=23]', label: 'gold', result: 'gold: S tier?? it broke' },    // fastest plain pickaxe; 9 uses left: it breaks on the last block
+  { item: 'golden_pickaxe[damage=26]', label: 'gold', result: 'gold: S tier?? it broke' },    // fastest plain pickaxe; 6 uses left: it breaks on the last block
   { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'efficiency V + haste', result: 'efficiency V + haste: GOD tier' }   // the instamine needs the Haste: say so
 ]
 const SPACING = 4             // wall sections: 3 wide + a 1-block pillar between them
+// each tier mines its whole section in one take with a timer (owner 2026-11-11, r:r52f94c: "why is there a cut when we
+// are using the wooden pick?" "actually theres a cut for all." "Also, we should have like a timer..."): no jump cut inside
+// a tier, so the section is 3 wide x 2 high (6 digs: the wooden pick's ~6 s in real time, not 9 digs cut down)
+const ROWS = [[2, 1], [1, -1]]   // [row over the floor, direction]: the head-high row left->right, the bottom right->left
 
 // subtitles: the tool, then its tier once its section is open. (Measured times were shown before,
 // but under the invisible Haste they ran ~2x vanilla and read as fake.)
@@ -34,14 +38,11 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [['woodcut_a', 'woodcut_b', 'cut'],
-      // on block boundaries of the lib/act.js recording (dig_end times, offsets from stonecut_b): each tier shorter on
-      // screen than the one before (wood 5.8, stone 4.5, iron 4.2, diamond 3.8, gold 3.6, instamine 3.1 s), and the
-      // look through the hole before each new pickaxe trimmed to 0.25 s
-      ['stonecut_a', 'stonecut_a:2.1', 'cut'], ['stonecut_b:1.75', 'stonecut_b:2.5', 'cut'],
-      ['stonecut_b:4.9', 'stonecut_b:6.0', 'cut'], ['stonecut_b:8.05', 'stonecut_b:8.85', 'cut'],
-      ['stonecut_b:11.1', 'stonecut_b:12.1', 'cut'], ['stonecut_b:13.95', 'stonecut_b:14.7', 'cut'],
-      ['stonecut_b:17.1', 'stonecut_b:17.5', 'cut'], ['stonecut_b:19.0', 'stonecut_b:19.8', 'cut'],
+    return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.3',   // (the camera drifts through it: settle:0.6 on a parked camera held a still frame 2 s, independent review)
+      // a speedrun timer per tier (edit.splits, as end_portal_job: r:r32b983): 0:00.00 on each tier's 'beat', frozen
+      // green on its 'mined' with n/6; real time, no cut inside a tier (subsY 0.2: the tier line clears the timer strip)
+      splits: { reset: 'beat', split: 'mined', of: TOOLS.length },
+      speed: [
       ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
@@ -50,7 +51,11 @@ module.exports = {
       // gamedip: the chain's previous blast 0.54 s before the last (+ the limiter) flattened its hit in the NCS mix (pace)
       // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
         // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
-      punch: [['boom', 0, 1.12]], shake: [['boom', 0, 10]] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
+      punch: [['boom', 0, 1.12], ['boom:1.3', 0, 1.06], ['boom:2.76', 0, 1.06]], shake: [['boom', 0, 10], ['boom:1.3', 0, 6], ['boom:2.76', 0, 6]],
+      // (boom:1.3 / boom:2.76: the chain's 3rd and 5th blasts in output seconds of this take, 1.75x: a 3.6 s stretch of
+      // same-looking booms under the song had no new event, pace dead BLOCK (the punches alone don't register); a card on
+      // the 4th: the chain keeps going. Re-check the offsets after a re-record)
+      cards: [['boom:1.95', 'CHAIN REACTION', 1.0, 'yellow']] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {
@@ -69,13 +74,13 @@ module.exports = {
       await ctx.cmd(`/fill ${x - 70} ${floor - 3} ${z0} ${x + 74} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player,distance=..150]')   // polar bears and pigs wandered through the finale
-    // the wall: one block thick (mining a section opens a window onto the field), 4 high
+    // the wall: one block thick (mining a section opens a window onto the field), 3 high (a 3x2 window under a lintel)
     this.wz = z - 4
     this.x0 = x - 12                                       // first section: x0..x0+2
     const xa = this.x0 - 2, xb = this.x0 + SPACING * (TOOLS.length - 1) + 4
-    await ctx.cmd(`/fill ${xa} ${floor + 1} ${this.wz} ${xb} ${floor + 4} ${this.wz} stone`)
+    await ctx.cmd(`/fill ${xa} ${floor + 1} ${this.wz} ${xb} ${floor + 3} ${this.wz} stone`)
     // pillars between the sections in cobblestone, so each 3x3 reads as its own wall
-    for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 4} ${this.wz} cobblestone`)
+    for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 3} ${this.wz} cobblestone`)
     await ctx.hotbar([...TOOLS.map(t => t.item), ['tnt', TOOLS.length + 1], 'flint_and_steel'])
     await ctx.cmd('/effect give @s haste infinite 1 true')   // Haste II (a beacon's best; V was command-only, every plain tool ~2x vanilla): netherite + efficiency V still instamines
     await ctx.cmd('/effect give @s saturation infinite 1 true')
@@ -121,17 +126,10 @@ module.exports = {
       const xs = this.x0 + i * SPACING
       // snake: top row left->right, middle right->left, bottom left->right
       const order = []
-      for (const [r, dir] of [[3, 1], [2, -1], [1, 1]]) for (let c = 0; c < 3; c++) order.push(new Vec3(xs + (dir > 0 ? c : 2 - c), floor + r, wz))
+      for (const [r, dir] of ROWS) for (let c = 0; c < 3; c++) order.push(new Vec3(xs + (dir > 0 ? c : 2 - c), floor + r, wz))
       const t0 = ctx.tick
       if (fast) ctx.mark('instamine')
-      let nb = 0
       for (const p of order) {
-        // wooden: blocks 4-7 jump-cut (nine identical 0.9 s digs were 8.6 s of the video; the ranking keeps the real speed)
-        if (i === 0 && nb === 3) ctx.mark('woodcut_a')
-        if (i === 0 && nb === 7) ctx.mark('woodcut_b')
-        if (i === 1 && nb === 3) ctx.mark('stonecut_a')   // stone too: nine identical digs took as long on screen as the cut wooden
-        if (i === 1 && nb === 7) ctx.mark('stonecut_b')
-        nb++
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
         if (fast) {
@@ -171,8 +169,11 @@ module.exports = {
       ctx.log('boom', booms, 'tick', ctx.tick)
     }
     bot._client.on('explosion', onBoom)
+    // the TNT walk plays at 3x: its turns at <= 70 deg/s, so on screen they stay under 240 (whip check: 165 deg/s turns
+    // showed at ~495 deg/s, r:r38374d)
+    const AW = require('../lib/act')(ctx, { turnSpeed: 70, turnAccel: 500 })
     // the TNT on the grass at a pillar's foot, aimed by construction (lib/act.js)
-    const place = async (q) => { try { await A.place(new Vec3(q.x, floor + 1, q.z), { against: new Vec3(q.x, floor, q.z), sound: null }) } catch (e) { ctx.log('place', e.message) } }
+    const place = async (q) => { try { await AW.place(new Vec3(q.x, floor + 1, q.z), { against: new Vec3(q.x, floor, q.z), sound: null }) } catch (e) { ctx.log('place', e.message) } }
     ctx.select(T)
     ctx.mark('tntwalk')   // the whole walk at 2.2x (6 s of the same place-swing at 1.5x)
     // walk west along the wall 3 out, controls picked against the view each tick so the motion stays on the
@@ -187,8 +188,8 @@ module.exports = {
         const eye = e.offset(0, 1.62, 0), d = aim.minus(eye)
         const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
         let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-        const ny = bot.entity.yaw + dy * 0.35
-        await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.35, true)
+        await AW.view({ yaw: bot.entity.yaw + dy, pitch })   // one governed step toward the pillar (70 deg/s)
+        const ny = bot.entity.yaw
         const len = Math.hypot(dx, dzz), wx = dx / len, wzz = dzz / len
         const f = wx * -Math.sin(ny) + wzz * -Math.cos(ny), rr = wx * Math.cos(ny) + wzz * -Math.sin(ny)
         bot.setControlState('forward', f > 0.35); bot.setControlState('back', f < -0.35)
@@ -248,9 +249,16 @@ module.exports = {
     for (const c of ['back', 'forward', 'left', 'right']) bot.setControlState(c, false)
     ctx.log('booms', booms, 'of', NP)
     if (booms < NP) { ctx.log('chain broke'); return false }
-    await bot.waitForTicks(24)
+    // the eyes keep drifting over the smoke and the broken wall until well past the settle (the blast's rendered smoke:
+    // 44 ticks), so the ending never parks the camera (a ~2 s still frame at the end: independent review)
+    for (let k = 0; k < 70; k++) {
+      const goal = boomAt.offset(-1.5 + 3 * k / 70, 0.4 * Math.sin(k / 11), 0)
+      look = look.plus(goal.minus(look).scaled(0.08))
+      const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
+      await A.view({ yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) })
+      await bot.waitForTicks(1)
+    }
     bot.removeListener('physicsTick', onTick)
-    await bot.waitForTicks(10)
     return !ctx.died
   }
 }

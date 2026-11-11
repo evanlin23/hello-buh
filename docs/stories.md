@@ -292,6 +292,42 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, Review Room notes on the ready Shorts: "still says hellobuh" / "all of these still say hellobuh
+  instead of 56e" (cave_reveal, creeper, half_heart, lava_crossing, tnt_1000, which_door); pickaxe_race: "why is there a
+  cut when we are using the wooden pick?" "actually theres a cut for all." "Also, we should have like a timer...";
+  guess_sound_2: "when we look over at the mob, we arent looking directly at it."; fortune: "The items are all
+  upsidedown?? Also we should have more drop."; mega_sponge: "the cuts are too jarring, it looks like we get stuck";
+  tnt_1000: "the title could be like vs SECRET or smth idk bc i wouldve swiped after 1000".** Every Short shows the player
+  as 56e (death messages, chat, command feedback), re-renders of older recordings included. No cut in the middle of an
+  action (a dig, a place, a use): cut between actions. When the view turns to a mob or thing, it lands centred on it.
+  Dropped items render the right way up (an engine bug). Cuts never look like the player got stuck. A title promises
+  something past the obvious end point, so the viewer stays for it.
+- **Owner, 2026-11-11: "make everything, then put all of it into a review folder. dont let anything go to youtube
+  anymore without an OK from me"; "the \"review folder\" is the review artifact"; "show what i need to review there,
+  then archive the rest (still available)".** Nothing uploads without the owner's OK for that exact cut:
+  scripts/youtube_upload.py skips any Short without a line in uploads/owner_ok.txt naming the sha256 of the video the
+  owner watched (scripts/owner_ok.py add, only after the owner says OK); a re-published Short needs a new OK. Every
+  ready Short goes on the review artifact; what is already decided is archived there, still viewable.
+- **Owner, 2026-11-11, on the skin stills: "i want it to be regular arms, the slim dont look good".** The player 56e
+  renders with regular (wide, classic) arms; the slim-painted arm art is widened to the wide layout (a duplicated column
+  per arm face) so no black stripes show. Supersedes the slim-arm auto-detect for 56e.
+- **Owner, 2026-11-11: "maybe we should use my real minecraft username: 56e".** HelloBuh stunts play as `56e` (the
+  harness's default bot name; it shows in death messages, chat and command feedback). Stories keep their character
+  names (botName 'Buh', 'Milo'). Already-uploaded Shorts are unchanged; Shorts re-recorded from now on carry it.
+- **Owner, 2026-11-11, on the time-lapse Shorts (lapse_statue, lapse_rocket): "for the time lapse stuff, like we should
+  have more angles when we're showing the last thing, and then also... the second one, like I think our smoother camera
+  movement is like too slow. I think it's okay to have like a really fast movement here because it's like, what, a
+  time lapse, right? Like right now, it's like I places and I take forever to turn."** In a lapse_* Short the 1-hour
+  build is shown from several clearly different angles (hard cuts between steady shots: a new angle, not a small jump
+  of the same view). In the sped-up 1-minute round the player turns fast between placements, as a sped-up player would;
+  the followable-camera speed cap does not apply inside a time-lapse's sped-up build spans (it still applies at normal
+  speed). Supersedes, for lapse_* builds, the 220/speed turn cap added to lib/time_lapse.js today.
+- **Owner, 2026-11-11, after the lead sent every Short it called ready (and asked whether the clutch Shorts' quick
+  look-down flick counts as a whip, and whether to hold four approved story Shorts the new whip check flags): "All
+  ok".** The Shorts sent today are approved as they are; the new formats (cells, dilemma, race, mislabel, hack, desire,
+  inside, interrupt, mega) go first in the queue. A clutch Short's single quick look-down at the landing is allowed
+  (the genre's look; boat_clutch, clutch_harder); every other turn keeps the followable-camera rule. The approved
+  story experiments (sun_wont_set, respawn_voice, chunk_next_door, sheep_stares) ship as they are.
 - **Owner, 2026-11-11, reviewing the ready Shorts by hand: "when we're building the statue, so I guess lapsed
   statue, we pause for some reason when we're building the second one. Like for like what seems like more than just a
   while."** A build never stalls on screen: while a build is unfinished, blocks keep going on (in a time-lapse, every
@@ -334,6 +370,36 @@ STANDARDS.md in the same commit.
   an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
   obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
   (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
+- **Owner, 2026-11-11, sharing Technoblade's "Sand Art" Short: "huge sand art".** (A giant pixel picture made of
+  concrete powder poured from the sky: the blocks fall and pile into pyramids, the camera rides down the slopes of
+  colour, a subscriber-counter overlay ticks to 1,000,000.) HelloBuh adds a sand-art format (family `sandart`): a
+  HUGE picture made of falling concrete powder (or sand and gravel) dropped from above, so it builds itself by gravity;
+  the camera sits close in the falling blocks, then pulls up to reveal the whole picture. Our own picture and caption;
+  no other creator's name, likeness or overlay. The settle rule holds: never cut or end while blocks still fall.
+- **Owner, 2026-11-11, sharing Necroncore's "what was your favorite version?" time-lapse (a crater dug in a real
+  landscape, a giant grass block rising in it, then a giant iron golem holding Steve and Alex, a wolf beside it):
+  "huge mega build, like ridiculously big".** The `mega` time-lapse variant goes BIGGER: the build must dwarf the
+  landscape (hundreds of blocks across, a real terrain around it for scale), shown from high up so the scale reads,
+  ending on a close pass that shows how small the player is next to it.
+- **Owner, 2026-11-11, sharing a "fananimation" dropper Short (a yellow shaft, "Attempt #1", "#3", "#15" captions,
+  a red-and-green target far below, the landing on #15): "Huge dropper?"** HelloBuh adds a dropper format (family
+  `dropper`): a HUGE, tall dropper fallen in first person, an attempt counter on screen, quick failed attempts cut
+  together, then the clean landing as the payoff. Our own shaft, obstacles and target; failed attempts end on a cut
+  before the death (no death puff left on screen), and the landing must be true vanilla (water, slime, hay, etc.).
+- **Owner, 2026-11-11, sharing "Minecraft Dirt Moment" (caption "bro found dirt for ONCE": a whole world where the
+  ground, hills and everything are one other block, and the player digs a lone patch of real dirt under a tree like
+  it's treasure): "fake world?"** HelloBuh adds a fake-world format (family `fakeworld`): a world where everything is
+  one wrong block (planks, glass, gold, sponge...) shown as normal survival, and the one ordinary block found in it
+  is treated like a rare treasure. Built by generating the world from our own block swap, never a copied map.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "a diabolical trap that made my friend hate
+  me...": a lake with a glass-roofed underwater base, the friend dives for it, the real base is a fake, a tunnel
+  and a hidden drop end in a glass cage): "trapping friend".** HelloBuh adds a friend-trap format (family `trap`):
+  build an irresistible bait (a base, loot, a portal), show how it works, then the friend walks into it; the trap
+  must really work in vanilla (minecraft-audit) and the friend is a second bot, never the owner's name.
+- **Owner, 2026-11-11, sharing struxo's "Beginner Friendly Nether Boss Build Timelapse" (a drone time-lapse of a
+  mangrove swamp cleared and a huge crimson/warped boss statue rising, with block counters ticking in a corner):
+  "another megabuild example".** For the `mega` time-lapse: a running count of blocks used, ticking up, is a good
+  overlay; the build stays our own design, at a ridiculous scale.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -498,6 +564,80 @@ STANDARDS.md in the same commit.
   pacing is the voice the owner chose: the narrator's take gate allows sentence breaks up to 0.95 s (cast `narrator`
   `max_pause.rest`). Takes are still never trimmed, and a longer pause, a breath or a wrong word is still re-taken. The
   opening rule (no gap over 0.6 s in the first 5 s) is unchanged.
+- **Owner, 2026-11-11, after watching the held cuts: "The moms voice is too similar to narrator, need a new voice.
+  Grandma sounds like a dude still. Can you explore options?"** A character voice must be told apart from the narrator
+  (Pip, a bright kid) at first hearing, and must read as its character's age and sex: Mom is recast (Sulafat sounds too
+  close to Pip) and Grandma recast again (Vindemiatrix still reads as a man), each chosen by the owner from an audition
+  of candidates saying the story's real line, measured against Pip (pitch and speaker distance).
+- **Owner, 2026-11-11, on Gold for the Portal: "when we say "string" in the piglin short, no string is on screen".**
+  Every thing the narration names is on screen, readable, while its words are said (the string on "a little string",
+  the pearls on "ender pearls"). Each line lists what it names (story.json `shows`), and the recording is checked for
+  each one in frame during that line.
+- **Owner, 2026-11-11, from the Mom/Grandma audition (brand/auditions/2026-11-11_mom_grandma, branch
+  claude/audition-mom-grandma): "mom D / grandma J".** Mom is **Pulcherrima** (was Sulafat, too close to Pip);
+  Grandma is **Autonoe** (was Vindemiatrix, read as a man). Each is directed with one short bracketed clause and
+  voiced on the story's character model; Light Sleeper's two Mom lines and Gold's Grandma line are re-voiced.
+- **Owner, 2026-11-11, after watching the held cuts (Light Sleeper 52 s, Gold 50 s, Dog on the Hill 50 s): "i think the
+  current length is fine, we shouldnt harp too much on length".** About 50 s at Pip's natural pace is fine. Length is
+  not a reason to cut lines or re-voice; a line goes only if it doesn't move the question. pace keeps only its floor
+  BLOCK; anything over 45 s is a note, never a blocker or a fix request.
+- **Owner, 2026-11-11, on Good Boy's voiced preview: "The opening scene is not very exciting? Also not centered."**
+  Its first 4 s were Buh walking a dirt road with the dog (the narrator, the story's subject) small at the right edge.
+  The opening shot puts the story's subject (the shot's `subject`, else line 1's) in frame from frame 1, in the middle
+  third of the frame and big enough to read at phone size, with something story-relevant already moving (the subject,
+  the cast, an action or a camera push) in the first 0.5 s; never a static or empty establishing frame.
+- **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
+  stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
+- **Owner, 2026-11-11: "keep the producer off. We should be doing the stories more manually just for now until our
+  process is good... try and get the premises first. I want good premises. And then good premises can turn into good
+  scripts and good stories. And then once we audit those... we can start writing the scripts for them. One session
+  per script."** The daily story producer stays off. New stories go in owner-audited stages: a premise shortlist first
+  (the owner picks), then one session per picked premise writes its script (the writers' room, critic, cold read),
+  and the owner audits the scripts before any voice or build.
+- **Owner, 2026-11-11, on the batch-2 premise audit (docs/pitches/batch2_premise_audit_2026-11-11.md): "Whatever is
+  suggested".** Batch 2 is the critic's five: The Wall Grows, The Bell in the Window, The Walk, Six Thousand Torches
+  (in place of Goat Horn, which needs a goat model), Red Sheep (Grandpa becomes Dad). One session writes each script,
+  with the audit's "must change" notes applied; the owner audits the scripts before voice or build.
+- **Owner, 2026-11-11, on batch 2's scripts: "We need to have that sense of mystery. And naivety".** Every script
+  is told by a kid who doesn't understand what they're seeing and says so plainly, with full trust: the kid explains
+  each clue the wrong, innocent way (the wall keeps us safe, the bell is just loud, Grandpa is being silly), and the
+  viewer starts to see what the kid can't. The kid never hints, foreshadows, sounds scared too early or explains the
+  twist; the gap between what the kid believes and what the viewer suspects is the mystery. Every clue in the clue
+  map has its innocent misreading in the kid's own words.
+- **Owner, 2026-11-11, auditing batch 2's scripts:**
+  - The Wall Grows: "ok for villagers to place blocks and climb ladders"; leaving "why doesn't the player dig in?"
+    unanswered: "sure for that, we can have it as arguing in the comments".
+  - Six Thousand Torches: "ok for the goodbye thats fine" (about 65% guess it at the midpoint; dramatic irony is
+    fine); "Jonah is fine" (a new character, not Buh); his voice: "we should test. we need to keep track of our
+    characters".
+  - The Bell in the Window: the implied death is fine ("we dont actually show it"); "whole village runs inside is
+    fine"; L10 takes "so he could see me".
+  - The Walk: "sea freezes is good" (Grandma: "Come back when the sea FREEZES." N: "Mom says it NEVER freezes
+    here."); "3 hundred is fine"; asked why its grandpa can't reuse a grandpa voice.
+  - Red Sheep: "new kid is fine"; ending on the evoker's look with no fangs: "sure".
+  Every speaking character is tracked in one place, docs/world/canon.md "Recurring characters" (who, look, cast id
+  and voice, stories), and a new character's voice is auditioned against Pip before it's cast.
+- **Owner, 2026-11-11, on Dog on the Hill (already OK'd): "maybe we can have buh say 'i just wanted to see you again,
+  but I need to go already' or smth bc its kinda jarring to join then immediately leave".** A player who appears and
+  leaves at once needs a word on why: Buh says why he came and that he can't stay before "Sit, BOY. Be right BACK."
+  (L15 "Hey, BUDDY! I just wanted to SEE you again." L17 "But I gotta GO already. Sit, BOY. Be right BACK."). The
+  OK'd package goes back to held until the owner re-OKs it.
+- **Owner, 2026-11-11, on The Bell in the Window's Mom (Saltmouth, not Buh's Mom), candidates A Kore / E Callirrhoe
+  from the Mom/Grandma audition: "A is fine".** Saltmouth's Mom is cast `mom_saltmouth`, Kore.
+- **Owner, 2026-11-11, on The Walk's Grandma (not Gold's Grandma), candidate E Callirrhoe: "calirrhoe is fine".**
+  The island Grandma is cast `grandma_island`, Callirrhoe, directed as an old woman; the first take must still read as
+  an old woman to the blind listener (reads_as 60-85), or it comes back to the owner.
+- **Owner, 2026-11-11, on the world: "i really liked how the hill and the place the dog was left was the same place and
+  people watching both will be able to see its connected".** The strongest link between stories is the same exact
+  place, seen again: the same spot, the same build, the same thing left behind (Good Boy's last login is Dog on the
+  Hill's first frame). Every new story looks for one: set it where an earlier story happened, or leave something
+  that a later story will show on the skyline.
+- **Owner, 2026-11-11, on batch 3's first premise round: "theyre all ok, but we should review further... im not exactly
+  sure how these were created, but i want to be more creative".** Premises are made in two phases: diverge first
+  (several writers, each with one lens: strange narrators, player habits seen from the other side, game systems as
+  mysteries, new moods; no other rules), then a cold-read gate (keep only ideas a fresh player can't guess at the
+  midpoint, or guesses wrong), and only then the house rules, vanilla, place and build checks and the critic. The
+  owner sees a ranked top 8 plus a wild-cards list, and how each idea was made.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

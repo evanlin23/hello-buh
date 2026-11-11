@@ -30,7 +30,7 @@ module.exports = {
     ['r4_zoom', 'r4_found:0.7', 1.7], ['r5_zoom', 'r5_found:0.3', 4]],
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
-    song: 'songs/funk_abnormal.mp3', dropAt: 'r5_zoom',
+    song: null, dropAt: 'r5_zoom',
     startAt: 'r1_go:0', endAfter: 'r5_found:-0.3',   // (cut to the y 320 shot as the look up the pillar ends: the tip held still 0.4 s)
     // the zoom-out: a fixed camera up at y 320 beside him, appended after the look up the pillar
     replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,324.5,10.5,45,-35', speed: 1, label: 'MEANWHILE AT Y 320' },
