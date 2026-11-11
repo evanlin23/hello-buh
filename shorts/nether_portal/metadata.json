@@ -1,9 +1,9 @@
 {
   "name": "nether_portal",
-  "caption": "POV: your first nether portal 😳",
+  "caption": "POV: your first nether portal \ud83d\ude33",
   "youtube": {
-    "title": "POV: your first nether portal 😳 #minecraft #shorts",
-    "description": "POV: your first nether portal 😳\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: your first nether portal \ud83d\ude33 #minecraft #shorts",
+    "description": "POV: your first nether portal \ud83d\ude33\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -47,14 +47,14 @@
     }
   },
   "edit": {
-    "caption": "POV: your first nether portal 😳",
+    "caption": "POV: your first nether portal \ud83d\ude33",
     "red": "nether",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "lit",
     "endAfter": "lit:2.4",
     "args": [
       "--caption",
-      "POV: your first nether portal 😳",
+      "POV: your first nether portal \ud83d\ude33",
       "--red",
       "nether",
       "--end_after",
@@ -172,10 +172,10 @@
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal 😳\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
   ],
   "status": "needs-fix",
-  "notes": "frame QA pass (reviewer 2026-11-06): nitpicks only (0.55 s still opening, portal particles column)",
+  "notes": "backlog worker A 2026-11-11: needs-fix (unfinished). stunts/nether_portal.js (main) is the new format 'rating every way to light a nether portal' (~18 s): flint and steel, fire charge, TNT (0/10), a dispenser, lava in a pit, then the respawn anchor's blast lights it (blast protection IV netherite: dead, the client never saw the fire), every click aimed via lib/act.js. Recordings so far found and fixed: tp centring, the bucket hitting the basin rim (lava death), the armour wiped by the hotbar's /clear. The anchor beat is still unproven. Next: ./hb make nether_portal --from record; if the anchor still won't light it, end on lava (8/10).",
   "published_at": "2026-11-06T17:56:46.539Z",
   "qa_notes": [
     "2026-11-06: held back - under the owner's 30 s minimum (single-stunt, ~10 s); needs a multi-beat format and both audits."

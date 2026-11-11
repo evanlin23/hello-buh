@@ -1,9 +1,9 @@
 {
   "name": "creeper",
-  "caption": "POV: you hear tssss 💀",
+  "caption": "POV: you hear tssss \ud83d\udc80",
   "youtube": {
-    "title": "POV: you hear tssss 💀 #minecraft #shorts",
-    "description": "POV: you hear tssss 💀\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you hear tssss \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you hear tssss \ud83d\udc80\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -15,7 +15,7 @@
   "song": {
     "file": "intranet_crush.mp3",
     "title": "Intranet Crush",
-    "artist": "hiræth, Willix",
+    "artist": "hir\u00e6th, Willix",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "hiss",
     "drop_in_song_s": 3.0,
@@ -47,7 +47,7 @@
     }
   },
   "edit": {
-    "caption": "POV: you hear tssss 💀",
+    "caption": "POV: you hear tssss \ud83d\udc80",
     "red": "tssss",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "hiss",
@@ -56,7 +56,7 @@
     "endAfter": "death:1.8",
     "args": [
       "--caption",
-      "POV: you hear tssss 💀",
+      "POV: you hear tssss \ud83d\udc80",
       "--red",
       "tssss",
       "--death_screen",
@@ -192,9 +192,9 @@
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss \ud83d\udc80\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
   ],
   "status": "needs-fix",
-  "notes": "frame QA: creeper not on screen until 4.2 s, no fuse flash; re-render queued",
+  "notes": "backlog worker A 2026-11-11: needs-fix (unfinished). stunts/creeper.js (main) is rebuilt: plateau field \u00b134 with a taper and its own biome (r1 review blocker: a cut wall/seam behind the creeper), full hearts, hard difficulty, a second glance as it closes in (~8.3 s), planks placed via lib/act.js, endAfter settle:0.6. The r1 render (5.5 s) had the fuse flash and the creeper on screen at 0.4 s, both fixed. It is not re-recorded yet: the shared server was busy and the disk was low. Next: ./hb make creeper --from record, render, independent review.",
   "published_at": "2026-11-06T17:19:00.311Z"
 }
