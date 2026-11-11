@@ -8,7 +8,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'water bucket clutch 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-0.8', endAfter: 'placed:2.4'},
+  edit: { caption: 'water bucket clutch 💀', dropAt: 'placed' , startAt: 'jump:-0.8', endAfter: 'placed:1.0'},
 
   async setup (ctx) {
     const { bot } = ctx

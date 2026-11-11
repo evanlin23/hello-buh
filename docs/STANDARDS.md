@@ -239,6 +239,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
 - **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
   **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
+- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: floor 8 s (lead decision 2026-11-11: the 25 s floor is the narration floor). Check: pace (length).
 
 ## 9. Review
 - An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
@@ -300,7 +301,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
   the same commit as its house rule. Check: owner. r:rc43770
 - **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
-  downloads each mp4 from its release (keeps the disk from filling). Check: owner. r:rc5eaf0
+  downloads each mp4 from its release, sha256-checked (keeps the disk from filling): release `pkg-<name>`,
+  metadata.json `video.release`, scripts/release_assets.py + .github/workflows/release-assets.yml. Check: owner. r:rc5eaf0
 - **Format "hack"**: one real, clever block trick per Short, a "POV: you realized..." caption, working on screen in
   the first 1.5 s. Check: owner, minecraft-audit (the trick must really work). r:rc15847
 - **Format "cooked"**: an impossible feat, then a flood of "X joined the game" as the consequences arrive, over a
@@ -313,6 +315,29 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:r934ea4
 - **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
   hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+- **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
+  round a beat, the path always wins. Check: owner. r:r2e0a32
+- **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
+  the caption plays it as a normal complaint. Check: owner. r:r047388
+- **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
+  absurd; short. Check: owner. r:ra64f79
+- **Format "mobpov"**: an annoying mob trait blown up into an unstoppable, absurdly fast POV chase. Check: owner. r:r8048f1
+- **Format "underdog"**: a fast list of how the game treats every mob, then the one it forgot ("...but what about
+  him?"), for sympathy and laughs. Check: owner. r:r8dcdb4
+- **Format "stages"**: a relatable arc in 3 titled chapters, each fast and escalating, a big payoff. Check: owner. r:redb7c0
+- **Format "dilemma"**: a life-or-death choice frozen mid-moment, stretched in slow motion from several angles,
+  then a true-vanilla twist that makes the choice moot. Check: owner, minecraft-audit (the twist). r:r9dcf73
+- **Format "psycho"**: a house tour, almost normal at the door, insanely dangerous inside, played straight.
+  Check: owner. r:rc40696
+- **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
+  track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
+  backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
+- **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
+  mob; fast is fine, off-aim reads as hacking. Check: review, the aim-error check (rec_check/lint). r:rffba12
+- **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
+  end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
+  Check: pace/rec_check (settle), lint. r:r24d99a
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

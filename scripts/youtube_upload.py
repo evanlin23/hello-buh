@@ -11,7 +11,9 @@ exists. Ported from evanlin23/buh-explains buhexplains/pipeline/upload.py, with 
 - each at a random time in its own slice of 9:00-21:00 Central (3 a day: 9-13, 13-17, 17-21), never a fixed
   robotic slot; YT_PER_DAY changes the count;
 - never delete or re-upload a video that underperforms (YouTube treats it as spam);
-- refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch,
+- refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch, if its
+  metadata `gates` are older than lib/hb/gates.json's version or blocked without a waiver (scripts/gates.py; story_*
+  Shorts are gated by the story pipeline instead),
   if its title is already on the channel (hand uploads too), or if it would break the posting mix
   (scripts/check_queue.py: no format twice in a row, at most 1 pixel-art per 3).
 
@@ -40,6 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from check_queue import series, mix_ok   # noqa: E402
+import gates   # noqa: E402  (lib/hb/gates.json: a package gated before the current gates waits until it's re-gated)
 
 CHANNELS = {"hellobuh": "HelloBuh", "buhstories": "Buh Stories"}   # the id a Short's metadata names -> its display name
 CHANNEL = (os.environ.get("YT_CHANNEL", "") or "hellobuh").strip().lower()
@@ -162,6 +165,17 @@ def fetch_short(vd: Path, name: str, meta: dict | None = None) -> Path:
     return f
 
 
+def has_video(vd: Path, name: str, meta: dict) -> bool:
+    """A release asset, or short.mp4 in the branch's tree (a package republished by a pre-r:rc5eaf0 publish.js after its
+    mp4 left git has neither: skip it rather than stop the run)."""
+    if ((meta.get("video") or {}).get("release") or {}).get("url"):
+        return True
+    if not (vd / ".git").exists():
+        return True   # (tests: a plain directory)
+    r = subprocess.run(["git", "-C", str(vd), "ls-tree", "HEAD", f"shorts/{name}/short.mp4"], capture_output=True, text=True)
+    return r.returncode != 0 or bool(r.stdout.strip())
+
+
 def meta_of(vd: Path, name: str) -> dict | None:
     p = vd / "shorts" / name / "metadata.json"
     return json.loads(p.read_text()) if p.exists() else None
@@ -170,7 +184,8 @@ def meta_of(vd: Path, name: str) -> dict | None:
 def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, str]:
     """The next Short: queue lines marked "# first", then the rest ranked by their format's expected subscribers
     per upload (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
-    uploaded or posted by hand, not ready, or that would break the mix after what went up last."""
+    uploaded or posted by hand, not ready, gated before the current gates (scripts/gates.py: lib/hb/gates.json's version;
+    story_* are gated by the story pipeline), or that would break the mix after what went up last."""
     history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
     lines = QUEUE.read_text().splitlines() if QUEUE.exists() else []
     pinned = [l.split("#")[0].strip() for l in lines if "# first" in l]
@@ -202,11 +217,17 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
             if name in queued:
                 why.append(f"{name}: status {meta.get('status')!r}, not ready")
             continue
+        gw = gates.stale({"name": name, **meta})
+        if gw:
+            why.append(f"{name}: {gw}"); continue
         lic = (meta.get("song") or {}).get("licence", "")
         if meta.get("song") and not lic.startswith(("NCS", "original")):
             why.append(f"{name}: its song isn't cleared ({lic or 'no licence'})"); continue
         if not mix_ok(history, name):
             why.append(f"{name}: same format as the last upload, or a 2nd pixel-art in 3"); continue
+        if not has_video(vd, name, meta):
+            why.append(f"{name}: no video (no video.release in metadata.json and no short.mp4 on the branch: re-publish it "
+                       "with publish.js from main)"); continue
         return name, "\n".join(why)
     return None, "\n".join(why)
 
@@ -590,6 +611,9 @@ def main() -> None:
                 history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
                 if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short) or channel_of(meta) != CHANNEL:
                     sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, breaks the mix, or belongs to another channel")
+                gw = gates.stale({"name": a.short, **meta})
+                if gw:
+                    sys.exit(f"{a.short}: {gw}")
                 name, skipped = a.short, ""
             else:
                 name, skipped = pick(vd, done, scores)
