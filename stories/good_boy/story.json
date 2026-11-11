@@ -33,7 +33,8 @@
    "ref": "buh",
    "color": "#4FD8E6",
    "on_screen": "actor bot Buh, Steve skin; speaks only L11 and L13",
-   "model": "gemini-3.8-flash-tts"
+   "model": "gemini-3.8-flash-tts",
+   "profile": "A sixteen-year-old boy, choked up and quick, trying to sound casual; full volume, not whispered"
   }
  },
  "lines": [
