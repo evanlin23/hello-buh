@@ -5,6 +5,13 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 
 | date | story | needed | status |
 |---|---|---|---|
+| 2026-11-11 | the_walk | merchant (villager trade) screen in edit.py, with the vanilla item tooltip on hover ("Frost Walker II") | open (script stage; not built) |
+| 2026-11-11 | the_walk | a non-spoken caption chunk (on-screen text in the band captions' style and key colour, timed to a shot) | open |
+| 2026-11-11 | the_walk | an actor seated in a moving, rowing boat (kit primitive: mount, row along a path; paddles are recorded) | open |
+| 2026-11-11 | the_walk | grey-haired old-man and old-woman player skins (skins/ has none; the default skins all read young) | open |
+| 2026-11-11 | the_walk | an actor walking off a block edge onto water with Frost Walker (kit walk over water; verify the server forms frosted ice for the actor, else stamp it per step) | open |
+| 2026-11-11 | the_walk | a flashback grade (warm, soft) as a per-shot look | open |
+| 2026-11-11 | the_walk | lead ropes / leash knots (dropped from the script for now) | open, not needed |
 | 2026-11-10 | thirty_one_raids | actor sit pose; drink/use pose; off-hand item | building (agent/ergonomics) |
 | 2026-11-10 | thirty_one_raids | chest contents (as the vanilla chest GUI on open) | building (agent/ergonomics) |
 | 2026-11-10 | thirty_one_raids | campfire smoke | building (agent/ergonomics) |
