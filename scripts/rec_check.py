@@ -911,9 +911,12 @@ def main():
             msg = (f"settle: the Short {what} while {OC.describe(mv)} still move{'s' if len(mv) == 1 else ''} in view ({when}): "
                    + ("end after it (endAfter on a mark after the settle, +1.0 s at most)" if kind == "end" else "cut after it lands")
                    + " (owner: let the last pillar of sand all fall before we end/cut; STANDARDS r:r24d99a)")
-            settle_res["findings"].append(("BLOCK", k_out, msg))
-            add("BLOCK", "settle", j, msg, tick=k_out)
-        settle_res["ok"] = not settle_res["findings"]
+            # only the rendered smoke left (PUFF_TICKS is an estimate): a WARN here; pace measures the finished mp4's last
+            # 0.6 s and blocks when the picture still moves
+            lvl = "WARN" if kind == "end" and all(t["kind"] == "puff" for t in mv) else "BLOCK"
+            settle_res["findings"].append((lvl, k_out, msg))
+            add(lvl, "settle", j, msg, tick=k_out)
+        settle_res["ok"] = not any(lvl == "BLOCK" for lvl, _, _ in settle_res["findings"])
 
     # ---------------------------------------------------------------- 6-9. the owner's notes (./hb owner, lib/hb/owner.js)
     owner_note = ""

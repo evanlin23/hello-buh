@@ -640,6 +640,8 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         if ev == "settle":   # endAfter 'settle:0.6' (lib/settle.js): the payoff is where that last motion began (the
             # blast, the fall, the death); the tail counts from the settle (the settle check below)
             st_ = mark_time("settle")
+            if st_ is None:   # endAfter 'settle:-0.15': the Short ends just before the mark (which_door, 2026-11-11)
+                st_ = dur
             starts = sorted(o for o in (clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and e["event"] == "motion_start")
                             if o is not None and st_ is not None and o <= st_ + 1e-6)   # (motion_start is preview NOISE: not in marks)
             if starts:
@@ -715,7 +717,9 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     guessed = how.startswith("the biggest")   # a guess never blocks: set story.json "payoff" to make it a real check
     if payoff is not None:
         ev_here = {m["event"] for m in marks if abs(m["out"] - payoff) <= 0.5}
-        text_payoff = bool(edit.get("deathScreen") and (ev_here & {"death", "slain", "boom", "burn"})) or \
+        # (or the death screen already up at a blast that follows the death: which_door's second wave 0.6 s after it)
+        died_before = any(m["event"] in ("death", "slain") and payoff - 2.0 <= m["out"] <= payoff + 0.5 for m in marks)
+        text_payoff = bool(edit.get("deathScreen") and ((ev_here & {"death", "slain", "boom", "burn"}) or died_before)) or \
             any(isinstance(c, list) and mark_time(str(c[0]).split(":")[0]) is not None and abs(mark_time(str(c[0]).split(":")[0]) - payoff) <= 0.5 for c in edit.get("cards", []))
         line_here = [(t, lid) for t, lid in lines if abs(t - payoff) <= PAYOFF_WIN]
         # a hit that is only a line's first word is the voice, not a sound hit (an impact, a boom, the music)
