@@ -7,7 +7,6 @@ dilemma_mace  52e380063133d97d  # 2026-11-11: owner pressed 'OK for YouTube' on 
 end_portal_job  8f11ca43f9072752  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 hack_banner_door  43fad54af3989625  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 heart_art  cb6e43568cc09dae  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
-inside_library  13b73d3b44a9c6ff  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 ladder_clutch  e710068cc121edef  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 lapse_rocket  90232e1e32bbde83  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 lapse_statue  f16d41ecce372ba3  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
