@@ -18,3 +18,14 @@
 - Notes: the top-down must read: the rise shows the shape forming and the hold after the settle (cut 1.0 s, owner
   rule) must still let it read; the podzol stripes must read as design, not unfinished dirt (set.md: straight-edged
   bands, same width). "Couldn't see home" is briefly ominous: fine, it's the tension.
+
+## r3 (after critic r1: agency L08/L11, L05 "little guy"), a fresh reader
+- Midpoint: 45 % "he loves them; the bee gets lost and the red leads her home"; 30 % a sting/death or he goes away;
+  15 % the honey cures him. Narrator: naive, "charmingly so".
+- After: partly right (he loves them), no picture guessed; surprised "a little to yes": "the red heart with the tiny
+  hive at its center is the shot that surprised me". One sentence: "every bottle of honey he took paid for one row
+  of a meadow-sized flower bee, with their hive as its heart, so they were never being robbed; he was building them
+  a monument." Why a bee: "because they're his favorite". Share 8. Loop: yes (emotionally; the reveal is silent).
+  Still naive at the end: yes.
+- Notes for the build: strong stripe contrast; the rise must let the eye find the heart and the giant before the cut
+  (the shape forms during the ~2 s lift from "TELL", then 1 s hold); L10 needs a clear shot of him (fov ~28, S10).

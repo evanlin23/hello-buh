@@ -18,7 +18,7 @@ the bee's heart would be. The giant is a speck at the tail planting the last row
 ## Beats (Pip's pace, ~2.8 words/s incl. breaths; ~105 words, ~40-45 s)
 | t (s) | beat | line | picture | clue planted |
 |---|---|---|---|---|
-| 0-5 | hook | L01 | bee POV: the giant bottling honey at the hive, then placing a dandelion | the trade: honey for flowers; 52 |
+| 0-5 | hook | L01 | bee POV: the giant at the dripping hive with a bottle, flowers to the horizon; he places a poppy | the trade: honey for flowers; 52 |
 | 5-9 | the method | L02 | the campfire under the hive, smoke, calm bees | (vanilla flavour; the giant is careful, not cruel) |
 | 9-13 | the rule | L03 | the bottle; he plants one straight row at the field's edge; podzol stripe visible | one bottle = one row (52 rows) |
 | 13-15 | misread 1 | L04 | the giant crouched planting | guilt (wrong) |

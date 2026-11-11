@@ -2,7 +2,7 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
   "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
@@ -41,7 +41,7 @@
   "place": "honey_meadow (claimed on this branch, docs/world/map.json): the High Meadow's top west of Larkfield, footprint (-484, -746, -420, -686), O = (-452, 118, -716): the hive's campfire block (read the ground y off the survey before build: the meadow top is y 116-120). The bee runs north-south: head at z ~ -742, tail at z ~ -690 (52 rows), the hive at the heart about (-452, -716), wings to x ~ -482 and -422.",
   "day": 4200,
   "canon": "The giant is a player who lives close by; in canon he is Larkfield's one player, Jonah (kai skin), 300 days before he leaves (Six Thousand Torches, 4500). He is never named here (owner decision, see bible 'Open'). From day 4200 the bee meadow is a permanent stamp on the plateau's top. Nothing here contradicts Torches (the meadow lies west of Larkfield's box, outside it).",
-  "easter_egg": "Larkfield's west roofs, small on the east skyline in S08 (pre-torch: day 4200). Never named."
+  "easter_egg": "Larkfield's west roofs, small on the east skyline at the end of S07's orbit (pre-torch: day 4200). Never named."
  },
  "voice": {
   "engine": "gemini",
@@ -71,7 +71,7 @@
    "note": "In canon this is Jonah (Larkfield's one player, Six Thousand Torches): if the owner keeps that, the giant takes whatever voice Jonah's audition picks (Zubenelgenubi / Sadachbia / Fenrir), and `friend`/Fenrir is only the placeholder so the lint runs. If the owner wants a new player instead, audition the two unused voices below.",
    "audition": {
     "line": "L05 \"You're my FAVORITE, little guy.\"",
-    "bracket": "[A friendly young man, bright and goofy]",
+    "bracket": "[A friendly teenage boy, bright and goofy]",
     "candidates": [
      {
       "voice": "Umbriel",
@@ -115,7 +115,7 @@
    "lines": [
     "L05"
    ],
-   "direction": "[A friendly young man, bright and goofy]"
+   "direction": "[A friendly teenage boy, bright and goofy]"
   }
  ],
  "lines": [
@@ -134,13 +134,13 @@
     },
     {
      "what": [
-      "honey_bottle"
+      "beehive"
      ],
      "word": "HONEY"
     },
     {
      "what": [
-      "dandelion"
+      "poppy"
      ],
      "word": "FLOWERS"
     }
@@ -187,7 +187,6 @@
    "shows": [
     {
      "what": [
-      "glass_bottle",
       "honey_bottle"
      ],
      "word": "BOTTLE"
@@ -243,7 +242,7 @@
    ],
    "direction": "a know-it-all eye-roll",
    "look": {
-    "what": "item:honey_bottle",
+    "what": "actor:Giant",
     "word": "HONEY"
    }
   },
@@ -354,9 +353,9 @@
     "L01"
    ],
    "place": "hive",
-   "size": "ms",
-   "camera": "bee pov hovering 1.5 blocks out from the hive's front face, eye at the hive's middle; a slow drift left-right (bee hover bob)",
-   "frame": "frame 1: the giant's head, arm and glass bottle big and centred on the hive's face, already moving (0.0 s), and behind him the flowers running yellow and white to the horizon (the picture asks the question too); on 'HONEY' the bottle fills to a honey bottle; on 'FLOWERS' he turns and places one dandelion at his feet, under his crosshair, the pov tilting after it. Bright noon sky.",
+   "size": "ws",
+   "camera": "bee pov hovering 4 blocks out from the hive's front face, eye at the hive's middle; a slow drift (bee hover bob)",
+   "frame": "frame 1: the giant centred, big (a WS at 4 blocks: ~35 % of frame height), his glass bottle held to the dripping hive, already moving (0.0 s); behind him the flowers run yellow and white to the horizon (the picture asks the question too). On 'FLOWERS' he turns and places one poppy at the heart's edge, under his crosshair. The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky (time 3000).",
    "look": {
     "time": 3000
    }
@@ -368,9 +367,9 @@
     "L02"
    ],
    "place": "hive",
-   "size": "ws",
-   "camera": "low, 6 blocks south-east of the hive, 1 block up, still; then a slow push",
-   "frame": "the hive on its oak-fence post, 2 blocks above a lit campfire (smoke rising past the hive's face: vanilla calms bees within 5 blocks below); four bees drifting slowly round it; the giant standing beside with a glass bottle; the red ring (poppies, rose bushes) round the post; yellow dandelions behind to the rise.",
+   "size": "ms",
+   "camera": "low, 3 blocks south-east of the hive, 1 block up, still; then a slow push",
+   "frame": "the hive on its post over the pit campfire, smoke rising past its face (vanilla calms bees within 5 below); three bees drifting slowly round it; the giant's bottle hand at frame edge; the red ring round the post.",
    "look": {
     "time": 3000
    }
@@ -382,9 +381,9 @@
     "L03"
    ],
    "place": "hive_edge",
-   "size": "ws",
-   "camera": "bee pov following the giant 3 blocks behind and 2 up as he walks from the hive to the field's growing edge",
-   "frame": "on 'CLINK' the honey bottle in his hand (raised to look at it); on 'ROW' he walks along the edge placing dandelions one per block in a straight row, fast but each under his crosshair; the half-finished field behind: dandelions, a band of bare podzol, dandelions (the stripes: never said).",
+   "size": "full",
+   "camera": "cut 1: bee pov on the bottle as it fills on 'CLINK' at the hive; cut 2 (on 'ROW'): side-on FULL at the head's crown, the field's north edge (no long walk)",
+   "frame": "'CLINK': the glass bottle fills to a honey bottle (he moves it to his offhand); 'ROW': at the crown he places dandelions one per block along the row, each under his crosshair, fast; behind him the plateau rim and open meadow (not yet flowers).",
    "look": {
     "time": 3000
    }
@@ -396,9 +395,9 @@
     "L04"
    ],
    "place": "hive_edge",
-   "size": "mcu",
-   "camera": "side-on, 3 blocks off, at his eye height",
-   "frame": "the giant crouched at the end of his row, placing a dandelion (under his crosshair); flowers fill the frame's lower third.",
+   "size": "ws",
+   "camera": "wide from 10 blocks off, eye height",
+   "frame": "the giant crouched at the end of his row on the crown, placing a dandelion; the field behind him, the meadow rim beyond.",
    "look": {
     "time": 3000
    }
@@ -440,7 +439,7 @@
    "place": "hive",
    "size": "ws",
    "camera": "high-ish orbit 8 blocks out, 5 up, round the hive (one smooth quarter turn)",
-   "frame": "the ring of red round the hive: poppies and rose bushes 4-6 blocks deep, the campfire and post at its middle; outside the red, yellow in every direction (no shape readable at this height).",
+   "frame": "the ring of red round the hive: rose bushes and poppies, the campfire pit and post at its middle; outside the red, yellow in every direction (no shape readable at this height); the orbit ends facing east, with Larkfield's west roofs small on the skyline 50-75 blocks away (the easter egg, never named).",
    "look": {
     "time": 3000
    }
@@ -454,7 +453,7 @@
    "place": "wing",
    "size": "ews",
    "camera": "bee pov flying fast and low (1.5 blocks up) west over the field, the camera ahead of her: she's off to find the edge",
-   "frame": "dandelions, then a dark podzol stripe flashing under, then white (the wing); flowers to the horizon ahead; Larkfield's west roofs small on the east skyline behind as she sets off (the easter egg, never named).",
+   "frame": "dandelions, then a dark podzol stripe flashing under, then white (the wing); flowers to the horizon ahead.",
    "look": {
     "time": 3000
    }
@@ -467,8 +466,8 @@
    ],
    "place": "wing",
    "size": "ws",
-   "camera": "bee pov hovering on the left wingtip, a slow 180-degree look round (eased, followable)",
-   "frame": "white flowers every way at the left wingtip; the hive is hidden (it sits low in a 1-deep pit ring, behind the meadow's rise and the heart's 2-tall rose bushes); live gate: a still from this eye shows no hive and no smoke.",
+   "camera": "bee pov hovering on the left wingtip, a slow eased look from north through east to south (never west, where the picture ends)",
+   "frame": "white flowers every way she looks; the hive is hidden (it sits low over a pit campfire inside the 2-tall rose-bush ring, behind the meadow's rise); live gate: a still from this eye shows no hive and no smoke.",
    "look": {
     "time": 3000
    }
@@ -482,7 +481,7 @@
    ],
    "place": "bee_picture",
    "size": "ews",
-   "camera": "bee pov: she spots the giant far off at the head's crown (north), and flies at him; on 'TELL' the camera lifts off her straight up, tilting to straight down (or ~75 deg if the test still reads better), rising to ~90 blocks over the hive at a fast smooth ease, settling within ~1 s of 'ENOUGH'",
+   "camera": "bee pov: she spots the giant far off at the head's crown (north-east), the view narrowing to fov ~28 so he reads (not a speck), and flies at him; on 'TELL' the camera (fov back to 70) lifts off her straight up, tilting to straight down (or ~75 deg if the test still reads better), rising to ~90 blocks over the hive at a fast smooth ease, settling within ~1 s of 'ENOUGH'",
    "frame": "the reveal: from straight above, the meadow is one huge bee, head north: dandelion body, three bare podzol stripes, white wings 61 wide (fit: 9:16 at vfov 70 from 90 up is ~71 wide), two podzol antennae; where its heart would be, a red heart of rose bushes and poppies with the tiny hive in it. The giant is a speck at the crown of the head, planting the last row (row 52); our bee a yellow dot flying toward him. Payoff mark `top` when the camera settles; cut 1.0 s after. No line.",
    "look": {
     "time": 3000
@@ -494,27 +493,27 @@
   "hive": {
    "at": [
     0,
-    2,
+    1,
     0
    ],
-   "note": "beehive (crafted) on an oak fence post, its face south; honey level 5 at each harvest"
+   "note": "beehive on a 1-block oak fence post, face south, 3 bees + the narrator; honey dripping (level 5) in S01, empty after S03's CLINK"
   },
   "campfire": {
    "at": [
     0,
-    0,
+    -1,
     0
    ],
-   "note": "lit, open (no carpet): 2 blocks below the hive (vanilla: within 5 below)"
+   "note": "lit, open, in a 1-deep pit: 2 below the hive (vanilla: within 5 below)"
   },
   "heart": {
-   "note": "poppies + rose bushes, a heart 11 wide x 10 deep round the post"
+   "note": "rose bushes (2 tall) and poppies, a heart 11 wide x 10 deep round the post, its point south"
   },
   "bee_picture": {
    "note": "52 rows (z), head north; set.md has the plan"
   },
   "giant": {
-   "note": "player actor, kai skin, hotbar: glass bottles, dandelions x64, poppies, oxeye daisies, rose bushes, a campfire, a bucket of milk, 67 eggs, a cake"
+   "note": "player actor, kai skin; main hand: glass bottle (S01-S03), then dandelions; honey bottle in the offhand from S03; hotbar (all 9): glass bottles, dandelions x64, poppies, oxeye daisies, rose bushes, campfire, milk bucket, 67 eggs, cake"
   }
  },
  "ending": {
@@ -524,17 +523,6 @@
   ],
   "loop": "cause and effect: the reveal answers line 1's 'he plants MORE flowers'"
  },
- "hotbar": [
-  "glass_bottle",
-  "dandelion",
-  "poppy",
-  "oxeye_daisy",
-  "rose_bush",
-  "campfire",
-  "milk_bucket",
-  "egg:67",
-  "cake"
- ],
  "bible": "stories/honey_thief/bible.md",
  "beats": "stories/honey_thief/beats.md",
  "set": "stories/honey_thief/set.md",
