@@ -24,7 +24,7 @@
   "twist": "They aren't an army. They're seventy ordinary un-named zombies kept within 32 blocks of the player's bed to fill his hostile mob cap: in Java 1.21 natural monster spawning near a player stops while 70 monsters that count toward his cap are near him (minecraft.wiki/w/Mob_spawning#Java_Edition_mob_cap, per player since 1.18). So no monster can spawn anywhere near him or the village. When one burned, the count fell to 69 and a spider spawned and came for him; he brings it back to seventy himself. 'Seventy.' Cut on the seventy faces turned up to him.",
   "key_color": "#5E8C4A",
   "mood": "eerie",
-  "payoff": "L15",
+  "payoff": "L16",
   "payoff_note": "L15 is the general's 'Seventy.' over S15 (the seventy faces turned up to his silhouette in the moonlit hole); the lid goes back on, the room goes dark, cut 1.0 s after the word. No line after L15. It loops into L01 ('SEVENTY of us...').",
   "punch_note": "hook L01, turn L08 (the hole opens in daylight), reveal L15 (the count back at seventy)",
   "look": {
@@ -89,12 +89,14 @@
         "L03",
         "L04",
         "L05",
+        "L07",
         "L08",
         "L09",
         "L10",
-        "L12",
+        "L11",
         "L13",
-        "L14"
+        "L14",
+        "L15"
       ],
       "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
     },
@@ -107,8 +109,8 @@
       "voice": "Charon",
       "lines": [
         "L06",
-        "L11",
-        "L15"
+        "L12",
+        "L16"
       ],
       "direction": "[An old man in his seventies, counting quietly to himself, slow and low]"
     }
@@ -130,27 +132,27 @@
       "note": "the lid broken above, on 'HOLE' (distant, from up the shaft)"
     },
     {
-      "under": "S08",
+      "under": "S09",
       "sound": "block.grass.break",
-      "note": "the lid broken, on 'DAY'; daylight floods the shaft"
+      "note": "the lid broken, on 'MORNING'; daylight floods the shaft"
     },
     {
-      "under": "S10",
+      "under": "S11",
       "sound": "entity.generic.burn",
-      "note": "the fire on Brother Seventy from 'GLOWY'; his death puff is silent but for entity.zombie.death, quiet, before 'GONE'"
+      "note": "the fire on Brother Seventy from 'GLOWY'; after the time cut on 'Then', silence and the last smoke"
     },
     {
-      "under": "S12",
+      "under": "S13",
       "sound": "entity.spider.step",
       "note": "the spider's steps on the wall; one entity.spider.ambient hiss"
     },
     {
-      "under": "S13",
+      "under": "S14",
       "sound": "entity.zombie.ambient",
-      "note": "the new zombie's groan as it follows him; a thud as it lands below (entity.zombie.hurt, quiet)"
+      "note": "the new zombie's groan as it follows him; his hit; a thud as it lands below (entity.zombie.hurt, quiet)"
     },
     {
-      "under": "S15",
+      "under": "S16",
       "sound": "block.grass.place",
       "note": "the lid back on, 0.4 s after 'SEVENTY'; then silence and the cut"
     }
@@ -279,8 +281,8 @@
     {
       "id": "L03",
       "who": "N",
-      "text": "Our GENERAL / SLEEPS / right on TOP of us.",
-      "say": "Our general sleeps right on top of us.",
+      "text": "Our GENERAL / SLEEPS / right ABOVE us.",
+      "say": "Our general sleeps right above us.",
       "shot": "S03",
       "shows": [
         {
@@ -375,32 +377,78 @@
       "direction": "half to himself, unhurried; a tiny settle on the last number"
     },
     {
+      "id": "L07",
+      "who": "N",
+      "text": "No new SOLDIERS / ever come. / I think the world's / all FULL of us.",
+      "say": "No new soldiers ever come. I think the world's all full of us.",
+      "shot": "S07",
+      "shows": [
+        {
+          "what": [
+            "zombie"
+          ],
+          "word": "SOLDIERS"
+        }
+      ],
+      "look": {
+        "what": "entity:zombie",
+        "word": "FULL"
+      },
+      "note": "proud and certain: the army is so big there's nobody left to join (the misreading of the full cap)"
+    },
+    {
       "id": "L08",
       "who": "N",
-      "text": "Then one DAY / he came EARLY.",
-      "say": "Then one day he came early.",
+      "text": "Then one night / he was too SLEEPY / to COUNT us.",
+      "say": "Then one night he was too sleepy to count us.",
       "shot": "S08",
       "punch": true,
       "shows": [
         {
           "what": [
-            "hole"
+            "player"
           ],
-          "word": "EARLY"
+          "word": "SLEEPY"
+        },
+        {
+          "what": [
+            "red_bed"
+          ],
+          "word": "COUNT"
         }
       ],
       "look": {
-        "what": "prop:hole",
-        "word": "EARLY"
+        "what": "prop:bed",
+        "word": "SLEEPY"
       },
-      "note": "the turn: surprised and happy, a treat, not a warning (the picture says morning, the line doesn't)"
+      "note": "the turn: a little sad for him, sweet"
     },
     {
       "id": "L09",
       "who": "N",
+      "text": "So he came / in the MORNING.",
+      "say": "So he came in the morning.",
+      "shot": "S09",
+      "shows": [
+        {
+          "what": [
+            "hole"
+          ],
+          "word": "MORNING"
+        }
+      ],
+      "look": {
+        "what": "prop:hole",
+        "word": "MORNING"
+      },
+      "note": "happy: a morning visit, a treat, not a warning"
+    },
+    {
+      "id": "L10",
+      "who": "N",
       "text": "Brother SEVENTY / RAN to see him. / Right into the SUN.",
       "say": "Brother Seventy ran to see him. Right into the sun.",
-      "shot": "S09",
+      "shot": "S10",
       "shows": [
         {
           "what": [
@@ -422,11 +470,11 @@
       "note": "happy for him: he loves the general most"
     },
     {
-      "id": "L10",
+      "id": "L11",
       "who": "N",
       "text": "He went all GLOWY. / Then he was GONE.",
       "say": "He went all glowy. Then he was gone.",
-      "shot": "S10",
+      "shot": "S11",
       "shows": [
         {
           "what": [
@@ -442,11 +490,11 @@
       "note": "puzzled, still light: a magic trick it doesn't get (the misreading of burning); not sad, not scared"
     },
     {
-      "id": "L11",
+      "id": "L12",
       "who": "General",
       "text": "Sixty-NINE.",
       "say": "Sixty-nine.",
-      "shot": "S11",
+      "shot": "S12",
       "shows": [
         {
           "what": [
@@ -462,11 +510,11 @@
       "direction": "flat and quiet, the count stopping short"
     },
     {
-      "id": "L12",
+      "id": "L13",
       "who": "N",
       "text": "That NIGHT, / a SPIDER climbed / the general's WALL. / The FIRST one ever. / I think it was LOOKING / for Brother SEVENTY.",
       "say": "That night, a spider climbed the general's wall. The first one ever. I think it was looking for Brother Seventy.",
-      "shot": "S12",
+      "shot": "S13",
       "shows": [
         {
           "what": [
@@ -488,11 +536,11 @@
       "note": "sweet and sure: a friend came to find him (the misreading)"
     },
     {
-      "id": "L13",
+      "id": "L14",
       "who": "N",
-      "text": "Next NIGHT, / the GENERAL brought / a NEW one. / Right down the HOLE.",
-      "say": "Next night, the general brought a new one. Right down the hole.",
-      "shot": "S13",
+      "text": "Next NIGHT, / the GENERAL brought / a new SOLDIER. / Right down the HOLE.",
+      "say": "Next night, the general brought a new soldier. Right down the hole.",
+      "shot": "S14",
       "shows": [
         {
           "what": [
@@ -504,7 +552,7 @@
           "what": [
             "zombie"
           ],
-          "word": "NEW"
+          "word": "SOLDIER"
         },
         {
           "what": [
@@ -515,16 +563,16 @@
       ],
       "look": {
         "what": "prop:new_brother",
-        "word": "NEW"
+        "word": "SOLDIER"
       },
-      "note": "delighted: a new recruit"
+      "note": "delighted: a new recruit for the army (the misreading)"
     },
     {
-      "id": "L14",
+      "id": "L15",
       "who": "N",
       "text": "NOTHING climbed the wall / after THAT. / I think they're SCARED / of US.",
       "say": "Nothing climbed the wall after that. I think they're scared of us.",
-      "shot": "S14",
+      "shot": "S15",
       "shows": [
         {
           "what": [
@@ -540,11 +588,11 @@
       "note": "the proudest line: the army works (the last misreading); full volume, never knowing"
     },
     {
-      "id": "L15",
+      "id": "L16",
       "who": "General",
       "text": "SEVENTY.",
       "say": "Seventy.",
-      "shot": "S15",
+      "shot": "S16",
       "punch": true,
       "shows": [
         {
@@ -591,9 +639,9 @@
       "line": "L03",
       "place": "grandpa_house",
       "size": "ws",
-      "time": 13500,
+      "time": 18500,
       "camera": "inside the house, on the floor by the barrel at (-2057.5, 73.3, -495.7), looking north at the bed; static",
-      "frame": "subject: the general from the knees down (zuri trousers and shoes; the frame cuts above his knees) walking slowly from frame right to the red bed at the north-west corner and getting in (the bed shows him lying, the frame keeps his head out: a tilt no higher than the mattress); bg: the north wall's lower totem frames glinting in the lantern light (the house as it is; not the cameo). The floor planks fill the lower third: we are above the room. Dusk into night."
+      "frame": "subject: the general from the knees down (zuri trousers and shoes; the frame cuts above his knees) walking slowly from frame right to the red bed at the north-west corner and getting in (the bed shows him lying, the frame keeps his head out: a tilt no higher than the mattress); bg: the north wall's lower totem frames glinting in the lantern light (the house as it is; not the cameo). The floor planks fill the lower third: we are above the room. Night, after tonight's count (18500): the count is done, he goes to bed."
     },
     {
       "id": "S04",
@@ -623,17 +671,35 @@
       "frame": "subject: the square of night sky at the top of the 3-block shaft and the general's dark head filling half of it, still; his head nods very slightly with each number. Stars beside it. No face detail (silhouette against the sky)."
     },
     {
-      "id": "S08",
-      "line": "L08",
+      "id": "S07",
+      "line": "L07",
       "place": "room",
       "size": "ws",
-      "time": 1000,
-      "camera": "in the room at (-2053.5, 65.6, -493.5), looking north-west at the floor under the hole; static",
-      "frame": "the room dark; on 'DAY' the lid above is broken and a hard square of daylight lands on the floor under the shaft (the room's only light), zombies around it in shadow turning their heads up toward it. Morning."
+      "time": 18000,
+      "camera": "in the room's north end under the house at (-2051.5, 65.6, -499.5), looking south down the room toward the moonlit square at the hole; a slow drift",
+      "frame": "the length of the room: rows of zombies shoulder to shoulder from the lens to the light square at the far end, every one of them looking up toward it; the room full wall to wall, no gap anywhere. Night."
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "grandpa_house",
+      "size": "full",
+      "time": 13500,
+      "camera": "inside the house by the door at (-2054.5, 73.4, -495.5), low, looking north-west at the bed; static",
+      "frame": "subject: his legs (knees down) coming in the door past the lens, slow, straight to the red bed, and he lies down (the frame keeps his head out); the window behind the bed still blue with dusk. He did not go to the hole: the lid stays shut (S08 confirms). In vanilla, sleeping skips to morning."
     },
     {
       "id": "S09",
       "line": "L09",
+      "place": "room",
+      "size": "ws",
+      "time": 1000,
+      "camera": "in the room at (-2053.5, 65.6, -493.5), looking north-west at the floor under the hole; static",
+      "frame": "the room dark; on 'MORNING' the lid above is broken and a hard square of daylight lands on the floor under the shaft (the room's only light), zombies around it in shadow turning their heads up toward it. Morning."
+    },
+    {
+      "id": "S10",
+      "line": "L10",
       "place": "room",
       "size": "full",
       "time": 1000,
@@ -641,17 +707,17 @@
       "frame": "subject: Brother Seventy (an adult zombie, no helmet) pushing out of the crowd, arms out, and stepping into the square of sunlight under the hole, his face turned straight up (he has seen the general); on 'SUN' he stands in it, full-figure, lit white."
     },
     {
-      "id": "S10",
-      "line": "L10",
+      "id": "S11",
+      "line": "L11",
       "place": "room",
       "size": "ms",
       "time": 1000,
-      "camera": "at (-2055.5, 66.2, -491.5), looking north-west at Brother Seventy, a slow push",
-      "frame": "subject: Brother Seventy in the sunlight, still looking up, catches fire on 'GLOWY' (the vanilla burning overlay, smoke); he stays in the light; on 'GONE' the vanilla death (he tips over, the white smoke puff, no drops shown) and the square of sunlight is empty. Other zombies at the frame edges in shadow, faces up. Eerie, not gory."
+      "camera": "at (-2055.5, 66.2, -491.5), looking north-west at Brother Seventy; two set-ups of the same framing joined by a hard cut on 'Then' (a time cut of ~20 s)",
+      "frame": "subject: Brother Seventy in the sunlight, still looking up, catches fire on 'GLOWY' (the vanilla burning overlay, smoke); he stays under the hole looking up at the general. Hard cut on 'Then' (vanilla: a burning zombie at 20 health takes about 20 s to die; the cut skips it) to the same framing: the square of sunlight empty, the last white death-puff smoke drifting up the shaft, no drops on the floor (the zero-drop roll; record with doMobLoot off for this shot only). Other zombies at the frame edges in shadow, faces up. Eerie, not gory."
     },
     {
-      "id": "S11",
-      "line": "L11",
+      "id": "S12",
+      "line": "L12",
       "place": "room",
       "size": "mcu",
       "time": 1000,
@@ -659,8 +725,8 @@
       "frame": "subject: the bright day sky in the square and the general's dark head in it, still, looking down at the empty light. On 'NINE' he is still; 0.6 s after the word the lid block goes back on and the shaft goes black (cut)."
     },
     {
-      "id": "S12",
-      "line": "L12",
+      "id": "S13",
+      "line": "L13",
       "place": "grandpa_yard",
       "size": "ms",
       "time": 14000,
@@ -668,17 +734,17 @@
       "frame": "subject (MS on the wall around the east window, 5 blocks wide): a spider (red eyes) climbing the cobblestone-and-spruce south wall beside the east window (x -2051), toward the lit window; the lantern by the door; the lid block shut in the grass at frame left (lower third). Night. The spider is the only thing moving."
     },
     {
-      "id": "S13",
-      "line": "L13",
+      "id": "S14",
+      "line": "L14",
       "place": "grandpa_yard",
       "size": "full",
       "time": 15000,
       "camera": "low in the yard at (-2060.5, 71.5, -490.5) by the west fence, looking east across the hole; static",
-      "frame": "subject: the hole open in the grass (centre); the general's legs (knees down) step around it from the right; on 'NEW' an adult zombie shambling after him reaches the hole's edge; on 'HOLE' it drops in and is gone. bg: the grindstone, the barrel, the palisade beyond. Night."
+      "frame": "subject: the hole open in the grass (centre); the general's legs (knees down) step around it from the right and stop on its far side; on 'SOLDIER' an adult zombie shambling after him reaches the edge (zombies path around a drop); on 'HOLE' he hits it once (the vanilla knockback; it lives) and it tips into the hole and is gone (a 7-block fall from feet y 72 to 65: 4 damage). bg: the grindstone, the barrel, the palisade beyond. Night."
     },
     {
-      "id": "S14",
-      "line": "L14",
+      "id": "S15",
+      "line": "L15",
       "place": "grandpa_yard",
       "size": "ews",
       "time": 16000,
@@ -686,8 +752,8 @@
       "frame": "fg: the pasture's north edge with the blue flock lying asleep (the easter egg, `blue_flock`); mid: the road and the roofs; subject: Grandpa's whole south wall at night, the lit windows, nothing on it; the lid shut in the yard (too small to read). The mirror of S12 with the spider gone. Night, the moon high."
     },
     {
-      "id": "S15",
-      "line": "L15",
+      "id": "S16",
+      "line": "L16",
       "place": "room",
       "size": "ws",
       "time": 18000,

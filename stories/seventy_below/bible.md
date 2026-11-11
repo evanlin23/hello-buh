@@ -1,4 +1,4 @@
-# seventy_below: continuity bible (r2, 2026-11-11)
+# seventy_below: continuity bible (r3, 2026-11-11; lines and shots renumbered L01-L16 / S01-S16 in r3)
 
 ## World
 - **Place:** Ravenford (docs/world/map.json `ravenford`): Grandpa's house and yard just inside the east gate (stamp
@@ -34,8 +34,8 @@ Code names for the checker: `NaturalSpawner.createState` / `LocalMobCapCalculato
    room is under 17 blocks from the bed ((-2058, 73, -501) to the far corner (-2050, 65, -489): 16.5), so while he's
    home, asleep or in his yard, they stay. That's why "he never goes far" (L04): if he left for long, the room would
    empty. (From day ~2000 he no longer hunts at the tower; canon note.)
-4. **Why 8 below the bed.** A player can't sleep with a monster that targets players inside a box 8 blocks out and 5
-   up/down from the bed ("You may not rest now; there are monsters nearby"). The bed is at y 73; the room floor is
+4. **Why 8 below the bed.** A player can't sleep with any monster (`Monster.isPreventingPlayerRest`: every hostile, zombies included) inside a
+   box 8 blocks out and 5 up/down from the bed ("You may not rest now; there are monsters nearby"). The bed is at y 73; the room floor is
    y 64, so a zombie's feet are at y 65 and its head top at y 66.95, under the box's bottom (y 68). He sleeps right on
    top of them, 8 blocks above.
 5. **No spawns inside the room.** Monsters never spawn within 24 blocks of a player; every cell of the room is within
@@ -44,16 +44,21 @@ Code names for the checker: `NaturalSpawner.createState` / `LocalMobCapCalculato
 6. **The burn.** A zombie burns when, in daylight, the block at its eyes sees the sky. The lid is a full grass block
    (opaque: no sky light through it; a trapdoor would let sky light down and burn one every day). Opened in the
    morning, the 1x1 shaft is open to the sky; a zombie that sees the player through it walks toward him, into the
-   cell under the shaft (-2057, 65, -490), and burns. It stays under him, looking up, until it dies (fire 1 damage a
-   second, 20 health). Visible cause: he opened it in daylight (STANDARDS 4b).
-7. **The spider.** At 69 there's one free slot. That night a spider spawns in the dark somewhere 24-128 blocks from
+   cell under the shaft (-2057, 65, -490), and burns. It stays under him, looking up, until it dies: about 20 s (fire 1 damage a
+   second, 20 health); S11 skips it with a hard time cut on 'Then'. A burnt zombie drops 0-2 rotten flesh, and a
+   zombie that picks one up turns persistent and stops counting (the count would fall to 68): the shown roll is the
+   zero-drop one (record S11 with doMobLoot off). Difficulty Normal (on Hard a burning zombie can call
+   reinforcements). Visible cause (STANDARDS 4b): the night before he was too sleepy to count and went straight to
+   bed (S08); sleeping skips the night, so he counted in the morning, in daylight.
+7. **The spider.** At 69 the cap is open: a spawn attempt can bring a whole pack (up to 4), most of them out of
+   sight in caves; the story claims only that one spider came to his wall, the first ever. That night a spider spawns in the dark somewhere 24-128 blocks from
    him and, since spiders hunt players at night, climbs his south wall toward the lit window (spiders climb walls).
    With the spider the count is 70 again, so nothing else spawns while it's near. It wanders off by day and despawns
    (more than 32 blocks from anyone) or the village golem gets it: "never came back" is not said; L14 says only that
    nothing climbed the wall after that (true: the new zombie fills the slot).
 8. **The new one.** The next night, after the spider is gone, a zombie spawns in the free slot and follows him (zombies
-   chase players within 35 blocks). He walks it across his yard to the open hole; it drops 6 blocks (3 damage, it
-   lives) into the room. Seventy again.
+   chase players within 35 blocks). He walks it across his yard to the open hole; zombies path around a drop, so he
+   hits it once on 'HOLE' (knockback) and it tips in: 7 blocks (feet y 72 to 65), 4 damage, it lives. Seventy again.
 9. **Not stopped by the cap (never said, theory bonus):** raids, pillager patrols, phantoms (he sleeps every night
    anyway), zombie sieges, and spawners. So Thirty-One Raids' raids could still come.
 
@@ -61,12 +66,12 @@ Code names for the checker: `NaturalSpawner.createState` / `LocalMobCapCalculato
 | scene | lines | time | light |
 |---|---|---|---|
 | A. the count (tonight) | L01, L02, L05, L06, L15 | 18000 | the room is dark; moonlight down the 1x1 shaft is the only light |
-| B. the general | L03 (13500, his bedroom), L04 (6000, the bench) | per shot | lanterns indoors; midday sun in the yard |
-| D. the morning of the burn | L08-L11 | 1000 | a hard square of daylight under the shaft; the rest of the room black |
+| B. the general | L03 (18500, his bedroom, after tonight's count), L04 (6000, the bench) | per shot | lanterns indoors; midday sun in the yard |
+| D. the sleepy night and the morning of the burn | L08 (13500: straight to bed, the lid shut; sleep skips to morning), L09-L12 (1000) | per shot | lanterns indoors; then a hard square of daylight under the shaft, the rest of the room black |
 | E. the nights after | L12 (14000), L13 (15000), L14 (16000) | per shot | the door lantern, the lit windows; S14 the village and the pasture under the moon |
 
-Time runs forward except scene A, which is tonight (the frame story): L01-L06 and L15 are the same night, L08-L14 the
-memory of the last few days. L05/L06's count and L15's count are the same ritual on different nights; the picture is
+Time runs forward except scene A, which is tonight (the frame story): L01-L07, L03's bedtime and L16 are the same
+night, L08-L15 the memory of the last few days. L05/L06's count and L15's count are the same ritual on different nights; the picture is
 the same.
 
 ## Places
@@ -88,8 +93,8 @@ the same.
 | the spider | vanilla spider | his south wall, S12 only | vanilla |
 | the new one | an adult zombie | the yard, then the hole (S13) | vanilla groan |
 
-**Count:** before the burn 70 (69 adults + baby). S09-S10: Brother Seventy is one of the 69 adults. After S10: 68 adults
-+ baby = 69. After S13: 69 adults + baby = 70. S15 shows 70.
+**Count:** before the burn 70 (69 adults + baby). S10-S11: Brother Seventy is one of the 69 adults. After S11: 68 adults
++ baby = 69. After S14: 69 adults + baby = 70. S16 shows 70.
 
 ## Props
 | prop | state | shots |
