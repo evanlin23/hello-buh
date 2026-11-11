@@ -1,5 +1,6 @@
 {
   "name": "creeper_art",
+  "channel": "hellobuh",
   "caption": "rate my pixel art 1-10 \ud83d\ude2d",
   "youtube": {
     "title": "rate my pixel art 1-10 \ud83d\ude2d #minecraft #shorts",
@@ -19,20 +20,43 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 39.75,
-    "drop_in_short_s": 30.95,
-    "song_start_s": 8.8
+    "drop_in_short_s": 33.7,
+    "song_start_s": 6.05
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 31.85,
+    "duration_s": 34.6,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28763901,
-    "sha256": "b5981013a23cf4212f2dd0622dd216dd6f8be9ccd00c4fd5ea52dc47e14c0d83"
+    "bytes": 30505419,
+    "sha256": "c712ec7e019364a3f29987947f813ed936f3a1c6f9d9d10387cd0706ebbb7ac5"
   },
   "edit": {
+    "punch": [
+      [
+        "complete",
+        0,
+        1.12
+      ]
+    ],
+    "sfx": [
+      [
+        "impact",
+        "complete",
+        {
+          "gain": 0.8
+        }
+      ]
+    ],
+    "flash": [
+      [
+        "complete",
+        0,
+        0.45
+      ]
+    ],
     "caption": "rate my pixel art 1-10 \ud83d\ude2d",
     "song": "songs/misery.mp3",
     "dropAt": "complete",
@@ -41,10 +65,20 @@
     "args": [
       "--caption",
       "rate my pixel art 1-10 \ud83d\ude2d",
+      "--punch",
+      "[[\"complete\",0,1.12]]",
+      "--flash",
+      "[[\"complete\",0,0.45]]",
+      "--sfx",
+      "[[\"impact\",\"complete\",{\"gain\":0.8}]]",
       "--start_at",
       "stage:-0.2",
       "--end_after",
-      "complete:0.9"
+      "complete:0.9",
+      "--song",
+      "songs/misery.mp3",
+      "--song_drop_at",
+      "complete"
     ]
   },
   "recording": {
@@ -55,177 +89,181 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 376,
-      "y": 71,
-      "z": -41
+      "x": 357,
+      "y": 68,
+      "z": -44
     },
     "biome": "minecraft:plains",
-    "ticks": 663,
-    "seconds": 33.15,
+    "ticks": 729,
+    "seconds": 36.45,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0,
+        "t": 0.75,
         "event": "stage"
       },
       {
-        "t": 0.2,
+        "t": 0.75,
+        "event": "build0"
+      },
+      {
+        "t": 0.8,
         "event": "swing"
       },
       {
-        "t": 0.6,
+        "t": 1.05,
         "event": "swing"
       },
       {
-        "t": 0.9,
+        "t": 1.3,
         "event": "swing"
       },
       {
-        "t": 1.15,
+        "t": 1.55,
         "event": "swing"
       },
       {
-        "t": 1.4,
+        "t": 1.8,
         "event": "swing"
       },
       {
-        "t": 1.65,
+        "t": 2.05,
         "event": "swing"
       },
       {
-        "t": 1.95,
+        "t": 2.3,
         "event": "swing"
       },
       {
-        "t": 2.2,
+        "t": 2.55,
         "event": "swing"
       },
       {
-        "t": 2.45,
-        "event": "swing"
+        "t": 2.8,
+        "event": "built0"
       },
       {
-        "t": 2.7,
+        "t": 2.8,
         "event": "reveal"
       },
       {
-        "t": 3.75,
+        "t": 3.85,
         "event": "stage"
       },
       {
-        "t": 3.8,
+        "t": 3.85,
+        "event": "build1"
+      },
+      {
+        "t": 3.9,
         "event": "swing"
       },
       {
-        "t": 4,
+        "t": 4.1,
         "event": "swing"
       },
       {
-        "t": 4.2,
+        "t": 4.3,
         "event": "swing"
       },
       {
-        "t": 4.4,
+        "t": 4.5,
         "event": "swing"
       },
       {
-        "t": 4.6,
+        "t": 4.7,
         "event": "swing"
       },
       {
-        "t": 4.8,
+        "t": 4.9,
         "event": "swing"
       },
       {
-        "t": 5,
+        "t": 5.1,
         "event": "swing"
       },
       {
-        "t": 5.2,
+        "t": 5.25,
         "event": "swing"
       },
       {
-        "t": 5.4,
+        "t": 5.45,
         "event": "swing"
       },
       {
-        "t": 5.6,
+        "t": 5.65,
         "event": "swing"
       },
       {
-        "t": 5.8,
+        "t": 5.85,
         "event": "swing"
       },
       {
-        "t": 6,
+        "t": 6.05,
         "event": "swing"
       },
       {
-        "t": 6.2,
+        "t": 6.25,
         "event": "swing"
       },
       {
-        "t": 6.4,
+        "t": 6.45,
         "event": "swing"
       },
       {
-        "t": 6.55,
+        "t": 6.65,
         "event": "swing"
       },
       {
-        "t": 6.75,
+        "t": 6.85,
         "event": "swing"
       },
       {
-        "t": 6.95,
+        "t": 7.05,
         "event": "swing"
       },
       {
-        "t": 7.15,
+        "t": 7.25,
         "event": "swing"
       },
       {
-        "t": 7.35,
+        "t": 7.45,
         "event": "swing"
       },
       {
-        "t": 7.55,
+        "t": 7.65,
         "event": "swing"
       },
       {
-        "t": 7.75,
+        "t": 7.85,
         "event": "swing"
       },
       {
-        "t": 7.95,
+        "t": 8.1,
         "event": "swing"
       },
       {
-        "t": 8.15,
+        "t": 8.3,
         "event": "swing"
       },
       {
-        "t": 8.35,
+        "t": 8.6,
         "event": "swing"
       },
       {
-        "t": 8.55,
+        "t": 8.8,
         "event": "swing"
       },
       {
-        "t": 8.75,
+        "t": 9,
         "event": "swing"
       },
       {
-        "t": 8.95,
-        "event": "swing"
-      },
-      {
-        "t": 9.15,
+        "t": 9.2,
         "event": "swing"
       },
       {
@@ -249,35 +287,43 @@
         "event": "swing"
       },
       {
-        "t": 10.25,
+        "t": 10.35,
+        "event": "swing"
+      },
+      {
+        "t": 10.6,
+        "event": "swing"
+      },
+      {
+        "t": 10.8,
+        "event": "swing"
+      },
+      {
+        "t": 10.9,
+        "event": "built1"
+      },
+      {
+        "t": 10.9,
         "event": "reveal"
       },
       {
-        "t": 11.3,
+        "t": 12,
         "event": "stage"
       },
       {
-        "t": 11.35,
+        "t": 12,
+        "event": "build2"
+      },
+      {
+        "t": 12.05,
         "event": "swing"
       },
       {
-        "t": 11.55,
+        "t": 12.2,
         "event": "swing"
       },
       {
-        "t": 11.8,
-        "event": "swing"
-      },
-      {
-        "t": 11.95,
-        "event": "swing"
-      },
-      {
-        "t": 12.15,
-        "event": "swing"
-      },
-      {
-        "t": 12.3,
+        "t": 12.35,
         "event": "swing"
       },
       {
@@ -297,7 +343,7 @@
         "event": "swing"
       },
       {
-        "t": 13.2,
+        "t": 13.15,
         "event": "swing"
       },
       {
@@ -305,7 +351,7 @@
         "event": "swing"
       },
       {
-        "t": 13.55,
+        "t": 13.5,
         "event": "swing"
       },
       {
@@ -313,43 +359,47 @@
         "event": "swing"
       },
       {
-        "t": 13.9,
+        "t": 13.85,
         "event": "swing"
       },
       {
-        "t": 14.05,
+        "t": 14,
         "event": "swing"
       },
       {
-        "t": 14.25,
+        "t": 14.15,
         "event": "swing"
       },
       {
-        "t": 14.4,
+        "t": 14.3,
         "event": "swing"
       },
       {
-        "t": 14.6,
+        "t": 14.5,
         "event": "swing"
       },
       {
-        "t": 14.75,
+        "t": 14.65,
         "event": "swing"
       },
       {
-        "t": 14.95,
+        "t": 14.85,
         "event": "swing"
       },
       {
-        "t": 15.1,
+        "t": 15,
         "event": "swing"
       },
       {
-        "t": 15.3,
+        "t": 15.15,
         "event": "swing"
       },
       {
-        "t": 15.45,
+        "t": 15.35,
+        "event": "swing"
+      },
+      {
+        "t": 15.5,
         "event": "swing"
       },
       {
@@ -361,7 +411,7 @@
         "event": "swing"
       },
       {
-        "t": 16,
+        "t": 15.95,
         "event": "swing"
       },
       {
@@ -369,31 +419,27 @@
         "event": "swing"
       },
       {
-        "t": 16.35,
+        "t": 16.3,
         "event": "swing"
       },
       {
-        "t": 16.5,
+        "t": 16.45,
         "event": "swing"
       },
       {
-        "t": 16.7,
+        "t": 16.6,
         "event": "swing"
       },
       {
-        "t": 16.85,
+        "t": 16.75,
         "event": "swing"
       },
       {
-        "t": 17.05,
+        "t": 17.1,
         "event": "swing"
       },
       {
-        "t": 17.2,
-        "event": "swing"
-      },
-      {
-        "t": 17.4,
+        "t": 17.25,
         "event": "swing"
       },
       {
@@ -401,31 +447,35 @@
         "event": "swing"
       },
       {
-        "t": 17.75,
+        "t": 17.7,
         "event": "swing"
       },
       {
-        "t": 17.9,
+        "t": 17.85,
         "event": "swing"
       },
       {
-        "t": 18.1,
+        "t": 18.05,
         "event": "swing"
       },
       {
-        "t": 18.25,
+        "t": 18.2,
         "event": "swing"
       },
       {
-        "t": 18.45,
+        "t": 18.35,
         "event": "swing"
       },
       {
-        "t": 18.6,
+        "t": 18.5,
         "event": "swing"
       },
       {
-        "t": 18.8,
+        "t": 18.65,
+        "event": "swing"
+      },
+      {
+        "t": 18.85,
         "event": "swing"
       },
       {
@@ -433,19 +483,23 @@
         "event": "swing"
       },
       {
-        "t": 19.2,
+        "t": 19.15,
         "event": "swing"
       },
       {
-        "t": 19.4,
+        "t": 19.3,
         "event": "swing"
       },
       {
-        "t": 19.6,
+        "t": 19.45,
         "event": "swing"
       },
       {
-        "t": 19.75,
+        "t": 19.65,
+        "event": "swing"
+      },
+      {
+        "t": 19.8,
         "event": "swing"
       },
       {
@@ -457,11 +511,11 @@
         "event": "swing"
       },
       {
-        "t": 20.3,
+        "t": 20.25,
         "event": "swing"
       },
       {
-        "t": 20.45,
+        "t": 20.5,
         "event": "swing"
       },
       {
@@ -473,19 +527,55 @@
         "event": "swing"
       },
       {
-        "t": 21,
+        "t": 20.95,
         "event": "swing"
       },
       {
-        "t": 21.15,
+        "t": 21.1,
         "event": "swing"
       },
       {
-        "t": 21.2,
-        "event": "glance"
+        "t": 21.3,
+        "event": "swing"
       },
       {
-        "t": 22.75,
+        "t": 21.45,
+        "event": "swing"
+      },
+      {
+        "t": 21.6,
+        "event": "swing"
+      },
+      {
+        "t": 21.65,
+        "event": "backup"
+      },
+      {
+        "t": 21.75,
+        "event": "swing"
+      },
+      {
+        "t": 21.9,
+        "event": "swing"
+      },
+      {
+        "t": 22.1,
+        "event": "swing"
+      },
+      {
+        "t": 22.25,
+        "event": "swing"
+      },
+      {
+        "t": 22.4,
+        "event": "swing"
+      },
+      {
+        "t": 22.55,
+        "event": "swing"
+      },
+      {
+        "t": 22.7,
         "event": "swing"
       },
       {
@@ -505,31 +595,35 @@
         "event": "swing"
       },
       {
-        "t": 23.55,
+        "t": 23.5,
         "event": "swing"
       },
       {
-        "t": 23.7,
+        "t": 23.65,
         "event": "swing"
       },
       {
-        "t": 23.9,
+        "t": 23.8,
         "event": "swing"
       },
       {
-        "t": 24.05,
+        "t": 23.95,
         "event": "swing"
       },
       {
-        "t": 24.3,
+        "t": 24.1,
         "event": "swing"
       },
       {
-        "t": 24.45,
+        "t": 24.25,
         "event": "swing"
       },
       {
-        "t": 24.65,
+        "t": 24.4,
+        "event": "swing"
+      },
+      {
+        "t": 24.6,
         "event": "swing"
       },
       {
@@ -537,27 +631,27 @@
         "event": "swing"
       },
       {
-        "t": 25,
+        "t": 24.95,
         "event": "swing"
       },
       {
-        "t": 25.15,
+        "t": 25.1,
         "event": "swing"
       },
       {
-        "t": 25.35,
+        "t": 25.25,
         "event": "swing"
       },
       {
-        "t": 25.5,
+        "t": 25.6,
         "event": "swing"
       },
       {
-        "t": 25.7,
+        "t": 25.75,
         "event": "swing"
       },
       {
-        "t": 25.85,
+        "t": 25.9,
         "event": "swing"
       },
       {
@@ -573,35 +667,27 @@
         "event": "swing"
       },
       {
-        "t": 26.55,
+        "t": 26.7,
         "event": "swing"
       },
       {
-        "t": 26.75,
+        "t": 26.85,
         "event": "swing"
       },
       {
-        "t": 26.9,
+        "t": 27.15,
         "event": "swing"
       },
       {
-        "t": 27.1,
+        "t": 27.3,
         "event": "swing"
       },
       {
-        "t": 27.25,
+        "t": 27.5,
         "event": "swing"
       },
       {
-        "t": 27.25,
-        "event": "backup"
-      },
-      {
-        "t": 27.45,
-        "event": "swing"
-      },
-      {
-        "t": 27.6,
+        "t": 27.65,
         "event": "swing"
       },
       {
@@ -613,7 +699,7 @@
         "event": "swing"
       },
       {
-        "t": 28.15,
+        "t": 28.1,
         "event": "swing"
       },
       {
@@ -621,11 +707,11 @@
         "event": "swing"
       },
       {
-        "t": 28.5,
+        "t": 28.45,
         "event": "swing"
       },
       {
-        "t": 28.65,
+        "t": 28.6,
         "event": "swing"
       },
       {
@@ -645,15 +731,15 @@
         "event": "swing"
       },
       {
-        "t": 29.55,
+        "t": 29.5,
         "event": "swing"
       },
       {
-        "t": 29.7,
+        "t": 29.65,
         "event": "swing"
       },
       {
-        "t": 29.9,
+        "t": 29.85,
         "event": "swing"
       },
       {
@@ -661,37 +747,119 @@
         "event": "swing"
       },
       {
-        "t": 30.25,
+        "t": 30.2,
         "event": "swing"
       },
       {
-        "t": 30.4,
+        "t": 30.35,
         "event": "swing"
       },
       {
-        "t": 30.6,
+        "t": 30.5,
         "event": "swing"
       },
       {
-        "t": 30.75,
+        "t": 30.65,
         "event": "swing"
       },
       {
-        "t": 30.95,
+        "t": 30.9,
+        "event": "swing"
+      },
+      {
+        "t": 31.05,
+        "event": "swing"
+      },
+      {
+        "t": 31.3,
+        "event": "swing"
+      },
+      {
+        "t": 31.45,
+        "event": "swing"
+      },
+      {
+        "t": 31.6,
+        "event": "swing"
+      },
+      {
+        "t": 31.8,
+        "event": "swing"
+      },
+      {
+        "t": 31.95,
+        "event": "swing"
+      },
+      {
+        "t": 32.1,
+        "event": "swing"
+      },
+      {
+        "t": 32.25,
+        "event": "swing"
+      },
+      {
+        "t": 32.45,
+        "event": "swing"
+      },
+      {
+        "t": 32.7,
+        "event": "swing"
+      },
+      {
+        "t": 32.95,
+        "event": "swing"
+      },
+      {
+        "t": 33.1,
+        "event": "swing"
+      },
+      {
+        "t": 33.25,
+        "event": "swing"
+      },
+      {
+        "t": 33.4,
+        "event": "swing"
+      },
+      {
+        "t": 33.6,
+        "event": "swing"
+      },
+      {
+        "t": 33.8,
+        "event": "swing"
+      },
+      {
+        "t": 33.95,
+        "event": "swing"
+      },
+      {
+        "t": 34.1,
+        "event": "swing"
+      },
+      {
+        "t": 34.25,
+        "event": "built2"
+      },
+      {
+        "t": 34.25,
         "event": "complete"
       },
       {
-        "t": 33.15,
+        "t": 36.45,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "68b05c5aa547c33d83fd6946bc8bab52ff0383ab",
-    "rendered_at": "2026-11-07T00:30:36.811Z",
-    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
+    "branch": "render/creeper_art",
+    "commit": "69fb60b6ee29b5e273c9b75de8f5fce760f765c7",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42968476182",
+    "rendered_at": "2026-11-11T05:59:54.620Z",
+    "head_at_publish": "ae457fa4c807a18bcf6927e39e125155d84061ed",
     "stunt": "stunts/creeper_art.js",
     "source_snapshot": [
       "source/creeper_art.js",
@@ -699,13 +867,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 68b05c5aa547",
+    "git checkout 69fb60b6ee29",
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
-    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 \ud83d\ude2d\" --start_at stage:-0.2 --end_after complete:0.9 --out out/creeper_art.mp4"
+    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 \ud83d\ude2d\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --song songs/misery.mp3 --song_drop_at complete --out out/creeper_art.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
-  "published_at": "2026-11-07T06:06:45.061Z"
+  "status": "ready",
+  "notes": "worker B 2026-11-11: re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session). Nitpicks: medium wall edge at left during the big build's backup; small reveal held briefly",
+  "published_at": "2026-11-11T06:19:19.044Z"
 }

@@ -1,22 +1,27 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-08:49:30.935 spawned at Vec3 { x: 133.5, y: 70, z: 7.5 }
-08:49:31.145 nearest minecraft:forest at [ 421, -89 ]
-08:49:43.456 set at { x: 421, y: 69, z: -89 }
-08:49:51.302 placed 64, correct 64/64
-08:49:53.135 STUNT OK
+16:52:20.383 spawned at Vec3 { x: 125.5, y: 73, z: 23.5 }
+16:52:20.739 nearest minecraft:forest at [ 445, -105 ]
+16:52:25.941 script error Error: Timeout waiting for 3 ticks after 5150ms
+    at Timeout._onTimeout (/home/user/hello-buh/node_modules/mineflayer/lib/plugins/physics.js:462:16)
+    at listOnTimeout (node:internal/timers:585:17)
+    at process.processTimers (node:internal/timers:521:7)
+attempt 2
+16:52:28.467 spawned at Vec3 { x: 445.5, y: 200, z: -104.5 }
+16:52:28.630 nearest minecraft:forest at [ 445, -105 ]
+16:52:37.690 set at { x: 453, y: 66, z: -113 }
+16:52:45.775 placed 64, correct 64/64
+16:52:48.866 STUNT OK
 meshing from y 8
-light computed in 0.6 s
-meshed + uploaded world in 15.2 s
-rendered 546 frames (9.10 s of video) in 162.7 s = 17.9 s per video second
-wrote work/creeper_art.wav 9.15s
-song drop at 16.25s lands on 7.25s of the Short (song starts at 9.00s)
-icon black_concrete
-icon green_concrete
-icon lime_concrete
-wrote out/creeper_art.mp4 8.80s
+light computed in 1.1 s
+meshed + uploaded world in 20.3 s
+rendered 639 frames (10.65 s of video) in 305.7 s = 28.7 s per video second
+wrote work/creeper_art.wav 10.70s
+song drop at 16.25s lands on 7.50s of the Short (song starts at 8.75s)
+no 3D block icons needed
+wrote out/creeper_art.mp4 9.20s
 
-real	4m11.036s
-user	4m11.804s
-sys	0m11.981s
+real	6m59.403s
+user	5m53.836s
+sys	0m15.561s
 exit=0

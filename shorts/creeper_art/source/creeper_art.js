@@ -7,7 +7,7 @@ module.exports = pixelArt({
   stages: [
     { art: ['LGGL', 'KGLK', 'GKKG', 'LKKG'], first: 'K' },
     { art: MID, first: 'K' },
-    { art: pixelArt.upscale(MID, 2), first: 'K', tpb: 1.4 }
+    { art: pixelArt.upscale(MID, 2), first: 'K', tpb: 1.6 }
   ],
   palette: { G: 'green_concrete', L: 'lime_concrete', K: 'black_concrete' },
   wall: 'smooth_stone',
