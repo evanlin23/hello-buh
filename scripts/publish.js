@@ -1,5 +1,6 @@
 // Package reviewed Shorts onto the `videos` branch with everything that made them:
-//   shorts/<name>/short.mp4            the upload
+//   shorts/<name>/short.mp4            the upload: a GitHub Release asset (release pkg-<name>, metadata video.release
+//                                      with its URL + sha256), never committed (owner r:rc5eaf0; scripts/release_assets.py)
 //   shorts/<name>/metadata.json        title, description, hashtags, song credit + drop, video
 //                                      specs + sha256, recording summary, code commit, edit args
 //   shorts/<name>/recording.json.gz    the bot recording (with the code commit this re-renders the
@@ -60,6 +61,7 @@ function codeOf (name, mp4) {
   return { commit: c, branch: headBranch, where: 'local' }
 }
 
+const packaged = []
 for (const name of names) {
   const mp4 = path.join(ROOT, 'out', `${name}.mp4`)
   if (!fs.existsSync(mp4)) { console.error(`skip ${name}: no out/${name}.mp4`); continue }
@@ -197,7 +199,10 @@ for (const name of names) {
   // (that one stays in out/ for review only): see README "Music"
   if (!fs.existsSync(path.join(ROOT, 'songs', 'ncs')) || !fs.readdirSync(path.join(ROOT, 'songs', 'ncs')).length) execFileSync('python3', ['scripts/ncs.py', '--download'], { cwd: ROOT, stdio: 'inherit' })
   execFileSync('python3', ['scripts/add_song.py', name, '--ncs'], { cwd: ROOT, stdio: 'inherit' })
+  packaged.push(name)
 }
+// the mp4s go to GitHub Releases (Actions uploads them), metadata gets video.release, git never holds them (r:rc5eaf0)
+if (push && packaged.length) execFileSync('python3', ['scripts/release_assets.py', 'upload', ...packaged], { cwd: ROOT, stdio: 'inherit' })
 
 // README index from every package
 const rows = fs.readdirSync(path.join(VID, 'shorts')).sort().map(n => {
@@ -205,14 +210,16 @@ const rows = fs.readdirSync(path.join(VID, 'shorts')).sort().map(n => {
   if (!fs.existsSync(f)) return null
   const m = JSON.parse(fs.readFileSync(f, 'utf8'))
   const s = m.song ? `${m.song.title || m.song.file}${m.song.artist ? ' · ' + m.song.artist : ''}` : '-'
-  return `| [${n}](shorts/${n}/short.mp4) | ${m.caption} | ${m.video.duration_s}s | ${s} | ${m.status} | ${m.code.commit.slice(0, 7)} | ${m.notes || ''} |`
+  const link = (m.video && m.video.release && m.video.release.url) || `shorts/${n}/short.mp4`
+  return `| [${n}](${link}) | ${m.caption} | ${m.video.duration_s}s | ${s} | ${m.status} | ${m.code.commit.slice(0, 7)} | ${m.notes || ''} |`
 }).filter(Boolean)
 fs.writeFileSync(path.join(VID, 'README.md'), `# HelloBuh Shorts (finished renders)
 
 Reviewed Shorts from the pipeline on \`main\`, each with everything that made it. The code lives on
 \`main\`; this branch only holds packages, so \`main\` stays small.
 
-Each \`shorts/<name>/\` has: \`short.mp4\` (the upload), \`metadata.json\` (YouTube title, description,
+Each \`shorts/<name>/\` has: \`short.mp4\` (the upload: since r:rc5eaf0 a GitHub Release asset, \`pkg-<name>\`,
+linked below and named in metadata.json \`video.release\` with its sha256; older packages keep it in git), \`metadata.json\` (YouTube title, description,
 hashtags, song credit and drop, video specs and sha256, recording summary, code commit, exact edit
 arguments, rebuild steps), \`recording.json.gz\` (the bot recording: with the commit it re-renders
 the same video), \`game_audio.flac\`, \`source/\` (the stunt module as it was) and \`build.log\`.
@@ -226,21 +233,8 @@ checked out at \`../hb-videos\`.
 ${rows.join('\n')}
 `)
 
-if (push) {
-  const g = (a) => execFileSync('git', a, { cwd: VID, encoding: 'utf8' }).trim()
-  g(['add', '-A'])
-  if (g(['status', '--porcelain'])) {
-    g(['commit', '-q', '-m', `Package ${names.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_019n1tKFAZAV7uPEWDxhJzEt`])
-    // other sessions publish too: rebase onto theirs and retry (README conflicts: regenerate it)
-    for (let i = 0; ; i++) {
-      try { g(['push', '-q', 'origin', 'videos']); break } catch (e) {
-        if (i === 3) throw e
-        try { g(['pull', '-q', '--rebase', 'origin', 'videos']) } catch (_) {
-          g(['checkout', '--theirs', 'README.md']); g(['add', 'README.md'])
-          execFileSync('git', ['-c', 'core.editor=true', 'rebase', '--continue'], { cwd: VID })
-        }
-      }
-    }
-    console.log('pushed videos branch:', g(['log', '--oneline', '-1']))
-  } else console.log('nothing new to push')
+if (push && packaged.length) {
+  // only these packages (+ README, .gitignore), through a private index: another session's staged files are never swept
+  // into this commit ("Package tnt" took someone else's), and never unstaged
+  execFileSync('python3', ['scripts/release_assets.py', 'commit', ...packaged, '-m', `Package ${packaged.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_019n1tKFAZAV7uPEWDxhJzEt`], { cwd: ROOT, stdio: 'inherit' })
 }

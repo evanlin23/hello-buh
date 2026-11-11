@@ -300,7 +300,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
   the same commit as its house rule. Check: owner. r:rc43770
 - **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
-  downloads each mp4 from its release (keeps the disk from filling). Check: owner. r:rc5eaf0
+  downloads each mp4 from its release, sha256-checked (keeps the disk from filling): release `pkg-<name>`,
+  metadata.json `video.release`, scripts/release_assets.py + .github/workflows/release-assets.yml. Check: owner. r:rc5eaf0
 - **Format "hack"**: one real, clever block trick per Short, a "POV: you realized..." caption, working on screen in
   the first 1.5 s. Check: owner, minecraft-audit (the trick must really work). r:rc15847
 - **Format "cooked"**: an impossible feat, then a flood of "X joined the game" as the consequences arrive, over a

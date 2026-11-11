@@ -158,7 +158,7 @@ def upload(vd, names, from_videos=None, minutes=20):
                     meta["video"]["sha256"], meta["video"]["bytes"] = e["sha256"], e["bytes"]
         (d / "metadata.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
         for f, (key, _) in FILES.items():   # in a release now: out of git (the file stays on disk for local tools)
-            if (meta.get("video") or {}).get(key):
+            if (meta.get("video") or {}).get(key) and (vd / ".git").exists():
                 git("rm", "-q", "--cached", "--ignore-unmatch", f"shorts/{n}/{f}", cwd=vd)
         print(f"{n}: " + ", ".join(f"{k} -> {meta['video'][k]['url']}" for k in ("release", "nosong_release") if meta["video"].get(k)))
     gi = vd / ".gitignore"
