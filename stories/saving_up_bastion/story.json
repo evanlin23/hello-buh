@@ -2,10 +2,10 @@
  "name": "saving_up_bastion",
  "stunt": "story_saving_up_bastion",
  "version": 2,
- "revision": "r2 (2026-11-11): table read r1 (critic revise 7.1, cold reader 65% at the midpoint): the farm cues leave the first half (dropper off-frame in S01, 'generous' and the gravel line after the midpoint), a false lead (the staring grown-ups), the player throws the first ingot (agency), the sign at the catch hole, gold boots, a 1x2 cell, a tighter reveal; and continuity r1 (the cliff-and-chute layout, the chest screen for EMPTY, the sign outside, sizes, shows); see reviews/",
- "caption": "why does gold fall from the sky every 6 seconds 🪙",
+ "revision": "r3 (2026-11-11): table read r2 (critic revise 7.5; cold reader 60 % at the midpoint): 'six seconds' leaves line 1 (the six is only in L12, where the dropper fires on it: the clock is shown, not said); L04/L05/L08 rewritten for the out-of-context read (critic r2); the sign faces the piglins on the shelf; S11 framed as an L. L07 (the moat) kept: it is one of the premise's must-fix gifts, and length is not a criterion (r:r08fd98). See reviews/.",
+ "caption": "why does gold keep falling on this baby piglin 🪙",
  "upload": {
-  "title": "a gold ingot falls from the sky every 6 seconds and i keep all of them 🐷 #minecraft #shorts",
+  "title": "gold falls from the sky just for me and i've kept all of it 🐷 #minecraft #shorts",
   "pinned": "How long until he figures it out? Wrong answers only",
   "tags": [
    "minecraft piglin",
@@ -19,7 +19,7 @@
  "upload_note": "docs/brand.md \"Buh Stories channel\": the upload text is built from `upload` (lib/buhstories_upload.js). pinned = the question, without the 👇",
  "family": "narrator_is_the_problem",
  "logline": "A baby piglin catches a gold ingot that falls from the sky every six seconds and is saving all of them for a bastion of its own, grateful to the generous stranger up there who keeps giving it gifts, until we see the stranger's barter farm: the baby is stuck in the cell, and babies never barter.",
- "question": "why tf does gold fall on this baby piglin every six seconds?",
+ "question": "why tf does gold keep falling on this baby piglin?",
  "premise": "In the Nether by the Portal Cottage's portal, a player (efe skin) built a barter farm: a dropper drops one gold ingot every six seconds onto a one-piglin cell, the piglin barters, the hoppers carry the barters to a chest. A baby piglin chased an ingot down the farm's catch hole and landed in the cell. It thinks the cell is its room, the gold is a gift from a generous stranger, and it is saving up for a bastion of its own, for when it's big.",
  "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a lava moat, a PLEASE WORK sign) the baby read as a present. The reveal is the picture: the farm's output chest open and empty under the hopper floor, the baby above it hugging an ingot as the dropper clicks out another. Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
  "key_color": "#F2C14E",
@@ -129,22 +129,21 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Every SIX seconds, / a gold INGOT / falls from the SKY. / I've kept / all FOUR HUNDRED.",
-   "say": "Every six seconds, a gold ingot falls from the sky. I've kept all four HUNDRED.",
+   "text": "Gold falls / from the SKY, / just for ME. / I've kept / all FOUR HUNDRED.",
+   "say": "Gold falls from the sky, just for me. I've kept all four HUNDRED.",
    "shot": "S01",
    "shows": [
     {
      "what": [
-      "dropper",
       "gold_ingot"
      ],
-     "word": "SKY"
+     "word": "GOLD"
     },
     {
      "what": [
       "piglin"
      ],
-     "word": "KEPT"
+     "word": "ME"
     }
    ],
    "punch": true,
@@ -187,15 +186,15 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "Somebody / up there / THREW me / the first one. / I chased it / down a HOLE.",
-   "say": "Somebody up there threw me the first one. I chased it down a HOLE.",
+   "text": "A guy up there / tossed the first one. / I BEAT the grown-ups / down the HOLE.",
+   "say": "A guy up there tossed the first one. I beat the grown-ups down the HOLE.",
    "shot": "S04",
    "shows": [
     {
      "what": [
       "player"
      ],
-     "word": "SOMEBODY"
+     "word": "GUY"
     },
     {
      "what": [
@@ -205,25 +204,32 @@
     },
     {
      "what": [
+      "piglin"
+     ],
+     "word": "GROWN-UPS"
+    },
+    {
+     "what": [
       "trapdoor"
      ],
      "word": "HOLE"
     }
    ],
-   "direction": "delighted, like finding a secret clubhouse"
+   "direction": "proud of winning, quick and bouncy"
   },
   {
    "id": "L05",
    "who": "N",
-   "text": "He's still / up there. / He's SO / GENEROUS.",
-   "say": "He's still up there. He's so GENEROUS.",
+   "text": "And he keeps / sending MORE. / He's SO / GENEROUS.",
+   "say": "And he keeps sending more. He's so GENEROUS.",
    "shot": "S05",
    "shows": [
     {
      "what": [
-      "player"
+      "player",
+      "gold_ingot"
      ],
-     "word": "HE'S"
+     "word": "MORE"
     }
    ],
    "direction": "grateful, sweet"
@@ -263,8 +269,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "And a NOTE. / I can't READ. / But I think it says / I LOVE YOU.",
-   "say": "And a note. I can't read. But I think it says I love YOU.",
+   "text": "And a NOTE. / I can't READ. / But I think it says / WELCOME HOME.",
+   "say": "And a note. I can't read. But I think it says welcome HOME.",
    "shot": "S08",
    "shows": [
     {
@@ -384,7 +390,7 @@
    "place": "tower_window",
    "size": "ms",
    "camera": "at: OUTSIDE the tower, level with the cell's glass window, 3 blocks out over the ledge, slow push in from 0.0 s",
-   "frame": "frame 1: the baby piglin centred behind the glass, big (about 35% of frame height), looking up; the dropper is above frame (off-frame, critic r1). On 'INGOT' an ingot drops into frame from the top; on 'SKY' the baby catches it (off hand up, the admiring pose). The push ends on it hugging the ingot. Nether brick round the window; lava glow on the glass.",
+   "frame": "frame 1: the baby piglin centred behind the glass, big (about 35% of frame height), looking up; the dropper is above frame (off-frame, critic r1). On 'GOLD' an ingot drops into frame from the top; on 'SKY' the baby catches it (off hand up, the admiring pose). The push ends on it hugging the ingot. Nether brick round the window; lava glow on the glass.",
    "subject": "baby"
   },
   {
@@ -393,7 +399,7 @@
    "place": "shelf",
    "size": "wide",
    "camera": "ots: over the baby's shoulder through the glass (the cell's back wall hidden for the camera), looking west down at the shelf",
-   "frame": "5-6 adult piglins by the lit Nether portal, several turned up toward the window (piglins look at a mob holding gold); one steps toward the tower. EASTER EGG: frame left, mid-ground, the adult in golden_helmet[trim={pattern:\"sentry\",material:\"lapis\"}] (Gold for the Portal's item), never centred, 1-3 s; in this shot only."
+   "frame": "5-6 adult piglins by the lit Nether portal, several staged turning their heads up to the window (a head turn on 'STARE'; not a vanilla behaviour, so it's staged); one steps toward the tower. EASTER EGG: frame left, mid-ground, the adult in golden_helmet[trim={pattern:\"sentry\",material:\"lapis\"}] (Gold for the Portal's item), never centred, 1-3 s; in this shot only."
   },
   {
    "id": "S03",
@@ -409,7 +415,7 @@
    "place": "ledge",
    "size": "wide",
    "camera": "low on the ledge above the tower's roof, tracking (two days ago: no moat, no sign, the hopper the old one)",
-   "frame": "the PLAYER (efe skin, iron chest and legs, GOLD boots) on the ledge tosses one ingot beside the catch hole to lure an adult; the baby beats the adults to it, grabs it, and drops with it into the 1x1 catch hole (trapdoor-edged) that chutes into the cell. The player has already turned to the bridge."
+   "frame": "the PLAYER (efe skin, iron chest and legs, GOLD boots) on the ledge tosses one ingot beside the catch hole to lure an adult; two adults and the baby run for it; the baby beats the adults to it, grabs it, and drops with it into the 1x1 catch hole (trapdoor-edged) that chutes into the cell. The player has already turned to the bridge."
   },
   {
    "id": "S05",
@@ -417,7 +423,7 @@
    "place": "tower_top",
    "size": "ms",
    "camera": "low angle up the tower's outside wall to its roof",
-   "frame": "the player on the roof (face visible), feeding gold from a stack into the hopper over the dropper, frowning at the dropper. The roof is solid nether brick: he can't see into the cell."
+   "frame": "the player on the roof (face visible), tipping a whole stack of gold into the hopper over the dropper, frowning down at it. The roof is solid nether brick: he can't see into the cell."
   },
   {
    "id": "S06",
@@ -438,10 +444,10 @@
   {
    "id": "S08",
    "line": "L08",
-   "place": "ledge",
+   "place": "shelf",
    "size": "cu",
-   "camera": "outside, on the ledge by the catch hole",
-   "frame": "an oak sign planted by the catch hole, readable at phone size: 'PLEASE' / 'WORK'; the player's back as he walks off (he never looks into the window below). The baby saw him place it from the window (not shown). The only close-up before the reveal."
+   "camera": "outside on the shelf below the window, at the sign's height",
+   "frame": "an oak sign the player has just planted on the shelf below the window, facing west toward the piglins by the portal (it's addressed to them), readable at phone size: 'PLEASE' / 'WORK'; the player walking off toward the portal, back to the tower, never looking up. The window is in the top of frame, the baby small in it, looking down at the sign. The only close-up before the reveal."
   },
   {
    "id": "S09",
@@ -465,7 +471,7 @@
    "place": "cutaway",
    "size": "wide",
    "camera": "the reveal: the cutaway, tight on about 6 blocks, a short crane UP from the base room to the cell",
-   "frame": "start (L11): the player slumped at the OPEN chest (he is still there, so the lid stays open), the hopper straight above it in the ceiling. On 'GOLD' (L12) crane up along the hopper to the baby on its block beside it, hugging its ingot; the chest and the slumped player still in frame bottom: player, chest, hopper, baby in one line. On 'SIX' (`drop`) the dropper clicks, an ingot drops onto the baby, who catches it. Cut 1.0 s after.",
+   "frame": "start (L11): the player in the sneak pose (slumped) at the OPEN chest in the base room (he's still at it, so the lid stays open), the hopper line rising from the chest to the cell. On 'GOLD' (L12) crane up the hopper line to the cell: the baby on its block NEXT TO the top hopper, hugging its ingot, the dropper straight above the baby. Framed as an L: the chest and the slumped player bottom left, the hopper line up the left, the baby top right under the dropper. On 'SIX' (`drop`) the dropper clicks and the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
    "marks": [
     "drop"
    ]

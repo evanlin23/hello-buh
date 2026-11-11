@@ -1,4 +1,4 @@
-# Saving Up for a Bastion: continuity bible (r2)
+# Saving Up for a Bastion: continuity bible (r3)
 
 ## World
 - Place `portal_cottage_nether` (the Nether, about (-16, 80, -118)), day 5000. Before Gold for the Portal (9300): the
@@ -21,7 +21,7 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 | who | look | in shots | holds |
 |---|---|---|---|
 | the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S02 (back of head), S03 (silhouette), S04, S06, S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
-| the player | default `efe` skin, iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07, S08 (back), S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), a lava bucket (S07), nothing (S08, S10, S11) |
+| the player | default `efe` skin, iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07, S08 (back, walking to the portal), S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), a lava bucket (S07), nothing (S08, S10); the sneak pose at the chest (S11) |
 | adult piglins | vanilla adults, gold swords | S02, S04, S09 | one admires an ingot and drops gravel (S09) |
 | the helmet piglin (easter egg) | adult, `golden_helmet[trim={pattern:"sentry",material:"lapis"}]` (Gold for the Portal's item) | S02 only, frame left, mid-ground | a gold sword |
 | a hoglin | vanilla adult | S07 only, beyond the moat | |
@@ -32,7 +32,7 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 | dropper (cell ceiling) | fires every 6.05 s while the farm runs; fires on `drop` in S11 |
 | hopper (beside the baby) | old until S06; new and shiny after (S11) |
 | chest (base room) | closed until S10; open while the player is at it (S10, S11); EMPTY (S10's screen) |
-| sign (ledge, by the catch hole) | from S08 on: PLEASE / WORK |
+| sign (on the shelf below the window, facing west to the piglins) | from S08 on: PLEASE / WORK |
 | lava moat (round the base) | from S07 on |
 | portal | lit, always |
 | bastion | across the lake (S03) |

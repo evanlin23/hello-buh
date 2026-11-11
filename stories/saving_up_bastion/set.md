@@ -1,4 +1,4 @@
-# Saving Up for a Bastion: set (r2)
+# Saving Up for a Bastion: set (r3)
 
 **Place:** `portal_cottage_nether` (claimed on this branch, docs/world/map.json, `dimension: the_nether`): the Nether
 side of the Portal Cottage's cellar portal, about (-16, 80, -118) in Nether coordinates. Day 5000. Crimson Nether fog.
@@ -22,7 +22,7 @@ view (an engine/world gap, see the report).
   - one **glass window** on the cell's west side, looking down at the shelf, the portal and the lake;
   - the **catch hole**: a 1 x 1 hole on the cliff ledge, trapdoor-edged, chuting down into the cell's hopper side
     (how the baby got in);
-  - the **sign** (from S08's day): an oak sign standing by the catch hole on the ledge, PLEASE / WORK;
+  - the **sign** (from S08's day): an oak sign standing on the shelf below the window, facing west to the piglins at the portal: PLEASE / WORK;
   - the **lava moat** (from S07's day): a 1-wide trench round the base, a 1-wide bridge to the door.
 - **The bastion remnant** across the lava lake (S03): blackstone, a few gold blocks, big on the skyline.
 - **The cutaway** (S06, S11): the column's south wall hidden for the camera (a cinematic cutaway). Engine: per-shot
@@ -31,7 +31,7 @@ view (an engine/world gap, see the report).
 ## The narration's claims (they must hold in every shot)
 | claim | line | holds |
 |---|---|---|
-| one ingot every six seconds | L01, L12 | the dropper fires on a 6.05 s clock in every cell shot (S01, S02, S06, S11) |
+| gold falls on it (every 6.05 s, never said until the count) | L01, L12 | the dropper fires on a 6.05 s clock in every cell shot (S01, S02, S06, S11) |
 | it falls from above | L01 | an ingot drops into S01 from the top of frame |
 | four hundred kept | L01 | not countable on screen (a piglin's inventory is hidden); 400 at 6.05 s = 40 min of loaded farm over 2 days; at most 512 fit (8 slots) |
 | the grown-ups stare | L02 | S02: several adults look up at the window |
