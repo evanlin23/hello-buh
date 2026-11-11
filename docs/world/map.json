@@ -2006,17 +2006,17 @@
    "kind": "village",
    "region": "the_white",
    "at": [
-    -1100,
-    72,
-    -630
+    -1594,
+    133,
+    -524
    ],
    "footprint": [
-    -1140,
-    -730,
-    -1060,
-    -590
+    -1634,
+    -624,
+    -1554,
+    -484
    ],
-   "about": "The walled village in the White's east lowland, on the old road west where it comes down from Frostgate's highlands (snowy plains, a shallow valley at y 70-74). A square stone-brick wall 40 high on day 3700 (old Tomas adds one block a morning), no gate; outside its north side a player's trading hall, 12 x 52, running north. Built by the story (wall, village, hall); the hills hide it from Frostgate, and no rendered Short is within 500 blocks.",
+   "about": "The walled village on a snowy plateau in the middle of the White (y 133-141, snowy plains), 40 blocks from the line of the old road between Frostgate and Ravenford: a square stone-brick wall 40 high on day 3700 (old Tomas adds one block a morning), no gate; outside its north side a player's trading hall, 12 x 52, running north on level ground. The wall's top (~y 175) stands over the White for kilometres: the road's landmark. Built by the story (wall, village, hall). No rendered Short within 450 blocks (Ravenford is 452 west, Frostgate 812 east).",
    "pieces": [],
    "stamps": [],
    "stories": [

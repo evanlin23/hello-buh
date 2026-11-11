@@ -51,3 +51,4 @@ faketrick_gold_portal   # first: owner's new format (faketrick); uploads only af
 psycho_lava_mansion   # first: owner's new format (psycho), OK'd 2026-11-11
 herobrine_bridge   # first: owner's new format (herobrine); uploads only after the owner's OK
 lucky_dig   # first: owner's new format (lucky); uploads only after the owner's OK
+mega_lapse_fountain  # first
