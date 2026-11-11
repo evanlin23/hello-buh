@@ -33,6 +33,8 @@ jobs:
           key: mc-${{ hashFiles('versions.env') }}
       - run: npm ci --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
+      - name: real player skins   # the owner's skin from Mojang (its primary copy is in the private assets): README.md "skin"
+        run: python3 scripts/fetch_skin.py $(python3 -c "import json; print(' '.join(json.load(open('lib/real_skins.json'))['names']))") || true
       - name: render
         env: { CAPTION: "${{ inputs.caption }}" }
         run: ./run.sh
