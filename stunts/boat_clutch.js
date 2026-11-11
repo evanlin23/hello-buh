@@ -23,7 +23,8 @@ module.exports = {
     // a wooden thud (the boat). Owner r:r4df33c, 2026-11-11: "The sound effect at the end of boat clutch sounds like a fart,
     // change it out": that was audio.py's old water-clutch rebuild playing a water bucket's pour on the boat placement,
     // stretched by the slow-mo; a boat recording gets none now, and lib/hb/banned_sfx.json bans a pour with no bucket
-    sfx: [['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
+    // r:r0f3da0 pace: the hook flash and the first fall were silent until 2.08 s (a fall makes no vanilla sound): a wind bed from frame 0
+    sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
   },
 
   async setup (ctx) {
