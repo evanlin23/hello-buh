@@ -406,6 +406,29 @@ STANDARDS.md in the same commit.
   trees, water) instead of superflat, so the scale reads against real land.
 - **Owner, 2026-11-11, Review Room note on cooked_bedrock: "need to have the ominous music".** The `cooked` payoff
   plays an ominous, dread-building track on the drop (dark NCS or a low drone and hit), not an upbeat bed.
+- **Owner, 2026-11-11: "We should focus on making our opening phrase more eye-catching. And you do research on how
+  the other opening frames, like on big YouTubers ... Minecraft shorts specifically?" then, after the queue review,
+  "Fix everything, please."** Every Short's frame 0 shows the thing the video is about (the subject or the payoff's
+  setup: the creeper, the trap, the TNT, the build), already in motion by 0.5 s; never an empty field, plain grass, a
+  bare wall or a still room. The caption reads like a person reacting ("I hate this job 😭", "Am I cooked?", "bro
+  found dirt for ONCE 💀"), not a label ("ladder clutch"). Measured on the owner's 32 references: all show the subject
+  at frame 0, nearly all with a reaction-style caption in the top band.
+- **Owner, 2026-11-11: "Generally, I think we need to have faster cuts. Like, after the stunt is done, we just cut.
+  After we have done something, like, we just cut, go to the next thing. ... it can't be too fast, but it can't be so
+  slow either. It's like, right now, we blow up the TNT, wait for, like, what feels like forever, then we cut. We
+  should need to, like, go boom, boom, boom, fast, fast pace."** Cut as soon as an action's result reads: about
+  0.3-0.6 s after the hit (the block lands, the boom's flash and blast), then straight to the next beat. Never wait
+  for smoke, particles or drifting debris to clear. This narrows the settle rule (r:r24d99a): still no cut while the
+  thing itself is happening (a block mid-fall, a mob mid-death, the blast still going off), but smoke and particles
+  no longer hold a cut or the end. The end comes about 0.5-0.8 s after the payoff's result.
+- **Owner, 2026-11-11, on underdog_heal: "For the one where we're feeding like the health, like we started to show
+  like their health overhead, like with like hearts and like empty hearts and stuff."** In the `underdog` (healing)
+  format, each hurt mob shows its health above its head as a row of Minecraft hearts (full, half and empty, the HUD
+  heart style), and the row fills up as it's healed, so the heal reads at a glance. The hearts track the mob's real
+  health from the recording.
+- **Owner, 2026-11-11, on fakemod_permission: "Also, for the fake mod thing, I think the pop-up should be in the middle
+  of the screen rather than at the top."** In the `fakemod` format, the permission popup sits centred in the game view
+  (like a real modal dialog over the action), not at the top.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -654,6 +677,25 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, auditing Saving Up for a Bastion (cold read 60-65 %, dramatic irony; the second piglin-gold
   story, at Gold for the Portal's portal with the helmet piglin in the background): "ok all".** Approved as written;
   the player's voice is auditioned (Umbriel vs Zubenelgenubi; whichever Jonah doesn't take).
+- **Owner, 2026-11-11, auditing Pulled Away and The Singing Box Next Door, and on the lead's note that the bottleneck is now
+  building (voices, renderer pieces, skins) rather than pitching: "ok all".** Both scripts approved as written (with the
+  lead's calls: Bramble Hollow, one egg, original skins); next, the engine work the approved scripts need, one
+  session per piece.
+- **Owner, 2026-11-11, auditing Seventy Below (the general is Ravenford's Grandpa in his `elder` voice, never named;
+  one zombie burns in the sun, no gore): "Ok".** Approved as written.
+- **Owner, 2026-11-11, relaying a friend's reaction to Gold for the Portal (upload #1): "im confsued bro, feel like i
+  just wasted 10 seconds of my life bro".** A real first viewer didn't get it. Gold's twist takes several unspoken
+  steps (piglins barter; Grandpa died there; a piglin wears his helmet; Grandma knows) and an unexplained name
+  (Nico). From now on every script's cold read includes a CASUAL viewer (plays a little, not a Java expert, watching
+  once at phone speed): the twist must land for them in one step from the picture, with no name or mechanic they
+  weren't shown. A script the casual viewer can't explain in one sentence goes back to the writer.
+- **Owner, 2026-11-11, asking how the Roblox story Shorts set up the mystery, then: "Yes, please rewrite all the
+  stories as needed. We should be following the format, the tried and true format that already works for the Roblox
+  stories, but now we're doing Minecraft stories instead."** Every script follows docs/story_format.md: the impossible
+  fact and its "why?" said out loud in line 1, 3-5 two-way clues, the narrator as the one who wants to know, someone
+  loved at stake, the rule turned against itself, the reveal SAID in one plain sentence (the naive narrator says what
+  they see), one beat, cut, the last line echoing line 1. All 10 approved scripts are rewritten to it, one session
+  each, and come back to the owner.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

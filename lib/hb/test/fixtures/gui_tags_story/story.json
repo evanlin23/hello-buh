@@ -1,0 +1,10 @@
+{
+  "title": "gui_tags fixture (stunts/_test_gui_tags.js): The Walk's trade screen and caption chunk, The Honey Thief's hidden name tag",
+  "key_color": "#8FD8FF",
+  "lines": [],
+  "cast": {
+    "Giant": { "role": "character", "name": "Jonah (never named: 'the giant')", "name_tag": false },
+    "Pia": { "role": "character", "name": "Pia" }
+  },
+  "hotbar": [["emerald", 64], ["lectern", 63], "leather_boots", ["book", 2], "bread", "cake", "milk_bucket", ["egg", 67], "pufferfish"]
+}

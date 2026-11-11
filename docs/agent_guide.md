@@ -57,7 +57,7 @@ timestamps, artifacts, the last blockers; `./hb status` shows it).
 | `./hb sheet <stunt>` | one labelled frame per shot (`--at first,mid,last` adds the cut edges) | 3-10 min |
 | `./hb preview <stunt>` | the whole edited Short at 360x640 + sheets of every cut and caption | 10-25 min |
 | `./hb render <stunt>` | queues the full render on GitHub Actions on its own branch (`render/<stunt>`, or `<prefix>/render-<stunt>` when only your prefix may be pushed; never your working branch); `--wait` / `--fetch` brings back `out/<stunt>.mp4` (only this job's result: an older inherited one is refused); `--reuse` re-runs only the edit on the last render's frames when the picture can't have changed | 10-20 min (reuse ~6-8) |
-| `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length, the aim on every action and the payoff settling (the 1 s tail counts from when falling blocks/debris rest; scripts/owner_checks.py), a true peak over -1 dBTP (WARN); edit subs/cards count as caption events; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
+| `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, the opening (r:r0f3da0, scripts/opening.py: frame 0 not a flat view, moving by 0.5 s), dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length, the aim on every action and the payoff settling (the 1 s tail counts from when falling blocks/debris rest; scripts/owner_checks.py), a true peak over -1 dBTP (WARN); edit subs/cards count as caption events; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
 | `./hb panel <stunt>` | the viewer panel: Gemini watches the finished mp4 as a 12-year-old fan, a scroller and a strict editor: swipe point, hook in 2 s, cut-off / drifting / wrong-sex-or-age / annoying / ASMR voices, the ending explained back vs story.json's twist, dark/blurry/zoomed picture. BLOCK when 2+ agree on a cut word, drift, a wrong voice or a missed ending; FLAGs are review inputs (`scripts/viewer_panel.py`; 2 Gemini calls on the shared quota, cached per mp4; calibration in the short-review skill) | 1-5 min |
 | `./hb review <stunt>` | one report: qa_frames + beat_audit + pace + owner + voice edges + speaker check (when scripts/speaker_check.py is there); exit 1 on any blocker; counts the round; `--verdict "READY"` records the reviewer's answer | 2-5 min |
 | `./hb publish <stunt> --notes "..."` | to the videos branch (needs a READY verdict). Refuses unless HEAD contains origin/main (rebase first). Records the gates it ran on the package in metadata `gates` (`scripts/gates.py`: package = the reviewed cut, pace + key sounds, the latest check); the uploader skips a non-story package gated before `lib/hb/gates.json`'s version or blocked without `--waive "who: why"` | 1 min |
@@ -144,12 +144,16 @@ and don't send the bot's raw calls yourself:
 - **Walking backwards: `await A.back(ticks)`.** It lets go of the back key before the player gets within 1 block
   of a solid block behind. Pixel art keeps 3 blocks clear, so a pull-back never ends pressed against an earlier
   build.
-- **Ending on a blast or a fall: `endAfter: 'settle:0.6'`.** After `perform`, the harness keeps recording until
-  nothing in the payoff is still moving: no lit TNT, no falling blocks, no blast debris in the air, no death animation
-  still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark. This is the
-  default for every blast or fall payoff: the motion lint warns on one that ends any other way. A blast counts as
-  moving for 44 ticks (2.2 s: the renderer's smoke and crumbs, not just the server's entities), the recording runs 2 s
-  past the mark, and `./hb pace` blocks an ending whose last 0.6 s still changes (blast smoke, debris, the camera).
+- **Ending on a blast or a fall: `endAfter: 'settle:0.5'`.** After `perform`, the harness keeps recording until
+  the payoff's action is over: no lit TNT, no falling blocks, no death animation still playing, and the last blast's
+  frame (0.3 s) done. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.5 s after that mark. Smoke,
+  particles and items drifting out of a blast never hold it (owner r:r188b46, 2026-11-11: "we blow up the TNT, wait
+  for what feels like forever, then we cut"). This is the default for every blast or fall payoff: the motion lint
+  warns on one that ends any other way. The recording runs 2 s past the mark. `./hb pace` blocks an end while the
+  recording shows a falling block, a dying mob or a blast frame in view, and its dwell check warns on any result held
+  over 1.0 s and on an end over 0.9 s after the payoff's result (a blocker over 1.2 s). Recordings made before
+  2026-11-11 23:00 carry the old `settle` (~1.9 s after the last blast): on those, end on the blast's own mark or a
+  negative settle offset (`docs/worker.md` "Ending a beat fast").
 - **The shared factories in lib/** (door_run, escalation, guess_sound, hide_seek, inside, nph, spot_wrong,
   time_lapse, pixel_art) send their packets through `A.click`, `A.breakStart`/`A.breakFinish`, `A.digNow` and
   `A.strike`. When the crosshair is already on the target (within 6 degrees), the packet goes out on the same tick as

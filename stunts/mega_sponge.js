@@ -5,8 +5,8 @@
 // cinematic camera shots of the whole thing, getting closer each time, and ends threading the 3x3 hole of the small
 // glowing sponge hung in the big one's hollow middle ("a sponge inside the sponge").
 //
-// Beats (Short seconds, 25.5 s): 0 low under the south-west corner, craning up (the build fills the frame) | 2.0 the
-// south-east corner, wider | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
+// Beats (Short seconds, 25.5 s): 0 the whole sponge over the forest, pushing in fast from the south-west | 2.0 high
+// off the south-east, down across the top | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
 // east end | 8.4 wide orbit over the forest | 10.7 high over the top face | 12.8 boost up the north face and over the top,
 // looking down the top hole at the core | 17.6 the west face from its south-west corner, tracking | 19.6 head-on on the hole's line, pushing in | 21.5 boost,
 // dive into the face hole (flash), slow down inside | 24.65 thread the core's hole (punch, flash, impact, the drop)
@@ -35,10 +35,14 @@ module.exports = {
   look: { mood: 'golden_hour', bloom: 0.35, bloomThreshold: 0.86, bloomPasses: 1, sharpen: 0.4, rays: 0.5, raysOverBlocks: 0.3, shadows: true, vignette: 0.3, grain: 0.01 },
   shots: {
     pov: { pov: true },
-    // 1. under the south-west corner looking up: the build fills the frame from frame 1, the camera craning up and back
-    rise: { path: [[0, -52, 9, 56], [2, -57, 19, 62]], lookPath: [[0, -18, 62, 18], [2, -10, 54, 10]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
-    // 1b. the south-east corner from further out and higher: the whole height against the sky, the forest under it
-    rise2: { path: [[0, 66, 20, 70], [1.6, 58, 27, 62]], lookPath: [[0, 26, 52, 26], [1.6, 22, 56, 22]], fov: 70, dof: false, drift: 0.5, scenery: true, subject: [[41.5, 50, 41.5]] },
+    // 1. the whole sponge over the forest from the south-west, pushing in fast (~17 blocks/s) and drifting onto its corner
+    // (owner r:r0f3da0: frame 0 shows the subject, moving by 0.5 s; the old close crane under the corner filled frame 0
+    // with one dark texture: the opening check's flat view, centre 0.12 / busy 0.34; this frame 0: 0.89 / 0.66)
+    rise: { path: [[0, -100, 22, 100], [2, -66, 30, 66]], lookPath: [[0, -20, 45, 20], [2, -30, 50, 30]], fov: 76, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
+    // 1b. high off the south-east, looking DOWN across the top face to the far corner, the forest far below: rise looks up
+    // from the ground at a corner, so a second low corner shot cut onto it read as the same frame twice (independent
+    // review of the r:r52f94c fix: "a jump-cut stutter in the hook"); this one is a clearly different angle and height
+    rise2: { path: [[0, 96, 112, 78], [1.6, 88, 106, 70]], lookPath: [[0, 6, 70, 2], [1.6, 2, 66, -2]], fov: 64, dof: false, drift: 0.5, scenery: true, subject: [[0, 81, 0]] },
     // 2b. along the south face from its east end, the low sun raking across it
     south: { path: [[0, 72, 30, 76], [1.5, 64, 36, 70]], lookPath: [[0, -10, 40, 41], [1.5, -14, 46, 41]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 45, 42]] },
     // 3. wide: the whole sponge over the forest, orbiting from the south-east
@@ -63,7 +67,8 @@ module.exports = {
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
     // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
     // boosts alone left 3.1 s with nothing new)
-    sfx: [['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
+    // (an impact on frame 0: a sound hit by 0.3 s, r:r0f3da0)
+    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {

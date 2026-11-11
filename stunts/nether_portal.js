@@ -40,9 +40,12 @@ module.exports = {
     subsY: 0.15, caption: 'rating every way to light a nether portal 😳',
     armor: 20,   // the armour bar over the hearts: full netherite (review r1: surviving the anchor's blast with no armour on the HUD read as fake)
     red: 'every', dropAt: `lit${LAST}`,   // (these two had slipped into the comment above: the drop never landed on the payoff)
-    startAt: 'st:-0.05', endAfter: 'settle:0.6',   // the anchor's blast smoke drifts over the lit portal for 2.2 s (r:r24d99a): end 0.6 s after it settles, the 11/10 card up the whole time
+    startAt: 'st:-0.05', endAfter: 'settle:-0.65',   // r:r188b46: this take's settle mark is the old smoke wait (~1.9 s late): end ~1.2 s after the 11/10 card's blast. (was: the anchor's blast smoke drifts over the lit portal for 2.2 s (r:r24d99a): end 0.6 s after it settles, the 11/10 card up the whole time
     // pace r1: silent until 0.73 s: room tone from frame 1; the last light gets a dip + impact over the song (the publish gate)
-    sfx: [['air', 'start', `lit${LAST}`, { gain: 0.5 }], ['dip', `lit${LAST}`, 0.4], ['impact', `lit${LAST}`, { gain: 1.4 }]],
+    // mixcheck r1: under the NCS master the anchor's blast rose only ~4 dB (the room tone kept the level up): the song AND
+    // the game duck 0.4 s before that blast (the 2nd boom; the TNT's is the 1st), the impact on it
+    sfx: [['pop', 'st', { gain: 0.9 }], ['air', 'start', `lit${LAST}`, { gain: 0.5 }],   // (a pop on the first method's card, frame 0: the opening's hit, r:r0f3da0)
+      ['dip', 'boom', 0.4, { nth: 1 }], ['gamedip', 'boom', 0.35, { nth: 1 }], ['impact', 'boom', { gain: 1.4, nth: 1 }]],
     speed,
     subs: [...ST.map((s, i) => ['st', s.sub, 1.4, i]), ['lava_a', 'x6', 0.8, 0]],
     cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 3.2 : 0.9, i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
