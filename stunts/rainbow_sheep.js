@@ -16,6 +16,7 @@ const COLORS = [
 const N = COLORS.length + 1          // the last one gets the name tag
 const STEP = 2                       // blocks between sheep
 
+const { plateau } = require('../lib/plateau')
 module.exports = {
   name: 'rainbow_sheep',
   biome: process.env.BIOME || 'minecraft:plains',
@@ -26,6 +27,7 @@ module.exports = {
     // the short cut (lead 2026-11-11: as short as it reads): the seven dyes, the rainbow, then the jeb_ tag turns
     // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)
     endAfter: 'jeb:1.0',
+    speed: [['jeb:0.25', 'jeb:3.25', 3]],   // the jeb_ sheep cycles a colour per 25 ticks (vanilla): x3 shows three changes (review r1)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i])],   // (no 'jeb_' sub: it sat on the jeb_ nameplate)
     punch: [['jeb', 0, 1.06]],
     sfx: [['air', 'start', 'jeb', { gain: 0.5 }]]   // room tone from frame 1 (pace: the first sound was at 0.41 s)
@@ -36,14 +38,13 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
+    this.x = x; this.z = z
     await ctx.defaultRules()
-    for (const [z0, z1] of [[z - 30, z - 17], [z - 16, z - 3], [z - 2, z + 11], [z + 12, z + 24]]) {   // wide and high: the old box's cut wall showed behind the line
-      await ctx.cmd(`/fill ${x - 56} ${floor + 1} ${z0} ${x + 56} ${floor + 20} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 56} ${floor} ${z0} ${x + 56} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 56} ${floor - 3} ${z0} ${x + 56} ${floor - 1} ${z1} dirt`)
-    }
+    // the field levelled at the terrain's high percentile (lib/plateau): the old box cleared down to the start height
+    // left a cut dirt-and-stone wall behind the line (review 2026-11-11)
+    const floor = await plateau(ctx, { x0: x - 56, x1: x + 56, z0: z - 30, z1: z + 24, above: 24, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    this.floor = floor
     await ctx.cmd('/kill @e[type=sheep]')
     // sheep stand at x0 + i*STEP, z; a fence behind and posts between them, open at the front
     const x0 = x - Math.floor((N - 1) * STEP / 2)
@@ -156,7 +157,7 @@ module.exports = {
     bot.setControlState('back', true)
     for (let t = 0; t < 26; t++) {
       await bot.waitForTicks(1)
-      const e = bot.entity.position, q = new ctx.Vec3(lx - 3, floor + 1.2, z + 0.5), d = q.minus(e.offset(0, 1.62, 0))
+      const e = bot.entity.position, q = new ctx.Vec3(lx - 0.5, floor + 1.1, z + 0.5), d = q.minus(e.offset(0, 1.62, 0))   // eyes on the jeb_ sheep (review r1: aiming at lx - 3 slid it off the edge)
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.2, true)
