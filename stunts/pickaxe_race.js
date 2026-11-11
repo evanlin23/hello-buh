@@ -34,16 +34,16 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:1.2', speed: [['woodcut_a', 'woodcut_b', 'cut'],
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:1.15', speed: [['woodcut_a', 'woodcut_b', 'cut'],
       // one block boundary each (the recorded dig_end times): the beats get shorter tier by tier on screen. Cutting
       // stone 4 blocks ran it 2.8 s against iron's 3.65 and diamond's 3.2: stone looked faster than both
       ['stonecut_a', 'stonecut_a:1.05', 'cut'], ['stonecut_a:5.70', 'stonecut_a:6.05', 'cut'], ['stonecut_a:10.15', 'stonecut_a:10.45', 'cut'],
       ['tntwalk', 'lit', 2.2], ['lit', 'boom:-1.6', 2],
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
-      ['boom:0.85', 'boom:1.6', 'cut'], ['boom:1.6', 'lastboom:-0.4', 1.75]], subs: subs(),
+      ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
       flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.3], ['impact', 'lastboom']],
-      // ends on the second TNT's blast once its debris settles (pace settle: +0.32 s past 0.8), never on a lit TNT (r:r24d99a, independent review)
+      // ends on the second TNT's blast once its debris settles (pace settle: the debris lands ~1.12 s after it), never on a lit TNT (r:r24d99a, independent review)
         // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
       punch: [['boom', 0, 1.12]], shake: [['boom', 0, 10]] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
@@ -229,7 +229,9 @@ module.exports = {
     for (let k = 0; k < 360 && booms < NP && quiet < 60; k++) {
       // before the first blast: a slow pan east along the row of lit TNT (it stood frozen ~1.7 s on the fuse)
       // before the first blast: on the lit one (the pan east put the song-drop blast at the frame's edge)
-      const goal = boomAt || new Vec3(pil(0).x + 0.5, floor + 1.4, wz + 1)
+      // after a blast, the eyes keep drifting over the smoke and debris (lint: the wait between blasts read as
+      // nobody moving, and the settle gate forbids cutting it while the debris flies)
+      const goal = boomAt ? boomAt.offset(1.6 * Math.sin(k / 9), 0.6 * Math.sin(k / 7), 0) : new Vec3(pil(0).x + 0.5, floor + 1.4, wz + 1)
       look = look.plus(goal.minus(look).scaled(0.12))
       const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z)
