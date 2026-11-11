@@ -120,5 +120,27 @@ if (SKINS) {   // the line-ups (see --skins above); the actors' usernames are th
   // the second neighbour is another entity with the same username: give it its own id
   for (const e of out.entities) if (e[0] >= 120 && e[0] < 140 && e[1] === 9501) e[1] = 9511
 }
+if (args.includes('--mobposes')) {   // mob poses and held items (docs/engine_features.md "Mob poses"), left to right:
+  // a skeleton drawing its bow on a staged mark (tick 10) and one recorded aggressive + using its bow (from tick 20); an
+  // evoker standing (crossed arms only), one casting on a staged mark (ticks 10-70), one recorded casting (40-59); a sheep
+  // blue turning red at 50 and one white turning blue at 30; a baby and an adult piglin admiring a gold ingot in the off
+  // hand, an adult with none; an allay holding a diamond and one empty-handed
+  const ms = [[9500, 'skeleton', 4, -4.2, { held: 'bow' }], [9501, 'skeleton', 4, -3.2, { held: 'bow' }], [9502, 'evoker', 4, -2, null], [9503, 'evoker', 4, -1, null],
+    [9504, 'evoker', 4, 0, null], [9505, 'sheep', 4, 1.2, { color: 11 }], [9506, 'sheep', 5.2, 1.2, { color: 0 }], [9507, 'piglin', 3, 2.4, { baby: true, offhand: 'gold_ingot' }],
+    [9508, 'piglin', 4, 3.2, { offhand: 'gold_ingot' }], [9509, 'piglin', 4, 4.2, null], [9510, 'allay', 2.4, -0.6, { held: 'diamond' }], [9511, 'allay', 2.4, 0.4, null]]
+  for (const [id, n, ahead, right, ex] of ms) {
+    const [x, y, z] = at(ahead, right)
+    for (let t = 0; t < N; t++) {
+      let e = ex ? { ...ex } : null
+      if (id === 9501 && t >= 20) e = { ...e, aggressive: true, usingItem: true }
+      if (id === 9504 && t >= 40 && t < 60) e = { ...(e || {}), spell: 3 }
+      if (id === 9505 && t >= 50) e = { ...e, color: 14 }
+      if (id === 9506 && t >= 30) e = { ...e, color: 11 }
+      const yaw = faceCam + (n === 'evoker' || n === 'skeleton' ? Number(process.env.FIX_TURN || 0.5) : 0)
+      out.entities.push([t, id, n, +x.toFixed(3), y + (n === 'allay' ? 0.3 : 0), +z.toFixed(3), +yaw.toFixed(4), n === 'skeleton' ? 0.15 : 0, +yaw.toFixed(4), e])
+    }
+  }
+  out.timeline.push({ t: 10 * 50, event: 'pose', ids: [9500], bow: true }, { t: 10 * 50, event: 'pose', ids: [9503], spell: 'wololo' })
+}
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

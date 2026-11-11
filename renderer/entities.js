@@ -271,6 +271,9 @@ function look (name, extra, regs, engine = 0) {
     const f = extra.hp / 100, c = f < 0.25 ? 'high' : f < 0.5 ? 'medium' : f < 0.75 ? 'low' : null
     return { model: name, layers: ['entity/iron_golem/iron_golem', ...(c ? [`entity/iron_golem/iron_golem_crackiness_${c}`] : [])] }
   }
+  // IllagerModel's crossed arms (engine 2+, so older recordings stay as published): offsetAndRotation(0, 3, -1, -0.75, 0, 0),
+  // the converted bone's pivot sits 1 px higher and 1 px back. Shown only while not casting (entities.js update)
+  if (name === 'evoker' && engine >= 2 && MODELS && MODELS.evoker) return { model: 'evoker', layers: ['entity/illager/evoker'], rest: { arms: [0.75, 0, 0] }, move: { arms: [0, -1, -1] } }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
   // mobs that share another's model (scripts/mob_audit.js), drawn from recordings made from 2026-11-10 on (engine 2;
@@ -848,6 +851,14 @@ function poseBaby (r, name) {
   h.position.copy(h.userData.babyPos); h.scale.setScalar(h.userData.babyScale)
 }
 
+// Mob poses (docs/engine_features.md "Mob poses"): the per-frame keys render.js adds; a change of any of them
+// must not rebuild the model
+const MOB_POSE_KEYS = new Set(['aim', 'bow', 'bowT', 'aggressive', 'usingItem', 'spell', 'spellT', 'admire'])
+// a Java ModelPart rotation (xRot, yRot, zRot: Rz Ry Rx) onto a converted (Bedrock, y-up) bone: the y flip turns
+// x and z the other way and keeps y; three.js 'ZYX' is the same Rz Ry Rx order
+function javaRot (bone, x, y, z) { bone.rotation.order = 'ZYX'; bone.rotation.set(-x, y, -z) }
+function restRot (bone) { if (bone.rotation.order !== 'XYZ') bone.rotation.order = 'XYZ' }
+
 function B_isBlock (n) { return n === 'falling_block' || n === 'moving_block' || n === 'item_frame' || n === 'glow_item_frame' }
 
 export class EntityLayer {
@@ -857,7 +868,7 @@ export class EntityLayer {
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
     // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
-    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' || MOB_POSE_KEYS.has(k) ? undefined : v)
     if (ek === '{}' || ek === undefined) ek = 'null'
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
@@ -1037,6 +1048,7 @@ export class EntityLayer {
       if (geo && t) {
         const b = build(geo, t, l.extra); obj = b.root; bones = b.bones; mat = b.mat
         for (const [bn, r] of Object.entries(l.rest || {})) if (bones[bn]) { bones[bn].rotation.set(...r); bones[bn].userData.rest = bones[bn].rotation.clone() }
+        for (const [bn, d] of Object.entries(l.move || {})) if (bones[bn]) { bones[bn].position.add(new THREE.Vector3(...d)); bones[bn].userData.restPos = bones[bn].position.clone() }
         if (extra && extra.armor) await addMobArmor(geo, bones, extra.armor, extra.trims)
         if (name === 'sheep' && extra && (extra.jeb || extra.color)) {
           // SheepWoolUndercoatLayer (1.21.5+): a dyed or jeb_ sheep's body gets the undercoat over
@@ -1283,8 +1295,34 @@ export class EntityLayer {
         B.right_wing.rotation.set(0.436, -(-0.611 + f1), 0)
         B.left_wing.rotation.set(0.436, -(0.611 - f1), 0)
         const ab = Math.sin(age * 9 * Math.PI / 180) * 0.1
-        if (B.right_arm) B.right_arm.rotation.set(0.3, 0, 0.35 + ab)
-        if (B.left_arm) B.left_arm.rotation.set(0.3, 0, -0.35 - ab)
+        const mh = s.mobHeld
+        if (!mh) {
+          if (B.right_arm) { restRot(B.right_arm); B.right_arm.rotation.set(0.3, 0, 0.35 + ab) }
+          if (B.left_arm) { restRot(B.left_arm); B.left_arm.rotation.set(0.3, 0, -0.35 - ab) }
+        } else {
+          // AllayModel.setupAnim holding an item (getHoldingItemAnimationProgress 1, hovering): both arms reach forward
+          // (xRot -60 deg), spread round the item (yRot +-16 deg, zRot +-25 deg)
+          if (B.right_arm) javaRot(B.right_arm, -1.0471976, 0.27925268, 0.43633232)
+          if (B.left_arm) javaRot(B.left_arm, -1.0471976, -0.27925268, -0.43633232)
+        }
+        // the held item (AllayRenderer's ItemInHandLayer through AllayModel.translateToHand: the body, T(0, 1/16, 3/16),
+        // Rx(right_arm xRot), S(0.7), T(1/16, 0, 0); then the layer's Rx(-90) Ry(180) T(1/16, 0.125, -0.625), the
+        // item's third-person right-hand display), Java's y-down flipped to the bone's y-up, in pixels
+        const mk = mh ? mh.key : null
+        if (r.heldKey !== mk && B.body) {
+          if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
+          if (!r.heldGrp) {
+            r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
+            r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(0, 0.0625, 0.1875))
+              .multiply(new THREE.Matrix4().makeRotationX(-1.0471976)).multiply(new THREE.Matrix4().makeScale(0.7, 0.7, 0.7)).multiply(new THREE.Matrix4().makeTranslation(0.0625, 0, 0))
+              .multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
+            B.body.add(r.heldGrp)
+          }
+          r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
+          if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
+          r.heldKey = mk
+        }
+        if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
         if (B.head) { let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; B.head.rotation.set(s.pitch || 0, -dy, 0) }
         continue
       }
@@ -1300,6 +1338,8 @@ export class EntityLayer {
       }
       // SlimeRenderer.scale: 0.999 x size (metadata), drawn from the size-1 model
       if ((s.name === 'slime' || s.name === 'magma_cube') && s.extra && s.extra.size) r.obj.scale.setScalar(0.999 * s.extra.size)
+      // a mob pose last frame (mob poses below): its bones back to their rest turn before the walk swing
+      if (r.posed) { for (const b of r.posed) { restRot(b); b.rotation.set(b.userData.rest.x, b.userData.rest.y, b.userData.rest.z) } r.posed = null }
       // bipeds: legs opposite, arms against the legs. Quadrupeds (QuadrupedModel: creeper, pig):
       // leg0/leg1 hind right/left, leg2/leg3 front right/left; diagonal pairs move together.
       if (!B.leg4) for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1], ['leg2', -1], ['leg3', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
@@ -1315,6 +1355,38 @@ export class EntityLayer {
         // VillagerModel.setupAnim while unhappy (a refused trade): the head shakes no, zRot 0.3 sin(0.45 age), xRot 0.4
         // (staged: ctx.mark('pose', { ids, shake: true }), any mob with a head)
         if (s.extra && s.extra.shake) { B.head.rotation.z = B.head.userData.rest.z + 0.3 * Math.sin(0.45 * (tick || 0)); B.head.rotation.x = B.head.userData.rest.x + 0.4 }
+      }
+      // Mob poses (docs/engine_features.md "Mob poses"); keys render.js adds only for recordings that ask for them
+      const X = s.extra || {}
+      const jhx = -(s.pitch || 0), jhy = B.head ? B.head.rotation.y - B.head.userData.rest.y : 0   // Java head xRot / yRot
+      const mage = tick + (s.id % 97) * 3
+      // a skeleton aiming its bow (SkeletonModel: aggressive with a bow -> HumanoidModel.ArmPose.BOW_AND_ARROW on the
+      // main arm, which sets both: right yRot -0.1 + head, left 0.1 + head + 0.4, both xRot -PI/2 + head xRot), then
+      // AnimationUtils.bobModelPart (zRot +-(cos(age 0.09) 0.05 + 0.05), xRot +-sin(age 0.067) 0.05)
+      if (X.aim && B.rightArm && B.leftArm) {
+        const bz = Math.cos(mage * 0.09) * 0.05 + 0.05, bx = Math.sin(mage * 0.067) * 0.05
+        javaRot(B.rightArm, -Math.PI / 2 + jhx + bx, -0.1 + jhy, bz)
+        javaRot(B.leftArm, -Math.PI / 2 + jhx - bx, 0.1 + jhy + 0.4, -bz)
+        r.posed = [B.rightArm, B.leftArm]
+      }
+      // an evoker: IllagerModel draws its crossed arms OR the free ones (arms.visible = armPose == CROSSED), never both;
+      // casting a spell (IllagerArmPose.SPELLCASTING) raises the free arms: zRot +-135 deg, xRot cos(age 0.6662) 0.25
+      if (s.name === 'evoker' && B.arms && B.rightArm && B.leftArm && (this.engine >= 2 || X.spell)) {
+        const cast = !!X.spell
+        B.arms.visible = !cast; B.rightArm.visible = cast; B.leftArm.visible = cast
+        if (cast) {
+          const w = Math.cos(mage * 0.6662) * 0.25
+          javaRot(B.rightArm, w, 0, 2.3561945); javaRot(B.leftArm, w, 0, -2.3561945)
+          r.posed = [B.rightArm, B.leftArm]
+        }
+      }
+      // a piglin admiring the loved item in its off hand (PiglinModel.setupAnim, PiglinArmPose.ADMIRING_ITEM): head
+      // xRot 0.5 yRot 0 (down to the item), the left arm yRot 0.5 xRot -0.9 (the item held up to the face)
+      const pla = B.leftArm || (s.name === 'piglin' ? B.leftarm : null)
+      if (X.admire && pla && B.head) {
+        javaRot(pla, -0.9, 0.5, 0)
+        B.head.rotation.set(B.head.userData.rest.x - 0.5, B.head.userData.rest.y, B.head.userData.rest.z)
+        r.posed = [pla]
       }
       // a polar bear rearing up (PolarBear.DATA_STANDING_ID; clientSideStandAnimation moves 1 a tick
       // toward 6). PolarBearModel: the body tips back by f x 0.35 pi about the hips, the front legs reach
@@ -1354,24 +1426,28 @@ export class EntityLayer {
       }
       // a mob's off-hand item (ItemInHandLayer, the left arm: T(-1/16, 0.125, -0.625))
       const mo = s.mobOff, mok = mo ? mo.key : null
-      if (r.offKey !== mok && B.leftArm) {
+      // the piglin family's converted bones are lower case (so are the pillager's: its crossbow was never drawn, and
+      // published Shorts show pillagers without it, so it stays that way here)
+      const PIG = /^(piglin|piglin_brute|zombified_piglin)$/.test(s.name)
+      const LA = B.leftArm || (PIG ? B.leftarm : null), RA = B.rightArm || (PIG ? B.rightarm : null)
+      if (r.offKey !== mok && LA) {
         if (r.offObj) r.offGrp.remove(r.offObj.obj)
         if (!r.offGrp) {
           r.offGrp = new THREE.Group(); r.offGrp.matrixAutoUpdate = false
           r.offGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(-1 / 16, 0.125, -0.625))
-          B.leftArm.add(r.offGrp)
+          LA.add(r.offGrp)
         }
         r.offObj = mok && this.itemFactory ? await this.itemFactory(mo) : null
         if (r.offObj) r.offGrp.add(r.offObj.obj)
         r.offKey = mok
       }
       if (r.offObj && r.offObj.mat) r.offObj.mat.color.setRGB(...LL)
-      if (r.heldKey !== mk && B.rightArm) {
+      if (r.heldKey !== mk && RA) {
         if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
         if (!r.heldGrp) {
           r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
           r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
-          B.rightArm.add(r.heldGrp)
+          RA.add(r.heldGrp)
         }
         r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
         if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
