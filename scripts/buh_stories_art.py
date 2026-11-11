@@ -5,7 +5,7 @@ Type is Poppins Black (the story captions' font, assets/fonts) in white with Buh
     python3 scripts/buh_stories_art.py banner  <banner_still 2560x1440> out.png [--guides]
     python3 scripts/buh_stories_art.py avatar  <avatar_still 800x800>   out.png [--guides]
     python3 scripts/buh_stories_art.py mark    <avatar_still 800x800>   out.png            (150x150 watermark)
-    python3 scripts/buh_stories_art.py cover   <a story Short's frame 1080x1920> out.png --n 1 --title "..." [--key WORD]
+    python3 scripts/buh_stories_art.py cover   <a story Short's frame 1080x1920> out.png --title "..." [--key WORD]
 
 --guides draws YouTube's safe band (banner: 1546x423 in the middle) or the avatar's circle crop on a copy.
 """
@@ -75,20 +75,14 @@ def mark(src, out):
     o.resize((150, 150), Image.LANCZOS).save(out)
 
 
-def cover(src, out, n, title, key):
+def cover(src, out, title, key):
     """A story Short's first frame in the Buh Stories style: the format's 1080x1920 layout (edit.py: black bands, the
-    game view 1080x1011 at y 455), the title in the top band with its key word in gold and a gold kicker over it,
-    and the watermark in the bottom band."""
+    game view 1080x1011 at y 455), the title (the story's hook) centred in the top band with its key word in gold.
+    No series pill or number (owner: "Do we need BUH STORY #5?"): the channel name and #buhstories carry the brand."""
     im = Image.open(src).convert("RGB").resize((1080, 1920)).convert("RGBA")
     d = ImageDraw.Draw(im)
     d.rectangle((0, 0, 1080, 455), fill=(0, 0, 0, 255))
     d.rectangle((0, 1466, 1080, 1920), fill=(0, 0, 0, 255))
-    kick = ImageFont.truetype(POPPINS, 40)
-    k = f"BUH STORY #{n}"
-    kw = d.textlength(k, font=kick)
-    pad = 18
-    d.rounded_rectangle(((1080 - kw) / 2 - pad, 120, (1080 + kw) / 2 + pad, 120 + 62), 14, fill=GOLD + (255,))
-    d.text(((1080 - kw) / 2, 124), k, font=kick, fill=(0, 0, 0, 255))
     f = ImageFont.truetype(INTER, 78)
     words = title.split()
     width = lambda ws: d.textlength(" ".join(ws), font=f)
@@ -97,7 +91,7 @@ def cover(src, out, n, title, key):
     else:   # two balanced lines (as edit.py's caption): the split with the narrower longer line
         k = min(range(1, len(words)), key=lambda i: max(width(words[:i]), width(words[i:])))
         lines = [words[:k], words[k:]]
-    y = 215 + (2 - len(lines)) * 44
+    y = 271 - len(lines) * 88 / 2 - 8   # centred on edit.py's CAPTION_Y
     sp = d.textlength(" ", font=f)
     for ln in lines:
         tw = sum(d.textlength(w, font=f) for w in ln) + sp * (len(ln) - 1)
@@ -115,7 +109,6 @@ def main():
     ap.add_argument("src")
     ap.add_argument("out")
     ap.add_argument("--guides", action="store_true")
-    ap.add_argument("--n", type=int, default=1)
     ap.add_argument("--title", default="")
     ap.add_argument("--key", default="")
     a = ap.parse_args()
@@ -126,7 +119,7 @@ def main():
     elif a.kind == "mark":
         mark(a.src, a.out)
     else:
-        cover(a.src, a.out, a.n, a.title, a.key)
+        cover(a.src, a.out, a.title, a.key)
 
 
 if __name__ == "__main__":

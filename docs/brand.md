@@ -239,7 +239,7 @@ The art is in `brand/buh_stories/`, the review page is linked from the session r
   2. @TheBuhStories
   3. @HelloBuhStories (ties it to the main channel, but it's long)
   4. "Tales from Hushwell" @HushwellTales (a world name instead of the hero; good if "Buh" is taken)
-- **Promise (one line):** *Short Minecraft stories, told by the kid who lived them.* Every story stands alone (owner,
+- **Promise (one line):** *Short Minecraft stories.* (No "told by someone who lived it", r:r808cba.) Every story stands alone (owner,
   2026-11-11: no shared-world or connected-stories framing, r:rca5363; "just do stories", r:rae1fcc). Each story can still be a
   mystery: its own title, video description and pinned question set it up; the channel's own copy says "stories".
 - **Who's talking:** Pip's voice: a happy, bubbly kid who's figuring the world out and tells you the strange thing
@@ -257,27 +257,26 @@ The art is in `brand/buh_stories/`, the review page is linked from the session r
   the channel is, nothing more).
 - **Watermark** `watermark.png` (150x150): the avatar in a Buh-gold ring, transparent outside.
 - **First frame / title band** `cover_dog_hill.png`: the Short format unchanged (black bands, game view 1080x1011),
-  plus a gold "BUH STORY #N" pill over the title. The title is white Inter ExtraBold (edit.py's band font), with its
+  with only the story's hook in the top band (no series pill or number: owner, r:rc0d90d). The title is white Inter ExtraBold (edit.py's band font), with its
   key word in Buh gold instead of red, and two balanced lines at most. The game view's first frame follows the opening
   rule above: line 1's subject is already moving.
-- **Colours:** the palette above. Buh gold `#FFD640` is the accent everywhere (the title key word, the kicker, the
+- **Colours:** the palette above. Buh gold `#FFD640` is the accent everywhere (the title key word, the
   ring, the caption key colour), white for text, night `#1B2030`, dusk `#BC624A`. Captions as in STANDARDS 6:
   Poppins Black, with the brand key colour.
 - Commands: `brand/buh_stories/README.md`.
 
 ## Titles
-**Format: `<line 1's hook, lowercase> <emoji> | Buh Story #N #minecraft #shorts`.** The hook goes first, because feed
-titles are cut at about 40-60 characters (thin evidence, see above). The series tag goes after it, and the cover's
-gold pill carries the number on the video itself. The number counts releases on this channel. If the owner prefers
-the series tag first ("Buh Story #N: ..."), it's a one-line change.
+**Format: `<line 1's hook, lowercase> <emoji> #minecraft #shorts`.** No series tag or number (owner, "Do we need
+BUH STORY #5? It can just be in the title? or idk"): the channel name and #buhstories carry the brand. The hook
+comes first because feed titles are cut at about 40-60 characters (thin evidence, see above).
 
-| # (suggested release order) | story | title | cover title (band) |
+| suggested release order | story | title | cover title (band) |
 |---|---|---|---|
-| 1 | Light Sleeper | my village is covered in 9,000 carpets 😶 \| Buh Story #1 #minecraft #shorts | My village is covered in 9,000 **carpets** |
-| 2 | Good Boy | my human tried to lose me 37 times 🐺 \| Buh Story #2 #minecraft #shorts | My human has tried to lose me 37 **times** |
-| 3 | Thirty-One Raids | grandpa won 31 raids. he started all of them 😳 \| Buh Story #3 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
-| 4 | Gold for the Portal | my grandma has thrown 9,000 gold into a portal 🪙 \| Buh Story #4 #minecraft #shorts | My grandma has thrown 9,000 gold into a **portal** |
-| 5 | Dog on the Hill | the dog on the hill hasn't moved in 900 days 🐕 \| Buh Story #5 #minecraft #shorts | The dog on the hill hasn't moved in **900** days |
+| 1 | Light Sleeper | my village is covered in 9,000 carpets 😶 #minecraft #shorts | My village is covered in 9,000 **carpets** |
+| 2 | Good Boy | my human tried to lose me 37 times 🐺 #minecraft #shorts | My human has tried to lose me 37 **times** |
+| 3 | Thirty-One Raids | grandpa won 31 raids. he started all of them 😳 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
+| 4 | Gold for the Portal | my grandma has thrown 9,000 gold into a portal 🪙 #minecraft #shorts | My grandma has thrown 9,000 gold into a **portal** |
+| 5 | Dog on the Hill | the dog on the hill hasn't moved in 900 days 🐕 #minecraft #shorts | The dog on the hill hasn't moved in **900** days |
 
 Why this order: Light Sleeper is the strongest hook and the bar, so it opens the channel. After that the order is free,
 because each story stands alone; the two dog stories (Good Boy, Dog on the Hill) are kept apart so the feed stays
@@ -292,9 +291,9 @@ varied. Raids' title gives away less than its twist; check it against the final 
 
 ## Description, tags, playlists
 - **Channel description:**
-  "Short Minecraft stories, each told by someone who lived it: a village that carpets every
+  "Short Minecraft stories: a village that carpets every
   road, a grandpa who has won every raid, a dog who never stops waiting. Most of them have a secret. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
-- **Video description template:** line 1 = the hook, then "Buh Story #N.", the
+- **Video description template:** line 1 = the hook, then the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
 - **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
