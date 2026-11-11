@@ -29,7 +29,7 @@ module.exports = {
   cast: { self: 'steve' },
   selfName: 'Buh',
   idleLife: true,
-  look: 'bright',   // owner 2026-11-11: every story bright and punchy (main e58c77d; the audit's sharp look is in the preset)
+  look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11: bright and punchy; the roll-off keeps the daytime sky blue with clouds (main 2c6e5426)
   // subject: what the eye is on (the lint checks it; eyeTrace puts it where the last shot's subject was): the kit's
   // actors by tag ('actor:dog'), 'self' (Buh), or a point. Without one the village horse beside the dog won the eye.
   // offsets from D (dy from the ground's top: the dog's feet at dy 1, his sitting head ~1.6, Pip's eyes ~1.8, Buh's
