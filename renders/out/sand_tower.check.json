@@ -1,0 +1,131 @@
+{
+ "stunt": "sand_tower",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/sand_tower.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT sand_tower: 1 shots, scene 0.0-45.8 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-45.8  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 1 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 12.85,
+     "tick": 281,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 165 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 33.1,
+     "tick": 686,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 164 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    41.70s  sand broke                         -> block.sand.break                   7.1 blocks          ",
+    "    41.75s  sand broke                         -> block.sand.break                   4.6 blocks in view  ",
+    "    41.75s  sand broke                         -> block.sand.break                  10.6 blocks          ",
+    "    41.80s  sand broke                         -> block.sand.break                   7.9 blocks          ",
+    "    42.20s  sand broke                         -> block.sand.break                  11.6 blocks          ",
+    "    42.25s  sand broke                         -> block.sand.break                   4.7 blocks in view  ",
+    "    42.25s  sand broke                         -> block.sand.break                   8.1 blocks          ",
+    "    42.25s  sand broke                         -> block.sand.break                  15.4 blocks          ",
+    "    42.30s  sand broke                         -> block.sand.break                  12.6 blocks          ",
+    "    42.35s  sand broke                         -> block.sand.break                   5.5 blocks in view  ",
+    "    42.35s  sand broke                         -> block.sand.break                   9.1 blocks          ",
+    "    42.40s  sand broke                         -> block.sand.break                  13.7 blocks          ",
+    "    42.50s  sand broke                         -> block.sand.break                  14.7 blocks          ",
+    "    42.55s  sand broke                         -> block.sand.break                   7.3 blocks in view  ",
+    "    42.55s  sand broke                         -> block.sand.break                  11.2 blocks          ",
+    "    42.60s  sand broke                         -> block.sand.break                  15.8 blocks          ",
+    "    42.65s  sand broke                         -> block.sand.break                   8.3 blocks in view  ",
+    "    42.65s  sand broke                         -> block.sand.break                  12.2 blocks in view  ",
+    "    42.75s  sand broke                         -> block.sand.break                   9.3 blocks in view  ",
+    "    42.75s  sand broke                         -> block.sand.break                  13.3 blocks in view  ",
+    "    42.85s  sand broke                         -> block.sand.break                  10.4 blocks in view  ",
+    "    42.85s  sand broke                         -> block.sand.break                  14.4 blocks in view  ",
+    "    42.95s  sand broke                         -> block.sand.break                  11.4 blocks in view  ",
+    "    42.95s  sand broke                         -> block.sand.break                  15.5 blocks in view  ",
+    "    43.05s  sand broke                         -> block.sand.break                  12.5 blocks in view  ",
+    "    43.15s  sand broke                         -> block.sand.break                  13.5 blocks in view  ",
+    "    43.20s  sand broke                         -> block.sand.break                  14.5 blocks in view  ",
+    "    43.30s  sand broke                         -> block.sand.break                  15.5 blocks in view  ",
+    "ambience per shot: -0.25-48.15s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T14:54:58.860Z"
+}
