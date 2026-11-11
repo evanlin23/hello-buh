@@ -11,7 +11,7 @@ baby is stuck in his barter farm, babies never barter, and his chest has never h
 
 | t (s) | beat | picture | line | clue |
 |---|---|---|---|---|
-| 0-6 | hook | an ingot drops into frame, the baby catches it (the dropper off-frame) | L01 gold falls from the sky, just for me... kept all four hundred | 1, 2 |
+| 0-6 | hook | an ingot drops into frame, the baby catches it (the dropper off-frame) | L01 gold falls from the sky, just for me, kept all four hundred | 1, 2 |
 | 6-10 | false lead | the grown-ups by the portal staring up at it | L02 they stare, they're jealous | (are they after its gold?) |
 | 10-14 | the want | the bastion over the lava lake | L03 saving up, for when I'm big | 3 |
 | **midpoint** | | | | |

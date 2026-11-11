@@ -377,7 +377,7 @@
   "beats": [
    "S11: the cutaway: the slumped player at his open chest (L11), crane up along the hopper to the baby hugging its gold (L12); on 'SIX' the dropper clicks and an ingot drops onto the baby, who catches it. Cut 1.0 s after `drop`. No line."
   ],
-  "loop": "L12 'I count to six' runs into L01 'Every six seconds, a gold ingot falls from the sky.'"
+  "loop": "L12 'I count to SIX' (the dropper clicks on it) runs into L01 'Gold falls from the SKY, just for ME.'"
  },
  "beats": "stories/saving_up_bastion/beats.md",
  "set": "stories/saving_up_bastion/set.md",
@@ -439,7 +439,7 @@
    "place": "base",
    "size": "ms",
    "camera": "outside, low at the base room's wall",
-   "frame": "the player pours lava from a bucket into a 1-wide trench round the base; a HOGLIN paces just beyond it and turns back (why a moat); a 1-wide bridge to the base room's door."
+   "frame": "the player glances up at the tower, shakes his head, then pours lava from a bucket into a 1-wide trench round the base; a HOGLIN paces just beyond it and turns back (why a moat); a 1-wide bridge to the base room's door."
   },
   {
    "id": "S08",
