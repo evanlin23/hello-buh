@@ -1,0 +1,539 @@
+{
+  "name": "mobpov_baby_zombie",
+  "channel": "hellobuh",
+  "caption": "this baby zombie will NOT stop 😭",
+  "youtube": {
+    "title": "this baby zombie will NOT stop 😭 #minecraft #shorts",
+    "description": "this baby zombie will NOT stop 😭\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "payoff",
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": 7.85,
+    "song_start_s": 1.15
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 8.85,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 13310767,
+    "sha256": "c3c6ba747ff8fa992a3512692ece452c5f78ea5a6d9d750e203c4a95de79ee13",
+    "release": {
+      "tag": "pkg-mobpov_baby_zombie",
+      "asset": "mobpov_baby_zombie.short.c3c6ba747ff8fa99.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mobpov_baby_zombie/mobpov_baby_zombie.short.c3c6ba747ff8fa99.mp4",
+      "sha256": "c3c6ba747ff8fa992a3512692ece452c5f78ea5a6d9d750e203c4a95de79ee13",
+      "bytes": 13310767
+    },
+    "nosong_release": {
+      "tag": "pkg-mobpov_baby_zombie",
+      "asset": "mobpov_baby_zombie.short_nosong.45473a2aa0079181.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mobpov_baby_zombie/mobpov_baby_zombie.short_nosong.45473a2aa0079181.mp4",
+      "sha256": "45473a2aa00791815e38118cbcbcf0c932f62e36299f636b7e9ad2c37df17382",
+      "bytes": 13301311
+    }
+  },
+  "edit": {
+    "caption": "this baby zombie will NOT stop 😭",
+    "red": "baby zombie",
+    "startAt": "go:-0.05",
+    "endAfter": "payoff:0.8",
+    "dropAt": "payoff",
+    "subs": [
+      [
+        "found",
+        "found you.",
+        0.65,
+        0
+      ]
+    ],
+    "flash": [
+      [
+        "payoff",
+        0,
+        0.4
+      ]
+    ],
+    "punch": [
+      [
+        "payoff",
+        0,
+        1.08
+      ]
+    ],
+    "subsY": 0.12,
+    "sfx": [
+      [
+        "whoosh",
+        "leg",
+        {
+          "nth": 0,
+          "gain": 0.35
+        }
+      ],
+      [
+        "whoosh",
+        "leg",
+        {
+          "nth": 1,
+          "gain": 0.35
+        }
+      ],
+      [
+        "whoosh",
+        "leg",
+        {
+          "nth": 2,
+          "gain": 0.35
+        }
+      ],
+      [
+        "dip",
+        "payoff",
+        0.4
+      ],
+      [
+        "impact",
+        "payoff"
+      ],
+      [
+        "impact",
+        "smash",
+        {
+          "nth": 0,
+          "gain": 0.5
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "this baby zombie will NOT stop 😭",
+      "--self_name",
+      "56e",
+      "--red",
+      "baby zombie",
+      "--subs",
+      "[[\"found\",\"found you.\",0.65,0]]",
+      "--subs_y",
+      "0.12",
+      "--punch",
+      "[[\"payoff\",0,1.08]]",
+      "--flash",
+      "[[\"payoff\",0,0.4]]",
+      "--sfx",
+      "[[\"whoosh\",\"leg\",{\"nth\":0,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":1,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":2,\"gain\":0.35}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"impact\",\"smash\",{\"nth\":0,\"gain\":0.5}]]",
+      "--start_at",
+      "go:-0.05",
+      "--end_after",
+      "payoff:0.8"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 336,
+      "y": 71,
+      "z": -38
+    },
+    "biome": "minecraft:plains",
+    "ticks": 219,
+    "seconds": 10.95,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 1,
+        "event": "cut"
+      },
+      {
+        "t": 1.55,
+        "event": "f1_on"
+      },
+      {
+        "t": 1.55,
+        "event": "cut"
+      },
+      {
+        "t": 1.55,
+        "event": "shot"
+      },
+      {
+        "t": 1.65,
+        "event": "go"
+      },
+      {
+        "t": 2,
+        "event": "shot"
+      },
+      {
+        "t": 2.15,
+        "event": "smash"
+      },
+      {
+        "t": 2.2,
+        "event": "smash"
+      },
+      {
+        "t": 2.25,
+        "event": "smash"
+      },
+      {
+        "t": 2.85,
+        "event": "leg"
+      },
+      {
+        "t": 2.85,
+        "event": "cut"
+      },
+      {
+        "t": 2.85,
+        "event": "shot"
+      },
+      {
+        "t": 2.9,
+        "event": "smash"
+      },
+      {
+        "t": 3.15,
+        "event": "mob_hit"
+      },
+      {
+        "t": 3.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.25,
+        "event": "mob_hit"
+      },
+      {
+        "t": 3.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.4,
+        "event": "mob_hit"
+      },
+      {
+        "t": 3.4,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.45,
+        "event": "smash"
+      },
+      {
+        "t": 3.95,
+        "event": "leg"
+      },
+      {
+        "t": 3.95,
+        "event": "cut"
+      },
+      {
+        "t": 3.95,
+        "event": "shot"
+      },
+      {
+        "t": 4.3,
+        "event": "mob_hit"
+      },
+      {
+        "t": 4.3,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.4,
+        "event": "mob_hit"
+      },
+      {
+        "t": 4.4,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.55,
+        "event": "mob_hit"
+      },
+      {
+        "t": 4.55,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.65,
+        "event": "mob_hit"
+      },
+      {
+        "t": 4.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.8,
+        "event": "mob_hit"
+      },
+      {
+        "t": 4.8,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.9,
+        "event": "mob_hit"
+      },
+      {
+        "t": 4.9,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.9,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5,
+        "event": "smash"
+      },
+      {
+        "t": 5,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.05,
+        "event": "smash"
+      },
+      {
+        "t": 5.15,
+        "event": "smash"
+      },
+      {
+        "t": 5.2,
+        "event": "smash"
+      },
+      {
+        "t": 5.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.25,
+        "event": "smash"
+      },
+      {
+        "t": 5.3,
+        "event": "smash"
+      },
+      {
+        "t": 5.35,
+        "event": "smash"
+      },
+      {
+        "t": 5.4,
+        "event": "smash"
+      },
+      {
+        "t": 5.45,
+        "event": "smash"
+      },
+      {
+        "t": 6,
+        "event": "leg"
+      },
+      {
+        "t": 6,
+        "event": "cut"
+      },
+      {
+        "t": 6.1,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.15,
+        "event": "smash"
+      },
+      {
+        "t": 6.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.2,
+        "event": "smash"
+      },
+      {
+        "t": 6.25,
+        "event": "smash"
+      },
+      {
+        "t": 6.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.3,
+        "event": "smash"
+      },
+      {
+        "t": 6.35,
+        "event": "smash"
+      },
+      {
+        "t": 6.4,
+        "event": "smash"
+      },
+      {
+        "t": 6.45,
+        "event": "smash"
+      },
+      {
+        "t": 6.5,
+        "event": "smash"
+      },
+      {
+        "t": 6.55,
+        "event": "smash"
+      },
+      {
+        "t": 6.6,
+        "event": "smash"
+      },
+      {
+        "t": 6.65,
+        "event": "smash"
+      },
+      {
+        "t": 6.7,
+        "event": "smash"
+      },
+      {
+        "t": 6.75,
+        "event": "smash"
+      },
+      {
+        "t": 6.8,
+        "event": "smash"
+      },
+      {
+        "t": 6.85,
+        "event": "smash"
+      },
+      {
+        "t": 6.9,
+        "event": "smash"
+      },
+      {
+        "t": 6.95,
+        "event": "smash"
+      },
+      {
+        "t": 7,
+        "event": "smash"
+      },
+      {
+        "t": 7.05,
+        "event": "smash"
+      },
+      {
+        "t": 7.1,
+        "event": "smash"
+      },
+      {
+        "t": 7.15,
+        "event": "smash"
+      },
+      {
+        "t": 7.2,
+        "event": "smash"
+      },
+      {
+        "t": 7.25,
+        "event": "smash"
+      },
+      {
+        "t": 8.1,
+        "event": "landed"
+      },
+      {
+        "t": 8.6,
+        "event": "found"
+      },
+      {
+        "t": 9.45,
+        "event": "payoff"
+      },
+      {
+        "t": 9.45,
+        "event": "mob_hit"
+      },
+      {
+        "t": 9.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 10.95,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "832d95f7a8e2550318358e451a604899e03214a6",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T23:04:15.272Z",
+    "head_at_publish": "945377ede470caf7fd2f3e8173ba587b54131d5f",
+    "stunt": "stunts/mobpov_baby_zombie.js",
+    "source_snapshot": [
+      "source/mobpov_baby_zombie.js",
+      "source/voxel.js",
+      "source/mobpov.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 832d95f7a8e2",
+    "gunzip -c shorts/mobpov_baby_zombie/recording.json.gz > work/mobpov_baby_zombie.rec.json",
+    "node render.js work/mobpov_baby_zombie.rec.json work/mobpov_baby_zombie.frames 60 1080 1011",
+    "python3 audio.py work/mobpov_baby_zombie.rec.json work/mobpov_baby_zombie.wav",
+    "python3 edit.py --frames work/mobpov_baby_zombie.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mobpov_baby_zombie.rec.json --audio work/mobpov_baby_zombie.wav --caption \"this baby zombie will NOT stop 😭\" --self_name 56e --red \"baby zombie\" --subs \"[[\\\"found\\\",\\\"found you.\\\",0.65,0]]\" --subs_y 0.12 --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.4]] --sfx [[\"whoosh\",\"leg\",{\"nth\":0,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":1,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":2,\"gain\":0.35}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"impact\",\"smash\",{\"nth\":0,\"gain\":0.5}]] --start_at go:-0.05 --end_after payoff:0.8 --out out/mobpov_baby_zombie.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: mobpov #1 (lib/mobpov.js); independent review r2 3 blockers fixed, r3 fix-check 1 blocker (sub timing) fixed edit-only, lead checked frames 7.3-8.0 s (clear of 56e); reaction caption + opening per r:r0f3da0",
+  "published_at": "2026-11-11T23:06:44.083Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T23:07:07+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 8.85 s vs the reviewed render 8.85 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T23:05:15.830Z",
+      "report": "work/hb/mobpov_baby_zombie.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
