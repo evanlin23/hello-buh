@@ -7,7 +7,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'glance:-0.8', deathScreen: true, endAfter: 'death:1.8',
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'glance:-0.8', deathScreen: true, endAfter: 'settle:0.6',   // the blast's smoke and the death fall settled (lib/settle.js)
     sfx: [['air', 'start', 'death', { gain: 0.18 }]] },   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
@@ -36,6 +36,7 @@ module.exports = {
   async perform (ctx) {
     const { bot, Vec3 } = ctx
     const { x, z, floor } = this
+    const A = require('../lib/act')(ctx)
     await bot.waitForTicks(6)
     // the creeper, well behind the bot (south)
     await ctx.cmd(`/summon creeper ${x + 0.5} ${floor + 1} ${z + 15.5} {PersistenceRequired:1b}`)   // far back: two glances as it closes in (lead 2026-11-11: the hiss build-up, 8 s+)
@@ -62,9 +63,7 @@ module.exports = {
         ctx.mark('glance2')
         if (c2) { await ctx.easeLookAt(c2.position.offset(0, 1.2, 0), 380); await bot.waitForTicks(10) }
       }
-      await ctx.easeLookAt(new Vec3(bx + 0.5, by + 0.5, bz + 0.5), 250)
-      bot._client.write('block_place', { hand: 0, location: { x: bx, y: by - 1, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound('block.wood.place', 1, 0.9)
+      await A.place(new Vec3(bx, by, bz), { sound: 'block.wood.place' })   // aimed by construction (lib/act.js)
       await bot.waitForTicks(6)
       if (near() < 3.2) { hissed = true; break }
     }

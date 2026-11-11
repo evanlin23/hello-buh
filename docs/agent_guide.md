@@ -127,6 +127,42 @@ block-entity and mob animations, GUI screens; the before/after pixel-diff test).
 shulker shows its screen with the contents; campfire smoke; the warden's emerge (`ctx.mark('pose', { ids, emerge:
 true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `./hb still`.
 
+## Use these helpers; never call the bot directly
+Most of the owner's defect notes on 2026-11-11 weren't renderer bugs. They were stunt scripts that hand-wrote their
+actions and got them wrong in the same few ways. The shared helpers below get these right every time, so use them
+and don't send the bot's raw calls yourself:
+
+- **Placing, breaking, using, dyeing: `lib/act.js`.** Start with `const A = require('../lib/act')(ctx)`. In a story,
+  use `K.place`, `K.dig`, `K.use` and `K.useOn` from the story kit; they work the same way. The calls are
+  `await A.place(pos)`, `await A.dig(block)`, `await A.use(pos)` (a button, a door, flint and steel on TNT),
+  `await A.useOn(sheep)` (dye, shears, a name tag) and `await A.hit(mob)`. Each one turns the view to the exact target
+  like a hand on a mouse (eased, at most 220 degrees a second). It waits until the crosshair is on the block or mob,
+  and until vanilla's delay since the last action has passed. Only then does it act, with the swing and the sound.
+  If it can't see the target or can't reach it in time, it stops with an error naming the target, so a take never
+  shows a block placed where the camera isn't looking. Because each action waits for the aim, actions can only come
+  as fast as the aim can follow. For many targets, `A.snake(cells, row, col)` gives an order that turns the least.
+- **Walking backwards: `await A.back(ticks)`.** It lets go of the back key before the player gets within 1 block
+  of a solid block behind. Pixel art keeps 3 blocks clear, so a pull-back never ends pressed against an earlier
+  build.
+- **Ending on a blast or a fall: `endAfter: 'settle:0.6'`.** After `perform`, the harness keeps recording until
+  nothing in the payoff is still moving: no lit TNT, no falling blocks, no blast debris in the air, no death animation
+  still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark. This is the
+  default for every blast or fall payoff: the motion lint warns on one that ends any other way.
+- **The shared factories in lib/** (door_run, escalation, guess_sound, hide_seek, inside, nph, spot_wrong,
+  time_lapse, pixel_art) send their packets through `A.click`, `A.breakStart`/`A.breakFinish`, `A.digNow` and
+  `A.strike`. When the crosshair is already on the target (within 6 degrees), the packet goes out on the same tick as
+  before. When it isn't, the view turns onto the target first. A factory that has its own look (time_lapse, inside,
+  spot_wrong) doesn't turn: it waits a few ticks for its own look to arrive, then acts with an `off_aim` mark, which
+  the aim check blocks. `./hb motion lib` checks lib/, and npm test fails on a raw action there.
+- **Moving the camera and the cast: the story kit** (`K.aimAt`, `K.walkTo`, `K.actor`, `K.cut`), as before.
+
+The motion lint enforces this. `./hb motion <stunt>` lists every raw call (`bot.dig`, `bot.placeBlock`,
+`bot.activateBlock`, `bot.activateEntity`, and raw `block_place`, `block_dig` or `use_entity` packets) as an error and
+names the helper to use instead. `./hb record` refuses to record a stunt that still has one. A blast or fall Short
+that doesn't end on `settle` gets a warning. If a line really has to stay raw (something off screen, under the floor,
+or mid-fall where the aim is the stunt itself), add `// motion-ok: <reason>` on that line. `--no-motion-lint`
+records anyway, for a one-off look.
+
 ## Rules
 - **One server batch at a time.** The Minecraft server has a fixed port and the work/ folder is shared by every
   worktree: `hb record` refuses while a server or bot runs anywhere (`hb status` shows whose). Never start one by hand

@@ -377,6 +377,15 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     cut_marks = sorted({round(m["out"], 2) for m in marks if m["event"] in ("cut", "respawn") and 0.05 < m["out"] < dur - 0.05})
     # a cut is a cut if the picture shows it; a cut mark the picture doesn't show (a same-place cut) still counts
     cuts = sorted(set(cuts_v) | {c for c in cut_marks if not any(abs(c - v) < 0.2 for v in cuts_v)})
+    if not caps and clock and edit.get("captions"):   # a stunt's band captions switching on marks (edit.captions): each change is news
+        for spec, text in ((c[0], c[1]) for c in edit["captions"]):
+            try:
+                name, _, off = str(spec).rpartition(":") if ":" in str(spec) else (str(spec), "", "0")
+                o = clock.resolve(f"{name}{float(off):+.3f}")["out"]
+            except (ValueError, KeyError):
+                o = None
+            if o is not None and 0 < o < dur:
+                caps.append((round(o, 3), text, None))
     cap_times = sorted({round(t, 2) for t, _, _ in caps} | set(edit_caption_times(video, edit, rec, clock)))
     other_marks = [(round(m["out"], 2), m["event"]) for m in marks if m["event"] not in ("line", "cut", "shot", "self", "start", "end", "f1_on", "f1_off", "story_end")]
     builds = build_events(rec.get("timeline", []), clock.out_of_src) if rec and clock else []
@@ -554,7 +563,20 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             payoff += float(m.group(1))
     if payoff is None and edit.get("endAfter"):
         ev = str(edit["endAfter"]).split(":")[0]
-        if ev not in ("story_end", "end", "line"):
+        if ev == "settle":   # endAfter 'settle:0.6' (lib/settle.js): the payoff is where that last motion began (the
+            # blast, the fall, the death); the tail counts from the settle (the settle check below)
+            st_ = mark_time("settle")
+            starts = sorted(o for o in (clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and e["event"] == "motion_start")
+                            if o is not None and st_ is not None and o <= st_ + 1e-6)   # (motion_start is preview NOISE: not in marks)
+            if starts:
+                payoff, how = starts[-1], "the edit's endAfter 'settle': where the last payoff motion began"
+                # inside that window, the last blast or death (a lit fuse opens the window: the payoff is the bang)
+                hits = [clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and (
+                    (e["event"] == "particles" and e.get("type") == "explosion") or e["event"] in ("death", "mob_death"))]
+                hits = [h for h in hits if h is not None and starts[-1] - 1e-6 <= h <= st_ + 1e-6]
+                if hits:
+                    payoff, how = max(hits), "the edit's endAfter 'settle': the last blast or death before it settles"
+        elif ev not in ("story_end", "end", "line"):
             payoff, how = mark_time(ev), f"the edit's endAfter event '{ev}'"
     if payoff is None and story and story.get("twist") and lines:
         quotes = re.findall(r"['\"\u2018\u201c]([^'\"\u2019\u201d]{3,40})['\"\u2019\u201d]", story["twist"])

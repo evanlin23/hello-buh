@@ -7,6 +7,7 @@
     ['air', 'start', 'fall'],         // a steady ambient wind bed (high places, night), faded in and out
     ['impact', 'splash5'],            // sub-bass boom + a punchy hit, layered under the game audio
     ['boom', 'splash5'],              // the big one: deep boom with a long tail
+    ['heart', 'beat0h'],              // a heartbeat: two low thumps (tension under a slow-motion freeze)
     ['dip', 'splash5', 0.3],          // the SONG ducks to near silence for 0.3 s before the mark
     ['pop', 'look2'], ['ding', 'x'],  // UI pop / ding on a mark
     ['pops'],                         // a pop on every impact card and counter change
@@ -40,7 +41,7 @@ LIB = {
     "ding": ["sfx/kenney/interface-sounds/confirmation_001.ogg"],
     "hit": ["sfx/kenney/impact-sounds/impactPunch_heavy_000.ogg"],
 }
-GAIN = {"whoosh": 0.55, "riser": 0.45, "wind": 0.35, "air": 0.12, "impact": 0.9, "boom": 1.0, "pop": 0.5, "ding": 0.45, "scratch": 0.6, "file": 0.7}
+GAIN = {"heart": 0.9, "whoosh": 0.55, "riser": 0.45, "wind": 0.35, "air": 0.12, "impact": 0.9, "boom": 1.0, "pop": 0.5, "ding": 0.45, "scratch": 0.6, "file": 0.7}
 
 
 def _load(x):
@@ -247,6 +248,10 @@ def build_track(spec, timeline, start, dur, out_wav, cards=None, counter=None):
         elif kind == "impact":
             put(synth_boom(1.1, 110, 40, 0.3), t0, g)
             put(library("hit"), t0, g * 0.7)
+        elif kind == "heart":   # a heartbeat (lub-dub): two low thumps 0.22 s apart (the dilemma format's frozen beats)
+            x = synth_boom(0.4, 75, 45, 0.12)
+            put(x, t0, g)
+            put(x * 0.7, t0 + 0.22, g)
         elif kind == "boom":
             put(synth_boom(2.2, 90, 30, 0.8), t0, g)
             put(library("hit"), t0, g * 0.6)

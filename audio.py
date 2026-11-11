@@ -53,6 +53,8 @@ class Mixer:
         """Play a sound event at time t (s) the way the client does: pick a variant, apply its
         volume/pitch on top of the event's. Our own sounds are not distance-attenuated."""
         variants = self.defs[event]["sounds"]
+        if not variants:   # an event with no files (entity.snow_golem.ambient): vanilla plays nothing
+            return
         v = self.rng.choice(variants)
         v = {"name": v} if isinstance(v, str) else v
         if v.get("type") == "event":   # points at another sound event (parrot imitations), not a file

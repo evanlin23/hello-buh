@@ -101,6 +101,7 @@ Verdict: **ready** or **not ready**. Any FAIL in checks 1-5 means not ready.
 ## Common fixes
 - **Late hook:** `startAt: 'EVENT:-1.0'`, aim the camera so the subject sits beside the crosshair, not under it.
 - **Freeze on a wait or after the payoff:** add a glance, a step or a look-up in the stunt (`ctx.easeLook`). Waits get motion.
-- **Long tail:** `endAfter: 'PAYOFF:0.8'`.
+- **Long tail:** `endAfter: 'PAYOFF:0.8'`. A blast or fall payoff: `endAfter: 'settle:0.6'` (0.6 s after the motion has
+  settled: the harness's `settle` mark, lib/settle.js; never earlier, owner r:r24d99a).
 - **Flat middle:** escalate (more TNT, a higher drop, a faster cycle), or cut a repeated beat.
 - **Weak payoff:** more particles or a bigger effect, the song drop exactly on it, the camera reacting.

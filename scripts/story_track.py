@@ -596,3 +596,5 @@ if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories
     story, _ = _lines(sys.argv[1])
     key = tuple(int(story.get("key_color", "#ffd640")[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
     caption_image(sys.argv[2], key).save(sys.argv[3])
+
+

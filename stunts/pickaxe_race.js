@@ -34,16 +34,20 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['woodcut_a', 'woodcut_b', 'cut'],
-      // one block boundary each (the recorded dig_end times): the beats get shorter tier by tier on screen. Cutting
-      // stone 4 blocks ran it 2.8 s against iron's 3.65 and diamond's 3.2: stone looked faster than both
-      ['stonecut_a', 'stonecut_a:1.05', 'cut'], ['stonecut_a:5.70', 'stonecut_a:6.05', 'cut'], ['stonecut_a:10.15', 'stonecut_a:10.45', 'cut'],
-      ['tntwalk', 'lit', 2.2], ['lit', 'boom:-1.6', 2],
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [['woodcut_a', 'woodcut_b', 'cut'],
+      // on block boundaries of the lib/act.js recording (dig_end times, offsets from stonecut_b): each tier shorter on
+      // screen than the one before (wood 5.8, stone 4.5, iron 4.2, diamond 3.8, gold 3.6, instamine 3.1 s), and the
+      // look through the hole before each new pickaxe trimmed to 0.25 s
+      ['stonecut_a', 'stonecut_a:2.1', 'cut'], ['stonecut_b:1.75', 'stonecut_b:2.5', 'cut'],
+      ['stonecut_b:4.9', 'stonecut_b:6.0', 'cut'], ['stonecut_b:8.05', 'stonecut_b:8.85', 'cut'],
+      ['stonecut_b:11.1', 'stonecut_b:12.1', 'cut'], ['stonecut_b:13.95', 'stonecut_b:14.7', 'cut'],
+      ['stonecut_b:17.1', 'stonecut_b:17.5', 'cut'], ['stonecut_b:19.0', 'stonecut_b:19.8', 'cut'],
+      ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
-      ['boom:0.85', 'boom:1.6', 'cut'], ['boom:1.6', 'lastboom:-0.4', 1.75]], subs: subs(),
+      ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
       flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.3], ['impact', 'lastboom']],
-      // ends on the second TNT's blast once its debris settles, never on a lit TNT (r:r24d99a, independent review)
+      // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
         // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
       punch: [['boom', 0, 1.12]], shake: [['boom', 0, 10]] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
@@ -87,6 +91,7 @@ module.exports = {
   async perform (ctx) {
     const { bot, Vec3 } = ctx
     const { floor, wz } = this
+    const A = require('../lib/act')(ctx)
     // digging sounds like the vanilla client: a hit sound every 4 ticks while digging
     let digTicks = 0
     const onTick = () => {
@@ -129,19 +134,12 @@ module.exports = {
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
         if (fast) {
-          // one block per tick: snap the crosshair to it and break it in the same tick
-          const eye = bot.entity.position.offset(0, 1.62, 0), d = p.offset(0.5, 0.5, 0.5).minus(eye)
-          await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
-          // instant mine: like the vanilla client, just START_DESTROY; the server breaks it at
-          // once only if the tool really is that fast (mineflayer's bot.dig chokes on 1.21
-          // enchantment components: 'enchantments is not iterable')
-          bot._client.write('block_dig', { status: 0, location: p, face: 3, sequence: 0 })
-          bot.swingArm()
-          await bot.waitForTicks(1)
+          // instant mine (Efficiency V + Haste): aimed by construction (lib/act.js, r:rffba12), no destroy delay
+          // after an instant break (vanilla), start + finish in one tick
+          try { await A.dig(b, { instant: true, delay: 0, sound: null }) } catch (e) { ctx.log('dig', e.message) }
         } else {
-          // eased aim at the block centre, then a real survival dig (no mineflayer look snap)
-          await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), p === order[0] ? 250 : 100)   // first aim of a beat: a turn, not a snap
-          try { await bot.dig(bot.blockAt(p), 'ignore') } catch (e) { ctx.log('dig', e.message) }
+          // the aim onto the block, then a real survival dig at the tool's speed (lib/act.js)
+          try { await A.dig(b) } catch (e) { ctx.log('dig', e.message) }
         }
         ctx.sound('block.stone.break', 1, 0.8); ctx.particles('block', p, { block: 'stone' })
       }
@@ -172,10 +170,8 @@ module.exports = {
       ctx.log('boom', booms, 'tick', ctx.tick)
     }
     bot._client.on('explosion', onBoom)
-    const place = (q) => {
-      bot._client.write('block_place', { hand: 0, location: q, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm()
-    }
+    // the TNT on the grass at a pillar's foot, aimed by construction (lib/act.js)
+    const place = async (q) => { try { await A.place(new Vec3(q.x, floor + 1, q.z), { against: new Vec3(q.x, floor, q.z), sound: null }) } catch (e) { ctx.log('place', e.message) } }
     ctx.select(T)
     ctx.mark('tntwalk')   // the whole walk at 2.2x (6 s of the same place-swing at 1.5x)
     // walk west along the wall 3 out, controls picked against the view each tick so the motion stays on the
@@ -205,20 +201,18 @@ module.exports = {
     for (let j = NP - 1; j >= 0; j--) {
       const q = pil(j), foot = new Vec3(q.x + 0.5, floor + 0.7, q.z + 0.5)
       await goTo(q.x + 1.5, new Vec3(q.x + 0.5, floor + 2.2, q.z))   // eyes on the pillar, not the grass at its foot (6 s of grass)
-      await ctx.easeLookAt(foot, 80)
-      place(q); ctx.sound('block.grass.place', 1)
+      await place(q); ctx.sound('block.grass.place', 1)
       await bot.waitForTicks(2)
       const tq = new Vec3(q.x, floor + 1, q.z)
-      for (let t = 0; t < 2 && bot.blockAt(tq)?.name !== 'tnt'; t++) { await ctx.easeLookAt(foot, 60); place(q); await bot.waitForTicks(2) }
+      for (let t = 0; t < 2 && bot.blockAt(tq)?.name !== 'tnt'; t++) { await place(q); await bot.waitForTicks(2) }
       if (bot.blockAt(tq)?.name !== 'tnt') { ctx.log('tnt place fallback at pillar', j, 'bot at', bot.entity.position.toString()); bot.chat(`/setblock ${q.x} ${floor + 1} ${q.z} tnt`); bot.chat(`/clear @s tnt 1`); await bot.waitForTicks(1) }
       if (j === NP - 2) ctx.mark('tntrun')
     }
     // light the one at your feet
     const q0 = pil(0)
     ctx.select(F)
-    await ctx.easeLookAt(new Vec3(q0.x + 0.5, floor + 1.5, q0.z + 0.5), 150)
-    place({ x: q0.x, y: floor + 1, z: q0.z })
-    ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    try { await A.use(new Vec3(q0.x, floor + 1, q0.z), { sound: 'item.flintandsteel.use' }) } catch (e) { ctx.log('light', e.message) }
+    ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     { const free = [...Array(9).keys()].find(h => !bot.inventory.slots[36 + h]); if (free !== undefined) ctx.select(free) }   // an empty hand: the flint and steel covered a third of every blast
     const placed = [...Array(NP).keys()].filter(j => bot.blockAt(new Vec3(pil(j).x, floor + 1, pil(j).z))?.name === 'tnt').length
@@ -229,7 +223,9 @@ module.exports = {
     for (let k = 0; k < 360 && booms < NP && quiet < 60; k++) {
       // before the first blast: a slow pan east along the row of lit TNT (it stood frozen ~1.7 s on the fuse)
       // before the first blast: on the lit one (the pan east put the song-drop blast at the frame's edge)
-      const goal = boomAt || new Vec3(pil(0).x + 0.5, floor + 1.4, wz + 1)
+      // after a blast, the eyes keep drifting over the smoke and debris (lint: the wait between blasts read as
+      // nobody moving, and the settle gate forbids cutting it while the debris flies)
+      const goal = boomAt ? boomAt.offset(1.6 * Math.sin(k / 9), 0.6 * Math.sin(k / 7), 0) : new Vec3(pil(0).x + 0.5, floor + 1.4, wz + 1)
       look = look.plus(goal.minus(look).scaled(0.12))
       const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z)

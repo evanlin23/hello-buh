@@ -23,7 +23,10 @@ module.exports = {
       ['beat', 'ender pearl...', 9, 2], ['crossed', 'ender pearl: 10/10', 9, 2],
       ['beat', 'walking...', 9, 3], ['in_lava', 'walking: 0/10', 9, 0],
       ['death', ' ', 0.05, 0]       // blank: ends the rating as the death screen opens (it drew over the buttons)
-    ]
+    ],
+    // pace: sound by 0.3 s (a whoosh into the first beat), a pop on each rating, a song dip + impact on the death
+    sfx: [['whoosh', 'beat'], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
+      ['dip', 'death', 0.3], ['impact', 'death']]
   },
   expectDeath: true,
 

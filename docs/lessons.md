@@ -3,6 +3,22 @@
 Everything that cost real debugging time, so nobody has to rediscover it. Newest first within
 each section.
 
+## Process lessons (2026-11-11: defects fixed by construction)
+
+Owner, 2026-11-11: "There seems to be so many bugs in our engine. Can we like fix it?" Most of the day's defects were
+stunt scripts, not the renderer. Each stunt hand-wrote its own actions and repeated the same few mistakes. The shared
+helpers now make those mistakes impossible, and the motion lint stops a stunt that goes around them. Detection (the
+aim-error and payoff-settle checks in ./hb check and pace) is the checks worker's job; these rows are about
+prevention.
+
+| Lesson | Evidence | How it's used now | State |
+|---|---|---|---|
+| An action off-aim reads as hacking | sand_tower's torch, rainbow_sheep's dye on the wrong sheep, places and breaks off the crosshair; pixel art's aim lagging at 18-20 blocks/s (r:rffba12) | lib/act.js (A.place / A.dig / A.use / A.useOn / A.hit, and K.use / K.useOn in the story kit) turns the view to the exact target at up to 220 deg/s, eased, and acts only once the crosshair is on it and the vanilla delay has passed. If it can't land, it throws. pixel_art places a block only when the crosshair is in its cell, and the ticks spent waiting come out of the build's budget. Tests: act.test.js, pixel_art_aim.test.js | built |
+| Make the mistake impossible, not just detectable | 41 stunts hand-write a place, break or use (73 raw calls) | The motion lint marks raw bot.dig / placeBlock / activateBlock / activateEntity and raw block_place / block_dig / use_entity packets as errors (kind 'action') that name the helper. `./hb record` refuses a stunt that has one, and `./hb check` blocks one recorded since the gate (rec.act). `// motion-ok: <reason>` lets a line stay raw | built |
+| The payoff ends when the motion settles, not when the script says | which_door, villager_fired, pickaxe_race and sand_tower ended or cut with TNT, debris or sand still moving (r:r24d99a) | After perform, the harness waits until nothing is moving (up to 6 s), then marks motion_start / motion_settled around every window and one `settle` at the last (lib/settle.js). endAfter 'settle:0.6' ends 0.6 s after that mark. The motion lint warns on a blast or fall stunt that ends on anything else (`// settle-ok: <reason>` for a reviewed hand-timed end). Test: settle.test.js | built |
+| A pull-back needs room behind it | creeper_art walked "halfway against the wall" of the earlier build (r:r650840) | A.back() stops 1 block short of anything solid behind (it allows for the 0.26-block coast). pixel_art keeps 3 blocks clear and logs the clear lane behind each build spot | built |
+| Vanilla facts get misremembered | villager_fired's jobless villager became a nitwit | The minecraft-audit skill lists the easy-to-get-wrong facts (unemployed, never nitwit; TNT point blank; Feather Falling; mace smash) | rule |
+
 ## Process lessons (2026-11-11: numbers, mixes, disk and many workers at once)
 
 Owner, 2026-11-11: "what have we learned? are all lessons used to help streamline our process?" Each row says whether
@@ -16,6 +32,7 @@ the lesson is enforced by a tool (built), only written down (rule), or still ope
 | Loops add views, not subscribers | 2025 looping Shorts: 0.50 subs per 1k views vs 0.77 for non-looping; about 10 subs per Short either way | No forced loops or shortening; length is what the Short needs | rule |
 | A flop is execution until proven format | spot_wrong 74 % viewed vs spot_wrong_2 58 %; guess_sound's music drowned the mob calls | Check the mix, the first 1.5 s and readability first; fix the same fault in queued siblings (r:rd56a20) | rule |
 | Music must sit under the game | Mob calls 2-11 dB under the music in guess_sound; the music over the biggest game hits in 15 of 18 queued Shorts | key_sounds.py blocks a key sound under +8 dB in add_song and pace; the stunt bed is -16 LUFS | built |
+| Gate the final mix, not the no-song render | cells_lab, dilemma_mace and race_grass_mycelium each passed pace on out/<name>.mp4 (no song), were reviewed READY, and were then blocked by the v3 gates at publish: the NCS bed buried the payoff hit | scripts/mixcheck.py (`./hb mixcheck <name>`) builds the exact mix publish makes (same NCS pick) in a scratch dir and runs the gate's own `./hb pace`; `./hb review` runs it and lists a BLOCK before the reviewer (skip with --no-mix; stories are exempt). Fix: drop on the payoff, a 0.4 s dip + impact, no riser | built |
 | A new gate must re-check what is already "ready" | 12 "ready" Shorts predated pace and failed it; hide_seek, next to upload, opened on 4.5 s of dead air | lib/hb/gates.json holds the gates version (3 since the owner-note checks, aim + settle; bump it with a history row when a gate is added or tightened). Every publish (publish.js, publish_ai_short.py) runs scripts/gates.py stamp on the finished package and records metadata `gates` (package = the reviewed cut, pace + key sounds, the latest ./hb check, `--waive "who: why"`). youtube_upload.py skips a non-story ready package gated before the current version or blocked without a waiver, and logs why; `python3 scripts/gates.py stale` lists them. Back-filled 2026-11-11 by running the gates on each package (videos 396c7dc): the 9 the queue worker re-gated pass, as does ai_dirk_willems; creeper_art, looks_wrong, skull_art, tnt and villager_crowd are blocked (short.mp4 3-10 s off the reviewed render: publish.js re-cut Actions renders from the shared work/ frames, fixed), and sand_tower is blocked (no sound hit on the payoff). story_* are exempt: the story pipeline and the owner's OK gate them | built (r:ee5e2bd) |
 | Git is not a video store | The videos branch history reached 5.4 GB and kept filling the disk; every remix added 30-80 MB for good | mp4s are GitHub Release assets; metadata carries url + sha256; the uploader verifies (r:rc5eaf0) | built |
 | Render branches still bring mp4s into .git | About 1 GB of render/* mp4s in the shared .git | `./hb render --fetch`/`--wait` (render_on_actions.sh) and hb's `--reuse` lookup read the render branch through a throwaway object store with alternates, so the mp4 never enters the shared .git. A plain `git fetch` skips render/* (`^refs/heads/render/*` in remote.origin.fetch, added by the script). The Actions artifact would need a token this box doesn't have. The old ~1 GB stays packed until a repack (needs pack size + 2 GB free) | built (r:37e2f50) |
@@ -66,6 +83,26 @@ How the work itself went wrong, and the rule now:
   and `npm test` green before recording or voicing; `scripts/assets_restore.sh` for assets.
 - **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
   they depend on.
+
+## Cells (lib/cells.js, cells_lab, 2026-11-11)
+- **A slime-block launcher needs an immovable collar.** Slime sticks to every pushable neighbour, so a 2x2 slime pad in a
+  concrete tube took the walls along and the push failed (more than 12 blocks): nothing launched. Obsidian round the
+  slime's two heights (slime ignores immovable blocks); glass sticks too.
+- **Whole-number /summon coordinates are centred on the block.** A golem summoned at `362 112 -72` for a 2x2 tube landed
+  at 362.5/-71.5, half inside the wall, and suffocated. Write decimals (`362.00`) for a corner.
+- **The server moves a mob every 3rd tick; the vanilla client eases it.** A launched golem flew in 2.4-block steps at
+  6.7 Hz (rec_check: teleport), a piston-shoved cow jumped a block. `stunt.lerpMobs: true` records mobs as the client
+  draws them (lib/motion.js lerpStep). Opt-in: older stunts stay as recorded.
+- **Power a machine from under the floor with a torch.** A redstone block swapped into the floor under a piston showed
+  through as a red sliver; a redstone torch two below strongly powers the floor block, which powers what stands on it.
+- **A sealed lab lit only by block light reads brown**; a glass roof (sky light) makes it the clean white lab.
+- **A dispenser shooting eggs at a chicken hatches chicks** (vanilla's 1 in 8): 6 in 25 s, a free running gag.
+- **A projectile never hits its shooter on the way out** (Projectile.leftOwner). render.js's hit simulation flashed a
+  snow golem red on every snowball it threw; it now skips the mobs whose box holds the spawn point until it has left.
+- **Mob AI that works behind glass**: a snow golem on a 2-high ledge pelts a husk below for good (glass blocks a mob's
+  line of sight, so shooter and target share the open cell); a husk can't climb the ledge. A husk, not a zombie: the
+  glass roof's sun would set a zombie on fire.
+- **A /kill by type list kills the cast you add later**: tag every cell mob (`cells`) and kill `tag=!cells`.
 
 ## Owner preferences and format
 - Owner decisions live in README "Owner decisions". Highlights: "close match is fine"; skip the
@@ -458,6 +495,12 @@ How the work itself went wrong, and the rule now:
   pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
   the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
   `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
+- FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is not done.
+- FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
+- FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
+- VANILLA, not bugs (story_sheep_stares nitpicks): the death puffs are drawn in the world under the death screen (edit.py overlays the screen on the finished frame; the white text over light-grey puffs is just low contrast); the hearts blink for 20 ticks after the killing hit (Gui.renderHearts); a dropped item stands upright facing the camera (sprite items are still billboards rather than vanilla's spinning 1-pixel-thick model: open).
+- Engine (worker 3): no tool-break particles or sound (golem's sword); seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666; every_clutch's frozen lake); redstone ore shows no dust while being mined; bucket use shows no arm swing.
+- Engine (worker 18): no lightning bolt is drawn, so storms have thunder sound only.
 - Audio (orchestrator, long-form pilot): recordings made before the harness logged sounds (no `sound` or `hurt` events,
   e.g. boat_clutch) fall back to audio.py's water-clutch rebuild, which plays `item.bucket.empty` and a high-speed
   splash on the last `placed` mark. On boat_clutch that's a bucket and a splash on the final boat landing (in the
@@ -519,3 +562,8 @@ How the work itself went wrong, and the rule now:
   (L06, 19.9-20.45 s) was the cast's waiting room roof (stone at F+64 over a barrier floor, 66 blocks up and in frame
   on the low POV shot), lit by sky light 8 under itself at time 12300. Vanilla draws it too. Fix: `stunt.hideBoxes`
   (docs/engine_features.md); story_good_boy lists its waiting room.
+- VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
+  over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
+  pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
+  the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
+  `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).

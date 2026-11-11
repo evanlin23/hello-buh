@@ -37,3 +37,40 @@ class OneTake(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _voice(sec, f0=120.0, amp=0.3):
+    """A buzzy voiced tone (harmonics, like a voice) at voice_drift's rate."""
+    import numpy as np
+    t = np.arange(int(sec * vd.SR)) / vd.SR
+    syll = ((t % 0.4) < 0.3).astype(np.float32)   # syllables: 0.3 s voiced, 0.1 s gap (as speech; a flat tone isn't)
+    return (amp * syll * sum(np.sin(2 * np.pi * f0 * k * t) / k for k in range(1, 8))).astype(np.float32)
+
+
+def _breath(sec, amp=0.006):
+    import numpy as np
+    return (amp * np.random.default_rng(1).standard_normal(int(sec * vd.SR))).astype(np.float32)
+
+
+class VoicedWindows(unittest.TestCase):
+    """Silent and breath-only stretches are not scored for WOBBLE (Thirty-One Raids L08, Buh Stories lead 2026-11-11)."""
+
+    def test_silent_gap_window_skipped(self):
+        import numpy as np
+        x = np.concatenate([_voice(1.5), np.zeros(int(1.6 * vd.SR), np.float32), _voice(1.5)])
+        starts = [t for t, _ in vd.windows(x)]
+        self.assertIn(0.0, starts)
+        self.assertNotIn(1.5, starts)   # 1.5-3.0 s: silence
+
+    def test_breath_window_skipped(self):
+        import numpy as np
+        x = np.concatenate([_voice(1.5), _breath(1.6), _voice(1.5)])
+        self.assertNotIn(1.5, [t for t, _ in vd.windows(x)])
+
+    def test_voiced_speech_kept(self):
+        x = _voice(4.0)
+        self.assertEqual(len(vd.windows(x)), 4)   # 0, 0.75, 1.5, 2.25
+
+    def test_nothing_voiced_falls_back_to_the_line(self):
+        x = _breath(4.0)
+        self.assertEqual([t for t, _ in vd.windows(x)], [0.0])

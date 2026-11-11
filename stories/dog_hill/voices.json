@@ -1,0 +1,96 @@
+[
+ {
+  "id": "pip",
+  "speakers": {
+   "Kid": "Leda"
+  },
+  "lines": [
+   [
+    "Kid",
+    "L01",
+    "The dog on the hill hasn't moved in nine hundred days."
+   ],
+   [
+    "Kid",
+    "L02",
+    "Not for rain. Not for thunder. Not even for zombies."
+   ],
+   [
+    "Kid",
+    "L03",
+    "I bring him a bone every morning. He never even looks."
+   ],
+   [
+    "Kid",
+    "L04",
+    "He wears a red collar. But nobody in the village owns him."
+   ],
+   [
+    "Kid",
+    "L05",
+    "He just stares at one empty patch of grass."
+   ],
+   [
+    "Kid",
+    "L06",
+    "And behind him, an old dirt hut. Nobody knows who built it."
+   ],
+   [
+    "Kid",
+    "L07",
+    "I tried to make him stand. I begged. He won't budge."
+   ],
+   [
+    "Kid",
+    "L11",
+    "So every night now, I sit with him. Nobody should wait alone."
+   ],
+   [
+    "Kid",
+    "L12",
+    "And then he stood up!"
+   ],
+   [
+    "Kid",
+    "L15",
+    "Day one. Again."
+   ]
+  ]
+ },
+ {
+  "id": "grandpa",
+  "speakers": {
+   "Grandpa": "Algenib"
+  },
+  "lines": [
+   [
+    "Grandpa",
+    "L08",
+    "Leave him be, kid. Only one voice gets him up."
+   ],
+   [
+    "Grandpa",
+    "L10",
+    "Said he'd be right back."
+   ]
+  ]
+ },
+ {
+  "id": "milo",
+  "speakers": {
+   "Milo": "Achird"
+  },
+  "lines": [
+   [
+    "Milo",
+    "L13",
+    "Hey, buddy! Sorry... got busy."
+   ],
+   [
+    "Milo",
+    "L14",
+    "Okay. Sit, boy. I'll be right back."
+   ]
+  ]
+ }
+]
