@@ -24,6 +24,7 @@ const FOREST = [                       // the forest ahead, in the order it goes
   { dx: -3, dz: -14, h: 6 }, { dx: -11, dz: -16, h: 5 }, { dx: -7, dz: -8, h: 5 }
 ]
 const HOUSE = [2, 17]                 // the cottage's centre behind me, its garden toward me (facing north)
+const BRO_WARP = [12.5, 3.5]          // where he lands off screen before walking to BRO_END (12 blocks east of me, behind the view)
 const BRO_END = [0.5, 6.2]            // bro at the end: in front of his garden, right of centre (the chat is bottom left), close enough for the diamond to read
 
 module.exports = {
@@ -36,9 +37,7 @@ module.exports = {
     caption: CAPTION, red: 'my friend',
     chatScale: 5,   // the advancement flood readable on a phone (independent review round 1; vanilla GUI 3 was ~16 px glyphs)
     startAt: 'dig1:-0.1', endAfter: 'reveal:0.9',
-    // the middle of the second log (my hand is slow: that's the joke, once is enough); both edges mid-dig, the view
-    // at rest on the log (sway off while digging)
-    speed: [['dig2:0.5', 'dig2:2.4', 'cut']],   // (8 s is the stunt floor)
+    // no cut: the second log plays whole (owner r:r52f94c: no cut mid-action; a bare-hand dig is one action)
     dropAt: 'reveal',
     punch: [['reveal', 0, 1.06]], flash: [['reveal', 0, 0.3]],   // the payoff's picture change (pace: the turn itself starts before the mark)
     keySounds: ['friend_vanish'],
@@ -136,13 +135,21 @@ module.exports = {
     const tl2 = FR.timeline(ctx, K, [
       [0, () => FR.buildNoise(ctx, { n: 10, every: 2, vol: [0.25, 0.45] })],
       [3, adv('Suit Up')],
+      [24, adv('Hot Stuff')],
+      [42, adv("Isn't It Iron Pick")],
       [22, () => FR.buildNoise(ctx, { n: 12, every: 2, vol: [0.45, 0.65] })],
-      [58, adv('Diamonds!')],   // (the edit's cut takes ~8-54 of the dig: nothing in there)
+      [58, adv('Diamonds!')],
       [44, () => FR.buildNoise(ctx, { n: 10, every: 2, vol: [0.65, 0.8], mats: ['wood', 'wood', 'stone'] })]
     ])
-    // bro, off screen behind me: in front of his garden in full diamond, facing me
+    // bro, off screen: warped far out of view (east of me, behind my shoulder, over 8 blocks away: a jump nearer reads
+    // as a teleport), then he walks behind my back to the front of his garden in full diamond, facing me
     K.warp(BRO)
-    Object.assign(b, { x: BRO_END[0], y: 1, z: BRO_END[1], yaw: 180, pitch: 0 })
+    Object.assign(b, { x: BRO_WARP[0], y: 1, z: BRO_WARP[1], yaw: 90, pitch: 0 })
+    broRun = () => {
+      const dx = BRO_END[0] - b.x, dz = BRO_END[1] - b.z, d = Math.hypot(dx, dz)
+      if (d <= 0.25) { b.x = BRO_END[0]; b.z = BRO_END[1]; b.yaw = 180; broRun = null; return }
+      b.x += dx / d * 0.25; b.z += dz / d * 0.25; b.yaw = K.mcYaw(dx, dz)
+    }
     await FR.dress(ctx, BRO, { tier: 'diamond', hand: 'diamond_sword' })
     ctx.mark('dig2')
     await K.dig(log(1))
