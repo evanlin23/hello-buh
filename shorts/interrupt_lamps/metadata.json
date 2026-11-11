@@ -1,10 +1,10 @@
 {
   "name": "interrupt_lamps",
   "channel": "hellobuh",
-  "caption": "easy light-up dance floor in survival \u2728",
+  "caption": "easy light-up dance floor in survival ✨",
   "youtube": {
-    "title": "easy light-up dance floor in survival \u2728 #minecraft #shorts",
-    "description": "easy light-up dance floor in survival \u2728\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "easy light-up dance floor in survival ✨ #minecraft #shorts",
+    "description": "easy light-up dance floor in survival ✨\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -20,43 +20,43 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "lit",
     "drop_in_song_s": 47.5,
-    "drop_in_short_s": 22.58,
-    "song_start_s": 24.92
+    "drop_in_short_s": 23.33,
+    "song_start_s": 24.17
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 23.58,
+    "duration_s": 24.33,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 44046813,
-    "sha256": "2293e2725f2ebbf8ff38e426ac132bfbf45d48837c2ee42dd4eec84b2cc28985",
+    "bytes": 45428893,
+    "sha256": "57ad962e526bb0819a0428bbe6c7affbac64ce31a26b1caebd45e7108ad0e139",
     "release": {
       "tag": "pkg-interrupt_lamps",
-      "asset": "interrupt_lamps.short.2293e2725f2ebbf8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.2293e2725f2ebbf8.mp4",
-      "sha256": "2293e2725f2ebbf8ff38e426ac132bfbf45d48837c2ee42dd4eec84b2cc28985",
-      "bytes": 44046813
+      "asset": "interrupt_lamps.short.57ad962e526bb081.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.57ad962e526bb081.mp4",
+      "sha256": "57ad962e526bb0819a0428bbe6c7affbac64ce31a26b1caebd45e7108ad0e139",
+      "bytes": 45428893
     },
     "nosong_release": {
       "tag": "pkg-interrupt_lamps",
-      "asset": "interrupt_lamps.short_nosong.ab8ee989c7d32a25.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short_nosong.ab8ee989c7d32a25.mp4",
-      "sha256": "ab8ee989c7d32a253aac0cc854f7e60d5444e53c13e1c784609edb06a1d60068",
-      "bytes": 44039495
+      "asset": "interrupt_lamps.short_nosong.94df7fc6e5372852.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short_nosong.94df7fc6e5372852.mp4",
+      "sha256": "94df7fc6e537285243d3bd39627a7d469589ff2dfd374d4940b1337fc5688fd8",
+      "bytes": 45422279
     }
   },
   "edit": {
-    "caption": "easy light-up dance floor in survival \u2728",
+    "caption": "easy light-up dance floor in survival ✨",
     "red": "dance floor",
     "dropAt": "lit",
     "startAt": "hook:-0.1",
     "endAfter": "lit:1.0",
     "speed": [
       [
-        "intr_back:1.2",
-        "intr_resume:-1.0",
+        "intr_back:1.4",
+        "intr_back:2.75",
         "cut"
       ]
     ],
@@ -103,11 +103,11 @@
     ],
     "args": [
       "--caption",
-      "easy light-up dance floor in survival \u2728",
+      "easy light-up dance floor in survival ✨",
       "--red",
       "dance floor",
       "--speed",
-      "[[\"intr_back:1.2\",\"intr_resume:-1.0\",\"cut\"]]",
+      "[[\"intr_back:1.4\",\"intr_back:2.75\",\"cut\"]]",
       "--punch",
       "[[\"lit\",0,1.08]]",
       "--flash",
@@ -1418,10 +1418,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "2a81676642502e8a0846e9d0110cc68022a235f5",
+    "commit": "58ea2def4b4db2f611a5cfa13c5baa3b65fe73e8",
     "rendered": "local",
-    "rendered_at": "2026-11-11T09:34:44.189Z",
-    "head_at_publish": "67b65f1120e150e2dd235b6d10ca75145b298106",
+    "rendered_at": "2026-11-11T12:27:08.101Z",
+    "head_at_publish": "58ea2def4b4db2f611a5cfa13c5baa3b65fe73e8",
     "stunt": "stunts/interrupt_lamps.js",
     "source_snapshot": [
       "source/interrupt_lamps.js",
@@ -1434,34 +1434,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 2a8167664250",
+    "git checkout 58ea2def4b4d",
     "gunzip -c shorts/interrupt_lamps/recording.json.gz > work/interrupt_lamps.rec.json",
     "node render.js work/interrupt_lamps.rec.json work/interrupt_lamps.frames 60 1080 1011",
     "python3 audio.py work/interrupt_lamps.rec.json work/interrupt_lamps.wav",
-    "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"easy light-up dance floor in survival \u2728\" --red \"dance floor\" --speed [[\"intr_back:1.2\",\"intr_resume:-1.0\",\"cut\"]] --punch [[\"lit\",0,1.08]] --flash [[\"lit\",0,0.4]] --sfx [[\"air\",\"start\",\"lit\",{\"gain\":0.5}],[\"dip\",\"lit\",0.4],[\"impact\",\"lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after lit:1.0 --out out/interrupt_lamps.mp4"
+    "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"easy light-up dance floor in survival ✨\" --red \"dance floor\" --speed [[\"intr_back:1.4\",\"intr_back:2.75\",\"cut\"]] --punch [[\"lit\",0,1.08]] --flash [[\"lit\",0,0.4]] --sfx [[\"air\",\"start\",\"lit\",{\"gain\":0.5}],[\"dip\",\"lit\",0.4],[\"impact\",\"lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after lit:1.0 --out out/interrupt_lamps.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "interrupt #1 (lib/interrupt.js): lamp dance floor build; a skeleton's arrow interrupts, he eats a golden apple in its face, it poofs, back to work, the floor lights up; independent review READY (0 blockers). Nitpicks: badlands/ice spikes behind the plains 12.8-14.2 s; the skeleton never raises its bow; no absorption hearts drawn; no eating crumbs; small arrow on a phone.",
-  "published_at": "2026-11-11T09:48:53.739Z",
+  "status": "ready",
+  "notes": "interrupt #1 (lib/interrupt.js): lamp dance floor build; a skeleton's arrow interrupts, he eats a golden apple in its face, it poofs, back to work, the floor lights up; independent review READY; edit-cut whip fix (r:r38374d, edit only): the walk-back cut now on still edges, fix-check READY. Nitpicks: badlands/ice spikes behind the plains; the skeleton never raises its bow; no absorption hearts drawn; no eating crumbs; small arrow on a phone.",
+  "published_at": "2026-11-11T12:30:38.587Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:15:03+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-11T12:31:16+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 23.59 s vs the reviewed render 23.58 s"
+      "summary": "short.mp4 24.34 s vs the reviewed render 24.33 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T10:12:21.601Z",
+      "at": "2026-11-11T12:29:54.409Z",
       "report": "work/hb/interrupt_lamps.check.json"
     },
     "key_sounds": {
@@ -1471,8 +1471,7 @@
         "intr_deal",
         "intr_gone"
       ],
-      "summary": "key sounds over the music: worst +12.3 dB over 3 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +12.6 dB over 3 clips (need >= 8 dB)"
     }
-  },
-  "needs_fix": "edit-cut whip check (lib/hb/owner.js editCutSnaps, r:r38374d): BLOCK at 13.70 s, the walk-back jump cut leaves an 84 deg/s turn and lands on a 20 deg/s turn the other way; move the cut to still edges (edit only)"
+  }
 }
