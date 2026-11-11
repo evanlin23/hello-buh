@@ -1,4 +1,4 @@
-# bell_window: set plan (r4)
+# bell_window: set plan (r5)
 
 `world.build(ctx, { story: 'bell_window' })` builds canonical Saltmouth. Stamp the oak on the edge of a sheer stone cliff face north of the house (`since: 1700`), the bell frame (the village belfry: two oak-fence posts on a cobblestone base, the bell double_wall-mounted between them, nothing above it) and his two-storey house with a porch roof east of the upstairs window. No lantern under the oak: the night floor.
 
@@ -8,9 +8,9 @@
 | opening the window rings the bell (L01); it only rings for his window (L03) | the skeleton (16-block follow range, shoots within 15) sees him the moment the shutters open; its arrow, aimed at his chest, hits the bell on the way | the line-up below |
 | the whole village runs inside (L02) | vanilla: any ring, a projectile's included, sets HEARD_BELL_TIME on villagers within 48 blocks and they go home | villagers out at 12600 (rest schedule started at 12000; still heading home) |
 | it only rings for his window (L03) | he's the only player in Saltmouth; skeletons don't target villagers, so their open windows are safe | S04 by day (every shutter open but his) |
-| the bell had a little feather sticking out; then poof, gone (L08) | an arrow sticks in the bell block (its fletching toward the cliff) and despawns after 1200 ticks (one minute) | S05 POV, a jump cut |
-| a super pale guy under the oak who never leaves the shade (L09) | skeletons shelter in shade from the sun; the oak's shade never moves off it | S06 at 6000: fully in shade, not burning |
-| he leaned out past the bell to wave hi (L10) | he steps one block east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S07, S08 |
+| the bell had a little feather sticking out; then poof, gone (L09) | an arrow sticks in the bell block (its fletching toward the cliff) and despawns after 1200 ticks (one minute) | S06 POV, a jump cut |
+| a super pale guy under the oak who never leaves the shade (L08) | skeletons shelter in shade from the sun; the oak's shade never moves off it | S05 at 6000: fully in shade, not burning |
+| he climbed out past the bell to wave hi (L10) | he steps one block east onto the porch roof; the line from the skeleton's eye to him now passes 1.5 blocks east of the bell's centre | S07, S08 |
 
 ## The line-up check (the audit's must-changes 1 and 2), before anything else
 Local coordinates: origin = the square's ground under his window; the window faces north (-z).
@@ -24,7 +24,7 @@ Local coordinates: origin = the square's ground under his window; the window fac
 - On the survey grid, find a Saltmouth house whose upstairs window faces such a rise. Record x, z in map.json. If none lines up, move the house (a stamped house) or the story to another plains village, with the critic and continuity agreeing.
 
 ## The skeleton
-Summoned under the oak with `PersistenceRequired`, no AI wandering off the shade (`NoAI` until S08, then its draw is staged). In S06 at 6000 it stands in shade (it doesn't burn). Its shots are real arrows (`/summon arrow` with motion along the line) so the bell rings by vanilla rules. S08: the bow raised to full draw on the `draw` mark (engine gap: the bow-draw arms).
+Summoned under the oak with `PersistenceRequired`, no AI wandering off the shade (`NoAI` until S08, then its draw is staged). In S05 at 6000 it stands in shade (it doesn't burn). Its shots are real arrows (`/summon arrow` with motion along the line) so the bell rings by vanilla rules. S08: the bow raised to full draw on the `draw` mark (engine gap: the bow-draw arms).
 
 ## Pre-build checklist
 1. Saltmouth stamps `cliff_oak` (since 1700), `bell_frame` and `boy_house` (two storeys, porch roof east of the upstairs window) in map.json; `"bell_window": {"day": 2000, "places": ["saltmouth"], "status": "claimed", "cameos": ["saltmouth_portal"]}`; register `saltmouth_portal` as a cameo (since 0).

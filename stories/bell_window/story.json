@@ -2,12 +2,12 @@
  "name": "bell_window",
  "stunt": "story_bell_window",
  "version": 2,
- "revision": "r4 (2026-11-11): STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
+ "revision": "r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
  "caption": "why does the bell ring when I open my window 🔔",
- "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he leans out past it to wave hi to the pale guy on the cliff.",
+ "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he climbs out past it to wave hi to the pale guy on the cliff.",
  "question": "why does the bell ring every time he opens his window?",
- "premise": "For three hundred nights, every time the kid opens his upstairs window, the village bell right outside it rings and the whole village runs inside. It only rings for his window, so he's sure the bell likes him and the villagers are shy. Mom: 'Shutters SHUT, honey' (he thinks she's afraid he'll catch a cold). Once the bell had a little feather sticking out of it, then poof, gone. Up on the cliff, under the old oak, there's a super pale guy who never leaves the shade. Tonight the bell rings again and he leans out past it to wave hi.",
- "twist": "Nobody rings the bell. A skeleton lives in the shade of the oak on the cliff (skeletons shelter from the sun) and shoots at the only player in the village whenever he shows himself: the kid at his open window. The bell hangs on the arrow's line between the oak and his window, so every arrow hits the bell (vanilla: a projectile rings a bell; a rung bell sends villagers indoors). The bell was a shield. Tonight he leans out past it, and the skeleton draws on him with nothing in between. Cut on the draw.",
+ "premise": "For three hundred nights, every time the kid opens his upstairs window, the village bell right outside it rings and the whole village runs inside. It only rings for his window, so he's sure the bell likes him and the villagers are shy. Mom: 'Shutters SHUT, honey' (he thinks she's afraid he'll catch a cold). Up on the cliff, under the old oak, there's a super pale guy who never leaves the shade. And once the bell had a little feather sticking out of it, then poof, gone. Tonight the bell rings again and he climbs out past it to wave hi.",
+ "twist": "Nobody rings the bell. A skeleton lives in the shade of the oak on the cliff (skeletons shelter from the sun) and shoots at the only player in the village whenever he shows himself: the kid at his open window. The bell hangs on the arrow's line between the oak and his window, so every arrow hits the bell (vanilla: a projectile rings a bell; a rung bell sends villagers indoors). The bell was a shield. Tonight he climbs out past it to wave hi, and the skeleton draws on him with nothing in between. Cut on the draw.",
  "key_color": "#E8C547",
  "mood": [
   "eerie",
@@ -194,31 +194,9 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "One night / the bell had a little / FEATHER / sticking OUT. / Then POOF. / GONE.",
-   "say": "One night the bell had a little feather sticking out. Then poof. GONE.",
-   "shot": "S05",
-   "shows": [
-    {
-     "what": [
-      "arrow"
-     ],
-     "word": "FEATHER"
-    },
-    {
-     "what": [
-      "bell"
-     ],
-     "word": "BELL"
-    }
-   ],
-   "direction": "amazed, a tiny magic-trick lift on the last word"
-  },
-  {
-   "id": "L09",
-   "who": "N",
    "text": "Up on the CLIFF, / under the old OAK, / there's a guy / who's SUPER pale. / He never leaves / the SHADE.",
    "say": "Up on the cliff, under the old oak, there's a guy who's super pale. He never leaves the SHADE.",
-   "shot": "S06",
+   "shot": "S05",
    "shows": [
     {
      "what": [
@@ -238,10 +216,32 @@
    "direction": "chatty, a little sorry for him, never scared"
   },
   {
+   "id": "L09",
+   "who": "N",
+   "text": "And one night / the bell had a little / FEATHER / sticking OUT. / Then POOF. / GONE.",
+   "say": "And one night the bell had a little feather sticking out. Then poof. GONE.",
+   "shot": "S06",
+   "shows": [
+    {
+     "what": [
+      "arrow"
+     ],
+     "word": "FEATHER"
+    },
+    {
+     "what": [
+      "bell"
+     ],
+     "word": "BELL"
+    }
+   ],
+   "direction": "amazed, a tiny magic-trick lift on the last word"
+  },
+  {
    "id": "L10",
    "who": "N",
-   "text": "So tonight / the bell RANG, / and I leaned out / PAST it / to wave HI.",
-   "say": "So tonight the bell rang, and I leaned out past it to wave HI.",
+   "text": "So tonight / the bell RANG, / and I climbed out / PAST it / to wave HI.",
+   "say": "So tonight the bell rang, and I climbed out past it to wave HI.",
    "shot": "S07",
    "shows": [
     {
@@ -318,12 +318,12 @@
   {
    "id": "S05",
    "line": "L08",
-   "place": "bedroom",
-   "size": "full",
-   "camera": "pov at the open window leaning to the east edge of the sill, still, a small push",
-   "frame": "subject: the bell 3 blocks out at his eye level, seen a little from the side: an arrow stuck in its north face, the shaft and fletching side-on, sticking out past the bell toward the dark cliff (the kid calls it a feather); on 'POOF' a jump cut a minute later: the arrow gone (vanilla: a stuck arrow despawns after a minute). Dusk 12600 (sun down, sky deep blue).",
+   "place": "cliff",
+   "size": "wide",
+   "camera": "at: (0, 2, -2) by the bell looking up north at the oak on the rise (0, 10, -12), slow push",
+   "frame": "subject: the oak on the cliff edge in full sun; in its dark shade a pale white figure standing still (the skeleton: a white shape at phone size, not yet readable as a skeleton, no bow visible). Day 6000.",
    "look": {
-    "time": 12600
+    "time": 6000
    },
    "lines": [
     "L08"
@@ -332,12 +332,12 @@
   {
    "id": "S06",
    "line": "L09",
-   "place": "cliff",
-   "size": "ews",
-   "camera": "at: (0, 2, -2) by the bell looking up north at the oak on the rise (0, 10, -12), slow push",
-   "frame": "subject: the oak on the cliff edge in full sun; in its dark shade a pale white figure standing still (the skeleton: a white shape at phone size, not yet readable as a skeleton, no bow visible). Day 6000.",
+   "place": "bedroom",
+   "size": "ms",
+   "camera": "pov at the open window leaning to the east edge of the sill, still, a small push",
+   "frame": "subject: the bell 3 blocks out at his eye level, seen a little from the side: an arrow stuck in its north face, the shaft and fletching side-on, sticking out past the bell toward the dark cliff (the kid calls it a feather); on 'POOF' a jump cut a minute later: the arrow gone (vanilla: a stuck arrow despawns after a minute). Dusk 12600 (sun down, sky deep blue).",
    "look": {
-    "time": 6000
+    "time": 12600
    },
    "lines": [
     "L09"
@@ -348,8 +348,8 @@
    "line": "L10",
    "place": "bedroom",
    "size": "full",
-   "camera": "pov at the open window; on 'PAST' the pov steps out onto the porch roof one block east and leans forward (x +2, eye 5.6)",
-   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'PAST' the pov steps out onto the porch roof and the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
+   "camera": "pov at the open window; on 'CLIMBED' the pov climbs over the sill onto the porch roof one block east (x +2, eye 5.6) and faces the cliff",
+   "frame": "fg: the open shutters; on 'RANG' the clang, the bell swings 3 blocks ahead, doors slam below (no arrow seen: it sticks in the bell's far, north face); on 'CLIMBED' the pov climbs out over the sill onto the porch roof one block east; on 'PAST' and the bell slides out of the frame's centre to the left; on 'HI' the hand comes up waving at the cliff and the oak, straight ahead, dark. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    },
@@ -424,12 +424,12 @@
   }
  },
  "ending": {
-  "after": "L07",
+  "after": "L10",
   "beats": [
-   "S07: the arrow rings the bell; he leans out past it",
-   "S08: from behind the skeleton, nothing between them; it draws; cut 1.0 s after L07. No line."
+   "S07: the bell rings; he climbs out past it onto the porch roof and waves",
+   "S08: over the skeleton's shoulder down the axis: the bell with tonight's arrow in it, the kid clear of it; it draws; cut 1.0 s after the `draw` mark. No line."
   ],
-  "loop": "cause and effect: why the village runs when he opens the window (line 1)"
+  "loop": "cause and effect: why the bell rings when he opens his window (line 1)"
  },
  "bible": "stories/bell_window/bible.md",
  "beats": "stories/bell_window/beats.md",
