@@ -400,6 +400,12 @@ STANDARDS.md in the same commit.
   mangrove swamp cleared and a huge crimson/warped boss statue rising, with block counters ticking in a corner):
   "another megabuild example".** For the `mega` time-lapse: a running count of blocks used, ticking up, is a good
   overlay; the build stays our own design, at a ridiculous scale.
+- **Owner, 2026-11-11, Review Room note on mega_lapse_fountain: "can we make the build more complicated, it looks a
+  bti flat right now. also we should put it in a real world, not superflat..."** Mega builds need depth and detail
+  (layers, overhangs, varied heights and materials, not flat tiers), and they sit in a real generated world (terrain,
+  trees, water) instead of superflat, so the scale reads against real land.
+- **Owner, 2026-11-11, Review Room note on cooked_bedrock: "need to have the ominous music".** The `cooked` payoff
+  plays an ominous, dread-building track on the drop (dark NCS or a low drone and hit), not an upbeat bed.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

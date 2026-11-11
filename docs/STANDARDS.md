@@ -325,7 +325,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
   escalating to the full reveal. r:r4449f0 Ridiculously big: the build dwarfs a real landscape, shown from high up
   for scale, ending on a close pass beside the tiny player. r:rf8524b A ticking count of blocks used is a good
-  overlay. r:rce78c5
+  overlay. r:rce78c5 Depth and detail (layers, overhangs, varied heights and materials, never flat tiers), in a
+  real generated world, never superflat. Check: owner, review. r:r13865d
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
@@ -374,6 +375,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:rc40696
 - **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Format "cooked"**: the payoff plays an ominous, dread-building track on the drop (dark NCS or a low drone and
+  hit), never an upbeat bed. Check: owner, review. r:rcefdcc
 - **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
   gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
   picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
