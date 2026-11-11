@@ -173,7 +173,7 @@ module.exports = {
     caption: CAPTION,
     red: 'baby zombie',
     whooshes: 3,
-    subs: [['found', 'found you.', 1.1, 0]],
+    subs: [['found', 'found you.', 0.65, 0]],   // gone before the rush-in: up to the punch it sat on 56e (review r3)
     extra: { subsY: 0.12, sfx: [['impact', 'smash', { nth: 0, gain: 0.5 }]] }   // the sub up in the cave's ceiling: at 0.42 it sat on 56e (review)
   }),
 
