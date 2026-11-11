@@ -58,7 +58,7 @@ function makeStunt (S) {
     caption: S.caption,
     edit: {
       caption: S.caption, red: S.red,
-      song: 'songs/funk_abnormal.mp3', dropAt: 'big_done',
+      song: S.song === undefined ? 'songs/funk_abnormal.mp3' : S.song, dropAt: 'big_done',   // S.song null: no reference song (publish adds NCS)
       // the payoff is the big build completing (60:00 and the drop): the camera's pull-back lands on
       // it, and the Short ends 0.8 s later with the camera still moving (the song's drop gets a moment
       // before the fade-out)
@@ -67,8 +67,10 @@ function makeStunt (S) {
       // dark ceiling there, turning to a new block every frame (it strobed at 6x, lapse_house)
       speed: [['cut1_a', 'cut1_b', 'cut']].concat(S.mid.roofY !== undefined
         ? [['mid_start', 'roof_start', S.mid.speed || 2], ['roof_start', 'roof_end', S.mid.roofSpeed || 8], ['roof_end', 'mid_done', S.mid.speed || 2]]
-        : [['mid_start', 'mid_done', S.mid.speed || 2]], [['cut2_a', 'cut2_b', 'cut'], ['big_start', 'big_done', 3]]),
-      clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR']]
+        : [['mid_start', 'mid_done', S.mid.speed || 2]], [['cut2_a', 'cut2_b', 'cut']], bigSpeed(S.bigCuts)),
+      clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR']],
+      // the payoff (60:00) gets a white flash + a zoom punch: pace wants a picture change on it (lapse_statue, lapse_rocket)
+      ...(S.payoffFlash ? { flash: [['big_done', 0, 0.5]], punch: [['big_done', 0, 1.08]] } : {})
     },
 
     async setup (ctx) {
@@ -98,11 +100,12 @@ function makeStunt (S) {
       for (let i = 0; i < 40 && !bot.blockAt(new ctx.Vec3(X1, floor, Z1)); i++) await bot.waitForTicks(5)
       await bot.waitForTicks(20)
       // top down: cleared bottom-up, gravel and sand fell back onto the field as heaps
-      for (let y0 = floor + 56; y0 >= floor + 1; y0--) await fill(y0, y0, 'air')
+      // (to floor + 72: a retried attempt's 64-high launch tower top stayed floating in the sky at +56)
+      for (let y0 = floor + 72; y0 >= floor + 1; y0--) await fill(y0, y0, 'air')
       // the edge: ring k blocks out is cleared down to floor + 1.3k, so the terrain beyond steps down
       // to the field like a hillside instead of standing as a cut wall
       for (let k = 1; k <= TAPER; k++) {
-        const h = floor + Math.ceil(k * 1.3), top = floor + 56
+        const h = floor + Math.ceil(k * 1.3), top = floor + 72
         for (const box of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
           bot.chat(`/fill ${box[0]} ${h} ${box[1]} ${box[2]} ${top} ${box[3]} air`); await bot.waitForTicks(1)
         }
@@ -615,6 +618,19 @@ function makeStunt (S) {
       return wrong <= 3 && !ctx.died
     }
   }
+}
+
+// S.bigCuts = [EVERY, GAP, UPTO]: jump cuts through the 1-hour round, one every EVERY scene seconds dropping GAP
+// seconds (up to UPTO s after big_start), the clock jumping with them. At 3x a build with no cut for 5+ s read as
+// dead air (pace: lapse_statue 5.7 s, lapse_rocket 3.4 s); a cut every ~1.6 s of output keeps it moving.
+function bigSpeed (c) {
+  if (!c) return [['big_start', 'big_done', 3]]
+  const [every, gap, upto] = c, out = []
+  const at = (x) => x ? `big_start:${+x.toFixed(2)}` : 'big_start'
+  let a = 0
+  for (let t = every; t + gap <= upto; t += every) { out.push([at(a), at(t), 3], [at(t), at(t + gap), 'cut']); a = t + gap }
+  out.push([at(a), 'big_done', 3])
+  return out
 }
 
 module.exports = { makeStunt, rail }
