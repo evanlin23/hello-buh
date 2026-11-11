@@ -28,7 +28,8 @@ FAMILIES = [
     ("race", lambda n: n.startswith("race_")),   # format race (lib/race.js, r:rbe60ef)
     ("interrupt", lambda n: n.startswith("interrupt_")),   # owner's pick 2026-11-11 (r:re05b89): a normal video, a mob interrupts
     ("hack", lambda n: n.startswith("hack_")),   # one real block trick per Short (docs/formats.md, r:rc15847)
-    ("mega", lambda n: n.startswith("mega_")),   # huge generated builds, flown round (owner 2026-11-11, r:r8bb1e3)
+    ("mega", lambda n: n.startswith("mega_")),
+    ("logic", lambda n: n.startswith("logic_")),   # rapid real vanilla quirks, one caption (lib/logic.js, r:r40f7c7)   # huge generated builds, flown round (owner 2026-11-11, r:r8bb1e3)
 ]
 
 
