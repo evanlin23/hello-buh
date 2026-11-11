@@ -4,7 +4,7 @@
 - **Place:** `honey_meadow` (claimed on this branch), the High Meadow's top west of Larkfield; set.md has the plan.
 - **Day:** 4200. Before Six Thousand Torches (4500): Larkfield is unlit by torches; its west roofs show in S08.
 - **Canon created:** from day 4200 the flower bee (52 rows) is a permanent stamp on the plateau's top; the giant
-  is a player who lives nearby (in canon, Jonah of Larkfield; never named here). Added to docs/world/canon.md.
+  is Jonah of Larkfield (owner 2026-11-11), never named, name tag hidden. Added to docs/world/canon.md.
 - **Easter egg:** Larkfield's west roofs on the east skyline at the end of S07's orbit (50-75 blocks). Never named.
 
 ## Scenes and time
@@ -15,7 +15,7 @@ S01-S07 at the hive and the field's south edge; S08-S10 out over the wing and up
 | who | look | voice | on screen |
 |---|---|---|---|
 | the narrator, a worker bee | vanilla bee (POV; a dot in the reveal) | `narrator` (Pip, Leda), one_take, plain_say | POV S01, S03, S05, S06, S08-S10 |
-| the giant | player actor, `kai` skin, a teenage boy (as Jonah in Torches), no name tag (owner call); plain clothes | L05 only: Jonah's audition voice if he is Jonah, else Umbriel or Algieba (owner) | S01-S06, S10 (speck) |
+| the giant = Jonah (owner 2026-11-11) | player actor, `kai` skin, a teenage boy as in Torches, name tag HIDDEN, never named | L05 only: Jonah's cast (`friend`/Fenrir placeholder; the Jonah audition picks) | S01-S06, S10 (speck) |
 | the hive's bees | 3 vanilla bees (+ the narrator = 4) | none | S02, S07 |
 
 ## Props

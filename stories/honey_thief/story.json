@@ -2,7 +2,7 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
   "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
@@ -40,7 +40,7 @@
  "world": {
   "place": "honey_meadow (claimed on this branch, docs/world/map.json): the High Meadow's top west of Larkfield, footprint (-484, -746, -420, -686), O = (-452, 118, -716): the hive's campfire block (read the ground y off the survey before build: the meadow top is y 116-120). The bee runs north-south: head at z ~ -742, tail at z ~ -690 (52 rows), the hive at the heart about (-452, -716), wings to x ~ -482 and -422.",
   "day": 4200,
-  "canon": "The giant is a player who lives close by; in canon he is Larkfield's one player, Jonah (kai skin), 300 days before he leaves (Six Thousand Torches, 4500). He is never named here (owner decision, see bible 'Open'). From day 4200 the bee meadow is a permanent stamp on the plateau's top. Nothing here contradicts Torches (the meadow lies west of Larkfield's box, outside it).",
+  "canon": "The giant is Jonah, Larkfield's one player (owner 2026-11-11: \"giant can be jonah. no name tag\"), 300 days before he leaves (Six Thousand Torches, 4500); never named, name tag hidden. From day 4200 the bee meadow is a permanent stamp on the plateau's top, west of Larkfield's box.",
   "easter_egg": "Larkfield's west roofs, small on the east skyline at the end of S07's orbit (pre-torch: day 4200). Never named."
  },
  "voice": {
@@ -62,28 +62,35 @@
   "Giant": {
    "role": "character",
    "ref": "friend",
-   "name": "the giant",
+   "name": "Jonah (never named: 'the giant')",
    "voice": "Fenrir",
    "model": "gemini-3.8-flash-tts",
    "color": "#4FD8E6",
+   "on_screen": "Jonah (owner 2026-11-11: \"giant can be jonah. no name tag\"): a player actor, `kai` skin (NOT Steve), his vanilla name tag HIDDEN (engine need), never named aloud or on screen; the bees call him 'the giant'. One voiced line (L05), on screen in S05 while he says it. Glass bottles, honey bottles and flowers in hand.",
    "skin": "kai",
-   "on_screen": "a player actor, `kai` skin (NOT Steve: Steve is Buh's), no name tag shown (the bees don't know his name); glass bottles, honey bottles and flowers in hand; one voiced line (L05), on screen in S05 while he says it.",
-   "note": "In canon this is Jonah (Larkfield's one player, Six Thousand Torches): if the owner keeps that, the giant takes whatever voice Jonah's audition picks (Zubenelgenubi / Sadachbia / Fenrir), and `friend`/Fenrir is only the placeholder so the lint runs. If the owner wants a new player instead, audition the two unused voices below.",
    "audition": {
-    "line": "L05 \"You're my FAVORITE, little guy.\"",
-    "bracket": "[A friendly teenage boy, bright and goofy]",
+    "line": "L07 \"See you TOMORROW!\" (say: See you TOMORROW!), gemini-3.8-flash-tts, single-speaker, one take each, judged against Pip (Leda) for contrast (STANDARDS 7, 7a)",
+    "bracket": "[A friendly teenage boy, bright and casual]",
     "candidates": [
      {
-      "voice": "Umbriel",
-      "why": "Gemini's 'easy-going': relaxed, warm young man; no character uses it (Torches lists it only as a spare)"
+      "voice": "Zubenelgenubi",
+      "why": "Gemini's 'casual': a relaxed, easy friend; no other character uses it (story_craft.md lists it for a comic one-liner)"
      },
      {
-      "voice": "Algieba",
-      "why": "Gemini's 'smooth': a soft-spoken grown-up, clearly not a kid; no character uses it or is planned for it"
+      "voice": "Sadachbia",
+      "why": "Gemini's 'lively': bright energy for a cheerful goodbye; no other character uses it"
+     },
+     {
+      "voice": "Fenrir",
+      "why": "the original proposal ('excitable'); it is Max's voice (cast `friend`), so only if the owner accepts the share"
      }
     ],
-    "not": "Leda (Pip), Achird (Buh), Charon, Orus, Algenib, Schedar, Fenrir unless he is Jonah, and the planned Iapetus, Alnilam, Sadaltager, Rasalgethi, Zubenelgenubi, Sadachbia"
-   }
+    "not": "Achird (Buh/Milo), Charon (elder), Iapetus (planned for The Walk's Grandpa), Alnilam (planned for Red Sheep's Dad), Puck (reads as a young woman), Umbriel (spare if both new candidates fail)",
+    "after": "the owner picks; then add a cast id (e.g. `jonah`) to voices/cast.json with this bracket and `reads_as` {sex: male, age: [13, 20]}, set cast.Jonah.ref/voice to it, and update docs/world/canon.md Planned characters",
+    "also": "The Honey Thief L05 \"You're my FAVORITE, little guy.\" [A friendly teenage boy, bright and goofy]"
+   },
+   "note": "Same cast entry as Six Thousand Torches' Jonah: `friend`/Fenrir is the placeholder; his voice is picked in the owner's Jonah audition (Zubenelgenubi / Sadachbia / Fenrir) and then used for both stories.",
+   "name_tag": false
   }
  },
  "requests": [
@@ -542,7 +549,7 @@
    "a `flower_bee` set build (lib/sets) from set.md's plan, and world.build stamping it from day 4200",
    "a top-down readability test (cross sprites seen edge-on from above may vanish: gate in set.md)",
    "honey drip particles (dripping_honey/falling_honey) under a level-5 hive: not found in renderer/particles.js",
-   "hiding a player's vanilla name tag for one actor (if the owner wants him unnamed)",
+   "hide one player actor's vanilla name tag (Jonah, owner: \"no name tag\"): needed for this story",
    "bees flying in the hive and around it on path (vanilla AI or kit-driven), 3 at once"
   ]
  }

@@ -127,7 +127,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 3700 | Highwall | **The Wall Grows** (planned, not canon until made). The kid climbs Tomas's ladder before dawn: outside is a trading hall of 100 villagers, and someone not in a room looks up. |
 | 3800 | Saltmouth | **The Bell in the Window** (planned, not canon until made). 300 nights of the bell ringing whenever the boy, Saltmouth's only player, opens his window. Tonight he climbs out past it to wave at the pale guy under the oak. Buh's empty yard is on the bank above. |
 | 4000 | Gullwick | **The Walk** (planned, not canon until made). Grandpa has broken the same lectern 300 times. This morning the librarian holds up Frost Walker, and he walks out across the sea to Grandma's window. |
-| 4200 | The Honey Meadow | **The Honey Thief** (planned, not canon until made). A worker bee tells how the giant has taken their honey 52 times and planted a row of flowers each time; from above the meadow is a giant bee with the hive as its heart. The giant is never named (in canon, Jonah of Larkfield, owner to confirm). |
+| 4200 | The Honey Meadow | **The Honey Thief** (planned, not canon until made). A worker bee tells how the giant has taken their honey 52 times and planted a row of flowers each time; from above the meadow is a giant bee with the hive as its heart. The giant is Jonah of Larkfield (owner 2026-11-11), never named, name tag hidden. |
 | 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Buh joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
 | 4500 | Larkfield | **Six Thousand Torches** (planned, not canon until made). Jonah, Larkfield's one player, puts a torch on every block of the village overnight, leaves his things in his friend's chest, sets his last torch by the kid's door and walks away. From here on Larkfield glows every night, and Dog Hill sees it. |
 | 9300 | The Portal Cottage | **Gold for the Portal.** the grandson throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
@@ -169,9 +169,8 @@ Ravenford 2300.
 | Grandma (the island) | The Walk (Grandma's Island, ~350 and 4000) | grey-haired old woman (new skin) | `grandma_island` (Callirrhoe, owner 2026-11-11 "calirrhoe is fine") | cast |
 | Mom (Gullwick) | The Walk (Gullwick, 4000) | player, `makena` skin, silent | none | cast |
 | the villager kid | Six Thousand Torches (Larkfield, 4500) | baby villager, plains, Larkfield | `narrator` (Leda) | cast |
-| Jonah | Six Thousand Torches (Larkfield, 4500) | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
+| Jonah | Six Thousand Torches (Larkfield, 4500); The Honey Thief (the Honey Meadow, 4200: "the giant", never named, name tag hidden) | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
 | the worker bee | The Honey Thief (the Honey Meadow, 4200) | vanilla bee, POV | `narrator` (Leda) | cast |
-| the giant (Jonah?) | The Honey Thief (the Honey Meadow, 4200) | player, `kai` skin, no name tag shown | Jonah's audition voice if he is Jonah; else Umbriel or Algieba (both unused), audition against Pip on L05 | audition |
 | the kid | Red Sheep (Ravenford, 2300) | player, `alex` skin, Ravenford (POV; never named, not Buh) | `narrator` (Leda) | cast |
 | Dad | Red Sheep (Ravenford, 2300) | player, `sunny` skin, Ravenford's shepherd, crossbow | Alnilam or Rasalgethi (both unused), audition against Pip on L03 | audition |
 
