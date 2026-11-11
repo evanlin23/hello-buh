@@ -12,11 +12,14 @@ const I = require('../lib/interrupt')
 const CAPTION = 'easy light-up dance floor in survival ✨'
 const ROWS = [-5, -4, -3, -2, -1]          // dz of each lamp row (north of the player), the far one first
 const COLS = [-2, -1, 0, 1, 2]             // dx, west to east
+// the order along a row: from each end inward, so the lamp just placed never stands between the eye and the lamp
+// the next one is clicked onto (from the middle, the west end's ray crossed its east neighbour); ends next to the lever
+const ORDER = [2, 1, 0, -2, -1]
 const HOME = [0.5, 0.8]                    // the player's feet (dx, dz): just south of the floor
 const POST = [-3, -1]                      // the lever's post, beside the floor's south-west corner
 const SKEL = [10.5, -1.5]                  // the skeleton, across the field to the east
 const PRE = 1                              // rows already down when the video starts (laid by command in setup)
-const BEFORE = 4                           // rows laid before the interruption (the rest after it)
+const BEFORE = 4                           // the row the interruption comes in (two lamps into it)
 
 module.exports = {
   name: 'interrupt_lamps',
@@ -66,32 +69,35 @@ module.exports = {
     const P = (dx, dy, dz) => new ctx.Vec3(X + dx, F + dy, Z + dz)
     let n = 0
     K.sway = 0.3   // a hand on the mouse while building: the full sway took the crosshair off the far corners' faces
-    // each lamp goes on the grass under it (its top: broad and in plain sight from the player; a neighbour's side was
-    // a sliver at the far corners, and the turn never landed). The last row runs east to west, ending by the lever
-    const lay = async (dz, cols = COLS) => {
+    // each lamp is clicked onto the side of the lamp north of it (the face toward the player: broad, in plain sight, and
+    // the ray to that lamp crosses nothing; the grass under the spot is a grazing top face whose ray hits the grass in
+    // front first, and a neighbour's side was a sliver at the far corners). The last row runs east to west, ending by
+    // the lever
+    const lay = async (dz, cols = ORDER) => {
       for (const dx of cols) {
-        await K.place(P(dx, 1, dz), 'redstone_lamp', { sound: 'block.glass.place', against: P(dx, 0, dz) })   // a redstone lamp's sound type is glass
+        await K.place(P(dx, 1, dz), 'redstone_lamp', { sound: 'block.glass.place', against: P(dx, 1, dz - 1) })   // a redstone lamp's sound type is glass
         K.say('/clear @s redstone_lamp 1')                                                   // the stack goes down, one a lamp
         ctx.mark('lamp', { n: n++ })
         if (n === 2) ctx.mark('hook')   // the video opens two lamps in: already building on frame 1
       }
     }
-    await K.aimAt(K.top(P(COLS[0], 0, ROWS[PRE])))
-    for (const dz of ROWS.slice(PRE, BEFORE)) await lay(dz)
+    await K.aimAt(K.top(P(ORDER[0], 0, ROWS[PRE])))
+    for (const dz of ROWS.slice(PRE, BEFORE - 1)) await lay(dz)
+    await lay(ROWS[BEFORE - 1], ORDER.slice(0, 2))   // two lamps into the row, the crosshair on the east side
 
     // the interruption: an arrow into the top of the east lamp of row -3, beside the crosshair
     await I.interrupt(ctx, K, {
       mob: 'skeleton', tag: 'intr',
       home: P(HOME[0], 1, HOME[1]),
-      resume: K.top(P(COLS[COLS.length - 1], 0, ROWS[BEFORE])),
-      stand: 1.6,
+      resume: K.top(P(ORDER[2], 0, ROWS[BEFORE - 1])),
       cue: { target: P(COLS[COLS.length - 1] + 0.45, 2.0, ROWS[2] + 0.5) },
       deal: { how: 'eat', slot: 1 },
       workSlot: 0
     })
 
     // ...and on with the floor, as if nothing happened
-    for (const dz of ROWS.slice(BEFORE)) await lay(dz, COLS.slice().reverse())
+    await lay(ROWS[BEFORE - 1], ORDER.slice(2))
+    for (const dz of ROWS.slice(BEFORE)) await lay(dz)
 
     // the lever: the floor lights up in a ripple from the corner (redstone blocks under the lamps, hidden)
     const lever = P(POST[0], 2, POST[1])
