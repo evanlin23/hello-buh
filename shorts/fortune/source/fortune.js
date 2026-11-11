@@ -4,23 +4,26 @@
 // The drops get spread spawn points (items summoned at one point merged into one stack) and real
 // launch velocities aimed to come down around the player, who picks them up for real.
 const ORES = [   // eight beats (~30 s, owner: 30 s minimum), filling the 8 free hotbar slots
-  { block: 'coal_ore', drop: 'coal', n: 10 },
-  { block: 'copper_ore', drop: 'raw_copper', n: 16 },
-  { block: 'iron_ore', drop: 'raw_iron', n: 22 },
-  { block: 'lapis_ore', drop: 'lapis_lazuli', n: 28 },
-  { block: 'redstone_ore', drop: 'redstone', n: 34 },
-  { block: 'gold_ore', drop: 'raw_gold', n: 40 },
-  { block: 'diamond_ore', drop: 'diamond', n: 52 },
-  { block: 'emerald_ore', drop: 'emerald', n: 64, vein: [1, 0, -1] }   // the finale: a vein of three, back to back
+  // owner 2026-11-11 (r:r52f94c): "we should have more drop": about 2x every burst, a stack of diamonds, 384 emeralds
+  { block: 'coal_ore', drop: 'coal', n: 20 },
+  { block: 'copper_ore', drop: 'raw_copper', n: 28 },
+  { block: 'iron_ore', drop: 'raw_iron', n: 36 },
+  { block: 'lapis_ore', drop: 'lapis_lazuli', n: 44 },
+  { block: 'redstone_ore', drop: 'redstone', n: 52 },
+  { block: 'gold_ore', drop: 'raw_gold', n: 60 },
+  { block: 'diamond_ore', drop: 'diamond', n: 64 },
+  { block: 'emerald_ore', drop: 'emerald', n: 128, vein: [1, 0, -1] }   // the finale: a vein of three, back to back
 ]
 
 module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9',
-    // a white flash as the last 192 emeralds land in the inventory (pace: no picture change on the payoff, 2026-11-11)
-    flash: [['collected', 0, 0.6]], subs: [['ore', '64 emeralds', 1.3, 7], ['ore', '128', 1.3, 8], ['ore', '192 emeralds', 1.6, 9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9',
+    // a white flash as the last 384 emeralds land in the inventory (pace: no picture change on the payoff, 2026-11-11)
+    flash: [['collected', 0, 0.6]],
+    // and a hit on it: under the NCS bed the pickup pops alone left the payoff with no sound hit (mixcheck, 2026-11-11)
+    sfx: [['dip', 'collected', 0.4], ['impact', 'collected', { gain: 1.4 }]], subs: [['ore', '128 emeralds', 1.3, 7], ['ore', '256', 1.3, 8], ['ore', '384 emeralds', 1.6, 9]] },   // the 2nd-6th stacks go to the hidden inventory: say it
 
   async setup (ctx) {
     const { bot } = ctx
