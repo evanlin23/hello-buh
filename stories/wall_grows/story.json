@@ -18,7 +18,7 @@
  "upload_note": "docs/brand.md \"Buh Stories channel\": the upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste wall_grows prints it). pinned = the question, without the 👇",
  "logline": "A villager kid lives behind a 40-block wall that old Tomas raises every morning, and climbs it to see what's out there.",
  "question": "why tf is the village wall forty blocks high with no gate?",
- "premise": "A plains village sits inside a stone-brick wall 40 blocks high with no gate. Every dawn a little dirt pokes over the rim from outside, and old Tomas, the mason, climbs up and builds one block higher above it. A block of the wall once vanished; Tomas patched it by noon. Tomas is the only one who has been outside: he came in an old minecart before the wall, and he hides when the kids push it. He says there's nothing out there 'we want to trade with'.",
+ "premise": "A village sits inside a stone-brick wall 40 blocks high with no gate. Every dawn a little dirt pokes over the rim from outside, and old Tomas, the mason, climbs up and builds one block higher above it. A block of the wall once vanished; Tomas patched it by noon. Tomas is the only one who has been outside: he came in an old minecart before the wall, and he hides when the kids push it. He says there's nothing out there 'we want to trade with'.",
  "family": "viewer_is_the_threat",
  "twist": "The thing outside is a player. The dirt is his pillar (he towers up every morning to look in), the vanished block is the one he mined to peek, the minecart is how players move villagers, and outside the wall is his trading hall: a hundred villagers, each boxed in a one-block cell. The kid reads every clue innocently (a brown plant, blocks that vanish, Tomas good at hide and seek) and climbs to see a monster; he finds 'another village' where everybody gets their own room, and the one person not in a room looks up. The wall was never for monsters; it's for us.",
  "key_color": "#FFD640",
@@ -42,7 +42,7 @@
    "ref": "narrator",
    "name": "me (a villager kid)",
    "color": "#FFFFFF",
-   "on_screen": "a baby villager (plains), seen in camera shots (S03, S09, S10, S11's foreground); no POV hand. Pip (cast `narrator`, Leda, one_take, plain_say); says every line but L06 and L12"
+   "on_screen": "a baby villager (snowy: Highwall is in the White), seen in camera shots (S03, S09, S10, S11's foreground); no POV hand. Pip (cast `narrator`, Leda, one_take, plain_say); says every line but L06 and L12"
   },
   "Tomas": {
    "role": "character",
@@ -50,7 +50,7 @@
    "color": "#F0A845",
    "model": "gemini-3.8-flash-tts",
    "profile": "[An old man in his seventies, slow and low, kind but closed]",
-   "on_screen": "an adult villager, plains mason (apron), no name tag; on screen while he says L06 (S04, by the patched block) and L12 (S09). Voice: to audition, Sadaltager or Rasalgethi (voice_note), old and slow, far from Pip",
+   "on_screen": "an adult villager, snowy mason (apron), no name tag; on screen while he says L06 (S04, by the patched block) and L12 (S09). Voice: to audition, Sadaltager or Rasalgethi (voice_note), old and slow, far from Pip",
    "voice": "Sadaltager",
    "voice_alt": "Rasalgethi",
    "voice_note": "To audition (owner, STANDARDS 7a: one voice per character; `elder`/Charon is Ravenford's Grandpa). Candidates, both male and in neither voices/cast.json nor the planned characters (Iapetus and Alnilam are taken): 1) Sadaltager ('knowledgeable': a deeper, measured man; heard near Charon in docs/voice_search.md, so it should read old); 2) Rasalgethi ('informative': a mature, even man). Same bracket for both. Pick by ear against Pip on L06 and L12, then add a `tomas` row to voices/cast.json and docs/world/canon.md."
@@ -555,7 +555,7 @@
    "place": "outside",
    "size": "ews",
    "camera": "at: just behind the narrator's head on the rim, then over him, looking down and out at the hall 15 blocks beyond the wall's foot; a slow tilt down",
-   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, its south end 13 blocks north of the wall's outer foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells along its length, a villager in every cell with a workstation in front, a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); lanterns hung inside under the glass so the cells read at dawn; bg: rolling hills, oak trees and a river north of the hall to the fog. Dawn (23500).",
+   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, its south end 13 blocks north of the wall's outer foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells along its length, a villager in every cell with a workstation in front, a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); lanterns hung inside under the glass so the cells read at dawn; bg: rolling snowy hills, spruce and a frozen stream north of the hall to the fog. Dawn (23500).",
    "subject": "the trading hall",
    "look": {
     "time": 23500
