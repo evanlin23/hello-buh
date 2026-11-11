@@ -2,17 +2,14 @@
  "name": "singing_box",
  "stunt": "story_singing_box",
  "version": 2,
- "revision": "r2 (2026-11-11): the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
+ "revision": "r3 (2026-11-11): cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
  "caption": "where do her diamonds go 💎",
- "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, sure the box is just hungry, while she climbs out empty-handed every night; today it flies diamond 32 through the hole to ask the box to share, and finds the neighbor in diamond armour tapping the box.",
+ "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, sure the box is just hungry, while she climbs out empty-handed every night; today it flies diamond 32, the biggest find yet, through the hole and finds the neighbor in diamond armour tapping the box.",
  "question": "why has she never had more than one diamond?",
- "premise": "A miner under Torch Hill gives her allay her only diamond so it collects more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, right by the lava she never goes near. The box sings whenever the allay comes close, and the diamonds vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. It's empty.' The neighbor asks her every night if she found anything; the allay thinks he's so nice.",
+ "premise": "A miner under Torch Hill gives her allay her only diamond so it collects more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, right by the lava she never goes near. The box sings whenever the allay comes close, and the diamonds vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. It's empty.' The neighbor shouts from his window that some of us are trying to sleep; the allay sticks up for her.",
  "twist": "The note block isn't hers. The neighbor dug a secret room beside her tunnel and plays his note block behind the hole every few seconds. Vanilla: an allay that hears a note block played within 16 blocks delivers its items there instead of to its player, for 30 s, and each note resets it. So her allay has delivered all 31 diamonds to him, and he wears them (diamond chestplate, leggings, boots, pickaxe and sword: 24 of them; his helmet off so his face reads). Diamond 32 lands at his feet as he taps. Cut on the tap.",
  "key_color": "#4AEDD9",
- "mood": [
-  "funny",
-  "funny"
- ],
+ "mood": "funny",
  "payoff": "tap",
  "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13b; diamond 32 lands right after and the Short ends 0.8 s after it lands. No line after L15; the picture is the reveal (STANDARDS 0, 3).",
  "look": {
@@ -45,47 +42,47 @@
    "role": "character",
    "ref": "storyteller",
    "name": "the miner",
-   "voice": "Despina",
+   "voice": "Zephyr",
    "model": "gemini-3.8-flash-tts",
    "color": "#9FE3A0",
    "skin": "noor",
-   "on_screen": "a player, default `noor` skin (not Steve: Steve reads as Buh, conflict 18), iron pickaxe; S02, S03, S06, S09, S10 (says L11 there, her shoulder in fg), S11. Never named.",
+   "on_screen": "a player, default `noor` skin (not Steve: Steve reads as Buh, conflict 18), iron pickaxe; S02, S03, S06, S09 (says L10 there), S10 (her shoulder in fg), S11. Never named.",
    "audition": {
     "line": "L10 \"Nothing AGAIN. It's EMPTY.\"",
     "bracket": "[A tired young woman, flat and worn out, full voice]",
     "candidates": [
      {
-      "voice": "Despina",
-      "why": "Gemini's 'breezy'; a grown woman, no character in voices/cast.json or canon.md uses it"
+      "voice": "Zephyr",
+      "why": "Gemini's 'bright', used by no cast or story; must read as a grown woman, not a kid, against Pip"
      },
      {
-      "voice": "Erinome",
-      "why": "Gemini's 'clear'; unused by any cast or planned character"
+      "voice": "Despina",
+      "why": "cast `storyteller` (a woman 25-45), which no character uses"
      }
     ],
-    "note": "ref `storyteller` (Despina) is the first candidate. Not Aoede (Rosa in names_in_the_woods) or Erinome (the house narrator until 2026-11-10)"
+    "note": "ref `storyteller` is the lint placeholder. Not Aoede (Rosa in names_in_the_woods) or Erinome (the house narrator until 2026-11-10)"
    }
   },
   "Neighbor": {
    "role": "character",
    "ref": "smith",
    "name": "the neighbor",
-   "voice": "Algieba",
+   "voice": "Umbriel",
    "model": "gemini-3.8-flash-tts",
    "color": "#7FB2FF",
    "skin": "efe",
-   "on_screen": "a player, default `efe` skin, plain clothes and no armour in S10 (at his window, says L10); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin. Never named.",
+   "on_screen": "a player, default `efe` skin, plain clothes and no armour in S10 (at his window, says L11); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin. Never named.",
    "audition": {
-    "line": "L10 \"Find anything down there TODAY?\"",
-    "bracket": "[A friendly grown man, calling from his window]",
+    "line": "L11 \"Some of us are trying to SLEEP!\"",
+    "bracket": "[A grumpy grown man, loud and annoyed, shouting from a window]",
     "candidates": [
      {
-      "voice": "Algieba",
-      "why": "Gemini's 'smooth'; a grown man, unused by any cast or planned character"
+      "voice": "Umbriel",
+      "why": "Gemini's 'easy-going', used by no cast or story; a grown man"
      },
      {
-      "voice": "Umbriel",
-      "why": "Gemini's 'easy-going'; unused by any cast or planned character"
+      "voice": "Algieba",
+      "why": "Gemini's 'smooth', used by no cast or story; a grown man"
      }
     ],
     "note": "`smith` (Orus) is only the placeholder ref so the lint runs; Orus was the old sped-up narrator and must not be this character's voice"
@@ -122,7 +119,7 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L11"
+    "L10"
    ],
    "direction": "[A tired young woman, flat and worn out, full voice]"
   },
@@ -133,9 +130,9 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L10"
+    "L11"
    ],
-   "direction": "[A friendly grown man, calling from his window]"
+   "direction": "[A grumpy grown man, loud and annoyed, shouting from a window]"
   }
  ],
  "sfx": [
@@ -167,7 +164,7 @@
   {
    "under": "S10",
    "sound": "block.wooden_trapdoor.open",
-   "note": "his shutter opens before L10, shuts after L12"
+   "note": "his shutter bangs open before L11, slams on L12"
   },
   {
    "under": "S12",
@@ -370,31 +367,31 @@
   {
    "id": "L07",
    "who": "N",
-   "text": "And the box SINGS / every time / I come CLOSE. / It's SO happy / to see me!",
-   "say": "And the box sings every time I come close. It's so happy to SEE me!",
+   "text": "And when I bring it / DIAMONDS, / it SINGS! / It's SO happy / to see me!",
+   "say": "And when I bring it diamonds, it sings! It's so happy to SEE me!",
    "shot": "S07",
    "shows": [
     {
      "what": [
-      "note_block"
+      "diamond"
      ],
-     "word": "SINGS"
+     "word": "DIAMONDS"
     },
     {
      "what": [
       "note_block"
      ],
-     "word": "CLOSE"
+     "word": "SINGS"
     }
    ],
    "look": [
     {
-     "what": "block:note_block",
-     "word": "SINGS"
+     "what": "entity:allay",
+     "word": "DIAMONDS"
     },
     {
-     "what": "entity:allay",
-     "word": "CLOSE"
+     "what": "block:note_block",
+     "word": "SINGS"
     }
    ],
    "direction": "flattered, a little giggle"
@@ -459,23 +456,10 @@
   },
   {
    "id": "L10",
-   "who": "Neighbor",
-   "text": "Find anything / down there / TODAY?",
-   "say": "Find anything down there TODAY?",
-   "shot": "S10",
-   "look": [
-    {
-     "what": "Neighbor",
-     "word": "TODAY"
-    }
-   ]
-  },
-  {
-   "id": "L11",
    "who": "Her",
    "text": "Nothing AGAIN. / It's EMPTY.",
    "say": "Nothing again. It's EMPTY.",
-   "shot": "S10",
+   "shot": "S09",
    "look": [
     {
      "what": "Her",
@@ -484,32 +468,43 @@
    ]
   },
   {
-   "id": "L12",
-   "who": "N",
-   "text": "He asks / EVERY night. / He's so NICE!",
-   "say": "He asks every night. He's so NICE!",
+   "id": "L11",
+   "who": "Neighbor",
+   "text": "Some of us / are trying / to SLEEP!",
+   "say": "Some of us are trying to SLEEP!",
    "shot": "S10",
    "look": [
     {
      "what": "Neighbor",
-     "word": "NICE"
+     "word": "SLEEP"
+    }
+   ]
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "text": "She's not / that LOUD. / The BOOM blocks are.",
+   "say": "She's not that loud. The boom blocks ARE.",
+   "shot": "S10",
+   "look": [
+    {
+     "what": "Her",
+     "word": "LOUD"
+    },
+    {
+     "what": "entity:allay",
+     "word": "BOOM"
     }
    ],
-   "direction": "warm, admiring him"
+   "direction": "loyal, sticking up for her, a little huffy"
   },
   {
    "id": "L13",
    "who": "N",
-   "text": "She looks / so TIRED. / So today, / I'll ask the box / to SHARE.",
-   "say": "She looks so tired. So today, I'll ask the box to SHARE.",
+   "text": "She looks / so TIRED. / So today, / I'm finding her / the BIGGEST one YET.",
+   "say": "She looks so tired. So today, I'm finding her the biggest one YET.",
    "shot": "S11",
    "shows": [
-    {
-     "what": [
-      "note_block"
-     ],
-     "word": "BOX"
-    },
     {
      "what": [
       "tnt"
@@ -523,8 +518,8 @@
      "word": "TIRED"
     },
     {
-     "what": "block:note_block",
-     "word": "BOX"
+     "what": "block:tnt",
+     "word": "BIGGEST"
     }
    ],
    "punch": true,
@@ -665,18 +660,21 @@
   {
    "id": "S09",
    "line": "L09",
+   "lines": [
+    "L09",
+    "L10"
+   ],
    "place": "cottages",
    "size": "full",
    "time": "1499 dusk 12600",
    "camera": "ground level about 5 blocks north-west of the shaft mouth, looking south-south-east, still",
    "subject": "Her",
-   "frame": "she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, both hands empty, and stands; the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
+   "frame": "she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, both hands empty, stands and says L10 to herself; the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
   },
   {
    "id": "S10",
-   "line": "L10",
+   "line": "L11",
    "lines": [
-    "L10",
     "L11",
     "L12"
    ],
@@ -685,7 +683,7 @@
    "time": "1499 dusk 12600",
    "camera": "over her shoulder north-east to his cottage window, still",
    "subject": "Neighbor",
-   "frame": "the neighbor (`efe` skin, plain clothes, no armour, nothing diamond) opens his lit spruce shutter and calls L10, friendly; she answers L11 (her shoulder and head in frame-right fg); L12 over his smile and wave as he shuts the shutter. His face is the face of S13b."
+   "frame": "the neighbor (`efe` skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms all day; he says he sleeps by day); L12 over him slamming the shutter, her shoulder and head in frame-right fg. His face is the face of S13b."
   },
   {
    "id": "S11",
@@ -695,7 +693,7 @@
    "time": "1500 (underground)",
    "camera": "at the ladder end looking east, a slow push",
    "subject": "Her",
-   "frame": "today: she places THREE TNT at the face (the crater from the last blast); the allay hovers at frame left, looking up at the hole over the lava on 'BOX'. She lights them and runs back past camera, the allay after her."
+   "frame": "today: she places THREE TNT at the face (the crater from the last blast); the allay hovers beside her, the diamond in its hands. She lights them and runs back past camera, the allay after her."
   },
   {
    "id": "S12",

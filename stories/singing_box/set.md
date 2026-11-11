@@ -1,4 +1,4 @@
-# singing_box: set plan (r2)
+# singing_box: set plan (r3)
 
 **Place:** the lowland under Torch Hill, by the Digger's House (map.json `digger_house`, at (-245, 67, -650),
 footprint (-300, -692, -232, -636)). Days 1489-1500. Not claimed yet: the build claims `torch_hill_cottages`
@@ -40,10 +40,10 @@ and torch line sit small at frame left.
 | TNT bounces diamonds everywhere (L04) | ore broken by TNT drops its item (diamond ore: a diamond) | S04 |
 | the singing box is where your finds go (L05) | vanilla: an allay that hears a note block played within 16 blocks delivers there instead of to its player, for 30 s, each note resetting it | wiki |
 | it's by the glowy orange water; she never goes near (L06) | the pool along the north wall, the hole above it; her path is the south side | S06 |
-| the box sings every time I come close (L07) | he plays it every few seconds; the allay is always within 16 blocks | S07 |
+| when I bring it diamonds, it sings (L07) | he plays it every few seconds (the allay hears it, then comes); always within 16 blocks | S07: the note first |
 | they're gone when I look back (L08) | the drops land on the note block's top in his room; he picks them up | S08 jump cut |
-| she climbs out with empty hands (L09); "It's EMPTY" (L11) | nothing is delivered to her; the face shows no ore before a blast | S09, S10 |
-| he asks every night (L12) | he wants to know she hasn't noticed | S10 |
+| she climbs out with empty hands (L09); "It's EMPTY" (L10) | nothing is delivered to her; the face shows no ore before a blast | S09, S10 |
+| some of us are trying to sleep (L11) | his cover: he says he sleeps by day; really he's in the room behind the wall | S10 |
 | 32 lands at his feet (S13b) | he tapped the box; the allay delivers | S13b |
 
 ## Vanilla notes for the build
