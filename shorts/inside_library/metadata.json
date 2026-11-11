@@ -1,10 +1,10 @@
 {
   "name": "inside_library",
   "channel": "hellobuh",
-  "caption": "rate my tiny house \ud83c\udfe0",
+  "caption": "rate my tiny house 🏠",
   "youtube": {
-    "title": "rate my tiny house \ud83c\udfe0 #minecraft #shorts",
-    "description": "rate my tiny house \ud83c\udfe0\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "rate my tiny house 🏠 #minecraft #shorts",
+    "description": "rate my tiny house 🏠\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -25,30 +25,30 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.55,
+    "duration_s": 8.25,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14242171,
-    "sha256": "fda701747f5d7c897bb9f96c3ddd8380504861cb8996e9369b1665dd9318747a",
+    "bytes": 14335151,
+    "sha256": "13b73d3b44a9c6ff2061549ca466b472a2822e3f9307ba3d41f70b5d569956c3",
     "release": {
       "tag": "pkg-inside_library",
-      "asset": "inside_library.short.fda701747f5d7c89.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.fda701747f5d7c89.mp4",
-      "sha256": "fda701747f5d7c897bb9f96c3ddd8380504861cb8996e9369b1665dd9318747a",
-      "bytes": 14242171
+      "asset": "inside_library.short.13b73d3b44a9c6ff.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.13b73d3b44a9c6ff.mp4",
+      "sha256": "13b73d3b44a9c6ff2061549ca466b472a2822e3f9307ba3d41f70b5d569956c3",
+      "bytes": 14335151
     },
     "nosong_release": {
       "tag": "pkg-inside_library",
-      "asset": "inside_library.short_nosong.7107f86601c91bab.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short_nosong.7107f86601c91bab.mp4",
-      "sha256": "7107f86601c91bab415f3d415052cbd02ab784d01fc547f8a095a0470ffcafcf",
-      "bytes": 14235868
+      "asset": "inside_library.short_nosong.0e2400b4e15404fc.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short_nosong.0e2400b4e15404fc.mp4",
+      "sha256": "0e2400b4e15404fcc76b5b9c62de02e2477e3ade41bbbe6127a6a73bdcccb302",
+      "bytes": 14330302
     }
   },
   "edit": {
-    "caption": "rate my tiny house \ud83c\udfe0",
+    "caption": "rate my tiny house 🏠",
     "red": "tiny",
     "startAt": "beat:-0.05",
     "endAfter": "reveal:1.0",
@@ -77,13 +77,22 @@
         0.8
       ]
     ],
+    "flash": [
+      [
+        "reveal",
+        0,
+        0.25
+      ]
+    ],
     "args": [
       "--caption",
-      "rate my tiny house \ud83c\udfe0",
+      "rate my tiny house 🏠",
       "--red",
       "tiny",
       "--punch",
       "[[\"reveal\",0,0.8]]",
+      "--flash",
+      "[[\"reveal\",0,0.25]]",
       "--sfx",
       "[[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]]",
       "--start_at",
@@ -100,13 +109,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 376,
-      "y": 71,
-      "z": -53
+      "x": 361,
+      "y": 70,
+      "z": -45
     },
     "biome": "minecraft:plains",
-    "ticks": 204,
-    "seconds": 10.2,
+    "ticks": 198,
+    "seconds": 9.9,
     "deaths": 0,
     "events": [
       {
@@ -118,31 +127,31 @@
         "event": "beat"
       },
       {
-        "t": 5.25,
-        "event": "door_stop"
-      },
-      {
-        "t": 5.6,
+        "t": 5,
         "event": "cut"
       },
       {
-        "t": 5.9,
+        "t": 5,
+        "event": "seamless"
+      },
+      {
+        "t": 5.15,
         "event": "swing"
       },
       {
-        "t": 5.9,
+        "t": 5.15,
         "event": "door_open"
       },
       {
-        "t": 7.1,
+        "t": 6.6,
         "event": "out"
       },
       {
-        "t": 8.25,
+        "t": 7.95,
         "event": "reveal"
       },
       {
-        "t": 10.2,
+        "t": 9.9,
         "event": "end"
       }
     ]
@@ -150,34 +159,37 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "107e5fd8aced8f272c8356f1d880f037ee6c87bf",
+    "commit": "c5fa55e7c4bc7fa0bb7d77cbaa9b5885559dc492",
     "rendered": "local",
-    "rendered_at": "2026-11-11T08:33:46.832Z",
-    "head_at_publish": "573effdd1a9a2ed492b1d4c5e0d9561e5bda1c2f",
+    "rendered_at": "2026-11-11T09:24:46.441Z",
+    "head_at_publish": "c5fa55e7c4bc7fa0bb7d77cbaa9b5885559dc492",
     "stunt": "stunts/inside_library.js",
     "source_snapshot": [
       "source/inside_library.js",
       "source/inside.js",
-      "source/plateau.js"
+      "source/plateau.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 107e5fd8aced",
+    "git checkout c5fa55e7c4bc",
     "gunzip -c shorts/inside_library/recording.json.gz > work/inside_library.rec.json",
     "node render.js work/inside_library.rec.json work/inside_library.frames 60 1080 1011",
     "python3 audio.py work/inside_library.rec.json work/inside_library.wav",
-    "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house \ud83c\udfe0\" --red tiny --punch [[\"reveal\",0,0.8]] --sfx [[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:1.0 --out out/inside_library.mp4"
+    "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house 🏠\" --red tiny --punch [[\"reveal\",0,0.8]] --flash [[\"reveal\",0,0.25]] --sfx [[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:1.0 --out out/inside_library.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "owner 2026-11-11: the cut is very obvious: the view shifts at the cut and we pause before opening the door; walk straight out without stopping | inside #1: library hall walk out to a 5x5 hut, hidden cut on the closed door; independent review r1 READY (session_019n1tKDmWotxs7qKsSgcmqC); nitpicks: 1.0 s tail, entry nook",
-  "published_at": "2026-11-11T08:37:11.365Z",
+  "status": "ready",
+  "notes": "inside #1 v2 (owner r:r81cb9c): no pause, seamless mid-stride cut (frame scrub: max diff 1.09x walk median, 0 px shift); reviewer READY; nitpick: near-still last 0.3 s",
+  "published_at": "2026-11-11T09:25:44.306Z",
   "gates": {
     "version": 3,
-    "at": "2026-11-11T08:37:28+00:00",
+    "at": "2026-11-11T09:26:02+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 8.55 s vs the reviewed render 8.55 s"
+      "summary": "short.mp4 8.26 s vs the reviewed render 8.25 s"
     },
     "pace": {
       "ok": true,
@@ -189,7 +201,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T08:33:29.578Z",
+      "at": "2026-11-11T09:24:58.255Z",
       "report": "work/hb/inside_library.check.json"
     },
     "key_sounds": "n/a"
