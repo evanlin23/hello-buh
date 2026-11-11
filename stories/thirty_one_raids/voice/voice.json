@@ -4,24 +4,24 @@
    "who": "N",
    "text": "Thirty-one raids. Every one started the night Grandpa came home.",
    "dur": 4.518,
-   "onset": 0.24,
-   "end": 4.12,
+   "onset": 0.21,
+   "end": 4.24,
    "chunks": [
     [
-     0.24,
-     1.18
+     0.21,
+     1.333
     ],
     [
-     1.8,
-     2.34
+     1.333,
+     1.928
     ],
     [
-     2.4,
-     3.2
+     1.928,
+     3.051
     ],
     [
-     3.28,
-     4.12
+     3.051,
+     4.24
     ]
    ],
    "captions": [
@@ -36,36 +36,34 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "6ba07f9dd9bd"
+   "gap": 0
   },
   "L02": {
    "who": "N",
    "text": "Raid one, raid twelve, raid thirty-one. He won every one.",
    "dur": 5.103,
-   "onset": 0.18,
-   "end": 4.64,
+   "onset": 0.13,
+   "end": 4.76,
    "chunks": [
     [
-     0.18,
-     0.6
+     0.13,
+     0.916
     ],
     [
-     1.02,
-     1.62
+     0.916,
+     1.965
     ],
     [
-     2.16,
-     2.92
+     1.965,
+     3.362
     ],
     [
-     3.32,
-     3.7
+     3.362,
+     3.886
     ],
     [
-     4.06,
-     4.64
+     3.886,
+     4.76
     ]
    ],
    "captions": [
@@ -81,32 +79,30 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 4.518,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "0b83cc48a9f4"
+   "gap": 0
   },
   "L03": {
    "who": "N",
    "text": "He says they follow him. They know who beats them.",
    "dur": 3.158,
-   "onset": 0.2,
-   "end": 2.62,
+   "onset": 0.13,
+   "end": 2.82,
    "chunks": [
     [
-     0.2,
-     0.52
+     0.13,
+     0.531
     ],
     [
-     0.58,
-     1.2
+     0.531,
+     1.446
     ],
     [
-     1.46,
-     1.84
+     1.446,
+     1.961
     ],
     [
-     1.98,
-     2.62
+     1.961,
+     2.82
     ]
    ],
    "captions": [
@@ -121,24 +117,22 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 9.62,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "57a770d174c1"
+   "gap": 0
   },
   "L04": {
    "who": "N",
    "text": "So the villagers throw him bread.",
    "dur": 2.442,
-   "onset": 0.14,
-   "end": 2.04,
+   "onset": 0.09,
+   "end": 2.32,
    "chunks": [
     [
-     0.14,
-     0.98
+     0.09,
+     1.205
     ],
     [
-     1.22,
-     2.04
+     1.205,
+     2.32
     ]
    ],
    "captions": [
@@ -151,36 +145,34 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 12.777,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "1c5134ca40b3"
+   "gap": 0
   },
   "L05": {
    "who": "N",
    "text": "Since Grandma died, he's always alone. But raid nights? Everyone cheers for him.",
    "dur": 5.457,
-   "onset": 0.13,
-   "end": 4.9,
+   "onset": 0.07,
+   "end": 5.02,
    "chunks": [
     [
-     0.13,
-     1.02
+     0.07,
+     1.307
     ],
     [
-     1.28,
-     2.14
+     1.307,
+     2.48
     ],
     [
-     2.6,
-     3.32
+     2.48,
+     3.522
     ],
     [
-     3.72,
-     4.52
+     3.522,
+     4.499
     ],
     [
-     4.475,
-     4.9
+     4.499,
+     5.02
     ]
    ],
    "captions": [
@@ -195,52 +187,50 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 15.22,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "d4e1f94c1e6f"
+   "offset": 15.22
   },
   "L06": {
    "who": "N",
    "text": "Every week, he hunts at the tower. He brings back ominous bottles. Ominous means lucky, I think. He calls them his luck.",
    "dur": 8.377,
-   "onset": 0.28,
-   "end": 7.82,
+   "onset": 0.15,
+   "end": 8.04,
    "chunks": [
     [
-     0.28,
-     0.74
+     0.15,
+     0.925
     ],
     [
-     1.04,
-     1.46
+     0.925,
+     1.488
     ],
     [
-     1.54,
-     2.1
+     1.488,
+     2.404
     ],
     [
-     2.56,
-     3.08
+     2.404,
+     3.391
     ],
     [
-     3.34,
-     4.14
+     3.391,
+     4.518
     ],
     [
-     4.8,
-     5.42
+     4.518,
+     5.433
     ],
     [
-     5.52,
-     6.12
+     5.433,
+     6.49
     ],
     [
-     6.62,
-     7.16
+     6.49,
+     7.406
     ],
     [
-     7.32,
-     7.82
+     7.406,
+     8.04
     ]
    ],
    "captions": [
@@ -260,28 +250,26 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
    "offset": 0.0,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "e150c18231b7"
+   "gap": 0
   },
   "L07": {
    "who": "N",
    "text": "He drinks one at the gate. Then he says:",
    "dur": 2.725,
-   "onset": 0.28,
-   "end": 2.42,
+   "onset": 0.19,
+   "end": 2.54,
    "chunks": [
     [
-     0.28,
-     0.94
+     0.19,
+     0.994
     ],
     [
-     0.98,
-     1.44
+     0.994,
+     1.736
     ],
     [
-     1.82,
-     2.42
+     1.736,
+     2.54
     ]
    ],
    "captions": [
@@ -294,9 +282,7 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 8.378,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "3a9b8c21e466"
+   "offset": 8.378
   },
   "L08": {
    "who": "Grandpa",
@@ -331,28 +317,28 @@
    "who": "N",
    "text": "Then a horn goes off. And Grandpa smiles. He must love the raids.",
    "dur": 5.73,
-   "onset": 0.8,
-   "end": 5.12,
+   "onset": 0.77,
+   "end": 5.5,
    "chunks": [
     [
-     0.8,
-     1.56
+     0.77,
+     1.623
     ],
     [
-     1.64,
-     2.08
+     1.623,
+     2.321
     ],
     [
-     2.54,
-     3.52
+     2.321,
+     3.794
     ],
     [
-     3.98,
-     4.6
+     3.794,
+     4.725
     ],
     [
-     4.68,
-     5.12
+     4.725,
+     5.5
     ]
    ],
    "captions": [
@@ -368,28 +354,26 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L09",
    "offset": 0.0,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "564e23fe3491"
+   "gap": 0
   },
   "L10": {
    "who": "N",
    "text": "Tonight he came home too tired to fight.",
    "dur": 2.975,
-   "onset": 0.3,
-   "end": 2.52,
+   "onset": 0.23,
+   "end": 2.72,
    "chunks": [
     [
-     0.3,
-     1.18
+     0.23,
+     1.213
     ],
     [
-     1.24,
-     2.16
+     1.213,
+     2.13
     ],
     [
-     2.2,
-     2.52
+     2.13,
+     2.72
     ]
    ],
    "captions": [
@@ -403,32 +387,30 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L09",
    "offset": 5.73,
-   "gap": 0,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "8150cc872bbe"
+   "gap": 0
   },
   "L11": {
    "who": "N",
    "text": "So I drank his luck. Somebody had to fight.",
    "dur": 3.425,
-   "onset": 0.2,
-   "end": 2.94,
+   "onset": 0.15,
+   "end": 3.16,
    "chunks": [
     [
-     0.2,
-     1.04
+     0.15,
+     0.903
     ],
     [
-     1.1,
-     1.4
+     0.903,
+     1.58
     ],
     [
-     1.885,
-     2.52
+     1.58,
+     2.483
     ],
     [
-     2.58,
-     2.94
+     2.483,
+     3.16
     ]
    ],
    "captions": [
@@ -442,9 +424,7 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L09",
-   "offset": 8.705,
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4219ed16c851"
+   "offset": 8.705
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -484,30 +464,6 @@
      "at": 1.26,
      "len": 0.43,
      "why": "0.43 s pause inside line 1 (limit 0.2 s, the opening)"
-    },
-    {
-     "kind": "pause",
-     "at": 9.14,
-     "len": 0.68,
-     "why": "0.68 s pause between lines 1-2 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 12.33,
-     "len": 0.61,
-     "why": "0.61 s pause between lines 2-3 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.59,
-     "len": 0.76,
-     "why": "0.76 s pause between lines 5-6 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.99,
-     "len": 0.81,
-     "why": "0.81 s pause between lines 7-8 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -515,11 +471,7 @@
     {
      "try": 1,
      "why": [
-      "0.43 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.68 s pause between lines 1-2 (limit 0.6 s)",
-      "0.61 s pause between lines 2-3 (limit 0.6 s)",
-      "0.76 s pause between lines 5-6 (limit 0.6 s)",
-      "0.81 s pause between lines 7-8 (limit 0.6 s)"
+      "0.43 s pause inside line 1 (limit 0.2 s, the opening)"
      ]
     }
    ],
@@ -548,30 +500,6 @@
      "at": 1.26,
      "len": 0.43,
      "why": "0.43 s pause inside line 1 (limit 0.2 s, the opening)"
-    },
-    {
-     "kind": "pause",
-     "at": 9.14,
-     "len": 0.68,
-     "why": "0.68 s pause between lines 1-2 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 12.33,
-     "len": 0.61,
-     "why": "0.61 s pause between lines 2-3 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.59,
-     "len": 0.76,
-     "why": "0.76 s pause between lines 5-6 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.99,
-     "len": 0.81,
-     "why": "0.81 s pause between lines 7-8 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -579,11 +507,7 @@
     {
      "try": 1,
      "why": [
-      "0.43 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.68 s pause between lines 1-2 (limit 0.6 s)",
-      "0.61 s pause between lines 2-3 (limit 0.6 s)",
-      "0.76 s pause between lines 5-6 (limit 0.6 s)",
-      "0.81 s pause between lines 7-8 (limit 0.6 s)"
+      "0.43 s pause inside line 1 (limit 0.2 s, the opening)"
      ]
     }
    ],
@@ -614,30 +538,6 @@
      "at": 1.26,
      "len": 0.43,
      "why": "0.43 s pause inside line 1 (limit 0.2 s, the opening)"
-    },
-    {
-     "kind": "pause",
-     "at": 9.14,
-     "len": 0.68,
-     "why": "0.68 s pause between lines 1-2 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 12.33,
-     "len": 0.61,
-     "why": "0.61 s pause between lines 2-3 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.59,
-     "len": 0.76,
-     "why": "0.76 s pause between lines 5-6 (limit 0.6 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.99,
-     "len": 0.81,
-     "why": "0.81 s pause between lines 7-8 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -645,11 +545,7 @@
     {
      "try": 1,
      "why": [
-      "0.43 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.68 s pause between lines 1-2 (limit 0.6 s)",
-      "0.61 s pause between lines 2-3 (limit 0.6 s)",
-      "0.76 s pause between lines 5-6 (limit 0.6 s)",
-      "0.81 s pause between lines 7-8 (limit 0.6 s)"
+      "0.43 s pause inside line 1 (limit 0.2 s, the opening)"
      ]
     }
    ],
