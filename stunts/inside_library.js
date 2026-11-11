@@ -101,13 +101,14 @@ module.exports = inside.make({
   caption: 'rate my tiny house 🏠',
   red: 'tiny',
   // the opening (owner r:r0f3da0: never a still room): frame 0 is already mid-turn across the hall's best side, the
-  // fireplace, both chandeliers and the two tiers of shelves, looking up at them; the turn sweeps on to the door. The
-  // walk's eased sway started from a standstill (0 deg/s on frame 0), so the edit starts 0.3 s in (the turn at speed,
-  // ~55 deg/s, frame 0 on the chandelier, the fireplace's edge and both tiers; a wider sweep opened on the bare chimney)
-  sway: [[-0.3, 0.75], [1.4, -0.45], [2.7, 0]],
-  pitch: [[-0.3, 0.46], [1.4, 0.14], [2.7, 0.02]],
-  // (the pop moves with the start: it is the first sound hit, louder than the 0.35 that pace didn't count)
-  // the end (owner r:r188b46, fast ends): 0.7 s after the turn lands on the hut
-  edit: { startAt: 'beat:0.3', endAfter: 'reveal:0.7', sfx: [['pop', 'beat:0.32', { gain: 0.7 }], ['dip', 'reveal', 0.35], ['impact', 'reveal']] },
+  // chandeliers, the fireplace's edge and both tiers of shelves, looking up at them; the turn sweeps on to the door.
+  // The walk's eased sway started from a standstill (0 deg/s on frame 0): its keys now start 0.6 s before the walk,
+  // so the turn is at ~40 deg/s on frame 0 (a wider sweep from further round opened on the bare chimney). A start
+  // 0.3 s into the walk made the Short 7.6 s, under the 8 s floor
+  sway: [[-0.6, 0.6], [1.4, -0.45], [2.7, 0]],
+  pitch: [[-0.6, 0.5], [1.4, 0.14], [2.7, 0.02]],
+  // the end (owner r:r188b46, fast ends): 0.8 s after the turn lands on the hut. A loud pop on frame 0 (pace: the
+  // 0.7 one was 13 dB under the payoff's impact)
+  edit: { startAt: 'beat:-0.05', endAfter: 'reveal:0.8', sfx: [['pop', 'beat', { gain: 1.6 }], ['dip', 'reveal', 0.35], ['impact', 'reveal']] },
   room
 })
