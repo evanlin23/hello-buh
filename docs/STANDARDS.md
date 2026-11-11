@@ -180,7 +180,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    **Nothing on screen jumps while the camera holds**: no entity, the narrator included (a wolf narrator is the
    recording bot), moves over 0.6 block in a tick in the frame unless the camera itself cuts on that tick; a teleport
    that is the story (K.blink, `teleport_ok`) still lands on the cut (`K.cutShot(name, moves, { self })` moves the
-   narrator with it; the shot mark waits for the landing). Check: owner (glitch: visible jump, in the frame BLOCK, just
+   narrator with it; the shot mark waits for the landing, and render.js draws every move of a cutShot, cast and
+   narrator, at its old spot until the cut tick: cutHolds). Check: owner (glitch: visible jump, in the frame BLOCK, just
    out of it WARN; lib/hb/motion.js visibleJumps on the track as render.js draws it). r:rfa229d
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
    (eye-trace: jump <= 15 % of the frame; > 20 % WARN, > 33 % BLOCK), and the cut lands in the pause 33-150 ms before
