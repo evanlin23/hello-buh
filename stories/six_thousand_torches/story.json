@@ -68,8 +68,28 @@
    "voice": "Fenrir",
    "model": "gemini-3.8-flash-tts",
    "color": "#4FD8E6",
-   "on_screen": "a player actor (bot named Jonah), a default skin that is NOT Steve (proposed `kai`; Steve is Buh's), his vanilla name tag over his head; one voiced line (L07), on screen in S07 while he says it, waving. Voice: proposed cast `friend` (Fenrir, teenage boy) pending the owner's audition of the real line against at least one other teen-boy candidate, since Fenrir is Max's recurring voice (STANDARDS 2.7): reads apart from Pip on age and sex. Never quits on screen: he walks away in S14",
-   "skin": "kai"
+   "on_screen": "a player actor (bot named Jonah), a default skin that is NOT Steve (proposed `kai`; Steve is Buh's), his vanilla name tag over his head; one voiced line (L07), on screen in S07 while he says it, waving. Voice: owner audition pending (cast.Jonah.audition: Zubenelgenubi, Sadachbia, Fenrir); `friend`/Fenrir is only the placeholder so the lint runs: reads apart from Pip on age and sex. Never quits on screen: he walks away in S14",
+   "skin": "kai",
+   "audition": {
+    "line": "L07 \"See you TOMORROW!\" (say: See you TOMORROW!), gemini-3.8-flash-tts, single-speaker, one take each, judged against Pip (Leda) for contrast (STANDARDS 7, 7a)",
+    "bracket": "[A friendly teenage boy, bright and casual]",
+    "candidates": [
+     {
+      "voice": "Zubenelgenubi",
+      "why": "Gemini's 'casual': a relaxed, easy friend; no other character uses it (story_craft.md lists it for a comic one-liner)"
+     },
+     {
+      "voice": "Sadachbia",
+      "why": "Gemini's 'lively': bright energy for a cheerful goodbye; no other character uses it"
+     },
+     {
+      "voice": "Fenrir",
+      "why": "the original proposal ('excitable'); it is Max's voice (cast `friend`), so only if the owner accepts the share"
+     }
+    ],
+    "not": "Achird (Buh/Milo), Charon (elder), Iapetus (planned for The Walk's Grandpa), Alnilam (planned for Red Sheep's Dad), Puck (reads as a young woman), Umbriel (spare if both new candidates fail)",
+    "after": "the owner picks; then add a cast id (e.g. `jonah`) to voices/cast.json with this bracket and `reads_as` {sex: male, age: [13, 20]}, set cast.Jonah.ref/voice to it, and update docs/world/canon.md Planned characters"
+   }
   }
  },
  "requests": [
