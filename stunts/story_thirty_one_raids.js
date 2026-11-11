@@ -39,6 +39,7 @@ const durOf = (id, fb) => (V && V.lines[id] ? V.lines[id].dur + (V.gap ?? 0.3) :
 
 module.exports = {
   name: 'story_thirty_one_raids',
+  channel: 'buhstories',   // a Buh Stories Short: the band's key word in Buh gold (scripts/edit_args.js), packaged for @BuhStoriesMC
   near: [X, Z],
   caption: CAPTION,
   time: TIMES.S01,
