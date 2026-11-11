@@ -32,6 +32,9 @@ def pick_ncs(name, at=0.0, mood=None):
         f = (json.loads(m.read_text()).get("song") or {}).get("file")
         if m.parent.name != name and f in NCS:
             used[f] = used.get(f, 0) + 1
+    if mood and not any((ROOT / "songs" / "ncs" / f).exists() for f in NCS if NCS[f].get("mood") == mood):
+        import ncs   # a mood's tracks were added after this machine downloaded the phonk beds: fetch them now
+        ncs.download([t for t in NCS.values() if t.get("mood") == mood])
     have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists() and not NCS[f].get("pin_only") and NCS[f].get("mood") == mood]   # (pin_only: a format's own track, edit.ncs; mood: edit.ncsMood)
     if not have:
         sys.exit(f"no NCS tracks downloaded{' with mood ' + mood if mood else ''}: python3 scripts/ncs.py --download")
