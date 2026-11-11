@@ -962,7 +962,7 @@
     "python3 edit.py --frames work/water_vs_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_vs_lava.rec.json --audio work/water_vs_lava.wav --caption \"can ONE water bucket delete a lava lake? 😳\" --red lava --subs_y 0.15 --speed [[\"run0a\",\"run0b\",1.8],[\"run1a\",\"run1b\",1.8],[\"run2a\",\"run2b\",1.8],[\"run3a\",\"run3b\",1.8],[\"run4a\",\"run4b\",1.8],[\"run5a\",\"run5b\",1.8],[\"run6a\",\"run6b\",1.8],[\"run7a\",\"run7b\",1.8],[\"run8a\",\"run8b\",1.8],[\"run9a\",\"run9b\",1.8],[\"run10a\",\"run10b\",1.8],[\"run11a\",\"run11b\",1.8],[\"walk_a\",\"walk_b\",2],[\"mop0a\",\"mop0b\",2],[\"mop1a\",\"mop1b\",2],[\"mop2a\",\"mop2b\",2],[\"mop3a\",\"mop3b\",2],[\"cross_a\",\"finale\",2],[\"drain_a\",\"end_look\",2]] --sfx [[\"dip\",\"end_look\",0.35],[\"impact\",\"end_look\"]] --start_at pour:-0.05 --end_after end_look:1.05 --out out/water_vs_lava.mp4"
   ],
   "status": "ready",
-  "notes": "backlog worker D: re-recorded on the current engine; aim through the motion governor (raw looks whipped at up to 850 deg/s); 15x21 lava lake crossed on its own obsidian with one water bucket, two long side pours, mop-up pours, payoff on the black lake with a song dip + impact; 41.6 s; pace 0 blockers; review READY (maker's review, no subagent tool). Water sheets hiding the obsidian, the checkerboard drain and stepped flow fronts are vanilla (docs/lessons.md). Nitpicks: repetitive pour/scoop rhythm in the middle; the turns back after scoops sweep over the dirt rim for ~1 s; hearts flash once ~26 s.",
+  "notes": "backlog worker D: re-recorded on the current engine; aim through the motion governor (raw looks whipped at up to 850 deg/s); 15x21 lava lake crossed on its own obsidian with one water bucket, two long side pours, mop-up pours, payoff on the black lake with a song dip + impact; 41.6 s; pace 0 blockers; review READY (maker's review, no subagent tool). Water sheets hiding the obsidian, the checkerboard drain and stepped flow fronts are vanilla (docs/lessons.md). Nitpicks: repetitive pour/scoop rhythm in the middle; the turns back after scoops sweep over the dirt rim for ~1 s; hearts flash once ~26 s. | independent review 2026-11-11: READY (owner OK on the black-lake ending). Pours and scoops land on the crosshair (r:rffba12); obsidian/checkerboard drain vanilla; ends on the settled black lake (r:r24d99a ok); pace 0 blockers on the package with marks. Nitpicks: the middle pour/scoop rhythm repeats (~8 cycles, 14-36 s) with little escalation; at 23.5-24.1 s the hearts drop ~1.5 with no visible cause while the view sweeps the dirt rim (looks like an unseen lava touch); key hits only +1.2 dB median over the music (31.35 s scoop -5.8 dB); true peak +1.0 dBTP (house-wide).",
   "published_at": "2026-11-11T07:32:35.284Z",
   "gates": {
     "version": 2,
@@ -986,5 +986,10 @@
       "report": "out/water_vs_lava.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "review_independent": {
+    "verdict": "READY",
+    "at": "2026-11-11",
+    "notes": "independent review 2026-11-11"
   }
 }
