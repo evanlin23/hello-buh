@@ -50,7 +50,7 @@ module.exports = {
   idleLife: true,
   look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11 (main 2c6e5426: the story default, rolls off the brightest highlights): stories are bright and punchy (r:rd13834, STANDARDS); was the dusky grade
   shots: {},   // below (module.exports.shots)
-  edit: { caption: CAPTION, red: 'home', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], punchStress: true, keySounds: ['horn'] },
+  edit: { caption: CAPTION, red: 'home', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], flash: ['raidbar'], punchStress: true, keySounds: ['horn'] },
 
   async setup (ctx) {
     const { bot } = ctx
