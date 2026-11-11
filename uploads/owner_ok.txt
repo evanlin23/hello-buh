@@ -28,3 +28,5 @@ psycho_lava_mansion  14b70bd2fadc1cc0  # 2026-11-11: owner pressed 'OK for YouTu
 herobrine_bridge  4d56fa34262b7b55  # 2026-11-11: owner pressed 'OK for YouTube' in the Review Room 19:51 UTC and said in chat: "ok herobrine is fine lmao"
 lucky_dig  6a6cbe726b07b07b  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T20:12Z
 fakerun_any  273c81ca6ab16a62  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T21:18Z
+cooked_bedrock  827dda904eca429e  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T22:10Z (v2, EXECUTIONER; painting kept as is)
+sandart_tnt  f839e49288317528  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T22:11Z
