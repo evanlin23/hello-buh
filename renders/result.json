@@ -1,0 +1,17 @@
+{
+ "name": "villager_job",
+ "stunt": "villager_job",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/42983673525",
+ "source": "552b86a",
+ "queued": "2026-11-11T08:00:41Z",
+ "finished": "2026-11-11T08:04:32Z",
+ "mp4": "renders/out/villager_job.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

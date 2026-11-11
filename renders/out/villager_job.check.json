@@ -1,0 +1,103 @@
+{
+ "stunt": "villager_job",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/villager_job.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "1 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 65,
+     "col": 52,
+     "text": "if (b && b.name === 'lectern') { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }",
+     "what": "a raw bot.dig (snaps onto the block, no destroyDelay)",
+     "use": "K.dig(block)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "LINT villager_job: 1 shots, scene 0.0-6.5 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-6.5   pov    ",
+    "verdict: clean"
+   ]
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 1 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "12 visible sound-making events (break 1, hit 1, place 1, step 6, voice 3), 2 with a sound mark, 10 without (audio.py adds those for a story)",
+    "     0.70s  villager idle voice                -> entity.villager.ambient            5.0 blocks in view  ",
+    "     2.00s  pig step on grass_block            -> entity.pig.step                   13.2 blocks          ",
+    "     2.60s  pig step on grass_block            -> entity.pig.step                   11.6 blocks          ",
+    "     4.05s  digging lectern                    -> block.wood.hit                     5.5 blocks in view  ",
+    "     4.45s  pig idle voice                     -> entity.pig.ambient                10.6 blocks          ",
+    "     5.50s  pig step on grass_block            -> entity.pig.step                   10.7 blocks          ",
+    "     6.15s  pig step on grass_block            -> entity.pig.step                   12.4 blocks          ",
+    "     6.75s  pig step on grass_block            -> entity.pig.step                   13.2 blocks          ",
+    "     6.95s  villager idle voice                -> entity.villager.ambient            5.0 blocks in view  ",
+    "     7.35s  pig step on grass_block            -> entity.pig.step                   14.4 blocks          ",
+    "ambience per shot: -0.20-7.90s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T08:01:52.874Z"
+}
