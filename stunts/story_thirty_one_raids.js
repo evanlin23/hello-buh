@@ -47,9 +47,9 @@ module.exports = {
   wideMaster: true,
   cast: { [GA]: 'zuri', [GB]: 'zuri' },
   idleLife: true,
-  look: { grade: { lift: [0.02, 0.012, 0.02], gamma: [0.98, 1.0, 1.03], gain: [1.1, 1.0, 0.9], sat: 1.08, contrast: 0.12, exposure: 1.04 }, bloom: 0, bloomThreshold: 0.72, vignette: 0.36, grain: 0, dof: { aperture: 0.7 }, shadows: true, rays: 0.4, cloudNight: 0.42 },
+  look: 'bright',   // owner 2026-11-11: stories are bright and punchy (r:rd13834, STANDARDS); was the dusky grade
   shots: {},   // below (module.exports.shots)
-  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'] },
+  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'], punchStress: true },
 
   async setup (ctx) {
     const { bot } = ctx
