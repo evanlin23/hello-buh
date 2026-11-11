@@ -40,7 +40,7 @@ module.exports = {
   self: { model: 'wolf', eye: EYE, extra: { tame: true, collar: 14 } },
   cast: { [GUY]: 'steve' },
   idleLife: true,
-  look: 'bright',          // the owner's bright, punchy look for every story (main e58c77d; it replaced 'auto', which itself replaced the fixed warm look that turned nights magenta)
+  look: { mood: 'bright', rolloff: 0.8 },   // bright with the highlight roll-off (main 2c6e5426: plain 'bright' clipped the day sky to cyan-white, no clouds). The owner's bright, punchy look for every story (main e58c77d; it replaced 'auto', which itself replaced the fixed warm look that turned nights magenta)
   shots: {},
   edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', chatScale: 7, chatY: 0.45, punchStress: true },   // the payoff chat centred (edit.chatAlign: story default) just above the sitting wolf (it fills 0.58-0.90 of the game area, lower left: hb still 23.5)   // "Buh left the game" readable at 300 px wide (vanilla GUI 3 was ~7 px tall there)
 
