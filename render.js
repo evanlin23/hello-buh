@@ -93,6 +93,24 @@ const P = rec.poses
   }
   if (fixed.length) console.log(`filled ${fixed.length} dropped pose tick(s): ${fixed.slice(0, 20).join(' ')}${fixed.length > 20 ? ' ...' : ''}`)
 }
+// A 'seamless' cut ({ dx, dy, dz }: lib/inside.js's hidden cut, a relative /tp mid-stride): the server teleports from
+// its own last position, a fraction of a tick behind the client's, so the step on the teleport tick comes out short
+// (0.14 blocks of a 0.22 walk) and the camera hitches. Over +-6 ticks the camera's path, with the offset taken out,
+// goes on a straight line at an even pace (the walk there is straight; only the camera moves, the world doesn't).
+for (const e of (rec.timeline || []).filter(e => e.event === 'seamless')) {
+  const d = [e.dx || 0, e.dy || 0, e.dz || 0], t = Math.round(e.t / 50)
+  let k = -1
+  for (let i = Math.max(1, t); i <= Math.min(P.length - 1, t + 6) && k < 0; i++) if (Math.hypot(P[i][1] - P[i - 1][1] - d[0], P[i][2] - P[i - 1][2] - d[1], P[i][3] - P[i - 1][3] - d[2]) < 1) k = i
+  const W = 6, i0 = k - W, i1 = k + W
+  if (k < 0 || i0 < 0 || i1 >= P.length) continue
+  const u = (i) => [1, 2, 3].map(c => P[i][c] - (i >= k ? d[c - 1] : 0))
+  const A = u(i0), B = u(i1)
+  for (let i = i0 + 1; i < i1; i++) {
+    const f = (i - i0) / (i1 - i0)
+    for (let c = 1; c <= 3; c++) P[i][c] = +(A[c - 1] + (B[c - 1] - A[c - 1]) * f + (i >= k ? d[c - 1] : 0)).toFixed(4)
+  }
+  console.log(`seamless cut at tick ${k}: the camera path evened over ticks ${i0}-${i1}`)
+}
 // client-side placement prediction: a stunt can mark('place', {x, y, z}) on the tick it uses an item
 // on a block. The block change the server sends back 1-3 ticks later is moved to that tick, as
 // BlockItem.place predicts on the client; an eye of ender is not predicted (EnderEyeItem.useOn returns
@@ -132,14 +150,19 @@ function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.
 const bobState = []
 {
   let walk = 0, bob = 0
+  // a 'seamless' mark ({ dx, dy, dz }: lib/inside.js's hidden cut) is a relative /tp mid-stride: the walk goes on, so
+  // the step that tick is the move minus the offset (the bob's phase and amplitude carry straight across the cut)
+  const SEAMLESS = (rec.timeline || []).filter(e => e.event === 'seamless').map(e => ({ t: e.t / 50, d: [e.dx || 0, e.dy || 0, e.dz || 0] }))
   for (let i = 0; i < P.length; i++) {
     const a = P[Math.max(0, i - 1)], b = P[i]
+    const s = SEAMLESS.find(s => i >= s.t && i <= s.t + 6 && Math.hypot(b[1] - a[1] - s.d[0], b[2] - a[2] - s.d[1], b[3] - a[3] - s.d[2]) < 1)
+    const d = s ? s.d : [0, 0, 0]
     // a teleport (a cut: over a block in one tick, faster than any sprint) moves the player without
     // move(), so vanilla adds no walkDist; counting it bobbed the view for a few ticks after every cut
     // and the whole frame swayed (worker 5, story_runaway f297-300, f939-942)
-    let h = Math.hypot(b[1] - a[1], b[3] - a[3])
+    let h = Math.hypot(b[1] - a[1] - d[0], b[3] - a[3] - d[2])
     if (h > 1) h = 0
-    const onGround = Math.abs(b[2] - a[2]) < 1e-4
+    const onGround = Math.abs(b[2] - a[2] - d[1]) < 1e-4
     walk += h * 0.6
     bob += ((onGround ? Math.min(0.1, h) : 0) - bob) * 0.4
     bobState.push({ walk, bob })
@@ -647,10 +670,11 @@ const dayTimeAt = (t) => { if (process.env.DAY_TIME) return Number(process.env.D
 const RAIN = [], THUNDER = []
 {
   const w0 = DIM !== 'overworld' ? 'clear' : (process.env.WEATHER || rec.weather || STUNT_MOD.weather || 'clear')
-  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather])
+  // a mark with `cut: true` lands the new weather at once (a montage cut to another day: not a 5 s fade on screen)
+  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather, !!e.cut])
   let r = w0 !== 'clear' ? 1 : 0, th = w0 === 'thunder' ? 1 : 0, w = w0, k = 0
   for (let i = 0; i <= P.length + 2; i++) {
-    while (k < marks.length && marks[k][0] <= i) w = marks[k++][1]
+    while (k < marks.length && marks[k][0] <= i) { w = marks[k][1]; if (marks[k][2]) { r = w !== 'clear' ? 1 : 0; th = w === 'thunder' ? 1 : 0 } k++ }
     if (i > 0) { r = Math.max(0, Math.min(1, r + (w !== 'clear' ? 0.01 : -0.01))); th = Math.max(0, Math.min(1, th + (w === 'thunder' ? 0.01 : -0.01))) }
     RAIN.push(r); THUNDER.push(th)
   }
@@ -1122,6 +1146,14 @@ const MOON_PHASE = (() => {
   return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
 })()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
+// Real skins (lib/skins.js): the bot's username (rec.user, HB_SELF_USER to override) and actors on lib/real_skins.json
+// draw the owner's own skin from work/skins/<name>.png (private assets, else Mojang via scripts/fetch_skin.py, else steve)
+const SKINS = require('./lib/skins')
+const SELF_USER = process.env.HB_SELF_USER || rec.user || null
+SKINS.ensureSkins(SKINS.wantedSkins({ user: SELF_USER, cast: STUNT_MOD.cast, actors: [...ACTOR.values()].map(a => a.user) }))
+const SELF_SKIN = SKINS.selfSkin({ env: process.env, cast: STUNT_MOD.cast, user: SELF_USER })
+const skinExtra = (k) => k.slim ? { skin: k.skin, slim: true } : { skin: k.skin }
+if (SELF_SKIN.real) console.log(`skin: the player is ${SELF_SKIN.real}'s own skin (${SELF_SKIN.slim ? 'slim' : 'wide'} arms)`)
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
 // a stunt with no `look` gets 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "hello buh should use the bright grading as
@@ -1613,11 +1645,11 @@ const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'ling
 // the living entity (id) whose hitbox the step from p by v passes through, or null: ProjectileUtil.getEntityHitResult
 // tests the mob's box inflated by 0.3 (a 0.6-wide humanoid: 0.6 a side). For the motion fixes' projectile hits.
 const NOT_LIVING = /^(item|experience_orb|falling_block|moving_block|egg|snowball|arrow|spectral_arrow|trident|ender_pearl|splash_potion|lingering_potion|experience_bottle|firework_rocket|armor_stand|painting|item_frame|glow_item_frame|marker|text_display|block_display|item_display|interaction|boat|minecart|lightning_bolt|player)$/
-function projectileHit (rows, self, p, v) {
+function projectileHit (rows, self, p, v, skip) {
   if (!rows) return null
   let best = null
   for (const [id, m] of rows) {
-    if (id === self || NOT_LIVING.test(m[2])) continue
+    if (id === self || NOT_LIVING.test(m[2]) || (skip && skip.has(id))) continue
     const h = ENT_H[m[2]] || 1.8, r = 0.3 + 0.3
     for (let k = 1; k <= 4; k++) {
       const x = p[0] + v[0] * k / 4, y = p[1] + v[1] * k / 4, z = p[2] + v[2] * k / 4
@@ -1625,6 +1657,19 @@ function projectileHit (rows, self, p, v) {
     }
   }
   return best ? best[0] : null
+}
+// Projectile.leftOwner: a projectile can't hit the mob that shot it until it has been outside that mob's box (inflated
+// by 1) once. Its owner here: the living entities whose box holds the spawn point (a snow golem's snowballs flashed the
+// golem itself red on every throw, cells_lab). Returns the ids still to skip at p (empty once it has left).
+function insideOf (rows, self, p) {
+  const out = new Set()
+  if (!rows) return out
+  for (const [id, m] of rows) {
+    if (id === self || NOT_LIVING.test(m[2])) continue
+    const h = ENT_H[m[2]] || 1.8
+    if (Math.abs(p[0] - m[3]) < 1.3 && Math.abs(p[2] - m[5]) < 1.3 && p[1] > m[4] - 1 && p[1] < m[4] + h + 1) out.add(id)
+  }
+  return out
 }
 function simulateDrops (world) {
   const tl = rec.timeline || []
@@ -1654,6 +1699,7 @@ function simulateDrops (world) {
     const t0 = rows[0][0], t1 = rows[rows.length - 1][0]
     const byTick = new Map(rows.map(r => [r[0], r]))
     let gone = false
+    let owner = thrown && MOTION_FIXES ? insideOf(ENT.get(t0), id, [x, y, z]) : null
     for (let tick = t0; tick <= t1; tick++) {
       if (gone) { if (ENT.has(tick)) ENT.get(tick).delete(id); continue }
       while (vi < vs.length && vs[vi][0] <= tick) { [, vx, vy, vz] = vs[vi++] }
@@ -1670,7 +1716,8 @@ function simulateDrops (world) {
         // sends no damage event, and the flight here ignored mobs: names_in_the_woods' eggs flew through Hugo and Pia
         // with no red ("the villagers dont have hte damage red when theyre hit")
         if (MOTION_FIXES && vx * vx + vy * vy + vz * vz > 1e-6) {
-          const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz])
+          if (owner && owner.size) { const still = insideOf(ENT.get(tick), id, [x, y, z]); for (const o of [...owner]) if (!still.has(o)) owner.delete(o) }
+          const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz], owner)
           if (hit !== null) {
             const hs = MOB_HURT.get(hit) || []
             if (!hs.some(h => Math.abs(h - (tick + 1)) <= 3)) { hs.push(tick + 1); MOB_HURT.set(hit, hs) }
@@ -2019,7 +2066,10 @@ function camAtLive (t) {
       }
       lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
     }
-    process.stdout.write(lines.join('\n') + '\n')
+    // (a synchronous write: through a pipe, process.exit cut a long recording's output mid-line, ~64 KB in:
+    // race_grass_mycelium's 2000 ticks, and hb check died parsing it)
+    const out = Buffer.from(lines.join('\n') + '\n')
+    for (let o = 0; o < out.length;) { try { o += fs.writeSync(1, out, o) } catch (e) { if (e.code !== 'EAGAIN') throw e } }
     process.exit(0)
   }
 
@@ -2034,6 +2084,7 @@ function camAtLive (t) {
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
+  app.use('/assets/env/entity/player/wide/real', express.static(path.join(__dirname, 'work', 'skins')))   // real skins (lib/skins.js)
   app.use('/assets/env/entity/player/wide', express.static(path.join(__dirname, 'skins')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
   const server = http.createServer(app)
@@ -2729,6 +2780,8 @@ else:
       // midnight sky light 15 is about (0.22, 0.22, 0.45): reel 1's bucket read as a dark sleeve, review v2 B2)
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb).map(v => v + (1 - v) * lift), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
+      // the bare arm in the player's real skin (the jar's Steve otherwise, as published Shorts drew it)
+      if (SELF_SKIN.real) { cam.hand.skin = SELF_SKIN.skin; if (SELF_SKIN.slim) cam.hand.slim = true }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
@@ -2771,7 +2824,7 @@ else:
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve', ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
+          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -2980,7 +3033,7 @@ else:
     for (const e of ents) {
       if ((e.name !== 'player' && e.name !== 'mannequin') || e.id === -1) continue
       const A = ACTOR.get(e.id), user = (e.extra && (e.extra.user || e.extra.name)) || (A && A.user)
-      e.extra = { ...(e.extra || {}), skin: (STUNT_MOD.cast && user && STUNT_MOD.cast[user]) || 'steve' }
+      e.extra = { ...(e.extra || {}), ...skinExtra(SKINS.actorSkin({ cast: STUNT_MOD.cast, user })) }
       let wp = 0, ws = 0
       if (A) {
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a

@@ -22,7 +22,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
    answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
-   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. The Short ends the moment its
+   cut within ~1 s of the reveal; nothing that doesn't move the question (length itself is not a target: ~50 s at
+   Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
@@ -45,7 +46,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    words; fiction, never "true story"; nothing aimed at kids in the title or description; one quotable line short
    enough to type. Check: review (an ellipsis shows up in pace as an opening pause). r:rd2e17b r:rc7ba87 r:r810b66
 8. **The hero is Buh** (default Steve skin); HelloBuh is the channel. His name is only in-game text (chat, death screen, name tag); **nobody says it aloud**. r:raa4daf r:rc1ccff r:rf8d2e6 r:rdd0a3e
-9. **Length 30-45 s** (pace BLOCK < 30 s, WARN > 45 s). r:rcb4ffc
+9. **Length**: pace BLOCKs only under the floor; over 45 s is a note, never a fix request (owner: "we shouldnt harp
+   too much on length"). r:rcb4ffc r:r08fd98
 10. **The bar is a polished animated short**, serious and professional, with more invention in the plots. r:r416ae4 r:r4b4332
 11. **The story decides, the engine follows**: a shot the renderer can't draw is a feature to build
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
@@ -64,6 +66,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    natural tempo, no speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
    sentence breaks up to 0.95 s (cast `max_pause`; the owner's "This is fine" on a 0.62-0.91 s take, r:r867786), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
    earlier picks are `narrator_sleepover` (k4, rubberband 1.1x +1 st) and `narrator_roblox` (Orus x1.45), history only.
+   Pip stays as is even when a listener hears a girl (owner: "narrator is fine", r:r440615).
    Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c r:r754946
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
@@ -95,7 +98,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
-   hearing (a grandma sounds like an older woman, not gravelly). Check: review (listen). r:r4b4332 r:raf72e0 r:rf8060c
+   hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
+   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
+   (listen), speaker distance to the narrator. r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -146,6 +151,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
+   **What the narration names is on screen while it's said** (story.json `shows` per line: the string on "a little
+   string"), readable at phone size. Check: rec_check `shows` (once built), review. r:r65ef27
 6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
    world (milk buckets, cake, 67 eggs: owner "make it 67 eggs"); never contradicting the story, the same between shots.
    story.json "hotbar" (the harness puts it on before the first frame; docs/engine_features.md "The story's hotbar").
@@ -205,7 +212,7 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
    their quote marks. (`"captions": "word"` gives one word at a time.) **Every spoken word is captioned**, narrator and
    characters: its line's caption is on screen while it's said, every caption word is shown, and the take says the
    caption text. Check: `scripts/caption_av_check.py` coverage (BLOCK; in `./hb check`, before the render with
-   `--events`). r:r61d371 (supersedes r:rbd7cb6)
+   `--events`; on the mp4 it also measures the caption holds from the frames and WARNs on any under 0.25 s). r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
@@ -314,9 +321,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "lucky"**: every next block impossibly luckier than the last, vanilla mechanics staged by the set.
   Check: owner. r:r934ea4
 - **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
-  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2 The walk never stops (no pause before the door); no jump or shift at the cut. r:r81cb9c
 - **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
-  round a beat, the path always wins. Check: owner. r:r2e0a32
+  round a beat, the path always wins. Check: owner. r:r2e0a32 The path breaks through each obstacle, never around it. r:r81cb9c
 - **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
   the caption plays it as a normal complaint. Check: owner. r:r047388
 - **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
@@ -334,10 +341,43 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
-  mob; fast is fine, off-aim reads as hacking. Check: review, the aim-error check (rec_check/lint). r:rffba12
+  mob; fast is fine, off-aim reads as hacking. Check: the aim check (scripts/owner_checks.py + lib/aim.js, in
+  rec_check (`./hb check`) and pace (gates v3): BLOCK an action over 15 deg off its target or off-screen, or over 10%
+  of them past 6 deg; the numbers are in `./hb review`), review. r:rffba12
 - **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
   end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
-  Check: pace/rec_check (settle), lint. r:r24d99a
+  Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
+  frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
+  before it, gates v3). r:r24d99a
+- **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
+- **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
+  (the genre's look); every other turn keeps the followable-camera rule. Check: review; the whip check lets one
+  look from/to straight down within 1 s of each landing mark (landed / placed<N>) or a ctx.mark('whip_ok') through as a
+  note. r:r258d1b
+- **A build never stalls on screen**: while a build is unfinished, new blocks appear every output second; no hold
+  between stages or builds without a captioned beat. Check: pace (build stall: no placement for over 1 s of output
+  time mid-build, from a build's X_start mark to its last block), review. r:r478786
+- **No fart-like sounds**: the payoff hit is a clean impact, splash or vanilla sound; a sound the owner calls out is
+  banned everywhere (lib/hb/banned_sfx.json). Check: lint (banned sound: `./hb check`, lib/hb/stunt_lint.js, every sound
+  audio.py plays from the recording plus edit.sfx), review. r:r4df33c
+- **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
+  (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
+  review. r:r32b983
+- **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b Regular (wide) arms, the slim art widened. r:ra3e80a
+- **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
+  Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those
+  spans), and the finished 1-hour build is shown from several clearly different steady angles joined by hard cuts (a
+  new shot, not a small jump of the same view: the camera-jump check applies only within one angle). Check: owner
+  (whip), rec_check cuts (lapse camera jump per angle), review. r:r66efa4
+- **A time-lapse holds one steady camera** (or one smooth move) across its shots: no jumps in angle, distance or
+  height between consecutive shots of the same build. Check: rec_check cuts (time-lapse camera jump: <= 6 deg, 3 blocks,
+  1.5 up/down across each jump cut; scripts/lapse_cuts.py, in `./hb check` and `./hb record`), review. r:r200cfe
+- **Followable camera**: no whip pans; view turns eased and speed-capped, settling long enough to read. Check:
+  the owner check 'whip' in ./hb check (lib/hb/owner.js whipCheck: BLOCK a turn over 240 deg/s ON SCREEN held > 3
+  ticks, WARN under 0.3 s of rest between big turns; the speed is the recording's x the edit's speed factor, so a x3
+  time-lapse of 220 deg/s turns is 660 deg/s: inside a lapse turn at <= 220/x deg/s, as lib/pixel_art.js does, or hold
+  one steady camera; hard cuts excluded; POV and known camera shots; an edit speed 'cut' inside one shot whose edges turn
+  over 30 deg/s blocks: its two pans read as one snap, so put both edges on rests), review. r:r38374d
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

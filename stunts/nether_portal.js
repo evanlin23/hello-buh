@@ -14,6 +14,8 @@
 // random tick, the anchor's explosion); commands only build the set and raise the random tick speed during the
 // lava wait (shown x6). Lead 2026-11-11: as short as it reads, the stunt on screen in the first 1.5 s.
 const GAP = 16
+// the anchor beat is unproven on camera: false ends on lava (8/10) instead (lead 2026-11-11: two tries, then lava)
+const ANCHOR = true
 const ST = [
   { id: 'flint', sub: 'flint and steel', score: '1/10', w: 2 },
   { id: 'charge', sub: 'fire charge', score: '3/10', w: 2 },
@@ -21,7 +23,7 @@ const ST = [
   { id: 'dispenser', sub: 'redstone', score: '5/10', w: 2 },
   { id: 'lava', sub: 'lava', score: '8/10', w: 2 },
   { id: 'anchor', sub: 'respawn anchor', score: '11/10', w: 6 }   // wider: the blast's fire (1 in 3 per cell) lands in the frame
-]
+].filter(s => ANCHOR || s.id !== 'anchor')
 const LAST = ST.length - 1
 const MID = (ST.length - 1) / 2
 const speed = []
@@ -35,8 +37,11 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'rating every way to light a nether portal 😳',
   edit: {
-    subsY: 0.15, caption: 'rating every way to light a nether portal 😳', red: 'every', dropAt: `lit${LAST}`,
-    startAt: 'st:-0.05', endAfter: `lit${LAST}:1.0`,
+    subsY: 0.15, caption: 'rating every way to light a nether portal 😳',
+    armor: 20,   // the armour bar over the hearts: full netherite (review r1: surviving the anchor's blast with no armour on the HUD read as fake) red: 'every', dropAt: `lit${LAST}`,
+    startAt: 'st:-0.05', endAfter: `lit${LAST}:1.4`,   // settle-ok: the payoff is the lit portal and its card (a text payoff: 1.4 s to read it, pace r1); the anchor's blast is over by then
+    // pace r1: silent until 0.73 s: room tone from frame 1; the last light gets a dip + impact over the song (the publish gate)
+    sfx: [['air', 'start', `lit${LAST}`, { gain: 0.5 }], ['dip', `lit${LAST}`, 0.4], ['impact', `lit${LAST}`, { gain: 1.4 }]],
     speed,
     subs: [...ST.map((s, i) => ['st', s.sub, 1.4, i]), ['lava_a', 'x6', 0.8, 0]],
     cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 1.4 : 0.9, i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
@@ -128,8 +133,12 @@ module.exports = {
       }
       ctx.log('tp did not stick')
     }
-    const place = (loc, face, cur) => {
-      bot._client.write('block_place', { hand: 0, location: loc, direction: face, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })
+    // every click is aimed by construction (lib/act.js, owner r:rffba12): the crosshair lands on the exact point
+    // on the block it clicks before the packet goes
+    const A = require('../lib/act')(ctx)
+    const place = async (loc, face, cur) => {
+      await A.aimAt(new Vec3(loc.x + cur[0], loc.y + cur[1], loc.z + cur[2]), { on: loc, strict: false })
+      bot._client.write('block_place', { hand: 0, location: loc, direction: face, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: aimed above (A.aimAt lands on this exact point; the face matters: fire on top)
       bot.swingArm()
     }
     // one smooth aim step toward a point (callers loop it every tick)
@@ -172,27 +181,27 @@ module.exports = {
       }
       ctx.mark('st', { n, id: t.id })
       const bottom = new Vec3(t.x0 + 1.5, t.y0 + 1, t.pz + 0.5)
-      const lightBottom = (slot, sound) => { place({ x: t.x0 + 1, y: t.y0, z: t.pz }, 1, [0.5, 1, 0.5]); ctx.sound(sound, 1) }
+      const lightBottom = async (slot, sound) => { await place({ x: t.x0 + 1, y: t.y0, z: t.pz }, 1, [0.5, 1, 0.5]); ctx.sound(sound, 1) }
 
       if (t.id === 'flint') {
         ctx.select(SLOT.flint)
         await ctx.easeLookAt(new Vec3(t.xc - 0.3, t.y0 + 3.6, t.pz + 0.5), 300)
         await ctx.easeLookAt(bottom.offset(0, 0.05, 0), 350)
-        lightBottom(SLOT.flint, 'item.flintandsteel.use')
+        await lightBottom(SLOT.flint, 'item.flintandsteel.use')
       } else if (t.id === 'charge') {
         ctx.select(SLOT.charge)
         await ctx.easeLookAt(new Vec3(t.xc + 0.3, t.y0 + 3.6, t.pz + 0.5), 300)
         await ctx.easeLookAt(bottom.offset(0, 0.05, 0), 350)
-        lightBottom(SLOT.charge, 'item.firecharge.use')
+        await lightBottom(SLOT.charge, 'item.firecharge.use')
       } else if (t.id === 'tnt') {
         // TNT right in front of the opening, lit, then back off and watch: the frame stands, nothing lights
         ctx.select(SLOT.tnt)
         await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 - 0.05, t.pz + 1.5), 350)
-        place({ x: t.x0 + 1, y: floor, z: t.pz + 1 }, 1, [0.5, 1, 0.5]); ctx.sound('block.grass.place', 1)
+        await place({ x: t.x0 + 1, y: floor, z: t.pz + 1 }, 1, [0.5, 1, 0.5]); ctx.sound('block.grass.place', 1)
         await bot.waitForTicks(5)
         ctx.select(SLOT.flint)
         await bot.waitForTicks(4)
-        place({ x: t.x0 + 1, y: t.y0, z: t.pz + 1 }, 3, [0.5, 0.5, 1]); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+        await place({ x: t.x0 + 1, y: t.y0, z: t.pz + 1 }, 3, [0.5, 0.5, 1]); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
         ctx.mark('primed')
         const litAt = ctx.tick
         await ctx.easeLook(bot.entity.yaw, bot.entity.pitch + 0.15, 250)
@@ -216,7 +225,7 @@ module.exports = {
         await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 + 1.5, t.pz - 0.5), 350)
         await ctx.easeLookAt(new Vec3(t.x0 + 1.5, t.y0 + 2.1, t.pz - 0.5), 250)
         ctx.select(SLOT.hand)
-        place({ x: t.x0 + 1, y: t.y0 + 2, z: t.pz - 1 }, 1, [0.5, 0.1, 0.5])
+        await place({ x: t.x0 + 1, y: t.y0 + 2, z: t.pz - 1 }, 1, [0.5, 0.1, 0.5])
         ctx.sound('block.stone_button.click_on', 1)
         ctx.mark('button')
         await bot.waitForTicks(4)
@@ -226,8 +235,9 @@ module.exports = {
         await ctx.easeLookAt(bottom.offset(0, 0.4, 0), 200)
       } else if (t.id === 'lava') {
         ctx.select(SLOT.lava)
-        await ctx.easeLookAt(new Vec3(t.x0 + 1.5, floor + 0.5, t.pz + 1.02), 350)   // the pit's back wall (under the frame): the lava goes in the pit
-        bot.activateItem(); bot.swingArm()             // a bucket is a use_item (its own ray from the eye), not a use-on-block
+        // the pit's back wall (under the frame): the bucket's own ray from the eye puts the lava in the pit
+        await A.aimAt(new Vec3(t.x0 + 1.5, floor + 0.5, t.pz + 1.02), { on: { x: t.x0 + 1, y: floor, z: t.pz }, strict: false })
+        bot.activateItem(); bot.swingArm()             // motion-ok: aimed above (a bucket is a use_item, not a use-on-block)
         ctx.sound('item.bucket.empty_lava', 1)
         ctx.mark('poured')
         await bot.waitForTicks(6)
@@ -243,9 +253,9 @@ module.exports = {
         ctx.select(SLOT.glow)
         await ctx.easeLookAt(new Vec3(t.xc, t.y0 + 3, t.pz + 0.5), 300)
         await ctx.easeLookAt(a.offset(0.5, 1, 0.5), 300)
-        const use = () => place(a, 1, [0.5, 1, 0.5])
+        const use = () => place(a, 1, [0.5, 1, 0.5])   // async: awaited below
         for (let c = 0; c < 4; c++) {                   // four glowstone: fully charged
-          use(); ctx.sound('block.respawn_anchor.charge', 1, 1 + c * 0.05)
+          await use(); ctx.sound('block.respawn_anchor.charge', 1, 1 + c * 0.05)
           ctx.mark('charge', { c })
           await bot.waitForTicks(6)
         }
@@ -254,7 +264,7 @@ module.exports = {
         await ctx.easeLookAt(new Vec3(t.xc, t.y0 + 1.4, t.pz + 0.5), 300)
         await ctx.easeLookAt(a.offset(0.5, 1, 0.5), 200)
         const before = booms
-        use()
+        await use()
         for (let k = 0; k < 20 && booms === before; k++) await bot.waitForTicks(1)
         for (let k = 0; k < 4 && !portalIn(t); k++) await bot.waitForTicks(1)
         for (let k = 0; k < 16 && !portalIn(t); k++) await bot.waitForTicks(1)
@@ -272,6 +282,7 @@ module.exports = {
       for (let k = 0; k < 20 && !portalIn(t); k++) await bot.waitForTicks(1)
       if (!portalIn(t)) { ctx.log('no portal at', t.id); return false }
       ctx.mark(`lit${n}`)
+      if (n === LAST) { await admire(t, 30); bot.removeListener('physicsTick', portalParts); return !ctx.died }   // the last frame (lava when ANCHOR is off)
       await admire(t)
     }
     return false

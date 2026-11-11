@@ -13,7 +13,9 @@ Checks (ranked by how often reviews flagged them):
   1. cuts      around every hard cut (a teleport, a speed "cut" span, a respawn): the first frames after the cut
                must already be the new shot's pose (no second jump, no 1-3 frame snap of the aim or the position,
                no stand-up/crouch); no whip in the last frames before it; a time-of-day change lands ON a cut.
-               Also teleports under 4 blocks with no `cut` mark (the renderer glides them).
+               Also teleports under 4 blocks with no `cut` mark (the renderer glides them). And a time-lapse's jump cuts
+               (a speed "cut" between two sped-up spans, no teleport): the camera turns <= 6 deg, moves <= 3 blocks and
+               <= 1.5 up/down across each (owner r:r200cfe; scripts/lapse_cuts.py).
   1b. cast     a cast member that jumps over 0.5 block 1-4 ticks after a cut's frame (the new shot opens on it in the
                old spot), or moves in stair steps (holds 2+ ticks, then moves, again and again: under 20 Hz, it reads as
                teleporting). scripts/cast_motion.py; the kit (K.actor, K.cutShot) makes both right by construction.
@@ -32,6 +34,10 @@ Checks (ranked by how often reviews flagged them):
   5c. sight   a clear line of sight to every dig and place (STANDARDS 3b.4, scripts/rec_sight.js): no face of the
                block (a place: the clicked face of a block it goes against) visible from the eye, or the crosshair
                hitting another block first
+  5d. aim     the crosshair on every action (r:rffba12, scripts/owner_checks.py + lib/aim.js): a place, break, block or
+               entity use (dye, shear, name tag) over 15 deg off its target or off-screen, or over 10% of them past 6 deg
+  5e. settle  no hard cut or end while falling blocks, explosion debris or a dying mob still move in view
+               (r:r24d99a, scripts/owner_checks.py)
   6-9. the owner's notes (2026-11-10), from `./hb owner` (lib/hb/owner.js; --no-owner skips them):
      flat      a story shot whose visible world is mostly a flat cleared plain (and the set's footprint and relief)
      subject   a line names a subject (lines[].look, or TORCH / MOM / LIBRARIAN...) and the camera isn't on it
@@ -54,6 +60,7 @@ HERE = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE / "scripts"))
 from beat_audit import SKIP, camera_turns, edit_config, load_rec, payoff_report, trim_start  # noqa: E402
 from timewarp import Warp, edit_spans  # noqa: E402
+import owner_checks as OC  # noqa: E402
 
 FPS = 60
 EYE = 1.62
@@ -209,20 +216,8 @@ NOISE |= {"place_on"}   # the kit's mark for K.place (which block it went agains
 
 
 def sight_findings(rec_p):
-    """scripts/rec_sight.js over the recording -> {digs, places, found: [...]} or {error}."""
-    try:
-        res = subprocess.run(["node", str(HERE / "scripts" / "rec_sight.js"), str(pathlib.Path(rec_p).resolve()), "--json"],
-                             capture_output=True, text=True, cwd=HERE)
-    except OSError as e:
-        return {"error": str(e)}
-    if res.returncode != 0:
-        err = (res.stderr or "").strip().splitlines() or ["?"]
-        why = next((ln.strip() for ln in reversed(err) if "Cannot find module" in ln or "Error" in ln), err[-1].strip())
-        return {"error": why + (" (run `npm ci`)" if "Cannot find module" in why else "")}
-    try:
-        return json.loads((res.stdout or "").strip().splitlines()[-1])
-    except (ValueError, IndexError):
-        return {"error": "rec_sight.js printed no JSON"}
+    """scripts/rec_sight.js over the recording -> {digs, places, found: [...], aim} or {error} (scripts/owner_checks.py)."""
+    return OC.sight_json(rec_p)
 
 
 def sight_findings_msgs(res):
@@ -243,7 +238,7 @@ def sight_findings_msgs(res):
         if f.get("source") == "inferred":
             lvl = "WARN"
             msg += " (a place guessed from a swing and a new block: K.place marks its own)"
-        out.append((lvl, f["tick"], msg + ": stand where the eye sees it, or let K.dig / K.place pick the face (STANDARDS 3b.4)"))
+        out.append((lvl, f["tick"], msg + ": stand where the eye sees it, or let A.place / A.dig (lib/act.js) or K.dig / K.place pick the face (STANDARDS 3b.4)"))
     return out
 
 
@@ -258,6 +253,7 @@ def main():
     ap.add_argument("--no-owner", action="store_true", help="skip the owner-note checks (./hb owner; hb check runs them itself)")
     ap.add_argument("--strict", action="store_true", default=os.environ.get("REC_CHECK_STRICT") == "1",
                     help="exit 2 when a check could not run (default with REC_CHECK_STRICT=1)")
+    ap.add_argument("--summary", help="write the aim and settle results (and every finding) as JSON here (scripts/gates.py, ./hb review)")
     ap.add_argument("--package", help="a videos-branch package (shorts/<name>): its recording.json.gz, source/<name>.js and the "
                     "edit it was published with (metadata.json), for checking published Shorts")
     a = ap.parse_args()
@@ -380,6 +376,12 @@ def main():
 
     # ---------------------------------------------------------------- 1. cuts
     n = len(ks)
+    # a time-lapse holds one steady camera (or one smooth move) across its jump cuts (owner r:r200cfe, scripts/lapse_cuts.py)
+    import lapse_cuts
+    for r_ in lapse_cuts.lapse_cuts(warp.spans if warp else [], tl, P):
+        if r_["problems"]:
+            o_ = out_t(r_["a"])
+            R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["a"]), lapse_cuts.message(r_), near(r_["a"] * 20))
     # F1 windows (HUD hidden, render.js/edit.py): a cinematic drone camera, not a player
     f1, f1_on = [], None
     for e in tl:
@@ -862,7 +864,7 @@ def main():
                     f"(lib/story.js mergeHotbar keeps the story's items)", tick=ft)
 
     # ---------------------------------------------------------------- 5c. sight (STANDARDS 3b.4, scripts/rec_sight.js)
-    sight_res = sight_findings(rec_p)
+    sight_res = OC.sight_json(rec_p)
     if sight_res.get("error"):
         not_run.append(f"sight ({sight_res['error']})")
     for lvl, tick, msg in sight_findings_msgs(sight_res):
@@ -871,6 +873,50 @@ def main():
         if not (start <= o < end_o) or any(sa <= tick / 20 <= sb for sa, sb in cut_spans):
             continue
         add(lvl, "sight", min(n - 1, max(0, int(round(o * FPS)) - k0)), msg, tick=tick)
+
+    # ---------------------------------------------------------------- 5d. aim on the action (r:rffba12, scripts/owner_checks.py)
+    def first_person(tick):
+        o = out_t(tick / 20)
+        return start <= o < end_o and not any(sa <= tick / 20 <= sb for sa, sb in cut_spans) and not in_f1(tick) and not in_cam(tick)
+    aim_res = OC.aim_report(sight_res, first_person) if "aim" in sight_res else None
+    if aim_res is None:
+        not_run.append(f"aim ({sight_res.get('error') or 'rec_sight.js gave no aim'})")
+    else:
+        for lvl, tick, msg in aim_res["findings"]:
+            add(lvl, "aim", min(n - 1, max(0, int(round(out_t(tick / 20) * FPS)) - k0)), msg, tick=tick)
+
+    # ---------------------------------------------------------------- 5e. let the payoff settle (r:r24d99a)
+    # the last frames before every hard cut and the end: falling blocks / debris / a death still moving in view
+    tracks = OC.debris_tracks(rec)
+    tracks_end = OC.debris_tracks(rec, puffs=True)   # the end also waits out the rendered smoke and debris (which_door)
+    cam_at = lambda k: cam.at(min(len(P) - 1, k))
+    settle_res = {"tracks": len(tracks_end), "ok": True, "findings": []}
+    if tracks_end:
+        checks_at = [(j - 1, kind) for j, kind in cuts] + [(n - 1, "end")]
+        for j, kind in checks_at:
+            if j < 0 or kind == "respawn":   # (a respawn cut follows the death screen: the world isn't on screen)
+                continue
+            k_out = src_tick[j]
+            any_v = in_cam(k_out) or in_f1(k_out)   # (a camera shot: anything near the player)
+            trs = tracks_end if kind == "end" else tracks
+            mv = OC.moving(trs, k_out, cam_at, any_v, seen=3) or OC.moving(trs, k_out - 1, cam_at, any_v, seen=3)
+            if not mv:
+                continue
+            k_set = OC.settle_after(trs, k_out, cam_at, 400, any_v)
+            more = (k_set - k_out) / 20 if k_set is not None else None   # (recording seconds: past a cut the edit never shows it)
+            if more is not None and more <= OC.SETTLE_GRACE:
+                continue
+            when = (f"it settles at src {k_set / 20:.2f}s, {more:.2f} s of recording later" if more is not None else "still moving 20 s later")
+            what = "ends" if kind == "end" else f"cuts ({kind})"
+            msg = (f"settle: the Short {what} while {OC.describe(mv)} still move{'s' if len(mv) == 1 else ''} in view ({when}): "
+                   + ("end after it (endAfter on a mark after the settle, +1.0 s at most)" if kind == "end" else "cut after it lands")
+                   + " (owner: let the last pillar of sand all fall before we end/cut; STANDARDS r:r24d99a)")
+            # only the rendered smoke left (PUFF_TICKS is an estimate): a WARN here; pace measures the finished mp4's last
+            # 0.6 s and blocks when the picture still moves
+            lvl = "WARN" if kind == "end" and all(t["kind"] == "puff" for t in mv) else "BLOCK"
+            settle_res["findings"].append((lvl, k_out, msg))
+            add(lvl, "settle", j, msg, tick=k_out)
+        settle_res["ok"] = not any(lvl == "BLOCK" for lvl, _, _ in settle_res["findings"])
 
     # ---------------------------------------------------------------- 6-9. the owner's notes (./hb owner, lib/hb/owner.js)
     owner_note = ""
@@ -931,17 +977,25 @@ def main():
         print("  " + owner_note.strip())
     if sound_note:
         print("  " + sound_note)
+    if aim_res is not None:
+        print(f"  aim (r:rffba12): {aim_res['summary']}" + ("" if aim_res["ok"] else f": {aim_res['blockers']} BLOCKER(s)"))
+    print(f"  settle (r:r24d99a): {len(tracks)} falling block / debris / death track(s)" + (f", {len(settle_res['findings'])} cut/end while they move" if settle_res["findings"] else ", none moving at a cut or the end"))
     if cam_spans:
         secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
         print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
               f"{' (' + ', '.join(f'{v} {k}' for k, v in skipped.items()) + ')' if skipped else ''}; run LINT=1 node render.js {rec_p} for the cameras")
-    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "sight": 5.7, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
+    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "sight": 5.7, "aim": 5.8, "settle": 5.9, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
     for level, title in (("BLOCK", "BLOCKERS"), ("WARN", "WARNINGS")):
         items = sorted([it for it in R.items if it[0] == level], key=lambda it: (order.get(it[1], 9), it[2][0] if it[2] and it[2][0] is not None else -1))
         print(f"\n{title} ({len(items)}):" if items else f"\n{title}: none")
         for _, check, t, msg, nr in items:
             ts = f"{t[0]:6.2f}s (src {t[1]:6.2f}s)" if t and t[0] is not None else (f"   src {t[1]:6.2f}s     " if t else " " * 22)
             print(f"  [{check:<7}] {ts}  {msg}" + (f"   [{nr}]" if nr else ""))
+    if a.summary:
+        pathlib.Path(a.summary).write_text(json.dumps({
+            "aim": {k: v for k, v in (aim_res or {"ok": None, "summary": "did not run"}).items()},
+            "settle": settle_res, "blockers": nb, "warnings": nw,
+            "items": [{"level": l, "check": c, "out": t[0] if t else None, "src": t[1] if t else None, "msg": m} for l, c, t, m, _ in R.items]}, indent=1))
     verdict = "FAIL" if nb else ("OK, BUT THE SET CHECK DID NOT RUN" if not_run else "OK")
     print(f"\n{verdict}: {nb} blocker(s), {nw} warning(s)" + (" -- fix by re-recording before rendering" if nb else "")
           + (f"\n  not checked: {'; '.join(not_run)}" + (" (exit 2: --strict / REC_CHECK_STRICT=1)" if a.strict else "") if not_run else ""))

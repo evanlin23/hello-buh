@@ -19,8 +19,14 @@ Coverage (owner 2026-11-11: "should we have captions on all of the words, not ju
   every word of every line (narrator and characters, voice/words.json placed where the edit lays the line) has its
   line's caption on screen while it is spoken (its middle, +-40 ms); every caption word of the line (voice.json
   captions) appears in the caption events; and the take says the caption text (Whisper on each line's wav, the take
-  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words); and no caption is on screen
+  gate's matcher: >= 75 % of the letters, every line heard, no run of 3+ extra words; a line whisper-base fails is
+  re-heard with whisper-small.en and is only a WARN if that hears it right); and no caption is on screen
   under 0.25 s (whole frames: a flash can't be read). Any miss is a BLOCK.
+
+Short captions in the video (a WARN, not a BLOCK; Buh Stories lead 2026-11-11): with an mp4, the caption holds are
+also measured from the frames (video_holds: outlined white text in the caption band, a change only when the text
+itself changes, not a cut or a GUI under it), so a flash the caption track's own times can't show (a video edited
+from an older voice.json) is still printed.
 
 BLOCK (exit 1) when |median offset| > 33 ms or over 10% of words are more than 100 ms off, or on any coverage miss. Prints the median,
 p10/p90, a per-line table (a constant offset, drift along the Short, or one bad line) and the worst words. Exit 2:
@@ -205,6 +211,69 @@ def flashes(events, frame_of=lambda t: int(round(t * FPS)), min_s=SHOW_MIN):
     return [(t0, t1, text, lid) for t0, t1, text, lid in events if (frame_of(t1) - frame_of(t0)) / FPS < min_s - 1e-9]
 
 
+# the video-side short-caption WARN: caption holds measured from the frames themselves, so a flash the caption
+# track's own times don't show (a video cut from another voice.json, an edit bug) is still seen. A WARN, not a BLOCK.
+HOLD_SCALE = 2           # the band is read at half size (900x240 -> 450x120)
+HOLD_BURST = 0.015       # a frame where over 1.5% of the band's white (>235) pixels flip starts a burst of change
+HOLD_TEXT = 0.35         # a burst is a caption change only if this share of the outlined text is new AND gone
+HOLD_POP = 6            # frames: the caption's pop-in (story_track); a change this soon after one is part of it
+HOLD_INK = 0.005         # outlined text on screen after the change (else it is a blank gap, not a caption)
+
+
+def _grow(m, r):
+    """m (boolean, ..., h, w) grown by r pixels in every direction (a square dilation, numpy only)."""
+    o = m.copy()
+    for dy in range(-r, r + 1):
+        for dx in range(-r, r + 1):
+            if dy or dx:
+                o |= np.roll(np.roll(m, dy, -2), dx, -1)
+    return o
+
+
+def _text_change(a, b):
+    """The share of caption text that changed between two outlined-text masks: the smaller of 'a's text gone in b'
+    and 'b's text new since a' (1 px slack for the pop). A background cut or a GUI under a steady caption adds or
+    removes white on one side only; a new caption does both."""
+    if not a.any() or not b.any():
+        return 1.0 if (a.any() or b.any()) else 0.0
+    return min((a & ~_grow(b, 1)).sum() / a.sum(), (b & ~_grow(a, 1)).sum() / b.sum())
+
+
+def video_holds(band, fps=FPS, min_s=SHOW_MIN):
+    """band: the caption band's frames, gray uint8 (n, h, w). -> [(start s, hold s)] for each caption on screen
+    under min_s: from one caption change to the next. The text is white with a dark outline, so the mask is white
+    pixels with dark (<70) within 2 px: Minecraft's own whites (snow, GUI, gold) rarely have that edge everywhere."""
+    white = band > 235
+    text = white & _grow(band < 70, 2)
+    hot = (white[1:] ^ white[:-1]).mean(axis=(1, 2)) > HOLD_BURST   # hot[i]: frame i+1 vs frame i
+    changes, i = [], 0
+    while i < len(hot):
+        if not hot[i]:
+            i += 1
+            continue
+        s = i + 1
+        while i < len(hot) and hot[i]:
+            i += 1
+        e = i   # the last changed frame
+        # (a change inside the pop of the one before, 0.84 -> 1.06 scale over 6 frames, is that caption still arriving)
+        if (not changes or s - changes[-1] > HOLD_POP) and _text_change(text[max(0, s - 2)], text[min(len(band) - 1, e + 1)]) > HOLD_TEXT:
+            changes.append(s)
+    out = []
+    for a, b in zip(changes, changes[1:]):
+        if (b - a) / fps < min_s - 1e-9 and text[min(b - 1, a + 6)].mean() > HOLD_INK:
+            out.append((round(a / fps, 2), round((b - a) / fps, 2)))
+    return out
+
+
+def caption_band(mp4, track):
+    """The caption band of the finished Short (900x240 around the caption centre), read at half size. -> uint8 array"""
+    x0, w, h = (track.W - 900) // 2, 900 // HOLD_SCALE, 240 // HOLD_SCALE
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(mp4), "-vf",
+                          f"crop=900:240:{x0}:{track.CY - 122},scale={w}:{h}:flags=area,format=gray", "-f", "rawvideo", "-"],
+                         capture_output=True, check=True).stdout
+    return np.frombuffer(raw, np.uint8).reshape(-1, h, w)
+
+
 def uncaptioned(spoken, events, tol=COVER_TOL):
     """spoken: [(line id, word, start s, end s)] in the edit's time; events: [(t0, t1, text, line id)] (the caption
     track). -> the spoken words with no caption of their own line on screen at their middle."""
@@ -255,23 +324,46 @@ def take_word_fails(captions, heard):
     return out
 
 
-def whisper_lines(wavs):
-    """{line id: [(word, a, b)]} from Whisper (align.words) on each wav, in this process if transformers is here, else
-    through the TTS venv; None when neither can run."""
+def whisper_lines(wavs, model=None):
+    """{line id: [(word, a, b)]} from Whisper (align.words; model: a checkpoint, default align.WHISPER) on each wav, in
+    this process if transformers is here, else through the TTS venv; None when neither can run."""
+    if not wavs:
+        return {}
     try:
         import align
-        return {lid: align.words(str(w)) for lid, w in wavs.items()}
+        import transformers   # noqa: F401  (align imports it lazily: check here, so a missing one goes to the venv)
+        return {lid: align.words(str(w), model or align.WHISPER) for lid, w in wavs.items()}
     except ImportError:
         pass
     py = os.path.expanduser("~/.hb-tts/bin/python")
     if not os.path.exists(py):
         return None
-    code = ("import sys, json; sys.path.insert(0, sys.argv[1]); import align; "
-            "print(json.dumps({k: align.words(v) for k, v in json.loads(sys.argv[2]).items()}))")
-    r = subprocess.run([py, "-c", code, str(HERE), json.dumps({k: str(v) for k, v in wavs.items()})], capture_output=True, text=True)
+    code = ("import sys, json; sys.path.insert(0, sys.argv[1]); import align; m = sys.argv[3] or align.WHISPER; "
+            "print(json.dumps({k: align.words(v, m) for k, v in json.loads(sys.argv[2]).items()}))")
+    r = subprocess.run([py, "-c", code, str(HERE), json.dumps({k: str(v) for k, v in wavs.items()}), model or ""],
+                       capture_output=True, text=True)
     if r.returncode:
         return None
     return {k: [tuple(x) for x in v] for k, v in json.loads(r.stdout.strip().splitlines()[-1]).items()}
+
+
+CONFIRM_MODEL = "openai/whisper-small.en"   # = align.WHISPER_CONFIRM (kept here so the tests need no transformers)
+
+
+def confirm_word_fails(captions, fails, rehear):
+    """A take whose words whisper-base hears wrong is a BLOCK only if a bigger Whisper agrees (Buh Stories lead
+    2026-11-11: base hears a kid's "Then he said:" as "Denny said?", small.en and medium.en hear it right).
+    fails: take_word_fails with base; rehear(line ids) -> {line id: words} from CONFIRM_MODEL, or None if it can't run.
+    -> (block {line id: [reason]}, warn {line id: [reason]}): a line small.en hears right is a WARN; if small.en can't
+    run, every fail stays a BLOCK (unconfirmed is not cleared)."""
+    if not fails:
+        return {}, {}
+    heard = rehear(sorted(fails))
+    if heard is None:
+        return dict(fails), {}
+    still = take_word_fails({lid: captions[lid] for lid in fails}, heard)
+    return ({lid: fails[lid] for lid in fails if lid in still or lid not in heard},
+            {lid: fails[lid] for lid in fails if lid in heard and lid not in still})
 
 
 def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t: int(round(t * FPS))):
@@ -286,12 +378,15 @@ def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t
     unc = uncaptioned(spoken, events)
     no_words = [lid for lid in lines if not words.get(lid)]
     miss = missing_caption_words({lid: v.get("captions", []) for lid, v in lines.items()}, events)
-    wf, listened = {}, False
+    wf, warn_wf, listened = {}, {}, False
     if listen:
-        heard = whisper_lines({lid: sd / "voice" / f"{lid}.wav" for lid in lines if (sd / "voice" / f"{lid}.wav").exists()})
+        wavs = {lid: sd / "voice" / f"{lid}.wav" for lid in lines if (sd / "voice" / f"{lid}.wav").exists()}
+        heard = whisper_lines(wavs)
         if heard is not None:
             listened = True
-            wf = take_word_fails({lid: v.get("captions", []) for lid, v in lines.items()}, heard)
+            caps = {lid: v.get("captions", []) for lid, v in lines.items()}
+            wf, warn_wf = confirm_word_fails(caps, take_word_fails(caps, heard),
+                                             lambda ids: whisper_lines({k: wavs[k] for k in ids}, CONFIRM_MODEL))
     fl = flashes(events, frame_of)
     block = bool(unc or miss or wf or no_words or fl)
     if verbose:
@@ -309,11 +404,15 @@ def coverage(story_dir, vs, events, verbose=True, listen=True, frame_of=lambda t
             print(f"  never shown: {lid} {' '.join(ws)!r}")
         for lid, why in wf.items():
             print(f"  take vs captions: {lid}: {'; '.join(why)}")
+        for lid, why in warn_wf.items():
+            print(f"  WARN take vs captions: {lid}: only whisper-base disagrees ({'; '.join(why)}); {CONFIRM_MODEL} hears the "
+                  "captions: not a BLOCK")
         if block:
             print(f"fix: re-align (scripts/align.py {story_dir}) and re-edit; a take that says other words than story.json is a re-take, "
                   "or change the line's text to what was said")
     return {"block": block, "uncaptioned": [list(u) for u in unc], "no_words": no_words, "missing": miss, "words": wf,
-            "flashes": [list(f) for f in fl], "listened": listened}
+            "flashes": [list(f) for f in fl], "listened": listened,
+            "words_warn": warn_wf}
 
 
 def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
@@ -337,11 +436,12 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
                 continue
             rows.append({"k": k, "line": lid, "word": text, "shown": t0, "heard": hw[i][1]})
         s_audio = s_video = 0.0
-        peak, frames_ok, frame_err = None, 0, []
+        peak, frames_ok, frame_err, vh = None, 0, [], None
         if mp4:
             mix = read_audio(mp4)
             s_audio, peak = audio_offset(narr, mix)
             s_video = s_audio
+            vh = video_holds(caption_band(mp4, track))
             got = caption_frames(mp4, [ev[r["k"]] for r in rows], s_video, track, story_dir, tmp)
             for r, f in zip(rows, got):
                 p = getattr(track, "frame_of", lambda t: int(round(t * FPS)))(r["shown"] - s_video)
@@ -375,6 +475,13 @@ def check(story_dir, rec_path, mp4=None, track_path=None, verbose=True):
     if len(rows) > 5 and np.ptp(t) > 1:
         res["drift_ms_per_10s"] = float(np.polyfit(t, off, 1)[0] * 10 * 1000)
     res["coverage"] = cov
+    if vh is not None:
+        res["video_short"] = vh
+        if verbose:
+            print(("WARN" if vh else "OK") + f": caption holds seen in the video ({len(vh)} under {SHOW_MIN:.2f} s)")
+            for t, d in vh[:10]:
+                print(f"  short in the video: a caption on screen {d:.2f} s from {t:.2f} s (video time): look at the frames; "
+                      "re-edit from the current voice.json (./hb render <stunt> --reuse)")
     timing_blk = abs(med) > MEDIAN_MAX or miss > MISS_MAX
     blk = timing_blk or cov["block"]
     if verbose:

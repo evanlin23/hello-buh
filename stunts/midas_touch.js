@@ -7,7 +7,7 @@ module.exports = {
   name: 'midas_touch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: you got the midas touch 🤑',
-  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', dropAt: 'touch', startAt: 'touch:-0.2', endAfter: 'wave:1.0' },
+  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', dropAt: 'touch', startAt: 'touch:-0.2', endAfter: 'wave:1.0', punch: [['wave', 0, 1.06]], flash: [['wave', 0, 0.4]], sfx: [['dip', 'wave', 0.35], ['impact', 'wave']] },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -97,17 +97,17 @@ module.exports = {
     wp = P(8); ctx.mark('walk')                               // walk on, gilding the path and the trees alongside
     await ctx.easeLook(Math.PI - 0.3, -0.3, 1100)
     // the trees on the left (looking right from here, PI + 0.7, gilded the cabin 7 s early)
-    await ctx.easeLook(Math.PI - 0.8, 0.05, 1200)
-    await ctx.easeLook(Math.PI - 1.0, 0.3, 1300)
+    // eyes on the trunks and the ground beside the path, never the sky (a look over the treetops gilded nothing for 3.4 s)
+    await ctx.easeLook(Math.PI - 0.8, -0.12, 1200)
+    await ctx.easeLook(Math.PI - 1.0, -0.02, 1300)
     // on toward the cabin, stopping back from it so it's all in frame, and it goes gold
     wp = P(12)
     const cab = new ctx.Vec3(this.cabin.x + 0.5, this.cabin.y + 1.5, this.cabin.z + 0.5)
     await ctx.easeLookAt(cab, 1100)
     ctx.mark('cabin')
     const cyaw = bot.entity.yaw, cp = bot.entity.pitch
-    await ctx.easeLook(cyaw - 0.25, cp + 0.25, 1200)
-    await ctx.easeLook(cyaw + 0.25, cp - 0.1, 1200)
-    await ctx.easeLook(cyaw, cp + 0.15, 1000)
+    await ctx.easeLook(cyaw - 0.25, cp + 0.2, 800)    // roof, walls, done: the cabin goes gold in ~1.5 s (a 3.4 s hold was dead)
+    await ctx.easeLook(cyaw + 0.2, cp - 0.1, 700)
     // (the 'stronger' walk on to P(27) is gone: on the hilly ground there it walked into its own gold and the
     // camera sat in gold walls for 8 s, 2026-11-11 review). The cabin is the build-up; the wave is the payoff.
     wp = null

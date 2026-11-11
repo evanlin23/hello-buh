@@ -10,8 +10,9 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
                                                    of footage) so it never reads as dead space.
   counter: {"at": [EVENT, ...], "total": N}        "3/5" beat counter in the top-left of the game
            or [EVENT, ...]                         view, popping up on each mark
-  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?]]  big impact text popping on a mark ("10/10",
-                                                   "NO WAY"); COLOR: white|red|green|yellow|blue|gold
+  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?, STYLE?, {y}?]]  big impact text popping on a mark ("10/10",
+                                                   "NO WAY"); COLOR: white|red|green|yellow|blue|gold;
+                                                   {"y": 0.8}: its height in the game view (default 0.36)
   zoom:    [[START[:off], END[:off], SCALE]]       a held push-in on the crosshair (eases in 0.4 s,
                                                    back out over 0.25 s after END); multiplies with punch.
                                                    It upscales the rendered frame, so above ~1.3-1.4x
@@ -50,7 +51,7 @@ sys.path.insert(0, str(HERE))
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 COLORS = {"white": (255, 255, 255), "red": (255, 60, 50), "green": (90, 255, 90), "yellow": (255, 225, 40),
-          "blue": (90, 175, 255), "gold": (255, 190, 30), "orange": (255, 140, 30)}
+          "blue": (90, 175, 255), "gold": (255, 190, 30), "orange": (255, 140, 30), "purple": (200, 120, 255)}
 
 
 def _load(x):
@@ -441,6 +442,75 @@ def tag_img(text, color, scale):
     return img
 
 
+def score_track(spec, timeline, start):
+    """[(t, a, b)] in Short time for edit.score = {"event": "score", "a": [LABEL, COLOR], "b": [LABEL, COLOR]}: the
+    marks' a/b shares (0-1, format "race": lib/race.js)."""
+    sp = _load(spec)
+    if not sp:
+        return [], None
+    ev = sp.get("event", "score")
+    pts = sorted((e["t"] / 1000 - start, float(e["a"]), float(e["b"])) for e in timeline if e["event"] == ev and "a" in e and "b" in e)
+    return pts, sp
+
+
+def score_at(pts, t):
+    """The two shares at Short time t, linear between marks (held before the first and after the last)."""
+    if not pts:
+        return None
+    if t <= pts[0][0]:
+        return pts[0][1:]
+    if t >= pts[-1][0]:
+        return pts[-1][1:]
+    lo, hi = 0, len(pts) - 1
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if pts[mid][0] <= t:
+            lo = mid
+        else:
+            hi = mid
+    (t0, a0, b0), (t1, a1, b1) = pts[lo], pts[hi]
+    k = (t - t0) / max(1e-6, t1 - t0)
+    return a0 + (a1 - a0) * k, b0 + (b1 - b0) * k
+
+
+_score_cache = {}
+def score_img(sp, pa, pb):
+    """pa, pb in tenths of a percent (503 = 50.3 %). The race's live score at the top of the game view: A's label and share on the left, B's on the right, and a
+    bar between them that fills from both ends in their colours (the untaken part dark), like the field itself."""
+    (la, ca), (lb, cb) = sp["a"], sp["b"]
+    ca, cb = COLORS.get(ca, COLORS["white"]), COLORS.get(cb, COLORS["white"])
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    x0, x1, y0 = 40, W - 40, BAND + 22
+    d.rounded_rectangle((x0 - 14, y0 - 10, x1 + 14, y0 + 168), 26, fill=(0, 0, 0, 165))
+    # one size for the whole row that fits both labels and the widest numbers ("100.0%") with a gap between the sides
+    fk = ("size", la, lb)
+    if fk not in _score_cache:
+        need = sum(rich_text(x, 64, (255, 255, 255)).width for x in (la, lb, "100.0%", "100.0%")) + 12 + 40
+        _score_cache[fk] = max(36, min(64, int(64 * (x1 - x0) / need)))
+    fs = _score_cache[fk]
+    def txt(k, s, col):
+        if (k, s, fs) not in _score_cache:
+            _score_cache[(k, s, fs)] = rich_text(s, fs, col)
+        return _score_cache[(k, s, fs)]
+    ta, tb = txt("la", la, ca), txt("lb", lb, cb)
+    na, nb = txt("na", f"{pa / 10:.1f}%", ca), txt("nb", f"{pb / 10:.1f}%", cb)
+    y0 += (64 - fs) // 2
+    img.alpha_composite(ta, (x0, y0))
+    img.alpha_composite(na, (x0 + ta.width + 6, y0))
+    img.alpha_composite(tb, (x1 - tb.width, y0))
+    img.alpha_composite(nb, (x1 - tb.width - 6 - nb.width, y0))
+    by0, by1 = BAND + 22 + 96, BAND + 22 + 146
+    d.rounded_rectangle((x0, by0, x1, by1), 14, fill=(70, 50, 35, 255), outline=(0, 0, 0, 255), width=5)
+    span = x1 - x0 - 10
+    wa, wb = int(round(span * pa / 1000)), int(round(span * pb / 1000))
+    if wa > 0:
+        d.rectangle((x0 + 5, by0 + 5, x0 + 5 + wa, by1 - 5), fill=tuple(ca) + (255,))
+    if wb > 0:
+        d.rectangle((x1 - 5 - wb, by0 + 5, x1 - 5, by1 - 5), fill=tuple(cb) + (255,))
+    return img
+
+
 def chat_windows(spec, timeline, start):
     """[(t_type, t_enter, t_close, text, feedback)] for chat: [[EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?]]."""
     out = []
@@ -487,7 +557,7 @@ def chat_img(typed, cursor, feedback, fb_alpha=1.0):
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=()):
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -503,20 +573,24 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             if len(ts) > nth:
                 marks.append((ts[nth] - start, k + 1))
         marks.sort()
-    cds = []                                         # cards: (t0, t1, text, color, tilt)
+    cds = []                                         # cards: (t0, t1, text, color, tilt, y)
     for j, cd in enumerate(_load(cards)):
         ts = event_times(timeline, cd[0])
+        if not ts and event_at(timeline, cd[0]) is not None:   # 'EVENT:OFFSET_S', as pace already counts it (it was dropped)
+            ts = [event_at(timeline, cd[0])]
         nth = int(cd[4]) if len(cd) > 4 else 0
         if len(ts) > nth:
             t0 = ts[nth] - start
             cds.append((t0, t0 + (float(cd[2]) if len(cd) > 2 and cd[2] else 1.0), cd[1],
                         COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
-                        "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4)))
+                        "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4),
+                        float(next((o for o in cd[5:] if isinstance(o, dict)), {}).get("y", 0.36))))   # (desire: off the obstacle)
     cdw = countdown_windows(countdowns, timeline, start)
     rgw = ring_windows(rings, timeline, start)
     tgw = tag_windows(tags, timeline, start, dur)
     chw = chat_windows(chat, timeline, start)
-    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw:
+    scp, scs = score_track(score, timeline, start)
+    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -530,9 +604,9 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         cc = None
         on = [cd for cd in cds if cd[0] <= t + 1e-6 < cd[1]]
         if on:
-            t0, t1, text, color, tilt = on[-1]
+            t0, t1, text, color, tilt, cy_frac = on[-1]
             fade = min(1.0, (t1 - t) / 0.12)
-            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1))
+            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1), cy_frac)
         fk = None
         for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
             if t0 <= t + 1e-6 < hold - 1e-6:
@@ -543,11 +617,12 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 left = c1 - t
                 since = t - max(c0, c1 - math.ceil(left - 1e-6))   # time since the digit last changed
                 cwk = (round(left, 3), round(c1 - c0, 3), clabel, round(since, 3), cred, cyf)
-        rk = None
-        for r0, r1, xf, yf, rad in rgw:       # highlight ring: pops in, pulses, fades over the last 0.12 s
+        rk = []
+        for r0, r1, xf, yf, rad in rgw:       # highlight rings: pop in, pulse, fade over the last 0.12 s (several at once)
             if r0 <= t + 1e-6 < r1 - 1e-6:
-                rk = (xf, yf, rad, round(_pop(t - r0, 0.2, 0.5), 2), round(min(1.0, (r1 - t) / 0.12), 2),
-                      round(math.sin((t - r0) * 2 * math.pi * 1.5), 2))
+                rk.append((xf, yf, rad, round(_pop(t - r0, 0.2, 0.5), 2), round(min(1.0, (r1 - t) / 0.12), 2),
+                           round(math.sin((t - r0) * 2 * math.pi * 1.5), 2)))
+        rk = tuple(rk) or None
         tk = None
         for g0, g1, gtext, gcolor in tgw:    # persistent role tag (no fade between consecutive tags)
             if g0 <= t + 1e-6 < g1 - 1e-6 and not any(h0 <= t + 1e-6 < h1 for h0, h1 in hide):   # not over a death screen
@@ -576,9 +651,17 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 fbs.append((cfb, round(fb_a, 2)))   # every open feedback line: vanilla stacks the history
         if typed_now is not None or fbs:
             chk = (typed_now, (int(t / 0.3) % 2 == 0) if typed_now is not None else False, tuple(fbs[-10:]))
-        key = (ck, cc, fk, cwk, rk, tk, chk)
+        sk = None
+        if scp:                              # the race's live score, in tenths of a percent: a close finish (50.3 vs
+            sa, sb = score_at(scp, t)        # 49.7) read as a 50-50 tie under the winner's card in whole percents (review r2)
+            sk = (int(math.floor(sa * 1000 + 1e-6)), int(math.floor(sb * 1000 + 1e-6)))
+            if sa + sb >= 0.9999:            # all taken: the two add to 100.0
+                ra = int(round(sa * 1000)); sk = (ra, 1000 - ra)
+        key = (ck, cc, fk, cwk, rk, tk, chk, sk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            if sk:
+                img.alpha_composite(score_img(scs, *sk))
             if ck:
                 k, s = ck
                 if ("c", k) not in imgs:
@@ -593,7 +676,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 cx, cy = 40 + imgs[("c", k)].width // 2, BAND + 26 + imgs[("c", k)].height // 2
                 img.alpha_composite(im, (cx - im.width // 2, cy - im.height // 2))
             if cc:
-                text, color, tilt, s, fade = cc
+                text, color, tilt, s, fade, cy_frac = cc
                 if ("t", text, color) not in imgs:
                     imgs[("t", text, color)] = stamp_img(text, color) if tilt == "stamp" else \
                         block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
@@ -603,12 +686,12 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
                 if fade < 1:
                     im = im.copy(); im.putalpha(im.split()[3].point(lambda v: int(v * fade)))
-                cy = BAND + int(GAME_H * 0.36)   # below the corner counters
+                cy = BAND + int(GAME_H * cy_frac)   # below the corner counters (0.36), or the card's own {y}
                 img.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
             if cwk:
                 img.alpha_composite(countdown_img(*cwk))
-            if rk:
-                img.alpha_composite(ring_img(*rk))
+            for r_ in rk or ():
+                img.alpha_composite(ring_img(*r_))
             if tk:
                 img.alpha_composite(tag_img(*tk))
             if chk:

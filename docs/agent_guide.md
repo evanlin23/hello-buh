@@ -47,7 +47,7 @@ timestamps, artifacts, the last blockers; `./hb status` shows it).
 | `./hb status [stunt]` | what exists and what's next | 2 s |
 | `./hb voice <stunt> [--only L03]` | the voices: a v2 cast on Gemini (word cuts, speaker check, automatic re-takes, word times; `--check` only checks: docs/voices.md), a v1 story on Kokoro | 30 s - 10 min |
 | `./hb record <stunt>` | server + bot -> `work/<stunt>.rec.json`, then rec_check; stops on blockers (`--no-strict` to keep going); refuses while another server batch runs | 3 min a try (5 tries) |
-| `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
+| `./hb check <stunt>` | rec_check (incl. the aim on every place/break/use and the settle before every cut/end: scripts/owner_checks.py) + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
 | `./hb owner <stunt>` | the owner's review notes as checks (lib/hb/owner.js): superflat shots (and the set's footprint, the plain, the relief), the camera off what the line names (`lines[].look`), the picture ahead of / against the words, an uncaused fall, glitches (doors by themselves, stuck on a door, jitter, one-tick snaps, stutter, fog/night/rain missing); `--shots` prints each shot's fill, `--story DIR` reads another story dir | 5-15 s |
 | `./hb describe <stunt> [T...]` | a moment as text (below); no T = the middle of every shot | 1-2 s |
 | `./hb map <stunt> [T...]` | top-down plan of the recorded blocks, north up, in set offsets, each shot's camera wedge and the cast (in/out of frame) -> `map.png` + `columns.json`; place things without mixing up north and east | 5-10 s |
@@ -57,7 +57,7 @@ timestamps, artifacts, the last blockers; `./hb status` shows it).
 | `./hb sheet <stunt>` | one labelled frame per shot (`--at first,mid,last` adds the cut edges) | 3-10 min |
 | `./hb preview <stunt>` | the whole edited Short at 360x640 + sheets of every cut and caption | 10-25 min |
 | `./hb render <stunt>` | queues the full render on GitHub Actions on its own branch (`render/<stunt>`, or `<prefix>/render-<stunt>` when only your prefix may be pushed; never your working branch); `--wait` / `--fetch` brings back `out/<stunt>.mp4` (only this job's result: an older inherited one is refused); `--reuse` re-runs only the edit on the last render's frames when the picture can't have changed | 10-20 min (reuse ~6-8) |
-| `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
+| `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length, the aim on every action and the payoff settling (the 1 s tail counts from when falling blocks/debris rest; scripts/owner_checks.py), a true peak over -1 dBTP (WARN); edit subs/cards count as caption events; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
 | `./hb panel <stunt>` | the viewer panel: Gemini watches the finished mp4 as a 12-year-old fan, a scroller and a strict editor: swipe point, hook in 2 s, cut-off / drifting / wrong-sex-or-age / annoying / ASMR voices, the ending explained back vs story.json's twist, dark/blurry/zoomed picture. BLOCK when 2+ agree on a cut word, drift, a wrong voice or a missed ending; FLAGs are review inputs (`scripts/viewer_panel.py`; 2 Gemini calls on the shared quota, cached per mp4; calibration in the short-review skill) | 1-5 min |
 | `./hb review <stunt>` | one report: qa_frames + beat_audit + pace + owner + voice edges + speaker check (when scripts/speaker_check.py is there); exit 1 on any blocker; counts the round; `--verdict "READY"` records the reviewer's answer | 2-5 min |
 | `./hb publish <stunt> --notes "..."` | to the videos branch (needs a READY verdict). Refuses unless HEAD contains origin/main (rebase first). Records the gates it ran on the package in metadata `gates` (`scripts/gates.py`: package = the reviewed cut, pace + key sounds, the latest check); the uploader skips a non-story package gated before `lib/hb/gates.json`'s version or blocked without `--waive "who: why"` | 1 min |
@@ -127,6 +127,44 @@ block-entity and mob animations, GUI screens; the before/after pixel-diff test).
 shulker shows its screen with the contents; campfire smoke; the warden's emerge (`ctx.mark('pose', { ids, emerge:
 true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `./hb still`.
 
+## Use these helpers; never call the bot directly
+Most of the owner's defect notes on 2026-11-11 weren't renderer bugs. They were stunt scripts that hand-wrote their
+actions and got them wrong in the same few ways. The shared helpers below get these right every time, so use them
+and don't send the bot's raw calls yourself:
+
+- **Placing, breaking, using, dyeing: `lib/act.js`.** Start with `const A = require('../lib/act')(ctx)`. In a story,
+  use `K.place`, `K.dig`, `K.use` and `K.useOn` from the story kit; they work the same way. The calls are
+  `await A.place(pos)`, `await A.dig(block)`, `await A.use(pos)` (a button, a door, flint and steel on TNT),
+  `await A.useOn(sheep)` (dye, shears, a name tag) and `await A.hit(mob)`. Each one turns the view to the exact target
+  like a hand on a mouse (eased, at most 220 degrees a second). It waits until the crosshair is on the block or mob,
+  and until vanilla's delay since the last action has passed. Only then does it act, with the swing and the sound.
+  If it can't see the target or can't reach it in time, it stops with an error naming the target, so a take never
+  shows a block placed where the camera isn't looking. Because each action waits for the aim, actions can only come
+  as fast as the aim can follow. For many targets, `A.snake(cells, row, col)` gives an order that turns the least.
+- **Walking backwards: `await A.back(ticks)`.** It lets go of the back key before the player gets within 1 block
+  of a solid block behind. Pixel art keeps 3 blocks clear, so a pull-back never ends pressed against an earlier
+  build.
+- **Ending on a blast or a fall: `endAfter: 'settle:0.6'`.** After `perform`, the harness keeps recording until
+  nothing in the payoff is still moving: no lit TNT, no falling blocks, no blast debris in the air, no death animation
+  still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark. This is the
+  default for every blast or fall payoff: the motion lint warns on one that ends any other way. A blast counts as
+  moving for 44 ticks (2.2 s: the renderer's smoke and crumbs, not just the server's entities), the recording runs 2 s
+  past the mark, and `./hb pace` blocks an ending whose last 0.6 s still changes (blast smoke, debris, the camera).
+- **The shared factories in lib/** (door_run, escalation, guess_sound, hide_seek, inside, nph, spot_wrong,
+  time_lapse, pixel_art) send their packets through `A.click`, `A.breakStart`/`A.breakFinish`, `A.digNow` and
+  `A.strike`. When the crosshair is already on the target (within 6 degrees), the packet goes out on the same tick as
+  before. When it isn't, the view turns onto the target first. A factory that has its own look (time_lapse, inside,
+  spot_wrong) doesn't turn: it waits a few ticks for its own look to arrive, then acts with an `off_aim` mark, which
+  the aim check blocks. `./hb motion lib` checks lib/, and npm test fails on a raw action there.
+- **Moving the camera and the cast: the story kit** (`K.aimAt`, `K.walkTo`, `K.actor`, `K.cut`), as before.
+
+The motion lint enforces this. `./hb motion <stunt>` lists every raw call (`bot.dig`, `bot.placeBlock`,
+`bot.activateBlock`, `bot.activateEntity`, and raw `block_place`, `block_dig` or `use_entity` packets) as an error and
+names the helper to use instead. `./hb record` refuses to record a stunt that still has one. A blast or fall Short
+that doesn't end on `settle` gets a warning. If a line really has to stay raw (something off screen, under the floor,
+or mid-fall where the aim is the stunt itself), add `// motion-ok: <reason>` on that line. `--no-motion-lint`
+records anyway, for a one-off look.
+
 ## Rules
 - **One server batch at a time.** The Minecraft server has a fixed port and the work/ folder is shared by every
   worktree: `hb record` refuses while a server or bot runs anywhere (`hb status` shows whose). Never start one by hand
@@ -166,7 +204,7 @@ true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `.
 `--look`/`--day-time`), `RECORD_ONLY=1` + `REC_CHECK_STRICT=1` (`hb record`), `TRIES=` (`--tries`), `RESUME=1`
 (`scripts/resume.sh`), `PREVIEW_FPS`/`PREVIEW_W`/`PREVIEW_JOBS`/`KEEP` (preview.py), `EDIT_EXTRA='{...}'` (try an edit
 change in a preview), `STUNT_OPTIONAL=1` (render without a broken stunt module), `PROFILE=1` (render.js timings),
-`MESH_WORKERS`, `BRIGHTNESS`, `WEATHER`, `DIMENSION`, `RENDER_DISTANCE`, `SKIN`, `SHOW_PLAYER` (render.js overrides).
+`MESH_WORKERS`, `BRIGHTNESS`, `WEATHER`, `DIMENSION`, `RENDER_DISTANCE`, `SKIN`, `HB_SELF_USER` (draw the bot as that username's real skin: lib/skins.js), `SHOW_PLAYER` (render.js overrides).
 
 ## How it's built (for changing hb)
 `hb` -> `lib/hb/cli.js` (commands), `lib/hb/make.js` (`hb make`'s stages and state), `lib/hb/fixes.js` (known errors

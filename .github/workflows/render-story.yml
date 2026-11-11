@@ -1,0 +1,68 @@
+# Renders a cinematic story Short (scripts/story_short.py, docs/stories.md) on parallel runners. Triggered by pushing
+# renders/story_job.json ({"story": "dog_hill"}) with renders/<story>/<stunt>.rec.json.gz (scripts/queue_story.sh writes
+# both). 12 jobs render a slice of the picture each; one more joins them, mixes the voices (stories/<story>/vox) and
+# the score, draws the captions, and commits the Short back to the branch as renders/out/<stunt>.mp4 (no token needed
+# to fetch it), plus renders/story_result.json.
+name: render-story
+on:
+  push:
+    branches-ignore: [main, videos]
+    paths: ['renders/story_job.json']
+  workflow_dispatch:
+concurrency:
+  group: render-story-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  frames:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: true
+      matrix: { chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/render-setup
+      - name: the job
+        id: job
+        run: |
+          SD=$(python3 -c "import json;print(json.load(open('renders/story_job.json'))['story'])")
+          ST=$(python3 -c "import json;print(json.load(open('stories/$SD/story.json'))['stunt'])")
+          echo "sd=$SD" >> "$GITHUB_OUTPUT"
+          gunzip -c "renders/$SD/$ST.rec.json.gz" > "work/$ST.rec.json"
+      - name: render slice ${{ matrix.chunk }}
+        run: python3 scripts/story_short.py "stories/${{ steps.job.outputs.sd }}" --chunk ${{ matrix.chunk }}/12
+      - uses: actions/upload-artifact@v4
+        with: { name: "seg-${{ matrix.chunk }}", path: "work/${{ steps.job.outputs.sd }}/segs/seg_*.mp4", retention-days: 3 }
+
+  assemble:
+    needs: frames
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/render-setup
+        with: { extra-cache: "true" }
+      - name: the job
+        id: job
+        run: |
+          SD=$(python3 -c "import json;print(json.load(open('renders/story_job.json'))['story'])")
+          ST=$(python3 -c "import json;print(json.load(open('stories/$SD/story.json'))['stunt'])")
+          echo "sd=$SD" >> "$GITHUB_OUTPUT"; echo "st=$ST" >> "$GITHUB_OUTPUT"
+          gunzip -c "renders/$SD/$ST.rec.json.gz" > "work/$ST.rec.json"
+      - uses: actions/download-artifact@v4
+        with: { pattern: "seg-*", path: segs, merge-multiple: true }
+      - name: assemble
+        run: python3 scripts/story_short.py "stories/${{ steps.job.outputs.sd }}" --segments segs
+      - uses: actions/upload-artifact@v4
+        with: { name: short, path: "out/${{ steps.job.outputs.st }}.mp4", retention-days: 14 }
+      - name: commit the Short back
+        run: |
+          mkdir -p renders/out && cp "out/${{ steps.job.outputs.st }}.mp4" renders/out/
+          python3 -c "import json,time;json.dump({'state':'done','stunt':'${{ steps.job.outputs.st }}','run':'$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID','at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())},open('renders/story_result.json','w'),indent=1)"
+          git config user.name github-actions[bot]
+          git config user.email 41898299+github-actions[bot]@users.noreply.github.com
+          git add -f renders/out renders/story_result.json
+          git commit -qm "render-story: out/${{ steps.job.outputs.st }}.mp4 [skip ci]"
+          git push origin "HEAD:$GITHUB_REF_NAME" || echo "the branch moved on: the Short is the 'short' artifact"

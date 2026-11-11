@@ -12,6 +12,7 @@ import numpy as np
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import ctc_align as A  # noqa: E402
+import caption_av_check as C  # noqa: E402
 
 
 class Spelling(unittest.TestCase):
@@ -219,6 +220,24 @@ class Coverage(unittest.TestCase):
         self.assertEqual(self.C.take_word_fails(caps, good), {})
         self.assertIn("L01", self.C.take_word_fails(caps, bad))
 
+    def test_a_base_mishearing_is_confirmed_by_small_en_before_it_blocks(self):
+        # dog_hill L16, 2026-11-11: whisper-base hears the kid's "Then he said:" as "Denny said?"; small.en hears it
+        caps = {"L16": ["Then he SAID:"], "L17": ["My village is COVERED in carpets."]}
+        base = {"L16": [("Denny", 0, .4), ("said?", .4, 1)], "L17": [(w, 0, 0) for w in "Nine thousand dogs bark".split()]}
+        fails = self.C.take_word_fails(caps, base)
+        self.assertEqual(set(fails), {"L16", "L17"})
+        small = {"L16": [("Then", 0, .4), ("he", .4, .5), ("said.", .5, 1)], "L17": base["L17"]}
+        asked = []
+        rehear = lambda ids: asked.extend(ids) or {k: small[k] for k in ids}
+        block, warn = self.C.confirm_word_fails(caps, fails, rehear)
+        self.assertEqual(asked, ["L16", "L17"])        # only the lines base failed are re-heard
+        self.assertEqual(set(block), {"L17"})          # small.en agrees it's wrong: still a BLOCK
+        self.assertEqual(set(warn), {"L16"})           # only base disagrees: a WARN
+        # small.en can't run: nothing is cleared
+        self.assertEqual(self.C.confirm_word_fails(caps, fails, lambda ids: None), (fails, {}))
+        # nothing failed: small.en isn't loaded at all
+        self.assertEqual(self.C.confirm_word_fails(caps, {}, lambda ids: self.fail("re-heard")), ({}, {}))
+
 
 class MinShow(unittest.TestCase):
     """story_track.min_show: no caption under 0.30 s (a merge within its line when it fits, else time borrowed from the
@@ -261,3 +280,50 @@ class TooWide(unittest.TestCase):
         import caption_sync
         self.assertIsNone(caption_sync.too_wide("So I STEPPED"))
         self.assertIsNotNone(caption_sync.too_wide("But I'd never DANCED before. So I stepped off the carpet onto the STONE."))
+
+
+class VideoHolds(unittest.TestCase):
+    """caption_av_check.video_holds: the video-side short-caption WARN (Buh Stories lead 2026-11-11), from frames:
+    a caption under 0.25 s is seen; a cut or a GUI under a steady caption is not a caption change (Gold 24.02)."""
+
+    H, W = 120, 450
+
+    def bg(self, n, level=110, seed=0):
+        r = np.random.default_rng(seed)
+        return (r.integers(-20, 20, (n, self.H, self.W)) + level).clip(0, 200).astype(np.uint8)
+
+    def caption(self, fr, x0, words):
+        """white blocks with a dark outline, like story_track's captions (one block per 'letter')"""
+        for i in range(words):
+            x = x0 + i * 26
+            fr[:, 40:80, x - 3:x + 21] = 20
+            fr[:, 43:77, x:x + 18] = 255
+
+    def test_a_flash_is_seen(self):
+        v = self.bg(90)
+        self.caption(v[0:30], 40, 8)
+        self.caption(v[30:38], 200, 6)            # 8 frames: 0.13 s
+        self.caption(v[38:90], 20, 12)
+        self.assertEqual(C.video_holds(v), [(0.5, 0.13)])
+
+    def test_a_background_cut_under_a_steady_caption_is_not_a_change(self):
+        v = self.bg(90)
+        v[38:] = self.bg(52, level=150, seed=1)     # a cut 8 frames after the caption came, to a shot with snow
+        v[38:, :, 370:] = 250
+        v[46:, 85:120, :] = 245                     # then a GUI's white under the caption, no outline of its own
+        self.caption(v[0:30], 40, 8)
+        self.caption(v[30:90], 200, 6)
+        self.assertEqual(C.video_holds(v), [])
+
+    def test_a_blank_gap_is_not_a_caption(self):
+        v = self.bg(90)
+        self.caption(v[0:30], 40, 8)                # then 8 frames with no caption
+        self.caption(v[38:90], 20, 12)
+        self.assertEqual(C.video_holds(v), [])
+
+    def test_the_pop_is_one_change(self):
+        v = self.bg(90)
+        self.caption(v[0:30], 40, 8)
+        self.caption(v[30:33], 60, 5)               # the pop-in: the same caption at 0.84 scale, then full size
+        self.caption(v[33:90], 50, 6)
+        self.assertEqual(C.video_holds(v), [])

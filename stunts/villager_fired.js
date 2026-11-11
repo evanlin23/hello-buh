@@ -25,7 +25,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'gone:1.0',
+    startAt: 'beat:-0.05', endAfter: 'settle:0.6',   // the blast and his death puff settled (lib/settle.js)
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
@@ -39,13 +39,17 @@ module.exports = {
       ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
       ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast
-      ['gone', 'permanently 💀', 1.5, 0]
+      ['gone', 'permanently', 1.5, 0]   // (the subtitle font has no emoji: it drew a box)
     ],
-    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch and push-in on his
-    // death puff, a song dip + impact on it, a pop on the opening (pace)
-    speed: [['fuse_a', 'fuse_b', 'cut']],
-    flash: [['gone', 0, 0.4]], punch: [['gone', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'gone', 0.3], ['impact', 'gone']]
+    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
+    // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
+    // the payoff pace times is the ring's LAST blast, 0.6 s after his death in this recording (34.05 s vs 33.45 s
+    // source; 0.45 s in the take before): a flash on the death, then the big flash + punch and the song dip + impact on
+    // that last blast (on the death they were early and the payoff had no hit: pace BLOCK). Re-check after a re-record.
+    flash: [['mob_death', 0, 0.6], ['mob_death:0.6', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death:0.6', 0, 1.3]],
+    // (+ the game audio ducked 0.35 s before it: the ring's blasts 0.15-0.45 s earlier flattened its hit, as on pickaxe_race)
+    sfx: [['pop', 'beat'], ['dip', 'mob_death:0.6', 0.4], ['gamedip', 'mob_death:0.6', 0.35], ['impact', 'mob_death:0.6', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {
@@ -87,9 +91,10 @@ module.exports = {
     await ctx.cmd('/execute as @e[type=villager] run attribute @s minecraft:knockback_resistance base set 1')
     // job site spots (13): both sides, the front corners and the back row
     const spots = []
-    // (none in the middle of the front row: there they hid his outfit from the camera)
-    for (const dz of [1, 2, 0, -1, -2]) { spots.push([x + 2, vz + dz]); spots.push([x - 2, vz + dz]) }
-    for (const dx of [-1, 0, 1]) spots.push([x + dx, vz - 2])
+    // (none in the middle of the front row: there they hid his outfit from the camera). Placed back to front, the
+    // outer column first: each spot's top face is in sight when its block goes down (lib/act.js aims at it; a placed
+    // block in front hid the one behind; the pen's corner posts hide x±2 at the back: the back pair sits at x±3)
+    for (const [dx, dz] of [[3, -2], [-3, -2], [3, -1], [-3, -1], [2, -1], [-2, -1], [2, 0], [-2, 0], [3, 1], [2, 1], [-2, 1], [2, 2], [-2, 2]]) spots.push([x + dx, vz + dz])
     this.spots = spots
     // TNT in the ground under every spot, and a 3-block fuse line toward the player
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)
@@ -119,13 +124,14 @@ module.exports = {
     const head = new Vec3(x + 0.5, floor + 3.0, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
     ctx.mark('face_on', { near: [x + 0.5, vz - 2, 10.5], head: true })
+    const A = require('../lib/act')(ctx)
     const slotOf = (i) => (i < 8 ? i : i - 8)
     const place = async (i, lookMs, spot) => {
       const [bx, bz] = spot || this.spots[i]
       ctx.select(slotOf(i))
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + (i >= 8 ? 2.8 : 1.2), bz + 0.5), lookMs)   // the fast ones aimed high: the subtitle clears his outfit
-      bot._client.write('block_place', { hand: 0, location: { x: bx, y: floor, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound(STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place', 1, 0.8)
+      // aimed by construction (lib/act.js, r:rffba12): the crosshair on the spot as the job site goes down (reach 10: the
+      // setup raises block_interaction_range to 9, the far spots are ~9 blocks from the eye)
+      await A.place(new Vec3(bx, floor + 1, bz), { reach: 10, against: new Vec3(bx, floor, bz), sound: STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place' })
       await bot.waitForTicks(1)
       setJob(JOBS[i][1])
       ctx.sound(`entity.villager.work_${JOBS[i][1]}`, 1, 1)
@@ -133,9 +139,8 @@ module.exports = {
     }
     const breakAt = async ([bx, bz], name) => {
       ctx.select(8); await bot.waitForTicks(2)
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + 1.5, bz + 0.5), 200)
       const b = bot.blockAt(new Vec3(bx, floor + 1, bz))
-      if (b && b.name === name) { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
+      if (b && b.name === name) { try { await A.dig(b, { reach: 10 }) } catch (e) { ctx.log('dig', e.message) } }
       setJob('none'); ctx.sound('entity.villager.no', 1, 1)
     }
     // a hold that still moves: a slow drift of the look, never a frozen frame
@@ -201,9 +206,7 @@ module.exports = {
     await bot.waitForTicks(2)
     ctx.select(5); await bot.waitForTicks(6)
     const L = [x, floor, vz + 4]
-    await ctx.easeLookAt(new Vec3(L[0] + 0.5, L[1] + 1, L[2] + 0.5), 200)
-    bot._client.write('block_place', { hand: 0, location: { x: L[0], y: L[1], z: L[2] }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    await A.use(new Vec3(L[0], L[1], L[2]), { reach: 10, sound: 'item.flintandsteel.use' }); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     const litAt = ctx.tick
     // back off facing it, the villager in view

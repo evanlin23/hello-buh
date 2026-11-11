@@ -11,7 +11,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'boat clutch 💀',
   edit: {
-    caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
+    caption: 'boat clutch 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
     // the label stays up through the fall
     subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.1 + Math.sqrt(p.h) * 0.3, i]),
     // the teleport between pillars is cut out (no hold around it)
@@ -19,8 +19,11 @@ module.exports = {
     hook: { at: 'final_place', before: 1.4, after: -0.05, text: '79 blocks 💀' },
     slowmo: [['final_place', 0.15, 0.3, 0.5]],   // real in-between frames (render_replay.py), no blending
     // no replay after the landing (2026-11-11, pace BLOCK: it ran the Short 4.1 s past the payoff; end ~1 s after it), and
-    // the song drops out 0.35 s before the 79-block landing so it lands as a hit
-    sfx: [['dip', 'final', 0.35]]
+    // the song drops out 0.35 s before the 79-block landing so it lands as a hit, and the landing is a clean impact with
+    // a wooden thud (the boat). Owner r:r4df33c, 2026-11-11: "The sound effect at the end of boat clutch sounds like a fart,
+    // change it out": that was audio.py's old water-clutch rebuild playing a water bucket's pour on the boat placement,
+    // stretched by the slow-mo; a boat recording gets none now, and lib/hb/banned_sfx.json bans a pour with no bucket
+    sfx: [['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
   },
 
   async setup (ctx) {

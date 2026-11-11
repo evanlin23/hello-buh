@@ -30,13 +30,20 @@ module.exports = {
     ['r4_zoom', 'r4_found:0.7', 1.7], ['r5_zoom', 'r5_found:0.3', 4]],
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
-    song: 'songs/funk_abnormal.mp3', dropAt: 'r5_zoom',
+    song: null, dropAt: 'r5_zoom',
     startAt: 'r1_go:0', endAfter: 'r5_found:-0.3',   // (cut to the y 320 shot as the look up the pillar ends: the tip held still 0.4 s)
     // the zoom-out: a fixed camera up at y 320 beside him, appended after the look up the pillar
     replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,324.5,10.5,45,-35', speed: 1, label: 'MEANWHILE AT Y 320' },
     // round 1's 3 s of door-to-door searching cut (r1_go+1.3..4.3: pace saw 4.5 s with nothing new right after the hook;
     // the viewer swipes at 1.3-1.5 s, Studio 2026-11-11): the villager runs off, then the search is already at its end
-    speed: [['r1_go:1.3', 'r1_go:4.3', 'cut'], ...[1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut'])],
+    // (2026-11-11, the followable camera, r:r38374d: slower, eased looks made the searches longer; the pace comes back
+    // through cuts, not whips: round 2's and round 3's door-to-door middles and most of round 5's tilt up the pillar, pace dead 3.6 / 4.4 / 3.2 s)
+    // Each cut inside a round starts and ends where the view is still (review 2026-11-11: r1 1.3..4.3 and r3 1.8..4.4
+    // joined a 180 deg/s pan one way to one the other way, a snap; ./hb check's edit-cut test, lib/hb/owner.js
+    // editCutSnaps): r1 rests at +0.2..1.0 and +3.5..3.9, r2 +2.5..2.9 and +5.05..5.55, r3 +1.25..1.5 and +3.55..3.95.
+    // Round 5's cut stays inside its one tilt up the pillar (the same way, 24 deg apart: reads as one tilt).
+    speed: [['r1_go:1.0', 'r1_go:3.85', 'cut'], ['r2_go:2.95', 'r2_go:5.5', 'cut'], ['r3_go:1.5', 'r3_go:3.9', 'cut'], ['r5_end:0.5', 'r5_end:2.4', 'cut'],
+      ...[1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut'])],
     clock: R.map((n, i) => [`r${n}_go`, `r${n}_end`, [5, 4, 4, 4, 3][i], `ROUND ${n}`, 'down']),
     counter: { at: [...R.slice(0, 4).map(n => `r${n}_found`), 'r5_zoom'], total: ROUNDS },
     cards: [['r1_found', 'IN A TREE 😭', 0.8, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.7, 'blue'],
@@ -44,7 +51,8 @@ module.exports = {
     punch: [...R.slice(0, 4).map(n => `r${n}_found`), 'r5_zoom'],
     subs: [['r1_end', 'where did he go', 0.9], ['r2_end', 'nothing again', 0.9], ['r3_end', 'I give up', 0.9],
       ['r4_end', 'not again', 0.9], ['r5_end', 'seriously?', 0.9]],
-    subsY: 0.62
+    subsY: 0.62,
+    sfx: [['whoosh', 'r1_go']]   // pace: sound by 0.3 s (the song comes in at the remix; the opening was silent on the render)
   },
 
   // ---------------------------------------------------------------- set
@@ -151,58 +159,10 @@ module.exports = {
     const { bot, Vec3 } = ctx
     const { X, Z, F } = this
     const W = (dx, dy, dz) => new Vec3(X + dx, F + dy, Z + dz)
-    const wrap = a => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
-    const MOVES = ['forward', 'back', 'left', 'right', 'sprint', 'jump']
-    // Go to (dx, dz). Without `face` the camera turns toward where it goes (eased); with face: [x, y, z]
-    // it stays on that point and the bot walks there sideways or backwards as needed (strafing).
-    const go = async (dx, dz, { sprint = true, pitch = -0.08, stop = 0.45, maxTicks = 120, face = null } = {}) => {
-      const tx = X + dx, tz = Z + dz
-      let i = 0
-      for (; i < maxTicks; i++) {
-        const p = bot.entity.position, mx = tx - p.x, mz = tz - p.z, d = Math.hypot(mx, mz)
-        if (d < stop) break
-        const cur = bot.entity.yaw
-        if (face) {
-          const fx = X + face[0] - p.x, fy = F + face[1] - (p.y + 1.62), fz = Z + face[2] - p.z
-          const want = Math.atan2(-fx, -fz), wantP = Math.atan2(fy, Math.hypot(fx, fz))
-          await bot.look(cur + wrap(want - cur) * 0.35, bot.entity.pitch + (wantP - bot.entity.pitch) * 0.35, true)
-          const y = bot.entity.yaw, fwd = (-Math.sin(y) * mx - Math.cos(y) * mz) / d, rgt = (Math.cos(y) * mx - Math.sin(y) * mz) / d
-          bot.setControlState('forward', fwd > 0.35); bot.setControlState('back', fwd < -0.35)
-          bot.setControlState('right', rgt > 0.35); bot.setControlState('left', rgt < -0.35)
-        } else {
-          const want = Math.atan2(-mx, -mz)
-          await bot.look(cur + Math.max(-0.32, Math.min(0.32, wrap(want - cur) * 0.45)), bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-          bot.setControlState('forward', true); bot.setControlState('sprint', sprint && d > 1.4)
-        }
-        bot.setControlState('jump', !!bot.entity.isCollidedHorizontally)
-        await bot.waitForTicks(1)
-      }
-      for (const c of MOVES) bot.setControlState(c, false)
-      if (i >= maxTicks) ctx.log('go: did not reach', dx, dz, 'at', (bot.entity.position.x - X).toFixed(2), (bot.entity.position.z - Z).toFixed(2))
-    }
-    const look = (dx, dy, dz, ms) => ctx.easeLookAt(W(dx, dy, dz), ms)
-    const openDoor = async (dx, dz) => {
-      await look(dx + 0.5, 1.5, dz + 0.5, 200)
-      const loc = { x: X + dx, y: F + 1, z: Z + dz }
-      bot._client.write('block_place', { hand: 0, location: loc, direction: 4, cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm(); ctx.sound('block.wooden_door.open', 1, 0.95 + Math.random() * 0.1)
-    }
-    const dig = async (dx, dy, dz, ticks, block, sound) => {
-      const loc = { x: X + dx, y: F + dy, z: Z + dz }
-      bot._client.write('block_dig', { status: 0, location: loc, face: 1, sequence: 0 })
-      for (let i = 0; i < ticks; i++) { if (i % 4 === 0) { bot.swingArm(); ctx.sound(`block.${sound}.hit`, 0.5) } await bot.waitForTicks(1) }
-      bot._client.write('block_dig', { status: 2, location: loc, face: 1, sequence: 0 })
-      bot.swingArm()
-      ctx.sound(`block.${sound}.break`, 1); ctx.particles('block', new Vec3(loc.x, loc.y, loc.z), { block })
-    }
-    const hmm = (pitch = 1) => ctx.sound('entity.villager.ambient', 1, pitch)
-    const found = (n) => { ctx.mark(`r${n}_found`); ctx.sound('entity.villager.yes', 1, 1); ctx.sound('entity.player.levelup', 0.5, 1.4) }
-    // a drift after each find, so the shot never freezes while the card is up
-    const drift = async (ticks, amt = 0.1) => { const y0 = bot.entity.yaw, p0 = bot.entity.pitch; for (let i = 1; i <= ticks; i++) { await bot.look(y0 + amt * Math.sin(i / ticks * Math.PI), p0 + amt * 0.5 * (i / ticks), true); await bot.waitForTicks(1) } }
-    // run something every tick while the bot does other things (giveaway particles, a hider rising)
-    const everyTick = (n, fn) => (async () => { for (let i = 0; i < n; i++) { fn(i); await bot.waitForTicks(1) } })()
-    // a hider rising by teleports (NoGravity): `dy` blocks over `n` ticks
-    const rise = (tag, dy, n) => everyTick(n, () => bot.chat(`/execute as @e[tag=${tag},limit=1] at @s run tp @s ~ ~${(dy / n).toFixed(3)} ~`))
+    // the moves (lib/hide_seek.js): governed, eased looks that rest on each hiding spot (owner 2026-11-11, r:r38374d:
+    // "the camera moves around so quickly ... confusing to try and follow"); doors and digs gated on the crosshair
+    const M = hs.moves(ctx, { X, Z, F })
+    const { go, look, openDoor, dig, hmm, found, drift, everyTick, rise } = M
     const tp = async (dx, dz, yaw, pitch) => { await ctx.tpCheck(X + dx, F + 1, Z + dz, yaw, pitch) }
 
     // ---- the opening: a villager runs off and hides behind the tree
@@ -292,7 +252,7 @@ module.exports = {
     await bot.waitForTicks(3)
     await go(-8.5, -0.3, { stop: 0.3 })          // back to the start
     ctx.mark('r3_end')
-    await ctx.easeLook(Math.PI / 2 + 0.4, 0, 220)   // looks around: nobody
+    await M.turn(Math.PI / 2 + 0.4, 0)   // looks around: nobody
     // the giveaway: something knocks under the path block, crumbs jump up
     const knock = everyTick(16, (i) => { if (i % 5 === 0) { ctx.particles('block', W(-9, 0, -1), { block: 'dirt_path' }); ctx.sound('block.grass.hit', 0.9, 0.7) } })
     await look(-8.5, 0, -0.5, 280)

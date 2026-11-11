@@ -19,7 +19,14 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
   payoff    the story.json `payoff` line/mark, else the edit's endAfter event, else the line the `twist` quotes,
             else the biggest sound + picture hit in the last 40%: a sound hit and a picture change within 0.3 s,
             and the end <= 1.0 s after it (1.2-1.8 s for a text payoff: a death screen or a card).
+            The 1.0 s counts from when the payoff's motion settles (r:r24d99a: falling blocks, explosion debris, a
+            dying mob in view: scripts/owner_checks.py), and the end while it still moves is a BLOCK (settle).
+  build     inside every marked build (X_start .. X_done), a block placed or broken at least every 1.0 s of output
+            time until its last block: BLOCK on a stall (r:r478786).
+  aim       every player action in the Short (place, break, block/entity use) with the crosshair on its target
+            (r:rffba12, scripts/owner_checks.py + lib/aim.js): BLOCK over 15 deg or off-screen, or over 10% past 6 deg.
   length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
+  loud      WARN when the true peak is over -1 dBTP (clips after YouTube's transcode).
   keysound  a stunt with edit.keySounds (guess the mob: the call is the game), on a package's short.mp4 beside its
             short_nosong.mp4: each key sound >= 8 dB over the music, else BLOCK (scripts/key_sounds.py).
 Exit 1 on a blocker, 2 when it can't run.
@@ -51,6 +58,7 @@ DEAD_BLOCK, DEAD_WARN = 3.0, 2.0
 PICTURE_WARN = 5.0
 SAME_WARN = 5.0               # runaway (the benchmark) holds one picture 3.3 s at most
 PAYOFF_WIN = 0.3
+TP_MAX = -1.0                 # dBTP: the master's true-peak ceiling (scripts/loud.py master)
 TAIL_MAX, TEXT_TAIL = 1.0, (1.2, 1.8)
 LEN_MIN, LEN_WARN = 25.0, 45.0   # 25: no-pause narration at ~5.25 words/s runs 25-29 s (owner: no dramatic pauses)
 LEN_MIN_STUNT = 8.0   # an unnarrated stunt (lead 2026-11-11: the 25 s floor is the narration floor; the owner's "inside" format is 8-12 s)
@@ -134,6 +142,35 @@ def sound_hits(level, jump=10.0, floor=-38.0, gap=0.2):
     return hits
 
 
+TAIL_STILL = (0.15, 0.4)   # % of the game view changing per frame over the last 0.6 s: WARN / BLOCK (a settle ending)
+
+
+def tail_motion(video, dur, secs=0.6):
+    """The median % of the game view that changes frame to frame over the last `secs` (270x253 grey, 30 fps), with the
+    camera's own drift taken out: the whole-frame shift (phase correlation) is undone and a pixel counts only when it
+    leaves its 3x3 neighbourhood's range by > 20 grey levels (sub-pixel pans, a slow tilt or a death-screen hold read 0;
+    a speck of debris or smoke moving across does not). Calibrated 2026-11-11: which_door's debris falling past "You
+    Died!" 1.77%; villager_fired re-recorded (a slow tilt, nothing moving) 0.02%; pickaxe_race, creeper, half_heart <= 0.01%."""
+    w, h = 270, 253
+    cmd = ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, dur - secs - 1 / 30):.3f}", "-i", str(video), "-vf",
+           f"fps=30,crop={W}:{GAME_H}:0:{BAND},scale={w}:{h}:flags=area,format=gray", "-f", "rawvideo", "-"]
+    raw = subprocess.run(cmd, capture_output=True).stdout
+    f = np.frombuffer(raw, np.uint8)[: len(raw) // (w * h) * w * h].reshape(-1, h, w).astype(np.float32)
+    if len(f) < 3:
+        return None
+    out = []
+    for a, b in zip(f, f[1:]):
+        R = np.fft.fft2(a - a.mean()) * np.conj(np.fft.fft2(b - b.mean()))
+        c = np.fft.ifft2(R / (np.abs(R) + 1e-6)).real
+        dy, dx = np.unravel_index(int(np.argmax(c)), c.shape)
+        dy, dx = -(dy - h if dy > h // 2 else dy), -(dx - w if dx > w // 2 else dx)
+        pad = np.pad(np.roll(a, (dy, dx), axis=(0, 1)), 1, mode="edge")
+        nb = np.stack([pad[i:i + h, j:j + w] for i in range(3) for j in range(3)])
+        m = 8 + max(abs(dx), abs(dy))
+        out.append(float(((b < nb.min(0) - 20) | (b > nb.max(0) + 20))[m:-m, m:-m].mean() * 100))
+    return float(np.median(out))
+
+
 def picture_events(P):
     """Cuts (a cut score well over its neighbours) and motion onsets (motion jumps to >= 2.2x the last second's
     median and >= 3 grey levels: something starts moving, a hit, an explosion, a whip pan) in seconds."""
@@ -209,6 +246,44 @@ def build_events(timeline, to_out, run=BUILD_RUN):
     return sorted(set(out))
 
 
+STALL_S = 1.0   # s of output time: a build mid-way with no new block for longer than this stalls (r:r478786)
+BUILD_END = ("_done", "_end")
+
+
+def build_spans(timeline):
+    """The marked builds in source seconds: each X_start mark with the first X_done / X_end after it (lib/time_lapse.js
+    small/mid/big_start .. _done, a speed build's build_start .. build_done) -> [(name, a, b)]."""
+    out = []
+    for e in timeline:
+        ev = str(e.get("event", ""))
+        if not ev.endswith("_start"):
+            continue
+        name, a = ev[: -len("_start")], e["t"] / 1000
+        b = next((x["t"] / 1000 for x in timeline if x["t"] / 1000 >= a and x.get("event") in (name + s for s in BUILD_END)), None)
+        if b is not None and name:
+            out.append((name, a, b))
+    return out
+
+
+def build_stalls(timeline, to_out, limit=STALL_S):
+    """r:r478786 (owner, lapse_statue: "we pause for some reason when we're building the second one... more than just a
+    while"): inside every marked build, from its start mark to its last block, blocks keep appearing: no stretch of over
+    `limit` s of OUTPUT time (after the edit's speed and cut spans) without a placement or a break.
+    -> [(name, out_a, out_b, length)], the stalls."""
+    src = sorted(e["t"] / 1000 for e in timeline
+                 if (e.get("event") == "sound" and BUILD_SOUND.match(str(e.get("sound", "")))) or e.get("event") in ("place", "dig_end"))
+    stalls = []
+    for name, a, b in build_spans(timeline):
+        inside = [t for t in src if a <= t <= b]
+        if len(inside) < 3:   # (a mark pair with a block or two: not a build)
+            continue
+        outs = [o for o in (to_out(t) for t in [a] + inside) if o is not None]
+        for x, y in zip(outs, outs[1:]):
+            if y - x > limit:
+                stalls.append((name, round(x, 2), round(y, 2), round(y - x, 2)))
+    return stalls
+
+
 def gaps(evs):
     """The spans between consecutive (time, label) events, longest first: (a, b, length, label a, label b)."""
     evs = sorted(evs)
@@ -219,6 +294,108 @@ def gaps(evs):
     return sorted(g, key=lambda x: -x[2])
 
 
+def edit_caption_times(video, edit, rec, clock):
+    """The edit's own captions (edit.subs [EVENT, TEXT, SECONDS?, NTH?] and edit.cards [EVENT, TEXT, SECONDS?, COLOR?,
+    NTH?]) in output time: each appearance is a new event on screen (half_heart's "lava bridge" and "almost there..."
+    were read as 4.45 s dead). A package's metadata.json `edit` (as published) wins over the stunt's."""
+    meta = pathlib.Path(video).resolve().parent / "metadata.json"
+    if meta.exists():
+        try:
+            e = json.loads(meta.read_text()).get("edit")
+            if isinstance(e, dict) and (e.get("subs") or e.get("cards")):
+                edit = e
+        except ValueError:
+            pass
+    if not rec or not clock or not edit:
+        return []
+    tl = rec.get("timeline", [])
+    out = []
+    for kind, nth_i in (("subs", 3), ("cards", 4)):
+        items = edit.get(kind) or []
+        if isinstance(items, str):
+            try:
+                items = json.loads(items)
+            except ValueError:
+                items = []
+        for it in items:
+            if not isinstance(it, list) or not it:
+                continue
+            ev = str(it[0])
+            off = 0.0
+            if ":" in ev:
+                ev, _, o = ev.rpartition(":")
+                try:
+                    off = float(o)
+                except ValueError:
+                    ev, off = str(it[0]), 0.0
+            nth = it[nth_i] if len(it) > nth_i and isinstance(it[nth_i], int) else 0
+            ts = [e["t"] / 1000 for e in tl if e.get("event") == ev]
+            if len(ts) > nth:
+                o = clock.out_of_src(ts[nth] + off)
+                if o is not None:
+                    out.append(round(o, 2))
+    return out
+
+
+# ---------------------------------------------------------------- owner notes as checks (scripts/owner_checks.py)
+def owner_checks_on(add, notes, rec, recp, clock, stunt, dur):
+    """The aim check (findings added now) and the settle check's helper for the payoff: payoff out-s -> None (nothing
+    moving after it) or {out (settled, output s; None past the end), end_out, blocks, msg, note}."""
+    import owner_checks as OC
+    tl = rec.get("timeline", [])
+    spans = clock.p.warp.spans if getattr(clock.p, "warp", None) else []
+    cut_src = [(a, b) for a, b, f in spans if f == math.inf]
+    f1 = OC.f1_spans(tl)
+    try:
+        from rec_check import camera_shot_spans
+        cams = camera_shot_spans(stunt, None, tl)
+    except Exception:   # noqa: BLE001
+        cams = []
+    def first_person(k):
+        o = clock.out_of_src(k / 20)
+        return (o is not None and o < dur and not any(a <= k / 20 <= b for a, b in cut_src)
+                and not any(a <= k < b for a, b in f1) and not any(a <= k < b for a, b in cams))
+    sres = OC.sight_json(recp)
+    if "aim" in sres:
+        ar = OC.aim_report(sres, first_person)
+        notes.append(f"aim (r:rffba12): {ar['summary']}")
+        for lvl, tick, msg in ar["findings"]:
+            add(lvl, "aim", clock.out_of_src(tick / 20), msg)
+    else:
+        notes.append(f"aim: not checked ({sres.get('error')})")
+    tracks = OC.debris_tracks(rec, puffs=True)   # (the end: the rendered smoke and debris count too)
+    if not tracks:
+        return lambda payoff: None
+    cam = OC.pose_cam(rec)
+    end_r = clock.at_out(max(0.0, dur - 1 / 60))
+    end_src = end_r["tick"] if end_r.get("tick") is not None else None
+
+    def settle(payoff):
+        r = clock.at_out(payoff)
+        if r.get("tick") is None or end_src is None:
+            return None
+        k0 = r["tick"]
+        any_v = lambda k: any(a <= k < b for a, b in f1) or any(a <= k < b for a, b in cams)
+        # the payoff's motion: something moving in view within 1 s of the payoff, followed until it all rests
+        start = next((k for k in range(int(k0), int(k0) + 21) if OC.moving(tracks, k, cam, any_v(k))), None)
+        if start is None:
+            return None
+        k_set = OC.settle_after(tracks, start, cam, 600, any_v(start))
+        moving_end = OC.moving(tracks, end_src, cam, any_v(end_src))
+        out = clock.out_of_src(k_set / 20) if k_set is not None and k_set <= end_src else None
+        left = ((k_set - end_src) / 20) if k_set is not None else None
+        blocks = bool(moving_end) and (left is None or left > OC.SETTLE_GRACE)
+        what = OC.describe(moving_end or OC.moving(tracks, start, cam, any_v(start)))
+        msg = (f"the Short ends while {what} still move{'s' if len(moving_end) == 1 else ''} in view ("
+               + (f"it settles {left:.2f} s of recording later" if left is not None else "still moving 30 s later")
+               + "): owner, let the last pillar of sand all fall before we end/cut (r:r24d99a)")
+        note = (f"settle (r:r24d99a): the payoff's motion ({what}) settles at {out:.2f} s: the 1 s tail counts from there" if out is not None
+                else f"settle (r:r24d99a): the payoff's motion ({what}) is still going at the end")
+        return {"out": out, "end_out": round(dur, 2), "blocks": blocks, "msg": msg, "note": note,
+                "puff_only": bool(moving_end) and all(t["kind"] == "puff" for t in moving_end)}
+    return settle
+
+
 # ---------------------------------------------------------------- the checks
 def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_story=None):
     notes, F = [], []
@@ -227,6 +404,17 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     P = picture(video)
     S = sound(video)
     lt, lS = lufs_short(video)
+    # the true peak (after the AAC encode): over -1 dBTP clips after YouTube's transcode (lead 2026-11-11: the stunt
+    # masters peaked above 0; scripts/loud.py master limits to -1 dBTP from then on)
+    try:
+        import loud
+        tp = loud.true_peak(video)
+        if tp > TP_MAX:
+            add("WARN", "loud", None, f"true peak {tp:+.1f} dBTP (max {TP_MAX:g}): it can clip after YouTube's transcode",
+                "re-master: scripts/loud.py master (add_song.py does it for new packages)")
+        notes.append(f"true peak {tp:+.1f} dBTP")
+    except Exception as e:   # noqa: BLE001
+        notes.append(f"true peak not measured ({e})")
     cuts_v, onsets = picture_events(P)
     hits = sound_hits(S["level"])
 
@@ -259,9 +447,22 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     cut_marks = sorted({round(m["out"], 2) for m in marks if m["event"] in ("cut", "respawn") and 0.05 < m["out"] < dur - 0.05})
     # a cut is a cut if the picture shows it; a cut mark the picture doesn't show (a same-place cut) still counts
     cuts = sorted(set(cuts_v) | {c for c in cut_marks if not any(abs(c - v) < 0.2 for v in cuts_v)})
-    cap_times = sorted({round(t, 2) for t, _, _ in caps})
+    if not caps and clock and edit.get("captions"):   # a stunt's band captions switching on marks (edit.captions): each change is news
+        for spec, text in ((c[0], c[1]) for c in edit["captions"]):
+            try:
+                name, _, off = str(spec).rpartition(":") if ":" in str(spec) else (str(spec), "", "0")
+                o = clock.resolve(f"{name}{float(off):+.3f}")["out"]
+            except (ValueError, KeyError):
+                o = None
+            if o is not None and 0 < o < dur:
+                caps.append((round(o, 3), text, None))
+    cap_times = sorted({round(t, 2) for t, _, _ in caps} | set(edit_caption_times(video, edit, rec, clock)))
     other_marks = [(round(m["out"], 2), m["event"]) for m in marks if m["event"] not in ("line", "cut", "shot", "self", "start", "end", "f1_on", "f1_off", "story_end")]
     builds = build_events(rec.get("timeline", []), clock.out_of_src) if rec and clock else []
+    for name, a, b, ln in (build_stalls(rec.get("timeline", []), clock.out_of_src) if rec and clock else []):
+        add("BLOCK", "build", a, f"build stall: the {name} build places no block for {ln:.2f} s ({a:.2f}-{b:.2f} s; max {STALL_S:g} s mid-build). "
+            f"Owner r:r478786: \"we pause ... when we're building the second one\"",
+            "speed up or cut the stretch with no block (a walk round the build: lib/time_lapse.js mid.walkSpeed), or place blocks through it")
     if builds:
         notes.append(f"{len(builds)} block placements/breaks in steady runs count as events (a build is never dead)")
 
@@ -415,6 +616,12 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             add("WARN", "pace", None, f"the narration is sparse: {wps:.2f} words/s overall (Pip's Dog on the Hill ~2.85)",
                 "tighten the gaps between lines and the holds with no voice")
 
+    # ---- owner notes as checks on the recording (scripts/owner_checks.py): aim on the action (r:rffba12) and the
+    # payoff's motion settling before the end (r:r24d99a)
+    settle_of = lambda payoff: None
+    if rec and clock and recp:
+        settle_of = owner_checks_on(add, notes, rec, recp, clock, stunt, dur)
+
     # ---- 5. payoff (located first: build-up runs to it)
     payoff, how = None, ""
     spec = payoff_spec or (story or {}).get("payoff")
@@ -430,7 +637,22 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             payoff += float(m.group(1))
     if payoff is None and edit.get("endAfter"):
         ev = str(edit["endAfter"]).split(":")[0]
-        if ev not in ("story_end", "end", "line"):
+        if ev == "settle":   # endAfter 'settle:0.6' (lib/settle.js): the payoff is where that last motion began (the
+            # blast, the fall, the death); the tail counts from the settle (the settle check below)
+            st_ = mark_time("settle")
+            if st_ is None:   # endAfter 'settle:-0.15': the Short ends just before the mark (which_door, 2026-11-11)
+                st_ = dur
+            starts = sorted(o for o in (clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and e["event"] == "motion_start")
+                            if o is not None and st_ is not None and o <= st_ + 1e-6)   # (motion_start is preview NOISE: not in marks)
+            if starts:
+                payoff, how = starts[-1], "the edit's endAfter 'settle': where the last payoff motion began"
+                # inside that window, the last blast or death (a lit fuse opens the window: the payoff is the bang)
+                bangs = [clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and (
+                    (e["event"] == "particles" and e.get("type") == "explosion") or e["event"] in ("death", "mob_death"))]
+                bangs = [h for h in bangs if h is not None and starts[-1] - 1e-6 <= h <= st_ + 1e-6]
+                if bangs:
+                    payoff, how = max(bangs), "the edit's endAfter 'settle': the last blast or death before it settles"
+        elif ev not in ("story_end", "end", "line"):
             payoff, how = mark_time(ev), f"the edit's endAfter event '{ev}'"
     if payoff is None and story and story.get("twist") and lines:
         quotes = re.findall(r"['\"\u2018\u201c]([^'\"\u2019\u201d]{3,40})['\"\u2019\u201d]", story["twist"])
@@ -495,7 +717,9 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     guessed = how.startswith("the biggest")   # a guess never blocks: set story.json "payoff" to make it a real check
     if payoff is not None:
         ev_here = {m["event"] for m in marks if abs(m["out"] - payoff) <= 0.5}
-        text_payoff = bool(edit.get("deathScreen") and (ev_here & {"death", "slain", "boom", "burn"})) or \
+        # (or the death screen already up at a blast that follows the death: which_door's second wave 0.6 s after it)
+        died_before = any(m["event"] in ("death", "slain") and payoff - 2.0 <= m["out"] <= payoff + 0.5 for m in marks)
+        text_payoff = bool(edit.get("deathScreen") and ((ev_here & {"death", "slain", "boom", "burn"}) or died_before)) or \
             any(isinstance(c, list) and mark_time(str(c[0]).split(":")[0]) is not None and abs(mark_time(str(c[0]).split(":")[0]) - payoff) <= 0.5 for c in edit.get("cards", []))
         line_here = [(t, lid) for t, lid in lines if abs(t - payoff) <= PAYOFF_WIN]
         # a hit that is only a line's first word is the voice, not a sound hit (an impact, a boom, the music)
@@ -511,7 +735,26 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         if not pic and flash < 12:
             add("WARN" if guessed else "BLOCK", "payoff", payoff, "no clear picture change within 0.3 s of the payoff (no cut, no motion onset, no flash)",
                 "cut to the reveal shot on the payoff mark, or a punch/flash on it (edit punch/flash: [EVENT])")
-        tail = dur - payoff
+        # let the payoff settle (r:r24d99a): the tail counts from when its falling blocks / debris / death stop
+        st = settle_of(payoff)
+        tail = dur - max(payoff, st["out"] if st and st["out"] is not None else payoff)
+        if st:
+            notes.append(st["note"])
+        # the picture itself (the renderer's particles outlive the entities; which_door, independent review): a blast /
+        # fall / settle ending must be still in its last 0.6 s
+        tm = tail_motion(video, dur) if (st or str(edit.get("endAfter") or "").startswith("settle")) else None
+        if st:
+            if st["blocks"]:
+                # only the rendered smoke left (by the recording's clock) and the picture is still: a far or small blast
+                lvl = "WARN" if st.get("puff_only") and tm is not None and tm < TAIL_STILL[0] else "BLOCK"
+                add(lvl, "settle", st["end_out"], st["msg"], "end after it settles (endAfter on a later mark, or a later offset), +1.0 s at most")
+        if tm is not None:
+            notes.append(f"the last 0.6 s: {tm:.2f}% of the game view changes per frame besides the camera (a still ending is ~0)")
+            if tm >= TAIL_STILL[0]:
+                add("BLOCK" if tm >= TAIL_STILL[1] else "WARN", "settle", round(dur - 0.6, 2),
+                    f"the picture still moves in the last 0.6 s ({tm:.2f}% of the game view changes every frame besides the camera's "
+                    "own drift: blast smoke, debris, a mob): owner, never end while the payoff is moving (r:r24d99a)",
+                    "re-record so the recording runs past the settle (lib/settle.js waits out the rendered smoke), or endAfter 'settle:1.0'")
         after = [f"{lid} at {t:.2f}" for t, lid in lines if t > payoff + 0.2]
         ok_hi, block_hi = (TEXT_TAIL[1], TEXT_TAIL[1] + 0.5) if text_payoff else (TAIL_MAX, TEXT_TAIL[1])
         if tail > ok_hi + 0.05:

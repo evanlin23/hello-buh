@@ -400,6 +400,9 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     # story.json v2: a character's lines in that speaker's colour (the narrator's, and v1 stories', white)
     spk = speakers(story)
     cast_v = any(c for c in spk.values() if c[1])   # the story has a voiced character
+    # a line's own caption height (story.json line "caption_y": a fraction of the game view, default 0.70), for a
+    # shot whose subject sits on the caption line (Dog on the Hill L14: "A GUY just APPEARED" over Buh's body)
+    cy_of = {ln["id"]: BAND + int(GAME_H * float(ln["caption_y"])) for ln in story.get("lines", []) if ln.get("caption_y") is not None}
     for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
         f0, f1 = frame_of(t0), frame_of(t1)
         if f0 > frame:
@@ -416,7 +419,7 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
                 break
             im = base.resize((max(1, int(base.width * s)), max(1, int(base.height * s))), Image.BICUBIC) if s != 1.0 else base
             full = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-            full.alpha_composite(im, (int(W / 2 - im.width / 2), int(CY - im.height / 2 - base.info.get("tag_h", 0) * s / 2)))
+            full.alpha_composite(im, (int(W / 2 - im.width / 2), int(cy_of.get(lid, CY) - im.height / 2 - base.info.get("tag_h", 0) * s / 2)))
             p = tmp / f"cap{k}_{j}.png"
             full.save(p)
             runs.append((p, 1))
@@ -596,3 +599,5 @@ if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories
     story, _ = _lines(sys.argv[1])
     key = tuple(int(story.get("key_color", "#ffd640")[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
     caption_image(sys.argv[2], key).save(sys.argv[3])
+
+

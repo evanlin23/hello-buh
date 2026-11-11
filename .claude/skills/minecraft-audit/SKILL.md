@@ -58,7 +58,29 @@ player would notice is.
 - The world looks natural: no command-built artefacts visible (a stray barrier, a cleared box with sharp edges,
   floating terrain the stunt didn't make).
 
-**4. "Is it actually a bug?"** Before reporting something as un-vanilla, check it:
+**4. Vanilla facts that are easy to get wrong** (1.21.x; check the outcome against these, not memory):
+- **A villager that loses its job becomes unemployed, never a nitwit.** If you break its job site before anyone has
+  traded with it, it goes back to no profession: a plain robe, and it will take another job site. A nitwit (green
+  coat) only exists from birth or from a summon; nothing turns a villager into one. A villager that has traded even
+  once keeps its profession for good, even with its job site gone. (villager_fired got this wrong.)
+- **TNT at point blank:** power 4. Damage is `(e^2 + e) / 2 * 7 * 8 + 1`, where `e = (1 - distance/8) * exposure`.
+  Touching it with nothing in between, that's 57 HP on Normal before armour, so an unarmoured player at full health
+  dies. The damage falls to nothing 8 blocks out. Peaceful: none. Easy: about half, `min(d/2 + 1, d)`. Hard: x1.5. A
+  creeper is power 3 (43 HP point blank), a charged creeper power 6. Beds in the Nether or End, and respawn anchors
+  outside the Nether, explode with power 5 and fire.
+- **Fall damage and Feather Falling:** fall damage is the blocks fallen minus 3. Armour points don't reduce it.
+  Feather Falling cuts it by 12% per level (IV: 48%). Feather Falling and Protection stack, but the total cut is
+  capped at 80%. With Feather Falling IV alone, a full-health player survives a fall of about 41 blocks (38 x 0.52 =
+  19.8). Adding Protection IV on all four pieces reaches the 80% cap: about 102 blocks. Landing in 1-deep water, a
+  hay bale (-80%), slime, powder snow or a cobweb changes the numbers.
+- **Mace smash:** a mace hit while falling more than 1.5 blocks is a smash. It adds +4 damage per block for the first
+  3 blocks, +2 per block for blocks 3 to 8, then +1 per block. Density adds more per block, Breach cuts the target's
+  armour, and Wind Burst launches the attacker back up. A smash that lands cancels the attacker's own fall damage and
+  knocks back the mobs around the target. It is not a free save from any height: it has to hit something.
+- **Zombie villagers:** a zombie that kills a villager converts it 50% of the time on Normal and 100% on Hard. On
+  Easy it never does.
+
+**5. "Is it actually a bug?"** Before reporting something as un-vanilla, check it:
 - `docs/lessons.md` lists behaviour already verified as vanilla. For example: water's alpha is 180/255, the checkerboard
   draining pattern is real, fast slot switches keep the hand down, and you can't see your own pillar's sides
   from on top of it.

@@ -122,7 +122,13 @@ def split_emoji(tok):
     return out
 
 
-def caption_png(text, red_word, path, colors=None, bands="black"):
+def red_rgb_of(args):
+    """The key word's colour (--red_rgb RRGGBB; default HelloBuh red)."""
+    h = getattr(args, "red_rgb", None)
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) + (255,) if h else (235, 40, 40, 255)
+
+
+def caption_png(text, red_word, path, colors=None, bands="black", red_rgb=(235, 40, 40, 255)):
     """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red.
     bands="blur": the bands stay transparent (the blurred game shows through) under a soft dark wash."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -178,7 +184,7 @@ def caption_png(text, red_word, path, colors=None, bands="black"):
                 key = tok.strip("?!.,:").lower()
                 color = (255, 255, 255, 255)
                 if red_word and key in red_word.lower().split():   # one word or a phrase
-                    color = (235, 40, 40, 255)
+                    color = red_rgb
                 if colors and key in colors:
                     color = colors[key]
                 d.text((x, y), tok, font=font, fill=color)
@@ -215,6 +221,9 @@ def glint_icon(jar, icon, tick):
     g = g * 0.75                                    # GlintAlpha: Glint Strength defaults to 0.75
     a[..., :3] = np.clip(a[..., :3] + g * g * mask, 0, 1)
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
+
+
+HUD_STYLE = {"hardcore": False, "armor": 0}   # edit.hardcore / edit.armor (--hardcore, --armor): the dilemma format
 
 
 def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20, xp_state=None, item_name=None):
@@ -269,8 +278,10 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
                 draw.rectangle([ix + 2 * GUI, iy + 13 * GUI, ix + (2 + w) * GUI - 1, iy + 14 * GUI - 1], fill=(round(r_ * 255), round(g_ * 255), round(b_ * 255), 255))
         if count and count > 1:                   # stack count, like GuiGraphics.renderItemDecorations
             draw_text(img, jar, str(count), ix + (19 - 2) * GUI, iy + (6 + 3) * GUI, align_right=True)
-    heart_c, heart = big(sprite(jar, "gui/sprites/hud/heart/container")), big(sprite(jar, "gui/sprites/hud/heart/full"))
-    half = big(sprite(jar, "gui/sprites/hud/heart/half"))
+    # a hardcore world (Gui.HeartType: the hardcore sprites, the container's too)
+    hc = "hardcore_" if HUD_STYLE["hardcore"] else ""
+    heart_c, heart = big(sprite(jar, f"gui/sprites/hud/heart/container{'_hardcore' if hc else ''}")), big(sprite(jar, f"gui/sprites/hud/heart/{hc}full"))
+    half = big(sprite(jar, f"gui/sprites/hud/heart/{hc}half"))
     food_e, food = big(sprite(jar, "gui/sprites/hud/food_empty")), big(sprite(jar, "gui/sprites/hud/food_full"))
     xp_bg, xp = big(sprite(jar, "gui/sprites/hud/experience_bar_background")), big(sprite(jar, "gui/sprites/hud/experience_bar_progress"))
     img.alpha_composite(xp_bg, (bx + GUI, by - 7 * GUI))
@@ -283,8 +294,8 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             draw_text(img, jar, str(level), W // 2, by - 13 * GUI, center=True, color=(0x80, 0xFF, 0x20, 255), outline=True)
     # no XP progress: a fresh player (the death screen says "Score: 0"; a 35% bar contradicted it)
     hy = by - 17 * GUI
-    hc_blink = big(sprite(jar, "gui/sprites/hud/heart/container_blinking"))
-    full_b, half_b = big(sprite(jar, "gui/sprites/hud/heart/full_blinking")), big(sprite(jar, "gui/sprites/hud/heart/half_blinking"))
+    hc_blink = big(sprite(jar, f"gui/sprites/hud/heart/container{'_hardcore' if hc else ''}_blinking"))
+    full_b, half_b = big(sprite(jar, f"gui/sprites/hud/heart/{hc}full_blinking")), big(sprite(jar, f"gui/sprites/hud/heart/{hc}half_blinking"))
     cur = math.ceil(health)
     disp = cur if display is None else display
     # Gui.renderHearts: ceil(max health / 2) containers, rows of 10 stacked upward, the row step
@@ -301,6 +312,13 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             img.alpha_composite(half_b if q + 1 == disp else full_b, (hx, y_))
         if q < cur:
             img.alpha_composite(half if q + 1 == cur else heart, (hx, y_))
+    arm = int(HUD_STYLE["armor"] or 0)
+    if arm > 0:   # Gui.renderArmor: 10 icons in a row over the hearts (above every heart row), 2 points an icon
+        ay = hy - ((rows - 1) * row_h + 10) * GUI
+        a_full, a_half, a_empty = (big(sprite(jar, f"gui/sprites/hud/armor_{k}")) for k in ("full", "half", "empty"))
+        for i in range(10):
+            k = 2 * i + 1
+            img.alpha_composite(a_full if k < arm else a_half if k == arm else a_empty, (bx + 8 * GUI * i, ay))
     for i in range(10):
         fx = bx + bar.width - 9 * GUI - 8 * GUI * i
         img.alpha_composite(food_e, (fx, hy))
@@ -857,7 +875,7 @@ def container_windows(timeline):
 
 
 def syschat_windows(timeline, hold=10.0):
-    """[(t0, t1, ((text, rgba), ...))] from `syschat` marks ({text, color}: chat lines the stunt or the harness
+    """[(t0, t1, ((text, rgba), ...))] from `syschat` marks and story `chat` marks ({text, color}: chat lines the stunt or the harness
     recorded, e.g. '<Jonah> see you tomorrow' and the yellow 'Jonah left the game') and `syschat_clear` marks. A
     line shows for `hold` s (ChatComponent keeps a closed chat's line 200 ticks), newest at the bottom."""
     COL = {"yellow": (255, 255, 85, 255), "white": (255, 255, 255, 255), "gray": (170, 170, 170, 255)}
@@ -866,6 +884,11 @@ def syschat_windows(timeline, hold=10.0):
         t = e["t"] / 1000
         if e["event"] == "syschat":
             lines.append([t, t + hold, e.get("text", ""), COL.get(e.get("color"), COL["white"])])
+        elif e["event"] == "chat":   # a story stunt's `chat` mark {text, hold?, color?} ("Buh joined the game"): the
+            # same chat line on the one shared path (centred for story Shorts: edit.chatAlign / edit.chatY), its own hold
+            c = e.get("color", "yellow")
+            rgba = COL.get(c) or (tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) + (255,) if str(c).startswith("#") else COL["yellow"])
+            lines.append([t, t + float(e.get("hold", 2.6)), e.get("text", ""), rgba])
         elif e["event"] == "syschat_clear":
             for ln in lines:
                 ln[1] = min(ln[1], t)
@@ -1114,6 +1137,76 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
     return seq / "c%05d.png"
 
 
+SPLIT_POS = (24, 479)      # the split timer's strip: top-left of the game area (the end_portal_job overlay the owner asked for)
+
+
+def split_timer(spec, timeline, start, dur, outdir, fps=60):
+    """edit.splits: a speedrun timer that times ONE attempt (owner r:r32b983, end_portal_job: "the timer should reset
+    every single time like we start a new ender portal"). spec {reset, split, of, endless}: the timer starts at 0:00.00 on
+    every `reset` mark and runs in output time, freezes green on the next `split` mark (that attempt's time) with "n/of",
+    holds until the next reset and starts again from 0; from the `endless` mark (optional) it starts from 0 once more,
+    red, "n/∞", and never stops. Returns (an image-sequence pattern of SW x SH strips, one per output frame, x, y)."""
+    sp = json.loads(spec) if isinstance(spec, str) else spec
+    ev = lambda name: sorted(e["t"] / 1000 - start for e in timeline if e["event"] == name) if name else []
+    resets, splits_, endless = ev(sp["reset"]), ev(sp.get("split")), ev(sp.get("endless"))
+    runs = []                                    # (t0, t1 or None, n, endless)
+    for i, a in enumerate(resets):
+        nxt = resets[i + 1] if i + 1 < len(resets) else math.inf
+        b = next((x for x in splits_ if a < x <= nxt), None)
+        runs.append((a, b, i + 1, False))
+    if endless:
+        runs.append((endless[0], None, len(resets) + 1, True))
+    runs.sort()
+    if not runs:
+        return None
+    big, small = ImageFont.truetype(FONT, 72), ImageFont.truetype(FONT, 34)
+    SW, SH = 440, 112
+    of = sp.get("of") or len(resets)
+
+    def fmt(t):
+        m, sec = divmod(max(0.0, t), 60)
+        return f"{int(m)}:{sec:05.2f}"
+
+    def strip(txt, col, count, ccol):
+        img = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle((0, 0, SW - 1, SH - 1), 16, fill=(0, 0, 0, 150))
+        adv = 46                                 # a fixed advance per digit: the numbers don't jitter
+        tw = sum(adv if c.isdigit() else d.textlength(c, font=big) for c in txt)
+        x = 172 - tw / 2
+        for c in txt:
+            w_ = adv if c.isdigit() else d.textlength(c, font=big)
+            d.text((x + (w_ - d.textlength(c, font=big)) / 2, 12), c, font=big, fill=col, stroke_width=6, stroke_fill=(0, 0, 0, 255))
+            x += w_
+        if count:
+            d.text((340, 36), count, font=small, fill=ccol, stroke_width=4, stroke_fill=(0, 0, 0, 255))
+        return img
+
+    seq = outdir / "splitseq"
+    seq.mkdir()
+    cache = {}
+    WHITE, GREEN, RED = (255, 255, 255, 255), (90, 255, 90, 255), (255, 70, 70, 255)
+    for i in range(int(math.ceil(dur * fps)) + 1):
+        t = i / fps
+        cur = [r for r in runs if r[0] <= t + 1e-6]
+        if not cur:                              # before the first attempt: 0:00.00, waiting
+            key = (fmt(0), WHITE, "", WHITE)
+        else:
+            a, b, n, endl = cur[-1]
+            if endl:
+                key = (fmt(t - a), RED, f"{n}/\u221e", RED)
+            elif b is not None and t >= b - 1e-6:
+                key = (fmt(b - a), GREEN, f"{n}/{of}", GREEN)
+            else:
+                key = (fmt(t - a), WHITE, f"{n - 1}/{of}" if n > 1 else "", GREEN)
+        if key not in cache:
+            path = outdir / f"split{len(cache)}.png"
+            strip(*key).save(path)
+            cache[key] = path
+        (seq / f"s{i:05d}.png").hardlink_to(cache[key])
+    return seq / "s%05d.png", SPLIT_POS
+
+
 def apply_speed(args):
     """--speed: rebuild the footage, the timeline and the game audio on the time-lapse map
     (scripts/timewarp.py), so everything after this works in output time unchanged."""
@@ -1134,6 +1227,11 @@ def apply_speed(args):
     # work/<name>.slowmo (blends turned a placed boat into a 50% double exposure: worker 4)
     slow_dir = src_dir.with_suffix(".slowmo")
     slow_fps = json.loads((slow_dir / "slowmo.json").read_text())["fps"] if (slow_dir / "slowmo.json").exists() else None
+    seq_mode, _sizes = None, {}
+    def seq_size(f):
+        if f not in _sizes:
+            _sizes[f] = Image.open(f).size
+        return _sizes[f]
     while True:
         x = warp.src(k / args.fps) * args.fps
         i = warp.frame(k, args.fps)
@@ -1142,12 +1240,25 @@ def apply_speed(args):
         frac = x - math.floor(x)
         step = warp.src((k + 1) / args.fps) * args.fps - x      # < 1 only inside a slow-motion span
         real = None
-        if step < 0.99 and 0.2 < frac < 0.8 and slow_fps:   # slow motion: a real in-between frame from the high-fps pass
+        # slow motion: a real in-between frame from the high-fps pass, for every in-between frame (it renders all of
+        # them). Only the middle 60 % real held each 60 fps frame ~7 frames at 0.06x, then jumped (dilemma_mace r1),
+        # and a span's last frame (step 0.34, frac 0.95) fell back to floor(x): the picture snapped back (r2)
+        mid = (frac > 1e-6 and 1 - frac > 1e-6) if slow_fps else (0.2 < frac < 0.8)
+        if step < 0.99 and mid and slow_fps:
             j = int(round(x / args.fps * slow_fps))
             real = slow_dir / f"f{j:05d}.png"
             real = real if real.exists() else None
         if real:
-            (wd / (pat % k)).symlink_to(real.resolve())
+            # the same pixel format as the sequence: on Actions the 60 fps frames are decoded from the slices (RGB) and
+            # the slow pass is render.js PNGs; a format change mid-sequence makes ffmpeg re-init the graph, and that
+            # frame went out with no caption, cards or HUD (dilemma_mace r2: 5 blinks, one at the landing)
+            if seq_mode is None:
+                seq_mode = Image.open(src_dir / (pat % 0)).mode
+            im = Image.open(real)
+            if im.mode != seq_mode or im.size != seq_size(src_dir / (pat % 0)):
+                im.convert(seq_mode).resize(seq_size(src_dir / (pat % 0))).save(wd / (pat % k), compress_level=1)
+            else:
+                (wd / (pat % k)).symlink_to(real.resolve())
             rendered += 1
         elif step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # fallback: blend the two neighbours (fast things ghost)
             lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
@@ -1226,6 +1337,28 @@ def fgrid(t, fps):
     return math.ceil(t * fps - 1e-6) / fps - 0.5 / fps
 
 
+def band_captions(args, tl_ev, dur, tmp, colors):
+    """edit.captions [[EVENT[:OFFSET_S], TEXT], ...] -> [(t0, t1, png)] in Short time: the top band's caption from each mark to the
+    next (the last to the end). A mark due a frame or two before a hard cut starts on the cut (the label of the next
+    item never flashes over the last frames of the one before). Marks missing from the timeline are skipped, loudly."""
+    out = []
+    for k, c in enumerate(json.loads(args.captions)):
+        ev_, text = c[0], c[1]
+        name, _, off = str(ev_).rpartition(":") if ":" in str(ev_) else (str(ev_), "", "0")
+        if name not in tl_ev:
+            print(f"WARNING captions: no {name!r} mark, {text!r} skipped")
+            continue
+        t0 = tl_ev[name] + float(off) - args.start
+        for ct in cut_times(args):
+            if ct - 0.07 < t0 < ct:
+                t0 = ct
+        png = tmp / f"caption_{k}.png"
+        caption_png(text, args.red, png, colors, bands=args.bands, red_rgb=red_rgb_of(args))
+        out.append([max(0.0, t0), png])
+    out.sort(key=lambda x: x[0])
+    return [(a, (out[i + 1][0] if i + 1 < len(out) else dur + 1.0), png) for i, (a, png) in enumerate(out) if a < dur]
+
+
 def cut_times(args):
     """Video times of the hard cuts (speed "cut" spans)."""
     w = getattr(args, "warp", None)
@@ -1242,7 +1375,7 @@ def premix_sfx(args, dur, tmp):
     track = sfx.build_track(args.sfx, sfx_tl, args.start, dur, tmp / "sfx.wav", args.cards, args.counter)
     if track and args.audio:
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
-                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
+                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)}{sfx.duck_filter(sfx.game_dips(args.sfx, sfx_tl, args.start), 0.03)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
                         "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
         return str(tmp / "game_sfx.wav"), 0.0
     if track:
@@ -1314,13 +1447,16 @@ def main():
     ap.add_argument("--out_fps", type=int, default=30)
     ap.add_argument("--caption", required=True)
     ap.add_argument("--red")
+    ap.add_argument("--red_rgb", help="the key word's colour as RRGGBB (default HelloBuh red EB2828; story Shorts: Buh gold FFD640)")
     ap.add_argument("--bands", choices=["blur", "black"], default="black", help="top/bottom bands: a blurred copy of the game (stories, owner 2026-11-10) or black")
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
+    ap.add_argument("--splits", help='JSON {reset, split, of, endless}: a speedrun timer reset to 0 at every attempt (edit.splits)')
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
+    ap.add_argument("--captions", help='JSON list of [EVENT[:OFFSET_S], TEXT]: the top band\'s caption switches to TEXT at EVENT (a numbered list: "1. ...", "2. ..."); --caption shows before the first')
     ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
     ap.add_argument("--subs_y", type=float, default=0.42, help="subtitle height as a fraction of the game view (0.15 = top third; default 0.42, mid view)")
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
@@ -1340,6 +1476,7 @@ def main():
     ap.add_argument("--countdowns", help='JSON list of [START_EVENT, END_EVENT, LABEL?, NTH?] live round countdowns (every START pairs with the next END)')
     ap.add_argument("--ring", help='JSON list of [EVENT[:off], SECONDS, X_FRAC?, Y_FRAC?, RADIUS_PX?] red highlight rings')
     ap.add_argument("--tags", help='JSON list of [START, END|null, TEXT, COLOR, NTH?] persistent role labels')
+    ap.add_argument("--score", help='JSON {"event": "score", "a": [LABEL, COLOR], "b": [LABEL, COLOR]}: a live two-sided score bar from the marks\' a/b shares (format race)')
     ap.add_argument("--chat", help='JSON list of [EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?] vanilla chat input typed up to EVENT (Enter)')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
@@ -1350,6 +1487,8 @@ def main():
     ap.add_argument("--loop", help='true or SECONDS: the last 0.25 s dissolve into the first frame')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 1.5, "after": 0, "text": ...} finale preview in front (1.2-1.5 s)')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
+    ap.add_argument("--hardcore", action="store_true", help="hardcore hearts on the HUD (edit.hardcore)")
+    ap.add_argument("--armor", type=int, default=0, help="armor points shown over the hearts (edit.armor: the worn armour's total, 0-20)")
     ap.add_argument("--gui_scale", type=int, help="GUI scale of container screens (edit.guiScale; default 3, vanilla's auto scale here; 4 is vanilla's largest at this window): phone-readable chests and barrels")
     ap.add_argument("--chat_align", default="left", choices=["left", "center"], help="chat lines (syschat marks) at vanilla's bottom-left, or centred (edit.chatAlign; story Shorts default to center)")
     ap.add_argument("--chat_y", type=float, default=0.70, help="with --chat_align center: the newest line's middle as a fraction of the game area's height (edit.chatY; 0.70 = the caption line)")
@@ -1362,6 +1501,7 @@ def main():
     ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    HUD_STYLE.update(hardcore=args.hardcore, armor=args.armor)
     if args.preview:
         os.environ["HB_PREVIEW"] = "1"
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
@@ -1400,13 +1540,13 @@ def main():
             print(f"WARNING song drop at {drop:.2f}s plays {at - drop:.2f}s BEFORE the drop event at {at:.2f}s: pick a song with a later drop")
         else:
             print(f"song drop at {drop:.2f}s lands on {at:.2f}s of the Short (song starts at {args.song_start:.2f}s)")
-    named = {"red": (235, 40, 40, 255), "green": (60, 220, 60, 255), "yellow": (255, 220, 40, 255), "blue": (80, 160, 255, 255)}
+    named = {"red": (235, 40, 40, 255), "green": (60, 220, 60, 255), "yellow": (255, 220, 40, 255), "blue": (80, 160, 255, 255), "purple": (190, 110, 255, 255)}
     colors = {}
     for pair in (args.colors or "").split(","):
         if "=" in pair:
             w, c = pair.split("=", 1)
             colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
-    caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands)
+    caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands, red_rgb=red_rgb_of(args))
     if args.audio_only:   # the finished picture is already cut to the edit: its length is the Short's
         dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.audio_only],
                                    capture_output=True, text=True).stdout)
@@ -1561,6 +1701,14 @@ def main():
         graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[tmv]")
         graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
         last, n_in = "tmo", n_in + 1
+    if args.splits and args.timeline:   # edit.splits: a speedrun timer reset at every attempt (r:r32b983)
+        sres = split_timer(args.splits, json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.start, dur, tmp, fps=args.out_fps)
+        if sres:
+            sseq, (sx, sy) = sres
+            inputs += ["-framerate", str(args.out_fps), "-i", str(sseq)]
+            graph.append(f"[{n_in}:v]format=rgba[spv]")
+            graph.append(f"[{last}][spv]overlay={sx}:{sy}:eof_action=repeat[spo]")
+            last, n_in = "spo", n_in + 1
     if args.clock and args.timeline:
         seq = clock_concat(args.clock, tl_ev, args.start, dur, tmp, fps=args.out_fps, timeline=json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
         if seq:
@@ -1663,9 +1811,9 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"chat{si}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sc{si}]")
                     last, n_in = f"sc{si}", n_in + 1
-    if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
+    if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat or args.score) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
-                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat,
+                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat, score=args.score,
                                   hide=[(death_start(a_, args), b_ - args.start) for a_, b_ in death_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.death_screen)]
                                   if args.death_screen else [], cuts=cut_times(args))
         if lst:
@@ -1699,7 +1847,17 @@ def main():
             graph.append(f"[{last}][mtv]overlay=0:0:eof_action=repeat[mto]")
             last, n_in = "mto", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
-    graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
+    band_caps = band_captions(args, tl_ev, dur, tmp, colors) if args.captions and args.timeline else []
+    if band_caps:   # the band's caption switches on marks (edit.captions): each one over the base band in its window
+        graph.append(f"[{last}][1:v]overlay=0:0[bc0]")
+        last = "bc0"
+        for k, (a, b, png) in enumerate(band_caps):
+            inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(png)]
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(a, args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[bc{k + 1}]")
+            last, n_in = f"bc{k + 1}", n_in + 1
+        graph.append(f"[{last}]format=yuv420p[v]")
+    else:
+        graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     audio_ss, duck = args.start, ""
     # with a replay or a hook the song goes in LAST, over the whole finished video, so it plays on
     # under the appended replay instead of cutting out (one_in_a_million: the bass fell 35 dB 1 s

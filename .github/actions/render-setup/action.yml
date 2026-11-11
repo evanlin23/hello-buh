@@ -77,3 +77,9 @@ runs:
         python3 scripts/fetch.py
         VER=$(grep '^MC_VERSION=' versions.env | cut -d= -f2)
         [ -f "work/assets/$VER/resolved.json" ] || { python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"; }
+    # the owner's own player skin (56e, owner 2026-11-11): its primary copy is in the PRIVATE assets repo, which the
+    # runners can't read, so fetch it from Mojang (api.mojang.com -> sessionserver.mojang.com -> textures.minecraft.net)
+    # into work/skins/ (never cached or committed). A failure only warns: render.js then draws the default skin.
+    - name: real player skins
+      shell: bash
+      run: python3 scripts/fetch_skin.py $(python3 -c "import json; print(' '.join(json.load(open('lib/real_skins.json'))['names']))") || true

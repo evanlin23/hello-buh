@@ -17,10 +17,18 @@ FAMILIES = [
     ("guess", lambda n: n.startswith("guess_sound")),
     ("worse", lambda n: n.startswith("worse_")),
     ("story", lambda n: n.startswith("story_")),
+    ("dilemma", lambda n: n.startswith("dilemma_")),   # the mace and the dog... (docs/formats.md)
     ("art", lambda n: n.endswith("_art") or n == "looks_wrong"),
     ("clutch", lambda n: "clutch" in n or n in ("one_in_a_million",)),
     ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
     ("inside", lambda n: n.startswith("inside_")),
+    ("desire", lambda n: n.startswith("desire_")),
+    ("cells", lambda n: n.startswith("cells_")),
+    ("mislabel", lambda n: n.startswith("mislabel_")),
+    ("race", lambda n: n.startswith("race_")),   # format race (lib/race.js, r:rbe60ef)
+    ("interrupt", lambda n: n.startswith("interrupt_")),   # owner's pick 2026-11-11 (r:re05b89): a normal video, a mob interrupts
+    ("hack", lambda n: n.startswith("hack_")),   # one real block trick per Short (docs/formats.md, r:rc15847)
+    ("mega", lambda n: n.startswith("mega_")),   # huge generated builds, flown round (owner 2026-11-11, r:r8bb1e3)
 ]
 
 

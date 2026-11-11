@@ -89,6 +89,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     meta = json.loads((d / "metadata.json").read_text())
     stunt = json.loads(subprocess.run(["node", "-e", f"console.log(JSON.stringify(require('./stunts/{name}').edit||{{}}))"], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
     src = d / "short_nosong.mp4"
+    if stunt.get("ownScore"):   # a cinematic story with its own made score (scripts/story_short.py): no song on top
+        print(name, "own score: no song added"); return
     rec = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))
     tl = rec["timeline"]
     sys.path.insert(0, str(ROOT / "scripts"))
@@ -156,7 +158,10 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         loud.master(out, -10.0, -2.0 if keys else -1.0)   # (ducked under the key sounds, the master lifts the game: limit lower)
         if keys:   # the gate (BLOCK): each key sound >= KEY_MIN_DB over the music (owner 2026-11-11, guess_sound: "super loud music")
             rows, bad = key_sounds.check(out, src, keys, kstop)
-            print(name, f"key sounds over the music: worst {min(r['margin_db'] for r in rows):+.1f} dB over {len(rows)} clips (need >= {key_sounds.KEY_MIN_DB:.0f})")
+            if rows:   # (no clip before the drop, e.g. dropAt on the last mark: nothing to measure; race 2026-11-11 crashed here)
+                print(name, f"key sounds over the music: worst {min(r['margin_db'] for r in rows):+.1f} dB over {len(rows)} clips (need >= {key_sounds.KEY_MIN_DB:.0f})")
+            else:
+                print(name, "key sounds over the music: none before the drop to measure")
             if bad:
                 sys.exit(f"{name}: BLOCK [keysound] the music covers {len(bad)} key sound(s): " + ", ".join(f"{r['t']:.2f} s ({r['margin_db']:+.1f} dB)" for r in bad))
     f = pathlib.Path(song).name
