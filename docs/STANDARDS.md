@@ -1,6 +1,6 @@
 # Story standards: the current checklist
 
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 Every rule a story Short must meet **today**, once, by stage, with its number and the check that enforces it. The
 newest owner decision wins; superseded rules are listed at the end and must not be applied. The dated history (the
