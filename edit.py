@@ -857,7 +857,7 @@ def container_windows(timeline):
 
 
 def syschat_windows(timeline, hold=10.0):
-    """[(t0, t1, ((text, rgba), ...))] from `syschat` marks ({text, color}: chat lines the stunt or the harness
+    """[(t0, t1, ((text, rgba), ...))] from `syschat` marks and story `chat` marks ({text, color}: chat lines the stunt or the harness
     recorded, e.g. '<Jonah> see you tomorrow' and the yellow 'Jonah left the game') and `syschat_clear` marks. A
     line shows for `hold` s (ChatComponent keeps a closed chat's line 200 ticks), newest at the bottom."""
     COL = {"yellow": (255, 255, 85, 255), "white": (255, 255, 255, 255), "gray": (170, 170, 170, 255)}
@@ -866,6 +866,11 @@ def syschat_windows(timeline, hold=10.0):
         t = e["t"] / 1000
         if e["event"] == "syschat":
             lines.append([t, t + hold, e.get("text", ""), COL.get(e.get("color"), COL["white"])])
+        elif e["event"] == "chat":   # a story stunt's `chat` mark {text, hold?, color?} ("Buh joined the game"): the
+            # same chat line on the one shared path (centred for story Shorts: edit.chatAlign / edit.chatY), its own hold
+            c = e.get("color", "yellow")
+            rgba = COL.get(c) or (tuple(int(c[i:i + 2], 16) for i in (1, 3, 5)) + (255,) if str(c).startswith("#") else COL["yellow"])
+            lines.append([t, t + float(e.get("hold", 2.6)), e.get("text", ""), rgba])
         elif e["event"] == "syschat_clear":
             for ln in lines:
                 ln[1] = min(ln[1], t)
@@ -1721,12 +1726,6 @@ def main():
             graph.append(f"[{n_in}:v]format=rgba[mtv]")
             graph.append(f"[{last}][mtv]overlay=0:0:eof_action=repeat[mto]")
             last, n_in = "mto", n_in + 1
-        chat = story_track.chat_concat(story_tl, args.start, dur, tmp)   # the game's chat lines (`chat` marks), if any
-        if chat:
-            inputs += ["-framerate", str(args.out_fps), "-i", story_track.as_sequence(chat, "ch")]
-            graph.append(f"[{n_in}:v]format=rgba[chv]")
-            graph.append(f"[{last}][chv]overlay=0:0:eof_action=repeat[cho]")
-            last, n_in = "cho", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
     band_caps = band_captions(args, tl_ev, dur, tmp, colors) if args.captions and args.timeline else []
     if band_caps:   # the band's caption switches on marks (edit.captions): each one over the base band in its window
