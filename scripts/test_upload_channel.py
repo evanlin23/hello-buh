@@ -17,7 +17,9 @@ def load(channel, **env):
     os.environ.update({"YT_CHANNEL": channel, **env})
     try:
         sys.modules.pop("youtube_upload", None)
-        return importlib.import_module("youtube_upload")
+        _yu = importlib.import_module("youtube_upload")
+        _yu.owner_ok = lambda name, meta: ""  # (the owner-OK gate is tested in scripts/test_owner_ok.py)
+        return _yu
     finally:
         os.environ.clear(); os.environ.update(old)
 

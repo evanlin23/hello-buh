@@ -379,6 +379,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
   frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
   before it, gates v3). r:r24d99a
+- **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
   (the genre's look); every other turn keeps the followable-camera rule. Check: review; the whip check lets one

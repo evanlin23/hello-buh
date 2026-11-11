@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11: "make everything, then put all of it into a review folder. dont let anything go to youtube
+  anymore without an OK from me"; "the \"review folder\" is the review artifact"; "show what i need to review there,
+  then archive the rest (still available)".** Nothing uploads without the owner's OK for that exact cut:
+  scripts/youtube_upload.py skips any Short without a line in uploads/owner_ok.txt naming the sha256 of the video the
+  owner watched (scripts/owner_ok.py add, only after the owner says OK); a re-published Short needs a new OK. Every
+  ready Short goes on the review artifact; what is already decided is archived there, still viewable.
 - **Owner, 2026-11-11, on the skin stills: "i want it to be regular arms, the slim dont look good".** The player 56e
   renders with regular (wide, classic) arms; the slim-painted arm art is widened to the wide layout (a duplicated column
   per arm face) so no black stripes show. Supersedes the slim-arm auto-detect for 56e.
