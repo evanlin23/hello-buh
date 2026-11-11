@@ -31,6 +31,7 @@ module.exports = makeStunt({
   select: 0,
   start: [0.5, 1, 1.15, 180, 66],
   park: [-3.5, 1, 6.5, -125],
+  endHold: 0.75,   // owner r:r188b46: the end 0.5-0.8 s after the payoff's result
   // fast cuts (owner r:r188b46): jump over the walk into hiding and his coast + shuffle onto the trapdoor
   edit: { speed: [['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut']] },   // south-west, behind me while I build and ~67 deg off my view from the hide; the turn into hiding goes round by the north
 
