@@ -1,434 +1,298 @@
-// Story Short "the sun hasn't set in 300 days 💀" (stories/sun_wont_set, premise #10 in docs/stories.md).
-// The sun has hung low over the narrator's village for 300 days. Nobody has slept: the farmer walks
-// into his own fence, the butcher sleeps standing up, every bed is still made, and the zombies have
-// waited under one tree the whole time. Every day grandpa asks "is tonight the night?" and every day
-// the narrator says "not yet". It isn't a curse: it's a lever, and he pulled it, because zombies come
-// out at night and grandpa is too slow to run. Today grandpa asks him to let it come. He pulls the
-// lever back, the sun goes down, the zombies come out, he yells "run, grandpa!" and grandpa is
-// already gone. "Then who was too slow to run?" The game answers: HelloBuh was slain by Zombie.
-// The death loops into line 1 (that's why the sun never sets here).
+// Story Short "the sun hasn't set in 300 days 💀" (stories/sun_wont_set r3, the owner's notes 2026-11-10).
+// The sun has hung over Stillwater for 300 days: the kid holds it up with a lever, because at night the zombies come
+// out and Grandpa is too slow to run. Grandpa asks every day whether the sun will go down, and finally: "Let the night
+// come. You need sleep, kid." The kid hears it as Grandpa being tired, walks him home, pulls the lever back and stands
+// guard at Grandpa's door against the zombies. Then the sky screams: phantoms come at night for a player who hasn't
+// slept, and he hasn't slept in 300 days. Slain by Phantom.
 //
-// The plants: grandpa "always gets there first" (L09, he pulls away from the camera), and he strides
-// up the street at a brisk walk while the narrator calls him too slow (L11).
-//
-// One scene per line (docs/stories.md): each lasts its spoken length + gap, and actions land on
-// caption chunks (at(k)). The sun is frozen at 11500 (low in the west, the street runs toward it);
-// the sunset is a run of `time` marks; the zombies are NoAI and hit with /damage ... by <zombie>.
+// The place is canon (docs/world/map.json stillwater, day 1100: the Long Day lever ON): Grandpa's cottage on the west
+// rise, the square with the lever on its stone post, Gary's cottage, the one tree at the edge of the shore. world.build
+// puts them on the seed's own terrain; the story adds the tree's shade canopy, Gary's field and its cast.
+// O = (X, F, Z) = Stillwater's canonical origin (-215, 68, -1060); every spot off it reads its own ground (gy).
 const path = require('path')
-const { storyLines, storyKit, house, clearSet, plainsBiome, resendChunks } = require('../lib/story')
+const world = require('../lib/world')
+const { storyLines, storyKit, setKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'sun_wont_set')
-const DAY = 11500, DUSK = 12950
-
-// the cast's fixed spots (set-relative x, z)
-const ZA = [[2.7, 29.3], [3.2, 31.9], [5.5, 28.5], [5.8, 31.6], [5.9, 29.9], [4.4, 32.6]]   // under the tree
-const ZF = [7.2, 30.7]                                                                       // the one who tries the sun
-const ZB = [[8.0, 0.4, 1.25], [8.8, -1.2, 1.7], [9.2, 1.6, 1.5], [10.6, 0.2, 2.2], [11.0, -1.4, 2.6], [11.4, 1.2, 2.4]]   // x, z, how close each gets
-const ZW = [[-2.6, 5.4], [-2.0, 6.8], [-3.2, 6.4]]   // three more, in the gap between the houses behind me
-const GAZE = [[-9.2, -1.6, 'cleric'], [-10.8, -0.7, 'mason'], [-9.9, 1.9, 'shepherd'], [-11.4, 2.3, 'fletcher']]
+const CAPTION = "the sun hasn't set in 300 days 💀"
+const DAY = 11000, NIGHT = 14200
+const X = -215, Z = -1060, F = 68
+const TREE = [27, 2]                 // the one tree (-188, -1058)
+const LEVER = [1, 2, -2]             // the lever block (-214, 70, -1062), on its stone post
+const FIELD = [15, 25, 22, 32]       // Gary's field (story prop): x0, z0, x1, z1, north-east of his cottage
+// the zombies' places in the shade (rel to the trunk)
+const ZA = [[-2.3, -1.2], [-1.6, 1.4], [1.4, -1.8], [2.2, 0.9], [0.6, 2.2], [-2.6, 0.4], [1.9, -0.2]]
 
 module.exports = {
   name: 'story_sun_wont_set',
-  biome: process.env.BIOME || 'minecraft:plains',
+  caption: CAPTION,
   time: DAY,
-  clouds: false,             // Video Settings > Clouds: OFF (the renderer fogs dusk clouds orange one way and grey the other)
-  brightness: 1,             // Options > Brightness: Bright, so the dusk scenes read
-  caption: "the sun hasn't set in 300 days 💀",
-  edit: { caption: "the sun hasn't set in 300 days 💀", red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.3', zoom: [['death:0.1', 'death:1.3', 1.04], ['death:0.45', 'death:1.3', 1.05], ['death:0.9', 'death:1.7', 1.16]], deathScreen: true, sfx: [['riser', 'lever', 'dusk', { gain: 0.5 }], ['impact', 'dusk', { gain: 0.6 }], ['impact', 'death', { gain: 0.6 }]] },
+  clouds: false,             // the renderer fogs dusk clouds orange one way and grey the other
+  brightness: 1,
+  renderDistance: 12, recordRadius: 128,
+  look: { mood: 'bright', rolloff: 0.8 },
+  edit: {
+    caption: CAPTION, red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.0', deathScreen: true,
+    punchStress: true,
+    zoom: [['death:0.1', 'death:1.0', 1.05]],
+    sfx: [['impact', 'dusk', { gain: 0.5 }], ['impact', 'death', { gain: 0.6 }]]
+  },
   expectDeath: true,
-  botTimeout: 300,
+  botTimeout: 600,
+  chunkStops (set) { return [[0, 0], [30, 0], [-20, 0], [10, 25], [0, -25]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
-    if (!g) throw new Error('no dry land')
-    const X = g.x, Z = g.z, F = g.y
-    Object.assign(this, { X, Z, F })
-    const c = (s) => ctx.cmd(s)
-    const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
+    const { c, A, mob, vil } = setKit(ctx, { X, Z, F })
     await ctx.defaultRules()
-    await c('/gamerule log_admin_commands false')            // per-tick `execute as` tps flood the bot with op broadcasts
-    await c('/gamerule natural_health_regeneration false')   // a heart came back between the zombies' hits
-    await c('/gamerule mob_griefing false')
-    await c('/difficulty hard')                              // a zombie's hit is 4.5 on hard: five of them kill
-    await clearSet(ctx, A, 64, 24)
-    await c('/kill @e[type=!player]')
-    await plainsBiome(ctx, A, 80, -4, 24)
+    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing false', 'natural_health_regeneration false', 'do_insomnia false', 'do_mob_spawning false']) await c(`/gamerule ${g}`)
+    await c('/difficulty normal')
+    await c(`/setworldspawn ${X} ${F + 1} ${Z}`)
+    const W = await world.build(ctx, { story: 'sun_wont_set' })
+    const P0 = W.places.stillwater
+    ctx.log(`stillwater: ${JSON.stringify(P0.origin)}; pieces ${Object.keys(P0.pieces).join(' ')}`)
+    const gp = P0.pieces.grandpa
+    this.door = gp.anchors.door; this.doorstep = gp.anchors.doorstep; this.gate = gp.anchors.gate; this.bedA = gp.anchors.bed; this.street = gp.anchors.street
+    ctx.log(`grandpa anchors: ${JSON.stringify({ door: this.door, doorstep: this.doorstep, gate: this.gate, bed: this.bedA, street: this.street })}`)
+    await c(`/kill @e[type=!player,x=${X},y=${F},z=${Z},distance=..100]`)
+    const gy = (dx, dz) => groundAt(ctx, X + dx, Z + dz)
 
-    // --- the street: east-west, straight at the low sun in the west
-    await c(`/fill ${A(-34, 0, -1)} ${A(31, 0, 1)} dirt_path`)
-    for (const x0 of [14, 5, -4, -13, -22]) await house(ctx, A, x0, -9, x0 + 1, -4, 'north')   // north side, doors on the street (-4..1 is grandpa's)
-    for (const x0 of [10, 0, -10, -19]) await house(ctx, A, x0, 4, x0 + 1, 4, 'south')         // south side
-    for (const [dx, dz] of [[20, -2], [14, 2], [3, 2], [-6, 2], [-16, -2], [-26, 2]]) { await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} oak_fence`); await c(`/setblock ${A(dx, 3, dz)} lantern`) }
-    for (const [dx, dz, b] of [[18, 2, 'poppy'], [12, -2, 'dandelion'], [2, 2, 'cornflower'], [-7, -2, 'oxeye_daisy'], [-14, 3, 'poppy'], [22, 3, 'azure_bluet'], [-20, -3, 'dandelion']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
-    // the butcher's stall, in the gap between two south houses
-    await c(`/setblock ${A(7, 1, 3)} smoker[facing=north]`); await c(`/setblock ${A(6, 1, 3)} barrel[facing=up]`)
-
-    // --- the farm (L02), north-east: wheat round a water row, fenced
-    await c(`/fill ${A(23, 0, -23)} ${A(29, 0, -17)} farmland[moisture=7]`)
-    await c(`/fill ${A(23, 1, -23)} ${A(29, 1, -17)} wheat[age=7]`)
-    await c(`/fill ${A(23, 0, -20)} ${A(29, 0, -20)} water`)
-    await c(`/fill ${A(23, 1, -20)} ${A(29, 1, -20)} air`)
-    await c(`/fill ${A(22, 1, -24)} ${A(22, 1, -16)} oak_fence[north=true,south=true]`)
-    await c(`/fill ${A(30, 1, -24)} ${A(30, 1, -16)} oak_fence[north=true,south=true]`)
-    await c(`/fill ${A(23, 1, -24)} ${A(29, 1, -24)} oak_fence[east=true,west=true]`)
-    await c(`/fill ${A(23, 1, -16)} ${A(29, 1, -16)} oak_fence[east=true,west=true]`)
-    await c(`/setblock ${A(22, 1, -24)} oak_fence[south=true,east=true]`); await c(`/setblock ${A(30, 1, -24)} oak_fence[south=true,west=true]`)
-    await c(`/setblock ${A(22, 1, -16)} oak_fence[north=true,east=true]`); await c(`/setblock ${A(30, 1, -16)} oak_fence[north=true,west=true]`)
-    await c(`/fill ${A(24, 1, -18)} ${A(25, 1, -18)} air`)   // where the farmer paces: trodden clear
-    await c(`/fill ${A(23, 1, -19)} ${A(25, 1, -19)} air`)
-    await c(`/setblock ${A(28, 1, -17)} hay_block`); await c(`/setblock ${A(29, 1, -17)} composter`)
-
-    // --- the bunkhouse (L04), at the east end of the street: eight beds, all made
-    await c(`/fill ${A(32, 0, -3)} ${A(41, 4, 3)} oak_planks hollow`)
-    await c(`/fill ${A(32, 0, -3)} ${A(41, 0, 3)} spruce_planks`)
-    for (const [x, z] of [[32, -3], [41, -3], [32, 3], [41, 3]]) await c(`/fill ${A(x, 1, z)} ${A(x, 3, z)} oak_log`)
-    await c(`/fill ${A(31, 4, -4)} ${A(42, 4, 4)} spruce_planks`)
-    await c(`/fill ${A(32, 5, -3)} ${A(41, 5, 3)} spruce_slab`)
-    for (const x of [34, 37, 40]) await c(`/setblock ${A(x, 4, 0)} glowstone`)
-    for (const x of [35, 38]) for (const z of [-3, 3]) await c(`/setblock ${A(x, 2, z)} glass`)
-    await c(`/fill ${A(41, 2, -1)} ${A(41, 2, 1)} glass`)
-    await c(`/setblock ${A(32, 2, 0)} oak_door[half=upper,facing=east,open=true]`); await c(`/setblock ${A(32, 1, 0)} oak_door[half=lower,facing=east,open=true]`)
-    const beds = ['red', 'white', 'yellow', 'light_blue']
-    for (let i = 0; i < 4; i++) {
-      const x = 34 + i * 2
-      await c(`/setblock ${A(x, 1, -1)} ${beds[i]}_bed[facing=north,part=foot]`); await c(`/setblock ${A(x, 1, -2)} ${beds[i]}_bed[facing=north,part=head]`)
-      await c(`/setblock ${A(x, 1, 1)} ${beds[3 - i]}_bed[facing=south,part=foot]`); await c(`/setblock ${A(x, 1, 2)} ${beds[3 - i]}_bed[facing=south,part=head]`)
+    // the tree's shade: a wide persistent leaf canopy round the canon tree's trunk, so seven zombies keep out of the sun
+    { const g = gy(TREE[0] + 3, TREE[1] + 3) - F
+      await c(`/fill ${A(TREE[0] - 4, g + 5, TREE[1] - 4)} ${A(TREE[0] + 4, g + 5, TREE[1] + 4)} oak_leaves[persistent=true] keep`)
+      await c(`/fill ${A(TREE[0] - 3, g + 6, TREE[1] - 3)} ${A(TREE[0] + 3, g + 6, TREE[1] + 3)} oak_leaves[persistent=true] keep`)
+      for (const [x, z] of [[-4, -4], [4, -4], [-4, 4], [4, 4]]) await c(`/setblock ${A(TREE[0] + x, g + 5, TREE[1] + z)} air`)
+      this.treeG = g }
+    // Gary's field: farmland on each column's ground, a water row, a fence round it
+    for (let x = FIELD[0]; x <= FIELD[2]; x++) {
+      for (let z = FIELD[1]; z <= FIELD[3]; z++) {
+        const g = gy(x, z) - F
+        const edge = x === FIELD[0] || x === FIELD[2] || z === FIELD[1] || z === FIELD[3]
+        await c(`/fill ${A(x, g + 1, z)} ${A(x, g + 2, z)} air`)
+        if (edge) { await c(`/setblock ${A(x, g + 1, z)} oak_fence`); continue }
+        if (z === 28) { await c(`/setblock ${A(x, g, z)} water`); continue }
+        await c(`/setblock ${A(x, g, z)} farmland[moisture=7]`); await c(`/setblock ${A(x, g + 1, z)} wheat[age=7]`)
+      }
     }
-
-    // --- the lever (L10, L13): a command block behind the bunkhouse, a lamp on it, the lever on its east face
-    await c(`/fill ${A(27, 1, 11)} ${A(27, 2, 13)} stone_bricks`)
-    await c(`/fill ${A(27, 3, 11)} ${A(27, 3, 13)} stone_brick_slab`)
-    await c(`/fill ${A(26, 0, 10)} ${A(29, 0, 14)} cobblestone`)
-    await c(`/setblock ${A(27, 1, 12)} command_block`)
-    await c(`/setblock ${A(28, 1, 12)} lever[face=wall,facing=east,powered=true]`)
-    await c(`/setblock ${A(27, 2, 12)} redstone_lamp[lit=true]`)
-
-    // --- the one tree (L05, L11, L14), south of the village: a wide canopy, shade for seven
-    await c(`/fill ${A(1, 4, 27)} ${A(7, 5, 33)} oak_leaves[persistent=true]`)
-    await c(`/fill ${A(2, 6, 28)} ${A(6, 6, 32)} oak_leaves[persistent=true]`)
-    await c(`/fill ${A(3, 7, 29)} ${A(5, 7, 31)} oak_leaves[persistent=true]`)
-    for (const [x, z] of [[1, 27], [7, 27], [1, 33], [7, 33]]) await c(`/setblock ${A(x, 5, z)} air`)
-    await c(`/fill ${A(4, 1, 30)} ${A(4, 6, 30)} oak_log`)
-
-    // --- the cast, all NoAI: moved only by the scenes
-    const vil = (x, z, yaw, prof, tag, type = 'plains', y = 1) => c(`/summon villager ${(X + x).toFixed(2)} ${F + y} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,0f],VillagerData:{profession:"minecraft:${prof}",type:"minecraft:${type}",level:2},Xp:1}`)
-    const zom = (x, y, z, yaw, tags) => c(`/summon zombie ${(X + x).toFixed(2)} ${F + y} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,CanPickUpLoot:0b,Tags:[${tags.map(t => `"${t}"`).join(',')}],Rotation:[${yaw}f,0f]}`)
-    await vil(-1.5, -6.5, 0, 'librarian', 'gp')              // grandpa, at home until L05
-    await vil(8.5, 2.6, -90, 'butcher', 'butcher')
-    await vil(23.9, -18.5, 90, 'farmer', 'farmer')
-    await vil(13.0, -0.5, -90, 'toolsmith', 'w1', 'taiga'); await vil(9.6, 0.9, -90, 'leatherworker', 'w2', 'savanna')
-    for (let i = 0; i < GAZE.length; i++) await vil(GAZE[i][0], GAZE[i][1], 90, GAZE[i][2], 'gaze', ['plains', 'desert', 'plains', 'taiga'][i])
-    for (let i = 0; i < ZA.length; i++) await zom(ZA[i][0], 1, ZA[i][1], -90 + (i % 3 - 1) * 14, ['za'])
-    await zom(ZF[0], 1, ZF[1], -90, ['za', 'zf'])
-    for (let i = 0; i < ZB.length; i++) await zom(ZB[i][0], -3, ZB[i][1], 90, ['zb', `zb${i}`])
-    for (let i = 0; i < ZW.length; i++) await zom(ZW[i][0], -3, ZW[i][1], 180, ['zb', `zw${i}`])   // the street's zombies wait under it, out of the sun
-
-    await c('/clear @s')
-    await resendChunks(ctx, X, Z)
-    await ctx.tpCheck(X + 24.5, F + 1, Z + 0.5, 90, -14)
+    // Grandpa's door: lanterns either side (the night shots), the gate shut at night
+    // the cast: all NoAI, moved only by the scenes
+    const at = (dx, dz) => ({ x: dx, z: dz, y: gy(dx, dz) - F + 1 })
+    const V = (p, yaw, prof, tags) => vil(p.x, p.z, yaw, prof, tags, { y: p.y })
+    const d = this.doorstep
+    await vil(d.x - X, d.z - Z, 90, 'librarian', ['gp'], { y: d.y - F })     // Grandpa, at his door
+    await V(at(FIELD[0] - 0.7, 28.5), -90, 'farmer', ['gary'])                 // Gary, walking into his own fence
+    const GAZE = [[-5.5, -3.2, 'cleric'], [-6.8, -0.6, 'mason'], [-5.2, 1.9, 'shepherd'], [-7.4, 2.8, 'fletcher']]
+    for (let i = 0; i < GAZE.length; i++) await V(at(GAZE[i][0], GAZE[i][1]), 90, GAZE[i][2], ['gaze', `g${i}`])
+    for (let i = 0; i < ZA.length; i++) { const p = at(TREE[0] + ZA[i][0], TREE[1] + ZA[i][1]); await mob('zombie', p.x, p.y, p.z, -90 + (i % 3 - 1) * 20, ['za', `z${i}`]) }
+    for (let i = 0; i < 6; i++) await mob('phantom', 0.5, 60, 0.5 + i * 2, 0, ['ph', `ph${i}`])
+    await c('/item replace entity @s armor.head with air')
+    await c('/effect clear @s')
+    await ctx.tpCheck(X + 37.5, gy(37.5, 2.5) + 1, Z + 2.5, 90, 0)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
+    this.GAZE = GAZE
     return { x: X, y: F, z: Z }
   },
 
   async perform (ctx) {
     const { bot } = ctx
-    const { X, Z, F } = this
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F })
-    const { P, say, look, cut } = K
-    const go = (on) => bot.setControlState('forward', on)
-    const ease = (u) => { u = Math.max(0, Math.min(1, u)); return u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2 }
-    const yawOf = (dx, dz) => Math.atan2(-dx, dz) * 180 / Math.PI   // Minecraft yaw (degrees) of a walking direction
-    const setTime = (n) => { n = Math.round(n); if (n === ctx.dayTime) return; ctx.dayTime = n; say(`/time set ${n}`); ctx.mark('time', { time: n }) }
+    const { P, look, line, say } = K
+    const gy = (dx, dz) => groundAt(ctx, X + dx, Z + dz) - F + 1
+    const cut = (dx, dz, target, o = {}) => K.cut(dx, dz, target, gy(dx, dz), o)
+    const walk = (a, dx, dz) => { K.step(a, dx, dz); a.y = gy(a.x, a.z) }
+    const away = (tag, a) => { a.y = 60; K.warp(tag) }
+    const rel = (p) => ({ x: p.x - X, y: p.y - F, z: p.z - Z })
+    const door = rel(this.door), step0 = rel(this.doorstep), gate = rel(this.gate), bedA = rel(this.bedA)
+    const tg = this.treeG
+    const TRUNK = P(TREE[0] + 0.5, tg + 1.6, TREE[1] + 0.5)
 
-    // the actors the scenes move: one /tp a tick each, so their turn and head pitch reach the recording at once
-    // (a mob that stood still for long shows its first move ~1 s late)
-    const G = { x: -1.5, z: -6.5, yaw: 0, pitch: 0, y: 1 }           // grandpa
-    const B = { x: 8.5, z: 2.6, yaw: -90, pitch: 0, on: true }       // the butcher, asleep on his feet
-    const W = [{ x: 13.0, z: -0.5, on: true }, { x: 9.6, z: 0.9, on: true }]   // L01's walkers
-    let zaMode = 'idle', zbUp = false, gazeOn = true
-    const nod = (t) => { const u = (t % 56) / 56; return u < 0.62 ? 52 * ease(u / 0.62) : u < 0.7 ? 52 * (1 - (u - 0.62) / 0.08) : 0 }   // droop, droop, snap awake
-    let bPitch = null
-    const ambient = () => {
-      const j = ctx.tick % 2 ? 0.002 : -0.002
-      say(`/tp @e[tag=gp,limit=1] ${(X + G.x + j).toFixed(3)} ${F + G.y} ${(Z + G.z).toFixed(3)} ${G.yaw.toFixed(1)} ${G.pitch.toFixed(1)}`)
-      if (B.on) say(`/tp @e[tag=butcher,limit=1] ${(X + B.x + j).toFixed(3)} ${F + 1} ${(Z + B.z).toFixed(3)} ${B.yaw} ${(bPitch ?? nod(ctx.tick)).toFixed(1)}`)
-      if (gazeOn) say(`/execute as @e[tag=gaze] at @s run tp @s ~${j} ~ ~ 90 ${(-30 + Math.sin(ctx.tick / 23) * 4).toFixed(1)}`)   // staring up at the sun
-      if (zaMode === 'idle') say(`/execute as @e[tag=za,tag=!out] at @s run tp @s ~${j} ~ ~`)                             // shuffling in the shade
-      if (zaMode === 'stare') say(`/execute as @e[tag=za,tag=!out] at @s run tp @s ~${j} ~ ~ facing entity ${bot.username} eyes`)
-      if (zbUp === 'wait') say(`/execute as @e[tag=zb] at @s run tp @s ~${j} ~ ~`)
-    }
-    const line = (id, scene, extra = 0) => K.line(id, async (k, at) => { ambient(); await scene(k, at) }, extra)
-    const groan = (v = 0.7, p = 1) => ctx.sound('entity.zombie.ambient', v, p)
+    // the cast
+    const gp = K.actor('gp', { x: step0.x, y: step0.y, z: step0.z, yaw: 90 })   // Grandpa
+    const gary = K.actor('gary', { x: FIELD[0] - 0.7, y: gy(FIELD[0] - 0.7, 28.5), z: 28.5, yaw: -90 })
+    const zs = ZA.map((o, i) => K.actor(`z${i}`, { x: TREE[0] + o[0], y: gy(TREE[0] + o[0], TREE[1] + o[1]), z: TREE[1] + o[1], yaw: -90 + (i % 3 - 1) * 20 }))
+    const gaze = this.GAZE.map((g, i) => K.actor(`g${i}`, { x: g[0], y: gy(g[0], g[1]), z: g[1], yaw: 90, pitch: -35 }))
+    const ph = [0, 1, 2, 3, 4, 5].map(i => K.actor(`ph${i}`, { x: 0.5, y: 60, z: 0.5 + i * 2, yaw: 0 }))
+    ctx.select(2)   // bread in hand (the sword comes out at the door)
 
-    // ---- L01: the sun, low over the street, where it has been for 300 days
-    await cut(24.5, 0.5, P(-75.5, 28, 0.5))
-    const walkers = () => W.forEach((w, i) => { if (!w.on) return; w.x += 0.03; say(`/tp @e[tag=w${i + 1},limit=1] ${(X + w.x).toFixed(3)} ${F + 1} ${(Z + w.z + Math.sin((ctx.tick + i * 30) / 14) * 0.25).toFixed(3)} ${(-90 + Math.cos((ctx.tick + i * 30) / 14) * 22).toFixed(1)} ${(28 + Math.sin((ctx.tick + i * 17) / 9) * 10).toFixed(1)}`) })
-    for (let k = 0; k < 10; k++) { ambient(); walkers(); look(k); await bot.waitForTicks(1) }   // moving on the first frame
-    await line('L01', async (k, at) => {
-      walkers()
-      go(k < 30)
-      // from the sun down to the street under it, as the walk starts
-      const u = ease((k - at(1)) / 26)
-      K.base = K.aim(P(bot.entity.position.x - X - 100, 1.62 + 26.4 - 17 * u, 0.5)); look(k)
+    // L01: 10 blocks east of the tree, looking west: the zombies packed in its shade, an arm out in the sun, smoking;
+    // the lever post beyond, the low sun over Grandpa's cottage on the rise
+    await cut(37.5, 2.5, TRUNK)
+    const arm = zs[3]
+    await K.preroll(6, () => {})
+    await line('L01', async (k) => {
+      if (k > 6 && k < 30) { arm.x = TREE[0] + 2.2 + 0.03 * Math.min(k - 6, 14) }   // a step toward the sun...
+      if (k >= 30) arm.x = Math.max(TREE[0] + 2.2, arm.x - 0.06)                       // ...and back into the shade
+      if (k > 12 && k < 40 && k % 2 === 0) ctx.particles('smoke', P(arm.x + 0.6, arm.y + 1.4, arm.z), { count: 2 })
+      K.go(k > 2)
+      K.base = K.aim(P(TREE[0] - 4, tg + 1.8, TREE[1] + 0.2)); look(k)
     })
-    go(false)
+    K.go(false)
 
-    // ---- L02: the farmer keeps walking into his own fence
-    await cut(23.6, -14.9, P(23.4, 2.2, -18.5))   // side on, over the south fence: the walk and the bump go across the frame
-    W.forEach((w, i) => { w.on = false; say(`/tp @e[tag=w${i + 1}] ${X + 20} ${F - 8} ${Z - 40}`) })   // the walkers leave the street
-    let fx = 23.9, fk = 0
-    await line('L02', async (k, at) => {
-      // a cycle: shuffle up to the fence, thump, rock back, stand a moment, again
-      fk = (k + 13) % 20
-      if (fk < 11) fx = Math.max(22.95, fx - 0.1); else if (fk < 16) fx += 0.2 * (1 - (fk - 11) / 5)   // bounces off it
-      say(`/tp @e[tag=farmer,limit=1] ${(X + fx).toFixed(3)} ${F + 1} ${Z - 18.5} 90 ${(fk >= 10 && fk < 15 ? -14 : 24).toFixed(0)}`)
-      K.base = K.aim(P(23.4 + (fx - 23.4) * 0.4, 2.2, -18.5)); look(k)
-    })
-
-    // ---- L03: the butcher fell asleep standing up (the sun behind his head)
-    await cut(11.3, 2.2, P(8.5, 2.7, 2.6))
-    await line('L03', async (k, at) => {
-      // nods off as I step up; on "standing UP" his head jerks up, and sinks again
-      const up = at(2) + 2
-      bPitch = k < up ? 50 * ease((k + 8) / (up + 6)) : k < up + 3 ? 50 - 62 * (k - up + 1) / 3 : -12 + 50 * ease((k - up - 3) / 16)
-      if (k === up) ctx.sound('entity.villager.ambient', 0.8, 0.9)
-      bot.setControlState('right', k > 3 && k < 10)   // a step round him, for a better look
-      K.base = K.aim(P(8.5, 2.7, 2.6)); look(k)
-    })
-    bot.setControlState('right', false); bPitch = null
-
-    // ---- L04: every bed in the village is still made
-    await cut(39.5, 0.5, P(33, 2.3, 0.5))
-    let from4 = null
-    await line('L04', async (k, at) => {
-      go(k > 2 && k < 15)
-      if (k >= at(3) - 4) { from4 = from4 || { ...K.base }; K.turnTo(from4, P(35.9, 1.45, -1.3), (k - at(3) + 4) / 19) }   // down at the nearest one on "MADE"
+    // L02: nobody has slept; the farmer keeps walking into his own fence (Gary at his field, bump, back, bump)
+    await cut(FIELD[0] - 6.5, 32.5, P(FIELD[0] - 0.8, gy(FIELD[0] - 0.8, 28.5) + 1.0, 28.5))
+    await line('L02', async (k) => {
+      const ph2 = (k % 24) / 24
+      gary.x = FIELD[0] - 1.4 + 0.75 * Math.sin(ph2 * Math.PI)   // up to the fence, back
+      gary.yaw = -90
+      if (k % 24 === 12) ctx.sound('block.wood.hit', 0.6, 1.2)
       look(k)
     })
-    go(false)
 
-    // ---- L05: the zombies have been hiding under one tree since it started
-    await cut(15.4, 27.9, P(4.6, 2.5, 30.3))
-    G.x = 8.0; G.z = 0.5; G.yaw = -90   // grandpa comes out to the street, out of shot
-    await line('L05', async (k, at) => {
-      go(k > 2 && k < at(4))
-      if (k === 4) groan(0.6, 0.9)
-      if (k === at(3)) groan(0.7, 1.1)
+    // L03: and the zombies have been hiding under one tree the whole time (from the village side, the sea behind)
+    await cut(TREE[0] - 11, TREE[1] + 3, TRUNK)
+    await line('L03', async (k) => {
+      if (k % 30 === 5) ctx.sound('entity.zombie.ambient', 0.6, 0.9)
+      for (const [i, z] of zs.entries()) z.yaw = -90 + Math.sin((ctx.tick + i * 9) / 11) * 25
+      K.go(k > 2 && k < 30)
       look(k)
     })
-    go(false)
+    K.go(false)
 
-    // ---- L06: and every day my grandpa asks me the same thing (he walks up, the sun behind him)
-    await cut(15.5, 0.5, P(9, 2.5, 0.5))
-    await line('L06', async (k) => {
-      G.x = Math.min(13.3, G.x + 0.135)
-      K.base = K.aim(P(G.x, 2.55, 0.5)); look(k)
+    // L04-L05: every day Grandpa asks me the same thing (at his door, on the porch)
+    const gpFace = () => P(gp.x, gp.y + 1.55, gp.z)
+    await cut(step0.x + 3.2, step0.z + 0.6, gpFace())
+    await line('L04', async (k) => { gp.yaw = 90; look(k) })
+    await line('L05', async (k) => { gp.yaw = 90; gp.pitch = k % 30 < 10 ? 8 : 0; look(k) })
+
+    // L06: and every day I tell him, not yet (he turns and shuffles back to the door)
+    await cut(step0.x + 2.4, step0.z - 0.4, gpFace())
+    await line('L06', async (k, at) => {
+      if (k >= at(2) - 4) walk(gp, -0.025, 0)
+      look(k)
     })
-    // ---- L07: "is tonight the night?" (close on him)
-    await cut(14.75, 0.95, P(13.3, 2.72, 0.5))
+    // L07: everyone thinks it's a curse (the square: villagers staring up at the sun, faces lit from the west)
+    gp.x = step0.x; gp.z = step0.z; gp.y = step0.y; gp.yaw = 90; K.warp('gp')
+    await cut(-11.5, 0.5, P(-5.8, gy(-5.8, 0) + 1.4, 0))
     await line('L07', async (k) => {
-      if (k === 1) ctx.sound('entity.villager.trade', 1, 0.9)
-      G.x = Math.min(13.5, G.x + 0.035); G.pitch = -6 * ease(k / 8)   // leans in, chin up
-      K.base = K.aim(P(G.x, 2.72, 0.5)); look(k)
+      for (const [i, g] of gaze.entries()) { g.yaw = 90 + Math.sin((ctx.tick + i * 7) / 15) * 8; g.pitch = -40 }
+      look(k)
     })
-    // ---- L08: and every day I tell him, not yet (I shake my head; his sinks; he turns for home)
-    const T8 = Math.round((S.line('L08').dur + S.gap) * 20)
-    await line('L08', async (k, at) => {
-      const no = at(2)
-      const shake = k >= no ? Math.sin((k - no) * 0.82) * 0.2 * Math.min(1, (k - no) / 5) * Math.max(0, 1 - (k - no) / 16) : 0
-      G.pitch = k < no + 3 ? -6 : -6 + 36 * ease((k - no - 3) / 7)
-      if (k === no + 5) ctx.sound('entity.villager.no', 1, 0.9)
-      if (k >= T8 - 11) { G.yaw = -90 - 180 * ease((k - T8 + 12) / 5); G.pitch = 20 }   // turns away
-      if (k >= T8 - 6) G.x -= 0.135                                                    // and sets off for home
-      K.base = K.aim(P(G.x, 2.72, 0.5)); look(k, shake)
-    })
-    // ---- L09: then I walk him home. He always gets there first (he pulls away down the street)
-    G.yaw = 90; G.pitch = 0
-    await cut(16.4, 0.5, P(G.x - 4, 2.4, 0.5))
-    const door = { x: -2.5, z: -2.7 }
-    let home = false
+    // L08: it's a LEVER. And I pulled it (a slow push onto the lever on its post; it's ON)
+    const LV = P(LEVER[0] + 0.5, LEVER[1] + 0.2, LEVER[2] + 0.5)
+    await cut(LEVER[0] + 3.6, LEVER[2] + 2.4, LV)
+    await line('L08', async (k) => { K.go(k > 4 && k < 14); look(k) })
+    K.go(false)
+
+    // L09: because at night the zombies come out (the tree far off), and Grandpa is way too slow to run (crossing the
+    // square at an old man's shuffle)
+    Object.assign(gp, { x: -12, z: 3.5, y: gy(-12, 3.5), yaw: -90 }); K.warp('gp')
+    await cut(-3.5, 6.5, P(TREE[0], tg + 2, TREE[1]))
+    let from9 = null
     await line('L09', async (k, at) => {
-      go(true)
-      const dx = door.x - G.x, dz = door.z - G.z, d = Math.hypot(dx, dz)
-      const v = Math.min(0.33, 0.135 + k * 0.05)   // off he goes, at a villager's run
-      if (d > v) { G.x += dx / d * v; G.z += dz / d * v; G.yaw = yawOf(dx, dz) } else if (!home) { home = true; G.x = door.x; G.z = door.z }
-      if (home) { const p = bot.entity.position; G.yaw = yawOf(p.x - X - G.x, p.z - Z - G.z) }   // at his door, looking back for me
-      K.base = K.aim(P(Math.min(G.x, bot.entity.position.x - X - 4), 2.4, G.z * 0.6 + 0.2)); look(k)
-    })
-    go(false)
-
-    // ---- L10: everyone thinks it's a curse (the villagers stare at the sun). It's not. It's a lever. And I pulled it
-    await cut(-3.8, 0.5, P(-43.8, 13.5, 0.5))
-    let rig = false
-    await line('L10', async (k, at) => {
-      if (!rig && k >= at(3) - 1) { rig = true; go(false); await cut(32.4, 12.5, P(28.0, 1.7, 12.5)) }
-      if (!rig) { go(k > 2 && k < 8); look(k) } else { bot.setControlState('sneak', true); go(bot.entity.position.x > X + 30.2); K.sway = 0.5; K.base = K.aim(P(28.2, 1.55, 12.5)); look(k) }   // creeping up on it
-    })
-    go(false); bot.setControlState('sneak', false); K.sway = 1
-
-    // ---- L11: because at night the zombies come out (one tries it now, and catches fire). And grandpa is too slow to run
-    //      (grandpa, striding up the street)
-    await cut(10.4, 32.3, P(5.6, 2.4, 30.5))
-    G.x = -6.0; G.z = 0.5; G.yaw = -90; G.pitch = 0
-    zaMode = 'stare'
-    say('/tag @e[tag=zf] add out')
-    let zx = ZF[0], lit = false, street = false
-    await line('L11', async (k, at) => {
-      const out = at(3) - 14
-      if (!street) {
-        // he shuffles out past the leaves, burns, and scrambles back under
-        if (k >= out && k < out + 14) zx = Math.min(8.7, zx + 0.11)   // a zombie's walk
-        if (k >= out + 17) zx = Math.max(ZF[0], zx - 0.11)
-        say(`/tp @e[tag=zf,limit=1] ${(X + zx).toFixed(3)} ${F + 1} ${(Z + ZF[1] + (ctx.tick % 2 ? 0.002 : -0.002)).toFixed(3)} ${(k >= out + 17 && zx > ZF[0] ? -90 + 180 * ease((k - out - 16) / 4) : -90).toFixed(0)} 0`)
-        // sunlight sets a zombie alight on a random tick (~4% a tick): this one catches at once
-        if (k === out + 10 && !lit) { lit = true; say('/data merge entity @e[tag=zf,limit=1] {Fire:200s}') }
-        if (k === out + 12) ctx.sound('entity.zombie.hurt', 0.9, 1)
-        if (k === 2) groan(0.6, 1)
-      }
-      if (!street && k >= at(4) - 1) {
-        street = true
-        say('/tag @e[tag=zf] remove out'); say(`/tp @e[tag=zf,limit=1] ${X + ZF[0]} ${F + 1} ${Z + ZF[1]} -90 0`)
-        zaMode = 'idle'
-        await cut(4.6, 1.3, P(-6, 2.5, 0.5))
-        say('/data merge entity @e[tag=zf,limit=1] {Fire:0s}')   // he's out by the time they leave the shade
-      }
-      if (street) { G.x = Math.min(1.6, G.x + 0.27); K.base = K.aim(P(G.x, 2.55, 0.5)) } else K.base = K.aim(P(5.6 + (zx - ZF[0]) * 0.7, 2.4, 30.5))
+      if (k >= at(3) - 6) { from9 = from9 || { ...K.base }; K.turnTo(from9, P(gp.x, gp.y + 1.4, gp.z), (k - at(3) + 6) / 14) }
+      walk(gp, 0.025, -0.004)
       look(k)
     })
+    // L10: me? I haven't slept in 300 days either (in Grandpa's cottage: the white bed in my hand, his red bed made)
+    Object.assign(gp, { x: step0.x, z: step0.z, y: step0.y, yaw: 90 }); K.warp('gp')
+    ctx.select(3)
+    await K.cutTo(bedA.x + 2.6, bedA.y + F, bedA.z + 1.8, P(bedA.x, bedA.y + 0.4, bedA.z + 0.5))
+    await line('L10', async (k) => { look(k) })
 
-    // ---- L12: but today he said, let it come. I'm tired, kid (close, the sun right behind his head)
-    await cut(3.45, 0.2, P(1.6, 2.74, 0.5))
-    await line('L12', async (k, at) => {
-      G.x = Math.min(1.6, G.x + 0.27)
-      if (k === 1) ctx.sound('entity.villager.trade', 1, 0.8)
-      G.pitch = k < at(3) ? -5 * ease(k / 6) : -5 + 33 * ease((k - at(3)) / 9)   // his head sinks on "TIRED"
-      if (k === at(3) + 3) ctx.sound('entity.villager.no', 0.9, 0.8)
-      K.base = K.aim(P(G.x, 2.74, 0.5)); look(k)
-    })
+    // L11-L12: but today Grandpa said: let the night come; you need sleep, kid (at his door, close)
+    ctx.select(2)
+    await cut(step0.x + 2.4, step0.z + 0.3, gpFace())
+    await line('L11', async (k) => { gp.yaw = 90; look(k) })
+    await line('L12', async (k) => { gp.yaw = 90; gp.pitch = k % 26 < 8 ? 10 : 0; look(k) })
 
-    // ---- L13: so I pulled it back (the lever clicks, the lamp goes out)
-    await cut(31.0, 12.5, P(28.0, 1.6, 12.5))
-    G.yaw = 90; G.pitch = -14      // grandpa turns to watch the sun
-    B.on = false; say(`/tp @e[tag=butcher] ${X + 20} ${F - 8} ${Z - 40}`)   // the butcher goes in for the night
-    K.sway = 0.25
-    let from13 = null
-    ctx.mark('lever')
-    await line('L13', async (k, at) => {
-      go(bot.entity.position.x > X + 30.3)
-      if (k === at(2)) {
-        bot._client.write('block_place', { hand: 0, location: { x: X + 28, y: F + 1, z: Z + 12 }, direction: 5, cursorX: 0.2, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-        bot.swingArm(); ctx.sound('block.lever.click', 0.6, 0.5)
-      }
-      if (k <= at(2) + 2) K.base = K.aim(P(28.2, 1.5, 12.5))   // the crosshair stays on the lever for the click
-      if (k >= at(2) + 3) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(28.0, 2.75, 12.5), (k - at(2) - 3) / 12); K.sway = 1 }   // up to the lamp as it goes dark
+    // L13: me? HE's the one who's tired (he looks at the lever post, then turns to go in)
+    await cut(step0.x + 3.6, step0.z - 1.2, gpFace())
+    await line('L13', async (k) => {
+      const u = K.ease(k / 20)
+      gp.yaw = 90 + 50 * u                                  // a look toward the square and the lever
       look(k)
     })
-    go(false); K.sway = 1
-
-    // ---- L14: the sun went down (it sinks at the end of the street, grandpa watching). The zombies came out
-    await cut(5.6, 0.5, P(-60, 9.5, 0.5))
-    let tree = false, k14 = 0
+    // L14: so I walked him home (in through his door); then I pulled the lever BACK
+    let leverCut = false, pulled = false
     await line('L14', async (k, at) => {
-      const end = at(2) - 6   // dusk for the last few ticks of the shot, so the street is seen to dim with the sky
-      if (!tree) setTime(DAY + (DUSK - DAY) * Math.min(1, (k + 1) / end))   // ~20 ticks from late afternoon to dusk: a time-lapse of the first sunset in 300 days
-      if (!tree && k >= at(2) - 1) {
-        tree = true; k14 = k; setTime(DUSK)
-        say('/tag @e[tag=za] add out')
-        await cut(11.6, 29.3, P(5.2, 2.4, 30.3))
-        for (let i = 0; i < ZB.length; i++) say(`/tp @e[tag=zb${i}] ${X + ZB[i][0]} ${F + 1} ${Z + ZB[i][1]} 90 0`)
-        for (let i = 0; i < ZW.length; i++) say(`/tp @e[tag=zw${i}] ${X + ZW[i][0]} ${F + 1} ${Z + ZW[i][1]} 180 0`)   // the street's zombies climb out, out of shot
-        zbUp = 'wait'
-        say(`/tp @e[tag=gaze] ${X + 20} ${F - 8} ${Z - 40}`); gazeOn = false   // the sun-watchers have gone in
-        ctx.mark('dusk')
-        groan(0.9, 0.9)
+      if (!leverCut) {
+        gp.yaw = -90
+        if (gp.x > door.x - 0.5) walk(gp, -0.06, 0)
+        K.go(k > 3)
+        K.base = K.aim(P(gp.x - 0.5, gp.y + 1.4, gp.z))
       }
-      if (tree) {
-        say(`/execute as @e[tag=za] at @s run tp @s ~0.1 ~ ~ -90 0`)   // out from under the leaves, toward me
-        if (k === k14 + 8) groan(0.8, 1.1)
-      } else K.base = K.aim(P(-60, 9.5 - 5 * ease(k / end), 0.5))        // the camera sinks with it
+      if (!leverCut && k >= at.cut(2)) {
+        leverCut = true
+        K.go(false)
+        await cut(LEVER[0] + 2.2, LEVER[2] + 1.3, LV, { after: () => away('gp', gp) })
+      }
+      if (leverCut && !pulled && k >= at(3) - 5) {
+        pulled = true
+        K.use(new ctx.Vec3(X + LEVER[0], F + LEVER[1], Z + LEVER[2])).then(() => ctx.mark('lever')).catch(e => ctx.log('lever', e.message))
+      }
       look(k)
     })
 
-    bot.setControlState('back', false)
-    // ---- L15: I yelled, run, grandpa! He was already gone
-    G.x = -3.5; G.z = 0.5   // he bolted when they came out
-    await cut(3.0, 0.5, P(9.5, 2.4, 0.5))
-    zbUp = 'go'
-    const T15 = Math.round((S.line('L15').dur + S.gap) * 20), T16 = Math.round((S.line('L16').dur + S.gap) * 20)
-    const D = T16 - 3                                         // the killing hit, on the last word
-    const hits16 = [D, D - 11, D - 22, D - 33].filter(t => t >= 0)
-    const hits15 = [D - 33, D - 44].filter(t => t < 0).map(t => T15 + t)
-    // the street's zombies: each makes for its own place in an arc round me (straight at me they piled into one
-    // green wall), at a zombie's walk. Six come up the street from the east; three more come through the gap
-    // between the houses behind me. A hit knocks me ~2 blocks (vanilla), so one group could never keep up:
-    // each hit throws me at the other group, which lands the next one
-    const SLOT = [[1.35, 0], [1.9, -34], [1.9, 34], [2.9, -17], [2.9, 17], [3.7, -2], [1.35, 180], [1.9, 148], [1.9, 212]]
-    const Zs = [...ZB.map(([x, z], i) => ({ x, z, tag: `zb${i}` })), ...ZW.map(([x, z], i) => ({ x, z, tag: `zw${i}` }))]
-    let me = { x: 3.0, z: 0.5 }, close = 1, shuffle = 0
-    const zombies = () => {
-      if (!ctx.died) me = { x: bot.entity.position.x - X, z: bot.entity.position.z - Z }
-      Zs.forEach((q, i) => {
-        const a = (SLOT[i][1] + shuffle * (i % 2 ? 1 : -1)) * Math.PI / 180, r = SLOT[i][0] * close
-        const dx = me.x + r * Math.cos(a) - q.x, dz = me.z + r * Math.sin(a) - q.z, d = Math.hypot(dx, dz)
-        if (d > 0.02) { const v = Math.min(0.115, d); q.x += dx / d * v; q.z += dz / d * v }
-        const j = d > 0.02 ? 0 : (ctx.tick % 2 ? 0.002 : -0.002)
-        say(`/tp @e[tag=${q.tag},limit=1] ${(X + q.x + j).toFixed(3)} ${F + 1} ${(Z + q.z).toFixed(3)} ${yawOf(me.x - q.x, me.z - q.z).toFixed(1)} 8`)
-      })
-    }
-    const EAST = Zs[0], WEST = Zs[ZB.length]
-    let attacker = EAST
-    const hit = (who) => { attacker = who; say(`/damage @s 3 minecraft:mob_attack by @e[tag=${who.tag},limit=1]`) }
-    // the hit's knockback: the server sends it as the player's velocity, which mineflayer scales away to nothing
-    // on 1.21.11 (blocks a tick read as 1/8000ths), so the bot applies vanilla's LivingEntity.knockback(0.4) itself
-    // when that packet comes: half the old speed plus 0.4 away from the zombie, and 0.4 up from the ground
-    bot._client.on('entity_velocity', (p) => {
-      if (p.entityId !== bot.entity.id || ctx.died) return
-      setImmediate(() => {
-        const dx = me.x - attacker.x, dz = me.z - attacker.z, d = Math.hypot(dx, dz) || 1, v = bot.entity.velocity
-        v.x = v.x / 2 + dx / d * 0.4; v.z = v.z / 2 + dz / d * 0.4
-        if (bot.entity.onGround) v.y = Math.min(0.4, v.y / 2 + 0.4)
-      })
-    })
-    const face = (q) => P(q === EAST ? Math.max(q.x, me.x + 1.2) : Math.min(q.x, me.x - 1.2), 2.55, q.z * 0.5 + me.z * 0.5)
-    // who lands each hit: 1 east (from behind, while I look for grandpa), 2 west, 3 east, 4 west, 5 east
-    const ORDER = [EAST, WEST, EAST, WEST, EAST]
-    const hitAt = [D - 44, D - 33, D - 22, D - 11, D]          // ticks from L16's start (negative: in L15)
-    let fromA = null, fromB = null, kB = 0
-    await line('L15', async (k, at) => {
-      zombies()
-      G.x -= 0.32; G.yaw = 90; G.pitch = 0   // grandpa, flat out (a villager's panic run), already well down the street
-      if (k === 3) groan(0.9, 1)
-      const turn = at(1) + 2
-      if (k >= turn && !fromB) { fromA = fromA || { ...K.base }; K.turnTo(fromA, P(G.x, 2.4, 0.9), (k - turn) / 11) }   // round to where grandpa was... he's a dot down the street
-      hitAt.forEach((t, n) => { if (t < 0 && k === T15 + t) { hit(ORDER[n]); fromB = { ...K.base }; kB = k } })
-      if (fromB) K.turnTo(fromB, face(EAST), (k - kB - 1) / 8)                                                       // the hit from behind: back round to them
-      if (!fromA) K.base = K.aim(face(EAST))
+    // L15: the sun went down (from east of the tree, looking west: the sun sinks behind the cottage, fast); the zombies
+    // came out (they walk out of the shade); so I stood guard at his door (POV at the gate, the sword out, night)
+    await cut(37.5, 3.5, P(-8, gy(-8, 0) + 6, 0))
+    let guard = false
+    await line('L15', async (k, at, n) => {
+      if (!guard) {
+        const u = Math.min(1, k / Math.max(1, at.cut(4) - 4))
+        K.setTime(DAY + (13600 - DAY) * K.ease(u))
+        if (k === Math.round(at(1))) ctx.mark('dusk')
+        if (k >= at(2) - 4) for (const [i, z] of zs.entries()) walk(z, 0.07 + i * 0.006, (i - 3) * 0.01)
+      }
+      if (!guard && k >= at.cut(4)) {
+        guard = true
+        ctx.select(0)
+        await cut(gate.x + 1.2, gate.z, P(gate.x + 12, gy(gate.x + 12, gate.z) + 1.4, gate.z), {
+          time: NIGHT,
+          after: () => { for (const [i, z] of zs.entries()) { Object.assign(z, { x: gate.x + 9 + (i % 3) * 1.3, z: gate.z - 2.5 + (i % 4) * 1.5, yaw: 90 }); z.y = gy(z.x, z.z); K.warp(`z${i}`) } }
+        })
+      }
+      if (guard) for (const z of zs) if (z.x > gate.x + 3.2) walk(z, -0.03, 0)
       look(k)
     })
-    // ---- L16: wait. Then who was too slow to run? (hit from behind again: the ones from the gap. I spin round to them)
-    let dead = false, view = EAST, from16 = null, k16 = 0
-    await line('L16', async (k) => {
-      zombies()
-      if (!ctx.died) {
-        hitAt.forEach((t, n) => { if (t >= 0 && k === t) hit(ORDER[n]) })
-        if (k === 6 || k === 20) groan(1, k === 6 ? 1 : 0.85)
-        if (k === hitAt[2] + 1) { view = WEST; from16 = { ...K.base }; k16 = k }   // the third hit throws me at the ones behind: round to face them
-        if (from16 && k < k16 + 8) K.turnTo(from16, face(view), (k - k16) / 7); else K.base = K.aim(face(view))
-        look(k, Math.sin(k * 0.9) * 0.035, Math.sin(k * 0.7 + 1) * 0.025)
-      } else if (!dead) { dead = true; ctx.mark('slain') }
+    // L16: then something screamed up in the sky (a screech; the view tips up: phantoms circling over the roof)
+    const C = { x: gate.x + 2, y: gy(gate.x + 2, gate.z) + 13, z: gate.z }
+    const circle = (t) => ph.forEach((p, i) => {
+      const a = t / 28 + i * Math.PI / 3
+      Object.assign(p, { x: C.x + Math.cos(a) * 7, y: C.y + Math.sin(t / 9 + i) * 0.8, z: C.z + Math.sin(a) * 7, yaw: K.mcYaw(-Math.sin(a), Math.cos(a)) })
     })
-    for (let i = 0; i < 40 && !ctx.died; i++) { ambient(); zombies(); if (i % 11 === 0) hit(i % 22 ? WEST : EAST); await bot.waitForTicks(1) }
-    if (!dead) { dead = true; ctx.mark('slain') }
-    // behind the death screen they crowd round (their moves reach a dead player for ~0.9 s)
-    // (closing right in filled the whole screen with one face: they jostle for a place instead)
-    for (let i = 0; i < 44; i++) { close = Math.max(0.92, close - 0.006); shuffle = Math.sin(i / 3.2) * 9; zombies(); await bot.waitForTicks(1) }
+    circle(0); ph.forEach((p, i) => K.warp(`ph${i}`))
+    let from16 = null
+    await line('L16', async (k, at) => {
+      circle(k)
+      if (k === at(1) - 2) ctx.sound('entity.phantom.ambient', 1.4, 0.9)
+      for (const z of zs) if (z.x > gate.x + 3.2) walk(z, -0.02, 0)
+      if (k >= at(1)) { from16 = from16 || { ...K.base }; K.turnTo(from16, P(C.x, C.y, C.z), (k - at(1)) / 18) }
+      look(k)
+    })
+    // the end: one dives; two hits; slain by Phantom
+    const diver = ph[0]
+    for (let i = 0; i < 40 && !ctx.died; i++) {
+      circle(40 + i)
+      if (i >= 4) {   // the dive: straight at my face
+        const me = bot.entity.position
+        const tx = me.x - X, ty = me.y - F + 1.2, tz = me.z - Z
+        Object.assign(diver, { x: diver.x + (tx - diver.x) * 0.22, y: diver.y + (ty - diver.y) * 0.22, z: diver.z + (tz - diver.z) * 0.22, yaw: K.mcYaw(tx - diver.x, tz - diver.z) })
+        if (i === 4) ctx.sound('entity.phantom.swoop', 1.5, 1)
+      }
+      K.base = K.aim(P(diver.x, diver.y + 0.2, diver.z))
+      if (i === 14) say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`)
+      if (i === 24) { ctx.mark('death'); say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
+      look(i)
+      await bot.waitForTicks(1)
+    }
+    for (let i = 0; i < 30; i++) await bot.waitForTicks(1)
     ctx.mark('story_end')
-    await bot.waitForTicks(4)
     return ctx.died
   }
+}
+
+// The ground's top solid block at (x, z), ignoring plants, crops, leaves, logs, fences and lanterns (story_good_boy's)
+function groundAt (ctx, x, z) {
+  const { bot } = ctx
+  for (let y = 110; y > 40; y--) {
+    const b = bot.blockAt(new ctx.Vec3(Math.floor(x), y, Math.floor(z)))
+    if (!b) continue
+    if (b.boundingBox !== 'block' || /_leaves$|_log$|fence|lantern|campfire|^barrier$|_slab$|_stairs$|planks$/.test(b.name)) { if (b.name === 'farmland' || b.name === 'dirt_path') return y; continue }
+    return y
+  }
+  return 68
 }
