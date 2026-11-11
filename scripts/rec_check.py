@@ -13,7 +13,9 @@ Checks (ranked by how often reviews flagged them):
   1. cuts      around every hard cut (a teleport, a speed "cut" span, a respawn): the first frames after the cut
                must already be the new shot's pose (no second jump, no 1-3 frame snap of the aim or the position,
                no stand-up/crouch); no whip in the last frames before it; a time-of-day change lands ON a cut.
-               Also teleports under 4 blocks with no `cut` mark (the renderer glides them).
+               Also teleports under 4 blocks with no `cut` mark (the renderer glides them). And a time-lapse's jump cuts
+               (a speed "cut" between two sped-up spans, no teleport): the camera turns <= 6 deg, moves <= 3 blocks and
+               <= 1.5 up/down across each (owner r:r200cfe; scripts/lapse_cuts.py).
   1b. cast     a cast member that jumps over 0.5 block 1-4 ticks after a cut's frame (the new shot opens on it in the
                old spot), or moves in stair steps (holds 2+ ticks, then moves, again and again: under 20 Hz, it reads as
                teleporting). scripts/cast_motion.py; the kit (K.actor, K.cutShot) makes both right by construction.
@@ -374,6 +376,12 @@ def main():
 
     # ---------------------------------------------------------------- 1. cuts
     n = len(ks)
+    # a time-lapse holds one steady camera (or one smooth move) across its jump cuts (owner r:r200cfe, scripts/lapse_cuts.py)
+    import lapse_cuts
+    for r_ in lapse_cuts.lapse_cuts(warp.spans if warp else [], tl, P):
+        if r_["problems"]:
+            o_ = out_t(r_["a"])
+            R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["a"]), lapse_cuts.message(r_), near(r_["a"] * 20))
     # F1 windows (HUD hidden, render.js/edit.py): a cinematic drone camera, not a player
     f1, f1_on = [], None
     for e in tl:

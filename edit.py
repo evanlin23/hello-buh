@@ -1137,6 +1137,76 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
     return seq / "c%05d.png"
 
 
+SPLIT_POS = (24, 479)      # the split timer's strip: top-left of the game area (the end_portal_job overlay the owner asked for)
+
+
+def split_timer(spec, timeline, start, dur, outdir, fps=60):
+    """edit.splits: a speedrun timer that times ONE attempt (owner r:r32b983, end_portal_job: "the timer should reset
+    every single time like we start a new ender portal"). spec {reset, split, of, endless}: the timer starts at 0:00.00 on
+    every `reset` mark and runs in output time, freezes green on the next `split` mark (that attempt's time) with "n/of",
+    holds until the next reset and starts again from 0; from the `endless` mark (optional) it starts from 0 once more,
+    red, "n/∞", and never stops. Returns (an image-sequence pattern of SW x SH strips, one per output frame, x, y)."""
+    sp = json.loads(spec) if isinstance(spec, str) else spec
+    ev = lambda name: sorted(e["t"] / 1000 - start for e in timeline if e["event"] == name) if name else []
+    resets, splits_, endless = ev(sp["reset"]), ev(sp.get("split")), ev(sp.get("endless"))
+    runs = []                                    # (t0, t1 or None, n, endless)
+    for i, a in enumerate(resets):
+        nxt = resets[i + 1] if i + 1 < len(resets) else math.inf
+        b = next((x for x in splits_ if a < x <= nxt), None)
+        runs.append((a, b, i + 1, False))
+    if endless:
+        runs.append((endless[0], None, len(resets) + 1, True))
+    runs.sort()
+    if not runs:
+        return None
+    big, small = ImageFont.truetype(FONT, 72), ImageFont.truetype(FONT, 34)
+    SW, SH = 440, 112
+    of = sp.get("of") or len(resets)
+
+    def fmt(t):
+        m, sec = divmod(max(0.0, t), 60)
+        return f"{int(m)}:{sec:05.2f}"
+
+    def strip(txt, col, count, ccol):
+        img = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle((0, 0, SW - 1, SH - 1), 16, fill=(0, 0, 0, 150))
+        adv = 46                                 # a fixed advance per digit: the numbers don't jitter
+        tw = sum(adv if c.isdigit() else d.textlength(c, font=big) for c in txt)
+        x = 172 - tw / 2
+        for c in txt:
+            w_ = adv if c.isdigit() else d.textlength(c, font=big)
+            d.text((x + (w_ - d.textlength(c, font=big)) / 2, 12), c, font=big, fill=col, stroke_width=6, stroke_fill=(0, 0, 0, 255))
+            x += w_
+        if count:
+            d.text((340, 36), count, font=small, fill=ccol, stroke_width=4, stroke_fill=(0, 0, 0, 255))
+        return img
+
+    seq = outdir / "splitseq"
+    seq.mkdir()
+    cache = {}
+    WHITE, GREEN, RED = (255, 255, 255, 255), (90, 255, 90, 255), (255, 70, 70, 255)
+    for i in range(int(math.ceil(dur * fps)) + 1):
+        t = i / fps
+        cur = [r for r in runs if r[0] <= t + 1e-6]
+        if not cur:                              # before the first attempt: 0:00.00, waiting
+            key = (fmt(0), WHITE, "", WHITE)
+        else:
+            a, b, n, endl = cur[-1]
+            if endl:
+                key = (fmt(t - a), RED, f"{n}/\u221e", RED)
+            elif b is not None and t >= b - 1e-6:
+                key = (fmt(b - a), GREEN, f"{n}/{of}", GREEN)
+            else:
+                key = (fmt(t - a), WHITE, f"{n - 1}/{of}" if n > 1 else "", GREEN)
+        if key not in cache:
+            path = outdir / f"split{len(cache)}.png"
+            strip(*key).save(path)
+            cache[key] = path
+        (seq / f"s{i:05d}.png").hardlink_to(cache[key])
+    return seq / "s%05d.png", SPLIT_POS
+
+
 def apply_speed(args):
     """--speed: rebuild the footage, the timeline and the game audio on the time-lapse map
     (scripts/timewarp.py), so everything after this works in output time unchanged."""
@@ -1382,6 +1452,7 @@ def main():
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
+    ap.add_argument("--splits", help='JSON {reset, split, of, endless}: a speedrun timer reset to 0 at every attempt (edit.splits)')
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
@@ -1630,6 +1701,14 @@ def main():
         graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[tmv]")
         graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
         last, n_in = "tmo", n_in + 1
+    if args.splits and args.timeline:   # edit.splits: a speedrun timer reset at every attempt (r:r32b983)
+        sres = split_timer(args.splits, json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.start, dur, tmp, fps=args.out_fps)
+        if sres:
+            sseq, (sx, sy) = sres
+            inputs += ["-framerate", str(args.out_fps), "-i", str(sseq)]
+            graph.append(f"[{n_in}:v]format=rgba[spv]")
+            graph.append(f"[{last}][spv]overlay={sx}:{sy}:eof_action=repeat[spo]")
+            last, n_in = "spo", n_in + 1
     if args.clock and args.timeline:
         seq = clock_concat(args.clock, tl_ev, args.start, dur, tmp, fps=args.out_fps, timeline=json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
         if seq:
