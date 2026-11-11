@@ -8742,8 +8742,8 @@
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
     "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it broke\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.15 --speed [[\"woodcut_a\",\"woodcut_b\",\"cut\"],[\"stonecut_a\",\"stonecut_a:1.05\",\"cut\"],[\"stonecut_a:5.70\",\"stonecut_a:6.05\",\"cut\"],[\"stonecut_a:10.15\",\"stonecut_a:10.45\",\"cut\"],[\"tntwalk\",\"lit\",2.2],[\"lit\",\"boom:-1.6\",2],[\"boom:-1.6\",\"boom:-0.2\",\"cut\"],[\"boom:0.5\",\"lastboom:-0.4\",1.75]] --punch [[\"boom\",0,1.12]] --shake [[\"boom\",0,10]] --flash [[\"boom\",0,0.6]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"boom\",0.3],[\"impact\",\"boom\"]] --start_at beat:-0.05 --end_after boom:0.98 --out out/pickaxe_race.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); flash + punch + shake and a song dip + impact on the TNT blast (payoff), a pop at 0.05 s (hook); 30.1 s; pace 0 blockers, check OK; awaiting independent review",
+  "status": "needs-fix",
+  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); flash + punch + shake and a song dip + impact on the TNT blast (payoff), a pop at 0.05 s (hook); 30.1 s; pace 0 blockers, check OK; awaiting independent review | independent review 2026-11-11: NOT READY, 1 blocker. (1) r:r24d99a (owner: never cut or end while the payoff is still moving): the first TNT blows at ~29.1 s, and at 29.2-30.06 s the second TNT by the right pillar is still primed and flashing white, with the smoke still clearing, when the video ends. Viewers see a lit TNT that never goes off. Cheapest fix: edit-only, endAfter on the last blast once its debris settles (lastboom:~0.8) instead of boom:0.98. Checked OK: every block mined with the crosshair on its crack; TNT placed and lit with the crosshair on it (r:rffba12); tiers and gold breaking plausible; Efficiency V + Haste insta-mine vanilla; pace 0 blockers. Nitpick: pace WARN on build-up, the last third before the TNT sags (19.4-29.1 s, cut rate and bed drop).",
   "published_at": "2026-11-11T07:47:51.340Z",
   "gates": {
     "version": 2,
@@ -8767,5 +8767,10 @@
       "report": "work/hb/pickaxe_race.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "review_independent": {
+    "verdict": "NOT READY",
+    "at": "2026-11-11",
+    "notes": "independent review 2026-11-11"
   }
 }
