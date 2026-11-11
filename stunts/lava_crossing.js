@@ -16,7 +16,7 @@ module.exports = {
   caption: 'every way to cross lava (rated) 💀',
   edit: {
     caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
-    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:-0.3', endAfter: 'death:1.15',
+    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:1.15',
     subs: [
       ['beat', 'bridging...', 9, 0], ['crossed', 'bridging: 6/10', 9, 0],
       ['beat', 'water bucket...', 9, 1], ['crossed', 'water bucket: 9/10', 9, 1],
