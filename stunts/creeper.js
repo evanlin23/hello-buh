@@ -7,7 +7,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'first:0', deathScreen: true, endAfter: 'settle:0.1',   // 0.1 s after the blast's smoke has settled (lib/settle.js: 2.2 s after the blast); 9.2 s total. Was settle:0.6: owner 2026-11-11 (r:r52f94c) "we can cut a little earlier"; still after the debris rests (r:r24d99a)
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'first:0', deathScreen: true, endAfter: 'death:0.8',   // r:r188b46: the end lands 0.8 s after the blast (the death screen is up; smoke no longer holds the end). Was settle:0.1 (2.2 s after the blast). Was settle:0.6: owner 2026-11-11 (r:r52f94c) "we can cut a little earlier"; still after the debris rests (r:r24d99a)
     sfx: [['air', 'start', 'death', { gain: 0.5 }], ['heart', 'first'], ['dip', 'hurt', 0.4], ['impact', 'hurt', { gain: 1.4 }]] },   // mixcheck r2: under the NCS bed the blast wasn't a hit: dip + impact on it   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
@@ -29,18 +29,18 @@ module.exports = {
     for (const [f, dx, dz] of trees) await ctx.cmd(`/place feature minecraft:${f} ${x + dx} ${floor + 1} ${z + dz}`, { mayFail: true })
     for (let dx = -32; dx <= 32; dx += 8) {
       for (let dz = -32; dz <= 32; dz += 8) {
-        if (Math.abs(dx) <= 6 && dz >= -8 && dz <= 4) continue   // the wall and where I stand
+        if (Math.abs(dx) <= 6 && dz >= -8 && dz <= 8) continue   // the wall and where I stand
         await ctx.cmd(`/place feature minecraft:patch_grass ${x + dx} ${floor + 1} ${z + dz}`, { mayFail: true })
         if ((dx + dz) % 16 === 0) await ctx.cmd(`/place feature minecraft:flower_plain ${x + dx + 3} ${floor + 1} ${z + dz + 3}`, { mayFail: true })
       }
     }
-    await ctx.cmd(`/fill ${x - 6} ${floor + 1} ${z - 7} ${x + 6} ${floor + 3} ${z + 6} air`)   // no plants round the build spot: a grass patch on a wall cell failed a take ('nothing to place against'), and the blast threw their drops for 2 s (settle)
+    await ctx.cmd(`/fill ${x - 6} ${floor + 1} ${z - 7} ${x + 6} ${floor + 3} ${z + 9} air`)   // no plants round the build spot: a grass patch on a wall cell failed a take ('nothing to place against'), and the blast threw their drops for 2 s (settle)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/gamerule keep_inventory true')
     await ctx.cmd('/gamerule block_drops false')   // the blast's plank and dirt drops fell into the crater for 2.2 s: the end sat 3.2 s after the blast (settle)   // no hotbar spray on death: the sword, bread and torches flew 2.2 s and held the end 3.2 s after the blast (settle)
     await ctx.cmd('/difficulty hard')   // full hearts (vanilla start) + the step back: on normal the blast left 3 hearts; hard kills, as the old 1.5-heart start did
     await ctx.hotbar([['oak_planks', 64], 'diamond_sword', ['bread', 16], ['torch', 32]])
-    await ctx.tpCheck(x + 0.5, floor + 1, z + 5.5, 0, 4)        // 5 blocks south of the wall, facing south, where the creeper comes from (frame 0: it's in view)
+    await ctx.tpCheck(x + 0.5, floor + 1, z + 6.5, 0, 4)        // 6 blocks south of the wall (the walk back keeps it over the 8 s floor now the end is 0.8 s after the blast), facing south, where the creeper comes from (frame 0: it's in view)
     await ctx.cmd('/effect give @s instant_health 1 10 true')   // full hearts (the last render started on 1.5 hearts)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -58,11 +58,11 @@ module.exports = {
     await bot.waitForTicks(6)
     await ctx.cmd('/kill @e[type=creeper]', { mayFail: true })   // only mine
     // the creeper, south, in view at frame 0 (r:r0f3da0): 7 blocks from me (at 12 it was a speck among the flowers);
-    // I walk 5 blocks back to my wall, so its walk up still runs the Short past the 8 s stunt floor (the fuse + the
-    // settle are a fixed 3.7 s); a hidden Slowness I (-15 %, no particles) for the same
-    await ctx.cmd(`/summon creeper ${x + 0.5} ${floor + 1} ${z + 12.5} {PersistenceRequired:1b}`)
+    // I walk 6 blocks back to my wall (8 was 2 s of empty field: r:r188b46), so its walk up still runs the Short past the 8 s stunt floor (the fuse + the
+    // 0.8 s end are a fixed 2.3 s); a hidden Slowness II (no particles) for the same
+    await ctx.cmd(`/summon creeper ${x + 0.5} ${floor + 1} ${z + 13.5} {PersistenceRequired:1b}`)
     await bot.waitForTicks(2); { const c = mine(); if (c) myId = c.id }
-    await ctx.cmd('/effect give @e[type=creeper] slowness 60 0 true', { mayFail: true })
+    await ctx.cmd('/effect give @e[type=creeper] slowness 60 1 true', { mayFail: true })
     { const c = mine(); if (c) await A.aimAt(c.position.offset(0, 1.0, 0), { strict: false, max: 6 }) }
     await bot.waitForTicks(4)   // spawned and drawn before frame 0 (no pop-in)
     // building a little wall behind me (north): 4 planks wide, 2 high
@@ -76,7 +76,7 @@ module.exports = {
     await A.turnTo(new Vec3(x + 0.5, floor + 1, z - 1.5), { max: 40 })
     ctx.mark('walk')
     bot.setControlState('forward', true)   // motion-ok: a straight walk on cleared flat grass, the view held on the wall
-    for (let i = 0; i < 40 && bot.entity.position.z > z + 1.2; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 60 && bot.entity.position.z > z + 1.2; i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)   // motion-ok: the walk's end
     await bot.waitForTicks(3)
     let hissed = false

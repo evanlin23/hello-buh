@@ -38,7 +38,7 @@ module.exports = {
     // 1. under the south-west corner looking up, craning up FAST past the corner's edge (owner r:r0f3da0, 2026-11-11: frame 0
     // shows the subject already moving by 0.5 s; the old slow crane read as a dark, still dome): ~14 blocks in 2 s, the
     // look sliding from the lower face holes up the corner edge, so the fractal holes stream past from frame 0
-    rise: { path: [[0, -66, 5, 70], [2, -52, 26, 56]], lookPath: [[0, -26, 26, 26], [2, -12, 58, 12]], fov: 76, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 40, 41.5]] },
+    rise: { path: [[0, -60, 15, 64], [2, -49, 33, 53]], lookPath: [[0, -24, 30, 24], [2, -10, 60, 10]], fov: 76, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 40, 41.5]] },
     // 1b. high off the south-east, looking DOWN across the top face to the far corner, the forest far below: rise looks up
     // from the ground at a corner, so a second low corner shot cut onto it read as the same frame twice (independent
     // review of the r:r52f94c fix: "a jump-cut stutter in the hook"); this one is a clearly different angle and height
