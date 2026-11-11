@@ -7,7 +7,7 @@ module.exports = {
   name: 'midas_touch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: you got the midas touch 🤑',
-  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', dropAt: 'touch', startAt: 'touch:-0.35', endAfter: 'wave:1.0' },
+  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', dropAt: 'touch', startAt: 'touch:-0.2', endAfter: 'wave:1.0' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -52,10 +52,10 @@ module.exports = {
     const COVER = ['leaf_litter', 'short_grass', 'fern', 'bush', 'tall_grass', 'large_fern', '#minecraft:small_flowers']
     const clearCover = (x0, y0, z0, x1, y1, z1) => { for (const c of COVER) bot.chat(`/fill ${x0} ${y0} ${z0} ${x1} ${y1} ${z1} air replace ${c}`) }
     const touch = () => {
-      if (on && n++ % 4 === 0) {
+      if (on && n++ % 3 === 0) {
         const b = bot.blockAtCursor(48)
         if (b && b.name !== 'gold_block') {
-          blobs.push({ p: b.position, r: 0, max: n < 140 ? 1 : n < 380 ? 2 : 3 })   // it gets stronger
+          blobs.push({ p: b.position, r: 0, max: n < 60 ? 1 : n < 200 ? 2 : 3 })   // it gets stronger
           ctx.sound('block.amethyst_block.chime', 1, 0.8 + (n % 7) * 0.08)
         }
       }
@@ -90,15 +90,15 @@ module.exports = {
     await ctx.easeLook(Math.PI + 0.2, -0.3, 700)              // a normal day in the forest...
     on = true; ctx.mark('touch')
     ctx.sound('entity.player.levelup', 0.7)
-    await ctx.easeLook(Math.PI - 0.5, -0.55, 1800)            // across the ground in front (fresh ground all the way)
-    await ctx.easeLook(Math.PI + 0.9, 0.15, 2000)             // up a tree
-    await ctx.easeLook(Math.PI - 0.6, -0.25, 3000)            // sweep back across, low: near ground, bushes
+    // quicker sweeps (2026-11-11 pace: 5 s of slow ground sweeps with nothing new after the first blob)
+    await ctx.easeLook(Math.PI - 0.5, -0.55, 1200)            // across the ground in front (fresh ground all the way)
+    await ctx.easeLook(Math.PI + 0.9, 0.15, 1300)             // up a tree
+    await ctx.easeLook(Math.PI - 0.6, -0.25, 1800)            // sweep back across, low: near ground, bushes
     wp = P(8); ctx.mark('walk')                               // walk on, gilding the path and the trees alongside
-    await ctx.easeLook(Math.PI - 0.3, -0.3, 1600)
+    await ctx.easeLook(Math.PI - 0.3, -0.3, 1100)
     // the trees on the left (looking right from here, PI + 0.7, gilded the cabin 7 s early)
-    await ctx.easeLook(Math.PI - 0.8, 0.05, 1800)
-    await ctx.easeLook(Math.PI - 1.0, 0.3, 2000)
-    await ctx.easeLook(Math.PI - 0.7, -0.25, 1500)
+    await ctx.easeLook(Math.PI - 0.8, 0.05, 1200)
+    await ctx.easeLook(Math.PI - 1.0, 0.3, 1300)
     // on toward the cabin, stopping back from it so it's all in frame, and it goes gold
     wp = P(12)
     const cab = new ctx.Vec3(this.cabin.x + 0.5, this.cabin.y + 1.5, this.cabin.z + 0.5)
@@ -108,19 +108,15 @@ module.exports = {
     await ctx.easeLook(cyaw - 0.25, cp + 0.25, 1200)
     await ctx.easeLook(cyaw + 0.25, cp - 0.1, 1200)
     await ctx.easeLook(cyaw, cp + 0.15, 1000)
-    // on: it's stronger now, whole trees at a glance
-    wp = P(27); ctx.mark('stronger')
-    await ctx.easeLook(Math.PI + 0.5, 0.25, 2400)
-    await ctx.easeLook(Math.PI - 0.6, 0.3, 2600)
-    await ctx.easeLook(Math.PI + 0.9, -0.2, 2000)
-    await ctx.easeLook(Math.PI, -0.1, 1000)
+    // (the 'stronger' walk on to P(27) is gone: on the hilly ground there it walked into its own gold and the
+    // camera sat in gold walls for 8 s, 2026-11-11 review). The cabin is the build-up; the wave is the payoff.
     wp = null
     // turn round to the untouched forest to the side (the touch held back so it stays green)... and
     // one last wave, while the camera drifts
     on = false
     await ctx.easeLook(Math.PI / 2 + 0.3, -0.2, 1300)          // west-ish, down onto the land (level, it saw only sky over the crest)
     let b = bot.blockAtCursor(64)
-    if (!b) { b = ctx.surface(this.x - 12, this.z + 27); ctx.log('wave: cursor missed, fixed centre', !!b) }
+    if (!b) { b = ctx.surface(this.x - 12, this.z + 12); ctx.log('wave: cursor missed, fixed centre', !!b) }
     if (!b) throw new Error('no wave target')
     ctx.mark('wave')
     ctx.sound('entity.player.levelup', 1, 0.8); ctx.sound('block.amethyst_block.chime', 1, 0.6)
