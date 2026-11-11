@@ -42,7 +42,7 @@ module.exports = {
     // the burn sped up (6 s of one shot in the lava: pace), and a hit on the death (pace: no sound hit on the payoff;
     // the lava's burning keeps the game track busy, so the impact doesn't flatten the rest)
     speed: [['in_lava:1.0', 'death:-0.4', 2]],
-    sfx: [['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]
+    sfx: [['pop', 'dig0'], ['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]   // (a pop on the opening: the no-song cut was silent until the first block broke at 2.7 s, pace hook)
   },
 
   async setup (ctx) {
