@@ -36,7 +36,7 @@
    ]
   },
   "L02": {
-   "text": "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.",
+   "text": "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I POP up / right NEXT to him.",
    "who": "N",
    "dur": 2.947,
    "onset": 0.08,
@@ -44,26 +44,22 @@
    "chunks": [
     [
      0.08,
-     0.408
+     0.43
     ],
     [
-     0.408,
-     0.777
+     0.43,
+     0.823
     ],
     [
-     0.777,
-     1.516
+     0.823,
+     1.61
     ],
     [
-     1.516,
-     2.049
+     1.61,
+     1.96
     ],
     [
-     2.049,
-     2.459
-    ],
-    [
-     2.459,
+     1.96,
      2.747
     ]
    ],
@@ -71,60 +67,34 @@
     "He RUNS.",
     "I FOLLOW.",
     "Twelve BLOCKS out,",
-    "I just APPEAR",
-    "right NEXT",
-    "to HIM."
+    "I POP up",
+    "right NEXT to him."
    ]
   },
   "L03": {
-   "text": "He HID / in the WHEAT. / He tried HILLS / at NIGHT. / He SWAM / to an ISLAND. / I POPPED up / on the BEACH.",
+   "text": "He tried the WHEAT. / The HILLS. / An ISLAND.",
    "who": "N",
-   "dur": 4.28,
+   "dur": 1.804,
    "onset": 0.08,
-   "end": 4.08,
+   "end": 1.604,
    "chunks": [
     [
      0.08,
-     0.359
+     0.822
     ],
     [
-     0.359,
-     0.964
+     0.822,
+     1.213
     ],
     [
-     0.964,
-     1.615
-    ],
-    [
-     1.615,
-     2.033
-    ],
-    [
-     2.033,
-     2.359
-    ],
-    [
-     2.359,
-     2.964
-    ],
-    [
-     2.964,
-     3.475
-    ],
-    [
-     3.475,
-     4.08
+     1.213,
+     1.604
     ]
    ],
    "captions": [
-    "He HID",
-    "in the WHEAT.",
-    "He tried HILLS",
-    "at NIGHT.",
-    "He SWAM",
-    "to an ISLAND.",
-    "I POPPED up",
-    "on the BEACH."
+    "He tried the WHEAT.",
+    "The HILLS.",
+    "An ISLAND."
    ]
   },
   "L04": {
@@ -195,39 +165,29 @@
    ]
   },
   "L06": {
-   "text": "He keeps TALKING / about COLLEGE. / He SAYS / there's no MINECRAFT / THERE.",
+   "text": "He keeps TALKING / about COLLEGE. / Far AWAY.",
    "who": "N",
-   "dur": 2.375,
+   "dur": 1.613,
    "onset": 0.08,
-   "end": 2.175,
+   "end": 1.413,
    "chunks": [
     [
      0.08,
-     0.612
+     0.627
     ],
     [
-     0.612,
-     1.078
+     0.627,
+     1.106
     ],
     [
-     1.078,
-     1.311
-    ],
-    [
-     1.311,
-     1.976
-    ],
-    [
-     1.976,
-     2.175
+     1.106,
+     1.413
     ]
    ],
    "captions": [
     "He keeps TALKING",
     "about COLLEGE.",
-    "He SAYS",
-    "there's no MINECRAFT",
-    "THERE."
+    "Far AWAY."
    ]
   },
   "L07": {
@@ -303,65 +263,34 @@
    ]
   },
   "L09": {
-   "text": "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.",
+   "text": "This MORNING / he WALKED me / HOME, / up the HILL.",
    "who": "N",
-   "dur": 2.756,
+   "dur": 1.994,
    "onset": 0.08,
-   "end": 2.556,
+   "end": 1.794,
    "chunks": [
     [
      0.08,
-     0.645
+     0.582
     ],
     [
-     0.645,
-     1.166
+     0.582,
+     1.083
     ],
     [
-     1.166,
-     1.6
+     1.083,
+     1.293
     ],
     [
-     1.6,
-     2.078
-    ],
-    [
-     2.078,
-     2.556
+     1.293,
+     1.794
     ]
    ],
    "captions": [
-    "This MORNING,",
+    "This MORNING",
     "he WALKED me",
-    "BACK home,",
-    "up the HILL",
-    "to his HUT."
-   ]
-  },
-  "L10": {
-   "text": "He TURNED / to ME / and SAID:",
-   "who": "N",
-   "dur": 1.423,
-   "onset": 0.08,
-   "end": 1.223,
-   "chunks": [
-    [
-     0.08,
-     0.527
-    ],
-    [
-     0.527,
-     0.776
-    ],
-    [
-     0.776,
-     1.223
-    ]
-   ],
-   "captions": [
-    "He TURNED",
-    "to ME",
-    "and SAID:"
+    "HOME,",
+    "up the HILL."
    ]
   },
   "L11": {

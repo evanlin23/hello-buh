@@ -46,14 +46,14 @@
   {
    "id": "L02",
    "who": "N",
-   "text": "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.",
-   "say": "He RUNS. I FOLLOW. Twelve blocks out, I just appear right next to HIM."
+   "text": "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I POP up / right NEXT to him.",
+   "say": "He runs. I follow. Twelve blocks out, I pop up right NEXT to him."
   },
   {
    "id": "L03",
    "who": "N",
-   "text": "He HID / in the WHEAT. / He tried HILLS / at NIGHT. / He SWAM / to an ISLAND. / I POPPED up / on the BEACH.",
-   "say": "He hid in the WHEAT. He tried hills at NIGHT. He swam to an ISLAND. I popped up on the BEACH."
+   "text": "He tried the WHEAT. / The HILLS. / An ISLAND.",
+   "say": "He tried the WHEAT. The HILLS. An ISLAND."
   },
   {
    "id": "L04",
@@ -72,8 +72,8 @@
   {
    "id": "L06",
    "who": "N",
-   "text": "He keeps TALKING / about COLLEGE. / He SAYS / there's no MINECRAFT / THERE.",
-   "say": "He keeps talking about COLLEGE. He says there's no MINECRAFT there."
+   "text": "He keeps TALKING / about COLLEGE. / Far AWAY.",
+   "say": "He keeps talking about COLLEGE. Far AWAY."
   },
   {
    "id": "L07",
@@ -90,14 +90,8 @@
   {
    "id": "L09",
    "who": "N",
-   "text": "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.",
-   "say": "This morning, he walked me back home, up the hill to his HUT."
-  },
-  {
-   "id": "L10",
-   "who": "N",
-   "text": "He TURNED / to ME / and SAID:",
-   "say": "He turned to me and SAID:"
+   "text": "This MORNING / he WALKED me / HOME, / up the HILL.",
+   "say": "This morning he walked me home, up the HILL."
   },
   {
    "id": "L11",
