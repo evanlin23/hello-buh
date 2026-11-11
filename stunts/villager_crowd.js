@@ -28,9 +28,11 @@ module.exports = {
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
     // the short cut (lead 2026-11-11: as short as it reads, ~8-20 s): 1, 10, 100, 200 and the crowd behind; the 5,
     // 20 (emerald) and 50 crowds are recorded but cut out whole
-    speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5]],   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new)
+    speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5], ['pillar', 'overhead', 3]],   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
     subs: [...[0, 2, 5, 6].map(i => ['beat', CROWDS[i].sub, 1.6, i]), ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]],
-    punch: [['behind', 0, 1.08]], flash: [['behind', 0, 0.5]],   // the payoff: every head snaps round (pace: a picture change on it; the punch alone didn't register)
+    punch: [['behind', 0, 1.08]], flash: [['behind', 0, 0.5]],
+    zoom: [['overhead', 'behind:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead
+      // the payoff: every head snaps round (pace: a picture change on it; the punch alone didn't register)
     sfx: [['air', 'start', 'behind', { gain: 0.5 }]]   // room tone from frame 1 (the first sound was at 0.8 s)
   },
 
