@@ -2,10 +2,11 @@
 // The shared world's tools (docs/world/canon.md). Also ./hb world <cmd>.
 //   node scripts/world.js check                      validate docs/world/map.json (+ every story stunt that uses it)
 //   node scripts/world.js list                       places, stories and their days, cameos
-//   node scripts/world.js where <x> <z>              which place holds a point, and the nearest places
+//   node scripts/world.js where <x> <z> [--dimension the_nether]   which place holds a point, and the nearest places
 //   node scripts/world.js story <name>               a story's places, day, cameos, origins (what world.build builds)
 //   node scripts/world.js claim <place> --name "..." --at x,y,z --footprint x0,z0,x1,z1 --story <story> --day N
 //                                                    [--kind homestead] [--region <region>] [--about "..."]
+//                                                    [--dimension the_nether] (x, z then in that dimension)
 //        adds a new place (and the story's entry) to map.json; refuses an overlap. Commit it before building.
 //   node scripts/world.js map                        out/world/world_map.png + world_map_hub.png (needs the survey grid)
 //   node scripts/world.js stunt <stunt>              is this story stunt canon-safe (no site search, no clearing)?
@@ -49,7 +50,7 @@ function main () {
   if (cmd === 'list') {
     console.log(`seed "${M.seed}"`)
     console.log('\nplaces:')
-    for (const [k, p] of Object.entries(M.places)) console.log(`  ${k.padEnd(16)} ${p.name.padEnd(24)} at ${p.at.join(',').padEnd(16)} ${p.kind || ''}${p.within ? ' in ' + p.within : ''}  ${(p.stories || []).join(', ')}`)
+    for (const [k, p] of Object.entries(M.places)) console.log(`  ${k.padEnd(16)} ${p.name.padEnd(24)} at ${p.at.join(',').padEnd(16)} ${p.kind || ''}${p.within ? ' in ' + p.within : ''}${p.dimension && world.dimName(p.dimension) !== 'overworld' ? ' [' + world.dimName(p.dimension) + ']' : ''}  ${(p.stories || []).join(', ')}`)
     console.log('\nstories (world day):')
     for (const [k, s] of Object.entries(M.stories).sort((a, b) => a[1].day - b[1].day)) console.log(`  day ${String(s.day).padStart(5)}  ${k.padEnd(18)} ${s.places.join(', ').padEnd(28)} ${s.status || ''}`)
     console.log('\ncameos:')
@@ -58,9 +59,10 @@ function main () {
   }
   if (cmd === 'where') {
     const x = Number(args[1]), z = Number(args[2])
-    const here = world.at(x, z)
-    const near = Object.entries(M.places).map(([k, p]) => [k, Math.round(Math.hypot(p.at[0] - x, p.at[2] - z))]).sort((a, b) => a[1] - b[1]).slice(0, 5)
-    console.log(`(${x}, ${z}): ${here ? 'in ' + here : 'no place'}; nearest: ${near.map(([k, d]) => `${k} ${d}`).join(', ')}`)
+    const dim = world.dimName(flag('dimension'))
+    const here = world.at(x, z, dim)
+    const near = Object.entries(M.places).filter(([, p]) => world.dimName(p.dimension) === dim).map(([k, p]) => [k, Math.round(Math.hypot(p.at[0] - x, p.at[2] - z))]).sort((a, b) => a[1] - b[1]).slice(0, 5)
+    console.log(`(${x}, ${z})${dim !== 'overworld' ? ' in ' + dim : ''}: ${here ? 'in ' + here : 'no place'}; nearest: ${near.map(([k, d]) => `${k} ${d}`).join(', ')}`)
     return 0
   }
   if (cmd === 'story') {
@@ -76,6 +78,7 @@ function main () {
     if (!at || at.length !== 3 || !fp || fp.length !== 4) { console.error('--at x,y,z and --footprint x0,z0,x1,z1 are required (read the ground y off the world map / survey grid)'); return 2 }
     const story = flag('story'), day = flag('day') !== undefined ? Number(flag('day')) : undefined
     M.places[key] = { name: flag('name') || key, kind: flag('kind') || 'place', region: flag('region') || null, at, footprint: fp, about: flag('about') || '', pieces: [], stamps: [], stories: story ? [story] : [], status: `claimed ${new Date().toISOString().slice(0, 10)}${story ? ' by ' + story : ''}` }
+    if (flag('dimension') && world.dimName(flag('dimension')) !== 'overworld') M.places[key].dimension = world.dimName(flag('dimension'))
     if (story) {
       if (day === undefined) { console.error('--day N (the story\'s day on the world timeline) is required with --story'); delete M.places[key]; return 2 }
       const s = M.stories[story] || { day, places: [], cameos: [], status: 'claimed' }

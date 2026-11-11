@@ -20,6 +20,7 @@ FAMILIES = [
     ("dilemma", lambda n: n.startswith("dilemma_")),   # the mace and the dog... (docs/formats.md)
     ("psycho", lambda n: n.startswith("psycho_")),   # the fake psycho house tour (docs/formats.md, r:rc40696)
     ("fakerun", lambda n: n.startswith("fakerun_")),   # an obviously fake speedrun in jump cuts (lib/fakerun.js, r:r9105ba)
+    ("sandart", lambda n: n.startswith("sandart_")),   # a huge picture poured from the sky in falling blocks (lib/sandart.js, r:r718ec5)
     ("art", lambda n: n.endswith("_art") or n == "looks_wrong"),
     ("clutch", lambda n: "clutch" in n or n in ("one_in_a_million",)),
     ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
@@ -36,7 +37,15 @@ FAMILIES = [
     ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
     ("herobrine", lambda n: n.startswith("herobrine_")),   # secret herobrine: the "lag" that never was (lib/herobrine.js, r:r047388)
     ("lucky", lambda n: n.startswith("lucky_")),   # fake super lucky: a dig where every block is luckier (r:r934ea4)
+    ("fakeworld", lambda n: n.startswith("fakeworld_")),   # a whole world of one wrong block; one ordinary block is treasure (lib/fakeworld.js, r:r62f46d)
     ("mobpov", lambda n: n.startswith("mobpov_")),   # a mob's annoying trait as an absurd POV chase (lib/mobpov.js, r:r8048f1)
+    ("trap", lambda n: n.startswith("trap_")),   # trapping a friend: a bait over a real vanilla trap (lib/trap.js, r:refc733)
+    ("logic", lambda n: n.startswith("logic_")),   # rapid real vanilla quirks, one caption (lib/logic.js, r:r40f7c7)
+    ("underdog", lambda n: n.startswith("underdog_")),   # every mob gets X... but what about him? (lib/underdog.js, r:r8dcdb4)
+    ("stages", lambda n: n.startswith("stages_")),   # 3 titled chapters (lib/stages.js, r:redb7c0)
+    ("fakemod", lambda n: n.startswith("fakemod_")),   # a fake mod's popup, the choice plays out (lib/fakemod.js, r:rd551de)
+    ("friend", lambda n: n.startswith("friend_")),   # that one friend, from my POV (owner 2026-11-11, r:ra64f79; lib/friend.js)
+    ("quest", lambda n: n.startswith("quest_")),   # the whole Short is the way down to one secret chest (lib/quest.js, r:r4b458d)
 ]
 
 

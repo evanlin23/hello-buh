@@ -132,11 +132,14 @@ module.exports = makeStunt({
   red: 'hour',
   recordRadius: 200,
   endAfter: 'big_done:0.5',
+  // r:r188b46: after the last scaffold break (22.5 s on this take, mid_done 24.2) the round's end plays at x4 and the
+  // cut to the 1-hour round comes 0.4 s into the 1:00 pull-back (was 1.2 s after the last break)
+  cut2From: 'mid_done:0.4',
   bigCuts: [6, 0.6, 57], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'red_sand', under: 'terracotta', biome: 'minecraft:badlands' },
   hotbar: [['white_concrete', 64], ['red_concrete', 64], ['blue_concrete', 64], ['dirt', 64], 'diamond_shovel'],
   small,
-  mid: { blocks: mini(), w: 3, d: 3, towerY: 3, towerH: 3, towerSlot: 3, digSlot: 4, perTick: 2, speed: 3, backTicks: 12,
+  mid: { blocks: mini(), w: 3, d: 3, towerY: 3, towerH: 3, towerSlot: 3, digSlot: 4, perTick: 2, speed: 3, backTicks: 12, tail: ['mid_done:-1.65', 4],
     slots: { white_concrete: 0, red_concrete: 1, blue_concrete: 2 } },
   big: {
     blocks: complex(),

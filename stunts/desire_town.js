@@ -13,6 +13,7 @@ module.exports = makeStunt({
   name: 'desire_town',
   caption: 'the town REALLY hates this shortcut 💀',
   red: 'REALLY',
+  endHold: 0.7,   // r:r188b46: the end 0.7 s after the path back (the format's default is 1.0)
   rounds: [
     { id: 'fence', card: 'FENCE', c: [-5, -5], slot: 'N', shape: SHAPES.fence(9, 'dark_oak_fence', 2), sound: [['block.wood.place', 1, 1], ['block.wood.place', 1, 0.8]] },
     { id: 'bush', card: 'BUSHES', c: [5, 5], slot: 'S', shape: SHAPES.blob(3, 3, LEAVES), sound: [['block.azalea_leaves.place', 1, 1], ['block.grass.place', 1, 0.8]] },
