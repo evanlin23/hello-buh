@@ -1,16 +1,31 @@
-# the_walk: continuity bible (r5)
+# the_walk: continuity bible (r5; world pass 2026-11-11: Gullwick claimed over the stronghold, the island 92 out)
 
 ## World
-- **Place:** a new place to claim, `gullwick` ("Gullwick"): a shore hamlet on the West March coast, within ~200
-  blocks of the Ridge tower (-2000, -445), clear of Leo's House and the stronghold islets.
+- **Place:** `gullwick` ("Gullwick", claimed on main 2026-11-11): a shore hamlet on the low headland west of Leo's
+  lagoon in the West March, **over the world's only stronghold** (its pieces (-2313..-2272, -600..-534) run under the
+  headland; never said, never dug, never shown). The dock's end at (-2301, 62, -566). Leo's House is 100 blocks east
+  across the lagoon.
   - The library hut (a librarian, a lectern, an anvil), a dock with an oak boat floating empty beside it, a short shingle shore at the
-    dock's foot, and an island **60 blocks** out across open cold ocean: never frozen_ocean (L08: it never freezes here), no snow on the shore; Frost Walker needs liquid water.
+    dock's foot, and **Grandma's Island** (`grandmas_island`, a natural sand-and-grass islet, 13 x 17, at sea level, at
+    (-2374, 62, -630)) **92 blocks** out across open cold ocean (survey: every block on the line is `cold_ocean`):
+    never frozen_ocean (L08: it never freezes here), no snow on the shore; Frost Walker needs liquid water.
+  - Why 92, not 60: the lead asked for one of "the islets over the stronghold". The survey shows no islet over it (the
+    land there is a headland joined to the mainland in the north: Grandpa could walk round, which would break L05).
+    The nearest true island to the stronghold is this one, and no shore near it is closer than ~86 blocks with open
+    water between. So Gullwick stands on the stronghold and Grandma's island faces it. The FOVs are narrowed so every
+    phone size holds (set.md).
+  - The open question the canon keeps (docs/world/canon.md): what's under Gullwick? Never asked in the Short.
 - **Day:** 4000 (the flashback, "ten years" before, is about day 350: canon counts 365 days a year; outside the Long Day 800-1100).
 - **Actor height:** outside, an actor at y 0 stands on the deck, feet at y 1; in the hut y 0 is the floor.
 - **Coordinates:** outside, dock-relative. (0, 0, 0) is the dock's end, its deck flush at sea level (stand at sea
-  level + 1); -z is out to sea (west). Grandma's window is (0, 3, -60). The hut's door is about 20 blocks inland.
+  level + 1); -z is out to sea (toward the island: north-west in the world). Grandma's window is (0, 3, -92). The
+  hut's door is about 20 blocks inland (south-east).
 - **Hut coordinates are hut-local:** (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) facing +z; Grandpa at (-0.6, 0, 1.0) at the counter, (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the tally wall at z -3; the door at (0, 0, 6) facing the bay. The hut is a `room` from lib/sets (15x13x13).
-- **Not claimed yet:** survey for real cold_ocean with a natural island 60 blocks out (the example spot (-2190, -380) is land); the Ridge tower needs renderDistance/recordRadius above 192.
+- **Claimed** 2026-11-11 (map.json `gullwick`, `grandmas_island`; the story's entry, day 4000, no cameo). The Ridge
+  tower easter egg is dropped: it's 315 blocks from the dock, past any render distance we use. S05's inland view has
+  Leo's stone cottage across the lagoon instead (geography, never named; a fan of One More Eye will know it).
+- **Costume flag (canon conflict 19):** the kid's `kai` skin is Jonah's (Six Thousand Torches). Recommended `noor`;
+  the lead's call.
 - **New canon facts:** Gullwick; Grandpa and Grandma (players, a couple apart for ten years); Mom (their daughter, a
   player) and the kid; the ice path on day 4000 (Frost Walker ice melts, so nothing is stamped after the day).
 
@@ -47,7 +62,7 @@
 
 ## Positions and screen direction
 - The island is always west, out along the dock (-z). S04, S07, S08, S11 look out to sea; S05 looks back inland
-  (the Ridge tower on the skyline: the easter egg); S06 looks across the dock.
+  (Gullwick's headland, and Leo's House across the lagoon); S06 looks across the dock.
 - S04: Grandpa at the dock's end at dusk. S05: he walks inland, away from the camera, past the boat. S08: he walks up the shore past Mom, out of frame left. All three are the same dusk.
 - S06 to S07: Grandma rows west, away from the dock, and turns back toward Grandpa (east) for her line.
 
@@ -70,7 +85,7 @@ See set.md "Claims".
 - **Three hundred, not three thousand** (critic r3, accuracy outranks): Frost Walker II comes up about 1 roll in 110
   (2/3 an enchanted book x 1/37 x 1/2), so 300 rolls without it is about a 7% streak (unlucky but real); 3,000 would
   be about 1 in 10^12. The tally wall shows about 300.
-- **Why II, not I:** Frost Walker freezes a radius of 2 + level (I: 3, II: 4): the wider path he wants for 60 blocks of open sea. Never said; the tooltip shows it. (With any level, 300 misses would be about 1 in 230.)
+- **Why II, not I:** Frost Walker freezes a radius of 2 + level (I: 3, II: 4): the wider path he wants for 92 blocks of open sea. Never said; the tooltip shows it. (With any level, 300 misses would be about 1 in 230.)
 
 ## Voices (owner audit 2026-11-11: to audition, nothing voiced yet)
 Every candidate is a Gemini voice no other character uses (`voices/cast.json` and every story.json checked:

@@ -21,11 +21,11 @@
   },
   "weather": "clear",
   "world": {
-    "place": "gullwick (to claim): a shore hamlet on the West March coast within ~200 blocks of the Ridge tower (-2000, -445), e.g. near (-2190, -380), away from Leo's House and the stronghold islets. The bay must be cold_ocean (NEVER frozen_ocean: L08's claim is that the sea never freezes here; no snow on the shore either) with a natural island 50-70 blocks out; the dock flush at sea level (Frost Walker freezes water one block below the feet). Coordinates in shots are dock-relative, -z = out to sea (the island is west).",
+    "place": "gullwick (claimed 2026-11-11, docs/world/map.json): the shore hamlet on the low headland west of Leo's lagoon, over the world's only stronghold (never said, never dug). The dock's end (the origin) at (-2301, 62, -566), flush at sea level, pointing north-west across 92 blocks of open cold_ocean (never frozen, no snow) to Grandma's Island (grandmas_island, a natural islet at (-2374, 62, -630), 13 x 17, at sea level). Coordinates in shots are dock-relative, -z = out to sea (toward the island).",
     "day": 4000,
     "canon": "A new family: the kid (a player, narrator), Grandpa and Grandma (players, apart since about day 350, ten years before), Mom (their daughter, a player), the librarian (a villager). Grandma is seen: in the flashback boat and in her lit window. One grandpa per Short (canon conflict 11): this Grandpa has his own voice and skin.",
-    "easter_egg": "raven_tower: the old watchtower on the Ridge on the inland skyline in S05 (looking back from the dock)",
-    "note": "Gullwick is NOT claimed yet (continuity r3 #2): the example spot (-2190, -380) is land on the world map; survey for real cold_ocean with a natural island 60 blocks out before claiming. The Ridge tower easter egg needs renderDistance/recordRadius above 192 if Gullwick sits 200-300 blocks away."
+    "easter_egg": "none on the cameo list. S05's inland view has Leo's House across the lagoon (geography, never named). The Ridge tower (raven_tower) was dropped: 315 blocks from the dock, past any render distance we use.",
+    "note": "Claimed 2026-11-11 (the lore pass). The survey found no islet over the stronghold (its land is a headland joined to the mainland, where Gullwick now stands) and no natural island 60 blocks from any shore near it: the nearest true island is 92 blocks out, so the shots' FOVs are narrowed to keep the phone sizes (set.md)."
   },
   "voice": {
     "engine": "gemini",
@@ -348,11 +348,11 @@
       "line": "L04",
       "place": "dock",
       "size": "wide",
-      "camera": "at: (2, 3.5, 20) looking at Grandma's window (0, 3, -60), still, FOV 15 (a long lens)",
-      "frame": "fg: Grandpa at (1.0, 0, 0.5) at the dock's end, his back to us, lower left below the window (about 670 px); subject: the island 60 blocks out, a small house, its 3-wide x 2-high window lit warm, the sill at floor level, Grandma standing in it head to toe (about 160 px); bg: the sea to the horizon. Dusk 13000.",
+      "camera": "at: (2, 3.5, 20) looking at Grandma's window (0, 3, -92), still, FOV 11 (a long lens: 92 blocks keeps the window ~140 x 95 px)",
+      "frame": "fg: Grandpa at (1.0, 0, 0.5) at the dock's end, his back to us, lower left below the window (about 670 px); subject: the island 92 blocks out, a small house, its 3-wide x 2-high window lit warm, the sill at floor level, Grandma standing in it head to toe (about 160 px); bg: the sea to the horizon. Dusk 13000.",
       "look": {
         "time": 13000,
-        "fov": 15
+        "fov": 11
       }
     },
     {
@@ -361,7 +361,7 @@
       "place": "dock",
       "size": "full",
       "camera": "at: (1.5, 1.6, -1) at the dock's end looking back inland (+z), slow push",
-      "frame": "subject: the oak boat floating empty beside the dock at (2, 0, 4); Grandpa walks inland away from the camera, past it without a look; bg: Gullwick and, on the inland skyline, the old tower on the Ridge (the easter egg; needs the render distance). Dusk 13000.",
+      "frame": "subject: the oak boat floating empty beside the dock at (2, 0, 4); Grandpa walks inland away from the camera, past it without a look; bg: Gullwick's low headland and, across the lagoon about 100 blocks east, Leo's stone cottage on the far shore (geography, never named). Dusk 13000.",
       "look": {
         "time": 13000
       }
@@ -396,11 +396,11 @@
       "line": "L08",
       "place": "dock",
       "size": "full",
-      "camera": "at: (-3, 1.6, 21) on the shore looking past Mom down the dock to the sea (0, 2, -60), still, FOV 30",
-      "frame": "subject: Mom at (-2.5, 0, 14.5), head to toe, frame right, shaking her head as Grandpa walks past her up the shore (out of frame left by the end); the kid small beside her; the empty dock running away from us; the bay open and unfrozen, no ice anywhere; bg: the island 60 blocks from the dock's end, Grandma's lit window. Dusk 13000.",
+      "camera": "at: (-3, 1.6, 21) on the shore looking past Mom down the dock to the sea (0, 2, -92), still, FOV 21",
+      "frame": "subject: Mom at (-2.5, 0, 14.5), head to toe, frame right, shaking her head as Grandpa walks past her up the shore (out of frame left by the end); the kid small beside her; the empty dock running away from us; the bay open and unfrozen, no ice anywhere; bg: the island 92 blocks from the dock's end, Grandma's lit window. Dusk 13000.",
       "look": {
         "time": 13000,
-        "fov": 30
+        "fov": 21
       }
     },
     {
@@ -433,11 +433,11 @@
       "line": "L10",
       "place": "dock",
       "size": "wide",
-      "camera": "at: (0, 5, 14) behind Grandpa looking down the dock to the window (0, 3, -60), FOV 40, still. Opens on Grandpa at the dock's end in new leather boots, glinting; his first step off the end makes the first ice; the water freezes into a white disc under each step (frosted ice); cut 1.0 s after the first ice, on his third step",
+      "camera": "at: (0, 5, 14) behind Grandpa looking down the dock to the window (0, 3, -92), FOV 28, still. Opens on Grandpa at the dock's end in new leather boots, glinting; his first step off the end makes the first ice; the water freezes into a white disc under each step (frosted ice); cut 1.0 s after the first ice, on his third step",
       "frame": "subject: Grandpa on the sea, a short trail of white frosted-ice discs under and behind him, three steps' worth (vanilla: it melts after a few seconds, after the cut; the first ice anywhere in the Short: the sea freezing); bg: the island and Grandma's lit window, her figure in it (the window reads; she is small), at the end of his line of travel. Dawn 23500.",
       "look": {
         "time": 23500,
-        "fov": 40
+        "fov": 28
       }
     }
   ],
@@ -446,10 +446,10 @@
       "at": [
         0,
         3,
-        -60
+        -92
       ],
       "size": "3 wide x 2 high glass panes, the sill at floor level, lanterns behind",
-      "note": "dock-relative: (0,0,0) is the dock's end at sea level, -z out to sea (west). 60 blocks from the dock's end in every shot"
+      "note": "dock-relative: (0,0,0) is the dock's end at sea level, -z out to sea (north-west in the world: toward Grandma's Island, map.json grandmas_island). 92 blocks from the dock's end in every shot"
     },
     "boat": {
       "at": [
