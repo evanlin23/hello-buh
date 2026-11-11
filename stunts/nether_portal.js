@@ -14,6 +14,8 @@
 // random tick, the anchor's explosion); commands only build the set and raise the random tick speed during the
 // lava wait (shown x6). Lead 2026-11-11: as short as it reads, the stunt on screen in the first 1.5 s.
 const GAP = 16
+// the anchor beat is unproven on camera: false ends on lava (8/10) instead (lead 2026-11-11: two tries, then lava)
+const ANCHOR = true
 const ST = [
   { id: 'flint', sub: 'flint and steel', score: '1/10', w: 2 },
   { id: 'charge', sub: 'fire charge', score: '3/10', w: 2 },
@@ -21,7 +23,7 @@ const ST = [
   { id: 'dispenser', sub: 'redstone', score: '5/10', w: 2 },
   { id: 'lava', sub: 'lava', score: '8/10', w: 2 },
   { id: 'anchor', sub: 'respawn anchor', score: '11/10', w: 6 }   // wider: the blast's fire (1 in 3 per cell) lands in the frame
-]
+].filter(s => ANCHOR || s.id !== 'anchor')
 const LAST = ST.length - 1
 const MID = (ST.length - 1) / 2
 const speed = []
@@ -36,7 +38,9 @@ module.exports = {
   caption: 'rating every way to light a nether portal 😳',
   edit: {
     subsY: 0.15, caption: 'rating every way to light a nether portal 😳', red: 'every', dropAt: `lit${LAST}`,
-    startAt: 'st:-0.05', endAfter: `lit${LAST}:1.0`,
+    startAt: 'st:-0.05', endAfter: `lit${LAST}:1.4`,   // settle-ok: the payoff is the lit portal and its card (a text payoff: 1.4 s to read it, pace r1); the anchor's blast is over by then
+    // pace r1: silent until 0.73 s: room tone from frame 1; the last light gets a dip + impact over the song (the publish gate)
+    sfx: [['air', 'start', `lit${LAST}`, { gain: 0.5 }], ['dip', `lit${LAST}`, 0.4], ['impact', `lit${LAST}`, { gain: 1.4 }]],
     speed,
     subs: [...ST.map((s, i) => ['st', s.sub, 1.4, i]), ['lava_a', 'x6', 0.8, 0]],
     cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 1.4 : 0.9, i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
@@ -277,6 +281,7 @@ module.exports = {
       for (let k = 0; k < 20 && !portalIn(t); k++) await bot.waitForTicks(1)
       if (!portalIn(t)) { ctx.log('no portal at', t.id); return false }
       ctx.mark(`lit${n}`)
+      if (n === LAST) { await admire(t, 30); bot.removeListener('physicsTick', portalParts); return !ctx.died }   // the last frame (lava when ANCHOR is off)
       await admire(t)
     }
     return false

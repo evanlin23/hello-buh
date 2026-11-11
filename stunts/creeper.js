@@ -7,8 +7,8 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'glance:-0.8', deathScreen: true, endAfter: 'settle:0.6',   // the blast's smoke and the death fall settled (lib/settle.js)
-    sfx: [['air', 'start', 'death', { gain: 0.18 }]] },   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'glance:-0.8', deathScreen: true, endAfter: 'settle:1.0',   // the blast's smoke and the death fall settled (lib/settle.js); 1.0 s (pace r2: 0.6 made 7.9 s, under the 8 s floor, and held the death text 0.8 s)
+    sfx: [['air', 'start', 'death', { gain: 0.18 }], ['dip', 'hurt', 0.4], ['impact', 'hurt', { gain: 1.4 }]] },   // mixcheck r2: under the NCS bed the blast wasn't a hit: dip + impact on it   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
   async setup (ctx) {
