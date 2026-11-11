@@ -418,7 +418,7 @@
    "place": "village",
    "size": "ews",
    "subject": "the torch-covered village centre (the bell)",
-   "camera": "path: a crane forward and down. Key 0 (0 s): 30 blocks above the village's west edge, already moving east at ~2 blocks/s, pitched ~20 degrees down so the bell sits in the lower third and the east skyline is in frame; key 1 (end of L01, ~3 s): 22 blocks up over the meeting point, still looking east toward the dawn. FOV 60. Frame 1 is the thumbnail: the lit centre big and centred from frame 1 (STANDARDS 1b).",
+   "camera": "path: a crane forward and down. Key 0 (0 s): 30 blocks above the village's west edge, already moving east at ~2 blocks/s, pitched ~20 degrees down so the bell sits in the lower third and the east skyline is in frame; key 1 (end of L01, ~3 s): 22 blocks up over the meeting point, still looking east toward the dawn. FOV 60. Frame 1 is the thumbnail: the lit centre big and horizontally centred from frame 1, the bell in the lower third (STANDARDS 1b).",
    "frame": "fg: torch-topped roof ridges and fence posts passing under the lens; mid: the whole village, about 90 x 90 blocks, a carpet of thousands of warm points, the dirt paths and fields reading as darker lines threaded between them (lit by their neighbours, so 'not one dark block' holds); bg: the dark forest ring, Dog Hill's ridge on the east-south-east skyline (geography only: the dog is hidden behind its ridge from here, continuity r1), the pale dawn band. Dawn (23000)."
   },
   {

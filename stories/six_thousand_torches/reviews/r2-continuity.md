@@ -24,3 +24,6 @@ Verdict: fix (one owner-rule break; the rest should-fix)
 - S01 says both "centred" and "lower third".
 - The room size is unchecked.
 - In S14 Jonah walks round the kid.
+
+## Writer's response (6dc18d0 and after)
+Must-fix 1 and should-fixes 2-7 are applied: in S12 Jonah is crouched at the doorstep, small, with his name dimmed; the ids are renumbered; S05 uses `kai`; in S13 the kid is frame left beyond the door spot; in S06 they walk toward the lens from the west; the strip and row placement is in props.torches; the ticks are S12 23670, S13 23700, S14 23770 (taken from the voiced durations at build). For the S01 note, "horizontally centred, the bell in the lower third". The larkfield claim is left for the build (bible).
