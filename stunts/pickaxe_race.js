@@ -38,7 +38,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.3',   // (the camera drifts through it: settle:0.6 on a parked camera held a still frame 2 s, independent review)
+    return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.7',   // 0.7 s after the last blast (owner r:r188b46: the end 0.5-0.8 s after the result; smoke and debris never hold it)
       // a speedrun timer per tier (edit.splits, as end_portal_job: r:r32b983): 0:00.00 on each tier's 'beat', frozen
       // green on its 'mined' with n/6; real time, no cut inside a tier (subsY 0.2: the tier line clears the timer strip)
       // (hidden from the finale: the TNT run is no timed attempt, and the frozen netherite split read as TNT's time, review)
