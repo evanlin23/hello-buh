@@ -16,7 +16,7 @@ const OR = 'orange_wool', WH = 'white_wool', BK = 'black_wool'
 // the fox is drawn in its own coordinates (head to the west, -x; its tail curled round the south side, +z), then
 // shifted so the field's centre is the middle of its footprint
 const OX = 24, OZ = -12
-const PLAYER = [-120 + OX, 0 + OZ]        // 56e: 8 blocks in front of the snout, on its axis
+const PLAYER = [-140 + OX, 0 + OZ]        // 56e: 28 blocks in front of the snout, on its axis (the whole face behind him)
 
 // a box in fox coordinates -> a lapse box in the field's, its step the layer (y) it rises with
 const bx = (out, x0, y0, z0, x1, y1, z1, block, step) => {
@@ -115,7 +115,7 @@ module.exports = L.makeLapse({
   fieldBiome: 'minecraft:taiga',
   time: 6500,                            // midday: the orange fur bright against the dark spruces
   look: { mood: 'golden_hour', bloom: 0.3, bloomThreshold: 0.88, bloomPasses: 1, sharpen: 0.4, rays: 0.3, raysOverBlocks: 0.2, shadows: true, vignette: 0.2, grain: 0.01 },
-  field: [104, 56],                      // the clearing: the fox's footprint (177 x 90) plus room for 56e at the snout
+  field: [124, 56],                      // the clearing: the fox's footprint (177 x 90) plus room for 56e in front
   height: 80,
   clearTrees: 6,                         // no half-cut trees at the clearing's edge; the forest beyond stays
   renderDistance: 16, recordRadius: 256, // the reveal looks out over the forest: no missing chunks at the frame's edge
@@ -140,18 +140,18 @@ module.exports = L.makeLapse({
     cards: [['pass', 'SMALL', 1.6, 'yellow', 0, null, { y: 0.24 }]]
   },
   shots: {
-    // (every point in the fox's own coordinates; 56e stands at (-120, 1, 0), facing east up at the snout)
-    // 1. low behind 56e's left shoulder: the paws and the snout rise in front of him, the drone easing back and up
-    close: { path: [cam(0, P(-134, 3.4, -9)), cam(2.2, P(-142, 9, -16))], lookPath: [cam(0, P(-100, 5, 0)), cam(2.2, P(-98, 9, 0))], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [P(-120, 1.8, 0), P(-113, 8, 0)] },
-    // 2. out in front and to the north: the head rises behind the snout, 56e a speck at its foot
-    front: { path: [cam(0, P(-184, 26, -80)), cam(2.5, P(-190, 34, -84))], lookPath: [cam(0, P(-74, 18, 0)), cam(2.5, P(-70, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-89, 30, -10)] },
+    // (every point in the fox's own coordinates; 56e stands at (-140, 1, 0), facing east up at the snout)
+    // 1. low, beside and behind 56e: the paws and the snout rise past him, the drone easing back and up
+    close: { path: [cam(0, P(-152, 4, -30)), cam(2.2, P(-160, 10, -38))], lookPath: [cam(0, P(-108, 4, 0)), cam(2.2, P(-104, 10, 0))], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [P(-140, 1.8, 0), P(-113, 8, 0)] },
+    // 2. out in front and to the north: the head rises behind the snout, 56e a speck in front of it
+    front: { path: [cam(0, P(-150, 28, -64)), cam(2.5, P(-156, 34, -68))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.5, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-89, 30, -10)] },
     // 3. high behind it, the forest round the clearing: the long body fills in behind the head
-    back: { path: [cam(0, P(170, 96, -110)), cam(2.8, P(160, 100, -124))], lookPath: [cam(0, P(-14, 12, 0)), cam(2.8, P(-18, 12, 0))], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [P(10, 41, 0)] },
+    back: { path: [cam(0, P(120, 74, -86)), cam(2.8, P(112, 78, -96))], lookPath: [cam(0, P(-14, 14, 0)), cam(2.8, P(-18, 14, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(10, 41, 0)] },
     // 4. over the spruces on the south side: the tail curls round across the frame
     forest: { path: [cam(0, P(30, 46, 160)), cam(2.2, P(14, 48, 162))], lookPath: [cam(0, P(-12, 12, 36)), cam(2.2, P(-20, 12, 36))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-10, 15, 58)] },
-    // 5. the reveal: high to the south-west over the forest, the whole fox and the taiga round it, a slow push
-    reveal: { path: [cam(0, P(-176, 130, 120)), cam(1.8, P(-168, 124, 113))], lookPath: [cam(0, P(-30, 10, 8)), cam(1.8, P(-30, 10, 8))], fov: 60, dof: false, drift: 0.3, scenery: true, subject: [P(-30, 41, 0)] },
-    // 6. the close pass: low, sliding behind 56e from his left to his right, the fox's face filling the sky above him
-    pass: { path: [cam(0, P(-128, 2.4, -6)), cam(2.0, P(-128, 2.6, 6))], lookPath: [cam(0, P(-96, 18, -2)), cam(2.0, P(-96, 18, 2))], fov: 74, dof: false, drift: 0.2, scenery: true, subject: [P(-120, 1.8, 0), P(-88, 40, 0)] }
+    // 5. the reveal: high to the south-west over the forest (under the clouds), the whole fox and the taiga, a slow push
+    reveal: { path: [cam(0, P(-150, 104, 104)), cam(1.8, P(-143, 99, 98))], lookPath: [cam(0, P(-30, 12, 8)), cam(1.8, P(-30, 12, 8))], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [P(-30, 41, 0)] },
+    // 6. the close pass: low behind 56e, sliding from his left to his right, the fox's whole face towering over him
+    pass: { path: [cam(0, P(-147, 2.6, -6)), cam(2.0, P(-147, 2.8, 6))], lookPath: [cam(0, P(-100, 20, -2)), cam(2.0, P(-100, 20, 2))], fov: 74, dof: false, drift: 0.2, scenery: true, subject: [P(-140, 1.8, 0), P(-89, 30, -10)] }
   }
 })
