@@ -22,7 +22,7 @@
 | L01 | a player pulled me out of my village in a boat, across the grass | the boat on grass, Oakend's cottages behind, the man ahead with the lead (gap: the lead must draw) |
 | L04 | (flashback) across the water, the old empty village; one light on | open water; Fernbank dark but exactly one lit window (the librarian's west window), her figure in it (S04b) |
 | L07 | he took Mom, and Uncle | each in a boat behind the man, in its flashback shot, while named |
-| L08 | none came back; I sat in his boat | the two cottages shut and dark; the kid in the boat |
+| L08 | none came back; I got in the boat | the two cottages shut and dark; the kid in the boat |
 | L09 | he got in his own boat and mine came right behind | two boats on the water, his rowing, hers following on the lead |
 | L10 | we bumped into the old empty village | the bow knocks the dock post; then S11's lit new quarter contradicts "empty" |
 | S11 | (no line) | Mom, the librarian, Uncle, the only villagers near the dock's foot; 25+ villagers readable up the path |

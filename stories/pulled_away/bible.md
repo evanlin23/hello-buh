@@ -85,7 +85,7 @@ Nothing (a baby villager). No hotbar, no HUD.
   in hers. A player riding his own boat can hold a lead (as a rider leads a horse); verify the towed boat follows on
   water in the engine test.
 - A mob in a boat's front seat: a player can't steer that boat (why he rows his own).
-- A villager can't leave a boat on its own; a mob walking into a boat gets in (L08's "I sat in his boat").
+- A villager can't leave a boat on its own; a mob walking into a boat gets in (L08's "I got in the boat").
 - Villagers walk to their beds at dusk (S11's background).
 - Villagers don't wave: the librarian turns (S11).
 - No bell: Fernbank has none (dropped from the premise's ending).

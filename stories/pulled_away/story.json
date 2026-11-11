@@ -2,11 +2,11 @@
  "name": "pulled_away",
  "stunt": "story_pulled_away",
  "version": 2,
- "revision": "r2 (2026-11-11): critic r1 and continuity r1 must-fixes: the look across the water is a flashback ('The FIRST time he came'), 'Somebody left ONE light ON' (0a), S04b long lens on the librarian, he tows her boat from his own (vanilla: she sat in the front first), the reveal in one shot cut on EMPTY, 'A PLAYER', 'So TODAY, I sat in his BOAT and WAITED' (agency), the new lit quarter out of Oakend's sight; L05 plain. Script only, nothing voiced (r:ra5bc8f)",
+ "revision": "r2 (2026-11-11): critic r1 and continuity r1 must-fixes: the look across the water is a flashback ('The FIRST time he came'), 'Somebody left ONE light ON' (0a), S04b long lens on the librarian, he tows her boat from his own (vanilla: she sat in the front first), the reveal in one shot cut on EMPTY, 'A PLAYER', 'So TODAY, I sat in his BOAT and WAITED' (agency), the new lit quarter out of Oakend's sight; L05 plain. Script only, nothing voiced (r:ra5bc8f); r2.1: L08 'I got in the BOAT' (critic r2: 'his boat' clashed with L09's 'his OWN boat')",
  "caption": "why is he collecting villagers 🛶",
  "logline": "A villager kid gets in a player's boat and is dragged out of her village across the grass; he calls her number forty, he already took her Mom and her uncle, and none of them came back, so she's sure they love it there; at dusk her boat bumps the old empty village across the water and Mom, her uncle and the old librarian who was alone for years are waiting, the village lit behind them.",
  "question": "why tf is this man dragging a villager kid across the grass in a boat?",
- "premise": "A player pulls a baby villager out of Oakend in an oak boat on a lead, across the grass. He calls her number forty. He took her Mom last week and her uncle before that, and none came back, so today she sat in his boat and waited. The first time he came, he looked across the water at the old empty village, where one light was on, and said someone's been alone a long time.",
+ "premise": "A player pulls a baby villager out of Oakend in an oak boat on a lead, across the grass. He calls her number forty. He took her Mom last week and her uncle before that, and none came back, so today she got in the boat and waited. The first time he came, he looked across the water at the old empty village, where one light was on, and said someone's been alone a long time.",
  "twist": "Every Minecraft player knows a villager dragged in a boat is going to a trading hall. He isn't building one. He is filling Fernbank, the empty village across the inlet where the old librarian has lived alone with the golem for years, one villager at a time: number forty is the fortieth neighbour he has brought her. At dusk the boat bumps the dock, every window is lit, and Mom and the uncle are waiting at the dock's foot beside the librarian. 'None of them came back. They must love it there' was true.",
  "key_color": "#FFD640",
  "mood": [
@@ -281,8 +281,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "None of them / came BACK. / They must / LOVE it there. / So TODAY, / I sat in his BOAT / and WAITED.",
-   "say": "None of them came back. They must love it there. So today, I sat in his boat and waited.",
+   "text": "None of them / came BACK. / They must / LOVE it there. / So TODAY, / I got in the BOAT / and WAITED.",
+   "say": "None of them came back. They must love it there. So today, I got in the boat and waited.",
    "shot": "S08",
    "look": [
     {

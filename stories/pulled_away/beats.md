@@ -1,6 +1,6 @@
 # pulled_away: beat sheet and clue map (r2)
 
-r2: critic r1 and continuity r1 applied (reviews/). Changes: the look across the water is a flashback (the first time he came); "Somebody left ONE light ON" (the misreading); "A PLAYER"; "So TODAY, I sat in his BOAT and WAITED" (her own act); he tows her boat from his own; the reveal is one shot cut on EMPTY.
+r2: critic r1 and continuity r1 applied (reviews/). Changes: the look across the water is a flashback (the first time he came); "Somebody left ONE light ON" (the misreading); "A PLAYER"; "So TODAY, I got in the BOAT and WAITED" (her own act); he tows her boat from his own; the reveal is one shot cut on EMPTY.
 
 Batch 3, round 1's #1 (docs/pitches/batch3_premises_2026-11-11.md "### 1. Pulled Away", branch claude/batch3-premises).
 Must-changes applied: (1) the lonely one is planted AT Fernbank, as the man's one early line (L04-L05: he looks across
@@ -41,7 +41,7 @@ lit window across the water.
 | 5 | S05 | flashback: the man in profile | Man: "Someone's been ALONE a long TIME." | clue 3, on screen |
 | 6 | S06 | present: the kid in her boat behind him | N: "I think he means HIMSELF. He doesn't have any FRIENDS." | misreading of clue 3 |
 | 7 | S07, S07b | flashbacks: Mom in a boat down the lane; Uncle another day | N: "He took MOM last WEEK. And my UNCLE before THAT." | the turn, dark for a player |
-| 8 | S08 | the kid looks back at the two shut cottages | N: "None of them came BACK. They must LOVE it there. So TODAY, I sat in his BOAT and WAITED." | clue 4 (misread as fondness), and her own act. **The attentive viewer is ahead of her here.** |
+| 8 | S08 | the kid looks back at the two shut cottages | N: "None of them came BACK. They must LOVE it there. So TODAY, I got in the BOAT and WAITED." | clue 4 (misread as fondness), and her own act. **The attentive viewer is ahead of her here.** |
 | 9 | S09 | two boats crossing, his rowing, hers towed | N: "At the WATER, he got in his OWN boat, and mine came RIGHT behind. My boat finally got to SWIM!" | the trip's joy; toward the old village |
 | 10 | S10, S11 | the bow bumps the dock; on EMPTY the cut to Mom, the librarian and Uncle at the dock's foot, the lit quarter behind | N: "When it got DARK, we bumped into the old EMPTY village." | the reveal (the word says empty, the picture full); 1.2 s; cut |
 
@@ -52,7 +52,7 @@ window).
 
 | clue | planted | the kid's misreading (on a line) | a player's reading | after the reveal |
 |---|---|---|---|---|
-| dragged in a boat (by a player) | L01, S01 (picture + line) | "It's the best TRIP ever." (L03); "I sat in his BOAT and WAITED." (L08) | the trading-hall trip | a ride home |
+| dragged in a boat (by a player) | L01, S01 (picture + line) | "It's the best TRIP ever." (L03); "I got in the BOAT and WAITED." (L08) | the trading-hall trip | a ride home |
 | number forty | L02 | "He's GOOD at counting." (L02) | stock count for a hall or breeder | the 40th neighbour he has brought to Fernbank |
 | one lit window across the water | L04, S04, S04b (picture + line) | "Somebody left ONE light ON." (L04) | a lonely place | the librarian, alone since the village emptied |
 | "Someone's been alone a long time" | L05 (the man, on screen) | "I think he means HIMSELF." (L06) | the man is lonely, or something about that village | the librarian |
