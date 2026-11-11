@@ -1,19 +1,20 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-08:19:11.612 spawned at Vec3 { x: 136.5, y: 70, z: 13.5 }
-08:19:11.872 nearest minecraft:forest at [ 424, -83 ]
-08:19:23.892 set at { x: 424, y: 70, z: -83 }
-08:19:35.094 STUNT OK
+16:21:45.121 spawned at Vec3 { x: 128.5, y: 74, z: 24.5 }
+16:21:45.446 nearest minecraft:forest at [ 448, -104 ]
+16:21:57.507 COMMAND ERROR: No entity was found
+16:21:57.696 set at { x: 448, y: 69, z: -104 }
+16:22:08.930 STUNT OK
 meshing from y 8
-light computed in 0.5 s
-meshed + uploaded world in 13.0 s
-rendered 639 frames (10.65 s of video) in 261.9 s = 24.6 s per video second
-wrote work/midas_touch.wav 10.70s
-song drop at 10.50s lands on 0.70s of the Short (song starts at 9.80s)
+light computed in 0.6 s
+meshed + uploaded world in 14.6 s
+rendered 642 frames (10.70 s of video) in 655.2 s = 61.2 s per video second
+wrote work/midas_touch.wav 10.75s
+song drop at 10.50s lands on -0.30s of the Short (song starts at 10.80s)
 no 3D block icons needed
-wrote out/midas_touch.mp4 10.15s
+wrote out/midas_touch.mp4 7.70s
 
-real	5m52.313s
-user	5m11.315s
-sys	0m13.308s
+real	12m22.140s
+user	11m14.468s
+sys	0m25.086s
 exit=0
