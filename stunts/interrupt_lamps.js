@@ -30,6 +30,9 @@ module.exports = {
   edit: {
     caption: CAPTION, red: 'dance floor', dropAt: 'lit',
     startAt: 'hook:-0.1', endAfter: 'lit:1.0',
+    // the walk back stays one continuous walk (owner: the jump cut there "looks weird"), a touch brisker (x1.3: the
+    // whole 3 s of it uncut was a span with nothing new, pace)
+    speed: [['intr_back:0.1', 'intr_resume:-0.1', 1.3]],
     punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.4]],   // the payoff's picture change (the lights coming on), with the ripple and the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_gone'],   // the hit, the pickup and crunches, the last bite: over the music
     // room tone from frame 1; the music dips before the lights and an impact lands on them (mixcheck: the payoff hit over the NCS bed)
