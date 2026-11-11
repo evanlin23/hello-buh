@@ -12,10 +12,10 @@ module.exports = makeQuest({
   red: 'SECRET',
   stages: [
     { kind: 'tunnel', len: 9, plug: 4, drop: 3 },
-    { kind: 'parkour', jumps: [2, 2, 2] },
+    { kind: 'parkour', jumps: [2, 2, 2, 2] },
     { kind: 'arrows', n: 3, step: 3, wait: 3 },
     { kind: 'tunnel', len: 15, plug: 6, drop: 4 },
-    { kind: 'parkour', jumps: [3, { gap: 2, up: 1 }, 3, { gap: 2, up: 1 }], lastGap: 3 },
+    { kind: 'parkour', jumps: [3, { gap: 2, up: 1 }, 3, { gap: 2, up: 1 }, 3], lastGap: 3 },
     { kind: 'vault', approach: 6 }
   ],
   loot: [
