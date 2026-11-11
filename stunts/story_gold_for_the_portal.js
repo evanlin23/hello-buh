@@ -37,7 +37,7 @@ module.exports = {
   idleLife: true,
   cast: { Grandpa: 'ari' },
   selfArmor: ['golden_boots', null, null, null],   // Grandma's rule: the grandson wears golden boots (never said)
-  look: 'bright',   // the owner's pick (2026-11-11, A/B ab_bright_gold): bright and punchy
+  look: { mood: 'bright', rolloff: 0.8 },   // the owner's pick (rolloff: main 2c6e5426, highlights roll off instead of clipping) (2026-11-11, A/B ab_bright_gold): bright and punchy
   shots: {},   // below
   edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', guiScale: 4, punchStress: true, startAt: 'line:0', endAfter: 'story_end:0', punch: [['reveal', 0, 0.08]] },   // the punch: the stripe reads (the payoff; S14 has no line)
   // the whole area, Hushwell's plaza (S05's background, ~95 blocks SSW) included
