@@ -24,7 +24,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `quest` | (seen by the owner; no file) a "secret chest in a desert pyramid" Short | The whole video is the way down to one secret chest: hidden buttons, tunnels, parkour, traps, each stage harder; opened only at the end | "fake secret chest in desert pyramid that takes like the entire video to get to and theres like parkour and tunnels etc." | r:r4b458d | idea |
 | `love` | "Send This To Someone You Love Most 😍💗" | A heart laid out in redstone and lamps in a cherry grove; night falls, it lights up, fireworks ring it; made to be sent to someone | "its like a heart and its cute and lovey" | r:rf91fef | idea |
 | `lucky` | an "aura" Short ("Bro just used all the luck left in his life") | Digging straight down: diamonds, then lava saved by a water bucket, then emeralds, then right into the end portal room; every block luckier than the last | "fake super lucky" | r:r934ea4 | idea |
-| `inside` | "Every Time I Snap" ("Why does my house always end up like this?") | One walk from a detailed interior out the door to a small plain house that cannot hold it; the cut is hidden, it is 11 s long, and the mismatch makes people replay to find the trick | "this one lends to replays, since its short and the inside differs from the outside so its confusing and the cut is not obvious" | r:r9a54b2 | idea |
+| `inside` | "Every Time I Snap" ("Why does my house always end up like this?") | One walk from a detailed interior out the door to a small plain house that cannot hold it; the cut is hidden, it is 11 s long, and the mismatch makes people replay to find the trick | "this one lends to replays, since its short and the inside differs from the outside so its confusing and the cut is not obvious" | r:r9a54b2 | building (inside_library: lib/inside.js) |
 
 ## Ideas for each (to start from, not to copy)
 - **race**: grass vs mycelium, moss vs sculk, fire vs water, vines vs glow lichen, a 4-way race; a bracket series.
@@ -39,4 +39,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   stage a different trick (sticky-piston stairs, a lava parkour, a hidden lever).
 - **love**: a heart of lamps that lights at night, a pixel-art "for you" made of flowers, two sheep in a heart pen,
   a heart-shaped firework show.
+- **inside**: a library hall (inside_library), a mega storage room of chests and item frames, a greenhouse with a
+  waterfall, a Nether-portal lounge, a two-floor bakery; the outside can also go the other way (a mansion that is one
+  bed inside). lib/inside.js keeps the entry's light rule (no light within 6 blocks of the door's front cells).
 - **faketrick**: carrying a portal, a "secret" diamond recipe, a floating lava tower, a portal frame made of gold.
