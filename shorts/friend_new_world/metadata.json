@@ -1,0 +1,497 @@
+{
+  "name": "friend_new_world",
+  "channel": "hellobuh",
+  "caption": "how is he already done 💀",
+  "youtube": {
+    "title": "how is he already done 💀 #minecraft #shorts",
+    "description": "how is he already done 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "reveal",
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 8.5,
+    "song_start_s": 6.0
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 9.4,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 10512036,
+    "sha256": "3bf04202429faffa7522dfa0c5a22c970d7746bbc006a6e32088289ee5d896db",
+    "release": {
+      "tag": "pkg-friend_new_world",
+      "asset": "friend_new_world.short.3bf04202429faffa.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-friend_new_world/friend_new_world.short.3bf04202429faffa.mp4",
+      "sha256": "3bf04202429faffa7522dfa0c5a22c970d7746bbc006a6e32088289ee5d896db",
+      "bytes": 10512036
+    },
+    "nosong_release": {
+      "tag": "pkg-friend_new_world",
+      "asset": "friend_new_world.short_nosong.8f9eaeb73b153be1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-friend_new_world/friend_new_world.short_nosong.8f9eaeb73b153be1.mp4",
+      "sha256": "8f9eaeb73b153be1a40df1e69642dc73a16b307646a543d6548becb98f818266",
+      "bytes": 10501277
+    }
+  },
+  "edit": {
+    "caption": "how is he already done 💀",
+    "red": "already",
+    "chatScale": 5,
+    "startAt": "dig1:0.55",
+    "endAfter": "reveal:0.9",
+    "dropAt": "reveal",
+    "punch": [
+      [
+        "reveal",
+        0,
+        1.06
+      ]
+    ],
+    "flash": [
+      [
+        "reveal",
+        0,
+        0.3
+      ]
+    ],
+    "keySounds": [
+      "friend_vanish"
+    ],
+    "sfx": [
+      [
+        "air",
+        "start",
+        "reveal",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "impact",
+        "friend_vanish",
+        {
+          "gain": 1.2
+        }
+      ],
+      [
+        "dip",
+        "reveal",
+        0.4
+      ],
+      [
+        "gamedip",
+        "reveal",
+        0.35
+      ],
+      [
+        "impact",
+        "reveal",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "how is he already done 💀",
+      "--self_name",
+      "56e",
+      "--red",
+      "already",
+      "--punch",
+      "[[\"reveal\",0,1.06]]",
+      "--flash",
+      "[[\"reveal\",0,0.3]]",
+      "--sfx",
+      "[[\"air\",\"start\",\"reveal\",{\"gain\":0.5}],[\"impact\",\"friend_vanish\",{\"gain\":1.2}],[\"dip\",\"reveal\",0.4],[\"gamedip\",\"reveal\",0.35],[\"impact\",\"reveal\",{\"gain\":1.4}]]",
+      "--chat_scale",
+      "5",
+      "--start_at",
+      "dig1:0.55",
+      "--end_after",
+      "reveal:0.9"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 361,
+      "y": 78,
+      "z": -40
+    },
+    "biome": "minecraft:plains",
+    "ticks": 238,
+    "seconds": 11.9,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.85,
+        "event": "dig1"
+      },
+      {
+        "t": 0.85,
+        "event": "dig"
+      },
+      {
+        "t": 0.85,
+        "event": "swing"
+      },
+      {
+        "t": 1.1,
+        "event": "ent_swing"
+      },
+      {
+        "t": 1.2,
+        "event": "swing"
+      },
+      {
+        "t": 1.35,
+        "event": "ent_swing"
+      },
+      {
+        "t": 1.4,
+        "event": "chat"
+      },
+      {
+        "t": 1.4,
+        "event": "chat"
+      },
+      {
+        "t": 1.4,
+        "event": "friend_chat"
+      },
+      {
+        "t": 1.45,
+        "event": "friend_vanish"
+      },
+      {
+        "t": 1.55,
+        "event": "swing"
+      },
+      {
+        "t": 1.55,
+        "event": "ent_swing"
+      },
+      {
+        "t": 1.85,
+        "event": "swing"
+      },
+      {
+        "t": 2.2,
+        "event": "swing"
+      },
+      {
+        "t": 2.35,
+        "event": "friend_vanish"
+      },
+      {
+        "t": 2.55,
+        "event": "chat"
+      },
+      {
+        "t": 2.55,
+        "event": "chat"
+      },
+      {
+        "t": 2.55,
+        "event": "friend_chat"
+      },
+      {
+        "t": 2.55,
+        "event": "swing"
+      },
+      {
+        "t": 2.7,
+        "event": "friend_vanish"
+      },
+      {
+        "t": 2.9,
+        "event": "swing"
+      },
+      {
+        "t": 3.05,
+        "event": "friend_vanish"
+      },
+      {
+        "t": 3.25,
+        "event": "swing"
+      },
+      {
+        "t": 3.4,
+        "event": "friend_vanish"
+      },
+      {
+        "t": 3.45,
+        "event": "chat"
+      },
+      {
+        "t": 3.45,
+        "event": "chat"
+      },
+      {
+        "t": 3.45,
+        "event": "friend_chat"
+      },
+      {
+        "t": 3.65,
+        "event": "swing"
+      },
+      {
+        "t": 3.75,
+        "event": "friend_vanish"
+      },
+      {
+        "t": 3.85,
+        "event": "dig_end"
+      },
+      {
+        "t": 3.85,
+        "event": "log1"
+      },
+      {
+        "t": 3.85,
+        "event": "vel"
+      },
+      {
+        "t": 4,
+        "event": "vel"
+      },
+      {
+        "t": 4.35,
+        "event": "collect"
+      },
+      {
+        "t": 4.45,
+        "event": "friend_build"
+      },
+      {
+        "t": 4.55,
+        "event": "chat"
+      },
+      {
+        "t": 4.55,
+        "event": "chat"
+      },
+      {
+        "t": 4.55,
+        "event": "friend_chat"
+      },
+      {
+        "t": 5.4,
+        "event": "dig2"
+      },
+      {
+        "t": 5.5,
+        "event": "friend_build"
+      },
+      {
+        "t": 5.6,
+        "event": "chat"
+      },
+      {
+        "t": 5.6,
+        "event": "chat"
+      },
+      {
+        "t": 5.6,
+        "event": "friend_chat"
+      },
+      {
+        "t": 5.85,
+        "event": "dig"
+      },
+      {
+        "t": 5.85,
+        "event": "swing"
+      },
+      {
+        "t": 6.2,
+        "event": "swing"
+      },
+      {
+        "t": 6.5,
+        "event": "chat"
+      },
+      {
+        "t": 6.5,
+        "event": "chat"
+      },
+      {
+        "t": 6.5,
+        "event": "friend_chat"
+      },
+      {
+        "t": 6.55,
+        "event": "swing"
+      },
+      {
+        "t": 6.6,
+        "event": "friend_build"
+      },
+      {
+        "t": 6.85,
+        "event": "swing"
+      },
+      {
+        "t": 7.2,
+        "event": "swing"
+      },
+      {
+        "t": 7.3,
+        "event": "chat"
+      },
+      {
+        "t": 7.3,
+        "event": "chat"
+      },
+      {
+        "t": 7.3,
+        "event": "friend_chat"
+      },
+      {
+        "t": 7.55,
+        "event": "swing"
+      },
+      {
+        "t": 7.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.25,
+        "event": "swing"
+      },
+      {
+        "t": 8.6,
+        "event": "swing"
+      },
+      {
+        "t": 8.8,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.8,
+        "event": "log2"
+      },
+      {
+        "t": 8.8,
+        "event": "pose"
+      },
+      {
+        "t": 8.85,
+        "event": "vel"
+      },
+      {
+        "t": 9.3,
+        "event": "collect"
+      },
+      {
+        "t": 9.9,
+        "event": "reveal"
+      },
+      {
+        "t": 9.9,
+        "event": "chat"
+      },
+      {
+        "t": 9.9,
+        "event": "chat"
+      },
+      {
+        "t": 9.9,
+        "event": "friend_chat"
+      },
+      {
+        "t": 11.9,
+        "event": "pose_off"
+      },
+      {
+        "t": 11.9,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "a23bd9a47172b0ca8e79c450e57d5e53cd511d54",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T23:10:37.588Z",
+    "head_at_publish": "49d3fa180aeb92a0eed5baca7bb24a3a0f3c6bd3",
+    "stunt": "stunts/friend_new_world.js",
+    "source_snapshot": [
+      "source/friend_new_world.js",
+      "source/story.js",
+      "source/motion.js",
+      "source/sight.js",
+      "source/act.js",
+      "source/boats.js",
+      "source/plateau.js",
+      "source/dress.js",
+      "source/voxel.js",
+      "source/friend.js",
+      "source/movie.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout a23bd9a47172",
+    "gunzip -c shorts/friend_new_world/recording.json.gz > work/friend_new_world.rec.json",
+    "node render.js work/friend_new_world.rec.json work/friend_new_world.frames 60 1080 1011",
+    "python3 audio.py work/friend_new_world.rec.json work/friend_new_world.wav",
+    "python3 edit.py --frames work/friend_new_world.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/friend_new_world.rec.json --audio work/friend_new_world.wav --caption \"how is he already done 💀\" --self_name 56e --red already --punch [[\"reveal\",0,1.06]] --flash [[\"reveal\",0,0.3]] --sfx [[\"air\",\"start\",\"reveal\",{\"gain\":0.5}],[\"impact\",\"friend_vanish\",{\"gain\":1.2}],[\"dip\",\"reveal\",0.4],[\"gamedip\",\"reveal\",0.35],[\"impact\",\"reveal\",{\"gain\":1.4}]] --chat_scale 5 --start_at dig1:0.55 --end_after reveal:0.9 --out out/friend_new_world.mp4"
+  ],
+  "status": "ready",
+  "notes": "friend #1 (lib/friend.js). R3 fix-check READY (fresh reviewer, subagent a51156d74d4a2fccb): second log plays whole (no mid-dig cut), bro warps off screen and walks in behind, frame 0 has bro + his tree + Stone Age in chat with motion and a hit by 0.2 s (r:r0f3da0) under a reaction caption. Nitpicks: caption top y=195, faint name tag first ~8 frames.",
+  "published_at": "2026-11-11T23:12:12.494Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T23:12:36+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 9.41 s vs the reviewed render 9.40 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 0,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T23:11:04.007Z",
+      "report": "work/hb/friend_new_world.check.json"
+    },
+    "key_sounds": {
+      "ok": true,
+      "keys": [
+        "friend_vanish"
+      ],
+      "summary": "key sounds over the music: worst +13.6 dB over 6 clips (need >= 8 dB)"
+    }
+  }
+}
