@@ -1,80 +1,80 @@
 {
- "updated": "2026-11-10",
- "mean": 22.33,
+ "updated": "2026-11-11",
+ "mean": 22.3,
  "family": {
   "lapse": 9.85,
-  "story": 43.67,
-  "spot": 32.12,
-  "clutch": 10.7,
-  "guess": 12.13,
-  "ai": 12.14,
-  "chain_reaction": 19.42
+  "story": 43.64,
+  "spot": 32.05,
+  "clutch": 10.69,
+  "guess": 12.11,
+  "ai": 12.05,
+  "chain_reaction": 19.38
  },
  "rate_per_1k": {
-  "lapse": 0.854,
-  "story": 2.532,
-  "spot": 1.834,
-  "clutch": 0.883,
-  "guess": 1.272,
-  "ai": 0.902,
-  "chain_reaction": 1.443
+  "lapse": 0.853,
+  "story": 2.53,
+  "spot": 1.83,
+  "clutch": 0.882,
+  "guess": 1.269,
+  "ai": 0.895,
+  "chain_reaction": 1.439
  },
- "mean_rate_per_1k": 1.659,
+ "mean_rate_per_1k": 1.656,
  "reach": {
-  "lapse": 11539,
-  "story": 17249,
-  "spot": 17508,
-  "clutch": 12119,
-  "guess": 9542,
-  "ai": 13463,
-  "chain_reaction": 13463
+  "lapse": 11543,
+  "story": 17253,
+  "spot": 17511,
+  "clutch": 12125,
+  "guess": 9546,
+  "ai": 13468,
+  "chain_reaction": 13468
  },
- "mean_reach": 13463,
+ "mean_reach": 13468,
  "family_totals": {
   "lapse": {
-   "views": 19230,
+   "views": 19237,
    "subs": 14,
    "shorts": 2,
-   "settled_views": 19230,
+   "settled_views": 19237,
    "settled": 2
   },
   "story": {
-   "views": 30562,
+   "views": 30590,
    "subs": 80,
    "shorts": 3,
-   "settled_views": 24820,
+   "settled_views": 24825,
    "settled": 1
   },
   "spot": {
-   "views": 28603,
+   "views": 28674,
    "subs": 53,
    "shorts": 3,
-   "settled_views": 25597,
+   "settled_views": 25599,
    "settled": 1
   },
   "clutch": {
-   "views": 9432,
+   "views": 9441,
    "subs": 6,
    "shorts": 1,
-   "settled_views": 9432,
+   "settled_views": 9441,
    "settled": 1
   },
   "guess": {
-   "views": 1699,
+   "views": 1704,
    "subs": 1,
    "shorts": 1,
-   "settled_views": 1699,
+   "settled_views": 1704,
    "settled": 1
   },
   "ai": {
-   "views": 2518,
+   "views": 2551,
    "subs": 0,
    "shorts": 1,
    "settled_views": 0,
    "settled": 0
   },
   "chain_reaction": {
-   "views": 3222,
+   "views": 3232,
    "subs": 4,
    "shorts": 1,
    "settled_views": 0,
@@ -84,111 +84,111 @@
  "videos": {
   "lapse_castle": {
    "family": "lapse",
-   "views": 16174,
+   "views": 16176,
    "subs": 13,
    "settled": true,
-   "avg_pct": 80.4,
+   "avg_pct": 81.17,
    "viewed_pct": 79.4,
-   "stayed": null
+   "stayed": 0.5286226508407518
   },
   "story_runaway": {
    "family": "story",
-   "views": 24820,
+   "views": 24825,
    "subs": 71,
    "settled": true,
-   "avg_pct": 93.7,
+   "avg_pct": 94.04,
    "viewed_pct": 80.0,
-   "stayed": null
+   "stayed": 0.43331319234642496
   },
   "spot_wrong": {
    "family": "spot",
-   "views": 25597,
+   "views": 25599,
    "subs": 52,
    "settled": true,
-   "avg_pct": 89.7,
+   "avg_pct": 86.71,
    "viewed_pct": 73.7,
-   "stayed": null
+   "stayed": 0.30872299699207
   },
   "clutch_harder": {
    "family": "clutch",
-   "views": 9432,
+   "views": 9441,
    "subs": 6,
    "settled": true,
-   "avg_pct": 83,
+   "avg_pct": 79.66,
    "viewed_pct": 81.0,
-   "stayed": null
+   "stayed": 0.10835716555449634
   },
   "guess_sound": {
    "family": "guess",
-   "views": 1699,
+   "views": 1704,
    "subs": 1,
    "settled": true,
-   "avg_pct": 60,
+   "avg_pct": 60.47,
    "viewed_pct": 59.3,
-   "stayed": null
+   "stayed": 0.4782863849765258
   },
   "lapse_house": {
    "family": "lapse",
-   "views": 3056,
+   "views": 3061,
    "subs": 1,
    "settled": true,
-   "avg_pct": 102,
+   "avg_pct": 110.07000000000001,
    "viewed_pct": 70.3,
-   "stayed": null
+   "stayed": 0.33681803332244364
   },
   "ai_thin_ice": {
    "family": "ai",
-   "views": 2518,
+   "views": 2551,
    "subs": 0,
    "settled": false,
    "avg_pct": null,
    "viewed_pct": 60.9,
-   "stayed": null
+   "stayed": 0.0
   },
   "chain_reaction": {
    "family": "chain_reaction",
-   "views": 3222,
+   "views": 3232,
    "subs": 4,
    "settled": false,
    "avg_pct": 90.9,
-   "viewed_pct": 59.2,
-   "stayed": null
+   "viewed_pct": 59.3,
+   "stayed": 0.0
   },
   "story_respawn_tax": {
    "family": "story",
-   "views": 3436,
+   "views": 3445,
    "subs": 6,
    "settled": false,
    "avg_pct": 74.7,
-   "viewed_pct": 77.6,
-   "stayed": null
+   "viewed_pct": 77.5,
+   "stayed": 0.0
   },
   "spot_wrong_2": {
    "family": "spot",
-   "views": 1822,
+   "views": 1841,
    "subs": 0,
    "settled": false,
    "avg_pct": null,
    "viewed_pct": 58.5,
-   "stayed": null
+   "stayed": 0.0
   },
   "story_torch": {
    "family": "story",
-   "views": 2306,
+   "views": 2320,
    "subs": 3,
    "settled": false,
    "avg_pct": null,
    "viewed_pct": 76.5,
-   "stayed": null
+   "stayed": 0.0
   },
   "spot_wrong_3": {
    "family": "spot",
-   "views": 1184,
+   "views": 1234,
    "subs": 1,
    "settled": false,
    "avg_pct": 92.9,
    "viewed_pct": 56.4,
-   "stayed": null
+   "stayed": 0.0
   }
  },
  "note": "family = expected subscribers per upload (typical views x subs per 1k views); YouTube Analytics lags 1-3 days, Studio numbers from uploads/studio.json"
