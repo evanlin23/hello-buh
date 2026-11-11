@@ -413,7 +413,7 @@ module.exports = {
       if (k === at(2) - 2) { M.poseOff(ctx, GB); hold(GB, 'crossbow') }
       if (k >= at(2) - 2) G[GB].pitch = Math.min(0, G[GB].pitch + 7)
       look(k)
-    })
+    }, 0.15)   // 0.15 s after "Then he SAYS:" before Grandpa's line (pace: L08 started 60 ms before L07's take ended)
     // ---- L08 (S09, Grandpa's own voice): closer; he turns his head back over his right shoulder on "Lock the DOOR",
     // a nod on "kid. They're COMING"
     await shot('s09', -4.2, 5.6, P(0, 2, 0))
