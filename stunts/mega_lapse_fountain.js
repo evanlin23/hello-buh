@@ -207,11 +207,13 @@ module.exports = L.makeLapse({
   name: 'mega_lapse_fountain',
   caption: 'bro asked for a SMALL fountain at spawn 😭',   // (a reaction, not a label: r:r0f3da0; take 2's 'the server asked me for a small fountain at spawn')
   red: 'SMALL',
-  // a real forest round it (r:r13865d). r2: only the core (plaza and houses, half-size 38) is cleared and levelled;
+  // real land round it (r:r13865d). r2: only the core (plaza and houses, half-size 38) is cleared and levelled;
   // the terraces rise out of the forest floor on sunk foundations (the hilly flower-forest site of take 3 was cut into
   // stepped stone faces, and a 172-block cleared lawn read as superflat)
-  biome: 'minecraft:forest',
-  fieldBiome: 'minecraft:forest',
+  // (r2 take 1: the nearest forest stood on a hill by snowy slopes, cut into steps; the plains near spawn are flat, with
+  // their own grass, flowers and trees: real land the city rises out of)
+  biome: 'minecraft:plains',
+  fieldBiome: 'minecraft:plains',
   time: 11000,                            // late afternoon: a low warm sun raking the arcades
   look: { mood: 'golden_hour', bloom: 0.35, bloomThreshold: 0.86, bloomPasses: 1, sharpen: 0.4, rays: 0.4, raysOverBlocks: 0.3, shadows: true, vignette: 0.25, grain: 0.01 },
   field: 38,                              // the core only; the taper (16) runs under tier 1
