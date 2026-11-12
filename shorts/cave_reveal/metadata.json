@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21752782,
-    "sha256": "45f28f31693464e5796b325ffd493e53f8408dbcbd9bd855629eba43b9857104",
+    "bytes": 21750858,
+    "sha256": "f6cc41d3d52e9f234d2ebf622b5155a6dd5bdbb758c36423f2769200cd6cddfd",
     "release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short.45f28f31693464e5.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.45f28f31693464e5.mp4",
-      "sha256": "45f28f31693464e5796b325ffd493e53f8408dbcbd9bd855629eba43b9857104",
-      "bytes": 21752782
+      "asset": "cave_reveal.short.f6cc41d3d52e9f23.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.f6cc41d3d52e9f23.mp4",
+      "sha256": "f6cc41d3d52e9f234d2ebf622b5155a6dd5bdbb758c36423f2769200cd6cddfd",
+      "bytes": 21750858
     },
     "nosong_release": {
       "tag": "pkg-cave_reveal",
@@ -195,7 +195,8 @@
       "dig1:-0.05",
       "--end_after",
       "death:1.2"
-    ]
+    ],
+    "songGain": -1.0
   },
   "recording": {
     "file": "recording.json.gz",
@@ -1987,12 +1988,12 @@
     "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --self_name 56e --red never --subs \"[[\\\"dig1\\\",\\\"just digging down...\\\",1.4],[\\\"l2\\\",\\\"a mineshaft??\\\",1.6],[\\\"dig2\\\",\\\"keep going...\\\",1.4],[\\\"l3\\\",\\\"a DUNGEON\\\",1.6],[\\\"dig3\\\",\\\"one more...\\\",1.4],[\\\"l4\\\",\\\"a GEODE?!\\\",1.6],[\\\"dig4\\\",\\\"just one more\\\",1.4],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"seen1\",\"dig1\",\"cut\"],[\"seen2\",\"dig2\",\"cut\"],[\"seen3\",\"dig3\",\"cut\"],[\"seen4\",\"dig4\",\"cut\"],[\"dig1:0.3\",\"l2:-0.35\",2],[\"dig2:0.3\",\"l3:-0.35\",2],[\"dig3:0.3\",\"l4:-0.35\",2],[\"dig4:0.3\",\"l5:-0.35\",2],[\"in_lava:1.0\",\"death:-0.4\",4]] --hook \"{\\\"at\\\":\\\"l5\\\",\\\"before\\\":0,\\\"after\\\":0.9,\\\"text\\\":\\\"how it ends 💀\\\"}\" --sfx [[\"pop\",\"dig1\"],[\"whoosh\",\"l5:0.15\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig1:-0.05 --end_after death:1.2 --out out/cave_reveal.mp4"
   ],
   "status": "ready",
-  "notes": "no-op audit (r:r4607fa): ~17 s (first cave layer cut, digs x2) and a stronger end, a ~16-block fall into a huge lava cavern; new take; READY",
+  "notes": "no-op audit (r:r4607fa): ~17 s (first cave layer cut, digs x2) and a stronger end, a ~16-block fall into a huge lava cavern; new take; READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:31:43.815Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:32:16+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:44:57+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 17.05 s vs the reviewed render 17.04 s"
@@ -2000,16 +2001,65 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 6,
+      "warnings": 5,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:29:56.917Z",
-      "report": "work/hb/cave_reveal.check.json"
+      "at": "2026-11-12T06:06:41.438Z",
+      "report": "out/cave_reveal.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.35,
+      "pump_run": 0.0,
+      "under": 9.49,
+      "summary": "the master's gain spread 1.35 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 9.5 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.35,
+    "pump_run": 0.0,
+    "master_gain": -0.14,
+    "under": 9.49,
+    "windows": [
+      31,
+      205
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.35 dB (max 3.0), run 0.0 s (max 0.5), game over music 9.49 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:44:46+00:00",
+    "code": "e73eeea4357875e5519248cfed56cadda6031b16",
+    "from": {
+      "sha256": "45f28f31693464e5796b325ffd493e53f8408dbcbd9bd855629eba43b9857104",
+      "release": {
+        "tag": "pkg-cave_reveal",
+        "asset": "cave_reveal.short.45f28f31693464e5.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.45f28f31693464e5.mp4",
+        "sha256": "45f28f31693464e5796b325ffd493e53f8408dbcbd9bd855629eba43b9857104",
+        "bytes": 21752782
+      },
+      "song": {
+        "drop_in_short_s": 12.81,
+        "drop_in_song_s": 16.5,
+        "song_start_s": 3.69
+      }
+    },
+    "song_file_sha256": "cbd28e180dfac36e604ba2458ec768d14af5f5808b10bd07a47586b5d4c6629e",
+    "video_stream_md5": "79ebee7a79efbbce99a816f9b6263812",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true,
+    "song_gain_adjusted": {
+      "from": null,
+      "to": -1.0,
+      "why": "the stunt mix pumped over 3 dB at the old bed level; lowered just enough for pump <= 3 and under >= 3"
+    }
   }
 }
