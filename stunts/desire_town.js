@@ -4,7 +4,7 @@
 // lava. The path never gives an inch (owner r:r81cb9c): each obstacle lands on it and the path breaks straight
 // through it (a slot cut through the fence, the bushes, the tree, the boulder, a causeway across the pond, gaps in the
 // walls, a hole through the shed); the next one replaces the wreck on that side of the road. After the lava it comes
-// back dead straight across it.
+// back dead straight across it, and the one who keeps walking it runs out of his door and across the lava on it.
 const { makeStunt, SHAPES } = require('../lib/desire')
 
 const LEAVES = ['azalea_leaves[persistent=true]', 'flowering_azalea_leaves[persistent=true]', 'oak_leaves[persistent=true]']
@@ -13,7 +13,11 @@ module.exports = makeStunt({
   name: 'desire_town',
   caption: 'the town REALLY hates this shortcut 💀',
   red: 'REALLY',
-  endHold: 0.7,   // r:r188b46: the end 0.7 s after the path back (the format's default is 1.0)
+  // the payoff (owner r:r4607fa, docs/noop_audit_2026-11-12.md: "show someone walking the lava path, with a hit"): the
+  // path comes back across the lava, and 56e, who keeps wearing it in, runs out of his door and straight along it over
+  // the lava to the house across the road. A speck out of the door in the locked shot, then the hit, the card and a
+  // cut to a chase camera riding behind him over the lava; the end 0.5 s after he reaches the far doorstep
+  walker: { sprint: true, wait: 0, card: 'IT WAS HIM 💀' },
   rounds: [
     { id: 'fence', card: 'FENCE', c: [-5, -5], slot: 'N', shape: SHAPES.fence(9, 'dark_oak_fence', 2), sound: [['block.wood.place', 1, 1], ['block.wood.place', 1, 0.8]] },
     { id: 'bush', card: 'BUSHES', c: [5, 5], slot: 'S', shape: SHAPES.blob(3, 3, LEAVES), sound: [['block.azalea_leaves.place', 1, 1], ['block.grass.place', 1, 0.8]] },
