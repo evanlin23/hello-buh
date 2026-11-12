@@ -1,0 +1,17 @@
+# statue_younger: critic, opening only (L01-L02, S01-S02c), STANDARDS 0t
+
+Verdict: REVISE (two blockers; the rest of the opening works)
+
+**What works.** Frame 1 (S01) passes 0t: a villager's face at least 1/3 of the width, the trail already moving, a row popping ON. Showing the rule's normal direction instead of the study's row popping OFF was the right call (only Mom removes rows). It also makes the question sharper. The viewer watches the stone take a year, then hears "And it's getting YOUNGER", and the two clash. It doesn't spoil L02: the picture shows the rule first, and L02 puts it into words. The "why is it getting younger?" question still asks itself, out loud, by the end of L01. The title CAPS (OLD) and the cut on OLD are right. Keeping 0w's "In my village" is right.
+
+**BLOCKER 1: S01b (1.8-3.0 s) shows Dad over "Except the STATUE".** The line names the statue, but the picture is a wide shot of the hamlet with the statue cut off by the top of frame. That breaks the rule that the camera looks at what the line names. Dad's grey head is either a few pixels at 300 px (wasted, and not "a stake on a face" as 0t asks) or readable. If it's readable, the viewer sees a grey-haired man while hearing "nobody gets old", and clue 2 (L05) is spent 5 s early, next to the word "younger". Readers already guessed the ending by L08 at 60-75 %, so this makes it more guessable for no gain.
+Fix: S01b becomes a low-angle wide shot of the WHOLE stone face towering over the hamlet (villagers small at its foot), with a slow push. Dad is either framed out or the unreadable speck at the bench he was in r2. His first readable grey head stays at S05 with L05. S01c, the stone face up close, is then the 2-4 s face.
+
+**BLOCKER 2: the `say` field now has two full stops and CAPS.** Every other narrator `say` is plain sentence case (STANDARDS 0000). Each full stop allows a sentence break of up to 0.95 s, which pushes YOUNGER from about 4.3 s toward 5-6 s. That misses 0y (the "why" by 3 s) and 0t by even more.
+Fix: `"say": "In my village, nobody gets old, except the statue. And it's getting younger."` (r2's rhythm). Keep the split and the CAPS in `text` for the captions. Gate it on the take: OLD by 2.0 s, YOUNGER by 4.0 s, or retake. Note for the owner: 0t's "line 1 done by ~2.5 s" can't be met by any 0w line of 13-14 words (the study's own line runs 3.4 s). That miss is accepted, not fixed.
+
+**Should-fixes**
+1. S02b, the baby villager. The frame asks for things the game can't do: a baby can't hold a cake and has no tiptoe pose, and at 2.5 blocks its face is about 1/9 of the width. It also raises a "why": does a baby that gives its years stay a baby? Swap it for **Mom** (`statue_mom`, dark hair, no grey) giving her year on YEAR. That puts someone loved on screen in the first 8 s, makes S10 ("taking back her years") fair, and adds a rewatch line. She is unnamed, one giver of three, so it gives nothing away.
+2. The 4-8 s pacing (1.3 / 1.0 / 1.0 s) is under 0t's 1.2-1.6 s, and S02c isn't a new person. Fold the row popping on into S02b (side-on at the chin, the stone behind Mom, the row appearing on WRINKLE). That gives S02 at 4.3-5.9 s and S02b at 5.9-7.6 s.
+3. S01c: the 7 pale stripes are still on YOUNGER. Give the shot motion: set it at sunrise on day 3899 (time 0, the 7th dawn of S03), framed tight on the brow, with one dark row turning to calcite on YOUNGER.
+4. Update bible.md (S01b/S01c time, Mom in S02b, the cast row for the baby) when you apply these.

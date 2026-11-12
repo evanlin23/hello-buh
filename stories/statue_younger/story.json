@@ -2,10 +2,10 @@
  "name": "statue_younger",
  "stunt": "story_statue_younger",
  "version": 2,
- "revision": "r2.1 (2026-11-12): critic r2 APPROVE (7.5; Hook/Twist/Fairness 8, nothing under 7). Its condition met: two fresh casual readers on r2 explain it in one sentence ('so she can grow old with him'), how-guess 65-70 %, why 25-40 % (reviews/readers_r2.md); S01 stripes -> calcite. r2 (2026-11-12): critic r1 REVISE (6.8) must-fixes: L11 'Mom was taking her years back...' CUT (the kid says what she sees, L10; 0a); S10 she turns east on STONE and the push lands on her face on FACE (statue_mom_2 gets a brow line + a second streak); S11 streaks through the ponytail so they read from behind, Dad turns his head to her (no hand-hold pose); L09 the want ('Where does she even WALK?') and full voice. Should-fixes: L04 Dad's own voice ('Just RAIN. Wears the stone SMOOTH.'); L06 no longer echoes L03 ('And Mom goes on a WALK. Every DAY.'); L07 Mom's own voice ('Gotta keep my LEGS young!'); calcite stripes; the face 24 tall; the Cliff House framed out. Readers r1 (2 casual + 1 gamer) all guessed it by L08 (60/75/60 %) and flagged the unpaid poppy: the flower is cut. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/statue_younger.md; premise A on claude/batch4-blocky, from blocky ep99 statue-years). The critic's fixes applied: L01 as fixed (no stock 'nobody will tell me why': STANDARDS 0w, owner 2026-11-12); a number (SEVEN this week); the climax (the kid follows Mom before sunrise) and the reveal over her hand on the statue as a wrinkle moves onto her face; clue 4 bright ('I think she's EMBARRASSED'); Mom and Dad are player actors with grey-hair skins (new skins: grandpa_gullwick / grandma_island are The Walk's and read as grandparents); first frame the giant stone face beside a hamlet with one grey head.",
+ "revision": "r3 opening (2026-11-12, STANDARDS 0t, hook frame study docs/research/hook_frames_2026-11-12.md): L01 keeps its words, split into the study's sentences, 'In my village, nobody gets OLD. Except the STATUE. And it's getting YOUNGER.' (OLD ~1.7-1.8 s, said through); 0-8 s re-shot to the study's plan: S01 an MCU on a neighbour at the statue's chin as her year flies to the stone on frame 1, cut on OLD to S01b (the whole stone face towering over the hamlet; Dad framed out until S05), S01c the brow at sunrise, a row jump-cut to a pale stripe on YOUNGER, S02/S02b the rule on a new person every ~1.6 s (a farmer, then Mom giving her year as a new row pops on); `say` keeps r2's plain rhythm; title CAPS OLD. r2.1 (2026-11-12): critic r2 APPROVE (7.5; Hook/Twist/Fairness 8, nothing under 7). Its condition met: two fresh casual readers on r2 explain it in one sentence ('so she can grow old with him'), how-guess 65-70 %, why 25-40 % (reviews/readers_r2.md); S01 stripes -> calcite. r2 (2026-11-12): critic r1 REVISE (6.8) must-fixes: L11 'Mom was taking her years back...' CUT (the kid says what she sees, L10; 0a); S10 she turns east on STONE and the push lands on her face on FACE (statue_mom_2 gets a brow line + a second streak); S11 streaks through the ponytail so they read from behind, Dad turns his head to her (no hand-hold pose); L09 the want ('Where does she even WALK?') and full voice. Should-fixes: L04 Dad's own voice ('Just RAIN. Wears the stone SMOOTH.'); L06 no longer echoes L03 ('And Mom goes on a WALK. Every DAY.'); L07 Mom's own voice ('Gotta keep my LEGS young!'); calcite stripes; the face 24 tall; the Cliff House framed out. Readers r1 (2 casual + 1 gamer) all guessed it by L08 (60/75/60 %) and flagged the unpaid poppy: the flower is cut. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/statue_younger.md; premise A on claude/batch4-blocky, from blocky ep99 statue-years). The critic's fixes applied: L01 as fixed (no stock 'nobody will tell me why': STANDARDS 0w, owner 2026-11-12); a number (SEVEN this week); the climax (the kid follows Mom before sunrise) and the reveal over her hand on the statue as a wrinkle moves onto her face; clue 4 bright ('I think she's EMBARRASSED'); Mom and Dad are player actors with grey-hair skins (new skins: grandpa_gullwick / grandma_island are The Walk's and read as grandparents); first frame the giant stone face beside a hamlet with one grey head.",
  "caption": "why is the statue getting younger 🗿",
  "upload": {
-  "title": "nobody in my village gets old. except the statue 🗿 #minecraft #shorts",
+  "title": "nobody in my village gets OLD. except the statue 🗿 #minecraft #shorts",
   "pinned": "Would YOU take your years back for someone?",
   "tags": [
    "minecraft statue",
@@ -92,7 +92,7 @@
    "voice": "Vindemiatrix",
    "model": "gemini-3.8-flash-tts",
    "color": "#F2B8C6",
-   "on_screen": "player actor, NEW SKIN NEEDED `statue_mom` in three states: dark brown hair in a low ponytail (S05-S07); `statue_mom_1` one grey streak from the left temple back through the ponytail (S08, S09 under the cap); `statue_mom_2` two streaks + a one-pixel dark brow line in the stone rows' colour (S10 from FACE, S11); the streaks run through the ponytail so they read from behind (S11). A sage-green dress, brown boots; a brown leather cap (dyed leather helmet) from S08 to S10. Not `grandma_island` (an old woman's look, The Walk's). No name tag. One voiced line (L07), on screen.",
+   "on_screen": "player actor, NEW SKIN NEEDED `statue_mom` in three states: dark brown hair in a low ponytail (S02b, S05-S07); `statue_mom_1` one grey streak from the left temple back through the ponytail (S08, S09 under the cap); `statue_mom_2` two streaks + a one-pixel dark brow line in the stone rows' colour (S10 from FACE, S11); the streaks run through the ponytail so they read from behind (S11). A sage-green dress, brown boots; a brown leather cap (dyed leather helmet) from S08 to S10. Not `grandma_island` (an old woman's look, The Walk's). No name tag. One voiced line (L07), on screen.",
    "skin": "statue_mom (new; 3 states)",
    "audition": {
     "line": "L07 \"Gotta keep my LEGS young!\"",
@@ -160,7 +160,7 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "In my village, / NOBODY gets old, / except the STATUE. / And it's getting YOUNGER.",
+   "text": "In my village, / nobody gets OLD. / Except the STATUE. / And it's getting / YOUNGER.",
    "say": "In my village, nobody gets old, except the statue. And it's getting younger.",
    "shot": "S01",
    "punch": true,
@@ -182,8 +182,8 @@
     "what": "set:statue_face",
     "word": "STATUE"
    },
-   "direction": "flat and matter-of-fact, like any kid's normal; puzzled lift on YOUNGER",
-   "note": "hook (STANDARDS 0u/0v/0w): the genre opener, the impossible fact, and a short clause that makes it stranger; no stock why tag. On YOUNGER the push reaches the brow: 12 dark wrinkle rows and 7 pale clean stripes where rows were."
+   "direction": "flat and matter-of-fact, like any kid's normal; straight in, no pause after 'village', OLD lands by ~1.8 s; puzzled lift on YOUNGER",
+   "note": "hook (STANDARDS 0u/0v/0w; 0t, hook frame study 2026-11-12): the genre opener, the impossible fact, and a short clause that makes it stranger; no stock why tag. 0t: the key word OLD (the title's CAPS word) is word 6, about 1.7-1.8 s at Pip's pace said through without a pause after 'village'; 'In my village, nobody gets OLD' is done by ~1.9 s, the line by ~4.3 s. S01 cuts on OLD. Same words as the owner-reviewed hook; `text` is split into the study's three caption sentences, `say` keeps r2's plain rhythm (critic 0t: full stops in `say` add sentence breaks; gate the take on OLD by 2.0 s and YOUNGER by 4.0 s, or retake) (the study's 'Nobody in my village gets OLD.' lands OLD at the same word but drops 0w's opener). On YOUNGER (S01c) the 7 pale stripes where rows were read on the stone."
   },
   {
    "id": "L02",
@@ -396,12 +396,57 @@
     "L01"
    ],
    "place": "stonefold",
-   "size": "ws",
-   "camera": "eye height 25 blocks east of the statue, looking west; a slow push (0.3 blocks/s) from frame 1",
-   "frame": "frame 1: the giant stone face centred, ~45 % of frame height; around its foot Stonefold's four cottages and the bench; at the bench Dad's one grey head (the only player hair in frame, lower third); a villager crossing. The face has 12 dark wrinkle rows (cobbled deepslate) and 7 pale clean stripes (calcite) where rows were: on YOUNGER the push has reached the brow so the pale stripes read. Morning of day 3899, time 1000.",
+   "size": "mcu",
+   "camera": "side-on at the statue's chin, 3 blocks out at the villager's eye height, a slow push from frame 1; holds 0-~1.8 s, cut on OLD",
+   "frame": "frame 1 (STANDARDS 0t: the rule acting on a person, moving): a plains villager neighbour at the plinth, her face at least 1/3 of the game view's width at frame right, a lit candle cake by her; the giant stone chin and cheek huge behind her at frame left. On frame 1 a sparkle trail (happy_villager) is already running FROM her head TO the stone, and a new dark wrinkle row (cobbled deepslate) pops onto the stone cheek by ~1.0 s: she stays young, the stone takes her year. An earlier birthday (day ~3870, before the week; that row is part of the 19), noon, time 6000, bright and cool-neutral.",
+   "subject": "villager",
+   "look": {
+    "time": 6000
+   },
+   "cut": {
+    "line": "L01",
+    "word": "OLD",
+    "at_s": 1.8
+   }
+  },
+  {
+   "id": "S01b",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "stonefold",
+   "size": "wide",
+   "camera": "low angle, eye height 18 blocks east of the plinth, looking west and up, a slow push; cut in on OLD (~1.8 s), holds ~1.2 s",
+   "frame": "the WHOLE giant stone face towering over the hamlet on STATUE, villagers small and unchanged at its foot crossing between the cottages; Dad at the bench is framed out (his first readable grey head stays at S05 with L05). Morning of day 3899, time 1000.",
    "subject": "statue_face",
+   "cut": {
+    "line": "L01",
+    "word": "OLD",
+    "at_s": 1.8
+   },
    "look": {
     "time": 1000
+   }
+  },
+  {
+   "id": "S01c",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "stonefold",
+   "size": "mcu",
+   "camera": "eye height 10 blocks east of the statue, tight on the brow, still; cut in on 'And' (~3.0 s); on YOUNGER a hard jump cut in the same frame (as S03's lapse)",
+   "frame": "the stone brow: dark wrinkle rows (cobbled deepslate) and pale clean stripes (calcite) where rows were; on YOUNGER the jump cut: one dark row is now a pale stripe (13 rows + 6 stripes -> 12 + 7; the 7th dawn of S03's week). Sunrise of day 3899, time 0, clear.",
+   "subject": "statue_face",
+   "cut": {
+    "line": "L01",
+    "word": "And",
+    "at_s": 3.0
+   },
+   "look": {
+    "time": 0
    }
   },
   {
@@ -412,10 +457,36 @@
    ],
    "place": "stonefold",
    "size": "ms",
-   "camera": "side-on at the statue's chin, 6 blocks out, still",
-   "frame": "a plains villager neighbour by the plinth with a candle cake on it (lit candle); on BIRTHDAY a sparkle trail (happy_villager) runs FROM her head TO the stone; on WRINKLE a new dark row appears on the stone cheek. An earlier birthday (day ~3880, before the week), late afternoon, time 9000.",
+   "camera": "side-on at the statue's chin, 5 blocks out, still; cut in on 'Every' (~4.3 s), holds to 'you' (~5.9 s)",
+   "frame": "the rule on a new person (0t): a second neighbour (a farmer villager, straw hat) by the plinth with a lit candle cake; on BIRTHDAY a sparkle trail runs FROM his head TO the stone. Another earlier birthday (day ~3880, before the week), late afternoon, time 9000.",
    "look": {
     "time": 9000
+   },
+   "subject": "villager",
+   "cut": {
+    "line": "L02",
+    "word": "Every",
+    "at_s": 4.3
+   }
+  },
+  {
+   "id": "S02b",
+   "line": "L02",
+   "lines": [
+    "L02"
+   ],
+   "place": "stonefold",
+   "size": "ms",
+   "camera": "side-on at the statue's chin, 3 blocks out at her eye height, the stone cheek behind her, still; cut in on 'you' (~5.9 s), holds through WRINKLE (~7.6 s)",
+   "frame": "the rule on a new person: Mom (`statue_mom`, dark hair, no grey; unnamed here, one giver of three) at the plinth with a lit candle cake; on YEAR the sparkle trail runs FROM her head TO the stone; on WRINKLE a new dark row pops onto the stone cheek behind her. Her birthday, day ~3885, time 6000. (A rewatch line: S10 runs her trail backwards.)",
+   "subject": "actor:Mom",
+   "cut": {
+    "line": "L02",
+    "word": "you",
+    "at_s": 5.9
+   },
+   "look": {
+    "time": 6000
    }
   },
   {
@@ -594,7 +665,7 @@
    "S11: L11 the one beat, echoing L01, over Dad on the bench turning to Mom",
    "hold 1.0 s; cut"
   ],
-  "loop": "L11 'Nobody gets old in my village. Except Mom. And Dad.' runs into L01 'In my village, nobody gets old, except the statue.'"
+  "loop": "L11 'Nobody gets old in my village. Except Mom. And Dad.' runs into L01 'In my village, nobody gets OLD. Except the STATUE.'"
  },
  "bible": "stories/statue_younger/bible.md",
  "beats": "stories/statue_younger/beats.md",

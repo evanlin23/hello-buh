@@ -1,4 +1,6 @@
-# statue_younger: beat sheet and clue map (r2)
+# statue_younger: beat sheet and clue map (r3 opening)
+
+r3 opening (2026-11-12, STANDARDS 0t): L01 split into the hook frame study's sentences (same words, OLD as the key word); the first 8 s re-shot to its plan: frame 1 the rule at work on a neighbour, the rule on a new person every ~1.0-1.3 s (shots.md).
 
 r2 (2026-11-12): critic r1 (REVISE 6.8) and the readers' r1 applied: the kid's explaining line ('Mom was taking her years back...') is cut; the reveal is L10, what she sees, and the viewer makes the jump to Dad in S11; L09 says the want; L04/L07 in Dad's and Mom's own voices; L06 no longer echoes L03; the poppy is cut (it never paid off).
 
@@ -13,15 +15,15 @@ stone. A sparkle trail runs from the stone to her face (S02's trail, running bac
 from the stone, and a second grey streak comes into her hair. Then, at the bench at the statue's foot, Dad has been
 waiting. She sits by him: his grey head and her grey streaks side by side.
 
-**The first line it re-explains.** "Nobody gets old, except the statue. And it's getting younger." The statue is
+**The first line it re-explains.** "Nobody gets OLD. Except the statue. And it's getting younger." The statue is
 getting younger because Mom is taking her years back, one each morning. Now two people in the village get old.
 
 ## The format, beat by beat (116 words: ~41 s at Pip's pace, plus the 1.0 s hold)
 
 | format beat | # | shot | picture | line |
 |---|---|---|---|---|
-| 1. genre opener, impossible fact, the question (0-3 s) | L01 | S01 | the giant stone face over a hamlet, one grey head at its foot; 12 dark rows and 7 pale stripes | N: "In my village, NOBODY gets old, except the STATUE. And it's getting YOUNGER." |
-| 2. the rule in action | L02 | S02 | a neighbour's birthday: sparkle trail from her to the stone, a new dark row | N: "Every BIRTHDAY, you give it a YEAR. One more WRINKLE." |
+| 1. genre opener, impossible fact, the question (0-4.3 s) | L01 | S01, S01b, S01c | a neighbour at the statue's chin, her year flying to the stone (a new dark row) on frame 1; cut on OLD to the whole stone face over the hamlet; the brow at sunrise, a dark row jump-cut to a pale stripe on YOUNGER | N: "In my village, nobody gets OLD. Except the STATUE. And it's getting YOUNGER." |
+| 2. the rule in action | L02 | S02, S02b | birthdays: a farmer, then Mom (no grey), each sparkle trail to the stone; a new dark row on WRINKLE | N: "Every BIRTHDAY, you give it a YEAR. One more WRINKLE." |
 | 2. clue 1 + the count | L03 | S03 | a 7-dawn lapse, one row gone each clear sunrise | N: "But every MORNING, a wrinkle's GONE. SEVEN this week." |
 | 2. clue 1's misreading | L04 | S04 | Dad at breakfast, sun and dry ground behind him | Dad: "Just RAIN. Wears the stone SMOOTH." |
 | 2. clue 2 | L05 | S05 | the family at the statue's foot; Dad the only grey head; he walks past the cakes | N: "Only DAD has grey hair. He's NEVER given a year. He FORGETS, I think." |
@@ -44,7 +46,7 @@ years? sick? paying Dad's share? stealing?). The gate's readers guessed "Mom is 
 | Dad the only grey head; never gave a year | L05, S05 | "He FORGETS, I think." | he chose to get old | the reason Mom is taking hers back |
 | Mom out walking every day (S06: pre-dawn, unsaid) | L06, S06, L07 | Mom: "Gotta keep my LEGS young!" | an affair, a secret job, the statue | she walks to the statue to get OLDER |
 | Mom's first grey hair, hidden under a cap | L08, S08 | "I think she's EMBARRASSED." | she's ill / she's paying Dad's share | she is getting old on purpose, a year a day |
-| the trail runs FROM you TO the stone on a birthday | L02, S02 (picture) | (the rule, stated) | | S10 runs it backwards: the gift taken back |
+| the trail runs FROM you TO the stone on a birthday | S01 (frame 1), L02, S02, S02b: Mom gives hers (picture) | (the rule, stated) | | S10 runs it backwards: the gift taken back |
 
 ## The twist checklist
 - One sentence: Mom is taking back the years she gave the statue, one each morning, so she can grow old with Dad.
