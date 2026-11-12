@@ -50,3 +50,44 @@ Against runaway: worse. The opening image is less strange, and the loop is loose
 - S11: hold the hall at 40% or more of the frame, so the cells read at 300 px.
 - In the bible, explain the pillar: he breaks it down every day and rebuilds it each dawn, so S05's rim+1 and S11's 28 agree.
 - Run both cold readers on r3, then sync the docs and canon.md.
+
+## r3b (re-check after the fixes)
+
+Verdict: APPROVE. The average is 8.0, Hook, Twist and Fairness are 8 or higher, and nothing scores under 6.
+
+**The r3 must-fixes are confirmed:**
+1. **Loop.** L01 is now "grows one block every morning ... WHY", and L16's "put down one MORE" echoes and answers it. The format blocker is cleared, and a wall that grows is a stranger hook than a tall one.
+2. **Length.** It's 163 words, about 54 s. Under r:r08fd98 that's a note, not a blocker.
+
+**The should-fixes are done:**
+- L13/S09b: Tomas steps onto the rung, steps back and drops the brick. That gives a visible cause and a reason for the kid to go.
+- The pillar is at y0+38: the player stands just under the rim, and the extra dirt in S12 lifts his eyes over it. This agrees with set.md row 19 and bible.md line 83.
+- S11 holds the hall at 40% or more of the frame.
+- The bible and canon line 126 are synced.
+
+**Cold readers:**
+- Casual: a 60% guess at the midpoint, and gets the twist. That's guessable without being sure.
+- Gamer: 75% on the trading hall. That's ahead of the kid, which the twist checklist allows.
+
+**No regressions in the lines.**
+
+**Changed scores:**
+
+| | was | now |
+|---|---|---|
+| Hook | 8 | 9 |
+| Agency | 7 | 8 |
+| Delivery | 5 | 7 |
+| Visual | 7 | 8 |
+| Continuity | 6 | 8 |
+
+Everything else is unchanged.
+
+**Against runaway:** close to equal. Runaway's opening image is still stranger.
+
+**Should-fixes (cue sync, not story):**
+- S01's camera says "ends on 'high'". Change it to "ends on 'WHY'".
+- S01b's frame says "on 'ONE more'". Change it to "on 'ON'".
+- The S01 sfx entry: move it to `under: S01b`, with the note "on 'ON'".
+- The S09b sfx still describes the old bedroom ("quiet room, Tomas's slow breath"). Change it to `entity.item.pickup` or a soft drop when the brick lands, and nothing else. Regenerate shots.md.
+- Caption: "why does our village wall grow every morning 🧱" matches the new line 1. The upload title can keep "40 blocks high".
