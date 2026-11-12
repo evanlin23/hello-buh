@@ -4,7 +4,7 @@
   "caption": "bro said TNT is a pickaxe 💀",
   "youtube": {
     "title": "bro said TNT is a pickaxe 💀 #minecraft #shorts",
-    "description": "bro said TNT is a pickaxe 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "bro said TNT is a pickaxe 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "x2.mp3",
-    "title": "X2",
-    "artist": "MUPP",
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "lastboom",
-    "drop_in_song_s": 14.5,
-    "drop_in_short_s": 10.97,
-    "song_start_s": 3.53
+    "drop_in_song_s": 36.75,
+    "drop_in_short_s": 23.5,
+    "song_start_s": 13.25
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 11.87,
+    "duration_s": 24.41,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19205076,
-    "sha256": "ef711b8d3bd1e5c9278864f8c1f38a6c4ab463fa8b04f055c30b83d17268d04e",
+    "bytes": 35450489,
+    "sha256": "d0d34e506971d00418f6d7a66eb6d73df5e01ddfc8a7743348ef67c4ec63cf5b",
     "release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short.ef711b8d3bd1e5c9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.ef711b8d3bd1e5c9.mp4",
-      "sha256": "ef711b8d3bd1e5c9278864f8c1f38a6c4ab463fa8b04f055c30b83d17268d04e",
-      "bytes": 19205076
+      "asset": "pickaxe_race.short.d0d34e506971d004.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.d0d34e506971d004.mp4",
+      "sha256": "d0d34e506971d00418f6d7a66eb6d73df5e01ddfc8a7743348ef67c4ec63cf5b",
+      "bytes": 35450489
     },
     "nosong_release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short_nosong.04852b9d482b4934.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.04852b9d482b4934.mp4",
-      "sha256": "04852b9d482b49341daf80754089d108fca9e26d72a0ef03953755afbf1d4205",
-      "bytes": 19168227
+      "asset": "pickaxe_race.short_nosong.eb453dfea4dcee86.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short_nosong.eb453dfea4dcee86.mp4",
+      "sha256": "eb453dfea4dcee86ddc64363739c8d55c2b9a75a620e6f6c24c4717247dff63a",
+      "bytes": 35416922
     }
   },
   "edit": {
@@ -57,13 +57,33 @@
     "splits": {
       "reset": "beat",
       "split": "mined",
-      "of": 2,
+      "of": 6,
       "hide": "finale"
     },
     "speed": [
       [
-        "mined0:0.6",
-        "beat1:-0.25",
+        "mined0:0.5",
+        "beat1:0.1",
+        "cut"
+      ],
+      [
+        "mined1:0.5",
+        "beat2:0.1",
+        "cut"
+      ],
+      [
+        "mined2:0.5",
+        "beat3:0.1",
+        "cut"
+      ],
+      [
+        "mined3:0.5",
+        "beat4:0.1",
+        "cut"
+      ],
+      [
+        "mined4:0.5",
+        "beat5:0.1",
         "cut"
       ],
       [
@@ -80,27 +100,75 @@
     "subs": [
       [
         "beat",
-        "gold...",
+        "wooden...",
         9,
         0
       ],
       [
         "mined",
-        "gold: S tier?? it BROKE",
+        "wooden: D tier",
         9,
         0
       ],
       [
         "beat",
-        "efficiency V + haste...",
+        "stone...",
         9,
         1
       ],
       [
         "mined",
-        "efficiency V + haste: GOD tier",
+        "stone: C tier",
         9,
         1
+      ],
+      [
+        "beat",
+        "iron...",
+        9,
+        2
+      ],
+      [
+        "mined",
+        "iron: B tier",
+        9,
+        2
+      ],
+      [
+        "beat",
+        "diamond...",
+        9,
+        3
+      ],
+      [
+        "mined",
+        "diamond: A tier",
+        9,
+        3
+      ],
+      [
+        "beat",
+        "gold...",
+        9,
+        4
+      ],
+      [
+        "mined",
+        "gold: S tier?? it BROKE",
+        9,
+        4
+      ],
+      [
+        "beat",
+        "efficiency V + haste...",
+        9,
+        5
+      ],
+      [
+        "mined",
+        "efficiency V + haste: GOD tier",
+        9,
+        5
       ],
       [
         "tntrun",
@@ -206,13 +274,13 @@
       "--red",
       "TNT",
       "--subs",
-      "[[\"beat\",\"gold...\",9,0],[\"mined\",\"gold: S tier?? it BROKE\",9,0],[\"beat\",\"efficiency V + haste...\",9,1],[\"mined\",\"efficiency V + haste: GOD tier\",9,1],[\"tntrun\",\"TNT...\",9,0],[\"boom\",\"TNT: ??? tier\",9,0]]",
+      "[[\"beat\",\"wooden...\",9,0],[\"mined\",\"wooden: D tier\",9,0],[\"beat\",\"stone...\",9,1],[\"mined\",\"stone: C tier\",9,1],[\"beat\",\"iron...\",9,2],[\"mined\",\"iron: B tier\",9,2],[\"beat\",\"diamond...\",9,3],[\"mined\",\"diamond: A tier\",9,3],[\"beat\",\"gold...\",9,4],[\"mined\",\"gold: S tier?? it BROKE\",9,4],[\"beat\",\"efficiency V + haste...\",9,5],[\"mined\",\"efficiency V + haste: GOD tier\",9,5],[\"tntrun\",\"TNT...\",9,0],[\"boom\",\"TNT: ??? tier\",9,0]]",
       "--subs_y",
       "0.2",
       "--splits",
-      "{\"reset\":\"beat\",\"split\":\"mined\",\"of\":2,\"hide\":\"finale\"}",
+      "{\"reset\":\"beat\",\"split\":\"mined\",\"of\":6,\"hide\":\"finale\"}",
       "--speed",
-      "[[\"mined0:0.6\",\"beat1:-0.25\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit:0.4\",\"boom:-0.5\",3.5]]",
+      "[[\"mined0:0.5\",\"beat1:0.1\",\"cut\"],[\"mined1:0.5\",\"beat2:0.1\",\"cut\"],[\"mined2:0.5\",\"beat3:0.1\",\"cut\"],[\"mined3:0.5\",\"beat4:0.1\",\"cut\"],[\"mined4:0.5\",\"beat5:0.1\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit:0.4\",\"boom:-0.5\",3.5]]",
       "--punch",
       "[[\"boom\",0,1.06],[\"boom6\",0,1.06],[\"lastboom\",0,1.12]]",
       "--shake",
@@ -235,1429 +303,749 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 359,
-      "y": 65,
-      "z": -47
+      "x": 360,
+      "y": 63,
+      "z": -42
     },
     "biome": "minecraft:plains",
-    "ticks": 508,
-    "seconds": 25.4,
+    "ticks": 895,
+    "seconds": 44.75,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 0,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 1,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 1.1,
+        "t": 1.05,
         "event": "beat"
       },
       {
-        "t": 1.1,
+        "t": 1.05,
         "event": "beat0"
       },
       {
-        "t": 1.1,
+        "t": 1.05,
         "event": "dig"
       },
       {
-        "t": 1.1,
+        "t": 1.05,
         "event": "swing"
       },
       {
-        "t": 1.25,
-        "event": "dig_end"
-      },
-      {
-        "t": 1.25,
-        "event": "vel"
-      },
-      {
-        "t": 1.45,
-        "event": "vel"
-      },
-      {
-        "t": 1.55,
-        "event": "dig"
-      },
-      {
-        "t": 1.55,
+        "t": 1.4,
         "event": "swing"
-      },
-      {
-        "t": 1.55,
-        "event": "mob_hurt"
       },
       {
         "t": 1.7,
-        "event": "dig_end"
-      },
-      {
-        "t": 1.7,
-        "event": "vel"
-      },
-      {
-        "t": 1.8,
-        "event": "vel"
-      },
-      {
-        "t": 1.8,
-        "event": "vel"
-      },
-      {
-        "t": 1.95,
-        "event": "dig"
-      },
-      {
-        "t": 1.95,
         "event": "swing"
       },
       {
-        "t": 2.05,
-        "event": "vel"
-      },
-      {
-        "t": 2.05,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 2.05,
+        "t": 1.85,
         "event": "dig_end"
       },
       {
         "t": 2.1,
-        "event": "vel"
-      },
-      {
-        "t": 2.3,
         "event": "dig"
       },
       {
-        "t": 2.3,
+        "t": 2.1,
         "event": "swing"
       },
       {
-        "t": 2.3,
-        "event": "vel"
-      },
-      {
         "t": 2.4,
-        "event": "vel"
-      },
-      {
-        "t": 2.4,
-        "event": "dig_end"
-      },
-      {
-        "t": 2.45,
-        "event": "vel"
-      },
-      {
-        "t": 2.5,
-        "event": "vel"
-      },
-      {
-        "t": 2.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 2.65,
-        "event": "dig"
-      },
-      {
-        "t": 2.65,
         "event": "swing"
-      },
-      {
-        "t": 2.65,
-        "event": "vel"
-      },
-      {
-        "t": 2.7,
-        "event": "vel"
       },
       {
         "t": 2.75,
-        "event": "dig_end"
-      },
-      {
-        "t": 2.8,
-        "event": "vel"
-      },
-      {
-        "t": 2.8,
-        "event": "vel"
+        "event": "swing"
       },
       {
         "t": 2.9,
-        "event": "vel"
-      },
-      {
-        "t": 3,
-        "event": "dig"
-      },
-      {
-        "t": 3,
-        "event": "swing"
-      },
-      {
-        "t": 3,
-        "event": "vel"
-      },
-      {
-        "t": 3,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 3.15,
         "event": "dig_end"
       },
       {
-        "t": 3.2,
-        "event": "vel"
-      },
-      {
-        "t": 3.25,
+        "t": 3,
         "event": "mined"
       },
       {
-        "t": 3.25,
+        "t": 3,
         "event": "mined0"
       },
       {
-        "t": 3.3,
-        "event": "vel"
-      },
-      {
-        "t": 3.35,
-        "event": "vel"
-      },
-      {
-        "t": 3.35,
-        "event": "vel"
-      },
-      {
-        "t": 3.45,
-        "event": "vel"
-      },
-      {
-        "t": 3.55,
-        "event": "vel"
-      },
-      {
-        "t": 3.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 3.65,
-        "event": "vel"
-      },
-      {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
-        "t": 3.8,
-        "event": "vel"
-      },
-      {
-        "t": 3.85,
-        "event": "vel"
-      },
-      {
-        "t": 4,
-        "event": "vel"
-      },
-      {
-        "t": 4,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 4.15,
-        "event": "vel"
-      },
-      {
-        "t": 4.2,
-        "event": "vel"
-      },
-      {
-        "t": 4.3,
-        "event": "vel"
-      },
-      {
-        "t": 4.35,
-        "event": "vel"
-      },
-      {
-        "t": 4.4,
-        "event": "vel"
-      },
-      {
-        "t": 4.45,
-        "event": "vel"
-      },
-      {
         "t": 4.55,
-        "event": "vel"
-      },
-      {
-        "t": 4.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 4.6,
-        "event": "vel"
-      },
-      {
-        "t": 4.95,
         "event": "beat"
       },
       {
-        "t": 4.95,
+        "t": 4.55,
         "event": "beat1"
       },
       {
-        "t": 4.95,
-        "event": "instamine"
+        "t": 4.9,
+        "event": "dig"
       },
       {
-        "t": 4.95,
-        "event": "dig_end"
-      },
-      {
-        "t": 4.95,
+        "t": 4.9,
         "event": "swing"
-      },
-      {
-        "t": 4.95,
-        "event": "vel"
-      },
-      {
-        "t": 5,
-        "event": "vel"
-      },
-      {
-        "t": 5.05,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 5.2,
-        "event": "dig_end"
-      },
-      {
-        "t": 5.2,
-        "event": "swing"
-      },
-      {
-        "t": 5.2,
-        "event": "vel"
       },
       {
         "t": 5.25,
-        "event": "vel"
-      },
-      {
-        "t": 5.3,
-        "event": "vel"
+        "event": "swing"
       },
       {
         "t": 5.35,
         "event": "dig_end"
       },
       {
-        "t": 5.35,
-        "event": "swing"
-      },
-      {
-        "t": 5.55,
-        "event": "vel"
-      },
-      {
-        "t": 5.55,
-        "event": "vel"
-      },
-      {
-        "t": 5.55,
-        "event": "vel"
-      },
-      {
-        "t": 5.55,
-        "event": "vel"
-      },
-      {
-        "t": 5.55,
-        "event": "mob_hurt"
-      },
-      {
         "t": 5.6,
-        "event": "dig_end"
+        "event": "dig"
       },
       {
         "t": 5.6,
         "event": "swing"
       },
       {
-        "t": 5.6,
-        "event": "vel"
-      },
-      {
-        "t": 5.7,
-        "event": "vel"
-      },
-      {
-        "t": 5.75,
-        "event": "dig_end"
-      },
-      {
-        "t": 5.75,
-        "event": "swing"
-      },
-      {
-        "t": 5.75,
-        "event": "vel"
-      },
-      {
-        "t": 5.9,
-        "event": "dig_end"
-      },
-      {
         "t": 5.9,
         "event": "swing"
-      },
-      {
-        "t": 5.9,
-        "event": "vel"
-      },
-      {
-        "t": 5.95,
-        "event": "vel"
-      },
-      {
-        "t": 5.95,
-        "event": "vel"
-      },
-      {
-        "t": 5.95,
-        "event": "vel"
       },
       {
         "t": 6,
-        "event": "mined"
-      },
-      {
-        "t": 6,
-        "event": "mined1"
-      },
-      {
-        "t": 6.05,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 6.1,
-        "event": "vel"
-      },
-      {
-        "t": 6.15,
-        "event": "vel"
-      },
-      {
-        "t": 6.2,
-        "event": "finale"
-      },
-      {
-        "t": 6.2,
-        "event": "tntwalk"
+        "event": "dig_end"
       },
       {
         "t": 6.25,
-        "event": "vel"
+        "event": "dig"
       },
       {
-        "t": 6.3,
-        "event": "vel"
-      },
-      {
-        "t": 6.3,
-        "event": "vel"
-      },
-      {
-        "t": 6.3,
-        "event": "vel"
-      },
-      {
-        "t": 6.35,
-        "event": "vel"
-      },
-      {
-        "t": 6.35,
-        "event": "vel"
-      },
-      {
-        "t": 6.4,
-        "event": "vel"
-      },
-      {
-        "t": 6.4,
-        "event": "vel"
-      },
-      {
-        "t": 6.45,
-        "event": "vel"
-      },
-      {
-        "t": 6.45,
-        "event": "vel"
-      },
-      {
-        "t": 6.5,
-        "event": "vel"
-      },
-      {
-        "t": 6.55,
-        "event": "vel"
-      },
-      {
-        "t": 6.55,
-        "event": "vel"
-      },
-      {
-        "t": 6.55,
-        "event": "mob_hurt"
+        "t": 6.25,
+        "event": "swing"
       },
       {
         "t": 6.6,
-        "event": "vel"
-      },
-      {
-        "t": 6.8,
-        "event": "vel"
-      },
-      {
-        "t": 6.85,
-        "event": "vel"
-      },
-      {
-        "t": 6.95,
-        "event": "vel"
-      },
-      {
-        "t": 6.95,
-        "event": "vel"
-      },
-      {
-        "t": 6.95,
-        "event": "vel"
-      },
-      {
-        "t": 6.95,
-        "event": "vel"
-      },
-      {
-        "t": 7,
-        "event": "vel"
-      },
-      {
-        "t": 7,
-        "event": "vel"
-      },
-      {
-        "t": 7.05,
-        "event": "place_on"
-      },
-      {
-        "t": 7.05,
         "event": "swing"
       },
       {
-        "t": 7.05,
-        "event": "mob_hurt"
+        "t": 6.7,
+        "event": "dig_end"
       },
       {
-        "t": 7.05,
-        "event": "mob_death"
+        "t": 6.95,
+        "event": "dig"
       },
       {
-        "t": 7.05,
-        "event": "motion_start"
-      },
-      {
-        "t": 7.1,
-        "event": "vel"
-      },
-      {
-        "t": 7.2,
-        "event": "vel"
-      },
-      {
-        "t": 7.2,
-        "event": "vel"
+        "t": 6.95,
+        "event": "swing"
       },
       {
         "t": 7.25,
-        "event": "vel"
-      },
-      {
-        "t": 7.3,
-        "event": "vel"
+        "event": "swing"
       },
       {
         "t": 7.35,
-        "event": "vel"
-      },
-      {
-        "t": 7.35,
-        "event": "vel"
-      },
-      {
-        "t": 7.35,
-        "event": "vel"
-      },
-      {
-        "t": 7.4,
-        "event": "vel"
-      },
-      {
-        "t": 7.4,
-        "event": "vel"
+        "event": "dig_end"
       },
       {
         "t": 7.45,
-        "event": "place_on"
+        "event": "mined"
       },
       {
         "t": 7.45,
+        "event": "mined1"
+      },
+      {
+        "t": 9.05,
+        "event": "beat"
+      },
+      {
+        "t": 9.05,
+        "event": "beat2"
+      },
+      {
+        "t": 9.4,
+        "event": "dig"
+      },
+      {
+        "t": 9.4,
         "event": "swing"
-      },
-      {
-        "t": 7.55,
-        "event": "vel"
-      },
-      {
-        "t": 7.85,
-        "event": "place_on"
-      },
-      {
-        "t": 7.85,
-        "event": "swing"
-      },
-      {
-        "t": 7.9,
-        "event": "vel"
-      },
-      {
-        "t": 7.9,
-        "event": "vel"
-      },
-      {
-        "t": 7.95,
-        "event": "vel"
-      },
-      {
-        "t": 8,
-        "event": "vel"
-      },
-      {
-        "t": 8.05,
-        "event": "motion_settled"
-      },
-      {
-        "t": 8.1,
-        "event": "vel"
-      },
-      {
-        "t": 8.1,
-        "event": "vel"
-      },
-      {
-        "t": 8.15,
-        "event": "place_on"
-      },
-      {
-        "t": 8.15,
-        "event": "swing"
-      },
-      {
-        "t": 8.15,
-        "event": "vel"
-      },
-      {
-        "t": 8.2,
-        "event": "tntrun"
-      },
-      {
-        "t": 8.2,
-        "event": "vel"
-      },
-      {
-        "t": 8.3,
-        "event": "vel"
-      },
-      {
-        "t": 8.35,
-        "event": "vel"
-      },
-      {
-        "t": 8.45,
-        "event": "place_on"
-      },
-      {
-        "t": 8.45,
-        "event": "swing"
-      },
-      {
-        "t": 8.45,
-        "event": "vel"
-      },
-      {
-        "t": 8.45,
-        "event": "vel"
-      },
-      {
-        "t": 8.45,
-        "event": "vel"
-      },
-      {
-        "t": 8.45,
-        "event": "vel"
-      },
-      {
-        "t": 8.5,
-        "event": "vel"
-      },
-      {
-        "t": 8.5,
-        "event": "vel"
-      },
-      {
-        "t": 8.5,
-        "event": "vel"
-      },
-      {
-        "t": 8.55,
-        "event": "vel"
-      },
-      {
-        "t": 8.65,
-        "event": "vel"
-      },
-      {
-        "t": 8.8,
-        "event": "place_on"
-      },
-      {
-        "t": 8.8,
-        "event": "swing"
-      },
-      {
-        "t": 8.9,
-        "event": "vel"
-      },
-      {
-        "t": 8.95,
-        "event": "vel"
-      },
-      {
-        "t": 9,
-        "event": "vel"
-      },
-      {
-        "t": 9,
-        "event": "vel"
-      },
-      {
-        "t": 9.2,
-        "event": "vel"
-      },
-      {
-        "t": 9.25,
-        "event": "vel"
-      },
-      {
-        "t": 9.25,
-        "event": "vel"
-      },
-      {
-        "t": 9.35,
-        "event": "vel"
-      },
-      {
-        "t": 9.35,
-        "event": "vel"
-      },
-      {
-        "t": 9.45,
-        "event": "vel"
-      },
-      {
-        "t": 9.45,
-        "event": "vel"
-      },
-      {
-        "t": 9.55,
-        "event": "vel"
-      },
-      {
-        "t": 9.6,
-        "event": "vel"
       },
       {
         "t": 9.7,
-        "event": "vel"
-      },
-      {
-        "t": 9.9,
-        "event": "vel"
-      },
-      {
-        "t": 9.9,
-        "event": "vel"
+        "event": "dig_end"
       },
       {
         "t": 9.95,
-        "event": "vel"
+        "event": "dig"
       },
       {
-        "t": 10,
-        "event": "vel"
+        "t": 9.95,
+        "event": "swing"
       },
       {
-        "t": 10.1,
-        "event": "vel"
+        "t": 10.25,
+        "event": "dig_end"
       },
       {
-        "t": 10.3,
-        "event": "vel"
+        "t": 10.5,
+        "event": "dig"
       },
       {
-        "t": 10.35,
-        "event": "vel"
+        "t": 10.5,
+        "event": "swing"
       },
       {
-        "t": 10.4,
-        "event": "vel"
-      },
-      {
-        "t": 10.45,
-        "event": "vel"
-      },
-      {
-        "t": 10.45,
-        "event": "vel"
-      },
-      {
-        "t": 10.55,
-        "event": "vel"
-      },
-      {
-        "t": 10.9,
-        "event": "vel"
-      },
-      {
-        "t": 10.9,
-        "event": "vel"
-      },
-      {
-        "t": 10.95,
-        "event": "vel"
+        "t": 10.75,
+        "event": "dig_end"
       },
       {
         "t": 11,
-        "event": "vel"
+        "event": "dig"
       },
       {
-        "t": 11.1,
-        "event": "vel"
+        "t": 11,
+        "event": "swing"
       },
       {
-        "t": 11.3,
-        "event": "vel"
+        "t": 11.25,
+        "event": "dig_end"
       },
       {
         "t": 11.35,
-        "event": "vel"
+        "event": "mined"
       },
       {
-        "t": 11.4,
-        "event": "vel"
-      },
-      {
-        "t": 11.4,
-        "event": "vel"
-      },
-      {
-        "t": 11.4,
-        "event": "vel"
-      },
-      {
-        "t": 11.55,
-        "event": "vel"
-      },
-      {
-        "t": 11.9,
-        "event": "place_on"
-      },
-      {
-        "t": 11.9,
-        "event": "swing"
-      },
-      {
-        "t": 11.9,
-        "event": "vel"
-      },
-      {
-        "t": 11.95,
-        "event": "vel"
-      },
-      {
-        "t": 12,
-        "event": "vel"
-      },
-      {
-        "t": 12.1,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "place_on"
-      },
-      {
-        "t": 12.3,
-        "event": "swing"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.35,
-        "event": "vel"
-      },
-      {
-        "t": 12.4,
-        "event": "vel"
-      },
-      {
-        "t": 12.45,
-        "event": "vel"
-      },
-      {
-        "t": 12.45,
-        "event": "vel"
-      },
-      {
-        "t": 12.55,
-        "event": "vel"
-      },
-      {
-        "t": 12.65,
-        "event": "place_on"
-      },
-      {
-        "t": 12.65,
-        "event": "swing"
-      },
-      {
-        "t": 12.7,
-        "event": "vel"
-      },
-      {
-        "t": 12.75,
-        "event": "vel"
-      },
-      {
-        "t": 12.8,
-        "event": "vel"
-      },
-      {
-        "t": 12.85,
-        "event": "vel"
+        "t": 11.35,
+        "event": "mined2"
       },
       {
         "t": 12.9,
-        "event": "vel"
+        "event": "beat"
       },
       {
         "t": 12.9,
-        "event": "vel"
+        "event": "beat3"
       },
       {
-        "t": 12.95,
-        "event": "vel"
+        "t": 13.25,
+        "event": "dig"
       },
       {
-        "t": 13,
-        "event": "vel"
-      },
-      {
-        "t": 13.1,
-        "event": "vel"
-      },
-      {
-        "t": 13.15,
-        "event": "place_on"
-      },
-      {
-        "t": 13.15,
+        "t": 13.25,
         "event": "swing"
       },
       {
-        "t": 13.3,
-        "event": "vel"
+        "t": 13.5,
+        "event": "dig_end"
       },
       {
-        "t": 13.4,
-        "event": "vel"
+        "t": 13.75,
+        "event": "dig"
       },
       {
-        "t": 13.45,
-        "event": "vel"
-      },
-      {
-        "t": 13.45,
-        "event": "vel"
-      },
-      {
-        "t": 13.55,
-        "event": "vel"
-      },
-      {
-        "t": 13.55,
-        "event": "vel"
-      },
-      {
-        "t": 13.65,
-        "event": "place_on"
-      },
-      {
-        "t": 13.65,
+        "t": 13.75,
         "event": "swing"
-      },
-      {
-        "t": 13.9,
-        "event": "swing"
-      },
-      {
-        "t": 13.9,
-        "event": "lit"
-      },
-      {
-        "t": 13.9,
-        "event": "vel"
-      },
-      {
-        "t": 13.9,
-        "event": "motion_start"
       },
       {
         "t": 13.95,
-        "event": "vel"
+        "event": "dig_end"
       },
       {
-        "t": 13.95,
-        "event": "vel"
+        "t": 14.2,
+        "event": "dig"
       },
       {
-        "t": 14,
-        "event": "vel"
-      },
-      {
-        "t": 14.1,
-        "event": "vel"
-      },
-      {
-        "t": 14.15,
-        "event": "vel"
-      },
-      {
-        "t": 14.3,
-        "event": "vel"
-      },
-      {
-        "t": 14.35,
-        "event": "vel"
+        "t": 14.2,
+        "event": "swing"
       },
       {
         "t": 14.4,
-        "event": "vel"
+        "event": "dig_end"
       },
       {
-        "t": 14.45,
-        "event": "vel"
+        "t": 14.65,
+        "event": "dig"
       },
       {
-        "t": 14.45,
-        "event": "vel"
-      },
-      {
-        "t": 14.55,
-        "event": "vel"
-      },
-      {
-        "t": 14.7,
-        "event": "vel"
+        "t": 14.65,
+        "event": "swing"
       },
       {
         "t": 14.85,
-        "event": "vel"
-      },
-      {
-        "t": 14.9,
-        "event": "vel"
+        "event": "dig_end"
       },
       {
         "t": 14.95,
-        "event": "vel"
+        "event": "mined"
       },
       {
-        "t": 15.1,
-        "event": "vel"
+        "t": 14.95,
+        "event": "mined3"
       },
       {
-        "t": 15.3,
-        "event": "vel"
+        "t": 16.75,
+        "event": "beat"
       },
       {
-        "t": 15.35,
-        "event": "vel"
-      },
-      {
-        "t": 15.4,
-        "event": "vel"
-      },
-      {
-        "t": 15.45,
-        "event": "vel"
-      },
-      {
-        "t": 15.45,
-        "event": "vel"
-      },
-      {
-        "t": 15.55,
-        "event": "vel"
-      },
-      {
-        "t": 15.85,
-        "event": "vel"
-      },
-      {
-        "t": 15.9,
-        "event": "vel"
-      },
-      {
-        "t": 16,
-        "event": "vel"
-      },
-      {
-        "t": 16.1,
-        "event": "vel"
-      },
-      {
-        "t": 16.35,
-        "event": "vel"
-      },
-      {
-        "t": 16.35,
-        "event": "vel"
-      },
-      {
-        "t": 16.4,
-        "event": "vel"
-      },
-      {
-        "t": 16.45,
-        "event": "vel"
-      },
-      {
-        "t": 16.45,
-        "event": "vel"
-      },
-      {
-        "t": 16.55,
-        "event": "vel"
-      },
-      {
-        "t": 16.9,
-        "event": "vel"
-      },
-      {
-        "t": 16.95,
-        "event": "vel"
-      },
-      {
-        "t": 17,
-        "event": "vel"
+        "t": 16.75,
+        "event": "beat4"
       },
       {
         "t": 17.1,
-        "event": "vel"
+        "event": "dig"
       },
       {
-        "t": 17.3,
-        "event": "vel"
+        "t": 17.1,
+        "event": "swing"
       },
       {
-        "t": 17.35,
-        "event": "vel"
+        "t": 17.25,
+        "event": "dig_end"
       },
       {
-        "t": 17.4,
-        "event": "vel"
+        "t": 17.5,
+        "event": "dig"
       },
       {
-        "t": 17.45,
-        "event": "vel"
+        "t": 17.5,
+        "event": "swing"
       },
       {
-        "t": 17.45,
-        "event": "vel"
-      },
-      {
-        "t": 17.55,
-        "event": "vel"
-      },
-      {
-        "t": 17.85,
-        "event": "boom"
-      },
-      {
-        "t": 17.85,
-        "event": "boom1"
+        "t": 17.65,
+        "event": "dig_end"
       },
       {
         "t": 17.9,
-        "event": "vel"
+        "event": "dig"
       },
       {
         "t": 17.9,
-        "event": "vel"
+        "event": "swing"
       },
       {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
-        "event": "vel"
-      },
-      {
-        "t": 17.95,
-        "event": "vel"
-      },
-      {
-        "t": 17.95,
-        "event": "vel"
-      },
-      {
-        "t": 18,
-        "event": "vel"
-      },
-      {
-        "t": 18.1,
-        "event": "vel"
-      },
-      {
-        "t": 18.15,
-        "event": "vel"
-      },
-      {
-        "t": 18.2,
-        "event": "vel"
+        "t": 18.05,
+        "event": "dig_end"
       },
       {
         "t": 18.3,
-        "event": "vel"
+        "event": "dig"
       },
       {
-        "t": 18.35,
-        "event": "vel"
-      },
-      {
-        "t": 18.35,
-        "event": "vel"
+        "t": 18.3,
+        "event": "swing"
       },
       {
         "t": 18.4,
-        "event": "vel"
-      },
-      {
-        "t": 18.45,
-        "event": "vel"
-      },
-      {
-        "t": 18.45,
-        "event": "vel"
-      },
-      {
-        "t": 18.55,
-        "event": "vel"
-      },
-      {
-        "t": 18.6,
-        "event": "boom2"
+        "event": "dig_end"
       },
       {
         "t": 18.65,
-        "event": "vel"
+        "event": "dig"
       },
       {
         "t": 18.65,
-        "event": "vel"
+        "event": "swing"
       },
       {
-        "t": 18.65,
-        "event": "vel"
+        "t": 18.75,
+        "event": "dig_end"
       },
       {
-        "t": 18.65,
-        "event": "vel"
+        "t": 19,
+        "event": "dig"
       },
       {
-        "t": 18.65,
-        "event": "vel"
+        "t": 19,
+        "event": "swing"
       },
       {
-        "t": 18.65,
-        "event": "vel"
-      },
-      {
-        "t": 18.65,
-        "event": "vel"
-      },
-      {
-        "t": 18.65,
-        "event": "vel"
-      },
-      {
-        "t": 18.65,
-        "event": "vel"
-      },
-      {
-        "t": 18.7,
-        "event": "vel"
-      },
-      {
-        "t": 18.8,
-        "event": "vel"
-      },
-      {
-        "t": 18.8,
-        "event": "vel"
-      },
-      {
-        "t": 18.85,
-        "event": "boom3"
-      },
-      {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.9,
-        "event": "boom4"
+        "t": 19.15,
+        "event": "dig_end"
       },
       {
         "t": 19.25,
+        "event": "mined"
+      },
+      {
+        "t": 19.25,
+        "event": "mined4"
+      },
+      {
+        "t": 21.1,
+        "event": "beat"
+      },
+      {
+        "t": 21.1,
+        "event": "beat5"
+      },
+      {
+        "t": 21.45,
+        "event": "instamine"
+      },
+      {
+        "t": 21.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 21.45,
+        "event": "swing"
+      },
+      {
+        "t": 21.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 21.7,
+        "event": "swing"
+      },
+      {
+        "t": 21.85,
+        "event": "dig_end"
+      },
+      {
+        "t": 21.85,
+        "event": "swing"
+      },
+      {
+        "t": 22.05,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.05,
+        "event": "swing"
+      },
+      {
+        "t": 22.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.2,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.35,
+        "event": "swing"
+      },
+      {
+        "t": 22.45,
+        "event": "mined"
+      },
+      {
+        "t": 22.45,
+        "event": "mined5"
+      },
+      {
+        "t": 22.65,
+        "event": "finale"
+      },
+      {
+        "t": 22.65,
+        "event": "tntwalk"
+      },
+      {
+        "t": 24.05,
+        "event": "place_on"
+      },
+      {
+        "t": 24.05,
+        "event": "swing"
+      },
+      {
+        "t": 24.35,
+        "event": "place_on"
+      },
+      {
+        "t": 24.35,
+        "event": "swing"
+      },
+      {
+        "t": 24.85,
+        "event": "place_on"
+      },
+      {
+        "t": 24.85,
+        "event": "swing"
+      },
+      {
+        "t": 25.15,
+        "event": "place_on"
+      },
+      {
+        "t": 25.15,
+        "event": "swing"
+      },
+      {
+        "t": 25.2,
+        "event": "tntrun"
+      },
+      {
+        "t": 25.35,
+        "event": "place_on"
+      },
+      {
+        "t": 25.35,
+        "event": "swing"
+      },
+      {
+        "t": 25.9,
+        "event": "place_on"
+      },
+      {
+        "t": 25.9,
+        "event": "swing"
+      },
+      {
+        "t": 26.2,
+        "event": "place_on"
+      },
+      {
+        "t": 26.2,
+        "event": "swing"
+      },
+      {
+        "t": 26.75,
+        "event": "place_on"
+      },
+      {
+        "t": 26.75,
+        "event": "swing"
+      },
+      {
+        "t": 27.05,
+        "event": "place_on"
+      },
+      {
+        "t": 27.05,
+        "event": "swing"
+      },
+      {
+        "t": 27.25,
+        "event": "place_on"
+      },
+      {
+        "t": 27.25,
+        "event": "swing"
+      },
+      {
+        "t": 27.85,
+        "event": "place_on"
+      },
+      {
+        "t": 27.85,
+        "event": "swing"
+      },
+      {
+        "t": 28.15,
+        "event": "place_on"
+      },
+      {
+        "t": 28.15,
+        "event": "swing"
+      },
+      {
+        "t": 28.65,
+        "event": "place_on"
+      },
+      {
+        "t": 28.65,
+        "event": "swing"
+      },
+      {
+        "t": 28.95,
+        "event": "place_on"
+      },
+      {
+        "t": 28.95,
+        "event": "swing"
+      },
+      {
+        "t": 29.15,
+        "event": "place_on"
+      },
+      {
+        "t": 29.15,
+        "event": "swing"
+      },
+      {
+        "t": 29.75,
+        "event": "place_on"
+      },
+      {
+        "t": 29.75,
+        "event": "swing"
+      },
+      {
+        "t": 30.05,
+        "event": "place_on"
+      },
+      {
+        "t": 30.05,
+        "event": "swing"
+      },
+      {
+        "t": 30.25,
+        "event": "place_on"
+      },
+      {
+        "t": 30.25,
+        "event": "swing"
+      },
+      {
+        "t": 30.85,
+        "event": "place_on"
+      },
+      {
+        "t": 30.85,
+        "event": "swing"
+      },
+      {
+        "t": 31.15,
+        "event": "place_on"
+      },
+      {
+        "t": 31.15,
+        "event": "swing"
+      },
+      {
+        "t": 31.65,
+        "event": "place_on"
+      },
+      {
+        "t": 31.65,
+        "event": "swing"
+      },
+      {
+        "t": 31.95,
+        "event": "place_on"
+      },
+      {
+        "t": 31.95,
+        "event": "swing"
+      },
+      {
+        "t": 32.45,
+        "event": "swing"
+      },
+      {
+        "t": 32.45,
+        "event": "lit"
+      },
+      {
+        "t": 32.45,
+        "event": "motion_start"
+      },
+      {
+        "t": 36.4,
+        "event": "boom"
+      },
+      {
+        "t": 36.4,
+        "event": "boom1"
+      },
+      {
+        "t": 37.05,
+        "event": "boom2"
+      },
+      {
+        "t": 37.1,
+        "event": "boom3"
+      },
+      {
+        "t": 37.3,
+        "event": "boom4"
+      },
+      {
+        "t": 37.3,
         "event": "boom5"
       },
       {
-        "t": 19.35,
+        "t": 38,
         "event": "boom6"
       },
       {
-        "t": 19.5,
+        "t": 38.05,
         "event": "boom7"
       },
       {
-        "t": 19.5,
+        "t": 38.2,
         "event": "boom8"
       },
       {
-        "t": 19.95,
+        "t": 38.35,
         "event": "boom9"
       },
       {
-        "t": 20,
+        "t": 38.5,
         "event": "boom10"
       },
       {
-        "t": 20.2,
+        "t": 38.55,
         "event": "boom11"
       },
       {
-        "t": 20.2,
+        "t": 38.7,
+        "event": "boom12"
+      },
+      {
+        "t": 38.75,
+        "event": "boom13"
+      },
+      {
+        "t": 38.9,
+        "event": "boom14"
+      },
+      {
+        "t": 39.15,
+        "event": "boom15"
+      },
+      {
+        "t": 39.2,
+        "event": "boom16"
+      },
+      {
+        "t": 39.25,
+        "event": "boom17"
+      },
+      {
+        "t": 39.3,
+        "event": "boom18"
+      },
+      {
+        "t": 39.5,
+        "event": "boom19"
+      },
+      {
+        "t": 39.6,
+        "event": "boom20"
+      },
+      {
+        "t": 39.65,
+        "event": "boom21"
+      },
+      {
+        "t": 39.65,
+        "event": "boom22"
+      },
+      {
+        "t": 39.65,
         "event": "lastboom"
       },
       {
-        "t": 20.5,
+        "t": 39.95,
         "event": "motion_settled"
       },
       {
-        "t": 20.5,
+        "t": 39.95,
         "event": "settle"
       },
       {
-        "t": 21.8,
+        "t": 41.25,
         "event": "wallgone"
       },
       {
-        "t": 25.4,
+        "t": 44.75,
         "event": "end"
       }
     ]
@@ -1665,10 +1053,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "7379097ae6540653fb577338ec3de8fe261e2bff",
+    "commit": "1a1df6204a4cc327daf8d5dcb9182f8306f1cd38",
     "rendered": "local",
-    "rendered_at": "2026-11-12T05:28:14.603Z",
-    "head_at_publish": "7379097ae6540653fb577338ec3de8fe261e2bff",
+    "rendered_at": "2026-11-12T07:21:38.340Z",
+    "head_at_publish": "1a1df6204a4cc327daf8d5dcb9182f8306f1cd38",
     "stunt": "stunts/pickaxe_race.js",
     "source_snapshot": [
       "source/pickaxe_race.js",
@@ -1678,34 +1066,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 7379097ae654",
+    "git checkout 1a1df6204a4c",
     "gunzip -c shorts/pickaxe_race/recording.json.gz > work/pickaxe_race.rec.json",
     "node render.js work/pickaxe_race.rec.json work/pickaxe_race.frames 60 1080 1011",
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
-    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"bro said TNT is a pickaxe 💀\" --self_name 56e --red TNT --subs \"[[\\\"beat\\\",\\\"gold...\\\",9,0],[\\\"mined\\\",\\\"gold: S tier?? it BROKE\\\",9,0],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,1],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,1],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.2 --splits {\"reset\":\"beat\",\"split\":\"mined\",\"of\":2,\"hide\":\"finale\"} --speed [[\"mined0:0.6\",\"beat1:-0.25\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit:0.4\",\"boom:-0.5\",3.5]] --punch [[\"boom\",0,1.06],[\"boom6\",0,1.06],[\"lastboom\",0,1.12]] --shake [[\"boom\",0,6],[\"boom6\",0,6],[\"lastboom\",0,10]] --flash [[\"boom\",0,0.35],[\"lastboom\",0,0.6]] --sfx [[\"impact\",\"beat\",{\"gain\":1.5}],[\"impact\",\"boom\",{\"gain\":1}],[\"dip\",\"lastboom\",0.45],[\"gamedip\",\"lastboom\",0.4],[\"impact\",\"lastboom\",{\"gain\":1.4}],[\"boom\",\"lastboom\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/pickaxe_race.mp4"
+    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"bro said TNT is a pickaxe 💀\" --self_name 56e --red TNT --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it BROKE\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.2 --splits {\"reset\":\"beat\",\"split\":\"mined\",\"of\":6,\"hide\":\"finale\"} --speed [[\"mined0:0.5\",\"beat1:0.1\",\"cut\"],[\"mined1:0.5\",\"beat2:0.1\",\"cut\"],[\"mined2:0.5\",\"beat3:0.1\",\"cut\"],[\"mined3:0.5\",\"beat4:0.1\",\"cut\"],[\"mined4:0.5\",\"beat5:0.1\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit:0.4\",\"boom:-0.5\",3.5]] --punch [[\"boom\",0,1.06],[\"boom6\",0,1.06],[\"lastboom\",0,1.12]] --shake [[\"boom\",0,6],[\"boom6\",0,6],[\"lastboom\",0,10]] --flash [[\"boom\",0,0.35],[\"lastboom\",0,0.6]] --sfx [[\"impact\",\"beat\",{\"gain\":1.5}],[\"impact\",\"boom\",{\"gain\":1}],[\"dip\",\"lastboom\",0.45],[\"gamedip\",\"lastboom\",0.4],[\"impact\",\"lastboom\",{\"gain\":1.4}],[\"boom\",\"lastboom\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/pickaxe_race.mp4"
   ],
   "status": "ready",
-  "notes": "No-op fix (audit 2026-11-12): 3 beats (gold breaks, Eff V + Haste instamine, a TNT row erases the WHOLE wall), per-tier timer kept, no cut mid-dig, frame 0 on the gold pick; 11.9 s; reviewed READY (independent subagent); mixcheck OK",
-  "published_at": "2026-11-12T05:29:41.613Z",
+  "notes": "v3 (owner r:rf557af): the full pickaxe ladder (wood→netherite Eff V+Haste), each tier one fast uncut timed take, cuts only between tiers; a 22-TNT row erases the whole 20-wide wall; 24.4 s; reviewed READY (independent subagent); mixcheck OK",
+  "published_at": "2026-11-12T07:23:55.595Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:30:03+00:00",
+    "at": "2026-11-12T07:24:32+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 11.88 s vs the reviewed render 11.87 s"
+      "summary": "short.mp4 24.41 s vs the reviewed render 24.41 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:28:33.407Z",
+      "at": "2026-11-12T07:21:59.841Z",
       "report": "work/hb/pickaxe_race.check.json"
     },
     "key_sounds": "n/a"
