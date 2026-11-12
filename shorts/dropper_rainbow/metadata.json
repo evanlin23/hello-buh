@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "land",
     "drop_in_song_s": 113.75,
-    "drop_in_short_s": 14.73,
-    "song_start_s": 99.03
+    "drop_in_short_s": 16.08,
+    "song_start_s": 97.67
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 15.43,
+    "duration_s": 16.78,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15334148,
-    "sha256": "c7f99082f6103e9a72421484ed86b64022d49c035e28c4a6c08d4f308b289313",
+    "bytes": 16019154,
+    "sha256": "49d5c572b46d4e0981780a10e40f92654cd1c9c2959521e81aeaea86108e1b27",
     "release": {
       "tag": "pkg-dropper_rainbow",
-      "asset": "dropper_rainbow.short.c7f99082f6103e9a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short.c7f99082f6103e9a.mp4",
-      "sha256": "c7f99082f6103e9a72421484ed86b64022d49c035e28c4a6c08d4f308b289313",
-      "bytes": 15334148
+      "asset": "dropper_rainbow.short.49d5c572b46d4e09.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short.49d5c572b46d4e09.mp4",
+      "sha256": "49d5c572b46d4e0981780a10e40f92654cd1c9c2959521e81aeaea86108e1b27",
+      "bytes": 16019154
     },
     "nosong_release": {
       "tag": "pkg-dropper_rainbow",
-      "asset": "dropper_rainbow.short_nosong.2689e0537b60f532.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short_nosong.2689e0537b60f532.mp4",
-      "sha256": "2689e0537b60f53205dc08e62bba30bcf8da75c8bdd77afce6fc290cd2ffdab2",
-      "bytes": 15324823
+      "asset": "dropper_rainbow.short_nosong.dbdd17cb0f7ad671.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short_nosong.dbdd17cb0f7ad671.mp4",
+      "sha256": "dbdd17cb0f7ad671de7fdcfb230cd20a1ec6735678d80d721d2dd87493776781",
+      "bytes": 15999742
     }
   },
   "edit": {
@@ -54,17 +54,17 @@
     "endAfter": "land:0.7",
     "speed": [
       [
-        "fail0",
+        "fail0:0.35",
         "att1",
         "cut"
       ],
       [
-        "fail1",
+        "fail1:0.35",
         "att2",
         "cut"
       ],
       [
-        "fail2",
+        "fail2:0.35",
         "att3",
         "cut"
       ],
@@ -145,6 +145,21 @@
     ],
     "shake": [
       [
+        "fail0",
+        0,
+        22
+      ],
+      [
+        "fail1",
+        0,
+        22
+      ],
+      [
+        "fail2",
+        0,
+        22
+      ],
+      [
         "land",
         0,
         18
@@ -155,6 +170,13 @@
         "land",
         0,
         0.35
+      ]
+    ],
+    "punch": [
+      [
+        "land",
+        0,
+        1.12
       ]
     ],
     "dropAt": "land",
@@ -300,11 +322,36 @@
         "pops"
       ],
       [
-        "whoosh",
+        "impact",
         "go:0.3",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "impact",
+        "fail0",
         {
           "gain": 0.6
         }
+      ],
+      [
+        "impact",
+        "fail1",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "impact",
+        "fail2",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "boom",
+        "land"
       ],
       [
         "dip",
@@ -320,17 +367,19 @@
       "--red",
       "NEVER",
       "--speed",
-      "[[\"fail0\",\"att1\",\"cut\"],[\"fail1\",\"att2\",\"cut\"],[\"fail2\",\"att3\",\"cut\"],[\"att1\",\"pass1_1\",2],[\"att2\",\"pass2_3\",2],[\"att3\",\"pass3_2\",2]]",
+      "[[\"fail0:0.35\",\"att1\",\"cut\"],[\"fail1:0.35\",\"att2\",\"cut\"],[\"fail2:0.35\",\"att3\",\"cut\"],[\"att1\",\"pass1_1\",2],[\"att2\",\"pass2_3\",2],[\"att3\",\"pass3_2\",2]]",
+      "--punch",
+      "[[\"land\",0,1.12]]",
       "--cards",
       "[[\"go:0.25\",\"ATTEMPT #1\",1.1,\"white\",0,{\"y\":0.34}],[\"att1\",\"ATTEMPT #6\",1.1,\"white\",0,{\"y\":0.34}],[\"att2\",\"ATTEMPT #19\",1.1,\"white\",0,{\"y\":0.34}],[\"att3\",\"ATTEMPT #47\",1.6,\"gold\",0,{\"y\":0.34}],[\"land\",\"CLEAN!\",0.8,\"green\",0,{\"y\":0.34}]]",
       "--shake",
-      "[[\"land\",0,18]]",
+      "[[\"fail0\",0,22],[\"fail1\",0,22],[\"fail2\",0,22],[\"land\",0,18]]",
       "--flash",
       "[[\"land\",0,0.35]]",
       "--fallen",
       "[[\"att3\",\"land\",\"blocks\"]]",
       "--sfx",
-      "[[\"wind\",\"att0\",\"fail0\",{\"gain\":0.15}],[\"wind\",\"att1\",\"fail1\",{\"gain\":0.15}],[\"wind\",\"att2\",\"fail2\",{\"gain\":0.15}],[\"wind\",\"att3\",\"land\",{\"gain\":0.15}],[\"whoosh\",\"pass0_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_1\",{\"gain\":0.4}],[\"whoosh\",\"pass1_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_0\",{\"gain\":0.4}],[\"whoosh\",\"pass2_1\",{\"gain\":0.4}],[\"whoosh\",\"pass2_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_3\",{\"gain\":0.4}],[\"whoosh\",\"pass2_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_0\",{\"gain\":0.4}],[\"whoosh\",\"pass3_1\",{\"gain\":0.4}],[\"whoosh\",\"pass3_2\",{\"gain\":0.4}],[\"whoosh\",\"pass3_3\",{\"gain\":0.4}],[\"whoosh\",\"pass3_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_5\",{\"gain\":0.4}],[\"pops\"],[\"whoosh\",\"go:0.3\",{\"gain\":0.6}],[\"dip\",\"land\",0.4]]",
+      "[[\"wind\",\"att0\",\"fail0\",{\"gain\":0.15}],[\"wind\",\"att1\",\"fail1\",{\"gain\":0.15}],[\"wind\",\"att2\",\"fail2\",{\"gain\":0.15}],[\"wind\",\"att3\",\"land\",{\"gain\":0.15}],[\"whoosh\",\"pass0_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_1\",{\"gain\":0.4}],[\"whoosh\",\"pass1_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_0\",{\"gain\":0.4}],[\"whoosh\",\"pass2_1\",{\"gain\":0.4}],[\"whoosh\",\"pass2_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_3\",{\"gain\":0.4}],[\"whoosh\",\"pass2_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_0\",{\"gain\":0.4}],[\"whoosh\",\"pass3_1\",{\"gain\":0.4}],[\"whoosh\",\"pass3_2\",{\"gain\":0.4}],[\"whoosh\",\"pass3_3\",{\"gain\":0.4}],[\"whoosh\",\"pass3_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_5\",{\"gain\":0.4}],[\"pops\"],[\"impact\",\"go:0.3\",{\"gain\":0.45}],[\"impact\",\"fail0\",{\"gain\":0.6}],[\"impact\",\"fail1\",{\"gain\":0.6}],[\"impact\",\"fail2\",{\"gain\":0.6}],[\"boom\",\"land\"],[\"dip\",\"land\",0.4]]",
       "--start_at",
       "go:0.25",
       "--end_after",
@@ -345,149 +394,256 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 358,
+      "x": 381,
       "y": 64,
-      "z": -40
+      "z": -49
     },
     "biome": "minecraft:plains",
-    "ticks": 490,
-    "seconds": 24.5,
-    "deaths": 0,
+    "ticks": 724,
+    "seconds": 36.2,
+    "deaths": 3,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell 56e "
+          },
+          "insertion": "56e",
+          "text": "56e",
+          "hover_event": {
+            "name": "56e",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1501766631,
+              -1382728230,
+              -1353399714,
+              429653331
+            ]
+          }
+        }
+      ],
+      "translate": "death.fell.accident.generic"
+    },
     "events": [
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "go"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "att0"
       },
       {
-        "t": 3.1,
+        "t": 3.05,
         "event": "pass0_0"
       },
       {
-        "t": 3.95,
+        "t": 4,
         "event": "fail0"
       },
       {
-        "t": 3.95,
+        "t": 4,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 4,
+        "event": "death"
+      },
+      {
+        "t": 4,
+        "event": "motion_start"
+      },
+      {
+        "t": 4.6,
+        "event": "xp"
+      },
+      {
+        "t": 4.65,
+        "event": "respawn"
+      },
+      {
+        "t": 4.65,
+        "event": "xp"
+      },
+      {
+        "t": 5.85,
+        "event": "motion_settled"
+      },
+      {
+        "t": 7.8,
         "event": "cut"
       },
       {
-        "t": 4.15,
+        "t": 8,
         "event": "top1"
       },
       {
-        "t": 4.35,
+        "t": 8.2,
         "event": "att1"
       },
       {
-        "t": 6.05,
+        "t": 9.9,
         "event": "pass1_0"
       },
       {
-        "t": 7.05,
+        "t": 10.9,
         "event": "pass1_1"
       },
       {
-        "t": 8.05,
+        "t": 11.9,
         "event": "pass1_2"
       },
       {
-        "t": 8.85,
+        "t": 12.8,
         "event": "fail1"
       },
       {
-        "t": 8.85,
+        "t": 12.8,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 12.85,
+        "event": "death"
+      },
+      {
+        "t": 12.85,
+        "event": "motion_start"
+      },
+      {
+        "t": 13.45,
+        "event": "xp"
+      },
+      {
+        "t": 13.45,
+        "event": "respawn"
+      },
+      {
+        "t": 13.45,
+        "event": "xp"
+      },
+      {
+        "t": 13.85,
+        "event": "motion_settled"
+      },
+      {
+        "t": 16.6,
         "event": "cut"
       },
       {
-        "t": 9.05,
+        "t": 16.8,
         "event": "top2"
       },
       {
-        "t": 9.25,
+        "t": 17,
         "event": "att2"
       },
       {
-        "t": 10.95,
+        "t": 18.7,
         "event": "pass2_0"
       },
       {
-        "t": 11.95,
+        "t": 19.7,
         "event": "pass2_1"
       },
       {
-        "t": 12.95,
+        "t": 20.7,
         "event": "pass2_2"
       },
       {
-        "t": 13.9,
+        "t": 21.65,
         "event": "pass2_3"
       },
       {
-        "t": 14.75,
+        "t": 22.5,
         "event": "pass2_4"
       },
       {
-        "t": 15.3,
+        "t": 23.15,
         "event": "fail2"
       },
       {
-        "t": 15.3,
+        "t": 23.15,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 23.15,
+        "event": "death"
+      },
+      {
+        "t": 23.15,
+        "event": "motion_start"
+      },
+      {
+        "t": 23.75,
+        "event": "xp"
+      },
+      {
+        "t": 23.75,
+        "event": "respawn"
+      },
+      {
+        "t": 23.75,
+        "event": "xp"
+      },
+      {
+        "t": 24.15,
+        "event": "motion_settled"
+      },
+      {
+        "t": 24.15,
+        "event": "settle"
+      },
+      {
+        "t": 27,
         "event": "cut"
       },
       {
-        "t": 15.5,
+        "t": 27.2,
         "event": "top3"
       },
       {
-        "t": 15.7,
+        "t": 27.4,
         "event": "att3"
       },
       {
-        "t": 17.4,
+        "t": 29.1,
         "event": "pass3_0"
       },
       {
-        "t": 18.4,
+        "t": 30.1,
         "event": "pass3_1"
       },
       {
-        "t": 19.4,
+        "t": 31.1,
         "event": "pass3_2"
       },
       {
-        "t": 20.35,
+        "t": 32.05,
         "event": "pass3_3"
       },
       {
-        "t": 21.2,
+        "t": 32.9,
         "event": "pass3_4"
       },
       {
-        "t": 21.25,
-        "event": "vel"
-      },
-      {
-        "t": 21.8,
-        "event": "collect"
-      },
-      {
-        "t": 21.9,
+        "t": 33.6,
         "event": "pass3_5"
       },
       {
-        "t": 22.5,
+        "t": 34.2,
         "event": "land"
       },
       {
-        "t": 24.5,
+        "t": 36.2,
         "event": "end"
       }
     ]
@@ -495,10 +651,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "99afdffe83be7ae3a4d41622163396aaf137e233",
+    "commit": "477b04c74e8035c82a414e3748eab64f3b7a9418",
     "rendered": "local",
-    "rendered_at": "2026-11-12T00:36:23.016Z",
-    "head_at_publish": "b1ca13e8543496bdc4318757e36ad7823f0daaa7",
+    "rendered_at": "2026-11-12T04:42:24.683Z",
+    "head_at_publish": "477b04c74e8035c82a414e3748eab64f3b7a9418",
     "stunt": "stunts/dropper_rainbow.js",
     "source_snapshot": [
       "source/dropper_rainbow.js",
@@ -507,34 +663,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 99afdffe83be",
+    "git checkout 477b04c74e80",
     "gunzip -c shorts/dropper_rainbow/recording.json.gz > work/dropper_rainbow.rec.json",
     "node render.js work/dropper_rainbow.rec.json work/dropper_rainbow.frames 60 1080 1011",
     "python3 audio.py work/dropper_rainbow.rec.json work/dropper_rainbow.wav",
-    "python3 edit.py --frames work/dropper_rainbow.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dropper_rainbow.rec.json --audio work/dropper_rainbow.wav --caption \"I'm NEVER beating this dropper 😭\" --self_name 56e --red NEVER --speed [[\"fail0\",\"att1\",\"cut\"],[\"fail1\",\"att2\",\"cut\"],[\"fail2\",\"att3\",\"cut\"],[\"att1\",\"pass1_1\",2],[\"att2\",\"pass2_3\",2],[\"att3\",\"pass3_2\",2]] --cards \"[[\\\"go:0.25\\\",\\\"ATTEMPT #1\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att1\\\",\\\"ATTEMPT #6\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att2\\\",\\\"ATTEMPT #19\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att3\\\",\\\"ATTEMPT #47\\\",1.6,\\\"gold\\\",0,{\\\"y\\\":0.34}],[\\\"land\\\",\\\"CLEAN!\\\",0.8,\\\"green\\\",0,{\\\"y\\\":0.34}]]\" --shake [[\"land\",0,18]] --flash [[\"land\",0,0.35]] --fallen [[\"att3\",\"land\",\"blocks\"]] --sfx [[\"wind\",\"att0\",\"fail0\",{\"gain\":0.15}],[\"wind\",\"att1\",\"fail1\",{\"gain\":0.15}],[\"wind\",\"att2\",\"fail2\",{\"gain\":0.15}],[\"wind\",\"att3\",\"land\",{\"gain\":0.15}],[\"whoosh\",\"pass0_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_1\",{\"gain\":0.4}],[\"whoosh\",\"pass1_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_0\",{\"gain\":0.4}],[\"whoosh\",\"pass2_1\",{\"gain\":0.4}],[\"whoosh\",\"pass2_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_3\",{\"gain\":0.4}],[\"whoosh\",\"pass2_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_0\",{\"gain\":0.4}],[\"whoosh\",\"pass3_1\",{\"gain\":0.4}],[\"whoosh\",\"pass3_2\",{\"gain\":0.4}],[\"whoosh\",\"pass3_3\",{\"gain\":0.4}],[\"whoosh\",\"pass3_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_5\",{\"gain\":0.4}],[\"pops\"],[\"whoosh\",\"go:0.3\",{\"gain\":0.6}],[\"dip\",\"land\",0.4]] --start_at go:0.25 --end_after land:0.7 --out out/dropper_rainbow.mp4"
+    "python3 edit.py --frames work/dropper_rainbow.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dropper_rainbow.rec.json --audio work/dropper_rainbow.wav --caption \"I'm NEVER beating this dropper 😭\" --self_name 56e --red NEVER --speed [[\"fail0:0.35\",\"att1\",\"cut\"],[\"fail1:0.35\",\"att2\",\"cut\"],[\"fail2:0.35\",\"att3\",\"cut\"],[\"att1\",\"pass1_1\",2],[\"att2\",\"pass2_3\",2],[\"att3\",\"pass3_2\",2]] --punch [[\"land\",0,1.12]] --cards \"[[\\\"go:0.25\\\",\\\"ATTEMPT #1\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att1\\\",\\\"ATTEMPT #6\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att2\\\",\\\"ATTEMPT #19\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att3\\\",\\\"ATTEMPT #47\\\",1.6,\\\"gold\\\",0,{\\\"y\\\":0.34}],[\\\"land\\\",\\\"CLEAN!\\\",0.8,\\\"green\\\",0,{\\\"y\\\":0.34}]]\" --shake [[\"fail0\",0,22],[\"fail1\",0,22],[\"fail2\",0,22],[\"land\",0,18]] --flash [[\"land\",0,0.35]] --fallen [[\"att3\",\"land\",\"blocks\"]] --sfx [[\"wind\",\"att0\",\"fail0\",{\"gain\":0.15}],[\"wind\",\"att1\",\"fail1\",{\"gain\":0.15}],[\"wind\",\"att2\",\"fail2\",{\"gain\":0.15}],[\"wind\",\"att3\",\"land\",{\"gain\":0.15}],[\"whoosh\",\"pass0_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_1\",{\"gain\":0.4}],[\"whoosh\",\"pass1_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_0\",{\"gain\":0.4}],[\"whoosh\",\"pass2_1\",{\"gain\":0.4}],[\"whoosh\",\"pass2_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_3\",{\"gain\":0.4}],[\"whoosh\",\"pass2_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_0\",{\"gain\":0.4}],[\"whoosh\",\"pass3_1\",{\"gain\":0.4}],[\"whoosh\",\"pass3_2\",{\"gain\":0.4}],[\"whoosh\",\"pass3_3\",{\"gain\":0.4}],[\"whoosh\",\"pass3_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_5\",{\"gain\":0.4}],[\"pops\"],[\"impact\",\"go:0.3\",{\"gain\":0.45}],[\"impact\",\"fail0\",{\"gain\":0.6}],[\"impact\",\"fail1\",{\"gain\":0.6}],[\"impact\",\"fail2\",{\"gain\":0.6}],[\"boom\",\"land\"],[\"dip\",\"land\",0.4]] --start_at go:0.25 --end_after land:0.7 --out out/dropper_rainbow.mp4"
   ],
   "status": "ready",
-  "notes": "dropper #1 (lib/dropper.js, r:r304cb5): a 376-block rainbow shaft from the build limit to y -60, first person; attempts #1, #6, #19 cut before the hit (no death); #47 lands in a 1x1 of water in a bullseye (vanilla). Reviewed READY in round 2. Nitpicks: #19 reads mostly by the thud; payoff text 0.7 s; quiet 0.1-1.9 s under the opening whoosh.",
-  "published_at": "2026-11-12T00:38:08.215Z",
+  "notes": "dropper #1 re-cut (r:r4607fa): the fails splat for real (fall damage, cut before the poof); the clean #47 lands in a 1x1 of water with the biggest hit. Fix-check READY.",
+  "published_at": "2026-11-12T04:44:40.233Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:38:29+00:00",
+    "at": "2026-11-12T04:45:08+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 15.45 s vs the reviewed render 15.43 s"
+      "summary": "short.mp4 16.79 s vs the reviewed render 16.78 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T00:36:44.236Z",
+      "at": "2026-11-12T04:42:50.101Z",
       "report": "work/hb/dropper_rainbow.check.json"
     },
     "key_sounds": "n/a"
