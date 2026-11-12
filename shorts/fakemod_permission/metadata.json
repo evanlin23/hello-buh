@@ -1,10 +1,10 @@
 {
   "name": "fakemod_permission",
   "channel": "hellobuh",
-  "caption": "this mod makes mobs ask permission 💀",
+  "caption": "why is every mob asking me for permission 💀",
   "youtube": {
-    "title": "this mod makes mobs ask permission 💀 #minecraft #shorts",
-    "description": "this mod makes mobs ask permission 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "why is every mob asking me for permission 💀 #minecraft #shorts",
+    "description": "why is every mob asking me for permission 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -20,39 +20,51 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "boom",
     "drop_in_song_s": 16.5,
-    "drop_in_short_s": 16.4,
-    "song_start_s": 0.1
+    "drop_in_short_s": 15.57,
+    "song_start_s": 0.93
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 17.9,
+    "duration_s": 16.37,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 11220598,
-    "sha256": "e0357fa077f77c2a91bf9a6297dc98de9321fc6ad691915bd0f157fd5ed6badb",
+    "bytes": 9623735,
+    "sha256": "0157c5e5591178ec0193ec2b4766950553b6fa129f5ce425c92be0449b22130f",
     "release": {
       "tag": "pkg-fakemod_permission",
-      "asset": "fakemod_permission.short.e0357fa077f77c2a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.e0357fa077f77c2a.mp4",
-      "sha256": "e0357fa077f77c2a91bf9a6297dc98de9321fc6ad691915bd0f157fd5ed6badb",
-      "bytes": 11220598
+      "asset": "fakemod_permission.short.0157c5e5591178ec.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.0157c5e5591178ec.mp4",
+      "sha256": "0157c5e5591178ec0193ec2b4766950553b6fa129f5ce425c92be0449b22130f",
+      "bytes": 9623735
     },
     "nosong_release": {
       "tag": "pkg-fakemod_permission",
-      "asset": "fakemod_permission.short_nosong.ae91a92f0526ca8d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short_nosong.ae91a92f0526ca8d.mp4",
-      "sha256": "ae91a92f0526ca8d45ca89c9bf9908e4216754154e03eca4e04073362bee3a08",
-      "bytes": 11218929
+      "asset": "fakemod_permission.short_nosong.2e21bd6f75f8fc1d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short_nosong.2e21bd6f75f8fc1d.mp4",
+      "sha256": "2e21bd6f75f8fc1d74e1e3b2f1858c4b3d33c1493f8674fffb7ed41d980e4de5",
+      "bytes": 9618113
     }
   },
   "edit": {
-    "caption": "this mod makes mobs ask permission 💀",
+    "caption": "why is every mob asking me for permission 💀",
     "red": "permission",
     "startAt": "first:-0.05",
     "deathScreen": true,
-    "endAfter": "boom:1.5",
+    "endAfter": "boom:0.8",
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ]
+    ],
     "dropAt": "boom",
     "sfx": [
       [
@@ -142,8 +154,7 @@
             "red"
           ],
           "."
-        ],
-        "y": 0.03
+        ]
       },
       {
         "at": [
@@ -192,8 +203,7 @@
             "red"
           ],
           "."
-        ],
-        "y": 0.03
+        ]
       },
       {
         "at": [
@@ -255,19 +265,20 @@
           "ticks": "fm3_roll",
           "at": "fm3_result",
           "result": "Allow"
-        },
-        "y": 0.03
+        }
       }
     ],
     "args": [
       "--caption",
-      "this mod makes mobs ask permission 💀",
+      "why is every mob asking me for permission 💀",
       "--self_name",
       "56e",
       "--red",
       "permission",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"]]",
       "--popup",
-      "[{\"at\":[\"fm1_open\",\"fm1_click\",\"fm1_close\"],\"marks\":[\"fm1_hover0\"],\"mob\":\"zombie\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Zombie\",\"red\"],\" is asking for permission to attack you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"],\"y\":0.03},{\"at\":[\"fm2_open\",\"fm2_click\",\"fm2_close\"],\"marks\":[\"fm2_hover0\",\"fm2_hover1\"],\"mob\":\"skeleton\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Skeleton\",\"red\"],\" is asking for permission to shoot you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Allow\",\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"],\"y\":0.03},{\"at\":[\"fm3_open\",\"fm3_click\",\"fm3_close\"],\"marks\":[\"fm3_hover0\",\"fm3_hover1\",\"fm3_roll0\",\"fm3_roll1\",\"fm3_roll2\",\"fm3_roll3\",\"fm3_roll4\",\"fm3_roll5\",\"fm3_roll6\",\"fm3_roll7\",\"fm3_roll8\"],\"mob\":\"creeper\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Creeper\",\"red\"],\" is asking for permission to explode.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Roll\",\"hover\":[\"Deny\",\"Roll\"],\"done\":[\"The dice say: \",[\"ALLOW\",\"green\"]],\"roll\":{\"ticks\":\"fm3_roll\",\"at\":\"fm3_result\",\"result\":\"Allow\"},\"y\":0.03}]",
+      "[{\"at\":[\"fm1_open\",\"fm1_click\",\"fm1_close\"],\"marks\":[\"fm1_hover0\"],\"mob\":\"zombie\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Zombie\",\"red\"],\" is asking for permission to attack you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"]},{\"at\":[\"fm2_open\",\"fm2_click\",\"fm2_close\"],\"marks\":[\"fm2_hover0\",\"fm2_hover1\"],\"mob\":\"skeleton\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Skeleton\",\"red\"],\" is asking for permission to shoot you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Allow\",\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"]},{\"at\":[\"fm3_open\",\"fm3_click\",\"fm3_close\"],\"marks\":[\"fm3_hover0\",\"fm3_hover1\",\"fm3_roll0\",\"fm3_roll1\",\"fm3_roll2\",\"fm3_roll3\",\"fm3_roll4\",\"fm3_roll5\",\"fm3_roll6\",\"fm3_roll7\",\"fm3_roll8\"],\"mob\":\"creeper\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Creeper\",\"red\"],\" is asking for permission to explode.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Roll\",\"hover\":[\"Deny\",\"Roll\"],\"done\":[\"The dice say: \",[\"ALLOW\",\"green\"]],\"roll\":{\"ticks\":\"fm3_roll\",\"at\":\"fm3_result\",\"result\":\"Allow\"}}]",
       "--sfx",
       "[[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]]",
       "--death_screen",
@@ -275,7 +286,7 @@
       "--start_at",
       "first:-0.05",
       "--end_after",
-      "boom:1.5"
+      "boom:0.8"
     ]
   },
   "recording": {
@@ -286,13 +297,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 377,
-      "y": 86,
-      "z": -39
+      "x": 383,
+      "y": 85,
+      "z": -43
     },
     "biome": "minecraft:plains",
-    "ticks": 442,
-    "seconds": 22.1,
+    "ticks": 475,
+    "seconds": 23.75,
     "deaths": 1,
     "death_message": {
       "with": [
@@ -316,7 +327,7 @@
           }
         },
         {
-          "insertion": "886f5140-b378-4ad7-b02f-01a801aa7c97",
+          "insertion": "128c8261-a12e-4d48-bcfc-00bec86d5ac9",
           "hover_event": {
             "name": {
               "translate": "entity.minecraft.creeper"
@@ -324,10 +335,10 @@
             "action": "show_entity",
             "id": "minecraft:creeper",
             "uuid": [
-              -2005970624,
-              -1283962153,
-              -1339096664,
-              27950231
+              311198305,
+              -1590801080,
+              -1124335426,
+              -932357431
             ]
           },
           "translate": "entity.minecraft.creeper"
@@ -341,264 +352,280 @@
         "event": "start"
       },
       {
-        "t": 1.25,
+        "t": 2,
         "event": "first"
       },
       {
-        "t": 2,
+        "t": 2.8,
         "event": "fm1_open"
       },
       {
-        "t": 2,
+        "t": 2.8,
         "event": "gui_freeze"
       },
       {
-        "t": 2.6,
+        "t": 3.4,
         "event": "fm1_hover"
       },
       {
-        "t": 2.6,
+        "t": 3.4,
         "event": "fm1_hover0"
       },
       {
-        "t": 3.1,
+        "t": 3.9,
         "event": "fm1_click"
       },
       {
-        "t": 3.5,
+        "t": 4.3,
         "event": "fm1_close"
       },
       {
-        "t": 3.5,
+        "t": 4.3,
         "event": "gui_thaw"
       },
       {
-        "t": 3.85,
+        "t": 4.65,
         "event": "mob_hurt"
       },
       {
-        "t": 4.5,
+        "t": 5.3,
         "event": "mob_hurt"
       },
       {
-        "t": 4.5,
+        "t": 5.3,
         "event": "mob_death"
       },
       {
-        "t": 4.5,
+        "t": 5.3,
         "event": "motion_start"
       },
       {
-        "t": 5.5,
+        "t": 6.3,
         "event": "zombie_dead"
       },
       {
-        "t": 5.5,
+        "t": 6.3,
         "event": "motion_settled"
       },
       {
-        "t": 6.55,
+        "t": 6.45,
+        "event": "cut1a"
+      },
+      {
+        "t": 7.3,
+        "event": "cut1b"
+      },
+      {
+        "t": 7.5,
         "event": "fm2_open"
       },
       {
-        "t": 6.55,
+        "t": 7.5,
         "event": "gui_freeze"
       },
       {
-        "t": 7.15,
+        "t": 8.1,
         "event": "fm2_hover"
       },
       {
-        "t": 7.15,
+        "t": 8.1,
         "event": "fm2_hover0"
       },
       {
-        "t": 7.65,
+        "t": 8.6,
         "event": "fm2_hover"
       },
       {
-        "t": 7.65,
+        "t": 8.6,
         "event": "fm2_hover1"
       },
       {
-        "t": 8.15,
+        "t": 9.1,
         "event": "fm2_click"
       },
       {
-        "t": 8.55,
+        "t": 9.5,
         "event": "fm2_close"
       },
       {
-        "t": 8.55,
+        "t": 9.5,
         "event": "gui_thaw"
       },
       {
-        "t": 9.6,
+        "t": 10.85,
         "event": "mob_hurt"
       },
       {
-        "t": 10.25,
+        "t": 11.5,
         "event": "mob_hurt"
       },
       {
-        "t": 10.25,
+        "t": 11.5,
         "event": "mob_death"
       },
       {
-        "t": 10.25,
+        "t": 11.5,
         "event": "motion_start"
       },
       {
-        "t": 11.25,
+        "t": 12.5,
         "event": "skeleton_dead"
       },
       {
-        "t": 11.25,
+        "t": 12.5,
         "event": "motion_settled"
       },
       {
-        "t": 12.2,
+        "t": 12.65,
+        "event": "cut2a"
+      },
+      {
+        "t": 13.5,
+        "event": "cut2b"
+      },
+      {
+        "t": 13.7,
         "event": "fm3_open"
       },
       {
-        "t": 12.2,
+        "t": 13.7,
         "event": "gui_freeze"
       },
       {
-        "t": 12.8,
+        "t": 14.3,
         "event": "fm3_hover"
       },
       {
-        "t": 12.8,
+        "t": 14.3,
         "event": "fm3_hover0"
       },
       {
-        "t": 13.3,
+        "t": 14.8,
         "event": "fm3_hover"
       },
       {
-        "t": 13.3,
+        "t": 14.8,
         "event": "fm3_hover1"
       },
       {
-        "t": 13.8,
+        "t": 15.35,
         "event": "fm3_click"
       },
       {
-        "t": 13.9,
+        "t": 15.45,
         "event": "fm3_roll"
       },
       {
-        "t": 13.9,
+        "t": 15.45,
         "event": "fm3_roll0"
       },
       {
-        "t": 14,
+        "t": 15.55,
         "event": "fm3_roll"
       },
       {
-        "t": 14,
+        "t": 15.55,
         "event": "fm3_roll1"
       },
       {
-        "t": 14.1,
+        "t": 15.65,
         "event": "fm3_roll"
       },
       {
-        "t": 14.1,
+        "t": 15.65,
         "event": "fm3_roll2"
       },
       {
-        "t": 14.25,
+        "t": 15.8,
         "event": "fm3_roll"
       },
       {
-        "t": 14.25,
+        "t": 15.8,
         "event": "fm3_roll3"
       },
       {
-        "t": 14.4,
+        "t": 16,
         "event": "fm3_roll"
       },
       {
-        "t": 14.4,
+        "t": 16,
         "event": "fm3_roll4"
       },
       {
-        "t": 14.6,
+        "t": 16.2,
         "event": "fm3_roll"
       },
       {
-        "t": 14.6,
+        "t": 16.2,
         "event": "fm3_roll5"
       },
       {
-        "t": 14.85,
+        "t": 16.45,
         "event": "fm3_roll"
       },
       {
-        "t": 14.85,
+        "t": 16.45,
         "event": "fm3_roll6"
       },
       {
-        "t": 15.15,
+        "t": 16.75,
         "event": "fm3_roll"
       },
       {
-        "t": 15.15,
+        "t": 16.75,
         "event": "fm3_roll7"
       },
       {
-        "t": 15.5,
+        "t": 17.1,
         "event": "fm3_roll"
       },
       {
-        "t": 15.5,
+        "t": 17.1,
         "event": "fm3_roll8"
       },
       {
-        "t": 15.5,
+        "t": 17.1,
         "event": "fm3_result"
       },
       {
-        "t": 16.1,
+        "t": 17.7,
         "event": "fm3_close"
       },
       {
-        "t": 16.1,
+        "t": 17.7,
         "event": "gui_thaw"
       },
       {
-        "t": 16.3,
+        "t": 17.9,
         "event": "ignite"
       },
       {
-        "t": 17.55,
+        "t": 19.2,
         "event": "hurt",
         "type": "player_explosion"
       },
       {
-        "t": 17.55,
+        "t": 19.2,
         "event": "death"
       },
       {
-        "t": 17.55,
+        "t": 19.2,
         "event": "motion_start"
       },
       {
-        "t": 17.6,
+        "t": 19.25,
         "event": "boom"
       },
       {
-        "t": 19.75,
+        "t": 21.4,
         "event": "motion_settled"
       },
       {
-        "t": 19.75,
+        "t": 21.4,
         "event": "settle"
       },
       {
-        "t": 22.1,
+        "t": 23.75,
         "event": "end"
       }
     ]
@@ -606,10 +633,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "3d1cdaa2ba28c382bbe49e1d5ed402fdbd4bf742",
+    "commit": "a1f50a4486a25ee671ebb5616bfe57116ab5b74f",
     "rendered": "local",
-    "rendered_at": "2026-11-11T22:26:43.503Z",
-    "head_at_publish": "3d1cdaa2ba28c382bbe49e1d5ed402fdbd4bf742",
+    "rendered_at": "2026-11-12T00:21:31.724Z",
+    "head_at_publish": "a1f50a4486a25ee671ebb5616bfe57116ab5b74f",
     "stunt": "stunts/fakemod_permission.js",
     "source_snapshot": [
       "source/fakemod_permission.js",
@@ -621,34 +648,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 3d1cdaa2ba28",
+    "git checkout a1f50a4486a2",
     "gunzip -c shorts/fakemod_permission/recording.json.gz > work/fakemod_permission.rec.json",
     "node render.js work/fakemod_permission.rec.json work/fakemod_permission.frames 60 1080 1011",
     "python3 audio.py work/fakemod_permission.rec.json work/fakemod_permission.wav",
-    "python3 edit.py --frames work/fakemod_permission.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakemod_permission.rec.json --audio work/fakemod_permission.wav --caption \"this mod makes mobs ask permission 💀\" --self_name 56e --red permission --popup \"[{\\\"at\\\":[\\\"fm1_open\\\",\\\"fm1_click\\\",\\\"fm1_close\\\"],\\\"marks\\\":[\\\"fm1_hover0\\\"],\\\"mob\\\":\\\"zombie\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Zombie\\\",\\\"red\\\"],\\\" is asking for permission to attack you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"],\\\"y\\\":0.03},{\\\"at\\\":[\\\"fm2_open\\\",\\\"fm2_click\\\",\\\"fm2_close\\\"],\\\"marks\\\":[\\\"fm2_hover0\\\",\\\"fm2_hover1\\\"],\\\"mob\\\":\\\"skeleton\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Skeleton\\\",\\\"red\\\"],\\\" is asking for permission to shoot you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Allow\\\",\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"],\\\"y\\\":0.03},{\\\"at\\\":[\\\"fm3_open\\\",\\\"fm3_click\\\",\\\"fm3_close\\\"],\\\"marks\\\":[\\\"fm3_hover0\\\",\\\"fm3_hover1\\\",\\\"fm3_roll0\\\",\\\"fm3_roll1\\\",\\\"fm3_roll2\\\",\\\"fm3_roll3\\\",\\\"fm3_roll4\\\",\\\"fm3_roll5\\\",\\\"fm3_roll6\\\",\\\"fm3_roll7\\\",\\\"fm3_roll8\\\"],\\\"mob\\\":\\\"creeper\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Creeper\\\",\\\"red\\\"],\\\" is asking for permission to explode.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Roll\\\",\\\"hover\\\":[\\\"Deny\\\",\\\"Roll\\\"],\\\"done\\\":[\\\"The dice say: \\\",[\\\"ALLOW\\\",\\\"green\\\"]],\\\"roll\\\":{\\\"ticks\\\":\\\"fm3_roll\\\",\\\"at\\\":\\\"fm3_result\\\",\\\"result\\\":\\\"Allow\\\"},\\\"y\\\":0.03}]\" --sfx [[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]] --death_screen death --start_at first:-0.05 --end_after boom:1.5 --out out/fakemod_permission.mp4"
+    "python3 edit.py --frames work/fakemod_permission.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakemod_permission.rec.json --audio work/fakemod_permission.wav --caption \"why is every mob asking me for permission 💀\" --self_name 56e --red permission --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"]] --popup \"[{\\\"at\\\":[\\\"fm1_open\\\",\\\"fm1_click\\\",\\\"fm1_close\\\"],\\\"marks\\\":[\\\"fm1_hover0\\\"],\\\"mob\\\":\\\"zombie\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Zombie\\\",\\\"red\\\"],\\\" is asking for permission to attack you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm2_open\\\",\\\"fm2_click\\\",\\\"fm2_close\\\"],\\\"marks\\\":[\\\"fm2_hover0\\\",\\\"fm2_hover1\\\"],\\\"mob\\\":\\\"skeleton\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Skeleton\\\",\\\"red\\\"],\\\" is asking for permission to shoot you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Allow\\\",\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm3_open\\\",\\\"fm3_click\\\",\\\"fm3_close\\\"],\\\"marks\\\":[\\\"fm3_hover0\\\",\\\"fm3_hover1\\\",\\\"fm3_roll0\\\",\\\"fm3_roll1\\\",\\\"fm3_roll2\\\",\\\"fm3_roll3\\\",\\\"fm3_roll4\\\",\\\"fm3_roll5\\\",\\\"fm3_roll6\\\",\\\"fm3_roll7\\\",\\\"fm3_roll8\\\"],\\\"mob\\\":\\\"creeper\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Creeper\\\",\\\"red\\\"],\\\" is asking for permission to explode.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Roll\\\",\\\"hover\\\":[\\\"Deny\\\",\\\"Roll\\\"],\\\"done\\\":[\\\"The dice say: \\\",[\\\"ALLOW\\\",\\\"green\\\"]],\\\"roll\\\":{\\\"ticks\\\":\\\"fm3_roll\\\",\\\"at\\\":\\\"fm3_result\\\",\\\"result\\\":\\\"Allow\\\"}}]\" --sfx [[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]] --death_screen death --start_at first:-0.05 --end_after boom:0.8 --out out/fakemod_permission.mp4"
   ],
   "status": "ready",
-  "notes": "fakemod 1: mobs ask permission (zombie Deny, skeleton Deny, creeper Roll -> ALLOW -> boom). R1: creeper yaw/tree + long death screen fixed by re-record; R2: still death-screen tail -> endAfter boom:1.5; R3 fix-check READY. Nits: creeper sits low under the popup, skeleton reads blue in dusk light, crit stars small.",
-  "published_at": "2026-11-11T22:28:52.363Z",
+  "notes": "fakemod 1 re-cut (owner): popup centred over the action with each mob framed under it (r:r7ef6ec); hard cuts after each kill, end boom+0.8 (r:r188b46); zombie walking from frame 0, reaction caption (r:r0f3da0). Fix-check READY (fresh reviewer). Nits: quiet hit at 0.3 s, zombie low under the HUD at the open.",
+  "published_at": "2026-11-12T00:23:07.882Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:29:16+00:00",
+    "at": "2026-11-12T00:23:34+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 17.92 s vs the reviewed render 17.90 s"
+      "summary": "short.mp4 16.38 s vs the reviewed render 16.37 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 5,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:27:01.263Z",
+      "at": "2026-11-12T00:21:45.257Z",
       "report": "work/hb/fakemod_permission.check.json"
     },
     "key_sounds": "n/a"
