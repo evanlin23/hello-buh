@@ -184,7 +184,8 @@ function dress () {
     if (Math.abs(jx) <= 4 && jz > -66) continue                            // the road up the middle
     d.push([jx, jz, (jx + jz) % 3 === 0 ? 'minecraft:flower_plain' : 'minecraft:patch_grass'])
   }
-  for (const [tx, tz] of [[-54, -70], [-55, -40], [-56, -12], [54, -72], [55, -44], [56, -16], [-30, -74], [26, -75], [-50, 8], [52, 6]]) d.push([tx, tz, 'minecraft:fancy_oak'])
+  // (no oak at (56, -16): the 'low right' showcase camera stands beside it)
+  for (const [tx, tz] of [[-54, -70], [-55, -40], [-56, -12], [54, -72], [55, -44], [-30, -74], [26, -75], [-50, 8], [52, 6]]) d.push([tx, tz, 'minecraft:fancy_oak'])
   return d
 }
 
