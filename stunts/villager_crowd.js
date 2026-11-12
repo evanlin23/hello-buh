@@ -31,7 +31,7 @@ module.exports = {
     speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5], ['pillar', 'overhead', 3],
       // fast cuts (owner r:r188b46; pace: 2.4 s and 2.2 s with nothing new): the sidestep after the 100's and the 200's
       // heads turn plays x2.2 (the heads still follow it; no cut inside the sidestep)
-      ['cut6a:-1.9', 'cut6a', 2.2], ['pillar:-2.2', 'pillar', 2.2]],   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
+      ['cut6a:-1.9', 'cut6a', 2.2], ['pillar:-2.2', 'pillar:-0.35', 2.2]],   // (the 200's span stops before the look down: x2.2 made it a 1220 deg/s whip)   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
     subs: [...[0, 2, 5, 6].map(i => ['beat', CROWDS[i].sub, 1.6, i]), ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]],
     punch: [['behind', 0, 1.08]], flash: [['behind', 0, 0.5]],
     zoom: [['overhead', 'behind:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead

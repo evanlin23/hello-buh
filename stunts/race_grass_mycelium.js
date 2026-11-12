@@ -19,5 +19,5 @@ module.exports = makeRace({
     startAt: 'race_start:2.25', endAfter: 'done:0.7',
     speed: [['race_start', 'race_start:30', 8], ['race_start:30', 'last', 3], ['last', 'done', 9]]
   },
-  sfx: [['ding', 'race_start:2.26'], ['pop', 'race_start:2.27', { gain: 1.6 }]],
+  sfx: [['ding', 'race_start:2.26'], ['pop', 'race_start:2.27', { gain: 2.0 }]],   // (1.6 was 6.5 dB under the win's peak: max 6)
 })
