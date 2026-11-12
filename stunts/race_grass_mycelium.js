@@ -19,9 +19,9 @@ module.exports = makeRace({
   // and under the WINS stamp the margin, read off this recording's done mark (mycelium 2061 vs grass 2035 blocks: a
   // photo finish); a re-take must update it. 0.8 s on it (the fast-end rule's upper edge: two lines to read)
   edit: {
-    startAt: 'race_start:2.25', endAfter: 'done:0.8',
+    startAt: 'race_start:2.25', endAfter: 'done:1.3',   // (review r1: two lines on the win need 1.2 s+ to read; 0.8 cut 'by just 26 blocks!' short)
     speed: [['race_start', 'race_start:30', 8], ['race_start:30', 'last', 4], ['last', 'done', 9]],
-    subs: [['done', 'by just 26 blocks!', 0.8, 0]], subsY: 0.66   // (no emoji: the sub font drew 😱 as a box)
+    subs: [['done', 'by just 26 blocks!', 1.3, 0]], subsY: 0.66   // (no emoji: the sub font drew 😱 as a box)
   },
   sfx: [['ding', 'race_start:2.26'], ['pop', 'race_start:2.27', { gain: 2.0 }]],   // (1.6 was 6.5 dB under the win's peak: max 6)
 })

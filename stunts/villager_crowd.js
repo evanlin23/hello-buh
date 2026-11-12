@@ -276,14 +276,18 @@ module.exports = {
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
       // (toward the pillar's foot by coordinates: 'facing entity <name>' with the player's name did nothing, r1)
       const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
-      const probe = Object.values(bot.entities).find(e => e.name === 'villager'), p0 = probe && probe.position.clone()
+      const vill = Object.values(bot.entities).filter(e => e.name === 'villager').sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
+      const probe = vill[0], p0 = probe && probe.position.clone()
       for (let k = 0; k < 6; k++) {
         bot.chat(`/execute as @e[type=villager] at @s facing ${px} ~ ${pz} run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
+        // NoAI mobs' moves reach the client only on the tracker's 3-tick beat: a metadata change each tick flushes them
+        // at 20 Hz (the kit's actor does the same; without it the recording showed no step at all, r1-r2)
+        bot.chat(`/execute as @e[type=villager] run data merge entity @s {Air:${k % 2 ? 298 : 299}s}`)
         await bot.waitForTicks(1)
       }
-      await bot.waitForTicks(2)
-      ctx.log('step_in: a villager moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
-      await bot.waitForTicks(14)   // footage for the end (0.7 s after the step) and the settle
+      await bot.waitForTicks(3)
+      ctx.log('step_in:', vill.length, 'villagers; the nearest moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
+      await bot.waitForTicks(12)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
     }
     bot.removeListener('physicsTick', track); bot.removeListener('physicsTick', aimTick)
