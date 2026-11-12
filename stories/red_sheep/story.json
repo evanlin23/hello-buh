@@ -2,10 +2,10 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why ('In my village, all SIXTY sheep are BLUE. And nobody will tell me WHY.'); five two-way clues (the dye, EYES, the count, the red one, the crossbow week); the snaps (L08, S08) cut: a sound-only clue a casual viewer can't read; L10 carries the why ('He never even says WHY'); the reveal is now SAID (L13, the kid naming what she sees: 'A grey man in the trees raised his ARMS, and my lamb turned RED.') over S13, RED on the cast tick, cut 1.0 s later on the evoker's look; r4.5 (2026-11-11): owner approved (new kid narrator, end on the evoker's look); Dad's skin sunny (kai is Jonah's), a second voice candidate (Rasalgethi); r4.4: r4 continuity must-fixes (S13 camera clears the hiding trunk, S07 crossbow in the off hand, S10 Dad in the field 13 blocks out) and should-fixes; r4.3: r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
+  "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'In my village, SHEEP can only be BLUE. My lamb broke the LAW.' replaces the frame + why opener; r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why ('In my village, all SIXTY sheep are BLUE. And nobody will tell me WHY.'); five two-way clues (the dye, EYES, the count, the red one, the crossbow week); the snaps (L08, S08) cut: a sound-only clue a casual viewer can't read; L10 carries the why ('He never even says WHY'); the reveal is now SAID (L13, the kid naming what she sees: 'A grey man in the trees raised his ARMS, and my lamb turned RED.') over S13, RED on the cast tick, cut 1.0 s later on the evoker's look; r4.5 (2026-11-11): owner approved (new kid narrator, end on the evoker's look); Dad's skin sunny (kai is Jonah's), a second voice candidate (Rasalgethi); r4.4: r4 continuity must-fixes (S13 camera clears the hiding trunk, S07 crossbow in the off hand, S10 Dad in the field 13 blocks out) and should-fixes; r4.3: r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
   "caption": "why is every sheep in our village blue 🐑",
   "upload": {
-    "title": "every sheep in our village is blue. all sixty of them 🐑 #minecraft #shorts",
+    "title": "in my village, sheep can only be blue. my lamb broke the law 🐑 #minecraft #shorts",
     "pinned": "Would YOU have followed the lamb?",
     "tags": [
       "minecraft sheep",
@@ -158,8 +158,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "In my village, / all SIXTY sheep / are BLUE. / And NOBODY / will tell me WHY.",
-      "say": "In my village, all SIXTY sheep are BLUE. And nobody will tell me WHY.",
+      "text": "In my village, / SHEEP can only / be BLUE. / My LAMB / broke the LAW.",
+      "say": "In my village, SHEEP can only be BLUE. My lamb broke the LAW.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -170,7 +170,7 @@
         "what": "entity:sheep",
         "word": "SHEEP"
       },
-      "note": "hook: the fact, then the question, a little indignant on WHY; one breath, a lift on SIXTY"
+      "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; flat, a little scandalised on LAW; L13 is how she broke it"
     },
     {
       "id": "L02",
@@ -495,7 +495,7 @@
     "beats": [
       "S13 under L13: the evoker still under 'A grey man in the trees'; its arms go up 2.0 s before 'RED' (around 'raised his ARMS'); on 'RED' the lamb's wool turns red (the reveal, said, and her wish for a red one granted); 'RED' + 1.0 s its arms drop and its head turns to the lens; cut."
     ],
-    "loop": "'...my lamb turned RED.' -> 'In my village, all SIXTY sheep are BLUE. And nobody will tell me WHY.': line 1's why is answered; sixty blue sheep are sixty alarms"
+    "loop": "'...and my lamb turned RED.' -> 'In my village, SHEEP can only be BLUE. My lamb broke the LAW.': the law was an alarm; blue means safe"
   },
   "bible": "stories/red_sheep/bible.md",
   "beats": "stories/red_sheep/beats.md",

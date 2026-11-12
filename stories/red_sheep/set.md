@@ -6,7 +6,7 @@ top. No site search and no clearing (STANDARDS 3.5).
 ## What the narration claims (check each on stills from every shot angle before recording)
 | claim | line | check |
 |---|---|---|
-| every sheep in the village is blue, sixty of them | L01 | S01: count 60 sheep, all `Color:11`; no white or other wool anywhere in any shot except the S02 stray and the S06 red one |
+| sheep can only be blue (sixty of them) | L01 | S01: count 60 sheep, all `Color:11`; no white or other wool anywhere in any shot except the S02 stray and the S06 red one |
 | Dad won't let a white one through the gate | L02 | S02: the stray is white until 'GATE', then blue, then through the gate |
 | sheep (can't see that good) | L04 | S04: one blue sheep, full figure, staring at the lens |
 | he counts them every night | L05 | S05 is at nightfall (13000), Dad walking among the flock |
