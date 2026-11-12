@@ -27,6 +27,7 @@ function blobCmds (cx, cy, cz, r, block) {
 
 module.exports = {
   name: 'cave_reveal',
+  botTimeout: 300,   // the deep cavern's setup (stone to F-80, a bigger lava lake) ran past the default 180 s
   brightness: 1,   // Options > Brightness: Bright (underground the default reads near-black)
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight down 💀',
