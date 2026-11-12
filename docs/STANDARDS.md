@@ -459,6 +459,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   song ducked through it, its drop after: dropAt 'EVENT:OFFSET'). Check: mixcheck, review, owner. r:rfe4f62
 - **A method that is named is shown**: every method a list names and rates is on screen (built and crossed, sped up if
   long), never cut while its sub stays up. Check: review, owner. r:r32a80c
+- **Blur only the answer**: a tease blurs the mob or object that is the answer (edit hook.blurBox), the rest of the
+  frame sharp. Check: review, owner. r:r24c30c
+- **A known death plays fast**: once the death is certain (walking into lava), the damage and the burn are sped up and
+  the Short ends ~0.9 s into the death screen. Check: pace, review, owner. r:rf26b9b
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Labour steps play as a time-lapse**: a long dig (a trap's shaft) or any build step that is only labour is one

@@ -846,6 +846,11 @@ STANDARDS.md in the same commit.
   the parrot); a short pop is the hit, the song stays ducked through it and drops after (dropAt 'EVENT:OFFSET').
 - **Owner, 2026-11-12, Review Room, on lava_crossing at 2.4 s: "huh? no brdige?"** A method that is named and rated is
   shown: the bridge is built and crossed on screen (sped up), never cut while its sub stays up.
+- **Owner, 2026-11-12, Review Room, on guess_sound at 4 s: "only blur the animal at the start, not the full screen";
+  on guess_sound_2 at 0.6 s: "only blur the animal, not eveyrhting for the start".** A tease blurs only the answer
+  itself (edit hook.blurBox around the mob), the rest of the picture sharp.
+- **Owner, 2026-11-12, Review Room, on lava_crossing at 19.6 s: "we can speed up us taking damage and dying".** A known
+  death plays fast (the burn sped up) and the Short ends soon after it (~0.9 s on the death screen).
 - **Owner, 2026-11-12, on dropper_rainbow v2: "also the dropper should be fancier please".** A dropper's shaft is a
   build to show off, not a coloured tube: patterned walls (glazed terracotta trims, quartz corner pillars), lit
   stained-glass neon rings and windows, obstacles with trims and glowing hole rims, a glass layer, lanterns on chains,
