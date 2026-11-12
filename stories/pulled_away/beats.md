@@ -29,7 +29,7 @@ dusk villagers walk home to their beds.
 
 | format beat | # | shot | picture | line |
 |---|---|---|---|---|
-| 1. the impossible fact + the question (0-3 s) | 1 | S01 | the kid in an oak boat dragged over grass by a player on a lead | N: "In my village, a PLAYER takes us away in his BOAT. THIRTY-NINE so far. NONE came BACK. WHERE did they GO?" |
+| 1. the impossible fact + the question (0-3 s) | 1 | S01 | the kid in an oak boat dragged over grass by a player on a lead | N: "A MAN is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS." |
 | 3, 5. the narrator wants to know and goes to look | 2 | S02 | tracking beside the boat; the man glances back on FORTY | N: "So TODAY, I got in MYSELF. I'm number FORTY." |
 | 4. someone loved at stake (+ clue) | 3 | S07, S07b, S08 | flashbacks: Mom in a boat; Uncle another day; present: the kid looks back from the crest at the two shut doors on LOVE | N: "He took MOM last WEEK. And my UNCLE. They must LOVE it there." |
 | 2. clue | 4 | S04, S04b | flashback: the man alone on the bank, dark Fernbank across the water; on WINDOW the long lens on the one lit window, the librarian in it | N: "The FIRST time he came, he stared across the WATER at the old EMPTY village. Somebody left a light on in ONE WINDOW." |
@@ -46,7 +46,7 @@ lit window and the lonely one).
 
 | clue | planted | the kid's misreading (on a line) | the dark reading | after the reveal |
 |---|---|---|---|---|
-| thirty-nine taken, none came back | L01, S01 | "WHERE did they GO?" (curious, not scared); "They must LOVE it there" (L03) | kidnapping / a trading hall | they stayed: they live there now |
+| a man is kidnapping the village, one at a time (thirty-nine so far) | L01, L02, S01 | "WHERE did they GO?" (curious, not scared); "They must LOVE it there" (L03) | kidnapping / a trading hall | they stayed: they live there now |
 | number forty | L02 | said proudly, her own choice | stock count | the fortieth neighbour he brings |
 | Mom, then Uncle, taken | L03, S07, S07b, S08 | "They must LOVE it there." | locked in cells | they do |
 | one lit window across the water | L04, S04, S04b | "Somebody left a light on in ONE WINDOW." | a creepy empty place | the librarian, alone since the village emptied |
@@ -59,6 +59,6 @@ lit window and the lonely one).
   every house full = he filled her village). No mechanic needed; "trading hall" is a bonus read for players only.
 - Planted twice where a rewatch catches it: the lit window (S04, S04b) with the man's line (L05); "They must LOVE it
   there" (L03).
-- Loop: L09 "None of them came BACK" echoes L01 "NONE came BACK", and answers its "WHERE?".
+- Loop: L09 "None of them came BACK. I'm not going back either." runs into L01 "A man is kidnapping my whole VILLAGE": the kidnapping was a move.
 - Agency: she got in herself (L02); every motion has a visible cause (the man pulls, rows; the boat bumps the dock).
 - Fair to the canon: Fernbank has been empty but for the librarian and the golem since day 520 (Respawn Tax).

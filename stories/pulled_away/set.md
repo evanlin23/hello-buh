@@ -23,7 +23,7 @@
 ## Claims (the narration and the picture must agree, checked on stills from every shot angle)
 | line | claim | the set must show |
 |---|---|---|
-| L01 | a player takes us away in his boat, thirty-nine so far | the boat on grass with the kid in it, the Hollow's cottages behind, the man ahead with the lead (gap: the lead must draw) |
+| L01 | a man is kidnapping my whole village, one at a time, in a boat, on the grass | the boat on grass with the kid in it, the Hollow's cottages behind, the man ahead with the lead (gap: the lead must draw) |
 | L02 | I got in myself; number forty | the kid sitting in the boat, the man glancing back |
 | L03 | he took Mom, and Uncle; they must love it there | each in a boat behind the man, in its flashback shot, while named; on LOVE the two cottages shut and dark (S08) |
 | L04 | (flashback) across the water, the old empty village; a light on in one window | open water; Fernbank dark but exactly one lit window (the librarian's upstairs west window), her figure in it (S04b) |

@@ -2,7 +2,7 @@
  "name": "pulled_away",
  "stunt": "story_pulled_away",
  "version": 2,
- "revision": "r5.1 (2026-11-12): critic r3 must-fixes: L01 'A PLAYER took THIRTY-NINE of us in his BOAT. NONE came BACK. WHERE did they GO?' (14 words); L04 ends 'Somebody left a light on in ONE WINDOW.' (plants L08's WINDOW; S04b cuts on it); S11: their cottage door under the lantern, no boats at the dock but the two. r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the impossible fact (thirty-nine villagers taken, none came back) and the question (WHERE does he take them?); she gets in herself to find out (L02, number forty); Mom and Uncle at stake with the misread (L03); the lit window and the man's line (L04-L06); the crossing and the bump (L07); the reveal SAID over S11 (L08: Mom, Uncle, the lady from the window, every house full); one beat echoing L01 (L09); S03 and 'best trip ever' / 'good at counting' / 'my boat got to swim' cut; 9 lines, ~110 words. Earlier: r4 (2026-11-11): the lead's calls: the title says 'a player'; the kid's family moves from Oakend to a new untagged homestead, Bramble Hollow, behind the ridge with no sightline to Fernbank (claimed); one easter egg (the empty boat, S10); the man's skin a new plain one; lines unchanged. Earlier: r3 (2026-11-11): continuity r2: the lit window is the librarian house's upstairs west window and S04's camera moves to about (-452, 66, -1076); the flashback at dusk 13000; S06 ms up the slope; S08's doors swapped; the hidden new quarter dropped (it can't be hidden: S11 and Oakend's bank share an axis), the lit houses within 30 blocks of the dock. Earlier: r2 (2026-11-11): critic r1 and continuity r1 must-fixes: the look across the water is a flashback ('The FIRST time he came'), 'Somebody left ONE light ON' (0a), S04b long lens on the librarian, he tows her boat from his own (vanilla: she sat in the front first), the reveal in one shot cut on EMPTY, 'A PLAYER', 'So TODAY, I sat in his BOAT and WAITED' (agency), the new lit quarter out of Oakend's sight; L05 plain. Script only, nothing voiced (r:ra5bc8f); r2.1: L08 'I got in the BOAT' (critic r2: 'his boat' clashed with L09's 'his OWN boat')",
+ "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'A man is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS.' replaces the frame + why opener; r5.1 (2026-11-12): critic r3 must-fixes: L01 'A PLAYER took THIRTY-NINE of us in his BOAT. NONE came BACK. WHERE did they GO?' (14 words); L04 ends 'Somebody left a light on in ONE WINDOW.' (plants L08's WINDOW; S04b cuts on it); S11: their cottage door under the lantern, no boats at the dock but the two. r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the impossible fact (thirty-nine villagers taken, none came back) and the question (WHERE does he take them?); she gets in herself to find out (L02, number forty); Mom and Uncle at stake with the misread (L03); the lit window and the man's line (L04-L06); the crossing and the bump (L07); the reveal SAID over S11 (L08: Mom, Uncle, the lady from the window, every house full); one beat echoing L01 (L09); S03 and 'best trip ever' / 'good at counting' / 'my boat got to swim' cut; 9 lines, ~110 words. Earlier: r4 (2026-11-11): the lead's calls: the title says 'a player'; the kid's family moves from Oakend to a new untagged homestead, Bramble Hollow, behind the ridge with no sightline to Fernbank (claimed); one easter egg (the empty boat, S10); the man's skin a new plain one; lines unchanged. Earlier: r3 (2026-11-11): continuity r2: the lit window is the librarian house's upstairs west window and S04's camera moves to about (-452, 66, -1076); the flashback at dusk 13000; S06 ms up the slope; S08's doors swapped; the hidden new quarter dropped (it can't be hidden: S11 and Oakend's bank share an axis), the lit houses within 30 blocks of the dock. Earlier: r2 (2026-11-11): critic r1 and continuity r1 must-fixes: the look across the water is a flashback ('The FIRST time he came'), 'Somebody left ONE light ON' (0a), S04b long lens on the librarian, he tows her boat from his own (vanilla: she sat in the front first), the reveal in one shot cut on EMPTY, 'A PLAYER', 'So TODAY, I sat in his BOAT and WAITED' (agency), the new lit quarter out of Oakend's sight; L05 plain. Script only, nothing voiced (r:ra5bc8f); r2.1: L08 'I got in the BOAT' (critic r2: 'his boat' clashed with L09's 'his OWN boat')",
  "caption": "where does he take them 🛶",
  "logline": "A villager kid says a player took thirty-nine villagers in his boat and none came back, so today she got in herself to find out where; he took her Mom and her uncle, and the first time he came he stared at the old empty village across the water where a light was on in one window; at dusk her boat bumps that village and Mom, her uncle and the lady from the window are waiting, every house full.",
  "question": "why has this player taken thirty-nine villagers in his boat, and where did they go?",
@@ -127,14 +127,14 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "In my village, / a PLAYER / takes us away / in his BOAT. / THIRTY-NINE so far. / NONE came BACK. / WHERE did they GO?",
-   "say": "In my village, a player takes us away in his boat. Thirty-nine so far. None came back. Where did they go?",
+   "text": "A man is KIDNAPPING / my whole VILLAGE. / One at a TIME. / In a BOAT. / On the GRASS.",
+   "say": "A man is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS.",
    "shot": "S01",
    "punch": true,
    "shows": [
     {
      "what": "player",
-     "word": "PLAYER"
+     "word": "MAN"
     },
     {
      "what": "oak_boat",
@@ -143,10 +143,10 @@
    ],
    "look": {
     "what": "Man",
-    "word": "PLAYER"
+    "word": "MAN"
    },
    "direction": "bright and quick, telling a friend a real mystery; the question curious, never scared",
-   "note": "r5 (story_format beat 1): the impossible, countable fact AND the question, said in line 1 (critic r3: 14 words, one quick breath; 'of us' says the narrator is a villager); the picture (a villager dragged over grass in a boat by a player) shows it by 2 s. 'None came BACK' is echoed by the last line"
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; flat, matter-of-fact, a tiny beat before each short fragment; the picture (a villager dragged over grass in a boat by a player) shows it by 2 s. 'Kidnapping' is her word; L09 turns it ('I'm not going back either')"
   },
   {
    "id": "L02",
@@ -534,14 +534,14 @@
    "S11 on EMPTY; L08 the reveal said over it: Mom, Uncle, the lady from the window, every house full",
    "L09 the one beat: 'None of them came BACK. I'm not going back EITHER.' (echoes L01); 1.0 s; cut"
   ],
-  "loop": "the last line echoes line 1's 'NONE came BACK', and answers its 'WHERE did they GO?'"
+  "loop": "L09 'None of them came BACK. I'm not going back either.' runs into L01 'A man is kidnapping my whole VILLAGE': the 'kidnapping' was a move, and she chose it"
  },
  "bible": "stories/pulled_away/bible.md",
  "set": "stories/pulled_away/set.md",
  "shotlist": "stories/pulled_away/shots.md",
  "beats": "stories/pulled_away/beats.md",
  "upload": {
-  "title": "a player took 39 of us in his boat 🛶 #minecraft #shorts",
+  "title": "a man is kidnapping my whole village. in a boat. on the grass 🛶 #minecraft #shorts",
   "pinned": "Be honest: where did YOU think he was taking her?",
   "tags": [
    "minecraft villager",
