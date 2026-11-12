@@ -23,7 +23,7 @@ module.exports = {
   time: 12950,     // sunset: undead don't burn (the sky is too dark for it) and the sky goes orange
   caption: CAPTION,
   edit: {
-    caption: CAPTION, red: 'permission', startAt: 'first:-0.05', deathScreen: true, endAfter: 'boom:0.8',   // settle-ok: fast cuts (owner r:r188b46): end 0.5-0.8 s after the payoff's result; smoke never holds the end
+    caption: CAPTION, red: 'permission', startAt: 'first:0.25', deathScreen: true, endAfter: 'boom:0.8',   // settle-ok: fast cuts (owner r:r188b46): end 0.5-0.8 s after the payoff's result; smoke never holds the end
     // straight to the next beat once each kill reads (r:r188b46): cut when the dying mob is gone (r:r24d99a still holds
     // a cut for a mob mid-death) to the next mob already framed under the popup
     speed: [['cut1a', 'cut1b', 'cut'], ['cut2a', 'cut2b', 'cut']],
