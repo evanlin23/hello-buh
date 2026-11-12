@@ -51,3 +51,9 @@ quest_pyramid  abd32be2280b4bf3  # 2026-11-12: 2026-11-12: owner pressed 'OK for
 sandart_tnt  85646a5fa8cecab8  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 18:42-20:37 UTC
 trap_free_diamonds  55a9fd23eb944039  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 18:42-20:37 UTC
 story_nitwit  5ca4315ac4cfadec  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 18:42-20:37 UTC
+which_door  e32e579bd9d60618  # sound-only re-mix of OK'd cut 2060e5056d50f933 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
+lucky_dig  0917c343418a90b9  # sound-only re-mix of OK'd cut 6a6cbe726b07b07b (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
+one_in_a_million  ba580d59bf91a0b1  # sound-only re-mix of OK'd cut 5df9f64bf48c09b5 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
+lapse_statue  af387111df29ecbe  # sound-only re-mix of OK'd cut f16d41ecce372ba3 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
+tnt_1000  dd20490bfe729f83  # sound-only re-mix of OK'd cut b9dbc555bb04ac05 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
+tnt  a504c460b17e34a3  # sound-only re-mix of OK'd cut adea555f2b9215d3 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
