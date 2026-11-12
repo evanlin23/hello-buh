@@ -67,3 +67,6 @@ fakeworld_diamond  # first
 mobpov_baby_zombie  # first
 friend_new_world  # first
 quest_pyramid  # first
+dropper_rainbow  # first
+pickaxe_race  # first
+mega_lapse_fox  # first

@@ -38,7 +38,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
 0v. **The hook is absurd** (owner: "we need to make our hooks absurd"): line 1 is a sentence nobody expects, said
    flatly, true to the story and naive, never a joke at a real group's expense; a casual reader would stop scrolling.
-   Edgy inside the story's world is fine; no real-world flashpoints (religion, gender, politics, real groups). Check: cold reader (casual), story-critic. r:rb14c39 r:r4419c8
+   Edgy inside the story's world is fine; no real-world flashpoints (religion, gender, politics, real groups). It parses on first hearing and carries tension (two casual readers). Check: cold reader (casual), story-critic. r:rb14c39 r:r4419c8 r:r581039
 0w. **The genre opener**: line 1 starts "In my village...", "In my world..." or "My [twin/grandpa/friend]...", then the
    impossible fact and a short clause that makes it stranger; the viewer asks "why?", the line doesn't say it (no stock "nobody will tell me why"). Check: story-critic. r:rd2f8e4 r:r208f5c
 0y. **The Roblox story format, in Minecraft** (docs/story_format.md): the impossible fact AND its "why?" said in line 1
@@ -417,6 +417,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner, review. r:r7ef6ec
 - **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
   ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
+  The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a
+  satisfying finish, something new); "nothing much" / a small result / "it just ends" is a no-op and a BLOCKER.
+  Check: review (short-review takeaway line), owner. r:r8d6af1
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never

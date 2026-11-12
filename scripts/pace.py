@@ -678,11 +678,13 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     # ---- 5. payoff (located first: build-up runs to it)
     payoff, how = None, ""
     spec = payoff_spec or (story or {}).get("payoff")
-    def mark_time(name):
-        for m in marks:
-            if (m["event"] == "line" and m.get("id") == name) or m["event"] == name:
-                return m["out"]
-        return None
+    def mark_time(name, nth=0):
+        """The output time of the nth (0-based) mark of that name (a card's 5th field, an sfx's nth)."""
+        hits = [m["out"] for m in marks if (m["event"] == "line" and m.get("id") == name) or m["event"] == name]
+        return hits[nth] if len(hits) > nth else None
+    def card_time(c):
+        n = c[4] if len(c) > 4 and isinstance(c[4], int) else 0
+        return mark_time(str(c[0]).split(":")[0], n)
     if spec:
         payoff, how = mark_time(re.split(r"[+:]", str(spec))[0]), f"story.json payoff {spec}" if not payoff_spec else f"--payoff {spec}"
         m = re.search(r"[+:](-?[\d.]+)$", str(spec))
@@ -774,7 +776,7 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         # (or the death screen already up at a blast that follows the death: which_door's second wave 0.6 s after it)
         died_before = any(m["event"] in ("death", "slain") and payoff - 2.0 <= m["out"] <= payoff + 0.5 for m in marks)
         text_payoff = bool(edit.get("deathScreen") and ((ev_here & {"death", "slain", "boom", "burn"}) or died_before)) or \
-            any(isinstance(c, list) and mark_time(str(c[0]).split(":")[0]) is not None and abs(mark_time(str(c[0]).split(":")[0]) - payoff) <= 0.5 for c in edit.get("cards", []))
+            any(isinstance(c, list) and card_time(c) is not None and abs(card_time(c) - payoff) <= 0.5 for c in edit.get("cards", []))   # (at the card's own occurrence: guess_sound's last 'lit')
         line_here = [(t, lid) for t, lid in lines if abs(t - payoff) <= PAYOFF_WIN]
         # a hit that is only a line's first word is the voice, not a sound hit (an impact, a boom, the music)
         snd = [(t, r) for t, r in hits if abs(t - payoff) <= PAYOFF_WIN and not any(abs(t - lt_) <= 0.12 for lt_, _ in lines)]
