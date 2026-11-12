@@ -2089,6 +2089,29 @@
    ],
    "status": "claimed 2026-11-11 by the_walk",
    "story_builds": "Grandma's cottage (one 3 x 2 glass-pane window facing the dock, lit) and her boat on the beach: the_walk's set, since about day 350"
+  },
+  "stonefold": {
+   "name": "Stonefold",
+   "kind": "hamlet",
+   "region": "the_green",
+   "at": [
+    -444,
+    118,
+    -786
+   ],
+   "footprint": [
+    -472,
+    -812,
+    -414,
+    -758
+   ],
+   "about": "A small hamlet on the High Meadow's top west of Larkfield (meadow y ~116-120; read the ground y off the survey before build), four cottages around a giant player-built stone face (the statue, about 15 wide x 16 tall, facing east toward Larkfield) with a bench at its foot. Everyone gives the statue one year on their birthday; the face's wrinkles are rows of dark blocks. From day 3900 the statue stands and later High Meadow stories can show it. North of The Honey Thief's bee meadow (claimed on its branch, day 4200); Larkfield's roofs and bell 30-75 blocks east, pre-torch before day 4500.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "statue_younger"
+   ],
+   "status": "claimed 2026-11-12 by statue_younger"
   }
  },
  "stories": {
@@ -2314,6 +2337,14 @@
     "boxed_bell"
    ],
    "status": "made"
+  },
+  "statue_younger": {
+   "day": 3900,
+   "places": [
+    "stonefold"
+   ],
+   "cameos": [],
+   "status": "claimed"
   }
  },
  "cameos": {
