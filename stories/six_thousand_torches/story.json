@@ -2,7 +2,7 @@
  "name": "six_thousand_torches",
  "stunt": "story_six_thousand_torches",
  "version": 2,
- "revision": "r2 (2026-11-11): the r1 critic's must-fixes (the nightly walk home with his torch, not a torch left by the door; the L08 'one last night' line cut; L14 a quote with no sign-off comma; Jonah's skin and voice flagged for the owner), the r1 cold read (75% sure at the midpoint: the 'last night' line removed so the midpoint stays open), and STANDARDS 0a naivety (r:rb89776): every clue gets the kid's innocent misreading (a PARTY, PRESENTS, MOVING in with US, he FORGOT). r2b: 'So I'm NEVER in the DARK' moved from L06 to L13, the kid's happy read of the last torch (the r2 midpoint cold read was still 75% with it next to the 6,000). reviews/ has the table read",
+ "revision": "r3 (2026-11-11, the Roblox story format, docs/story_format.md, STANDARDS 0y/0z): L01 now says the fact AND the why ('I HAD to know WHY'); L03/L04 merged into one thought ('One torch lights a whole house. So something big must be coming!'), the second 'why' cut; the reveal L14 is said over S14 and a new sting L15 'I'll ask him WHY... TOMORROW' echoes line 1 and loops. Before: r2 (2026-11-11): the r1 critic's must-fixes (the nightly walk home with his torch, not a torch left by the door; the L08 'one last night' line cut; L14 a quote with no sign-off comma; Jonah's skin and voice flagged for the owner), the r1 cold read (75% sure at the midpoint: the 'last night' line removed so the midpoint stays open), and STANDARDS 0a naivety (r:rb89776): every clue gets the kid's innocent misreading (a PARTY, PRESENTS, MOVING in with US, he FORGOT). r2b: 'So I'm NEVER in the DARK' moved from L06 to L13, the kid's happy read of the last torch (the r2 midpoint cold read was still 75% with it next to the 6,000). reviews/ has the table read",
  "caption": "who put 6,000 torches on my village 🔥",
  "upload": {
   "title": "someone put 6,000 torches on my village last night 🔥 #minecraft #shorts",
@@ -27,7 +27,7 @@
   "sad"
  ],
  "payoff": "L14",
- "punch_note": "hook L01, turn L10 (the house gone, read as 'moving in'), reveal L14",
+ "punch_note": "hook L01 (the fact + 'I HAD to know WHY'), turn L10 (the house gone, read as 'moving in'), reveal L14 (said: he forgot to say see you tomorrow), sting L15 echoes L01's WHY",
  "look": {
   "time": "dawn",
   "ticks": {
@@ -111,7 +111,8 @@
     "L11",
     "L12",
     "L13",
-    "L14"
+    "L14",
+    "L15"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -161,16 +162,16 @@
   {
    "under": "S14",
    "sound": "block.grass.step",
-   "note": "Jonah's footsteps walking away down the street; the score drops out 0.45 s before 'TOMORROW', the payoff hit lands on it"
+   "note": "Jonah's footsteps walking away down the street; the score drops out 0.45 s before L14's 'TOMORROW', the payoff hit lands on it; L15 over the footsteps alone"
   }
  ],
  "lines": [
   {
    "id": "L01",
    "who": "N",
-   "text": "SOMEONE put / six THOUSAND / TORCHES / on my VILLAGE / last NIGHT.",
-   "say": "Someone put six thousand torches on my village last NIGHT.",
-   "direction": "one breath, amazed and delighted, a lift on the number",
+   "text": "SOMEONE put / six THOUSAND / TORCHES / on my village / OVERNIGHT. / I HAD / to know WHY.",
+   "say": "Someone put six thousand torches on my village overnight. I had to know WHY.",
+   "direction": "one breath, amazed and delighted, a lift on the number; then bright and determined on WHY, never scared",
    "shot": "S01",
    "beat": 1,
    "punch": true,
@@ -215,9 +216,9 @@
   {
    "id": "L03",
    "who": "N",
-   "text": "ONE torch / LIGHTS / a whole HOUSE. / So WHY / six THOUSAND?",
-   "say": "One torch lights a whole house. So why six THOUSAND?",
-   "direction": "proud of knowing it, then delighted puzzling",
+   "text": "ONE torch / LIGHTS / a whole HOUSE.",
+   "say": "One torch lights a whole HOUSE.",
+   "direction": "proud of knowing it, a little puzzled",
    "shot": "S03",
    "beat": 1,
    "shows": [
@@ -234,8 +235,8 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "Something BIG / must be COMING! / Like a PARTY!",
-   "say": "Something big must be coming! Like a PARTY!",
+   "text": "So something BIG / must be COMING! / Like a PARTY!",
+   "say": "So something big must be coming! Like a PARTY!",
    "direction": "delighted, bouncing, full volume; never scared",
    "shot": "S04",
    "beat": 1,
@@ -413,23 +414,36 @@
    "direction": "bright and a little puzzled, like it's a funny slip; plain and steady to the end, no pause before the quote",
    "shot": "S14",
    "beat": 5,
-   "punch": true,
    "look": {
     "what": "actor:Jonah",
     "word": "FORGOT"
+   },
+   "punch": true
+  },
+  {
+   "id": "L15",
+   "who": "N",
+   "text": "I'll ask him WHY... / TOMORROW.",
+   "say": "I'll ask him why... TOMORROW.",
+   "direction": "bright and sure, like it's easy; a small lift on WHY, then TOMORROW plain and light, no sadness, no slowing",
+   "shot": "S14",
+   "beat": 5,
+   "look": {
+    "what": "actor:Jonah",
+    "word": "TOMORROW"
    }
   }
  ],
  "reveal": {
-  "at": "L14 'TOMORROW'",
+  "at": "L14 'TOMORROW' (said, one plain sentence); L15 the sting",
   "picture": "S14: Jonah, empty-handed, walks away west down the torch-lit street toward where his house stood, his back to us; he says nothing",
   "echo": "S06-S07 showed the ordinary night: Jonah walking the kid home with his torch, the wave, 'See you TOMORROW!' in his own voice. S13-S14 repeat the torch and the wave without the words, and he walks away without his torch",
   "chat": "none: no chat line, no quit, no 'left the game'",
-  "hold": "cut within 0.3-0.6 s after 'TOMORROW'; nothing after it"
+  "hold": "L15 follows L14 with no gap on the same S14 picture; cut 0.3-0.6 s after L15's 'TOMORROW', Jonah still walking; nothing after it"
  },
  "ending": {
   "after": "L14",
-  "loop": "cause and effect: the goodbye is why line 1's village has six thousand torches 'last night'; 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
+  "loop": "L15 'I'll ask him WHY... TOMORROW' echoes L01's 'I HAD to know WHY' (the question the kid never gets to ask; there is no tomorrow) and runs into L01's 'overnight'; cause and effect: the goodbye is why line 1's village has six thousand torches; 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
  },
  "shots": [
   {
@@ -455,7 +469,7 @@
    "place": "meeting_point",
    "size": "full",
    "camera": "at: 1.2 up, 7 blocks from the iron golem, a slow push in; FOV 50",
-   "frame": "fg: torches on the grass at the lens, out of focus; subject: the village iron golem head to foot, walking slowly through the grid of torches beside a house; on 'ONE torch' one torch in sharp focus at lower centre; on 'HOUSE' the house beside it, every block of it lit; on 'THOUSAND' the push reveals the rows going on past the houses. Dawn (23120)."
+   "frame": "fg: torches on the grass at the lens, out of focus; subject: the village iron golem head to foot, walking slowly through the grid of torches beside a house; on 'ONE torch' one torch in sharp focus at lower centre; on 'HOUSE' the house beside it, every block of it lit; then the push reveals the rows going on past the houses. Dawn (23120)."
   },
   {
    "id": "S04",
@@ -551,11 +565,11 @@
   },
   {
    "id": "S14",
-   "line": "L14",
+   "line": "L14, L15",
    "place": "our_street",
    "size": "wide",
    "camera": "pov (kid's eye, 0.81) from the kid's S13 spot at (-24, 8), turning to look west down the main street; still once turned; FOV 50",
-   "frame": "subject: Jonah, back to us, stepping round the kid and walking away west down the torch-lit street at a player's walk, empty-handed (his torch is at our door now), about 2 blocks out at the line's start and ~10-14 at 'TOMORROW', his name over him; he walks toward where his house stood (the bare torch square at the street's end); he never looks back and says nothing; the chat is empty; bg: the street of torches, the plot's torch square, the west hills lit gold by the sunrise behind the camera (no sun in frame). Sunrise (23770). It rhymes with S07, where he walked home west to a house that existed. Cut within 0.3-0.6 s of 'TOMORROW', Jonah still walking."
+   "frame": "subject: Jonah, back to us, stepping round the kid and walking away west down the torch-lit street at a player's walk, empty-handed (his torch is at our door now), about 2 blocks out at the line's start and ~10-14 at 'TOMORROW', his name over him; he walks toward where his house stood (the bare torch square at the street's end); he never looks back and says nothing; the chat is empty; bg: the street of torches, the plot's torch square, the west hills lit gold by the sunrise behind the camera (no sun in frame). Sunrise (23770). It rhymes with S07, where he walked home west to a house that existed. L15 ('I'll ask him WHY... TOMORROW') follows with no gap on the same picture, Jonah smaller (~14-18 blocks out); cut within 0.3-0.6 s of L15's 'TOMORROW', Jonah still walking."
   }
  ],
  "props": {

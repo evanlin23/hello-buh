@@ -1,6 +1,6 @@
 # six_thousand_torches: continuity bible (r2; world pass 2026-11-11: Larkfield claimed on the High Meadow, the cameo)
 
-Built on stories/nine_thousand_torches/bible.md (r2). r2: 14 lines, S01-S14 (one shot per line). The nightly habit
+Built on stories/nine_thousand_torches/bible.md (r2). r3 (the story format): 15 lines, S01-S14 (one shot per line, except S14 carries L14 and the sting L15). r2: 14 lines, S01-S14. The nightly habit
 is a WALK HOME with Jonah's own torch (not a torch left by the door: a placed torch burns forever, so it wouldn't need
 him every night); "one LAST night" and "grounded" are cut; the kid misreads every clue innocently (STANDARDS 0a); the
 ending is Jonah setting his own torch down by our door, waving and walking away, no quit, no chat.
@@ -117,3 +117,4 @@ Coordinates: the village bell is (0,0); +x east, +z south. Real numbers come fro
 | L08-L10 | the chest (presents), the plot (he's moving in) | he gave it all away | **he's leaving** (~25 s), not sure |
 | L11-L13 | a row is growing; it ends at his door; Jonah's last torch is for him | goodbye | the walk-home torch, left behind |
 | L14 | he forgot to say "see you tomorrow" | | he isn't coming back |
+| L15 | he'll ask him why tomorrow | | there is no tomorrow |

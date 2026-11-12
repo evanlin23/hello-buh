@@ -1,4 +1,4 @@
-# six_thousand_torches: beats (r2)
+# six_thousand_torches: beats (r3)
 
 From stories/nine_thousand_torches (r2, critic 7.8) and docs/writers_room_2026-11-10.md, with the batch-2 premise
 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #6):
@@ -18,7 +18,7 @@ the DARK" moved from L06 to L13 (the r2 midpoint read was still 75% with it next
 
 ## The ending first
 S14: from the path, Jonah walks away empty-handed west down the torch-lit street toward his bare plot. He set his own torch
-down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "See you TOMORROW."" Cut on "TOMORROW".
+down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "See you TOMORROW."" Then, sure: "I'll ask him WHY... TOMORROW." Cut.
 
 ## Spine
 - Every night, Jonah, the village's only player, walks me home with his torch so I'm never in the dark, and says
@@ -31,9 +31,9 @@ down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "Se
 ## Beat sheet (Pip ~3.2 words/s; 98 words, ~32-36 s)
 | # | line | picture | job / clue | the kid's innocent reading |
 |---|---|---|---|---|
-| 1 | L01 SOMEONE put six THOUSAND TORCHES on my VILLAGE last NIGHT. | S01 dawn crane over a carpet of light | hook | amazed |
+| 1 | L01 SOMEONE put six THOUSAND TORCHES on my village OVERNIGHT. I HAD to know WHY. | S01 dawn crane over a carpet of light | hook: the impossible fact + the why, said (format beat 1, 3) | amazed |
 | 2 | L02 FENCES. ROOFS. HAY bales. Not ONE DARK block. | S02 low dolly | escalation | delighted |
-| 3 | L03 ONE torch LIGHTS a whole HOUSE. So WHY six THOUSAND? | S03 golem, a house, one torch sharp | the excess (every night at once) | puzzling, happily |
+| 3 | L03 ONE torch LIGHTS a whole HOUSE. | S03 golem, a house, one torch sharp | the excess (every night at once) | puzzling, happily |
 | 4 | L04 Something BIG must be COMING! Like a PARTY! | S04 lights end, dark forest | **decoy** (audit: kept) | a party |
 | 5 | L05 Our VILLAGE has one PLAYER. JONAH. My best FRIEND. | S05 flashback, Jonah at his gate | the name, set up | proud |
 | 6 | L06 Every NIGHT, he WALKS me HOME with his TORCH. | S06 the walk home, his torch lighting us | **plant**: the habit | just love |
@@ -44,9 +44,12 @@ down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "Se
 | 11 | L11 One ROW of TORCHES was still GROWING. I HAD to see WHO. | S11 the arm round the corner | agency: the want | |
 | 12 | L12 I FOLLOWED it to MY door. | S12 follow round the corner, the gap at the door | the last spot | |
 | 13 | L13 It was JONAH! With his LAST torch. So I'm NEVER in the DARK! | S13 he sets his own torch down, waves | the walk-home torch, left behind; the gesture in the kid's words (audit #6.2) | a present for me |
-| 14 | L14 He FORGOT to SAY, "See you TOMORROW." | S14 he walks away, silent, no torch | **reveal**: cut on TOMORROW | he forgot |
+| 14 | L14 He FORGOT to SAY, "See you TOMORROW." | S14 he walks away, silent, no torch | **reveal**, said in one plain sentence | he forgot |
+| 15 | L15 I'll ask him WHY... TOMORROW. | S14 continues, Jonah smaller | **sting**: echoes L01's WHY; cut 0.3-0.6 s after | there'll be a tomorrow |
 
-Loop: "...See you TOMORROW." / "SOMEONE put six THOUSAND TORCHES on my VILLAGE last NIGHT."
+Loop: "...I'll ask him WHY... TOMORROW." / "SOMEONE put six THOUSAND TORCHES on my village OVERNIGHT. I HAD to know WHY."
+
+r3 (2026-11-11, docs/story_format.md): L01 says the fact AND the why; L03 loses its second "why" (L04 takes "So"); L14 is the reveal, said; L15 the sting echoing L01.
 
 ## Clue map (every clue has the kid's misreading on a line: STANDARDS 0a)
 | clue | planted | misread as (line) | after the twist |
@@ -58,10 +61,10 @@ Loop: "...See you TOMORROW." / "SOMEONE put six THOUSAND TORCHES on my VILLAGE l
 | his stuff in our chest | L08, S08 | presents for the party (L09) | a goodbye gift |
 | his house gone | L10, S10 | he's moving in with us (L10) | nothing left of him here |
 | the row ending at my door, his own torch | L11-L13, S11-S13 | a mystery to follow, then "it was Jonah!" | I'm his last stop; he leaves his torch with me |
-| no "see you tomorrow", he walks away | L14, S14 | he forgot (L14) | he isn't coming back |
+| no "see you tomorrow", he walks away | L14, S14 | he forgot (L14); I'll ask him tomorrow (L15) | he isn't coming back; there is no tomorrow |
 
 ## Twist checklist
-- [x] Changes line 1: "SOMEONE" is Jonah; "COMING" becomes going; the "party" is a goodbye.
+- [x] Changes line 1: "SOMEONE" is Jonah; "I HAD to know WHY" comes back as "I'll ask him WHY... TOMORROW" (L15); "COMING" becomes going; the "party" is a goodbye.
 - [x] Fair play: the habit, the words, the gifts, the house, the row all come before L14; the reveal adds no fact.
 - [x] Planted twice+, in the picture (S06, S08, S10, S13).
 - [x] Misread, not hidden: each clue's innocent reading is on a line; the kid never hints or sounds afraid.
