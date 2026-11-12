@@ -176,6 +176,109 @@ const SHAPES = {
   }
 }
 
+// ---------------------------------------------------------------- the walker (opt-in: S.walker)
+// Who keeps wearing the path in? After the lava round the player (56e) runs out of house N's open door and straight
+// along the new path over the lava into house S (owner r:r4607fa, docs/noop_audit_2026-11-12.md: "show someone walking
+// the lava path, with a hit"). Real player movement: the forward key, the head eased onto the path ahead (lib/motion.js
+// stepTurn + walkSteer). Marks: walk_start (he starts running inside), out (through the door), walker (the reveal:
+// the cut to a chase camera, S.walker.cam false keeps the top shot), road (on the road), home (on house S's doorstep),
+// walk_done.
+//   S.walker = { sprint: true, wait: ticks after the path is back, card: 'IT WAS HIM', tail: ticks after home }
+const WALK_FROM = [-9.5, -13.5]   // inside house N, out of sight of its open door (2.5 blocks back)
+function walkPoints () {
+  const [a, b] = HOUSES
+  // through house N's doorway, the path's two ends (door to door, straight over the lava), house S's doorway, inside
+  // (into house S straight on through the middle of its doorway, not cutting the corner)
+  return [[a.door[0] + 0.5, a.door[1] + 0.5], [a.out[0] + 0.5, a.out[1] + 0.5], [b.out[0] + 0.3, b.out[1] + 0.3], [b.door[0] + 0.5, b.door[1] - 0.2], [b.door[0] + 0.5, b.door[1] + 2.5]]
+}
+
+// The cameras of the run. walk: rides beside him on his left (north-east of the path, a little above his eye),
+// looking a little ahead of him, so he runs across the frame; review r1: from behind and above, the top of 56e's head
+// (eyes painted on the top of the frog-green skin, it seems: a Steve-textured test render from the same camera shows
+// the back of the head) read as his face turned to the lens, as if he ran backwards. door: from NEAR_Z on, the camera
+// stops (lib/movie crane from the walk shot, its motion eased out) a little further on, looking at house S's
+// doorstep, so the end shows him reaching the door with the front of the house (review r1: the follow camera rode
+// up over the roof and covered him)
+const NEAR_Z = 8
+const WALK_OFF = [3.5, 3.5, -3.5]
+function walkShots (W = {}) {
+  const off = W.offset || WALK_OFF, lag = 4, sprint = 0.28
+  // where the walk camera is when he crosses NEAR_Z (on the path's diagonal x = z, `lag` ticks back), carried on
+  // a little along his line so the crane eases out instead of stopping dead
+  const h = NEAR_Z - lag * sprint / Math.SQRT2, carry = 0.8
+  // (it also comes down to just over his eye: from above, the eyes painted on the top of 56e's head read as his face
+  // turned to the lens as he goes in; review r1's last frame)
+  const at = [h + off[0] + carry, W.doorY ?? 3.4, h + off[2] + carry]
+  const door = [HOUSES[1].door[0] + 0.5, 1.6, HOUSES[1].door[1] + 0.2]
+  const dx = door[0] - at[0], dy = door[1] - at[1], dz = door[2] - at[2]
+  const yaw = Math.atan2(-dx, -dz) * 180 / Math.PI, pitch = Math.atan2(dy, Math.hypot(dx, dz)) * 180 / Math.PI
+  return {
+    walk: { follow: 'self', offset: off, lag, look: { of: 'self', offset: [1.4, -0.7, 1.4] }, fov: 70, drift: 0, push: 0, dof: false, eyeTrace: false },
+    door: { crane: { from: 'prev', to: at.map(v => +v.toFixed(2)), yaw: +yaw.toFixed(1), pitch: +pitch.toFixed(1), fov: 70, secs: 0.8, tilt: 1 }, drift: 0, push: 0, dof: false, eyeTrace: false }
+  }
+}
+
+async function walkPath (ctx, { X, Z, F }, W = {}) {
+  const { bot } = ctx
+  const MOTION = require('./motion'), M = require('./movie')
+  await bot.waitForTicks(W.wait ?? 4)
+  const pts = walkPoints().map(([x, z]) => ({ x: X + x, y: F + 1, z: Z + z }))
+  const start = { x: bot.entity.position.x, y: F + 1, z: bot.entity.position.z }
+  const lim = { speed: 200 * MOTION.DEG / 20, accel: 900 * MOTION.DEG / 400 }
+  let gov = { cur: { yaw: bot.entity.yaw, pitch: bot.entity.pitch }, vel: { yaw: 0, pitch: 0 } }, i = 0
+  const seen = { out: false, walker: false, road: false, near: false, home: false }
+  let stuck = 0, last = bot.entity.position.clone()
+  ctx.mark('walk_start')
+  for (let k = 0; k < 400; k++) {
+    const p = bot.entity.position
+    const near = i >= pts.length - 2   // the last legs, into house S: walk, steer close (no corner cut into the door)
+    const s = MOTION.walkSteer(start, pts, i, p, near ? 0.6 : MOTION.WALK_LOOK); i = s.i
+    const rz = p.z - Z
+    // out: through house N's door (seen from the top shot); walker: 3.5 blocks on, the cut to the chase camera (its
+    // offset clears house N's roof from there; take 7 cut at the door and opened on the roof); home: on house S's
+    // doorstep, before the eave hides him (take 7 ended on its roof)
+    if (!seen.out && rz > HOUSES[0].door[1] + 1) { seen.out = true; ctx.mark('out') }
+    if (!seen.walker && rz > HOUSES[0].door[1] + (W.cutAfter ?? 4.5)) { seen.walker = true; ctx.mark('walker'); if (W.cam !== false) M.shot(ctx, 'walk') }
+    if (!seen.road && Math.abs(rz) <= 2) { seen.road = true; ctx.mark('road') }
+    if (!seen.near && rz > NEAR_Z && W.cam !== false) { seen.near = true; ctx.mark('near'); M.shot(ctx, 'door') }
+    if (!seen.home && rz > HOUSES[1].door[1] - 0.7) { seen.home = true; ctx.mark('home') }
+    if (!s.ahead) break
+    const want = { yaw: Math.atan2(-(s.ahead.x - p.x), -(s.ahead.z - p.z)), pitch: -0.15 }
+    const r = MOTION.stepTurn(gov.cur, gov.vel, want, lim); gov = r
+    await bot.look(r.cur.yaw, r.cur.pitch, true)   // motion-ok: the governed step (lib/motion.js stepTurn)
+    const go = Math.abs(MOTION.wrap(want.yaw - r.cur.yaw)) < 0.6
+    bot.setControlState('sprint', go && W.sprint !== false && !near)   // motion-ok: a straight run along the path, steered above
+    bot.setControlState('forward', go)   // motion-ok: as above
+    // (a step he can't walk up: a player hops it; never stands stuck against it)
+    stuck = go && bot.entity.onGround && Math.hypot(p.x - last.x, p.z - last.z) < 0.02 ? stuck + 1 : 0
+    last = p.clone()
+    bot.setControlState('jump', stuck >= 3)   // motion-ok: as above
+    await bot.waitForTicks(1)
+  }
+  bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('jump', false)   // motion-ok: the run ends inside house S
+  if (!seen.home) ctx.log('desire: WARNING the walker never got home')
+  ctx.mark('walk_done')
+  await bot.waitForTicks(W.tail ?? 30)
+}
+
+// the edit for a walker ending: the path back keeps a small hit; the reveal (the cut to the chase) gets the drop, the
+// dip and the big hit plus a card; home (the far doorstep) a dip, an impact, a ding, a punch and a flash, then the end
+function walkerEdit (S) {
+  const W = S.walker
+  return {
+    endAfter: `home:${W.endHold ?? 0.5}`,
+    dropAt: 'walker',
+    punch: ['flood', 'final', 'walker', 'home'],
+    sfx: [['impact', 'flood', { gain: 0.7 }], ['riser', 'flood', 'final_a'], ['impact', 'final', { gain: 0.9 }], ['ding', 'final'],
+      ['whoosh', 'out'], ['dip', 'walker', 0.4], ['impact', 'walker', { gain: 1.4 }], ['boom', 'walker'], ['dip', 'home', 0.4], ['impact', 'home', { gain: 1.4 }], ['ding', 'home'], ...(W.sfx || [])],
+    cards: [...S.rounds.filter(r => r.card).map(r => [`ob_${r.id}`, r.card, r.cardSecs || 0.75, r.color || 'white', 0, null,
+      { y: r.cardY ?? (r.flood ? 0.36 : ((r.c || r.near || [0, 1])[1] < 0 ? 0.8 : 0.17)) }]),
+    ...(W.card ? [['walker', W.card, W.cardSecs || 1.2, W.cardColor || 'yellow', 0, null, { y: W.cardY ?? 0.84 }]] : []), ...(W.cards || [])],
+    flash: [['home', 0, 0.3]],
+    ...(W.speed ? { speed: W.speed } : {})
+  }
+}
+
 // ---------------------------------------------------------------- the stunt
 function makeStunt (S) {
   const rounds = S.rounds
@@ -192,7 +295,12 @@ function makeStunt (S) {
     renderDistance: 8, recordRadius: 96,
     clouds: false,
     botTimeout: 900,      // the site search alone can take 3-4 min
-    shots: { top: { ...camera, push: 0, drift: 0, dof: false, eyeTrace: false, subject: [[0, 1.5, 0]], size: 'wide' } },
+    shots: {
+      top: { ...camera, push: 0, drift: 0, dof: false, eyeTrace: false, subject: [[0, 1.5, 0]], size: 'wide' },
+      // the walker's run (S.walker): from the top shot the player is a speck (take 7's review frames), so on his way
+      // out of the door the camera cuts to ride along beside him, then settles in front of house S (walkShots)
+      ...(S.walker ? walkShots(S.walker) : {})
+    },
     edit: {
       caption: S.caption, red: S.red, song: null,
       startAt: 'start:0', endAfter: `final:${S.endHold ?? 1.0}`,
@@ -210,6 +318,7 @@ function makeStunt (S) {
       // impact over the boom + ding (the NCS bed buried boom + ding alone: mixcheck, lead 2026-11-11)
       sfx: [...(flood ? [['impact', 'flood', { gain: 0.7 }], ['riser', 'flood', 'final_a']] : []),
         ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }], ['boom', 'final'], ['ding', 'final'], ...(S.sfx || [])],
+      ...(S.walker ? walkerEdit(S) : {}),
       ...(S.edit || {})
     },
 
@@ -238,9 +347,23 @@ function makeStunt (S) {
       // the first path (straight, door to door)
       this.blocked = new Set(); this.path = plan(this.blocked)
       await bulk(this.path.cells.map(([x, z]) => `/setblock ${P(x, 0, z)} dirt_path`))
-      // the bot waits well out of the shot (east, on the road)
+      // the bot waits well out of the shot (east, on the road); with S.walker, in the back of house N, out of sight
+      // of the open door: he is who keeps wearing the path, and walks it at the end
       await ctx.forceload({ x0: X - 60, z0: Z - 40, x1: X + 60, z1: Z + 40 })
-      await ctx.tpCheck(X + 44.5, F + 1, Z + 0.5, 90, 0)
+      if (S.walker) {
+        // (the houses read as solid planks in the recording: hollow them out, so he has a room to run out of)
+        for (const h of HOUSES) await ctx.cmd(`/fill ${P(h.x0 + 1, 1, h.z0 + 1)} ${P(h.x1 - 1, 3, h.z1 - 1)} air`)
+        // house N's door stands open; house S's doorway is left empty (takes 2-4: the bot's physics kept colliding with
+        // its open north-facing door as if it were shut, and he stood stuck on the doorstep)
+        for (const half of ['lower', 'upper']) await ctx.cmd(`/setblock ${P(HOUSES[0].door[0], half === 'lower' ? 1 : 2, HOUSES[0].door[1])} oak_door[half=${half},facing=south,open=true]`)
+        await ctx.cmd(`/fill ${P(HOUSES[1].door[0], 1, HOUSES[1].door[1])} ${P(HOUSES[1].door[0], 2, HOUSES[1].door[1])} air`)
+        // (and the path runs on into it: a dirt path floor through the doorway and the room, level with the path
+        // outside; take 5 stopped dead at the 1/16 step up from the path onto the cobblestone sill)
+        const hs = HOUSES[1]
+        await ctx.cmd(`/setblock ${P(hs.door[0], 0, hs.door[1])} dirt_path`)
+        await ctx.cmd(`/fill ${P(hs.x0 + 1, 0, hs.z0 + 1)} ${P(hs.x1 - 1, 0, hs.z1 - 1)} dirt_path`)
+        await ctx.tpCheck(X + WALK_FROM[0], F + 1, Z + WALK_FROM[1], 0, 0)
+      } else await ctx.tpCheck(X + 44.5, F + 1, Z + 0.5, 90, 0)
       await bot.waitForTicks(30)
       return { x: X, y: F, z: Z }
     },
@@ -288,6 +411,13 @@ function makeStunt (S) {
               bot.chat(`/fill ${P(x, 0, z0)} ${P(x1, 0, z1)} grass_block replace water`)
           }
           for (const [x, x1, z0, z1] of strips) for (const b of ['grass_block', 'dirt_path', 'sand', 'dirt']) bot.chat(`/fill ${P(x, 0, z0)} ${P(x1, 0, z1)} ${r.flood} replace ${b}`)
+          if (S.walker) {
+            // (in the same tick: house S's dirt path floor (the walker's way in) is not lawn; take 6 flooded it and he
+            // ran into a room of lava)
+            const hs = HOUSES[1]
+            bot.chat(`/fill ${P(hs.x0 + 1, 0, hs.z0 + 1)} ${P(hs.x1 - 1, 0, hs.z1 - 1)} dirt_path replace ${r.flood}`)
+            bot.chat(`/setblock ${P(hs.door[0], 0, hs.door[1])} dirt_path`)
+          }
           await bot.waitForTicks(r.hold ?? 14)
           blocked.clear(); path = { cells: [] }
           const np = plan(blocked)
@@ -295,7 +425,8 @@ function makeStunt (S) {
           await wearIn(np.cells, { onLava: true })
           path = np
           ctx.mark('final')
-          await bot.waitForTicks(Math.round((S.endHold ?? 1.0) * 20) + 6)
+          if (S.walker) await walkPath(ctx, { X, Z, F }, S.walker)
+          else await bot.waitForTicks(Math.round((S.endHold ?? 1.0) * 20) + 6)
           break
         }
         // the obstacle lands ON the path (owner r:r81cb9c: the path breaks through it, never goes round): a slot of
@@ -442,4 +573,4 @@ async function house (ctx, P, h, i) {
   }
 }
 
-module.exports = { makeStunt, simulate, cutThrough, drop, map, plan, pointAt, raster, crossing, SHAPES, HOUSES, B, inHouse, ROAD }
+module.exports = { makeStunt, walkPoints, walkerEdit, walkShots, simulate, cutThrough, drop, map, plan, pointAt, raster, crossing, SHAPES, HOUSES, B, inHouse, ROAD }

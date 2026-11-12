@@ -18,33 +18,33 @@
     "title": "X2",
     "artist": "MUPP",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "final",
+    "drop_on_event": "walker",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 12.1,
-    "song_start_s": 2.4
+    "drop_in_short_s": 13.65,
+    "song_start_s": 0.85
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 13.1,
+    "duration_s": 16.64,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 7664592,
-    "sha256": "5883717d5523c9e2b1e38919f6ded98c9d860992f38915b5c70c9563bab482b9",
+    "bytes": 15635283,
+    "sha256": "f010aeced39674b9d12ae72b5d1f6c96ebbf089c8e2ffb89f46bc5821bb70cc2",
     "release": {
       "tag": "pkg-desire_town",
-      "asset": "desire_town.short.5883717d5523c9e2.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.5883717d5523c9e2.mp4",
-      "sha256": "5883717d5523c9e2b1e38919f6ded98c9d860992f38915b5c70c9563bab482b9",
-      "bytes": 7664592
+      "asset": "desire_town.short.f010aeced39674b9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.f010aeced39674b9.mp4",
+      "sha256": "f010aeced39674b9d12ae72b5d1f6c96ebbf089c8e2ffb89f46bc5821bb70cc2",
+      "bytes": 15635283
     },
     "nosong_release": {
       "tag": "pkg-desire_town",
-      "asset": "desire_town.short_nosong.b8854adb87275fc6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short_nosong.b8854adb87275fc6.mp4",
-      "sha256": "b8854adb87275fc6ee673b579178538f2c07a524fe6b6f5c2545914d96c69a09",
-      "bytes": 7643332
+      "asset": "desire_town.short_nosong.27821bd9f766e079.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short_nosong.27821bd9f766e079.mp4",
+      "sha256": "27821bd9f766e07970729e92a9f49e702d292e73915dd4f41a647779d76c0671",
+      "bytes": 15612166
     }
   },
   "edit": {
@@ -52,8 +52,8 @@
     "red": "REALLY",
     "song": null,
     "startAt": "start:0",
-    "endAfter": "final:1",
-    "dropAt": "final",
+    "endAfter": "home:0.3",
+    "dropAt": "walker",
     "keySounds": [
       "obstacle",
       "break"
@@ -146,11 +146,36 @@
         {
           "y": 0.36
         }
+      ],
+      [
+        "walker",
+        "IT WAS HIM 💀",
+        1.2,
+        "yellow",
+        0,
+        null,
+        {
+          "y": 0.84
+        }
+      ],
+      [
+        "road",
+        "NOT EVEN LAVA 💀",
+        1,
+        "orange",
+        0,
+        null,
+        {
+          "y": 0.9,
+          "size": 84
+        }
       ]
     ],
     "punch": [
       "flood",
-      "final"
+      "final",
+      "walker",
+      "home"
     ],
     "sfx": [
       [
@@ -166,41 +191,88 @@
         "final_a"
       ],
       [
-        "dip",
+        "impact",
         "final",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "ding",
+        "final"
+      ],
+      [
+        "whoosh",
+        "out"
+      ],
+      [
+        "dip",
+        "walker",
         0.4
       ],
       [
         "impact",
-        "final",
+        "walker",
         {
           "gain": 1.4
         }
       ],
       [
         "boom",
-        "final"
+        "walker"
+      ],
+      [
+        "dip",
+        "home",
+        0.4
+      ],
+      [
+        "impact",
+        "home",
+        {
+          "gain": 1.4
+        }
       ],
       [
         "ding",
-        "final"
+        "home"
+      ]
+    ],
+    "flash": [
+      [
+        "home",
+        0,
+        0.3
+      ]
+    ],
+    "speed": [
+      [
+        "walker:0.5",
+        "home:-0.3",
+        1.8
       ]
     ],
     "args": [
       "--caption",
       "the town REALLY hates this shortcut 💀",
+      "--self_name",
+      "56e",
       "--red",
       "REALLY",
+      "--speed",
+      "[[\"walker:0.5\",\"home:-0.3\",1.8]]",
       "--punch",
-      "[\"flood\",\"final\"]",
+      "[\"flood\",\"final\",\"walker\",\"home\"]",
       "--cards",
-      "[[\"ob_fence\",\"FENCE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_bush\",\"BUSHES\",0.75,\"white\",0,null,{\"y\":0.17}],[\"ob_tree\",\"A TREE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_boulder\",\"A BOULDER\",0.75,\"yellow\",0,null,{\"y\":0.17}],[\"ob_pond\",\"A POND\",0.75,\"yellow\",0,null,{\"y\":0.8}],[\"ob_walls\",\"WALLS\",0.75,\"orange\",0,null,{\"y\":0.14}],[\"ob_shed\",\"A WHOLE SHED\",0.75,\"orange\",0,null,{\"y\":0.17}],[\"ob_lava\",\"LAVA 🔥\",1,\"red\",0,null,{\"y\":0.36}]]",
+      "[[\"ob_fence\",\"FENCE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_bush\",\"BUSHES\",0.75,\"white\",0,null,{\"y\":0.17}],[\"ob_tree\",\"A TREE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_boulder\",\"A BOULDER\",0.75,\"yellow\",0,null,{\"y\":0.17}],[\"ob_pond\",\"A POND\",0.75,\"yellow\",0,null,{\"y\":0.8}],[\"ob_walls\",\"WALLS\",0.75,\"orange\",0,null,{\"y\":0.14}],[\"ob_shed\",\"A WHOLE SHED\",0.75,\"orange\",0,null,{\"y\":0.17}],[\"ob_lava\",\"LAVA 🔥\",1,\"red\",0,null,{\"y\":0.36}],[\"walker\",\"IT WAS HIM 💀\",1.2,\"yellow\",0,null,{\"y\":0.84}],[\"road\",\"NOT EVEN LAVA 💀\",1,\"orange\",0,null,{\"y\":0.9,\"size\":84}]]",
+      "--flash",
+      "[[\"home\",0,0.3]]",
       "--sfx",
-      "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}],[\"boom\",\"final\"],[\"ding\",\"final\"]]",
+      "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]]",
       "--start_at",
       "start:0",
       "--end_after",
-      "final:1"
+      "home:0.3"
     ]
   },
   "recording": {
@@ -211,13 +283,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": -1377,
-      "y": 70,
-      "z": 1041
+      "x": -456,
+      "y": 65,
+      "z": 3293
     },
     "biome": "minecraft:plains",
-    "ticks": 403,
-    "seconds": 20.15,
+    "ticks": 419,
+    "seconds": 20.95,
     "deaths": 0,
     "events": [
       {
@@ -305,39 +377,39 @@
         "event": "ob_walls"
       },
       {
-        "t": 9.2,
+        "t": 9.15,
         "event": "break"
       },
       {
-        "t": 10.15,
+        "t": 10.1,
         "event": "obstacle"
       },
       {
-        "t": 10.15,
+        "t": 10.1,
         "event": "ob_shed"
       },
       {
-        "t": 10.75,
+        "t": 10.7,
         "event": "break"
       },
       {
-        "t": 11.65,
+        "t": 11.6,
         "event": "obstacle"
       },
       {
-        "t": 11.65,
+        "t": 11.6,
         "event": "ob_lava"
       },
       {
-        "t": 11.65,
+        "t": 11.6,
         "event": "flood"
       },
       {
-        "t": 12.4,
+        "t": 12.35,
         "event": "final_a"
       },
       {
-        "t": 12.4,
+        "t": 12.35,
         "event": "path"
       },
       {
@@ -345,7 +417,43 @@
         "event": "final"
       },
       {
-        "t": 20.15,
+        "t": 12.85,
+        "event": "walk_start"
+      },
+      {
+        "t": 13.55,
+        "event": "out"
+      },
+      {
+        "t": 14.4,
+        "event": "walker"
+      },
+      {
+        "t": 14.4,
+        "event": "shot"
+      },
+      {
+        "t": 15.55,
+        "event": "road"
+      },
+      {
+        "t": 18.1,
+        "event": "near"
+      },
+      {
+        "t": 18.1,
+        "event": "shot"
+      },
+      {
+        "t": 18.6,
+        "event": "home"
+      },
+      {
+        "t": 19.45,
+        "event": "walk_done"
+      },
+      {
+        "t": 20.95,
         "event": "end"
       }
     ]
@@ -353,50 +461,50 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ce7359812870d05d10b38af79fc6414733769301",
+    "commit": "873f4bbecb3c60a41195e643a4271fa9f201e20f",
     "rendered": "local",
-    "rendered_at": "2026-11-11T09:39:32.689Z",
-    "head_at_publish": "3a7aa2fd95be56ef3fe4d0fbce51305b1d89a221",
+    "rendered_at": "2026-11-12T08:16:39.679Z",
+    "head_at_publish": "873f4bbecb3c60a41195e643a4271fa9f201e20f",
     "stunt": "stunts/desire_town.js",
     "source_snapshot": [
       "source/desire_town.js",
       "source/desire.js",
+      "source/motion.js",
+      "source/movie.js",
       "source/hide_seek.js",
       "source/act.js",
-      "source/motion.js",
-      "source/sight.js",
-      "source/movie.js"
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout ce7359812870",
+    "git checkout 873f4bbecb3c",
     "gunzip -c shorts/desire_town/recording.json.gz > work/desire_town.rec.json",
     "node render.js work/desire_town.rec.json work/desire_town.frames 60 1080 1011",
     "python3 audio.py work/desire_town.rec.json work/desire_town.wav",
-    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --red REALLY --punch [\"flood\",\"final\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}]]\" --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}],[\"boom\",\"final\"],[\"ding\",\"final\"]] --start_at start:0 --end_after final:1 --out out/desire_town.mp4"
+    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --self_name 56e --red REALLY --speed [[\"walker:0.5\",\"home:-0.3\",1.8]] --punch [\"flood\",\"final\",\"walker\",\"home\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}],[\\\"walker\\\",\\\"IT WAS HIM 💀\\\",1.2,\\\"yellow\\\",0,null,{\\\"y\\\":0.84}],[\\\"road\\\",\\\"NOT EVEN LAVA 💀\\\",1,\\\"orange\\\",0,null,{\\\"y\\\":0.9,\\\"size\\\":84}]]\" --flash [[\"home\",0,0.3]] --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]] --start_at start:0 --end_after home:0.3 --out out/desire_town.mp4"
   ],
   "status": "ready",
-  "notes": "desire #1 v2 (owner r:r81cb9c): the path breaks straight through every obstacle (fence, bushes, tree, boulder, pond causeway, road walls, shed) and comes back across the lava; fresh independent review READY; payoff fix (edit only): dip + impact on 'final', riser ends before the dip. Nitpicks: dirt (not dirt_path) under broken obstacles; LAVA card over the first 0.2 s of the return; 2-block wall gaps small on a phone; path on lava low-contrast.",
-  "published_at": "2026-11-11T09:42:06.524Z",
+  "notes": "no-op fix (r:r4607fa): the shortcut that survived every obstacle was 56e all along; a side chase cam as he sprints it across the lava into house S; 16.6 s; independent review READY r2",
+  "published_at": "2026-11-12T08:19:35.850Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:14:37+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-12T08:20:02+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 13.12 s vs the reviewed render 13.10 s"
+      "summary": "short.mp4 16.64 s vs the reviewed render 16.64 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T10:14:25.826Z",
+      "at": "2026-11-12T08:17:17.868Z",
       "report": "work/hb/desire_town.check.json"
     },
     "key_sounds": {
@@ -405,7 +513,7 @@
         "obstacle",
         "break"
       ],
-      "summary": "key sounds over the music: worst +10.9 dB over 15 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +12.6 dB over 15 clips (need >= 8 dB)"
     }
   }
 }
