@@ -23,7 +23,7 @@ const PIECES = require('../lib/sets/pieces')
 const { Voxels } = require('../lib/sets/voxel')
 const { rusher, mobpovEdit } = require('../lib/mobpov')
 
-const CAPTION = 'no wall can stop a baby zombie 💀'   // our own words (the reference's caption is "POV: A baby zombie found you")
+const CAPTION = 'this baby zombie will NOT stop 😭'   // a reaction, not a label (owner r:r0f3da0, docs/lessons.md "Openings"); our own words, not the reference's "POV: A baby zombie found you"
 const EAST = -Math.PI / 2
 const DEG = Math.PI / 180
 const GUY = { x: 112.3, z: 3.9 }   // 56e, just right of his portal (its frame is z -2..2 at x 114): he flies past it
@@ -174,7 +174,7 @@ module.exports = {
     red: 'baby zombie',
     whooshes: 3,
     subs: [['found', 'found you.', 0.65, 0]],   // gone before the rush-in: up to the punch it sat on 56e (review r3)
-    extra: { subsY: 0.12, sfx: [['impact', 'smash', { nth: 0, gain: 0.5 }]] }   // the sub up in the cave's ceiling: at 0.42 it sat on 56e (review)
+    extra: { subsY: 0.12, sfx: [['impact', 'go', { gain: 0.8 }], ['impact', 'smash', { nth: 0, gain: 0.5 }]] }   // the sub up in the cave's ceiling: at 0.42 it sat on 56e (review); the hit on 'go': a real sound hit in the first 0.5 s (owner r:r0f3da0)
   }),
 
   async setup (ctx) {

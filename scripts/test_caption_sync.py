@@ -95,6 +95,22 @@ class Captions(unittest.TestCase):
         self.assertAlmostEqual(got["gold"], 2.9 - lead, places=3)     # by index it took ",000"'s 2.2
         self.assertAlmostEqual(got["ingots."], 3.22 - lead, places=3)
 
+    def test_caption_clear_ends_a_held_caption_early(self):
+        # thirty_one_raids L08: the raid horn's hold after the line; the held caption covered Grandpa's turn
+        st = json.loads((self.d / "story.json").read_text())
+        st["captions"] = "chunk"
+        st["lines"] = [{"id": "L01", "who": "N", "text": st["lines"][0]["text"]}, {"id": "L02", "who": "N", "text": "Then."}]
+        vo = json.loads((self.d / "voice" / "voice.json").read_text())
+        vo["lines"]["L02"] = {"who": "N", "text": "Then.", "dur": 1.0, "onset": 0.1, "end": 0.6, "chunks": [[0.1, 0.6]], "captions": ["Then."]}
+        (self.d / "voice" / "voice.json").write_text(json.dumps(vo))
+        tl = [{"t": 1000, "event": "line", "id": "L01"}, {"t": 5400, "event": "line", "id": "L02"}]   # 0.9 s after "ingots."
+        for clear, want in ((None, 5.4), (0.25, 1.0 + 3.5 + 0.25)):
+            if clear is not None:
+                st["lines"][0]["caption_clear"] = clear
+            (self.d / "story.json").write_text(json.dumps(st))
+            last = [e for e in self.st.caption_events(self.d, tl, 0.0, 7.0) if e[2] == "gold ingots."][0]
+            self.assertAlmostEqual(last[1], want, places=3)
+
     def test_frame_of_floors(self):
         self.assertEqual(self.st.frame_of(1.0), 60)
         self.assertEqual(self.st.frame_of(1.0166), 60)    # the frame the word starts in, never the next one
