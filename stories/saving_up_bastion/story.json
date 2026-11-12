@@ -2,10 +2,10 @@
  "name": "saving_up_bastion",
  "stunt": "story_saving_up_bastion",
  "version": 2,
- "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's 'biggest fan' and he gets sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12, one sentence over the L-frame: 'All the gold he sent was up here, with ME.'; S10's empty chest screen has already shown the box); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md (critic r4 revise -> r5 approve; L08 'I'd NEVER' after).",
+ "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'I'm a BABY, and I'm the RICHEST pig in the NETHER.' replaces the frame + why opener; L03 'Four hundred gold. For my own BASTION, when I'm BIG.' (the count moves here; 'saving up' cut as a repeat of 'richest'); r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's 'biggest fan' and he gets sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12, one sentence over the L-frame: 'All the gold he sent was up here, with ME.'; S10's empty chest screen has already shown the box); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md (critic r4 revise -> r5 approve; L08 'I'd NEVER' after).",
  "caption": "why does gold keep falling on this baby piglin 🪙",
  "upload": {
-  "title": "gold falls from the sky and i don't know why 🐷 #minecraft #shorts",
+  "title": "i'm a baby and i'm the richest pig in the nether 🐷 #minecraft #shorts",
   "pinned": "How long until he figures it out? Wrong answers only",
   "tags": [
    "minecraft piglin",
@@ -125,25 +125,26 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "In my world, / gold falls / from the SKY. / Four HUNDRED so far. / And I don't know WHY.",
-   "say": "In my world, gold falls from the sky. Four hundred so far. And I don't know WHY.",
+   "text": "I'm a BABY, / and I'm the RICHEST / pig in the NETHER.",
+   "say": "I'm a BABY, and I'm the RICHEST pig in the NETHER.",
    "shot": "S01",
    "shows": [
     {
      "what": [
       "gold_ingot"
      ],
-     "word": "GOLD"
+     "word": "RICHEST"
     },
     {
      "what": [
       "piglin"
      ],
-     "word": "WORLD"
+     "word": "BABY"
     }
    ],
    "punch": true,
-   "direction": "proud and amazed, quick; the number lands, then a real little puzzle on WHY"
+   "direction": "proud and amazed, quick; the number lands, then a real little puzzle on WHY",
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; a proud little flex, chin up"
   },
   {
    "id": "L02",
@@ -164,8 +165,8 @@
   {
    "id": "L03",
    "who": "N",
-   "text": "I'm saving up / for a whole BASTION. / For when / I'm BIG.",
-   "say": "I'm saving up for a whole bastion. For when I'm BIG.",
+   "text": "Four HUNDRED gold. / For my own BASTION, / when I'm BIG.",
+   "say": "Four hundred gold. For my own BASTION, when I'm BIG.",
    "shot": "S03",
    "shows": [
     {
@@ -377,7 +378,7 @@
   "beats": [
    "S11: L13 'Four hundred and ONE.' as the dropper clicks and the next ingot lands in the baby's arms (`drop`). Cut 1.0 s after. No other line."
   ],
-  "loop": "L13 'Four hundred and ONE.' (an ingot falling on the baby) runs into L01 'In my world, gold falls from the SKY. Four HUNDRED so far.'"
+  "loop": "L13 'Four hundred and ONE.' (an ingot falling on the baby) echoes L03's 'Four HUNDRED gold' and runs into L01 'I'm a BABY, and I'm the RICHEST pig in the NETHER.'"
  },
  "beats": "stories/saving_up_bastion/beats.md",
  "set": "stories/saving_up_bastion/set.md",
@@ -390,7 +391,7 @@
    "place": "tower_window",
    "size": "ms",
    "camera": "at: OUTSIDE the tower, level with the cell's glass window, 3 blocks out over the ledge, slow push in from 0.0 s",
-   "frame": "frame 1: the baby piglin centred behind the glass, big (about 35% of frame height), looking up; the dropper is above frame (off-frame, critic r1). On 'GOLD' an ingot drops into frame from the top; on 'SKY' the baby catches it (off hand up, the admiring pose). The push ends on it hugging the ingot. Nether brick round the window; lava glow on the glass.",
+   "frame": "frame 1: the baby piglin centred behind the glass, big (about 35% of frame height), looking up; the dropper is above frame (off-frame, critic r1). On 'RICHEST' an ingot drops into frame from the top; on 'NETHER' the baby catches it (off hand up, the admiring pose). The push ends on it hugging the ingot. Nether brick round the window; lava glow on the glass.",
    "subject": "baby"
   },
   {
