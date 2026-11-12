@@ -446,6 +446,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   beat. Check: owner, review. r:r7ef6ec r:rb35549
 - **Format "fakemod", DENY**: a denied mob is eaten: the player picks the mob itself up bare-handed and eats it bite by
   bite (lib/interrupt.js pickupEat), not its drop. Check: owner, review. r:r535ba1
+- **Steady music, and sound-only re-mixes keep the OK**: the song sits steady under the game and sfx (the stunt mix masters the game first). mixcheck BLOCKs pumping over 3 dB, or block sounds less than 3 dB over the music. A re-mix that changes only the audio (video stream bit-identical) carries the owner's OK on the old cut over to the new sha. Check: mixcheck, owner_ok.txt note. r:r6ae905
 - **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
   ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
   The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a
