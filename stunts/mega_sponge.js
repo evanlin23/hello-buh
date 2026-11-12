@@ -76,7 +76,7 @@ module.exports = L.makeLapse({
   renderDistance: 16, recordRadius: 256,
   chunkStops: [[-160, -160], [160, -160], [-160, 160], [160, 160]],
   botTimeout: 1200,
-  player: { at: [-43.5, 43.5], yaw: -45, pitch: -30 },   // 56e just off the south-west corner, inside the levelled ground, looking up at it
+  player: { at: [-44, 44], yaw: -45, pitch: -30 },   // 56e just off the south-west corner, inside the levelled ground, looking up at it
   startSound: 'block.stone.place',
   stages: [rise(), carve2(), carve3(), carve4(), lights()],
   perTick: 60,
