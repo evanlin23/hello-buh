@@ -500,7 +500,7 @@
    "S07: the bell rings; he climbs out past it onto the porch roof and waves",
    "S08 under L11: over the skeleton's shoulder down the axis: the bell with tonight's arrow in it, the kid clear of it; it draws on 'WAY'; cut 1.0 s after the `draw` mark."
   ],
-  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'Every time I open my WINDOW, the village BELL RINGS.': the bell rang because it was in the way"
+  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'Every time I open my WINDOW, the BELL RINGS.': the bell rang because it was in the way"
  },
  "bible": "stories/bell_window/bible.md",
  "beats": "stories/bell_window/beats.md",
