@@ -3,15 +3,31 @@
   "channel": "buhstories",
   "caption": "My village is covered in 9,000 carpets",
   "youtube": {
-    "title": "My village is covered in 9,000 carpets #minecraft #shorts",
-    "description": "My village is covered in 9,000 carpets\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "my village is covered in 9,000 carpets 😶 #minecraft #shorts",
+    "description": "My village is covered in 9,000 carpets.\n\nWhat do you think is under the well? Wrong answers only\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftstory #buhstories",
     "hashtags": [
       "#minecraft",
       "#shorts",
-      "#minecraftmemes",
-      "#funny"
+      "#minecraftstory",
+      "#buhstories"
     ],
-    "made_for_kids": false
+    "tags": [
+      "minecraft story",
+      "minecraft stories",
+      "minecraft shorts",
+      "minecraft mystery",
+      "buh stories",
+      "minecraft village",
+      "minecraft warden",
+      "minecraft carpet",
+      "minecraft well",
+      "minecraft light sleeper"
+    ],
+    "pinned_comment": "What do you think is under the well? Wrong answers only 👇",
+    "playlist": "All Buh Stories",
+    "made_for_kids": false,
+    "altered_content": false,
+    "source": "stories/light_sleeper/story.json upload"
   },
   "song": {
     "file": "songs/score/darkest_child.ogg",
@@ -31,26 +47,26 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 52.3,
+    "duration_s": 52.95,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 76372449,
-    "sha256": "d9c2fb3e13de7613c93adaf13cb80f22351aaf8dfdbf3ca1938a6b1490a99ac8",
+    "bytes": 77932402,
+    "sha256": "264c0a2baf9b4688cc5334aa91b7ccaf2b6fe41beb5e6d1798aab078e9ed1731",
     "release": {
       "tag": "pkg-story_light_sleeper",
-      "asset": "story_light_sleeper.short.d9c2fb3e13de7613.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_light_sleeper/story_light_sleeper.short.d9c2fb3e13de7613.mp4",
-      "sha256": "d9c2fb3e13de7613c93adaf13cb80f22351aaf8dfdbf3ca1938a6b1490a99ac8",
-      "bytes": 76372449
+      "asset": "story_light_sleeper.short.264c0a2baf9b4688.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_light_sleeper/story_light_sleeper.short.264c0a2baf9b4688.mp4",
+      "sha256": "264c0a2baf9b4688cc5334aa91b7ccaf2b6fe41beb5e6d1798aab078e9ed1731",
+      "bytes": 77932402
     },
     "nosong_release": {
       "tag": "pkg-story_light_sleeper",
-      "asset": "story_light_sleeper.short_nosong.d9c2fb3e13de7613.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_light_sleeper/story_light_sleeper.short_nosong.d9c2fb3e13de7613.mp4",
-      "sha256": "d9c2fb3e13de7613c93adaf13cb80f22351aaf8dfdbf3ca1938a6b1490a99ac8",
-      "bytes": 76372449
+      "asset": "story_light_sleeper.short_nosong.264c0a2baf9b4688.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_light_sleeper/story_light_sleeper.short_nosong.264c0a2baf9b4688.mp4",
+      "sha256": "264c0a2baf9b4688cc5334aa91b7ccaf2b6fe41beb5e6d1798aab078e9ed1731",
+      "bytes": 77932402
     }
   },
   "edit": {
@@ -73,6 +89,9 @@
         }
       ]
     ],
+    "keySounds": [
+      "roar"
+    ],
     "args": [
       "--caption",
       "My village is covered in 9,000 carpets",
@@ -83,6 +102,8 @@
       "--punch_stress",
       "[[\"L01\",2.42,0.07],[\"L11\",3.4,0.07],[\"L16\",3.66,0.07]]",
       "--flash",
+      "[\"roar\"]",
+      "--key_sounds",
       "[\"roar\"]",
       "--sfx",
       "[[\"impact\",\"roar\",{\"nth\":0,\"gain\":1.4}]]",
@@ -108,13 +129,17 @@
       "y": 79,
       "z": -860
     },
-    "ticks": 1077,
-    "seconds": 53.85,
+    "ticks": 1251,
+    "seconds": 62.55,
     "deaths": 0,
     "events": [
       {
         "t": 0.75,
         "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "cut_moves"
       },
       {
         "t": 0.75,
@@ -146,6 +171,10 @@
       },
       {
         "t": 4.45,
+        "event": "cut_moves"
+      },
+      {
+        "t": 4.45,
         "event": "shot"
       },
       {
@@ -155,6 +184,10 @@
       {
         "t": 4.5,
         "event": "line"
+      },
+      {
+        "t": 7.25,
+        "event": "cut_moves"
       },
       {
         "t": 7.25,
@@ -193,52 +226,24 @@
         "event": "line"
       },
       {
-        "t": 16.75,
+        "t": 17.75,
         "event": "cut"
       },
       {
-        "t": 16.75,
+        "t": 17.75,
         "event": "time"
       },
       {
-        "t": 16.85,
+        "t": 17.85,
         "event": "line"
-      },
-      {
-        "t": 16.95,
-        "event": "swing"
-      },
-      {
-        "t": 17.05,
-        "event": "dig"
-      },
-      {
-        "t": 17.05,
-        "event": "swing"
-      },
-      {
-        "t": 17.2,
-        "event": "swing"
-      },
-      {
-        "t": 17.4,
-        "event": "swing"
-      },
-      {
-        "t": 17.45,
-        "event": "swing"
-      },
-      {
-        "t": 17.7,
-        "event": "swing"
-      },
-      {
-        "t": 17.75,
-        "event": "swing"
       },
       {
         "t": 17.95,
         "event": "swing"
+      },
+      {
+        "t": 18.05,
+        "event": "dig"
       },
       {
         "t": 18.05,
@@ -249,43 +254,43 @@
         "event": "swing"
       },
       {
-        "t": 18.2,
-        "event": "dig_end"
+        "t": 18.35,
+        "event": "swing"
       },
       {
-        "t": 18.25,
-        "event": "vel"
+        "t": 18.45,
+        "event": "swing"
+      },
+      {
+        "t": 18.7,
+        "event": "swing"
+      },
+      {
+        "t": 18.7,
+        "event": "swing"
+      },
+      {
+        "t": 18.95,
+        "event": "swing"
+      },
+      {
+        "t": 19.05,
+        "event": "swing"
+      },
+      {
+        "t": 19.2,
+        "event": "swing"
+      },
+      {
+        "t": 19.2,
+        "event": "dig_end"
       },
       {
         "t": 19.25,
         "event": "vel"
       },
       {
-        "t": 19.3,
-        "event": "vel"
-      },
-      {
-        "t": 19.8,
-        "event": "f1_on"
-      },
-      {
-        "t": 19.8,
-        "event": "shot"
-      },
-      {
-        "t": 19.8,
-        "event": "line"
-      },
-      {
-        "t": 19.8,
-        "event": "vel"
-      },
-      {
-        "t": 20.15,
-        "event": "vel"
-      },
-      {
-        "t": 20.2,
+        "t": 20.25,
         "event": "vel"
       },
       {
@@ -293,7 +298,31 @@
         "event": "vel"
       },
       {
-        "t": 21.2,
+        "t": 20.7,
+        "event": "vel"
+      },
+      {
+        "t": 20.8,
+        "event": "cut_moves"
+      },
+      {
+        "t": 20.8,
+        "event": "f1_on"
+      },
+      {
+        "t": 20.8,
+        "event": "shot"
+      },
+      {
+        "t": 20.8,
+        "event": "line"
+      },
+      {
+        "t": 20.9,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
         "event": "vel"
       },
       {
@@ -301,7 +330,7 @@
         "event": "vel"
       },
       {
-        "t": 22.2,
+        "t": 22.3,
         "event": "vel"
       },
       {
@@ -309,51 +338,51 @@
         "event": "vel"
       },
       {
-        "t": 22.5,
+        "t": 23.3,
+        "event": "vel"
+      },
+      {
+        "t": 23.35,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
         "event": "actor"
       },
       {
-        "t": 22.6,
+        "t": 23.6,
         "event": "actor"
       },
       {
-        "t": 22.6,
+        "t": 23.6,
         "event": "cut"
       },
       {
-        "t": 22.6,
+        "t": 23.6,
         "event": "time"
       },
       {
-        "t": 22.6,
+        "t": 23.6,
         "event": "f1_off"
       },
       {
-        "t": 22.6,
+        "t": 23.6,
         "event": "shot"
       },
       {
-        "t": 22.6,
+        "t": 23.6,
         "event": "effect"
       },
       {
-        "t": 22.75,
+        "t": 23.7,
         "event": "line"
-      },
-      {
-        "t": 23.25,
-        "event": "vel"
-      },
-      {
-        "t": 23.4,
-        "event": "vel"
       },
       {
         "t": 24.25,
         "event": "vel"
       },
       {
-        "t": 24.4,
+        "t": 24.3,
         "event": "vel"
       },
       {
@@ -361,7 +390,7 @@
         "event": "vel"
       },
       {
-        "t": 25.4,
+        "t": 25.3,
         "event": "vel"
       },
       {
@@ -369,157 +398,145 @@
         "event": "vel"
       },
       {
-        "t": 26.4,
+        "t": 26.3,
         "event": "vel"
-      },
-      {
-        "t": 26.9,
-        "event": "cut"
-      },
-      {
-        "t": 26.9,
-        "event": "darkness_snap"
-      },
-      {
-        "t": 26.9,
-        "event": "effect_end"
-      },
-      {
-        "t": 26.9,
-        "event": "time"
-      },
-      {
-        "t": 27,
-        "event": "line"
-      },
-      {
-        "t": 27.2,
-        "event": "hurt",
-        "type": "arrow"
       },
       {
         "t": 27.25,
         "event": "vel"
       },
       {
-        "t": 27.4,
+        "t": 27.3,
         "event": "vel"
       },
       {
         "t": 27.9,
-        "event": "mob_hurt"
+        "event": "cut"
+      },
+      {
+        "t": 27.9,
+        "event": "darkness_snap"
+      },
+      {
+        "t": 27.9,
+        "event": "effect_end"
+      },
+      {
+        "t": 27.9,
+        "event": "time"
       },
       {
         "t": 28,
-        "event": "vel"
-      },
-      {
-        "t": 28,
-        "event": "mob_death"
+        "event": "line"
       },
       {
         "t": 28.15,
+        "event": "hurt",
+        "type": "arrow"
+      },
+      {
+        "t": 28.3,
         "event": "vel"
       },
       {
-        "t": 28.25,
+        "t": 28.35,
         "event": "vel"
       },
       {
-        "t": 28.4,
-        "event": "vel"
-      },
-      {
-        "t": 28.45,
-        "event": "vel"
-      },
-      {
-        "t": 28.95,
-        "event": "vel"
+        "t": 28.9,
+        "event": "mob_hurt"
       },
       {
         "t": 29,
         "event": "vel"
       },
       {
-        "t": 29.15,
-        "event": "vel"
+        "t": 29,
+        "event": "mob_death"
+      },
+      {
+        "t": 29,
+        "event": "motion_start"
       },
       {
         "t": 29.15,
         "event": "vel"
       },
       {
-        "t": 29.25,
+        "t": 29.3,
         "event": "vel"
       },
       {
-        "t": 29.25,
+        "t": 29.35,
         "event": "vel"
-      },
-      {
-        "t": 29.4,
-        "event": "cut"
-      },
-      {
-        "t": 29.4,
-        "event": "time"
       },
       {
         "t": 29.5,
-        "event": "line"
+        "event": "vel"
       },
       {
-        "t": 32.7,
+        "t": 30,
+        "event": "motion_settled"
+      },
+      {
+        "t": 30,
+        "event": "settle"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.1,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.35,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
         "event": "cut"
       },
       {
-        "t": 32.7,
-        "event": "f1_on"
+        "t": 30.4,
+        "event": "time"
       },
       {
-        "t": 32.7,
-        "event": "shot"
-      },
-      {
-        "t": 32.8,
+        "t": 30.5,
         "event": "line"
       },
       {
-        "t": 32.9,
-        "event": "swing"
+        "t": 33.7,
+        "event": "cut"
       },
       {
-        "t": 33,
-        "event": "dig"
+        "t": 33.7,
+        "event": "f1_on"
       },
       {
-        "t": 33,
-        "event": "swing"
+        "t": 33.7,
+        "event": "shot"
       },
       {
-        "t": 33.15,
-        "event": "swing"
-      },
-      {
-        "t": 33.35,
-        "event": "swing"
-      },
-      {
-        "t": 33.4,
-        "event": "swing"
-      },
-      {
-        "t": 33.65,
-        "event": "swing"
-      },
-      {
-        "t": 33.65,
-        "event": "swing"
+        "t": 33.8,
+        "event": "line"
       },
       {
         "t": 33.9,
         "event": "swing"
+      },
+      {
+        "t": 34,
+        "event": "dig"
       },
       {
         "t": 34,
@@ -530,163 +547,407 @@
         "event": "swing"
       },
       {
-        "t": 34.15,
-        "event": "dig_end"
+        "t": 34.4,
+        "event": "swing"
       },
       {
-        "t": 34.2,
-        "event": "vel"
-      },
-      {
-        "t": 34.65,
-        "event": "place_on"
+        "t": 34.4,
+        "event": "swing"
       },
       {
         "t": 34.65,
+        "event": "swing"
+      },
+      {
+        "t": 34.7,
+        "event": "swing"
+      },
+      {
+        "t": 34.9,
+        "event": "swing"
+      },
+      {
+        "t": 35.05,
+        "event": "swing"
+      },
+      {
+        "t": 35.15,
         "event": "swing"
       },
       {
         "t": 35.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 35.25,
         "event": "vel"
       },
       {
-        "t": 35.3,
+        "t": 35.7,
+        "event": "place_on"
+      },
+      {
+        "t": 35.7,
+        "event": "swing"
+      },
+      {
+        "t": 36.25,
         "event": "vel"
       },
       {
-        "t": 35.35,
+        "t": 36.35,
+        "event": "cut_moves"
+      },
+      {
+        "t": 36.35,
         "event": "shot"
       },
       {
-        "t": 35.6,
+        "t": 36.35,
         "event": "vel"
       },
       {
-        "t": 35.8,
+        "t": 36.75,
         "event": "vel"
       },
       {
-        "t": 36.2,
+        "t": 36.95,
         "event": "vel"
       },
       {
-        "t": 36.65,
+        "t": 37.25,
+        "event": "vel"
+      },
+      {
+        "t": 37.35,
+        "event": "vel"
+      },
+      {
+        "t": 37.65,
         "event": "line"
       },
       {
-        "t": 36.7,
+        "t": 37.7,
         "event": "actor"
       },
       {
-        "t": 37.25,
-        "event": "actor"
+        "t": 38.2,
+        "event": "vel"
       },
       {
-        "t": 37.25,
-        "event": "actor"
-      },
-      {
-        "t": 37.25,
-        "event": "actor"
-      },
-      {
-        "t": 37.25,
-        "event": "actor"
-      },
-      {
-        "t": 37.25,
-        "event": "actor"
-      },
-      {
-        "t": 37.25,
-        "event": "actor"
-      },
-      {
-        "t": 37.25,
-        "event": "actor"
-      },
-      {
-        "t": 37.25,
+        "t": 38.25,
         "event": "actor"
       },
       {
         "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.25,
+        "event": "actor"
+      },
+      {
+        "t": 38.3,
+        "event": "vel"
+      },
+      {
+        "t": 39.2,
+        "event": "vel"
+      },
+      {
+        "t": 39.25,
         "event": "swing"
       },
       {
-        "t": 39.75,
+        "t": 39.3,
+        "event": "vel"
+      },
+      {
+        "t": 40.2,
+        "event": "vel"
+      },
+      {
+        "t": 40.3,
+        "event": "vel"
+      },
+      {
+        "t": 40.7,
         "event": "cut"
       },
       {
-        "t": 39.75,
+        "t": 40.7,
         "event": "shot"
       },
       {
-        "t": 39.85,
+        "t": 40.8,
         "event": "line"
       },
       {
-        "t": 40.7,
+        "t": 41.2,
+        "event": "vel"
+      },
+      {
+        "t": 41.3,
+        "event": "vel"
+      },
+      {
+        "t": 41.65,
         "event": "darkness_phase"
       },
       {
-        "t": 40.7,
+        "t": 41.65,
         "event": "effect"
       },
       {
-        "t": 42.65,
+        "t": 42.2,
+        "event": "vel"
+      },
+      {
+        "t": 42.3,
+        "event": "vel"
+      },
+      {
+        "t": 43.2,
+        "event": "vel"
+      },
+      {
+        "t": 43.3,
+        "event": "vel"
+      },
+      {
+        "t": 43.65,
+        "event": "cut_moves"
+      },
+      {
+        "t": 43.65,
         "event": "shot"
       },
       {
-        "t": 42.65,
+        "t": 43.65,
         "event": "line"
       },
       {
         "t": 44.2,
+        "event": "vel"
+      },
+      {
+        "t": 44.3,
+        "event": "vel"
+      },
+      {
+        "t": 45.2,
         "event": "line"
       },
       {
-        "t": 46.65,
+        "t": 45.25,
+        "event": "vel"
+      },
+      {
+        "t": 45.35,
+        "event": "vel"
+      },
+      {
+        "t": 46.25,
+        "event": "vel"
+      },
+      {
+        "t": 46.35,
+        "event": "vel"
+      },
+      {
+        "t": 47.25,
+        "event": "vel"
+      },
+      {
+        "t": 47.35,
         "event": "cut"
       },
       {
-        "t": 46.65,
+        "t": 47.35,
+        "event": "vel"
+      },
+      {
+        "t": 47.35,
         "event": "f1_off"
       },
       {
-        "t": 46.65,
+        "t": 47.35,
         "event": "shot"
       },
       {
-        "t": 46.75,
+        "t": 47.45,
         "event": "line"
       },
       {
-        "t": 51.35,
+        "t": 48.2,
+        "event": "vel"
+      },
+      {
+        "t": 48.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.2,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.2,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 52,
         "event": "actor"
       },
       {
-        "t": 51.35,
+        "t": 52,
+        "event": "cut_moves"
+      },
+      {
+        "t": 52,
         "event": "f1_on"
       },
       {
-        "t": 51.35,
+        "t": 52,
         "event": "shot"
       },
       {
-        "t": 52.65,
+        "t": 52.2,
+        "event": "vel"
+      },
+      {
+        "t": 52.3,
+        "event": "vel"
+      },
+      {
+        "t": 53.2,
+        "event": "vel"
+      },
+      {
+        "t": 53.3,
         "event": "pose"
       },
       {
-        "t": 52.65,
+        "t": 53.3,
         "event": "roar"
       },
       {
-        "t": 53.65,
+        "t": 53.3,
+        "event": "vel"
+      },
+      {
+        "t": 54.2,
+        "event": "vel"
+      },
+      {
+        "t": 54.3,
         "event": "story_end"
       },
       {
-        "t": 53.85,
+        "t": 54.3,
+        "event": "vel"
+      },
+      {
+        "t": 55.25,
+        "event": "vel"
+      },
+      {
+        "t": 55.35,
+        "event": "vel"
+      },
+      {
+        "t": 56.25,
+        "event": "vel"
+      },
+      {
+        "t": 56.35,
+        "event": "vel"
+      },
+      {
+        "t": 57.25,
+        "event": "vel"
+      },
+      {
+        "t": 57.35,
+        "event": "vel"
+      },
+      {
+        "t": 58.2,
+        "event": "vel"
+      },
+      {
+        "t": 58.3,
+        "event": "vel"
+      },
+      {
+        "t": 59.2,
+        "event": "vel"
+      },
+      {
+        "t": 59.3,
+        "event": "vel"
+      },
+      {
+        "t": 60.2,
+        "event": "vel"
+      },
+      {
+        "t": 60.3,
+        "event": "vel"
+      },
+      {
+        "t": 61.2,
+        "event": "vel"
+      },
+      {
+        "t": 61.3,
+        "event": "vel"
+      },
+      {
+        "t": 62.2,
+        "event": "vel"
+      },
+      {
+        "t": 62.3,
+        "event": "vel"
+      },
+      {
+        "t": 62.55,
         "event": "end"
       }
     ]
@@ -694,51 +955,60 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/story_light_sleeper",
-    "commit": "18112aa4c8017003ca6838c45a0bbf72ce4976c7",
+    "commit": "d9e145cc725dfe6ca42296c0c6e782ef5ca29665",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43003799268",
-    "rendered_at": "2026-11-11T10:41:02.485Z",
-    "head_at_publish": "c8e071fb1af726f5a40fc9c4a19546bb333fa5ce",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43191010151",
+    "rendered_at": "2026-11-12T09:41:43.083Z",
+    "head_at_publish": "867b0d582d4602acd5c43c1f5207f1363fda1ca0",
     "stunt": "stunts/story_light_sleeper.js",
     "source_snapshot": [
       "source/story_light_sleeper.js",
       "source/story.js",
       "source/motion.js",
       "source/sight.js",
-      "source/act.js"
+      "source/act.js",
+      "source/boats.js",
+      "source/kit_extras.js"
     ]
   },
   "rebuild": [
-    "git checkout 18112aa4c801",
+    "git checkout d9e145cc725d",
     "gunzip -c shorts/story_light_sleeper/recording.json.gz > work/story_light_sleeper.rec.json",
     "node render.js work/story_light_sleeper.rec.json work/story_light_sleeper.frames 60 1080 1011",
     "python3 audio.py work/story_light_sleeper.rec.json work/story_light_sleeper.wav",
-    "python3 edit.py --frames work/story_light_sleeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_light_sleeper.rec.json --audio work/story_light_sleeper.wav --caption \"My village is covered in 9,000 carpets\" --red carpets --red_rgb FFD640 --punch_stress [[\"L01\",2.42,0.07],[\"L11\",3.4,0.07],[\"L16\",3.66,0.07]] --flash [\"roar\"] --sfx [[\"impact\",\"roar\",{\"nth\":0,\"gain\":1.4}]] --chat_align center --story stories/light_sleeper --start_at line:0 --end_after story_end:0 --out out/story_light_sleeper.mp4"
+    "python3 edit.py --frames work/story_light_sleeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_light_sleeper.rec.json --audio work/story_light_sleeper.wav --caption \"My village is covered in 9,000 carpets\" --red carpets --red_rgb FFD640 --punch_stress [[\"L01\",2.42,0.07],[\"L11\",3.4,0.07],[\"L16\",3.66,0.07]] --flash [\"roar\"] --key_sounds [\"roar\"] --sfx [[\"impact\",\"roar\",{\"nth\":0,\"gain\":1.4}]] --chat_align center --story stories/light_sleeper --start_at line:0 --end_after story_end:0 --out out/story_light_sleeper.mp4"
   ],
   "status": "held",
-  "notes": "short-review r1 READY (0 blockers, session_019n1tKH9GqLZrB3z4xapapH); Pip narrator (owner's pick; panel hears a girl, owner asked); held for the owner",
-  "published_at": "2026-11-11T10:46:12.075Z",
+  "notes": "Mom re-voiced (owner 2026-11-11 r:rc31bfe 'too similar to narrator'): Pulcherrima on gemini-3.1-flash-tts-preview (the owner's audition pick), L05 + L15 (L15 its own scared bracket); re-recorded and rendered on main; short-review r1+r2 READY (0 blockers); nitpicks: end 1.00 s after the roar, L15 caption 1 frame past the 46.00 cut, Mom's L05 read hushed (panel ASMR flag 3/3), pace WARNs as in the reviewed cut; held for the owner",
+  "published_at": "2026-11-12T09:54:58.851Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:46:29+00:00",
+    "at": "2026-11-12T09:55:43+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 52.30 s vs the reviewed render 52.30 s"
+      "summary": "short.mp4 52.95 s vs the reviewed render 52.95 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T10:28:39.740Z",
-      "report": "out/story_light_sleeper.check.json"
+      "at": "2026-11-12T09:44:25.486Z",
+      "report": "work/hb/story_light_sleeper.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": {
+      "ok": true,
+      "keys": [
+        "roar"
+      ],
+      "summary": "key sounds over the music: worst +106.7 dB over 1 clips (need >= 8 dB)"
+    },
+    "waived": "lead 2026-11-12: voice_drift L06 (narrator, DRIFT 2.21 vs peers) pre-existing on the unchanged take the owner already reviewed; Mom's read check waived in story.json cast.Mom.read_waiver (owner's voice pick; the backwards listener hears the owner's own audition clip as a man; forwards woman 30-45 conf 9)"
   }
 }
