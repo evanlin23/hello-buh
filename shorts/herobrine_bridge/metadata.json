@@ -4,7 +4,7 @@
   "caption": "this guy's ping is actually unplayable",
   "youtube": {
     "title": "this guy's ping is actually unplayable #minecraft #shorts",
-    "description": "this guy's ping is actually unplayable\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "this guy's ping is actually unplayable\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "feel_good_funk.mp3",
-    "title": "Feel Good Funk",
-    "artist": "Syn Cole, Nakama",
+    "file": "montagem_toma.mp3",
+    "title": "Montagem Toma",
+    "artist": "X972, sk3tch01, MXZI",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "payoff",
-    "drop_in_song_s": 16.5,
-    "drop_in_short_s": 11.95,
-    "song_start_s": 4.55
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 10.6,
+    "song_start_s": 3.9
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 12.95,
+    "duration_s": 11.6,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 4938552,
-    "sha256": "4d56fa34262b7b559028bc0f263cea6cfb2d4f4bb3d646424f52c30cb256e61c",
+    "bytes": 4438767,
+    "sha256": "f0f2d86a3a111946ba5cdb601f8127ec18a5c69ff3486321965dc28cd6588002",
     "release": {
       "tag": "pkg-herobrine_bridge",
-      "asset": "herobrine_bridge.short.4d56fa34262b7b55.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short.4d56fa34262b7b55.mp4",
-      "sha256": "4d56fa34262b7b559028bc0f263cea6cfb2d4f4bb3d646424f52c30cb256e61c",
-      "bytes": 4938552
+      "asset": "herobrine_bridge.short.f0f2d86a3a111946.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short.f0f2d86a3a111946.mp4",
+      "sha256": "f0f2d86a3a111946ba5cdb601f8127ec18a5c69ff3486321965dc28cd6588002",
+      "bytes": 4438767
     },
     "nosong_release": {
       "tag": "pkg-herobrine_bridge",
-      "asset": "herobrine_bridge.short_nosong.cc5bd2851aa5eef8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short_nosong.cc5bd2851aa5eef8.mp4",
-      "sha256": "cc5bd2851aa5eef884c943ebaac79b94788ee47cc97059b3ff760c9e2975ed42",
-      "bytes": 4743635
+      "asset": "herobrine_bridge.short_nosong.43d01652e496ce06.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short_nosong.43d01652e496ce06.mp4",
+      "sha256": "43d01652e496ce06a5307f007f09d89f52a31676712daeb84f0d3ececa2d2275",
+      "bytes": 4241138
     }
   },
   "edit": {
@@ -59,12 +59,6 @@
         "why isn't he falling",
         1.6,
         0
-      ],
-      [
-        "drift",
-        "bro??",
-        1.2,
-        0
       ]
     ],
     "flash": [
@@ -76,11 +70,6 @@
     ],
     "punch": [
       [
-        "reveal",
-        0,
-        1.12
-      ],
-      [
         "payoff",
         0,
         1.06
@@ -91,6 +80,13 @@
         "dip",
         "payoff",
         0.4
+      ],
+      [
+        "hit",
+        "reveal",
+        {
+          "gain": 1
+        }
       ],
       [
         "gamedip",
@@ -110,18 +106,20 @@
     "args": [
       "--caption",
       "this guy's ping is actually unplayable",
+      "--self_name",
+      "56e",
       "--red",
       "unplayable",
       "--subs",
-      "[[\"air\",\"why isn't he falling\",1.6,0],[\"drift\",\"bro??\",1.2,0]]",
+      "[[\"air\",\"why isn't he falling\",1.6,0]]",
       "--subs_y",
       "0.12",
       "--punch",
-      "[[\"reveal\",0,1.12],[\"payoff\",0,1.06]]",
+      "[[\"payoff\",0,1.06]]",
       "--flash",
       "[[\"payoff\",0,0.35]]",
       "--sfx",
-      "[[\"dip\",\"payoff\",0.4],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
+      "[[\"dip\",\"payoff\",0.4],[\"hit\",\"reveal\",{\"gain\":1}],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
       "--chat_scale",
       "5",
       "--start_at",
@@ -138,13 +136,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 360,
+      "x": 358,
       "y": 160,
-      "z": -48
+      "z": -50
     },
     "biome": "minecraft:plains",
-    "ticks": 299,
-    "seconds": 14.95,
+    "ticks": 256,
+    "seconds": 12.8,
     "deaths": 0,
     "events": [
       {
@@ -248,67 +246,67 @@
         "event": "shears"
       },
       {
-        "t": 5.45,
+        "t": 5.55,
         "event": "dig"
       },
       {
-        "t": 5.45,
+        "t": 5.55,
         "event": "swing"
       },
       {
-        "t": 5.7,
+        "t": 5.8,
         "event": "dig_end"
       },
       {
-        "t": 5.7,
+        "t": 5.8,
         "event": "broke"
       },
       {
-        "t": 6.15,
+        "t": 6.25,
         "event": "dig"
       },
       {
-        "t": 6.15,
+        "t": 6.25,
         "event": "swing"
       },
       {
-        "t": 6.4,
+        "t": 6.5,
         "event": "dig_end"
       },
       {
-        "t": 6.4,
+        "t": 6.5,
         "event": "broke"
       },
       {
-        "t": 6.4,
+        "t": 6.5,
         "event": "air"
       },
       {
-        "t": 6.6,
+        "t": 6.7,
         "event": "lag"
       },
       {
-        "t": 9.2,
+        "t": 9.25,
         "event": "cast_skin"
       },
       {
-        "t": 10.6,
+        "t": 10.7,
         "event": "reveal"
       },
       {
-        "t": 11.3,
-        "event": "drift"
+        "t": 10.7,
+        "event": "lag"
       },
       {
-        "t": 12.9,
+        "t": 11.55,
         "event": "syschat"
       },
       {
-        "t": 12.9,
+        "t": 11.55,
         "event": "payoff"
       },
       {
-        "t": 14.95,
+        "t": 12.8,
         "event": "end"
       }
     ]
@@ -316,10 +314,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "260191a0060940e94204f47e7ff1f64e475972c3",
+    "commit": "7af609f231364d7968b818c59fe396936b205a72",
     "rendered": "local",
-    "rendered_at": "2026-11-11T19:47:51.311Z",
-    "head_at_publish": "8638a26a55b9d3468fbfea50397bf79fa01976fe",
+    "rendered_at": "2026-11-12T06:38:47.248Z",
+    "head_at_publish": "7af609f231364d7968b818c59fe396936b205a72",
     "stunt": "stunts/herobrine_bridge.js",
     "source_snapshot": [
       "source/herobrine_bridge.js",
@@ -328,38 +326,40 @@
       "source/motion.js",
       "source/sight.js",
       "source/act.js",
+      "source/boats.js",
+      "source/kit_extras.js",
       "source/movie.js"
     ]
   },
   "rebuild": [
-    "git checkout 260191a00609",
+    "git checkout 7af609f23136",
     "gunzip -c shorts/herobrine_bridge/recording.json.gz > work/herobrine_bridge.rec.json",
     "node render.js work/herobrine_bridge.rec.json work/herobrine_bridge.frames 60 1080 1011",
     "python3 audio.py work/herobrine_bridge.rec.json work/herobrine_bridge.wav",
-    "python3 edit.py --frames work/herobrine_bridge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/herobrine_bridge.rec.json --audio work/herobrine_bridge.wav --caption \"this guy's ping is actually unplayable\" --red unplayable --subs \"[[\\\"air\\\",\\\"why isn't he falling\\\",1.6,0],[\\\"drift\\\",\\\"bro??\\\",1.2,0]]\" --subs_y 0.12 --punch [[\"reveal\",0,1.12],[\"payoff\",0,1.06]] --flash [[\"payoff\",0,0.35]] --sfx [[\"dip\",\"payoff\",0.4],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:1.0 --out out/herobrine_bridge.mp4"
+    "python3 edit.py --frames work/herobrine_bridge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/herobrine_bridge.rec.json --audio work/herobrine_bridge.wav --caption \"this guy's ping is actually unplayable\" --self_name 56e --red unplayable --subs \"[[\\\"air\\\",\\\"why isn't he falling\\\",1.6,0]]\" --subs_y 0.12 --punch [[\"payoff\",0,1.06]] --flash [[\"payoff\",0,0.35]] --sfx [[\"dip\",\"payoff\",0.4],[\"hit\",\"reveal\",{\"gain\":1}],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:1.0 --out out/herobrine_bridge.mp4"
   ],
   "status": "ready",
-  "notes": "worker: herobrine #1 (bridge fight over the void, lag -> standing on air -> white eyes -> logs out); independent review 2 rounds (r1 sub over the gap -> subsY 0.12); mixcheck OK; pace buildup WARN = deliberate stare. Nitpicks: top sub crosses his face on the look-down; chat band over his shins in the reveal; wool vanishes while half turned.",
-  "published_at": "2026-11-11T19:49:20.954Z",
+  "notes": "no-op fix (r:r4607fa): the 'laggy' player was Herobrine: white eyes, a lag-snap into your face, full-frame, then 'Herobrine left the game' on the drop; 11.6 s; independent full review READY",
+  "published_at": "2026-11-12T06:40:06.819Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:49:41+00:00",
+    "at": "2026-11-12T06:40:28+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 12.97 s vs the reviewed render 12.95 s"
+      "summary": "short.mp4 11.61 s vs the reviewed render 11.60 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:48:08.977Z",
+      "at": "2026-11-12T06:38:59.350Z",
       "report": "work/hb/herobrine_bridge.check.json"
     },
     "key_sounds": "n/a"
