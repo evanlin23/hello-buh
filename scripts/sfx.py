@@ -222,7 +222,7 @@ def plan(spec, timeline, start, cards=None, counter=None):
 
 def dips(spec, timeline, start, shift=0.0):
     """[(a, b)] song-duck windows in Short time (+shift: a hook preview in front)."""
-    return [(a + shift, b + shift) for k, a, b, _ in plan(spec, timeline, start) if k == "dip"]
+    return [(a + shift, b + shift) + ((float(o["depth"]),) if "depth" in o else ()) for k, a, b, o in plan(spec, timeline, start) if k == "dip"]
 
 
 def game_dips(spec, timeline, start):
@@ -232,11 +232,20 @@ def game_dips(spec, timeline, start):
 
 
 def duck_filter(windows, depth=0.06):
-    """An ffmpeg volume filter that ducks to `depth` inside each window (20 ms ramps)."""
+    """An ffmpeg volume filter that ducks to `depth` inside each window (20 ms ramps). A window (a, b, d) ducks only
+    to its own depth d (an sfx 'dip' with {depth}: a gentle dip that keeps the song under the hit, owner 2026-11-12
+    on desire_town: "the music jumps too much"); where windows overlap the deepest wins."""
     if not windows:
         return ""
-    terms = "+".join(f"clip((t-{a - 0.02:.3f})/0.02,0,1)*clip(({b:.3f}-t)/0.02,0,1)" for a, b in windows)
-    return f",volume='1-{1 - depth:.3f}*min(1,{terms})':eval=frame"
+    ramp = lambda a, b: f"clip((t-{a - 0.02:.3f})/0.02,0,1)*clip(({b:.3f}-t)/0.02,0,1)"
+    if all(len(w) == 2 for w in windows):
+        terms = "+".join(ramp(a, b) for a, b in windows)
+        return f",volume='1-{1 - depth:.3f}*min(1,{terms})':eval=frame"
+    terms = [f"{1 - (w[2] if len(w) > 2 else depth):.3f}*{ramp(w[0], w[1])}" for w in windows]
+    expr = terms[0]
+    for t in terms[1:]:
+        expr = f"max({expr},{t})"
+    return f",volume='1-{expr}':eval=frame"
 
 
 def build_track(spec, timeline, start, dur, out_wav, cards=None, counter=None):
