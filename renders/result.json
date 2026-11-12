@@ -1,0 +1,17 @@
+{
+ "name": "mega_lapse_fox",
+ "stunt": "mega_lapse_fox",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43166885788",
+ "source": "a5ff2a5c",
+ "queued": "2026-11-12T06:15:37Z",
+ "finished": "2026-11-12T06:41:17Z",
+ "mp4": "renders/out/mega_lapse_fox.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
