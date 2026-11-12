@@ -843,6 +843,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-12, on dropper_rainbow v2 at 3.8 s (the fail cut 0.35 s after the hit, hearts empty, still alive on
   screen): "we should die when we lose all life?"** A dropper fail shows the whole death: the hit, the hearts empty,
   the death tilt and vanilla's "You died!" screen, then the cut (before the poof); never cut away mid-death.
+- **Owner, 2026-11-12, on trap_free_diamonds v3 at 8.6 s: "we should timelaspe the digging."** A long dig in a trap
+  (or any build step that is only labour) plays as a time-lapse: one steady sped-up move with a live depth counter
+  (edit `tally`), never seconds of stone walls. Keep it to one steady camera (no jump cuts in a lapse, r:r200cfe) and
+  cap the turns at 220 / x deg/s while it is sped up (K.turnLimit, r:r38374d); dig straight down where the trap
+  allows (no turns at all), and aim a hair off straight down (an exact 90 deg look never lands).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
