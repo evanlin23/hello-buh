@@ -1,0 +1,17 @@
+{
+ "name": "fortune",
+ "stunt": "fortune",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43163665319",
+ "source": "a7fe784",
+ "queued": "2026-11-12T05:46:58Z",
+ "finished": "2026-11-12T05:50:34Z",
+ "mp4": "renders/out/fortune.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

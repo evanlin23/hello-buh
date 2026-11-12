@@ -1,0 +1,136 @@
+{
+ "stunt": "fortune",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/fortune.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT fortune: 1 shots, scene 0.0-10.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-10.7  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 5 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 78% of the frame is within 3 blocks (stone, coal_ore)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "     0.80s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "     0.80s  generic died                       -> entity.generic.death               0.0 blocks          ",
+    "ambience per shot: -0.20-12.90s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:47:43.405Z"
+}
