@@ -1,0 +1,17 @@
+{
+ "name": "fakeworld_diamond",
+ "stunt": "fakeworld_diamond",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43124861829",
+ "source": "a738d93",
+ "queued": "2026-11-12T00:06:42Z",
+ "finished": "2026-11-12T00:25:30Z",
+ "mp4": "renders/out/fakeworld_diamond.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
