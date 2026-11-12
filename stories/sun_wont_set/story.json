@@ -265,10 +265,6 @@
    "shot": "S14",
    "look": [
     {
-     "what": "prop:sun_village",
-     "word": "DOWN"
-    },
-    {
      "what": "entity:zombie",
      "word": "OUT"
     },
