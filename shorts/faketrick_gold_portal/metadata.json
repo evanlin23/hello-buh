@@ -20,38 +20,38 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "payoff",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 6.9,
-    "song_start_s": 7.6
+    "drop_in_short_s": 7.7,
+    "song_start_s": 6.8
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.1,
+    "duration_s": 8.52,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 17685745,
-    "sha256": "551f72a84f8cdf3cde4d4d0f1bc65a0a1a8e77f2c0219f056a16745b64f1c473",
+    "bytes": 17739432,
+    "sha256": "4241db5e3179820041e22bf033662a2e77138270fd76dd07e1197afcec6ddbc0",
     "release": {
       "tag": "pkg-faketrick_gold_portal",
-      "asset": "faketrick_gold_portal.short.551f72a84f8cdf3c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.551f72a84f8cdf3c.mp4",
-      "sha256": "551f72a84f8cdf3cde4d4d0f1bc65a0a1a8e77f2c0219f056a16745b64f1c473",
-      "bytes": 17685745
+      "asset": "faketrick_gold_portal.short.4241db5e31798200.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.4241db5e31798200.mp4",
+      "sha256": "4241db5e3179820041e22bf033662a2e77138270fd76dd07e1197afcec6ddbc0",
+      "bytes": 17739432
     },
     "nosong_release": {
       "tag": "pkg-faketrick_gold_portal",
-      "asset": "faketrick_gold_portal.short_nosong.010756e4e0cca296.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short_nosong.010756e4e0cca296.mp4",
-      "sha256": "010756e4e0cca296f1e561c7da074620ab9e7ebf155c62aebd7315752a1633c0",
-      "bytes": 17683704
+      "asset": "faketrick_gold_portal.short_nosong.1ad68b1130a9ea8d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short_nosong.1ad68b1130a9ea8d.mp4",
+      "sha256": "1ad68b1130a9ea8d2bfb357a6dac1a0ca0735f9bc82714925b876467f7fa8d6d",
+      "bytes": 17732454
     }
   },
   "edit": {
     "caption": "a nether portal out of GOLD?? nobody knows this 😱",
     "red": "GOLD??",
     "startAt": "go:-0.05",
-    "endAfter": "payoff:1.2",
+    "endAfter": "payoff:0.8",
     "dropAt": "payoff",
     "subs": [
       [
@@ -175,15 +175,25 @@
         }
       ]
     ],
+    "hook": {
+      "at": "payoff",
+      "before": 0,
+      "after": 0.8,
+      "text": "how is this working?? 😳"
+    },
     "args": [
       "--caption",
       "a nether portal out of GOLD?? nobody knows this 😱",
+      "--self_name",
+      "56e",
       "--red",
       "GOLD??",
       "--subs",
       "[[\"step\",\"step 1: gold blocks\",1.5,0],[\"step\",\"step 2: light it\",1.5,1],[\"step\",\"step 3: wait...\",1.5,2],[\"payoff\",\"IT WORKS\",1.2,0]]",
       "--punch",
       "[[\"payoff\",0,1.08]]",
+      "--hook",
+      "{\"at\":\"payoff\",\"before\":0,\"after\":0.8,\"text\":\"how is this working?? 😳\"}",
       "--flash",
       "[[\"payoff\",0,0.45]]",
       "--sfx",
@@ -191,7 +201,7 @@
       "--start_at",
       "go:-0.05",
       "--end_after",
-      "payoff:1.2"
+      "payoff:0.8"
     ]
   },
   "recording": {
@@ -448,10 +458,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "05d7d81d85b364a0310ae6b4842076812c4494dd",
+    "commit": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
     "rendered": "local",
-    "rendered_at": "2026-11-11T19:31:12.859Z",
-    "head_at_publish": "9dd43f8f53bf48cdda95208bfa140e1105f4a7a6",
+    "rendered_at": "2026-11-12T01:15:33.796Z",
+    "head_at_publish": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
     "stunt": "stunts/faketrick_gold_portal.js",
     "source_snapshot": [
       "source/faketrick_gold_portal.js",
@@ -462,34 +472,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 05d7d81d85b3",
+    "git checkout 70d22037ae43",
     "gunzip -c shorts/faketrick_gold_portal/recording.json.gz > work/faketrick_gold_portal.rec.json",
     "node render.js work/faketrick_gold_portal.rec.json work/faketrick_gold_portal.frames 60 1080 1011",
     "python3 audio.py work/faketrick_gold_portal.rec.json work/faketrick_gold_portal.wav",
-    "python3 edit.py --frames work/faketrick_gold_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/faketrick_gold_portal.rec.json --audio work/faketrick_gold_portal.wav --caption \"a nether portal out of GOLD?? nobody knows this 😱\" --red GOLD?? --subs \"[[\\\"step\\\",\\\"step 1: gold blocks\\\",1.5,0],[\\\"step\\\",\\\"step 2: light it\\\",1.5,1],[\\\"step\\\",\\\"step 3: wait...\\\",1.5,2],[\\\"payoff\\\",\\\"IT WORKS\\\",1.2,0]]\" --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}]] --start_at go:-0.05 --end_after payoff:1.2 --out out/faketrick_gold_portal.mp4"
+    "python3 edit.py --frames work/faketrick_gold_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/faketrick_gold_portal.rec.json --audio work/faketrick_gold_portal.wav --caption \"a nether portal out of GOLD?? nobody knows this 😱\" --self_name 56e --red GOLD?? --subs \"[[\\\"step\\\",\\\"step 1: gold blocks\\\",1.5,0],[\\\"step\\\",\\\"step 2: light it\\\",1.5,1],[\\\"step\\\",\\\"step 3: wait...\\\",1.5,2],[\\\"payoff\\\",\\\"IT WORKS\\\",1.2,0]]\" --punch [[\"payoff\",0,1.08]] --hook \"{\\\"at\\\":\\\"payoff\\\",\\\"before\\\":0,\\\"after\\\":0.8,\\\"text\\\":\\\"how is this working?? 😳\\\"}\" --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}]] --start_at go:-0.05 --end_after payoff:0.8 --out out/faketrick_gold_portal.mp4"
   ],
   "status": "ready",
-  "notes": "faketrick #1: a nether portal of gold blocks, built aimed from a grass step (16 places), real flint and steel fire, 'step 3: wait...', then it lights (the portal is the staged fake, F.fake). r1 READY, 0 blockers. Nitpicks: step subs sit over the fire at 5.4-6.7 s; few portal particles; the wait beat is short (0.9 s); the mixcheck hook WARN (no hit detected under the bed in 1.5 s).",
-  "published_at": "2026-11-11T19:32:54.009Z",
+  "notes": "opening re-cut (r:r0f3da0): the lit gold portal flashes first; fast end (r:r188b46); fix-check READY",
+  "published_at": "2026-11-12T01:17:44.698Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:33:17+00:00",
+    "at": "2026-11-12T01:18:09+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 8.11 s vs the reviewed render 8.10 s"
+      "summary": "short.mp4 8.53 s vs the reviewed render 8.52 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:31:26.891Z",
+      "at": "2026-11-12T01:16:03.201Z",
       "report": "work/hb/faketrick_gold_portal.check.json"
     },
     "key_sounds": "n/a"
