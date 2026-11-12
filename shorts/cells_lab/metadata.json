@@ -4,7 +4,7 @@
   "caption": "nobody remembers who built this place",
   "youtube": {
     "title": "nobody remembers who built this place #minecraft #shorts",
-    "description": "nobody remembers who built this place\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "nobody remembers who built this place\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,61 +14,123 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "mortals_funk_remix.mp3",
-    "title": "Mortals Funk Remix",
-    "artist": "Warriyo, LXNGVX",
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "slam",
-    "drop_in_song_s": 113.75,
-    "drop_in_short_s": 29.85,
-    "song_start_s": 83.9
+    "drop_on_event": "selflaunch",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 9.65,
+    "song_start_s": 6.85
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.85,
+    "duration_s": 12.2,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20965158,
-    "sha256": "a3b84297905115390984e22c8a316be728c77cb0a939382d8e8df6a584efb6d1",
+    "bytes": 10254549,
+    "sha256": "6fcef8652fe0311a484851a840ea9db4c61558730c3d449f1f63191317dafd99",
     "release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short.a3b8429790511539.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.a3b8429790511539.mp4",
-      "sha256": "a3b84297905115390984e22c8a316be728c77cb0a939382d8e8df6a584efb6d1",
-      "bytes": 20965158
+      "asset": "cells_lab.short.6fcef8652fe0311a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.6fcef8652fe0311a.mp4",
+      "sha256": "6fcef8652fe0311a484851a840ea9db4c61558730c3d449f1f63191317dafd99",
+      "bytes": 10254549
     },
     "nosong_release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short_nosong.1c8d5e82b9d85f9f.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short_nosong.1c8d5e82b9d85f9f.mp4",
-      "sha256": "1c8d5e82b9d85f9fa656ae0ee234c6ed0bf3bd687d7d43343ac4e3e0b6200472",
-      "bytes": 20947475
+      "asset": "cells_lab.short_nosong.3f25ea09e510d219.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short_nosong.3f25ea09e510d219.mp4",
+      "sha256": "3f25ea09e510d219e377398f0f7c5b9dc7c5eb8453dee1b522aa844b3e043c1d",
+      "bytes": 10246907
     }
   },
   "edit": {
     "caption": "nobody remembers who built this place",
     "red": "nobody",
     "startAt": "open:0.1",
-    "endAfter": "slam:1.0",
-    "dropAt": "slam",
+    "endAfter": "selfland:1.3",
+    "dropAt": "selflaunch",
+    "speed": [
+      [
+        "cellout0",
+        "cellin1",
+        "cut"
+      ],
+      [
+        "cellout1",
+        "cellin2",
+        "cut"
+      ],
+      [
+        "cellout2",
+        "finale",
+        "cut"
+      ]
+    ],
+    "subs": [
+      [
+        "cell",
+        "cell 1",
+        1.4,
+        0
+      ],
+      [
+        "cell",
+        "cell 2",
+        1.4,
+        1
+      ],
+      [
+        "cell",
+        "cell 3",
+        1.8,
+        2
+      ],
+      [
+        "finale",
+        "cell 4",
+        1.6
+      ],
+      [
+        "padlook",
+        "cell 5...?",
+        1
+      ]
+    ],
+    "cards": [
+      [
+        "selfland",
+        "CELL 5: YOU",
+        1.4,
+        "red"
+      ]
+    ],
     "sfx": [
       [
         "impact",
-        "open:0.12",
+        "open:0.35",
         {
-          "gain": 0.8
+          "gain": 0.9
+        }
+      ],
+      [
+        "impact",
+        "selflaunch",
+        {
+          "gain": 1.1
         }
       ],
       [
         "dip",
-        "slam",
+        "selfland",
         0.4
       ],
       [
         "impact",
-        "slam",
+        "selfland",
         {
           "gain": 1.4
         }
@@ -76,14 +138,31 @@
     ],
     "flash": [
       [
-        "slam",
+        "selflaunch",
         0,
-        0.5
+        0.3
+      ],
+      [
+        "selfland",
+        0,
+        0.4
+      ]
+    ],
+    "punch": [
+      [
+        "selfland",
+        0,
+        1.08
       ]
     ],
     "shake": [
       [
-        "slam",
+        "selflaunch",
+        0,
+        6
+      ],
+      [
+        "selfland",
         0,
         8
       ]
@@ -95,16 +174,24 @@
       "56e",
       "--red",
       "nobody",
+      "--subs",
+      "[[\"cell\",\"cell 1\",1.4,0],[\"cell\",\"cell 2\",1.4,1],[\"cell\",\"cell 3\",1.8,2],[\"finale\",\"cell 4\",1.6],[\"padlook\",\"cell 5...?\",1]]",
+      "--speed",
+      "[[\"cellout0\",\"cellin1\",\"cut\"],[\"cellout1\",\"cellin2\",\"cut\"],[\"cellout2\",\"finale\",\"cut\"]]",
+      "--punch",
+      "[[\"selfland\",0,1.08]]",
+      "--cards",
+      "[[\"selfland\",\"CELL 5: YOU\",1.4,\"red\"]]",
       "--shake",
-      "[[\"slam\",0,8]]",
+      "[[\"selflaunch\",0,6],[\"selfland\",0,8]]",
       "--flash",
-      "[[\"slam\",0,0.5]]",
+      "[[\"selflaunch\",0,0.3],[\"selfland\",0,0.4]]",
       "--sfx",
-      "[[\"impact\",\"open:0.12\",{\"gain\":0.8}],[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]]",
+      "[[\"impact\",\"open:0.35\",{\"gain\":0.9}],[\"impact\",\"selflaunch\",{\"gain\":1.1}],[\"dip\",\"selfland\",0.4],[\"impact\",\"selfland\",{\"gain\":1.4}]]",
       "--start_at",
       "open:0.1",
       "--end_after",
-      "slam:1.0"
+      "selfland:1.3"
     ]
   },
   "recording": {
@@ -115,185 +202,125 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 383,
+      "x": 360,
       "y": 110,
-      "z": -62
+      "z": -61
     },
     "biome": "minecraft:plains",
-    "ticks": 713,
-    "seconds": 35.65,
+    "ticks": 378,
+    "seconds": 18.9,
     "deaths": 0,
     "events": [
       {
-        "t": 0.2,
-        "event": "vel"
-      },
-      {
-        "t": 0.6,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 0.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 0.6,
-        "event": "motion_start"
-      },
-      {
-        "t": 0.75,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0.75,
-        "event": "vel"
-      },
-      {
-        "t": 0.75,
+        "t": 0.8,
         "event": "vel"
       },
       {
         "t": 0.8,
-        "event": "push"
-      },
-      {
-        "t": 0.8,
-        "event": "block_action"
-      },
-      {
-        "t": 0.8,
-        "event": "block_action"
+        "event": "vel"
       },
       {
         "t": 0.85,
+        "event": "push"
+      },
+      {
+        "t": 1,
         "event": "open"
       },
       {
-        "t": 0.95,
+        "t": 1,
+        "event": "block_action"
+      },
+      {
+        "t": 1.2,
         "event": "vel"
       },
       {
-        "t": 1.05,
+        "t": 1.2,
         "event": "mob_hurt"
       },
       {
-        "t": 1.05,
-        "event": "mob_death"
-      },
-      {
-        "t": 1.2,
+        "t": 1.25,
         "event": "push"
       },
       {
-        "t": 1.2,
+        "t": 1.25,
         "event": "block_action"
       },
       {
-        "t": 1.2,
-        "event": "block_action"
-      },
-      {
-        "t": 1.3,
-        "event": "block_action"
-      },
-      {
-        "t": 1.55,
-        "event": "vel"
-      },
-      {
-        "t": 1.6,
-        "event": "push"
-      },
-      {
-        "t": 1.6,
-        "event": "block_action"
-      },
-      {
-        "t": 1.6,
+        "t": 1.25,
         "event": "block_action"
       },
       {
         "t": 1.65,
+        "event": "push"
+      },
+      {
+        "t": 1.65,
+        "event": "block_action"
+      },
+      {
+        "t": 1.65,
+        "event": "block_action"
+      },
+      {
+        "t": 1.7,
+        "event": "vel"
+      },
+      {
+        "t": 1.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 1.9,
         "event": "hall_end"
       },
       {
-        "t": 1.65,
-        "event": "cell"
-      },
-      {
-        "t": 1.65,
+        "t": 1.95,
         "event": "vel"
       },
       {
-        "t": 1.7,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 1.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 1.75,
+        "t": 1.95,
         "event": "vel"
       },
       {
-        "t": 1.75,
-        "event": "vel"
-      },
-      {
-        "t": 1.75,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 1.75,
-        "event": "mob_death"
-      },
-      {
-        "t": 1.8,
-        "event": "vel"
-      },
-      {
-        "t": 1.85,
-        "event": "vel"
-      },
-      {
-        "t": 2,
+        "t": 2.05,
         "event": "push"
       },
       {
-        "t": 2,
-        "event": "block_action"
-      },
-      {
-        "t": 2,
-        "event": "block_action"
-      },
-      {
-        "t": 2,
-        "event": "block_action"
-      },
-      {
-        "t": 2.35,
+        "t": 2.05,
         "event": "vel"
       },
       {
-        "t": 2.35,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 2.35,
-        "event": "mob_death"
-      },
-      {
-        "t": 2.4,
-        "event": "push"
-      },
-      {
-        "t": 2.4,
+        "t": 2.05,
         "event": "block_action"
       },
       {
-        "t": 2.4,
+        "t": 2.05,
+        "event": "block_action"
+      },
+      {
+        "t": 2.1,
+        "event": "vel"
+      },
+      {
+        "t": 2.45,
+        "event": "push"
+      },
+      {
+        "t": 2.45,
+        "event": "vel"
+      },
+      {
+        "t": 2.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.5,
         "event": "block_action"
       },
       {
@@ -301,43 +328,31 @@
         "event": "block_action"
       },
       {
-        "t": 2.55,
-        "event": "vel"
-      },
-      {
-        "t": 2.7,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 2.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 2.75,
-        "event": "vel"
-      },
-      {
-        "t": 2.75,
-        "event": "vel"
+        "t": 2.8,
+        "event": "cell"
       },
       {
         "t": 2.8,
-        "event": "push"
-      },
-      {
-        "t": 2.8,
-        "event": "vel"
-      },
-      {
-        "t": 2.8,
-        "event": "block_action"
-      },
-      {
-        "t": 2.8,
-        "event": "block_action"
+        "event": "cellin0"
       },
       {
         "t": 2.85,
+        "event": "push"
+      },
+      {
+        "t": 2.9,
+        "event": "block_action"
+      },
+      {
+        "t": 2.9,
+        "event": "block_action"
+      },
+      {
+        "t": 2.95,
+        "event": "vel"
+      },
+      {
+        "t": 2.95,
         "event": "vel"
       },
       {
@@ -345,248 +360,180 @@
         "event": "vel"
       },
       {
-        "t": 3.15,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 3.15,
-        "event": "mob_death"
-      },
-      {
-        "t": 3.2,
-        "event": "push"
-      },
-      {
-        "t": 3.2,
-        "event": "block_action"
-      },
-      {
-        "t": 3.2,
-        "event": "block_action"
-      },
-      {
-        "t": 3.2,
-        "event": "block_action"
-      },
-      {
-        "t": 3.55,
+        "t": 3.1,
         "event": "vel"
       },
       {
-        "t": 3.6,
+        "t": 3.1,
+        "event": "vel"
+      },
+      {
+        "t": 3.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.25,
         "event": "push"
       },
       {
-        "t": 3.6,
+        "t": 3.25,
         "event": "block_action"
       },
       {
-        "t": 3.6,
+        "t": 3.25,
         "event": "block_action"
       },
       {
         "t": 3.65,
-        "event": "mob_hurt"
+        "event": "push"
       },
       {
         "t": 3.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 3.7,
         "event": "block_action"
       },
       {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
-        "t": 3.75,
-        "event": "vel"
+        "t": 3.65,
+        "event": "block_action"
       },
       {
         "t": 3.8,
         "event": "vel"
       },
       {
-        "t": 3.85,
+        "t": 3.95,
         "event": "vel"
       },
       {
-        "t": 3.9,
-        "event": "mob_death"
+        "t": 3.95,
+        "event": "vel"
       },
       {
-        "t": 4,
+        "t": 4.05,
         "event": "push"
       },
       {
-        "t": 4,
+        "t": 4.05,
+        "event": "vel"
+      },
+      {
+        "t": 4.05,
         "event": "block_action"
       },
       {
-        "t": 4,
+        "t": 4.05,
         "event": "block_action"
       },
       {
-        "t": 4.4,
+        "t": 4.1,
+        "event": "vel"
+      },
+      {
+        "t": 4.3,
+        "event": "cellout0"
+      },
+      {
+        "t": 4.45,
         "event": "push"
       },
       {
-        "t": 4.4,
-        "event": "block_action"
-      },
-      {
-        "t": 4.4,
-        "event": "block_action"
-      },
-      {
-        "t": 4.4,
+        "t": 4.45,
         "event": "block_action"
       },
       {
         "t": 4.45,
+        "event": "block_action"
+      },
+      {
+        "t": 4.5,
         "event": "vel"
       },
       {
-        "t": 4.45,
+        "t": 4.6,
         "event": "mob_hurt"
       },
       {
-        "t": 4.45,
-        "event": "mob_death"
-      },
-      {
-        "t": 4.55,
-        "event": "vel"
-      },
-      {
-        "t": 4.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 4.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 4.75,
-        "event": "vel"
-      },
-      {
-        "t": 4.75,
-        "event": "vel"
-      },
-      {
-        "t": 4.8,
+        "t": 4.85,
         "event": "push"
       },
       {
-        "t": 4.8,
-        "event": "vel"
-      },
-      {
-        "t": 4.8,
-        "event": "block_action"
-      },
-      {
-        "t": 4.8,
+        "t": 4.85,
         "event": "block_action"
       },
       {
         "t": 4.85,
-        "event": "vel"
-      },
-      {
-        "t": 4.9,
         "event": "block_action"
       },
       {
-        "t": 5.15,
+        "t": 4.95,
         "event": "vel"
       },
       {
-        "t": 5.15,
-        "event": "mob_hurt"
+        "t": 4.95,
+        "event": "vel"
       },
       {
-        "t": 5.15,
-        "event": "mob_death"
+        "t": 5.05,
+        "event": "vel"
+      },
+      {
+        "t": 5.1,
+        "event": "vel"
       },
       {
         "t": 5.2,
+        "event": "vel"
+      },
+      {
+        "t": 5.25,
         "event": "push"
       },
       {
-        "t": 5.2,
+        "t": 5.25,
         "event": "block_action"
       },
       {
-        "t": 5.2,
+        "t": 5.25,
         "event": "block_action"
       },
       {
-        "t": 5.55,
-        "event": "vel"
-      },
-      {
-        "t": 5.6,
-        "event": "push"
-      },
-      {
-        "t": 5.65,
-        "event": "block_action"
-      },
-      {
-        "t": 5.65,
-        "event": "block_action"
-      },
-      {
-        "t": 5.65,
-        "event": "block_action"
-      },
-      {
-        "t": 5.65,
+        "t": 5.25,
         "event": "mob_hurt"
       },
       {
         "t": 5.65,
-        "event": "mob_death"
+        "event": "push"
       },
       {
-        "t": 5.75,
-        "event": "vel"
+        "t": 5.65,
+        "event": "block_action"
       },
       {
-        "t": 5.75,
-        "event": "vel"
-      },
-      {
-        "t": 5.8,
-        "event": "vel"
-      },
-      {
-        "t": 5.85,
-        "event": "vel"
+        "t": 5.65,
+        "event": "block_action"
       },
       {
         "t": 5.9,
         "event": "vel"
       },
       {
-        "t": 6,
-        "event": "push"
-      },
-      {
-        "t": 6,
+        "t": 5.9,
         "event": "mob_hurt"
       },
       {
-        "t": 6,
-        "event": "mob_death"
+        "t": 5.95,
+        "event": "vel"
+      },
+      {
+        "t": 5.95,
+        "event": "vel"
+      },
+      {
+        "t": 6.05,
+        "event": "push"
+      },
+      {
+        "t": 6.05,
+        "event": "vel"
       },
       {
         "t": 6.05,
@@ -597,11 +544,11 @@
         "event": "block_action"
       },
       {
-        "t": 6.15,
-        "event": "block_action"
+        "t": 6.1,
+        "event": "vel"
       },
       {
-        "t": 6.4,
+        "t": 6.45,
         "event": "push"
       },
       {
@@ -613,75 +560,59 @@
         "event": "block_action"
       },
       {
-        "t": 6.55,
-        "event": "vel"
-      },
-      {
-        "t": 6.55,
-        "event": "vel"
-      },
-      {
-        "t": 6.6,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 6.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 6.65,
+        "t": 6.5,
         "event": "cell"
       },
       {
-        "t": 6.65,
+        "t": 6.5,
+        "event": "cellin1"
+      },
+      {
+        "t": 6.6,
+        "event": "vel"
+      },
+      {
+        "t": 6.6,
         "event": "mob_hurt"
       },
       {
-        "t": 6.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 6.7,
-        "event": "vel"
-      },
-      {
-        "t": 6.7,
-        "event": "vel"
-      },
-      {
-        "t": 6.75,
-        "event": "vel"
-      },
-      {
-        "t": 6.8,
+        "t": 6.85,
         "event": "push"
       },
       {
-        "t": 6.8,
+        "t": 6.85,
+        "event": "block_action"
+      },
+      {
+        "t": 6.85,
+        "event": "block_action"
+      },
+      {
+        "t": 6.95,
         "event": "vel"
       },
       {
-        "t": 6.8,
-        "event": "block_action"
+        "t": 6.95,
+        "event": "vel"
       },
       {
-        "t": 6.8,
-        "event": "block_action"
+        "t": 7.05,
+        "event": "vel"
       },
       {
-        "t": 6.8,
-        "event": "block_action"
+        "t": 7.1,
+        "event": "vel"
       },
       {
-        "t": 7.2,
+        "t": 7.25,
         "event": "push"
       },
       {
-        "t": 7.2,
+        "t": 7.25,
         "event": "block_action"
       },
       {
-        "t": 7.2,
+        "t": 7.25,
         "event": "block_action"
       },
       {
@@ -689,56 +620,20 @@
         "event": "vel"
       },
       {
-        "t": 7.3,
-        "event": "block_action"
-      },
-      {
-        "t": 7.3,
+        "t": 7.4,
         "event": "mob_hurt"
       },
       {
-        "t": 7.3,
-        "event": "mob_death"
-      },
-      {
-        "t": 7.55,
-        "event": "vel"
-      },
-      {
-        "t": 7.6,
+        "t": 7.65,
         "event": "push"
       },
       {
-        "t": 7.6,
+        "t": 7.65,
         "event": "block_action"
       },
       {
-        "t": 7.6,
+        "t": 7.65,
         "event": "block_action"
-      },
-      {
-        "t": 7.7,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 7.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.8,
-        "event": "vel"
-      },
-      {
-        "t": 7.85,
-        "event": "vel"
       },
       {
         "t": 7.95,
@@ -746,434 +641,322 @@
       },
       {
         "t": 7.95,
+        "event": "vel"
+      },
+      {
+        "t": 8,
+        "event": "cellout1"
+      },
+      {
+        "t": 8,
+        "event": "vel"
+      },
+      {
+        "t": 8.05,
+        "event": "push"
+      },
+      {
+        "t": 8.05,
+        "event": "vel"
+      },
+      {
+        "t": 8.05,
+        "event": "block_action"
+      },
+      {
+        "t": 8.05,
+        "event": "block_action"
+      },
+      {
+        "t": 8.1,
+        "event": "vel"
+      },
+      {
+        "t": 8.1,
         "event": "mob_hurt"
       },
       {
-        "t": 7.95,
-        "event": "mob_death"
-      },
-      {
-        "t": 8,
+        "t": 8.45,
         "event": "push"
       },
       {
-        "t": 8,
+        "t": 8.45,
         "event": "block_action"
       },
       {
-        "t": 8,
+        "t": 8.45,
         "event": "block_action"
       },
       {
-        "t": 8,
-        "event": "block_action"
-      },
-      {
-        "t": 8.4,
-        "event": "push"
-      },
-      {
-        "t": 8.4,
-        "event": "block_action"
-      },
-      {
-        "t": 8.4,
-        "event": "block_action"
-      },
-      {
-        "t": 8.5,
-        "event": "block_action"
-      },
-      {
-        "t": 8.55,
-        "event": "vel"
-      },
-      {
-        "t": 8.65,
-        "event": "vel"
-      },
-      {
-        "t": 8.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 8.75,
+        "t": 8.7,
         "event": "vel"
       },
       {
         "t": 8.75,
-        "event": "vel"
-      },
-      {
-        "t": 8.8,
-        "event": "push"
-      },
-      {
-        "t": 8.8,
-        "event": "vel"
-      },
-      {
-        "t": 8.8,
-        "event": "block_action"
-      },
-      {
-        "t": 8.8,
-        "event": "block_action"
-      },
-      {
-        "t": 8.8,
-        "event": "mob_death"
+        "event": "mob_hurt"
       },
       {
         "t": 8.85,
-        "event": "vel"
-      },
-      {
-        "t": 9.2,
         "event": "push"
       },
       {
-        "t": 9.2,
+        "t": 8.85,
         "event": "block_action"
       },
       {
-        "t": 9.2,
+        "t": 8.85,
         "event": "block_action"
       },
       {
-        "t": 9.2,
-        "event": "block_action"
-      },
-      {
-        "t": 9.35,
+        "t": 8.95,
         "event": "vel"
       },
       {
-        "t": 9.35,
+        "t": 8.95,
+        "event": "vel"
+      },
+      {
+        "t": 9.05,
+        "event": "vel"
+      },
+      {
+        "t": 9.1,
+        "event": "vel"
+      },
+      {
+        "t": 9.25,
+        "event": "push"
+      },
+      {
+        "t": 9.25,
+        "event": "block_action"
+      },
+      {
+        "t": 9.25,
+        "event": "block_action"
+      },
+      {
+        "t": 9.45,
+        "event": "vel"
+      },
+      {
+        "t": 9.45,
         "event": "mob_hurt"
       },
       {
-        "t": 9.35,
-        "event": "mob_death"
-      },
-      {
-        "t": 9.55,
-        "event": "vel"
-      },
-      {
-        "t": 9.6,
+        "t": 9.65,
         "event": "push"
       },
       {
-        "t": 9.6,
+        "t": 9.65,
         "event": "block_action"
       },
       {
-        "t": 9.6,
-        "event": "block_action"
-      },
-      {
-        "t": 9.7,
-        "event": "block_action"
-      },
-      {
-        "t": 9.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
-        "t": 9.8,
-        "event": "vel"
-      },
-      {
-        "t": 9.85,
-        "event": "vel"
-      },
-      {
-        "t": 10,
-        "event": "push"
-      },
-      {
-        "t": 10,
+        "t": 9.65,
         "event": "block_action"
       },
       {
         "t": 10,
-        "event": "block_action"
+        "event": "vel"
       },
       {
-        "t": 10.05,
+        "t": 10,
         "event": "vel"
       },
       {
         "t": 10.05,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 10.05,
-        "event": "mob_death"
-      },
-      {
-        "t": 10.4,
         "event": "push"
       },
       {
-        "t": 10.4,
-        "event": "block_action"
-      },
-      {
-        "t": 10.4,
-        "event": "block_action"
-      },
-      {
-        "t": 10.4,
-        "event": "block_action"
-      },
-      {
-        "t": 10.55,
+        "t": 10.1,
         "event": "vel"
       },
       {
-        "t": 10.65,
+        "t": 10.1,
+        "event": "block_action"
+      },
+      {
+        "t": 10.1,
+        "event": "block_action"
+      },
+      {
+        "t": 10.15,
+        "event": "cell"
+      },
+      {
+        "t": 10.15,
+        "event": "cellin2"
+      },
+      {
+        "t": 10.15,
+        "event": "vel"
+      },
+      {
+        "t": 10.15,
+        "event": "vel"
+      },
+      {
+        "t": 10.25,
         "event": "mob_hurt"
       },
       {
-        "t": 10.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 10.75,
-        "event": "vel"
-      },
-      {
-        "t": 10.75,
-        "event": "vel"
-      },
-      {
-        "t": 10.75,
-        "event": "vel"
-      },
-      {
-        "t": 10.75,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 10.75,
-        "event": "mob_death"
-      },
-      {
-        "t": 10.8,
+        "t": 10.45,
         "event": "push"
       },
       {
-        "t": 10.8,
-        "event": "vel"
-      },
-      {
-        "t": 10.8,
+        "t": 10.45,
         "event": "block_action"
       },
       {
-        "t": 10.8,
+        "t": 10.5,
         "event": "block_action"
+      },
+      {
+        "t": 10.5,
+        "event": "block_action"
+      },
+      {
+        "t": 10.7,
+        "event": "block_action"
+      },
+      {
+        "t": 10.85,
+        "event": "push"
       },
       {
         "t": 10.85,
         "event": "vel"
       },
       {
-        "t": 10.9,
+        "t": 10.85,
         "event": "block_action"
       },
       {
-        "t": 11.2,
-        "event": "push"
-      },
-      {
-        "t": 11.2,
+        "t": 10.85,
         "event": "block_action"
       },
       {
-        "t": 11.2,
-        "event": "block_action"
-      },
-      {
-        "t": 11.4,
-        "event": "cell"
-      },
-      {
-        "t": 11.45,
+        "t": 10.95,
         "event": "vel"
       },
       {
-        "t": 11.45,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 11.45,
-        "event": "mob_death"
-      },
-      {
-        "t": 11.55,
+        "t": 10.95,
         "event": "vel"
       },
       {
-        "t": 11.6,
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.1,
+        "event": "vel"
+      },
+      {
+        "t": 11.25,
         "event": "push"
       },
       {
-        "t": 11.6,
+        "t": 11.25,
         "event": "block_action"
       },
       {
-        "t": 11.6,
+        "t": 11.25,
         "event": "block_action"
       },
       {
-        "t": 11.6,
-        "event": "block_action"
+        "t": 11.5,
+        "event": "vel"
       },
       {
-        "t": 11.65,
+        "t": 11.5,
         "event": "mob_hurt"
       },
       {
         "t": 11.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 11.75,
-        "event": "vel"
-      },
-      {
-        "t": 11.75,
-        "event": "vel"
-      },
-      {
-        "t": 11.8,
-        "event": "vel"
-      },
-      {
-        "t": 11.85,
-        "event": "vel"
-      },
-      {
-        "t": 12,
         "event": "push"
       },
       {
-        "t": 12,
+        "t": 11.65,
         "event": "block_action"
       },
       {
-        "t": 12,
+        "t": 11.65,
+        "event": "block_action"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 12.05,
+        "event": "push"
+      },
+      {
+        "t": 12.05,
+        "event": "vel"
+      },
+      {
+        "t": 12.05,
+        "event": "block_action"
+      },
+      {
+        "t": 12.05,
         "event": "block_action"
       },
       {
         "t": 12.1,
-        "event": "block_action"
+        "event": "vel"
       },
       {
         "t": 12.15,
+        "event": "cellout2"
+      },
+      {
+        "t": 12.2,
         "event": "vel"
+      },
+      {
+        "t": 12.2,
+        "event": "block_action"
       },
       {
         "t": 12.25,
         "event": "mob_hurt"
       },
       {
-        "t": 12.25,
-        "event": "mob_death"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.3,
-        "event": "vel"
-      },
-      {
-        "t": 12.4,
+        "t": 12.45,
         "event": "push"
       },
       {
-        "t": 12.4,
+        "t": 12.45,
         "event": "block_action"
       },
       {
-        "t": 12.4,
+        "t": 12.45,
         "event": "block_action"
       },
       {
-        "t": 12.55,
-        "event": "vel"
-      },
-      {
-        "t": 12.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 12.75,
-        "event": "vel"
-      },
-      {
-        "t": 12.75,
-        "event": "vel"
-      },
-      {
-        "t": 12.8,
-        "event": "push"
-      },
-      {
-        "t": 12.8,
-        "event": "vel"
-      },
-      {
-        "t": 12.8,
-        "event": "vel"
-      },
-      {
-        "t": 12.8,
-        "event": "block_action"
-      },
-      {
-        "t": 12.8,
-        "event": "block_action"
-      },
-      {
-        "t": 12.8,
+        "t": 12.5,
         "event": "block_action"
       },
       {
         "t": 12.85,
-        "event": "vel"
+        "event": "push"
       },
       {
         "t": 12.85,
+        "event": "block_action"
+      },
+      {
+        "t": 12.85,
+        "event": "block_action"
+      },
+      {
+        "t": 12.9,
         "event": "vel"
       },
       {
@@ -1181,64 +964,52 @@
         "event": "mob_hurt"
       },
       {
-        "t": 12.9,
-        "event": "mob_death"
+        "t": 12.95,
+        "event": "vel"
+      },
+      {
+        "t": 12.95,
+        "event": "vel"
       },
       {
         "t": 13,
-        "event": "vel"
+        "event": "finale"
       },
       {
         "t": 13.05,
         "event": "vel"
       },
       {
-        "t": 13.2,
+        "t": 13.1,
+        "event": "vel"
+      },
+      {
+        "t": 13.25,
         "event": "push"
       },
       {
-        "t": 13.2,
+        "t": 13.25,
         "event": "block_action"
       },
       {
-        "t": 13.2,
+        "t": 13.25,
         "event": "block_action"
       },
       {
         "t": 13.3,
-        "event": "vel"
+        "event": "launch"
+      },
+      {
+        "t": 13.3,
+        "event": "payoff"
       },
       {
         "t": 13.3,
         "event": "block_action"
       },
       {
-        "t": 13.45,
-        "event": "vel"
-      },
-      {
-        "t": 13.55,
-        "event": "vel"
-      },
-      {
-        "t": 13.55,
-        "event": "vel"
-      },
-      {
-        "t": 13.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 13.55,
-        "event": "mob_death"
-      },
-      {
         "t": 13.6,
-        "event": "push"
-      },
-      {
-        "t": 13.6,
-        "event": "block_action"
+        "event": "vel"
       },
       {
         "t": 13.6,
@@ -1246,118 +1017,98 @@
       },
       {
         "t": 13.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 13.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 13.75,
-        "event": "vel"
-      },
-      {
-        "t": 13.75,
-        "event": "vel"
-      },
-      {
-        "t": 13.8,
-        "event": "vel"
-      },
-      {
-        "t": 13.85,
-        "event": "vel"
-      },
-      {
-        "t": 14,
         "event": "push"
       },
       {
-        "t": 14,
+        "t": 13.65,
         "event": "block_action"
       },
       {
-        "t": 14,
+        "t": 13.65,
         "event": "block_action"
       },
       {
-        "t": 14,
-        "event": "block_action"
-      },
-      {
-        "t": 14.25,
-        "event": "vel"
-      },
-      {
-        "t": 14.25,
+        "t": 13.65,
         "event": "mob_hurt"
       },
       {
-        "t": 14.25,
-        "event": "mob_death"
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 14,
+        "event": "block_action"
+      },
+      {
+        "t": 14.05,
+        "event": "push"
+      },
+      {
+        "t": 14.05,
+        "event": "vel"
+      },
+      {
+        "t": 14.05,
+        "event": "block_action"
+      },
+      {
+        "t": 14.05,
+        "event": "block_action"
+      },
+      {
+        "t": 14.1,
+        "event": "vel"
       },
       {
         "t": 14.3,
         "event": "vel"
       },
       {
-        "t": 14.4,
-        "event": "push"
-      },
-      {
-        "t": 14.4,
+        "t": 14.3,
         "event": "block_action"
       },
       {
-        "t": 14.4,
+        "t": 14.35,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 14.45,
+        "event": "push"
+      },
+      {
+        "t": 14.45,
         "event": "block_action"
       },
       {
         "t": 14.45,
-        "event": "vel"
-      },
-      {
-        "t": 14.5,
         "event": "block_action"
       },
       {
-        "t": 14.55,
-        "event": "vel"
+        "t": 14.7,
+        "event": "land"
       },
       {
-        "t": 14.65,
-        "event": "mob_hurt"
+        "t": 14.7,
+        "event": "slam"
       },
       {
-        "t": 14.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 14.75,
-        "event": "vel"
-      },
-      {
-        "t": 14.75,
-        "event": "vel"
-      },
-      {
-        "t": 14.8,
+        "t": 14.85,
         "event": "push"
       },
       {
-        "t": 14.8,
-        "event": "vel"
-      },
-      {
-        "t": 14.8,
-        "event": "block_action"
-      },
-      {
-        "t": 14.8,
+        "t": 14.85,
         "event": "block_action"
       },
       {
         "t": 14.85,
+        "event": "block_action"
+      },
+      {
+        "t": 14.95,
         "event": "vel"
       },
       {
@@ -1365,235 +1116,187 @@
         "event": "vel"
       },
       {
+        "t": 15,
+        "event": "vel"
+      },
+      {
         "t": 15.05,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "padlook"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
         "event": "mob_hurt"
       },
       {
-        "t": 15.05,
-        "event": "mob_death"
-      },
-      {
-        "t": 15.2,
+        "t": 15.25,
         "event": "push"
       },
       {
-        "t": 15.2,
+        "t": 15.25,
         "event": "block_action"
       },
       {
-        "t": 15.2,
+        "t": 15.25,
         "event": "block_action"
       },
       {
-        "t": 15.2,
-        "event": "block_action"
-      },
-      {
-        "t": 15.3,
-        "event": "vel"
-      },
-      {
-        "t": 15.45,
-        "event": "vel"
-      },
-      {
-        "t": 15.55,
-        "event": "vel"
-      },
-      {
-        "t": 15.6,
+        "t": 15.65,
         "event": "push"
       },
       {
-        "t": 15.6,
-        "event": "cell"
-      },
-      {
-        "t": 15.6,
-        "event": "block_action"
-      },
-      {
-        "t": 15.6,
+        "t": 15.65,
         "event": "block_action"
       },
       {
         "t": 15.65,
-        "event": "vel"
-      },
-      {
-        "t": 15.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 15.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 15.7,
         "event": "block_action"
       },
       {
         "t": 15.7,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 15.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 15.75,
         "event": "vel"
       },
       {
         "t": 15.75,
-        "event": "vel"
+        "event": "mob_hurt"
       },
       {
         "t": 15.8,
+        "event": "block_action"
+      },
+      {
+        "t": 15.95,
         "event": "vel"
       },
       {
-        "t": 15.85,
+        "t": 15.95,
         "event": "vel"
       },
       {
         "t": 16,
+        "event": "selflaunch"
+      },
+      {
+        "t": 16,
+        "event": "payoff"
+      },
+      {
+        "t": 16.05,
         "event": "push"
       },
       {
-        "t": 16,
-        "event": "block_action"
-      },
-      {
-        "t": 16,
-        "event": "block_action"
-      },
-      {
-        "t": 16.3,
+        "t": 16.05,
         "event": "vel"
       },
       {
-        "t": 16.35,
+        "t": 16.05,
+        "event": "block_action"
+      },
+      {
+        "t": 16.05,
+        "event": "block_action"
+      },
+      {
+        "t": 16.05,
+        "event": "block_action"
+      },
+      {
+        "t": 16.05,
+        "event": "block_action"
+      },
+      {
+        "t": 16.1,
         "event": "vel"
       },
       {
+        "t": 16.1,
+        "event": "block_action"
+      },
+      {
         "t": 16.35,
+        "event": "block_action"
+      },
+      {
+        "t": 16.35,
+        "event": "block_action"
+      },
+      {
+        "t": 16.4,
+        "event": "vel"
+      },
+      {
+        "t": 16.4,
         "event": "mob_hurt"
       },
       {
-        "t": 16.35,
-        "event": "mob_death"
-      },
-      {
-        "t": 16.4,
+        "t": 16.45,
         "event": "push"
       },
       {
-        "t": 16.4,
-        "event": "block_action"
-      },
-      {
-        "t": 16.4,
-        "event": "block_action"
-      },
-      {
-        "t": 16.4,
+        "t": 16.45,
         "event": "block_action"
       },
       {
         "t": 16.45,
-        "event": "vel"
-      },
-      {
-        "t": 16.55,
-        "event": "vel"
-      },
-      {
-        "t": 16.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 16.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 16.75,
-        "event": "vel"
-      },
-      {
-        "t": 16.75,
-        "event": "vel"
-      },
-      {
-        "t": 16.8,
-        "event": "push"
-      },
-      {
-        "t": 16.8,
-        "event": "vel"
-      },
-      {
-        "t": 16.8,
-        "event": "block_action"
-      },
-      {
-        "t": 16.8,
         "event": "block_action"
       },
       {
         "t": 16.85,
+        "event": "push"
+      },
+      {
+        "t": 16.85,
+        "event": "block_action"
+      },
+      {
+        "t": 16.85,
+        "event": "block_action"
+      },
+      {
+        "t": 16.95,
         "event": "vel"
       },
       {
-        "t": 16.9,
-        "event": "block_action"
+        "t": 16.95,
+        "event": "vel"
       },
       {
         "t": 17.05,
         "event": "vel"
       },
       {
+        "t": 17.1,
+        "event": "vel"
+      },
+      {
+        "t": 17.1,
+        "event": "vel"
+      },
+      {
         "t": 17.15,
         "event": "mob_hurt"
       },
       {
-        "t": 17.15,
-        "event": "mob_death"
-      },
-      {
-        "t": 17.2,
+        "t": 17.25,
         "event": "push"
       },
       {
-        "t": 17.2,
+        "t": 17.25,
+        "event": "selfland"
+      },
+      {
+        "t": 17.25,
         "event": "block_action"
       },
       {
-        "t": 17.2,
-        "event": "block_action"
-      },
-      {
-        "t": 17.3,
-        "event": "vel"
-      },
-      {
-        "t": 17.45,
-        "event": "vel"
-      },
-      {
-        "t": 17.55,
-        "event": "vel"
-      },
-      {
-        "t": 17.6,
-        "event": "push"
-      },
-      {
-        "t": 17.6,
-        "event": "block_action"
-      },
-      {
-        "t": 17.6,
+        "t": 17.25,
         "event": "block_action"
       },
       {
@@ -1602,27 +1305,15 @@
       },
       {
         "t": 17.65,
-        "event": "mob_hurt"
+        "event": "push"
       },
       {
         "t": 17.65,
-        "event": "mob_death"
+        "event": "block_action"
       },
       {
-        "t": 17.75,
-        "event": "vel"
-      },
-      {
-        "t": 17.75,
-        "event": "vel"
-      },
-      {
-        "t": 17.75,
-        "event": "vel"
-      },
-      {
-        "t": 17.8,
-        "event": "vel"
+        "t": 17.65,
+        "event": "block_action"
       },
       {
         "t": 17.85,
@@ -1630,1474 +1321,81 @@
       },
       {
         "t": 17.9,
-        "event": "mob_death"
-      },
-      {
-        "t": 18,
-        "event": "push"
-      },
-      {
-        "t": 18,
         "event": "block_action"
       },
       {
-        "t": 18,
-        "event": "block_action"
-      },
-      {
-        "t": 18.1,
-        "event": "block_action"
-      },
-      {
-        "t": 18.3,
-        "event": "vel"
-      },
-      {
-        "t": 18.4,
-        "event": "push"
-      },
-      {
-        "t": 18.4,
-        "event": "block_action"
-      },
-      {
-        "t": 18.4,
-        "event": "block_action"
-      },
-      {
-        "t": 18.45,
-        "event": "vel"
-      },
-      {
-        "t": 18.45,
-        "event": "vel"
-      },
-      {
-        "t": 18.45,
+        "t": 17.95,
         "event": "mob_hurt"
       },
       {
-        "t": 18.45,
-        "event": "mob_death"
-      },
-      {
-        "t": 18.55,
+        "t": 18,
         "event": "vel"
       },
       {
-        "t": 18.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 18.75,
+        "t": 18,
         "event": "vel"
       },
       {
-        "t": 18.75,
-        "event": "vel"
-      },
-      {
-        "t": 18.8,
+        "t": 18.05,
         "event": "push"
       },
       {
-        "t": 18.8,
+        "t": 18.05,
+        "event": "block_action"
+      },
+      {
+        "t": 18.05,
+        "event": "block_action"
+      },
+      {
+        "t": 18.05,
         "event": "vel"
       },
       {
-        "t": 18.8,
+        "t": 18.15,
+        "event": "vel"
+      },
+      {
+        "t": 18.45,
+        "event": "push"
+      },
+      {
+        "t": 18.45,
         "event": "block_action"
       },
       {
-        "t": 18.8,
+        "t": 18.45,
         "event": "block_action"
       },
       {
-        "t": 18.8,
+        "t": 18.5,
+        "event": "vel"
+      },
+      {
+        "t": 18.85,
+        "event": "push"
+      },
+      {
+        "t": 18.85,
         "event": "block_action"
       },
       {
         "t": 18.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.15,
-        "event": "vel"
-      },
-      {
-        "t": 19.2,
-        "event": "push"
-      },
-      {
-        "t": 19.2,
-        "event": "block_action"
-      },
-      {
-        "t": 19.2,
-        "event": "block_action"
-      },
-      {
-        "t": 19.2,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 19.2,
-        "event": "mob_death"
-      },
-      {
-        "t": 19.25,
-        "event": "vel"
-      },
-      {
-        "t": 19.3,
-        "event": "block_action"
-      },
-      {
-        "t": 19.4,
-        "event": "vel"
-      },
-      {
-        "t": 19.5,
-        "event": "vel"
-      },
-      {
-        "t": 19.6,
-        "event": "push"
-      },
-      {
-        "t": 19.6,
-        "event": "cell"
-      },
-      {
-        "t": 19.6,
-        "event": "block_action"
-      },
-      {
-        "t": 19.6,
-        "event": "block_action"
-      },
-      {
-        "t": 19.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 19.75,
-        "event": "vel"
-      },
-      {
-        "t": 19.75,
-        "event": "vel"
-      },
-      {
-        "t": 19.75,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 19.85,
-        "event": "mob_death"
-      },
-      {
-        "t": 20,
-        "event": "push"
-      },
-      {
-        "t": 20,
-        "event": "block_action"
-      },
-      {
-        "t": 20,
-        "event": "block_action"
-      },
-      {
-        "t": 20,
-        "event": "block_action"
-      },
-      {
-        "t": 20.3,
-        "event": "vel"
-      },
-      {
-        "t": 20.4,
-        "event": "push"
-      },
-      {
-        "t": 20.4,
-        "event": "block_action"
-      },
-      {
-        "t": 20.4,
-        "event": "block_action"
-      },
-      {
-        "t": 20.45,
-        "event": "vel"
-      },
-      {
-        "t": 20.5,
-        "event": "block_action"
-      },
-      {
-        "t": 20.55,
-        "event": "vel"
-      },
-      {
-        "t": 20.55,
-        "event": "vel"
-      },
-      {
-        "t": 20.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 20.55,
-        "event": "mob_death"
-      },
-      {
-        "t": 20.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 20.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 20.75,
-        "event": "vel"
-      },
-      {
-        "t": 20.75,
-        "event": "vel"
-      },
-      {
-        "t": 20.8,
-        "event": "push"
-      },
-      {
-        "t": 20.8,
-        "event": "vel"
-      },
-      {
-        "t": 20.8,
-        "event": "block_action"
-      },
-      {
-        "t": 20.8,
-        "event": "block_action"
-      },
-      {
-        "t": 20.9,
-        "event": "vel"
-      },
-      {
-        "t": 21.2,
-        "event": "push"
-      },
-      {
-        "t": 21.2,
-        "event": "block_action"
-      },
-      {
-        "t": 21.2,
-        "event": "block_action"
-      },
-      {
-        "t": 21.2,
-        "event": "block_action"
-      },
-      {
-        "t": 21.25,
-        "event": "vel"
-      },
-      {
-        "t": 21.25,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 21.25,
-        "event": "mob_death"
-      },
-      {
-        "t": 21.3,
-        "event": "vel"
-      },
-      {
-        "t": 21.45,
-        "event": "vel"
-      },
-      {
-        "t": 21.55,
-        "event": "vel"
-      },
-      {
-        "t": 21.6,
-        "event": "push"
-      },
-      {
-        "t": 21.6,
-        "event": "block_action"
-      },
-      {
-        "t": 21.6,
-        "event": "block_action"
-      },
-      {
-        "t": 21.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 21.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 21.7,
-        "event": "block_action"
-      },
-      {
-        "t": 21.75,
-        "event": "vel"
-      },
-      {
-        "t": 21.75,
-        "event": "vel"
-      },
-      {
-        "t": 21.8,
-        "event": "vel"
-      },
-      {
-        "t": 21.85,
-        "event": "vel"
-      },
-      {
-        "t": 21.95,
-        "event": "vel"
-      },
-      {
-        "t": 22,
-        "event": "push"
-      },
-      {
-        "t": 22,
-        "event": "block_action"
-      },
-      {
-        "t": 22,
-        "event": "block_action"
-      },
-      {
-        "t": 22.05,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 22.05,
-        "event": "mob_death"
-      },
-      {
-        "t": 22.3,
-        "event": "vel"
-      },
-      {
-        "t": 22.4,
-        "event": "push"
-      },
-      {
-        "t": 22.4,
-        "event": "block_action"
-      },
-      {
-        "t": 22.4,
-        "event": "block_action"
-      },
-      {
-        "t": 22.4,
-        "event": "block_action"
-      },
-      {
-        "t": 22.45,
-        "event": "vel"
-      },
-      {
-        "t": 22.55,
-        "event": "vel"
-      },
-      {
-        "t": 22.65,
-        "event": "vel"
-      },
-      {
-        "t": 22.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 22.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.8,
-        "event": "push"
-      },
-      {
-        "t": 22.8,
-        "event": "vel"
-      },
-      {
-        "t": 22.8,
-        "event": "block_action"
-      },
-      {
-        "t": 22.8,
-        "event": "block_action"
-      },
-      {
-        "t": 22.8,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 22.8,
-        "event": "mob_death"
-      },
-      {
-        "t": 22.85,
-        "event": "vel"
-      },
-      {
-        "t": 22.9,
-        "event": "block_action"
-      },
-      {
-        "t": 23.2,
-        "event": "push"
-      },
-      {
-        "t": 23.2,
-        "event": "block_action"
-      },
-      {
-        "t": 23.2,
-        "event": "block_action"
-      },
-      {
-        "t": 23.3,
-        "event": "vel"
-      },
-      {
-        "t": 23.35,
-        "event": "vel"
-      },
-      {
-        "t": 23.45,
-        "event": "vel"
-      },
-      {
-        "t": 23.5,
-        "event": "mob_death"
-      },
-      {
-        "t": 23.55,
-        "event": "vel"
-      },
-      {
-        "t": 23.6,
-        "event": "push"
-      },
-      {
-        "t": 23.6,
-        "event": "block_action"
-      },
-      {
-        "t": 23.6,
-        "event": "block_action"
-      },
-      {
-        "t": 23.6,
-        "event": "block_action"
-      },
-      {
-        "t": 23.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 23.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.8,
-        "event": "vel"
-      },
-      {
-        "t": 23.85,
-        "event": "vel"
-      },
-      {
-        "t": 24,
-        "event": "push"
-      },
-      {
-        "t": 24,
-        "event": "block_action"
-      },
-      {
-        "t": 24,
-        "event": "block_action"
-      },
-      {
-        "t": 24.05,
-        "event": "vel"
-      },
-      {
-        "t": 24.05,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 24.05,
-        "event": "mob_death"
-      },
-      {
-        "t": 24.1,
-        "event": "block_action"
-      },
-      {
-        "t": 24.3,
-        "event": "vel"
-      },
-      {
-        "t": 24.4,
-        "event": "push"
-      },
-      {
-        "t": 24.4,
-        "event": "block_action"
-      },
-      {
-        "t": 24.4,
-        "event": "block_action"
-      },
-      {
-        "t": 24.45,
-        "event": "vel"
-      },
-      {
-        "t": 24.55,
-        "event": "vel"
-      },
-      {
-        "t": 24.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 24.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 24.75,
-        "event": "vel"
-      },
-      {
-        "t": 24.75,
-        "event": "vel"
-      },
-      {
-        "t": 24.75,
-        "event": "vel"
-      },
-      {
-        "t": 24.75,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 24.75,
-        "event": "mob_death"
-      },
-      {
-        "t": 24.8,
-        "event": "push"
-      },
-      {
-        "t": 24.8,
-        "event": "vel"
-      },
-      {
-        "t": 24.8,
-        "event": "block_action"
-      },
-      {
-        "t": 24.8,
-        "event": "block_action"
-      },
-      {
-        "t": 24.8,
-        "event": "block_action"
-      },
-      {
-        "t": 24.85,
-        "event": "cell"
-      },
-      {
-        "t": 24.85,
-        "event": "vel"
-      },
-      {
-        "t": 25.2,
-        "event": "push"
-      },
-      {
-        "t": 25.2,
-        "event": "block_action"
-      },
-      {
-        "t": 25.2,
-        "event": "block_action"
-      },
-      {
-        "t": 25.3,
-        "event": "vel"
-      },
-      {
-        "t": 25.3,
-        "event": "block_action"
-      },
-      {
-        "t": 25.4,
-        "event": "block_action"
-      },
-      {
-        "t": 25.45,
-        "event": "vel"
-      },
-      {
-        "t": 25.45,
-        "event": "vel"
-      },
-      {
-        "t": 25.55,
-        "event": "vel"
-      },
-      {
-        "t": 25.6,
-        "event": "push"
-      },
-      {
-        "t": 25.6,
-        "event": "block_action"
-      },
-      {
-        "t": 25.6,
-        "event": "block_action"
-      },
-      {
-        "t": 25.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 25.7,
-        "event": "block_action"
-      },
-      {
-        "t": 25.75,
-        "event": "vel"
-      },
-      {
-        "t": 25.75,
-        "event": "vel"
-      },
-      {
-        "t": 25.75,
-        "event": "mob_death"
-      },
-      {
-        "t": 25.8,
-        "event": "vel"
-      },
-      {
-        "t": 25.85,
-        "event": "vel"
-      },
-      {
-        "t": 26,
-        "event": "push"
-      },
-      {
-        "t": 26,
-        "event": "block_action"
-      },
-      {
-        "t": 26,
-        "event": "block_action"
-      },
-      {
-        "t": 26,
-        "event": "block_action"
-      },
-      {
-        "t": 26.15,
-        "event": "vel"
-      },
-      {
-        "t": 26.2,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 26.2,
-        "event": "mob_death"
-      },
-      {
-        "t": 26.3,
-        "event": "vel"
-      },
-      {
-        "t": 26.4,
-        "event": "push"
-      },
-      {
-        "t": 26.4,
-        "event": "block_action"
-      },
-      {
-        "t": 26.4,
-        "event": "block_action"
-      },
-      {
-        "t": 26.45,
-        "event": "vel"
-      },
-      {
-        "t": 26.5,
-        "event": "block_action"
-      },
-      {
-        "t": 26.55,
-        "event": "vel"
-      },
-      {
-        "t": 26.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 26.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 26.75,
-        "event": "vel"
-      },
-      {
-        "t": 26.75,
-        "event": "vel"
-      },
-      {
-        "t": 26.8,
-        "event": "push"
-      },
-      {
-        "t": 26.8,
-        "event": "vel"
-      },
-      {
-        "t": 26.8,
-        "event": "block_action"
-      },
-      {
-        "t": 26.8,
-        "event": "block_action"
-      },
-      {
-        "t": 26.85,
-        "event": "vel"
-      },
-      {
-        "t": 26.85,
-        "event": "vel"
-      },
-      {
-        "t": 26.85,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 26.85,
-        "event": "mob_death"
-      },
-      {
-        "t": 27.2,
-        "event": "push"
-      },
-      {
-        "t": 27.2,
-        "event": "block_action"
-      },
-      {
-        "t": 27.2,
-        "event": "block_action"
-      },
-      {
-        "t": 27.2,
-        "event": "block_action"
-      },
-      {
-        "t": 27.2,
-        "event": "block_action"
-      },
-      {
-        "t": 27.3,
-        "event": "vel"
-      },
-      {
-        "t": 27.45,
-        "event": "vel"
-      },
-      {
-        "t": 27.5,
-        "event": "block_action"
-      },
-      {
-        "t": 27.55,
-        "event": "vel"
-      },
-      {
-        "t": 27.55,
-        "event": "vel"
-      },
-      {
-        "t": 27.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 27.55,
-        "event": "mob_death"
-      },
-      {
-        "t": 27.6,
-        "event": "push"
-      },
-      {
-        "t": 27.6,
-        "event": "block_action"
-      },
-      {
-        "t": 27.6,
-        "event": "block_action"
-      },
-      {
-        "t": 27.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 27.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 27.75,
-        "event": "vel"
-      },
-      {
-        "t": 27.75,
-        "event": "vel"
-      },
-      {
-        "t": 27.75,
-        "event": "block_action"
-      },
-      {
-        "t": 27.8,
-        "event": "vel"
-      },
-      {
-        "t": 27.85,
-        "event": "vel"
-      },
-      {
-        "t": 28,
-        "event": "push"
-      },
-      {
-        "t": 28.05,
-        "event": "block_action"
-      },
-      {
-        "t": 28.05,
-        "event": "block_action"
-      },
-      {
-        "t": 28.3,
-        "event": "vel"
-      },
-      {
-        "t": 28.3,
-        "event": "vel"
-      },
-      {
-        "t": 28.35,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 28.35,
-        "event": "mob_death"
-      },
-      {
-        "t": 28.4,
-        "event": "push"
-      },
-      {
-        "t": 28.4,
-        "event": "vel"
-      },
-      {
-        "t": 28.4,
-        "event": "block_action"
-      },
-      {
-        "t": 28.4,
-        "event": "block_action"
-      },
-      {
-        "t": 28.4,
-        "event": "block_action"
-      },
-      {
-        "t": 28.55,
-        "event": "vel"
-      },
-      {
-        "t": 28.6,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 28.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 28.7,
-        "event": "vel"
-      },
-      {
-        "t": 28.7,
-        "event": "vel"
-      },
-      {
-        "t": 28.75,
-        "event": "vel"
-      },
-      {
-        "t": 28.8,
-        "event": "push"
-      },
-      {
-        "t": 28.8,
-        "event": "vel"
-      },
-      {
-        "t": 28.8,
-        "event": "block_action"
-      },
-      {
-        "t": 28.8,
-        "event": "block_action"
-      },
-      {
-        "t": 28.9,
-        "event": "block_action"
-      },
-      {
-        "t": 28.95,
-        "event": "vel"
-      },
-      {
-        "t": 29,
-        "event": "block_action"
-      },
-      {
-        "t": 29,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 29,
-        "event": "mob_death"
-      },
-      {
-        "t": 29.1,
-        "event": "finale"
-      },
-      {
-        "t": 29.2,
-        "event": "push"
-      },
-      {
-        "t": 29.2,
-        "event": "block_action"
-      },
-      {
-        "t": 29.2,
-        "event": "block_action"
-      },
-      {
-        "t": 29.25,
-        "event": "vel"
-      },
-      {
-        "t": 29.3,
-        "event": "block_action"
-      },
-      {
-        "t": 29.4,
-        "event": "launch"
-      },
-      {
-        "t": 29.4,
-        "event": "payoff"
-      },
-      {
-        "t": 29.4,
-        "event": "vel"
-      },
-      {
-        "t": 29.4,
-        "event": "block_action"
-      },
-      {
-        "t": 29.55,
-        "event": "vel"
-      },
-      {
-        "t": 29.6,
-        "event": "push"
-      },
-      {
-        "t": 29.6,
-        "event": "block_action"
-      },
-      {
-        "t": 29.6,
-        "event": "block_action"
-      },
-      {
-        "t": 29.6,
-        "event": "block_action"
-      },
-      {
-        "t": 29.65,
-        "event": "vel"
-      },
-      {
-        "t": 29.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 29.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 29.7,
-        "event": "block_action"
-      },
-      {
-        "t": 29.75,
-        "event": "vel"
-      },
-      {
-        "t": 29.75,
-        "event": "vel"
-      },
-      {
-        "t": 29.8,
-        "event": "vel"
-      },
-      {
-        "t": 29.8,
-        "event": "mob_death"
-      },
-      {
-        "t": 29.85,
-        "event": "vel"
-      },
-      {
-        "t": 30,
-        "event": "push"
-      },
-      {
-        "t": 30,
-        "event": "block_action"
-      },
-      {
-        "t": 30,
-        "event": "block_action"
-      },
-      {
-        "t": 30.1,
-        "event": "block_action"
-      },
-      {
-        "t": 30.3,
-        "event": "vel"
-      },
-      {
-        "t": 30.35,
-        "event": "vel"
-      },
-      {
-        "t": 30.35,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.35,
-        "event": "mob_death"
-      },
-      {
-        "t": 30.4,
-        "event": "push"
-      },
-      {
-        "t": 30.4,
-        "event": "block_action"
-      },
-      {
-        "t": 30.4,
-        "event": "block_action"
-      },
-      {
-        "t": 30.45,
-        "event": "vel"
-      },
-      {
-        "t": 30.55,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 30.75,
-        "event": "vel"
-      },
-      {
-        "t": 30.75,
-        "event": "vel"
-      },
-      {
-        "t": 30.8,
-        "event": "push"
-      },
-      {
-        "t": 30.8,
-        "event": "land"
-      },
-      {
-        "t": 30.8,
-        "event": "slam"
-      },
-      {
-        "t": 30.8,
-        "event": "vel"
-      },
-      {
-        "t": 30.8,
-        "event": "block_action"
-      },
-      {
-        "t": 30.8,
-        "event": "block_action"
-      },
-      {
-        "t": 30.8,
-        "event": "block_action"
-      },
-      {
-        "t": 30.8,
         "event": "block_action"
-      },
-      {
-        "t": 30.85,
-        "event": "vel"
-      },
-      {
-        "t": 31.05,
-        "event": "vel"
-      },
-      {
-        "t": 31.1,
-        "event": "block_action"
-      },
-      {
-        "t": 31.15,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31.15,
-        "event": "mob_death"
-      },
-      {
-        "t": 31.2,
-        "event": "push"
-      },
-      {
-        "t": 31.2,
-        "event": "block_action"
-      },
-      {
-        "t": 31.2,
-        "event": "block_action"
-      },
-      {
-        "t": 31.3,
-        "event": "vel"
-      },
-      {
-        "t": 31.3,
-        "event": "block_action"
-      },
-      {
-        "t": 31.45,
-        "event": "vel"
-      },
-      {
-        "t": 31.55,
-        "event": "vel"
-      },
-      {
-        "t": 31.6,
-        "event": "push"
-      },
-      {
-        "t": 31.6,
-        "event": "block_action"
-      },
-      {
-        "t": 31.6,
-        "event": "block_action"
-      },
-      {
-        "t": 31.75,
-        "event": "vel"
-      },
-      {
-        "t": 31.75,
-        "event": "vel"
-      },
-      {
-        "t": 31.75,
-        "event": "vel"
-      },
-      {
-        "t": 31.75,
-        "event": "mob_death"
-      },
-      {
-        "t": 31.8,
-        "event": "vel"
-      },
-      {
-        "t": 31.8,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31.8,
-        "event": "mob_death"
-      },
-      {
-        "t": 31.85,
-        "event": "vel"
-      },
-      {
-        "t": 32,
-        "event": "push"
-      },
-      {
-        "t": 32,
-        "event": "block_action"
-      },
-      {
-        "t": 32,
-        "event": "block_action"
-      },
-      {
-        "t": 32,
-        "event": "block_action"
-      },
-      {
-        "t": 32.3,
-        "event": "vel"
-      },
-      {
-        "t": 32.45,
-        "event": "vel"
-      },
-      {
-        "t": 32.45,
-        "event": "vel"
-      },
-      {
-        "t": 32.5,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 32.5,
-        "event": "mob_death"
-      },
-      {
-        "t": 32.55,
-        "event": "vel"
-      },
-      {
-        "t": 32.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 32.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 32.75,
-        "event": "vel"
-      },
-      {
-        "t": 32.75,
-        "event": "vel"
-      },
-      {
-        "t": 32.8,
-        "event": "vel"
-      },
-      {
-        "t": 32.85,
-        "event": "vel"
-      },
-      {
-        "t": 33.3,
-        "event": "vel"
-      },
-      {
-        "t": 33.45,
-        "event": "vel"
-      },
-      {
-        "t": 33.55,
-        "event": "vel"
-      },
-      {
-        "t": 33.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 33.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 33.75,
-        "event": "vel"
-      },
-      {
-        "t": 33.75,
-        "event": "vel"
-      },
-      {
-        "t": 33.8,
-        "event": "vel"
-      },
-      {
-        "t": 33.85,
-        "event": "vel"
-      },
-      {
-        "t": 34.3,
-        "event": "vel"
-      },
-      {
-        "t": 34.45,
-        "event": "vel"
-      },
-      {
-        "t": 34.55,
-        "event": "vel"
-      },
-      {
-        "t": 34.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 34.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 34.75,
-        "event": "vel"
-      },
-      {
-        "t": 34.75,
-        "event": "vel"
-      },
-      {
-        "t": 34.8,
-        "event": "vel"
-      },
-      {
-        "t": 34.85,
-        "event": "vel"
-      },
-      {
-        "t": 35.3,
-        "event": "vel"
-      },
-      {
-        "t": 35.45,
-        "event": "vel"
-      },
-      {
-        "t": 35.55,
-        "event": "vel"
       },
       {
-        "t": 35.65,
+        "t": 18.9,
         "event": "end"
-      },
-      {
-        "t": 35.65,
-        "event": "motion_settled"
-      },
-      {
-        "t": 35.65,
-        "event": "settle"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/cells_lab",
-    "commit": "4296a39167870da5ebeefaa7315a53b2de21366b",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43120632404",
-    "rendered_at": "2026-11-11T23:58:07.628Z",
-    "head_at_publish": "7dc94a67d1b607c6cf35476723b8940a15720b58",
+    "branch": "main",
+    "commit": "42e33f64c28838cf303738c3d86ffa59c71992d1",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T05:52:05.283Z",
+    "head_at_publish": "ca8db75f28c14abef0d7d6b03ff72d66d3d43af0",
     "stunt": "stunts/cells_lab.js",
     "source_snapshot": [
       "source/cells_lab.js",
@@ -3107,22 +1405,22 @@
     ]
   },
   "rebuild": [
-    "git checkout 4296a3916787",
+    "git checkout 42e33f64c288",
     "gunzip -c shorts/cells_lab/recording.json.gz > work/cells_lab.rec.json",
     "node render.js work/cells_lab.rec.json work/cells_lab.frames 60 1080 1011",
     "python3 audio.py work/cells_lab.rec.json work/cells_lab.wav",
-    "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --self_name 56e --red nobody --shake [[\"slam\",0,8]] --flash [[\"slam\",0,0.5]] --sfx [[\"impact\",\"open:0.12\",{\"gain\":0.8}],[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]] --start_at open:0.1 --end_after slam:1.0 --out out/cells_lab.mp4"
+    "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --self_name 56e --red nobody --subs \"[[\\\"cell\\\",\\\"cell 1\\\",1.4,0],[\\\"cell\\\",\\\"cell 2\\\",1.4,1],[\\\"cell\\\",\\\"cell 3\\\",1.8,2],[\\\"finale\\\",\\\"cell 4\\\",1.6],[\\\"padlook\\\",\\\"cell 5...?\\\",1]]\" --speed [[\"cellout0\",\"cellin1\",\"cut\"],[\"cellout1\",\"cellin2\",\"cut\"],[\"cellout2\",\"finale\",\"cut\"]] --punch [[\"selfland\",0,1.08]] --cards \"[[\\\"selfland\\\",\\\"CELL 5: YOU\\\",1.4,\\\"red\\\"]]\" --shake [[\"selflaunch\",0,6],[\"selfland\",0,8]] --flash [[\"selflaunch\",0,0.3],[\"selfland\",0,0.4]] --sfx [[\"impact\",\"open:0.35\",{\"gain\":0.9}],[\"impact\",\"selflaunch\",{\"gain\":1.1}],[\"dip\",\"selfland\",0.4],[\"impact\",\"selfland\",{\"gain\":1.4}]] --start_at open:0.1 --end_after selfland:1.3 --out out/cells_lab.mp4"
   ],
   "status": "ready",
-  "notes": "r:r52f94c Review Room note (@5.8 s 'the opening should look down the hallway, then go to the first.'): opens walking in down the hallway (cells receding to the golem tube), pans, then an eased turn onto the first cell (lib/cells.js openHall); moving from frame 0 with a hit (r:r0f3da0); pace dwell clean (r:r188b46). Independent review READY (round 2).",
-  "published_at": "2026-11-12T00:03:39.147Z",
+  "notes": "No-op fix (audit 2026-11-12): cells_lab redone around a twist: hallway opening, 3 cells with hard cuts, the golem's launch, then the floor launches 56e on the same pad, card CELL 5: YOU; 12.2 s; reviewed READY (independent subagent), check/pace/mixcheck OK",
+  "published_at": "2026-11-12T05:53:42.843Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:04:13+00:00",
+    "at": "2026-11-12T05:54:04+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.87 s vs the reviewed render 30.85 s"
+      "summary": "short.mp4 12.20 s vs the reviewed render 12.20 s"
     },
     "pace": {
       "ok": true,
@@ -3134,8 +1432,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T23:34:29.251Z",
-      "report": "out/cells_lab.check.json"
+      "at": "2026-11-12T05:52:20.040Z",
+      "report": "work/hb/cells_lab.check.json"
     },
     "key_sounds": "n/a"
   }
