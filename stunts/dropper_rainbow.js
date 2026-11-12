@@ -21,5 +21,5 @@ module.exports = dropper.make({
   attempts: [{ n: 1, fail: 1 }, { n: 6, fail: 3 }, { n: 19, fail: 5 }, { n: 47 }],
   landing: { block: 'water', size: 1 },
   // pillars to fall past, on the side away from every try's line (scripts/dropper_sim.js checks the clearance)
-  deco: { pillars: [{ from: 58, to: 92, at: [-3, 3] }, { from: 168, to: 212, at: [-2, 2] }, { from: 228, to: 272, at: [-3, -1] }] }
+  deco: { pillars: [{ from: 58, to: 92, at: [-4, 2] }, { from: 168, to: 212, at: [-3, 2] }, { from: 228, to: 272, at: [-4, -2] }] }
 })
