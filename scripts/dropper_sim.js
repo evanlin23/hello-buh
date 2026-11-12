@@ -61,9 +61,9 @@ spec.attempts.forEach((a, i) => {
     if (e.position.y > s.y - 0.5) continue   // still on the rim
     if (a.fail !== undefined) {
       const L = layers[a.fail]
-      if (e.onGround || e.position.y + 2 * e.velocity.y <= L.y + 1.05) {
-        const ok = pl.li === a.fail && e.position.y >= L.y + 1 && !e.onGround
-        out = `${ok ? 'fail as planned' : 'WRONG'}: cut ${(e.position.y - L.y - 1).toFixed(2)} over layer ${pl.li} (planned ${a.fail}) at tick ${t}, x ${e.position.x.toFixed(2)} z ${e.position.z.toFixed(2)}`
+      if (e.onGround) {   // the splat (the stunt marks fail<i> here; the edit cuts 0.35 s later)
+        const ok = pl.li === a.fail && Math.abs(e.position.y - L.y - 1) < 0.1
+        out = `${ok ? 'fail as planned' : 'WRONG'}: hit layer ${pl.li} (planned ${a.fail}) at tick ${t}, x ${e.position.x.toFixed(2)} z ${e.position.z.toFixed(2)}`
         if (!ok) bad++
       }
     } else if (e.position.y < D.FLOOR + 2.2 || e.isInWater || e.onGround) {

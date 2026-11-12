@@ -4,18 +4,21 @@
 // into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
 // down the fall the whole way, then up the pillar from the boat.
 const { clearPlants, openSpots } = require('./_site')
-const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 }))   // heights where a fall tick lands in the boat window (fall phases simulated)
+// (No-op audit 2026-11-12, owner r:r4607fa: "7 identical top-down clutches": three drops now, each with a stake at the
+// bottom: 20 onto grass, 50 into a cactus field, 79 onto a landing pad in a lava pool. The pad (the landing footprint,
+// 3 wide) keeps the boat clear of the cacti and the lava.)
+const PILLARS = [{ h: 20, stake: 'grass', sub: '20 blocks' }, { h: 50, stake: 'cactus', sub: '50 blocks... into cactus' }, { h: 79, stake: 'lava', sub: '79 blocks... into LAVA' }]   // heights where a fall tick lands in the boat window (fall phases simulated)
 
 module.exports = {
   name: 'boat_clutch',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'bro thinks a boat will save him 💀',
   edit: {
-    caption: 'bro thinks a boat will save him 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
+    caption: 'bro thinks a boat will save him 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'seen2:0.6',   // r:r188b46 (was 0.9)
     // the label stays up through the fall
-    subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.1 + Math.sqrt(p.h) * 0.3, i]),
-    // the teleport between pillars is cut out (no hold around it)
-    speed: PILLARS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
+    subs: PILLARS.map((p, i) => ['jump', p.sub, 1.6, i]),
+    // the teleport between pillars is cut out (no hold around it); the long falls' middles x2 (the view holds still, down)
+    speed: [...PILLARS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']), ['fall1:0.8', 'catch1:-0.6', 2], ['fall2:0.8', 'catch2:-1.0', 2]],
     hook: { at: 'final_place', before: 1.4, after: -0.05, text: '79 blocks 💀' },
     slowmo: [['final_place', 0.15, 0.3, 0.5]],   // real in-between frames (render_replay.py), no blending
     // no replay after the landing (2026-11-11, pace BLOCK: it ran the Short 4.1 s past the payoff; end ~1 s after it), and
@@ -39,12 +42,31 @@ module.exports = {
     try { await bot.waitForChunksToLoad() } catch (e) {}
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    this.spots = await openSpots(ctx, x, z, PILLARS.map(P => P.h), { axis: 'x', gap: 9, foot: [-1, 1, -4, 1], level: [-1, 1, -4, 1] })
+    this.spots = await openSpots(ctx, x, z, PILLARS.map(P => P.h), { axis: 'x', gap: 13, foot: [-1, 1, -4, 1], level: [-1, 1, -4, 1] })
     for (const [i, P] of PILLARS.entries()) ctx.log('pillar', P.h, 'at', this.spots[i])
     for (const [i, P] of PILLARS.entries()) {
       const S = this.spots[i]
       await clearPlants(ctx, S.x - 2, S.floor, S.z - 5, S.x + 2, S.floor + 3, S.z + 2)   // the flowers and grass where it lands (plants only)
       await ctx.cmd(`/fill ${S.x} ${S.floor + 1} ${S.z} ${S.x} ${S.floor + P.h} ${S.z} cobblestone`)
+      // the stake round the landing pad (the footprint: x-1..x+1, z-4..z+1, left as grass)
+      const F = S.floor, X0 = S.x - 5, X1 = S.x + 5, Z0 = S.z - 8, Z1 = S.z + 4
+      const pad = (dx, dz) => dx >= -1 && dx <= 1 && dz >= -4 && dz <= 1
+      if (P.stake === 'lava') {
+        await ctx.cmd(`/fill ${X0} ${F + 1} ${Z0} ${X1} ${F + 4} ${Z1} air replace #minecraft:replaceable`, { mayFail: true })
+        await ctx.cmd(`/fill ${X0} ${F - 1} ${Z0} ${X1} ${F - 1} ${Z1} stone`)
+        await ctx.cmd(`/fill ${X0} ${F} ${Z0} ${X1} ${F} ${Z1} lava`)
+        await ctx.cmd(`/fill ${S.x - 1} ${F} ${S.z - 4} ${S.x + 1} ${F} ${S.z + 1} grass_block`)
+      }
+      if (P.stake === 'cactus') {
+        await ctx.cmd(`/fill ${X0} ${F} ${Z0} ${X1} ${F} ${Z1} sand`)
+        await ctx.cmd(`/fill ${S.x - 1} ${F} ${S.z - 4} ${S.x + 1} ${F} ${S.z + 1} grass_block`)
+        for (let dx = -5; dx <= 5; dx++) for (let dz = -8; dz <= 4; dz++) {
+          if ((dx + dz) % 2 || dx === 0 && dz === 0) continue
+          if (dx >= -3 && dx <= 3 && dz >= -6 && dz <= 3) continue   // two clear of the pad: the boat never touches one
+          const ht = 2 + ((dx * 7 + dz * 3) & 1)
+          await ctx.cmd(`/fill ${S.x + dx} ${F + 1} ${S.z + dz} ${S.x + dx} ${F + ht} ${S.z + dz} cactus`, { mayFail: true })
+        }
+      }
     }
     const S0 = this.spots[0], SL = this.spots[this.spots.length - 1]
     const n = this.spots.length
@@ -78,7 +100,7 @@ module.exports = {
     await ctx.easeLook(0.15, -1.3, 350)
     await ctx.easeLook(-0.1, -1.1, 300)
     await bot.waitForTicks(3)
-    ctx.mark('jump', { n: i })
+    ctx.mark('jump', { n: i }); ctx.mark(`fall${i}`)
     bot.setControlState('forward', true); bot.setControlState('jump', true)
     await bot.waitForTicks(5)
     bot.setControlState('jump', false)
@@ -109,7 +131,7 @@ module.exports = {
       if (!placed && vy < -0.5 && above + vy > 0 && above + 2 * vy - 0.1 <= 0 && above + 1.62 <= 6.4) {
         placed = true; k0 = Date.now()
         bot.entity.pitch = -Math.PI / 2
-        ctx.mark('placed', { n: i, above }); if (i === PILLARS.length - 1) ctx.mark('final_place')
+        ctx.mark('placed', { n: i, above }); ctx.mark(`catch${i}`); if (i === PILLARS.length - 1) ctx.mark('final_place')
         ctx.log('boat placed at height', above.toFixed(2), 'vy', vy.toFixed(2))
         process.nextTick(() => { bot.activateItem(); bot.swingArm() })
         return
@@ -128,9 +150,14 @@ module.exports = {
     await ctx.easeLookAt(new Vec3(px + 0.5, floor + 3, z + 0.5), 500)
     ctx.log('health', bot.health, 'vehicle', !!bot.vehicle, 'pos', bot.entity.position)
     if (ctx.died || bot.health < 20) return false
-    if (i === PILLARS.length - 1) ctx.mark('outro')
-    await ctx.easeLookAt(new Vec3(px + 0.5, floor + P.h * 0.6, z + 0.5), i < PILLARS.length - 1 ? 700 : 1000)
-    if (i === PILLARS.length - 1) await ctx.easeLookAt(new Vec3(px + 0.9, floor + P.h, z + 0.2), 900)
+    if (P.stake === 'grass') await ctx.easeLookAt(new Vec3(px + 0.5, floor + P.h * 0.6, z + 0.5), 700)   // up the pillar it came down
+    else {
+      // round at the stake it just missed, close (the cacti / the lava a block past the pad)
+      const b = bot.entity.position
+      await ctx.easeLookAt(new Vec3(b.x + 3.5, floor + 0.6, b.z - 1.5), 1300)   // (800 ms peaked at 295 deg/s)
+      ctx.mark(`seen${i}`)
+      await ctx.easeLookAt(new Vec3(b.x - 3.5, floor + 0.6, b.z - 2), 1400)
+    }
     if (i < PILLARS.length - 1) ctx.mark(`cut${i + 1}a`)   // from here to the next pillar's top is cut out
     if (bot.vehicle) { await ctx.cmd('/ride @s dismount'); await bot.waitForTicks(4) }
     ctx.log('after dismount: vehicle', !!bot.vehicle, 'pos', bot.entity.position)

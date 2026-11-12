@@ -1,0 +1,2 @@
+# Batch 4 script: Sorry, Dear
+Read _common.md first. Premise H in the batch-4 doc (from blocky ep123 sorry-shrink). Name: sorry_dear, branch claude/script-sorry-dear. Critic fixes to apply: the stakes (one more inch: a teacup), the kid plays to win to save her, an emerald-pile score, and note the engine need (a 0.3 entity scale in the renderer). Place: Stillwater, day 2200 (check canon: the Long Day lever outside the window).

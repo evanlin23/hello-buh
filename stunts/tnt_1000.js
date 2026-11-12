@@ -31,6 +31,9 @@ for (let i = 1; i <= TIERS.length; i++) {
   if (WALK[i]) speed.push([WALK[i], `crater${i}`, 4])
   if (i === 4) speed.push(['boom4:1.5', 'rim4a', 4], ['rim4a', 'rim4b', 'cut'])   // the 1000's chain tail and its smoke at x4, then to the rim of the big crater
 }
+// the chain behind the death screen (its text and buttons still; only the blasts move) at x5 up to the last blast's
+// flash (fix-check r1: the screen was up 3.5 s)
+speed.push(['boom5:0.35', 'boom5:1.8', 5])
 
 module.exports = {
   name: 'tnt_1000',
@@ -44,12 +47,13 @@ module.exports = {
     // smoke, 2.2 s) held a frozen death screen on which_door; pace's last-0.6 s check still wants a still ending
     startAt: 'tier1:-0.05', endAfter: 'settle:-0.6',   // r:r188b46: the death screen ~1.25 s after the last blast (was 1.7; it needs 1.2 to read; this take's settle mark is the old smoke wait)
     deathScreen: true,
-    // the payoff pace times is the 1000 pile's LAST blast, 1.85 s (output) after boom5 on this take: a flash, a punch,
+    // the payoff pace times is the 1000 pile's LAST blast, 0.69 s (output) after boom5 on this take with the x5 span
+    // behind the death screen (1.85 s without it; these offsets are OUTPUT seconds, the speed spans' are source): a flash, a punch,
     // the song dip, the game ducked and an impact there (no hit and no picture change on it: pace BLOCK); the song
     // also drops out 0.35 s before the death. Re-check the offset after a re-record
     sfx: [['pop', 'tier1', { gain: 1.0 }],   // (r:r0f3da0: the opening's hit was 8.7 dB under the peak at the default gain)
-      ['dip', 'death', 0.35], ['dip', 'boom5:1.85', 0.4], ['gamedip', 'boom5:1.85', 0.35], ['impact', 'boom5:1.85', { gain: 1.4 }]],
-    flash: [['boom5:1.85', 0, 0.8]], punch: [['boom5:1.85', 0, 1.15], ['crater1', 0, 1.04], ['crater2', 0, 1.04], ['crater3', 0, 1.04]],   // (a small punch on each crater reveal: the hole is the tier's result)
+      ['dip', 'death', 0.35], ['dip', 'boom5:0.69', 0.4], ['gamedip', 'boom5:0.69', 0.35], ['impact', 'boom5:0.69', { gain: 1.4 }]],
+    flash: [['boom5:0.69', 0, 0.8]], punch: [['boom5:0.69', 0, 1.15], ['crater1', 0, 1.04], ['crater2', 0, 1.04], ['crater3', 0, 1.04]],   // (a small punch on each crater reveal: the hole is the tier's result)
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },

@@ -429,6 +429,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on fakemod_permission: "Also, for the fake mod thing, I think the pop-up should be in the middle
   of the screen rather than at the top."** In the `fakemod` format, the permission popup sits centred in the game view
   (like a real modal dialog over the action), not at the top.
+- **Owner, 2026-11-12, on the bigger fakemod popup take (a bigger creeper popup plus an ALLOW card): "bigger popup is
+  prolly better lowkey".** In the `fakemod` format the permission popup is big: it fills most of the game view's width,
+  centred, at a GUI scale that reads at phone size, and the ALLOW/DENY result shows big as its own beat.
 - **Owner, 2026-11-12, asked whether to keep the 30 s minimum (2026-11-06) or drop it: "no fixed minimum, just don't
   pad them".** A Short is as long as its beats need. There is no minimum length for a stunt (the 30 s rule of
   2026-11-06 is retired). Padding is the blocker instead: a beat added or stretched only to reach a length, a beat
@@ -443,6 +446,44 @@ STANDARDS.md in the same commit.
   the cuts need to be cleaner, we should do into a hole 1x1 and then come out of the sky? need cleaner"** The
   `mislabel` parkour uses sideways (left/right) double extensions, the classic bridge-out move, not blocks placed
   upward. The transition is one clean move: drop into a 1x1 hole, cut, come out of the sky.
+- **Owner, 2026-11-12: "We need to be optimizing our hook as well as the viewer satisfaction. They need to look at the
+  reel, and when they're done watching it, be like, I got something out of that. It can't be a no-op, bro. It
+  absolutely cannot be a no-op."** Every Short is judged on two things before anything else: the hook (r:r0f3da0) and
+  the takeaway. The takeaway test: in one sentence, what did the viewer get out of it (a laugh at a clear joke, a
+  "whoa" at a big result, a satisfying finish, a thing they didn't know)? If the honest answer is "nothing much", a
+  small result, or "it just ends", the Short is a no-op and does not ship: make the payoff bigger or drop it.
+- **Owner, 2026-11-12, on the no-op audit: "We should not ship any no ops. we should fix all of them or just drop or
+  redo or anyhting yk" and "Also fix the borderline as well. All of them need to 'make sense' and leave teh viewer
+  happy and satisfied."** No Short ships unless an independent reviewer's takeaway says it makes sense and pays off.
+  No-ops are redone or dropped; borderline Shorts get one bigger, clearer last beat. The audit and every fix:
+  docs/noop_audit_2026-11-12.md.
+- **Owner, 2026-11-12, Review Room notes:** on mislabel_grandma "wtf is this parkour. the double extension is like
+  you jump, place 2 blocks, and then land etc (without the blocks, the jump would hav ebeen impopssile)", "we should
+  move our camera... like the art should be vertical, and we look at it tracking it as we fall", "we should have the
+  name whenver the number pops up, like 4. lime jello for the full time, not 4 before", "the loop needs ot work too";
+  on trap_free_diamonds "We should have more setup for the trap. Like go all the way down and then lava or fire etc";
+  on mega_lapse_fox "the beaet drops before the ears appear"; on lapse_house "make the house more fancy, and it doesnt
+  need to be superflat"; on guess_sound "nothing really happens this first bit, people will scroll". The general
+  rules: a double extension is a mid-air clutch (jump a gap you can't make, place 2 blocks under you in the air,
+  land on them); a list item's number and name appear together and stay up for the whole item; a Short that loops
+  must loop seamlessly (the last frame leads into the first); a build sits in a real world, not superflat, and is
+  detailed; the music drop lands on the payoff's reveal, never before it; and something happens from the first
+  frame (r:r0f3da0).
+- **Owner, 2026-11-12, Review Room notes: on nether_portal v3 at 11.0 s "need faster cuts".** The fast-cuts rule
+  (r:r188b46) applied to a rating list: each method's result (the portal lights, or doesn't) holds about 0.5 s with
+  its card, then a hard cut to the next method. No step back, no look at the swirl, no smoke clearing in between.
+- **Owner, 2026-11-12, Review Room notes: on villager_fired v2 at 1.2 s "too slow to start in the opening, also i dont
+  understand the premise of this short".** The opening rule (r:r0f3da0): something happens on frame 0. Also, the
+  premise reads in the first second from the picture and the caption together (the subject big and centred, the first
+  step of the premise happening on screen as the title states it), and every later step reads on one watch at full
+  speed: no act that fights the title (v2 fired the villager before giving him "every job"), no set dressing that raises
+  a question the Short doesn't answer (v2's TNT showed in the ground from frame 0), no change too small to see (his
+  robe 6 blocks away). If the premise can't be made that clear, redesign it.
+- **Owner, 2026-11-12, Review Room notes: on cooked_bedrock v3 at 1.0 s "why does the music start late?".** A Short's
+  music plays from frame 0. When a pinned track's drop comes earlier in the track than the drop event, the track
+  repeats a whole bar of its build until the drop lands on the event (edit.songLoop, scripts/add_song.py). It never
+  starts late after silence (the old edit.songLate). In the `cooked` format the ominous track (r:rcefdcc) plays from
+  the first frame, goes quiet on the black, and drops on the flood.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -733,6 +774,36 @@ STANDARDS.md in the same commit.
   story's world (kidnapping, robbing, a kid "in love" with a bell, a grandpa "dumped"), the kind that makes people
   comment. It stops short of real-world flashpoints (religion, gender, politics, real people or groups), which risk the
   channel and aren't needed: the shock comes from the story's own absurd fact.
+- **Owner, 2026-11-12, relaying a friend on the absurd hooks: "my friend said he didnt like the wall, and didnt knwo
+  waht the grandpa one".** An absurd hook must still parse on first hearing (The Walk's "got DUMPED. Now he breaks
+  LECTERNS" didn't) and carry tension (The Wall's "forty blocks high, still growing" had none). Each hook is gated by
+  two fresh casual readers: understood instantly, a clear question, would keep watching.
+- **Owner, 2026-11-12: "ask the buhtown what its found with its shorts metrics stuff, and what we can do to apply it
+  to our content. We dont necessarily need them to all be grounded in minecraeft like topic sin my option."** Buhtown's
+  Studio data (20 story Shorts, Nov 2-11; evanlin23/blocky-stories metrics/studio/2026-11-12.md, RULES.md): the stop
+  rate (viewed vs swiped) is the gate: every Short at >= 81% viewed passed 10k views, every one under 80% stayed under
+  2.6k even with great retention. The biggest drop is at 0:04-0:08, the beat after the hook. What we apply:
+  - the first frame and the title are ONE strange, checkable fact, stated plainly ("The Elevator Mirror Shows FIVE",
+    "Everyone's Born With HALF a Mark"); warning titles ("Never...", "...is DANGEROUS") did worse;
+  - seconds 4-8 escalate: no setup, no backstory, no who's-who;
+  - the reveal is one plain line that recasts the rule (confusion kills: "where did lemonade go?");
+  - 30-45 s and loopable is the sweet spot; longer only with a very strong hook;
+  - give viewers something to answer or argue in the comments;
+  - premises that won: a rule with a number or mark, a person who changed overnight, warm twists; weaker: dark sets,
+    monsters, sad family losses, warnings. Topics needn't be about Minecraft.
+- **Owner, 2026-11-12, on the lead's keep/drop list: "ok, only do the ones that have high potential."** Build only the
+  high-potential five: Pulled Away, The Honey Thief, Saving Up for a Bastion, The Statue Gets Younger and Sorry, Dear
+  (the last two new from blocky-stories). Benched: The Singing Box, The Walk, The Wall Grows, Six Thousand Torches.
+  Dropped: The Bell in the Window, Seventy Below, Red Sheep (monster reveals, dark sets). The four built stories stay.
+  Also: "can we also check what was going on the screen for the ones with good hooks vs bad hooks and see how we can
+  improve?" A frame study of Buhtown's high vs low stop-rate openings sets the opening-shot rules.
+  The study (docs/research/hook_frames_2026-11-12.md on claude/hook-frame-study; 22 Buhtown Shorts, leads only):
+  frame 1 is a person or body the rule acts on (face >= 1/4 of the width), never a prop still life (prop openers
+  averaged 62.8% viewed, none over 75%; the rest 75.7%); the strange fact is a person doubled, split or replaced, or a
+  person acting wrong; the key word (the title's CAPS word) is spoken by 1.8 s and line 1 ends by about 2.5 s; shot 1
+  cuts on the key word to line 1's second half; 2-4 s a personal stake on a face; 4-8 s the rule at work on a new
+  person every 1.2-1.6 s (no backstory, layout, who's who, object list, HUD POV, near-black); a cool or neutral bright
+  grade. Our game view is 53% of the frame under a title band: Buhtown is full-bleed 9:16. A/B it.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

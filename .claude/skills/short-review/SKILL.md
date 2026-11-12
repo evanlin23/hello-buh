@@ -102,6 +102,11 @@ Work in this order, and stop collecting once you have the verdict's evidence:
     him intentionally walking into the lava");
   - black or void terrain, a cut world edge in shot, a broken render;
   - padding: a beat added or stretched only to reach a length (owner 2026-11-12: "just don't pad them");
+  - **a no-op** (owner 2026-11-12: "It absolutely cannot be a no-op", r:r8d6af1): write the TAKEAWAY line, one
+    sentence on what a viewer gets out of it (a laugh at a clear joke, a "whoa" at a big result, a satisfying
+    finish, something they didn't know). If it's "nothing much", a small result, or "it just ends", BLOCK: the fix
+    is a bigger payoff, never padding;
+  - **a weak hook** (r:r0f3da0): frame 0 doesn't show the subject, or nothing pulls you in by 1.5 s;
   - the story not understandable without pausing;
   - **a line in the wrong voice** (a character's line read by the narrator's voice or the other way round, owner
     2026-11-10: "make sure the voices are distinct and correct"), a word in the wrong line, a direction read aloud,
