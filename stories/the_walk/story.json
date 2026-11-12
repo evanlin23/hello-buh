@@ -2,7 +2,7 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r5 (2026-11-11): the owner's audit: Grandma 'Come back when the sea FREEZES.' and the kid 'Mom says it NEVER freezes here.' (replacing 'walk the water' / 'that means never'); three hundred kept; Grandpa and Grandma voices proposed for audition (bible.md 'Voices'). r5.1: Grandma cast as `grandma_island` (Callirrhoe), the owner's pick.",
+  "revision": "r6 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the reveal is spoken (L10: the boots, the dock, the sea froze); L11 echoes line 1 ('Three hundred lecterns. For a walk.'); kept the owner's choices: 'Come back when the sea FREEZES.' / 'Mom says it NEVER freezes here.', three hundred, Grandma = grandma_island. r5: the owner's audit; r5.1 Grandma cast.",
   "caption": "grandpa broke the same lectern 300 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three hundred times, rerolling her book; ten years ago Grandma rowed to the island across the bay and told him to come back when the sea freezes, and the sea there never freezes, until this morning's book is Frost Walker II.",
   "question": "why tf has grandpa broken the same lectern 300 times?",
@@ -13,7 +13,7 @@
     "funny",
     "heroic"
   ],
-  "payoff": "L10+2.3",
+  "payoff": "L10",
   "look": {
     "time": 6000,
     "fog": false,
@@ -84,9 +84,11 @@
         "L06",
         "L08",
         "L09",
-        "L10"
+        "L09b",
+        "L10",
+        "L11"
       ],
-      "direction": "One continuous telling, start to finish: bright and quick, a kid who thinks Grandpa is a funny old grump; no dramatic pauses, the last line a little slower and surprised, never scared."
+      "direction": "One continuous telling, start to finish: bright and quick, a kid who thinks Grandpa is a funny old grump; no dramatic pauses; the reveal (L10) wide-eyed and plain, never scared; L11 a small amazed laugh."
     },
     {
       "id": "rG",
@@ -113,8 +115,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "My GRANDPA / has BROKEN / the same LECTERN / three hundred TIMES.",
-      "say": "My grandpa has broken the same lectern three hundred times.",
+      "text": "My GRANDPA / has BROKEN / the same LECTERN / three hundred TIMES. / And he won't / tell me WHY.",
+      "say": "My grandpa has broken the same lectern three hundred times. And he won't tell me why.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -127,13 +129,14 @@
         "what": "Grandpa",
         "word": "GRANDPA"
       },
-      "direction": "amazed and fed up, one quick breath; the number lands"
+      "direction": "amazed and fed up, one quick breath; the number lands, then WHY is a real question the kid wants answered",
+      "note": "STANDARDS 0y: the impossible fact AND the why, by 3 s"
     },
     {
       "id": "L02",
       "who": "N",
-      "text": "The LIBRARIAN / holds up a BOOK. / He READS it. / Breaks the LECTERN / AGAIN.",
-      "say": "The librarian holds up a book. He reads it. Breaks the lectern again.",
+      "text": "The LIBRARIAN / holds up a BOOK. / He READS it.",
+      "say": "The librarian holds up a book. He reads it.",
       "shot": "S02",
       "shows": [
         {
@@ -143,17 +146,13 @@
         {
           "what": "enchanted_book",
           "word": "BOOK"
-        },
-        {
-          "what": "lectern",
-          "word": "LECTERN"
         }
       ],
       "look": {
         "what": "entity:villager",
         "word": "BOOK"
       },
-      "direction": "rhythmic, a routine the kid has watched a hundred times"
+      "direction": "rhythmic, a routine the kid has watched a hundred times; straight into Grandpa"
     },
     {
       "id": "L03",
@@ -169,10 +168,14 @@
     {
       "id": "L03b",
       "who": "N",
-      "text": "I think he just / really HATES / that LIBRARIAN.",
-      "say": "I think he just really hates that librarian.",
+      "text": "And BREAKS it / AGAIN. / I think he just / HATES / that LIBRARIAN.",
+      "say": "And breaks it again. I think he just hates that librarian.",
       "shot": "S03",
       "shows": [
+        {
+          "what": "lectern",
+          "word": "BREAKS"
+        },
         {
           "what": "villager",
           "word": "LIBRARIAN"
@@ -183,13 +186,13 @@
         "word": "LIBRARIAN"
       },
       "direction": "giggly, totally sure of it",
-      "note": "STANDARDS 0a: the kid's innocent misreading of the reroll (the lead's note: he REALLY hates that librarian)"
+      "note": "clue 1 (Not THAT one, 300 breaks) and its misreading: a grudge (0a)"
     },
     {
       "id": "L04",
       "who": "N",
-      "text": "GRANDMA lives / on the ISLAND / across the BAY. / Her WINDOW'S lit / every NIGHT. / I think she's / scared of the DARK.",
-      "say": "Grandma lives on the island across the bay. Her window's lit every night. I think she's scared of the dark.",
+      "text": "GRANDMA lives / on that ISLAND. / Her LIGHT'S on / every NIGHT. / I think she's / scared of the DARK.",
+      "say": "Grandma lives on that island. Her light's on every night. I think she's scared of the dark.",
       "shot": "S04",
       "shows": [
         {
@@ -197,7 +200,7 @@
             "glass_pane",
             "glass"
           ],
-          "word": "WINDOW"
+          "word": "LIGHT'S"
         }
       ],
       "look": {
@@ -205,13 +208,13 @@
         "word": "GRANDMA"
       },
       "direction": "bright, a fact she likes, then a confident little theory",
-      "note": "0a: the lit window misread (it's left on for him)"
+      "note": "someone loved at stake; clue 2 (the light is left on for him) and its misreading: a night light (0a)"
     },
     {
       "id": "L05",
       "who": "N",
-      "text": "He WON'T / take a BOAT. / Won't BUILD / a BRIDGE. / Ten YEARS. / He's SO / STUBBORN.",
-      "say": "He won't take a boat. Won't build a bridge. Ten years. He's so stubborn.",
+      "text": "He WON'T / take a BOAT. / Ten YEARS. / He's SO / STUBBORN.",
+      "say": "He won't take a boat. Ten years. He's so stubborn.",
       "shot": "S05",
       "shows": [
         {
@@ -224,7 +227,7 @@
         "word": "BOAT"
       },
       "direction": "baffled and a little funny; the last word lands, eye-roll fond",
-      "note": "0a: no boat, no bridge misread as plain stubbornness (she said the SEA must freeze: a boat or a bridge isn't that); 'bridge' is a thing he won't build: nothing to show, the open water is the picture"
+      "note": "clue 3 (no boat: she said the SEA must freeze) and its misreading: stubborn (0a). 'Won't build a bridge' cut for time: the empty water says it"
     },
     {
       "id": "L06",
@@ -270,7 +273,7 @@
     {
       "id": "L09",
       "who": "N",
-      "text": "This MORNING, / the LIBRARIAN / held UP / a NEW book.",
+      "text": "This MORNING, / the LIBRARIAN / held up / a NEW book.",
       "say": "This morning, the librarian held up a new book.",
       "shot": "S09",
       "punch": true,
@@ -288,21 +291,65 @@
         "what": "entity:villager",
         "word": "NEW"
       },
-      "direction": "quick, noticing; a lift on the key word; still not suspicious"
+      "direction": "quick, noticing; a lift on NEW; still not suspicious",
+      "note": "'the librarian', not 'she' (cold read r6: 'she' read as Grandma). S09 to 'a', S10 (the merchant screen, Frost Walker II) cuts in on NEW: the gamer's clue, never needed by the casual viewer"
     },
     {
-      "id": "L10",
+      "id": "L09b",
       "who": "N",
-      "text": "GRANDPA didn't / say ANYTHING.",
-      "say": "Grandpa didn't say anything.",
-      "shot": "S10",
+      "text": "And GRANDPA / DIDN'T / BREAK it.",
+      "say": "And Grandpa didn't break it.",
+      "shot": "S11",
       "punch": true,
+      "shows": [
+        {
+          "what": "lectern",
+          "word": "BREAK"
+        }
+      ],
       "look": {
         "what": "Grandpa",
         "word": "GRANDPA"
       },
-      "direction": "surprised, a little slower, the last word held; not scared",
-      "note": "S09 holds through 'Grandpa didn't say' (his face, silent); the cut to S10 lands on ANYTHING"
+      "direction": "surprised, a little slower, DIDN'T held; not scared",
+      "note": "the rule turned against itself (format beat 5): the lectern stands"
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "He put it / on his BOOTS, / walked OFF / the DOCK, / and the SEA / FROZE / under his FEET.",
+      "say": "He put it on his boots, walked off the dock, and the sea froze under his feet.",
+      "shot": "S12",
+      "punch": true,
+      "shows": [
+        {
+          "what": "leather_boots",
+          "word": "BOOTS"
+        },
+        {
+          "what": "frosted_ice",
+          "word": "FROZE"
+        }
+      ],
+      "look": {
+        "what": "Grandpa",
+        "word": "FEET"
+      },
+      "direction": "wide-eyed, plain, each beat a step; the kid says only what they see; FROZE lands with the first ice",
+      "note": "THE REVEAL, spoken (format beat 6): one plain sentence, no game knowledge; the viewer makes the one jump (the book froze the sea; her words came true)"
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "Three hundred LECTERNS. / For a WALK.",
+      "say": "Three hundred lecterns. For a walk.",
+      "shot": "S12",
+      "look": {
+        "what": "Grandpa",
+        "word": "WALK"
+      },
+      "direction": "a tiny amazed laugh, the kid's understatement; WALK soft",
+      "note": "the one beat after the reveal; echoes line 1 (three hundred, lecterns) and names the title; cut 1.0 s after WALK"
     }
   ],
   "shots": [
@@ -325,7 +372,7 @@
       "place": "library_hut",
       "size": "ms",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-0.6, 0, 1.0) at the counter (S02, S09), (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
-      "camera": "at: (1.5, 1.7, 4.5) behind the kid looking at (-0.3, 1.4, -1.5), still. Camera shot, no GUI: the kid has the trade open (unseen), so the librarian holds up the offered enchanted book over her crossed arms (vanilla), glinting; Grandpa leans in at frame left, reads it, shakes his head; on AGAIN he breaks the lectern",
+      "camera": "at: (1.5, 1.7, 4.5) behind the kid looking at (-0.3, 1.4, -1.5), still. Camera shot, no GUI: the kid has the trade open (unseen), so the librarian holds up the offered enchanted book over her crossed arms (vanilla), glinting; Grandpa leans in at frame left, reads it, shakes his head; holds to 'reads it'",
       "frame": "subject: the librarian holding up the glinting book, its name never shown; Grandpa's face at frame left; the kid's shoulder at frame right. Day 6000. Grandpa at (-0.6, 0, 1.0), in frame (L10 names him).",
       "look": {
         "time": 6000
@@ -337,8 +384,8 @@
       "place": "library_hut",
       "size": "full",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-1, 0, 1.2); the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
-      "camera": "at: (0, 1.6, 6.5) in the doorway looking back at Grandpa (-1, 1, 1.2), about 6.9 blocks, still; holds through L03b",
-      "frame": "subject: Grandpa head to toe, axe in hand, unimpressed, the lectern item at his feet; the librarian in plain clothes (jobless) at frame right; bg: the tally wall. Day 6000.",
+      "camera": "at: (0, 1.6, 6.5) in the doorway looking back at Grandpa (-1, 1, 1.2), about 6.9 blocks, still; holds L03 and L03b. On BREAKS he swings, the lectern cracks and pops on AGAIN, the librarian's outfit pops off",
+      "frame": "subject: Grandpa head to toe, axe in hand, unimpressed; the lectern at his side, then its item at his feet; the librarian at frame right (jobless after AGAIN); bg: the tally wall. Day 6000.",
       "look": {
         "time": 6000
       }
@@ -409,32 +456,43 @@
       "place": "library_hut",
       "size": "ms",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-0.6, 0, 1.0) at the counter (S02, S09), (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
-      "camera": "the same set-up as S02, (1.5, 1.7, 4.5) looking at (-0.3, 1.4, -1.5), still; holds through 'Grandpa didn't say' of L10. Lantern-lit",
-      "frame": "subject: the librarian holding up a glinting book (its name not shown here); Grandpa leans in at frame left, reads, and goes still: no head shake. Dawn 22800. Grandpa at (-0.6, 0, 1.0), in frame (L10 names him).",
+      "camera": "the same set-up as S02, (1.5, 1.7, 4.5) looking at (-0.3, 1.4, -1.5), still; holds to 'a' of L09. Lantern-lit",
+      "frame": "subject: the librarian holding up a glinting book (its name not shown here); Grandpa leans in at frame left. Dawn 22800.",
       "look": {
         "time": 22800
       }
     },
     {
       "id": "S10",
-      "line": "L10",
-      "cut_on": "ANYTHING",
-      "hold": 1.3,
+      "line": "L09",
+      "cut_on": "NEW",
       "place": "library_hut",
       "size": "cu",
-      "camera": "pov insert: the kid's merchant screen, the view held still behind it (GUI rule); the cursor on the result slot; starts on ANYTHING, holds 1.3 s",
-      "frame": "the reveal, part 1: the merchant screen; the book's tooltip readable: 'Frost Walker II' (and the same words in the captions); the kid's inventory below. Near the end of the hold the trade completes. On the cut to S11: an anvil clank off screen. Dawn 22800.",
+      "camera": "pov insert: the kid's merchant screen, the view held still behind it (GUI rule); the cursor on the result slot; starts on NEW, holds to the end of L09 (about 1.3 s)",
+      "frame": "the merchant screen; the book's tooltip readable: 'Frost Walker II' (and the same words in the captions); the kid's inventory below. A gamer's clue; the casual viewer doesn't need it. Dawn 22800.",
       "look": {
         "time": 22800
       }
     },
     {
       "id": "S11",
+      "line": "L09b",
+      "place": "library_hut",
+      "size": "ms",
+      "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-0.6, 0, 1.0) at the counter (S02, S09), (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
+      "camera": "at: (-0.1, 1.7, 3.4) in front of Grandpa looking at his face and chest (-0.6, 1.4, 1.0), still",
+      "frame": "subject: Grandpa's face, close; he reads, goes still, no head shake; the axe lowers; the lectern stands, in frame lower right; by the end the book is in his own hand (no hand-off shown: cold read r6). On the cut to S12: an anvil clank off screen. Dawn 22800.",
+      "look": {
+        "time": 22800
+      }
+    },
+    {
+      "id": "S12",
       "line": "L10",
       "place": "dock",
       "size": "wide",
-      "camera": "at: (0, 5, 14) behind Grandpa looking down the dock at (0, 1, -20), FOV 28, still (the window sits about 5.6 degrees above centre, the first ice in frame). Opens on Grandpa at the dock's end in new leather boots, glinting; his first step off the end makes the first ice; the water freezes into a white disc under each step (frosted ice); cut 1.0 s after the first ice, on his third step",
-      "frame": "subject: Grandpa on the sea, a short trail of white frosted-ice discs under and behind him, three steps' worth (vanilla: it melts after a few seconds, after the cut; the first ice anywhere in the Short: the sea freezing); bg: the island and Grandma's lit window, her figure in it (the window reads; she is small), at the end of his line of travel. Dawn 23500.",
+      "camera": "at: (0, 5, 14) behind Grandpa looking down the dock at (0, 1, -20), FOV 28, still (the window sits about 5.6 degrees above centre, the first ice in frame). Opens on Grandpa at the dock's end in new leather boots, glinting, on BOOTS; he steps off on DOCK; the first ice forms on FROZE; the water freezes into a white disc under each step (frosted ice); holds through L11; cut 1.0 s after WALK",
+      "frame": "subject: Grandpa on the sea, a short trail of white frosted-ice discs under and behind him, five or six steps' worth by the cut, the oldest discs already fading back to water behind him (vanilla frosted ice melts) (vanilla: it melts after a few seconds, after the cut; the first ice anywhere in the Short: the sea freezing); bg: the island and Grandma's lit window, her figure in it (the window reads; she is small), at the end of his line of travel. Dawn 23500.",
       "look": {
         "time": 23500,
         "fov": 28
@@ -468,19 +526,20 @@
     }
   },
   "ending": {
-    "after": "L10",
+    "after": "L11",
     "beats": [
-      "S09 holds on Grandpa going still; S10 cuts in on ANYTHING: the merchant screen reads Frost Walker II, held 1.3 s",
-      "S11: Grandpa steps off the dock in glinting boots and the sea freezes under each step toward Grandma's lit window; cut 1.0 s after the first ice. No line."
+      "S11: Grandpa does NOT break the lectern (L09b); the anvil clank on the cut",
+      "S12: L10, the reveal said over the picture: boots, the step off the dock, the sea freezing under each step toward Grandma's lit window",
+      "L11 'Three hundred lecterns. For a walk.' over his walk; cut 1.0 s after WALK"
     ],
-    "loop": "cause and effect: why he broke the lectern (line 1)"
+    "loop": "L11 echoes line 1 (three hundred, lecterns) and answers its WHY"
   },
   "bible": "stories/the_walk/bible.md",
   "set": "stories/the_walk/set.md",
   "shotlist": "stories/the_walk/shots.md",
   "upload": {
     "title": "my grandpa has broken the same lectern 300 times 📚 #minecraft #shorts",
-    "pinned": "Ten years of lecterns. Would YOU have waited that long for her?",
+    "pinned": "Three hundred lecterns. Would YOU have waited that long for her?",
     "tags": [
       "minecraft grandpa",
       "minecraft lectern",
@@ -500,7 +559,7 @@
       "text": "Frost Walker II",
       "as": [
         "the vanilla item tooltip on the merchant screen's result slot (engine gap)",
-        "a caption chunk in the key colour, from the first frame of S10 to the cut to S11"
+        "a caption chunk in the key colour, from the first frame of S10 (on NEW) to the cut to S11"
       ],
       "hold": 1.3
     }
@@ -527,6 +586,6 @@
   ],
   "hotbar_note": "The kid's bar: shows only in S10's merchant screen. Story things first: emeralds (the kid trades), Grandpa's 63 spare lecterns, a pair of plain leather boots (Grandpa's, the kid is carrying them), a book, bread; then the ridiculous ones: a cake, a milk bucket, 67 eggs (owner), a pufferfish. The anvil is in the hut, not the bar.",
   "beats": "stories/the_walk/beats.md",
-  "payoff_note": "S10 starts on ANYTHING and holds the tooltip 1.3 s; S11 opens on the step off the dock: the first ice about 0.3 s in, the cut 1.0 s after the first ice (about L10 end + 1.3 + 1.0)",
+  "payoff_note": "L10 says the reveal over S12: the boots glint on BOOTS, the step off on DOCK, the first ice on FROZE; L11 follows at once; cut 1.0 s after WALK",
   "coords_note": "Outside, an actor at y 0 stands on the deck: feet at y 1 (the deck is flush at sea level, y 0). In the hut, y 0 is the floor."
 }

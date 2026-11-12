@@ -1,4 +1,4 @@
-# the_walk: continuity bible (r5; world pass 2026-11-11: Gullwick claimed over the stronghold, the island 92 out)
+# the_walk: continuity bible (r6; world pass 2026-11-11: Gullwick claimed over the stronghold, the island 92 out)
 
 ## World
 - **Place:** `gullwick` ("Gullwick", claimed on main 2026-11-11): a shore hamlet on the low headland west of Leo's
@@ -36,32 +36,32 @@
 | B. the dock, the present | L04, L05 | S04, S05 | dusk 13000 |
 | C. the flashback, ten years ago (about day 350) | L06, L07 | S06, S07 | sunset 12000, graded warm and soft; the island window dark (she hasn't arrived yet); no boat tied at the dock |
 | D. the shore, the present | L08 | S08 | dusk 13000, the window lit |
-| E. this morning | L09, L10 (S09 to 'didn't say', S10 from ANYTHING, 1.3 s hold), reveal | S09, S10 (22800, lantern-lit hut), S11 (23500) | the window still lit at dawn |
+| E. this morning | L09, L09b (S09 to 'a', S10 from NEW, S11 on 'And Grandpa'), L10 the reveal + L11 | S09, S10, S11 (22800, lantern-lit hut), S12 (23500) | the window still lit at dawn |
 
 ## Cast and costume
 | who | what | voice | shots |
 |---|---|---|---|
-| the kid (narrator) | player, the default `kai` skin (not Steve, not zuri); never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; small next to Mom S08 |
-| Grandpa | player actor, a grey-haired old-man skin (to make); iron axe in the hut (S01-S03, S09), empty-handed on the dock and in the flashback; **no boots** until S11, put on at the dock's end, leather with the enchant glint | Iapetus directed old (not `elder`: canon conflict 11), one clause; to audition | S01-S09, S11 |
-| Grandma | player actor, a grey-haired old-woman skin (to make) | `grandma_island` (Callirrhoe) | in the boat S06-S07; head to toe in the window (sill at floor level) S04, S08, S11 |
+| the kid (narrator) | player, the default `kai` skin (not Steve, not zuri); never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; not in S11 (the book is in Grandpa's hand); small next to Mom S08 |
+| Grandpa | player actor, a grey-haired old-man skin (to make); iron axe in the hut (S01-S03, S09, S11; lowered, unswung in S11), empty-handed on the dock and in the flashback; **no boots** until S12, put on at the dock's end, leather with the enchant glint | Iapetus directed old (not `elder`: canon conflict 11), one clause; to audition | S01-S09, S11 |
+| Grandma | player actor, a grey-haired old-woman skin (to make) | `grandma_island` (Callirrhoe) | in the boat S06-S07; head to toe in the window (sill at floor level) S04, S08, S12 |
 | Mom | player actor, the default `makena` skin | silent | S08 |
-| the librarian | plains villager; librarian outfit while a lectern stands, plain after each break (plain in S03) | none | S01-S03, S09 |
+| the librarian | plains villager; librarian outfit while a lectern stands, plain after each break (plain in S03) | none | S01-S03, S09, S11 |
 
 ## Props
 | prop | state | shots |
 |---|---|---|
-| lectern | broken and placed again; there in every hut shot except mid-break; dropped at Grandpa's feet in S03 | S01-S03, S09 |
+| lectern | broken and placed again; there in every hut shot except mid-break; dropped at Grandpa's feet in S03 | S01-S03, S09, S11 |
 | tally signs | about 60 oak signs on the hut's back wall, about 300 tally marks | S01, S03 |
 | enchanted book | glinting in the librarian's raised hand; its name never shown before S10 | S02, S09, S10 |
 | oak boat | floating empty beside the dock at (2, 0, 4), no lead; NOT there in the flashback | S05, S08 (background) |
 | Grandma's boat | the one she rows away in; on the island's beach since | S06, S07 |
-| Grandma's window | 3x2 glass panes, lanterns inside; **dark** in the flashback, lit at dusk and dawn | S04, S06 (dark), S08, S11 |
-| leather boots | plain in the kid's inventory (S10); on Grandpa's feet, glinting, in S11 | S10, S11 |
-| anvil | in the hut, heard (clank) on the cut S10 to S11 | sound only |
-| frosted ice | forms under each of Grandpa's steps off the dock's end | S11 |
+| Grandma's window | 3x2 glass panes, lanterns inside; **dark** in the flashback, lit at dusk and dawn | S04, S06 (dark), S08, S12 |
+| leather boots | plain in the kid's inventory (S10); on Grandpa's feet, glinting, in S12 | S10, S12 |
+| anvil | in the hut, heard (clank) on the cut S11 to S12 | sound only |
+| frosted ice | forms under each of Grandpa's steps off the dock's end | S12 |
 
 ## Positions and screen direction
-- The island is always west, out along the dock (-z). S04, S07, S08, S11 look out to sea; S05 looks back inland
+- The island is always west, out along the dock (-z). S04, S07, S08, S12 look out to sea; S05 looks back inland
   (Gullwick's headland, and Leo's House across the lagoon); S06 looks across the dock.
 - S04: Grandpa at the dock's end at dusk. S05: he walks inland, away from the camera, past the boat. S08: he walks up the shore past Mom, out of frame left. All three are the same dusk.
 - S06 to S07: Grandma rows west, away from the dock, and turns back toward Grandpa (east) for her line.
@@ -72,7 +72,7 @@
 
 ## Who knows what
 - **Grandpa** knows all along what he's rolling for.
-- **The kid** knows the condition (L07) and Mom's reading (L08), and doesn't connect them to the book until S10.
+- **The kid** knows the condition (L07) and Mom's reading (L08), and doesn't connect them to the book even at the end: L10 only says what they see (boots, dock, the sea froze) and L11 is an understatement ("For a walk."); the viewer makes the jump.
 - **Mom** thinks it means never (the sea here never freezes).
 - **The viewer** can connect "the sea FREEZES" and the book from L07 on.
 
