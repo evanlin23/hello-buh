@@ -61,9 +61,9 @@ module.exports = {
     // the dive starts (x -72), so the cut to first person carries the same move on (motion continues across the cut)
     face2: { path: [[0, -110, 42, 0.5], [1.9, -73.5, 43.6, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 62, dof: false, drift: 0.2, scenery: true, subject: [[0, 41.5, 0.5]] },
     // 7. the ending: close on 56e standing on the south-west top corner, the top face running away behind him, easing back
-    roof: { path: [[0, -46, 84.6, 46], [1.2, -48.5, 85.6, 48.5]], lookPath: [[0, -39.5, 83.4, 39.5], [1.2, -37.5, 83, 37.5]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: [[-39.5, 83.5, 39.5]] },
+    roof: { path: [[0, -46, 84.6, 46], [1.2, -48.5, 85.6, 48.5]], lookPath: [[0, -39.5, 83.4, 39.5], [1.2, -37.5, 83, 37.5]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: ['self'] },
     // 7b. the scale: far off the same corner, the whole sponge over the forest and 56e a speck on its nearest top corner
-    scale: { path: [[0, -118, 70, 118], [1.5, -124, 73, 124]], lookPath: [[0, -4, 46, 4], [1.5, -4, 46, 4]], fov: 52, dof: false, drift: 0.2, scenery: true, subject: [[-39.5, 83.5, 39.5]] }
+    scale: { path: [[0, -118, 70, 118], [1.5, -124, 73, 124]], lookPath: [[0, -4, 46, 4], [1.5, -4, 46, 4]], fov: 52, dof: false, drift: 0.2, scenery: true, subject: ['self'] }
   },
   edit: {
     caption: 'rate my starter house',
