@@ -1,0 +1,17 @@
+{
+ "name": "fakemod_permission",
+ "stunt": "fakemod_permission",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43160950211",
+ "source": "2697043c",
+ "queued": "2026-11-12T05:22:21Z",
+ "finished": "2026-11-12T05:26:48Z",
+ "mp4": "renders/out/fakemod_permission.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

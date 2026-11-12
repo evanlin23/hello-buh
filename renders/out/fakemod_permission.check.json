@@ -1,0 +1,144 @@
+{
+ "stunt": "fakemod_permission",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/fakemod_permission.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT fakemod_permission: 1 shots, scene 0.0-21.9 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-21.9  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 3 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "vanish",
+     "msg": "zombie #334 vanishes in the middle of the frame 4.70 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 5.05,
+     "shot": 2,
+     "line": null,
+     "kind": "vanish",
+     "msg": "skeleton #335 vanishes in the middle of the frame 5.58 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 10.983,
+     "shot": 3,
+     "line": null,
+     "kind": "vanish",
+     "msg": "creeper #336 vanishes in the middle of the frame 5.58 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "2 warning(s) over 3 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "too tight (CU close-up): zombie #334 fills 106% of the frame height, 1.5 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 5.05,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "too tight (MS medium): skeleton #335 fills 65% of the frame height, 2.2 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "2 visible sound-making events (voice 2), 0 with a sound mark, 2 without (audio.py adds those for a story)",
+    "     2.40s  zombie idle voice                  -> entity.zombie.ambient              4.1 blocks in view  ",
+    "     8.65s  skeleton idle voice                -> entity.skeleton.ambient            6.0 blocks in view  ",
+    "ambience per shot: -0.25-27.90s dusk",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:23:54.966Z"
+}
