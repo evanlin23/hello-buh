@@ -123,7 +123,8 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   obstacles; still in the Overworld, still a water target: hay only cuts a fall by 80%, fatal from 376 blocks), an ocean shaft (prismarine and sea lanterns, a
   slime-block target that bounces), a "glass" shaft over a city, a 2-player race down twin shafts. Built
   (lib/dropper.js): make({ walls, layers: [{ depth, block, holes, via }], attempts: [{ n, fail }...], landing }) builds a
-  376-block 9x9 shaft from the build limit to y -60, light rings every 8 blocks, a bullseye floor with a true vanilla
+  376-block 9x9 shaft from the build limit to y -60 (blueprint(): 2-thick patterned walls, neon glass rings, lit
+  windows, trimmed obstacles with glowing hole rims, lanterns on chains, gold columns, a crowned rim; r:r8fad06), a bullseye floor with a true vanilla
   breaker in the middle; the steering is the movement keys only (lib/air_steer.js) and each fail really splats on its
   obstacle (fall damage: the hit, the hearts, the death tilt) and is cut 0.35 s later, before the poof (r:r4607fa: hiding
   the hits made #47 feel unearned). Air control reaches ~1.5 blocks between layers 50 apart: run
