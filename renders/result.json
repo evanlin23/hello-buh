@@ -1,0 +1,17 @@
+{
+ "name": "boat_clutch",
+ "stunt": "boat_clutch",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43164808488",
+ "source": "ed9e18b0",
+ "queued": "2026-11-12T05:57:31Z",
+ "finished": "2026-11-12T06:03:37Z",
+ "mp4": "renders/out/boat_clutch.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

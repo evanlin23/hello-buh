@@ -1,0 +1,152 @@
+{
+ "stunt": "boat_clutch",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/boat_clutch.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT boat_clutch: 1 shots, scene 0.0-14.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-14.1  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 2 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 5.067,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: nothing -> oak_boat"
+    },
+    {
+     "level": "WARN",
+     "out": 9.233,
+     "shot": 3,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: nothing -> oak_boat"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 4 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 3.667,
+     "tick": 61,
+     "line": null,
+     "msg": "the view whips at 246 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 4.167,
+     "tick": 71,
+     "line": null,
+     "msg": "the view whips at 368 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 7.733,
+     "tick": 165,
+     "line": null,
+     "msg": "the view whips at 246 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 12.583,
+     "tick": 283,
+     "line": null,
+     "msg": "the view whips at 246 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": [
+    "whip allowed at 3.92 s (672 deg/s for 0.30 s): the clutch's look-down at the landing (landing), owner r:r258d1b"
+   ]
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "0 visible sound-making events (), 0 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-4.85s day, 4.85-10.15s day, 10.15-15.75s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:58:59.109Z"
+}
