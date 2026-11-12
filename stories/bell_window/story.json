@@ -2,7 +2,7 @@
  "name": "bell_window",
  "stunt": "story_bell_window",
  "version": 2,
- "revision": "r7 (2026-11-12): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 adds the 'why?' ('And nobody will tell me WHY.'); L05 'Mom won't SAY why' (he wants to know); the reveal is now spoken, L11 over S08 ('He had a BOW. And this time, the bell wasn't in the WAY.'), cut 1.0 s after the draw on 'WAY'; the last line echoes line 1's bell. r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom recast `mom_saltmouth` (Kore, the owner's pick). r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
+ "revision": "r7 (2026-11-12; critic r7 must-fix: L11 one sentence; should-fixes: L01 trimmed so RINGS lands by 3 s, S08 `raise` + `draw` marks): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 adds the 'why?' ('And nobody will tell me WHY.'); L05 'Mom won't SAY why' (he wants to know); the reveal is now spoken, L11 over S08 ('He had a BOW, and this time the bell wasn't in the WAY.'), cut 1.0 s after the draw on 'WAY'; the last line echoes line 1's bell. r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom recast `mom_saltmouth` (Kore, the owner's pick). r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
  "caption": "why does the bell ring when I open my window 🔔",
  "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he climbs out past it to wave hi to the pale guy on the cliff.",
  "question": "why does the bell ring every time he opens his window?",
@@ -85,8 +85,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Every time / I open my WINDOW, / the village / BELL RINGS. / And nobody / will tell me / WHY.",
-   "say": "Every time I open my window, the village bell RINGS. And nobody will tell me WHY.",
+   "text": "Every time / I open my WINDOW, / the BELL RINGS. / And nobody / will tell me / WHY.",
+   "say": "Every time I open my window, the bell RINGS. And nobody will tell me WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -296,8 +296,8 @@
   {
    "id": "L11",
    "who": "N",
-   "text": "He had a BOW. / And this time, / the bell / wasn't in / the WAY.",
-   "say": "He had a BOW. And this time, the bell wasn't in the WAY.",
+   "text": "He had a BOW, / and this time / the bell / wasn't in / the WAY.",
+   "say": "He had a BOW, and this time the bell wasn't in the WAY.",
    "shot": "S08",
    "shows": [
     {
@@ -429,8 +429,8 @@
    "line": "L11",
    "place": "cliff",
    "size": "wide",
-   "camera": "at: (0.6, 12.6, -15.5) behind the skeleton, over its left shoulder, looking down the axis at the window, FOV 30, still. The reveal, one shot, under L11. The skeleton starts raising the bow on 'BOW'; mark `draw` at full draw on 'WAY'; cut 1.0 s after it",
-   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade, about 7.5 deg right of centre and 4.5 deg below it; mid the bell, swinging, centred, tonight's arrow stuck in its north face toward the camera (check a 300 px still before locking: the shaft must read, not a dot); the lit window behind it; the kid on the porch roof beside the bell at about 7.7 deg left, clear of it, waving up at us. On 'BOW' (L11) the skeleton raises the bow; on 'BELL' the bell, beside the kid, not between him and us; on 'WAY' full draw (the bow-draw arms). Cut 1.0 s after. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
+   "camera": "at: (0.6, 12.6, -15.5) behind the skeleton, over its left shoulder, looking down the axis at the window, FOV 30, still. The reveal, one shot, under L11. Mark `raise` on 'BOW': the skeleton raises the bow and holds it; it starts the ~1 s vanilla draw so mark `draw` (full draw) lands on 'WAY'; cut 1.0 s after it",
+   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade, about 7.5 deg right of centre and 4.5 deg below it; mid the bell, swinging, centred, tonight's arrow stuck in its north face toward the camera (check a 300 px still before locking: the shaft must read, not a dot); the lit window behind it; the kid on the porch roof beside the bell at about 7.7 deg left, clear of it, waving up at us. On 'BOW' (L11, mark `raise`) the skeleton raises the bow and holds; on 'BELL' the bell, beside the kid, not between him and us; on 'WAY' full draw (the bow-draw arms). Cut 1.0 s after. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
    "look": {
     "time": 12600
    },
