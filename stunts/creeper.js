@@ -18,6 +18,7 @@ module.exports = {
     armor: 20,   // the netherite's armour bar over the hearts (why I live)
     subs: [['found', 'wait... DIAMONDS?', 1.0]], subsY: 0.12,
     zoom: [['found:-0.4', 'found:0.9', 1.3]],   // a held push-in on the vein
+    flash: [['found', 0, 0.3]],   // pace: a clear picture change on the payoff (the eased push-in isn't one)
     sfx: [['heart', 'first', { gain: 1.6 }], ['dip', 'hiss', 0.25], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.4 }],
       ['dip', 'found', 0.5], ['gamedip', 'found', 0.4], ['impact', 'found', { gain: 1.6 }], ['ding', 'found', { gain: 1.4 }]]
   },
