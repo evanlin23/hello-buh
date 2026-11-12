@@ -55,7 +55,7 @@
 | oak boat | floating empty beside the dock at (2, 0, 4), no lead; NOT there in the flashback | S05, S08 (background) |
 | Grandma's boat | the one she rows away in; on the island's beach since | S06, S07 |
 | Grandma's window | 3x2 glass panes, lanterns inside; **dark** in the flashback, lit at dusk and dawn | S04, S06 (dark), S08, S12 |
-| leather boots | plain in the kid's inventory (S10); on Grandpa's feet, glinting, in S12 | S10, S12 |
+| leather boots | on Grandpa's feet, glinting, in S12 | S12 |
 | anvil | in the hut, behind Grandpa in S11; its clank on the cut S11 to S12 | S11 |
 | frosted ice | forms under each of Grandpa's steps off the dock's end | S12 |
 
@@ -66,7 +66,7 @@
 - S06 to S07: Grandma rows west, away from the dock, and turns back toward Grandpa (east) for her line.
 
 ## What the narrator holds
-- The kid's inventory (only seen in S10's merchant screen): 64 emeralds, 63 lecterns, plain leather boots, a book,
+- The kid's inventory (only seen in S10's merchant screen): 64 emeralds, 63 lecterns, a lantern, a book,
   bread, a cake, a milk bucket, 67 eggs, a pufferfish. The anvil is in the hut (seen in S11, heard on the S11 cut).
 
 ## Who knows what

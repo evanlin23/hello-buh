@@ -573,7 +573,7 @@
       "lectern",
       63
     ],
-    "leather_boots",
+    "lantern",
     "book",
     "bread",
     "cake",
@@ -584,7 +584,7 @@
     ],
     "pufferfish"
   ],
-  "hotbar_note": "The kid's bar: shows only in S10's merchant screen. Story things first: emeralds (the kid trades), Grandpa's 63 spare lecterns, a pair of plain leather boots (Grandpa's, the kid is carrying them), a book, bread; then the ridiculous ones: a cake, a milk bucket, 67 eggs (owner), a pufferfish. The anvil is in the hut, not the bar.",
+  "hotbar_note": "The kid's bar: shows only in S10's merchant screen. Story things first: emeralds (the kid trades), Grandpa's 63 spare lecterns, a lantern (no boots: they're Grandpa's, r6.1 critic), a book, bread; then the ridiculous ones: a cake, a milk bucket, 67 eggs (owner), a pufferfish. The anvil is in the hut, not the bar.",
   "beats": "stories/the_walk/beats.md",
   "payoff_note": "L10 says the reveal over S12: the boots glint on BOOTS, the step off on DOCK, the first ice on FROZE; L11 follows at once; cut 1.0 s after WALK",
   "coords_note": "Outside, an actor at y 0 stands on the deck: feet at y 1 (the deck is flush at sea level, y 0). In the hut, y 0 is the floor."
