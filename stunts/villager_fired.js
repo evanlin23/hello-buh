@@ -47,8 +47,9 @@ module.exports = {
       ...JOBS.map((j, i) => ['job', jobSub(i), i < 3 ? 0.9 : i < 8 ? 0.6 : 0.45, i]),
       ['all_jobs', 'ALL 13 AT ONCE', 1.6, 0],
       ['crowd', 'the rest of the village: 0 jobs', 1.4, 0],
-      ['tnt', 'now FIRE him', 1.2, 0],
-      ['lit', 'from all 13 jobs', 1.6, 0],
+      // (no label while the TNT goes down and is lit: the camera is low and close, his face where a sky label sits;
+      // the line comes as I step back, his head mid-view, the fuse burning: fix-check r2)
+      ['lit:1.0', 'now FIRE him', 1.4, 0],
       ['ring_boom', 'FIRED from 13 jobs at once', 1.5, 0],
       ['gone', 'permanently', 1.5, 0]   // (the subtitle font has no emoji: it drew a box)
     ],
@@ -56,7 +57,7 @@ module.exports = {
     // a pop on frame 0; on the payoff ('gone': his death puff ends as the ring's last blasts go off; pace's payoff, the
     // endAfter event) a flash, punch, song dip + impact (a number for the ring's last blast changed with every take)
     flash: [['mob_death', 0, 0.6], ['gone', 0, 0.9]], punch: [['gone', 0, 1.3]],
-    sfx: [['pop', 'job', { gain: 1.4 }], ['dip', 'gone', 0.4], ['gamedip', 'gone', 0.35], ['impact', 'gone', { gain: 1.3 }]]
+    sfx: [['pop', 'job', { gain: 2.0 }], ['dip', 'gone', 0.4], ['gamedip', 'gone', 0.35], ['impact', 'gone', { gain: 1.3 }]]
   },
 
   async setup (ctx) {
