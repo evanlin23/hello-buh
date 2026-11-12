@@ -4,7 +4,7 @@
   "caption": "FASTEST SPEEDRUN EVER (not fake)",
   "youtube": {
     "title": "FASTEST SPEEDRUN EVER (not fake) #minecraft #shorts",
-    "description": "FASTEST SPEEDRUN EVER (not fake)\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "FASTEST SPEEDRUN EVER (not fake)\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,44 +14,44 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "vem_lenta.mp3",
-    "title": "VEM LENTA!",
-    "artist": "KPHK, Eluvo, Sayfalse",
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "wr",
-    "drop_in_song_s": 36.75,
-    "drop_in_short_s": 20.32,
-    "song_start_s": 16.43
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 20.02,
+    "song_start_s": 18.23
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 21.92,
+    "duration_s": 21.42,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 27308270,
-    "sha256": "273c81ca6ab16a62a4b3d1f66e3da49bb84b129be262003ffad262fbf6ab1e50",
+    "bytes": 27078784,
+    "sha256": "459f3a07630134efd3317fffe6c2d7b026615798f43bb253f622752438a6a3ee",
     "release": {
       "tag": "pkg-fakerun_any",
-      "asset": "fakerun_any.short.273c81ca6ab16a62.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.273c81ca6ab16a62.mp4",
-      "sha256": "273c81ca6ab16a62a4b3d1f66e3da49bb84b129be262003ffad262fbf6ab1e50",
-      "bytes": 27308270
+      "asset": "fakerun_any.short.459f3a07630134ef.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.459f3a07630134ef.mp4",
+      "sha256": "459f3a07630134efd3317fffe6c2d7b026615798f43bb253f622752438a6a3ee",
+      "bytes": 27078784
     },
     "nosong_release": {
       "tag": "pkg-fakerun_any",
-      "asset": "fakerun_any.short_nosong.f7ce19d0568ab917.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short_nosong.f7ce19d0568ab917.mp4",
-      "sha256": "f7ce19d0568ab9179959997fddc11f7c254869a96b01b065f576f4d3e1cb59f1",
-      "bytes": 27305889
+      "asset": "fakerun_any.short_nosong.afd7edd51adce867.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short_nosong.afd7edd51adce867.mp4",
+      "sha256": "afd7edd51adce867b7e0e2108821edf8bba9ba24e1105d8a85ee12b85b1976e4",
+      "bytes": 27056511
     }
   },
   "edit": {
     "caption": "FASTEST SPEEDRUN EVER (not fake)",
     "red": "EVER",
     "startAt": "go:0",
-    "endAfter": "wr:1.6",
+    "endAfter": "wr:1.4",
     "dropAt": "wr",
     "speed": [
       [
@@ -78,6 +78,11 @@
         "cut5a",
         "cut5b",
         "cut"
+      ],
+      [
+        "ender_hit:1.0",
+        "ender_hit:1.45",
+        3
       ]
     ],
     "subs": [
@@ -155,7 +160,7 @@
       [
         "wr",
         "NEW WORLD RECORD!!1",
-        1.6,
+        1.4,
         "gold"
       ]
     ],
@@ -253,13 +258,13 @@
       "--subs_y",
       "0.72",
       "--speed",
-      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"]]",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"ender_hit:1.0\",\"ender_hit:1.45\",3]]",
       "--clock",
       "[[\"go\",\"wr\",9.41,\"WORLD RECORD PASE\"]]",
       "--punch",
       "[[\"wr\",0,1.1]]",
       "--cards",
-      "[[\"wr\",\"NEW WORLD RECORD!!1\",1.6,\"gold\"]]",
+      "[[\"wr\",\"NEW WORLD RECORD!!1\",1.4,\"gold\"]]",
       "--flash",
       "[\"wr\"]",
       "--sfx",
@@ -269,7 +274,7 @@
       "--start_at",
       "go:0",
       "--end_after",
-      "wr:1.6"
+      "wr:1.4"
     ]
   },
   "recording": {
@@ -538,10 +543,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "9d89a4d741468071b766122d429cea3d10358fa0",
+    "commit": "7f43c3502c5058e1702824ff924fee392cc93a79",
     "rendered": "local",
-    "rendered_at": "2026-11-11T20:19:15.327Z",
-    "head_at_publish": "304dc3369c27e12bb9da99376536c9430838e419",
+    "rendered_at": "2026-11-12T00:52:14.628Z",
+    "head_at_publish": "0209316e0981831f74e7bc7b13f1022be5960f52",
     "stunt": "stunts/fakerun_any.js",
     "source_snapshot": [
       "source/fakerun_any.js",
@@ -554,34 +559,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 9d89a4d74146",
+    "git checkout 7f43c3502c50",
     "gunzip -c shorts/fakerun_any/recording.json.gz > work/fakerun_any.rec.json",
     "node render.js work/fakerun_any.rec.json work/fakerun_any.frames 60 1080 1011",
     "python3 audio.py work/fakerun_any.rec.json work/fakerun_any.wav",
-    "python3 edit.py --frames work/fakerun_any.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakerun_any.rec.json --audio work/fakerun_any.wav --caption \"FASTEST SPEEDRUN EVER (not fake)\" --self_name 56e --red EVER --subs \"[[\\\"label0\\\",\\\"0:00 spawned in ful netherite\\\",2.4],[\\\"label1\\\",\\\"diamods (after netherite??)\\\",2.2],[\\\"label2\\\",\\\"portal (corners are optinal)\\\",2.4],[\\\"label3\\\",\\\"nether fortres found (its 1 wall)\\\",2],[\\\"label4\\\",\\\"blaze rods: 1 of 6 (enuf)\\\",2],[\\\"label5\\\",\\\"ender perls x12 (1 enderman)\\\",2.2],[\\\"label6\\\",\\\"dug strait down (pro tip)\\\",1.6],[\\\"label7\\\",\\\"found strongold 1st try\\\",1.8],[\\\"label8\\\",\\\"end portel is lit\\\",1.6],[\\\"label9\\\",\\\"THE END (looks diferent)\\\",1.8],[\\\"label10\\\",\\\"end crystals: destroyd (all 0)\\\",1.6],[\\\"label11\\\",\\\"dragon kiled (trust)\\\",1.6]]\" --subs_y 0.72 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"]] --clock \"[[\\\"go\\\",\\\"wr\\\",9.41,\\\"WORLD RECORD PASE\\\"]]\" --punch [[\"wr\",0,1.1]] --cards \"[[\\\"wr\\\",\\\"NEW WORLD RECORD!!1\\\",1.6,\\\"gold\\\"]]\" --flash [\"wr\"] --sfx [[\"air\",\"go\",\"wr\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]] --armor 20 --start_at go:0 --end_after wr:1.6 --out out/fakerun_any.mp4"
+    "python3 edit.py --frames work/fakerun_any.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakerun_any.rec.json --audio work/fakerun_any.wav --caption \"FASTEST SPEEDRUN EVER (not fake)\" --self_name 56e --red EVER --subs \"[[\\\"label0\\\",\\\"0:00 spawned in ful netherite\\\",2.4],[\\\"label1\\\",\\\"diamods (after netherite??)\\\",2.2],[\\\"label2\\\",\\\"portal (corners are optinal)\\\",2.4],[\\\"label3\\\",\\\"nether fortres found (its 1 wall)\\\",2],[\\\"label4\\\",\\\"blaze rods: 1 of 6 (enuf)\\\",2],[\\\"label5\\\",\\\"ender perls x12 (1 enderman)\\\",2.2],[\\\"label6\\\",\\\"dug strait down (pro tip)\\\",1.6],[\\\"label7\\\",\\\"found strongold 1st try\\\",1.8],[\\\"label8\\\",\\\"end portel is lit\\\",1.6],[\\\"label9\\\",\\\"THE END (looks diferent)\\\",1.8],[\\\"label10\\\",\\\"end crystals: destroyd (all 0)\\\",1.6],[\\\"label11\\\",\\\"dragon kiled (trust)\\\",1.6]]\" --subs_y 0.72 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"ender_hit:1.0\",\"ender_hit:1.45\",3]] --clock \"[[\\\"go\\\",\\\"wr\\\",9.41,\\\"WORLD RECORD PASE\\\"]]\" --punch [[\"wr\",0,1.1]] --cards \"[[\\\"wr\\\",\\\"NEW WORLD RECORD!!1\\\",1.4,\\\"gold\\\"]]\" --flash [\"wr\"] --sfx [[\"air\",\"go\",\"wr\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]] --armor 20 --start_at go:0 --end_after wr:1.4 --out out/fakerun_any.mp4"
   ],
   "status": "ready",
-  "notes": "fakerun 1 (format worker, independent review 2 rounds: r1 labels over subjects + dead dig beat, fixed; r2 READY). Nitpicks: End build-up sag, no sound hit in first 1.5 s under the bed, stronghold wall visible from the nether set, no drops",
-  "published_at": "2026-11-11T21:04:10.105Z",
+  "notes": "fast cuts r:r188b46: the hold after the enderman x3, card 1.4 s; fix-check READY",
+  "published_at": "2026-11-12T00:54:41.422Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T21:04:43+00:00",
+    "at": "2026-11-12T00:55:11+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 21.93 s vs the reviewed render 21.92 s"
+      "summary": "short.mp4 21.42 s vs the reviewed render 21.42 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T20:19:46.844Z",
+      "at": "2026-11-12T00:52:34.408Z",
       "report": "work/hb/fakerun_any.check.json"
     },
     "key_sounds": "n/a"
