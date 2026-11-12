@@ -124,7 +124,7 @@ module.exports = {
     // the cast
     const HOME = { x: door.x + 0.6, y: door.y, z: door.z }   // Grandpa in his doorway (the porch camera stands inside the garden)
     const gp = K.actor('gp', { x: HOME.x, y: HOME.y, z: HOME.z, yaw: 90 })   // Grandpa
-    const gary = K.actor('gary', { x: FIELD[0] - 0.7, y: gy(FIELD[0] - 0.7, 28.5), z: 28.5, yaw: -90 })
+    const gary = K.actor('gary', { x: FIELD[0] - 1.4, y: gy(FIELD[0] - 1.4, 28.5), z: 28.5, yaw: -90 })
     const zs = ZA.map((o, i) => K.actor(`z${i}`, { x: TREE[0] + o[0], y: gy(TREE[0] + o[0], TREE[1] + o[1]), z: TREE[1] + o[1], yaw: -90 + (i % 3 - 1) * 20 }))
     const gaze = this.GAZE.map((g, i) => K.actor(`g${i}`, { x: g[0], y: gy(g[0], g[1]), z: g[1], yaw: 90, pitch: -35 }))
     const ph = [0, 1, 2, 3, 4, 5].map(i => K.actor(`ph${i}`, { x: 0.5, y: -23, z: 0.5 + i * 2, yaw: 0 }))
@@ -239,7 +239,7 @@ module.exports = {
 
     // L15: the sun went down (from east of the tree, looking west: the sun sinks behind the cottage, fast); the zombies
     // came out (they walk out of the shade); so I stood guard at his door (POV at the gate, the sword out, night)
-    await cut(37.5, 3.5, P(-8, gy(-8, 0) + 6, 0))
+    await cut(TREE[0] + 9.5, TREE[1] + 1.5, P(TREE[0] - 1, tg + 2.2, TREE[1]))   // the zombies under the tree, the sunset sky behind them
     let guard = false
     await line('L15', async (k, at, n) => {
       if (!guard) {
@@ -247,6 +247,7 @@ module.exports = {
         K.setTime(DAY + (NIGHT - DAY) * K.ease(u))
         if (k === Math.round(at(1))) ctx.mark('dusk')
         if (k >= at(2) - 4) for (const [i, z] of zs.entries()) walk(z, 0.07 + i * 0.006, (i - 3) * 0.01)
+        else for (const [i, z] of zs.entries()) z.yaw = -90 + Math.sin((ctx.tick + i * 9) / 7) * 30   // restless in the shade as the light goes
       }
       if (!guard && k >= at.cut(4)) {
         guard = true
