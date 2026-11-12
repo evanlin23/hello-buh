@@ -31,10 +31,16 @@ const MID = (ST.length - 1) / 2
 // to the next frame (v3 held each one ~1.3 s: the step back and the look at the swirl)
 const RESULT_HOLD = 0.5
 const speed = []
-for (let i = 1; i < ST.length; i++) speed.push([`lit${i - 1}:${RESULT_HOLD}`, `cut${i}b`, 'cut'])
-speed.push(['fuse_a', 'fuse_b', 'cut'])                  // most of the TNT's 4 s fuse
-speed.push(['boom:0.45', `lit${ST.findIndex(s => s.id === 'tnt')}`, 'cut'])   // the TNT's smoke clearing (0.3 s): its blast reads, then the empty frame
+const TNT = ST.findIndex(s => s.id === 'tnt')
+const hold = (i) => i === TNT ? RESULT_HOLD + 0.1 : RESULT_HOLD   // the red 0/10 on black obsidian: a little longer (fix-check)
+for (let i = 1; i < ST.length; i++) speed.push([`lit${i - 1}:${hold(i - 1)}`, `cut${i}b`, 'cut'])
+// the TNT's fuse: one cut from the lit close-up to the wide 0.35 s before the blast (v4's wide blinked 1.2 s first: fix-check)
+speed.push(['fuse_a', 'boom:-0.35', 'cut'])
+speed.push(['boom:0.45', `lit${TNT}`, 'cut'])   // the TNT's smoke clearing (0.3 s): its blast reads, then the empty frame
 speed.push(['lava_a', 'lava_b', 6])                     // the lava's wait, x6
+// the anchor: after the 4th glowstone, the look up at the frame and back (~0.95 s) is cut: the view before and after it
+// is the same (on the anchor, yaw -24 pitch -27 on this take), so the click follows the last charge
+if (ANCHOR) speed.push(['charge:0.95', `lit${LAST}:-0.1`, 'cut'])   // (lit: 'boom' is the TNT's first)
 const SLOT = { obsidian: 0, flint: 1, charge: 2, tnt: 3, lava: 4, glow: 5, hand: 6 }
 
 module.exports = {
@@ -45,7 +51,7 @@ module.exports = {
     subsY: 0.15, caption: 'rating every way to light a nether portal 😳',
     armor: 20,   // the armour bar over the hearts: full netherite (review r1: surviving the anchor's blast with no armour on the HUD read as fake)
     red: 'every', dropAt: `lit${LAST}`,   // (these two had slipped into the comment above: the drop never landed on the payoff)
-    startAt: 'st:-0.05', endAfter: 'settle:-0.8',   // (v4: ~1.05 s after the 11/10 card's blast, its reading time; v3 1.2 s)   // r:r188b46: this take's settle mark is the old smoke wait (~1.9 s late): end ~1.2 s after the 11/10 card's blast. (was: the anchor's blast smoke drifts over the lit portal for 2.2 s (r:r24d99a): end 0.6 s after it settles, the 11/10 card up the whole time
+    startAt: 'st:-0.05', endAfter: 'settle:-0.65',   // ~1.2 s after the 11/10 card's blast: a text payoff's reading time (pace)   // r:r188b46: this take's settle mark is the old smoke wait (~1.9 s late): end ~1.2 s after the 11/10 card's blast. (was: the anchor's blast smoke drifts over the lit portal for 2.2 s (r:r24d99a): end 0.6 s after it settles, the 11/10 card up the whole time
     // pace r1: silent until 0.73 s: room tone from frame 1; the last light gets a dip + impact over the song (the publish gate)
     // mixcheck r1: under the NCS master the anchor's blast rose only ~4 dB (the room tone kept the level up): the song AND
     // the game duck 0.4 s before that blast (the 2nd boom; the TNT's is the 1st), the impact on it
@@ -53,7 +59,7 @@ module.exports = {
       ['dip', 'boom', 0.4, { nth: 1 }], ['gamedip', 'boom', 0.35, { nth: 1 }], ['impact', 'boom', { gain: 1.4, nth: 1 }]],
     speed,
     subs: [...ST.map((s, i) => ['st', s.sub, 1.4, i]), ['lava_a', 'x6', 0.8, 0]],
-    cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 3.2 : RESULT_HOLD, i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
+    cards: ST.map((s, i) => [`lit${i}`, s.score, i === LAST ? 3.2 : hold(i), i === LAST ? 'gold' : s.id === 'tnt' ? 'red' : i < 2 ? 'white' : 'yellow']),
     punch: ST.map((s, i) => [`lit${i}`, 0, i === LAST ? 1.12 : 1.06]),
     shake: [['boom', 0, 12], ['boom', 1, 20]],
     counter: { at: ST.map((s, i) => ['st', i]), total: ST.length }
