@@ -30,6 +30,7 @@ function rise () {
   const boxes = []
   for (const [a, b, c] of CUBES) for (let y = 0; y < 27; y += 3) {
     const y0 = b * 27 + y
+    if (y0 === 0) continue                                 // (the first slab stands at frame 0: FIRST, placed in setup)
     boxes.push({ box: at([a * 27, y0, c * 27, a * 27 + 26, y0 + 2, c * 27 + 26]), block: BODY, step: Math.floor(y0 / 3) })
   }
   return { name: 'rise', ticks: 54, boxes }
@@ -45,6 +46,9 @@ function carves (j) {
   }))
   return boxes
 }
+// the first three layers of the 8 bottom cubes, placed in setup (owner r:r0f3da0: frame 0 shows the subject; v4 take 1
+// opened on an empty lawn, the first slab landing a tick later)
+const FIRST = CUBES.filter(([, b]) => b === 0).map(([a, , c]) => [...at([a * 27, 0, c * 27, a * 27 + 26, 2, c * 27 + 26]), BODY])
 const carve2 = () => ({ name: 'carve2', ticks: 12, boxes: carves(1) })
 const carve3 = () => ({ name: 'carve3', ticks: 30, boxes: carves(2) })
 const carve4 = () => ({ name: 'carve4', ticks: 50, boxes: carves(3) })
@@ -78,14 +82,15 @@ module.exports = L.makeLapse({
   botTimeout: 1200,
   player: { at: [-44, 44], yaw: -45, pitch: -30 },   // 56e just off the south-west corner, inside the levelled ground, looking up at it
   startSound: 'block.stone.place',
+  dress: FIRST,
   stages: [rise(), carve2(), carve3(), carve4(), lights()],
   perTick: 60,
   angles: [['rise', 'rise'], ['carve2', 'face'], ['carve4', 'high']],
   payoff: { stage: 'lights', shot: 'zoom', hold: 40, toast: false, sound: 'block.beacon.activate' },
   endAfter: 1.0,
   shots: {
-    // 1. low off the south-west corner: the cubes rise from the ground from the first frame, the drone easing up with them
-    rise: { path: [[0, -45, 5, 45], [2.7, -46, 18, 46]], lookPath: [[0, -18, 9, 18], [2.7, -8, 44, 8]], fov: 72, dof: false, drift: 0.4, scenery: true, subject: [[-40, 10, 40]] },   // (inside the levelled ground: past it the forest hill swallowed the camera on frame 0)
+    // 1. high off the south-west over the forest: the footprint at frame 0, the cubes rising, the drone easing up with them
+    rise: { path: [[0, -100, 60, 100], [2.7, -92, 64, 92]], lookPath: [[0, 0, 6, 0], [2.7, 0, 34, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 10, 0]] },   // (high over the forest, above every hill: from the levelled ground the rising corner column filled the frame)
     // 2. the west face head-on, pushing in a little: the big and middle tunnels cut through it
     face: { path: [[0, -128, 44, 10], [2.2, -116, 44, 4]], lookPath: [[0, 0, 41, 0], [2.2, 0, 41, 0]], fov: 58, dof: false, drift: 0.3, scenery: true, subject: [[-41, 41, 0]] },
     // 3. high off the south-east, down across the top: the smallest holes sharpen it
