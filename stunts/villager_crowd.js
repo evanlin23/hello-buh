@@ -107,9 +107,9 @@ module.exports = {
   async spawnCrowd (ctx, i) {
     const { bot } = ctx
     const { x, z, floor } = this
-    const summon = async (vx, vz, tag, rot = 180) => {
+    const summon = async (vx, vz, tag, rot = 180, own = null) => {
       const p = this.profs[(this.k * 5 + 3) % this.profs.length], t = this.types[(this.k * 3 + 1) % this.types.length]
-      bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${rot}f,0f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
+      bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${rot}f,0f],Tags:["${tag}"${own ? `,"${own}"` : ''}],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
       if (++this.k % 10 === 0) await ctx.sleep(200)
     }
     const c = CROWDS[i], sx = crowdX(x, i), big = c.n >= 50
@@ -122,7 +122,13 @@ module.exports = {
     if (i === CROWDS.length - 1) {   // the finale crowd: behind where the last walk starts, already facing it
       for (let r = 0; r < BEHIND.rows; r++) {
         // right behind where the back-off ends, backs turned: they snap round on the reveal
-        for (let q = 0; q < BEHIND.cols; q++) await summon(sx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 5.5 + r * 1.3, 'behind', 0)
+        // each with its own tag and its spot kept: the step-in moves them by absolute /tp (relative ones never reached
+        // the client in this stunt: 4 takes with no step)
+        for (let q = 0; q < BEHIND.cols; q++) {
+          const bx = sx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, bz = z + 5.5 + r * 1.3, own = `bh${(this.behind || (this.behind = [])).length}`
+          this.behind.push({ tag: own, x: +bx.toFixed(2), z: +bz.toFixed(2) })
+          await summon(bx, bz, 'behind', 0, own)
+        }
       }
     }
     await ctx.sleep(1500)
@@ -277,23 +283,23 @@ module.exports = {
       await bot.waitForTicks(3)
       ctx.mark('step_in')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
-      // (toward the pillar's foot by coordinates: 'facing entity <name>' with the player's name did nothing, r1)
+      // (toward the pillar's foot)
       const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
       const vill = Object.values(bot.entities).filter(e => e.name === 'villager' && e.position.z > bot.entity.position.z).sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
       const probe = vill[0], p0 = probe && probe.position.clone()
-      const fb = (m) => { if (/Teleport|Modified|Unknown|Incorrect|No entity|found|data/i.test(m)) ctx.log('step_in feedback:', m.slice(0, 120)) }
-      bot.chat('/gamerule send_command_feedback true'); bot.on('messagestr', fb)
-      for (let k = 0; k < 6; k++) {
-        bot.chat(`/execute as @e[type=villager,tag=behind] at @s facing ${px} ~ ${pz} run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
+      const fy = this.floor + 1, B = this.behind || []
+      for (let k = 1; k <= 6; k++) {
+        for (const v of B) {
+          const dx = +px - v.x, dz = +pz - v.z, d = Math.hypot(dx, dz) || 1
+          bot.chat(`/tp @e[tag=${v.tag},limit=1] ${(v.x + dx / d * 0.33 * k).toFixed(3)} ${fy} ${(v.z + dz / d * 0.33 * k).toFixed(3)}`)   // motion-ok: the crowd (extras, not a cast member) steps in as one
+        }
         // NoAI mobs' moves reach the client only on the tracker's 3-tick beat: a metadata change each tick flushes them
-        // at 20 Hz (the kit's actor does the same). Only the crowd in view (behind): moving all ~240 a tick, with the
-        // NBT merge, put the server 27 s behind and the take ended before anyone moved (r3)
+        // at 20 Hz (the kit's actor does the same)
         bot.chat(`/execute as @e[type=villager,tag=behind] run data merge entity @s {Air:${k % 2 ? 298 : 299}s}`)
         await bot.waitForTicks(1)
       }
       await bot.waitForTicks(3)
-      bot.removeListener('messagestr', fb); bot.chat('/gamerule send_command_feedback false')
-      ctx.log('step_in:', vill.length, 'villagers; the nearest moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
+      ctx.log('step_in:', B.length, 'stepped;', vill.length, 'in view; the nearest moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
       await bot.waitForTicks(12)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
     }
