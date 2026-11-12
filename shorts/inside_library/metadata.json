@@ -25,39 +25,39 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.25,
+    "duration_s": 8.1,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14335151,
-    "sha256": "13b73d3b44a9c6ff2061549ca466b472a2822e3f9307ba3d41f70b5d569956c3",
+    "bytes": 15056044,
+    "sha256": "afd020dcb719d1caa2a1800722d37ed3c8247837b7598b42852c801225af7111",
     "release": {
       "tag": "pkg-inside_library",
-      "asset": "inside_library.short.13b73d3b44a9c6ff.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.13b73d3b44a9c6ff.mp4",
-      "sha256": "13b73d3b44a9c6ff2061549ca466b472a2822e3f9307ba3d41f70b5d569956c3",
-      "bytes": 14335151
+      "asset": "inside_library.short.afd020dcb719d1ca.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.afd020dcb719d1ca.mp4",
+      "sha256": "afd020dcb719d1caa2a1800722d37ed3c8247837b7598b42852c801225af7111",
+      "bytes": 15056044
     },
     "nosong_release": {
       "tag": "pkg-inside_library",
-      "asset": "inside_library.short_nosong.0e2400b4e15404fc.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short_nosong.0e2400b4e15404fc.mp4",
-      "sha256": "0e2400b4e15404fcc76b5b9c62de02e2477e3ade41bbbe6127a6a73bdcccb302",
-      "bytes": 14330302
+      "asset": "inside_library.short_nosong.0c482c79f2634b08.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short_nosong.0c482c79f2634b08.mp4",
+      "sha256": "0c482c79f2634b0826a8d1ef1b9f5e602bfc2b3e956e425c9f1eda60f7a819bc",
+      "bytes": 15049910
     }
   },
   "edit": {
     "caption": "rate my tiny house 🏠",
     "red": "tiny",
     "startAt": "beat:-0.05",
-    "endAfter": "reveal:1.0",
+    "endAfter": "reveal:0.8",
     "sfx": [
       [
         "pop",
         "beat",
         {
-          "gain": 0.35
+          "gain": 2.2
         }
       ],
       [
@@ -87,6 +87,8 @@
     "args": [
       "--caption",
       "rate my tiny house 🏠",
+      "--self_name",
+      "56e",
       "--red",
       "tiny",
       "--punch",
@@ -94,11 +96,11 @@
       "--flash",
       "[[\"reveal\",0,0.25]]",
       "--sfx",
-      "[[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]]",
+      "[[\"pop\",\"beat\",{\"gain\":2.2}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]]",
       "--start_at",
       "beat:-0.05",
       "--end_after",
-      "reveal:1.0"
+      "reveal:0.8"
     ]
   },
   "recording": {
@@ -109,13 +111,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 361,
-      "y": 70,
-      "z": -45
+      "x": 375,
+      "y": 72,
+      "z": -48
     },
     "biome": "minecraft:plains",
-    "ticks": 198,
-    "seconds": 9.9,
+    "ticks": 199,
+    "seconds": 9.95,
     "deaths": 0,
     "events": [
       {
@@ -127,19 +129,19 @@
         "event": "beat"
       },
       {
-        "t": 5,
+        "t": 4.95,
         "event": "cut"
       },
       {
-        "t": 5,
+        "t": 4.95,
         "event": "seamless"
       },
       {
-        "t": 5.15,
+        "t": 5.1,
         "event": "swing"
       },
       {
-        "t": 5.15,
+        "t": 5.1,
         "event": "door_open"
       },
       {
@@ -147,11 +149,11 @@
         "event": "out"
       },
       {
-        "t": 7.95,
+        "t": 8,
         "event": "reveal"
       },
       {
-        "t": 9.9,
+        "t": 9.95,
         "event": "end"
       }
     ]
@@ -159,10 +161,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "c5fa55e7c4bc7fa0bb7d77cbaa9b5885559dc492",
+    "commit": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
     "rendered": "local",
-    "rendered_at": "2026-11-11T09:24:46.441Z",
-    "head_at_publish": "c5fa55e7c4bc7fa0bb7d77cbaa9b5885559dc492",
+    "rendered_at": "2026-11-12T01:18:59.108Z",
+    "head_at_publish": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
     "stunt": "stunts/inside_library.js",
     "source_snapshot": [
       "source/inside_library.js",
@@ -174,34 +176,34 @@
     ]
   },
   "rebuild": [
-    "git checkout c5fa55e7c4bc",
+    "git checkout 70d22037ae43",
     "gunzip -c shorts/inside_library/recording.json.gz > work/inside_library.rec.json",
     "node render.js work/inside_library.rec.json work/inside_library.frames 60 1080 1011",
     "python3 audio.py work/inside_library.rec.json work/inside_library.wav",
-    "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house 🏠\" --red tiny --punch [[\"reveal\",0,0.8]] --flash [[\"reveal\",0,0.25]] --sfx [[\"pop\",\"beat\",{\"gain\":0.35}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:1.0 --out out/inside_library.mp4"
+    "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house 🏠\" --self_name 56e --red tiny --punch [[\"reveal\",0,0.8]] --flash [[\"reveal\",0,0.25]] --sfx [[\"pop\",\"beat\",{\"gain\":2.2}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:0.8 --out out/inside_library.mp4"
   ],
   "status": "ready",
-  "notes": "inside #1 v2 (owner r:r81cb9c): no pause, seamless mid-stride cut (frame scrub: max diff 1.09x walk median, 0 px shift); reviewer READY; nitpick: near-still last 0.3 s",
-  "published_at": "2026-11-11T09:25:44.306Z",
+  "notes": "opening re-take (r:r0f3da0): opens mid-turn on the chandeliers; fast end (r:r188b46); fix-check READY",
+  "published_at": "2026-11-12T01:19:55.195Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:14:52+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-12T01:20:12+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 8.26 s vs the reviewed render 8.25 s"
+      "summary": "short.mp4 8.11 s vs the reviewed render 8.10 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 0,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T10:12:13.432Z",
+      "at": "2026-11-12T01:19:08.162Z",
       "report": "work/hb/inside_library.check.json"
     },
     "key_sounds": "n/a"
