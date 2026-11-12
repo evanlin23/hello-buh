@@ -468,6 +468,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
 - **No cut mid-action; the view lands centred on what it turns to; cuts never read as getting stuck; a title promises past the obvious end; dropped items right way up; 56e on every re-render too.** Check: cuts (mid-action cut), aim (turn target), review. r:r52f94c
+- **Watch the block break and the drops fly**: the crosshair stays on a block through its break; after a burst of drops
+  the camera follows them where they fly (never back off them); a burst payoff ends 0.5-0.8 s after the burst, with no
+  hold or counter beats after it (fortune v3 notes). Check: aim (on-target per action), dwell (the end after the
+  payoff), review, owner. r:ra8d5da
 - **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b Regular (wide) arms, the slim art widened. r:ra3e80a
 - **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
   Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those
