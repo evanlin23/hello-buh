@@ -18,42 +18,42 @@
     "title": "MONTAGEM FAVELA",
     "artist": "CHASHKAKEFIRA",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "big_done",
+    "drop_on_event": "liftoff",
     "drop_in_song_s": 38.25,
-    "drop_in_short_s": 29.55,
-    "song_start_s": 8.7
+    "drop_in_short_s": 30.5,
+    "song_start_s": 7.75
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.05,
+    "duration_s": 31.4,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21338206,
-    "sha256": "277a04e8af0a5ef8fcd5501307d56dbcebef37aa8dfb3c91614c8eae44299921",
+    "bytes": 23093173,
+    "sha256": "631c63c6d8584a95d9cc8ccd3032f092a507c519eff113bfae2a550bd48e50d5",
     "release": {
       "tag": "pkg-lapse_rocket",
-      "asset": "lapse_rocket.short.277a04e8af0a5ef8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.277a04e8af0a5ef8.mp4",
-      "sha256": "277a04e8af0a5ef8fcd5501307d56dbcebef37aa8dfb3c91614c8eae44299921",
-      "bytes": 21338206
+      "asset": "lapse_rocket.short.631c63c6d8584a95.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.631c63c6d8584a95.mp4",
+      "sha256": "631c63c6d8584a95d9cc8ccd3032f092a507c519eff113bfae2a550bd48e50d5",
+      "bytes": 23093173
     },
     "nosong_release": {
       "tag": "pkg-lapse_rocket",
-      "asset": "lapse_rocket.short_nosong.3030cfd066f079aa.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short_nosong.3030cfd066f079aa.mp4",
-      "sha256": "3030cfd066f079aa00a786e990ca0748223df9602b289ccebdaf9b7eba496ac2",
-      "bytes": 21261749
+      "asset": "lapse_rocket.short_nosong.b8ea7ea5d74c3f33.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short_nosong.b8ea7ea5d74c3f33.mp4",
+      "sha256": "b8ea7ea5d74c3f334baf6779c43dbf921bc257574693de65195077da0581746c",
+      "bytes": 23017413
     }
   },
   "edit": {
     "caption": "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
     "red": "hour",
     "song": null,
-    "dropAt": "big_done",
+    "dropAt": "liftoff",
     "startAt": "small_start:-0.1",
-    "endAfter": "big_done:0.5",
+    "endAfter": "liftoff:0.9",
     "speed": [
       [
         "cut1_a",
@@ -188,7 +188,10 @@
         "big_start",
         "big_done",
         3600,
-        "1 HOUR"
+        "1 HOUR",
+        {
+          "hide": "launch_cut"
+        }
       ]
     ],
     "flash": [
@@ -208,12 +211,20 @@
     "sfx": [
       [
         "dip",
-        "big_done",
+        "liftoff",
+        0.4
+      ],
+      [
+        "gamedip",
+        "liftoff",
         0.3
       ],
       [
         "impact",
-        "big_done"
+        "liftoff",
+        {
+          "gain": 1.4
+        }
       ]
     ],
     "args": [
@@ -226,17 +237,17 @@
       "--speed",
       "[[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done:-1.65\",3],[\"mid_done:-1.65\",\"mid_done\",4],[\"mid_done:0.4\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]]",
       "--clock",
-      "[[\"small_start\",\"small_done\",1,\"1 SECOND\"],[\"mid_start\",\"mid_done\",60,\"1 MINUTE\"],[\"big_start\",\"big_done\",3600,\"1 HOUR\"]]",
+      "[[\"small_start\",\"small_done\",1,\"1 SECOND\"],[\"mid_start\",\"mid_done\",60,\"1 MINUTE\"],[\"big_start\",\"big_done\",3600,\"1 HOUR\",{\"hide\":\"launch_cut\"}]]",
       "--punch",
       "[[\"big_done\",0,1.08]]",
       "--flash",
       "[[\"big_done\",0,0.5]]",
       "--sfx",
-      "[[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]]",
+      "[[\"dip\",\"liftoff\",0.4],[\"gamedip\",\"liftoff\",0.3],[\"impact\",\"liftoff\",{\"gain\":1.4}]]",
       "--start_at",
       "small_start:-0.1",
       "--end_after",
-      "big_done:0.5"
+      "liftoff:0.9"
     ]
   },
   "recording": {
@@ -247,13 +258,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": -3661,
+      "x": -3671,
       "y": 65,
-      "z": -3182
+      "z": -3284
     },
     "biome": "minecraft:badlands",
-    "ticks": 1925,
-    "seconds": 96.25,
+    "ticks": 1997,
+    "seconds": 99.85,
     "deaths": 0,
     "events": [
       {
@@ -261,624 +272,628 @@
         "event": "start"
       },
       {
-        "t": 1.2,
+        "t": 1.15,
         "event": "small_start"
       },
       {
-        "t": 1.2,
+        "t": 1.15,
         "event": "place"
       },
       {
-        "t": 1.2,
+        "t": 1.15,
         "event": "swing"
       },
       {
-        "t": 1.5,
+        "t": 1.45,
         "event": "place"
       },
       {
-        "t": 1.5,
+        "t": 1.45,
         "event": "swing"
       },
       {
-        "t": 1.8,
+        "t": 1.75,
         "event": "place"
       },
       {
-        "t": 1.8,
+        "t": 1.75,
         "event": "swing"
       },
       {
-        "t": 2.2,
+        "t": 2.15,
         "event": "small_done"
       },
       {
-        "t": 2.4,
+        "t": 2.35,
         "event": "cut1_a"
       },
       {
-        "t": 2.4,
+        "t": 2.35,
         "event": "cut"
       },
       {
-        "t": 3.75,
+        "t": 3.7,
         "event": "cut1_b"
       },
       {
-        "t": 3.75,
+        "t": 3.7,
         "event": "mid_start"
       },
       {
-        "t": 3.75,
+        "t": 3.7,
         "event": "turns_fast"
       },
       {
-        "t": 3.95,
+        "t": 3.9,
         "event": "place"
       },
       {
-        "t": 3.95,
+        "t": 3.9,
         "event": "swing"
       },
       {
-        "t": 4.15,
+        "t": 4.1,
         "event": "place"
       },
       {
-        "t": 4.15,
+        "t": 4.1,
         "event": "swing"
       },
       {
-        "t": 4.45,
+        "t": 4.4,
         "event": "place"
       },
       {
-        "t": 4.45,
+        "t": 4.4,
         "event": "swing"
       },
       {
-        "t": 4.6,
+        "t": 4.55,
         "event": "place"
       },
       {
-        "t": 4.6,
+        "t": 4.55,
         "event": "swing"
       },
       {
-        "t": 4.9,
+        "t": 4.85,
         "event": "place"
       },
       {
-        "t": 4.9,
+        "t": 4.85,
         "event": "swing"
       },
       {
-        "t": 5.3,
+        "t": 5.25,
         "event": "place"
       },
       {
-        "t": 5.3,
+        "t": 5.25,
         "event": "swing"
       },
       {
-        "t": 5.4,
+        "t": 5.35,
         "event": "mid_walk1_a"
       },
       {
-        "t": 7.4,
+        "t": 7.35,
         "event": "mid_walk1_b"
       },
       {
-        "t": 7.65,
+        "t": 7.6,
         "event": "place"
       },
       {
-        "t": 7.65,
+        "t": 7.6,
         "event": "swing"
       },
       {
-        "t": 7.85,
+        "t": 7.8,
         "event": "place"
       },
       {
-        "t": 7.85,
+        "t": 7.8,
         "event": "swing"
       },
       {
-        "t": 8.1,
+        "t": 8.05,
         "event": "place"
       },
       {
-        "t": 8.1,
+        "t": 8.05,
         "event": "swing"
       },
       {
-        "t": 8.35,
+        "t": 8.3,
         "event": "place"
       },
       {
-        "t": 8.35,
+        "t": 8.3,
         "event": "swing"
       },
       {
-        "t": 8.55,
+        "t": 8.5,
         "event": "place"
       },
       {
-        "t": 8.55,
+        "t": 8.5,
         "event": "swing"
       },
       {
-        "t": 8.8,
+        "t": 8.75,
         "event": "place"
       },
       {
-        "t": 8.8,
+        "t": 8.75,
         "event": "swing"
       },
       {
-        "t": 9.05,
+        "t": 9,
         "event": "place"
       },
       {
-        "t": 9.05,
+        "t": 9,
         "event": "swing"
       },
       {
-        "t": 9.15,
+        "t": 9.1,
         "event": "mid_walk2_a"
       },
       {
-        "t": 11.1,
+        "t": 11.05,
         "event": "mid_walk2_b"
       },
       {
-        "t": 11.35,
+        "t": 11.3,
         "event": "place"
       },
       {
-        "t": 11.35,
+        "t": 11.3,
         "event": "swing"
       },
       {
-        "t": 11.6,
+        "t": 11.55,
         "event": "place"
       },
       {
-        "t": 11.6,
+        "t": 11.55,
         "event": "swing"
       },
       {
-        "t": 11.85,
+        "t": 11.8,
         "event": "place"
       },
       {
-        "t": 11.85,
+        "t": 11.8,
         "event": "swing"
       },
       {
-        "t": 11.95,
+        "t": 11.9,
         "event": "mid_walk3_a"
       },
       {
-        "t": 13.9,
+        "t": 13.85,
         "event": "mid_walk3_b"
       },
       {
-        "t": 14.15,
+        "t": 14.1,
         "event": "place"
       },
       {
-        "t": 14.15,
+        "t": 14.1,
         "event": "swing"
       },
       {
-        "t": 14.35,
+        "t": 14.3,
         "event": "place"
       },
       {
-        "t": 14.35,
+        "t": 14.3,
         "event": "swing"
       },
       {
-        "t": 14.6,
+        "t": 14.55,
         "event": "place"
       },
       {
-        "t": 14.6,
+        "t": 14.55,
         "event": "swing"
       },
       {
-        "t": 14.85,
+        "t": 14.8,
         "event": "place"
       },
       {
-        "t": 14.85,
+        "t": 14.8,
         "event": "swing"
       },
       {
-        "t": 15.05,
+        "t": 15,
         "event": "place"
       },
       {
-        "t": 15.05,
+        "t": 15,
         "event": "swing"
       },
       {
-        "t": 15.3,
+        "t": 15.25,
         "event": "place"
       },
       {
-        "t": 15.3,
+        "t": 15.25,
         "event": "swing"
       },
       {
-        "t": 15.55,
+        "t": 15.5,
         "event": "place"
       },
       {
-        "t": 15.55,
+        "t": 15.5,
         "event": "swing"
       },
       {
-        "t": 17,
+        "t": 16.95,
         "event": "place"
       },
       {
-        "t": 17,
+        "t": 16.95,
         "event": "swing"
       },
       {
-        "t": 17.5,
+        "t": 17.45,
         "event": "place"
       },
       {
-        "t": 17.5,
+        "t": 17.45,
         "event": "swing"
       },
       {
-        "t": 18,
+        "t": 17.95,
         "event": "place"
       },
       {
-        "t": 18,
+        "t": 17.95,
         "event": "swing"
       },
       {
-        "t": 18.6,
+        "t": 18.55,
         "event": "place"
       },
       {
-        "t": 18.6,
+        "t": 18.55,
         "event": "swing"
       },
       {
-        "t": 18.8,
+        "t": 18.75,
         "event": "place"
       },
       {
-        "t": 18.8,
+        "t": 18.75,
         "event": "swing"
       },
       {
-        "t": 18.95,
+        "t": 18.9,
         "event": "place"
       },
       {
-        "t": 18.95,
+        "t": 18.9,
         "event": "swing"
       },
       {
-        "t": 19.15,
+        "t": 19.1,
         "event": "place"
       },
       {
-        "t": 19.15,
+        "t": 19.1,
         "event": "swing"
       },
       {
-        "t": 19.35,
+        "t": 19.3,
         "event": "place"
       },
       {
-        "t": 19.35,
+        "t": 19.3,
         "event": "swing"
       },
       {
-        "t": 19.7,
+        "t": 19.65,
         "event": "place"
       },
       {
-        "t": 19.7,
+        "t": 19.65,
         "event": "swing"
       },
       {
-        "t": 19.9,
+        "t": 19.85,
         "event": "place"
       },
       {
-        "t": 19.9,
+        "t": 19.85,
         "event": "swing"
       },
       {
-        "t": 20.05,
+        "t": 20,
         "event": "place"
       },
       {
-        "t": 20.05,
+        "t": 20,
         "event": "swing"
       },
       {
-        "t": 20.25,
+        "t": 20.2,
         "event": "place"
       },
       {
-        "t": 20.25,
+        "t": 20.2,
         "event": "swing"
       },
       {
-        "t": 20.45,
+        "t": 20.4,
         "event": "place"
       },
       {
-        "t": 20.45,
+        "t": 20.4,
         "event": "swing"
       },
       {
-        "t": 20.95,
+        "t": 20.9,
         "event": "place"
       },
       {
-        "t": 20.95,
+        "t": 20.9,
         "event": "swing"
       },
       {
-        "t": 21.7,
+        "t": 21.65,
         "event": "dig"
       },
       {
-        "t": 21.7,
+        "t": 21.65,
         "event": "swing"
       },
       {
-        "t": 21.8,
+        "t": 21.75,
         "event": "dig_end"
       },
       {
-        "t": 21.8,
+        "t": 21.75,
         "event": "vel"
       },
       {
-        "t": 22.05,
+        "t": 22,
         "event": "dig"
       },
       {
-        "t": 22.05,
+        "t": 22,
         "event": "swing"
       },
       {
-        "t": 22.15,
+        "t": 22.1,
         "event": "dig_end"
       },
       {
-        "t": 22.15,
+        "t": 22.1,
         "event": "vel"
       },
       {
-        "t": 22.25,
+        "t": 22.2,
         "event": "collect"
       },
       {
-        "t": 22.4,
+        "t": 22.35,
         "event": "dig"
       },
       {
-        "t": 22.4,
+        "t": 22.35,
         "event": "swing"
       },
       {
-        "t": 22.5,
+        "t": 22.45,
         "event": "dig_end"
       },
       {
-        "t": 22.5,
+        "t": 22.45,
         "event": "vel"
       },
       {
-        "t": 22.6,
+        "t": 22.55,
         "event": "collect"
       },
       {
-        "t": 22.95,
+        "t": 22.9,
         "event": "collect"
       },
       {
-        "t": 24.2,
+        "t": 24.15,
         "event": "mid_done"
       },
       {
-        "t": 24.2,
+        "t": 24.15,
         "event": "turns_fast_end"
       },
       {
-        "t": 24.8,
+        "t": 24.75,
         "event": "cut2_a"
       },
       {
-        "t": 25.2,
+        "t": 25.15,
         "event": "cut"
       },
       {
-        "t": 26.55,
+        "t": 26.5,
         "event": "cut2_b"
       },
       {
-        "t": 26.55,
+        "t": 26.5,
         "event": "f1_on"
       },
       {
-        "t": 26.55,
+        "t": 26.5,
         "event": "big_start"
       },
       {
-        "t": 26.55,
+        "t": 26.5,
         "event": "swing"
       },
       {
-        "t": 26.75,
+        "t": 26.7,
         "event": "swing"
       },
       {
-        "t": 26.95,
+        "t": 26.9,
         "event": "swing"
       },
       {
-        "t": 27.15,
+        "t": 27.1,
         "event": "swing"
       },
       {
-        "t": 27.35,
+        "t": 27.3,
         "event": "swing"
       },
       {
-        "t": 27.55,
+        "t": 27.5,
         "event": "swing"
       },
       {
-        "t": 27.75,
+        "t": 27.7,
         "event": "swing"
       },
       {
-        "t": 27.95,
+        "t": 27.9,
         "event": "swing"
       },
       {
-        "t": 28.15,
+        "t": 28.1,
         "event": "swing"
       },
       {
-        "t": 28.35,
+        "t": 28.3,
         "event": "swing"
       },
       {
-        "t": 28.55,
+        "t": 28.5,
         "event": "swing"
       },
       {
-        "t": 28.75,
+        "t": 28.7,
         "event": "swing"
       },
       {
-        "t": 28.95,
+        "t": 29,
         "event": "swing"
       },
       {
-        "t": 29.15,
+        "t": 29.2,
         "event": "swing"
       },
       {
-        "t": 29.35,
+        "t": 29.4,
         "event": "swing"
       },
       {
-        "t": 29.55,
+        "t": 29.6,
         "event": "swing"
       },
       {
-        "t": 29.75,
+        "t": 29.8,
         "event": "swing"
       },
       {
-        "t": 29.95,
+        "t": 30,
         "event": "swing"
       },
       {
-        "t": 30.15,
+        "t": 30.2,
         "event": "swing"
       },
       {
-        "t": 30.35,
+        "t": 30.4,
         "event": "swing"
       },
       {
-        "t": 30.55,
+        "t": 30.6,
         "event": "swing"
       },
       {
-        "t": 30.75,
+        "t": 30.8,
         "event": "swing"
       },
       {
-        "t": 30.95,
+        "t": 31,
         "event": "swing"
       },
       {
-        "t": 31.15,
+        "t": 31.2,
         "event": "swing"
       },
       {
-        "t": 31.35,
+        "t": 31.4,
         "event": "swing"
       },
       {
-        "t": 31.55,
+        "t": 31.6,
         "event": "swing"
       },
       {
-        "t": 31.75,
+        "t": 31.8,
         "event": "swing"
       },
       {
-        "t": 31.95,
+        "t": 32,
         "event": "swing"
       },
       {
-        "t": 32.15,
+        "t": 32.2,
         "event": "swing"
       },
       {
-        "t": 32.35,
+        "t": 32.4,
         "event": "swing"
       },
       {
-        "t": 32.55,
+        "t": 32.6,
         "event": "swing"
       },
       {
-        "t": 32.75,
+        "t": 32.8,
         "event": "swing"
       },
       {
-        "t": 32.95,
+        "t": 33,
         "event": "swing"
       },
       {
-        "t": 33.15,
+        "t": 33.2,
         "event": "swing"
       },
       {
-        "t": 33.35,
+        "t": 33.4,
         "event": "swing"
       },
       {
-        "t": 33.55,
+        "t": 33.6,
         "event": "swing"
       },
       {
-        "t": 33.75,
+        "t": 33.8,
         "event": "swing"
       },
       {
-        "t": 33.95,
+        "t": 34,
         "event": "swing"
       },
       {
-        "t": 34.1,
+        "t": 34.15,
         "event": "swing"
       },
       {
-        "t": 34.25,
-        "event": "swing"
+        "t": 34.2,
+        "event": "off_aim"
+      },
+      {
+        "t": 34.2,
+        "event": "place"
       },
       {
         "t": 34.25,
@@ -886,6 +901,18 @@
       },
       {
         "t": 34.25,
+        "event": "place"
+      },
+      {
+        "t": 34.3,
+        "event": "swing"
+      },
+      {
+        "t": 34.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 34.3,
         "event": "place"
       },
       {
@@ -913,84 +940,80 @@
         "event": "place"
       },
       {
-        "t": 34.4,
+        "t": 34.5,
         "event": "swing"
       },
       {
-        "t": 34.4,
+        "t": 34.5,
         "event": "off_aim"
       },
       {
-        "t": 34.4,
+        "t": 34.5,
         "event": "place"
       },
       {
-        "t": 34.4,
+        "t": 34.5,
         "event": "off_aim"
       },
       {
-        "t": 34.4,
+        "t": 34.5,
         "event": "place"
       },
       {
         "t": 34.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 34.55,
+        "event": "place"
+      },
+      {
+        "t": 34.65,
         "event": "swing"
       },
       {
-        "t": 34.55,
+        "t": 34.65,
         "event": "off_aim"
       },
       {
-        "t": 34.55,
+        "t": 34.65,
         "event": "place"
       },
       {
-        "t": 34.55,
+        "t": 34.65,
         "event": "off_aim"
       },
       {
-        "t": 34.55,
-        "event": "place"
-      },
-      {
-        "t": 34.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 34.6,
+        "t": 34.65,
         "event": "place"
       },
       {
         "t": 34.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 34.7,
+        "event": "place"
+      },
+      {
+        "t": 34.8,
         "event": "swing"
       },
       {
-        "t": 34.7,
+        "t": 34.8,
         "event": "off_aim"
       },
       {
-        "t": 34.7,
+        "t": 34.8,
         "event": "place"
       },
       {
-        "t": 34.7,
+        "t": 34.8,
         "event": "off_aim"
       },
       {
-        "t": 34.7,
+        "t": 34.8,
         "event": "place"
-      },
-      {
-        "t": 34.75,
-        "event": "off_aim"
-      },
-      {
-        "t": 34.75,
-        "event": "place"
-      },
-      {
-        "t": 34.85,
-        "event": "swing"
       },
       {
         "t": 34.85,
@@ -1026,11 +1049,7 @@
       },
       {
         "t": 34.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 34.95,
-        "event": "place"
+        "event": "swing"
       },
       {
         "t": 34.95,
@@ -1041,62 +1060,70 @@
         "event": "place"
       },
       {
-        "t": 35,
+        "t": 34.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 34.95,
+        "event": "place"
+      },
+      {
+        "t": 35.1,
         "event": "swing"
       },
       {
-        "t": 35,
+        "t": 35.1,
         "event": "off_aim"
       },
       {
-        "t": 35,
+        "t": 35.1,
         "event": "place"
       },
       {
-        "t": 35,
+        "t": 35.1,
         "event": "off_aim"
       },
       {
-        "t": 35,
+        "t": 35.1,
         "event": "place"
       },
       {
         "t": 35.15,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.15,
+        "event": "place"
+      },
+      {
+        "t": 35.15,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.15,
+        "event": "place"
+      },
+      {
+        "t": 35.2,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.2,
+        "event": "place"
+      },
+      {
+        "t": 35.2,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.2,
+        "event": "place"
+      },
+      {
+        "t": 35.25,
         "event": "swing"
       },
       {
-        "t": 35.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.15,
-        "event": "place"
-      },
-      {
-        "t": 35.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.15,
-        "event": "place"
-      },
-      {
-        "t": 35.2,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.2,
-        "event": "place"
-      },
-      {
-        "t": 35.2,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.2,
-        "event": "place"
-      },
-      {
         "t": 35.25,
         "event": "off_aim"
       },
@@ -1110,18 +1137,6 @@
       },
       {
         "t": 35.25,
-        "event": "place"
-      },
-      {
-        "t": 35.3,
-        "event": "swing"
-      },
-      {
-        "t": 35.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.3,
         "event": "place"
       },
       {
@@ -1142,6 +1157,18 @@
       },
       {
         "t": 35.4,
+        "event": "swing"
+      },
+      {
+        "t": 35.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.4,
+        "event": "place"
+      },
+      {
+        "t": 35.4,
         "event": "off_aim"
       },
       {
@@ -1150,41 +1177,41 @@
       },
       {
         "t": 35.45,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.45,
+        "event": "place"
+      },
+      {
+        "t": 35.45,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.45,
+        "event": "place"
+      },
+      {
+        "t": 35.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.5,
+        "event": "place"
+      },
+      {
+        "t": 35.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.5,
+        "event": "place"
+      },
+      {
+        "t": 35.55,
         "event": "swing"
       },
       {
-        "t": 35.45,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.45,
-        "event": "place"
-      },
-      {
-        "t": 35.45,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.45,
-        "event": "place"
-      },
-      {
-        "t": 35.5,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.5,
-        "event": "place"
-      },
-      {
-        "t": 35.5,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.5,
-        "event": "place"
-      },
-      {
         "t": 35.55,
         "event": "off_aim"
       },
@@ -1201,26 +1228,26 @@
         "event": "place"
       },
       {
-        "t": 35.6,
+        "t": 35.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.65,
+        "event": "place"
+      },
+      {
+        "t": 35.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 35.65,
+        "event": "place"
+      },
+      {
+        "t": 35.7,
         "event": "swing"
       },
       {
-        "t": 35.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.6,
-        "event": "place"
-      },
-      {
-        "t": 35.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.6,
-        "event": "place"
-      },
-      {
         "t": 35.7,
         "event": "off_aim"
       },
@@ -1235,10 +1262,6 @@
       {
         "t": 35.7,
         "event": "place"
-      },
-      {
-        "t": 35.75,
-        "event": "swing"
       },
       {
         "t": 35.75,
@@ -1274,11 +1297,7 @@
       },
       {
         "t": 35.85,
-        "event": "off_aim"
-      },
-      {
-        "t": 35.85,
-        "event": "place"
+        "event": "swing"
       },
       {
         "t": 35.85,
@@ -1290,7 +1309,11 @@
       },
       {
         "t": 35.9,
-        "event": "swing"
+        "event": "off_aim"
+      },
+      {
+        "t": 35.9,
+        "event": "place"
       },
       {
         "t": 35.9,
@@ -1318,30 +1341,22 @@
       },
       {
         "t": 36,
-        "event": "off_aim"
-      },
-      {
-        "t": 36,
-        "event": "place"
-      },
-      {
-        "t": 36,
-        "event": "off_aim"
-      },
-      {
-        "t": 36,
-        "event": "place"
-      },
-      {
-        "t": 36.05,
         "event": "swing"
       },
       {
-        "t": 36.05,
+        "t": 36,
         "event": "off_aim"
       },
       {
-        "t": 36.05,
+        "t": 36,
+        "event": "place"
+      },
+      {
+        "t": 36,
+        "event": "off_aim"
+      },
+      {
+        "t": 36,
         "event": "place"
       },
       {
@@ -1353,11 +1368,11 @@
         "event": "place"
       },
       {
-        "t": 36.1,
+        "t": 36.05,
         "event": "off_aim"
       },
       {
-        "t": 36.1,
+        "t": 36.05,
         "event": "place"
       },
       {
@@ -1370,6 +1385,10 @@
       },
       {
         "t": 36.15,
+        "event": "swing"
+      },
+      {
+        "t": 36.15,
         "event": "off_aim"
       },
       {
@@ -1378,7 +1397,11 @@
       },
       {
         "t": 36.2,
-        "event": "swing"
+        "event": "off_aim"
+      },
+      {
+        "t": 36.2,
+        "event": "place"
       },
       {
         "t": 36.2,
@@ -1406,30 +1429,22 @@
       },
       {
         "t": 36.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.3,
-        "event": "place"
-      },
-      {
-        "t": 36.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.3,
-        "event": "place"
-      },
-      {
-        "t": 36.35,
         "event": "swing"
       },
       {
-        "t": 36.35,
+        "t": 36.3,
         "event": "off_aim"
       },
       {
-        "t": 36.35,
+        "t": 36.3,
+        "event": "place"
+      },
+      {
+        "t": 36.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.3,
         "event": "place"
       },
       {
@@ -1450,6 +1465,18 @@
       },
       {
         "t": 36.45,
+        "event": "swing"
+      },
+      {
+        "t": 36.45,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.45,
+        "event": "place"
+      },
+      {
+        "t": 36.45,
         "event": "off_aim"
       },
       {
@@ -1458,41 +1485,41 @@
       },
       {
         "t": 36.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.5,
+        "event": "place"
+      },
+      {
+        "t": 36.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.5,
+        "event": "place"
+      },
+      {
+        "t": 36.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.55,
+        "event": "place"
+      },
+      {
+        "t": 36.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.55,
+        "event": "place"
+      },
+      {
+        "t": 36.6,
         "event": "swing"
       },
       {
-        "t": 36.5,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.5,
-        "event": "place"
-      },
-      {
-        "t": 36.5,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.5,
-        "event": "place"
-      },
-      {
-        "t": 36.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.55,
-        "event": "place"
-      },
-      {
-        "t": 36.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.55,
-        "event": "place"
-      },
-      {
         "t": 36.6,
         "event": "off_aim"
       },
@@ -1510,10 +1537,6 @@
       },
       {
         "t": 36.65,
-        "event": "swing"
-      },
-      {
-        "t": 36.65,
         "event": "off_aim"
       },
       {
@@ -1521,11 +1544,11 @@
         "event": "place"
       },
       {
-        "t": 36.65,
+        "t": 36.7,
         "event": "off_aim"
       },
       {
-        "t": 36.65,
+        "t": 36.7,
         "event": "place"
       },
       {
@@ -1554,30 +1577,22 @@
       },
       {
         "t": 36.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.8,
-        "event": "place"
-      },
-      {
-        "t": 36.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 36.8,
-        "event": "place"
-      },
-      {
-        "t": 36.85,
         "event": "swing"
       },
       {
-        "t": 36.85,
+        "t": 36.8,
         "event": "off_aim"
       },
       {
-        "t": 36.85,
+        "t": 36.8,
+        "event": "place"
+      },
+      {
+        "t": 36.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 36.8,
         "event": "place"
       },
       {
@@ -1589,20 +1604,20 @@
         "event": "place"
       },
       {
-        "t": 36.9,
-        "event": "off_aim"
+        "t": 37,
+        "event": "swing"
       },
       {
-        "t": 36.9,
-        "event": "place"
-      },
-      {
-        "t": 37.05,
+        "t": 37.2,
         "event": "swing"
       },
       {
         "t": 37.25,
-        "event": "swing"
+        "event": "place"
+      },
+      {
+        "t": 37.25,
+        "event": "place"
       },
       {
         "t": 37.3,
@@ -1614,23 +1629,35 @@
       },
       {
         "t": 37.35,
-        "event": "place"
-      },
-      {
-        "t": 37.35,
-        "event": "place"
-      },
-      {
-        "t": 37.4,
         "event": "swing"
       },
       {
-        "t": 37.4,
+        "t": 37.35,
         "event": "off_aim"
       },
       {
-        "t": 37.4,
+        "t": 37.35,
         "event": "place"
+      },
+      {
+        "t": 37.45,
+        "event": "place"
+      },
+      {
+        "t": 37.5,
+        "event": "swing"
+      },
+      {
+        "t": 37.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 37.5,
+        "event": "place"
+      },
+      {
+        "t": 37.5,
+        "event": "off_aim"
       },
       {
         "t": 37.5,
@@ -1638,39 +1665,47 @@
       },
       {
         "t": 37.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 37.55,
+        "event": "place"
+      },
+      {
+        "t": 37.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 37.55,
+        "event": "place"
+      },
+      {
+        "t": 37.6,
+        "event": "place"
+      },
+      {
+        "t": 37.6,
+        "event": "off_aim"
+      },
+      {
+        "t": 37.6,
+        "event": "place"
+      },
+      {
+        "t": 37.65,
+        "event": "place"
+      },
+      {
+        "t": 37.65,
+        "event": "place"
+      },
+      {
+        "t": 37.65,
         "event": "swing"
       },
       {
-        "t": 37.55,
+        "t": 37.65,
         "event": "off_aim"
-      },
-      {
-        "t": 37.55,
-        "event": "place"
-      },
-      {
-        "t": 37.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 37.55,
-        "event": "place"
-      },
-      {
-        "t": 37.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 37.6,
-        "event": "place"
-      },
-      {
-        "t": 37.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 37.6,
-        "event": "place"
       },
       {
         "t": 37.65,
@@ -1694,10 +1729,6 @@
       },
       {
         "t": 37.7,
-        "event": "swing"
-      },
-      {
-        "t": 37.7,
         "event": "off_aim"
       },
       {
@@ -1729,42 +1760,42 @@
         "event": "place"
       },
       {
-        "t": 37.75,
-        "event": "off_aim"
-      },
-      {
-        "t": 37.75,
-        "event": "place"
-      },
-      {
         "t": 37.8,
-        "event": "place"
-      },
-      {
-        "t": 37.8,
-        "event": "place"
-      },
-      {
-        "t": 37.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 37.8,
-        "event": "place"
-      },
-      {
-        "t": 37.85,
         "event": "swing"
       },
       {
-        "t": 38,
+        "t": 37.95,
         "event": "place"
       },
       {
-        "t": 38,
+        "t": 37.95,
         "event": "swing"
       },
       {
+        "t": 37.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 37.95,
+        "event": "place"
+      },
+      {
+        "t": 37.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 37.95,
+        "event": "place"
+      },
+      {
+        "t": 38,
+        "event": "place"
+      },
+      {
+        "t": 38,
+        "event": "place"
+      },
+      {
         "t": 38,
         "event": "off_aim"
       },
@@ -1814,51 +1845,47 @@
       },
       {
         "t": 38.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.1,
-        "event": "place"
-      },
-      {
-        "t": 38.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.1,
-        "event": "place"
-      },
-      {
-        "t": 38.15,
-        "event": "place"
-      },
-      {
-        "t": 38.15,
-        "event": "place"
-      },
-      {
-        "t": 38.15,
         "event": "swing"
       },
       {
-        "t": 38.15,
+        "t": 38.1,
         "event": "off_aim"
       },
       {
+        "t": 38.1,
+        "event": "place"
+      },
+      {
         "t": 38.15,
         "event": "place"
       },
       {
-        "t": 38.2,
+        "t": 38.15,
         "event": "place"
       },
       {
-        "t": 38.2,
-        "event": "place"
+        "t": 38.25,
+        "event": "swing"
       },
       {
         "t": 38.3,
-        "event": "swing"
+        "event": "place"
+      },
+      {
+        "t": 38.35,
+        "event": "place"
+      },
+      {
+        "t": 38.35,
+        "event": "off_aim"
+      },
+      {
+        "t": 38.35,
+        "event": "place"
+      },
+      {
+        "t": 38.35,
+        "event": "off_aim"
       },
       {
         "t": 38.35,
@@ -1870,35 +1897,31 @@
       },
       {
         "t": 38.4,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.4,
         "event": "place"
       },
       {
         "t": 38.4,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.4,
-        "event": "place"
-      },
-      {
-        "t": 38.45,
-        "event": "place"
-      },
-      {
-        "t": 38.45,
-        "event": "place"
-      },
-      {
-        "t": 38.45,
         "event": "swing"
       },
       {
-        "t": 38.45,
+        "t": 38.4,
         "event": "off_aim"
+      },
+      {
+        "t": 38.4,
+        "event": "place"
+      },
+      {
+        "t": 38.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 38.4,
+        "event": "place"
+      },
+      {
+        "t": 38.45,
+        "event": "place"
       },
       {
         "t": 38.45,
@@ -1938,69 +1961,73 @@
       },
       {
         "t": 38.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.55,
-        "event": "place"
-      },
-      {
-        "t": 38.6,
-        "event": "place"
-      },
-      {
-        "t": 38.6,
-        "event": "place"
-      },
-      {
-        "t": 38.6,
         "event": "swing"
+      },
+      {
+        "t": 38.65,
+        "event": "place"
       },
       {
         "t": 38.7,
         "event": "place"
       },
       {
+        "t": 38.7,
+        "event": "swing"
+      },
+      {
         "t": 38.75,
         "event": "place"
       },
       {
         "t": 38.75,
+        "event": "place"
+      },
+      {
+        "t": 38.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 38.75,
+        "event": "place"
+      },
+      {
+        "t": 38.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 38.75,
+        "event": "place"
+      },
+      {
+        "t": 38.8,
+        "event": "place"
+      },
+      {
+        "t": 38.8,
+        "event": "place"
+      },
+      {
+        "t": 38.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 38.8,
+        "event": "place"
+      },
+      {
+        "t": 38.85,
+        "event": "place"
+      },
+      {
+        "t": 38.85,
+        "event": "place"
+      },
+      {
+        "t": 38.85,
         "event": "swing"
       },
       {
-        "t": 38.8,
-        "event": "place"
-      },
-      {
-        "t": 38.8,
-        "event": "place"
-      },
-      {
-        "t": 38.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.8,
-        "event": "place"
-      },
-      {
-        "t": 38.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.8,
-        "event": "place"
-      },
-      {
-        "t": 38.85,
-        "event": "place"
-      },
-      {
-        "t": 38.85,
-        "event": "place"
-      },
-      {
         "t": 38.85,
         "event": "off_aim"
       },
@@ -2014,22 +2041,6 @@
       },
       {
         "t": 38.9,
-        "event": "place"
-      },
-      {
-        "t": 38.9,
-        "event": "swing"
-      },
-      {
-        "t": 38.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 38.9,
-        "event": "place"
-      },
-      {
-        "t": 38.95,
         "event": "place"
       },
       {
@@ -2041,12 +2052,24 @@
         "event": "place"
       },
       {
+        "t": 39,
+        "event": "swing"
+      },
+      {
         "t": 39.05,
         "event": "place"
       },
       {
-        "t": 39.05,
-        "event": "swing"
+        "t": 39.1,
+        "event": "place"
+      },
+      {
+        "t": 39.1,
+        "event": "place"
+      },
+      {
+        "t": 39.1,
+        "event": "off_aim"
       },
       {
         "t": 39.1,
@@ -2062,6 +2085,10 @@
       },
       {
         "t": 39.15,
+        "event": "swing"
+      },
+      {
+        "t": 39.15,
         "event": "off_aim"
       },
       {
@@ -2078,10 +2105,6 @@
       },
       {
         "t": 39.2,
-        "event": "swing"
-      },
-      {
-        "t": 39.2,
         "event": "off_aim"
       },
       {
@@ -2097,14 +2120,6 @@
         "event": "place"
       },
       {
-        "t": 39.25,
-        "event": "off_aim"
-      },
-      {
-        "t": 39.25,
-        "event": "place"
-      },
-      {
         "t": 39.3,
         "event": "place"
       },
@@ -2113,36 +2128,36 @@
         "event": "place"
       },
       {
-        "t": 39.35,
-        "event": "place"
-      },
-      {
-        "t": 39.35,
-        "event": "place"
-      },
-      {
-        "t": 39.35,
+        "t": 39.3,
         "event": "swing"
       },
       {
-        "t": 39.4,
+        "t": 39.35,
         "event": "place"
       },
       {
-        "t": 39.4,
+        "t": 39.35,
         "event": "place"
       },
       {
-        "t": 39.5,
+        "t": 39.45,
         "event": "place"
       },
       {
-        "t": 39.5,
+        "t": 39.45,
         "event": "place"
       },
       {
-        "t": 39.5,
+        "t": 39.45,
         "event": "swing"
+      },
+      {
+        "t": 39.5,
+        "event": "place"
+      },
+      {
+        "t": 39.5,
+        "event": "place"
       },
       {
         "t": 39.55,
@@ -2153,40 +2168,40 @@
         "event": "place"
       },
       {
-        "t": 39.6,
-        "event": "place"
-      },
-      {
-        "t": 39.6,
-        "event": "place"
-      },
-      {
-        "t": 39.6,
+        "t": 39.55,
         "event": "off_aim"
       },
       {
-        "t": 39.6,
+        "t": 39.55,
         "event": "place"
       },
       {
-        "t": 39.6,
+        "t": 39.55,
         "event": "off_aim"
       },
       {
+        "t": 39.55,
+        "event": "place"
+      },
+      {
         "t": 39.6,
         "event": "place"
       },
       {
-        "t": 39.65,
+        "t": 39.6,
         "event": "place"
       },
       {
-        "t": 39.65,
-        "event": "place"
-      },
-      {
-        "t": 39.65,
+        "t": 39.6,
         "event": "swing"
+      },
+      {
+        "t": 39.65,
+        "event": "place"
+      },
+      {
+        "t": 39.7,
+        "event": "place"
       },
       {
         "t": 39.7,
@@ -2198,23 +2213,23 @@
       },
       {
         "t": 39.75,
-        "event": "place"
-      },
-      {
-        "t": 39.8,
-        "event": "place"
-      },
-      {
-        "t": 39.8,
         "event": "swing"
       },
       {
-        "t": 39.85,
+        "t": 39.8,
+        "event": "place"
+      },
+      {
+        "t": 39.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 39.8,
         "event": "place"
       },
       {
         "t": 39.85,
-        "event": "off_aim"
+        "event": "place"
       },
       {
         "t": 39.85,
@@ -2229,36 +2244,32 @@
         "event": "place"
       },
       {
-        "t": 39.95,
-        "event": "place"
-      },
-      {
-        "t": 39.95,
-        "event": "place"
-      },
-      {
-        "t": 39.95,
+        "t": 39.9,
         "event": "swing"
       },
       {
+        "t": 39.9,
+        "event": "off_aim"
+      },
+      {
+        "t": 39.9,
+        "event": "place"
+      },
+      {
+        "t": 39.95,
+        "event": "place"
+      },
+      {
+        "t": 39.95,
+        "event": "place"
+      },
+      {
         "t": 39.95,
         "event": "off_aim"
       },
       {
         "t": 39.95,
         "event": "place"
-      },
-      {
-        "t": 40,
-        "event": "place"
-      },
-      {
-        "t": 40,
-        "event": "place"
-      },
-      {
-        "t": 40,
-        "event": "off_aim"
       },
       {
         "t": 40,
@@ -2269,44 +2280,48 @@
         "event": "place"
       },
       {
-        "t": 40.1,
+        "t": 40.05,
         "event": "place"
       },
       {
-        "t": 40.1,
-        "event": "place"
-      },
-      {
-        "t": 40.1,
+        "t": 40.05,
         "event": "swing"
       },
       {
-        "t": 40.15,
+        "t": 40.1,
+        "event": "place"
+      },
+      {
+        "t": 40.1,
         "event": "place"
       },
       {
         "t": 40.15,
-        "event": "place"
-      },
-      {
-        "t": 40.2,
         "event": "off_aim"
       },
       {
+        "t": 40.15,
+        "event": "place"
+      },
+      {
         "t": 40.2,
         "event": "place"
       },
       {
-        "t": 40.25,
+        "t": 40.2,
         "event": "place"
       },
       {
-        "t": 40.25,
-        "event": "place"
-      },
-      {
-        "t": 40.25,
+        "t": 40.2,
         "event": "swing"
+      },
+      {
+        "t": 40.25,
+        "event": "place"
+      },
+      {
+        "t": 40.25,
+        "event": "place"
       },
       {
         "t": 40.3,
@@ -2317,36 +2332,36 @@
         "event": "place"
       },
       {
-        "t": 40.35,
-        "event": "place"
-      },
-      {
-        "t": 40.35,
-        "event": "place"
-      },
-      {
-        "t": 40.35,
+        "t": 40.3,
         "event": "off_aim"
       },
       {
-        "t": 40.35,
+        "t": 40.3,
         "event": "place"
       },
       {
-        "t": 40.35,
+        "t": 40.3,
         "event": "off_aim"
       },
       {
+        "t": 40.3,
+        "event": "place"
+      },
+      {
         "t": 40.35,
         "event": "place"
       },
       {
-        "t": 40.4,
-        "event": "place"
-      },
-      {
-        "t": 40.4,
+        "t": 40.35,
         "event": "swing"
+      },
+      {
+        "t": 40.4,
+        "event": "place"
+      },
+      {
+        "t": 40.4,
+        "event": "place"
       },
       {
         "t": 40.45,
@@ -2358,7 +2373,11 @@
       },
       {
         "t": 40.5,
-        "event": "place"
+        "event": "swing"
+      },
+      {
+        "t": 40.5,
+        "event": "off_aim"
       },
       {
         "t": 40.5,
@@ -2366,14 +2385,10 @@
       },
       {
         "t": 40.55,
-        "event": "swing"
+        "event": "place"
       },
       {
-        "t": 40.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 40.55,
+        "t": 40.6,
         "event": "place"
       },
       {
@@ -2389,20 +2404,28 @@
         "event": "place"
       },
       {
-        "t": 40.7,
-        "event": "place"
-      },
-      {
-        "t": 40.7,
-        "event": "place"
-      },
-      {
-        "t": 40.7,
+        "t": 40.65,
         "event": "swing"
       },
       {
-        "t": 40.7,
+        "t": 40.65,
         "event": "off_aim"
+      },
+      {
+        "t": 40.65,
+        "event": "place"
+      },
+      {
+        "t": 40.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 40.65,
+        "event": "place"
+      },
+      {
+        "t": 40.7,
+        "event": "place"
       },
       {
         "t": 40.7,
@@ -2419,14 +2442,6 @@
       {
         "t": 40.75,
         "event": "place"
-      },
-      {
-        "t": 40.75,
-        "event": "place"
-      },
-      {
-        "t": 40.75,
-        "event": "off_aim"
       },
       {
         "t": 40.75,
@@ -2441,36 +2456,52 @@
         "event": "place"
       },
       {
-        "t": 40.85,
-        "event": "place"
-      },
-      {
-        "t": 40.85,
-        "event": "place"
-      },
-      {
-        "t": 40.85,
+        "t": 40.8,
         "event": "swing"
       },
       {
-        "t": 40.9,
+        "t": 40.85,
         "event": "place"
       },
       {
-        "t": 41,
+        "t": 40.95,
         "event": "place"
       },
       {
-        "t": 41,
+        "t": 40.95,
         "event": "place"
       },
       {
-        "t": 41,
+        "t": 40.95,
         "event": "swing"
+      },
+      {
+        "t": 41,
+        "event": "place"
+      },
+      {
+        "t": 41,
+        "event": "place"
+      },
+      {
+        "t": 41,
+        "event": "off_aim"
+      },
+      {
+        "t": 41,
+        "event": "place"
       },
       {
         "t": 41.05,
         "event": "place"
+      },
+      {
+        "t": 41.05,
+        "event": "place"
+      },
+      {
+        "t": 41.05,
+        "event": "off_aim"
       },
       {
         "t": 41.05,
@@ -2494,34 +2525,14 @@
       },
       {
         "t": 41.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 41.1,
-        "event": "place"
-      },
-      {
-        "t": 41.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 41.1,
-        "event": "place"
-      },
-      {
-        "t": 41.15,
-        "event": "place"
-      },
-      {
-        "t": 41.15,
-        "event": "place"
-      },
-      {
-        "t": 41.15,
         "event": "swing"
       },
       {
-        "t": 41.2,
+        "t": 41.15,
+        "event": "place"
+      },
+      {
+        "t": 41.15,
         "event": "place"
       },
       {
@@ -2530,22 +2541,34 @@
       },
       {
         "t": 41.25,
+        "event": "swing"
+      },
+      {
+        "t": 41.35,
         "event": "place"
       },
       {
-        "t": 41.3,
+        "t": 41.35,
+        "event": "place"
+      },
+      {
+        "t": 41.35,
+        "event": "off_aim"
+      },
+      {
+        "t": 41.35,
+        "event": "place"
+      },
+      {
+        "t": 41.4,
+        "event": "place"
+      },
+      {
+        "t": 41.4,
         "event": "swing"
       },
       {
         "t": 41.4,
-        "event": "place"
-      },
-      {
-        "t": 41.4,
-        "event": "place"
-      },
-      {
-        "t": 41.4,
         "event": "off_aim"
       },
       {
@@ -2553,12 +2576,16 @@
         "event": "place"
       },
       {
-        "t": 41.45,
+        "t": 41.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 41.4,
         "event": "place"
       },
       {
         "t": 41.45,
-        "event": "swing"
+        "event": "place"
       },
       {
         "t": 41.45,
@@ -2579,18 +2606,6 @@
       {
         "t": 41.5,
         "event": "place"
-      },
-      {
-        "t": 41.5,
-        "event": "off_aim"
-      },
-      {
-        "t": 41.5,
-        "event": "place"
-      },
-      {
-        "t": 41.5,
-        "event": "off_aim"
       },
       {
         "t": 41.5,
@@ -2602,17 +2617,17 @@
       },
       {
         "t": 41.55,
-        "event": "place"
-      },
-      {
-        "t": 41.6,
-        "event": "place"
-      },
-      {
-        "t": 41.6,
         "event": "swing"
       },
       {
+        "t": 41.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 41.55,
+        "event": "place"
+      },
+      {
         "t": 41.6,
         "event": "off_aim"
       },
@@ -2621,27 +2636,39 @@
         "event": "place"
       },
       {
-        "t": 41.65,
-        "event": "off_aim"
-      },
-      {
-        "t": 41.65,
-        "event": "place"
-      },
-      {
-        "t": 41.75,
+        "t": 41.7,
         "event": "swing"
       },
       {
-        "t": 41.75,
+        "t": 41.7,
         "event": "off_aim"
+      },
+      {
+        "t": 41.7,
+        "event": "place"
       },
       {
         "t": 41.75,
         "event": "place"
       },
       {
-        "t": 41.8,
+        "t": 41.75,
+        "event": "place"
+      },
+      {
+        "t": 41.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 41.75,
+        "event": "place"
+      },
+      {
+        "t": 41.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 41.75,
         "event": "place"
       },
       {
@@ -2662,10 +2689,6 @@
       },
       {
         "t": 41.8,
-        "event": "place"
-      },
-      {
-        "t": 41.85,
         "event": "place"
       },
       {
@@ -2686,46 +2709,46 @@
       },
       {
         "t": 41.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 41.9,
-        "event": "place"
-      },
-      {
-        "t": 41.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 41.9,
-        "event": "place"
-      },
-      {
-        "t": 41.95,
         "event": "swing"
       },
       {
-        "t": 42.15,
+        "t": 42.1,
+        "event": "swing"
+      },
+      {
+        "t": 42.25,
         "event": "swing"
       },
       {
         "t": 42.3,
-        "event": "swing"
-      },
-      {
-        "t": 42.35,
         "event": "off_aim"
       },
       {
-        "t": 42.35,
+        "t": 42.3,
+        "event": "place"
+      },
+      {
+        "t": 42.4,
+        "event": "swing"
+      },
+      {
+        "t": 42.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.4,
+        "event": "place"
+      },
+      {
+        "t": 42.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.4,
         "event": "place"
       },
       {
         "t": 42.45,
-        "event": "swing"
-      },
-      {
-        "t": 42.45,
         "event": "off_aim"
       },
       {
@@ -2738,6 +2761,10 @@
       },
       {
         "t": 42.45,
+        "event": "place"
+      },
+      {
+        "t": 42.5,
         "event": "place"
       },
       {
@@ -2758,29 +2785,29 @@
       },
       {
         "t": 42.55,
-        "event": "place"
-      },
-      {
-        "t": 42.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.55,
-        "event": "place"
-      },
-      {
-        "t": 42.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.55,
-        "event": "place"
-      },
-      {
-        "t": 42.6,
         "event": "swing"
       },
       {
+        "t": 42.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.55,
+        "event": "place"
+      },
+      {
+        "t": 42.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.55,
+        "event": "place"
+      },
+      {
+        "t": 42.6,
+        "event": "place"
+      },
+      {
         "t": 42.6,
         "event": "off_aim"
       },
@@ -2797,44 +2824,36 @@
         "event": "place"
       },
       {
-        "t": 42.65,
+        "t": 42.6,
         "event": "place"
       },
       {
-        "t": 42.65,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.65,
-        "event": "place"
-      },
-      {
-        "t": 42.65,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.65,
-        "event": "place"
-      },
-      {
-        "t": 42.65,
-        "event": "place"
-      },
-      {
-        "t": 42.75,
+        "t": 42.7,
         "event": "swing"
       },
       {
+        "t": 42.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.7,
+        "event": "place"
+      },
+      {
+        "t": 42.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.7,
+        "event": "place"
+      },
+      {
         "t": 42.75,
         "event": "off_aim"
       },
       {
         "t": 42.75,
         "event": "place"
-      },
-      {
-        "t": 42.75,
-        "event": "off_aim"
       },
       {
         "t": 42.75,
@@ -2849,8 +2868,16 @@
         "event": "place"
       },
       {
-        "t": 42.8,
+        "t": 42.85,
         "event": "place"
+      },
+      {
+        "t": 42.85,
+        "event": "place"
+      },
+      {
+        "t": 42.85,
+        "event": "swing"
       },
       {
         "t": 42.85,
@@ -2861,8 +2888,12 @@
         "event": "place"
       },
       {
-        "t": 42.9,
+        "t": 42.85,
         "event": "place"
+      },
+      {
+        "t": 42.9,
+        "event": "off_aim"
       },
       {
         "t": 42.9,
@@ -2870,75 +2901,59 @@
       },
       {
         "t": 42.9,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.9,
+        "event": "place"
+      },
+      {
+        "t": 42.95,
+        "event": "place"
+      },
+      {
+        "t": 42.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.95,
+        "event": "place"
+      },
+      {
+        "t": 42.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 42.95,
+        "event": "place"
+      },
+      {
+        "t": 43,
         "event": "swing"
       },
       {
-        "t": 42.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.9,
-        "event": "place"
-      },
-      {
-        "t": 42.9,
-        "event": "place"
-      },
-      {
-        "t": 42.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.95,
-        "event": "place"
-      },
-      {
-        "t": 42.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 42.95,
-        "event": "place"
-      },
-      {
-        "t": 43,
-        "event": "place"
-      },
-      {
-        "t": 43,
-        "event": "off_aim"
-      },
-      {
-        "t": 43,
-        "event": "place"
-      },
-      {
-        "t": 43,
-        "event": "off_aim"
-      },
-      {
-        "t": 43,
+        "t": 43.05,
         "event": "place"
       },
       {
         "t": 43.05,
-        "event": "swing"
+        "event": "off_aim"
       },
       {
-        "t": 43.1,
+        "t": 43.05,
+        "event": "place"
+      },
+      {
+        "t": 43.05,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.05,
         "event": "place"
       },
       {
         "t": 43.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.1,
         "event": "place"
-      },
-      {
-        "t": 43.1,
-        "event": "off_aim"
       },
       {
         "t": 43.1,
@@ -2953,20 +2968,24 @@
         "event": "place"
       },
       {
-        "t": 43.2,
-        "event": "place"
-      },
-      {
-        "t": 43.2,
-        "event": "place"
-      },
-      {
-        "t": 43.2,
+        "t": 43.15,
         "event": "swing"
       },
       {
-        "t": 43.2,
+        "t": 43.15,
         "event": "off_aim"
+      },
+      {
+        "t": 43.15,
+        "event": "place"
+      },
+      {
+        "t": 43.15,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.15,
+        "event": "place"
       },
       {
         "t": 43.2,
@@ -2986,6 +3005,10 @@
       },
       {
         "t": 43.25,
+        "event": "place"
+      },
+      {
+        "t": 43.25,
         "event": "off_aim"
       },
       {
@@ -2998,15 +3021,7 @@
       },
       {
         "t": 43.3,
-        "event": "place"
-      },
-      {
-        "t": 43.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.3,
-        "event": "place"
+        "event": "swing"
       },
       {
         "t": 43.35,
@@ -3014,19 +3029,19 @@
       },
       {
         "t": 43.35,
-        "event": "swing"
-      },
-      {
-        "t": 43.4,
         "event": "place"
       },
       {
-        "t": 43.4,
-        "event": "place"
-      },
-      {
-        "t": 43.4,
+        "t": 43.35,
         "event": "off_aim"
+      },
+      {
+        "t": 43.35,
+        "event": "place"
+      },
+      {
+        "t": 43.35,
+        "event": "place"
       },
       {
         "t": 43.4,
@@ -3045,38 +3060,50 @@
         "event": "place"
       },
       {
-        "t": 43.5,
-        "event": "place"
+        "t": 43.45,
+        "event": "swing"
       },
       {
-        "t": 43.5,
-        "event": "place"
-      },
-      {
-        "t": 43.5,
+        "t": 43.6,
         "event": "swing"
       },
       {
         "t": 43.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.65,
+        "event": "place"
+      },
+      {
+        "t": 43.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.65,
+        "event": "place"
+      },
+      {
+        "t": 43.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.7,
+        "event": "place"
+      },
+      {
+        "t": 43.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.7,
+        "event": "place"
+      },
+      {
+        "t": 43.75,
         "event": "swing"
       },
       {
-        "t": 43.7,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.7,
-        "event": "place"
-      },
-      {
-        "t": 43.7,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.7,
-        "event": "place"
-      },
-      {
         "t": 43.75,
         "event": "off_aim"
       },
@@ -3094,45 +3121,53 @@
       },
       {
         "t": 43.8,
+        "event": "place"
+      },
+      {
+        "t": 43.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.8,
+        "event": "place"
+      },
+      {
+        "t": 43.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.8,
+        "event": "place"
+      },
+      {
+        "t": 43.85,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.85,
+        "event": "place"
+      },
+      {
+        "t": 43.85,
+        "event": "off_aim"
+      },
+      {
+        "t": 43.85,
+        "event": "place"
+      },
+      {
+        "t": 43.9,
+        "event": "place"
+      },
+      {
+        "t": 43.9,
+        "event": "place"
+      },
+      {
+        "t": 43.9,
         "event": "swing"
       },
       {
-        "t": 43.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.8,
-        "event": "place"
-      },
-      {
-        "t": 43.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.8,
-        "event": "place"
-      },
-      {
-        "t": 43.85,
-        "event": "place"
-      },
-      {
-        "t": 43.85,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.85,
-        "event": "place"
-      },
-      {
-        "t": 43.85,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.85,
-        "event": "place"
-      },
-      {
         "t": 43.9,
         "event": "off_aim"
       },
@@ -3146,26 +3181,6 @@
       },
       {
         "t": 43.9,
-        "event": "place"
-      },
-      {
-        "t": 43.95,
-        "event": "place"
-      },
-      {
-        "t": 43.95,
-        "event": "place"
-      },
-      {
-        "t": 43.95,
-        "event": "swing"
-      },
-      {
-        "t": 43.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 43.95,
         "event": "place"
       },
       {
@@ -3185,42 +3200,54 @@
         "event": "place"
       },
       {
-        "t": 44.05,
+        "t": 44,
         "event": "off_aim"
       },
       {
-        "t": 44.05,
+        "t": 44,
         "event": "place"
       },
       {
         "t": 44.05,
+        "event": "swing"
+      },
+      {
+        "t": 44.1,
         "event": "off_aim"
       },
       {
-        "t": 44.05,
+        "t": 44.1,
         "event": "place"
       },
       {
         "t": 44.1,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.1,
+        "event": "place"
+      },
+      {
+        "t": 44.15,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.15,
+        "event": "place"
+      },
+      {
+        "t": 44.15,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.15,
+        "event": "place"
+      },
+      {
+        "t": 44.2,
         "event": "swing"
       },
       {
-        "t": 44.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.15,
-        "event": "place"
-      },
-      {
-        "t": 44.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.15,
-        "event": "place"
-      },
-      {
         "t": 44.2,
         "event": "off_aim"
       },
@@ -3238,57 +3265,53 @@
       },
       {
         "t": 44.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.25,
+        "event": "place"
+      },
+      {
+        "t": 44.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.25,
+        "event": "place"
+      },
+      {
+        "t": 44.25,
+        "event": "place"
+      },
+      {
+        "t": 44.3,
+        "event": "place"
+      },
+      {
+        "t": 44.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.3,
+        "event": "place"
+      },
+      {
+        "t": 44.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.3,
+        "event": "place"
+      },
+      {
+        "t": 44.35,
+        "event": "place"
+      },
+      {
+        "t": 44.35,
         "event": "swing"
       },
       {
-        "t": 44.25,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.25,
-        "event": "place"
-      },
-      {
-        "t": 44.25,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.25,
-        "event": "place"
-      },
-      {
-        "t": 44.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.3,
-        "event": "place"
-      },
-      {
-        "t": 44.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.3,
-        "event": "place"
-      },
-      {
-        "t": 44.3,
-        "event": "place"
-      },
-      {
-        "t": 44.35,
-        "event": "place"
-      },
-      {
-        "t": 44.35,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.35,
-        "event": "place"
-      },
-      {
         "t": 44.35,
         "event": "off_aim"
       },
@@ -3302,10 +3325,6 @@
       },
       {
         "t": 44.4,
-        "event": "swing"
-      },
-      {
-        "t": 44.4,
         "event": "off_aim"
       },
       {
@@ -3313,15 +3332,11 @@
         "event": "place"
       },
       {
-        "t": 44.45,
-        "event": "place"
-      },
-      {
-        "t": 44.45,
+        "t": 44.4,
         "event": "off_aim"
       },
       {
-        "t": 44.45,
+        "t": 44.4,
         "event": "place"
       },
       {
@@ -3334,15 +3349,15 @@
       },
       {
         "t": 44.5,
+        "event": "swing"
+      },
+      {
+        "t": 44.5,
         "event": "off_aim"
       },
       {
         "t": 44.5,
         "event": "place"
-      },
-      {
-        "t": 44.55,
-        "event": "swing"
       },
       {
         "t": 44.55,
@@ -3361,28 +3376,32 @@
         "event": "place"
       },
       {
-        "t": 44.65,
+        "t": 44.6,
         "event": "off_aim"
       },
       {
-        "t": 44.65,
+        "t": 44.6,
         "event": "place"
       },
       {
         "t": 44.65,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.65,
-        "event": "place"
-      },
-      {
-        "t": 44.7,
         "event": "swing"
       },
       {
-        "t": 44.7,
+        "t": 44.65,
         "event": "off_aim"
+      },
+      {
+        "t": 44.65,
+        "event": "place"
+      },
+      {
+        "t": 44.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.65,
+        "event": "place"
       },
       {
         "t": 44.7,
@@ -3397,7 +3416,11 @@
         "event": "place"
       },
       {
-        "t": 44.75,
+        "t": 44.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 44.7,
         "event": "place"
       },
       {
@@ -3418,50 +3441,42 @@
       },
       {
         "t": 44.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.8,
-        "event": "place"
-      },
-      {
-        "t": 44.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 44.8,
-        "event": "place"
-      },
-      {
-        "t": 44.85,
         "event": "cut"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
         "event": "angle"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
         "event": "place"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
         "event": "place"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
         "event": "swing"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
         "event": "place"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
         "event": "place"
       },
       {
-        "t": 44.85,
+        "t": 44.8,
+        "event": "place"
+      },
+      {
+        "t": 44.8,
+        "event": "place"
+      },
+      {
+        "t": 44.8,
         "event": "place"
       },
       {
@@ -3489,16 +3504,16 @@
         "event": "place"
       },
       {
-        "t": 45,
-        "event": "place"
-      },
-      {
-        "t": 45,
-        "event": "place"
-      },
-      {
-        "t": 45,
+        "t": 44.95,
         "event": "swing"
+      },
+      {
+        "t": 45,
+        "event": "place"
+      },
+      {
+        "t": 45,
+        "event": "place"
       },
       {
         "t": 45.05,
@@ -3517,16 +3532,16 @@
         "event": "place"
       },
       {
-        "t": 45.15,
-        "event": "place"
-      },
-      {
-        "t": 45.15,
-        "event": "place"
-      },
-      {
-        "t": 45.15,
+        "t": 45.1,
         "event": "swing"
+      },
+      {
+        "t": 45.15,
+        "event": "place"
+      },
+      {
+        "t": 45.15,
+        "event": "place"
       },
       {
         "t": 45.2,
@@ -3545,16 +3560,16 @@
         "event": "place"
       },
       {
-        "t": 45.3,
-        "event": "place"
-      },
-      {
-        "t": 45.3,
-        "event": "place"
-      },
-      {
-        "t": 45.3,
+        "t": 45.25,
         "event": "swing"
+      },
+      {
+        "t": 45.3,
+        "event": "place"
+      },
+      {
+        "t": 45.3,
+        "event": "place"
       },
       {
         "t": 45.35,
@@ -3573,16 +3588,16 @@
         "event": "place"
       },
       {
-        "t": 45.45,
-        "event": "place"
-      },
-      {
-        "t": 45.45,
-        "event": "place"
-      },
-      {
-        "t": 45.45,
+        "t": 45.4,
         "event": "swing"
+      },
+      {
+        "t": 45.45,
+        "event": "place"
+      },
+      {
+        "t": 45.45,
+        "event": "place"
       },
       {
         "t": 45.5,
@@ -3601,16 +3616,16 @@
         "event": "place"
       },
       {
-        "t": 45.6,
-        "event": "place"
-      },
-      {
-        "t": 45.6,
-        "event": "place"
-      },
-      {
-        "t": 45.6,
+        "t": 45.55,
         "event": "swing"
+      },
+      {
+        "t": 45.6,
+        "event": "place"
+      },
+      {
+        "t": 45.6,
+        "event": "place"
       },
       {
         "t": 45.65,
@@ -3629,16 +3644,16 @@
         "event": "place"
       },
       {
-        "t": 45.75,
-        "event": "place"
-      },
-      {
-        "t": 45.75,
-        "event": "place"
-      },
-      {
-        "t": 45.75,
+        "t": 45.7,
         "event": "swing"
+      },
+      {
+        "t": 45.75,
+        "event": "place"
+      },
+      {
+        "t": 45.75,
+        "event": "place"
       },
       {
         "t": 45.8,
@@ -3657,16 +3672,16 @@
         "event": "place"
       },
       {
-        "t": 45.9,
-        "event": "place"
-      },
-      {
-        "t": 45.9,
-        "event": "place"
-      },
-      {
-        "t": 45.9,
+        "t": 45.85,
         "event": "swing"
+      },
+      {
+        "t": 45.9,
+        "event": "place"
+      },
+      {
+        "t": 45.9,
+        "event": "place"
       },
       {
         "t": 45.95,
@@ -3685,16 +3700,16 @@
         "event": "place"
       },
       {
-        "t": 46.05,
-        "event": "place"
-      },
-      {
-        "t": 46.05,
-        "event": "place"
-      },
-      {
-        "t": 46.05,
+        "t": 46,
         "event": "swing"
+      },
+      {
+        "t": 46.05,
+        "event": "place"
+      },
+      {
+        "t": 46.05,
+        "event": "place"
       },
       {
         "t": 46.1,
@@ -3713,16 +3728,16 @@
         "event": "place"
       },
       {
-        "t": 46.2,
-        "event": "place"
-      },
-      {
-        "t": 46.2,
-        "event": "place"
-      },
-      {
-        "t": 46.2,
+        "t": 46.15,
         "event": "swing"
+      },
+      {
+        "t": 46.2,
+        "event": "place"
+      },
+      {
+        "t": 46.2,
+        "event": "place"
       },
       {
         "t": 46.25,
@@ -3741,16 +3756,20 @@
         "event": "place"
       },
       {
-        "t": 46.35,
-        "event": "place"
-      },
-      {
-        "t": 46.35,
-        "event": "place"
-      },
-      {
-        "t": 46.35,
+        "t": 46.3,
         "event": "swing"
+      },
+      {
+        "t": 46.35,
+        "event": "place"
+      },
+      {
+        "t": 46.4,
+        "event": "place"
+      },
+      {
+        "t": 46.4,
+        "event": "place"
       },
       {
         "t": 46.4,
@@ -3766,19 +3785,15 @@
       },
       {
         "t": 46.45,
-        "event": "place"
-      },
-      {
-        "t": 46.5,
-        "event": "place"
-      },
-      {
-        "t": 46.5,
-        "event": "place"
-      },
-      {
-        "t": 46.5,
         "event": "swing"
+      },
+      {
+        "t": 46.5,
+        "event": "place"
+      },
+      {
+        "t": 46.5,
+        "event": "place"
       },
       {
         "t": 46.55,
@@ -3797,16 +3812,16 @@
         "event": "place"
       },
       {
-        "t": 46.65,
-        "event": "place"
-      },
-      {
-        "t": 46.65,
-        "event": "place"
-      },
-      {
-        "t": 46.65,
+        "t": 46.6,
         "event": "swing"
+      },
+      {
+        "t": 46.65,
+        "event": "place"
+      },
+      {
+        "t": 46.65,
+        "event": "place"
       },
       {
         "t": 46.7,
@@ -3825,16 +3840,16 @@
         "event": "place"
       },
       {
-        "t": 46.8,
-        "event": "place"
-      },
-      {
-        "t": 46.8,
-        "event": "place"
-      },
-      {
-        "t": 46.8,
+        "t": 46.75,
         "event": "swing"
+      },
+      {
+        "t": 46.85,
+        "event": "place"
+      },
+      {
+        "t": 46.85,
+        "event": "place"
       },
       {
         "t": 46.9,
@@ -3845,36 +3860,36 @@
         "event": "place"
       },
       {
-        "t": 46.95,
-        "event": "place"
-      },
-      {
-        "t": 46.95,
-        "event": "place"
-      },
-      {
-        "t": 46.95,
+        "t": 46.9,
         "event": "swing"
       },
       {
-        "t": 47,
+        "t": 46.95,
         "event": "place"
       },
       {
-        "t": 47,
+        "t": 46.95,
         "event": "place"
       },
       {
-        "t": 47,
+        "t": 46.95,
         "event": "off_aim"
       },
       {
-        "t": 47,
+        "t": 46.95,
+        "event": "place"
+      },
+      {
+        "t": 46.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 46.95,
         "event": "place"
       },
       {
         "t": 47,
-        "event": "off_aim"
+        "event": "place"
       },
       {
         "t": 47,
@@ -3889,19 +3904,15 @@
         "event": "place"
       },
       {
-        "t": 47.1,
-        "event": "place"
-      },
-      {
-        "t": 47.1,
-        "event": "place"
-      },
-      {
-        "t": 47.1,
+        "t": 47.05,
         "event": "swing"
       },
       {
-        "t": 47.15,
+        "t": 47.1,
+        "event": "place"
+      },
+      {
+        "t": 47.1,
         "event": "place"
       },
       {
@@ -3913,42 +3924,62 @@
         "event": "place"
       },
       {
-        "t": 47.25,
+        "t": 47.2,
         "event": "place"
       },
       {
-        "t": 47.25,
-        "event": "place"
-      },
-      {
-        "t": 47.25,
+        "t": 47.2,
         "event": "swing"
       },
       {
-        "t": 47.35,
+        "t": 47.3,
         "event": "place"
       },
       {
-        "t": 47.35,
+        "t": 47.3,
         "event": "off_aim"
       },
       {
+        "t": 47.3,
+        "event": "place"
+      },
+      {
         "t": 47.35,
         "event": "place"
       },
       {
-        "t": 47.4,
+        "t": 47.35,
         "event": "place"
       },
       {
-        "t": 47.4,
-        "event": "place"
-      },
-      {
-        "t": 47.4,
+        "t": 47.35,
         "event": "swing"
       },
       {
+        "t": 47.4,
+        "event": "place"
+      },
+      {
+        "t": 47.4,
+        "event": "place"
+      },
+      {
+        "t": 47.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 47.4,
+        "event": "place"
+      },
+      {
+        "t": 47.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 47.4,
+        "event": "place"
+      },
+      {
         "t": 47.45,
         "event": "place"
       },
@@ -3965,14 +3996,6 @@
         "event": "place"
       },
       {
-        "t": 47.45,
-        "event": "off_aim"
-      },
-      {
-        "t": 47.45,
-        "event": "place"
-      },
-      {
         "t": 47.5,
         "event": "place"
       },
@@ -3982,22 +4005,6 @@
       },
       {
         "t": 47.5,
-        "event": "off_aim"
-      },
-      {
-        "t": 47.5,
-        "event": "place"
-      },
-      {
-        "t": 47.55,
-        "event": "place"
-      },
-      {
-        "t": 47.55,
-        "event": "place"
-      },
-      {
-        "t": 47.55,
         "event": "swing"
       },
       {
@@ -4006,14 +4013,6 @@
       },
       {
         "t": 47.6,
-        "event": "place"
-      },
-      {
-        "t": 47.65,
-        "event": "place"
-      },
-      {
-        "t": 47.65,
         "event": "place"
       },
       {
@@ -4022,6 +4021,10 @@
       },
       {
         "t": 47.75,
+        "event": "place"
+      },
+      {
+        "t": 47.8,
         "event": "place"
       },
       {
@@ -4065,24 +4068,16 @@
         "event": "place"
       },
       {
-        "t": 47.95,
-        "event": "place"
-      },
-      {
-        "t": 47.95,
-        "event": "place"
-      },
-      {
-        "t": 47.95,
+        "t": 47.9,
         "event": "off_aim"
       },
       {
-        "t": 47.95,
+        "t": 47.9,
         "event": "place"
       },
       {
         "t": 47.95,
-        "event": "off_aim"
+        "event": "place"
       },
       {
         "t": 47.95,
@@ -4099,10 +4094,6 @@
       {
         "t": 48,
         "event": "swing"
-      },
-      {
-        "t": 48.05,
-        "event": "place"
       },
       {
         "t": 48.05,
@@ -4113,7 +4104,7 @@
         "event": "place"
       },
       {
-        "t": 48.15,
+        "t": 48.1,
         "event": "place"
       },
       {
@@ -4121,7 +4112,19 @@
         "event": "swing"
       },
       {
-        "t": 48.15,
+        "t": 48.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 48.25,
+        "event": "place"
+      },
+      {
+        "t": 48.3,
+        "event": "place"
+      },
+      {
+        "t": 48.3,
         "event": "place"
       },
       {
@@ -4137,6 +4140,14 @@
         "event": "place"
       },
       {
+        "t": 48.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 48.3,
+        "event": "place"
+      },
+      {
         "t": 48.35,
         "event": "place"
       },
@@ -4195,22 +4206,6 @@
       {
         "t": 48.45,
         "event": "swing"
-      },
-      {
-        "t": 48.45,
-        "event": "off_aim"
-      },
-      {
-        "t": 48.45,
-        "event": "place"
-      },
-      {
-        "t": 48.45,
-        "event": "off_aim"
-      },
-      {
-        "t": 48.45,
-        "event": "place"
       },
       {
         "t": 48.5,
@@ -4218,14 +4213,6 @@
       },
       {
         "t": 48.5,
-        "event": "place"
-      },
-      {
-        "t": 48.55,
-        "event": "place"
-      },
-      {
-        "t": 48.55,
         "event": "place"
       },
       {
@@ -4233,6 +4220,22 @@
         "event": "swing"
       },
       {
+        "t": 48.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 48.7,
+        "event": "place"
+      },
+      {
+        "t": 48.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 48.7,
+        "event": "place"
+      },
+      {
         "t": 48.75,
         "event": "swing"
       },
@@ -4254,6 +4257,10 @@
       },
       {
         "t": 48.8,
+        "event": "place"
+      },
+      {
+        "t": 48.8,
         "event": "off_aim"
       },
       {
@@ -4266,6 +4273,10 @@
       },
       {
         "t": 48.8,
+        "event": "place"
+      },
+      {
+        "t": 48.85,
         "event": "place"
       },
       {
@@ -4317,31 +4328,7 @@
         "event": "place"
       },
       {
-        "t": 48.95,
-        "event": "place"
-      },
-      {
-        "t": 48.95,
-        "event": "place"
-      },
-      {
-        "t": 48.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 48.95,
-        "event": "place"
-      },
-      {
-        "t": 48.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 48.95,
-        "event": "place"
-      },
-      {
-        "t": 48.95,
+        "t": 48.9,
         "event": "place"
       },
       {
@@ -4349,6 +4336,22 @@
         "event": "swing"
       },
       {
+        "t": 49.1,
+        "event": "off_aim"
+      },
+      {
+        "t": 49.1,
+        "event": "place"
+      },
+      {
+        "t": 49.1,
+        "event": "off_aim"
+      },
+      {
+        "t": 49.1,
+        "event": "place"
+      },
+      {
         "t": 49.15,
         "event": "off_aim"
       },
@@ -4362,6 +4365,10 @@
       },
       {
         "t": 49.15,
+        "event": "place"
+      },
+      {
+        "t": 49.2,
         "event": "place"
       },
       {
@@ -4410,10 +4417,6 @@
       },
       {
         "t": 49.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 49.3,
         "event": "place"
       },
       {
@@ -4425,11 +4428,11 @@
         "event": "place"
       },
       {
-        "t": 49.35,
-        "event": "place"
+        "t": 49.3,
+        "event": "off_aim"
       },
       {
-        "t": 49.35,
+        "t": 49.3,
         "event": "place"
       },
       {
@@ -4445,20 +4448,16 @@
         "event": "place"
       },
       {
-        "t": 49.35,
-        "event": "off_aim"
-      },
-      {
-        "t": 49.35,
+        "t": 49.45,
         "event": "place"
       },
       {
-        "t": 49.4,
-        "event": "off_aim"
+        "t": 49.5,
+        "event": "swing"
       },
       {
-        "t": 49.4,
-        "event": "place"
+        "t": 49.5,
+        "event": "off_aim"
       },
       {
         "t": 49.5,
@@ -4466,14 +4465,10 @@
       },
       {
         "t": 49.5,
-        "event": "swing"
-      },
-      {
-        "t": 49.55,
         "event": "off_aim"
       },
       {
-        "t": 49.55,
+        "t": 49.5,
         "event": "place"
       },
       {
@@ -4505,11 +4500,11 @@
         "event": "place"
       },
       {
-        "t": 49.7,
+        "t": 49.65,
         "event": "off_aim"
       },
       {
-        "t": 49.7,
+        "t": 49.65,
         "event": "place"
       },
       {
@@ -4529,6 +4524,18 @@
         "event": "place"
       },
       {
+        "t": 49.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 49.75,
+        "event": "place"
+      },
+      {
+        "t": 49.8,
+        "event": "place"
+      },
+      {
         "t": 49.8,
         "event": "swing"
       },
@@ -4541,14 +4548,6 @@
         "event": "place"
       },
       {
-        "t": 49.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 49.8,
-        "event": "place"
-      },
-      {
         "t": 49.85,
         "event": "place"
       },
@@ -4573,39 +4572,35 @@
         "event": "place"
       },
       {
-        "t": 49.95,
+        "t": 49.9,
+        "event": "off_aim"
+      },
+      {
+        "t": 49.9,
         "event": "place"
       },
       {
         "t": 49.95,
         "event": "swing"
-      },
-      {
-        "t": 49.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 49.95,
-        "event": "place"
-      },
-      {
-        "t": 49.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 49.95,
-        "event": "place"
       },
       {
         "t": 50.1,
         "event": "swing"
       },
       {
-        "t": 50.15,
+        "t": 50.1,
         "event": "off_aim"
       },
       {
-        "t": 50.15,
+        "t": 50.1,
+        "event": "place"
+      },
+      {
+        "t": 50.1,
+        "event": "off_aim"
+      },
+      {
+        "t": 50.1,
         "event": "place"
       },
       {
@@ -4618,6 +4613,10 @@
       },
       {
         "t": 50.2,
+        "event": "place"
+      },
+      {
+        "t": 50.2,
         "event": "off_aim"
       },
       {
@@ -4625,7 +4624,11 @@
         "event": "place"
       },
       {
-        "t": 50.25,
+        "t": 50.2,
+        "event": "off_aim"
+      },
+      {
+        "t": 50.2,
         "event": "place"
       },
       {
@@ -4650,10 +4653,6 @@
       },
       {
         "t": 50.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 50.3,
         "event": "place"
       },
       {
@@ -4665,15 +4664,11 @@
         "event": "place"
       },
       {
-        "t": 50.35,
-        "event": "place"
-      },
-      {
-        "t": 50.35,
+        "t": 50.3,
         "event": "off_aim"
       },
       {
-        "t": 50.35,
+        "t": 50.3,
         "event": "place"
       },
       {
@@ -4697,11 +4692,11 @@
         "event": "place"
       },
       {
-        "t": 50.45,
+        "t": 50.4,
         "event": "off_aim"
       },
       {
-        "t": 50.45,
+        "t": 50.4,
         "event": "place"
       },
       {
@@ -4710,6 +4705,14 @@
       },
       {
         "t": 50.45,
+        "event": "place"
+      },
+      {
+        "t": 50.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 50.5,
         "event": "place"
       },
       {
@@ -4774,6 +4777,10 @@
       },
       {
         "t": 50.7,
+        "event": "place"
+      },
+      {
+        "t": 50.7,
         "event": "swing"
       },
       {
@@ -4794,10 +4801,6 @@
       },
       {
         "t": 50.75,
-        "event": "place"
-      },
-      {
-        "t": 50.75,
         "event": "off_aim"
       },
       {
@@ -4814,10 +4817,6 @@
       },
       {
         "t": 50.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 50.8,
         "event": "place"
       },
       {
@@ -4829,7 +4828,11 @@
         "event": "place"
       },
       {
-        "t": 50.85,
+        "t": 50.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 50.8,
         "event": "place"
       },
       {
@@ -4845,11 +4848,11 @@
         "event": "place"
       },
       {
-        "t": 50.85,
+        "t": 50.9,
         "event": "off_aim"
       },
       {
-        "t": 50.85,
+        "t": 50.9,
         "event": "place"
       },
       {
@@ -4869,14 +4872,6 @@
         "event": "place"
       },
       {
-        "t": 50.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 50.95,
-        "event": "place"
-      },
-      {
         "t": 51,
         "event": "swing"
       },
@@ -4889,6 +4884,14 @@
         "event": "place"
       },
       {
+        "t": 51,
+        "event": "off_aim"
+      },
+      {
+        "t": 51,
+        "event": "place"
+      },
+      {
         "t": 51.05,
         "event": "off_aim"
       },
@@ -4921,47 +4924,31 @@
         "event": "place"
       },
       {
-        "t": 51.15,
+        "t": 51.2,
         "event": "swing"
       },
       {
-        "t": 51.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 51.15,
-        "event": "place"
-      },
-      {
-        "t": 51.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 51.15,
-        "event": "place"
-      },
-      {
-        "t": 51.35,
+        "t": 51.4,
         "event": "swing"
       },
       {
-        "t": 51.55,
+        "t": 51.6,
         "event": "swing"
       },
       {
-        "t": 51.75,
+        "t": 51.8,
         "event": "swing"
       },
       {
-        "t": 51.95,
+        "t": 52,
         "event": "swing"
       },
       {
-        "t": 52.15,
+        "t": 52.2,
         "event": "swing"
       },
       {
-        "t": 52.35,
+        "t": 52.4,
         "event": "swing"
       },
       {
@@ -4969,6 +4956,26 @@
         "event": "swing"
       },
       {
+        "t": 52.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 52.65,
+        "event": "place"
+      },
+      {
+        "t": 52.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 52.65,
+        "event": "place"
+      },
+      {
+        "t": 52.7,
+        "event": "place"
+      },
+      {
         "t": 52.7,
         "event": "swing"
       },
@@ -4990,10 +4997,6 @@
       },
       {
         "t": 52.75,
-        "event": "place"
-      },
-      {
-        "t": 52.75,
         "event": "off_aim"
       },
       {
@@ -5010,10 +5013,6 @@
       },
       {
         "t": 52.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 52.8,
         "event": "place"
       },
       {
@@ -5025,7 +5024,11 @@
         "event": "place"
       },
       {
-        "t": 52.85,
+        "t": 52.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 52.8,
         "event": "place"
       },
       {
@@ -5041,11 +5044,11 @@
         "event": "place"
       },
       {
-        "t": 52.85,
+        "t": 52.9,
         "event": "off_aim"
       },
       {
-        "t": 52.85,
+        "t": 52.9,
         "event": "place"
       },
       {
@@ -5065,14 +5068,6 @@
         "event": "place"
       },
       {
-        "t": 52.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 52.95,
-        "event": "place"
-      },
-      {
         "t": 53,
         "event": "swing"
       },
@@ -5085,6 +5080,14 @@
         "event": "place"
       },
       {
+        "t": 53,
+        "event": "off_aim"
+      },
+      {
+        "t": 53,
+        "event": "place"
+      },
+      {
         "t": 53.05,
         "event": "off_aim"
       },
@@ -5637,51 +5640,43 @@
         "event": "place"
       },
       {
-        "t": 54.65,
+        "t": 54.7,
         "event": "swing"
       },
       {
-        "t": 54.65,
+        "t": 54.9,
+        "event": "swing"
+      },
+      {
+        "t": 55.1,
+        "event": "swing"
+      },
+      {
+        "t": 55.3,
+        "event": "swing"
+      },
+      {
+        "t": 55.5,
+        "event": "swing"
+      },
+      {
+        "t": 55.65,
+        "event": "swing"
+      },
+      {
+        "t": 55.65,
         "event": "off_aim"
       },
       {
-        "t": 54.65,
+        "t": 55.65,
         "event": "place"
       },
       {
-        "t": 54.65,
+        "t": 55.65,
         "event": "off_aim"
       },
       {
-        "t": 54.65,
-        "event": "place"
-      },
-      {
-        "t": 54.85,
-        "event": "swing"
-      },
-      {
-        "t": 55.05,
-        "event": "swing"
-      },
-      {
-        "t": 55.25,
-        "event": "swing"
-      },
-      {
-        "t": 55.45,
-        "event": "swing"
-      },
-      {
-        "t": 55.6,
-        "event": "swing"
-      },
-      {
-        "t": 55.7,
-        "event": "off_aim"
-      },
-      {
-        "t": 55.7,
+        "t": 55.65,
         "event": "place"
       },
       {
@@ -5693,24 +5688,32 @@
         "event": "place"
       },
       {
+        "t": 55.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 55.7,
+        "event": "place"
+      },
+      {
         "t": 55.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 55.75,
+        "event": "place"
+      },
+      {
+        "t": 55.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 55.75,
+        "event": "place"
+      },
+      {
+        "t": 55.8,
         "event": "swing"
-      },
-      {
-        "t": 55.75,
-        "event": "off_aim"
-      },
-      {
-        "t": 55.75,
-        "event": "place"
-      },
-      {
-        "t": 55.75,
-        "event": "off_aim"
-      },
-      {
-        "t": 55.75,
-        "event": "place"
       },
       {
         "t": 55.8,
@@ -5746,25 +5749,25 @@
       },
       {
         "t": 55.9,
+        "event": "off_aim"
+      },
+      {
+        "t": 55.9,
+        "event": "place"
+      },
+      {
+        "t": 55.9,
+        "event": "off_aim"
+      },
+      {
+        "t": 55.9,
+        "event": "place"
+      },
+      {
+        "t": 55.95,
         "event": "swing"
       },
       {
-        "t": 55.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 55.9,
-        "event": "place"
-      },
-      {
-        "t": 55.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 55.9,
-        "event": "place"
-      },
-      {
         "t": 55.95,
         "event": "off_aim"
       },
@@ -5798,25 +5801,25 @@
       },
       {
         "t": 56.05,
+        "event": "off_aim"
+      },
+      {
+        "t": 56.05,
+        "event": "place"
+      },
+      {
+        "t": 56.05,
+        "event": "off_aim"
+      },
+      {
+        "t": 56.05,
+        "event": "place"
+      },
+      {
+        "t": 56.1,
         "event": "swing"
       },
       {
-        "t": 56.05,
-        "event": "off_aim"
-      },
-      {
-        "t": 56.05,
-        "event": "place"
-      },
-      {
-        "t": 56.05,
-        "event": "off_aim"
-      },
-      {
-        "t": 56.05,
-        "event": "place"
-      },
-      {
         "t": 56.1,
         "event": "off_aim"
       },
@@ -5846,6 +5849,22 @@
       },
       {
         "t": 56.15,
+        "event": "place"
+      },
+      {
+        "t": 56.2,
+        "event": "off_aim"
+      },
+      {
+        "t": 56.2,
+        "event": "place"
+      },
+      {
+        "t": 56.2,
+        "event": "off_aim"
+      },
+      {
+        "t": 56.2,
         "event": "place"
       },
       {
@@ -6042,30 +6061,30 @@
       },
       {
         "t": 56.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 56.8,
-        "event": "place"
-      },
-      {
-        "t": 56.8,
-        "event": "off_aim"
-      },
-      {
-        "t": 56.8,
-        "event": "place"
-      },
-      {
-        "t": 56.85,
         "event": "cut"
       },
       {
-        "t": 56.85,
+        "t": 56.8,
         "event": "angle"
       },
       {
-        "t": 56.85,
+        "t": 56.8,
+        "event": "place"
+      },
+      {
+        "t": 56.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 56.8,
+        "event": "place"
+      },
+      {
+        "t": 56.8,
+        "event": "off_aim"
+      },
+      {
+        "t": 56.8,
         "event": "place"
       },
       {
@@ -6090,6 +6109,10 @@
       },
       {
         "t": 56.9,
+        "event": "place"
+      },
+      {
+        "t": 56.9,
         "event": "off_aim"
       },
       {
@@ -6107,10 +6130,6 @@
       {
         "t": 56.95,
         "event": "place"
-      },
-      {
-        "t": 56.95,
-        "event": "off_aim"
       },
       {
         "t": 56.95,
@@ -6145,16 +6164,12 @@
         "event": "place"
       },
       {
-        "t": 57.05,
-        "event": "place"
-      },
-      {
-        "t": 57.05,
-        "event": "place"
-      },
-      {
-        "t": 57.05,
+        "t": 57,
         "event": "off_aim"
+      },
+      {
+        "t": 57,
+        "event": "place"
       },
       {
         "t": 57.05,
@@ -6174,18 +6189,6 @@
       },
       {
         "t": 57.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 57.1,
-        "event": "place"
-      },
-      {
-        "t": 57.15,
-        "event": "place"
-      },
-      {
-        "t": 57.15,
         "event": "place"
       },
       {
@@ -6193,11 +6196,15 @@
         "event": "swing"
       },
       {
-        "t": 57.25,
+        "t": 57.2,
         "event": "off_aim"
       },
       {
-        "t": 57.25,
+        "t": 57.2,
+        "event": "place"
+      },
+      {
+        "t": 57.3,
         "event": "place"
       },
       {
@@ -6205,7 +6212,19 @@
         "event": "swing"
       },
       {
-        "t": 57.35,
+        "t": 57.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 57.3,
+        "event": "place"
+      },
+      {
+        "t": 57.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 57.3,
         "event": "place"
       },
       {
@@ -6226,6 +6245,10 @@
       },
       {
         "t": 57.4,
+        "event": "place"
+      },
+      {
+        "t": 57.4,
         "event": "off_aim"
       },
       {
@@ -6238,6 +6261,14 @@
       },
       {
         "t": 57.4,
+        "event": "place"
+      },
+      {
+        "t": 57.4,
+        "event": "place"
+      },
+      {
+        "t": 57.45,
         "event": "place"
       },
       {
@@ -6257,31 +6288,19 @@
         "event": "place"
       },
       {
-        "t": 57.45,
-        "event": "off_aim"
-      },
-      {
-        "t": 57.45,
-        "event": "place"
-      },
-      {
-        "t": 57.45,
-        "event": "place"
-      },
-      {
-        "t": 57.5,
-        "event": "place"
-      },
-      {
-        "t": 57.5,
-        "event": "place"
-      },
-      {
         "t": 57.5,
         "event": "off_aim"
       },
       {
         "t": 57.5,
+        "event": "place"
+      },
+      {
+        "t": 57.55,
+        "event": "place"
+      },
+      {
+        "t": 57.55,
         "event": "place"
       },
       {
@@ -6305,14 +6324,6 @@
         "event": "swing"
       },
       {
-        "t": 57.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 57.6,
-        "event": "place"
-      },
-      {
         "t": 57.65,
         "event": "place"
       },
@@ -6326,10 +6337,6 @@
       },
       {
         "t": 57.7,
-        "event": "place"
-      },
-      {
-        "t": 57.75,
         "event": "place"
       },
       {
@@ -6345,7 +6352,7 @@
         "event": "place"
       },
       {
-        "t": 57.85,
+        "t": 57.8,
         "event": "place"
       },
       {
@@ -6353,11 +6360,7 @@
         "event": "place"
       },
       {
-        "t": 57.9,
-        "event": "place"
-      },
-      {
-        "t": 57.9,
+        "t": 57.85,
         "event": "place"
       },
       {
@@ -6365,8 +6368,12 @@
         "event": "swing"
       },
       {
-        "t": 57.95,
+        "t": 57.9,
         "event": "off_aim"
+      },
+      {
+        "t": 57.9,
+        "event": "place"
       },
       {
         "t": 57.95,
@@ -6385,15 +6392,19 @@
         "event": "swing"
       },
       {
-        "t": 58.1,
-        "event": "place"
-      },
-      {
-        "t": 58.1,
+        "t": 58.05,
         "event": "off_aim"
       },
       {
-        "t": 58.1,
+        "t": 58.05,
+        "event": "place"
+      },
+      {
+        "t": 58.05,
+        "event": "off_aim"
+      },
+      {
+        "t": 58.05,
         "event": "place"
       },
       {
@@ -6406,10 +6417,18 @@
       },
       {
         "t": 58.15,
+        "event": "place"
+      },
+      {
+        "t": 58.15,
         "event": "off_aim"
       },
       {
         "t": 58.15,
+        "event": "place"
+      },
+      {
+        "t": 58.2,
         "event": "place"
       },
       {
@@ -6445,7 +6464,11 @@
         "event": "place"
       },
       {
-        "t": 58.3,
+        "t": 58.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 58.25,
         "event": "place"
       },
       {
@@ -6458,18 +6481,6 @@
       },
       {
         "t": 58.3,
-        "event": "place"
-      },
-      {
-        "t": 58.3,
-        "event": "off_aim"
-      },
-      {
-        "t": 58.3,
-        "event": "place"
-      },
-      {
-        "t": 58.35,
         "event": "place"
       },
       {
@@ -6477,12 +6488,20 @@
         "event": "swing"
       },
       {
-        "t": 58.35,
-        "event": "off_aim"
+        "t": 58.4,
+        "event": "place"
       },
       {
-        "t": 58.35,
+        "t": 58.45,
         "event": "place"
+      },
+      {
+        "t": 58.45,
+        "event": "place"
+      },
+      {
+        "t": 58.45,
+        "event": "off_aim"
       },
       {
         "t": 58.45,
@@ -6494,10 +6513,6 @@
       },
       {
         "t": 58.5,
-        "event": "place"
-      },
-      {
-        "t": 58.5,
         "event": "swing"
       },
       {
@@ -6509,12 +6524,12 @@
         "event": "place"
       },
       {
-        "t": 58.55,
-        "event": "place"
+        "t": 58.5,
+        "event": "off_aim"
       },
       {
-        "t": 58.55,
-        "event": "off_aim"
+        "t": 58.5,
+        "event": "place"
       },
       {
         "t": 58.55,
@@ -6534,38 +6549,30 @@
       },
       {
         "t": 58.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 58.6,
         "event": "place"
       },
       {
-        "t": 58.65,
+        "t": 58.7,
         "event": "place"
       },
       {
-        "t": 58.65,
+        "t": 58.7,
         "event": "place"
       },
       {
-        "t": 58.65,
+        "t": 58.7,
         "event": "swing"
       },
       {
         "t": 58.7,
-        "event": "place"
-      },
-      {
-        "t": 58.7,
-        "event": "place"
-      },
-      {
-        "t": 58.7,
         "event": "off_aim"
       },
       {
         "t": 58.7,
+        "event": "place"
+      },
+      {
+        "t": 58.75,
         "event": "place"
       },
       {
@@ -6587,10 +6594,6 @@
       {
         "t": 58.8,
         "event": "place"
-      },
-      {
-        "t": 58.8,
-        "event": "swing"
       },
       {
         "t": 58.85,
@@ -6601,40 +6604,36 @@
         "event": "place"
       },
       {
-        "t": 58.9,
-        "event": "place"
-      },
-      {
-        "t": 58.9,
-        "event": "place"
-      },
-      {
-        "t": 58.9,
-        "event": "off_aim"
-      },
-      {
-        "t": 58.9,
-        "event": "place"
-      },
-      {
-        "t": 58.95,
-        "event": "place"
-      },
-      {
-        "t": 58.95,
-        "event": "place"
-      },
-      {
-        "t": 58.95,
+        "t": 58.85,
         "event": "swing"
       },
       {
+        "t": 58.9,
+        "event": "place"
+      },
+      {
+        "t": 58.9,
+        "event": "place"
+      },
+      {
+        "t": 58.95,
+        "event": "place"
+      },
+      {
+        "t": 58.95,
+        "event": "place"
+      },
+      {
         "t": 59,
         "event": "place"
       },
       {
         "t": 59,
         "event": "place"
+      },
+      {
+        "t": 59,
+        "event": "swing"
       },
       {
         "t": 59.05,
@@ -6647,49 +6646,49 @@
       {
         "t": 59.1,
         "event": "place"
-      },
-      {
-        "t": 59.1,
-        "event": "place"
-      },
-      {
-        "t": 59.1,
-        "event": "swing"
       },
       {
         "t": 59.15,
         "event": "place"
       },
       {
-        "t": 59.2,
+        "t": 59.15,
         "event": "place"
       },
       {
-        "t": 59.2,
-        "event": "place"
-      },
-      {
-        "t": 59.25,
-        "event": "place"
-      },
-      {
-        "t": 59.25,
-        "event": "place"
-      },
-      {
-        "t": 59.25,
+        "t": 59.15,
         "event": "swing"
       },
       {
+        "t": 59.2,
+        "event": "place"
+      },
+      {
+        "t": 59.2,
+        "event": "place"
+      },
+      {
+        "t": 59.25,
+        "event": "place"
+      },
+      {
+        "t": 59.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 59.25,
+        "event": "place"
+      },
+      {
         "t": 59.3,
         "event": "place"
       },
       {
         "t": 59.3,
-        "event": "off_aim"
+        "event": "swing"
       },
       {
-        "t": 59.3,
+        "t": 59.35,
         "event": "place"
       },
       {
@@ -6702,15 +6701,19 @@
       },
       {
         "t": 59.4,
-        "event": "place"
+        "event": "off_aim"
       },
       {
         "t": 59.4,
-        "event": "swing"
+        "event": "place"
       },
       {
         "t": 59.45,
         "event": "place"
+      },
+      {
+        "t": 59.45,
+        "event": "swing"
       },
       {
         "t": 59.45,
@@ -6725,28 +6728,24 @@
         "event": "place"
       },
       {
-        "t": 59.5,
+        "t": 59.55,
+        "event": "place"
+      },
+      {
+        "t": 59.55,
+        "event": "place"
+      },
+      {
+        "t": 59.55,
         "event": "off_aim"
       },
       {
-        "t": 59.5,
-        "event": "place"
-      },
-      {
         "t": 59.55,
         "event": "place"
       },
       {
-        "t": 59.55,
+        "t": 59.6,
         "event": "swing"
-      },
-      {
-        "t": 59.6,
-        "event": "place"
-      },
-      {
-        "t": 59.6,
-        "event": "place"
       },
       {
         "t": 59.6,
@@ -6766,15 +6765,31 @@
       },
       {
         "t": 59.7,
+        "event": "place"
+      },
+      {
+        "t": 59.75,
+        "event": "place"
+      },
+      {
+        "t": 59.75,
+        "event": "place"
+      },
+      {
+        "t": 59.75,
         "event": "swing"
       },
       {
-        "t": 59.7,
+        "t": 59.75,
         "event": "off_aim"
       },
       {
-        "t": 59.7,
+        "t": 59.75,
         "event": "place"
+      },
+      {
+        "t": 59.75,
+        "event": "off_aim"
       },
       {
         "t": 59.75,
@@ -6786,10 +6801,6 @@
       },
       {
         "t": 59.8,
-        "event": "place"
-      },
-      {
-        "t": 59.8,
         "event": "off_aim"
       },
       {
@@ -6803,26 +6814,6 @@
       {
         "t": 59.8,
         "event": "place"
-      },
-      {
-        "t": 59.85,
-        "event": "place"
-      },
-      {
-        "t": 59.85,
-        "event": "swing"
-      },
-      {
-        "t": 59.85,
-        "event": "off_aim"
-      },
-      {
-        "t": 59.85,
-        "event": "place"
-      },
-      {
-        "t": 59.85,
-        "event": "off_aim"
       },
       {
         "t": 59.85,
@@ -6830,21 +6821,37 @@
       },
       {
         "t": 59.9,
-        "event": "place"
-      },
-      {
-        "t": 60,
-        "event": "place"
-      },
-      {
-        "t": 60,
-        "event": "place"
-      },
-      {
-        "t": 60,
         "event": "swing"
       },
       {
+        "t": 59.95,
+        "event": "place"
+      },
+      {
+        "t": 59.95,
+        "event": "place"
+      },
+      {
+        "t": 59.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 59.95,
+        "event": "place"
+      },
+      {
+        "t": 60,
+        "event": "place"
+      },
+      {
+        "t": 60,
+        "event": "off_aim"
+      },
+      {
+        "t": 60,
+        "event": "place"
+      },
+      {
         "t": 60,
         "event": "off_aim"
       },
@@ -6858,59 +6865,51 @@
       },
       {
         "t": 60.05,
-        "event": "off_aim"
-      },
-      {
-        "t": 60.05,
-        "event": "place"
-      },
-      {
-        "t": 60.05,
-        "event": "off_aim"
-      },
-      {
-        "t": 60.05,
-        "event": "place"
-      },
-      {
-        "t": 60.1,
-        "event": "place"
-      },
-      {
-        "t": 60.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 60.1,
-        "event": "place"
-      },
-      {
-        "t": 60.1,
-        "event": "off_aim"
-      },
-      {
-        "t": 60.1,
-        "event": "place"
-      },
-      {
-        "t": 60.15,
-        "event": "place"
-      },
-      {
-        "t": 60.15,
-        "event": "place"
-      },
-      {
-        "t": 60.15,
         "event": "swing"
       },
       {
-        "t": 60.2,
+        "t": 60.05,
+        "event": "off_aim"
+      },
+      {
+        "t": 60.05,
+        "event": "place"
+      },
+      {
+        "t": 60.05,
+        "event": "off_aim"
+      },
+      {
+        "t": 60.05,
+        "event": "place"
+      },
+      {
+        "t": 60.1,
+        "event": "place"
+      },
+      {
+        "t": 60.1,
+        "event": "place"
+      },
+      {
+        "t": 60.15,
+        "event": "place"
+      },
+      {
+        "t": 60.15,
+        "event": "place"
+      },
+      {
+        "t": 60.15,
+        "event": "off_aim"
+      },
+      {
+        "t": 60.15,
         "event": "place"
       },
       {
         "t": 60.2,
-        "event": "place"
+        "event": "swing"
       },
       {
         "t": 60.2,
@@ -6922,7 +6921,7 @@
       },
       {
         "t": 60.25,
-        "event": "off_aim"
+        "event": "place"
       },
       {
         "t": 60.25,
@@ -6937,10 +6936,6 @@
         "event": "place"
       },
       {
-        "t": 60.3,
-        "event": "swing"
-      },
-      {
         "t": 60.35,
         "event": "place"
       },
@@ -6949,48 +6944,52 @@
         "event": "place"
       },
       {
-        "t": 60.4,
-        "event": "place"
-      },
-      {
-        "t": 60.4,
-        "event": "place"
-      },
-      {
-        "t": 60.4,
-        "event": "off_aim"
-      },
-      {
-        "t": 60.4,
-        "event": "place"
-      },
-      {
-        "t": 60.4,
-        "event": "off_aim"
-      },
-      {
-        "t": 60.4,
-        "event": "place"
-      },
-      {
-        "t": 60.45,
-        "event": "place"
-      },
-      {
-        "t": 60.45,
-        "event": "place"
-      },
-      {
-        "t": 60.45,
+        "t": 60.35,
         "event": "swing"
       },
       {
+        "t": 60.35,
+        "event": "off_aim"
+      },
+      {
+        "t": 60.35,
+        "event": "place"
+      },
+      {
+        "t": 60.35,
+        "event": "off_aim"
+      },
+      {
+        "t": 60.35,
+        "event": "place"
+      },
+      {
+        "t": 60.4,
+        "event": "place"
+      },
+      {
+        "t": 60.4,
+        "event": "place"
+      },
+      {
+        "t": 60.45,
+        "event": "place"
+      },
+      {
+        "t": 60.45,
+        "event": "place"
+      },
+      {
         "t": 60.5,
         "event": "place"
       },
       {
         "t": 60.5,
         "event": "place"
+      },
+      {
+        "t": 60.5,
+        "event": "swing"
       },
       {
         "t": 60.55,
@@ -7009,16 +7008,16 @@
         "event": "place"
       },
       {
-        "t": 60.6,
+        "t": 60.65,
+        "event": "place"
+      },
+      {
+        "t": 60.65,
+        "event": "place"
+      },
+      {
+        "t": 60.65,
         "event": "swing"
-      },
-      {
-        "t": 60.65,
-        "event": "place"
-      },
-      {
-        "t": 60.65,
-        "event": "place"
       },
       {
         "t": 60.7,
@@ -7031,18 +7030,14 @@
       {
         "t": 60.75,
         "event": "place"
-      },
-      {
-        "t": 60.75,
-        "event": "place"
-      },
-      {
-        "t": 60.75,
-        "event": "swing"
       },
       {
         "t": 60.8,
         "event": "place"
+      },
+      {
+        "t": 60.8,
+        "event": "swing"
       },
       {
         "t": 60.85,
@@ -7054,15 +7049,19 @@
       },
       {
         "t": 60.9,
+        "event": "place"
+      },
+      {
+        "t": 60.9,
+        "event": "off_aim"
+      },
+      {
+        "t": 60.9,
+        "event": "place"
+      },
+      {
+        "t": 60.95,
         "event": "swing"
-      },
-      {
-        "t": 60.95,
-        "event": "place"
-      },
-      {
-        "t": 60.95,
-        "event": "place"
       },
       {
         "t": 60.95,
@@ -7070,6 +7069,14 @@
       },
       {
         "t": 60.95,
+        "event": "place"
+      },
+      {
+        "t": 61,
+        "event": "place"
+      },
+      {
+        "t": 61,
         "event": "place"
       },
       {
@@ -7085,20 +7092,28 @@
         "event": "place"
       },
       {
-        "t": 61.05,
+        "t": 61.1,
         "event": "place"
       },
       {
-        "t": 61.05,
+        "t": 61.1,
+        "event": "place"
+      },
+      {
+        "t": 61.1,
         "event": "swing"
       },
       {
-        "t": 61.05,
+        "t": 61.1,
         "event": "off_aim"
       },
       {
-        "t": 61.05,
+        "t": 61.1,
         "event": "place"
+      },
+      {
+        "t": 61.1,
+        "event": "off_aim"
       },
       {
         "t": 61.1,
@@ -7113,48 +7128,32 @@
         "event": "place"
       },
       {
-        "t": 61.15,
+        "t": 61.2,
+        "event": "place"
+      },
+      {
+        "t": 61.2,
+        "event": "place"
+      },
+      {
+        "t": 61.2,
         "event": "off_aim"
       },
       {
-        "t": 61.15,
-        "event": "place"
-      },
-      {
-        "t": 61.15,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.15,
-        "event": "place"
-      },
-      {
         "t": 61.2,
         "event": "place"
       },
       {
-        "t": 61.2,
+        "t": 61.25,
         "event": "place"
       },
       {
-        "t": 61.2,
+        "t": 61.25,
+        "event": "place"
+      },
+      {
+        "t": 61.25,
         "event": "swing"
-      },
-      {
-        "t": 61.25,
-        "event": "place"
-      },
-      {
-        "t": 61.25,
-        "event": "place"
-      },
-      {
-        "t": 61.25,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.25,
-        "event": "place"
       },
       {
         "t": 61.3,
@@ -7173,23 +7172,15 @@
         "event": "place"
       },
       {
-        "t": 61.35,
+        "t": 61.4,
         "event": "swing"
       },
       {
-        "t": 61.4,
-        "event": "place"
-      },
-      {
-        "t": 61.4,
+        "t": 61.5,
         "event": "place"
       },
       {
         "t": 61.5,
-        "event": "swing"
-      },
-      {
-        "t": 61.55,
         "event": "place"
       },
       {
@@ -7197,66 +7188,78 @@
         "event": "place"
       },
       {
-        "t": 61.6,
-        "event": "place"
-      },
-      {
-        "t": 61.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.6,
-        "event": "place"
-      },
-      {
-        "t": 61.6,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.6,
-        "event": "place"
-      },
-      {
-        "t": 61.65,
+        "t": 61.55,
         "event": "swing"
       },
       {
-        "t": 61.65,
+        "t": 61.55,
         "event": "off_aim"
       },
       {
-        "t": 61.65,
+        "t": 61.55,
         "event": "place"
       },
       {
-        "t": 61.65,
+        "t": 61.55,
         "event": "off_aim"
       },
       {
-        "t": 61.65,
+        "t": 61.55,
         "event": "place"
       },
       {
-        "t": 61.75,
-        "event": "place"
-      },
-      {
-        "t": 61.75,
-        "event": "place"
-      },
-      {
-        "t": 61.75,
+        "t": 61.6,
         "event": "off_aim"
       },
       {
-        "t": 61.75,
+        "t": 61.6,
         "event": "place"
       },
       {
-        "t": 61.8,
+        "t": 61.6,
+        "event": "off_aim"
+      },
+      {
+        "t": 61.6,
+        "event": "place"
+      },
+      {
+        "t": 61.7,
+        "event": "place"
+      },
+      {
+        "t": 61.7,
+        "event": "place"
+      },
+      {
+        "t": 61.7,
         "event": "swing"
       },
       {
+        "t": 61.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 61.7,
+        "event": "place"
+      },
+      {
+        "t": 61.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 61.75,
+        "event": "place"
+      },
+      {
+        "t": 61.75,
+        "event": "off_aim"
+      },
+      {
+        "t": 61.75,
+        "event": "place"
+      },
+      {
         "t": 61.8,
         "event": "off_aim"
       },
@@ -7274,19 +7277,31 @@
       },
       {
         "t": 61.85,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.85,
         "event": "place"
       },
       {
         "t": 61.85,
+        "event": "swing"
+      },
+      {
+        "t": 61.9,
+        "event": "place"
+      },
+      {
+        "t": 61.9,
+        "event": "place"
+      },
+      {
+        "t": 61.9,
         "event": "off_aim"
       },
       {
-        "t": 61.85,
+        "t": 61.9,
         "event": "place"
+      },
+      {
+        "t": 61.9,
+        "event": "off_aim"
       },
       {
         "t": 61.9,
@@ -7302,41 +7317,29 @@
       },
       {
         "t": 61.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 61.95,
+        "event": "place"
+      },
+      {
+        "t": 61.95,
+        "event": "off_aim"
+      },
+      {
+        "t": 61.95,
+        "event": "place"
+      },
+      {
+        "t": 62,
+        "event": "place"
+      },
+      {
+        "t": 62,
         "event": "swing"
       },
       {
-        "t": 61.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.95,
-        "event": "place"
-      },
-      {
-        "t": 61.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 61.95,
-        "event": "place"
-      },
-      {
-        "t": 62,
-        "event": "place"
-      },
-      {
-        "t": 62,
-        "event": "place"
-      },
-      {
-        "t": 62,
-        "event": "off_aim"
-      },
-      {
-        "t": 62,
-        "event": "place"
-      },
-      {
         "t": 62,
         "event": "off_aim"
       },
@@ -7350,34 +7353,38 @@
       },
       {
         "t": 62.05,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.05,
         "event": "place"
       },
       {
-        "t": 62.1,
-        "event": "place"
-      },
-      {
-        "t": 62.1,
-        "event": "place"
-      },
-      {
-        "t": 62.1,
+        "t": 62.15,
         "event": "swing"
       },
       {
-        "t": 62.2,
+        "t": 62.15,
         "event": "off_aim"
       },
       {
-        "t": 62.2,
+        "t": 62.15,
         "event": "place"
       },
       {
         "t": 62.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 62.25,
+        "event": "place"
+      },
+      {
+        "t": 62.25,
+        "event": "off_aim"
+      },
+      {
+        "t": 62.25,
+        "event": "place"
+      },
+      {
+        "t": 62.3,
         "event": "swing"
       },
       {
@@ -7414,25 +7421,25 @@
       },
       {
         "t": 62.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 62.4,
+        "event": "place"
+      },
+      {
+        "t": 62.4,
+        "event": "off_aim"
+      },
+      {
+        "t": 62.4,
+        "event": "place"
+      },
+      {
+        "t": 62.45,
         "event": "swing"
       },
       {
-        "t": 62.4,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.4,
-        "event": "place"
-      },
-      {
-        "t": 62.4,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.4,
-        "event": "place"
-      },
-      {
         "t": 62.45,
         "event": "off_aim"
       },
@@ -7466,23 +7473,23 @@
       },
       {
         "t": 62.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 62.55,
+        "event": "place"
+      },
+      {
+        "t": 62.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 62.55,
+        "event": "place"
+      },
+      {
+        "t": 62.6,
         "event": "swing"
-      },
-      {
-        "t": 62.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.55,
-        "event": "place"
-      },
-      {
-        "t": 62.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.55,
-        "event": "place"
       },
       {
         "t": 62.6,
@@ -7525,587 +7532,579 @@
         "event": "place"
       },
       {
-        "t": 62.7,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.7,
-        "event": "place"
-      },
-      {
-        "t": 62.75,
+        "t": 62.8,
         "event": "swing"
       },
       {
-        "t": 62.75,
-        "event": "off_aim"
-      },
-      {
-        "t": 62.75,
-        "event": "place"
-      },
-      {
-        "t": 62.95,
+        "t": 63,
         "event": "swing"
       },
       {
-        "t": 63.15,
+        "t": 63.2,
         "event": "swing"
       },
       {
-        "t": 63.35,
+        "t": 63.4,
         "event": "swing"
       },
       {
-        "t": 63.55,
+        "t": 63.6,
         "event": "swing"
       },
       {
-        "t": 63.75,
+        "t": 63.8,
         "event": "swing"
       },
       {
-        "t": 63.95,
+        "t": 64,
         "event": "swing"
       },
       {
-        "t": 64.15,
+        "t": 64.2,
         "event": "swing"
       },
       {
-        "t": 64.35,
+        "t": 64.4,
         "event": "swing"
       },
       {
-        "t": 64.55,
+        "t": 64.6,
         "event": "swing"
       },
       {
-        "t": 64.75,
+        "t": 64.8,
         "event": "swing"
       },
       {
-        "t": 64.95,
+        "t": 65,
         "event": "swing"
       },
       {
-        "t": 65.15,
+        "t": 65.2,
         "event": "swing"
       },
       {
-        "t": 65.35,
+        "t": 65.4,
         "event": "swing"
       },
       {
-        "t": 65.55,
+        "t": 65.6,
         "event": "swing"
       },
       {
-        "t": 65.75,
+        "t": 65.8,
         "event": "swing"
       },
       {
-        "t": 65.95,
+        "t": 66,
         "event": "swing"
       },
       {
-        "t": 66.15,
+        "t": 66.2,
         "event": "swing"
       },
       {
-        "t": 66.35,
+        "t": 66.4,
         "event": "swing"
       },
       {
-        "t": 66.55,
+        "t": 66.6,
         "event": "swing"
       },
       {
-        "t": 66.75,
+        "t": 66.8,
         "event": "swing"
       },
       {
-        "t": 66.95,
+        "t": 67,
         "event": "swing"
       },
       {
-        "t": 67.15,
+        "t": 67.2,
         "event": "swing"
       },
       {
-        "t": 67.35,
+        "t": 67.4,
         "event": "swing"
       },
       {
-        "t": 67.55,
+        "t": 67.6,
         "event": "swing"
       },
       {
-        "t": 67.75,
+        "t": 67.8,
         "event": "swing"
       },
       {
-        "t": 67.95,
+        "t": 68,
         "event": "swing"
       },
       {
-        "t": 68.15,
+        "t": 68.2,
         "event": "swing"
       },
       {
-        "t": 68.35,
+        "t": 68.4,
         "event": "swing"
       },
       {
-        "t": 68.55,
+        "t": 68.6,
         "event": "swing"
       },
       {
-        "t": 68.75,
-        "event": "swing"
-      },
-      {
-        "t": 68.85,
+        "t": 68.8,
         "event": "cut"
       },
       {
-        "t": 68.85,
+        "t": 68.8,
         "event": "angle"
       },
       {
-        "t": 69.05,
+        "t": 68.8,
         "event": "swing"
       },
       {
-        "t": 69.25,
+        "t": 69,
         "event": "swing"
       },
       {
-        "t": 69.45,
+        "t": 69.2,
         "event": "swing"
       },
       {
-        "t": 69.65,
+        "t": 69.4,
         "event": "swing"
       },
       {
-        "t": 69.85,
+        "t": 69.6,
         "event": "swing"
       },
       {
-        "t": 70.05,
+        "t": 69.8,
         "event": "swing"
       },
       {
-        "t": 70.25,
+        "t": 70,
         "event": "swing"
       },
       {
-        "t": 70.45,
+        "t": 70.2,
         "event": "swing"
       },
       {
-        "t": 70.65,
+        "t": 70.4,
         "event": "swing"
       },
       {
-        "t": 70.85,
+        "t": 70.6,
         "event": "swing"
       },
       {
-        "t": 71.05,
+        "t": 70.8,
         "event": "swing"
       },
       {
-        "t": 71.25,
+        "t": 71,
         "event": "swing"
       },
       {
-        "t": 71.45,
+        "t": 71.2,
         "event": "swing"
       },
       {
-        "t": 71.65,
+        "t": 71.4,
         "event": "swing"
       },
       {
-        "t": 71.85,
+        "t": 71.6,
         "event": "swing"
       },
       {
-        "t": 72.05,
+        "t": 71.8,
         "event": "swing"
       },
       {
-        "t": 72.25,
+        "t": 72,
         "event": "swing"
       },
       {
-        "t": 72.45,
+        "t": 72.2,
         "event": "swing"
       },
       {
-        "t": 72.65,
+        "t": 72.4,
         "event": "swing"
       },
       {
-        "t": 72.85,
+        "t": 72.6,
         "event": "swing"
       },
       {
-        "t": 73.05,
+        "t": 72.8,
         "event": "swing"
       },
       {
-        "t": 73.25,
+        "t": 73,
         "event": "swing"
       },
       {
-        "t": 73.45,
+        "t": 73.2,
         "event": "swing"
       },
       {
-        "t": 73.65,
+        "t": 73.4,
         "event": "swing"
       },
       {
-        "t": 73.85,
+        "t": 73.6,
         "event": "swing"
       },
       {
-        "t": 74.05,
+        "t": 73.8,
         "event": "swing"
       },
       {
-        "t": 74.25,
+        "t": 74,
         "event": "swing"
       },
       {
-        "t": 74.45,
+        "t": 74.2,
         "event": "swing"
       },
       {
-        "t": 74.65,
+        "t": 74.4,
         "event": "swing"
       },
       {
-        "t": 74.85,
+        "t": 74.6,
         "event": "swing"
       },
       {
-        "t": 75.05,
+        "t": 74.8,
         "event": "swing"
       },
       {
-        "t": 75.25,
+        "t": 75,
         "event": "swing"
       },
       {
-        "t": 75.45,
+        "t": 75.2,
         "event": "swing"
       },
       {
-        "t": 75.65,
+        "t": 75.4,
         "event": "swing"
       },
       {
-        "t": 75.85,
+        "t": 75.6,
         "event": "swing"
       },
       {
-        "t": 76.05,
+        "t": 75.8,
         "event": "swing"
       },
       {
-        "t": 76.25,
+        "t": 76,
         "event": "swing"
       },
       {
-        "t": 76.45,
+        "t": 76.2,
         "event": "swing"
       },
       {
-        "t": 76.65,
+        "t": 76.4,
         "event": "swing"
       },
       {
-        "t": 76.85,
+        "t": 76.6,
         "event": "swing"
       },
       {
-        "t": 77.05,
+        "t": 76.8,
         "event": "swing"
       },
       {
-        "t": 77.25,
+        "t": 77,
         "event": "swing"
       },
       {
-        "t": 77.45,
+        "t": 77.2,
         "event": "swing"
       },
       {
-        "t": 77.65,
+        "t": 77.4,
         "event": "swing"
       },
       {
-        "t": 77.85,
+        "t": 77.6,
         "event": "swing"
       },
       {
-        "t": 78.05,
+        "t": 77.8,
         "event": "swing"
       },
       {
-        "t": 78.25,
+        "t": 78,
         "event": "swing"
       },
       {
-        "t": 78.45,
+        "t": 78.2,
         "event": "swing"
       },
       {
-        "t": 78.65,
+        "t": 78.4,
         "event": "swing"
       },
       {
-        "t": 78.85,
+        "t": 78.6,
         "event": "swing"
       },
       {
-        "t": 79.05,
+        "t": 78.8,
         "event": "swing"
       },
       {
-        "t": 79.25,
+        "t": 79,
         "event": "swing"
       },
       {
-        "t": 79.45,
+        "t": 79.2,
         "event": "swing"
       },
       {
-        "t": 79.65,
+        "t": 79.4,
         "event": "swing"
       },
       {
-        "t": 79.85,
+        "t": 79.6,
         "event": "swing"
       },
       {
-        "t": 80.05,
+        "t": 79.8,
         "event": "swing"
       },
       {
-        "t": 80.25,
+        "t": 80,
         "event": "swing"
       },
       {
-        "t": 80.45,
+        "t": 80.2,
         "event": "swing"
       },
       {
-        "t": 80.65,
+        "t": 80.4,
         "event": "swing"
       },
       {
-        "t": 80.85,
+        "t": 80.6,
+        "event": "swing"
+      },
+      {
+        "t": 80.8,
         "event": "cut"
       },
       {
-        "t": 80.85,
+        "t": 80.8,
         "event": "angle"
       },
       {
-        "t": 80.85,
+        "t": 80.8,
         "event": "swing"
       },
       {
-        "t": 81.05,
+        "t": 81,
         "event": "swing"
       },
       {
-        "t": 81.25,
+        "t": 81.2,
         "event": "swing"
       },
       {
-        "t": 81.45,
+        "t": 81.4,
         "event": "swing"
       },
       {
-        "t": 81.65,
+        "t": 81.6,
         "event": "swing"
       },
       {
-        "t": 81.85,
+        "t": 81.8,
         "event": "swing"
       },
       {
-        "t": 82.05,
+        "t": 82,
         "event": "swing"
       },
       {
-        "t": 82.25,
+        "t": 82.2,
         "event": "swing"
       },
       {
-        "t": 82.45,
+        "t": 82.4,
         "event": "swing"
       },
       {
-        "t": 82.65,
+        "t": 82.6,
         "event": "swing"
       },
       {
-        "t": 82.85,
+        "t": 82.8,
         "event": "swing"
       },
       {
-        "t": 83.05,
+        "t": 83,
         "event": "swing"
       },
       {
-        "t": 83.25,
+        "t": 83.2,
         "event": "swing"
       },
       {
-        "t": 83.45,
+        "t": 83.4,
         "event": "swing"
       },
       {
-        "t": 83.65,
+        "t": 83.6,
         "event": "swing"
       },
       {
-        "t": 83.85,
+        "t": 83.8,
         "event": "swing"
       },
       {
-        "t": 84.05,
+        "t": 84,
         "event": "swing"
       },
       {
-        "t": 84.25,
+        "t": 84.2,
         "event": "swing"
       },
       {
-        "t": 84.45,
+        "t": 84.4,
         "event": "swing"
       },
       {
-        "t": 84.65,
+        "t": 84.6,
         "event": "swing"
       },
       {
-        "t": 84.85,
+        "t": 84.8,
         "event": "swing"
       },
       {
-        "t": 85.05,
+        "t": 85,
         "event": "swing"
       },
       {
-        "t": 85.25,
+        "t": 85.2,
         "event": "swing"
       },
       {
-        "t": 85.45,
+        "t": 85.4,
         "event": "swing"
       },
       {
-        "t": 85.65,
+        "t": 85.6,
         "event": "swing"
       },
       {
-        "t": 85.85,
+        "t": 85.8,
         "event": "swing"
       },
       {
-        "t": 86.05,
+        "t": 86,
         "event": "swing"
       },
       {
-        "t": 86.25,
+        "t": 86.2,
         "event": "swing"
       },
       {
-        "t": 86.45,
+        "t": 86.4,
         "event": "swing"
       },
       {
-        "t": 86.65,
+        "t": 86.6,
         "event": "swing"
       },
       {
-        "t": 86.85,
+        "t": 86.8,
         "event": "cut"
       },
       {
-        "t": 86.85,
+        "t": 86.8,
         "event": "angle"
       },
       {
-        "t": 86.85,
+        "t": 86.8,
         "event": "swing"
       },
       {
-        "t": 87.05,
+        "t": 87,
         "event": "swing"
       },
       {
-        "t": 87.25,
+        "t": 87.2,
         "event": "swing"
       },
       {
-        "t": 87.45,
+        "t": 87.4,
         "event": "swing"
       },
       {
-        "t": 87.65,
+        "t": 87.6,
         "event": "swing"
       },
       {
-        "t": 87.85,
+        "t": 87.8,
         "event": "swing"
       },
       {
-        "t": 88.05,
+        "t": 88,
         "event": "swing"
       },
       {
-        "t": 88.25,
+        "t": 88.2,
         "event": "swing"
       },
       {
-        "t": 88.45,
+        "t": 88.4,
         "event": "swing"
       },
       {
-        "t": 88.65,
+        "t": 88.6,
         "event": "swing"
       },
       {
-        "t": 88.85,
+        "t": 88.8,
         "event": "swing"
       },
       {
-        "t": 89.05,
+        "t": 89,
         "event": "swing"
       },
       {
-        "t": 89.2,
+        "t": 89.15,
         "event": "swing"
       },
       {
-        "t": 89.35,
+        "t": 89.3,
         "event": "swing"
       },
       {
-        "t": 89.35,
+        "t": 89.3,
         "event": "off_aim"
       },
       {
-        "t": 89.35,
+        "t": 89.3,
+        "event": "place"
+      },
+      {
+        "t": 89.3,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.3,
         "event": "place"
       },
       {
@@ -8117,42 +8116,54 @@
         "event": "place"
       },
       {
-        "t": 89.4,
+        "t": 89.35,
         "event": "off_aim"
       },
       {
-        "t": 89.4,
+        "t": 89.35,
         "event": "place"
       },
       {
-        "t": 89.4,
+        "t": 89.45,
+        "event": "swing"
+      },
+      {
+        "t": 89.5,
         "event": "off_aim"
       },
       {
-        "t": 89.4,
+        "t": 89.5,
         "event": "place"
       },
       {
         "t": 89.5,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.5,
+        "event": "place"
+      },
+      {
+        "t": 89.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.55,
+        "event": "place"
+      },
+      {
+        "t": 89.55,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.55,
+        "event": "place"
+      },
+      {
+        "t": 89.6,
         "event": "swing"
       },
       {
-        "t": 89.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.55,
-        "event": "place"
-      },
-      {
-        "t": 89.55,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.55,
-        "event": "place"
-      },
-      {
         "t": 89.6,
         "event": "off_aim"
       },
@@ -8170,41 +8181,41 @@
       },
       {
         "t": 89.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.65,
+        "event": "place"
+      },
+      {
+        "t": 89.65,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.65,
+        "event": "place"
+      },
+      {
+        "t": 89.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.7,
+        "event": "place"
+      },
+      {
+        "t": 89.7,
+        "event": "off_aim"
+      },
+      {
+        "t": 89.7,
+        "event": "place"
+      },
+      {
+        "t": 89.75,
         "event": "swing"
       },
       {
-        "t": 89.65,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.65,
-        "event": "place"
-      },
-      {
-        "t": 89.65,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.65,
-        "event": "place"
-      },
-      {
-        "t": 89.7,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.7,
-        "event": "place"
-      },
-      {
-        "t": 89.7,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.7,
-        "event": "place"
-      },
-      {
         "t": 89.75,
         "event": "off_aim"
       },
@@ -8222,10 +8233,6 @@
       },
       {
         "t": 89.8,
-        "event": "swing"
-      },
-      {
-        "t": 89.8,
         "event": "off_aim"
       },
       {
@@ -8238,14 +8245,6 @@
       },
       {
         "t": 89.8,
-        "event": "place"
-      },
-      {
-        "t": 89.85,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.85,
         "event": "place"
       },
       {
@@ -8258,6 +8257,10 @@
       },
       {
         "t": 89.9,
+        "event": "swing"
+      },
+      {
+        "t": 89.9,
         "event": "off_aim"
       },
       {
@@ -8265,127 +8268,151 @@
         "event": "place"
       },
       {
-        "t": 89.95,
-        "event": "swing"
-      },
-      {
-        "t": 89.95,
-        "event": "off_aim"
-      },
-      {
-        "t": 89.95,
-        "event": "place"
-      },
-      {
-        "t": 90.05,
+        "t": 90,
         "event": "cut"
       },
       {
-        "t": 90.05,
+        "t": 90,
         "event": "angle"
       },
       {
-        "t": 90.15,
+        "t": 90.1,
         "event": "swing"
       },
       {
-        "t": 90.35,
+        "t": 90.3,
         "event": "swing"
       },
       {
-        "t": 90.55,
+        "t": 90.5,
         "event": "swing"
       },
       {
-        "t": 90.75,
+        "t": 90.9,
         "event": "swing"
       },
       {
-        "t": 90.95,
+        "t": 91.1,
         "event": "swing"
       },
       {
-        "t": 91.15,
+        "t": 91.3,
         "event": "swing"
       },
       {
-        "t": 91.35,
+        "t": 91.5,
         "event": "swing"
       },
       {
-        "t": 91.65,
+        "t": 91.7,
         "event": "swing"
       },
       {
-        "t": 91.85,
+        "t": 91.9,
         "event": "swing"
       },
       {
-        "t": 92.05,
+        "t": 92.1,
         "event": "swing"
       },
       {
-        "t": 92.25,
+        "t": 92.3,
         "event": "swing"
       },
       {
-        "t": 92.45,
+        "t": 92.5,
         "event": "swing"
       },
       {
-        "t": 92.65,
+        "t": 92.7,
         "event": "swing"
       },
       {
-        "t": 92.85,
+        "t": 92.9,
         "event": "swing"
       },
       {
-        "t": 93.05,
+        "t": 93.1,
         "event": "swing"
       },
       {
-        "t": 93.25,
+        "t": 93.3,
         "event": "swing"
       },
       {
-        "t": 93.45,
+        "t": 93.5,
         "event": "swing"
       },
       {
-        "t": 93.65,
+        "t": 93.7,
         "event": "swing"
       },
       {
-        "t": 93.85,
+        "t": 93.9,
         "event": "swing"
       },
       {
-        "t": 94.05,
+        "t": 94.1,
         "event": "swing"
       },
       {
-        "t": 94.25,
+        "t": 94.3,
         "event": "swing"
       },
       {
-        "t": 94.45,
+        "t": 94.5,
         "event": "swing"
       },
       {
-        "t": 94.65,
+        "t": 94.7,
         "event": "swing"
       },
       {
-        "t": 94.85,
+        "t": 94.9,
         "event": "swing"
       },
       {
-        "t": 95.45,
+        "t": 95.4,
         "event": "big_done"
       },
       {
-        "t": 96.25,
+        "t": 95.9,
+        "event": "cut"
+      },
+      {
+        "t": 95.9,
+        "event": "angle"
+      },
+      {
+        "t": 95.9,
+        "event": "launch_cut"
+      },
+      {
+        "t": 96.35,
+        "event": "ignite"
+      },
+      {
+        "t": 96.35,
+        "event": "liftoff"
+      },
+      {
+        "t": 96.35,
+        "event": "motion_start"
+      },
+      {
+        "t": 96.7,
+        "event": "motion_settled"
+      },
+      {
+        "t": 96.7,
+        "event": "settle"
+      },
+      {
+        "t": 97.85,
+        "event": "launch_end"
+      },
+      {
+        "t": 99.85,
         "event": "end"
       }
     ]
@@ -8393,36 +8420,37 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "99afdffe83be7ae3a4d41622163396aaf137e233",
+    "commit": "1527797dd7404f884199610e3fce2cbe61e9fdb7",
     "rendered": "local",
-    "rendered_at": "2026-11-12T00:31:45.984Z",
-    "head_at_publish": "99afdffe83be7ae3a4d41622163396aaf137e233",
+    "rendered_at": "2026-11-12T08:00:56.312Z",
+    "head_at_publish": "1527797dd7404f884199610e3fce2cbe61e9fdb7",
     "stunt": "stunts/lapse_rocket.js",
     "source_snapshot": [
       "source/lapse_rocket.js",
       "source/time_lapse.js",
+      "source/mega.js",
       "source/act.js",
       "source/motion.js",
       "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout 99afdffe83be",
+    "git checkout 1527797dd740",
     "gunzip -c shorts/lapse_rocket/recording.json.gz > work/lapse_rocket.rec.json",
     "node render.js work/lapse_rocket.rec.json work/lapse_rocket.frames 60 1080 1011",
     "python3 audio.py work/lapse_rocket.rec.json work/lapse_rocket.wav",
-    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --self_name 56e --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done:-1.65\",3],[\"mid_done:-1.65\",\"mid_done\",4],[\"mid_done:0.4\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
+    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --self_name 56e --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done:-1.65\",3],[\"mid_done:-1.65\",\"mid_done\",4],[\"mid_done:0.4\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\",{\\\"hide\\\":\\\"launch_cut\\\"}]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"liftoff\",0.4],[\"gamedip\",\"liftoff\",0.3],[\"impact\",\"liftoff\",{\"gain\":1.4}]] --start_at small_start:-0.1 --end_after liftoff:0.9 --out out/lapse_rocket.mp4"
   ],
   "status": "ready",
-  "notes": "fast cuts r:r188b46: 1.2 s after the last scaffold break -> 0.75 s (x4 tail, cut 0.4 s into the 1:00 pull-back); fix-check READY (fresh reviewer)",
-  "published_at": "2026-11-12T00:34:11.749Z",
+  "notes": "no-op fix (r:r4607fa): after 60:00 the 1-hour rocket launches: arms retract, TNT fires, it lifts off on a flame; drop on liftoff; 31.4 s; independent review READY r2",
+  "published_at": "2026-11-12T08:03:26.741Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:34:49+00:00",
+    "at": "2026-11-12T08:03:59+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.06 s vs the reviewed render 30.05 s"
+      "summary": "short.mp4 31.40 s vs the reviewed render 31.40 s"
     },
     "pace": {
       "ok": true,
@@ -8434,7 +8462,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T00:32:10.273Z",
+      "at": "2026-11-12T08:01:26.709Z",
       "report": "work/hb/lapse_rocket.check.json"
     },
     "key_sounds": "n/a"

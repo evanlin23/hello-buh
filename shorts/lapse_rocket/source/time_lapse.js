@@ -42,7 +42,7 @@ const SOUND = (n) => /dirt|grass/.test(n) ? 'block.gravel.place' : /glass/.test(
 // subject: {
 //   name, caption, red,
 //   small: { blocks: [[x,y,z,name]] (local, z=0 front row), slots: {name: slot} },
-//   mid:   { blocks, w, d, slots, perTick (ticks per block) },
+//   mid:   { blocks, w, d, slots, perTick (ticks per block), roofFrom (where a roof span starts: default roof_start) },
 //   big:   { blocks: [[x,y,z,name,stage]] (local to the centre, y from the ground; y < 0 digs in),
 //            hold (block the bot places for real) and slot, stageTicks ({stage: ticks}, built in
 //            stage order), keys (camera keys [tick of the build, camera, look-at]),
@@ -62,15 +62,17 @@ function makeStunt (S) {
       // the payoff is the big build completing (60:00 and the drop): the camera's pull-back lands on
       // it, and the Short ends 0.8 s later with the camera still moving (the song's drop gets a moment
       // before the fade-out)
-      startAt: 'small_start:-0.1', endAfter: S.endAfter || 'big_done:0.8',
+      startAt: S.startAt || 'small_start:-0.1', endAfter: S.endAfter || 'big_done:0.8',
       // a roof put on from inside plays faster (mid.roofSpeed), or is cut out ('cut'): the camera is under a
       // dark ceiling there, turning to a new block every frame (it strobed at 6x, lapse_house)
       speed: [['cut1_a', 'cut1_b', 'cut']].concat(S.mid.roofY !== undefined
-        ? [['mid_start', 'roof_start', S.mid.speed || 2], ['roof_start', 'roof_end', S.mid.roofSpeed || 8], ['roof_end', 'mid_done', S.mid.speed || 2]]
+        ? [['mid_start', S.mid.roofFrom || 'roof_start', S.mid.speed || 2], [S.mid.roofFrom || 'roof_start', 'roof_end', S.mid.roofSpeed || 8], ['roof_end', 'mid_done', S.mid.speed || 2]]
         : midSpeed(S.mid), [[S.cut2From || 'cut2_a', 'cut2_b', 'cut']], bigSpeed(S.bigCuts)),
-      clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR']],
+      clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR', ...(S.clockHide ? [{ hide: S.clockHide }] : [])]],   // S.clockHide: the 1-hour clock off screen from that mark (a finale under it)
       // the payoff (60:00) gets a white flash + a zoom punch and a song dip + impact: pace wants a picture change and a hit on it (the drop alone didn't count in the packaged mix) (lapse_statue, lapse_rocket)
-      ...(S.payoffFlash ? { flash: [['big_done', 0, 0.5]], punch: [['big_done', 0, 1.08]], sfx: [['dip', 'big_done', 0.3], ['impact', 'big_done']] } : {})
+      ...(S.payoffFlash ? { flash: [['big_done', 0, 0.5]], punch: [['big_done', 0, 1.08]] } : {}),
+      // S.sfx: extra edit sfx (a hit on the opening, r:r0f3da0) on top of the payoff's dip and impact
+      ...((S.payoffFlash || S.sfx) ? { sfx: [...(S.sfx || []), ...(S.payoffFlash ? [['dip', 'big_done', 0.3], ['impact', 'big_done']] : [])] } : {})
     },
 
     async setup (ctx) {
@@ -90,7 +92,11 @@ function makeStunt (S) {
       // its edges sit ~115+ blocks from every camera, in the 8-chunk fog (a cut dirt edge 70 blocks
       // behind the minute build showed when the bot faced south; hills past the edge showed in the
       // minute's shots but not the hour's)
-      const X0 = x - 120, X1 = x + 120, Z0 = z - 125, Z1 = z + 115
+      // S.site = [dx0, dx1, dz0, dz1]: a smaller cleared site in the real world round it (owner on lapse_house, 2026-11-12:
+      // "it doesnt need to be superflat"): only the builds' own ground is levelled, the land beyond keeps its trees,
+      // hills and water; S.clearTrees: n also takes out the trees within n blocks of the taper (no half-cut trees)
+      const [sx0, sx1, sz0, sz1] = S.site || [-120, 120, -125, 115]
+      const X0 = x + sx0, X1 = x + sx1, Z0 = z + sz0, Z1 = z + sz1
       const ZM = z - 5                                     // fills in two halves: 241 x 121 under the 32768 cap
       const fill = async (y0, y1, block) => { for (const [a, b] of [[Z0, ZM], [ZM + 1, Z1]]) { bot.chat(`/fill ${X0} ${y0} ${a} ${X1} ${y1} ${b} ${block}`); await bot.waitForTicks(2) } }   // the bot's 180 s attempt budget
       // the far corners can be outside the chunks the server has loaded yet ("That position is not
@@ -104,21 +110,44 @@ function makeStunt (S) {
       for (let y0 = floor + 72; y0 >= floor + 1; y0--) await fill(y0, y0, 'air')
       // the edge: ring k blocks out is cleared down to floor + 1.3k, so the terrain beyond steps down
       // to the field like a hillside instead of standing as a cut wall
+      // S.taperNoise: each ring side in 4-6 block segments, each with its own slope (0.6-1.5 x), so the edge reads as
+      // uneven land, not straight parallel terraces (independent review of lapse_house r2: "perfectly straight 1-block
+      // terraces"); without it, whole straight sides as before
+      const segs = (box) => {
+        if (!S.taperNoise) return [[box, 1]]
+        const [ax, az, bx, bz] = box, alongX = az === bz, len = alongX ? bx - ax : bz - az, out = []
+        for (let i = 0; i <= len;) {
+          const a = alongX ? ax + i : ax, b = alongX ? az : az + i, n = 4 + (((a * 7 + b * 13) % 3) + 3) % 3, j = Math.min(len, i + n - 1)
+          const r = Math.sin((alongX ? a : b) * 0.37 + (alongX ? b : a) * 0.11) * 0.5 + 0.5
+          out.push([alongX ? [ax + i, az, ax + j, bz] : [ax, az + i, bx, az + j], 0.6 + 0.9 * r]); i = j + 1
+        }
+        return out
+      }
       for (let k = 1; k <= TAPER; k++) {
-        const h = floor + Math.ceil(k * 1.3), top = floor + 72
-        for (const box of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
-          bot.chat(`/fill ${box[0]} ${h} ${box[1]} ${box[2]} ${top} ${box[3]} air`); await bot.waitForTicks(1)
+        const top = floor + 72
+        for (const side of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
+          for (const [box, f] of segs(side)) { bot.chat(`/fill ${box[0]} ${floor + Math.ceil(k * 1.3 * f)} ${box[1]} ${box[2]} ${top} ${box[3]} air`); if (!S.taperNoise) await bot.waitForTicks(1) }
+          if (S.taperNoise) await bot.waitForTicks(1)
         }
       }
       // and where the land beyond is lower, the field's edge steps down to it the same way (it stood as a
       // flat slab over a beach and the sea: lapse_rocket)
       for (let k = 1; k <= TAPER; k++) {
-        const h = floor - Math.ceil(k * 1.3)
-        for (const box of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
-          for (const what of ['air', 'water']) {
-            bot.chat(`/fill ${box[0]} ${floor - 30} ${box[1]} ${box[2]} ${h - 1} ${box[3]} ${F.under} replace ${what}`); await bot.waitForTicks(1)
-            bot.chat(`/fill ${box[0]} ${h} ${box[1]} ${box[2]} ${h} ${box[3]} ${F.top} replace ${what}`); await bot.waitForTicks(1)
+        for (const side of [[X0 - k, Z0 - k, X1 + k, Z0 - k], [X0 - k, Z1 + k, X1 + k, Z1 + k], [X0 - k, Z0 - k, X0 - k, Z1 + k], [X1 + k, Z0 - k, X1 + k, Z1 + k]]) {
+          for (const [box, f] of segs(side)) {
+            const h = floor - Math.ceil(k * 1.3 * f)
+            for (const what of ['air', 'water']) {
+              bot.chat(`/fill ${box[0]} ${floor - 30} ${box[1]} ${box[2]} ${h - 1} ${box[3]} ${F.under} replace ${what}`); if (!S.taperNoise) await bot.waitForTicks(1)
+              bot.chat(`/fill ${box[0]} ${h} ${box[1]} ${box[2]} ${h} ${box[3]} ${F.top} replace ${what}`); if (!S.taperNoise) await bot.waitForTicks(1)
+            }
           }
+          if (S.taperNoise) await bot.waitForTicks(2)
+        }
+      }
+      if (S.clearTrees) {
+        const m = TAPER + S.clearTrees
+        for (const what of ['#minecraft:leaves', '#minecraft:logs']) for (const b of require('./mega').split([X0 - m, floor - 4, Z0 - m, X1 + m, floor + 40, Z1 + m])) {
+          bot.chat(`/fill ${b.join(' ')} air replace ${what}`); await bot.waitForTicks(1)
         }
       }
       await ctx.cmd('/kill @e[type=!player]')            // falling blocks, and mobs of the old biome (polar bears on plains)
@@ -135,6 +164,10 @@ function makeStunt (S) {
       for (let bx = g4(X0); bx <= X1; bx += 64) for (let bz = g4(Z0); bz <= Z1; bz += 64) for (let by = g4(floor - 4); by <= floor + 52; by += 8) {
         bot.chat(`/fillbiome ${bx} ${by} ${bz} ${bx + 63} ${by + 7} ${bz + 63} ${F.biome}`); await bot.waitForTicks(1)
       }
+      // S.dress = [[dx, dz, feature], ...] (from spawn, on the ground): the levelled site planted like the land round it
+      // (/place feature: grass and flower patches, trees), so it reads as a real plain, not a superflat field
+      for (const [dx, dz, f] of S.dress || []) { bot.chat(`/place feature ${f} ${x + dx} ${floor + 1} ${z + dz}`); await bot.waitForTicks(1) }
+      if (S.dress) { await bot.waitForTicks(10); await ctx.cmd('/kill @e[type=item]', { mayFail: true }) }
       await ctx.hotbar(S.hotbar)
       await ctx.tpCheck(x - 4.5, floor + 1, z - 1.3, 180, 25)   // (from z - 0.5 the top block of a 3-high build was 4.57 away)
       await ctx.cmd('/gamemode survival')
@@ -592,8 +625,8 @@ function makeStunt (S) {
       const p0 = cam(0).pos
       await ctx.tpCheck(+p0[0].toFixed(3), +(p0[1] - 1.62).toFixed(3), +p0[2].toFixed(3), 0, 0)
       ctx.select(BG.slot)
-      const setCam = (t) => {
-        const { pos, look: l } = cam(t)
+      const setCam = (t) => aimCam(cam(t))
+      const aimCam = ({ pos, look: l }) => {
         bot.entity.velocity.set(0, 0, 0)
         bot.entity.position.set(pos[0], pos[1] - 1.62, pos[2])
         const d = [l[0] - pos[0], l[1] - pos[1], l[2] - pos[2]]
@@ -673,6 +706,17 @@ function makeStunt (S) {
       while (ctx.tick - railT0 < end) await bot.waitForTicks(1)
       bot.removeListener('physicsTick', railTick)
       wrong += check(big, 'big')
+      // S.finale (opt-in): a last beat after the build is checked (lapse_rocket's launch). It gets the pad's centre C,
+      // W (local -> world), view(pos, look) (local coordinates: puts the flying camera there, this tick) and
+      // cutTo(pos, look, name) (a hard cut to a new angle, marked as the angles' cuts are: the renderer snaps)
+      const view = (p, l) => aimCam({ pos: W(p), look: W(l) })
+      const cutTo = (p, l, name) => {
+        const w = W(p)
+        ctx.mark('cut'); ctx.mark('angle', { n: ++angleN, name: name || null })
+        bot.chat(`/tp @s ${w[0].toFixed(3)} ${(w[1] - 1.62).toFixed(3)} ${w[2].toFixed(3)}`)
+        view(p, l)
+      }
+      if (S.finale && !(await S.finale(ctx, { C, W, view, cutTo }))) return false
       return wrong <= 3 && !ctx.died
     }
   }
