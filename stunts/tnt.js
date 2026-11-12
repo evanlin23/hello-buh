@@ -186,12 +186,15 @@ module.exports = {
     await ctx.cmd('/kill @e[type=item]', { mayFail: true })
     // the crater's south rim: going out from the hill's centre, the first of 3 solid surface blocks in a row (a stray
     // flung-TNT pit near the vantage fooled a walk in from the vantage)
+    const solid = (zz) => [floor, floor - 1].every(y => { const bl = bot.blockAt(new Vec3(x, y, zz)); return bl && bl.name !== 'air' && bl.boundingBox === 'block' })
     let rz = hz + HR + 8
-    for (let zz = hz; zz < vz; zz++) {
-      const ok = [0, 1, 2].every(d => { const b = bot.blockAt(new Vec3(x, floor, zz + d)); return b && b.name !== 'air' })
-      if (ok) { rz = zz + 5; break }
+    for (let zz = hz; zz < vz - 7; zz++) {
+      if ([0, 1, 2, 3, 4, 5, 6].every(d => solid(zz + d))) { rz = zz + 4; break }
     }
-    await ctx.tpCheck(x + 0.5, floor + 1, rz + 0.5, 180, 24)
+    ctx.log('rim at', rz - hz, 'from the centre')
+    // a tolerant teleport (tpCheck threw on take 2: a blast-loosened column): land on the rim, whatever its height
+    await ctx.cmd(`/tp @s ${x + 0.5} ${floor + 1} ${rz + 0.5} 180 24`)
+    await bot.waitForTicks(12)
     ctx.mark('rim_b')
     ctx.mark('crater')
     ctx.sound('entity.generic.explode', 0.15, 0.6)
