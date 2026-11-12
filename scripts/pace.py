@@ -68,7 +68,7 @@ PAYOFF_WIN = 0.3
 TP_MAX = -1.0                 # dBTP: the master's true-peak ceiling (scripts/loud.py master)
 TAIL_MAX, TEXT_TAIL = 1.0, (1.2, 1.8)
 LEN_MIN, LEN_WARN = 25.0, 45.0   # 25: no-pause narration at ~5.25 words/s runs 25-29 s (owner: no dramatic pauses)
-LEN_MIN_STUNT = 8.0   # an unnarrated stunt (lead 2026-11-11: the 25 s floor is the narration floor; the owner's "inside" format is 8-12 s)
+LEN_MIN_STUNT = 0.0   # no minimum for a stunt (owner 2026-11-12: "no fixed minimum, just don't pad them"); stories keep the narration floor
 
 
 def length_floor(is_story):

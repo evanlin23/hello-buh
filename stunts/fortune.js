@@ -27,8 +27,8 @@ module.exports = {
     speed: [...ORES.slice(0, -1).map((_, i) => [`burst${i}_0:0.6`, `mine${i + 1}_0:-0.05`, 'cut']), ['burst7_2:0.6', 'collected:-0.1', 2]],
     flash: [['collected', 0, 0.6]],
     // and a hit on it: under the NCS bed the pickup pops alone left the payoff with no sound hit (mixcheck, 2026-11-11)
-    sfx: [['pop', 'mine'], ['impact', 'ore', { gain: 0.9 }], ['dip', 'collected', 0.4], ['impact', 'collected', { gain: 1.4 }]],
-    // (sfx: a pop on frame 0 and a hit on the first burst: the opening's sound, r:r0f3da0)
+    sfx: [['impact', 'mine', { gain: 1.0 }], ['impact', 'ore', { gain: 0.9 }], ['dip', 'collected', 0.4], ['impact', 'collected', { gain: 1.4 }]],
+    // (sfx: a hit on frame 0 and a hit on the first burst: the opening's sound, r:r0f3da0)
     subs: [['ore', '128 emeralds', 1.3, 7], ['ore', '256', 1.3, 8], ['ore', '384 emeralds', 1.6, 9]] },   // the 2nd-6th stacks go to the hidden inventory: say it
 
   async setup (ctx) {
@@ -48,7 +48,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 10} ${floor + 6} ${this.wz - 2} ${x + 10} ${floor + 6} ${this.wz} grass_block`)
     this.ores = ORES.map((o, i) => ({ ...o, x: x - 7 + i * 2, y: floor + 2 }))
     for (const o of this.ores) for (const dy of (o.vein || [0])) await ctx.cmd(`/setblock ${o.x} ${o.y + dy} ${this.wz} ${o.block}`)
-    await ctx.hotbar(['diamond_pickaxe[enchantments={fortune:3}]'])   // enchanted: it glints
+    await ctx.hotbar(['diamond_pickaxe[enchantments={fortune:3,efficiency:5}]'])   // enchanted: it glints. Efficiency V: a 3-tick dig on ore (owner r:r188b46, fast pace: the 13-tick dig after each cut was 0.65 s of the same swing)
     await ctx.tpCheck(x - 6.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -86,7 +86,8 @@ module.exports = {
         // hardness-3 ore (12 ticks), finish. (bot.dig took 4.5 s on every ore after the first.)
         const dig = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })
         dig(0)
-        for (let t = 0; t < 13; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
+        // (Efficiency V: speed 8 + 26 = 34 on hardness 3 -> 0.378 a tick, 3 ticks; 4 for the server's tolerance)
+        for (let t = 0; t < 4; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
         dig(2)
         await bot.waitForTicks(1)
         if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${oy} ${this.wz} air`) }

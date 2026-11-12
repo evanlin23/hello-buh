@@ -23,7 +23,9 @@ const speed = []
 const WALK = { 1: 'crater1:-0.85', 2: 'crater2:-0.75' }
 for (let i = 1; i <= TIERS.length; i++) {
   if (i > 1 && i < 5) speed.push([i === 4 ? 'crater3:0.6' : `crater${i - 1}:0.6`, `cut${i}b`, 'cut'])   // to the next pile
-  if (i === 5) speed.push(['cut5a', 'cut5b', 'cut'])
+  // the big crater's sweep cut where it rests between its eases (1.4 s in: the 2.3 s sweep read as a dead span), and
+  // the 1000-on-the-pile setup (look out, back down: 3.15 s) at x1.45 (its turns peak at 171 deg/s)
+  if (i === 5) speed.push(['crater4:1.4', 'cut5b', 'cut'], ['cut5b', 'lit5', 1.45])
   speed.push([`fuse${i}a`, `fuse${i}b`, 'cut'])                   // most of the 4 s fuse
   if (i === 1) speed.push(['crater1:-1.35', 'crater1:-0.85', 1.4])   // tier 1's turn to the hole (164 deg/s) at x1.4: under the whip cap
   if (WALK[i]) speed.push([WALK[i], `crater${i}`, 4])
@@ -40,7 +42,7 @@ module.exports = {
     caption: '1 TNT vs 10 vs 100 vs 1000 vs SECRET 💀', red: 'SECRET', dropAt: 'boom4',
     // once the blast's debris settles (lib/settle.js, r:r24d99a), less 0.15 s: the conservative settle (the renderer's
     // smoke, 2.2 s) held a frozen death screen on which_door; pace's last-0.6 s check still wants a still ending
-    startAt: 'tier1:-0.05', endAfter: 'settle:-0.8',   // r:r188b46: the death screen ~1.4 s after the last blast (was 1.7; this take's settle mark is the old smoke wait)
+    startAt: 'tier1:-0.05', endAfter: 'settle:-0.6',   // r:r188b46: the death screen ~1.25 s after the last blast (was 1.7; it needs 1.2 to read; this take's settle mark is the old smoke wait)
     deathScreen: true,
     // the payoff pace times is the 1000 pile's LAST blast, 1.85 s (output) after boom5 on this take: a flash, a punch,
     // the song dip, the game ducked and an impact there (no hit and no picture change on it: pace BLOCK); the song
