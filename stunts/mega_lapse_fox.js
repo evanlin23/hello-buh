@@ -203,9 +203,10 @@ module.exports = L.makeLapse({
   edit: {
     // the payoff's hit on the final mix (mixcheck): the drop on the reveal with a dip and an impact; on the pass a
     // second dip and impact under the snore (the snore alone is no hit: pace r1), and the punchline card
-    sfx: [['dip', 'pass', 0.7], ['gamedip', 'pass', 0.5], ['boom', 'pass', { gain: 1.4 }], ['impact', 'open', { gain: 1.0 }]],   // (mixcheck r2-4: the reveal's own impact rang on into the pass, so the reveal keeps only its flash, punch and the
+    sfx: [['dip', 'reveal', 0.3], ['dip', 'pass', 0.4], ['gamedip', 'pass', 0.5], ['boom', 'pass', { gain: 1.4 }], ['impact', 'open', { gain: 1.0 }]],   // (mixcheck r2-4: the reveal's own impact rang on into the pass, so the reveal keeps only its flash, punch and the
     // game's beacon, and the game ducks before the pass too; a hit on frame 0: r:r0f3da0)
-    dropAt: 'pass',                      // the NCS drop on the last payoff (mixcheck r1: under the bed the pass had no hit)
+    dropAt: 'reveal',                    // the NCS drop on the ears landing (owner 2026-11-12: "the beat drops before the ears
+    //                                      appear"; the pass keeps its own dip and boom)
     cards: [['pass', 'SMALL', 0.8, 'yellow', 0, null, { y: 0.24 }]]
   },
   shots: {
