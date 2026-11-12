@@ -90,12 +90,12 @@ module.exports = L.makeLapse({
   endAfter: 1.0,
   shots: {
     // 1. high off the south-west over the forest: the footprint at frame 0, the cubes rising, the drone easing up with them
-    rise: { path: [[0, -100, 60, 100], [2.7, -92, 64, 92]], lookPath: [[0, 0, 6, 0], [2.7, 0, 34, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 10, 0]] },   // (high over the forest, above every hill: from the levelled ground the rising corner column filled the frame)
+    rise: { path: [[0, -100, 60, 100], [2.7, -92, 64, 92]], lookPath: [[0, 0, 6, 0], [2.7, 0, 34, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[-42, 12, 42]] },   // (high over the forest, above every hill: from the levelled ground the rising corner column filled the frame)
     // 2. the west face head-on, pushing in a little: the big and middle tunnels cut through it
     face: { path: [[0, -128, 44, 10], [2.2, -116, 44, 4]], lookPath: [[0, 0, 41, 0], [2.2, 0, 41, 0]], fov: 58, dof: false, drift: 0.3, scenery: true, subject: [[-41, 41, 0]] },
     // 3. high off the south-east, down across the top: the smallest holes sharpen it
     high: { path: [[0, 98, 116, 82], [2.5, 90, 110, 74]], lookPath: [[0, 4, 62, -2], [2.5, 0, 60, -4]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[0, 82, 0]] },
     // 4. the zoom (1x): from just behind 56e at the corner's foot, looking up, out fast to the whole sponge over the forest
-    zoom: { path: [[0, -46.5, 3.4, 46.5], [0.95, -112, 62, 118], [2.0, -118, 66, 124]], lookPath: [[0, -24, 7, 24], [0.95, 0, 44, 0], [2.0, 0, 44, 0]], fov: 66, dof: false, drift: 0.2, scenery: true, subject: ['self'] }   // (starts inside the levelled ground, 56e in the lower frame)
+    zoom: { path: [[0, -46.5, 3.4, 46.5], [0.95, -112, 62, 118], [2.0, -118, 66, 124]], lookPath: [[0, -24, 7, 24], [0.95, 0, 44, 0], [2.0, 0, 44, 0]], fov: 66, dof: false, drift: 0.2, scenery: true, subject: [[-41, 8, 41]] }   // (the eye on the near corner's edge: the cut check reads a fast zoom as cuts, and 56e -> the middle was a 38% jump; starts inside the levelled ground, 56e in the lower frame)
   }
 })
