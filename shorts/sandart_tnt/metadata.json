@@ -18,41 +18,41 @@
     "title": "X2",
     "artist": "MUPP",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "settle",
+    "drop_on_event": "blast_last",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 10.1,
-    "song_start_s": 4.4
+    "drop_in_short_s": 12.55,
+    "song_start_s": 1.95
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 10.7,
+    "duration_s": 13.35,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 22949654,
-    "sha256": "f839e492883175287c88039340e1ce689d85fa0b76351b672abaa24bb19be47f",
+    "bytes": 29943301,
+    "sha256": "85646a5fa8cecab8ad39a7a7391151e20943c69f489affefa168cb17006c02b4",
     "release": {
       "tag": "pkg-sandart_tnt",
-      "asset": "sandart_tnt.short.f839e49288317528.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short.f839e49288317528.mp4",
-      "sha256": "f839e492883175287c88039340e1ce689d85fa0b76351b672abaa24bb19be47f",
-      "bytes": 22949654
+      "asset": "sandart_tnt.short.85646a5fa8cecab8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short.85646a5fa8cecab8.mp4",
+      "sha256": "85646a5fa8cecab8ad39a7a7391151e20943c69f489affefa168cb17006c02b4",
+      "bytes": 29943301
     },
     "nosong_release": {
       "tag": "pkg-sandart_tnt",
-      "asset": "sandart_tnt.short_nosong.7cc7db9e2fd578ea.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short_nosong.7cc7db9e2fd578ea.mp4",
-      "sha256": "7cc7db9e2fd578ea2181d6524bfd0314cfab8ce42d88e88839154f8c98d6bdf0",
-      "bytes": 22947706
+      "asset": "sandart_tnt.short_nosong.63362298b824afff.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short_nosong.63362298b824afff.mp4",
+      "sha256": "63362298b824afffa14474cc20e3d91f4ff44ba3bf13d066b19522d93b3c65a6",
+      "bytes": 29938503
     }
   },
   "edit": {
     "caption": "dropping 11,760 blocks from the sky. guess what it is 👀",
     "red": "guess",
     "startAt": "pour_start:4.55",
-    "endAfter": "settle:0.6",
-    "dropAt": "settle",
+    "endAfter": "settle:0.5",
+    "dropAt": "blast_last",
     "tally": {
       "event": "tally",
       "label": "blocks",
@@ -60,31 +60,61 @@
     },
     "flash": [
       [
-        "settle",
+        "boom",
         0,
         0.45
+      ],
+      [
+        "blast_last",
+        0,
+        0.35
       ]
     ],
     "punch": [
       [
-        "settle",
+        "reveal",
         0,
-        1.07
+        1.04
+      ],
+      [
+        "boom",
+        0,
+        1.1
+      ],
+      [
+        "blast_last",
+        0,
+        1.08
       ]
     ],
     "sfx": [
       [
         "dip",
-        "settle",
+        "boom",
         0.4
       ],
       [
         "impact",
-        "settle",
+        "boom",
         {
-          "gain": 1.2
+          "gain": 1.3
+        }
+      ],
+      [
+        "dip",
+        "blast_last",
+        0.4
+      ],
+      [
+        "impact",
+        "blast_last",
+        {
+          "gain": 1.4
         }
       ]
+    ],
+    "shake": [
+      "boom"
     ],
     "args": [
       "--caption",
@@ -94,17 +124,19 @@
       "--red",
       "guess",
       "--punch",
-      "[[\"settle\",0,1.07]]",
+      "[[\"reveal\",0,1.04],[\"boom\",0,1.1],[\"blast_last\",0,1.08]]",
+      "--shake",
+      "[\"boom\"]",
       "--flash",
-      "[[\"settle\",0,0.45]]",
+      "[[\"boom\",0,0.45],[\"blast_last\",0,0.35]]",
       "--tally",
       "{\"event\":\"tally\",\"label\":\"blocks\",\"done\":\"complete\"}",
       "--sfx",
-      "[[\"dip\",\"settle\",0.4],[\"impact\",\"settle\",{\"gain\":1.2}]]",
+      "[[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"dip\",\"blast_last\",0.4],[\"impact\",\"blast_last\",{\"gain\":1.4}]]",
       "--start_at",
       "pour_start:4.55",
       "--end_after",
-      "settle:0.6"
+      "settle:0.5"
     ]
   },
   "recording": {
@@ -115,13 +147,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 383,
-      "y": 72,
-      "z": -39
+      "x": 357,
+      "y": 69,
+      "z": -41
     },
     "biome": "minecraft:plains",
-    "ticks": 332,
-    "seconds": 16.6,
+    "ticks": 423,
+    "seconds": 21.15,
     "deaths": 0,
     "events": [
       {
@@ -145,12 +177,8 @@
         "event": "tally"
       },
       {
-        "t": 1.15,
+        "t": 1.1,
         "event": "motion_start"
-      },
-      {
-        "t": 4.15,
-        "event": "tally"
       },
       {
         "t": 4.35,
@@ -185,7 +213,7 @@
         "event": "tally"
       },
       {
-        "t": 6,
+        "t": 5.95,
         "event": "tally"
       },
       {
@@ -381,10 +409,6 @@
         "event": "motion_settled"
       },
       {
-        "t": 15.4,
-        "event": "settle"
-      },
-      {
         "t": 15.45,
         "event": "pour_done"
       },
@@ -405,7 +429,39 @@
         "event": "top"
       },
       {
-        "t": 16.6,
+        "t": 15.6,
+        "event": "reveal"
+      },
+      {
+        "t": 15.9,
+        "event": "lit"
+      },
+      {
+        "t": 15.9,
+        "event": "motion_start"
+      },
+      {
+        "t": 16.4,
+        "event": "boom"
+      },
+      {
+        "t": 17.2,
+        "event": "boom_last"
+      },
+      {
+        "t": 17.85,
+        "event": "blast_last"
+      },
+      {
+        "t": 18.15,
+        "event": "motion_settled"
+      },
+      {
+        "t": 18.15,
+        "event": "settle"
+      },
+      {
+        "t": 21.15,
         "event": "end"
       }
     ]
@@ -413,10 +469,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "a68a6e4039c6ce5e5e29082c1576b22f33e951f2",
+    "commit": "1527797dd7404f884199610e3fce2cbe61e9fdb7",
     "rendered": "local",
-    "rendered_at": "2026-11-11T21:33:42.363Z",
-    "head_at_publish": "eab71a66a9f5547fd6e03ca9c85391e5d955d115",
+    "rendered_at": "2026-11-12T07:56:30.756Z",
+    "head_at_publish": "1527797dd7404f884199610e3fce2cbe61e9fdb7",
     "stunt": "stunts/sandart_tnt.js",
     "source_snapshot": [
       "source/sandart_tnt.js",
@@ -426,22 +482,22 @@
     ]
   },
   "rebuild": [
-    "git checkout a68a6e4039c6",
+    "git checkout 1527797dd740",
     "gunzip -c shorts/sandart_tnt/recording.json.gz > work/sandart_tnt.rec.json",
     "node render.js work/sandart_tnt.rec.json work/sandart_tnt.frames 60 1080 1011",
     "python3 audio.py work/sandart_tnt.rec.json work/sandart_tnt.wav",
-    "python3 edit.py --frames work/sandart_tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sandart_tnt.rec.json --audio work/sandart_tnt.wav --caption \"dropping 11,760 blocks from the sky. guess what it is 👀\" --self_name 56e --red guess --punch [[\"settle\",0,1.07]] --flash [[\"settle\",0,0.45]] --tally {\"event\":\"tally\",\"label\":\"blocks\",\"done\":\"complete\"} --sfx [[\"dip\",\"settle\",0.4],[\"impact\",\"settle\",{\"gain\":1.2}]] --start_at pour_start:4.55 --end_after settle:0.6 --out out/sandart_tnt.mp4"
+    "python3 edit.py --frames work/sandart_tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sandart_tnt.rec.json --audio work/sandart_tnt.wav --caption \"dropping 11,760 blocks from the sky. guess what it is 👀\" --self_name 56e --red guess --punch [[\"reveal\",0,1.04],[\"boom\",0,1.1],[\"blast_last\",0,1.08]] --shake [\"boom\"] --flash [[\"boom\",0,0.45],[\"blast_last\",0,0.35]] --tally {\"event\":\"tally\",\"label\":\"blocks\",\"done\":\"complete\"} --sfx [[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"dip\",\"blast_last\",0.4],[\"impact\",\"blast_last\",{\"gain\":1.4}]] --start_at pour_start:4.55 --end_after settle:0.5 --out out/sandart_tnt.mp4"
   ],
   "status": "ready",
-  "notes": "worker: format sandart #1, lib/sandart.js; 11,760 real falling blocks, one drone shot, payoff on the last landing; independent review READY r1, 0 blockers; nitpicks: a red block fills the lens ~0.1 s at 0.95 s, counter gold 0.15 s after the flash, counter over the picture's top-right corner at the end",
-  "published_at": "2026-11-11T21:36:28.471Z",
+  "notes": "no-op fix (r:r4607fa): the 11,760-block TNT picture poured from the sky is real TNT and blows itself apart in one wave from the middle out; drop on the last blast; 13.35 s; independent full review READY",
+  "published_at": "2026-11-12T07:59:44.068Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T21:36:58+00:00",
+    "at": "2026-11-12T08:00:18+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 10.71 s vs the reviewed render 10.70 s"
+      "summary": "short.mp4 13.35 s vs the reviewed render 13.35 s"
     },
     "pace": {
       "ok": true,
@@ -453,7 +509,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T21:34:35.726Z",
+      "at": "2026-11-12T07:57:36.520Z",
       "report": "work/hb/sandart_tnt.check.json"
     },
     "key_sounds": "n/a"
