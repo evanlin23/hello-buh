@@ -159,7 +159,7 @@ function make (opts) {
   for (const a of attempts.slice(0, -1)) if (!(a.fail >= 0 && a.fail < layers.length)) throw new Error(`dropper: attempt #${a.n} fails on layer ${a.fail}: no such layer`)
   const N = attempts.length, last = N - 1
   const cardY = opts.cardY ?? 0.34   // clear of the blocks-fallen counter (at 0.13 and 0.22 'ATTEMPT #47' ran into it: renders r0, review r1)
-  const HIT = 0.35                   // s of each fail's splat on screen before the cut (the poof is at 1 s: never shown)
+  const HIT = 0.95                   // s of each fail on screen after the hit: the hearts empty, the death tilt and "You died!" (owner r:rddac31: "we should die when we lose all life?"); the cut before the 1 s poof
   const START = 0.25                 // s after 'go' the Short starts (frame 0: the step off the rim under way)
   const cards = [...attempts.map((a, i) => [i === 0 ? `go:${START}` : `att${i}`, `ATTEMPT #${a.n}`, i === last ? 1.6 : 1.1, i === last ? 'gold' : 'white', 0, { y: cardY }]),
     ['land', opts.landed || 'CLEAN!', 0.8, 'green', 0, { y: cardY }]]   // the payoff reads without sound
@@ -191,6 +191,7 @@ function make (opts) {
       shake: [...attempts.slice(0, -1).map((_, i) => [`fail${i}`, 0, 22]), ['land', 0, 18]],
       flash: [['land', 0, 0.35]],
       punch: [['land', 0, 1.12]],
+      deathScreen: true,             // vanilla's "You died!" on every fail (the windows end on the respawn, inside the cuts)
       dropAt: 'land',
       sfx: [
         // a quiet wind (at the default 0.35 it masked every hit: pace heard none), a whoosh through every hole cleared
@@ -318,7 +319,7 @@ function make (opts) {
           const t0 = ctx.tick
           for (let k = 0; k < 20 && !ctx.died; k++) await bot.waitForTicks(1)
           if (!ctx.died) throw new Error(`attempt #${attempts[i].n}: the hit didn't kill (health ${bot.health})`)
-          while (ctx.tick < t0 + 12) await bot.waitForTicks(1)
+          while (ctx.tick < t0 + 26) await bot.waitForTicks(1)   // the edit shows 0.95 s of the death: respawn after it (inside the cut)
           ctx.respawn()
           for (let k = 0; k < 60 && bot.entity.position.y < TOP; k++) await bot.waitForTicks(1)
           await bot.waitForTicks(4)
