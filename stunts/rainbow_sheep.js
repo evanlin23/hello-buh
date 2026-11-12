@@ -1,7 +1,9 @@
 // "dyeing sheep until it's a rainbow 🌈": a fenced line of 8 white sheep (NoAI). The bot strafes along the line
 // using a dye on each (aimed by lib/act.js A.useOn; vanilla dyes the sheep), red to purple, and backs up to show the
-// rainbow. Then the reward (no-op audit 2026-11-12, owner r:r4607fa: the jeb_ tag on one far sheep wasn't one): shears
-// back down the line, each sheep pops its wool in its colour, and it ends on the rainbow of wool on the grass.
+// rainbow. Then the reward (no-op audit 2026-11-12, owner r:r4607fa: the jeb_ tag on one far sheep wasn't one; the
+// shearing version's 2-3 silent wool cubes per sheep were too small, review): a "jeb_" name tag on EVERY sheep, back
+// down the line, and a step back as the whole rainbow starts cycling colours at once (vanilla jeb_), sped up into a
+// disco wave. On a real field (trees, grass, a tapered edge: not superflat, r:r489883).
 const COLORS = [
   { dye: 'red_dye', id: 14, sub: 'red' },
   { dye: 'orange_dye', id: 1, sub: 'orange' },
@@ -22,11 +24,12 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
     startAt: 'dye:-0.45',
-    endAfter: 'lastshear:0.75',   // r:r188b46: the last burst (red) is the payoff, the wool landing, the look along the sheared rainbow starting (the end <= 1 s after the payoff)
-    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['shears', 'now the best part', 1.2]],
-    punch: [['lastshear', 0, 1.06]],
-    flash: [['lastshear', 0, 0.35]],   // pace: a clear picture change on the payoff (the punch alone isn't one)
-    sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'lastshear', 0.45], ['impact', 'lastshear', { gain: 1.3 }], ['ding', 'lastshear']]   // a hit on the payoff over the song; room tone from frame 1
+    endAfter: 'party:3.2',   // the whole line cycling, x6 after the payoff: ends ~0.55 s after it (r:r188b46)
+    speed: [['party:0.15', 'party:3.2', 6]],   // jeb_ is one colour per 25 ticks: x6 turns the line into a disco wave
+    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['tags', 'now name them all jeb_...', 1.6]],
+    punch: [['party', 0, 1.08]],
+    flash: [['party', 0, 0.3]],   // pace: a clear picture change on the payoff
+    sfx: [['air', 'start', 'party', { gain: 0.5 }], ...COLORS.map((_, k) => ['pop', 'tag', { nth: k }]), ['dip', 'party', 0.4], ['impact', 'party', { gain: 1.2 }], ['ding', 'party']]   // a pop on every tag (a name tag makes no vanilla sound); a hit on the payoff
   },
 
   async setup (ctx) {
@@ -39,8 +42,17 @@ module.exports = {
     await ctx.defaultRules()
     // the field levelled at the terrain's high percentile (lib/plateau): the old box cleared down to the start height
     // left a cut dirt-and-stone wall behind the line (review 2026-11-11)
-    const floor = await plateau(ctx, { x0: x - 56, x1: x + 56, z0: z - 30, z1: z + 24, above: 24, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    const floor = await plateau(ctx, { x0: x - 40, x1: x + 40, z0: z - 24, z1: z + 20, above: 24, biome: 'minecraft:plains', pct: 0.95, taper: 14, trees: 14 })   // (taper 0 and no dressing read as superflat: review)
     this.floor = floor
+    // dressed: trees behind the fence and off the sides, grass and flower patches everywhere but the walk lane (z .. z+9)
+    const trees = [['oak', -14, -9], ['birch', -4, -12], ['fancy_oak', 7, -10], ['oak', 17, -13], ['birch', 24, -7], ['oak', -22, -6],
+      ['fancy_oak', -28, 4], ['birch', 30, 6], ['oak', -6, -20], ['birch', 12, -19]]
+    for (const [f, dx, dz] of trees) await ctx.cmd(`/place feature minecraft:${f} ${x + dx} ${floor + 1} ${z + dz}`, { mayFail: true })
+    for (let dx = -34; dx <= 34; dx += 7) for (let dz = -20; dz <= 18; dz += 6) {
+      if (dz >= -3 && dz <= 10 && Math.abs(dx) <= 16) continue
+      await ctx.cmd(`/place feature minecraft:patch_grass ${x + dx} ${floor + 1} ${z + dz}`, { mayFail: true })
+      if ((dx + dz) % 3 === 0) await ctx.cmd(`/place feature minecraft:flower_plain ${x + dx + 2} ${floor + 1} ${z + dz + 1}`, { mayFail: true })
+    }
     await ctx.cmd('/kill @e[type=!player]')   // a wandering villager from a village nearby walked through the shot (rec_check: stair-stepping cast)
     // sheep stand at x0 + i*STEP, z; a fence behind and posts between them, open at the front
     const x0 = x - Math.floor((N - 1) * STEP / 2)
@@ -52,7 +64,8 @@ module.exports = {
     }
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 5')
     // everything it uses is in the hotbar from the start (items used to appear from nowhere mid-video)
-    await ctx.hotbar([...COLORS.map(c => c.dye), 'shears'])
+    await ctx.hotbar([...COLORS.map(c => c.dye), 'name_tag'])
+    await ctx.cmd('/item replace entity @s hotbar.7 with name_tag[custom_name="jeb_"] 8')
     await bot.waitForTicks(4)
     await ctx.tpCheck(x0 + 0.5 - 1.2, floor + 1, z + 3.3, 200, 20)
     await ctx.cmd('/gamemode survival')
@@ -127,7 +140,7 @@ module.exports = {
     bot.setControlState('back', false); bot.setControlState('left', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
     if (!rev) ctx.mark('reveal')
     await bot.waitForTicks(8)
-    // the reward: shears back down the line (purple to red), each sheep pops its wool in its colour
+    // the reward: a jeb_ name tag on every sheep, back down the line (purple to red)
     ctx.select(7)
     const zt = z + 2.6
     let first = true
@@ -135,35 +148,44 @@ module.exports = {
       const sh = this.sheepAt(ctx, i)
       if (!sh) { ctx.log('no sheep at', i); return false }
       const tx = x0 + i * STEP + 0.5
-      const look = ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.4, z + 0.5), first ? 600 : 420)   // (450/300 ms touched 242-261 deg/s)
-      // stand a little right of it, at the row distance (strafe left along the line, forward/back to hold the row)
+      const look = ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.4, z + 0.5), first ? 600 : 420)
       for (let t = 0; t < 60; t++) {
         const e = bot.entity.position
         const right = e.x > tx + 1.0, near = Math.abs(e.z - zt) < 0.2
         if (!right && near) break
-        bot.setControlState('left', right)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
-        bot.setControlState('forward', e.z > zt + 0.15)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
-        bot.setControlState('back', e.z < zt - 0.15)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+        bot.setControlState('left', right)   // motion-ok: a strafe along the sheep row on cleared flat grass
+        bot.setControlState('forward', e.z > zt + 0.15)   // motion-ok: holding the row distance
+        bot.setControlState('back', e.z < zt - 0.15)   // motion-ok: holding the row distance
         await bot.waitForTicks(1)
       }
-      bot.setControlState('left', false); bot.setControlState('forward', false); bot.setControlState('back', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+      for (const k of ['left', 'forward', 'back']) bot.setControlState(k, false)   // motion-ok: stop
       await look
-      if (first) { ctx.mark('shears'); first = false }
+      if (first) { ctx.mark('tags'); first = false }
       await A.useOn(sh)                              // lib/act.js: only with the crosshair on this sheep
-      ctx.mark('shear', { n: i })
-      if (i === 0) ctx.mark('lastshear')
-      await bot.waitForTicks(4)
+      ctx.mark('tag', { n: i })
+      await bot.waitForTicks(3)
     }
-    // the payoff shot: from the red end, close, eyes along the line: the last wool still in the air in front, the sheared
-    // rainbow and its wool receding (backed off to the middle 7 blocks out, the wool read as specks: review of the take)
-    const pileAt = new ctx.Vec3(x0 + 3 * STEP + 0.5, floor + 0.8, z + 1.0)
-    await ctx.easeLookAt(pileAt, 700)
-    await bot.waitForTicks(2)
-    const wool = Object.values(bot.entities).filter(e => e.name === 'item').length
-    ctx.log('wool items on the ground:', wool)
-    if (wool < N) return false
-    ctx.mark('pile')
-    await bot.waitForTicks(30)
+    // the payoff: back off diagonally to the middle, ~7 out, eyes on the row: the whole line cycling at once
+    const lineAt = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1.0, z + 0.5)
+    const goal = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 10)   // 10 out: all seven in frame
+    const lk = ctx.easeLookAt(lineAt, 1000)
+    for (let t = 0; t < 90; t++) {   // (50 ticks stopped short, off-centre: the red end out of frame)
+      const e = bot.entity.position, d = goal.minus(e)
+      if (Math.hypot(d.x, d.z) < 0.6) break
+      const f = { x: -Math.sin(bot.entity.yaw), z: -Math.cos(bot.entity.yaw) }, rt = { x: -f.z, z: f.x }
+      const df = (d.x * f.x + d.z * f.z) / Math.hypot(d.x, d.z), dr = (d.x * rt.x + d.z * rt.z) / Math.hypot(d.x, d.z)
+      bot.setControlState('forward', df > 0.35); bot.setControlState('back', df < -0.35)   // motion-ok: a walk back on open flat grass to the goal
+      bot.setControlState('right', dr > 0.35); bot.setControlState('left', dr < -0.35)   // motion-ok: as above
+      await bot.waitForTicks(1)
+    }
+    for (const k of ['forward', 'back', 'left', 'right']) bot.setControlState(k, false)   // motion-ok: stop
+    await lk
+    await ctx.easeLookAt(lineAt, 500)   // re-centred from where the walk ended
+    const named = Object.values(bot.entities).filter(e => e.name === 'sheep' && e.metadata && JSON.stringify(e.metadata).includes('jeb_')).length
+    ctx.log('jeb_ sheep:', named)
+    if (named < N) return false
+    ctx.mark('party')
+    await bot.waitForTicks(70)   // x6 in the edit
     return true
   }
 }
