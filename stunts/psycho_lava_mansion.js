@@ -9,12 +9,15 @@ module.exports = P.makeStunt({
   caption: 'rate my cozy house 1-10',
   red: 'cozy',
   rooms: ['living_room', 'kitchen', 'bathroom'],
-  finale: 'bed_jump',
+  finale: 'bed_anchor',
   edit: {
-    startAt: 'open:0', endAfter: 'land:0.65',   /* r:r188b46: was 0.9 */ dropAt: 'land',
-    // a pop on frame 1 under the fire's crackle (the audio hook); the payoff is the landing on the bed: the song dips
-    // 0.4 s before it, then an impact and a punch-in
-    sfx: [['pop', 'open', { gain: 0.8 }],   /* r:r0f3da0: 0.35 sat 7.4 dB under the peak */ ['dip', 'land', 0.4], ['impact', 'land']],
-    punch: [['land', 0, 0.6]]
+    startAt: 'open:0', endAfter: 'boom:1.7', deathScreen: true, dropAt: 'boom',
+    // a pop on frame 1 under the fire's crackle (the audio hook); the landing on the bed gets a small punch; the payoff
+    // is the anchor's blast: the song dips 0.4 s before it, then a boom, a flash, a shake, and the death screen with
+    // its message ("56e was killed by [Intentional Game Design]") read for 1.7 s
+    sfx: [['pop', 'open', { gain: 1.0 }],   /* r:r0f3da0: 0.35 sat 7.4 dB under the peak */ ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }]],
+    punch: [['land', 0, 1.06], ['boom', 0, 1.15]],
+    flash: [['boom', 0, 0.5]],
+    shake: [['boom', 0, 18]]
   }
 })
