@@ -52,7 +52,7 @@ module.exports = {
     // the lava's burning keeps the game track busy, so the impact doesn't flatten the rest)
     // r:r188b46: after each reveal reads (the look lands + 0.3 s still on it) a hard cut to the next dig, which starts
     // still and looking down: no look-down between (pace: 2-3 s dwell after each landing, a 3.05 s dead span at the geode)
-    speed: [['seen1', 'dig1', 'cut'], ['seen2', 'dig2', 'cut'], ['seen3', 'dig3', 'cut'], ['seen4', 'dig4', 'cut'], ['dig1:0.3', 'l2:-0.35', 2], ['dig2:0.3', 'l3:-0.35', 2], ['dig3:0.3', 'l4:-0.35', 2], ['dig4:0.3', 'l5:-0.35', 2], ['in_lava:1.0', 'death:-0.4', 4]]   // every dig x2 (the view straight down: ~19 -> ~15.5 s),
+    speed: [['seen1', 'dig1', 'cut'], ['seen2', 'dig2', 'cut'], ['seen3', 'dig3', 'cut'], ['seen4', 'dig4', 'cut'], ['dig1:0.3', 'l2:-0.35', 2], ['dig2:0.3', 'l3:-0.35', 2], ['dig3:0.3', 'l4:-0.35', 2], ['dig4:0.3', 'l5:-0.35', 2], ['in_lava:1.0', 'death:-0.4', 4]],   // every dig x2 (the view straight down: ~19 -> ~15.5 s)
     sfx: [['pop', 'dig1'], ['whoosh', 'l5:0.15'], ['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]   // (a pop on the opening: the no-song cut was silent until the first block broke at 2.7 s, pace hook)
   },
 
