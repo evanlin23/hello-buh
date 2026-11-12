@@ -27,7 +27,9 @@ module.exports = {
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     // the teleports between walls cut out; the long falls' middles at x2 (the camera holds still looking down the wall)
     speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `fall${i + 1}:0.95`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:1.0`, `catch${i + 1}:-0.6`, 2])],
-    subs: WALLS.map((w, i) => [`fall${i}:1.0`, w.sub, 1.5])   // just after each cut (on the cut's edge they came in 0.5 s late: review)
+    // on each drop's first frame: the edit's timeline is in output time and a mark inside a cut sits on the cut, so drops 2-3
+    // key on fall<i> itself (fall<i>:1.0 put them 1 s late); drop 1's fall0 is before the start
+    subs: WALLS.map((w, i) => [i ? `fall${i}:0.02` : 'fall0:1.0', w.sub, 1.5])
   },
 
   async setup (ctx) {
