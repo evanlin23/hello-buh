@@ -113,6 +113,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 1500 | Hushwell | **Light Sleeper.** Buh (about 10) plays a music disc on the open well and the warden rises. "Buh was obliterated by a sonically-charged shriek." His dog sits by its doghouse on the north slope. |
 | ~1550 | | After the warden night Buh is sent across the White to Grandpa in Ravenford. |
 | 1800 | Stillwater | **The Chunk Next Door.** 700 nights after the Long Day ended, the neighbour looks Gary in the face. |
+| 2200 | Stillwater | **Sorry, Dear** (script, not canon until made). In Stillwater every "sorry" shrinks you an inch. A kid's aunt, once taller than the door, is the size of a mug; she says "sorry, dear" every time she beats him at cards for emeralds. This Sunday he plays to win so she'll have nothing to be sorry for; she wins, grins, says it and shrinks. Next hand he wins, says it back, and loses an inch himself. Inside the neighbour's cottage, the lever through the window. |
 | 1900 | Ravenford | **Thirty-One Raids.** Buh (about 11) drinks Grandpa's "courage". Raid 32. The 32nd frame on the totem wall is filled after it. (Lore, never on screen: raid 32 brought two evokers. One fell, and its totem is the 32nd. The other strayed past the Ridge, out of the raid's reach, and got away into the birch woods past the ford. From the next morning Ravenford dyes its sheep blue.) |
 | ~2000 | Leo's House | Put Back (pilot, not canon until made): Leo's house, blown up three years before, comes back block by block. |
 | 2300 | Ravenford | **Red Sheep** (planned, not canon until made). A shepherd's kid in Ravenford: every sheep in the village is blue, and Dad won't let a white one through the gate. Last spring one came back from the woods red. Today the kid's lamb gets out, and the kid follows it into the woods, where it turns red in front of the evoker. Grandpa's house and the 32 totems are in the background, Grandpa slow on his bench. |
@@ -174,6 +175,13 @@ Ravenford 2300.
 | the girl miner | The Singing Box Next Door | player, `miner_girl` skin (original) | | |
 | the neighbour | The Singing Box Next Door | player, `neighbour` skin (original; his face reads the same in diamond armour without a helmet) | | |
 | the barter-farm player | Saving Up for a Bastion | player, `barter_player` skin (original; was `efe`) | | |
+
+Batch 4 (scripts for owner audit; not canon until made):
+
+| who | story (place, day) | look | voice | status |
+|---|---|---|---|---|
+| the kid | Sorry, Dear (Stillwater, 2200) | player, `spare_boy` skin (moves up from spare once made), a boy about ten, never named, not Buh | `narrator` (Leda) | cast |
+| the aunt | Sorry, Dear (Stillwater, 2200) | player actor at entity scale 0.3, NEW skin `sorry_aunt` (grey perm, red cat-eye glasses, coral cardigan, lavender skirt), never named, no name tag; lives in the neighbour's cottage | audition Vindemiatrix vs Zephyr (both unused) against Pip on L10 | audition |
 
 Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: Tomas and Dad): each pick takes it off the others' lists.
 | Grandpa (Ravenford), in the background | Red Sheep (Ravenford, 2300) | player actor, `zuri` skin, the slow walk; on his bench by his door; **never named, never called Grandpa** (conflict 11) | none | |

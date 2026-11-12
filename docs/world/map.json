@@ -1115,7 +1115,8 @@
    ],
    "stories": [
     "sun_wont_set",
-    "chunk_next_door"
+    "chunk_next_door",
+    "sorry_dear"
    ],
    "status": "canon"
   },
@@ -2314,6 +2315,18 @@
     "boxed_bell"
    ],
    "status": "made"
+  },
+  "sorry_dear": {
+   "day": 2200,
+   "places": [
+    "stillwater"
+   ],
+   "cameos": [
+    "long_day_lever"
+   ],
+   "status": "claimed",
+   "short": "every sorry shrinks you an inch, and my aunt is the size of a mug",
+   "note": "script on claude/script-sorry-dear (2026-11-12); inside the neighbour's cottage (piece `neighbour`), the card table by the north-east window; the lever through the window in S04. Not canon until made."
   }
  },
  "cameos": {

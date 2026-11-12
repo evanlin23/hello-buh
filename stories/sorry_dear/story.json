@@ -1,0 +1,607 @@
+{
+ "name": "sorry_dear",
+ "stunt": "story_sorry_dear",
+ "version": 2,
+ "revision": "r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
+ "caption": "why won't my tiny aunt stop saying sorry ☕",
+ "upload": {
+  "title": "in my village every sorry shrinks you an inch. my aunt is the size of a mug ☕ #minecraft #shorts",
+  "pinned": "Be honest: would YOU say sorry if you won?",
+  "tags": [
+   "minecraft story",
+   "minecraft emerald",
+   "minecraft village",
+   "minecraft funny",
+   "minecraft aunt",
+   "minecraft roblox story"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): built by lib/buhstories_upload.js; pinned = the question, without the 👇. The title is line 1's strange, checkable fact (STANDARDS 0u).",
+ "logline": "In a village where every sorry shrinks you an inch, a kid's aunt is the size of a mug and keeps saying it; he plays cards to win so she'll have nothing to be sorry for, and she lays down her winning hand, grins 'Oh, sorry, dear' and shrinks: she was never sorry, she was gloating.",
+ "question": "if every sorry shrinks you an inch, why won't the nicest lady alive stop saying it?",
+ "premise": "In Stillwater, every 'sorry' you say shrinks you an inch. The kid's aunt used to be taller than the door; now she is the size of a mug, standing on her own card table. She shrinks most on Sundays, which is cards day: they play for emeralds, her pile is taller than her ('luck', she says), and every time she lays her cards down she smiles and says 'sorry, dear'. The kid thinks she feels bad for him. One more inch and she'll fit in a teacup, so this Sunday he plays to WIN, so she'll have nothing to be sorry for.",
+ "twist": "She isn't sorry for him. 'Sorry, dear' is how she gloats: she says it every time she beats him, and sixty-odd wins took her from taller than the door to the size of a mug. She would rather win and gloat than stay tall. The kid's best hand ever loses, she grins 'Oh. Sorry, DEAR.' and shrinks again, and the kid says what he sees: 'She wasn't SORRY. She was WINNING.' The sting: he wins the next hand and says 'Oh. Sorry, AUNTIE.', and shrinks an inch himself.",
+ "family": "village_custom",
+ "key_color": "#FF7F6B",
+ "mood": "funny",
+ "payoff": "L12",
+ "payoff_note": "L11 says the reveal over S11 (her raking his emerald onto her pile). L12 is the one beat (story_format beat 7): the kid's winning hand, 'Oh. Sorry, AUNTIE.', and his own tiny shrink (a soft 'bloop' sound hit + his head dropping an inch against the window sill in S12). The music drops 0.45 s before L12's shrink; the Short ends 1.0 s after the shrink settles.",
+ "punch_note": "hook L01 (the rule + the mug), turn L08 (he plays to WIN), the reveal L11, the sting L12",
+ "look": {
+  "time": 6000,
+  "fog": false,
+  "grade": "bright",
+  "note": "one sunny Sunday afternoon, time 6000 -> ~6600 across S01-S12, never backwards; warm light through the north-east window; no light change"
+ },
+ "weather": "clear",
+ "world": {
+  "place": "stillwater (canon, docs/world/map.json): the neighbour's cottage (piece `neighbour`, spruce cottage at (-236, 70, -1028), facing east) is the aunt's house. The card table stands inside by the north-east window; the Long Day lever on its stone post (-214, 70, -1062) is out of that window, about 40 blocks north-north-east.",
+  "where": "inside the aunt's cottage only: the card table by the north-east window, and the inside door on the table's north side",
+  "day": 2200,
+  "canon": "Day 2200: 1,100 days after the Long Day ended (1100) and 400 after The Chunk Next Door (1800); a sunny day, so no Gary (nights only). New: in Stillwater, every 'sorry' shrinks you an inch (a village rule; nobody grows back while they keep saying it). The kid's aunt (never named) lives in the neighbour's cottage; whether she is The Chunk Next Door's neighbour is never said. She was over two blocks tall once, now about half a block (0.3 scale) on day 2200, the kid an inch shorter after L12.",
+  "easter_egg": "`long_day_lever` (canon cameo, always): the lever on its stone post, small and soft through the north-east window behind her in S04's background (1-3 s), never named."
+ },
+ "voice": {
+  "engine": "gemini",
+  "recipe": "voices/cast.json narrator (Pip, Leda, flash-lite, plain_say, one_take) + the aunt's own voice on gemini-3.8-flash-tts (audition two unused voices); nothing voiced until the owner audits the script (r:ra5bc8f)"
+ },
+ "voice_takes": "beat",
+ "one_take": [
+  "N"
+ ],
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "color": "#FFFFFF",
+   "plain_say": true,
+   "on_screen": "the kid (a boy about ten, never named, not Buh): a player actor, `spare_boy` skin (docs/world/canon.md Original skins: chestnut hair, burgundy hoodie; becomes this kid's skin), full size (scale 1.0, 0.986 after L12). Sits on the south side of the card table in every shot he is in (S03, S06, S08, S09, S12); his hand at frame edge in S01, S05, S10. Voice: cast `narrator` (Pip, Leda), as Good Boy's dog."
+  },
+  "Aunt": {
+   "role": "character",
+   "name": "my aunt (never named)",
+   "voice": "Vindemiatrix",
+   "model": "gemini-3.8-flash-tts",
+   "color": "#FF7F6B",
+   "profile": "A sweet old lady, sugary and smug",
+   "on_screen": "a player actor at entity scale 0.3 (about 0.54 blocks tall: the mug's height), 0.286 after L10 (one inch less); new skin `sorry_aunt` (NEW SKIN NEEDED: a grey perm, red cat-eye glasses, a coral cardigan with pearl buttons, a lavender skirt, sensible brown shoes). Stands on the card table, north side, all film. One voiced line, L10, on screen (CU) while she says it.",
+   "skin": "sorry_aunt (new skin needed)",
+   "audition": {
+    "line": "L10 \"Oh. Sorry, DEAR.\" (say: Oh. Sorry, dear.), gemini-3.8-flash-tts, single-speaker, one take each, judged against Pip (Leda) for contrast (STANDARDS 7, 7a)",
+    "bracket": "[A sweet old lady, sugary and smug]",
+    "candidates": [
+     {
+      "voice": "Vindemiatrix",
+      "why": "Gemini's 'gentle': a soft, sweet older woman whose smugness reads as a smile; no character uses it"
+     },
+     {
+      "voice": "Zephyr",
+      "why": "Gemini's 'bright': a perky, sing-song sweetness for a gloat dressed as a kindness; no character uses it"
+     }
+    ],
+    "not": "Gacrux (six stories' grandmothers), Autonoe (Portal Cottage grandma), Callirrhoe (Grandma on the island), Pulcherrima and Kore (the moms), Leda (Pip), Despina (storyteller), Aoede (Names in the Woods), Achernar (breathy: a ghost)",
+    "after": "the owner picks; then add a cast id (`aunt_stillwater`) to voices/cast.json with this bracket and `reads_as` {sex: female, age: [60, 80]}, set cast.Aunt.voice to it, and update docs/world/canon.md Planned characters"
+   },
+   "name_tag": false
+  }
+ },
+ "requests": [
+  {
+   "id": "rN",
+   "speakers": [
+    "N"
+   ],
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L11",
+    "L12"
+   ],
+   "direction": "[A bubbly ten-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "rA",
+   "speakers": [
+    "Aunt"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "lines": [
+    "L10"
+   ],
+   "direction": "[A sweet old lady, sugary and smug]"
+  }
+ ],
+ "hotbar": [
+  [
+   "emerald",
+   1
+  ],
+  [
+   "paper",
+   52
+  ],
+  [
+   "cookie",
+   12
+  ],
+  "milk_bucket",
+  [
+   "sugar",
+   9
+  ],
+  "flower_pot",
+  "clock",
+  [
+   "egg",
+   67
+  ],
+  "cake"
+ ],
+ "hotbar_note": "the kid's (never shown in a POV; consistent if seen): his one emerald, the deck (paper), her cookies, then the ridiculous (STANDARDS 3.6).",
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "text": "In my village, / every SORRY / shrinks you an INCH. / My aunt / is the size / of a MUG.",
+   "say": "In my village, every SORRY shrinks you an INCH. My aunt is the size of a MUG.",
+   "shot": "S01",
+   "punch": true,
+   "look": [
+    {
+     "what": "actor:Aunt",
+     "word": "AUNT"
+    },
+    {
+     "what": "prop:mug",
+     "word": "MUG"
+    }
+   ],
+   "direction": "flat and bright, plain fact, a little proud of how weird it is; a tiny beat before MUG",
+   "note": "hook (STANDARDS 0u/0v/0w): the genre opener 'In my village', the rule with a number (an inch), then the stranger clause (the mug); the picture shows her beside the mug, the same height, by 2 s. No stock why tag: L02 asks it. The mug and the teacup are new props (no item id), so `look` names them, not `shows`."
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "text": "She used to be taller / than the DOOR. / So why won't she / STOP saying it?",
+   "say": "She used to be taller than the DOOR. So why won't she STOP saying it?",
+   "shot": "S02",
+   "shows": [
+    {
+     "what": [
+      "spruce_door"
+     ],
+     "word": "DOOR"
+    }
+   ],
+   "look": {
+    "what": "block:spruce_door",
+    "word": "DOOR"
+   },
+   "direction": "wide-eyed on DOOR, then honestly baffled, the question up",
+   "note": "seconds 4-8 escalate (0u): she used to be a giant. The viewer's question said for them (format beat 3), specific to her, not a stock tag."
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "She shrinks the MOST / on SUNDAYS. / CARDS day. / She's EXTRA nice / on cards day.",
+   "say": "She shrinks the MOST on SUNDAYS. CARDS day. She's EXTRA nice on cards day.",
+   "shot": "S03",
+   "shows": [
+    {
+     "what": [
+      "paper"
+     ],
+     "word": "CARDS"
+    }
+   ],
+   "look": {
+    "what": "actor:Aunt"
+   },
+   "direction": "matter-of-fact, then sweet and sure on EXTRA nice",
+   "note": "clue 1 (Sundays = cards day) with its misreading (she's extra nice then)"
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "We play for EMERALDS. / Her pile's / taller than HER. / She says it's LUCK.",
+   "say": "We play for EMERALDS. Her pile's taller than HER. She says it's LUCK.",
+   "shot": "S04",
+   "shows": [
+    {
+     "what": [
+      "emerald"
+     ],
+     "word": "EMERALDS"
+    }
+   ],
+   "look": {
+    "what": "prop:emerald_pile",
+    "word": "PILE"
+   },
+   "direction": "impressed, a little giggle on HER, then totally believing LUCK",
+   "note": "clue 2 (the score: she wins every game) with its misreading (luck). The critic's fix: the score is an emerald pile, never cards."
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "text": "Every time / she lays her cards DOWN, / she smiles / and says, / \"sorry, DEAR.\"",
+   "say": "Every time she lays her cards DOWN, she smiles and says, sorry, DEAR.",
+   "shot": "S05",
+   "shows": [
+    {
+     "what": [
+      "paper"
+     ],
+     "word": "DOWN"
+    }
+   ],
+   "look": {
+    "what": "actor:Aunt",
+    "word": "SMILES"
+   },
+   "direction": "warm and quick, copying her sweet little voice on the quote",
+   "note": "clue 3 (the sorry comes with her winning hand, and a smile); the narrator quotes it, so her own voice in L10 is the payoff"
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "text": "She feels / SO bad / for me.",
+   "say": "She feels SO bad for me.",
+   "shot": "S06",
+   "look": {
+    "what": "actor:N"
+   },
+   "direction": "touched, totally sure of it, a sheepish little smile",
+   "note": "the misreading of clues 1-3 (0a): the kid thinks the sorry is pity for his losing"
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "One more INCH, / and she'll fit / in a TEACUP.",
+   "say": "One more INCH, and she'll fit in a TEACUP.",
+   "shot": "S07",
+   "look": {
+    "what": "prop:teacup",
+    "word": "TEACUP"
+   },
+   "direction": "a small worried wobble, still bright (never scared)",
+   "note": "the stakes (the critic's fix): someone loved, one inch from a teacup"
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "text": "So this Sunday, / I played to WIN. / So she'd have NOTHING / to be sorry for.",
+   "say": "So this Sunday, I played to WIN. So she'd have NOTHING to be sorry for.",
+   "shot": "S08",
+   "punch": true,
+   "shows": [
+    {
+     "what": [
+      "paper"
+     ],
+     "word": "WIN"
+    }
+   ],
+   "look": {
+    "what": "actor:N"
+   },
+   "direction": "determined and heroic, a kid on a mission; WIN big",
+   "note": "the want (the critic's fix): the kid breaks the pattern to save her (format beat 5)"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "My best hand EVER. / Then she laid / hers DOWN.",
+   "say": "My best hand EVER. Then she laid hers DOWN.",
+   "shot": "S09",
+   "shows": [
+    {
+     "what": [
+      "paper"
+     ],
+     "word": "DOWN"
+    }
+   ],
+   "look": {
+    "what": "actor:Aunt",
+    "word": "HERS"
+   },
+   "direction": "proud on EVER, then a quick little drop on DOWN",
+   "note": "the climax: his try meets hers"
+  },
+  {
+   "id": "L10",
+   "who": "Aunt",
+   "text": "Oh. / Sorry, DEAR.",
+   "say": "Oh. Sorry, dear.",
+   "shot": "S10",
+   "look": {
+    "what": "actor:Aunt",
+    "size": "cu"
+   },
+   "direction": "sugary sweet with a smug little grin in it",
+   "note": "her one line, on screen (CU) while she says it; she shrinks one inch on DEAR (a soft 'bloop' + the dip, the camera holds)"
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "She wasn't SORRY. / She was WINNING.",
+   "say": "She wasn't SORRY. She was WINNING.",
+   "shot": "S11",
+   "punch": true,
+   "shows": [
+    {
+     "what": [
+      "emerald"
+     ],
+     "word": "WINNING"
+    }
+   ],
+   "look": {
+    "what": "actor:Aunt",
+    "word": "WINNING"
+   },
+   "direction": "the reveal, plain and amazed, slower: he says what he sees",
+   "note": "the reveal SAID in one plain line (format beat 6), over the picture that proves it: she rakes his emerald onto her pile, climbs it and throws her arms up"
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "text": "Next hand, / I WON. / Oh. / Sorry, AUNTIE.",
+   "say": "Next hand, I WON. Oh. Sorry, AUNTIE.",
+   "shot": "S12",
+   "look": {
+    "what": "actor:N"
+   },
+   "direction": "quick and cheeky, a sweet fake-innocent grin on Sorry, AUNTIE",
+   "note": "the one beat (format beat 7) and the loop: the rule now bites him (a soft 'bloop', his head drops an inch against the sill); 'Sorry, AUNTIE' runs into L01's 'every SORRY shrinks you an inch'. Cut 1.0 s after the shrink."
+  }
+ ],
+ "shots": [
+  {
+   "id": "S01",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "card_table",
+   "size": "ms",
+   "camera": "on the tabletop at her eye level (lens ~0.4 above the cloth, 1.2 blocks out, south of her), a slow push in",
+   "frame": "frame 1: the aunt centred, big (her whole body ~60 % of frame height), already moving (a little wave and a sway), beside the white mug with a red stripe exactly her height (the comparison IS the hook); a few cards (paper) flat at her feet; the kid's huge burgundy sleeve soft at frame left; the north-east window soft behind. On MUG the push ends with her head level with the mug's rim.",
+   "subject": "actor:Aunt",
+   "look": {
+    "time": 6000
+   }
+  },
+  {
+   "id": "S02",
+   "line": "L02",
+   "lines": [
+    "L02"
+   ],
+   "place": "inside_door",
+   "size": "ws",
+   "camera": "starts on the spruce button high on the wall above the inside door (2.2 blocks up: her old height mark), a fast eased tilt down the door to the tabletop, which stands just in front of the door",
+   "frame": "the button mark above the door frame centred, then the door, then she is revealed at the bottom of the tilt on the table's north edge, tiny against the 2-block door behind her, looking up at her old mark. One mark only (no text).",
+   "subject": "block:spruce_button",
+   "look": {
+    "time": 6000
+   }
+  },
+  {
+   "id": "S03",
+   "line": "L03",
+   "lines": [
+    "L03"
+   ],
+   "place": "card_table",
+   "size": "full",
+   "camera": "side-on from the east, eye height of the seated kid, still",
+   "frame": "the whole table: the kid seated on the south side (spruce stair chair) dealing cards (paper) flat onto the cloth; the aunt standing on the north edge, giving a sweet little bow; the mug, her emerald pile and his one emerald all on the cloth.",
+   "subject": "actor:Aunt",
+   "look": {
+    "time": 6000
+   }
+  },
+  {
+   "id": "S04",
+   "line": "L04",
+   "lines": [
+    "L04"
+   ],
+   "place": "card_table",
+   "size": "ms",
+   "camera": "on the tabletop at her eye level from the south-west, a slow slide right from her pile to his side",
+   "frame": "her emerald pile (a heap of emeralds, ~0.7 tall: taller than her) with her standing proudly beside it, patting it; the slide ends on his side: one lone emerald on the cloth. Background: the north-east window, the Long Day lever small and soft on its stone post outside (the easter egg, 1-3 s, never named).",
+   "subject": "prop:emerald_pile",
+   "look": {
+    "time": 6100
+   }
+  },
+  {
+   "id": "S05",
+   "line": "L05",
+   "lines": [
+    "L05"
+   ],
+   "place": "card_table",
+   "size": "mcu",
+   "camera": "tabletop, her eye level, 0.8 out from the south",
+   "frame": "she pushes her cards flat into a fan with her shoe (hands at her sides), then looks up past the lens at the kid and smiles (a closed-mouth, sly little smile); her mouth moves on the narrator's quote (no voice of hers here).",
+   "subject": "actor:Aunt",
+   "look": {
+    "time": 6100
+   }
+  },
+  {
+   "id": "S06",
+   "line": "L06",
+   "lines": [
+    "L06"
+   ],
+   "place": "card_table",
+   "size": "ms",
+   "camera": "from her eye level on the tabletop looking up at the kid (a low angle), still",
+   "frame": "the kid's face and shoulders, a sheepish touched smile, his losing cards flat in front of him, his one emerald by his hand.",
+   "subject": "actor:N",
+   "look": {
+    "time": 6200
+   }
+  },
+  {
+   "id": "S07",
+   "line": "L07",
+   "lines": [
+    "L07"
+   ],
+   "place": "card_table",
+   "size": "full",
+   "camera": "tabletop, side-on from the west, a slow push",
+   "frame": "three heights in a row on the cloth: the mug, the aunt (the mug's height), and a white teacup half her height; she peers into the teacup. The push ends on the teacup on TEACUP.",
+   "subject": "prop:teacup",
+   "look": {
+    "time": 6200
+   }
+  },
+  {
+   "id": "S08",
+   "line": "L08",
+   "lines": [
+    "L08"
+   ],
+   "place": "card_table",
+   "size": "mcu",
+   "camera": "over the aunt's head (she soft, foreground bottom), on the kid, a quick push in on WIN",
+   "frame": "the kid, brows down, slaps a card flat on the cloth on WIN, tongue out in focus; determined.",
+   "subject": "actor:N",
+   "look": {
+    "time": 6300
+   }
+  },
+  {
+   "id": "S09",
+   "line": "L09",
+   "lines": [
+    "L09"
+   ],
+   "place": "card_table",
+   "size": "ws",
+   "camera": "high side angle from the east, 2.5 blocks up, still",
+   "frame": "the table from above at an angle: the kid lays his hand down in a proud fan on EVER; then on DOWN she kicks her fan out flat on her side, longer than his; both cards' faces unreadable (paper), so the read is her pose: she straightens up.",
+   "subject": "actor:Aunt",
+   "look": {
+    "time": 6400
+   }
+  },
+  {
+   "id": "S10",
+   "line": "L10",
+   "lines": [
+    "L10"
+   ],
+   "place": "card_table",
+   "size": "cu",
+   "camera": "tabletop, her eye level, 0.6 out, still (it holds while she shrinks)",
+   "frame": "her face and shoulders, red cat-eye glasses, a sugary grin; on DEAR a soft 'bloop' and she dips one inch (scale 0.3 -> 0.286 over 0.25 s), her head sinking in the held frame.",
+   "subject": "actor:Aunt",
+   "look": {
+    "time": 6400
+   }
+  },
+  {
+   "id": "S11",
+   "line": "L11",
+   "lines": [
+    "L11"
+   ],
+   "place": "card_table",
+   "size": "ms",
+   "camera": "tabletop, her eye level from the south, 1.3 out, a slow push",
+   "frame": "the reveal picture: she drags the kid's one emerald across the cloth to her pile, climbs onto the heap and throws both arms up, grinning; the mug behind her now a bit taller than her. Held through L11.",
+   "subject": "actor:Aunt",
+   "look": {
+    "time": 6500
+   }
+  },
+  {
+   "id": "S12",
+   "line": "L12",
+   "lines": [
+    "L12"
+   ],
+   "place": "card_table",
+   "size": "mcu",
+   "camera": "the kid from the east at his eye level, the north-east window's sill a straight line across the frame behind his head; the camera holds",
+   "frame": "he slaps his winning fan down (cards flat at frame bottom), grins a fake-innocent grin on 'Sorry, AUNTIE', then a soft 'bloop' and his head drops one inch against the sill line (scale 1.0 -> 0.986); the aunt's tiny head pops into frame bottom left, mouth open. Cut 1.0 s after the dip settles.",
+   "subject": "actor:N",
+   "look": {
+    "time": 6600
+   },
+   "payoff_mark": "shrink_kid"
+  }
+ ],
+ "props": {
+  "card_table": {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "a 2 x 1 table of spruce slabs on fence posts (top at y + 1), a white carpet cloth, by the north-east window; O = the table's south-west top corner block (bible/set.md)"
+  },
+  "mug": {
+   "note": "a white mug with a red stripe and a handle, exactly the aunt's start height (~0.54 blocks): NEW PROP (no vanilla mug: a block_display/item_display model or a small custom model)"
+  },
+  "teacup": {
+   "note": "a white teacup on a saucer, ~0.27 blocks tall (half her height): NEW PROP"
+  },
+  "emerald_pile": {
+   "note": "a heap of emerald items ~0.7 tall on her side (north half of the table), static (no bob or spin): item_display entities or a static item heap"
+  },
+  "lone_emerald": {
+   "note": "one emerald on the kid's side; dragged to her pile in S11"
+  },
+  "cards": {
+   "note": "paper items lying flat on the cloth (two fans), static"
+  },
+  "height_mark": {
+   "note": "one spruce button on the wall above the inside door, 2.2 blocks up (the aunt's old height)"
+  },
+  "lever": {
+   "note": "the Long Day lever (canon stamp `lever`, (-214, 70, -1062)), through the north-east window in S04 only"
+  }
+ },
+ "ending": {
+  "after": "L12",
+  "beats": [
+   "S11: L11 says the reveal over her raking his emerald onto her pile and climbing it, arms up.",
+   "S12: L12: he wins the next hand, 'Oh. Sorry, AUNTIE.', a soft bloop, his head drops an inch against the sill; mark `shrink_kid`; cut 1.0 s after it settles."
+  ],
+  "loop": "L12's 'Sorry, AUNTIE' + his shrink runs into L01 'In my village, every SORRY shrinks you an INCH.'"
+ },
+ "bible": "stories/sorry_dear/bible.md",
+ "beats": "stories/sorry_dear/beats.md",
+ "set": "stories/sorry_dear/set.md",
+ "shotlist": "stories/sorry_dear/shots.md",
+ "engine": {
+  "have": [
+   "player actors with custom skins, eased turns, held items (renderer/entities.js)",
+   "the canon Stillwater pieces and the lever stamp (lib/world, docs/world/map.json)",
+   "camera shots with at/look/fov in stunt.shots",
+   "dropped items drawn as their ground model (engine_features: Dropped items)"
+  ],
+  "missing": [
+   "an entity scale in the renderer (the critic's estimate ~1-2 h: renderer/entities.js has no per-entity scale): the aunt at 0.3 (0.286 after L10) and the kid at 0.986 after L12, eased over 0.25 s; in-game the vanilla `minecraft:scale` attribute (1.20.5+) sets it, so the hitbox and the eye follow",
+   "the mug and the teacup props (no vanilla mug or cup): block_display/item_display entities or two small custom models",
+   "static item heaps: the emerald pile and the flat cards (paper) without the dropped-item bob and spin (item_display support, or a 'static' flag on dropped items)",
+   "a player actor kicking/pushing a flat item along the table with a foot (or the cards simply appear in a fan on the beat)"
+  ]
+ }
+}
