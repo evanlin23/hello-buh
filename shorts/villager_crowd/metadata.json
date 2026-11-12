@@ -4,7 +4,7 @@
   "caption": "why are they ALL staring at me 💀",
   "youtube": {
     "title": "why are they ALL staring at me 💀 #minecraft #shorts",
-    "description": "why are they ALL staring at me 💀\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "why are they ALL staring at me 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,46 +14,46 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "com_bota.mp3",
-    "title": "COM BOTA",
-    "artist": "cape, crysstales",
+    "file": "mortals_funk_remix.mp3",
+    "title": "Mortals Funk Remix",
+    "artist": "Warriyo, LXNGVX",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "behind",
-    "drop_in_song_s": 16.75,
-    "drop_in_short_s": 14.42,
-    "song_start_s": 2.33
+    "drop_on_event": "sting",
+    "drop_in_song_s": 113.75,
+    "drop_in_short_s": 15.17,
+    "song_start_s": 98.58
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 15.14,
+    "duration_s": 16.09,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28363622,
-    "sha256": "d2f532c4081abe8e7a7490002e3c88c0d287266e124045e8ba0fd6f2c8c28658",
+    "bytes": 29447333,
+    "sha256": "65ddd7b4d88ae6954befc2328642c8974fb02e16d7015d6208cca75841474e65",
     "release": {
       "tag": "pkg-villager_crowd",
-      "asset": "villager_crowd.short.d2f532c4081abe8e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_crowd/villager_crowd.short.d2f532c4081abe8e.mp4",
-      "sha256": "d2f532c4081abe8e7a7490002e3c88c0d287266e124045e8ba0fd6f2c8c28658",
-      "bytes": 28363622
+      "asset": "villager_crowd.short.65ddd7b4d88ae695.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_crowd/villager_crowd.short.65ddd7b4d88ae695.mp4",
+      "sha256": "65ddd7b4d88ae6954befc2328642c8974fb02e16d7015d6208cca75841474e65",
+      "bytes": 29447333
     },
     "nosong_release": {
       "tag": "pkg-villager_crowd",
-      "asset": "villager_crowd.short_nosong.faf72594ed19fbff.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_crowd/villager_crowd.short_nosong.faf72594ed19fbff.mp4",
-      "sha256": "faf72594ed19fbff8fe307c3cd09ffdb5c44cfb4ba6203c2469dd9485a2ab3c5",
-      "bytes": 28361192
+      "asset": "villager_crowd.short_nosong.6effeba2d8bc58d9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_crowd/villager_crowd.short_nosong.6effeba2d8bc58d9.mp4",
+      "sha256": "6effeba2d8bc58d97e36ca0aafc154e6757de429d98763fd5c41f8415f53372a",
+      "bytes": 29433557
     }
   },
   "edit": {
     "subsY": 0.15,
     "caption": "why are they ALL staring at me 💀",
     "red": "ALL",
-    "dropAt": "behind",
+    "dropAt": "sting",
     "startAt": "beat:-0.05",
-    "endAfter": "behind:0.7",
+    "endAfter": "sting:0.9",
     "speed": [
       [
         "cut1a",
@@ -89,6 +89,11 @@
         "pillar:-2.2",
         "pillar:-0.35",
         2.2
+      ],
+      [
+        "behind:0.45",
+        "sting",
+        2
       ]
     ],
     "subs": [
@@ -140,6 +145,11 @@
         "behind",
         0,
         1.08
+      ],
+      [
+        "sting",
+        0,
+        1.1
       ]
     ],
     "flash": [
@@ -147,13 +157,23 @@
         "behind",
         0,
         0.5
+      ],
+      [
+        "sting",
+        0,
+        0.35
       ]
     ],
     "zoom": [
       [
         "overhead",
-        "behind:1.0",
+        "sting:1.0",
         1.3
+      ],
+      [
+        "sting",
+        "sting:1.0",
+        1.45
       ]
     ],
     "sfx": [
@@ -178,12 +198,12 @@
       ],
       [
         "dip",
-        "behind",
+        "sting",
         0.4
       ],
       [
         "impact",
-        "behind",
+        "sting",
         {
           "gain": 1.4
         }
@@ -207,21 +227,21 @@
       "--subs_y",
       "0.15",
       "--speed",
-      "[[\"cut1a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"overhead\",\"back\",1.5],[\"pillar\",\"overhead\",3],[\"cut6a:-1.9\",\"cut6a\",2.2],[\"pillar:-2.2\",\"pillar:-0.35\",2.2]]",
+      "[[\"cut1a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"overhead\",\"back\",1.5],[\"pillar\",\"overhead\",3],[\"cut6a:-1.9\",\"cut6a\",2.2],[\"pillar:-2.2\",\"pillar:-0.35\",2.2],[\"behind:0.45\",\"sting\",2]]",
       "--punch",
-      "[[\"behind\",0,1.08]]",
+      "[[\"behind\",0,1.08],[\"sting\",0,1.1]]",
       "--hook",
       "{\"at\":\"overhead\",\"before\":-0.25,\"after\":1.45,\"text\":\"wait for the 200...\"}",
       "--zoom",
-      "[[\"overhead\",\"behind:1.0\",1.3]]",
+      "[[\"overhead\",\"sting:1.0\",1.3],[\"sting\",\"sting:1.0\",1.45]]",
       "--flash",
-      "[[\"behind\",0,0.5]]",
+      "[[\"behind\",0,0.5],[\"sting\",0,0.35]]",
       "--sfx",
-      "[[\"air\",\"start\",\"behind\",{\"gain\":0.5}],[\"pop\",\"overhead:0.27\",{\"gain\":1.4}],[\"whoosh\",\"beat\"],[\"dip\",\"behind\",0.4],[\"impact\",\"behind\",{\"gain\":1.4}]]",
+      "[[\"air\",\"start\",\"behind\",{\"gain\":0.5}],[\"pop\",\"overhead:0.27\",{\"gain\":1.4}],[\"whoosh\",\"beat\"],[\"dip\",\"sting\",0.4],[\"impact\",\"sting\",{\"gain\":1.4}]]",
       "--start_at",
       "beat:-0.05",
       "--end_after",
-      "behind:0.7"
+      "sting:0.9"
     ]
   },
   "recording": {
@@ -232,13 +252,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 374,
-      "y": 71,
-      "z": -41
+      "x": 382,
+      "y": 67,
+      "z": -55
     },
     "biome": "minecraft:plains",
-    "ticks": 1114,
-    "seconds": 55.7,
+    "ticks": 1162,
+    "seconds": 58.1,
     "deaths": 0,
     "events": [
       {
@@ -246,1747 +266,1871 @@
         "event": "start"
       },
       {
-        "t": 0.9,
+        "t": 0.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_death"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_death"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_death"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 0.75,
+        "event": "mob_death"
+      },
+      {
+        "t": 0.75,
+        "event": "motion_start"
+      },
+      {
+        "t": 1.4,
         "event": "beat"
       },
       {
-        "t": 1.65,
+        "t": 1.75,
+        "event": "motion_settled"
+      },
+      {
+        "t": 2.15,
         "event": "turn"
       },
       {
-        "t": 1.65,
+        "t": 2.15,
         "event": "face_on"
       },
       {
-        "t": 2.6,
+        "t": 3.1,
         "event": "face_off"
       },
       {
-        "t": 2.6,
+        "t": 3.1,
         "event": "cut1a"
       },
       {
-        "t": 4.05,
+        "t": 4.55,
         "event": "mob_hurt"
       },
       {
-        "t": 4.05,
+        "t": 4.55,
         "event": "mob_death"
       },
       {
-        "t": 5.2,
+        "t": 4.55,
+        "event": "motion_start"
+      },
+      {
+        "t": 5.55,
+        "event": "motion_settled"
+      },
+      {
+        "t": 5.7,
         "event": "cut1b"
       },
       {
-        "t": 5.2,
+        "t": 5.7,
         "event": "beat"
       },
       {
-        "t": 6.65,
+        "t": 7.15,
         "event": "turn"
       },
       {
-        "t": 6.65,
+        "t": 7.15,
         "event": "face_on"
       },
       {
-        "t": 7.6,
+        "t": 8.1,
         "event": "face_off"
       },
       {
-        "t": 7.6,
+        "t": 8.1,
         "event": "cut2a"
       },
       {
-        "t": 9.25,
+        "t": 9.75,
         "event": "mob_hurt"
       },
       {
-        "t": 9.25,
+        "t": 9.75,
         "event": "mob_death"
       },
       {
-        "t": 9.25,
+        "t": 9.75,
         "event": "mob_hurt"
       },
       {
-        "t": 9.25,
+        "t": 9.75,
+        "event": "motion_start"
+      },
+      {
+        "t": 9.8,
         "event": "mob_death"
       },
       {
-        "t": 9.25,
+        "t": 9.8,
         "event": "mob_hurt"
       },
       {
-        "t": 9.25,
+        "t": 9.8,
         "event": "mob_death"
       },
       {
-        "t": 9.25,
+        "t": 9.8,
         "event": "mob_hurt"
       },
       {
-        "t": 9.25,
+        "t": 9.8,
         "event": "mob_death"
       },
       {
-        "t": 9.25,
+        "t": 9.8,
         "event": "mob_hurt"
       },
       {
-        "t": 9.25,
+        "t": 9.8,
         "event": "mob_death"
       },
       {
-        "t": 10.4,
+        "t": 10.8,
+        "event": "motion_settled"
+      },
+      {
+        "t": 10.9,
         "event": "cut2b"
       },
       {
-        "t": 10.4,
+        "t": 10.9,
         "event": "beat"
       },
       {
-        "t": 11.85,
+        "t": 12.35,
         "event": "turn"
       },
       {
-        "t": 11.85,
+        "t": 12.35,
         "event": "face_on"
       },
       {
-        "t": 12.8,
+        "t": 13.3,
         "event": "face_off"
       },
       {
-        "t": 12.8,
+        "t": 13.3,
         "event": "cut3a"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.15,
+        "event": "motion_start"
+      },
+      {
+        "t": 15.2,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.2,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.2,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.2,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.2,
         "event": "mob_death"
       },
       {
-        "t": 14.65,
+        "t": 15.2,
         "event": "mob_hurt"
       },
       {
-        "t": 14.65,
+        "t": 15.2,
         "event": "mob_death"
       },
       {
-        "t": 15.8,
+        "t": 16.2,
+        "event": "motion_settled"
+      },
+      {
+        "t": 16.3,
         "event": "cut3b"
       },
       {
-        "t": 15.8,
+        "t": 16.3,
         "event": "beat"
       },
       {
-        "t": 17.25,
+        "t": 17.75,
         "event": "turn"
       },
       {
-        "t": 17.25,
+        "t": 17.75,
         "event": "face_on"
       },
       {
-        "t": 19.9,
+        "t": 20.4,
         "event": "face_off"
       },
       {
-        "t": 19.9,
+        "t": 20.4,
         "event": "gem"
       },
       {
-        "t": 19.9,
+        "t": 20.4,
         "event": "swing"
       },
       {
-        "t": 19.9,
+        "t": 20.4,
         "event": "vel"
       },
       {
-        "t": 20.3,
+        "t": 20.75,
         "event": "vel"
       },
       {
-        "t": 20.9,
+        "t": 21.4,
         "event": "vel"
       },
       {
-        "t": 21.05,
+        "t": 21.5,
         "event": "vel"
       },
       {
-        "t": 21.3,
+        "t": 21.8,
         "event": "face_on"
-      },
-      {
-        "t": 21.45,
-        "event": "vel"
-      },
-      {
-        "t": 21.8,
-        "event": "face_off"
-      },
-      {
-        "t": 21.8,
-        "event": "cut4a"
       },
       {
         "t": 21.85,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "face_off"
+      },
+      {
+        "t": 22.3,
+        "event": "cut4a"
+      },
+      {
+        "t": 22.35,
         "event": "collect"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.75,
+        "event": "motion_start"
+      },
+      {
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_hurt"
       },
       {
-        "t": 24.3,
+        "t": 24.8,
         "event": "mob_death"
       },
       {
-        "t": 25.45,
+        "t": 25.8,
+        "event": "motion_settled"
+      },
+      {
+        "t": 25.9,
         "event": "cut4b"
       },
       {
-        "t": 25.45,
+        "t": 25.9,
         "event": "beat"
       },
       {
-        "t": 26.45,
+        "t": 26.9,
         "event": "turn"
       },
       {
-        "t": 26.45,
+        "t": 26.9,
         "event": "face_on"
       },
       {
-        "t": 28.85,
+        "t": 29.3,
         "event": "face_off"
       },
       {
-        "t": 28.85,
+        "t": 29.3,
         "event": "cut5a"
       },
       {
-        "t": 32.3,
+        "t": 32.8,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.8,
+        "event": "motion_start"
+      },
+      {
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_hurt"
       },
       {
-        "t": 32.35,
+        "t": 32.85,
         "event": "mob_death"
       },
       {
-        "t": 33.45,
+        "t": 33.85,
+        "event": "motion_settled"
+      },
+      {
+        "t": 33.95,
         "event": "cut5b"
       },
       {
-        "t": 33.45,
+        "t": 33.95,
         "event": "beat"
       },
       {
-        "t": 34.45,
+        "t": 34.95,
         "event": "turn"
       },
       {
-        "t": 34.45,
+        "t": 34.95,
         "event": "face_on"
       },
       {
-        "t": 36.85,
+        "t": 37.35,
         "event": "face_off"
       },
       {
-        "t": 36.85,
+        "t": 37.35,
         "event": "cut6a"
       },
       {
-        "t": 43.15,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.15,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_hurt"
       },
       {
-        "t": 43.2,
+        "t": 45.15,
         "event": "mob_death"
       },
       {
-        "t": 44.3,
+        "t": 45.15,
+        "event": "motion_start"
+      },
+      {
+        "t": 45.3,
         "event": "cut6b"
       },
       {
-        "t": 44.3,
+        "t": 45.3,
         "event": "beat"
       },
       {
-        "t": 45.3,
+        "t": 46.15,
+        "event": "motion_settled"
+      },
+      {
+        "t": 46.15,
+        "event": "settle"
+      },
+      {
+        "t": 46.3,
         "event": "turn"
       },
       {
-        "t": 45.3,
+        "t": 46.3,
         "event": "face_on"
       },
       {
-        "t": 48,
+        "t": 48.95,
         "event": "pillar"
       },
       {
-        "t": 48.2,
+        "t": 49.15,
         "event": "swing"
       },
       {
-        "t": 48.65,
+        "t": 49.6,
         "event": "swing"
       },
       {
-        "t": 49.1,
+        "t": 50.05,
         "event": "swing"
       },
       {
-        "t": 49.55,
+        "t": 50.5,
         "event": "swing"
       },
       {
-        "t": 50,
+        "t": 50.95,
         "event": "swing"
       },
       {
-        "t": 50.45,
+        "t": 51.4,
         "event": "swing"
       },
       {
-        "t": 50.7,
+        "t": 51.65,
         "event": "overhead"
       },
       {
-        "t": 53.2,
+        "t": 54.15,
         "event": "back"
       },
       {
-        "t": 53.6,
+        "t": 54.55,
         "event": "turnaround"
       },
       {
-        "t": 54.7,
+        "t": 55.35,
+        "event": "vel"
+      },
+      {
+        "t": 55.65,
         "event": "face_off"
       },
       {
-        "t": 54.7,
+        "t": 55.65,
         "event": "face_on"
       },
       {
-        "t": 54.7,
+        "t": 55.65,
         "event": "behind"
       },
       {
-        "t": 55.7,
+        "t": 55.9,
+        "event": "vel"
+      },
+      {
+        "t": 56.35,
+        "event": "vel"
+      },
+      {
+        "t": 56.8,
+        "event": "sting"
+      },
+      {
+        "t": 56.95,
+        "event": "vel"
+      },
+      {
+        "t": 57.35,
+        "event": "vel"
+      },
+      {
+        "t": 57.4,
+        "event": "vel"
+      },
+      {
+        "t": 57.8,
+        "event": "vel"
+      },
+      {
+        "t": 58.1,
         "event": "face_off"
       },
       {
-        "t": 55.7,
+        "t": 58.1,
         "event": "end"
       }
     ]
@@ -1994,44 +2138,44 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
+    "commit": "17697c66fb6432a515bb55783cae1817bf0cf062",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:20:53.572Z",
-    "head_at_publish": "5c5e4a7a0b30302ed27f36908414fd09c0a30287",
+    "rendered_at": "2026-11-12T06:13:59.300Z",
+    "head_at_publish": "d70e0c699315d3eaa0c4ee37207295fe8ebe49a8",
     "stunt": "stunts/villager_crowd.js",
     "source_snapshot": [
       "source/villager_crowd.js"
     ]
   },
   "rebuild": [
-    "git checkout 70d22037ae43",
+    "git checkout 17697c66fb64",
     "gunzip -c shorts/villager_crowd/recording.json.gz > work/villager_crowd.rec.json",
     "node render.js work/villager_crowd.rec.json work/villager_crowd.frames 60 1080 1011",
     "python3 audio.py work/villager_crowd.rec.json work/villager_crowd.wav",
-    "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"why are they ALL staring at me 💀\" --self_name 56e --red ALL --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,2],[\\\"beat\\\",\\\"100 villagers\\\",1.6,5],[\\\"beat\\\",\\\"200 villagers\\\",1.6,6],[\\\"back\\\",\\\"nope\\\",0.5,0],[\\\"turnaround\\\",\\\"wait...\\\",0.8,0],[\\\"behind\\\",\\\"BEHIND ME TOO\\\",1,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"overhead\",\"back\",1.5],[\"pillar\",\"overhead\",3],[\"cut6a:-1.9\",\"cut6a\",2.2],[\"pillar:-2.2\",\"pillar:-0.35\",2.2]] --punch [[\"behind\",0,1.08]] --hook \"{\\\"at\\\":\\\"overhead\\\",\\\"before\\\":-0.25,\\\"after\\\":1.45,\\\"text\\\":\\\"wait for the 200...\\\"}\" --zoom [[\"overhead\",\"behind:1.0\",1.3]] --flash [[\"behind\",0,0.5]] --sfx [[\"air\",\"start\",\"behind\",{\"gain\":0.5}],[\"pop\",\"overhead:0.27\",{\"gain\":1.4}],[\"whoosh\",\"beat\"],[\"dip\",\"behind\",0.4],[\"impact\",\"behind\",{\"gain\":1.4}]] --start_at beat:-0.05 --end_after behind:0.7 --out out/villager_crowd.mp4"
+    "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"why are they ALL staring at me 💀\" --self_name 56e --red ALL --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,2],[\\\"beat\\\",\\\"100 villagers\\\",1.6,5],[\\\"beat\\\",\\\"200 villagers\\\",1.6,6],[\\\"back\\\",\\\"nope\\\",0.5,0],[\\\"turnaround\\\",\\\"wait...\\\",0.8,0],[\\\"behind\\\",\\\"BEHIND ME TOO\\\",1,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"overhead\",\"back\",1.5],[\"pillar\",\"overhead\",3],[\"cut6a:-1.9\",\"cut6a\",2.2],[\"pillar:-2.2\",\"pillar:-0.35\",2.2],[\"behind:0.45\",\"sting\",2]] --punch [[\"behind\",0,1.08],[\"sting\",0,1.1]] --hook \"{\\\"at\\\":\\\"overhead\\\",\\\"before\\\":-0.25,\\\"after\\\":1.45,\\\"text\\\":\\\"wait for the 200...\\\"}\" --zoom [[\"overhead\",\"sting:1.0\",1.3],[\"sting\",\"sting:1.0\",1.45]] --flash [[\"behind\",0,0.5],[\"sting\",0,0.35]] --sfx [[\"air\",\"start\",\"behind\",{\"gain\":0.5}],[\"pop\",\"overhead:0.27\",{\"gain\":1.4}],[\"whoosh\",\"beat\"],[\"dip\",\"sting\",0.4],[\"impact\",\"sting\",{\"gain\":1.4}]] --start_at beat:-0.05 --end_after sting:0.9 --out out/villager_crowd.mp4"
   ],
   "status": "ready",
-  "notes": "opening re-cut (r:r0f3da0): the 200 flash first, reaction caption; fast cuts on the sidesteps + fast end (r:r188b46); fix-check READY r2",
-  "published_at": "2026-11-12T01:23:16.671Z",
+  "notes": "no-op audit (r:r4607fa): ends on a sting (the crowd behind's chorus, a push-in, flash + impact); new take; READY",
+  "published_at": "2026-11-12T06:17:00.866Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:23:47+00:00",
+    "at": "2026-11-12T06:17:38+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 15.15 s vs the reviewed render 15.14 s"
+      "summary": "short.mp4 16.11 s vs the reviewed render 16.09 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 6,
+      "warnings": 7,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:21:31.768Z",
+      "at": "2026-11-12T06:14:51.251Z",
       "report": "work/hb/villager_crowd.check.json"
     },
     "key_sounds": "n/a"
