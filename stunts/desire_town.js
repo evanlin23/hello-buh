@@ -20,7 +20,7 @@ module.exports = makeStunt({
   // (the run sped up x1.8 between the reveal and the doorstep: at a sprint it held 4.2 s with nothing new, pace)
   walker: {
     sprint: true, wait: 0, card: 'IT WAS HIM 💀', endHold: 0.3,   // (he goes in under the eave ~0.3 s after the doorstep)
-    cards: [['road', 'NOT EVEN LAVA 💀', 1.0, 'orange', 0, null, { y: 0.76 }]],
+    cards: [['road', 'NOT EVEN LAVA 💀', 1.0, 'orange', 0, null, { y: 0.9, size: 84 }]],
     speed: [['walker:0.5', 'home:-0.3', 1.8]]
   },
   rounds: [
