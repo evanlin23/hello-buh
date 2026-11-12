@@ -199,8 +199,10 @@ const AIM_LIFT = 2
 //   await K.use(pos) / await K.useOn(entity)    right-click a block / a mob (dye, shears): the crosshair on it first
 //   await K.walkTo([p1, p2], { sprint })        walk a path: look-ahead, step-ups, jumps; a leg into a block throws
 //   K.warp(tag)                                 an actor's next move is a jump (off screen only; else: on a cut)
-//   await K.blink(tag | 'self', to?)            an on-screen teleport that is the story (a tamed wolf to its owner):
-//                                               no cut, a teleport_ok mark, the renderer snaps it (no lerp, no particles)
+//   await K.blink(tag | 'self', to?)            a teleport that is the story (a tamed wolf to its owner): a teleport_ok
+//                                               mark, the renderer snaps it; it must land under a camera cut (owner gate)
+//   await K.cutShot(name, moves, { self: to })  the narrator (a wolf seen from camera shots) moves with the cut: the
+//                                               shot mark waits for its landing too (never K.blink('self') beside a cut)
 //   K.darkPeak(offset)                          the Darkness pulse peaks on this tick (+ offset): "DARK" on the word
 //   K.hurt(entity|id)                           a staged hit's red flash (Invulnerable cast send no damage event)
 // Motion is a player's by construction (lib/motion.js, docs/engine_features.md "Motion by construction"): every look
@@ -208,6 +210,8 @@ const AIM_LIFT = 2
 // <= 180 deg/s with eased acceleration; actors walk to where a scene puts them (<= 0.3 blocks and 20 deg a tick)
 // unless a cut or K.warp moves them; while a window is open the view does not move.
 //   K.every(fn)                                 run fn every tick (ambient motion), until the returned stop()
+//   K.board(rider, boatTag) / K.leash(holder, tag | entity) / await K.row(actor, [[x, z], ...], o)   boats, leads and
+//                                               riders through the real server (lib/boats.js: the header lists them)
 // Options (4th argument): { warm: 'warm' } the tag nudged every tick (null: none), { stopOnCut: true }
 // movement keys released on every cut (sneak is kept: a crouch that changed on a cut showed as stray frames).
 function storyKit (ctx, S, { X, Z, F }, opts = {}) {
@@ -516,9 +520,24 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     async cutShot (name, moves, o = {}) {
       if (!(ctx.stunt.shots || {})[name]) throw new Error(`shot '${name}' is not in stunt.shots`)
       const called = K.now()
+      ctx.mark('cut_moves', { shot: name })   // the moves start: render.js holds every move until the shot mark (MO.cutHolds)
       if (moves) moves()
       const want = K._placed()
       if (o.time !== undefined && o.time !== ctx.dayTime) { ctx.dayTime = o.time; K.say(`/time set ${Math.round(o.time)}`) } else o = { ...o, time: undefined }
+      // o.self: the narrator moves with the cut (a wolf narrator seen from camera shots). Its /tp goes out with the moves
+      // and the shot mark waits for the client to land it, so the old shot never shows it gone and the new one never
+      // shows it arrive (Good Boy: a K.blink before the shot change left the shot 2 ticks early, one in o.at landed 2
+      // ticks into the new shot: "we can see the dog teleport"; owner gate: MO.visibleJumps)
+      let selfLanded = true, onSelf = null
+      if (o.self) {
+        const abs = K._spot(o.self, true)
+        selfLanded = false
+        onSelf = () => { selfLanded = true; check() }
+        bot.on('forcedMove', onSelf)
+        ctx.mark('teleport_ok', { tag: null, self: true, cut: name, x: +abs.x.toFixed(3), y: +abs.y.toFixed(3), z: +abs.z.toFixed(3) })
+        const yw = Number.isFinite(o.self.yaw) ? ` ${o.self.yaw.toFixed(1)} ${(o.self.pitch ?? 0).toFixed(1)}` : ' ~ ~'
+        K.say(`/tp @s ${abs.x.toFixed(3)} ${abs.y.toFixed(3)} ${abs.z.toFixed(3)}${yw}`)   // motion-ok: the narrator moves under the cut (the shot mark waits for its landing)
+      }
       let done = false
       const go = () => {
         if (done) return
@@ -528,8 +547,9 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
         K.shot(name)
         K.cutLat = Math.max(0, Math.min(4, K.now() - called))   // (K.line ends the line before the next cut this much early)
       }
-      const check = () => { if (!done && want.every(w => K._onMark(w))) go() }
-      if (!want.length) { go(); return 0 }
+      const ready = () => selfLanded && want.every(w => K._onMark(w))
+      function check () { if (!done && ready()) go() }
+      if (!want.length && selfLanded) { go(); return 0 }
       bot.on('entityMoved', check)   // on the packet: the mark lands on the tick the recording first has them there
       let k = 0
       try {
@@ -538,14 +558,26 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
           check()
           if (!done && o.during) o.during(k)
         }
-      } finally { bot.removeListener('entityMoved', check) }
+      } finally { bot.removeListener('entityMoved', check); if (onSelf) bot.removeListener('forcedMove', onSelf) }
       if (!done) {
         const late = want.filter(w => !K._onMark(w)).map(w => [...K.actors].find(([, s]) => s === w.s)?.[0])
+        if (!selfLanded) late.push('self')
         ctx.log(`K.cutShot ${name}: ${late.join(', ')} not on the mark after ${k} ticks: cutting anyway`)
         ctx.mark('motion_warn', { kind: 'cast_late', shot: name, tags: late })
         go()
       }
       return k
+    },
+    // a set-relative spot ({ x, y?, z } or [dx, dy, dz]; left out: 1.5 blocks to the player's right, facing his way)
+    // -> absolute { x, y, z }. y left out: the player's feet (self) or the actor's (1)
+    _spot (to, self, a = null) {
+      const pp = bot.entity.position, pyaw = bot.entity.yaw
+      let rel
+      if (Array.isArray(to)) rel = { x: to[0], y: to[1], z: to[2] }
+      else if (to) rel = { ...to }
+      else rel = { x: pp.x - X + Math.cos(pyaw) * 1.5, y: pp.y - F, z: pp.z - Z - Math.sin(pyaw) * 1.5, yaw: 180 - pyaw * 180 / Math.PI }
+      if (rel.y === undefined || rel.y === null) rel.y = self ? pp.y - F : ((a && a.y) ?? 1)
+      return { x: X + rel.x, y: F + rel.y, z: Z + rel.z, rel }
     },
     // the next move of an actor is a jump (it is off screen, or a hidden swap): the only way to reposition a cast
     // member without a cut
@@ -553,22 +585,17 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     // an on-screen teleport that IS the story (vanilla: a tamed wolf more than 12 blocks from its owner teleports to
     // within 1-2 blocks of him: TamableAnimal.tryToTeleportToOwner; no particles, it just appears). `who`: an actor's
     // tag (K.actor) or 'self' (the player: a wolf narrator). `to`: set-relative { x, y?, z, yaw? } or [dx, dy, dz]; left
-    // out, 1.5 blocks to the player's right, facing the way he faces. It jumps on the next tick, inside the shot, with no
-    // cut mark, and marks `teleport_ok` (absolute x, y, z) so the owner gate accepts the jump and the renderer snaps it
-    // (no client lerp at any distance). Returns the absolute spot.
+    // out, 1.5 blocks to the player's right, facing the way he faces. It jumps on the next tick with no cut mark, marks
+    // `teleport_ok` (absolute x, y, z) and the renderer snaps it (no client lerp at any distance). The owner gate
+    // (MO.visibleJumps) still BLOCKs a blink it can see land while the camera holds: an on-screen teleport has to land on
+    // a camera cut (owner, Good Boy: "we can see the dog teleport"). Blink in a cut's moves (K.cutShot), or off screen;
+    // the narrator with a cut: K.cutShot(name, moves, { self: to }). Returns the absolute spot.
     async blink (who, to, o = {}) {
       const self = who === 'self'
       const a = self ? null : K.actors.get(who)
       if (!self && !a) throw new Error(`K.blink: '${who}' is not an actor (K.actor('${who}', {...}) first) and not 'self'`)
-      const pp = bot.entity.position, pyaw = bot.entity.yaw
-      let rel
-      if (Array.isArray(to)) rel = { x: to[0], y: to[1], z: to[2] }
-      else if (to) rel = { ...to }
-      else {   // beside the player (to his right: (cos yaw, -sin yaw) in mineflayer's yaw), on his feet's level, facing his way
-        rel = { x: pp.x - X + Math.cos(pyaw) * 1.5, y: pp.y - F, z: pp.z - Z - Math.sin(pyaw) * 1.5, yaw: 180 - pyaw * 180 / Math.PI }
-      }
-      if (rel.y === undefined || rel.y === null) rel.y = self ? pp.y - F : (a.y ?? 1)
-      const abs = { x: X + rel.x, y: F + rel.y, z: Z + rel.z }
+      // beside the player (to his right: (cos yaw, -sin yaw) in mineflayer's yaw), on his feet's level, facing his way
+      const { rel, ...abs } = K._spot(to, self, a)
       ctx.mark('teleport_ok', { tag: self ? null : who, self, x: +abs.x.toFixed(3), y: +abs.y.toFixed(3), z: +abs.z.toFixed(3) })
       if (self) {
         let landed = false
@@ -748,6 +775,42 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
       return K._swaying(bot.openContainer(bot.blockAt(pos)))
     },
     close (w) { if (w || bot.currentWindow) bot.closeWindow(w || bot.currentWindow) },
+    // open a villager's (or wandering trader's) trade screen like a player: turn onto its face, then right-click it.
+    // The harness records the screen (`merchant` marks: the offers, slots and tooltips; edit.py draws MerchantScreen)
+    // and the view holds still while it is open, as for K.open. K.pick(v, i) selects offer i (the server moves the
+    // price into the payment slots, the result appears); `await K.takeResult(v)` completes it; K.hover('result') shows
+    // a slot's tooltip (staged: the cursor isn't recorded); K.close(v).
+    async trade (entity, o = {}) {
+      const p = Object.assign(entity.position.offset(0, (entity.height || 1.95) * 0.85, 0), { exact: true })
+      await K.aimAt(p, { until: K._lastUse + MOTION.USE_DELAY })
+      K._lastUse = K.now()
+      const v = await K._swaying(bot.openVillager(entity))
+      if (o.select !== undefined && o.select !== null) await K.pick(v, o.select)
+      return v
+    },
+    async pick (v, i) {
+      const wait = new Promise(resolve => { const t = setTimeout(resolve, 1500); v.once('updateSlot:2', () => { clearTimeout(t); resolve() }) })
+      bot._client.write('select_trade', { slot: i })
+      v.selectedTrade = v.trades && v.trades[i]
+      await wait
+    },
+    // complete the picked trade once: pick the result up and drop it in the first empty inventory slot (a plain
+    // click: a shift-click trades again and again while the payment lasts; v.trade(i, n) would count the price K.pick
+    // already moved into the payment slots as missing). o.shift: the shift-click (as many as the payment buys)
+    async takeResult (v, o = {}) {
+      if (o.shift) { await bot.clickWindow(2, 0, 1); await bot.waitForTicks(2); return }
+      await bot.clickWindow(2, 0, 0)
+      const empty = v.firstEmptySlotRange(v.inventoryStart, v.inventoryEnd)
+      if (empty !== null) await bot.clickWindow(empty, 0, 0)
+      await bot.waitForTicks(2)
+    },
+    // the cursor over a slot of the open screen: its tooltip (edit.py). 'result', 'a', 'b' (the merchant's payment
+    // slots), 'trade:N' (an offer's result in the list), a window slot number, or null to move off
+    hover (slot, o = {}) { ctx.mark('gui_hover', { slot, ...o }) },
+    // a non-spoken caption chunk (on-screen words nobody says: The Walk's "Frost Walker II" over the trade screen), in
+    // the word-chunk captions' style, every word in the story's key colour, from this tick for o.hold seconds (or to the
+    // next cut / line). o.caption_y: its height as a fraction of the game view (default the captions' 0.70)
+    onscreen (text, o = {}) { ctx.mark('onscreen', { text, ...o }) },
     // right-click a block (a button, a lever, flint and steel on TNT) / a mob (dye, shears, a name tag), aimed by
     // construction (lib/act.js on this kit's governor: the crosshair on it, then the use; owner r:rffba12)
     use (pos, o = {}) { return K.act.use(pos, o) },
@@ -834,6 +897,10 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     const m = (ctx.stunt && ctx.stunt.motion) || {}
     return { speed: (m.turnSpeed ?? 180) * MOTION.DEG / 20, accel: (m.turnAccel ?? 900) * MOTION.DEG / 400 }
   })()
+  // K.turnLimit(degPerSec): change the top turn speed from here on (a stretch the edit speeds up x N needs turns at
+  // <= 220 / N on screen, r:r38374d); K.turnLimit() restores the stunt's own
+  const lim0 = { ...lim }
+  K.turnLimit = (deg) => { lim.speed = deg == null ? lim0.speed : deg * MOTION.DEG / 20 }
   const raw = { look: typeof bot.look === 'function' ? bot.look.bind(bot) : null }
   K._gov = { cur: { yaw: bot.entity.yaw, pitch: bot.entity.pitch }, vel: { yaw: 0, pitch: 0 }, target: null }
   K._govSnap = () => {
@@ -869,6 +936,10 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
   }
   K.every(govTick)
   K.act = require('./act')(ctx, { K })
+  // boats, leads and riders (lib/boats.js): K.board / K.unboard / K.leash / K.row / K.rowing / K.entity
+  { const bk = require('./boats').boatKit(ctx, K, { X, Z, F }); for (const k of ['entity', 'board', 'unboard', 'leash', 'row', 'rowing']) K[k] = bk[k] }
+  // story-kit extras (lib/kit_extras.js): K.scale / K.skin / K.trail / K.setBlocks / K.prop / K.propOff
+  { const kx = require('./kit_extras').kit(ctx, K, { X, Z, F }); for (const k of ['scale', 'skin', 'trail', 'setBlocks', 'prop', 'propOff']) K[k] = kx[k] }
   // a stall: the forward key held on the ground and the player slowed to under 60% of its walk (a block corner, a door
   // frame): marked 'stuck' and logged at once (lib/hb/owner.js reads it; K.walkTo paths around blocks)
   let walkV = 0, stall = 0

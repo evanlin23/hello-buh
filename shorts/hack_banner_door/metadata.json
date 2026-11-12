@@ -20,38 +20,38 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "payoff",
     "drop_in_song_s": 39.75,
-    "drop_in_short_s": 29.25,
-    "song_start_s": 10.5
+    "drop_in_short_s": 22.57,
+    "song_start_s": 17.18
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.2,
+    "duration_s": 23.42,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 31816462,
-    "sha256": "43fad54af398962512a3fb136ee3e1e1e1eca15db7fffb015df257f4f23863d6",
+    "bytes": 25944359,
+    "sha256": "5131787cb44d429cd94503e8b34891d76f8ec053788849d6612af86b1947bb6a",
     "release": {
       "tag": "pkg-hack_banner_door",
-      "asset": "hack_banner_door.short.43fad54af3989625.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short.43fad54af3989625.mp4",
-      "sha256": "43fad54af398962512a3fb136ee3e1e1e1eca15db7fffb015df257f4f23863d6",
-      "bytes": 31816462
+      "asset": "hack_banner_door.short.5131787cb44d429c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short.5131787cb44d429c.mp4",
+      "sha256": "5131787cb44d429cd94503e8b34891d76f8ec053788849d6612af86b1947bb6a",
+      "bytes": 25944359
     },
     "nosong_release": {
       "tag": "pkg-hack_banner_door",
-      "asset": "hack_banner_door.short_nosong.2867484ad4fa9a0e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short_nosong.2867484ad4fa9a0e.mp4",
-      "sha256": "2867484ad4fa9a0e32549c130bd836423b4568c60ac48d26764a32837846206a",
-      "bytes": 31802032
+      "asset": "hack_banner_door.short_nosong.fd8c947d81a13565.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short_nosong.fd8c947d81a13565.mp4",
+      "sha256": "fd8c947d81a13565c07b89191dcb1fee46532193255df44e00c2cb93729e8d9b",
+      "bytes": 25931786
     }
   },
   "edit": {
     "caption": "POV: you realized banners have no hitbox",
     "red": "hitbox",
     "startAt": "go:-0.05",
-    "endAfter": "payoff:1.0",
+    "endAfter": "payoff:0.85",
     "dropAt": "payoff",
     "subs": [
       [
@@ -111,7 +111,7 @@
       [
         "reveal",
         "secret room 6",
-        1.6,
+        1.2,
         5
       ]
     ],
@@ -203,30 +203,90 @@
         "payoff"
       ],
       [
+        "impact",
+        "go",
+        {
+          "gain": 0.7
+        }
+      ],
+      [
+        "impact",
+        "reveal",
+        {
+          "nth": 0,
+          "gain": 0.8
+        }
+      ],
+      [
         "pop",
         "deeper",
         {
           "gain": 0.45
         }
+      ],
+      [
+        "pop",
+        "nope_try",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "whoosh",
+        "payoff",
+        {
+          "gain": 0.6
+        }
+      ]
+    ],
+    "speed": [
+      [
+        "stair_a",
+        "stair_b",
+        2.2
+      ],
+      [
+        "farm_a",
+        "farm_b",
+        1.8
+      ],
+      [
+        "lib_a",
+        "lib_b",
+        1.6
+      ],
+      [
+        "side_a",
+        "side_b",
+        2
+      ],
+      [
+        "diamond:0.3",
+        "mine_b",
+        "cut"
       ]
     ],
     "args": [
       "--caption",
       "POV: you realized banners have no hitbox",
+      "--self_name",
+      "56e",
       "--red",
       "hitbox",
       "--subs",
-      "[[\"reveal\",\"secret room 1\",1.6,0],[\"lookback\",\"banners have NO hitbox\",1.6,0],[\"reveal\",\"secret room 2\",1.6,1],[\"deeper\",\"how deep does this go?\",1.8,0],[\"reveal\",\"secret room 3\",1.6,2],[\"reveal\",\"secret room 4\",1.4,3],[\"which\",\"but which one is real?\",1.8,0],[\"reveal\",\"secret room 5\",1.6,4],[\"nope\",\"nope\",0.9,0],[\"reveal\",\"secret room 6\",1.6,5]]",
+      "[[\"reveal\",\"secret room 1\",1.6,0],[\"lookback\",\"banners have NO hitbox\",1.6,0],[\"reveal\",\"secret room 2\",1.6,1],[\"deeper\",\"how deep does this go?\",1.8,0],[\"reveal\",\"secret room 3\",1.6,2],[\"reveal\",\"secret room 4\",1.4,3],[\"which\",\"but which one is real?\",1.8,0],[\"reveal\",\"secret room 5\",1.6,4],[\"nope\",\"nope\",0.9,0],[\"reveal\",\"secret room 6\",1.2,5]]",
+      "--speed",
+      "[[\"stair_a\",\"stair_b\",2.2],[\"farm_a\",\"farm_b\",1.8],[\"lib_a\",\"lib_b\",1.6],[\"side_a\",\"side_b\",2],[\"diamond:0.3\",\"mine_b\",\"cut\"]]",
       "--punch",
       "[[\"payoff\",0,1.08]]",
       "--flash",
       "[[\"payoff\",0,0.45]]",
       "--sfx",
-      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"reveal\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":5,\"gain\":0.45}],[\"dip\",\"payoff\",0.3],[\"impact\",\"payoff\"],[\"pop\",\"deeper\",{\"gain\":0.45}]]",
+      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"reveal\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":5,\"gain\":0.45}],[\"dip\",\"payoff\",0.3],[\"impact\",\"payoff\"],[\"impact\",\"go\",{\"gain\":0.7}],[\"impact\",\"reveal\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"deeper\",{\"gain\":0.45}],[\"pop\",\"nope_try\",{\"gain\":0.5}],[\"whoosh\",\"payoff\",{\"gain\":0.6}]]",
       "--start_at",
       "go:-0.05",
       "--end_after",
-      "payoff:1.0"
+      "payoff:0.85"
     ]
   },
   "recording": {
@@ -242,8 +302,8 @@
       "z": 27.3
     },
     "biome": "minecraft:plains",
-    "ticks": 620,
-    "seconds": 31,
+    "ticks": 594,
+    "seconds": 29.7,
     "deaths": 0,
     "events": [
       {
@@ -273,11 +333,11 @@
       },
       {
         "t": 3,
-        "event": "open_chest"
+        "event": "block_action"
       },
       {
         "t": 3,
-        "event": "block_action"
+        "event": "open_chest"
       },
       {
         "t": 3.05,
@@ -296,235 +356,167 @@
         "event": "block_action"
       },
       {
-        "t": 3.95,
-        "event": "block_action"
-      },
-      {
-        "t": 4.1,
+        "t": 3.8,
         "event": "container_close"
       },
       {
-        "t": 4.1,
+        "t": 3.8,
         "event": "block_action"
       },
       {
-        "t": 4.15,
+        "t": 3.85,
         "event": "gui_thaw"
       },
       {
-        "t": 4.2,
+        "t": 4,
         "event": "block_action"
       },
       {
-        "t": 5.3,
+        "t": 5,
         "event": "lookback"
       },
       {
-        "t": 7.15,
+        "t": 6.85,
         "event": "reveal"
       },
       {
-        "t": 8.9,
+        "t": 7.9,
+        "event": "stair_a"
+      },
+      {
+        "t": 8.6,
         "event": "deeper"
       },
       {
-        "t": 11.35,
+        "t": 10.05,
+        "event": "stair_b"
+      },
+      {
+        "t": 11.4,
         "event": "reveal"
       },
       {
-        "t": 13.85,
-        "event": "farm_walk"
+        "t": 12.15,
+        "event": "farm_a"
       },
       {
-        "t": 14.9,
+        "t": 13.4,
+        "event": "farm_b"
+      },
+      {
+        "t": 13.75,
         "event": "reveal"
       },
       {
-        "t": 17.8,
+        "t": 14.85,
+        "event": "lib_a"
+      },
+      {
+        "t": 15.75,
+        "event": "lib_b"
+      },
+      {
+        "t": 15.95,
         "event": "which"
       },
       {
-        "t": 19.7,
+        "t": 18.15,
         "event": "nope_try"
       },
       {
-        "t": 20.15,
+        "t": 18.6,
         "event": "nope"
       },
       {
-        "t": 22.95,
+        "t": 19.6,
+        "event": "side_a"
+      },
+      {
+        "t": 20.5,
+        "event": "side_b"
+      },
+      {
+        "t": 21.15,
         "event": "reveal"
       },
       {
-        "t": 24.5,
+        "t": 22.8,
         "event": "dig"
       },
       {
-        "t": 24.5,
+        "t": 22.8,
         "event": "swing"
       },
       {
-        "t": 24.85,
+        "t": 23.15,
         "event": "swing"
       },
       {
-        "t": 25.2,
+        "t": 23.5,
         "event": "swing"
       },
       {
-        "t": 25.3,
+        "t": 23.6,
         "event": "dig_end"
       },
       {
-        "t": 25.3,
+        "t": 23.6,
         "event": "diamond"
       },
       {
-        "t": 25.35,
+        "t": 23.7,
         "event": "vel"
       },
       {
-        "t": 25.35,
+        "t": 23.7,
         "event": "vel"
       },
       {
-        "t": 25.35,
+        "t": 23.7,
         "event": "vel"
       },
       {
-        "t": 25.45,
-        "event": "vel"
-      },
-      {
-        "t": 25.5,
+        "t": 23.7,
         "event": "collect"
       },
       {
-        "t": 25.5,
+        "t": 23.7,
         "event": "xp"
       },
       {
-        "t": 25.65,
-        "event": "dig"
-      },
-      {
-        "t": 25.65,
-        "event": "swing"
-      },
-      {
-        "t": 25.7,
+        "t": 23.85,
         "event": "collect"
       },
       {
-        "t": 25.7,
+        "t": 23.85,
         "event": "xp"
       },
       {
-        "t": 25.75,
-        "event": "vel"
-      },
-      {
-        "t": 25.95,
-        "event": "swing"
-      },
-      {
-        "t": 26.1,
-        "event": "vel"
-      },
-      {
-        "t": 26.3,
-        "event": "swing"
-      },
-      {
-        "t": 26.35,
-        "event": "vel"
-      },
-      {
-        "t": 26.45,
-        "event": "dig_end"
-      },
-      {
-        "t": 26.45,
-        "event": "diamond"
-      },
-      {
-        "t": 26.5,
-        "event": "vel"
-      },
-      {
-        "t": 26.5,
-        "event": "vel"
-      },
-      {
-        "t": 26.5,
-        "event": "vel"
-      },
-      {
-        "t": 26.5,
-        "event": "vel"
-      },
-      {
-        "t": 26.7,
+        "t": 24.15,
         "event": "collect"
       },
       {
-        "t": 26.7,
-        "event": "xp"
+        "t": 26.05,
+        "event": "mine_b"
       },
       {
-        "t": 26.9,
-        "event": "collect"
-      },
-      {
-        "t": 26.9,
-        "event": "xp"
-      },
-      {
-        "t": 26.95,
-        "event": "collect"
-      },
-      {
-        "t": 27.4,
-        "event": "vel"
-      },
-      {
-        "t": 27.5,
-        "event": "vel"
-      },
-      {
-        "t": 28.4,
-        "event": "vel"
-      },
-      {
-        "t": 28.5,
-        "event": "vel"
-      },
-      {
-        "t": 28.8,
+        "t": 26.65,
         "event": "reveal"
       },
       {
-        "t": 29.35,
-        "event": "vel"
-      },
-      {
-        "t": 29.5,
-        "event": "vel"
-      },
-      {
-        "t": 30,
+        "t": 28,
         "event": "payoff"
       },
       {
-        "t": 30.35,
-        "event": "vel"
+        "t": 28,
+        "event": "f1_on"
       },
       {
-        "t": 30.5,
-        "event": "vel"
+        "t": 28,
+        "event": "shot"
       },
       {
-        "t": 31,
+        "t": 29.7,
         "event": "end"
       }
     ]
@@ -532,10 +524,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "67b65f1120e150e2dd235b6d10ca75145b298106",
+    "commit": "1b4c928d4d4efdebd81496c04e026ff2a20895ce",
     "rendered": "local",
-    "rendered_at": "2026-11-11T09:43:11.229Z",
-    "head_at_publish": "67b65f1120e150e2dd235b6d10ca75145b298106",
+    "rendered_at": "2026-11-12T06:10:40.068Z",
+    "head_at_publish": "a02d787900c49e8a9826b4656f623400efa9bce2",
     "stunt": "stunts/hack_banner_door.js",
     "source_snapshot": [
       "source/hack_banner_door.js",
@@ -545,38 +537,41 @@
       "source/story.js",
       "source/motion.js",
       "source/sight.js",
-      "source/act.js"
+      "source/act.js",
+      "source/boats.js",
+      "source/kit_extras.js",
+      "source/movie.js"
     ]
   },
   "rebuild": [
-    "git checkout 67b65f1120e1",
+    "git checkout 1b4c928d4d4e",
     "gunzip -c shorts/hack_banner_door/recording.json.gz > work/hack_banner_door.rec.json",
     "node render.js work/hack_banner_door.rec.json work/hack_banner_door.frames 60 1080 1011",
     "python3 audio.py work/hack_banner_door.rec.json work/hack_banner_door.wav",
-    "python3 edit.py --frames work/hack_banner_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/hack_banner_door.rec.json --audio work/hack_banner_door.wav --caption \"POV: you realized banners have no hitbox\" --red hitbox --subs \"[[\\\"reveal\\\",\\\"secret room 1\\\",1.6,0],[\\\"lookback\\\",\\\"banners have NO hitbox\\\",1.6,0],[\\\"reveal\\\",\\\"secret room 2\\\",1.6,1],[\\\"deeper\\\",\\\"how deep does this go?\\\",1.8,0],[\\\"reveal\\\",\\\"secret room 3\\\",1.6,2],[\\\"reveal\\\",\\\"secret room 4\\\",1.4,3],[\\\"which\\\",\\\"but which one is real?\\\",1.8,0],[\\\"reveal\\\",\\\"secret room 5\\\",1.6,4],[\\\"nope\\\",\\\"nope\\\",0.9,0],[\\\"reveal\\\",\\\"secret room 6\\\",1.6,5]]\" --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"reveal\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":5,\"gain\":0.45}],[\"dip\",\"payoff\",0.3],[\"impact\",\"payoff\"],[\"pop\",\"deeper\",{\"gain\":0.45}]] --start_at go:-0.05 --end_after payoff:1.0 --out out/hack_banner_door.mp4"
+    "python3 edit.py --frames work/hack_banner_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/hack_banner_door.rec.json --audio work/hack_banner_door.wav --caption \"POV: you realized banners have no hitbox\" --self_name 56e --red hitbox --subs \"[[\\\"reveal\\\",\\\"secret room 1\\\",1.6,0],[\\\"lookback\\\",\\\"banners have NO hitbox\\\",1.6,0],[\\\"reveal\\\",\\\"secret room 2\\\",1.6,1],[\\\"deeper\\\",\\\"how deep does this go?\\\",1.8,0],[\\\"reveal\\\",\\\"secret room 3\\\",1.6,2],[\\\"reveal\\\",\\\"secret room 4\\\",1.4,3],[\\\"which\\\",\\\"but which one is real?\\\",1.8,0],[\\\"reveal\\\",\\\"secret room 5\\\",1.6,4],[\\\"nope\\\",\\\"nope\\\",0.9,0],[\\\"reveal\\\",\\\"secret room 6\\\",1.2,5]]\" --speed [[\"stair_a\",\"stair_b\",2.2],[\"farm_a\",\"farm_b\",1.8],[\"lib_a\",\"lib_b\",1.6],[\"side_a\",\"side_b\",2],[\"diamond:0.3\",\"mine_b\",\"cut\"]] --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"reveal\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":5,\"gain\":0.45}],[\"dip\",\"payoff\",0.3],[\"impact\",\"payoff\"],[\"impact\",\"go\",{\"gain\":0.7}],[\"impact\",\"reveal\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"deeper\",{\"gain\":0.45}],[\"pop\",\"nope_try\",{\"gain\":0.5}],[\"whoosh\",\"payoff\",{\"gain\":0.6}]] --start_at go:-0.05 --end_after payoff:0.85 --out out/hack_banner_door.mp4"
   ],
   "status": "ready",
-  "notes": "hack #1 (banners have no hitbox): 6 nested banner doors, den -> vault; review r1 3 blockers (daylight through mined ore, turn to blank wall, under 30 s) fixed, r2 READY; mixcheck dead span fixed with a 'how deep does this go?' beat on the stair, re-checked READY. Nitpicks: decoy bump ~0.6 s of dark frames; the stair sub briefly over the green banner at ~9.8 s; stair-descent stutter WARN is vanilla stair stepping.",
-  "published_at": "2026-11-11T09:46:11.198Z",
+  "notes": "no-op fix (r:r4607fa): banners have no hitbox, room by room down to a 61x51x38 treasure hall 31 blocks deep, drop onto the hoard, 45-block pull-back; trimmed, 23.4 s (was 28.6); independent full review READY",
+  "published_at": "2026-11-12T06:13:00.061Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:14:48+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-12T06:13:32+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.21 s vs the reviewed render 30.20 s"
+      "summary": "short.mp4 23.42 s vs the reviewed render 23.42 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T10:12:08.694Z",
+      "at": "2026-11-12T06:11:07.699Z",
       "report": "work/hb/hack_banner_door.check.json"
     },
     "key_sounds": "n/a"
