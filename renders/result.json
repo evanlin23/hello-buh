@@ -1,0 +1,17 @@
+{
+ "name": "faketrick_gold_portal",
+ "stunt": "faketrick_gold_portal",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43169772553",
+ "source": "3855cc22",
+ "queued": "2026-11-12T06:40:20Z",
+ "finished": "2026-11-12T06:44:22Z",
+ "mp4": "renders/out/faketrick_gold_portal.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

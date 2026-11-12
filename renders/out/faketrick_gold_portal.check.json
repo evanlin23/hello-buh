@@ -1,0 +1,118 @@
+{
+ "stunt": "faketrick_gold_portal",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/faketrick_gold_portal.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "1 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 143,
+     "col": 19,
+     "text": "await F.fake(`/tp @s ${F.A(0.5, GN + 2, -27.5)} 180 0`, { what: 'the portal goes to a gold nether' })",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT faketrick_gold_portal: 1 shots, scene 0.0-9.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-9.7   pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.217,
+     "shot": 1,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: flint_and_steel -> gold_block"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 3 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "14 visible sound-making events (place 13, voice 1), 13 with a sound mark, 1 without (audio.py adds those for a story)",
+    "    11.50s  piglin idle voice                  -> entity.piglin.ambient             10.8 blocks in view  ",
+    "ambience per shot: -0.20-9.50s day, 9.50-11.65s cave",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:41:36.753Z"
+}
