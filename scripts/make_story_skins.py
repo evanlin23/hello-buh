@@ -223,14 +223,75 @@ SKINS = {
         shirt="#f4f2ee", coat="#e88aa8", coat_open=True, buttons="#f4f2ee", sleeve=12, cuff="#d07090",
         pants="#8aa8cc", shoes="#f2f2ee", shoe_rows=2, sole="#c8c8c2",
     ),
+    # --- Sorry, Dear (Stillwater, 2200) ---
+    "sorry_aunt": dict(
+        note="Sorry, Dear's aunt (Stillwater): a grey perm, red cat-eye glasses, rosy cheeks and a small closed smile baked in (kind or smug); a coral cardigan with pearl buttons, a lavender skirt, brown shoes. Plays at entity scale 0.3, so it is big blocks of colour",
+        skin="#ecbc9c", hair="#b9b9be", hair_d="#8f8f96", brow="#8f8f96", eye_w="#f4f4f0", eye="#3a2a24",
+        mouth="#c4544c", cheek="#ee9a8c", glasses="#d0242a",
+        face=["HhHHhHHh",
+              "HHhHHhHH",
+              "GBSSSSBG",
+              "GWEGGEWG",
+              "SCSssSCS",
+              "SSMSSMSS",
+              "SSSMMSSS",
+              "SSSSSSSS"],
+        top="curly", side_rows=4, back_rows=5, hat_layer="curls",
+        shirt="#f6ecdc", coat="#ee7a62", coat_open=True, buttons="#fbf6ea", sleeve=12, cuff="#d6624c",
+        skirt="#b8a2dc", skirt_rows=8, pants="#b8a2dc", socks="#d4b49c", shoes="#6e4626", shoe_rows=2,
+    ),
+    # --- The Statue Gets Younger (Stonefold, 3900) ---
+    "statue_dad": dict(
+        note="The Statue Gets Younger's Dad (Stonefold): forties, short grey hair, grey stubble, a kind face; a rust-red flannel shirt, dark jeans, brown boots",
+        skin="#d9a07c", hair="#a2a2a0", hair_d="#7e7e7c", brow="#77736e", beard="#b39a8c", beard_d="#9e887c",
+        eye_w="#f0f0ec", eye="#4a3222", mouth="#94564a",
+        face=["HHHHHHHH",
+              "HHhHHHhH",
+              "HBBSSBBH",
+              "SWESSEWS",
+              "SSSssSSS",
+              "rSSSSSSr",
+              "rRMMMMRr",
+              "rrRRRRrr"],
+        top="full", side_rows=3, back_rows=4,
+        shirt="#a8432c", plaid="#6c2618", plaid_l="#c8714f", collar="#8a3624", placket="#7a2e1e", sleeve=12, cuff="#7a2e1e",
+        pants="#2c3a58", belt="#3a2a1e", shoes="#5a3a22", shoe_rows=2,
+    ),
 }
+
+# The Statue Gets Younger's Mom: one woman in three states (story.json cast, bible.md "Mom's skin by shot"). The base
+# is drawn once with one noise seed, then the grey is painted on top (GREY), so everything but the hair and the brow
+# is the same bytes in all three: statue_mom (no grey: S02b, S05-S07), statue_mom_1 (one streak from her left temple
+# back through the ponytail: S08, S09), statue_mom_2 (a second streak from the right temple + a one-pixel dark brow
+# line in the statue's stone-row colour: S10 from FACE, S11).
+STATUE_MOM = dict(
+    seed="statue_mom",
+    skin="#e6b08e", hair="#3e2616", hair_d="#2a1a0e", brow="#4a2e1c", eye_w="#f4f4f0", eye="#3e5a34",
+    mouth="#b25a50", cheek="#eaa08c",
+    face=["HHHHHHHH",
+          "HhSSSShH",
+          "HBBSSBBH",
+          "SWESSEWS",
+          "SSSssSSS",
+          "SCSSSSCS",
+          "SSSMMSSS",
+          "SSSSSSSS"],
+    top="full", side_rows=4, back_rows=8, ponytail=5, tie="#6e8458",
+    shirt="#9aae86", neckline=True, waist="#7e9470", sleeve=4, cuff="#86996f",
+    skirt="#9aae86", skirt_rows=6, pants="#e0a886", shoes="#6a4428", shoe_rows=4,
+    grey="#c4c4c6", grey_d="#a2a2a6", brow_line="#4c4c52",
+)
+SKINS["statue_mom"] = dict(STATUE_MOM, note="The Statue Gets Younger's Mom (Stonefold), no grey: dark brown hair in a low ponytail, a sage-green dress, brown boots (S02b, S05-S07)")
+SKINS["statue_mom_1"] = dict(STATUE_MOM, streaks=("left",), note="Mom (Stonefold), first grey: statue_mom + one grey streak from her left temple back through the ponytail (S08, S09)")
+SKINS["statue_mom_2"] = dict(STATUE_MOM, streaks=("left", "right"), browline=True, note="Mom (Stonefold), the reveal: statue_mom_1 + a second streak from the right temple + a one-pixel dark brow line in the stone rows' colour (S10 from FACE, S11)")
+FAMILIES = {"statue_mom": ("statue_mom", "statue_mom_1", "statue_mom_2")}
 
 
 class Skin:
     def __init__(self, name, spec):
         self.name, self.s = name, spec
         self.im = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
-        self.rng = random.Random(name)
+        self.rng = random.Random(spec.get("seed", name))
         self.c = {k: hexc(v) for k, v in spec.items() if isinstance(v, str) and v.startswith("#")}
         self.c.setdefault("skin_d", shade(self.c["skin"], -0.12))
         self.c.setdefault("hair_d", shade(self.c["hair"], -0.2))
@@ -238,6 +299,17 @@ class Skin:
     def jit(self, c, amt=0.05):
         """a fabric/skin texture: a small fixed random light change per pixel"""
         return shade(c, self.rng.uniform(-amt, amt))
+
+    def plaid(self, col, x, y):
+        """a flannel check (spec `plaid`, `plaid_l`): dark bands every 4 columns and rows, light where they don't cross"""
+        c = self.c
+        if "plaid" not in c or col != c["shirt"]:
+            return col
+        v, h = x % 4 == 1, y % 4 == 2
+        if v and h: return shade(c["plaid"], -0.25)
+        if v or h: return c["plaid"]
+        if (x % 4 == 3) and (y % 4 == 0) and c.get("plaid_l"): return c["plaid_l"]
+        return col
 
     def put(self, x, y, c, a=255):
         self.im.putpixel((x, y), (*c, a))
@@ -306,6 +378,8 @@ class Skin:
                 return self.jit(c["hair_d"] if (x + y) % 2 else hair, 0.04)
             if top == "bandana" and y == 2 and x in (3, 4):   # the knot
                 return self.jit(c["hat_d"], 0.03)
+            if c.get("tie") and y == 7 and x in (3, 4):   # the ponytail's tie at the nape
+                return self.jit(c["tie"], 0.03)
             return hairpx(x, y) if y < br else self.jit(skin_d, 0.03)
         self.face_fill("head", 0, "back", back_fn)
         self.face_fill("head", 0, "bottom", lambda x, y, w, h: self.jit(
@@ -357,6 +431,9 @@ class Skin:
             if s.get("vest"):
                 if y >= 2 and not (y < 5 and 3 <= x <= 4): col = c["vest"] if (x + y) % 4 else c["vest_d"]
                 if y == 11: col = c["vest_d"]
+            col = self.plaid(col, x, y)
+            if c.get("waist") and y == 7: col = c["waist"]
+            if s.get("neckline") and y == 0 and x in (3, 4): col = c["skin"]
             if c.get("collar") and y == 0 and x not in (3, 4): col = c["collar"]
             if c.get("placket") and x == 3 and 1 <= y <= 8: col = c["placket"]
             if c.get("fur") and (y == 0 or (y == 1 and x in (0, 1, 6, 7))): col = c["fur"]
@@ -371,6 +448,9 @@ class Skin:
         def back(x, y, w, h):
             col = coat if (coat and not s.get("vest")) else shirt
             if s.get("vest") and y >= 1: col = c["vest"]
+            col = self.plaid(col, x, y)
+            if c.get("waist") and y == 7: col = c["waist"]
+            if self.tail(x, y): col = c["hair_d"] if (x + y) % 3 == 0 else c["hair"]
             if s.get("hoodie") and y <= 2: col = shade(shirt, -0.25)   # the hood down the back
             if c.get("fur") and y == 0: col = c["fur"]
             if c.get("hood_collar") and y <= 1: col = c["hood_collar"]
@@ -384,6 +464,8 @@ class Skin:
         def sides(x, y, w, h):
             col = coat if (coat and not s.get("vest")) else shirt
             if s.get("vest") and y >= 3: col = c["vest"]
+            col = self.plaid(col, x, y)
+            if c.get("waist") and y == 7: col = c["waist"]
             if c.get("belt") and y == 11: col = c["belt"]
             if c.get("toolbelt") and y in (10, 11): col = c["toolbelt"]
             if s.get("skirt") and y >= 10: col = c["skirt"]
@@ -403,6 +485,13 @@ class Skin:
         if c.get("fur"):   # the fur collar stands out
             for f in ("front", "back", "right", "left"):
                 self.face_fill("body", 1, f, lambda x, y, w, h: self.jit(c["fur"], 0.05) if y == 0 else None)
+        if s.get("ponytail"):   # the ponytail stands off the back a pixel
+            self.face_fill("body", 1, "back", lambda x, y, w, h: self.jit(c["hair"] if (x + y) % 2 else c["hair_d"], 0.04) if self.tail(x, y) else None)
+
+    def tail(self, x, y):
+        """the low ponytail down the body's back (spec `ponytail` rows): 4 wide, its last row 2 wide"""
+        n = self.s.get("ponytail", 0)
+        return y < n and (2 <= x <= 5 if y < n - 1 else 3 <= x <= 4)
 
     def arms(self):
         s, c = self.s, self.c
@@ -416,7 +505,7 @@ class Skin:
                 elif y == sl - 1 and c.get("cuff"):
                     col = c["cuff"]
                 else:
-                    col = outer
+                    col = self.plaid(outer, x, y)
                     if s.get("sleeve") and sl <= 8 and y == sl - 2: col = shade(outer, -0.1)   # the roll
                 return self.jit(shade(col, dark), 0.035)
             return f
@@ -458,8 +547,40 @@ class Skin:
             self.face_fill(p, 0, "top", lambda x, y, w, h: self.jit(c.get("skirt") or c["pants"], 0.03))
             self.face_fill(p, 0, "bottom", lambda x, y, w, h: self.jit(c.get("sole") or shade(c["shoes"], -0.2), 0.03))
 
+    # ---------- the grey (painted last, so a family's states share every other byte) ----------
+    # (part, layer, face, [(x, y), ...]) per streak; "left" is the character's left (front face column 7, the head's
+    # "left" side, back face column 0 side, the body back's left half)
+    STREAKS = {
+        "left": [("head", 0, "front", [(6, 0), (7, 1), (7, 2)]), ("head", 0, "left", [(0, 0), (0, 1), (1, 0)]),
+                 ("head", 0, "top", [(6, y) for y in range(8)]),
+                 ("head", 0, "back", [(1, 0), (1, 1), (1, 2), (2, 3), (2, 4), (2, 5), (2, 6), (3, 7)]),
+                 ("body", 0, "back", [(2, 0), (2, 1), (2, 2), (2, 3), (3, 4)]), ("body", 1, "back", [(2, 0), (2, 1), (2, 2), (2, 3), (3, 4)])],
+        "right": [("head", 0, "front", [(1, 0), (0, 1), (0, 2)]), ("head", 0, "right", [(7, 0), (7, 1), (6, 0)]),
+                  ("head", 0, "top", [(1, y) for y in range(8)]),
+                  ("head", 0, "back", [(6, 0), (6, 1), (6, 2), (5, 3), (5, 4), (5, 5), (5, 6), (4, 7)]),
+                  ("body", 0, "back", [(4, 0), (4, 1), (4, 2), (4, 3), (4, 4)]), ("body", 1, "back", [(4, 0), (4, 1), (4, 2), (4, 3), (4, 4)])],
+    }
+
+    def grey(self):
+        s, c = self.s, self.c
+        rng = random.Random(s.get("seed", self.name) + ":grey")   # its own noise: a streak is the same in every state
+        for side in ("left", "right"):
+            for part, layer, face, pts in self.STREAKS[side]:
+                (u, v) = PARTS[part][layer]
+                x0, y0, _, _ = rects(u, v, *PARTS[part][2])[face]
+                for k, (x, y) in enumerate(pts):
+                    col = shade(c["grey_d"] if k % 3 == 2 else c["grey"], rng.uniform(-0.04, 0.04))
+                    if side in s.get("streaks", ()):
+                        self.put(x0 + x, y0 + y, col)
+        if s.get("browline"):   # a furrow on the brow, one pixel high, in the statue's stone-row colour
+            x0, y0, _, _ = rects(*PARTS["head"][0], *PARTS["head"][2])["front"]
+            for x in (3, 4):   # 2 px between the brows (the full 4 read as a headband against the hairline)
+                self.put(x0 + x, y0 + 1, shade(c["brow_line"], rng.uniform(-0.03, 0.03)))
+
     def make(self):
         self.head(); self.torso(); self.arms(); self.legs()
+        if self.s.get("streaks") or self.s.get("browline"):
+            self.grey()
         return self.im
 
 

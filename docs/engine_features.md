@@ -464,6 +464,20 @@ jar's skins, so a stunt casts one by name like a jar skin: `cast: { Grandpa: 'gr
   barter player) must still read from the head alone (glasses, moustache, beanie). Avoid a jar skin's colour scheme
   (Steve's cyan shirt and blue trousers read as Buh).
 - Proofs: docs/engine_proofs/skins/ (line-ups at 1080 and 300 px, phone stills, armour, taken vs new).
+- Batch 4 (skins-2, 2026-11-12): `sorry_aunt` (Sorry, Dear; plays at entity scale 0.3, so it is big blocks of colour:
+  grey perm, red cat-eye glasses, coral cardigan, lavender skirt), `statue_dad`, and Mom in three states
+  `statue_mom`, `statue_mom_1`, `statue_mom_2` (The Statue Gets Younger; names as its story.json and bible).
+  New spec keys: `plaid`/`plaid_l` (a flannel check), `ponytail` (rows down the body's back, standing off a pixel)
+  with `tie`, `neckline`, `waist`, `seed` (the noise seed, so states share bytes).
+- **One character in several states** (a skin swap on a mark): give every state the same `seed` and paint the
+  difference last (`Skin.grey`: `streaks`, `browline`), so the costume is the same bytes in all of them; list them in
+  `FAMILIES`. The test exempts a family from the distinctness check among itself, and checks instead that nothing
+  differs outside the head and the ponytail, and that each pair differs clearly in the face (>= 2 front-face pixels)
+  and the hair (>= 15 pixels).
+- The fixture without ../hb-videos: any recording works as `--src`; a flat grass one can be written with
+  prismarine-chunk (the skins-2 proofs used one). Ticks 160-259 are the batch-4 skins (see pose_fixture.js --skins).
+- Proofs: docs/engine_proofs/skins_2/ (front, 3/4 and back line-ups, the aunt's size at 0.3 beside spare_boy, the three
+  Moms close, at 1080 and 300 px and on a phone).
 
 ## Flying-mob POV, the crane, the Nether (camera_world, 2026-11-11)
 Brief: docs/engine_briefs/camera_world.md (The Honey Thief's bee, The Singing Box's allay, Saving Up for a Bastion).

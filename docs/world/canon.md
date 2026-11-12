@@ -193,6 +193,9 @@ One look per character (STANDARDS 7a). The spares belong to no one yet: give one
 | `barter_player` | the barter-farm player, Saving Up for a Bastion | an orange beanie, dark skin, a short black beard; a black hoodie with orange strings, khaki trousers |
 | `spare_boy` | spare (a boy) | chestnut hair with a swept fringe, a burgundy hoodie with white strings, grey joggers, white trainers (no character yet) |
 | `spare_girl` | spare (a girl) | long straight black hair with a fringe, a pink cardigan over a white top, light jeans, white trainers (no character yet) |
+| `sorry_aunt` | the aunt, Sorry, Dear (planned; Stillwater, 2200; plays at entity scale 0.3) | a grey perm, red cat-eye glasses, rosy cheeks, a small closed smile baked in (kind or smug); a coral cardigan with pearl buttons, a lavender skirt, brown shoes |
+| `statue_dad` | Dad (Stonefold), The Statue Gets Younger (planned; 3900) | forties, short grey hair, grey stubble, a kind face; a rust-red flannel shirt, dark jeans, brown boots |
+| `statue_mom`, `statue_mom_1`, `statue_mom_2` | Mom (Stonefold), The Statue Gets Younger (planned; 3900): one woman, three states | dark brown hair in a low ponytail, a sage-green dress, brown boots; `_1` one grey streak from her left temple back through the ponytail; `_2` a second streak from the right temple + a one-pixel dark brow furrow in the statue's stone-row colour |
 
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
