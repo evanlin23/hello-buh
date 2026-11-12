@@ -287,17 +287,14 @@ module.exports = {
       const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
       const vill = Object.values(bot.entities).filter(e => e.name === 'villager' && e.position.z > bot.entity.position.z).sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
       const probe = vill[0], p0 = probe && probe.position.clone()
-      const fy = this.floor + 1, B = this.behind || []
-      for (let k = 1; k <= 6; k++) {
-        for (const v of B) {
-          const dx = +px - v.x, dz = +pz - v.z, d = Math.hypot(dx, dz) || 1
-          bot.chat(`/tp @e[tag=${v.tag},limit=1] ${(v.x + dx / d * 0.33 * k).toFixed(3)} ${fy} ${(v.z + dz / d * 0.33 * k).toFixed(3)}`)   // motion-ok: the crowd (extras, not a cast member) steps in as one
-        }
-        // NoAI mobs' moves reach the client only on the tracker's 3-tick beat: a metadata change each tick flushes them
-        // at 20 Hz (the kit's actor does the same)
-        bot.chat(`/execute as @e[type=villager,tag=behind] run data merge entity @s {Air:${k % 2 ? 298 : 299}s}`)
-        await bot.waitForTicks(1)
+      const B = this.behind || []
+      // a lurch in: each one gets a push toward the pillar (Motion: NoAI mobs keep their physics, so the client sees a
+      // real move; teleports of NoAI mobs, relative or absolute, never reached it past the first: 6 takes)
+      for (const v of B) {
+        const dx = +px - v.x, dz = +pz - v.z, d = Math.hypot(dx, dz) || 1
+        bot.chat(`/data merge entity @e[tag=${v.tag},limit=1] {Motion:[${(dx / d * 0.75).toFixed(3)}d,0.32d,${(dz / d * 0.75).toFixed(3)}d]}`)   // motion-ok: the crowd (extras) lurches in as one
       }
+      await bot.waitForTicks(6)
       await bot.waitForTicks(3)
       ctx.log('step_in:', B.length, 'stepped;', vill.length, 'in view; the nearest moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
       await bot.waitForTicks(12)   // footage for the end (0.7 s after the step) and the settle
