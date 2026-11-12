@@ -661,3 +661,6 @@ lib/hb/test/fixtures/opening_calibration.json):
 Owner: "maybe we should start as we are already falling?" A drop's walk-off, step and in-air turn are dead time before
 the stake: start each drop already falling, the camera still and looking down the wall (ladder_clutch: startAt and each
 teleport cut land on `fall<i>:0.95`, after the turn). Consider the same for boat_clutch's next version.
+Owner, 2026-11-12, on ladder_clutch v3 at 0.7 s: "for the first, we have the fall. but the rest we should have the
+jumping off." So: the first drop opens mid-fall (the hook, frame 0); the later drops show the jump off the top (the
+teleport between them is still cut).
