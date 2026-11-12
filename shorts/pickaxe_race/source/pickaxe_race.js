@@ -1,5 +1,5 @@
 // "ranking every pickaxe ⛏️ 💀" (~30 s, six beats + a finale): a stone wall in a field; wooden, stone,
-// iron and diamond pickaxe each mine a fresh 3x3 section of it (side by side), with real survival
+// iron and diamond pickaxe each mine a fresh 3x2 section of it (side by side), with real survival
 // digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the tier per tool.
 // Gold (fastest plain pickaxe) breaks on its last block; netherite + efficiency V (with the Haste)
 // instamines; then a TNT at every pillar chains down the wall and takes it out: "TNT: ??? tier".
@@ -11,10 +11,14 @@ const TOOLS = [   // six beats + the TNT run, ~30 s (owner: 30 s minimum; nether
   { item: 'stone_pickaxe', label: 'stone', result: 'stone: C tier' },
   { item: 'iron_pickaxe', label: 'iron', result: 'iron: B tier' },
   { item: 'diamond_pickaxe', label: 'diamond', result: 'diamond: A tier' },
-  { item: 'golden_pickaxe[damage=23]', label: 'gold', result: 'gold: S tier?? it broke' },    // fastest plain pickaxe; 9 uses left: it breaks on the last block
+  { item: 'golden_pickaxe[damage=26]', label: 'gold', result: 'gold: S tier?? it broke' },    // fastest plain pickaxe; 6 uses left: it breaks on the last block
   { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'efficiency V + haste', result: 'efficiency V + haste: GOD tier' }   // the instamine needs the Haste: say so
 ]
 const SPACING = 4             // wall sections: 3 wide + a 1-block pillar between them
+// each tier mines its whole section in one take with a timer (owner 2026-11-11, r:r52f94c: "why is there a cut when we
+// are using the wooden pick?" "actually theres a cut for all." "Also, we should have like a timer..."): no jump cut inside
+// a tier, so the section is 3 wide x 2 high (6 digs: the wooden pick's ~6 s in real time, not 9 digs cut down)
+const ROWS = [[2, 1], [1, -1]]   // [row over the floor, direction]: the head-high row left->right, the bottom right->left
 
 // subtitles: the tool, then its tier once its section is open. (Measured times were shown before,
 // but under the invisible Haste they ran ~2x vanilla and read as fake.)
@@ -34,20 +38,20 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.3',   // (the camera drifts through it: settle:0.6 on a parked camera held a still frame 2 s, independent review)
+    return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.7',   // 0.7 s after the last blast (owner r:r188b46: the end 0.5-0.8 s after the result; smoke and debris never hold it)
+      // a speedrun timer per tier (edit.splits, as end_portal_job: r:r32b983): 0:00.00 on each tier's 'beat', frozen
+      // green on its 'mined' with n/6; real time, no cut inside a tier (subsY 0.2: the tier line clears the timer strip)
+      // (hidden from the finale: the TNT run is no timed attempt, and the frozen netherite split read as TNT's time, review)
+      splits: { reset: 'beat', split: 'mined', of: TOOLS.length, hide: 'finale' },
       speed: [
-      // each tier's middle blocks jump-cut, edge to edge on the short rests the bot takes at those two blocks (blk<tier>_<n>:
-      // before block n; the whip check: a cut inside a turn reads as one snap, r:r38374d), each tier shorter on screen
-      // than the last (~1.1 / 0.7 / 0.55 / 0.5 / 0.4 s a block: 4, 5, 5, 5, 5 blocks shown; the instamine all 9)
-      ['blk0_3', 'blk0_8', 'cut'], ['blk1_3', 'blk1_7', 'cut'], ['blk2_3', 'blk2_7', 'cut'], ['blk3_3', 'blk3_7', 'cut'], ['blk4_3', 'blk4_7', 'cut'],
       ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
       ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
-      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
+      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['impact', 'beat', { gain: 1.0 }], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
       // gamedip: the chain's previous blast 0.54 s before the last (+ the limiter) flattened its hit in the NCS mix (pace)
       // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
-        // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
+        // an impact on the first tier card at 0.05 s (pace opening: a pop was 20 dB under the peak, r:r0f3da0)
       punch: [['boom', 0, 1.12], ['boom:1.3', 0, 1.06], ['boom:2.76', 0, 1.06]], shake: [['boom', 0, 10], ['boom:1.3', 0, 6], ['boom:2.76', 0, 6]],
       // (boom:1.3 / boom:2.76: the chain's 3rd and 5th blasts in output seconds of this take, 1.75x: a 3.6 s stretch of
       // same-looking booms under the song had no new event, pace dead BLOCK (the punches alone don't register); a card on
@@ -71,13 +75,13 @@ module.exports = {
       await ctx.cmd(`/fill ${x - 70} ${floor - 3} ${z0} ${x + 74} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player,distance=..150]')   // polar bears and pigs wandered through the finale
-    // the wall: one block thick (mining a section opens a window onto the field), 4 high
+    // the wall: one block thick (mining a section opens a window onto the field), 3 high (a 3x2 window under a lintel)
     this.wz = z - 4
     this.x0 = x - 12                                       // first section: x0..x0+2
     const xa = this.x0 - 2, xb = this.x0 + SPACING * (TOOLS.length - 1) + 4
-    await ctx.cmd(`/fill ${xa} ${floor + 1} ${this.wz} ${xb} ${floor + 4} ${this.wz} stone`)
+    await ctx.cmd(`/fill ${xa} ${floor + 1} ${this.wz} ${xb} ${floor + 3} ${this.wz} stone`)
     // pillars between the sections in cobblestone, so each 3x3 reads as its own wall
-    for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 4} ${this.wz} cobblestone`)
+    for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 3} ${this.wz} cobblestone`)
     await ctx.hotbar([...TOOLS.map(t => t.item), ['tnt', TOOLS.length + 1], 'flint_and_steel'])
     await ctx.cmd('/effect give @s haste infinite 1 true')   // Haste II (a beacon's best; V was command-only, every plain tool ~2x vanilla): netherite + efficiency V still instamines
     await ctx.cmd('/effect give @s saturation infinite 1 true')
@@ -123,17 +127,10 @@ module.exports = {
       const xs = this.x0 + i * SPACING
       // snake: top row left->right, middle right->left, bottom left->right
       const order = []
-      for (const [r, dir] of [[3, 1], [2, -1], [1, 1]]) for (let c = 0; c < 3; c++) order.push(new Vec3(xs + (dir > 0 ? c : 2 - c), floor + r, wz))
+      for (const [r, dir] of ROWS) for (let c = 0; c < 3; c++) order.push(new Vec3(xs + (dir > 0 ? c : 2 - c), floor + r, wz))
       const t0 = ctx.tick
       if (fast) ctx.mark('instamine')
-      let nb = 0
       for (const p of order) {
-        // a short rest on the dug block before turning to the next, marked in the middle: the edit's jump cuts over
-        // the middle blocks go edge to edge on these (nine identical digs were 8.6 s of the video; the ranking keeps
-        // the real speed), so no cut joins two turning views (whip check, r:r38374d)
-        // (only at the cut edges: 3 ticks still before the mark and 4 after, the whip check's window either side)
-        if (!fast && (nb === 3 || nb === (i === 0 ? 8 : 7))) { await bot.waitForTicks(3); ctx.mark(`blk${i}_${nb}`); await bot.waitForTicks(4) }
-        nb++
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
         if (fast) {
