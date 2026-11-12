@@ -32,7 +32,9 @@ module.exports = {
       ['pop', 'fm1_open'], ['pop', 'fm2_open'], ['pop', 'fm3_open'],   // a hit as each popup opens (mixcheck: under the NCS bed the toast sound wasn't one)
       ['riser', 'fm3_click', 'fm3_result', { gain: 0.35 }]],          // the roll builds (pace: the last third sagged); it ends 1.6 s before the dip
     // the roll's result as a big green card over the sky above the popup: readable at phone size (r:r4607fa)
-    cards: [['fm3_result', 'ALLOW', 0.9, 'green', 0, { y: 0.16 }]],
+    // ...and each DENY big as its own beat too (r:rb35549; fix-check v4: the small 'Request DENIED.' text alone was missable)
+    cards: [['fm1_click', 'DENIED', 0.6, 'red', 0, { y: 0.16 }], ['fm2_click', 'DENIED', 0.6, 'red', 0, { y: 0.16 }],
+      ['fm3_result', 'ALLOW', 0.9, 'green', 0, { y: 0.16 }]],
     popup: [
       FM.popup({ k: 1, mob: 'zombie', text: ['A ', ['Zombie', 'red'], ' is asking for permission to attack you.'], pick: 'Deny', done: ['Request ', ['DENIED', 'red'], '.'] }),
       FM.popup({ k: 2, mob: 'skeleton', text: ['A ', ['Skeleton', 'red'], ' is asking for permission to shoot you.'], pick: 'Deny', hover: ['Allow', 'Deny'], done: ['Request ', ['DENIED', 'red'], '.'] }),
