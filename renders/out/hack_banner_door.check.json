@@ -1,0 +1,434 @@
+{
+ "stunt": "hack_banner_door",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/hack_banner_door.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  1 camera shot(s), 1.7s: POV checks skipped there (1 held); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/hack_banner_door.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "motion fixes: the view holds still through 1 container window",
+    "LINT hack_banner_door: 2 shots, scene 0.0-28.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-27.3  pov    ",
+    "  pull          27.3-28.1  path   self 100% seen, 8% tall",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "2 warning(s) over 3 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 20.65,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 86% of the frame is within 3 blocks (deepslate_tiles, cracked_deepslate_bricks)"
+    },
+    {
+     "level": "WARN",
+     "out": 20.65,
+     "shot": 2,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (no cast, median depth 2.2 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 7.817,
+     "tick": 187,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 6 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 13 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 560,
+     "out": 27.2,
+     "line": null,
+     "from": "pov",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 565,
+     "out": 27.45,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.32,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.27,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.04,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 566,
+     "out": 27.5,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.27,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.24,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.028,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 567,
+     "out": 27.55,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.24,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.22,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.02,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 568,
+     "out": 27.6,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.22,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.21,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.014,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 569,
+     "out": 27.65,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.21,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.2,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.009,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 570,
+     "out": 27.7,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.2,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.19,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.007,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 571,
+     "out": 27.75,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.19,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.004,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 572,
+     "out": 27.8,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.004,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 573,
+     "out": 27.85,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.003,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 574,
+     "out": 27.9,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.002,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 575,
+     "out": 27.95,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.18,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.17,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.002,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 576,
+     "out": 28,
+     "line": null,
+     "from": "pull",
+     "to": "pull",
+     "before": {
+      "x": 0.5,
+      "y": 0.17,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.17,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.001,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "18 visible sound-making events (break 1, chest 6, hit 3, pickup 3, voice 5), 0 with a sound mark, 18 without (audio.py adds those for a story)",
+    "     3.00s  chest opened                       -> block.chest.open                   2.3 blocks in view  ",
+    "     3.20s  chest opened                       -> block.chest.open                   2.3 blocks in view  ",
+    "     3.45s  chest opened                       -> block.chest.open                   2.3 blocks in view  ",
+    "     3.70s  chest opened                       -> block.chest.open                   2.3 blocks in view  ",
+    "     3.80s  chest closed                       -> block.chest.close                  2.3 blocks in view  ",
+    "     4.00s  chest closed                       -> block.chest.close                  2.3 blocks in view  ",
+    "    10.30s  cow idle voice                     -> entity.cow.ambient                 7.2 blocks in view  ",
+    "    12.35s  sheep idle voice                   -> entity.sheep.ambient               4.6 blocks          ",
+    "    15.95s  cow idle voice                     -> entity.cow.ambient                15.5 blocks          ",
+    "    17.15s  sheep idle voice                   -> entity.sheep.ambient              12.7 blocks          ",
+    "    18.75s  cow idle voice                     -> entity.cow.ambient                12.3 blocks          ",
+    "    23.00s  digging deepslate_diamond_ore      -> block.deepslate.hit                2.2 blocks in view  ",
+    "    23.20s  digging deepslate_diamond_ore      -> block.deepslate.hit                2.2 blocks in view  ",
+    "    23.40s  digging deepslate_diamond_ore      -> block.deepslate.hit                2.2 blocks in view  ",
+    "    23.60s  broke deepslate_diamond_ore        -> block.deepslate.break              2.2 blocks in view  ",
+    "    23.70s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "    23.85s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "    24.15s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "ambience per shot: -0.20-29.70s indoor_day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:51:32.105Z"
+}
