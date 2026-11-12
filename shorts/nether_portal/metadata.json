@@ -25,26 +25,26 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 18.93,
+    "duration_s": 17.68,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 22387704,
-    "sha256": "03f9c205e971818ed183b8480ce2925f83b2d64bf7ef3dc2ea20987db4e4c1b8",
+    "bytes": 21616662,
+    "sha256": "692e352ee1903a3e3566f8ab6e814745fcead5f7b3eb72a971f998db2f708269",
     "release": {
       "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short.03f9c205e971818e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.03f9c205e971818e.mp4",
-      "sha256": "03f9c205e971818ed183b8480ce2925f83b2d64bf7ef3dc2ea20987db4e4c1b8",
-      "bytes": 22387704
+      "asset": "nether_portal.short.692e352ee1903a3e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.692e352ee1903a3e.mp4",
+      "sha256": "692e352ee1903a3e3566f8ab6e814745fcead5f7b3eb72a971f998db2f708269",
+      "bytes": 21616662
     },
     "nosong_release": {
       "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short_nosong.7f5aad6c56278b07.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.7f5aad6c56278b07.mp4",
-      "sha256": "7f5aad6c56278b071ed803b574b77ee5347317acaec1a05ac5c7faa97d74294e",
-      "bytes": 22384428
+      "asset": "nether_portal.short_nosong.7e18f53a2b0cd1d9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.7e18f53a2b0cd1d9.mp4",
+      "sha256": "7e18f53a2b0cd1d9b23848f9212f9777e913d92482a731557dbb97e735eb40fb",
+      "bytes": 21609657
     }
   },
   "edit": {
@@ -54,8 +54,15 @@
     "red": "every",
     "dropAt": "lit5",
     "startAt": "st:-0.05",
-    "endAfter": "settle:0.6",
+    "endAfter": "settle:-0.65",
     "sfx": [
+      [
+        "pop",
+        "st",
+        {
+          "gain": 0.9
+        }
+      ],
       [
         "air",
         "start",
@@ -303,13 +310,13 @@
       "--shake",
       "[[\"boom\",0,12],[\"boom\",1,20]]",
       "--sfx",
-      "[[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]]",
+      "[[\"pop\",\"st\",{\"gain\":0.9}],[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]]",
       "--armor",
       "20",
       "--start_at",
       "st:-0.05",
       "--end_after",
-      "settle:0.6"
+      "settle:-0.65"
     ]
   },
   "recording": {
@@ -1346,12 +1353,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/nether_portal",
-    "commit": "c538265bd38a412103677b5b6be58b345fddd0b4",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43106009842",
-    "rendered_at": "2026-11-11T22:11:14.611Z",
-    "head_at_publish": "28554cb2fd441abc288c208bf5f072ff87208220",
+    "branch": "main",
+    "commit": "59a06225d9cce4ee5b3e0dfc19320f2a8e686c85",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T01:03:38.332Z",
+    "head_at_publish": "e0add096ef689e3beccce3b4bf550904e2ae89af",
     "stunt": "stunts/nether_portal.js",
     "source_snapshot": [
       "source/nether_portal.js",
@@ -1361,34 +1367,34 @@
     ]
   },
   "rebuild": [
-    "git checkout c538265bd38a",
+    "git checkout 59a06225d9cc",
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"rating every way to light a nether portal 😳\" --self_name 56e --red every --subs \"[[\\\"st\\\",\\\"flint and steel\\\",1.4,0],[\\\"st\\\",\\\"fire charge\\\",1.4,1],[\\\"st\\\",\\\"TNT\\\",1.4,2],[\\\"st\\\",\\\"redstone\\\",1.4,3],[\\\"st\\\",\\\"lava\\\",1.4,4],[\\\"st\\\",\\\"respawn anchor\\\",1.4,5],[\\\"lava_a\\\",\\\"x6\\\",0.8,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse_a\",\"fuse_b\",\"cut\"],[\"lava_a\",\"lava_b\",6]] --punch [[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]] --counter {\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6} --cards [[\"lit0\",\"1/10\",0.9,\"white\"],[\"lit1\",\"3/10\",0.9,\"white\"],[\"lit2\",\"0/10\",0.9,\"red\"],[\"lit3\",\"5/10\",0.9,\"yellow\"],[\"lit4\",\"8/10\",0.9,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]] --shake [[\"boom\",0,12],[\"boom\",1,20]] --sfx [[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]] --armor 20 --start_at st:-0.05 --end_after settle:0.6 --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"rating every way to light a nether portal 😳\" --self_name 56e --red every --subs \"[[\\\"st\\\",\\\"flint and steel\\\",1.4,0],[\\\"st\\\",\\\"fire charge\\\",1.4,1],[\\\"st\\\",\\\"TNT\\\",1.4,2],[\\\"st\\\",\\\"redstone\\\",1.4,3],[\\\"st\\\",\\\"lava\\\",1.4,4],[\\\"st\\\",\\\"respawn anchor\\\",1.4,5],[\\\"lava_a\\\",\\\"x6\\\",0.8,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse_a\",\"fuse_b\",\"cut\"],[\"lava_a\",\"lava_b\",6]] --punch [[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]] --counter {\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6} --cards [[\"lit0\",\"1/10\",0.9,\"white\"],[\"lit1\",\"3/10\",0.9,\"white\"],[\"lit2\",\"0/10\",0.9,\"red\"],[\"lit3\",\"5/10\",0.9,\"yellow\"],[\"lit4\",\"8/10\",0.9,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]] --shake [[\"boom\",0,12],[\"boom\",1,20]] --sfx [[\"pop\",\"st\",{\"gain\":0.9}],[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]] --armor 20 --start_at st:-0.05 --end_after settle:-0.65 --out out/nether_portal.mp4"
   ],
   "status": "ready",
-  "notes": "nether_portal republish on the current pipeline: re-recorded as 56e; every look governed (max 223 deg/s on screen, the x6 lava wait <= 74) (r:r38374d); ends 0.6 s after the anchor's smoke settles with the 11/10 card up (r:r24d99a); drop + song/game dip + impact on the anchor blast, mixcheck OK. Round 1 READY (independent fresh session session_019n1tKGv36ZJWwDk2a5Tav4). Nitpicks: anchor shot tilts to the sky ~0.5 s, one-tick hitch landing in the crater (16.6 s), flat field.",
-  "published_at": "2026-11-11T22:14:04.153Z",
+  "notes": "fast cuts r:r188b46: the end 1.2 s after the 11/10 card (was 2.5 s); frame-0 pop; fix-check READY",
+  "published_at": "2026-11-12T01:05:56.100Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:14:27+00:00",
+    "at": "2026-11-12T01:06:20+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 18.94 s vs the reviewed render 18.93 s"
+      "summary": "short.mp4 17.68 s vs the reviewed render 17.68 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:11:30.194Z",
+      "at": "2026-11-12T01:03:55.118Z",
       "report": "work/hb/nether_portal.check.json"
     },
     "key_sounds": "n/a"
