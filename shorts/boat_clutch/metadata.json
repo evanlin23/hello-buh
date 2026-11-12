@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 30671077,
-    "sha256": "a7a5f2346dbe8ae296a7fab8e769e553fae4dd8dfd2956f0bdcd6ffd456a4d49",
+    "bytes": 30669096,
+    "sha256": "be937688791bf1206ce4af96680b44e1a28b5038bdafba4eb6c7daa668f7a5b9",
     "release": {
       "tag": "pkg-boat_clutch",
-      "asset": "boat_clutch.short.a7a5f2346dbe8ae2.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.a7a5f2346dbe8ae2.mp4",
-      "sha256": "a7a5f2346dbe8ae296a7fab8e769e553fae4dd8dfd2956f0bdcd6ffd456a4d49",
-      "bytes": 30671077
+      "asset": "boat_clutch.short.be937688791bf120.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.be937688791bf120.mp4",
+      "sha256": "be937688791bf1206ce4af96680b44e1a28b5038bdafba4eb6c7daa668f7a5b9",
+      "bytes": 30669096
     },
     "nosong_release": {
       "tag": "pkg-boat_clutch",
@@ -386,12 +386,12 @@
     "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"bro thinks a boat will save him 💀\" --self_name 56e --red boat --subs \"[[\\\"jump\\\",\\\"20 blocks\\\",1.6,0],[\\\"jump\\\",\\\"50 blocks... into cactus\\\",1.6,1],[\\\"jump\\\",\\\"79 blocks... into LAVA\\\",1.6,2]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fall1:0.8\",\"catch1:-0.6\",2],[\"fall2:0.8\",\"catch2:-1.0\",2]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --punch [[\"final\",0,1.08]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks 💀\\\"}\" --flash [[\"final\",0,0.3]] --sfx [[\"file\",\"landed\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.7,{\"nth\":0}],[\"file\",\"landed\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.7,{\"nth\":1}],[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]] --start_at start:0 --end_after final:0.6 --out out/boat_clutch.mp4"
   ],
   "status": "ready",
-  "notes": "no-op redo (r:r4607fa): 3 drops with stakes (20 grass, 50 cactus field, 79 onto a pad in a lava lake); each lands as a hit; ends 0.6 s after it; full review READY",
+  "notes": "no-op redo (r:r4607fa): 3 drops with stakes (20 grass, 50 cactus field, 79 onto a pad in a lava lake); each lands as a hit; ends 0.6 s after it; full review READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:35:47.758Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:36:21+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:14:53+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 13.29 s vs the reviewed render 13.28 s"
@@ -406,9 +406,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:33:58.114Z",
-      "report": "work/hb/boat_clutch.check.json"
+      "at": "2026-11-12T05:58:59.109Z",
+      "report": "out/boat_clutch.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.82,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 0.82 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.82,
+    "pump_run": 0.0,
+    "master_gain": -0.11,
+    "under": null,
+    "windows": [
+      239,
+      2
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.82 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:14:38+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "a7a5f2346dbe8ae296a7fab8e769e553fae4dd8dfd2956f0bdcd6ffd456a4d49",
+      "release": {
+        "tag": "pkg-boat_clutch",
+        "asset": "boat_clutch.short.a7a5f2346dbe8ae2.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.a7a5f2346dbe8ae2.mp4",
+        "sha256": "a7a5f2346dbe8ae296a7fab8e769e553fae4dd8dfd2956f0bdcd6ffd456a4d49",
+        "bytes": 30671077
+      },
+      "song": {
+        "drop_in_short_s": 12.47,
+        "drop_in_song_s": 38.25,
+        "song_start_s": 25.78
+      }
+    },
+    "song_file_sha256": "dc57ef5b2cb4f265f5aae1d04e647ac68e7f7cc184416712ceb77943ef4b180c",
+    "video_stream_md5": "808d5a1a2e425fbd96ef089aec211d27",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

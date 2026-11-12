@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 25944359,
-    "sha256": "5131787cb44d429cd94503e8b34891d76f8ec053788849d6612af86b1947bb6a",
+    "bytes": 25945705,
+    "sha256": "3c99f3fc1723d3b5e510966eb95eefcb196ec0642b77e8fdbee4063d4a01eb8b",
     "release": {
       "tag": "pkg-hack_banner_door",
-      "asset": "hack_banner_door.short.5131787cb44d429c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short.5131787cb44d429c.mp4",
-      "sha256": "5131787cb44d429cd94503e8b34891d76f8ec053788849d6612af86b1947bb6a",
-      "bytes": 25944359
+      "asset": "hack_banner_door.short.3c99f3fc1723d3b5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short.3c99f3fc1723d3b5.mp4",
+      "sha256": "3c99f3fc1723d3b5e510966eb95eefcb196ec0642b77e8fdbee4063d4a01eb8b",
+      "bytes": 25945705
     },
     "nosong_release": {
       "tag": "pkg-hack_banner_door",
@@ -551,12 +551,12 @@
     "python3 edit.py --frames work/hack_banner_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/hack_banner_door.rec.json --audio work/hack_banner_door.wav --caption \"POV: you realized banners have no hitbox\" --self_name 56e --red hitbox --subs \"[[\\\"reveal\\\",\\\"secret room 1\\\",1.6,0],[\\\"lookback\\\",\\\"banners have NO hitbox\\\",1.6,0],[\\\"reveal\\\",\\\"secret room 2\\\",1.6,1],[\\\"deeper\\\",\\\"how deep does this go?\\\",1.8,0],[\\\"reveal\\\",\\\"secret room 3\\\",1.6,2],[\\\"reveal\\\",\\\"secret room 4\\\",1.4,3],[\\\"which\\\",\\\"but which one is real?\\\",1.8,0],[\\\"reveal\\\",\\\"secret room 5\\\",1.6,4],[\\\"nope\\\",\\\"nope\\\",0.9,0],[\\\"reveal\\\",\\\"secret room 6\\\",1.2,5]]\" --speed [[\"stair_a\",\"stair_b\",2.2],[\"farm_a\",\"farm_b\",1.8],[\"lib_a\",\"lib_b\",1.6],[\"side_a\",\"side_b\",2],[\"diamond:0.3\",\"mine_b\",\"cut\"]] --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"reveal\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"reveal\",{\"nth\":5,\"gain\":0.45}],[\"dip\",\"payoff\",0.3],[\"impact\",\"payoff\"],[\"impact\",\"go\",{\"gain\":0.7}],[\"impact\",\"reveal\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"deeper\",{\"gain\":0.45}],[\"pop\",\"nope_try\",{\"gain\":0.5}],[\"whoosh\",\"payoff\",{\"gain\":0.6}]] --start_at go:-0.05 --end_after payoff:0.85 --out out/hack_banner_door.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): banners have no hitbox, room by room down to a 61x51x38 treasure hall 31 blocks deep, drop onto the hoard, 45-block pull-back; trimmed, 23.4 s (was 28.6); independent full review READY",
+  "notes": "no-op fix (r:r4607fa): banners have no hitbox, room by room down to a 61x51x38 treasure hall 31 blocks deep, drop onto the hoard, 45-block pull-back; trimmed, 23.4 s (was 28.6); independent full review READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:13:00.061Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:13:32+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:13:58+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 23.42 s vs the reviewed render 23.42 s"
@@ -571,9 +571,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:11:07.699Z",
-      "report": "work/hb/hack_banner_door.check.json"
+      "at": "2026-11-12T05:51:32.105Z",
+      "report": "out/hack_banner_door.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.5,
+      "pump_run": 0.0,
+      "under": 5.26,
+      "summary": "the master's gain spread 1.5 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 5.3 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.5,
+    "pump_run": 0.0,
+    "master_gain": -0.08,
+    "under": 5.26,
+    "windows": [
+      57,
+      328
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.5 dB (max 3.0), run 0.0 s (max 0.5), game over music 5.26 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:13:49+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "5131787cb44d429cd94503e8b34891d76f8ec053788849d6612af86b1947bb6a",
+      "release": {
+        "tag": "pkg-hack_banner_door",
+        "asset": "hack_banner_door.short.5131787cb44d429c.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-hack_banner_door/hack_banner_door.short.5131787cb44d429c.mp4",
+        "sha256": "5131787cb44d429cd94503e8b34891d76f8ec053788849d6612af86b1947bb6a",
+        "bytes": 25944359
+      },
+      "song": {
+        "drop_in_short_s": 22.57,
+        "drop_in_song_s": 39.75,
+        "song_start_s": 17.18
+      }
+    },
+    "song_file_sha256": "62d6091544049bbf6672fe522fa69515b243378b2e919110af8a0ac0505367cf",
+    "video_stream_md5": "443ea3af1c062f7c4b62722cc995c7b9",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 27453780,
-    "sha256": "abd32be2280b4bf353af3e493479c7b8fc5d4a31e577868349dd2d86b801ec89",
+    "bytes": 27461994,
+    "sha256": "1be6b52ff29ad3b2ba0255686eb16f0e36804f7c502fc1c94792f3b63508741a",
     "release": {
       "tag": "pkg-quest_pyramid",
-      "asset": "quest_pyramid.short.abd32be2280b4bf3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short.abd32be2280b4bf3.mp4",
-      "sha256": "abd32be2280b4bf353af3e493479c7b8fc5d4a31e577868349dd2d86b801ec89",
-      "bytes": 27453780
+      "asset": "quest_pyramid.short.1be6b52ff29ad3b2.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short.1be6b52ff29ad3b2.mp4",
+      "sha256": "1be6b52ff29ad3b2ba0255686eb16f0e36804f7c502fc1c94792f3b63508741a",
+      "bytes": 27461994
     },
     "nosong_release": {
       "tag": "pkg-quest_pyramid",
@@ -612,12 +612,12 @@
     "python3 edit.py --frames work/quest_pyramid.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/quest_pyramid.rec.json --audio work/quest_pyramid.wav --caption \"bro found the SECRET vault 😱\" --self_name 56e --red SECRET --subs \"[[\\\"room\\\",\\\"everyone loots these 4 chests...\\\",1.1],[\\\"press\\\",\\\"but nobody presses THIS\\\",1.2],[\\\"stage\\\",\\\"LEVEL 1: the tunnel\\\",1.1,0],[\\\"stage\\\",\\\"LEVEL 2: the lava\\\",1.1,1],[\\\"stage\\\",\\\"LEVEL 3: the arrow trap\\\",1.2,2],[\\\"stage\\\",\\\"LEVEL 4: deeper tunnel\\\",1.1,3],[\\\"stage\\\",\\\"LEVEL 5: harder lava\\\",1.1,4],[\\\"stage\\\",\\\"LEVEL 6: the secret wall\\\",1.2,5],[\\\"press2\\\",\\\"the eye was a button\\\",1]]\" --subs_y 0.15 --speed [[\"stage0\",\"mine_s0:-0.15\",1.6],[\"dug_s0:0.1\",\"stage1:-0.1\",1.6],[\"made_it_s1:0.1\",\"stage2:-0.1\",1.6],[\"safe:0.1\",\"mine_s3:-0.15\",1.6],[\"dug_s3:0.1\",\"stage4:-0.1\",1.6],[\"made_it_s4:0.1\",\"face:-0.1\",1.6],[\"walk2\",\"reveal:-0.3\",1.5]] --flash [[\"reveal\",0,0.35]] --sfx [[\"impact\",\"go:0.02\",{\"gain\":1.4}],[\"impact\",\"dug\",{\"gain\":1}],[\"whoosh\",\"drop\",{\"gain\":0.35}],[\"whoosh\",\"reveal:-0.15\",{\"gain\":0.6}],[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.4}]] --gui_scale 4 --start_at dug:-0.45 --end_after reveal:0.7 --out out/quest_pyramid.mp4"
   ],
   "status": "ready",
-  "notes": "quest_pyramid v3 (owner r:rf557af): 25.5 s; six named stages (LEVEL 1-6 captions); ends 0.7 s after the step into the vault (drop, dip, impact, flash on the first full view); dark button, door shown opening; reviewed READY (independent subagent); check/pace/mixcheck OK (true peak WARN +0.2 dBTP at the arrow volley)",
+  "notes": "quest_pyramid v3 (owner r:rf557af): 25.5 s; six named stages (LEVEL 1-6 captions); ends 0.7 s after the step into the vault (drop, dip, impact, flash on the first full view); dark button, door shown opening; reviewed READY (independent subagent); check/pace/mixcheck OK (true peak WARN +0.2 dBTP at the arrow volley) | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:49:07.342Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:49:45+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:16:03+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 25.51 s vs the reviewed render 25.50 s"
@@ -632,9 +632,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:47:07.044Z",
-      "report": "work/hb/quest_pyramid.check.json"
+      "at": "2026-11-12T06:38:31.831Z",
+      "report": "out/quest_pyramid.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.08,
+      "pump_run": 0.0,
+      "under": 4.64,
+      "summary": "the master's gain spread 2.08 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.6 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.08,
+    "pump_run": 0.0,
+    "master_gain": -0.07,
+    "under": 4.64,
+    "windows": [
+      37,
+      322
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.08 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.64 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:15:54+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "abd32be2280b4bf353af3e493479c7b8fc5d4a31e577868349dd2d86b801ec89",
+      "release": {
+        "tag": "pkg-quest_pyramid",
+        "asset": "quest_pyramid.short.abd32be2280b4bf3.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short.abd32be2280b4bf3.mp4",
+        "sha256": "abd32be2280b4bf353af3e493479c7b8fc5d4a31e577868349dd2d86b801ec89",
+        "bytes": 27453780
+      },
+      "song": {
+        "drop_in_short_s": 24.8,
+        "drop_in_song_s": 113.75,
+        "song_start_s": 88.95
+      }
+    },
+    "song_file_sha256": "efc5ddc9d822d5268632f1d2d921cda50f3c0043bcedf86ce64907d2d9104d55",
+    "video_stream_md5": "13d52a92ec22bba1b376384e29eb6d03",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

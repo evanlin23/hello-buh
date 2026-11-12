@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 4549002,
-    "sha256": "05c5539b36ffa8b4695e838b9f40da359b14eccdd844962c27b5712f00f02893",
+    "bytes": 4548767,
+    "sha256": "f06e9ed614a0f32aca21c5dcf405c3c5d0643a15562f313e55baeaac16500b5d",
     "release": {
       "tag": "pkg-cooked_bedrock",
-      "asset": "cooked_bedrock.short.05c5539b36ffa8b4.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cooked_bedrock/cooked_bedrock.short.05c5539b36ffa8b4.mp4",
-      "sha256": "05c5539b36ffa8b4695e838b9f40da359b14eccdd844962c27b5712f00f02893",
-      "bytes": 4549002
+      "asset": "cooked_bedrock.short.f06e9ed614a0f32a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cooked_bedrock/cooked_bedrock.short.f06e9ed614a0f32a.mp4",
+      "sha256": "f06e9ed614a0f32aca21c5dcf405c3c5d0643a15562f313e55baeaac16500b5d",
+      "bytes": 4548767
     },
     "nosong_release": {
       "tag": "pkg-cooked_bedrock",
@@ -450,12 +450,12 @@
     "python3 edit.py --frames work/cooked_bedrock.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cooked_bedrock.rec.json --audio work/cooked_bedrock.wav --caption \"why did everyone just join my world?\" --self_name 56e --red everyone --subs \"[[\\\"bedrock\\\",\\\"bedrock??\\\",1],[\\\"crack\\\",\\\"wait it's breaking\\\",1.3]]\" --still {\"at\":\"flood\",\"dark\":\"dark:0.35\",\"meme\":\"war_soldier\",\"punch\":[\"cooked\",1.12],\"dim\":0.12,\"fade\":0.25} --sfx [[\"dip\",\"flood\",0.7],[\"dip\",\"cooked\",0.4],[\"impact\",\"cooked\"],[\"pop\",\"go\",{\"gain\":0.9}],[\"impact\",\"dark\"]] --chat_scale 4 --start_at go:-0.05 --end_after cooked:0.6 --out out/cooked_bedrock.mp4"
   ],
   "status": "ready",
-  "notes": "owner 2026-11-12 'falls to black too long / grade changes on the bedrock': black 0.3 s (was 1.2), full light from frame 0 so the grade holds through the bedrock shot, re-recorded, 10.55 s; music from frame 0; fix-check READY",
+  "notes": "owner 2026-11-12 'falls to black too long / grade changes on the bedrock': black 0.3 s (was 1.2), full light from frame 0 so the grade holds through the bedrock shot, re-recorded, 10.55 s; music from frame 0; fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:38:03.373Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:38:15+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:15:06+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 10.56 s vs the reviewed render 10.55 s"
@@ -470,9 +470,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:37:11.117Z",
-      "report": "work/hb/cooked_bedrock.check.json"
+      "at": "2026-11-12T06:12:46.304Z",
+      "report": "out/cooked_bedrock.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.7,
+      "pump_run": 0.0,
+      "under": 11.99,
+      "summary": "the master's gain spread 0.7 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 12.0 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.7,
+    "pump_run": 0.0,
+    "master_gain": -0.05,
+    "under": 11.99,
+    "windows": [
+      16,
+      150
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.7 dB (max 3.0), run 0.0 s (max 0.5), game over music 11.99 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:15:01+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "05c5539b36ffa8b4695e838b9f40da359b14eccdd844962c27b5712f00f02893",
+      "release": {
+        "tag": "pkg-cooked_bedrock",
+        "asset": "cooked_bedrock.short.05c5539b36ffa8b4.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cooked_bedrock/cooked_bedrock.short.05c5539b36ffa8b4.mp4",
+        "sha256": "05c5539b36ffa8b4695e838b9f40da359b14eccdd844962c27b5712f00f02893",
+        "bytes": 4549002
+      },
+      "song": {
+        "drop_in_short_s": 7.5,
+        "drop_in_song_s": 9.0,
+        "song_start_s": 1.5
+      }
+    },
+    "song_file_sha256": "886226072ff22b7f8201bc4861dd58f133b4cc3d6ee8f8aa8f467c18c757b7e0",
+    "video_stream_md5": "260d248bc4420664b4ae1164fede7f0f",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

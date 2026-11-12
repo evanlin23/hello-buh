@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 4438767,
-    "sha256": "f0f2d86a3a111946ba5cdb601f8127ec18a5c69ff3486321965dc28cd6588002",
+    "bytes": 4439193,
+    "sha256": "1181c950a58fdc0f9b7d77190b22e5143c14693f0058569cdcffb1ceedda10e5",
     "release": {
       "tag": "pkg-herobrine_bridge",
-      "asset": "herobrine_bridge.short.f0f2d86a3a111946.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short.f0f2d86a3a111946.mp4",
-      "sha256": "f0f2d86a3a111946ba5cdb601f8127ec18a5c69ff3486321965dc28cd6588002",
-      "bytes": 4438767
+      "asset": "herobrine_bridge.short.1181c950a58fdc0f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short.1181c950a58fdc0f.mp4",
+      "sha256": "1181c950a58fdc0f9b7d77190b22e5143c14693f0058569cdcffb1ceedda10e5",
+      "bytes": 4439193
     },
     "nosong_release": {
       "tag": "pkg-herobrine_bridge",
@@ -339,12 +339,12 @@
     "python3 edit.py --frames work/herobrine_bridge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/herobrine_bridge.rec.json --audio work/herobrine_bridge.wav --caption \"this guy's ping is actually unplayable\" --self_name 56e --red unplayable --subs \"[[\\\"air\\\",\\\"why isn't he falling\\\",1.6,0]]\" --subs_y 0.12 --punch [[\"payoff\",0,1.06]] --flash [[\"payoff\",0,0.35]] --sfx [[\"dip\",\"payoff\",0.4],[\"hit\",\"reveal\",{\"gain\":1}],[\"gamedip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:1.0 --out out/herobrine_bridge.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): the 'laggy' player was Herobrine: white eyes, a lag-snap into your face, full-frame, then 'Herobrine left the game' on the drop; 11.6 s; independent full review READY",
+  "notes": "no-op fix (r:r4607fa): the 'laggy' player was Herobrine: white eyes, a lag-snap into your face, full-frame, then 'Herobrine left the game' on the drop; 11.6 s; independent full review READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:40:06.819Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:40:28+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:14:26+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 11.61 s vs the reviewed render 11.60 s"
@@ -359,9 +359,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:38:59.350Z",
-      "report": "work/hb/herobrine_bridge.check.json"
+      "at": "2026-11-12T06:05:48.162Z",
+      "report": "out/herobrine_bridge.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.78,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 0.78 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.78,
+    "pump_run": 0.0,
+    "master_gain": -0.05,
+    "under": null,
+    "windows": [
+      9,
+      190
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.78 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:14:21+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "f0f2d86a3a111946ba5cdb601f8127ec18a5c69ff3486321965dc28cd6588002",
+      "release": {
+        "tag": "pkg-herobrine_bridge",
+        "asset": "herobrine_bridge.short.f0f2d86a3a111946.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-herobrine_bridge/herobrine_bridge.short.f0f2d86a3a111946.mp4",
+        "sha256": "f0f2d86a3a111946ba5cdb601f8127ec18a5c69ff3486321965dc28cd6588002",
+        "bytes": 4438767
+      },
+      "song": {
+        "drop_in_short_s": 10.6,
+        "drop_in_song_s": 14.5,
+        "song_start_s": 3.9
+      }
+    },
+    "song_file_sha256": "f1bcf6f219f55c7ab5f6ac2c14e606e22b8bccd046d24d17d29ac9d99c104e40",
+    "video_stream_md5": "d9ec42bf5a2580532be52730a3c445bf",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

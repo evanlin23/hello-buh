@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 30730067,
-    "sha256": "f7cace0b97d5062d36acd0337fb3a239972c98a31684e6684d1fa070786a083a",
+    "bytes": 30732526,
+    "sha256": "047ef6862392b081237162a0597caf7a285a67130a35aabb934a7910fae92a97",
     "release": {
       "tag": "pkg-dropper_rainbow",
-      "asset": "dropper_rainbow.short.f7cace0b97d5062d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short.f7cace0b97d5062d.mp4",
-      "sha256": "f7cace0b97d5062d36acd0337fb3a239972c98a31684e6684d1fa070786a083a",
-      "bytes": 30730067
+      "asset": "dropper_rainbow.short.047ef6862392b081.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short.047ef6862392b081.mp4",
+      "sha256": "047ef6862392b081237162a0597caf7a285a67130a35aabb934a7910fae92a97",
+      "bytes": 30732526
     },
     "nosong_release": {
       "tag": "pkg-dropper_rainbow",
@@ -673,12 +673,12 @@
     "python3 edit.py --frames work/dropper_rainbow.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dropper_rainbow.rec.json --audio work/dropper_rainbow.wav --caption \"I'm NEVER beating this dropper 😭\" --self_name 56e --red NEVER --speed [[\"fail0:0.95\",\"att1\",\"cut\"],[\"fail1:0.95\",\"att2\",\"cut\"],[\"fail2:0.95\",\"att3\",\"cut\"],[\"att1\",\"pass1_1\",2],[\"att2\",\"pass2_3\",2],[\"att3\",\"pass3_2\",2]] --punch [[\"land\",0,1.12]] --cards \"[[\\\"go:0.25\\\",\\\"ATTEMPT #1\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att1\\\",\\\"ATTEMPT #6\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att2\\\",\\\"ATTEMPT #19\\\",1.1,\\\"white\\\",0,{\\\"y\\\":0.34}],[\\\"att3\\\",\\\"ATTEMPT #47\\\",1.6,\\\"gold\\\",0,{\\\"y\\\":0.34}],[\\\"land\\\",\\\"CLEAN!\\\",0.8,\\\"green\\\",0,{\\\"y\\\":0.34}]]\" --shake [[\"fail0\",0,22],[\"fail1\",0,22],[\"fail2\",0,22],[\"land\",0,18]] --flash [[\"land\",0,0.35]] --fallen [[\"att3\",\"land\",\"blocks\"]] --sfx [[\"wind\",\"att0\",\"fail0\",{\"gain\":0.15}],[\"wind\",\"att1\",\"fail1\",{\"gain\":0.15}],[\"wind\",\"att2\",\"fail2\",{\"gain\":0.15}],[\"wind\",\"att3\",\"land\",{\"gain\":0.15}],[\"whoosh\",\"pass0_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_0\",{\"gain\":0.4}],[\"whoosh\",\"pass1_1\",{\"gain\":0.4}],[\"whoosh\",\"pass1_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_0\",{\"gain\":0.4}],[\"whoosh\",\"pass2_1\",{\"gain\":0.4}],[\"whoosh\",\"pass2_2\",{\"gain\":0.4}],[\"whoosh\",\"pass2_3\",{\"gain\":0.4}],[\"whoosh\",\"pass2_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_0\",{\"gain\":0.4}],[\"whoosh\",\"pass3_1\",{\"gain\":0.4}],[\"whoosh\",\"pass3_2\",{\"gain\":0.4}],[\"whoosh\",\"pass3_3\",{\"gain\":0.4}],[\"whoosh\",\"pass3_4\",{\"gain\":0.4}],[\"whoosh\",\"pass3_5\",{\"gain\":0.4}],[\"pops\"],[\"impact\",\"go:0.3\",{\"gain\":0.45}],[\"impact\",\"fail0\",{\"gain\":0.6}],[\"impact\",\"fail1\",{\"gain\":0.6}],[\"impact\",\"fail2\",{\"gain\":0.6}],[\"boom\",\"land\"],[\"dip\",\"land\",0.4]] --death_screen death --start_at go:0.25 --end_after land:0.7 --out out/dropper_rainbow.mp4"
   ],
   "status": "ready",
-  "notes": "dropper #1 v4 (r:rddac31): every fail shows the real death (hearts empty, the death tilt, You Died!) before the cut; v3's fancy shaft and the clean #47 kept. Fix-check READY.",
+  "notes": "dropper #1 v4 (r:rddac31): every fail shows the real death (hearts empty, the death tilt, You Died!) before the cut; v3's fancy shaft and the clean #47 kept. Fix-check READY. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:43:28.557Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:43:57+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:15:29+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 18.64 s vs the reviewed render 18.63 s"
@@ -693,9 +693,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:41:18.248Z",
-      "report": "work/hb/dropper_rainbow.check.json"
+      "at": "2026-11-12T06:11:18.126Z",
+      "report": "out/dropper_rainbow.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.53,
+      "pump_run": 0.0,
+      "under": 9.1,
+      "summary": "the master's gain spread 1.53 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 9.1 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.53,
+    "pump_run": 0.0,
+    "master_gain": -0.07,
+    "under": 9.1,
+    "windows": [
+      39,
+      239
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.53 dB (max 3.0), run 0.0 s (max 0.5), game over music 9.1 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:15:20+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "f7cace0b97d5062d36acd0337fb3a239972c98a31684e6684d1fa070786a083a",
+      "release": {
+        "tag": "pkg-dropper_rainbow",
+        "asset": "dropper_rainbow.short.f7cace0b97d5062d.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dropper_rainbow/dropper_rainbow.short.f7cace0b97d5062d.mp4",
+        "sha256": "f7cace0b97d5062d36acd0337fb3a239972c98a31684e6684d1fa070786a083a",
+        "bytes": 30730067
+      },
+      "song": {
+        "drop_in_short_s": 17.92,
+        "drop_in_song_s": 36.75,
+        "song_start_s": 18.83
+      }
+    },
+    "song_file_sha256": "bdf862685bd587c1b7909a20949dd7a22e4e24ba1461060d6387bc6691dd9a89",
+    "video_stream_md5": "1440679e2beb1bd5b6e8d2a4f6f8ad68",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
