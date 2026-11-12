@@ -11,7 +11,7 @@ const { plateau } = require('../lib/plateau')
 const HR = 12, HH = 10          // the hill: radius and height (blocks)
 const HZ = -40                  // the hill's centre, relative to the start z (x is the start x)
 const PZ = HZ + HR + 3          // the 75-TNT wall's centre: its back row touches the hill's foot
-const VZ = HZ + 46              // the vantage after the cut (34 blocks from the wall, 46 from the hill)
+const VZ = HZ + 36              // the vantage after the cut (24 blocks from the wall, 36 from the hill: at 46 the hill read small)
 
 module.exports = {
   name: 'tnt',
@@ -148,7 +148,7 @@ module.exports = {
     // walk up to the wall, looking up at the hill and the house over it, then down to the block to light
     bot.setControlState('forward', true)
     const look = ctx.easeLook(0, 0.12, 700)
-    for (let i = 0; i < 60 && bot.entity.position.z > pz + 4.4; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 60 && bot.entity.position.z > pz + 5.6; i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
     await look
     await bot.waitForTicks(2)
@@ -171,12 +171,12 @@ module.exports = {
     }
     // the chain: the wall, then the hill for seconds. The look rides up with the eruption and settles, slowly
     // (r:r38374d: on screen <= ~220 deg/s eased; these are ~20 deg over 1 s)
-    const primed = () => Object.values(bot.entities).some(e => e.name === 'tnt')
     await bot.waitForTicks(10)
     await ctx.easeLook(0.04, 0.22, 1200)
     await ctx.easeLook(-0.04, 0.12, 1400)
-    // hold the view (slow drift) until nothing is primed and the last blast has read (BLAST_TICKS 6, ~0.3 s)
-    for (let k = 0; k < 600 && (ctx.tick - lastBoom < 8 || primed()); k++) {
+    // hold the view (slow drift) until the last blast has read (BLAST_TICKS 6, ~0.3 s) and no blast for 1 s
+    // (bot.entities kept stale primed TNT for 24 s on take 1: the server's blasts are the truth)
+    for (let k = 0; k < 400 && (booms < 50 || ctx.tick - lastBoom < 20); k++) {
       await bot.look(bot.entity.yaw - 0.0015, Math.max(0.05, bot.entity.pitch - 0.001), true)   // motion-ok: a slow drift
       await bot.waitForTicks(1)
     }
@@ -184,17 +184,19 @@ module.exports = {
     ctx.mark('rim_a')
     // inside the cut: to the rim on the line in, already looking down into the crater (the after)
     await ctx.cmd('/kill @e[type=item]', { mayFail: true })
-    let rz = vz
-    for (let zz = vz; zz > hz; zz--) {
-      const b = bot.blockAt(new Vec3(x, floor, zz))
-      if (!b || b.name === 'air') { rz = zz + 3; break }
+    // the crater's south rim: going out from the hill's centre, the first of 3 solid surface blocks in a row (a stray
+    // flung-TNT pit near the vantage fooled a walk in from the vantage)
+    let rz = hz + HR + 8
+    for (let zz = hz; zz < vz; zz++) {
+      const ok = [0, 1, 2].every(d => { const b = bot.blockAt(new Vec3(x, floor, zz + d)); return b && b.name !== 'air' })
+      if (ok) { rz = zz + 5; break }
     }
-    await ctx.tpCheck(x + 0.5, floor + 1, rz + 0.5, 180, 38)
+    await ctx.tpCheck(x + 0.5, floor + 1, rz + 0.5, 180, 24)
     ctx.mark('rim_b')
     ctx.mark('crater')
     ctx.sound('entity.generic.explode', 0.15, 0.6)
     // one slow pan across the hole that comes to rest
-    await ctx.easeLook(0.25, -0.62, 1100)
+    await ctx.easeLook(0.22, -0.36, 1100)
     await bot.waitForTicks(30)
     return boomed && hill && !ctx.died
   }
