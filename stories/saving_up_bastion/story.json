@@ -2,7 +2,7 @@
  "name": "saving_up_bastion",
  "stunt": "story_saving_up_bastion",
  "version": 2,
- "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's 'biggest fan' and he gets sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12, one sentence over the L-frame: 'All the gold he sent was up here, with ME.'; S10's empty chest screen has already shown the box); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md (critic r4 revise -> r5).",
+ "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's 'biggest fan' and he gets sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12, one sentence over the L-frame: 'All the gold he sent was up here, with ME.'; S10's empty chest screen has already shown the box); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md (critic r4 revise -> r5 approve; L08 'I'd NEVER' after).",
  "caption": "why does gold keep falling on this baby piglin 🪙",
  "upload": {
   "title": "gold falls from the sky just for me and i don't know why 🐷 #minecraft #shorts",
@@ -260,8 +260,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "The grown-ups / give their gold AWAY. / For GRAVEL. / FOOLS.",
-   "say": "The grown-ups give their gold away. For gravel. FOOLS.",
+   "text": "The grown-ups / give their gold AWAY. / For GRAVEL. / I'd NEVER.",
+   "say": "The grown-ups give their gold away. For gravel. I'd NEVER.",
    "shot": "S08",
    "shows": [
     {
@@ -277,7 +277,7 @@
      "word": "GRAVEL"
     }
    ],
-   "direction": "a tiny scoff, very superior"
+   "direction": "a tiny scoff, very superior, hugging its ingot on NEVER"
   },
   {
    "id": "L09",

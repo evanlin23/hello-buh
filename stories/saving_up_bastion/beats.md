@@ -25,7 +25,7 @@ L01's "four hundred".
 | **midpoint** | | | | |
 | 19-21 | gift 1 | the cutaway: a new hopper beside the baby | L06 a shiny new bowl | 6 |
 | 21-25 | gift 2 | the sign: PLEASE / WORK | L07 a note, welcome home | 7 |
-| 25-28 | the rule shown | an adult barters gold for gravel | L08 for gravel, fools | 8 |
+| 25-28 | the rule shown | an adult barters gold for gravel | L08 for gravel, I'd never | 8 |
 | 28-31 | stakes + want | the player slumped on the roof, hands empty | L09 my biggest fan got so sad, I had to find out why | |
 | 31-33 | the turn | the player opens the chest: the empty screen | L10 Come ON. Not even GRAVEL? | 9 |
 | 33-35 | it goes to look | the cutaway: the baby leans over its hopper; the camera follows its look down | L11 I looked down, past my shiny bowl | |
@@ -49,7 +49,7 @@ of trading, so he got nothing." Fans' second layer: baby piglins never grow up, 
 | 5 | a player feeding gold, frowning | L05, S05 | "my biggest fan" | he's paying for a farm that pays nothing |
 | 6 | a new hopper | L06, S06 | "a shiny new bowl" | he thinks the hopper is broken |
 | 7 | the sign PLEASE / WORK | L07, S07 | "I think it says welcome home" | his plea to the farm |
-| 8 | adults hand gold over and get gravel | L08, S08 | "Fools." | that's trading, what the farm is for |
+| 8 | adults hand gold over and get gravel | L08, S08 | "I'd NEVER." (it never gives its gold away) | that's trading, what the farm is for |
 | 9 | "Not even GRAVEL?", the empty chest screen | L10, S10 | (the baby goes to look) | the box gets nothing, not even the worst trade |
 
 **r4 cuts:** the lava moat (old L07/S07): it wasn't a two-way clue and the format wants 3-5 clues and a tight run.
