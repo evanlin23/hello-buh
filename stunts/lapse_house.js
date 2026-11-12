@@ -149,7 +149,8 @@ module.exports = makeStunt({
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
-  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 3, roofSpeed: 'cut', backTicks: 12, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
+  // roofFrom: the roof cut starts once the last wall block's swing is over and the view rests (action_cuts: 18.5 s was 0.1 s into it; the view turns until 18.8)
+  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 3, roofSpeed: 'cut', roofFrom: 'roof_start:0.35', backTicks: 12, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
   big: {
     blocks: mansion(),
     hold: 'quartz_block', slot: 5,
