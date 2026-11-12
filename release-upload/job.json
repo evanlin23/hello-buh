@@ -1,0 +1,65 @@
+{
+  "repo": "evanlin23/hello-buh",
+  "packages": {
+    "hack_banner_door": {
+      "tag": "pkg-hack_banner_door",
+      "assets": [
+        {
+          "asset": "hack_banner_door.short.3c99f3fc1723d3b5.mp4",
+          "sha256": "3c99f3fc1723d3b5e510966eb95eefcb196ec0642b77e8fdbee4063d4a01eb8b",
+          "path": "release-upload/hack_banner_door.short.3c99f3fc1723d3b5.mp4"
+        }
+      ]
+    },
+    "herobrine_bridge": {
+      "tag": "pkg-herobrine_bridge",
+      "assets": [
+        {
+          "asset": "herobrine_bridge.short.1181c950a58fdc0f.mp4",
+          "sha256": "1181c950a58fdc0f9b7d77190b22e5143c14693f0058569cdcffb1ceedda10e5",
+          "path": "release-upload/herobrine_bridge.short.1181c950a58fdc0f.mp4"
+        }
+      ]
+    },
+    "boat_clutch": {
+      "tag": "pkg-boat_clutch",
+      "assets": [
+        {
+          "asset": "boat_clutch.short.be937688791bf120.mp4",
+          "sha256": "be937688791bf1206ce4af96680b44e1a28b5038bdafba4eb6c7daa668f7a5b9",
+          "path": "release-upload/boat_clutch.short.be937688791bf120.mp4"
+        }
+      ]
+    },
+    "cooked_bedrock": {
+      "tag": "pkg-cooked_bedrock",
+      "assets": [
+        {
+          "asset": "cooked_bedrock.short.f06e9ed614a0f32a.mp4",
+          "sha256": "f06e9ed614a0f32aca21c5dcf405c3c5d0643a15562f313e55baeaac16500b5d",
+          "path": "release-upload/cooked_bedrock.short.f06e9ed614a0f32a.mp4"
+        }
+      ]
+    },
+    "dropper_rainbow": {
+      "tag": "pkg-dropper_rainbow",
+      "assets": [
+        {
+          "asset": "dropper_rainbow.short.047ef6862392b081.mp4",
+          "sha256": "047ef6862392b081237162a0597caf7a285a67130a35aabb934a7910fae92a97",
+          "path": "release-upload/dropper_rainbow.short.047ef6862392b081.mp4"
+        }
+      ]
+    },
+    "quest_pyramid": {
+      "tag": "pkg-quest_pyramid",
+      "assets": [
+        {
+          "asset": "quest_pyramid.short.1be6b52ff29ad3b2.mp4",
+          "sha256": "1be6b52ff29ad3b2ba0255686eb16f0e36804f7c502fc1c94792f3b63508741a",
+          "path": "release-upload/quest_pyramid.short.1be6b52ff29ad3b2.mp4"
+        }
+      ]
+    }
+  }
+}
