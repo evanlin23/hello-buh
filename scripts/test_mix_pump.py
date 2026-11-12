@@ -83,6 +83,79 @@ class GameFirst(unittest.TestCase):
                            input=tone(4.0, 300, 0.02).tobytes(), check=True)
             self.assertAlmostEqual(loud.tame_gain(w2, -12.5, -1.0), -12.5 - loud.measure(w2), delta=0.01)
 
+    def wav(self, d, name, x):
+        w = pathlib.Path(d) / name
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(w)],
+                       input=x.astype(np.float32).tobytes(), check=True)
+        return w
+
+    def test_silent_and_quiet_games_never_send_the_song_hot(self):
+        # review of e78b8f1: a silent stem measures -70 LUFS, tame_gain read that as +57 dB and the song came in ~30 dB hot
+        with tempfile.TemporaryDirectory() as d:
+            for x in (np.zeros(4 * SR), tone(4.0, 300, 10 ** (-60 / 20))):   # silence, a -60 dB game
+                w = self.wav(d, "g.wav", x)
+                g, song = loud.stunt_levels(loud.measure(w), loud.true_peak(w), -16.0, -12.5, -1.0)
+                self.assertEqual(g, 0.0)
+                self.assertEqual(song, -16.0)   # the plain bed, nothing raised
+        # a normal stem: the song at its offset under the game as measured (bed + 15 + stem + gain)
+        g, song = loud.stunt_levels(-20.0, -10.0, -16.0, -12.5, -1.0)
+        self.assertAlmostEqual(g, 7.5)
+        self.assertAlmostEqual(song, -16.0 + 15 - 20 + 7.5)
+        # a quiet stem (the static -15 clamped): the song follows the game down, not the -15 it never reached
+        g, song = loud.stunt_levels(-40.0, -30.0, -16.0, -12.5, -1.0)
+        self.assertEqual(g, loud.GAIN_RANGE)
+        self.assertAlmostEqual(song - (-40.0 + g), -16.0 + 15)
+
+
+class Settle(unittest.TestCase):
+    def test_lowering_is_remixed_and_remeasured(self):
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+        import add_song
+        calls = []
+        def remix(sdb):   # each dB off the song: +1 dB of under, but the first remix lands 1 dB short
+            calls.append(sdb)
+            return 0.0 + (-sdb) - (1.0 if len(calls) == 1 else 0.0)
+        sdb, cuts = add_song.settle_song(0.0, 0.0, remix, want=4.0)
+        self.assertEqual(len(calls), 2)   # re-measured, and lowered again
+        self.assertAlmostEqual(cuts[0][0], 4.0)
+        self.assertAlmostEqual(cuts[1][0], 1.0)
+        self.assertAlmostEqual(sdb, -5.0)
+        # nothing to do: no remix
+        calls.clear()
+        self.assertEqual(add_song.settle_song(-3.0, 6.0, remix, want=4.0), (-3.0, []))
+        self.assertEqual(add_song.settle_song(-3.0, None, remix, want=4.0), (-3.0, []))
+        self.assertEqual(calls, [])
+        # capped at `most` dB in all
+        sdb, cuts = add_song.settle_song(0.0, -20.0, lambda s: -20.0, want=4.0, most=12.0)
+        self.assertAlmostEqual(sdb, -12.0)
+
+
+class Blind(unittest.TestCase):
+    def test_a_short_hard_limited_run_fails(self):
+        # 20 s of steady +2 dB, one 0.6 s stretch limited 10 dB: 3% of the windows, the p5-p95 spread misses it
+        pre = np.full(400, -20.0)
+        fin = pre + 2.0
+        fin[100:112] -= 10.0
+        sp, _ = M.pump(fin, pre)
+        self.assertLess(sp, M.PUMP_MAX)
+        self.assertGreaterEqual(M.pump_run(fin, pre), M.RUN_S)
+        fin2 = pre + 2.0
+        fin2[100:104] -= 10.0   # 0.2 s: a single hit, fine
+        self.assertLess(M.pump_run(fin2, pre), M.RUN_S)
+
+    def test_room_tone_counts_as_quiet_and_songless_windows_are_left_out(self):
+        game = game_track(amp=0.5) + tone(8.0, 90, 10 ** (-40 / 20))   # a constant room tone at -40 dB
+        u, nb, nq = M.under(windows(game + tone(8.0, 220, 0.03)), windows(game))
+        self.assertIsNotNone(u)
+        self.assertGreater(nq, M.MIN_WIN)
+        # a late song: no music for the first half: those quiet windows are not "music-only"
+        game2 = game_track(amp=0.5)
+        late = tone(8.0, 220, 0.03)
+        late[:4 * SR] = 0
+        _, _, nq2 = M.under(windows(game2 + late), windows(game2))
+        _, _, nq_all = M.under(windows(game2 + tone(8.0, 220, 0.03)), windows(game2))
+        self.assertLess(nq2, nq_all)
+
 
 if __name__ == "__main__":
     unittest.main()

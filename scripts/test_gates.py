@@ -119,5 +119,54 @@ class Fresh(unittest.TestCase):
             self.assertIsNone(gates.fresh(b))
 
 
+class MixGate(unittest.TestCase):
+    """The bed pumping / music over the game gate (scripts/mix_pump.py via add_song's metadata.json `mix`, owner
+    2026-11-12 on desire_town: "the music jumps too much")."""
+    SONG = {"song": {"file": "x2.mp3"}}
+
+    def write(self, d, name, x):
+        import numpy as np
+        w = pathlib.Path(d) / name
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", "48000", "-ac", "1", "-i", "-", "-c:a", "aac", str(w)],
+                       input=np.asarray(x, np.float32).tobytes(), check=True)
+        return w
+
+    def test_pumped_fails_steady_passes(self):
+        with tempfile.TemporaryDirectory() as d:
+            v = pathlib.Path(d) / "short.mp4"   # (no short_nosong.mp4 beside it: the recorded numbers)
+            bad = gates.mix_gate("desire_town", {**self.SONG, "mix": {"pump": 13.0, "pump_run": 1.2, "under": -2.0}}, v)
+            self.assertFalse(bad["ok"])
+            self.assertIn("BLOCK pump+under", bad["summary"])
+            good = gates.mix_gate("desire_town", {**self.SONG, "mix": {"pump": 2.3, "pump_run": 0.0, "under": 5.8}}, v)
+            self.assertTrue(good["ok"])
+            # the uploader skips a package whose mix gate blocked (unless waived)
+            why = gates.stale({"name": "desire_town", "gates": ok_gates(mix=bad)})
+            self.assertIn("mix:", why)
+            self.assertIsNone(gates.stale({"name": "desire_town", "gates": ok_gates(mix=good)}))
+            self.assertIsNone(gates.stale({"name": "desire_town", "gates": ok_gates(mix=bad, waived="lead: ok")}))
+
+    def test_under_measured_on_the_package(self):
+        import numpy as np
+        sr = 48000
+        game = np.zeros(8 * sr, np.float32)
+        rng = np.random.default_rng(1)
+        for k in range(8):
+            game[int((k + .5) * sr):int((k + .65) * sr)] = 0.5 * rng.uniform(-1, 1, int(0.15 * sr))
+        music = 0.5 * np.sin(2 * np.pi * 220 * np.arange(8 * sr) / sr)
+        with tempfile.TemporaryDirectory() as d:
+            self.write(d, "short_nosong.mp4", game)
+            v = self.write(d, "short.mp4", game + music)   # music on top of the game
+            g = gates.mix_gate("x", {**self.SONG, "mix": {"pump": 1.0, "pump_run": 0.0, "under": 9.0}}, v)
+            self.assertFalse(g["ok"])   # the package's own short.mp4 decides, not the recorded 9.0
+            self.assertIn("on short.mp4", g["summary"])
+
+    def test_skipped_for_stories_no_song_and_old_packages(self):
+        v = pathlib.Path("/nonexistent/short.mp4")
+        self.assertIsNone(gates.mix_gate("story_torch", {**self.SONG, "mix": {"pump": 13.0}}, v))
+        self.assertIsNone(gates.mix_gate("tnt", {"mix": {"pump": 13.0}}, v))   # no song
+        self.assertIsNone(gates.mix_gate("tnt", {**self.SONG, "edit": {"ownScore": True}, "mix": {"pump": 13.0}}, v))
+        self.assertIsNone(gates.mix_gate("tnt", dict(self.SONG), v))   # mixed before add_song recorded `mix`
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -69,6 +69,23 @@ def master(path, target, limit_db=-1.0):
 MAX_REDUCTION = 3.0
 
 
+SILENT_GAME = -45.0   # LUFS: a game stem this quiet is (near) silent: nothing is raised, the song sits at its plain bed
+GAIN_RANGE = 20.0     # dB: the most the game stem is raised or lowered
+
+
+def stunt_levels(stem_lufs, stem_peak, bed, target, limit_db=-1.0, max_reduction=MAX_REDUCTION):
+    """(game gain dB, song LUFS) for the stunt mix from the game stem's measured loudness and true peak: the game toward
+    `target`, capped so its peak needs <= max_reduction dB of limiting (and to +-GAIN_RANGE), the song at its fixed
+    offset under the game as it measures (bed is the song's level for a game at -15 LUFS: song = bed + 15 + stem + g).
+    A near-silent game (<= SILENT_GAME, measure() says -70 for silence) raises nothing and the song sits at `bed`: the
+    old tame_gain read silence as +57 dB of headroom and the song came in ~30 dB hot (review of e78b8f1)."""
+    if stem_lufs <= SILENT_GAME:
+        return 0.0, bed
+    g = min(target - stem_lufs, limit_db + max_reduction - stem_peak)
+    g = max(-GAIN_RANGE, min(GAIN_RANGE, g))
+    return g, bed + 15.0 + stem_lufs + g
+
+
 def tame_gain(path, target, limit_db=-1.0, max_reduction=MAX_REDUCTION, ss=0.0, dur=None):
     """The static gain (dB) for a stem: toward `target` LUFS, but at most enough to put its true peak `max_reduction`
     dB over `limit_db` (so the limiter never takes more than that off its loudest moment)."""

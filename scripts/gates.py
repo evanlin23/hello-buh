@@ -3,7 +3,8 @@
 1. Re-gate on gate changes. lib/hb/gates.json holds the gates' version: bump it (with a history row) whenever a gate is
    added or tightened. Every publish (publish.js, publish_ai_short.py) runs the gates on the finished package and writes
    metadata.json `gates`: {version, at, package {ok: short.mp4 runs as long as the reviewed render}, pace {ok, blockers,
-   warnings, ...}, check {ok, label, at}, key_sounds, waived}.
+   warnings, ...}, check {ok, label, at}, key_sounds, mix {ok: the bed doesn't pump, the music sits under the game:
+   scripts/mix_pump.py; stunts mixed by add_song since 2026-11-12 only}, waived}.
    scripts/youtube_upload.py skips a non-story "ready" package whose gates are older than the current version, or
    whose gates blocked without a waiver, with the reason in the run log. story_* packages are gated by the story
    pipeline (story check, caption sync, table read, the owner's in-person OK before "held" becomes "ready"): the gates
@@ -64,7 +65,7 @@ def stale(meta: dict, cur: int | None = None) -> str | None:
                 f"re-gate it (python3 scripts/gates.py stamp {name}, fix any blocker, push the videos branch)")
     if g.get("waived"):
         return None
-    bad = [k for k in ("package", "pace", "check") if isinstance(g.get(k), dict) and g[k].get("ok") is False]
+    bad = [k for k in ("package", "pace", "check", "mix") if isinstance(g.get(k), dict) and g[k].get("ok") is False]
     if isinstance(g.get("key_sounds"), dict) and g["key_sounds"].get("ok") is False and "pace" not in bad:
         bad.append("key_sounds")
     if bad:
@@ -185,6 +186,33 @@ def package_match(meta: dict, video: pathlib.Path) -> dict:
 MATCH_S = 0.25
 
 
+def mix_gate(name: str, meta: dict, video: pathlib.Path) -> dict | None:
+    """The bed pumping and the music over the game (scripts/mix_pump.py; owner 2026-11-12 on desire_town: "the music
+    jumps too much, can we jsut have it sit underneath the sound effects but still there"). The master's gain spread is
+    the one add_song measured as it mixed (metadata.json `mix`: the mix before its limiter exists only then); the music
+    vs the game is measured again here on short.mp4 against short_nosong.mp4 when that sits beside it. None (no gate)
+    for a story, a Short with no song or its own score, and a package mixed before add_song recorded `mix`."""
+    if exempt(name) or not (meta.get("song") or {}).get("file") or (meta.get("edit") or {}).get("ownScore"):
+        return None
+    rec = meta.get("mix")
+    if not isinstance(rec, dict):
+        return None
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import mix_pump
+    u, where = rec.get("under"), "as mixed"
+    nos = video.parent / "short_nosong.mp4"
+    if nos.exists():
+        u, _, _ = mix_pump.under(mix_pump.rms_db(video), mix_pump.rms_db(nos))
+        where = "on short.mp4"
+    sp, run = rec.get("pump"), rec.get("pump_run") or 0.0
+    bad = [k for k, b in (("pump", sp is not None and (sp > mix_pump.PUMP_MAX or run >= mix_pump.RUN_S)),
+                          ("under", u is not None and u < mix_pump.UNDER_MIN)) if b]
+    return {"ok": not bad, "pump": sp, "pump_run": run, "under": None if u is None else round(float(u), 2),
+            "summary": (f"BLOCK {'+'.join(bad)}: " if bad else "") + f"the master's gain spread {sp} dB (max {mix_pump.PUMP_MAX:.0f}), "
+                       f"longest hard-limited run {run} s (max {mix_pump.RUN_S}), the game {u if u is None else round(float(u), 1)} dB over the music "
+                       f"{where} (min {mix_pump.UNDER_MIN:.0f})" + (": scripts/mix_pump.py; lower edit.songGain / the hits, publish again" if bad else "")}
+
+
 def block(name: str, video: pathlib.Path, waive: str = "", by: str = "", meta: dict | None = None) -> dict:
     pace = run_pace(name, video)
     ks = key_sounds_of(name, pace)
@@ -192,6 +220,9 @@ def block(name: str, video: pathlib.Path, waive: str = "", by: str = "", meta: d
     g = {"version": current(), "at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
          "by": by or "scripts/gates.py", "package": package_match(meta or {}, video), "pace": pace,
          "check": latest_check(name) or {"label": "no ./hb check report on this box"}, "key_sounds": ks}
+    mx = mix_gate(name, meta or {}, video)
+    if mx is not None:
+        g["mix"] = mx
     if waive:
         g["waived"] = waive
     return g

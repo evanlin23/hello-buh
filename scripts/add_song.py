@@ -119,6 +119,26 @@ def story_score(name, d, meta, stunt, rec, tl, start, src, out_override=None):
     print(name, f"score in -> {out}")
 
 
+def settle_song(song_db, under_db, remix, want=None, most=12.0, tries=2):
+    """Lower the song until the game's block sounds sit `want` dB over it (scripts/mix_pump.py under; default its
+    UNDER_MIN + 1). under_db: the first mix's value (None: not judged, nothing done); remix(song_db) mixes again and
+    returns the new under. At most `tries` remixes and `most` dB in all, re-measured each time.
+    -> (final song_db, [(cut dB, under before it)])"""
+    if want is None:
+        import mix_pump
+        want = mix_pump.UNDER_MIN + 1
+    cuts, done = [], 0.0
+    for _ in range(tries):
+        if under_db is None or under_db >= want or done >= most:
+            break
+        c = min(most - done, want - under_db)
+        cuts.append((c, under_db))
+        done += c
+        song_db -= c
+        under_db = remix(song_db)
+    return song_db, cuts
+
+
 def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=False, pre_out=None):
     d = VID / "shorts" / name
     meta = json.loads((d / "metadata.json").read_text())
@@ -215,42 +235,54 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
             game_gain, song_lufs = loud.static(src, -15), bed
         else:
             # the game + sfx stem mastered first (a static gain, capped so its peaks need <= 3 dB of limiting), the song
-            # at its fixed offset under it (bed - (-15) dB, as before), and later only a peak limiter: no makeup gain
-            # that the limiter takes back on every hit (the bed pumped ~11 dB on desire_town)
+            # at its fixed offset under the game as measured (bed + 15 + stem LUFS + gain), and later only a peak
+            # limiter: no makeup gain that the limiter takes back on every hit (the bed pumped ~11 dB on desire_town)
             stem = pathlib.Path(str(out) + ".game.wav")
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vn", "-af", f"{loud.static(src, -15)},aresample=48000",
                             "-c:a", "pcm_f32le", str(stem)], check=True)
-            g = loud.tame_gain(stem, GAME_LUFS, limit)
+            stem_lufs, stem_peak = loud.measure(stem), loud.true_peak(stem)
             stem.unlink()
-            game_gain, song_lufs = f"{loud.static(src, -15)},volume={g:.2f}dB", bed + g
-            print(name, f"mix: game + sfx {g:+.1f} dB over -15 LUFS (to {GAME_LUFS} LUFS, <= {loud.MAX_REDUCTION:.0f} dB of limiting), the song at {song_lufs:.1f} LUFS")
-        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, song_lufs, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
-                 f"[0:a]{game_gain},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
-                    "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+            g, song_lufs = loud.stunt_levels(stem_lufs, stem_peak, bed, GAME_LUFS, limit)
+            game_gain = f"{loud.static(src, -15)},volume={g:.2f}dB"
+            print(name, f"mix: game + sfx stem {stem_lufs:.1f} LUFS {g:+.1f} dB (to {GAME_LUFS} LUFS, <= {loud.MAX_REDUCTION:.0f} dB of limiting"
+                  f"{'; a near-silent game: nothing raised' if stem_lufs <= loud.SILENT_GAME else ''}), the song at {song_lufs:.1f} LUFS")
+        song_measured = loud.measure(ROOT / song, song_start, dur - late)
+        song_db = max(-40.0, min(30.0, song_lufs - song_measured))   # (as loud.static: a numeric gain, so the lowering below can change it)
+        graph_of = lambda sdb: (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,volume={sdb:.2f}dB,afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+                                f"[0:a]{game_gain},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
+        graph = graph_of(song_db)
+    mix_with = lambda g_: subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", g_,
+                                          "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+    mix_with(graph)
     if not stunt.get("story") and not LEGACY_MASTER:
         # the song under the game's block sounds (scripts/mix_pump.py `under`, mixcheck's gate: >= 3 dB): a bed that comes
-        # out on top of a quiet or sparse game track is lowered by what it misses (+1 dB of margin) and mixed once more
+        # out on top of a quiet or sparse game track is lowered by what it misses and mixed again, re-measured (twice at most)
         import mix_pump
-        u, _, _ = mix_pump.under(mix_pump.rms_db(out), mix_pump.rms_db(src))
-        if u is not None and u < mix_pump.UNDER_MIN + 1:
-            cut = min(12.0, mix_pump.UNDER_MIN + 1 - u)
-            graph = graph.replace(loud.static(ROOT / song, song_lufs, song_start, dur - late), loud.static(ROOT / song, song_lufs - cut, song_start, dur - late), 1)
-            print(name, f"mix: the song {cut:.1f} dB lower (the game sounds were {u:+.1f} dB over it; want >= {mix_pump.UNDER_MIN + 1:.0f})")
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
-                            "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+        game_rms = mix_pump.rms_db(src)
+        def measure_under(sdb):
+            mix_with(graph_of(sdb))
+            return mix_pump.under(mix_pump.rms_db(out), game_rms)[0]
+        settled, cuts = settle_song(song_db, mix_pump.under(mix_pump.rms_db(out), game_rms)[0], measure_under)
+        for c, u_ in cuts:
+            print(name, f"mix: the song {c:.1f} dB lower (the game sounds were {u_:+.1f} dB over it; want >= {mix_pump.UNDER_MIN + 1:.0f})")
+    mix_stats = None
     if stunt.get("story"):   # single-pass loudnorm lands short: correct the story master to -14 LUFS exactly
         sys.path.insert(0, str(ROOT / "scripts"))
         import story_track
         story_track.master_gain(out, -14.0)
     else:
-        if pre_out:   # (mixcheck's pump check: the mix before its master)
-            import shutil
-            shutil.copy(out, pre_out)
+        import shutil
+        pre = pathlib.Path(pre_out) if pre_out else pathlib.Path(str(out) + ".pre.mp4")   # (the pump check: the mix before its master)
+        shutil.copy(out, pre)
         if LEGACY_MASTER:
             loud.master(out, -10.0, limit)
         else:
             loud.limit_peaks(out, limit)
+        # the mix's own numbers (scripts/mix_pump.py), kept in metadata.json `mix` for the publish gate (scripts/gates.py)
+        import mix_pump
+        mix_stats = mix_pump.stats(out, pre, src)
+        if not pre_out:
+            pre.unlink()
         if keys:   # the gate (BLOCK): each key sound >= KEY_MIN_DB over the music (owner 2026-11-11, guess_sound: "super loud music")
             rows, bad = key_sounds.check(out, src, keys, kstop)
             if rows:   # (no clip before the drop, e.g. dropAt on the last mark: nothing to measure; race 2026-11-11 crashed here)
@@ -272,6 +304,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         credit, licence = "", "original (scripts/phonk.py), ours"
     else:
         credit, licence = f"Song: {t}{' · ' + a if a else ''}", "unlicensed: owner-supplied, expect a Content ID claim"
+    if mix_stats:
+        meta["mix"] = mix_stats
     meta["song"] = {"file": f, "title": t, "artist": a, "licence": licence, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2),
                     **({"song_enters_short_s": round(late, 2)} if late else {})}
     # rebuild the description: caption, credit, hashtags (any older song credit goes)
