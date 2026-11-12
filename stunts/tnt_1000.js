@@ -31,6 +31,9 @@ for (let i = 1; i <= TIERS.length; i++) {
   if (WALK[i]) speed.push([WALK[i], `crater${i}`, 4])
   if (i === 4) speed.push(['boom4:1.5', 'rim4a', 4], ['rim4a', 'rim4b', 'cut'])   // the 1000's chain tail and its smoke at x4, then to the rim of the big crater
 }
+// the chain behind the death screen (its text and buttons still; only the blasts move) at x5 up to the last blast's
+// flash (fix-check r1: the screen was up 3.5 s)
+speed.push(['boom5:0.35', 'boom5:1.8', 5])
 
 module.exports = {
   name: 'tnt_1000',
