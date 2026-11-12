@@ -837,6 +837,9 @@ STANDARDS.md in the same commit.
   stained-glass neon rings and windows, obstacles with trims and glowing hole rims, a glass layer, lanterns on chains,
   freestanding pillars to fall past, a crowned rim and a decorated pool (lib/dropper.js blueprint). Every decoration that
   could touch a fall is flown first in scripts/dropper_sim.js, which builds the same world.
+- **Owner, 2026-11-12, on mega_sponge v3 at 18.3 s: "i feel like im wasting my time wsatching this. maybe we should be
+  like building ti and then just zoom out."** A mega Short does not fly round a finished build for its length: it shows
+  the build going up as a fast time-lapse (lib/mega_lapse.js), then one big zoom out to its scale, then it ends.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
