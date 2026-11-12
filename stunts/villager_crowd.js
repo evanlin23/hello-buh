@@ -61,6 +61,7 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=villager]')
+    await ctx.cmd('/kill @e[type=!player,type=!villager]', { mayFail: true })   // no wild animals (a wolf wandering the cut-out takes blocked r1: cast stair steps)
     const profs = ['librarian', 'farmer', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'fisherman', 'nitwit', 'none']
     const types = ['plains', 'plains', 'plains', 'taiga', 'desert', 'savanna', 'snow']
     // one big flat field for all the crowds (slabs under the 32768-block /fill cap)
@@ -152,6 +153,7 @@ module.exports = {
   },
 
   async perform (ctx) {
+    await ctx.cmd('/kill @e[type=!player,type=!villager]', { mayFail: true })   // (again: the field's setup loads chunks with their own animals)
     const { bot } = ctx
     const { x, z, floor } = this
     const track = () => bot.chat(`/execute as @e[type=villager,tag=on] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes`)
@@ -267,16 +269,21 @@ module.exports = {
       await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
       // the sting (owner r:r4607fa, no-op audit: "end with a sting: they all step in"): the look comes to rest, then
       // every villager, the 200 and the crowd behind, lurches 2 blocks in toward the pillar, all at once (6 ticks of
-      // 0.33, level: 'rotated ~ 0' keeps the step on the ground), and a chorus of "hrmm"s. Against a still camera (a
+      // 0.33, level: facing the pillar's x/z at each one's own height), and a chorus of "hrmm"s. Against a still camera (a
       // 1-block step under the pan barely read: stills r1)
       await bot.waitForTicks(3)
       ctx.mark('step_in')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
+      // (toward the pillar's foot by coordinates: 'facing entity <name>' with the player's name did nothing, r1)
+      const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
+      const probe = Object.values(bot.entities).find(e => e.name === 'villager'), p0 = probe && probe.position.clone()
       for (let k = 0; k < 6; k++) {
-        bot.chat(`/execute as @e[type=villager] at @s facing entity ${bot.username} feet rotated ~ 0 run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
+        bot.chat(`/execute as @e[type=villager] at @s facing ${px} ~ ${pz} run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
         await bot.waitForTicks(1)
       }
-      await bot.waitForTicks(16)   // footage for the end (0.7 s after the step) and the settle
+      await bot.waitForTicks(2)
+      ctx.log('step_in: a villager moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
+      await bot.waitForTicks(14)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
     }
     bot.removeListener('physicsTick', track); bot.removeListener('physicsTick', aimTick)

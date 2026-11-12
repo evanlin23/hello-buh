@@ -21,7 +21,7 @@ module.exports = makeRace({
   edit: {
     startAt: 'race_start:2.25', endAfter: 'done:0.8',
     speed: [['race_start', 'race_start:30', 8], ['race_start:30', 'last', 4], ['last', 'done', 9]],
-    subs: [['done', 'by just 26 blocks 😱', 0.8, 0]], subsY: 0.66
+    subs: [['done', 'by just 26 blocks!', 0.8, 0]], subsY: 0.66   // (no emoji: the sub font drew 😱 as a box)
   },
   sfx: [['ding', 'race_start:2.26'], ['pop', 'race_start:2.27', { gain: 2.0 }]],   // (1.6 was 6.5 dB under the win's peak: max 6)
 })
