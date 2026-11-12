@@ -1,10 +1,10 @@
 {
   "name": "boat_clutch",
   "channel": "hellobuh",
-  "caption": "boat clutch 💀",
+  "caption": "bro thinks a boat will save him 💀",
   "youtube": {
-    "title": "boat clutch 💀 #minecraft #shorts",
-    "description": "boat clutch 💀\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "bro thinks a boat will save him 💀 #minecraft #shorts",
+    "description": "bro thinks a boat will save him 💀\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -25,35 +25,35 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 31.07,
+    "duration_s": 30.87,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 72320013,
-    "sha256": "298edef5754d6bdbee44dc3eade29dd8fc980fc0835140ca08e8dd16769b762e",
+    "bytes": 71767692,
+    "sha256": "119286d00815e015d5f4cf6c4192c46130774a0d535c2256bdb6dbd7c221c830",
     "release": {
       "tag": "pkg-boat_clutch",
-      "asset": "boat_clutch.short.298edef5754d6bdb.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.298edef5754d6bdb.mp4",
-      "sha256": "298edef5754d6bdbee44dc3eade29dd8fc980fc0835140ca08e8dd16769b762e",
-      "bytes": 72320013
+      "asset": "boat_clutch.short.119286d00815e015.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.119286d00815e015.mp4",
+      "sha256": "119286d00815e015d5f4cf6c4192c46130774a0d535c2256bdb6dbd7c221c830",
+      "bytes": 71767692
     },
     "nosong_release": {
       "tag": "pkg-boat_clutch",
-      "asset": "boat_clutch.short_nosong.22ab97fc5a658f87.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short_nosong.22ab97fc5a658f87.mp4",
-      "sha256": "22ab97fc5a658f87e608e76b25fc45f826aa8887c3a8cd5d10089c4dc27b3142",
-      "bytes": 71551843
+      "asset": "boat_clutch.short_nosong.8a35e3aca745a8db.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short_nosong.8a35e3aca745a8db.mp4",
+      "sha256": "8a35e3aca745a8dbd764b1e5d938cbbb8bf452b34a9890eea2e16090a5e67c13",
+      "bytes": 71723669
     }
   },
   "edit": {
-    "caption": "boat clutch 💀",
+    "caption": "bro thinks a boat will save him 💀",
     "red": "boat",
     "song": null,
     "dropAt": "final_place",
     "startAt": "start:0",
-    "endAfter": "final:0.9",
+    "endAfter": "final:0.7",
     "subs": [
       [
         "jump",
@@ -146,6 +146,14 @@
     ],
     "sfx": [
       [
+        "air",
+        "start",
+        "final",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
         "dip",
         "final",
         0.35
@@ -163,7 +171,9 @@
     ],
     "args": [
       "--caption",
-      "boat clutch 💀",
+      "bro thinks a boat will save him 💀",
+      "--self_name",
+      "56e",
       "--red",
       "boat",
       "--subs",
@@ -175,11 +185,11 @@
       "--hook",
       "{\"at\":\"final_place\",\"before\":1.4,\"after\":-0.05,\"text\":\"79 blocks 💀\"}",
       "--sfx",
-      "[[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]]",
+      "[[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]]",
       "--start_at",
       "start:0",
       "--end_after",
-      "final:0.9"
+      "final:0.7"
     ]
   },
   "recording": {
@@ -491,12 +501,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/boat_clutch",
-    "commit": "8ffd62f9444d272e5cd6857583812b4e985525b0",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42996286179",
-    "rendered_at": "2026-11-11T09:46:13.845Z",
-    "head_at_publish": "4b417a640b44eb608b1f3bba925da53b2aca9569",
+    "branch": "main",
+    "commit": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T01:49:26.988Z",
+    "head_at_publish": "ec8ab70b2df105888176afc747e682f7620d4590",
     "stunt": "stunts/boat_clutch.js",
     "source_snapshot": [
       "source/boat_clutch.js",
@@ -504,35 +513,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 8ffd62f9444d",
+    "git checkout ec8ab70b2df1",
     "gunzip -c shorts/boat_clutch/recording.json.gz > work/boat_clutch.rec.json",
     "node render.js work/boat_clutch.rec.json work/boat_clutch.frames 60 1080 1011",
     "python3 audio.py work/boat_clutch.rec.json work/boat_clutch.wav",
-    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"boat clutch 💀\" --red boat --subs \"[[\\\"jump\\\",\\\"15 blocks\\\",2.261895003862225,0],[\\\"jump\\\",\\\"20 blocks\\\",2.4416407864998737,1],[\\\"jump\\\",\\\"30 blocks\\\",2.743167672515498,2],[\\\"jump\\\",\\\"40 blocks\\\",2.9973665961010276,3],[\\\"jump\\\",\\\"50 blocks\\\",3.2213203435596425,4],[\\\"jump\\\",\\\"64 blocks\\\",3.5,5],[\\\"jump\\\",\\\"79 blocks\\\",3.7664583251946766,6]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks 💀\\\"}\" --sfx [[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]] --start_at start:0 --end_after final:0.9 --out out/boat_clutch.mp4"
+    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"bro thinks a boat will save him 💀\" --self_name 56e --red boat --subs \"[[\\\"jump\\\",\\\"15 blocks\\\",2.261895003862225,0],[\\\"jump\\\",\\\"20 blocks\\\",2.4416407864998737,1],[\\\"jump\\\",\\\"30 blocks\\\",2.743167672515498,2],[\\\"jump\\\",\\\"40 blocks\\\",2.9973665961010276,3],[\\\"jump\\\",\\\"50 blocks\\\",3.2213203435596425,4],[\\\"jump\\\",\\\"64 blocks\\\",3.5,5],[\\\"jump\\\",\\\"79 blocks\\\",3.7664583251946766,6]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks 💀\\\"}\" --sfx [[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]] --start_at start:0 --end_after final:0.7 --out out/boat_clutch.mp4"
   ],
   "status": "ready",
-  "notes": "owner r:r4df33c (2026-11-11, 'The sound effect at the end of boat clutch sounds like a fart, change it out'): the end sound was audio.py's old water-clutch rebuild playing a bucket pour on the boat placement, stretched by the slow-mo; now no pour (audio.py: boat recordings) and a clean impact + wooden thud on the 79-block landing; banned in lib/hb/banned_sfx.json (lint). Independent review READY round 1; nitpicks: drops 1-6 silent (vanilla), snow step on cobblestone at 2.1 s, 1 dup frame at 1.35 s",
-  "published_at": "2026-11-11T09:55:15.451Z",
+  "notes": "reaction caption r:r0f3da0; wind bed from frame 0; end 0.7 s after the landing; review READY r1",
+  "published_at": "2026-11-12T01:52:51.154Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T09:56:12+00:00",
+    "at": "2026-11-12T01:53:36+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 31.08 s vs the reviewed render 31.07 s"
+      "summary": "short.mp4 30.87 s vs the reviewed render 30.87 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:35:19.843Z",
-      "report": "out/boat_clutch.check.json"
+      "at": "2026-11-12T01:50:09.901Z",
+      "report": "work/hb/boat_clutch.check.json"
     },
     "key_sounds": "n/a"
   }
