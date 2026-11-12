@@ -2,10 +2,10 @@
  "name": "saving_up_bastion",
  "stunt": "story_saving_up_bastion",
  "version": 2,
- "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's best friend and he's sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12: his box was empty, and all the gold he sent was up here with me); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md.",
+ "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's 'biggest fan' and he gets sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12, one sentence over the L-frame: 'All the gold he sent was up here, with ME.'; S10's empty chest screen has already shown the box); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md (critic r4 revise -> r5).",
  "caption": "why does gold keep falling on this baby piglin 🪙",
  "upload": {
-  "title": "gold falls from the sky just for me and i've kept all of it 🐷 #minecraft #shorts",
+  "title": "gold falls from the sky just for me and i don't know why 🐷 #minecraft #shorts",
   "pinned": "How long until he figures it out? Wrong answers only",
   "tags": [
    "minecraft piglin",
@@ -18,10 +18,10 @@
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\": the upload text is built from `upload` (lib/buhstories_upload.js). pinned = the question, without the 👇",
  "family": "narrator_is_the_problem",
- "logline": "A baby piglin catches a gold ingot that falls from the sky, four hundred so far, and doesn't know why; it's saving them for a bastion of its own and loves the guy up there who keeps sending gifts. When he gets sad, it looks down to find out why: his box is empty, and all the gold he sent is up here with it. It's stuck in his barter farm, and babies never barter.",
+ "logline": "A baby piglin catches a gold ingot that falls from the sky, four hundred so far, and doesn't know why; it's saving them for a bastion of its own and thinks the guy up there who keeps sending gifts is its biggest fan. When he gets sad, it looks down to find out why: his box is empty, and all the gold he sent is up here with it. It's stuck in his barter farm, and babies never barter.",
  "question": "why tf does gold keep falling on this baby piglin?",
  "premise": "In the Nether by the Portal Cottage's portal, a player (the original `barter_player` skin) built a barter farm: a dropper drops one gold ingot every six seconds onto a one-piglin cell, the piglin barters, the hoppers carry the barters to a chest. A baby piglin chased an ingot down the farm's catch hole and landed in the cell. It thinks the cell is its room, the gold is a gift from a generous stranger, and it is saving up for a bastion of its own, for when it's big.",
- "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a PLEASE WORK sign) the baby read as a present. The reveal is SAID over the picture: the baby looks down and says what it sees, 'His box was EMPTY. And all the gold he sent was up here, with ME.' (the farm's output chest open and empty under the hopper line, the slumped player at it, the baby above hugging gold); the dropper clicks out another: 'Four hundred and ONE.' Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
+ "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a PLEASE WORK sign) the baby read as a present. The reveal is SAID over the picture: the baby looks down and says what it sees, 'All the gold he sent was up here, with ME.' (the farm's output chest open and empty under the hopper line, the slumped player at it, the baby above hugging gold); the dropper clicks out another: 'Four hundred and ONE.' Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
  "key_color": "#F2C14E",
  "mood": "funny",
  "payoff": "drop",
@@ -108,7 +108,7 @@
   {
    "under": "S10",
    "sound": "block.chest.open",
-   "note": "the player opens the chest on 'Come ON'; the lid hides its inside from us"
+   "note": "the player opens the chest on 'Come ON'; on 'GRAVEL' the chest screen (27 empty slots) fills the frame"
   },
   {
    "under": "S11",
@@ -210,8 +210,8 @@
   {
    "id": "L05",
    "who": "N",
-   "text": "Now he keeps / sending MORE. / He's my / best FRIEND.",
-   "say": "Now he keeps sending more. He's my best FRIEND.",
+   "text": "Now he keeps / sending MORE. / I think he's my / biggest FAN.",
+   "say": "Now he keeps sending more. I think he's my biggest FAN.",
    "shot": "S05",
    "shows": [
     {
@@ -227,15 +227,15 @@
   {
    "id": "L06",
    "who": "N",
-   "text": "He gave me / a shiny / new FLOOR.",
-   "say": "He gave me a shiny new FLOOR.",
+   "text": "He gave me / a shiny / new BOWL.",
+   "say": "He gave me a shiny new BOWL.",
    "shot": "S06",
    "shows": [
     {
      "what": [
       "hopper"
      ],
-     "word": "FLOOR"
+     "word": "BOWL"
     }
    ],
    "direction": "thrilled, showing it off"
@@ -282,15 +282,15 @@
   {
    "id": "L09",
    "who": "N",
-   "text": "But my friend / got SO sad. / I had to / find out WHY.",
-   "say": "But my friend got so sad. I had to find out WHY.",
+   "text": "But my biggest fan / got SO sad. / I had to / find out WHY.",
+   "say": "But my biggest fan got so sad. I had to find out WHY.",
    "shot": "S09",
    "shows": [
     {
      "what": [
       "player"
      ],
-     "word": "FRIEND"
+     "word": "FAN"
     }
    ],
    "direction": "the first worry in its voice, small, then determined on WHY"
@@ -315,8 +315,8 @@
   {
    "id": "L11",
    "who": "N",
-   "text": "So I looked DOWN, / past my / shiny floor.",
-   "say": "So I looked down, past my shiny FLOOR.",
+   "text": "So I looked DOWN, / past my / shiny bowl.",
+   "say": "So I looked down, past my shiny BOWL.",
    "shot": "S11",
    "shows": [
     {
@@ -332,15 +332,15 @@
   {
    "id": "L12",
    "who": "N",
-   "text": "His box / was EMPTY. / And all the gold he sent / was up here, / with ME.",
-   "say": "His box was empty. And all the gold he sent was up here, with ME.",
+   "text": "All the gold he sent / was up here, / with ME.",
+   "say": "All the gold he sent was up here, with ME.",
    "shot": "S11",
    "shows": [
     {
      "what": [
       "chest"
      ],
-     "word": "EMPTY"
+     "word": "GOLD"
     },
     {
      "what": [
@@ -470,8 +470,8 @@
    "line": "L11,L12,L13",
    "place": "cutaway",
    "size": "wide",
-   "camera": "the reveal: the cutaway (south wall hidden), starting tight on the baby at the cell, then a slow crane DOWN the hopper line and pull back, settling on the L-frame by 'EMPTY' and holding",
-   "frame": "start (L11): the baby on its block, leaning over its new hopper, looking down. The camera follows its look DOWN the hopper line (items go down) to the base room: the player in the sneak pose (slumped) at the OPEN chest (he's still at it, so the lid stays open). By 'EMPTY' (L12) it has pulled back to the L-frame: the chest and the slumped player bottom left, the hopper line up the left, the baby top right hugging its ingot under the dropper; on 'ME' the baby is lit and readable. Holds. After L12 the dropper clicks; on 'ONE' (L13, `drop`) the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
+   "camera": "the reveal: the cutaway (south wall hidden), starting tight on the baby at the cell, then a slow crane DOWN the hopper line and pull back, settling on the L-frame by 'GOLD' and holding",
+   "frame": "start (L11): the baby on its block, leaning over its new hopper, looking down. The camera follows its look DOWN the hopper line (items go down) to the base room: the player in the sneak pose (slumped) at the OPEN chest (he's still at it, so the lid stays open). By 'GOLD' (L12) it has pulled back to the L-frame: the chest and the slumped player bottom left, the hopper line up the left, the baby top right hugging its ingot under the dropper; on 'ME' the baby is lit and readable. Holds. After L12 the dropper clicks; on 'ONE' (L13, `drop`) the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
    "marks": [
     "drop"
    ]

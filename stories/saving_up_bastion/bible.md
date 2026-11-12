@@ -20,7 +20,7 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 ## Cast and costume
 | who | look | in shots | holds |
 |---|---|---|---|
-| the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S02 (back of head), S03 (silhouette), S04, S06, S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
+| the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S02 (back of head), S03 (silhouette), S04, S06, S07 (small, in the window), S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
 | the player | the original `barter_player` skin (orange beanie, black beard), iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07 (back, walking to the portal), S09, S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), nothing (S07, S09, S10); the sneak pose on the roof (S09) and at the chest (S11) |
 | adult piglins | vanilla adults, gold swords | S02, S04, S08 | one admires an ingot and drops gravel (S08) |
 | the helmet piglin (easter egg) | adult, `golden_helmet[trim={pattern:"sentry",material:"lapis"}]` (Gold for the Portal's item) | S02 only, frame left, mid-ground | a gold sword |
@@ -42,7 +42,7 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 - The cutaway (S06, S11) is the column's south face: west is screen left, the baby's block screen right of the hopper.
 
 ## Who knows what
-- The baby: thinks the cell is its room, the gold a gift, the giver its best friend, the grown-ups jealous; doesn't
+- The baby: thinks the cell is its room, the gold a gift, the giver its "biggest fan", the grown-ups jealous; doesn't
   know what bartering is for. In S11 it SEES the empty box below and the gold with it and says so (L12), plainly; it
   never says what it means, and L13 shows it still counting its gold.
 - The player: knows his farm makes nothing; has never seen into the cell (the roof is solid over the dropper; he works

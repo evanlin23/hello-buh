@@ -36,10 +36,10 @@ view (an engine/world gap, see the report).
 | the grown-ups stare | L02 | S02: several adults look up at the window |
 | a whole bastion | L03 | on screen in S03 |
 | a guy threw the first one, a hole | L04 | S04: the toss and the catch hole |
-| a new floor | L06 | S06: the new hopper pops in beside the baby; shiny in S11 |
+| a new bowl (the hopper) | L06 | S06: the new hopper pops in beside the baby; shiny in S11 |
 | a note | L07 | readable in S07 |
 | gold for gravel | L08 | S08: an ingot in, gravel out; no adult is in the farm |
-| my friend got so sad | L09 | S09: the player slumped on the roof, hands empty |
-| looked down past my floor | L11 | S11: the baby leans over its hopper; the camera follows its look down the hopper line |
-| the chest (his box) is empty | L10, L12, S10, S11 | S10's chest screen: 27 empty slots; never shown with anything in it |
+| my biggest fan got so sad | L09 | S09: the player slumped on the roof, hands empty |
+| looked down past my bowl | L11 | S11: the baby leans over its hopper; the camera follows its look down the hopper line |
+| the chest (his box) is empty | L10, S10, S11 | S10's chest screen: 27 empty slots; never shown with anything in it |
 | all the gold he sent is up here with me | L12 | S11's L-frame: the baby above the chest, hugging gold, under the dropper |
