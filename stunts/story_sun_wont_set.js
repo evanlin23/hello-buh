@@ -33,9 +33,9 @@ module.exports = {
   look: { mood: 'bright', rolloff: 0.8 },
   shots: { pov: { pov: true } },
   edit: {
-    caption: CAPTION, red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.0', deathScreen: true,
+    caption: CAPTION, red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.6', deathScreen: true,
     punchStress: true,
-    zoom: [['death:0.1', 'death:1.0', 1.05]],
+    zoom: [['death:0.1', 'death:1.6', 1.05]],
     sfx: [['impact', 'dusk', { gain: 0.5 }], ['impact', 'death', { gain: 0.6 }]]
   },
   expectDeath: true,
@@ -163,7 +163,7 @@ module.exports = {
     // L04-L05: every day Grandpa asks me the same thing (at his door, on the porch)
     const gpFace = () => P(gp.x, gp.y + 1.55, gp.z)
     await cut(step0.x + 1.6, step0.z + 0.3, gpFace())
-    await line('L04', async (k) => { gp.yaw = 90; look(k) })
+    await line('L04', async (k) => { gp.yaw = 90; look(k) }, 0.12)   // air before Grandpa speaks (the take ran into his line)
     await line('L05', async (k) => { gp.yaw = 90; gp.pitch = k % 30 < 10 ? 8 : 0; look(k) })
 
     // L06: and every day I tell him, not yet (he turns and shuffles back to the door)
@@ -206,7 +206,7 @@ module.exports = {
     // L11-L12: but today Grandpa said: let the night come; you need sleep, kid (at his door, close)
     ctx.select(2)
     await cut(step0.x + 0.4, step0.z + 0.2, gpFace())
-    await line('L11', async (k) => { gp.yaw = 90 + 18 * Math.sin(ctx.tick / 8); gp.pitch = 4 * Math.sin(ctx.tick / 5); look(k) })
+    await line('L11', async (k) => { gp.yaw = 90 + 18 * Math.sin(ctx.tick / 8); gp.pitch = 4 * Math.sin(ctx.tick / 5); look(k) }, 0.12)
     await line('L12', async (k) => { gp.yaw = 90 + 12 * Math.sin(ctx.tick / 9); gp.pitch = k % 20 < 7 ? 14 : 0; look(k) })   // he nods at me
 
     // L13: me? HE's the one who's tired (he looks at the lever post, then turns to go in)
@@ -285,7 +285,7 @@ module.exports = {
       }
       K.base = K.aim(P(diver.x, diver.y + 0.2, diver.z))
       if (i === 14) say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`)
-      if (i === 24) { ctx.mark('death'); say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
+      if (i === 24) { ctx.mark('second_hit'); say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
       look(i)
       await bot.waitForTicks(1)
     }
