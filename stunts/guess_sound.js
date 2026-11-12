@@ -10,6 +10,9 @@ module.exports = guessSound({
   caption: 'guess the mob from its sound 🔊',
   red: 'sound',
   endAfter: 1.45,   // the payoff ends on a text line ("parrots copy creepers"): reading time
+  // the twist's hit under the NCS bed (pace/mixcheck: no sound hit on the final reveal): the song dips, then an impact
+  // and a pop with the round counter on frame 0 (pace: silent until 0.71 s)
+  edit: { sfx: [['pop', 'count', { gain: 0.7 }], ['dip', 'final_reveal', 0.4], ['impact', 'final_reveal', { gain: 1.4 }]] },
   rounds: [
     { mob: 'cow', room: 'barn', sound: 'entity.cow.ambient', label: 'EASY', answer: 'COW', react: 'moo', leanTicks: 6, lookY: 1.2 },
     { mob: 'llama', room: 'savanna', sound: 'entity.llama.ambient', label: 'MEDIUM', answer: 'LLAMA', react: 'call', reactSound: 'entity.llama.angry', lean: 0, back: 4, lookY: 1.7, color: 'gold' },
