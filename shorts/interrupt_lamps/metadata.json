@@ -4,7 +4,7 @@
   "caption": "this dance floor is gonna be so clean 😌",
   "youtube": {
     "title": "this dance floor is gonna be so clean 😌 #minecraft #shorts",
-    "description": "this dance floor is gonna be so clean 😌\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "this dance floor is gonna be so clean 😌\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,64 +14,74 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "royalty_funk.mp3",
-    "title": "Royalty Funk",
-    "artist": "LXNGVX",
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "lit",
-    "drop_in_song_s": 47.5,
-    "drop_in_short_s": 25.07,
-    "song_start_s": 22.43
+    "drop_on_event": "floor_lit",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 13.27,
+    "song_start_s": 3.23
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 26.07,
+    "duration_s": 14.27,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 49245411,
-    "sha256": "d218c1f9fcab1ad962a158b30ea71a12b6e0103d5d48a3dcf8fe92465ea5ca6a",
+    "bytes": 16421351,
+    "sha256": "b46508e404c04ab8df61b7d29a8d258c3cdd288d9b163457bbcca8f44a810c21",
     "release": {
       "tag": "pkg-interrupt_lamps",
-      "asset": "interrupt_lamps.short.d218c1f9fcab1ad9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.d218c1f9fcab1ad9.mp4",
-      "sha256": "d218c1f9fcab1ad962a158b30ea71a12b6e0103d5d48a3dcf8fe92465ea5ca6a",
-      "bytes": 49245411
+      "asset": "interrupt_lamps.short.b46508e404c04ab8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.b46508e404c04ab8.mp4",
+      "sha256": "b46508e404c04ab8df61b7d29a8d258c3cdd288d9b163457bbcca8f44a810c21",
+      "bytes": 16421351
     },
     "nosong_release": {
       "tag": "pkg-interrupt_lamps",
-      "asset": "interrupt_lamps.short_nosong.77839f3ae7376264.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short_nosong.77839f3ae7376264.mp4",
-      "sha256": "77839f3ae7376264f84f254deca37e55d8d808f1fcbe24a55239a6dc3de1f39a",
-      "bytes": 49241242
+      "asset": "interrupt_lamps.short_nosong.c25945a2c0f925bf.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short_nosong.c25945a2c0f925bf.mp4",
+      "sha256": "c25945a2c0f925bf9cba2aeaf06d2c2734c4ef188d1212bc76f0440f6744927a",
+      "bytes": 16417136
     }
   },
   "edit": {
     "caption": "this dance floor is gonna be so clean 😌",
     "red": "so clean",
-    "dropAt": "lit",
+    "dropAt": "floor_lit",
     "startAt": "hook:-0.1",
-    "endAfter": "lit:1.0",
+    "endAfter": "floor_lit:1.0",
     "speed": [
+      [
+        "intr_walk",
+        "intr_deal:-0.1",
+        1.5
+      ],
       [
         "intr_back:0.1",
         "intr_resume:-0.1",
         1.3
+      ],
+      [
+        "intr_resume",
+        "lever",
+        2
       ]
     ],
     "punch": [
       [
-        "lit",
+        "floor_lit",
         0,
         1.08
       ]
     ],
     "flash": [
       [
-        "lit",
+        "floor_lit",
         0,
-        0.4
+        0.2
       ]
     ],
     "keySounds": [
@@ -84,19 +94,33 @@
       [
         "air",
         "start",
-        "lit",
+        "floor_lit",
         {
           "gain": 0.5
         }
       ],
       [
-        "dip",
-        "lit",
-        0.4
+        "impact",
+        "hook",
+        {
+          "gain": 1.2
+        }
       ],
       [
         "impact",
         "lit",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "dip",
+        "floor_lit",
+        0.4
+      ],
+      [
+        "impact",
+        "floor_lit",
         {
           "gain": 1.4
         }
@@ -110,17 +134,17 @@
       "--red",
       "so clean",
       "--speed",
-      "[[\"intr_back:0.1\",\"intr_resume:-0.1\",1.3]]",
+      "[[\"intr_walk\",\"intr_deal:-0.1\",1.5],[\"intr_back:0.1\",\"intr_resume:-0.1\",1.3],[\"intr_resume\",\"lever\",2]]",
       "--punch",
-      "[[\"lit\",0,1.08]]",
+      "[[\"floor_lit\",0,1.08]]",
       "--flash",
-      "[[\"lit\",0,0.4]]",
+      "[[\"floor_lit\",0,0.2]]",
       "--sfx",
-      "[[\"air\",\"start\",\"lit\",{\"gain\":0.5}],[\"dip\",\"lit\",0.4],[\"impact\",\"lit\",{\"gain\":1.4}]]",
+      "[[\"air\",\"start\",\"floor_lit\",{\"gain\":0.5}],[\"impact\",\"hook\",{\"gain\":1.2}],[\"impact\",\"lit\",{\"gain\":0.9}],[\"dip\",\"floor_lit\",0.4],[\"impact\",\"floor_lit\",{\"gain\":1.4}]]",
       "--start_at",
       "hook:-0.1",
       "--end_after",
-      "lit:1.0"
+      "floor_lit:1.0"
     ]
   },
   "recording": {
@@ -131,13 +155,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 380,
-      "y": 76,
-      "z": -54
+      "x": 388,
+      "y": 77,
+      "z": -57
     },
     "biome": "minecraft:plains",
-    "ticks": 597,
-    "seconds": 29.85,
+    "ticks": 431,
+    "seconds": 21.55,
     "deaths": 0,
     "events": [
       {
@@ -145,800 +169,564 @@
         "event": "start"
       },
       {
-        "t": 1.65,
+        "t": 1.25,
+        "event": "step_back"
+      },
+      {
+        "t": 1.5,
         "event": "place_on"
       },
       {
-        "t": 1.65,
+        "t": 1.5,
         "event": "swing"
       },
       {
-        "t": 1.65,
+        "t": 1.5,
         "event": "lamp"
       },
       {
-        "t": 1.85,
-        "event": "place_on"
-      },
-      {
-        "t": 1.85,
-        "event": "swing"
-      },
-      {
-        "t": 1.85,
-        "event": "lamp"
-      },
-      {
-        "t": 1.85,
+        "t": 1.5,
         "event": "hook"
       },
       {
-        "t": 2.1,
+        "t": 1.7,
         "event": "place_on"
       },
       {
-        "t": 2.1,
+        "t": 1.7,
         "event": "swing"
       },
       {
-        "t": 2.1,
+        "t": 1.7,
         "event": "lamp"
       },
       {
-        "t": 2.35,
+        "t": 1.95,
         "event": "place_on"
       },
       {
-        "t": 2.35,
+        "t": 1.95,
         "event": "swing"
       },
       {
-        "t": 2.35,
+        "t": 1.95,
         "event": "lamp"
       },
       {
-        "t": 2.75,
+        "t": 2.2,
         "event": "place_on"
       },
       {
-        "t": 2.75,
+        "t": 2.2,
         "event": "swing"
       },
       {
-        "t": 2.75,
+        "t": 2.2,
         "event": "lamp"
       },
       {
-        "t": 2.95,
-        "event": "place_on"
-      },
-      {
-        "t": 2.95,
-        "event": "swing"
-      },
-      {
-        "t": 2.95,
-        "event": "lamp"
-      },
-      {
-        "t": 3.2,
-        "event": "place_on"
-      },
-      {
-        "t": 3.2,
-        "event": "swing"
-      },
-      {
-        "t": 3.2,
-        "event": "lamp"
-      },
-      {
-        "t": 3.65,
-        "event": "step_back"
-      },
-      {
-        "t": 4.1,
-        "event": "place_on"
-      },
-      {
-        "t": 4.1,
-        "event": "swing"
-      },
-      {
-        "t": 4.1,
-        "event": "lamp"
-      },
-      {
-        "t": 4.3,
-        "event": "place_on"
-      },
-      {
-        "t": 4.3,
-        "event": "swing"
-      },
-      {
-        "t": 4.3,
-        "event": "lamp"
-      },
-      {
-        "t": 4.55,
-        "event": "place_on"
-      },
-      {
-        "t": 4.55,
-        "event": "swing"
-      },
-      {
-        "t": 4.55,
-        "event": "lamp"
-      },
-      {
-        "t": 4.8,
-        "event": "place_on"
-      },
-      {
-        "t": 4.8,
-        "event": "swing"
-      },
-      {
-        "t": 4.8,
-        "event": "lamp"
-      },
-      {
-        "t": 5.2,
-        "event": "place_on"
-      },
-      {
-        "t": 5.2,
-        "event": "swing"
-      },
-      {
-        "t": 5.2,
-        "event": "lamp"
-      },
-      {
-        "t": 5.45,
-        "event": "place_on"
-      },
-      {
-        "t": 5.45,
-        "event": "swing"
-      },
-      {
-        "t": 5.45,
-        "event": "lamp"
-      },
-      {
-        "t": 5.7,
-        "event": "place_on"
-      },
-      {
-        "t": 5.7,
-        "event": "swing"
-      },
-      {
-        "t": 5.7,
-        "event": "lamp"
-      },
-      {
-        "t": 6.2,
-        "event": "step_back"
-      },
-      {
-        "t": 6.6,
-        "event": "place_on"
-      },
-      {
-        "t": 6.6,
-        "event": "swing"
-      },
-      {
-        "t": 6.6,
-        "event": "lamp"
-      },
-      {
-        "t": 6.8,
-        "event": "place_on"
-      },
-      {
-        "t": 6.8,
-        "event": "swing"
-      },
-      {
-        "t": 6.8,
-        "event": "lamp"
-      },
-      {
-        "t": 7.05,
-        "event": "place_on"
-      },
-      {
-        "t": 7.05,
-        "event": "swing"
-      },
-      {
-        "t": 7.05,
-        "event": "lamp"
-      },
-      {
-        "t": 7.3,
-        "event": "place_on"
-      },
-      {
-        "t": 7.3,
-        "event": "swing"
-      },
-      {
-        "t": 7.3,
-        "event": "lamp"
-      },
-      {
-        "t": 7.7,
-        "event": "place_on"
-      },
-      {
-        "t": 7.7,
-        "event": "swing"
-      },
-      {
-        "t": 7.7,
-        "event": "lamp"
-      },
-      {
-        "t": 7.9,
-        "event": "place_on"
-      },
-      {
-        "t": 7.9,
-        "event": "swing"
-      },
-      {
-        "t": 7.9,
-        "event": "lamp"
-      },
-      {
-        "t": 8.15,
-        "event": "place_on"
-      },
-      {
-        "t": 8.15,
-        "event": "swing"
-      },
-      {
-        "t": 8.15,
-        "event": "lamp"
-      },
-      {
-        "t": 8.65,
-        "event": "step_back"
-      },
-      {
-        "t": 9.05,
-        "event": "place_on"
-      },
-      {
-        "t": 9.05,
-        "event": "swing"
-      },
-      {
-        "t": 9.05,
-        "event": "lamp"
-      },
-      {
-        "t": 9.25,
-        "event": "place_on"
-      },
-      {
-        "t": 9.25,
-        "event": "swing"
-      },
-      {
-        "t": 9.25,
-        "event": "lamp"
-      },
-      {
-        "t": 9.25,
+        "t": 2.2,
         "event": "intr_cue"
       },
       {
-        "t": 9.4,
+        "t": 2.35,
         "event": "hurt",
         "type": "arrow"
       },
       {
-        "t": 9.45,
+        "t": 2.4,
         "event": "intr_hit"
       },
       {
-        "t": 10.3,
+        "t": 3.1,
         "event": "intr_notice"
       },
       {
-        "t": 11.05,
+        "t": 3.95,
         "event": "intr_walk"
       },
       {
-        "t": 13.3,
+        "t": 6.4,
         "event": "intr_deal"
       },
       {
-        "t": 13.3,
+        "t": 6.4,
         "event": "swing"
       },
       {
-        "t": 13.3,
+        "t": 6.4,
         "event": "mob_scale"
       },
       {
-        "t": 13.3,
+        "t": 6.4,
         "event": "mob_scale"
       },
       {
-        "t": 13.35,
+        "t": 6.45,
         "event": "mob_scale"
       },
       {
-        "t": 13.4,
+        "t": 6.5,
         "event": "actor"
       },
       {
-        "t": 13.4,
+        "t": 6.5,
         "event": "mob_scale"
       },
       {
-        "t": 13.45,
+        "t": 6.55,
         "event": "mob_scale"
       },
       {
-        "t": 13.5,
+        "t": 6.6,
         "event": "mob_scale"
       },
       {
-        "t": 13.6,
+        "t": 6.65,
         "event": "mob_scale"
       },
       {
-        "t": 13.7,
+        "t": 6.7,
         "event": "intr_pickup"
       },
       {
-        "t": 14.1,
+        "t": 7,
         "event": "mob_scale"
       },
       {
-        "t": 14.1,
+        "t": 7,
         "event": "intr_bite"
       },
       {
-        "t": 14.1,
+        "t": 7,
         "event": "item_crumbs"
       },
       {
-        "t": 14.3,
+        "t": 7.2,
         "event": "mob_scale"
       },
       {
-        "t": 14.3,
+        "t": 7.2,
         "event": "intr_bite"
       },
       {
-        "t": 14.3,
+        "t": 7.2,
         "event": "item_crumbs"
       },
       {
-        "t": 14.5,
+        "t": 7.4,
         "event": "mob_scale"
       },
       {
-        "t": 14.5,
+        "t": 7.4,
         "event": "intr_bite"
       },
       {
-        "t": 14.5,
+        "t": 7.4,
         "event": "item_crumbs"
       },
       {
-        "t": 14.7,
+        "t": 7.6,
         "event": "mob_scale"
       },
       {
-        "t": 14.7,
+        "t": 7.6,
         "event": "intr_bite"
       },
       {
-        "t": 14.7,
+        "t": 7.6,
         "event": "item_crumbs"
       },
       {
-        "t": 14.9,
+        "t": 7.8,
         "event": "mob_scale"
       },
       {
-        "t": 14.9,
+        "t": 7.8,
         "event": "intr_bite"
       },
       {
-        "t": 14.9,
+        "t": 7.8,
         "event": "item_crumbs"
       },
       {
-        "t": 15.1,
+        "t": 8.05,
         "event": "mob_scale"
       },
       {
-        "t": 15.1,
+        "t": 8.05,
         "event": "intr_bite"
       },
       {
-        "t": 15.1,
+        "t": 8.05,
         "event": "item_crumbs"
       },
       {
-        "t": 15.3,
+        "t": 8.25,
         "event": "mob_scale"
       },
       {
-        "t": 15.3,
+        "t": 8.25,
         "event": "intr_bite"
       },
       {
-        "t": 15.3,
+        "t": 8.25,
         "event": "item_crumbs"
       },
       {
-        "t": 15.4,
+        "t": 8.35,
         "event": "intr_bite"
       },
       {
-        "t": 15.4,
+        "t": 8.35,
         "event": "intr_gone"
       },
       {
-        "t": 15.6,
+        "t": 8.55,
         "event": "intr_back"
       },
       {
-        "t": 18.75,
+        "t": 11.55,
         "event": "intr_resume"
       },
       {
-        "t": 18.8,
+        "t": 11.6,
         "event": "step_back"
       },
       {
-        "t": 19,
+        "t": 11.8,
         "event": "place_on"
       },
       {
-        "t": 19,
+        "t": 11.8,
         "event": "swing"
       },
       {
-        "t": 19,
+        "t": 11.8,
         "event": "lamp"
       },
       {
-        "t": 19.25,
+        "t": 12,
         "event": "place_on"
       },
       {
-        "t": 19.25,
+        "t": 12,
         "event": "swing"
       },
       {
-        "t": 19.25,
+        "t": 12,
         "event": "lamp"
       },
       {
-        "t": 19.65,
+        "t": 12.25,
         "event": "place_on"
       },
       {
-        "t": 19.65,
+        "t": 12.25,
         "event": "swing"
       },
       {
-        "t": 19.65,
+        "t": 12.25,
         "event": "lamp"
       },
       {
-        "t": 19.85,
-        "event": "place_on"
-      },
-      {
-        "t": 19.85,
-        "event": "swing"
-      },
-      {
-        "t": 19.85,
-        "event": "lamp"
-      },
-      {
-        "t": 20.1,
-        "event": "place_on"
-      },
-      {
-        "t": 20.1,
-        "event": "swing"
-      },
-      {
-        "t": 20.1,
-        "event": "lamp"
-      },
-      {
-        "t": 20.6,
+        "t": 12.7,
         "event": "step_back"
       },
       {
-        "t": 20.95,
+        "t": 12.9,
         "event": "place_on"
       },
       {
-        "t": 20.95,
+        "t": 12.9,
         "event": "swing"
       },
       {
-        "t": 20.95,
+        "t": 12.9,
         "event": "lamp"
       },
       {
-        "t": 21.15,
+        "t": 13.1,
         "event": "place_on"
       },
       {
-        "t": 21.15,
+        "t": 13.1,
         "event": "swing"
       },
       {
-        "t": 21.15,
+        "t": 13.1,
         "event": "lamp"
       },
       {
-        "t": 21.4,
+        "t": 13.35,
         "event": "place_on"
       },
       {
-        "t": 21.4,
+        "t": 13.35,
         "event": "swing"
       },
       {
-        "t": 21.4,
+        "t": 13.35,
         "event": "lamp"
       },
       {
-        "t": 21.65,
+        "t": 13.6,
         "event": "place_on"
       },
       {
-        "t": 21.65,
+        "t": 13.6,
         "event": "swing"
       },
       {
-        "t": 21.65,
+        "t": 13.6,
         "event": "lamp"
       },
       {
-        "t": 22.05,
+        "t": 13.85,
+        "event": "vel"
+      },
+      {
+        "t": 13.9,
+        "event": "vel"
+      },
+      {
+        "t": 14.05,
         "event": "place_on"
       },
       {
-        "t": 22.05,
+        "t": 14.05,
         "event": "swing"
       },
       {
-        "t": 22.05,
+        "t": 14.05,
         "event": "lamp"
       },
       {
-        "t": 22.3,
+        "t": 14.3,
         "event": "place_on"
       },
       {
-        "t": 22.3,
+        "t": 14.3,
         "event": "swing"
       },
       {
-        "t": 22.3,
+        "t": 14.3,
         "event": "lamp"
       },
       {
-        "t": 22.55,
+        "t": 14.4,
+        "event": "vel"
+      },
+      {
+        "t": 14.55,
         "event": "place_on"
       },
       {
-        "t": 22.55,
+        "t": 14.55,
         "event": "swing"
       },
       {
-        "t": 22.55,
+        "t": 14.55,
         "event": "lamp"
       },
       {
-        "t": 23,
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 14.85,
+        "event": "vel"
+      },
+      {
+        "t": 14.9,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
         "event": "step_back"
       },
       {
-        "t": 23.45,
+        "t": 15.45,
         "event": "place_on"
       },
       {
-        "t": 23.45,
+        "t": 15.45,
         "event": "swing"
       },
       {
-        "t": 23.45,
+        "t": 15.45,
         "event": "lamp"
       },
       {
-        "t": 23.65,
+        "t": 15.7,
         "event": "place_on"
       },
       {
-        "t": 23.65,
+        "t": 15.7,
         "event": "swing"
       },
       {
-        "t": 23.65,
+        "t": 15.7,
         "event": "lamp"
       },
       {
-        "t": 23.9,
+        "t": 15.85,
+        "event": "vel"
+      },
+      {
+        "t": 15.9,
+        "event": "vel"
+      },
+      {
+        "t": 15.95,
         "event": "place_on"
       },
       {
-        "t": 23.9,
+        "t": 15.95,
         "event": "swing"
       },
       {
-        "t": 23.9,
+        "t": 15.95,
         "event": "lamp"
       },
       {
-        "t": 24.15,
+        "t": 16.2,
         "event": "place_on"
       },
       {
-        "t": 24.15,
+        "t": 16.2,
         "event": "swing"
       },
       {
-        "t": 24.15,
+        "t": 16.2,
         "event": "lamp"
       },
       {
-        "t": 24.55,
+        "t": 16.65,
         "event": "place_on"
       },
       {
-        "t": 24.55,
+        "t": 16.65,
         "event": "swing"
       },
       {
-        "t": 24.55,
+        "t": 16.65,
         "event": "lamp"
       },
       {
-        "t": 24.75,
+        "t": 16.85,
+        "event": "vel"
+      },
+      {
+        "t": 16.9,
         "event": "place_on"
       },
       {
-        "t": 24.75,
+        "t": 16.9,
         "event": "swing"
       },
       {
-        "t": 24.75,
+        "t": 16.9,
         "event": "lamp"
       },
       {
-        "t": 25,
+        "t": 16.9,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
         "event": "place_on"
       },
       {
-        "t": 25,
+        "t": 17.15,
         "event": "swing"
       },
       {
-        "t": 25,
+        "t": 17.15,
         "event": "lamp"
       },
       {
-        "t": 25.3,
-        "event": "step_back"
-      },
-      {
-        "t": 25.6,
-        "event": "place_on"
-      },
-      {
-        "t": 25.6,
+        "t": 17.45,
         "event": "swing"
       },
       {
-        "t": 25.6,
-        "event": "lamp"
+        "t": 17.45,
+        "event": "lever"
       },
       {
-        "t": 25.85,
-        "event": "place_on"
+        "t": 17.65,
+        "event": "f1_on"
       },
       {
-        "t": 25.85,
-        "event": "swing"
+        "t": 17.65,
+        "event": "shot"
       },
       {
-        "t": 25.85,
-        "event": "lamp"
-      },
-      {
-        "t": 26.1,
-        "event": "place_on"
-      },
-      {
-        "t": 26.1,
-        "event": "swing"
-      },
-      {
-        "t": 26.1,
-        "event": "lamp"
-      },
-      {
-        "t": 26.35,
-        "event": "place_on"
-      },
-      {
-        "t": 26.35,
-        "event": "swing"
-      },
-      {
-        "t": 26.35,
-        "event": "lamp"
-      },
-      {
-        "t": 26.75,
-        "event": "place_on"
-      },
-      {
-        "t": 26.75,
-        "event": "swing"
-      },
-      {
-        "t": 26.75,
-        "event": "lamp"
-      },
-      {
-        "t": 26.95,
-        "event": "place_on"
-      },
-      {
-        "t": 26.95,
-        "event": "swing"
-      },
-      {
-        "t": 26.95,
-        "event": "lamp"
-      },
-      {
-        "t": 27.2,
-        "event": "place_on"
-      },
-      {
-        "t": 27.2,
-        "event": "swing"
-      },
-      {
-        "t": 27.2,
-        "event": "lamp"
-      },
-      {
-        "t": 27.5,
-        "event": "swing"
-      },
-      {
-        "t": 27.5,
+        "t": 17.65,
         "event": "lit"
       },
       {
-        "t": 29.85,
+        "t": 17.85,
+        "event": "vel"
+      },
+      {
+        "t": 17.9,
+        "event": "vel"
+      },
+      {
+        "t": 18.3,
+        "event": "vel"
+      },
+      {
+        "t": 18.85,
+        "event": "vel"
+      },
+      {
+        "t": 18.85,
+        "event": "vel"
+      },
+      {
+        "t": 18.85,
+        "event": "vel"
+      },
+      {
+        "t": 19.05,
+        "event": "floor_lit"
+      },
+      {
+        "t": 19.5,
+        "event": "vel"
+      },
+      {
+        "t": 19.7,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "vel"
+      },
+      {
+        "t": 19.9,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.85,
+        "event": "vel"
+      },
+      {
+        "t": 20.9,
+        "event": "vel"
+      },
+      {
+        "t": 21.1,
+        "event": "vel"
+      },
+      {
+        "t": 21.55,
         "event": "end"
       }
     ]
@@ -946,10 +734,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "61fd6b4d7a519e36c09b6cefda966b948afee715",
+    "commit": "ba9dda924e25c42ede91db459a804bed66855f38",
     "rendered": "local",
-    "rendered_at": "2026-11-11T22:57:30.587Z",
-    "head_at_publish": "61fd6b4d7a519e36c09b6cefda966b948afee715",
+    "rendered_at": "2026-11-12T04:50:58.991Z",
+    "head_at_publish": "ba9dda924e25c42ede91db459a804bed66855f38",
     "stunt": "stunts/interrupt_lamps.js",
     "source_snapshot": [
       "source/interrupt_lamps.js",
@@ -959,38 +747,39 @@
       "source/act.js",
       "source/boats.js",
       "source/plateau.js",
-      "source/interrupt.js"
+      "source/interrupt.js",
+      "source/movie.js"
     ]
   },
   "rebuild": [
-    "git checkout 61fd6b4d7a51",
+    "git checkout ba9dda924e25",
     "gunzip -c shorts/interrupt_lamps/recording.json.gz > work/interrupt_lamps.rec.json",
     "node render.js work/interrupt_lamps.rec.json work/interrupt_lamps.frames 60 1080 1011",
     "python3 audio.py work/interrupt_lamps.rec.json work/interrupt_lamps.wav",
-    "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"this dance floor is gonna be so clean 😌\" --self_name 56e --red \"so clean\" --speed [[\"intr_back:0.1\",\"intr_resume:-0.1\",1.3]] --punch [[\"lit\",0,1.08]] --flash [[\"lit\",0,0.4]] --sfx [[\"air\",\"start\",\"lit\",{\"gain\":0.5}],[\"dip\",\"lit\",0.4],[\"impact\",\"lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after lit:1.0 --out out/interrupt_lamps.mp4"
+    "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"this dance floor is gonna be so clean 😌\" --self_name 56e --red \"so clean\" --speed [[\"intr_walk\",\"intr_deal:-0.1\",1.5],[\"intr_back:0.1\",\"intr_resume:-0.1\",1.3],[\"intr_resume\",\"lever\",2]] --punch [[\"floor_lit\",0,1.08]] --flash [[\"floor_lit\",0,0.2]] --sfx [[\"air\",\"start\",\"floor_lit\",{\"gain\":0.5}],[\"impact\",\"hook\",{\"gain\":1.2}],[\"impact\",\"lit\",{\"gain\":0.9}],[\"dip\",\"floor_lit\",0.4],[\"impact\",\"floor_lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after floor_lit:1.0 --out out/interrupt_lamps.mp4"
   ],
   "status": "ready",
-  "notes": "interrupt owner notes: the skeleton really shoots and hits you; you pick it up and eat it (held at the fist, 4 bites, crumbs, crunches 10-12 dB over the bed); no golden apple; the walk back is one continuous x1.3 walk; reaction caption + opening r:r0f3da0. Fix-check r2 READY (fresh session). Nitpicks: skeleton reads slightly behind the arm at 12.6-13.2 s; a few crumbs big.",
-  "published_at": "2026-11-11T22:59:56.719Z",
+  "notes": "No-op fix (r:r8d6af1): build cut to seconds (5 rows pre-laid, x2 after the walk back), dusk, hard cut on the lever to a top-down drone as the floor lights in a ripple; drop + hit on the fully lit floor, held ~1 s. Skeleton hit / pick-up-and-eat / uncut walk back unchanged. Reviewed READY (independent subagent, 2 rounds), pace OK, mixcheck OK.",
+  "published_at": "2026-11-12T04:52:50.811Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T23:00:32+00:00",
+    "at": "2026-11-12T04:53:18+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 26.07 s vs the reviewed render 26.07 s"
+      "summary": "short.mp4 14.27 s vs the reviewed render 14.27 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 6,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:57:50.418Z",
+      "at": "2026-11-12T04:51:25.193Z",
       "report": "work/hb/interrupt_lamps.check.json"
     },
     "key_sounds": {
@@ -1001,7 +790,7 @@
         "intr_bite",
         "intr_gone"
       ],
-      "summary": "key sounds over the music: worst +15.4 dB over 11 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +9.2 dB over 11 clips (need >= 8 dB)"
     }
   }
 }
