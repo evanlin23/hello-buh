@@ -1436,13 +1436,20 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
     for c in json.loads(spec):
         a, b, target = c[0], c[1], float(c[2])
         down = len(c) > 4 and c[4] == "down"
+        # an options dict anywhere after the label: {"hide": EVENT} takes the clock off screen from that event on (lapse_rocket:
+        # the 1-hour clock covered the launching rocket's nose; 60:00 has read on the wide before the cut)
+        opts = next((x for x in c[4:] if isinstance(x, dict)), {})
         k = used.get(a, 0); used[a] = k + 1
         ta = [e["t"] / 1000 for e in timeline if e["event"] == a] if timeline else ([tl_ev[a]] if a in tl_ev else [])
         tb = [e["t"] / 1000 for e in timeline if e["event"] == b] if timeline else ([tl_ev[b]] if b in tl_ev else [])
         if len(ta) > k:
             te = next((x for x in tb if x > ta[k] + 1e-6), None)
             if te is not None:
-                clocks.append((ta[k] - start, te - start, target, c[3] if len(c) > 3 else "", down))
+                th = None
+                if opts.get("hide"):
+                    hs = [e["t"] / 1000 for e in timeline if e["event"] == opts["hide"]] if timeline else ([tl_ev[opts["hide"]]] if opts["hide"] in tl_ev else [])
+                    th = next((x - start for x in hs if x > ta[k] + 1e-6), None)
+                clocks.append((ta[k] - start, te - start, target, c[3] if len(c) > 3 and isinstance(c[3], str) else "", down, th))
     if not clocks:
         return None
     clocks.sort()
@@ -1458,7 +1465,7 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
         if not cur:
             key = None
         else:
-            t0, t1, target, label, down = cur[-1]
+            t0, t1, target, label, down, th = cur[-1]
             done = t >= t1 - 1e-6
             lag = 1.5 / fps            # the first frame after a cut can land mid-tick: it still reads 0:00
             v = target * min(1.0, max(0.0, (t - t0 - lag) / max(1e-6, t1 - t0 - lag)))
@@ -1468,6 +1475,8 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
                 pop = 1.0 + 0.22 * max(0.0, 1 - k) if k < 1 else 1.0
             txt = (clock_fmt(0.0, target, False) if done else clock_fmt(target - v, target, False)) if down else clock_fmt(v, target, done)
             key = (txt, label, done, round(pop, 2), down)
+            if th is not None and t >= th - 1e-6:
+                key = None   # hidden from its hide event on
         if key not in cache:
             path = outdir / f"clock{len(cache)}.png"
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))

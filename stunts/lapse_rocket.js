@@ -199,6 +199,7 @@ const stunt = makeStunt({
   mid: { blocks: mini(), w: 3, d: 3, towerY: 3, towerH: 3, towerSlot: 3, digSlot: 4, perTick: 2, speed: 3, backTicks: 12, tail: ['mid_done:-1.65', 4],
     slots: { white_concrete: 0, red_concrete: 1, blue_concrete: 2 } },
   finale: launch,
+  clockHide: 'launch_cut',   // review r1: the 60:00 clock covered the rocket's nose for the whole launch (it has read on the wide)
   big: {
     blocks: complex(),
     tail: 10,   // 0.5 s on the 60:00 wide, then the cut to the launch
