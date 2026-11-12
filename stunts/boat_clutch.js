@@ -27,7 +27,7 @@ module.exports = {
     // change it out": that was audio.py's old water-clutch rebuild playing a water bucket's pour on the boat placement,
     // stretched by the slow-mo; a boat recording gets none now, and lib/hb/banned_sfx.json bans a pour with no bucket
     // r:r0f3da0 pace: the hook flash and the first fall were silent until 2.08 s (a fall makes no vanilla sound): a wind bed from frame 0
-    punch: [['seen2', 0, 1.08]],   // the payoff is the look at the lava round the boat: a picture hit on it (pace)
+    punch: [['seen2', 0, 1.08]], flash: [['seen2', 0, 0.3]],   // the payoff is the look at the lava round the boat: a picture hit on it (pace)
     sfx: [['impact', 'seen2', { gain: 0.8 }], ['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
   },
 
