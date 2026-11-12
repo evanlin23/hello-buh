@@ -109,6 +109,25 @@ class Dwell(unittest.TestCase):
         self.assertEqual(F, [])
         self.assertLessEqual(s["worst_mid"]["dwell"], 0.75)
 
+    def test_a_card_counts_at_its_nth_occurrence(self):
+        # guess_sound: each round's answer card on 'lit' (the card's 5th field is the occurrence)
+        tl = [{"t": 1000, "event": "lit"}, {"t": 4000, "event": "place"}, {"t": 4050, "event": "lit"}, {"t": 8000, "event": "end_mark"}]
+        edit = {"cards": [["lit", "COW", 1.25, "green", 0], ["lit", "LLAMA", 1.25, "green", 1]]}
+        news = {(ev, n) for ev, off, why, h, n in DW.edit_marks(edit, nth=True)}
+        self.assertEqual(news, {("lit", 0), ("lit", 1)})
+        bts = DW.beats(rec(tl), Clock(), edit)
+        self.assertIn(4.05, [b["at"] for b in bts if b["name"] == "lit"])
+
+
+    def test_an_effect_offset_is_output_seconds(self):
+        # edit.py puts 'boom:1.0' 1.0 s of OUTPUT after the boom: with the 2 s after it played at x4 (source 5-7 s ->
+        # output 5-5.5 s), the effect lands at output 6.0 s, not at source 6.0 s (output 5.25 s)
+        class Sped(Clock):
+            def out_of_src(self, s):
+                return round(s if s <= 5 else (5 + (s - 5) / 4 if s <= 7 else s - 1.5), 3)
+        tl = [{"t": 5000, "event": "boom"}]
+        bts = DW.beats(rec(tl), Sped(), {"flash": [["boom:1.0", 0, 0.5]]})
+        self.assertEqual([b["at"] for b in bts if b["kind"] == "edit"], [6.0])
 
 if __name__ == "__main__":
     unittest.main()

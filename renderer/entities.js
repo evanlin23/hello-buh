@@ -2,7 +2,7 @@
 // by prismarine-viewer, MIT) built into three.js bone groups, textured with the client jar's
 // own entity textures. Unlit like Minecraft: per-face fixed shading x light at the entity.
 import * as THREE from 'three'
-import { nameTagTexture } from '/blockentities.js'
+import { nameTagTexture, heartsTexture } from '/blockentities.js'
 import { applyPoses } from '/poses.js'
 import { isSlimLayout, slimToWide, opaqueBase } from '/skin_layout.js'
 
@@ -873,7 +873,7 @@ export class EntityLayer {
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
-    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
+    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.hearts) this.scene.remove(cur.hearts); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
     let obj = null, bones = {}, mat = null, woolMat = null, underMat = null
     if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
@@ -1183,6 +1183,27 @@ export class EntityLayer {
           if (s.nameDim !== undefined) r.tag.material.opacity = s.nameDim ? 0.6 : 1   // a crouching player's plate (stunt.playerNames)
         }
       }
+      // overhead hearts (render.js sets hearts [hp, mhp] / heartsY for stunt.healthHearts): screen-aligned like the
+      // nameplate, 0.02 blocks a sprite pixel (10 hearts ~1.6 blocks), rebuilt when the health changes
+      if (s.hearts || r.hearts) {
+        const hk = s.hearts ? s.hearts.join('/') : null
+        if (hk && r.heartsKey !== hk) {
+          if (r.hearts) { this.scene.remove(r.hearts); r.hearts.material.map?.dispose(); r.hearts.material.dispose() }
+          r.hearts = null; r.heartsKey = hk
+          const ht = await heartsTexture(s.hearts[0], s.hearts[1])
+          if (ht) {
+            // (over everything, like a HUD element: the mob's own head or a post never hides it)
+            r.hearts = new THREE.Sprite(new THREE.SpriteMaterial({ map: ht.tex, transparent: true, depthWrite: false, depthTest: false, fog: false }))
+            r.hearts.userData.w = ht.w; r.hearts.userData.h = ht.h; r.hearts.center.set(0.5, 0); r.hearts.renderOrder = 4
+            this.scene.add(r.hearts)
+          }
+        }
+        if (r.hearts) {
+          r.hearts.visible = !!s.hearts
+          r.hearts.position.set(s.x, s.y + (s.heartsY || 2.2), s.z)
+          const k = 0.02 * (s.heartsScale || 1); r.hearts.scale.set(r.hearts.userData.w * k, r.hearts.userData.h * k, 1)
+        }
+      }
       if (r.underMat) r.underMat.color.setRGB(...sheepColor(s, tick).map((v, i) => v * LL[i]))
       if ((s.name === 'item_frame' || s.name === 'glow_item_frame') && r.bones.inner) {
         // ItemFrameRenderer: back to the block centre (+dir * 0.46875), Rx(xRot) Ry(180 - yRot); the item
@@ -1455,6 +1476,6 @@ export class EntityLayer {
       }
       if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
     }
-    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
+    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.hearts) this.scene.remove(r.hearts); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
   }
 }
