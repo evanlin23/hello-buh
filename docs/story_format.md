@@ -12,7 +12,8 @@ the characters, the places), not the twist: the twist does NOT need to be a game
 owner's Roblox-style channel) is a premise source.
 
 ## The beats (time is a guide at Pip's pace)
-1. **0-3 s, the impossible fact + the question, said out loud.** Line 1 is a strange, concrete, countable fact that
+1. **0-3 s, the genre opener + the impossible fact + the question, said out loud.** Open with "In my village..."
+   (a local rule), "In my world..." (a rule for everyone) or "My twin / my grandpa / my best friend..." (owner, 2026-11-12). Line 1 is a strange, concrete, countable fact that
    touches everyone, and it makes the "why?" explicit: "This man adopted 10 kids, and not a single one came out alive."
    "In this town, nobody is allowed to speak." Ours: "Every sheep in our village is BLUE. And nobody will tell me WHY."
    The picture shows the fact by 2 s.

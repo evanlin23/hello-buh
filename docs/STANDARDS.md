@@ -36,6 +36,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0w. **The genre opener**: line 1 starts "In my village...", "In my world..." or "My [twin/grandpa/friend]...", then the
+   impossible fact and its "why?". Check: story-critic. r:rd2f8e4
 0y. **The Roblox story format, in Minecraft** (docs/story_format.md): the impossible fact AND its "why?" said in line 1
    (by 3 s); 3-5 quick two-way clues; the narrator as the one who wants to know; someone loved at stake; the rule
    turned against itself; the reveal SAID in one plain sentence (the naive narrator says what they see), never wordless;
