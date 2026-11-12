@@ -4,7 +4,7 @@
   "caption": "why is every mob asking me for permission 💀",
   "youtube": {
     "title": "why is every mob asking me for permission 💀 #minecraft #shorts",
-    "description": "why is every mob asking me for permission 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "why is every mob asking me for permission 💀\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,43 +14,43 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "feel_good_funk.mp3",
-    "title": "Feel Good Funk",
-    "artist": "Syn Cole, Nakama",
+    "file": "com_bota.mp3",
+    "title": "COM BOTA",
+    "artist": "cape, crysstales",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "boom",
-    "drop_in_song_s": 16.5,
-    "drop_in_short_s": 15.37,
-    "song_start_s": 1.13
+    "drop_in_song_s": 16.75,
+    "drop_in_short_s": 16.62,
+    "song_start_s": 0.13
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 16.17,
+    "duration_s": 17.42,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 9610997,
-    "sha256": "8ccaa9b7cb53fd3df6719273a19a29a6e3f8fa22477850fbc397b8a5e1ad7266",
+    "bytes": 11316198,
+    "sha256": "e328dfbb2e452dfee68b5225e3e65963052bfeeb6f5c68f37ada4bd9c93e76f5",
     "release": {
       "tag": "pkg-fakemod_permission",
-      "asset": "fakemod_permission.short.8ccaa9b7cb53fd3d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.8ccaa9b7cb53fd3d.mp4",
-      "sha256": "8ccaa9b7cb53fd3df6719273a19a29a6e3f8fa22477850fbc397b8a5e1ad7266",
-      "bytes": 9610997
+      "asset": "fakemod_permission.short.e328dfbb2e452dfe.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.e328dfbb2e452dfe.mp4",
+      "sha256": "e328dfbb2e452dfee68b5225e3e65963052bfeeb6f5c68f37ada4bd9c93e76f5",
+      "bytes": 11316198
     },
     "nosong_release": {
       "tag": "pkg-fakemod_permission",
-      "asset": "fakemod_permission.short_nosong.2aa080cd392197d6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short_nosong.2aa080cd392197d6.mp4",
-      "sha256": "2aa080cd392197d60e84d41e4302b0367a545265a9f676cff429c32bce8a7f44",
-      "bytes": 9603900
+      "asset": "fakemod_permission.short_nosong.d9d1330101ce9ef0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short_nosong.d9d1330101ce9ef0.mp4",
+      "sha256": "d9d1330101ce9ef09cde027d042cdd7f3c1aa61416b31cd6736fa34eb200d359",
+      "bytes": 11309436
     }
   },
   "edit": {
     "caption": "why is every mob asking me for permission 💀",
     "red": "permission",
-    "startAt": "first:-0.05",
+    "startAt": "first:0.25",
     "deathScreen": true,
     "endAfter": "boom:0.8",
     "speed": [
@@ -109,6 +109,26 @@
       ]
     ],
     "cards": [
+      [
+        "fm1_click",
+        "DENIED",
+        0.6,
+        "red",
+        0,
+        {
+          "y": 0.16
+        }
+      ],
+      [
+        "fm2_click",
+        "DENIED",
+        0.6,
+        "red",
+        0,
+        {
+          "y": 0.16
+        }
+      ],
       [
         "fm3_result",
         "ALLOW",
@@ -277,8 +297,7 @@
           "ticks": "fm3_roll",
           "at": "fm3_result",
           "result": "Allow"
-        },
-        "scale": 4
+        }
       }
     ],
     "args": [
@@ -291,15 +310,15 @@
       "--speed",
       "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"]]",
       "--cards",
-      "[[\"fm3_result\",\"ALLOW\",0.9,\"green\",0,{\"y\":0.16}]]",
+      "[[\"fm1_click\",\"DENIED\",0.6,\"red\",0,{\"y\":0.16}],[\"fm2_click\",\"DENIED\",0.6,\"red\",0,{\"y\":0.16}],[\"fm3_result\",\"ALLOW\",0.9,\"green\",0,{\"y\":0.16}]]",
       "--popup",
-      "[{\"at\":[\"fm1_open\",\"fm1_click\",\"fm1_close\"],\"marks\":[\"fm1_hover0\"],\"mob\":\"zombie\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Zombie\",\"red\"],\" is asking for permission to attack you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"]},{\"at\":[\"fm2_open\",\"fm2_click\",\"fm2_close\"],\"marks\":[\"fm2_hover0\",\"fm2_hover1\"],\"mob\":\"skeleton\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Skeleton\",\"red\"],\" is asking for permission to shoot you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Allow\",\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"]},{\"at\":[\"fm3_open\",\"fm3_click\",\"fm3_close\"],\"marks\":[\"fm3_hover0\",\"fm3_hover1\",\"fm3_roll0\",\"fm3_roll1\",\"fm3_roll2\",\"fm3_roll3\",\"fm3_roll4\",\"fm3_roll5\",\"fm3_roll6\",\"fm3_roll7\",\"fm3_roll8\"],\"mob\":\"creeper\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Creeper\",\"red\"],\" is asking for permission to explode.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Roll\",\"hover\":[\"Deny\",\"Roll\"],\"done\":[\"The dice say: \",[\"ALLOW\",\"green\"]],\"roll\":{\"ticks\":\"fm3_roll\",\"at\":\"fm3_result\",\"result\":\"Allow\"},\"scale\":4}]",
+      "[{\"at\":[\"fm1_open\",\"fm1_click\",\"fm1_close\"],\"marks\":[\"fm1_hover0\"],\"mob\":\"zombie\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Zombie\",\"red\"],\" is asking for permission to attack you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"]},{\"at\":[\"fm2_open\",\"fm2_click\",\"fm2_close\"],\"marks\":[\"fm2_hover0\",\"fm2_hover1\"],\"mob\":\"skeleton\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Skeleton\",\"red\"],\" is asking for permission to shoot you.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Deny\",\"hover\":[\"Allow\",\"Deny\"],\"done\":[\"Request \",[\"DENIED\",\"red\"],\".\"]},{\"at\":[\"fm3_open\",\"fm3_click\",\"fm3_close\"],\"marks\":[\"fm3_hover0\",\"fm3_hover1\",\"fm3_roll0\",\"fm3_roll1\",\"fm3_roll2\",\"fm3_roll3\",\"fm3_roll4\",\"fm3_roll5\",\"fm3_roll6\",\"fm3_roll7\",\"fm3_roll8\"],\"mob\":\"creeper\",\"title\":\"Permission Request\",\"tag\":\"MobPerms\",\"text\":[\"A \",[\"Creeper\",\"red\"],\" is asking for permission to explode.\"],\"buttons\":[[\"Allow\",\"green\"],[\"Deny\",\"red\"],[\"Roll\",\"yellow\"]],\"pick\":\"Roll\",\"hover\":[\"Deny\",\"Roll\"],\"done\":[\"The dice say: \",[\"ALLOW\",\"green\"]],\"roll\":{\"ticks\":\"fm3_roll\",\"at\":\"fm3_result\",\"result\":\"Allow\"}}]",
       "--sfx",
       "[[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]]",
       "--death_screen",
       "death",
       "--start_at",
-      "first:-0.05",
+      "first:0.25",
       "--end_after",
       "boom:0.8"
     ]
@@ -312,13 +331,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 360,
-      "y": 76,
-      "z": -49
+      "x": 378,
+      "y": 81,
+      "z": -50
     },
     "biome": "minecraft:plains",
-    "ticks": 472,
-    "seconds": 23.6,
+    "ticks": 558,
+    "seconds": 27.9,
     "deaths": 1,
     "death_message": {
       "with": [
@@ -342,7 +361,7 @@
           }
         },
         {
-          "insertion": "a1289e10-2a00-4b83-b53b-762d85eafd9b",
+          "insertion": "32d01740-2c2d-4e9e-8fd1-4fa49d76d726",
           "hover_event": {
             "name": {
               "translate": "entity.minecraft.creeper"
@@ -350,10 +369,10 @@
             "action": "show_entity",
             "id": "minecraft:creeper",
             "uuid": [
-              -1591173616,
-              704662403,
-              -1254394323,
-              -2048197221
+              852498240,
+              741166750,
+              -1882107996,
+              -1653156058
             ]
           },
           "translate": "entity.minecraft.creeper"
@@ -367,280 +386,512 @@
         "event": "start"
       },
       {
-        "t": 2.05,
+        "t": 2.1,
         "event": "first"
       },
       {
-        "t": 2.85,
+        "t": 2.65,
         "event": "fm1_open"
       },
       {
-        "t": 2.85,
+        "t": 2.65,
         "event": "gui_freeze"
       },
       {
-        "t": 3.45,
+        "t": 3.25,
         "event": "fm1_hover"
       },
       {
-        "t": 3.45,
+        "t": 3.25,
         "event": "fm1_hover0"
       },
       {
-        "t": 3.95,
+        "t": 3.75,
         "event": "fm1_click"
       },
       {
-        "t": 4.35,
+        "t": 4.15,
         "event": "fm1_close"
       },
       {
-        "t": 4.35,
+        "t": 4.15,
         "event": "gui_thaw"
       },
       {
-        "t": 4.7,
-        "event": "mob_hurt"
+        "t": 5.15,
+        "event": "intr_deal"
+      },
+      {
+        "t": 5.15,
+        "event": "swing"
+      },
+      {
+        "t": 5.15,
+        "event": "mob_scale"
+      },
+      {
+        "t": 5.15,
+        "event": "mob_scale"
+      },
+      {
+        "t": 5.2,
+        "event": "mob_scale"
+      },
+      {
+        "t": 5.25,
+        "event": "actor"
+      },
+      {
+        "t": 5.25,
+        "event": "mob_scale"
+      },
+      {
+        "t": 5.3,
+        "event": "mob_scale"
       },
       {
         "t": 5.35,
-        "event": "mob_hurt"
+        "event": "mob_scale"
       },
       {
-        "t": 5.35,
-        "event": "mob_death"
+        "t": 5.4,
+        "event": "mob_scale"
       },
       {
-        "t": 5.35,
-        "event": "motion_start"
+        "t": 5.45,
+        "event": "intr_pickup"
+      },
+      {
+        "t": 5.75,
+        "event": "mob_scale"
+      },
+      {
+        "t": 5.75,
+        "event": "intr_bite"
+      },
+      {
+        "t": 5.75,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 5.95,
+        "event": "mob_scale"
+      },
+      {
+        "t": 5.95,
+        "event": "intr_bite"
+      },
+      {
+        "t": 5.95,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 6.15,
+        "event": "mob_scale"
+      },
+      {
+        "t": 6.15,
+        "event": "intr_bite"
+      },
+      {
+        "t": 6.15,
+        "event": "item_crumbs"
       },
       {
         "t": 6.35,
+        "event": "mob_scale"
+      },
+      {
+        "t": 6.35,
+        "event": "intr_bite"
+      },
+      {
+        "t": 6.35,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 6.55,
+        "event": "mob_scale"
+      },
+      {
+        "t": 6.55,
+        "event": "intr_bite"
+      },
+      {
+        "t": 6.55,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 6.75,
+        "event": "mob_scale"
+      },
+      {
+        "t": 6.75,
+        "event": "intr_bite"
+      },
+      {
+        "t": 6.75,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 6.95,
+        "event": "mob_scale"
+      },
+      {
+        "t": 6.95,
+        "event": "intr_bite"
+      },
+      {
+        "t": 6.95,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 7.05,
+        "event": "intr_bite"
+      },
+      {
+        "t": 7.05,
+        "event": "intr_gone"
+      },
+      {
+        "t": 7.25,
         "event": "zombie_dead"
       },
       {
-        "t": 6.35,
-        "event": "motion_settled"
-      },
-      {
-        "t": 6.5,
+        "t": 7.4,
         "event": "cut1a"
       },
       {
-        "t": 7.35,
+        "t": 9.55,
         "event": "cut1b"
       },
       {
-        "t": 7.55,
+        "t": 9.75,
         "event": "fm2_open"
       },
       {
-        "t": 7.55,
+        "t": 9.75,
         "event": "gui_freeze"
       },
       {
-        "t": 8.15,
+        "t": 10.35,
         "event": "fm2_hover"
       },
       {
-        "t": 8.15,
+        "t": 10.35,
         "event": "fm2_hover0"
       },
       {
-        "t": 8.65,
+        "t": 10.85,
         "event": "fm2_hover"
       },
       {
-        "t": 8.65,
+        "t": 10.85,
         "event": "fm2_hover1"
       },
       {
-        "t": 9.15,
+        "t": 11.35,
         "event": "fm2_click"
       },
       {
-        "t": 9.55,
+        "t": 11.75,
         "event": "fm2_close"
       },
       {
-        "t": 9.55,
+        "t": 11.75,
         "event": "gui_thaw"
       },
       {
-        "t": 10.9,
-        "event": "mob_hurt"
+        "t": 13.25,
+        "event": "intr_deal"
       },
       {
-        "t": 11.55,
-        "event": "mob_hurt"
+        "t": 13.25,
+        "event": "swing"
       },
       {
-        "t": 11.55,
-        "event": "mob_death"
+        "t": 13.25,
+        "event": "mob_scale"
       },
       {
-        "t": 11.55,
-        "event": "motion_start"
+        "t": 13.25,
+        "event": "mob_scale"
       },
       {
-        "t": 12.5,
-        "event": "skeleton_dead"
+        "t": 13.3,
+        "event": "mob_scale"
       },
       {
-        "t": 12.55,
-        "event": "motion_settled"
+        "t": 13.35,
+        "event": "actor"
       },
       {
-        "t": 12.65,
-        "event": "cut2a"
+        "t": 13.35,
+        "event": "mob_scale"
+      },
+      {
+        "t": 13.4,
+        "event": "mob_scale"
+      },
+      {
+        "t": 13.45,
+        "event": "mob_scale"
       },
       {
         "t": 13.5,
+        "event": "mob_scale"
+      },
+      {
+        "t": 13.55,
+        "event": "intr_pickup"
+      },
+      {
+        "t": 13.85,
+        "event": "mob_scale"
+      },
+      {
+        "t": 13.85,
+        "event": "intr_bite"
+      },
+      {
+        "t": 13.85,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 14.05,
+        "event": "mob_scale"
+      },
+      {
+        "t": 14.05,
+        "event": "intr_bite"
+      },
+      {
+        "t": 14.05,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 14.25,
+        "event": "mob_scale"
+      },
+      {
+        "t": 14.25,
+        "event": "intr_bite"
+      },
+      {
+        "t": 14.25,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 14.45,
+        "event": "mob_scale"
+      },
+      {
+        "t": 14.45,
+        "event": "intr_bite"
+      },
+      {
+        "t": 14.45,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 14.65,
+        "event": "mob_scale"
+      },
+      {
+        "t": 14.65,
+        "event": "intr_bite"
+      },
+      {
+        "t": 14.65,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 14.85,
+        "event": "mob_scale"
+      },
+      {
+        "t": 14.85,
+        "event": "intr_bite"
+      },
+      {
+        "t": 14.85,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 15.05,
+        "event": "mob_scale"
+      },
+      {
+        "t": 15.05,
+        "event": "intr_bite"
+      },
+      {
+        "t": 15.05,
+        "event": "item_crumbs"
+      },
+      {
+        "t": 15.15,
+        "event": "intr_bite"
+      },
+      {
+        "t": 15.15,
+        "event": "intr_gone"
+      },
+      {
+        "t": 15.35,
+        "event": "skeleton_dead"
+      },
+      {
+        "t": 15.5,
+        "event": "cut2a"
+      },
+      {
+        "t": 17.75,
         "event": "cut2b"
       },
       {
-        "t": 13.7,
+        "t": 17.95,
         "event": "fm3_open"
       },
       {
-        "t": 13.7,
+        "t": 17.95,
         "event": "gui_freeze"
       },
       {
-        "t": 14.3,
+        "t": 18.55,
         "event": "fm3_hover"
       },
       {
-        "t": 14.3,
+        "t": 18.55,
         "event": "fm3_hover0"
       },
       {
-        "t": 14.8,
+        "t": 19.05,
         "event": "fm3_hover"
       },
       {
-        "t": 14.8,
+        "t": 19.05,
         "event": "fm3_hover1"
       },
       {
-        "t": 15.3,
+        "t": 19.55,
         "event": "fm3_click"
       },
       {
-        "t": 15.4,
+        "t": 19.65,
         "event": "fm3_roll"
       },
       {
-        "t": 15.4,
+        "t": 19.65,
         "event": "fm3_roll0"
       },
       {
-        "t": 15.5,
+        "t": 19.75,
         "event": "fm3_roll"
       },
       {
-        "t": 15.5,
+        "t": 19.75,
         "event": "fm3_roll1"
       },
       {
-        "t": 15.6,
+        "t": 19.85,
         "event": "fm3_roll"
       },
       {
-        "t": 15.6,
+        "t": 19.85,
         "event": "fm3_roll2"
       },
       {
-        "t": 15.75,
+        "t": 20,
         "event": "fm3_roll"
       },
       {
-        "t": 15.75,
+        "t": 20,
         "event": "fm3_roll3"
       },
       {
-        "t": 15.9,
+        "t": 20.15,
         "event": "fm3_roll"
       },
       {
-        "t": 15.9,
+        "t": 20.15,
         "event": "fm3_roll4"
       },
       {
-        "t": 16.1,
+        "t": 20.35,
         "event": "fm3_roll"
       },
       {
-        "t": 16.1,
+        "t": 20.35,
         "event": "fm3_roll5"
       },
       {
-        "t": 16.35,
+        "t": 20.6,
         "event": "fm3_roll"
       },
       {
-        "t": 16.35,
+        "t": 20.6,
         "event": "fm3_roll6"
       },
       {
-        "t": 16.65,
+        "t": 20.9,
         "event": "fm3_roll"
       },
       {
-        "t": 16.65,
+        "t": 20.9,
         "event": "fm3_roll7"
       },
       {
-        "t": 17,
+        "t": 21.25,
         "event": "fm3_roll"
       },
       {
-        "t": 17,
+        "t": 21.25,
         "event": "fm3_roll8"
       },
       {
-        "t": 17,
+        "t": 21.25,
         "event": "fm3_result"
       },
       {
-        "t": 17.6,
+        "t": 21.85,
         "event": "fm3_close"
       },
       {
-        "t": 17.6,
+        "t": 21.85,
         "event": "gui_thaw"
       },
       {
-        "t": 17.8,
+        "t": 22.05,
         "event": "ignite"
       },
       {
-        "t": 19.05,
+        "t": 23.35,
         "event": "hurt",
         "type": "player_explosion"
       },
       {
-        "t": 19.05,
+        "t": 23.35,
         "event": "death"
       },
       {
-        "t": 19.05,
+        "t": 23.35,
         "event": "motion_start"
       },
       {
-        "t": 19.1,
+        "t": 23.4,
         "event": "boom"
       },
       {
-        "t": 20.05,
+        "t": 24.35,
         "event": "motion_settled"
       },
       {
-        "t": 20.05,
+        "t": 24.35,
         "event": "settle"
       },
       {
-        "t": 23.6,
+        "t": 27.9,
         "event": "end"
       }
     ]
@@ -648,49 +899,52 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "f79e31205c008e4a7bf4500a981aee9c714c51f8",
+    "commit": "91f02d4691de6cdfb3e50afc2dadf4332869fa71",
     "rendered": "local",
-    "rendered_at": "2026-11-12T04:36:14.671Z",
-    "head_at_publish": "7665b087ae78773773a6c485bd986b0f47ea871b",
+    "rendered_at": "2026-11-12T05:40:19.059Z",
+    "head_at_publish": "91f02d4691de6cdfb3e50afc2dadf4332869fa71",
     "stunt": "stunts/fakemod_permission.js",
     "source_snapshot": [
       "source/fakemod_permission.js",
       "source/plateau.js",
       "source/fakemod.js",
-      "source/act.js",
+      "source/interrupt.js",
+      "source/story.js",
       "source/motion.js",
-      "source/sight.js"
+      "source/sight.js",
+      "source/act.js",
+      "source/boats.js"
     ]
   },
   "rebuild": [
-    "git checkout f79e31205c00",
+    "git checkout 91f02d4691de",
     "gunzip -c shorts/fakemod_permission/recording.json.gz > work/fakemod_permission.rec.json",
     "node render.js work/fakemod_permission.rec.json work/fakemod_permission.frames 60 1080 1011",
     "python3 audio.py work/fakemod_permission.rec.json work/fakemod_permission.wav",
-    "python3 edit.py --frames work/fakemod_permission.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakemod_permission.rec.json --audio work/fakemod_permission.wav --caption \"why is every mob asking me for permission 💀\" --self_name 56e --red permission --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"]] --cards [[\"fm3_result\",\"ALLOW\",0.9,\"green\",0,{\"y\":0.16}]] --popup \"[{\\\"at\\\":[\\\"fm1_open\\\",\\\"fm1_click\\\",\\\"fm1_close\\\"],\\\"marks\\\":[\\\"fm1_hover0\\\"],\\\"mob\\\":\\\"zombie\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Zombie\\\",\\\"red\\\"],\\\" is asking for permission to attack you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm2_open\\\",\\\"fm2_click\\\",\\\"fm2_close\\\"],\\\"marks\\\":[\\\"fm2_hover0\\\",\\\"fm2_hover1\\\"],\\\"mob\\\":\\\"skeleton\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Skeleton\\\",\\\"red\\\"],\\\" is asking for permission to shoot you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Allow\\\",\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm3_open\\\",\\\"fm3_click\\\",\\\"fm3_close\\\"],\\\"marks\\\":[\\\"fm3_hover0\\\",\\\"fm3_hover1\\\",\\\"fm3_roll0\\\",\\\"fm3_roll1\\\",\\\"fm3_roll2\\\",\\\"fm3_roll3\\\",\\\"fm3_roll4\\\",\\\"fm3_roll5\\\",\\\"fm3_roll6\\\",\\\"fm3_roll7\\\",\\\"fm3_roll8\\\"],\\\"mob\\\":\\\"creeper\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Creeper\\\",\\\"red\\\"],\\\" is asking for permission to explode.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Roll\\\",\\\"hover\\\":[\\\"Deny\\\",\\\"Roll\\\"],\\\"done\\\":[\\\"The dice say: \\\",[\\\"ALLOW\\\",\\\"green\\\"]],\\\"roll\\\":{\\\"ticks\\\":\\\"fm3_roll\\\",\\\"at\\\":\\\"fm3_result\\\",\\\"result\\\":\\\"Allow\\\"},\\\"scale\\\":4}]\" --sfx [[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]] --death_screen death --start_at first:-0.05 --end_after boom:0.8 --out out/fakemod_permission.mp4"
+    "python3 edit.py --frames work/fakemod_permission.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakemod_permission.rec.json --audio work/fakemod_permission.wav --caption \"why is every mob asking me for permission 💀\" --self_name 56e --red permission --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"]] --cards [[\"fm1_click\",\"DENIED\",0.6,\"red\",0,{\"y\":0.16}],[\"fm2_click\",\"DENIED\",0.6,\"red\",0,{\"y\":0.16}],[\"fm3_result\",\"ALLOW\",0.9,\"green\",0,{\"y\":0.16}]] --popup \"[{\\\"at\\\":[\\\"fm1_open\\\",\\\"fm1_click\\\",\\\"fm1_close\\\"],\\\"marks\\\":[\\\"fm1_hover0\\\"],\\\"mob\\\":\\\"zombie\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Zombie\\\",\\\"red\\\"],\\\" is asking for permission to attack you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm2_open\\\",\\\"fm2_click\\\",\\\"fm2_close\\\"],\\\"marks\\\":[\\\"fm2_hover0\\\",\\\"fm2_hover1\\\"],\\\"mob\\\":\\\"skeleton\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Skeleton\\\",\\\"red\\\"],\\\" is asking for permission to shoot you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Allow\\\",\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm3_open\\\",\\\"fm3_click\\\",\\\"fm3_close\\\"],\\\"marks\\\":[\\\"fm3_hover0\\\",\\\"fm3_hover1\\\",\\\"fm3_roll0\\\",\\\"fm3_roll1\\\",\\\"fm3_roll2\\\",\\\"fm3_roll3\\\",\\\"fm3_roll4\\\",\\\"fm3_roll5\\\",\\\"fm3_roll6\\\",\\\"fm3_roll7\\\",\\\"fm3_roll8\\\"],\\\"mob\\\":\\\"creeper\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Creeper\\\",\\\"red\\\"],\\\" is asking for permission to explode.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Roll\\\",\\\"hover\\\":[\\\"Deny\\\",\\\"Roll\\\"],\\\"done\\\":[\\\"The dice say: \\\",[\\\"ALLOW\\\",\\\"green\\\"]],\\\"roll\\\":{\\\"ticks\\\":\\\"fm3_roll\\\",\\\"at\\\":\\\"fm3_result\\\",\\\"result\\\":\\\"Allow\\\"}}]\" --sfx [[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]] --death_screen death --start_at first:0.25 --end_after boom:0.8 --out out/fakemod_permission.mp4"
   ],
   "status": "ready",
-  "notes": "fakemod v3 (owner: bigger popup, r:rb35549): the creeper's popup at scale 4 with its face framed under it, the roll's ALLOW/DENY at double size, and a big green ALLOW card on the result, then the boom. Fix-check READY: readable at 360x640, no regressions vs v2. Nits: the zombie and skeleton popups are still the smaller scale; a 1-frame dup in the card pop at 13.38 s.",
-  "published_at": "2026-11-12T04:37:48.757Z",
+  "notes": "fakemod v4 (owner: you eat the mob; bigger popups): DENY -> eat the zombie and the skeleton bite by bite (pickupEat), every popup big with a red DENIED / green ALLOW card, the creeper's Roll -> ALLOW -> boom. Fix-checks READY. Nits: bare arm renders sleeve-cyan, shrink happens below frame, skeleton purple at dusk, DENIED fade lingers.",
+  "published_at": "2026-11-12T05:42:02.532Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T04:38:12+00:00",
+    "at": "2026-11-12T05:42:25+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 16.17 s vs the reviewed render 16.17 s"
+      "summary": "short.mp4 17.43 s vs the reviewed render 17.42 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 6,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T04:36:30.020Z",
+      "at": "2026-11-12T05:40:33.947Z",
       "report": "work/hb/fakemod_permission.check.json"
     },
     "key_sounds": "n/a"
