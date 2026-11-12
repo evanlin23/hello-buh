@@ -253,7 +253,7 @@ module.exports = {
     // the crop); the north road at night by the lantern post; climbing onto the island's far beach. In each the wolf is
     // already at his side on the cut (owner, 2026-11-11: "we can see the dog teleport": no pop on screen)
     if (once('L03wheat', true)) { await scut(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6), { shot: 'wheat_cam', after: moveWith({ x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 }) }); sneak(true) }   // (normally done in L02's last ticks)
-    await line('L03', async (k, at) => {
+    await line('L03', async (k, at, n) => {
       if (k < at.cut(1)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
       if (once('L03cut1', k >= at.cut(1))) {
         sneak(false)
@@ -265,14 +265,16 @@ module.exports = {
         K.go(false)
         await scut(67.6, 14.2, P(70.6, 64.5 - F, 13.6), 64 - F, { shot: 'beach', time: GOLD, after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // the wolf already on the sand, 3 blocks from where he climbs out
       }
-      if (k > at.cut(2)) { if (buh.x > 68.6) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
+      if (k > at.cut(2) && k < n - 6) { if (buh.x > 68.6) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
+      // the cut to the road in L03's last ticks (at L04's start it waited for the cast: L04's caption 0.23 s after its voice, 'But' uncaptioned)
+      if (once('L04road', k >= n - 6)) { await scut(23.6, -4.3, P(10, gy(10, -4.3) + 0.6, -4.3), gy(23.6, -4.3), { shot: 'other_wolf', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 23.6, z: -5.3, y: gy(23.6, -5.3), yaw: 90, pitch: 5 }) }); K.go(true) }
+      if (k > n - 6) { walkG(buh, -0.2, 0); buh.pitch = 5; autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 10, buh.y + 0.6, -4.3)); look(k) }
     })
 
     // L04 "But SITTING? / I STAY put. / He NEVER / makes me SIT.": the village road, another tamed wolf sitting alone
     // outside an empty house; Buh walks by with his wolf, stops and looks at it. L05 "He SAYS / a WAITING dog / is a
     // SAD dog. / He WANTS me / to FORGET him." (r6: the motive): the same shot: he walks on, his own wolf at his side
-    await scut(23.6, -4.3, P(10, gy(10, -4.3) + 0.6, -4.3), gy(23.6, -4.3), { shot: 'other_wolf', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 23.6, z: -5.3, y: gy(23.6, -5.3), yaw: 90, pitch: 5 }) })
-    K.go(true)
+    if (once('L04road', true)) { await scut(23.6, -4.3, P(10, gy(10, -4.3) + 0.6, -4.3), gy(23.6, -4.3), { shot: 'other_wolf', time: GOLD, self: [{ sitting: false }, EYE], after: moveWith({ x: 23.6, z: -5.3, y: gy(23.6, -5.3), yaw: 90, pitch: 5 }) }); K.go(true) }   // (normally done in L03's last ticks)
     await line('L04', async (k, at) => {
       const walking = k < at(1)
       if (walking) { walkG(buh, -0.2, 0); buh.pitch = 5; autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 10, buh.y + 0.6, -4.3)) }
