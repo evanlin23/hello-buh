@@ -26,7 +26,7 @@
     "tense",
     "eerie"
   ],
-  "payoff": "S13+2.0",
+  "payoff": "L13 'RED' (S13, about +2.8 s)",
   "look": {
     "time": 1000,
     "fog": false,
@@ -146,12 +146,12 @@
     {
       "under": "S13",
       "sound": "entity.evoker.prepare_wololo",
-      "note": "+0.0 s, as the arms go up (vanilla plays it as the 40-tick warm-up starts), under 'A grey MAN'"
+      "note": "2.0 s (40 ticks) before L13's 'RED' begins, as the arms go up (around 'raised his ARMS'): vanilla plays it as the warm-up starts"
     },
     {
       "under": "S13",
       "sound": "entity.evoker.cast_spell",
-      "note": "+2.0 s: the lamb turns red on the cast tick, on L13's 'RED' (the hit)"
+      "note": "on L13's 'RED' (the cast tick): the lamb turns red (the hit)"
     }
   ],
   "lines": [
@@ -349,7 +349,7 @@
         "what": "prop:evoker",
         "word": "MAN"
       },
-      "note": "THE REVEAL, said plainly: wonder, not fear, just telling what she saw; placed so 'RED' lands on the cast tick (S13+2.0)"
+      "note": "THE REVEAL, said plainly: wonder, not fear, just telling what she saw; the spell is timed from this take ('RED' = the cast tick, warm-up 2.0 s before it)"
     }
   ],
   "shots": [
@@ -459,7 +459,7 @@
       "size": "wide",
       "time": 12200,
       "camera": "at: (-1.5, 1.8, 2.5) clearing-relative, behind and to the RIGHT of the kid (who faces east; right is +z), aimed at the evoker (7.5, 1.0, -6), FOV 35 (the evoker about a quarter of the frame height, the lamb low in frame under it); the trunk that hides the evoker from K (the log column x 1..2, z -2..-1) clears this camera's line by about 0.6 blocks; the cut lands 1.0 s after L13's 'RED'",
-      "frame": "The reveal, one continuous wide under L13 (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, then the cast; the spellcasting pose lasts 60 ticks from the start). fg: the kid's right shoulder (the lead in her hand); the evoker is 8.5 blocks from the lamb (inside its 16-block spell range) and 9.6 from the kid (inside its 12-block follow range), level with both; mid: the lamb, still blue; subject: the evoker between the trunks, looking at the lamb. +0.0 s: its ARMS go up and wave (spellcasting pose), brownish-orange spell particles at its hands only, prepare_wololo, under 'A grey MAN in the trees raised his ARMS'. +2.0 s: the lamb's wool turns from blue to RED on the cast tick, on L13's 'RED' (cast-spell sound; no puff on the sheep) = THE REVEAL. +3.0 s: the pose ends, its arms come down and its head turns to the lens: it sees her. CUT there (1.0 s after the reveal). No line after L13. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
+      "frame": "The reveal, one continuous wide under L13 (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, then the cast; the spellcasting pose lasts 60 ticks from the start). fg: the kid's right shoulder (the lead in her hand); the evoker is 8.5 blocks from the lamb (inside its 16-block spell range) and 9.6 from the kid (inside its 12-block follow range), level with both; mid: the lamb, still blue; subject: the evoker between the trunks, standing still, looking at the lamb, under 'A grey man in the trees'. Timed from the RECORDED line (L13 is 14 words; 'RED' lands about 2.7-3.0 s in): the 40-tick warm-up starts 2.0 s before the word 'RED' begins: its ARMS go up and wave (spellcasting pose) around 'raised his ARMS', brownish-orange spell particles at its hands only, prepare_wololo. On 'RED' (the cast tick): the lamb's wool turns from blue to RED (cast-spell sound; no puff on the sheep) = THE REVEAL. 'RED' + 1.0 s: the 60-tick pose ends, its arms come down and its head turns to the lens: it sees her. CUT there (1.0 s after 'RED' begins). No line after L13. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
     }
   ],
   "props": {
@@ -493,7 +493,7 @@
   "ending": {
     "after": "L13",
     "beats": [
-      "S13 under L13: the evoker's arms go up ('A grey MAN in the trees raised his ARMS'); +2.0 s the lamb's wool turns red on 'RED' (the reveal, said, and her wish for a red one granted); +3.0 s its arms drop and its head turns to the lens; cut."
+      "S13 under L13: the evoker still under 'A grey man in the trees'; its arms go up 2.0 s before 'RED' (around 'raised his ARMS'); on 'RED' the lamb's wool turns red (the reveal, said, and her wish for a red one granted); 'RED' + 1.0 s its arms drop and its head turns to the lens; cut."
     ],
     "loop": "'...my lamb turned RED.' -> 'All SIXTY sheep in our village are BLUE. And nobody will tell me WHY.': line 1's why is answered; sixty blue sheep are sixty alarms"
   },

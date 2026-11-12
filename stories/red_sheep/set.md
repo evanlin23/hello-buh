@@ -15,7 +15,7 @@ top. No site search and no clearing (STANDARDS 3.5).
 | I forgot to shut the gate, my lamb got out | L09 | S09: the gate open in frame, the lamb outside it |
 | Dad says never go in the woods | L10 | S10: Dad (13 blocks out, in the field) and the woods both in frame |
 | (went in) | L11 | S11: birch trunks all round, the lamb ahead |
-| a grey man in the trees raised his arms, my lamb turned red | L13 | S13: the evoker between the trunks, arms going up under 'MAN'/'ARMS'; the lamb blue, then red on 'RED' |
+| a grey man in the trees raised his arms, my lamb turned red | L13 | S13: the evoker between the trunks, arms going up around 'ARMS' (2.0 s before 'RED'); the lamb blue, then red on 'RED' |
 
 ## The world (docs/world/map.json, as of day 2300)
 `world.build(ctx, { story: 'red_sheep' })` now builds, from Ravenford's stamps: Grandpa's house and yard
@@ -51,7 +51,7 @@ gate (a fence gate, lantern post) in the palisade at (0, 0, 15).
   cue, with the sounds and particles placed by hand on vanilla's timing (bible "The mechanic").
 - **The birch:** check the seed has birch at +45..+56 next to the tower's slope (+44, +40); stamp birch trunks there if not.
 - **The order matters:** the colour spell only fires while the evoker has NO target, and the kid at 9.6 blocks in view would be targeted first. Either keep her out of its sight until the cast starts (the trunk; `/team` or a later spawn of the camera player), or script it: `NoAI` + the raised-arms pose, the lamb's colour set with `/data` on the cast tick, the sounds placed on vanilla's timing.
-- **No fangs and no vexes on screen:** the shot cuts at +3.0 s (1.0 s after 'RED'). Real AI would summon vexes next; if real AI is used, the cut lands before they appear.
+- **No fangs and no vexes on screen:** the shot cuts 1.0 s after 'RED'. Real AI would summon vexes next; if real AI is used, the cut lands before they appear.
 
 ## Engine checks before building (see the engine gaps in reviews/r3-engine.md)
 - Sheep colour change mid-shot read per frame.

@@ -3,7 +3,7 @@
 **Ending first (the reveal frame, S13):** a low wide over the kid's shoulder in the birch woods. The blue lamb 2.5
 blocks ahead; 8 blocks beyond it an evoker raises its arms, brown-orange particles at its hands. The kid says it plainly:
 "A grey man in the trees raised his ARMS, and my lamb turned RED." On 'RED' the lamb turns red (the red one she came to
-find). 1 s later the arms drop and its head turns to us: it sees her. Cut.
+find). 1 s after 'RED' the arms drop and its head turns to us: it sees her. Cut.
 
 **The format beats (docs/story_format.md):** 1 the fact + the why, L01 ("All SIXTY sheep... are BLUE. And nobody will
 tell me WHY."); 2 five two-way clues, L02-L07; 3 the kid wants to know (L01, L10 "He never even says WHY"); 4 someone
@@ -13,7 +13,7 @@ in one plain sentence, L13; 7 one beat (the evoker's look), cut; "turned RED" lo
 **Spine.** Every day Dad dyes every sheep blue and counts them every night, and his kid thinks he just loves blue.
 One spring a sheep came back from the woods red, the prettiest one ever, and Dad sat at the gate with a crossbow
 (waiting for more, she thinks). Because of that, when she forgets the gate and her lamb gets out, she follows it into
-the woods Dad is "so boring" about, happily, to find more red ones. Until finally her lamb turns red in front of her:
+the woods Dad never explains, happily, to find more red ones. Until finally her lamb turns red in front of her:
 the alarm goes off with her standing in it.
 
 **Naivety (STANDARDS 0a, r:rb89776).** Every clue gets the kid's innocent reading on a line; she is bright and happy
@@ -42,7 +42,7 @@ turns sheep red until S13, where the kid says it.
 casual viewer can't read, and a sixth clue (the format wants 3-5).
 
 ## Easter egg
-The old watchtower on the Ridge (`raven_tower`) on S01's skyline. Never named.
+`totem_wall`: Grandpa's totems glinting through his west south window in S04's background, Grandpa on his bench (never named). The old watchtower on the Ridge on S01's skyline is geography, not the egg.
 
 ## How it differs from Light Sleeper (same shape: a hidden mob shown at the end)
 - **The reveal is a visible rule, not a monster.** The colour change happens on screen, cause and effect in one

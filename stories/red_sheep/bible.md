@@ -35,7 +35,7 @@
   start; the colour changes after the 40-tick warm-up (with the cast-spell sound); the arms stay up until the 60-tick
   cast ends (so they drop ~1 s AFTER the colour change). The evoker looks at the sheep while casting.
 - Then it has a target (the kid: players are on its list; it hadn't seen her, she came up behind trunks): the cast
-  ends at tick 60, its arms drop and it looks at her. **The Short cuts there** (S13 +3.0 s, 1.0 s after the colour change on L13's 'RED'). Nothing after: real AI
+  ends at tick 60, its arms drop and it looks at her. **The Short cuts there** (1.0 s after L13's 'RED' begins; the spell is timed from the recorded line: warm-up starts 2.0 s before 'RED', the colour changes on 'RED'). Nothing after: real AI
   would summon vexes next (EvokerSummonSpellGoal, priority 4, beats the fangs at 5), so no fangs are shown.
 - No particle puff on the sheep: the wool just changes on the cast tick; the spell particles are at the evoker's hands.
 - Particles: wololo brownish-orange (spell colour 0.7, 0.5, 0.2), from the hands.
@@ -65,11 +65,11 @@
   no armour, the lead selected (held: she means to bring the lamb back), the same 9-slot bar in every POV shot (story.json `hotbar`).
 - **Dad:** a player actor, `sunny` skin (not `kai`: Six Thousand Torches' Jonah). Blue dye in hand S02-S03; crossbow S06 (legs and crossbow only) and S07 (in his off hand, on the camera's side); a
   lantern on the post in S05 (not in his hand); empty-handed, mending the field fence outside the palisade in S10 (13 blocks from the lens, facing south).
-- **The lamb:** a baby sheep, `Color:11` blue from S01 (unsingled) to S12; red only from S13 +2.0 s (on L13's 'RED'). `PersistenceRequired`.
+- **The lamb:** a baby sheep, `Color:11` blue from S01 (unsingled) to S12; red only from L13's 'RED' (S13, the cast tick). `PersistenceRequired`.
 - **The flock:** 60 sheep, all blue in every shot (no white, no other colour) except the stray in S02 (white until
   'GATE') and the one red sheep in S06.
 - **The evoker:** vanilla, only in S13. Not in frame, not as a silhouette, not as particles before S13. Its arms go up and its
-  prepare sound plays on S13's first frame (under L13), not before.
+  prepare sound plays 2.0 s before L13's 'RED' (around 'raised his ARMS'), never before S13.
 
 ## Props
 | prop | state | shots |
