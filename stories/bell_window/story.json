@@ -85,8 +85,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Every time / I open my WINDOW, / the BELL RINGS. / And nobody / will tell me / WHY.",
-   "say": "Every time I open my window, the bell RINGS. And nobody will tell me WHY.",
+   "text": "In my village, / the bell RINGS / every time / I open my WINDOW. / And nobody / will tell me / WHY.",
+   "say": "In my village, the bell RINGS every time I open my window. And nobody will tell me WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -500,7 +500,7 @@
    "S07: the bell rings; he climbs out past it onto the porch roof and waves",
    "S08 under L11: over the skeleton's shoulder down the axis: the bell with tonight's arrow in it, the kid clear of it; it draws on 'WAY'; cut 1.0 s after the `draw` mark."
   ],
-  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'Every time I open my WINDOW, the BELL RINGS.': the bell rang because it was in the way"
+  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'In my village, the bell RINGS every time I open my WINDOW.': the bell rang because it was in the way"
  },
  "bible": "stories/bell_window/bible.md",
  "beats": "stories/bell_window/beats.md",

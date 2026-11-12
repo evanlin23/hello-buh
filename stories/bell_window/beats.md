@@ -14,7 +14,7 @@ of it, waving. The skeleton raises its bow and draws, under the one spoken revea
 - **Until finally,** from the cliff we see it, and he says it: "He had a BOW, and this time the bell wasn't in the WAY." The bell that was in the way every time is not in the way now.
 
 ## The format (docs/story_format.md)
-1. Fact + why, out loud: L01 "Every time I open my WINDOW, the BELL RINGS. And nobody will tell me WHY."
+1. Fact + why, out loud: L01 "In my village, the bell RINGS every time I open my WINDOW. And nobody will tell me WHY."
 2. Quick two-way clues: the village runs inside (L02), only his window (L03), Mom's shutters (L06), the pale guy in the shade (L08), the feather (L09).
 3. He wants to know: "nobody will tell me WHY" (L01), "Mom won't SAY why" (L05).
 4. Someone loved at stake: the kid himself, Mom's "honey" (L06): she keeps his shutters shut.
@@ -28,7 +28,7 @@ The kid is cheerful from the first word to "HI": no hint, no fear, no foreshadow
 ## Beat sheet (~108 words, ~36-40 s at Pip's pace, cut 1.0 s after L11)
 | beat | line | picture | plants |
 |---|---|---|---|
-| **the question** (0-3 s) | L01 "Every time I open my WINDOW, the BELL RINGS. And nobody will tell me WHY." (punch) | S01 POV: shutters open, the bell centred 3 blocks out rings | why does a window ring a bell? |
+| **the question** (0-3 s) | L01 "In my village, the bell RINGS every time I open my WINDOW. And nobody will tell me WHY." (punch) | S01 POV: shutters open, the bell centred 3 blocks out rings | why does a window ring a bell? |
 | worse | L02 "The WHOLE village runs INSIDE. Everybody's so SHY." | S01: villagers run for their doors | they're scared, not shy (vanilla: a rung bell sends villagers home) |
 | only me | L03-L04 "Three hundred NIGHTS, and it only rings for MY window. I think the bell LIKES me." | **S02 the axis**: window, bell, dark cliff in one line | it's about him; the line of fire, hidden |
 | the plant | L05-L06 "Mom won't SAY why. She just goes:" / Mom: "Shutters SHUT, honey." | S03 Mom (unarmed) at his door | Mom knows: shut = safe |
