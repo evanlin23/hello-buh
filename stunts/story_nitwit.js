@@ -178,8 +178,10 @@ module.exports = {
     await line('L03', async (k, at) => {
       if (k === at(3)) hmm(0.6)
       nRoof.yaw = 90 + Math.sin(ctx.tick / 6) * 35; nRoof.pitch = k >= at(3) ? 25 : 0
-      look(k, 0, 0.04 * K.ease(k / 30))
+      K.go(k > 2 && k < 34)   // a few steps across the plaza toward the cottage
+      K.base = K.aim(face(nRoof)); look(k)
     })
+    K.go(false)
 
     // L04: under a tree (day); that night lightning splits it
     const tg = this.treeY
