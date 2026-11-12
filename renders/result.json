@@ -1,0 +1,17 @@
+{
+ "name": "end_portal_job",
+ "stunt": "end_portal_job",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43169216350",
+ "source": "cabbe52",
+ "queued": "2026-11-12T06:35:36Z",
+ "finished": "2026-11-12T06:43:24Z",
+ "mp4": "renders/out/end_portal_job.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

@@ -1,0 +1,846 @@
+{
+ "stunt": "end_portal_job",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/end_portal_job.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "7 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 242,
+     "col": 15,
+     "text": "await bot.look(e.yaw + dy * ease, e.pitch + (pitch - e.pitch) * ease, true)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 246,
+     "col": 9,
+     "text": "bot.setControlState('forward', [-1, 0, 1].includes(oct)); bot.setControlState('back', [3, 4, -4, -3].includes(oct))",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 247,
+     "col": 9,
+     "text": "bot.setControlState('left', [1, 2, 3].includes(oct)); bot.setControlState('right', [-1, -2, -3].includes(oct))",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 259,
+     "col": 13,
+     "text": "await bot.lookAt(tgt, true)   // exactly on the frame (the ease aims from where it started)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 279,
+     "col": 26,
+     "text": "await ctx.cmd(`/tp @s ${X + 2.5} ${floor + 1} ${z + 2.5} 26.6 39`)",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    },
+    {
+     "line": 295,
+     "col": 24,
+     "text": "await ctx.cmd(`/tp @s ${X + 2.5} ${front} ${z + 5.6} 180 40`)",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    },
+    {
+     "line": 317,
+     "col": 24,
+     "text": "await ctx.cmd(`/tp @s ${sp.x + 2.5} ${fy} ${sp.z + 6.6} 180 35`)",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  1 camera shot(s), 3.7s: POV checks skipped there (1 held); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/end_portal_job.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT end_portal_job: 2 shots, scene 0.0-37.0 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-34.4  pov    ",
+    "  sea_e         34.4-37.0  at     (no subject: add subject: [...] to check its framing)",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 4 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 5,
+     "shot": 2,
+     "line": null,
+     "kind": "blocks",
+     "msg": "1 block(s) in view changed during the cut (e.g. dirt at -415 114 -786): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 24.7,
+     "shot": 11,
+     "line": null,
+     "kind": "blocks",
+     "msg": "1 block(s) in view changed during the cut (e.g. dirt at -442 121 -705): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 29.95,
+     "shot": 14,
+     "line": null,
+     "kind": "blocks",
+     "msg": "1 block(s) in view changed during the cut (e.g. dirt at -394 116 -760): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 30.833,
+     "shot": 15,
+     "line": null,
+     "kind": "blocks",
+     "msg": "1 block(s) in view changed during the cut (e.g. dirt at -422 119 -743): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "16 warning(s) over 16 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 75% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 5,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 6.083,
+     "shot": 3,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 74% of the frame is within 3 blocks (grass_block, end_portal_frame)"
+    },
+    {
+     "level": "WARN",
+     "out": 6.083,
+     "shot": 3,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (no cast, median depth 2.2 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 10.567,
+     "shot": 4,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, dirt)"
+    },
+    {
+     "level": "WARN",
+     "out": 11.65,
+     "shot": 5,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 74% of the frame is within 3 blocks (grass_block, end_portal_frame)"
+    },
+    {
+     "level": "WARN",
+     "out": 15.583,
+     "shot": 6,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 16.467,
+     "shot": 7,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 74% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 19.95,
+     "shot": 8,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 20.833,
+     "shot": 9,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 74% of the frame is within 3 blocks (grass_block, end_portal_frame)"
+    },
+    {
+     "level": "WARN",
+     "out": 23.817,
+     "shot": 10,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, dirt)"
+    },
+    {
+     "level": "WARN",
+     "out": 24.7,
+     "shot": 11,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 74% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 27.133,
+     "shot": 12,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, dirt)"
+    },
+    {
+     "level": "WARN",
+     "out": 28.017,
+     "shot": 13,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 74% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 29.95,
+     "shot": 14,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 67% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 30.833,
+     "shot": 15,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 69% of the frame is within 3 blocks (end_portal_frame, grass_block)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 25 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 6.567,
+     "tick": 155,
+     "line": null,
+     "msg": "the view whips at 248 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 7.767,
+     "tick": 179,
+     "line": null,
+     "msg": "the view whips at 248 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 9.017,
+     "tick": 204,
+     "line": null,
+     "msg": "the view whips at 248 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 10.217,
+     "tick": 228,
+     "line": null,
+     "msg": "the view whips at 248 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 12.083,
+     "tick": 274,
+     "line": null,
+     "msg": "the view whips at 259 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 13.133,
+     "tick": 295,
+     "line": null,
+     "msg": "the view whips at 259 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 14.183,
+     "tick": 316,
+     "line": null,
+     "msg": "the view whips at 259 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 15.233,
+     "tick": 337,
+     "line": null,
+     "msg": "the view whips at 259 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 16.85,
+     "tick": 378,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 155 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 17.5,
+     "tick": 391,
+     "line": null,
+     "msg": "the view whips at 274 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 18.1,
+     "tick": 403,
+     "line": null,
+     "msg": "the view whips at 276 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 18.65,
+     "tick": 414,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 155 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 19.3,
+     "tick": 427,
+     "line": null,
+     "msg": "the view whips at 274 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 21.217,
+     "tick": 474,
+     "line": null,
+     "msg": "the view whips at 347 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 21.717,
+     "tick": 484,
+     "line": null,
+     "msg": "the view whips at 245 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 22.267,
+     "tick": 495,
+     "line": null,
+     "msg": "the view whips at 249 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 22.767,
+     "tick": 505,
+     "line": null,
+     "msg": "the view whips at 347 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 23.267,
+     "tick": 515,
+     "line": null,
+     "msg": "the view whips at 245 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 25.083,
+     "tick": 560,
+     "line": null,
+     "msg": "the view whips at 693 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 25.683,
+     "tick": 572,
+     "line": null,
+     "msg": "the view whips at 693 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 26.283,
+     "tick": 584,
+     "line": null,
+     "msg": "the view whips at 693 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 26.883,
+     "tick": 596,
+     "line": null,
+     "msg": "the view whips at 693 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 28.4,
+     "tick": 635,
+     "line": null,
+     "msg": "the view whips at 693 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 28.9,
+     "tick": 645,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 693 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 29.45,
+     "tick": 656,
+     "line": null,
+     "msg": "the view whips at 501 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 15 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 115,
+     "out": 5,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 141,
+     "out": 6.3,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 235,
+     "out": 11,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 261,
+     "out": 12.3,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 344,
+     "out": 16.45,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 366,
+     "out": 17.55,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 440,
+     "out": 21.25,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 462,
+     "out": 22.35,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 526,
+     "out": 25.55,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 548,
+     "out": 26.65,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 601,
+     "out": 29.3,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 623,
+     "out": 30.4,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 666,
+     "out": 32.55,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 688,
+     "out": 33.65,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 702,
+     "out": 34.35,
+     "line": null,
+     "from": "pov",
+     "to": "sea_e",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "0 visible sound-making events (), 0 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-5.75s day, 5.75-7.05s day, 7.05-11.75s day, 11.75-13.05s day, 13.05-17.20s day, 17.20-18.30s day, 18.30-22.00s day, 22.00-23.10s day, 23.10-26.30s day, 26.30-27.40s day, 27.40-30.05s day, 30.05-31.15s day, 31.15-33.30s day, 33.30-34.40s day, 34.40-38.80s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:36:42.290Z"
+}
