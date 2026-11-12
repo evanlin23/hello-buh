@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 78781012,
-    "sha256": "1c3c6f458d8d2c7ba11ff1b1caebb2f0e87fb608d4e2a11bbf6f528d28281cf1",
+    "bytes": 78779370,
+    "sha256": "e5915784e54210b42093ce5c2aca6e9cf080acba61a760bdb2c95bf8aeb1e8ed",
     "release": {
       "tag": "pkg-end_portal_job",
-      "asset": "end_portal_job.short.1c3c6f458d8d2c7b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short.1c3c6f458d8d2c7b.mp4",
-      "sha256": "1c3c6f458d8d2c7ba11ff1b1caebb2f0e87fb608d4e2a11bbf6f528d28281cf1",
-      "bytes": 78781012
+      "asset": "end_portal_job.short.e5915784e54210b4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short.e5915784e54210b4.mp4",
+      "sha256": "e5915784e54210b42093ce5c2aca6e9cf080acba61a760bdb2c95bf8aeb1e8ed",
+      "bytes": 78779370
     },
     "nosong_release": {
       "tag": "pkg-end_portal_job",
@@ -1259,12 +1259,12 @@
     "python3 edit.py --frames work/end_portal_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/end_portal_job.rec.json --audio work/end_portal_job.wav --caption \"POV: your job is filling end portals\" --self_name 56e --red job --subs \"[[\\\"ring\\\",\\\"getting faster\\\",1.6,1],[\\\"ring\\\",\\\"speedrun\\\",1.6,2],[\\\"ring\\\",\\\"world record pace\\\",1.6,3],[\\\"ring\\\",\\\"overtime\\\",1.6,4],[\\\"ring\\\",\\\"double shift\\\",1.6,5],[\\\"ring\\\",\\\"no breaks\\\",1.6,6]]\" --subs_y 0.15 --splits {\"reset\":\"ring\",\"split\":\"portal\",\"of\":7,\"endless\":\"outro\"} --speed [[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]] --punch [[\"sea\",0,1.08]] --cards \"[[\\\"sea\\\",\\\"IT NEVER ENDS 💀\\\",1.4,\\\"red\\\"]]\" --flash [[\"sea\",0,0.4]] --sfx [[\"dip\",\"sea\",0.4],[\"gamedip\",\"sea\",0.4],[\"impact\",\"sea\",{\"gain\":1.4}]] --start_at start:0 --end_after sea:1.4 --out out/end_portal_job.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): 7 portals filled faster and faster, then a crane up reveals ~570 more empty rings to the horizon: IT NEVER ENDS; 33.9 s; independent full review READY",
+  "notes": "no-op fix (r:r4607fa): 7 portals filled faster and faster, then a crane up reveals ~570 more empty rings to the horizon: IT NEVER ENDS; 33.9 s; independent full review READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T07:14:25.478Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T07:15:05+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:32:53+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 33.92 s vs the reviewed render 33.92 s"
@@ -1279,9 +1279,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T07:11:35.335Z",
-      "report": "work/hb/end_portal_job.check.json"
+      "at": "2026-11-12T06:36:42.290Z",
+      "report": "out/end_portal_job.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.44,
+      "pump_run": 0.0,
+      "under": 10.1,
+      "summary": "the master's gain spread 1.44 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 10.1 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.44,
+    "pump_run": 0.0,
+    "master_gain": -0.14,
+    "under": 10.1,
+    "windows": [
+      118,
+      69
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.44 dB (max 3.0), run 0.0 s (max 0.5), game over music 10.1 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:32:39+00:00",
+    "code": "4714b3a13b2409e06f0928fdbdb22ebdb6d18511",
+    "from": {
+      "sha256": "1c3c6f458d8d2c7ba11ff1b1caebb2f0e87fb608d4e2a11bbf6f528d28281cf1",
+      "release": {
+        "tag": "pkg-end_portal_job",
+        "asset": "end_portal_job.short.1c3c6f458d8d2c7b.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-end_portal_job/end_portal_job.short.1c3c6f458d8d2c7b.mp4",
+        "sha256": "1c3c6f458d8d2c7ba11ff1b1caebb2f0e87fb608d4e2a11bbf6f528d28281cf1",
+        "bytes": 78781012
+      },
+      "song": {
+        "drop_in_short_s": 5.23,
+        "drop_in_song_s": 5.25,
+        "song_start_s": 0.02
+      }
+    },
+    "song_file_sha256": "34df31001f70e6c0574b3d4fbe5074540e23b48f4764d6c5ba5db9d5d522f10e",
+    "video_stream_md5": "3372f3d201fb4f91af786b71fcca36c0",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

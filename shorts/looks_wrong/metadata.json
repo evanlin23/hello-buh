@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 58597597,
-    "sha256": "416d9b9d1ef28212b0d5cfaa332371f537b0c4a1b881d0cb2d63ccdd1591e549",
+    "bytes": 58597089,
+    "sha256": "78ab78b250acfce01a78c2d9616eaf7c51fda4820684c23a811b47b2b05b06f0",
     "release": {
       "tag": "pkg-looks_wrong",
-      "asset": "looks_wrong.short.416d9b9d1ef28212.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.416d9b9d1ef28212.mp4",
-      "sha256": "416d9b9d1ef28212b0d5cfaa332371f537b0c4a1b881d0cb2d63ccdd1591e549",
-      "bytes": 58597597
+      "asset": "looks_wrong.short.78ab78b250acfce0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.78ab78b250acfce0.mp4",
+      "sha256": "78ab78b250acfce01a78c2d9616eaf7c51fda4820684c23a811b47b2b05b06f0",
+      "bytes": 58597089
     },
     "nosong_release": {
       "tag": "pkg-looks_wrong",
@@ -953,12 +953,12 @@
     "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
   ],
   "status": "ready",
-  "notes": "pixel art re-take for the owner's notes (r:r650840 no backing into the earlier wall: stops ~2.5 blocks short; r:rffba12 aim on every block: none over 6 deg); independent review READY (0 blockers). Nitpicks: the medium picture visible at the left edge during the last backup; the small reveal held ~0.5 s.",
+  "notes": "pixel art re-take for the owner's notes (r:r650840 no backing into the earlier wall: stops ~2.5 blocks short; r:rffba12 aim on every block: none over 6 deg); independent review READY (0 blockers). Nitpicks: the medium picture visible at the left edge during the last backup; the small reveal held ~0.5 s. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-11T12:50:17.817Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:50:55+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:34:07+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 38.61 s vs the reviewed render 38.60 s"
@@ -966,16 +966,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:49:36.689Z",
-      "report": "work/hb/looks_wrong.check.json"
+      "at": "2026-11-11T11:47:11.737Z",
+      "report": "out/looks_wrong.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.65,
+      "pump_run": 0.0,
+      "under": 4.25,
+      "summary": "the master's gain spread 0.65 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.65,
+    "pump_run": 0.0,
+    "master_gain": -0.11,
+    "under": 4.25,
+    "windows": [
+      319,
+      135
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.65 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.25 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:33:55+00:00",
+    "code": "4714b3a13b2409e06f0928fdbdb22ebdb6d18511",
+    "from": {
+      "sha256": "416d9b9d1ef28212b0d5cfaa332371f537b0c4a1b881d0cb2d63ccdd1591e549",
+      "release": {
+        "tag": "pkg-looks_wrong",
+        "asset": "looks_wrong.short.416d9b9d1ef28212.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-looks_wrong/looks_wrong.short.416d9b9d1ef28212.mp4",
+        "sha256": "416d9b9d1ef28212b0d5cfaa332371f537b0c4a1b881d0cb2d63ccdd1591e549",
+        "bytes": 58597597
+      },
+      "song": {
+        "drop_in_short_s": 37.7,
+        "drop_in_song_s": 38.25,
+        "song_start_s": 0.55
+      }
+    },
+    "song_file_sha256": "dc57ef5b2cb4f265f5aae1d04e647ac68e7f7cc184416712ceb77943ef4b180c",
+    "video_stream_md5": "675fe0122816501f9a9d4c93fe347021",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

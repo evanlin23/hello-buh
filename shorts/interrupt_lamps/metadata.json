@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 31159879,
-    "sha256": "d7d84d9b67d44dde5f7df1e6732bb42677356c25e808b2043541d5ea484fb2b4",
+    "bytes": 31162998,
+    "sha256": "3f04c70b96ed570dcfd1f360463cf2697298247d75976a7db44cf2a1cf2729f6",
     "release": {
       "tag": "pkg-interrupt_lamps",
-      "asset": "interrupt_lamps.short.d7d84d9b67d44dde.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.d7d84d9b67d44dde.mp4",
-      "sha256": "d7d84d9b67d44dde5f7df1e6732bb42677356c25e808b2043541d5ea484fb2b4",
-      "bytes": 31159879
+      "asset": "interrupt_lamps.short.3f04c70b96ed570d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.3f04c70b96ed570d.mp4",
+      "sha256": "3f04c70b96ed570dcfd1f360463cf2697298247d75976a7db44cf2a1cf2729f6",
+      "bytes": 31162998
     },
     "nosong_release": {
       "tag": "pkg-interrupt_lamps",
@@ -999,12 +999,12 @@
     "python3 edit.py --frames work/interrupt_lamps.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/interrupt_lamps.rec.json --audio work/interrupt_lamps.wav --caption \"this dance floor is gonna be so clean 😌\" --self_name 56e --red \"so clean\" --subs \"[[\\\"intr_hit\\\",\\\"ow??\\\",1,0],[\\\"intr_hit\\\",\\\"bro. stop.\\\",1.2,1],[\\\"intr_hit\\\",\\\"ok that's it\\\",1.4,2]]\" --subs_y 0.18 --speed [[\"intr_walk\",\"intr_deal:-0.1\",1.5],[\"intr_back:0.1\",\"intr_resume:-0.1\",1.3],[\"intr_resume\",\"lever\",2]] --punch [[\"floor_lit\",0,1.08]] --flash [[\"floor_lit\",0,0.2]] --sfx [[\"air\",\"start\",\"floor_lit\",{\"gain\":0.5}],[\"impact\",\"hook\",{\"gain\":1.2}],[\"impact\",\"lit\",{\"gain\":0.9}],[\"dip\",\"floor_lit\",0.4],[\"impact\",\"floor_lit\",{\"gain\":1.4}]] --start_at hook:-0.1 --end_after floor_lit:1.0 --out out/interrupt_lamps.mp4"
   ],
   "status": "ready",
-  "notes": "v3 (owner r:rf557af): longer build (2 rows pre-laid, 1x to the 3rd hit), the skeleton hits 3 times (real hits, hearts drain, 'ow??' / 'bro. stop.'), eaten on the 3rd ('ok that's it'), uncut walk back, rest x2, top-down lit floor on the drop; reviewed READY (independent subagent); pace OK, mixcheck OK",
+  "notes": "v3 (owner r:rf557af): longer build (2 rows pre-laid, 1x to the 3rd hit), the skeleton hits 3 times (real hits, hearts drain, 'ow??' / 'bro. stop.'), eaten on the 3rd ('ok that's it'), uncut walk back, rest x2, top-down lit floor on the drop; reviewed READY (independent subagent); pace OK, mixcheck OK | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T07:01:51.045Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T07:02:34+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:32:14+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 28.07 s vs the reviewed render 28.07 s"
@@ -1012,15 +1012,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 7,
+      "warnings": 6,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:59:40.377Z",
-      "report": "work/hb/interrupt_lamps.check.json"
+      "at": "2026-11-12T06:40:13.326Z",
+      "report": "out/interrupt_lamps.check.json"
     },
     "key_sounds": {
       "ok": true,
@@ -1030,7 +1030,51 @@
         "intr_bite",
         "intr_gone"
       ],
-      "summary": "key sounds over the music: worst +12.9 dB over 13 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +14.8 dB over 13 clips (need >= 8 dB)"
+    },
+    "mix": {
+      "ok": true,
+      "pump": 2.19,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 2.19 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
     }
+  },
+  "mix": {
+    "pump": 2.19,
+    "pump_run": 0.0,
+    "master_gain": -0.07,
+    "under": null,
+    "windows": [
+      97,
+      2
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.19 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:32:03+00:00",
+    "code": "4714b3a13b2409e06f0928fdbdb22ebdb6d18511",
+    "from": {
+      "sha256": "d7d84d9b67d44dde5f7df1e6732bb42677356c25e808b2043541d5ea484fb2b4",
+      "release": {
+        "tag": "pkg-interrupt_lamps",
+        "asset": "interrupt_lamps.short.d7d84d9b67d44dde.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-interrupt_lamps/interrupt_lamps.short.d7d84d9b67d44dde.mp4",
+        "sha256": "d7d84d9b67d44dde5f7df1e6732bb42677356c25e808b2043541d5ea484fb2b4",
+        "bytes": 31159879
+      },
+      "song": {
+        "drop_in_short_s": 27.06,
+        "drop_in_song_s": 113.75,
+        "song_start_s": 86.69
+      }
+    },
+    "song_file_sha256": "efc5ddc9d822d5268632f1d2d921cda50f3c0043bcedf86ce64907d2d9104d55",
+    "video_stream_md5": "d6d4c2dc478b79d180ae675774a83e4d",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

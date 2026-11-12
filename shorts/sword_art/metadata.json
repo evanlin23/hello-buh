@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 90800007,
-    "sha256": "371a726d38ca931c1b61d44d4513381e6f6dd8d758adc765d51e08b48dcd576d",
+    "bytes": 90800785,
+    "sha256": "1fcb8441603b184256b3a0e4d8647e91dc50f001365989066c6bd02f73287fe6",
     "release": {
       "tag": "pkg-sword_art",
-      "asset": "sword_art.short.371a726d38ca931c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sword_art/sword_art.short.371a726d38ca931c.mp4",
-      "sha256": "371a726d38ca931c1b61d44d4513381e6f6dd8d758adc765d51e08b48dcd576d",
-      "bytes": 90800007
+      "asset": "sword_art.short.1fcb8441603b1842.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sword_art/sword_art.short.1fcb8441603b1842.mp4",
+      "sha256": "1fcb8441603b184256b3a0e4d8647e91dc50f001365989066c6bd02f73287fe6",
+      "bytes": 90800785
     },
     "nosong_release": {
       "tag": "pkg-sword_art",
@@ -33935,12 +33935,12 @@
     "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? 🤔\" --red guess --speed [[\"build1:0.1\",\"built1:-0.2\",2],[\"build2:0.1\",\"decoyed2:-0.1\",2],[\"twist2:0.1\",\"built2:-0.4\",3]] --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:0.1 --end_after complete:0.9 --out out/sword_art.mp4"
   ],
   "status": "ready",
-  "notes": "backlog-b 2026-11-11 fix (r:r38374d + decoy readability): lapses turn at <= 220/x deg/s with each run started near the last; the huge decoy sword at x2, walked back with it whole in frame, x3 after the twist; on-screen max 235 deg/s (was 661); 45.2 s; independent fix-check READY. The reviewed render re-encoded at maxrate 16M (100.7 MB at 18M, over GitHub's limit). Nitpicks: unrested-swing WARNs (eased, under the cap), one-tick WARN 2.85 s.",
+  "notes": "backlog-b 2026-11-11 fix (r:r38374d + decoy readability): lapses turn at <= 220/x deg/s with each run started near the last; the huge decoy sword at x2, walked back with it whole in frame, x3 after the twist; on-screen max 235 deg/s (was 661); 45.2 s; independent fix-check READY. The reviewed render re-encoded at maxrate 16M (100.7 MB at 18M, over GitHub's limit). Nitpicks: unrested-swing WARNs (eased, under the cap), one-tick WARN 2.85 s. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-11T15:21:44.131Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T15:22:32+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:35:48+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 45.23 s vs the reviewed render 45.21 s"
@@ -33948,7 +33948,7 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
@@ -33956,8 +33956,53 @@
       "label": "CHECK OK",
       "blockers": 0,
       "at": "2026-11-11T14:46:23.896Z",
-      "report": "out/sword_art.check.json"
+      "report": "out/sword_art.check.json",
+      "carried": "from the previous stamp: same recording, sound-only re-mix"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.96,
+      "pump_run": 0.0,
+      "under": 5.43,
+      "summary": "the master's gain spread 0.96 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 5.4 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.96,
+    "pump_run": 0.0,
+    "master_gain": -0.15,
+    "under": 5.43,
+    "windows": [
+      352,
+      194
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.96 dB (max 3.0), run 0.0 s (max 0.5), game over music 5.43 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:35:33+00:00",
+    "code": "365e81ec2a80705a0ec309468369a656db47990e",
+    "from": {
+      "sha256": "371a726d38ca931c1b61d44d4513381e6f6dd8d758adc765d51e08b48dcd576d",
+      "release": {
+        "tag": "pkg-sword_art",
+        "asset": "sword_art.short.371a726d38ca931c.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sword_art/sword_art.short.371a726d38ca931c.mp4",
+        "sha256": "371a726d38ca931c1b61d44d4513381e6f6dd8d758adc765d51e08b48dcd576d",
+        "bytes": 90800007
+      },
+      "song": {
+        "drop_in_short_s": 44.31,
+        "drop_in_song_s": 47.5,
+        "song_start_s": 3.19
+      }
+    },
+    "song_file_sha256": "7cfaf6119ddf44be81996838f9620b75ef7ced05af346c9405e310b36748027e",
+    "video_stream_md5": "d5ecf6513d8ba4559d3fdd68cea65452",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

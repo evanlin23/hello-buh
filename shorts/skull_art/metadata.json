@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 48828053,
-    "sha256": "90fb02c533792bde3cf858d500a51e68be2e01f6a77eedf277d7b68c9123efb2",
+    "bytes": 48836148,
+    "sha256": "b9fa9a1a03e0dced6195d5096d1c5c18407278b7bcd5b9d58f91b46c444ead3a",
     "release": {
       "tag": "pkg-skull_art",
-      "asset": "skull_art.short.90fb02c533792bde.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.90fb02c533792bde.mp4",
-      "sha256": "90fb02c533792bde3cf858d500a51e68be2e01f6a77eedf277d7b68c9123efb2",
-      "bytes": 48828053
+      "asset": "skull_art.short.b9fa9a1a03e0dced.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.b9fa9a1a03e0dced.mp4",
+      "sha256": "b9fa9a1a03e0dced6195d5096d1c5c18407278b7bcd5b9d58f91b46c444ead3a",
+      "bytes": 48836148
     },
     "nosong_release": {
       "tag": "pkg-skull_art",
@@ -877,12 +877,12 @@
     "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS 😨\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
   ],
   "status": "ready",
-  "notes": "pixel art re-take for the owner's notes (r:r650840 no backing into the earlier wall: stops ~2.5 blocks short; r:rffba12 aim on every block: none over 6 deg); independent review READY (0 blockers). Nitpicks: the medium picture visible at the left edge during the last backup; the small reveal held ~0.5 s.",
+  "notes": "pixel art re-take for the owner's notes (r:r650840 no backing into the earlier wall: stops ~2.5 blocks short; r:rffba12 aim on every block: none over 6 deg); independent review READY (0 blockers). Nitpicks: the medium picture visible at the left edge during the last backup; the small reveal held ~0.5 s. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-11T12:52:16.599Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:52:53+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:35:04+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 33.11 s vs the reviewed render 33.10 s"
@@ -890,16 +890,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 5,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:51:33.321Z",
-      "report": "work/hb/skull_art.check.json"
+      "at": "2026-11-11T12:25:06.541Z",
+      "report": "out/skull_art.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.57,
+      "pump_run": 0.0,
+      "under": 4.66,
+      "summary": "the master's gain spread 2.57 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.7 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.57,
+    "pump_run": 0.0,
+    "master_gain": -0.65,
+    "under": 4.66,
+    "windows": [
+      349,
+      204
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.57 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.66 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:34:53+00:00",
+    "code": "365e81ec2a80705a0ec309468369a656db47990e",
+    "from": {
+      "sha256": "90fb02c533792bde3cf858d500a51e68be2e01f6a77eedf277d7b68c9123efb2",
+      "release": {
+        "tag": "pkg-skull_art",
+        "asset": "skull_art.short.90fb02c533792bde.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.90fb02c533792bde.mp4",
+        "sha256": "90fb02c533792bde3cf858d500a51e68be2e01f6a77eedf277d7b68c9123efb2",
+        "bytes": 48828053
+      },
+      "song": {
+        "drop_in_short_s": 32.2,
+        "drop_in_song_s": 113.75,
+        "song_start_s": 81.55
+      }
+    },
+    "song_file_sha256": "efc5ddc9d822d5268632f1d2d921cda50f3c0043bcedf86ce64907d2d9104d55",
+    "video_stream_md5": "d1e12c68fd8a6ee46ab8f02edbcf2f38",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
