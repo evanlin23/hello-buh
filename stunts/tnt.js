@@ -11,7 +11,7 @@ const { plateau } = require('../lib/plateau')
 const HR = 12, HH = 10          // the hill: radius and height (blocks)
 const HZ = -40                  // the hill's centre, relative to the start z (x is the start x)
 const PZ = HZ + HR + 3          // the 75-TNT wall's centre: its back row touches the hill's foot
-const VZ = HZ + 36              // the vantage after the cut (24 blocks from the wall, 36 from the hill: at 46 the hill read small)
+const VZ = HZ + 50              // the vantage after the cut, 50 from the hill: the chain flings TNT out to ~60 (at 36 the ground under the player went)
 
 module.exports = {
   name: 'tnt',
@@ -125,6 +125,8 @@ module.exports = {
     await ctx.cmd('/effect give @s instant_health 1 10 true')
     await ctx.cmd('/gamerule fall_damage false', { mayFail: true })
     await ctx.cmd('/gamerule keep_inventory true', { mayFail: true })
+    await ctx.cmd('/attribute @s minecraft:explosion_knockback_resistance base set 1', { mayFail: true })   // a far blast doesn't fling the camera
+    await ctx.cmd('/kill @e[type=!player]', { mayFail: true })   // a plains village's villagers wandered into take 3
     await ctx.cmd('/difficulty peaceful')   // peaceful: no TNT damage to the player 34+ blocks back (docs/lessons.md)
     await ctx.cmd('/gamemode survival')
     ctx.select(1)   // flint and steel from frame 1 (review: a TNT in the hand read as a stray 76th block)
@@ -160,6 +162,7 @@ module.exports = {
     await ctx.easeLook(0, 0.1, 400)                             // back up to the hill: the cut's edge on a still view
     await bot.waitForTicks(3)
     ctx.mark('fuse_a')
+    await ctx.cmd('/kill @e[type=!player,type=!tnt]', { mayFail: true })
     // inside the cut: to the vantage, the same line of view as the opening (the before), ~1.4 s of fuse left
     await ctx.tpCheck(x + 0.5, floor + 1, vz + 0.5, 180, -4)
     while (ctx.tick - litAt < 52) await bot.waitForTicks(1)
@@ -186,15 +189,22 @@ module.exports = {
     await ctx.cmd('/kill @e[type=item]', { mayFail: true })
     // the crater's south rim: going out from the hill's centre, the first of 3 solid surface blocks in a row (a stray
     // flung-TNT pit near the vantage fooled a walk in from the vantage)
-    const solid = (zz) => [floor, floor - 1].every(y => { const bl = bot.blockAt(new Vec3(x, y, zz)); return bl && bl.name !== 'air' && bl.boundingBox === 'block' })
-    let rz = hz + HR + 8
-    for (let zz = hz; zz < vz - 7; zz++) {
-      if ([0, 1, 2, 3, 4, 5, 6].every(d => solid(zz + d))) { rz = zz + 4; break }
+    // the client's blocks were stale after 2500 blasts (take 3 teleported onto 'solid' ground and fell 15 blocks), so
+    // ask the server: stand on the surface at each step out from the centre (/execute ... over motion_blocking) and
+    // read where the server puts the player; the rim is the first of 3 steps in a row back at field level
+    const surf = async (zz) => {
+      await ctx.cmd(`/execute positioned ${x + 0.5} 200 ${zz + 0.5} positioned over motion_blocking run tp @s ~ ~ ~ 180 24`)
+      await bot.waitForTicks(6)
+      return bot.entity.position.y
+    }
+    let rz = vz, run = 0
+    for (let zz = hz + 16; zz <= vz; zz += 2) {
+      run = (await surf(zz)) >= floor + 1 - 0.01 ? run + 1 : 0
+      if (run === 3) { rz = zz - 2; break }
     }
     ctx.log('rim at', rz - hz, 'from the centre')
-    // a tolerant teleport (tpCheck threw on take 2: a blast-loosened column): land on the rim, whatever its height
-    await ctx.cmd(`/tp @s ${x + 0.5} ${floor + 1} ${rz + 0.5} 180 24`)
-    await bot.waitForTicks(12)
+    await surf(rz)
+    await bot.waitForTicks(10)
     ctx.mark('rim_b')
     ctx.mark('crater')
     ctx.sound('entity.generic.explode', 0.15, 0.6)
