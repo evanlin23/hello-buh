@@ -15,8 +15,9 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every way to cross lava (rated) 💀',
   edit: {
+    songGain: -3,   // the music 3+ dB under the game sounds (mixcheck, owner's 'music jumps' note: +2.3 dB was too close)
     caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
-    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:1.15',
+    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:0.9',   // (owner 2026-11-12 at 19.6 s: "we can speed up us taking damage and dying": the burn x2.5, the end 0.9 s after the death)
     // the opening (owner r:r0f3da0): a 1.2 s flash of the walk into the lava (the 0/10 everyone waits for) comes first.
     // The bridge is back (owner 2026-11-12 at 2.4 s: "huh? no brdige?": the cut that started on the water bucket left
     // 'bridging: 6/10' on screen with no bridge): it is built and crossed, fast (x2.5 placing, x3 the walk across)
@@ -33,7 +34,7 @@ module.exports = {
       ['dip', 'death', 0.3], ['impact', 'death']],
     // (the look down before the first block and the turn after the last play at 1x: sped up they were 550-680 deg/s
     // whips on screen)
-    speed: [['beat:0.4', 'place_on:-0.35', 2], ['place_on:0.05', 'bridged:-0.05', 2.5], ['bridged:0.4', 'crossed', 3]]
+    speed: [['beat:0.4', 'place_on:-0.35', 2], ['place_on:0.05', 'bridged:-0.05', 2.5], ['bridged:0.4', 'crossed', 3], ['in_lava:0.5', 'death:-0.2', 2.5]]
   },
   expectDeath: true,
 
