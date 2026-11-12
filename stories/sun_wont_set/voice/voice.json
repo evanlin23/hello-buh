@@ -1,546 +1,745 @@
 {
- "voice": "am_adam",
- "tempo": 1.03,
- "rate": 1.45,
- "sr": 24000,
- "gap": 0.12,
- "model": "hexgrad/Kokoro-82M (Apache 2.0)",
  "lines": {
   "L01": {
-   "text": "The sun hasn't set in my world for 300 days.",
-   "dur": 2.5,
-   "onset": 0.172,
-   "end": 2.31,
+   "who": "N",
+   "text": "The sun hasn't set in my village for three hundred days.",
+   "dur": 3.345,
+   "onset": 0.2,
+   "end": 3.0,
    "chunks": [
     [
-     0.172,
-     0.448
+     0.2,
+     0.56
     ],
     [
-     0.448,
-     0.802
+     0.66,
+     1.22
     ],
     [
-     0.802,
-     1.207
+     1.3,
+     1.86
     ],
     [
-     1.207,
-     1.741
-    ],
-    [
-     1.741,
-     2.31
+     1.92,
+     3.0
     ]
    ],
    "captions": [
     "The SUN",
     "hasn't SET",
-    "in my world",
-    "for 300",
-    "DAYS."
-   ]
+    "in my village",
+    "for 300 DAYS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "1900c3843be7"
   },
   "L02": {
+   "who": "N",
    "text": "Nobody has slept. The farmer keeps walking into his own fence.",
-   "dur": 2.931,
-   "onset": 0.19,
-   "end": 2.724,
+   "dur": 3.645,
+   "onset": 0.2,
+   "end": 3.22,
    "chunks": [
     [
-     0.19,
-     0.44
+     0.2,
+     1.0
     ],
     [
-     0.44,
-     0.931
+     1.36,
+     1.74
     ],
     [
-     1.0,
-     1.328
+     1.8,
+     2.42
     ],
     [
-     1.328,
-     1.767
-    ],
-    [
-     1.767,
-     2.0
-    ],
-    [
-     2.0,
-     2.724
+     2.48,
+     3.22
     ]
    ],
    "captions": [
-    "Nobody",
-    "has SLEPT.",
-    "The farmer",
+    "Nobody has SLEPT.",
+    "The FARMER",
     "keeps walking",
-    "into his",
-    "own FENCE."
-   ]
+    "into his own FENCE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 3.345,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "323d39d0b6bb"
   },
   "L03": {
-   "text": "The butcher fell asleep standing up.",
-   "dur": 1.776,
-   "onset": 0.155,
-   "end": 1.569,
+   "who": "N",
+   "text": "And the zombies have been hiding under one tree the whole time.",
+   "dur": 3.63,
+   "onset": 0.14,
+   "end": 3.16,
    "chunks": [
     [
-     0.155,
-     0.466
+     0.14,
+     0.72
     ],
     [
-     0.466,
-     0.897
+     0.78,
+     1.38
     ],
     [
-     0.897,
-     1.569
+     1.48,
+     2.24
+    ],
+    [
+     2.32,
+     3.16
     ]
    ],
    "captions": [
-    "The butcher",
-    "fell ASLEEP",
-    "standing UP."
-   ]
+    "And the ZOMBIES",
+    "have been HIDING",
+    "under ONE tree",
+    "the whole time."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 6.99,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "def10b8d4213"
   },
   "L04": {
-   "text": "Every bed in the village is still made.",
-   "dur": 1.931,
-   "onset": 0.172,
-   "end": 1.724,
+   "who": "N",
+   "text": "Every day, Grandpa asks me the same thing.",
+   "dur": 2.67,
+   "onset": 0.24,
+   "end": 2.34,
    "chunks": [
     [
-     0.172,
-     0.543
+     0.24,
+     0.58
     ],
     [
-     0.543,
-     0.914
+     0.72,
+     1.02
     ],
     [
-     0.914,
-     1.207
+     1.18,
+     1.52
     ],
     [
-     1.207,
-     1.724
+     1.62,
+     2.34
     ]
    ],
    "captions": [
-    "Every BED",
-    "in the village",
-    "is still",
-    "MADE."
-   ]
+    "Every day,",
+    "GRANDPA",
+    "asks me",
+    "the same THING."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 10.62,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "cd2927ed640b"
   },
   "L05": {
-   "text": "The zombies have been hiding under one tree since it started.",
-   "dur": 2.638,
-   "onset": 0.172,
-   "end": 2.431,
+   "who": "Grandpa",
+   "text": "Will the sun go DOWN today?",
+   "dur": 4.277,
+   "onset": 0.3,
+   "end": 3.2,
    "chunks": [
     [
-     0.172,
-     0.578
+     0.3,
+     1.32
     ],
     [
-     0.578,
-     0.784
+     1.54,
+     2.26
     ],
     [
-     0.784,
-     1.19
-    ],
-    [
-     1.19,
-     1.629
-    ],
-    [
-     1.629,
-     1.845
-    ],
-    [
-     1.845,
-     2.431
+     2.44,
+     3.2
     ]
    ],
    "captions": [
-    "The ZOMBIES",
-    "have been",
-    "hiding under",
-    "ONE tree",
-    "since it",
-    "STARTED."
-   ]
+    "Will the SUN",
+    "go DOWN",
+    "today?"
+   ],
+   "with": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L05",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "47f37a329138"
   },
   "L06": {
-   "text": "And every day my grandpa asks me the same thing.",
-   "dur": 2.276,
-   "onset": 0.155,
-   "end": 2.069,
-   "chunks": [
-    [
-     0.155,
-     0.517
-    ],
-    [
-     0.517,
-     1.026
-    ],
-    [
-     1.026,
-     1.319
-    ],
-    [
-     1.319,
-     1.603
-    ],
-    [
-     1.603,
-     2.069
-    ]
-   ],
-   "captions": [
-    "And every day",
-    "my GRANDPA",
-    "asks me",
-    "the same",
-    "THING."
-   ]
-  },
-  "L07": {
-   "text": "Is tonight the night?",
-   "dur": 1.293,
-   "onset": 0.155,
-   "end": 1.086,
-   "chunks": [
-    [
-     0.155,
-     0.534
-    ],
-    [
-     0.534,
-     1.086
-    ]
-   ],
-   "captions": [
-    "Is TONIGHT",
-    "the night?"
-   ]
-  },
-  "L08": {
+   "who": "N",
    "text": "And every day I tell him, not yet.",
-   "dur": 1.793,
-   "onset": 0.155,
-   "end": 1.603,
+   "dur": 3.39,
+   "onset": 0.5,
+   "end": 3.04,
    "chunks": [
     [
-     0.155,
-     0.586
+     0.5,
+     1.26
     ],
     [
-     0.586,
-     0.983
+     1.56,
+     2.08
     ],
     [
-     1.017,
-     1.603
+     2.54,
+     3.04
     ]
    ],
    "captions": [
     "And every day",
     "I tell him,",
     "NOT YET."
-   ]
-  },
-  "L09": {
-   "text": "Then I walk him home. He always gets there first.",
-   "dur": 2.345,
-   "onset": 0.172,
-   "end": 2.138,
-   "chunks": [
-    [
-     0.172,
-     0.345
-    ],
-    [
-     0.345,
-     0.569
-    ],
-    [
-     0.569,
-     0.897
-    ],
-    [
-     0.966,
-     1.328
-    ],
-    [
-     1.328,
-     1.647
-    ],
-    [
-     1.647,
-     2.138
-    ]
    ],
-   "captions": [
-    "Then I",
-    "walk him",
-    "HOME.",
-    "He always",
-    "gets there",
-    "FIRST."
-   ]
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "8ee6833792a8"
   },
-  "L10": {
-   "text": "Everyone thinks it's a curse. It's not. It's a lever. And I pulled it.",
-   "dur": 2.897,
-   "onset": 0.172,
-   "end": 2.707,
+  "L07": {
+   "who": "N",
+   "text": "Everyone thinks it's a curse. It's not.",
+   "dur": 3.195,
+   "onset": 0.52,
+   "end": 2.82,
    "chunks": [
     [
-     0.172,
-     0.629
+     0.52,
+     1.14
     ],
     [
-     0.629,
-     1.069
+     1.22,
+     1.78
     ],
     [
-     1.138,
-     1.483
-    ],
-    [
-     1.509,
-     1.914
-    ],
-    [
-     1.94,
-     2.129
-    ],
-    [
-     2.129,
-     2.707
+     2.36,
+     2.82
     ]
    ],
    "captions": [
     "Everyone thinks",
     "it's a CURSE.",
-    "It's not.",
+    "It's NOT."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 3.39,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "b8a96b1f3466"
+  },
+  "L08": {
+   "who": "N",
+   "text": "It's a lever. And I pulled it.",
+   "dur": 3.143,
+   "onset": 0.34,
+   "end": 2.56,
+   "chunks": [
+    [
+     0.34,
+     1.3
+    ],
+    [
+     1.66,
+     1.92
+    ],
+    [
+     2.12,
+     2.56
+    ]
+   ],
+   "captions": [
     "It's a LEVER.",
     "And I",
     "PULLED it."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 6.585,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "8f9979ba528f"
+  },
+  "L09": {
+   "who": "N",
+   "text": "Because at night, zombies come out. And Grandpa is way too slow to run.",
+   "dur": 5.652,
+   "onset": 0.12,
+   "end": 5.28,
+   "chunks": [
+    [
+     0.12,
+     1.0
+    ],
+    [
+     1.6,
+     2.4
+    ],
+    [
+     3.0,
+     3.56
+    ],
+    [
+     3.8,
+     4.84
+    ],
+    [
+     4.9,
+     5.28
+    ]
+   ],
+   "captions": [
+    "Because at NIGHT,",
+    "zombies come OUT.",
+    "And Grandpa",
+    "is way too SLOW",
+    "to RUN."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 9.727,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "c1ab0e8c263a"
+  },
+  "L10": {
+   "who": "N",
+   "text": "Me? I haven't slept in three hundred days either. I'm not even tired!",
+   "dur": 5.378,
+   "onset": 0.32,
+   "end": 4.84,
+   "chunks": [
+    [
+     0.32,
+     1.98
+    ],
+    [
+     2.02,
+     2.76
+    ],
+    [
+     2.82,
+     3.02
+    ],
+    [
+     3.82,
+     4.84
+    ]
+   ],
+   "captions": [
+    "Me? I haven't slept",
+    "in 300 days",
+    "EITHER.",
+    "I'm not even TIRED!"
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 15.38,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "f01bacf9e746"
   },
   "L11": {
-   "text": "Because at night the zombies come out. And grandpa is too slow to run.",
-   "dur": 3.19,
-   "onset": 0.155,
-   "end": 3.0,
+   "who": "N",
+   "text": "But today, Grandpa said,",
+   "dur": 2.272,
+   "onset": 0.14,
+   "end": 1.94,
    "chunks": [
     [
-     0.155,
-     0.328
+     0.14,
+     0.64
     ],
     [
-     0.328,
-     0.569
-    ],
-    [
-     0.569,
-     0.966
-    ],
-    [
-     0.966,
-     1.397
-    ],
-    [
-     1.466,
-     1.931
-    ],
-    [
-     1.931,
-     2.414
-    ],
-    [
-     2.414,
-     3.0
+     1.16,
+     1.94
     ]
    ],
    "captions": [
-    "Because",
-    "at NIGHT",
-    "the zombies",
-    "come OUT.",
-    "And grandpa",
-    "is too SLOW",
-    "to RUN."
-   ]
+    "But TODAY,",
+    "Grandpa SAID,"
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 20.758,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "0daca663a6aa"
   },
   "L12": {
-   "text": "But today he said, let it come. I'm tired, kid.",
-   "dur": 2.397,
-   "onset": 0.155,
-   "end": 2.19,
+   "who": "Grandpa",
+   "text": "Let the night come. You need sleep, kid.",
+   "dur": 5.213,
+   "onset": 0.42,
+   "end": 4.62,
    "chunks": [
     [
-     0.155,
-     0.44
+     0.42,
+     1.8
     ],
     [
-     0.44,
-     0.707
+     2.88,
+     4.08
     ],
     [
-     0.733,
-     1.19
-    ],
-    [
-     1.276,
-     1.672
-    ],
-    [
-     1.707,
-     2.19
+     4.32,
+     4.62
     ]
    ],
    "captions": [
-    "But today",
-    "he said,",
-    "let it COME.",
-    "I'm TIRED,",
+    "Let the night COME.",
+    "YOU need SLEEP,",
     "kid."
-   ]
+   ],
+   "with": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L12",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "9399834a5165"
   },
   "L13": {
-   "text": "So I pulled it back.",
-   "dur": 1.259,
-   "onset": 0.172,
-   "end": 1.052,
+   "who": "N",
+   "text": "Me? he's the one who's tired.",
+   "dur": 3.172,
+   "onset": 0.4,
+   "end": 2.8,
    "chunks": [
     [
-     0.172,
-     0.353
+     0.4,
+     0.56
     ],
     [
-     0.353,
-     0.603
+     1.22,
+     1.98
     ],
     [
-     0.603,
-     1.052
+     2.02,
+     2.8
     ]
    ],
    "captions": [
-    "So I",
-    "pulled it",
-    "BACK."
-   ]
+    "ME?",
+    "HE'S the one",
+    "who's TIRED."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L13",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "d5990e089040"
   },
   "L14": {
-   "text": "The sun went down. The zombies came out.",
-   "dur": 2.103,
-   "onset": 0.155,
-   "end": 1.914,
+   "who": "N",
+   "text": "So I walked him home. Then I pulled the lever back.",
+   "dur": 4.237,
+   "onset": 0.365,
+   "end": 3.84,
    "chunks": [
     [
-     0.155,
-     0.414
+     0.365,
+     1.64
     ],
     [
-     0.414,
-     0.862
+     1.72,
+     1.96
     ],
     [
-     0.931,
-     1.345
+     2.52,
+     3.18
     ],
     [
-     1.345,
-     1.914
+     3.22,
+     3.84
     ]
    ],
    "captions": [
-    "The sun",
-    "went DOWN.",
-    "The zombies",
-    "came OUT."
-   ]
+    "So I walked him",
+    "HOME.",
+    "Then I pulled",
+    "the lever BACK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L13",
+   "offset": 3.172,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "c89b5ba72252"
   },
   "L15": {
-   "text": "I yelled, run, grandpa! He was already gone.",
-   "dur": 2.345,
-   "onset": 0.172,
-   "end": 2.138,
+   "who": "N",
+   "text": "The sun went down. The zombies came out. So I stood guard at his door.",
+   "dur": 5.72,
+   "onset": 0.18,
+   "end": 5.22,
    "chunks": [
     [
-     0.172,
-     0.448
+     0.18,
+     1.18
     ],
     [
-     0.483,
-     0.638
+     1.66,
+     2.36
     ],
     [
-     0.672,
-     1.138
+     2.42,
+     2.86
     ],
     [
-     1.224,
-     1.371
+     3.305,
+     4.56
     ],
     [
-     1.371,
-     1.621
-    ],
-    [
-     1.621,
-     2.138
+     4.64,
+     5.22
     ]
    ],
    "captions": [
-    "I yelled,",
-    "RUN,",
-    "grandpa!",
-    "He was",
-    "already",
-    "GONE."
-   ]
+    "The sun went DOWN.",
+    "The zombies",
+    "came OUT.",
+    "So I stood GUARD",
+    "at his DOOR."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L13",
+   "offset": 7.41,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "cff4c4e451c0"
   },
   "L16": {
-   "text": "Wait. Then who was too slow to run?",
-   "dur": 1.741,
-   "onset": 0.172,
-   "end": 1.534,
+   "who": "N",
+   "text": "Then something screamed up in the sky.",
+   "dur": 3.205,
+   "onset": 0.42,
+   "end": 2.84,
    "chunks": [
     [
-     0.172,
-     0.362
+     0.42,
+     1.16
     ],
     [
-     0.388,
-     0.543
+     1.205,
+     1.88
     ],
     [
-     0.543,
-     0.966
-    ],
-    [
-     0.966,
-     1.534
+     1.96,
+     2.84
     ]
    ],
    "captions": [
-    "Wait.",
-    "Then WHO",
-    "was too SLOW",
-    "to RUN?"
-   ]
+    "Then something",
+    "SCREAMED",
+    "up in the SKY."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L13",
+   "offset": 13.13,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "a1217cff5e4e"
   }
  },
- "total": 37.34
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts",
+  "Grandpa": "gemini-3.8-flash-tts"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 13.29,
+   "offsets": [
+    0.0,
+    3.345,
+    6.99,
+    10.62
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  },
+  "L05": {
+   "lines": [
+    "L05"
+   ],
+   "file": "beat_L05.wav",
+   "dur": 4.277,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 2,
+   "tries": 2,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "an audible breath (0.19 s)"
+     ]
+    }
+   ],
+   "take": "L05",
+   "take_at": 0.0
+  },
+  "L12": {
+   "lines": [
+    "L12"
+   ],
+   "file": "beat_L12.wav",
+   "dur": 5.213,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 2,
+   "tries": 2,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "an audible breath (0.19 s)"
+     ]
+    }
+   ],
+   "take": "L05",
+   "take_at": 4.277
+  },
+  "L06": {
+   "lines": [
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11"
+   ],
+   "file": "beat_L06.wav",
+   "dur": 23.03,
+   "offsets": [
+    0.0,
+    3.39,
+    6.585,
+    9.727,
+    15.38,
+    20.758
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  },
+  "L13": {
+   "lines": [
+    "L13",
+    "L14",
+    "L15",
+    "L16"
+   ],
+   "file": "beat_L13.wav",
+   "dur": 16.335,
+   "offsets": [
+    0.0,
+    3.172,
+    7.41,
+    13.13
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  }
+ },
+ "total": 63.39
 }

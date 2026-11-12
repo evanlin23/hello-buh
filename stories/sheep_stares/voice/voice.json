@@ -1,36 +1,31 @@
 {
- "voice": "am_adam",
- "tempo": 1.03,
- "rate": 1.45,
- "sr": 24000,
- "gap": 0.1,
- "model": "hexgrad/Kokoro-82M (Apache 2.0)",
  "lines": {
   "L01": {
-   "text": "My sheep has stared at the same dirt block for 412 days.",
-   "dur": 2.983,
-   "onset": 0.172,
-   "end": 2.793,
+   "who": "N",
+   "text": "My sheep has stared at the same dirt block for four hundred and twelve days.",
+   "dur": 4.895,
+   "onset": 0.38,
+   "end": 4.4,
    "chunks": [
     [
-     0.172,
-     0.457
+     0.38,
+     0.82
     ],
     [
-     0.457,
-     0.802
+     0.9,
+     1.6
     ],
     [
-     0.802,
-     1.103
+     1.64,
+     2.12
     ],
     [
-     1.103,
-     1.552
+     2.22,
+     2.72
     ],
     [
-     1.552,
-     2.793
+     2.84,
+     4.4
     ]
    ],
    "captions": [
@@ -39,37 +34,47 @@
     "the SAME",
     "dirt block",
     "for 412 DAYS."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "d022d1b97241"
   },
   "L02": {
+   "who": "N",
    "text": "He doesn't eat. He doesn't sleep. He doesn't even blink.",
-   "dur": 2.431,
-   "onset": 0.172,
-   "end": 2.224,
+   "dur": 4.13,
+   "onset": 0.16,
+   "end": 3.56,
    "chunks": [
     [
-     0.172,
-     0.431
+     0.16,
+     0.54
     ],
     [
-     0.431,
-     0.569
+     0.66,
+     0.78
     ],
     [
-     0.595,
-     0.853
+     1.1,
+     1.48
     ],
     [
-     0.853,
-     1.19
+     1.48,
+     1.88
     ],
     [
-     1.259,
-     1.509
+     2.34,
+     2.78
     ],
     [
-     1.509,
-     2.224
+     2.94,
+     3.56
     ]
    ],
    "captions": [
@@ -79,29 +84,39 @@
     "SLEEP.",
     "He doesn't",
     "even BLINK."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 4.895,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "b98562524bb5"
   },
   "L03": {
+   "who": "N",
    "text": "I pushed him into the river. He walked right back.",
-   "dur": 2.293,
-   "onset": 0.155,
-   "end": 2.086,
+   "dur": 2.527,
+   "onset": 0.24,
+   "end": 2.22,
    "chunks": [
     [
-     0.155,
-     0.509
+     0.24,
+     0.62
     ],
     [
-     0.509,
-     1.034
+     0.66,
+     1.2
     ],
     [
-     1.103,
-     1.431
+     1.5,
+     1.84
     ],
     [
-     1.431,
-     2.086
+     1.88,
+     2.22
     ]
    ],
    "captions": [
@@ -109,37 +124,47 @@
     "into the RIVER.",
     "He WALKED",
     "right BACK."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 9.025,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "54a1e7a6e5e8"
   },
   "L04": {
-   "text": "Wolves showed up. They took one look at him and left.",
-   "dur": 2.466,
-   "onset": 0.19,
-   "end": 2.259,
+   "who": "N",
+   "text": "wolves showed up. They took one look at him and left.",
+   "dur": 3.36,
+   "onset": 0.26,
+   "end": 2.84,
    "chunks": [
     [
-     0.19,
-     0.44
+     0.26,
+     0.52
     ],
     [
-     0.44,
-     0.862
+     0.48,
+     0.92
     ],
     [
-     0.931,
-     1.19
+     1.22,
+     1.5
     ],
     [
-     1.19,
-     1.474
+     1.72,
+     2.02
     ],
     [
-     1.474,
-     1.672
+     2.08,
+     2.3
     ],
     [
-     1.672,
-     2.259
+     2.44,
+     2.84
     ]
    ],
    "captions": [
@@ -149,37 +174,47 @@
     "one LOOK",
     "at him",
     "and LEFT."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 11.553,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "5884428128b1"
   },
   "L05": {
+   "who": "N",
    "text": "I put a block of gold on top. He stared through it.",
-   "dur": 2.448,
-   "onset": 0.155,
-   "end": 2.259,
+   "dur": 3.335,
+   "onset": 0.24,
+   "end": 2.82,
    "chunks": [
     [
-     0.155,
-     0.319
+     0.24,
+     0.42
     ],
     [
-     0.319,
-     0.56
+     0.46,
+     0.68
     ],
     [
-     0.56,
-     0.853
+     0.74,
+     1.08
     ],
     [
-     0.853,
-     1.31
+     1.16,
+     1.48
     ],
     [
-     1.379,
-     1.716
+     1.78,
+     2.28
     ],
     [
-     1.716,
-     2.259
+     2.36,
+     2.82
     ]
    ],
    "captions": [
@@ -189,37 +224,47 @@
     "on top.",
     "He stared",
     "THROUGH it."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 14.912,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "b10a6d15de13"
   },
   "L06": {
+   "who": "N",
    "text": "Sometimes the block groans. I figured dirt just does that.",
-   "dur": 2.793,
-   "onset": 0.172,
-   "end": 2.586,
+   "dur": 3.462,
+   "onset": 0.17,
+   "end": 3.0,
    "chunks": [
     [
-     0.172,
-     0.543
+     0.17,
+     0.62
     ],
     [
-     0.543,
-     0.81
+     0.68,
+     0.94
     ],
     [
-     0.81,
-     1.241
+     1.0,
+     1.3
     ],
     [
-     1.31,
-     1.672
+     1.76,
+     2.08
     ],
     [
-     1.672,
-     1.991
+     2.22,
+     2.58
     ],
     [
-     1.991,
-     2.586
+     2.62,
+     3.0
     ]
    ],
    "captions": [
@@ -229,41 +274,51 @@
     "I figured",
     "dirt just",
     "DOES that."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 18.247,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "2287cfee9a1f"
   },
   "L07": {
+   "who": "N",
    "text": "Honestly, I don't remember getting a sheep. Or dyeing him blue.",
-   "dur": 2.741,
-   "onset": 0.19,
-   "end": 2.534,
+   "dur": 3.928,
+   "onset": 0.2,
+   "end": 3.5,
    "chunks": [
     [
-     0.19,
-     0.483
+     0.2,
+     0.58
     ],
     [
-     0.509,
-     0.698
+     0.76,
+     0.98
     ],
     [
-     0.698,
-     0.914
+     1.06,
+     1.38
     ],
     [
-     0.914,
-     1.095
+     1.48,
+     1.74
     ],
     [
-     1.095,
-     1.483
+     1.8,
+     2.06
     ],
     [
-     1.569,
-     1.905
+     2.54,
+     3.04
     ],
     [
-     1.905,
-     2.534
+     3.08,
+     3.5
     ]
    ],
    "captions": [
@@ -274,41 +329,51 @@
     "a sheep.",
     "Or dyeing",
     "him BLUE."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 21.71,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "c29b710b2905"
   },
   "L08": {
-   "text": "I woke up in this house 412 days ago. No tools. No memories. Just him, already staring.",
-   "dur": 4.569,
-   "onset": 0.172,
-   "end": 4.379,
+   "who": "N",
+   "text": "I woke up in this house four hundred and twelve days ago. No tools. No memories. Just him, already staring.",
+   "dur": 7.247,
+   "onset": 0.26,
+   "end": 6.84,
    "chunks": [
     [
-     0.172,
-     0.491
+     0.26,
+     0.66
     ],
     [
-     0.491,
-     0.81
+     0.7,
+     1.16
     ],
     [
-     0.81,
-     1.862
+     1.3,
+     2.66
     ],
     [
-     1.974,
-     2.569
+     3.2,
+     3.74
     ],
     [
-     2.647,
-     3.121
+     4.06,
+     4.68
     ],
     [
-     3.155,
-     3.466
+     5.04,
+     5.5
     ],
     [
-     3.491,
-     4.379
+     5.98,
+     6.84
     ]
    ],
    "captions": [
@@ -319,45 +384,55 @@
     "No MEMORIES.",
     "Just HIM,",
     "already STARING."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 25.637,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "d3395f8120c5"
   },
   "L09": {
+   "who": "N",
    "text": "The house was already built. There's a line of torches from my door to that block.",
-   "dur": 3.431,
-   "onset": 0.172,
-   "end": 3.224,
+   "dur": 4.325,
+   "onset": 0.2,
+   "end": 3.98,
    "chunks": [
     [
-     0.172,
-     0.466
+     0.2,
+     0.5
     ],
     [
-     0.466,
-     0.845
+     0.54,
+     0.94
     ],
     [
-     0.845,
-     1.224
+     0.98,
+     1.18
     ],
     [
-     1.293,
-     1.422
+     1.76,
+     1.96
     ],
     [
-     1.422,
-     1.681
+     2.0,
+     2.24
     ],
     [
-     1.681,
-     2.052
+     2.28,
+     2.72
     ],
     [
-     2.052,
-     2.466
+     2.715,
+     3.32
     ],
     [
-     2.466,
-     3.224
+     3.46,
+     3.98
     ]
    ],
    "captions": [
@@ -369,62 +444,81 @@
     "of TORCHES",
     "from my door",
     "to that BLOCK."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 32.885,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "c5aaa5c6fbde"
   },
   "L10": {
+   "who": "N",
    "text": "The villagers call me the new one.",
-   "dur": 1.621,
-   "onset": 0.172,
-   "end": 1.431,
+   "dur": 2.763,
+   "onset": 0.22,
+   "end": 2.36,
    "chunks": [
     [
-     0.172,
-     0.578
+     0.22,
+     0.86
     ],
     [
-     0.578,
-     0.802
+     0.96,
+     1.32
     ],
     [
-     0.802,
-     1.431
+     1.6,
+     2.36
     ]
    ],
    "captions": [
     "The villagers",
     "call me",
     "the NEW one."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "37462c8bcc19"
   },
   "L11": {
+   "who": "N",
    "text": "They keep asking what happened to the old one. I say, who?",
-   "dur": 2.552,
-   "onset": 0.155,
-   "end": 2.276,
+   "dur": 4.875,
+   "onset": 0.16,
+   "end": 4.46,
    "chunks": [
     [
-     0.155,
-     0.431
+     0.16,
+     0.48
     ],
     [
-     0.431,
-     0.664
+     0.62,
+     0.9
     ],
     [
-     0.664,
-     0.974
+     1.0,
+     1.5
     ],
     [
-     0.974,
-     1.534
+     1.56,
+     2.4
     ],
     [
-     1.603,
-     1.914
+     3.16,
+     3.46
     ],
     [
-     1.948,
-     2.276
+     4.02,
+     4.46
     ]
    ],
    "captions": [
@@ -434,58 +528,78 @@
     "to the OLD one.",
     "I say,",
     "WHO?"
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 2.763,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "a6821337bcd0"
   },
   "L12": {
+   "who": "N",
    "text": "So today I got curious.",
-   "dur": 1.5,
-   "onset": 0.172,
-   "end": 1.31,
+   "dur": 2.41,
+   "onset": 0.285,
+   "end": 1.84,
    "chunks": [
     [
-     0.172,
-     0.491
+     0.285,
+     1.04
     ],
     [
-     0.491,
-     0.724
+     1.14,
+     1.34
     ],
     [
-     0.724,
-     1.31
+     1.42,
+     1.84
     ]
    ],
    "captions": [
     "So today",
     "I got",
     "CURIOUS."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 7.638,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "df9c53ea5ca2"
   },
   "L13": {
-   "text": "And for the first time in 412 days, he looked at me.",
-   "dur": 2.724,
-   "onset": 0.155,
-   "end": 2.534,
+   "who": "N",
+   "text": "And for the first time in four hundred and twelve days, he looked at me.",
+   "dur": 4.963,
+   "onset": 0.22,
+   "end": 4.44,
    "chunks": [
     [
-     0.155,
-     0.302
+     0.22,
+     0.48
     ],
     [
-     0.302,
-     0.733
+     0.54,
+     1.36
     ],
     [
-     0.733,
-     1.741
+     1.5,
+     3.16
     ],
     [
-     1.793,
-     2.052
+     3.62,
+     4.04
     ],
     [
-     2.052,
-     2.534
+     4.1,
+     4.44
     ]
    ],
    "captions": [
@@ -494,53 +608,73 @@
     "in 412 days,",
     "he LOOKED",
     "at ME."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 10.047,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "9b7d97c78fa2"
   },
   "L14": {
+   "who": "N",
    "text": "I broke the block.",
-   "dur": 1.241,
-   "onset": 0.172,
-   "end": 1.034,
+   "dur": 1.655,
+   "onset": 0.5,
+   "end": 1.16,
    "chunks": [
     [
-     0.172,
-     0.466
+     0.5,
+     0.78
     ],
     [
-     0.466,
-     1.034
+     0.84,
+     1.16
     ]
    ],
    "captions": [
     "I broke",
     "the BLOCK."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 15.01,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "ac45cf110634"
   },
   "L15": {
+   "who": "N",
    "text": "There's a hole under it. It goes straight down.",
-   "dur": 2.086,
-   "onset": 0.155,
-   "end": 1.879,
+   "dur": 3.89,
+   "onset": 0.18,
+   "end": 3.48,
    "chunks": [
     [
-     0.155,
-     0.267
+     0.18,
+     0.38
     ],
     [
-     0.267,
-     0.483
+     0.44,
+     0.92
     ],
     [
-     0.483,
-     0.81
+     1.1,
+     1.46
     ],
     [
-     0.862,
-     1.121
+     2.14,
+     2.42
     ],
     [
-     1.121,
-     1.879
+     2.385,
+     3.48
     ]
    ],
    "captions": [
@@ -549,33 +683,164 @@
     "under it.",
     "It goes",
     "STRAIGHT down."
-   ]
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 16.665,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "895f5622cf0f"
   },
   "L16": {
+   "who": "N",
    "text": "Who digs straight down?",
-   "dur": 1.379,
-   "onset": 0.172,
-   "end": 1.172,
+   "dur": 2.155,
+   "onset": 0.3,
+   "end": 1.9,
    "chunks": [
     [
-     0.172,
-     0.466
+     0.3,
+     0.9
     ],
     [
-     0.466,
-     0.69
+     0.89,
+     1.34
     ],
     [
-     0.69,
-     1.172
+     1.44,
+     1.9
     ]
    ],
    "captions": [
     "Who digs",
     "STRAIGHT",
     "DOWN?"
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L10",
+   "offset": 20.555,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "06ba3a372512"
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 37.21,
+   "offsets": [
+    0.0,
+    4.895,
+    9.025,
+    11.553,
+    14.912,
+    18.247,
+    21.71,
+    25.637,
+    32.885
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 2,
+   "tries": 2,
+   "fixes": [
+    "one continuous take, no pauses between sentences"
+   ],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.62 s pause between lines 0-1 (limit 0.6 s, the opening)"
+     ]
+    }
+   ]
+  },
+  "L10": {
+   "lines": [
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14",
+    "L15",
+    "L16"
+   ],
+   "file": "beat_L10.wav",
+   "dur": 22.71,
+   "offsets": [
+    0.0,
+    2.763,
+    7.638,
+    10.047,
+    15.01,
+    16.665,
+    20.555
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 2,
+   "tries": 2,
+   "fixes": [
+    "one continuous take, no pauses between sentences",
+    "full voice throughout, never whispering"
+   ],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 14.48,
+     "len": 1.02,
+     "why": "1.02 s pause between lines 3-4 (limit 0.95 s)"
+    },
+    {
+     "kind": "whisper",
+     "at": 8.9,
+     "len": 0.54,
+     "why": "0.54 s whispered or dropped far under the take"
+    }
+   ],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "1.12 s pause between lines 3-4 (limit 0.95 s)",
+      "0.56 s whispered or dropped far under the take"
+     ]
+    },
+    {
+     "try": 2,
+     "why": [
+      "1.02 s pause between lines 3-4 (limit 0.95 s)",
+      "0.54 s whispered or dropped far under the take"
+     ]
+    }
    ]
   }
  },
- "total": 40.86
+ "total": 60.42
 }
