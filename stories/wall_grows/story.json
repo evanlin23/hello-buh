@@ -137,8 +137,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Our village WALL / grows ONE block / every morning. / And nobody will tell me WHY.",
-   "say": "Our village wall grows one block every morning. And nobody will tell me WHY.",
+   "text": "In my village, / the WALL grows / one BLOCK / every MORNING. / And nobody will tell me WHY.",
+   "say": "In my village, the wall grows one block every morning. And nobody will tell me WHY.",
    "shot": "S01",
    "shows": [
     {

@@ -19,7 +19,7 @@ tiny BOX." One beat: he looks up and puts down ONE more (line 1's "ONE block eve
 ## Beats (Pip at about 3 words/s: 163 words, about 50-55 s; length is not a criterion, r:r08fd98)
 | ~t | line | picture | format beat / plants / the kid's innocent misreading (STANDARDS 0a) |
 |---|---|---|---|
-| 0-4 | L01 our wall grows ONE block every morning, and nobody will tell me WHY | EWS from the plaza up the wall | beat 1: the impossible fact + the why, said |
+| 0-4 | L01 in my village, the WALL grows one BLOCK every MORNING, and nobody will tell me WHY | EWS from the plaza up the wall | beat 1: the impossible fact + the why, said |
 | 4-7 | L02 it's FORTY blocks high; old Tomas puts the new one on | Tomas on the rim placing one block | the rule in action; proud of Tomas |
 | 6-10 | L03 a zombie can't jump two blocks, so we're super safe! | a zombie stuck at the farm's 2-high wall at night | clue: then what is 40 for? the kid: extra safe |
 | 10-13 | L04 no gate; who needs one? everything's in here | kids playing along the unbroken wall | clue: no gate; the kid: we don't need outside |
