@@ -61,6 +61,9 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=villager]')
+    // no admin broadcast per entity: the step-in's tp of ~250 villagers a tick logged and broadcast every one, the server
+    // fell seconds behind and the take ended before any of them moved (r1-r3)
+    await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/kill @e[type=!player,type=!villager]', { mayFail: true })   // no wild animals (a wolf wandering the cut-out takes blocked r1: cast stair steps)
     const profs = ['librarian', 'farmer', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'fisherman', 'nitwit', 'none']
     const types = ['plains', 'plains', 'plains', 'taiga', 'desert', 'savanna', 'snow']
