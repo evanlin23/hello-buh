@@ -1,0 +1,17 @@
+{
+ "name": "cells_lab",
+ "stunt": "cells_lab",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43157934506",
+ "source": "9b8c3da",
+ "queued": "2026-11-12T04:55:27Z",
+ "finished": "2026-11-12T04:59:11Z",
+ "mp4": "renders/out/cells_lab.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
