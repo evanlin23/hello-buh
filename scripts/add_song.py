@@ -228,6 +228,17 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                  f"[0:a]{game_gain},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+    if not stunt.get("story") and not LEGACY_MASTER:
+        # the song under the game's block sounds (scripts/mix_pump.py `under`, mixcheck's gate: >= 3 dB): a bed that comes
+        # out on top of a quiet or sparse game track is lowered by what it misses (+1 dB of margin) and mixed once more
+        import mix_pump
+        u, _, _ = mix_pump.under(mix_pump.rms_db(out), mix_pump.rms_db(src))
+        if u is not None and u < mix_pump.UNDER_MIN + 1:
+            cut = min(12.0, mix_pump.UNDER_MIN + 1 - u)
+            graph = graph.replace(loud.static(ROOT / song, song_lufs, song_start, dur - late), loud.static(ROOT / song, song_lufs - cut, song_start, dur - late), 1)
+            print(name, f"mix: the song {cut:.1f} dB lower (the game sounds were {u:+.1f} dB over it; want >= {mix_pump.UNDER_MIN + 1:.0f})")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
+                            "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
     if stunt.get("story"):   # single-pass loudnorm lands short: correct the story master to -14 LUFS exactly
         sys.path.insert(0, str(ROOT / "scripts"))
         import story_track
