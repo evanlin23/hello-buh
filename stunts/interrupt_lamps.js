@@ -1,13 +1,15 @@
 // "interrupt" #1 (owner's new format, 2026-11-11, r:re05b89; lib/interrupt.js): played straight as a normal build
 // video. The player lays a 7x8 floor of redstone lamps on a grass plain, row by row, stepping back a block after each
-// row, a lever on a post at the near corner. Six rows in, a skeleton a few blocks off shoots the player: a real hit
-// (the hurt tilt, knockback, a heart gone). The player turns, walks up to it, picks it up with a bare hand and eats it
+// row, a lever on a post at the near corner. A skeleton a few blocks off keeps shooting the player: a real hit each
+// time (the hurt tilt, knockback, a heart gone). Twice the player glances over, longer each time, and goes back to
+// the floor (owner 2026-11-12, r:rf557af: "spend longer building", "the skeleton hit us at least like 3 times"); on
+// the third the player turns, walks up to it, picks it up with a bare hand and eats it
 // (owner, 2026-11-11: "picking it up and eating it"), shuffling back toward the build as it eats: crunches, bone crumbs,
 // a burp. Then straight on to the same spot, the same row, as if nothing happened (no cut on the way back). Last row,
 // the lever: a hard cut on the music drop to a drone straight overhead, and the whole floor lights up in a ripple from
 // the corner (hidden redstone under it) at dusk, held lit ~1 s. One caption, no reaction.
-// No-op audit 2026-11-12 (r:r8d6af1): the lit floor showed under 1 s after ~25 s of building. Now five rows are down
-// when it opens (the build on screen is seconds, sped up after the walk back) and the payoff is the floor top-down.
+// No-op audit 2026-11-12 (r:r8d6af1): the payoff is the floor top-down, lit. v3 (r:rf557af): two rows are down when it
+// opens, the build plays at 1x up to the third hit (three lamps a second), sped up only after the walk back.
 const { storyKit, plainsBiome } = require('../lib/story')
 const { plateau } = require('../lib/plateau')
 const I = require('../lib/interrupt')
@@ -24,7 +26,9 @@ const BACK = 2.7                         // the player's feet stand this far sou
 const PX = 0.5                           // ...at this dx
 const POST = [-4, -1]                    // the lever's post, beside the floor's south-west corner
 const SKEL = [7.5, -1.0]                 // the skeleton, a short way off across the field to the east
-const PRE = 5                            // rows already down when the video starts (laid by command in setup)
+const PRE = 2                            // rows already down when the video starts (laid by command in setup)
+// the hits: [row index, lamps into it, ticks the player stares back at it]; the last one is the interruption itself
+const HITS = [[3, 3, 8], [4, 4, 14]]
 const BEFORE = 6                         // the row the interruption comes in (INTO lamps into it)
 const INTO = 4
 
@@ -40,7 +44,9 @@ module.exports = {
   },
   edit: {
     caption: CAPTION, red: 'so clean', dropAt: 'floor_lit',   // the drop lands as the last lamp lights (the cut overhead comes 1.4 s before, on the lever)
-    startAt: 'hook:-0.1', endAfter: 'floor_lit:1.0',   // the floor fully lit 1.0 s (the end limit), after the ripple across it (r:r188b46)
+    startAt: 'hook:-0.1', endAfter: 'floor_lit:1.0',
+    // the annoyance builds: a word on each hit (a person reacting, r:r0f3da0); the third one ends with it eaten
+    subsY: 0.18, subs: [['intr_hit', 'ow??', 1.0, 0], ['intr_hit', 'bro. stop.', 1.2, 1], ['intr_hit', "ok that's it", 1.4, 2]],   // the floor fully lit 1.0 s (the end limit), after the ripple across it (r:r188b46)
     // the walk back stays one continuous walk (owner: the jump cut there "looks weird"), a touch brisker (x1.3: the
     // whole 3 s of it uncut was a span with nothing new, pace); the rest of the floor after it plays fast (x2: the
     // build is the setup, seconds of it), never cut mid-place
@@ -76,6 +82,7 @@ module.exports = {
     await ctx.hotbar([['redstone_lamp', 64], null, 'iron_pickaxe', 'iron_sword', ['oak_planks', 48], ['torch', 24], ['bread', 9], ['redstone', 32], 'water_bucket'])
     await ctx.tpCheck(X + PX, F + 1, Z + ROWS[PRE] + 1 + BACK, 180, 30)
     await ctx.cmd('/effect give @s instant_health 1 10 true')
+    await ctx.cmd('/gamerule natural_health_regeneration false')   // the hearts stay gone: each hit takes more off the HUD (v3: three hits)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(30)
@@ -104,9 +111,9 @@ module.exports = {
     // a step back to the next row's spot, eyes on its first lamp (as a player backs up laying a floor)
     // ...and onto the row's spot in x too (the walk back from the skeleton ended ~0.5 off, and the west lamps' rays
     // then crossed their east neighbours: rec_check sight). The keys are picked against the view each tick
-    const stepBack = async (dz) => {
+    const stepBack = async (dz, dx = ORDER[0]) => {
       const x = X + PX, z = Z + dz + 1 + BACK
-      K.base = K.aim(K.top(P(ORDER[0], 0, dz)))
+      K.base = K.aim(K.top(P(dx, 0, dz)))
       for (let k = 0; k < 40; k++) {
         const e = bot.entity.position, wx = x - e.x, wz = z - e.z
         if (Math.abs(wx) < 0.06 && Math.abs(wz) < 0.06) break
@@ -119,9 +126,19 @@ module.exports = {
       ctx.mark('step_back')
     }
     await K.aimAt(K.top(P(ORDER[0], 0, ROWS[PRE])))
-    for (let r = PRE; r < BEFORE - 1; r++) { if (r > PRE) await stepBack(ROWS[r]); await lay(ROWS[r]) }
-    await stepBack(ROWS[BEFORE - 1])
-    await lay(ROWS[BEFORE - 1], ORDER.slice(0, INTO))   // a few lamps into the row
+    for (let r = PRE; r < BEFORE; r++) {
+      if (r > PRE) await stepBack(ROWS[r])
+      const h = HITS.findIndex(x => x[0] === r)
+      if (r === BEFORE - 1) { await lay(ROWS[r], ORDER.slice(0, INTO)); break }   // a few lamps into the row: the third
+      if (h < 0) { await lay(ROWS[r]); continue }
+      // it shoots: a glance over (longer each time: getting annoyed), back to the same lamp, the floor goes on
+      const [, into, stare] = HITS[h]
+      await lay(ROWS[r], ORDER.slice(0, into))
+      await I.annoy(ctx, K, { mob: 'skeleton', tag: 'intr', n: h, stare, resume: K.top(P(ORDER[into], 0, ROWS[r])) })
+      K.sway = 0.1
+      await stepBack(ROWS[r], ORDER[into])   // the knockback pushed the feet off the row's spot
+      await lay(ROWS[r], ORDER.slice(into))
+    }
 
     // the interruption: the skeleton shoots the player mid-row
     await I.interrupt(ctx, K, {
