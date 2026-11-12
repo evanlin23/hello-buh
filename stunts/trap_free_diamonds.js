@@ -29,7 +29,7 @@ const { makeStunt } = require('../lib/trap')
 const FRIEND = 'Dylan'
 const HIDE = [3.5, 1, 2.5]
 const PEEK = [1.05, 1, 0.5]   // on A's cover, the box (0.75..1.35) still on it, the eye over the shaft's edge
-const DEEP = 8                // my feet at the bottom: y -DEEP; the lava one below B's floor at y -(DEEP + 1); levels 0, -1 and the last one show, the rest is cut
+const DEEP = 8                // my feet at the bottom: y -DEEP; the lava one below B's floor at y -(DEEP + 1); levels 0 and -1 show, then the bottom, the rest is cut
 
 module.exports = makeStunt({
   name: 'trap_free_diamonds',
@@ -45,11 +45,11 @@ module.exports = makeStunt({
   edit: {
     // fast cuts (owner r:r188b46): the middle of the dig, the walk into hiding, his coast + shuffle onto the trapdoor,
     // and my walk to the edge; every edge sits on a rest (rec_check whip)
-    speed: [['deep_a:0.05', 'deep_b', 'cut'], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut'], ['get_up:0.05', 'peek:-0.05', 'cut']],
+    speed: [['deep_a:0.05', 'deep_b', 'cut'], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut']],
     // the last beat: straight down the shaft at him in the lava (owner: "all the way down and then lava"); a hit on it
-    endAfter: 'peek:0.8',
-    sfx: [['dip', 'peek', 0.3], ['impact', 'peek', { gain: 1.4 }]],
-    zoom: [['peek', 'peek:0.9', 2.2]]   // a push-in down the shaft onto him in the lava (the crosshair is on the shaft's bottom)
+    endAfter: 'splash:0.8',
+    sfx: [['dip', 'splash', 0.3], ['impact', 'splash', { gain: 1.4 }]],
+    zoom: [['splash:-0.3', 'splash:0.9', 2.4]]   // a push-in down the shaft onto him in the lava (the crosshair is on the shaft's bottom)
   },
 
   async set (ctx, T) {
@@ -73,7 +73,7 @@ module.exports = makeStunt({
       await T.dig(1, y, 0)
       await landed()
       if (y === -1) { await T.hold(3); ctx.mark('deep_a') }            // the cut out: after two levels, at rest
-      if (y === -(DEEP - 1)) { await T.hold(3); ctx.mark('deep_b'); await T.hold(2) }   // the cut in: one level from the bottom
+      if (y === -DEEP) { await T.hold(3); ctx.mark('deep_b'); await T.hold(2) }   // the cut in: at the bottom
     }
     // B one deeper: the lava pit, below my floor
     tool(-DEEP - 1)
@@ -139,18 +139,15 @@ module.exports = makeStunt({
     if (!open) { ctx.log('trap: the trapdoor did not open'); return false }
     T.payoff()
     ctx.sound('block.wooden_trapdoor.open', 1, 1, { key: true })
-    const fell = await F.waitFall({ minDrop: DEEP, max: 50 })
-    if (!fell) { ctx.log('trap: the friend did not reach the lava'); return false }
+    // as he drops through, cut to the edge (I'm still crouched): straight down the shaft, he falls the rest of the way
+    // into the lava, and the hit lands on the splash (reviewer v3: the fall and the landing must be seen)
+    await T.hold(10)   // he sinks out of the floor (the opening's flash-forward runs to payoff+0.45: the cut comes after it); the view rests for the cut's out edge
+    await T.K.cut(PEEK[0], PEEK[2], Object.assign(T.at(0.5, -DEEP, 0.5), { exact: true }), 1)
+    let inLava = false
+    for (let k = 0; k < 40 && !inLava; k++) { inLava = !!F.bot.entity.isInLava; if (!inLava) await T.tick() }
+    if (!inLava) { ctx.log('trap: the friend did not reach the lava'); return false }
+    ctx.mark('splash')
     ctx.sound('block.lava.pop', 1, 1)
-    await T.hold(4)   // the view rests for the edit cut's out edge
-    // the last beat: I get up, walk onto A's cover at the shaft's edge (cut) and look straight down at him in the lava
-    ctx.mark('get_up')
-    T.sneak(false)
-    await T.walk([[2.3, 1, 0.9], PEEK])
-    T.sneak(true)
-    await T.look(0.5, -DEEP, 0.5, { max: 30 })
-    await T.hold(4)
-    ctx.mark('peek')
     ctx.sound('entity.generic.burn', 0.8, 1)
     F.say('BRO')
     await F.lookAt(PEEK[0], PEEK[1] + 1.3, PEEK[2], 6)
