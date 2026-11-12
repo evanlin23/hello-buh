@@ -29,7 +29,7 @@ module.exports = {
     flash: [['flood', 0, 0.45]],
     shake: [['flood', 0, 10]],
     punch: [['flood', 0, 1.1]],
-    sfx: [['impact', 'mine0:0.02', { gain: 2.0 }], ['impact', 'burst0', { gain: 2.0 }], ['dip', 'flood', 0.4], ['impact', 'flood', { gain: 1.5 }]] },
+    sfx: [['impact', 'mine0:0.02', { gain: 2.0 }], ['impact', 'burst0', { gain: 2.6 }], ['dip', 'flood', 0.4], ['impact', 'flood', { gain: 1.5 }]] },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -79,7 +79,7 @@ module.exports = {
     // new item entities since a beat's burst: the camera follows their centre (the shower), r:ra8d5da
     let watch = null
     bot.on('entitySpawn', (e) => { if (watch && e.name === 'item') watch.push(e) })
-    const centre = () => {
+    const centre = () => {   // (the shower's live items)
       const live = (watch || []).filter(e => e.isValid !== false && bot.entities[e.id])
       if (!live.length) return null
       const c = live.reduce((a, e) => a.plus(e.position), new Vec3(0, 0, 0)).scaled(1 / live.length)
@@ -101,7 +101,7 @@ module.exports = {
       ctx.mark(`mine${i}`); ctx.mark('mine')
       const pk = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })   // motion-ok: aimed above (A.aimAt), held on it below
       pk(0)
-      for (let t = 0; t < 4; t++) { if (t % 2 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await look(face(o)) }
+      for (let t = 0; t < 4; t++) { if (t % 2 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 1.0, 0.7) } await look(face(o)) }
       pk(2)
       await look(face(o))
       for (let t = 0; t < 3 && bot.blockAt(p)?.name !== 'air'; t++) await look(face(o))
@@ -110,6 +110,7 @@ module.exports = {
       bot.chat(`/kill @e[type=item,x=${o.x + 0.5},y=${o.y + 0.5},z=${wz + 0.5},distance=..1.2]`)   // the ore's own drop, in the recess
     }
     const standX = (i) => this.ores[Math.min(i, this.ores.length - 1)].x + 0.5
+    bot.chat('/kill @e[type=!player,type=!item,type=!experience_orb,distance=..200]')   // a villager from a village nearby wandered in (rec_check cast)
     await bot.waitForTicks(4)
     for (let i = 0; i < this.ores.length; i++) {
       const o = this.ores[i]
@@ -135,20 +136,30 @@ module.exports = {
         const tag = `fd${i}`, nx = standX(i + 1)
         for (let k = 0; k < o.n; k++) {
           const sx = o.x + 0.5 + (rnd() - 0.5) * 0.9, sy = o.y + 0.5 + (rnd() - 0.5) * 0.7, sz = wz + 1.1 + rnd() * 0.3
-          launch(o.drop, sx, sy, sz, nx + (rnd() - 0.5) * 1.4, this.standZ - 0.9 + rnd() * 1.0, 0.3 + rnd() * 0.16, tag)   // a high arc: in frame longer, down within reach of the next spot
+          launch(o.drop, sx, sy, sz, nx + (rnd() - 0.5) * 1.4, this.standZ - 0.9 + rnd() * 1.0, 0.2 + rnd() * 0.1, tag)   // a low arc: it stays in frame (a high one flew out the top, review v4), down within reach of the next spot
         }
         { let t = 0; const rel = () => { if (++t === 22) { bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
-        if (/coal|diamond/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${o.y + 0.5} ${wz + 1.2} {Value:3}`)
-        // the camera rides the fountain's mean arc (the same vanilla physics as launch(): it starts on the hole, rises,
-        // and comes down at the next spot), so the shower stays in the middle of the frame (r:ra8d5da)
+        if (/coal/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${o.y + 0.5} ${wz + 1.8} {Value:3}`)   // out in the open (in the dark recess two orbs read as eyes: review v4)
+        // the camera follows the shower: its mean arc, worked out with the same vanilla physics as launch() (the server
+        // syncs a dropped item's position only once a second, so the live entities lag a whole flight behind), aimed a
+        // little below it and never tilted far above the horizon, so the pile stays in the middle of the frame
+        // (r:ra8d5da; review v4: the high arc and a camera tilting to the sky lost the coal shower)
         const arc = []
-        { const sx = o.x + 0.5, sy = o.y + 0.5, sz = wz + 1.25, tx = nx, tz = this.standZ - 0.4, vy0 = 0.38
+        { const sx = o.x + 0.5, sy = o.y + 0.5, sz = wz + 1.25, tx = nx, tz = this.standZ - 0.4, vy0 = 0.25
           let y = sy, T = 0; for (let v = vy0; T < 80; T++) { v -= 0.04; y += v; v *= 0.98; if (y <= ground && T > 2) break }
-          const f = (1 - Math.pow(0.98, T)) / 0.02, vx = (tx - sx) / f, vz = (tz - sz) / f
-          let p = new Vec3(sx, sy, sz), v = new Vec3(vx, vy0, vz)
-          for (let k = 0; k <= T + 2; k++) { arc.push(p.offset(0, 0.25, 0)); v = new Vec3(v.x * 0.98, (v.y - 0.04) * 0.98, v.z * 0.98); if (p.y + v.y > ground) p = p.plus(v) } }
-        let last = face(o)
-        for (let k = 0; k < 14; k++) { const g = arc[Math.min(k + 3, arc.length - 1)]; last = last.plus(g.minus(last).scaled(k < 3 ? 0.3 : 0.6)); await look(last) }   // cut ~0.9 s after the break (r:r188b46)
+          const f = (1 - Math.pow(0.98, T)) / 0.02
+          let q = new Vec3(sx, sy, sz), v = new Vec3((tx - sx) / f, vy0, (tz - sz) / f)
+          for (let k = 0; k <= T + 20; k++) { arc.push(q); v = new Vec3(v.x * 0.98, (v.y - 0.04) * 0.98, v.z * 0.98); if (q.y + v.y > ground) q = q.plus(v); else q = new Vec3(q.x + v.x, ground, q.z + v.z) } }
+        let last = face(o), seen = arc.length
+        for (let k = 0; k < 14; k++) {
+          const eye = bot.entity.position.offset(0, 1.62, 0)
+          let g = arc[Math.min(k + 2, arc.length - 1)].offset(0, -0.3, 0)
+          const d = Math.hypot(g.x - eye.x, g.z - eye.z), top = eye.y + d * Math.tan(0.15)
+          if (g.y > top) g = new Vec3(g.x, top, g.z)
+          last = last.plus(g.minus(last).scaled(0.5))
+          await look(last)
+        }
+        ctx.log('shower', i, 'arc ticks', seen)   // cut ~0.9 s after the break (r:r188b46)
         { const hold = last.clone(); for (let k = 0; k < 4; k++) await look(hold) }   // a rest on where it landed: the cut goes out here (the view still, r:r38374d)
         ctx.mark(`seen${i}`)
         watch = null
