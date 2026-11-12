@@ -128,3 +128,11 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   the obstacle (nothing hits or dies on screen). Air control reaches ~1.5 blocks between layers 50 apart: run
   `node scripts/dropper_sim.js <stunt>` (prismarine-physics, the same pilot) before recording; it matched the server's
   cut heights to the hundredth.
+- **tnt (hidden core)**: tnt v2 (r:re197bb): a small visible pile at the foot of a hill whose core is real TNT (a grass
+  skin over ~3000 TNT, a TNT bed under the field); the chain erases the hill and the house on top, then a cut to the
+  crater's rim. Next: a TNT core under a whole village (before shot of the village, one block lit, the village goes);
+  a TNT mountain at night (the blasts light the dark, the crater by moonlight); "POV: you lit 1 TNT" on a snowy-peaked
+  TNT mountain. Lessons from the build: 3000 TNT flings primed TNT ~60 blocks (the vantage 50 back, knockback
+  resistance), the client's blocks go stale after ~2000 blasts (find the rim from the server: /execute positioned over
+  motion_blocking), bot.entities keeps stale primed TNT (wait on the last explosion packet instead), build the hill in
+  layered row fills (per-column fills ran past the bot timeout), edit sfx/subs offsets count in OUTPUT seconds.
