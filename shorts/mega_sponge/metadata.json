@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 58288646,
-    "sha256": "2c3df27ec1bcf36149ef595b63a54506495a95dff77c4646c22c815be287928f",
+    "bytes": 58301618,
+    "sha256": "fef7d96ad06bd60851c643ba59acd2b659c6d1d42ea85a09e98995d6e0b6b502",
     "release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short.2c3df27ec1bcf361.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.2c3df27ec1bcf361.mp4",
-      "sha256": "2c3df27ec1bcf36149ef595b63a54506495a95dff77c4646c22c815be287928f",
-      "bytes": 58288646
+      "asset": "mega_sponge.short.fef7d96ad06bd608.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.fef7d96ad06bd608.mp4",
+      "sha256": "fef7d96ad06bd60851c643ba59acd2b659c6d1d42ea85a09e98995d6e0b6b502",
+      "bytes": 58301618
     },
     "nosong_release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short_nosong.59f5b3b6934d64de.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short_nosong.59f5b3b6934d64de.mp4",
-      "sha256": "59f5b3b6934d64de885cb1313446d4b26792111ba3e1f4febe18c05861d1bc15",
-      "bytes": 58282661
+      "asset": "mega_sponge.short_nosong.35cc5b4d2f236be3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short_nosong.35cc5b4d2f236be3.mp4",
+      "sha256": "35cc5b4d2f236be34b6f3caec9f99dd750d67244b0d0b708e6bb209bf1f8e083",
+      "bytes": 58288680
     }
   },
   "edit": {
@@ -72,6 +72,13 @@
       ]
     ],
     "sfx": [
+      [
+        "impact",
+        "start",
+        {
+          "gain": 0.8
+        }
+      ],
       [
         "dip",
         "thread",
@@ -119,7 +126,7 @@
       "--flash",
       "[[\"inside\",0,0.45],[\"thread\",0,0.3]]",
       "--sfx",
-      "[[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":0.6}],[\"dip\",\"swing\",0.25,{\"nth\":3}]]",
+      "[[\"impact\",\"start\",{\"gain\":0.8}],[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":0.6}],[\"dip\",\"swing\",0.25,{\"nth\":3}]]",
       "--start_at",
       "start:0",
       "--end_after",
@@ -528,11 +535,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/mega_sponge",
-    "commit": "4f903478dd015a54a4644aa93be978bb1dd176ef",
+    "commit": "8e08f38452040681b7a07ebebe59db8f6a8b50b7",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43106473804",
-    "rendered_at": "2026-11-11T22:04:03.307Z",
-    "head_at_publish": "32fb8e3c11eec8d593e48e5a72c3ebb61c91eb61",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43122322826",
+    "rendered_at": "2026-11-12T00:17:36.020Z",
+    "head_at_publish": "99afdffe83be7ae3a4d41622163396aaf137e233",
     "stunt": "stunts/mega_sponge.js",
     "source_snapshot": [
       "source/mega_sponge.js",
@@ -541,18 +548,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 4f903478dd01",
+    "git checkout 8e08f3845204",
     "gunzip -c shorts/mega_sponge/recording.json.gz > work/mega_sponge.rec.json",
     "node render.js work/mega_sponge.rec.json work/mega_sponge.frames 60 1080 1011",
     "python3 audio.py work/mega_sponge.rec.json work/mega_sponge.wav",
-    "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --self_name 56e --punch [[\"thread\",0,1.08]] --flash [[\"inside\",0,0.45],[\"thread\",0,0.3]] --sfx [[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":0.6}],[\"dip\",\"swing\",0.25,{\"nth\":3}]] --start_at start:0 --end_after thread:0.8 --out out/mega_sponge.mp4"
+    "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --self_name 56e --punch [[\"thread\",0,1.08]] --flash [[\"inside\",0,0.45],[\"thread\",0,0.3]] --sfx [[\"impact\",\"start\",{\"gain\":0.8}],[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":0.6}],[\"dip\",\"swing\",0.25,{\"nth\":3}]] --start_at start:0 --end_after thread:0.8 --out out/mega_sponge.mp4"
   ],
   "status": "ready",
-  "notes": "r:r52f94c owner note (@18.7 s 'the cuts are too jarring, it looks like we get stuck'): every hard cut is a clearly new angle or a match cut (face = 3/4 track, face2 = head-on push ending where the dive starts, rise2 = high top view). Independent review READY (round 2).",
-  "published_at": "2026-11-11T22:25:19.067Z",
+  "notes": "r:r52f94c owner note (@18.7 s 'the cuts are too jarring, it looks like we get stuck'): every hard cut a clearly new angle or a match cut (face 3/4 track, face2 head-on push ending where the dive starts, rise2 high top view); opens on the whole sponge pushing in (r:r0f3da0). Independent review READY. WARNs: dwell 1.3/2.1 s during continuous flight (the flight is the action), no early hit beyond the frame-0 impact.",
+  "published_at": "2026-11-12T00:31:44.924Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:25:53+00:00",
+    "at": "2026-11-12T00:32:18+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -561,14 +568,14 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 7,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T21:51:06.244Z",
+      "at": "2026-11-11T23:57:28.264Z",
       "report": "out/mega_sponge.check.json"
     },
     "key_sounds": "n/a"

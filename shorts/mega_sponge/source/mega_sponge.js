@@ -5,7 +5,7 @@
 // cinematic camera shots of the whole thing, getting closer each time, and ends threading the 3x3 hole of the small
 // glowing sponge hung in the big one's hollow middle ("a sponge inside the sponge").
 //
-// Beats (Short seconds, 25.5 s): 0 low under the south-west corner, craning up (the build fills the frame) | 2.0 high
+// Beats (Short seconds, 25.5 s): 0 the whole sponge over the forest, pushing in fast from the south-west | 2.0 high
 // off the south-east, down across the top | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
 // east end | 8.4 wide orbit over the forest | 10.7 high over the top face | 12.8 boost up the north face and over the top,
 // looking down the top hole at the core | 17.6 the west face from its south-west corner, tracking | 19.6 head-on on the hole's line, pushing in | 21.5 boost,
@@ -35,8 +35,10 @@ module.exports = {
   look: { mood: 'golden_hour', bloom: 0.35, bloomThreshold: 0.86, bloomPasses: 1, sharpen: 0.4, rays: 0.5, raysOverBlocks: 0.3, shadows: true, vignette: 0.3, grain: 0.01 },
   shots: {
     pov: { pov: true },
-    // 1. under the south-west corner looking up: the build fills the frame from frame 1, the camera craning up and back
-    rise: { path: [[0, -52, 9, 56], [2, -57, 19, 62]], lookPath: [[0, -18, 62, 18], [2, -10, 54, 10]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
+    // 1. the whole sponge over the forest from the south-west, pushing in fast (~17 blocks/s) and drifting onto its corner
+    // (owner r:r0f3da0: frame 0 shows the subject, moving by 0.5 s; the old close crane under the corner filled frame 0
+    // with one dark texture: the opening check's flat view, centre 0.12 / busy 0.34; this frame 0: 0.89 / 0.66)
+    rise: { path: [[0, -100, 22, 100], [2, -66, 30, 66]], lookPath: [[0, -20, 45, 20], [2, -30, 50, 30]], fov: 76, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
     // 1b. high off the south-east, looking DOWN across the top face to the far corner, the forest far below: rise looks up
     // from the ground at a corner, so a second low corner shot cut onto it read as the same frame twice (independent
     // review of the r:r52f94c fix: "a jump-cut stutter in the hook"); this one is a clearly different angle and height
@@ -65,7 +67,8 @@ module.exports = {
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
     // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
     // boosts alone left 3.1 s with nothing new)
-    sfx: [['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
+    // (an impact on frame 0: a sound hit by 0.3 s, r:r0f3da0)
+    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {
