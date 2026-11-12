@@ -38,9 +38,15 @@
       "ref": "mom",
       "color": "#FFB38A",
       "on_screen": "villager, plains farmer (straw hat), no name tag",
-      "model": "gemini-3.8-flash-tts"
+      "model": "gemini-3.1-flash-tts-preview",
+      "bracket": true,
+      "read_waiver": "lead 2026-11-12: owner picked this voice (Pulcherrima, audition D); the backwards listener hears the owner's own audition clip as a man; forwards: woman 30-45, conf 9 (L05 and L15)"
     }
   },
+  "requests": [
+    { "id": "mom_l05", "speakers": ["Mom"], "lines": ["L05"], "direction": "" },
+    { "id": "mom_l15", "speakers": ["Mom"], "lines": ["L15"], "direction": "[A scared mother, quick and low, not whispering]" }
+  ],
   "lines": [
     {
       "id": "L01",

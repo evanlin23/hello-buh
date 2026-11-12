@@ -20,6 +20,10 @@ Calibration (brand/auditions/2026-11-11_mom_grandma): Sulafat's Mom L05 is 0.853
 owner's "too similar"); the Mom candidates are 0.755-0.799, 3-5 semitones under; Pip's lines are 0.836 (p10) to each
 other. Here Light Sleeper's Mom is 0.86 to its narrator (bar 0.846, 1.4 st): BLOCK.
 
+READ WAIVER: a story cast entry's `"read_waiver": "who: why"` turns that character's READ blockers into WAIVED
+(printed with the reason; not a blocker). Only the read: a contrast BLOCK is never waived. Light Sleeper's Mom
+(2026-11-12): the owner picked Pulcherrima, and the backwards listener hears the owner's own audition clip as a man.
+
 READ (the age and sex the cast entry asks for, `reads_as: {"sex": "female", "age": [55, 85]}` in voices/cast.json or
 the story's cast; else from the role's name: Grandma, Grandpa, Mom, Dad...): every character line goes to the blind
 listener (scripts/who.py, played BACKWARDS so it hears the voice and not the words: forwards, "One's plenty,
@@ -218,6 +222,10 @@ def check(d, listen=True, cast_file=ROOT / "voices" / "cast.json", measure=None,
                     why2 += f" ({how})"
                 row["per_line"][k].update({"heard": {x: heard.get(x) for x in ("sex", "age", "voice", "model")} if heard else None,
                                            "listener": how, "read": lvl2})
+                waiver = (sc.get(c) or {}).get("read_waiver")   # a reviewed decision (story cast), never the contrast
+                if lvl2 == "BLOCK" and waiver:
+                    lvl2, why2 = "WAIVED", f"{why2} -- waived: {waiver}"
+                    row["per_line"][k]["read"] = lvl2
                 out["findings"].append({"level": lvl2, "check": "read", "who": c, "lines": [k], "msg": why2})
         else:
             out["findings"].append({"level": "NOTE", "check": "read", "who": c, "lines": ids,

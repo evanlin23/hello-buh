@@ -140,6 +140,21 @@
   "clip": "dog_hill/L17",
   "at": "2026-11-11T16:28:36Z"
  },
+ "8a3ac98e9b23": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 7,
+  "voice": "Deep, resonant, masculine, clear, steady",
+  "could_be_mistaken_for": "father",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-12T08:25:24Z"
+ },
  "9bb1a0ba0425": {
   "model": "gemini-3.5-flash-lite",
   "sex": "man",
