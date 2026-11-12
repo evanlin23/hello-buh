@@ -84,6 +84,14 @@ class Scope(unittest.TestCase):
         p = f"[{BUH}]\n\n" + lines[0][2]   # a `bracket: true` cast entry on 3.1 (Gold's Grandma)
         self.assertEqual(T.lint(p, lines, cs, M31)[0], "REFUSED")
 
+    def test_31_cast_bracket_true_sends_the_bracket(self):   # Light Sleeper's Mom: the audition's layout on 3.1
+        mom = T.library()["mom"]["profile"]
+        cs, lines = cast(mom, bracket=True), one("Sweetie, don't MOVE.")
+        p = T.prompt("", lines, cs, M31)
+        self.assertEqual(p, f"[{mom}]\n\nSweetie, don't MOVE.")
+        self.assertTrue(T.lint(p, lines, cs, M31)[0].startswith("ok"))
+        self.assertTrue(T.prompt("", lines, cast(mom), M31).startswith("# AUDIO PROFILE"))   # without it: unchanged
+
     def test_38_multi_speaker_structured_refused(self):
         cs = {**cast("[A warm, gentle grandmother]"), "Y": {"name": "Y", "voice": "Kore", "profile": "a guard", "role": "character"}}
         lines = [("X", "L01", "Hi.", ""), ("Y", "L02", "Halt.", "")]

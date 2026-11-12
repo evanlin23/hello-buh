@@ -979,7 +979,8 @@ def prompt(scene, lines, cs, model=MODELS[0], fixes=()):
         notes.append("This must be ONE continuous take: " + "; ".join(fixes) + ".")
     body = [t if len(who) == 1 else f"{cs[w]['name']}: {t}" for w, _, t, _ in lines]
     profiles = [f"{cs[w]['name']} is {cs[w]['profile']}." for w in who]
-    if model.startswith(BRACKET) and len(who) == 1:   # voices/recipes/pip.md: [profile], a blank line, the lines
+    if (model.startswith(BRACKET) or cs[who[0]].get("bracket")) and len(who) == 1:   # voices/recipes/pip.md: [profile], a blank line, the lines
+        # (a cast `bracket: true` asks for this layout on 3.1 too: the 2026-11-11 Mom audition's one-clause bracket)
         # a request split by emotional beat (STANDARDS 2b.1) brings its own one-line direction: it takes the bracket's
         # place, else the bubbly profile read every beat bubbly (Dog on the Hill's "Day one. Again.")
         beat = scene.strip()[1:-1].strip() if scene.strip().startswith('[') and scene.strip().endswith(']') else ''
