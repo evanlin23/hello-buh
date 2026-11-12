@@ -17,6 +17,33 @@ BED_LUFS = -16.0   # the stunt NCS bed, under the game at -15 (owner 2026-11-11,
 SONGS = {"misery.mp3": ("misery.", "pupsies"), "payphone.mp3": ("Payphone", "Radio Top Singers"), "funk_abnormal.mp3": ("FUNK ABNORMAL (ULTRA SLOWED)", "")}
 
 
+LOOPED = {}   # work/loop_*.wav -> the NCS file it was made from
+
+
+def loop_song(song, drop, bar, at):
+    """The track with one bar of its build repeated n times (n = the fewest whole bars that bring the drop to >= at s
+    of song): track[0:b1] + track[b0:b1] * n + track[b1:], where b1 is the earliest bar line counted back from the drop
+    in whole bars (drop - k*bar) that has a whole bar of song before it (b0 = b1 - bar >= 0). Every seam sits on a bar line of the same material, so it
+    plays as a longer build. Returns (path relative to ROOT, the new drop)."""
+    import math
+    n = math.ceil((at - drop - 1e-6) / bar)
+    b1 = drop - math.floor((drop - bar) / bar + 1e-9) * bar   # the first bar line after one whole bar of song
+    b0 = b1 - bar
+    (ROOT / "work").mkdir(exist_ok=True)
+    out = f"work/loop_{pathlib.Path(song).stem}_{bar:.3f}x{n}.wav"
+    parts = [f"[0:a]atrim=0:{b1:.4f},asetpts=PTS-STARTPTS[p0]"] + \
+        [f"[{i + 1}:a]atrim={b0:.4f}:{b1:.4f},asetpts=PTS-STARTPTS[p{i + 1}]" for i in range(n)] + \
+        [f"[{n + 1}:a]atrim=start={b1:.4f},asetpts=PTS-STARTPTS[p{n + 1}]"]
+    graph = ";".join(parts) + ";" + "".join(f"[p{i}]" for i in range(n + 2)) + f"concat=n={n + 2}:v=0:a=1[a]"
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    for _ in range(n + 2):
+        cmd += ["-i", str(ROOT / song)]
+    subprocess.run(cmd + ["-filter_complex", graph, "-map", "[a]", "-ar", "48000", str(ROOT / out)], check=True)
+    LOOPED[pathlib.Path(out).name] = pathlib.Path(song).name
+    print(f"song loop: {pathlib.Path(song).name} with the bar {b0:.2f}-{b1:.2f} s repeated x{n}: drop {drop:.2f} -> {drop + n * bar:.2f} s (the event at {at:.2f} s)")
+    return out, drop + n * bar
+
+
 def song_drop(path):
     return float(subprocess.run(["python3", str(ROOT / "scripts" / "song_drop.py"), str(path)], capture_output=True, text=True, check=True).stdout.split()[0])
 
@@ -143,6 +170,12 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                         "--drop", f"{drop:.3f}", "--length", f"{dur + 0.5:.3f}"], check=True, capture_output=True)
     else:
         drop = song_drop(ROOT / song)
+        loop = float(stunt.get("songLoop") or 0)
+        if loop and drop < at - 0.05 and not stunt.get("story"):
+            # edit.songLoop (a bar, s): a track whose drop comes before the drop event repeats one whole bar of its build
+            # (the bar just before the drop's phrase) until the drop lands on the event, so the song plays from frame 0
+            # (owner 2026-11-12 on cooked_bedrock: "why does the music start late?"; edit.songLate's silence is retired)
+            song, drop = loop_song(song, drop, loop, at)
         if drop < at - 0.05:
             print(f"{name}: the song starts {at - drop:.2f}s into the Short so its drop lands on the event (edit.songLate)" if stunt.get("songLate") and not stunt.get("story")
                   else f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
@@ -183,6 +216,7 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
             if bad:
                 sys.exit(f"{name}: BLOCK [keysound] the music covers {len(bad)} key sound(s): " + ", ".join(f"{r['t']:.2f} s ({r['margin_db']:+.1f} dB)" for r in bad))
     f = pathlib.Path(song).name
+    f = LOOPED.get(f, f)   # a looped build (edit.songLoop) credits the track itself
     t, a = SONGS.get(f, (f, ""))
     if gen:
         t, a = f"HelloBuh phonk ({gen}, original)", ""

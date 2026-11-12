@@ -1,17 +1,17 @@
-// "bro trusted ONE ladder with his life 😳" (was the label "ladder clutch 😳": reaction captions, r:r0f3da0) (~32 s, eight beats): the bot stands on the edge of a stone-brick wall looking
-// down the drop, walks off, turns to face the wall while falling and, a couple of ticks before the
-// ground, places one ladder on the wall (real block_place) in the row of its last airborne tick. It
-// grabs it (vanilla: a climbable block clamps the fall to 0.15 b/t and resets the fall distance) and
-// lands without damage, then looks up the wall. First from 20 blocks too late (it hits the ground
-// first and is left on 3 hearts; the ladder goes up 4 ticks later), then from 25, 30, 40, 50, 60,
-// 70 and 80 blocks, all clean on those 3 hearts, each wall a fancier material. Placements use vanilla reach (4.5,
-// nudged to 5 so an 80-block fall always has a tick in reach), one tick ahead.
-// each wall a different, fancier material: the beats look different and escalate
+// "bro trusted ONE ladder with his life 😳" (~15 s, three drops, each with a real stake at the bottom): the bot stands
+// on the edge of a wall looking down the drop, walks off, turns to face the wall while falling and, a couple of ticks
+// before the ground, places one ladder on the wall (real block_place) in the row of its last airborne tick. It grabs it
+// (vanilla: a climbable block clamps the fall and resets the fall distance) and lands without damage.
+//   30 blocks onto grass (the trick), 60 blocks into a cactus field (the one clear tile at the wall's foot), 80 blocks
+//   onto a single grass block in a lava pool. After each landing the camera looks at what it just missed.
+// (No-op audit 2026-11-12, owner r:r4607fa: "the clutches all look alike, end in the dark": 8 identical beats became
+// three with a visible stake each.) Placements use vanilla reach (4.5, nudged to 5 so an 80-block fall always has a
+// tick in reach), one tick ahead.
 const WALLS = [
-  { h: 20, late: true, mat: 'stone_bricks', base: 'mossy_stone_bricks' }, { h: 25, mat: 'cobblestone', base: 'mossy_cobblestone' },
-  { h: 30, mat: 'bricks' }, { h: 40, mat: 'sandstone' }, { h: 50, mat: 'deepslate_bricks' },
-  { h: 60, mat: 'quartz_bricks' }, { h: 70, mat: 'polished_blackstone_bricks' }, { h: 80, mat: 'obsidian' }
-].map((w, i) => ({ ...w, dz: i * 7 }))   // 7 apart: the whole cleared area must stay within the loaded chunks
+  { h: 30, mat: 'stone_bricks', base: 'mossy_stone_bricks', stake: 'grass', sub: '30 blocks' },
+  { h: 60, mat: 'sandstone', stake: 'cactus', sub: '60 blocks... into cactus' },
+  { h: 80, mat: 'obsidian', stake: 'lava', sub: '80 blocks... into LAVA' }
+]
 const { openSpots, clearPlants } = require('./_site')
 
 module.exports = {
@@ -19,12 +19,13 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'bro trusted ONE ladder with his life 😳',
   edit: {
-    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
+    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'seen2:0.4',   // r:r188b46: the look round at the lava it just missed, then out
     // r:r0f3da0 pace: silent until 1.61 s (a walk-off and fall make little vanilla sound): a wind bed from frame 0
     sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }]],   // (pace: no hit on the 80-block landing)
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
-    speed: WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),   // the teleports between walls, cut out
-    subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 1.2 + w.h / 40, i + 1])]
+    // the teleports between walls cut out; the long falls' middles at x2 (the camera holds still looking down the wall)
+    speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:0.9`, `catch${i + 1}:-0.6`, 2])],
+    subs: WALLS.map((w, i) => ['top', w.sub, 1.6, i])
   },
 
   async setup (ctx) {
@@ -35,7 +36,7 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    this.spots = await openSpots(ctx, g.x, g.z, WALLS.map(w => w.h), { axis: 'z', gap: 6, foot: [0, 3, -2, 2], level: [1, 2, -1, 1] })
+    this.spots = await openSpots(ctx, g.x, g.z, WALLS.map(w => w.h), { axis: 'z', gap: 11, foot: [0, 3, -2, 2], level: [1, 2, -1, 1] })
     for (const [i, w] of WALLS.entries()) {
       const S = this.spots[i]
       ctx.log('wall', w.h, 'at', S)
@@ -43,6 +44,23 @@ module.exports = {
       // the wall, 1 thick (x), 5 wide (z): the bot falls down its east face
       await ctx.cmd(`/fill ${S.x} ${S.floor} ${S.z - 2} ${S.x} ${S.floor + w.h} ${S.z + 2} ${w.mat}`)   // from the ground (it may sit a block higher or lower)
       if (w.base) await ctx.cmd(`/fill ${S.x} ${S.floor} ${S.z - 2} ${S.x} ${S.floor + 3} ${S.z + 2} ${w.base}`)
+      // the stake at its foot: x+1..x+6, z-4..z+4 at floor level, the landing tile (x+1, z) left as grass
+      const X0 = S.x + 1, X1 = S.x + 6, Z0 = S.z - 4, Z1 = S.z + 4, F = S.floor
+      if (w.stake !== 'grass') {
+        await ctx.cmd(`/fill ${X0} ${F + 1} ${Z0} ${X1} ${F + 4} ${Z1} air`)
+        await ctx.cmd(`/fill ${X0} ${F - 1} ${Z0} ${X1} ${F - 1} ${Z1} stone`)
+        await ctx.cmd(`/fill ${X0} ${F} ${Z0} ${X1} ${F} ${Z1} ${w.stake === 'lava' ? 'lava' : 'sand'}`)
+        await ctx.cmd(`/setblock ${X0} ${F} ${S.z} grass_block`)
+      }
+      if (w.stake === 'cactus') {
+        // cacti on every other tile, none touching the wall or the landing tile (a cactus next to a block breaks)
+        for (let dx = 2; dx <= 6; dx++) for (let dz = -4; dz <= 4; dz++) {
+          if ((dx + dz) % 2) continue
+          if (dx <= 2 && Math.abs(dz) <= 1) continue
+          const ht = 2 + ((dx * 7 + dz * 3) & 1)
+          await ctx.cmd(`/fill ${S.x + dx} ${F + 1} ${S.z + dz} ${S.x + dx} ${F + ht} ${S.z + dz} cactus`)
+        }
+      }
     }
     const S0 = this.spots[0], SL = this.spots[this.spots.length - 1]
     await ctx.cmd('/gamerule fall_damage true')
@@ -77,7 +95,7 @@ module.exports = {
     ctx.mark('top', { n: i })
     await ctx.easeLook(E + 0.2, -1.2, 300)
     await ctx.easeLook(E - 0.15, -1.3, 350)
-    ctx.mark('jump', { n: i })
+    ctx.mark('jump', { n: i }); ctx.mark(`fall${i}`)
     bot.setControlState('forward', true)
     for (let k = 0; k < 40 && bot.entity.onGround; k++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
@@ -109,7 +127,7 @@ module.exports = {
       if (last && ((last.k === 2 && reach <= 4.5) || (last.k === 1 && reach <= 4.95))) {
         placed = true
         row = Math.floor(last.y)
-        ctx.mark('placed', { n: i, row: row - floor })
+        ctx.mark('placed', { n: i, row: row - floor }); ctx.mark(`catch${i}`)
         ctx.sound('block.ladder.place')
         ctx.log('reach', reach.toFixed(2), 'ticks ahead', last.k, 'ladder at row', row - floor, 'feet', (p.y - floor - 1).toFixed(2), 'vy', vy.toFixed(2), 'last airborne y', (last.y - floor).toFixed(2))
         process.nextTick(() => { bot._client.write('block_place', { hand: 0, location: { x, y: row, z: Math.floor(p.z) }, direction: 5, cursorX: 1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 }); bot.swingArm() })
@@ -122,21 +140,29 @@ module.exports = {
     const lad = bot.blockAt(new Vec3(x + 1, row, Math.floor(bot.entity.position.z)))
     ctx.log('ladder block:', lad && lad.name, 'health', bot.health)
     await bot.waitForTicks(2)
-    // step back from the wall and look up the way it came, ladder in view
-    bot.setControlState('back', true)
-    ctx.easeLook(W + 0.15, 0.2, 500)
-    await bot.waitForTicks(8)
-    bot.setControlState('back', false)
     const last = i === WALLS.length - 1
-    await ctx.easeLook(W - 0.1, last ? 1.1 : 0.75, last ? 900 : 500)
-    if (last) { ctx.mark('outro'); await ctx.easeLook(W - 0.45, 1.25, 1100) }
+    if (w.stake === 'grass') {
+      // step back from the wall and look up the way it came, ladder in view
+      bot.setControlState('back', true)   // motion-ok: a step back on the open grass at the wall's foot
+      ctx.easeLook(W + 0.15, 0.2, 500)
+      await bot.waitForTicks(8)
+      bot.setControlState('back', false)   // motion-ok: the step's end
+      await ctx.easeLook(W - 0.1, 0.75, 500)
+    } else {
+      // no step back (it'd be into the cactus or the lava): turn round and look down at what I just missed
+      await ctx.easeLook(E + 0.35, -0.75, 950)   // (700 ms: 249 deg/s)
+      ctx.mark('missed', { n: i })
+      await ctx.easeLook(E - 0.35, -0.7, 700)
+      ctx.mark(`seen${i}`)
+    }
     if (!last) ctx.mark(`cut${i + 1}a`)
-    if (w.late) { this.hp = bot.health; ctx.log('late health', bot.health); return !ctx.died && bot.health < 20 }
-    return !ctx.died && bot.health >= this.hp   // no heal: every later clutch on the hearts left, no damage
+    ctx.log('health after', w.h, bot.health)
+    return !ctx.died && bot.health >= 20   // every clutch clean: no damage
   },
 
   async perform (ctx) {
     for (let i = 0; i < WALLS.length; i++) if (!(await this.clutch(ctx, i))) return false
+    await ctx.bot.waitForTicks(20)   // the recording runs past the end (endAfter seen2:0.4)
     ctx.log('final health', ctx.bot.health)
     return true
   }
