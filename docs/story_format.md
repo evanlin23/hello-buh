@@ -5,6 +5,12 @@ my life bro"): "We should be following the format, the tried and true format tha
 stories, but now we're doing Minecraft stories instead." Source: docs/story_research_mystery.md (the 2-7M-view rule
 Shorts) and docs/research/story_craft_research.md 12 (blocky's 27-hit study). Every Buh Stories script follows this.
 
+## The premise (owner, 2026-11-12)
+A crazy Roblox-story premise: "In my town, nobody...", "In my world, everyone...", "My twin...", "This man adopted 10
+kids and...". A strange rule or impossible fact about people, a family or a town. Minecraft is the look (the world,
+the characters, the places), not the twist: the twist does NOT need to be a game mechanic. blocky-stories (the
+owner's Roblox-style channel) is a premise source.
+
 ## The beats (time is a guide at Pip's pace)
 1. **0-3 s, the impossible fact + the question, said out loud.** Line 1 is a strange, concrete, countable fact that
    touches everyone, and it makes the "why?" explicit: "This man adopted 10 kids, and not a single one came out alive."
@@ -24,7 +30,7 @@ Shorts) and docs/research/story_craft_research.md 12 (blocky's 27-hit study). Ev
 
 ## What carries over from our own rules
 - Pip, a naive narrator who misreads (STANDARDS 0a); the misreadings ARE the two-way clues.
-- Real vanilla mechanics, shown on screen (named things on screen).
+- Named things on screen. A game mechanic is optional; when one is used, it's shown and true.
 - Same-place links to other stories, background only (5a). Each story stands alone.
 - A casual viewer gets it in one sentence after one watch (0z).
 - Length: tight like the hits (they run 25-45 s); never padded, but not cut for its own sake (r:r08fd98).

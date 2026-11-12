@@ -41,6 +41,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    turned against itself; the reveal SAID in one plain sentence (the naive narrator says what they see), never wordless;
    one beat, cut within ~1 s; the last line echoes line 1. Check: story-critic (blockers), cold readers (casual and
    gamer). r:rc8538b
+0x. **A crazy Roblox-story premise** (owner: "more roblox style... in my town, nobody... my twin... it doesnt
+   necessarily need to be minefrcaft themed"): the premise is a strange rule or impossible fact about people, a family
+   or a town; Minecraft is the look, not the twist, which need not be a game mechanic (when one is used it is still
+   shown and true). Check: owner, story-critic. r:r12f9ac
 0z. **A casual viewer gets it** (a friend on Gold for the Portal: "im confsued bro"): the table read's cold readers
    include a casual player watching once; the twist lands for them in one step from the picture, with no unshown name
    or mechanic; if they can't say it in one sentence, the script goes back. Check: cold reader (casual), story-critic. r:rac4476

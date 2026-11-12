@@ -700,6 +700,13 @@ STANDARDS.md in the same commit.
   loved at stake, the rule turned against itself, the reveal SAID in one plain sentence (the naive narrator says what
   they see), one beat, cut, the last line echoing line 1. All 10 approved scripts are rewritten to it, one session
   each, and come back to the owner.
+- **Owner, 2026-11-12: "What i want is more roblox style. Like the premise. Like in my town, nobody etc. Or in my
+  world. Or my twin etc. its a crazy premise. it doesnt necessarily need to be minefrcaft themed yk?"** The premise is
+  a crazy Roblox-story premise ("In my town, nobody...", "In my world...", "My twin...", "This man adopted 10 kids
+  and..."): a strange rule or impossible fact about people, families, towns. Minecraft is the look (the world, the
+  blocky characters, the places), not the twist: the twist no longer has to be a vanilla mechanic. Premises can come
+  straight from blocky-stories (the owner's Roblox-style channel) and the Roblox hits. Everything else holds: the
+  format (docs/story_format.md), naivety, the casual viewer gets it, the shared world as background.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
