@@ -36,22 +36,27 @@ function rise () {
   return { name: 'rise', ticks: 54, boxes }
 }
 
-// the carve prisms of digit position j (menger(): cells whose j-th digits are both 1 on two axes), sweeping along the face
-function carves (j) {
+// the carve prisms of digit position j (menger(): cells whose j-th digits are both 1 on two axes), the ones nearest the
+// camera filming that phase cut first, sweeping away from it (owner 2026-11-12, r:r759917, on v4 at 5.8 s: "for the
+// tiny squares, we should start cutting the ones closer to us first, not further bc we cant really see them"). A
+// prism runs right through the sponge, so its distance is from the camera to its nearest point; `per` prisms a step
+function carves (j, cam, per) {
   const s = 3 ** (LV - 1 - j), cells = 3 ** j, ones = [], boxes = []
   for (let c = 0; c < cells; c++) ones.push([c * 3 * s + s, c * 3 * s + 2 * s - 1])
-  ones.forEach(([a0, a1], ia) => ones.forEach(([b0, b1], ib) => {
-    const step = ia * cells + ib
-    for (const b of [[a0, b0, 0, a1, b1, N - 1], [a0, 0, b0, a1, N - 1, b1], [0, a0, b0, N - 1, a1, b1]]) for (const p of mega.split(b)) boxes.push({ box: at(p), block: 'air', step })
+  ones.forEach(([a0, a1]) => ones.forEach(([b0, b1]) => {
+    for (const b of [[a0, b0, 0, a1, b1, N - 1], [a0, 0, b0, a1, N - 1, b1], [0, a0, b0, N - 1, a1, b1]]) for (const p of mega.split(b)) boxes.push({ box: at(p), block: 'air' })
   }))
+  const near = (b) => Math.hypot(...[0, 1, 2].map(i => Math.max(b[i], Math.min(b[i + 3], cam[i])) - cam[i]))
+  boxes.sort((p, q) => near(p.box) - near(q.box)).forEach((b, i) => { b.step = Math.floor(i / per) })
   return boxes
 }
 // the first three layers of the 8 bottom cubes, placed in setup (owner r:r0f3da0: frame 0 shows the subject; v4 take 1
 // opened on an empty lawn, the first slab landing a tick later)
 const FIRST = CUBES.filter(([, b]) => b === 0).map(([a, , c]) => [...at([a * 27, 0, c * 27, a * 27 + 26, 2, c * 27 + 26]), BODY])
-const carve2 = () => ({ name: 'carve2', ticks: 12, boxes: carves(1) })
-const carve3 = () => ({ name: 'carve3', ticks: 30, boxes: carves(2) })
-const carve4 = () => ({ name: 'carve4', ticks: 50, boxes: carves(3) })
+const FACE_CAM = [-128, 44, 10], HIGH_CAM = [98, 116, 82]   // the 'face' and 'high' shots' cameras (local)
+const carve2 = () => ({ name: 'carve2', ticks: 12, boxes: carves(1, FACE_CAM, 3) })
+const carve3 = () => ({ name: 'carve3', ticks: 30, boxes: carves(2, FACE_CAM, 9) })
+const carve4 = () => ({ name: 'carve4', ticks: 50, boxes: carves(3, HIGH_CAM, 27) })
 
 // the payoff, in one tick on the cut: the glowing edges of the 20 cubes (no carve ever reaches an edge cell) and the small
 // froglight sponge hung in the hollow middle

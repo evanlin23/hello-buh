@@ -355,7 +355,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   overlay. r:rce78c5 Depth and detail (layers, overhangs, varied heights and materials, never flat tiers), in a
   real generated world, never superflat. Check: owner, review. r:r13865d Build it, then zoom out: a fast
   time-lapse of the build going up, one big zoom out to its scale, then the end; never a long fly-round of a finished
-  build. Check: owner, review. r:rb5f36a
+  build. Check: owner, review. r:rb5f36a In a build time-lapse each wave of changes starts nearest the camera filming it
+  and sweeps away from it. Check: owner, review. r:r759917
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
