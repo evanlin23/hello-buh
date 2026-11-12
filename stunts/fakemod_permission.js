@@ -91,6 +91,12 @@ module.exports = {
     const burning = (e) => e && e.metadata && typeof e.metadata[0] === 'number' && (e.metadata[0] & 1)
     const kill = async (e, n = 4) => {
       const hp = () => (e.metadata && typeof e.metadata[9] === 'number') ? e.metadata[9] : 20   // LivingEntity health
+      // step in to sword reach first (vanilla 3 blocks: a hit from 4 would read as a reach hack)
+      if (dist(e) > 2.7) {
+        bot.setControlState('forward', true)   // motion-ok: a step straight at the frozen mob, the view on it (A.view)
+        for (let i = 0; i < 30 && dist(e) > 2.5; i++) { A.view(e.position.offset(0, 1.2, 0)); await bot.waitForTicks(1) }
+        bot.setControlState('forward', false)   // motion-ok: the step's end
+      }
       for (let i = 0; i < n && e.isValid !== false && hp() > 0; i++) {
         // a jump crit (vanilla: falling, not on the ground: x1.5 and the crit stars): jump, hit on the way down
         bot.setControlState('jump', true); await bot.waitForTicks(1); bot.setControlState('jump', false)   // motion-ok: one jump, the view stays on the mob (A.view)
@@ -110,9 +116,12 @@ module.exports = {
     // the skeleton waits off to the right (north), frozen until its turn (it would shoot me in the back)
     await ctx.cmd(`/summon skeleton ${x - 2.5} ${F} ${z - 6.0} {Tags:["fm_skel"],PersistenceRequired:1b,NoAI:1b,Rotation:[0f,0f],equipment:{mainhand:{id:"minecraft:bow",count:1}}}`)
     const sk = await grab('fm_skel', 'skeleton')
-    for (let i = 0; i < 60 && zb.position.distanceTo(z0) < 0.25; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }
+    const d0 = dist(zb)
+    for (let i = 0; i < 80 && dist(zb) > d0 - 0.3; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // until it is walking AT me
+    if (dist(zb) > d0 - 0.3) throw new Error(`the zombie never came at me (${dist(zb).toFixed(2)} blocks): retry the take`)
     ctx.mark('first')
-    for (let i = 0; i < 12 && dist(zb) > 3.4; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // framed under the centred popup; it opens by ~0.6 s (pace r0: a far zombie read as a still opener)
+    ctx.sound('entity.zombie.ambient', 1, 1)   // a sound hit at frame 0 (pace r:r0f3da0: no hit by 0.5 s)
+    for (let i = 0; i < 7 && dist(zb) > 3.4; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // framed under the centred popup; it opens by ~0.35 s (pace: a slow opening; the popup's pop-in and toast are the opener's motion and hit)
     ctx.log('zombie at', dist(zb).toFixed(2), 'burning', burning(zb))
     await FM.ask(ctx, { k: 1, tag: 'fm_zombie', hover: ['Deny'], entity: zb, A })
     await kill(zb)
