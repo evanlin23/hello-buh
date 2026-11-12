@@ -1,0 +1,17 @@
+{
+ "name": "tnt_1000",
+ "stunt": "tnt_1000",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43131771384",
+ "source": "59a0622",
+ "queued": "2026-11-12T01:03:15Z",
+ "finished": "2026-11-12T01:16:26Z",
+ "mp4": "renders/out/tnt_1000.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
