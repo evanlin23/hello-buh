@@ -1,0 +1,17 @@
+{
+ "name": "dilemma_mace",
+ "stunt": "dilemma_mace",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43170808201",
+ "source": "bf989fe",
+ "queued": "2026-11-12T06:49:10Z",
+ "finished": "2026-11-12T06:56:45Z",
+ "mp4": "renders/out/dilemma_mace.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
