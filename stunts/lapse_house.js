@@ -172,13 +172,30 @@ function mansion () {
   return [...out.values()]
 }
 
+// the levelled site planted like the plain round it (lib/time_lapse.js S.dress, from spawn; the mansion's centre is
+// z - 45, its grounds x -46..46, z -65..-9): grass and flower patches everywhere but the two small plots and the road
+// (the 1-second and 1-minute builds and the bot's walk round them stay clear), oak trees round the site's edges, off
+// every camera's line
+function dress () {
+  const d = []
+  for (let dx = -56; dx <= 56; dx += 7) for (let dz = -74; dz <= 30; dz += 7) {
+    const jx = dx + Math.round(Math.sin(dx * 3.1 + dz) * 2), jz = dz + Math.round(Math.cos(dz * 2.3 + dx) * 2)
+    if (jx >= -14 && jx <= 16 && jz >= -16 && jz <= 12) continue          // the small plots, the bot's walk round them
+    if (Math.abs(jx) <= 4 && jz > -66) continue                            // the road up the middle
+    d.push([jx, jz, (jx + jz) % 3 === 0 ? 'minecraft:flower_plain' : 'minecraft:patch_grass'])
+  }
+  for (const [tx, tz] of [[-54, -70], [-55, -40], [-56, -12], [54, -72], [55, -44], [56, -16], [-30, -74], [26, -75], [-50, 8], [52, 6]]) d.push([tx, tz, 'minecraft:fancy_oak'])
+  return d
+}
+
 module.exports = makeStunt({
   name: 'lapse_house',
   recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
   // a real plain round it (owner 2026-11-12 on take 1: "it doesnt need to be superflat"): only the grounds and the two
   // small plots are levelled (x -60..60, z -78..14 from spawn; the mansion's centre is z - 45), the trees within 16 of
   // the taper go, the land beyond keeps its own ground, trees and water
-  site: [-60, 60, -78, 14], clearTrees: 16,
+  site: [-60, 60, -78, 34], clearTrees: 16,   // (to z + 34: the hero wide's camera at z + 27 was inside the land past a z + 14 edge)
+  dress: dress(),
   endAfter: 'big_done:0.5',
   bigCuts: [6, 0.6, 57],
   payoffFlash: true, song: null,   // pace: a flash + punch + dip/impact on 60:00 (no picture change on the payoff), NCS at publish
