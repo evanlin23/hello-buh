@@ -76,7 +76,7 @@ module.exports = L.makeLapse({
   renderDistance: 16, recordRadius: 256,
   chunkStops: [[-160, -160], [160, -160], [-160, 160], [160, 160]],
   botTimeout: 1200,
-  player: { at: [-47, 47], yaw: -45, pitch: -30 },   // 56e outside the south-west corner, looking up at it
+  player: { at: [-43.5, 43.5], yaw: -45, pitch: -30 },   // 56e just off the south-west corner, inside the levelled ground, looking up at it
   startSound: 'block.stone.place',
   stages: [rise(), carve2(), carve3(), carve4(), lights()],
   perTick: 60,
@@ -85,12 +85,12 @@ module.exports = L.makeLapse({
   endAfter: 1.0,
   shots: {
     // 1. low off the south-west corner: the cubes rise from the ground from the first frame, the drone easing up with them
-    rise: { path: [[0, -72, 8, 72], [2.7, -80, 22, 80]], lookPath: [[0, -10, 14, 10], [2.7, -6, 42, 6]], fov: 70, dof: false, drift: 0.4, scenery: true, subject: [[-40, 20, 40]] },
+    rise: { path: [[0, -45, 5, 45], [2.7, -46, 18, 46]], lookPath: [[0, -18, 9, 18], [2.7, -8, 44, 8]], fov: 72, dof: false, drift: 0.4, scenery: true, subject: [[-40, 10, 40]] },   // (inside the levelled ground: past it the forest hill swallowed the camera on frame 0)
     // 2. the west face head-on, pushing in a little: the big and middle tunnels cut through it
     face: { path: [[0, -128, 44, 10], [2.2, -116, 44, 4]], lookPath: [[0, 0, 41, 0], [2.2, 0, 41, 0]], fov: 58, dof: false, drift: 0.3, scenery: true, subject: [[-41, 41, 0]] },
     // 3. high off the south-east, down across the top: the smallest holes sharpen it
     high: { path: [[0, 98, 116, 82], [2.5, 90, 110, 74]], lookPath: [[0, 4, 62, -2], [2.5, 0, 60, -4]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[0, 82, 0]] },
     // 4. the zoom (1x): from just behind 56e at the corner's foot, looking up, out fast to the whole sponge over the forest
-    zoom: { path: [[0, -52, 3.2, 53], [0.95, -112, 62, 118], [2.0, -118, 66, 124]], lookPath: [[0, -20, 40, 20], [0.95, 0, 44, 0], [2.0, 0, 44, 0]], fov: 62, dof: false, drift: 0.2, scenery: true, subject: ['self'] }
+    zoom: { path: [[0, -46.5, 3.4, 46.5], [0.95, -112, 62, 118], [2.0, -118, 66, 124]], lookPath: [[0, -24, 7, 24], [0.95, 0, 44, 0], [2.0, 0, 44, 0]], fov: 66, dof: false, drift: 0.2, scenery: true, subject: ['self'] }   // (starts inside the levelled ground, 56e in the lower frame)
   }
 })
