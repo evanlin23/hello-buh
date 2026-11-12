@@ -15,6 +15,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every way to cross lava (rated) 💀',
   edit: {
+    songGain: -3,   // the music 3+ dB under the game sounds (mixcheck, owner's 'music jumps' note: +2.3 dB was too close)
     caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
     onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:0.9',   // (owner 2026-11-12 at 19.6 s: "we can speed up us taking damage and dying": the burn x2.5, the end 0.9 s after the death)
     // the opening (owner r:r0f3da0): a 1.2 s flash of the walk into the lava (the 0/10 everyone waits for) comes first.
