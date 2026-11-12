@@ -17,7 +17,12 @@ module.exports = makeStunt({
   // path comes back across the lava, and 56e, who keeps wearing it in, runs out of his door and straight along it over
   // the lava to the house across the road. A speck out of the door in the locked shot, then the hit, the card and a
   // cut to a chase camera riding behind him over the lava; the end 0.5 s after he reaches the far doorstep
-  walker: { sprint: true, wait: 0, card: 'IT WAS HIM 💀' },
+  // (the run sped up x1.8 between the reveal and the doorstep: at a sprint it held 4.2 s with nothing new, pace)
+  walker: {
+    sprint: true, wait: 0, card: 'IT WAS HIM 💀', endHold: 0.3,   // (he goes in under the eave ~0.3 s after the doorstep)
+    cards: [['road', 'NOT EVEN LAVA 💀', 1.0, 'orange', 0, null, { y: 0.18 }]],
+    speed: [['walker:0.5', 'home:-0.3', 1.8]]
+  },
   rounds: [
     { id: 'fence', card: 'FENCE', c: [-5, -5], slot: 'N', shape: SHAPES.fence(9, 'dark_oak_fence', 2), sound: [['block.wood.place', 1, 1], ['block.wood.place', 1, 0.8]] },
     { id: 'bush', card: 'BUSHES', c: [5, 5], slot: 'S', shape: SHAPES.blob(3, 3, LEAVES), sound: [['block.azalea_leaves.place', 1, 1], ['block.grass.place', 1, 0.8]] },
