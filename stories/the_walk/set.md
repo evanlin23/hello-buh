@@ -23,7 +23,7 @@
 ## Claims (the narration and the picture must agree, checked on stills from every shot angle)
 | line | claim | the set must show |
 |---|---|---|
-| L01 | the same lectern, three hundred times | one lectern, in one spot; the tally wall reads as hundreds of marks (about 300) |
+| L01 | got dumped; now he breaks lecterns, three hundred so far (the same one) | one lectern, in one spot; the tally wall reads as hundreds of marks (about 300) |
 | L02 | the librarian holds up a book | the villager holding a glinting enchanted book, in frame |
 | L03b | he just hates that librarian | (a misreading: nothing to build) the librarian in frame, jobless |
 | L04 | Grandma lives on that island; her light's on every night | the island across open water, 92 blocks; the window lit; Grandma's figure in it, readable at phone size (FOV 11 in S04) |

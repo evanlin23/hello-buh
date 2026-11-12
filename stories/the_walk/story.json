@@ -2,7 +2,7 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r6 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the reveal is spoken (L10: the boots, the dock, the sea froze); L11 echoes line 1 ('Three hundred lecterns. For a walk.'); kept the owner's choices: 'Come back when the sea FREEZES.' / 'Mom says it NEVER freezes here.', three hundred, Grandma = grandma_island. r5: the owner's audit; r5.1 Grandma cast.",
+  "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'My grandpa got DUMPED. Now he breaks LECTERNS. Three HUNDRED so far.' replaces the frame + why opener; r6 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the reveal is spoken (L10: the boots, the dock, the sea froze); L11 echoes line 1 ('Three hundred lecterns. For a walk.'); kept the owner's choices: 'Come back when the sea FREEZES.' / 'Mom says it NEVER freezes here.', three hundred, Grandma = grandma_island. r5: the owner's audit; r5.1 Grandma cast.",
   "caption": "grandpa broke the same lectern 300 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three hundred times, rerolling her book; ten years ago Grandma rowed to the island across the bay and told him to come back when the sea freezes, and the sea there never freezes, until this morning's book is Frost Walker II.",
   "question": "why tf has grandpa broken the same lectern 300 times?",
@@ -115,8 +115,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "My GRANDPA / has broken / the same LECTERN / three hundred TIMES. / And he won't / tell me WHY.",
-      "say": "My grandpa broke the same lectern three hundred times, and won't tell me why.",
+      "text": "My GRANDPA / got DUMPED. / Now he breaks LECTERNS. / Three HUNDRED so far.",
+      "say": "My grandpa got DUMPED. Now he breaks LECTERNS. Three HUNDRED so far.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -130,7 +130,7 @@
         "word": "GRANDPA"
       },
       "direction": "amazed and fed up, one quick breath; the number lands, then WHY is a real question the kid wants answered",
-      "note": "STANDARDS 0y: the impossible fact AND the why, by 3 s"
+      "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; flat, a kid reporting family gossip; the viewer joins 'dumped' and 'lecterns'"
     },
     {
       "id": "L02",
@@ -532,13 +532,13 @@
       "S12: L10, the reveal said over the picture: boots, the step off the dock, the sea freezing under each step toward Grandma's lit window",
       "L11 'Three hundred lecterns. For a walk.' over his walk; cut 1.0 s after WALK"
     ],
-    "loop": "L11 echoes line 1 (three hundred, lecterns) and answers its WHY"
+    "loop": "L11 'Three hundred lecterns. For a WALK.' echoes line 1 (three hundred, lecterns) and answers what lecterns have to do with getting dumped"
   },
   "bible": "stories/the_walk/bible.md",
   "set": "stories/the_walk/set.md",
   "shotlist": "stories/the_walk/shots.md",
   "upload": {
-    "title": "my grandpa has broken the same lectern 300 times 📚 #minecraft #shorts",
+    "title": "my grandpa got dumped. now he breaks lecterns 📚 #minecraft #shorts",
     "pinned": "Three hundred lecterns. Would YOU have waited that long for her?",
     "tags": [
       "minecraft grandpa",

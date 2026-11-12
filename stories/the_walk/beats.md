@@ -10,9 +10,9 @@ Grandma standing in it. Cut.
 ## The format (docs/story_format.md, r6)
 | format beat | here |
 |---|---|
-| 1. fact + why, by 3 s | L01 "My GRANDPA has broken the same LECTERN three hundred TIMES. And he won't tell me WHY." over the lectern popping |
+| 1. fact + why, by 3 s | L01 "My grandpa got DUMPED. Now he breaks LECTERNS. THREE HUNDRED so far." over the lectern popping |
 | 2. 3-5 quick two-way clues | "Not THAT one." (L03); the light every night (L04); no boat, ten years (L05); "Come back when the sea FREEZES." / "Mom says it NEVER freezes here." (L07-L08) |
-| 3. the kid wants to know | L01 "he won't tell me WHY"; every clue gets the kid's own answer (hates her, scared of the dark, stubborn) |
+| 3. the kid wants to know | every clue gets the kid's own answer (hates her, scared of the dark, stubborn) |
 | 4. someone loved at stake | Grandma, alone on the island ten years (L04, S04) |
 | 5. the rule turned against itself | L09b "And GRANDPA DIDN'T break the LECTERN." |
 | 6. the reveal, said | L10 "He put the BOOK on his BOOTS, walked off the DOCK, and the SEA FROZE under his FEET." (the kid names what they see; the viewer jumps: the book froze the sea, her words came true) |
@@ -29,7 +29,7 @@ Grandma standing in it. Cut.
 ## Beat sheet (about 115 words, ~40 s at Pip's pace)
 | beat | line | picture | plants / the kid's misreading |
 |---|---|---|---|
-| **the question** (punch) | L01 N "My GRANDPA has broken the same LECTERN three hundred TIMES. And he won't tell me WHY." | S01 the lectern cracks, pops, is placed again; the tally wall | why? |
+| **the question** (punch) | L01 N "My grandpa got DUMPED. Now he breaks LECTERNS. THREE HUNDRED so far." | S01 the lectern cracks, pops, is placed again; the tally wall | why? |
 | clue 1 | L02 N "The librarian holds up a BOOK. He reads it." | S02 the glinting book, its name never shown | he's after one book |
 | | L03 Grandpa "Not THAT one." | S03 | there is a "that one" |
 | misread 1 | L03b N "And breaks it AGAIN. I think he just HATES that LIBRARIAN." | S03, the break on AGAIN | the kid: a grudge |
