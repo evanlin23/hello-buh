@@ -183,13 +183,14 @@ module.exports = {
     await cut(LEVER[0] + 4.5, LEVER[2] + 0.5, LV)
     await line('L08', async (k) => { look(k, 0, -0.02 * K.ease(k / 30)) })
 
-    // L09: because at night the zombies come out (the tree far off), and Grandpa is way too slow to run (crossing the
-    // square at an old man's shuffle)
-    await cutP(-7.5, 4.5, P(TREE[0], tg + 2, TREE[1]), () => Object.assign(gp, { x: -1.5, z: 6.0, y: gy(-1.5, 6), yaw: -90 }))
-    let from9 = null
+    // L09: because at night the zombies come out (the tree, close: the shade full of them), and Grandpa is way too slow
+    // to run (cut to the square: him crossing it at an old man's shuffle)
+    await cut(TREE[0] - 8, TREE[1] + 4, P(TREE[0] - 1, tg + 1.6, TREE[1]))
+    let c9 = false
     await line('L09', async (k, at) => {
-      if (k >= at(3) - 6) { from9 = from9 || { ...K.base }; K.turnTo(from9, K.face(P(gp.x, gp.y, gp.z), 'villager'), (k - at(3) + 6) / 14) }
-      walk(gp, 0.025, 0)
+      if (!c9 && k >= at.cut(2)) { c9 = true; await cutP(-7.5, 4.5, K.face(P(-1.5, gy(-1.5, 6), 6), 'villager'), () => Object.assign(gp, { x: -1.5, z: 6.0, y: gy(-1.5, 6), yaw: -90 })) }
+      if (c9) { walk(gp, 0.025, 0); K.base = K.aim(K.face(P(gp.x, gp.y, gp.z), 'villager')) }
+      else for (const [i, z] of zs.entries()) z.yaw = -90 + Math.sin((ctx.tick + i * 9) / 11) * 25
       look(k)
     })
     // L10: me? I haven't slept in 300 days either (in Grandpa's cottage: the white bed in my hand, his red bed made)
@@ -218,12 +219,10 @@ module.exports = {
       if (!leverCut) {
         gp.yaw = -90
         if (gp.x > door.x - 0.5) walk(gp, -0.06, 0)
-        K.go(k > 3)
         K.base = K.aim(P(gp.x - 0.5, gp.y + 1.4, gp.z))
       }
       if (!leverCut && k >= at.cut(2)) {
         leverCut = true
-        K.go(false)
         await cutP(LEVER[0] + 3.3, LEVER[2] + 0.7, LV, () => away('gp', gp))
       }
       if (leverCut) {   // K.use turns the view onto the lever and clicks it (on BACK): no look() of ours from the cut on
