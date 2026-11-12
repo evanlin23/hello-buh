@@ -142,14 +142,14 @@ async function launch (ctx, { C, view, cutTo }) {
   const steer = () => { look = look.map((v, i) => v + (target[i] - v) * 0.2); view(CAM, look) }
   cutTo(CAM, look, 'launch, low front left'); ctx.mark('launch_cut')
   bot.on('physicsTick', steer)
-  await bot.waitForTicks(2)
-  // the swing arms pull back into the tower, a column a tick from the rocket's side (pistons)
-  for (let x = 6; x <= 10; x++) {
-    for (const y of [31, 51]) bot.chat(`/fill ${B(x, y, -1)} ${B(x, y, 1)} air`)
-    if (x % 2 === 0) ctx.sound('block.piston.contract', 0.6, 0.8 + x * 0.03)
+  await bot.waitForTicks(1)
+  // the swing arms pull back into the tower, two columns a tick from the rocket's side (pistons); owner 2026-11-12:
+  // "we should cut to the launch faster": 0.25 s on 60:00, then ~0.2 s of arms before the ignition (was 0.5 + 0.45 s)
+  for (const xs of [[6, 7], [8, 9], [10]]) {
+    for (const x of xs) for (const y of [31, 51]) bot.chat(`/fill ${B(x, y, -1)} ${B(x, y, 1)} air`)
+    ctx.sound('block.piston.contract', 0.6, 0.85 + xs[0] * 0.03)
     await bot.waitForTicks(1)
   }
-  await bot.waitForTicks(2)
   // ignition: TNT at the trench's mouth, the near end (block_drops off: no loose items)
   ctx.mark('ignite')
   for (const [x, z] of [[-3, 14], [3, 14], [-2, 19], [2, 19]]) bot.chat(`/summon tnt ${C.x + x + 0.5} ${C.y + 1 + 3} ${C.z + z + 0.5} {fuse:0}`)
@@ -202,7 +202,8 @@ const stunt = makeStunt({
   clockHide: 'launch_cut',   // review r1: the 60:00 clock covered the rocket's nose for the whole launch (it has read on the wide)
   big: {
     blocks: complex(),
-    tail: 10,   // 0.5 s on the 60:00 wide, then the cut to the launch
+    tail: 5,   // 0.25 s on the 60:00 wide (its flash and punch), then the cut to the launch (owner 2026-11-12: "cut to the launch faster")
+    soundInView: true,   // owner 2026-11-12 (19.9 s): place sounds only for blocks the camera shows (lib/time_lapse.js)
     hold: 'white_concrete', slot: 0,
     // pad, stage 1, stage 2, stage 3, nose, tower, tanks + masts, the hall, ignition
     stageTicks: { 0: 150, 1: 190, 2: 150, 3: 130, 4: 120, 5: 170, 6: 200, 7: 170, 8: 90 },
@@ -213,11 +214,14 @@ const stunt = makeStunt({
     angles: [
       [0, [[-22, 14, 30], [0, 1, 0]], [[-31, 12, 40], [0, 20, 0]], 'low front three-quarter'],    // the pad, stage 1
       [372, [[52, 18, 6], [0, 26, 0]], [[50, 26, -2], [0, 38, 0]], 'side'],                       // stages 2 and 3
-      [612, [[-12, 52, 26], [0, 50, 0]], [[-9, 54, 22], [0, 52, 0]], 'the nose, close'],          // the nose, the tower
+      [612, [[-12, 52, 26], [0, 50, 0]], [[-9, 54, 22], [0, 52, 0]], 'the nose, close'],          // the nose
+      // the tower rising, from the front right (owner 2026-11-12 at 19.9 s: "we cant hear blocks being placed but no
+      // blocks being placed on screen": the nose shot stayed up while the tower's foot went in below the frame)
+      [765, [[40, 10, 30], [13, 8, 0]], [[40, 34, 30], [13, 34, 0]], 'the tower'],
       [852, [[-60, 70, 70], [-10, 15, -5]], [[-54, 72, 64], [-12, 16, -8]], 'high wide'],         // tanks and masts
       // the showcase: the finished rocket from three angles, the hall and the ignition going on
       [1086, [[30, 6, 50], [-18, 20, 3]], [[26, 6, 52], [-20, 21, 3]], 'low right, across the pad'],
-      [1206, [[-30, 90, 30], [-10, 40, 0]], [[-26, 92, 26], [-10, 42, 0]], 'over the nose'],
+      // (an 'over the nose' angle from 1206 left the hall going in out of frame: a build stall once the sounds follow the view)
       [1270, [[-6, 21, 99], [-6, 30, 0]], [[-6, 22.5, 91], [-6, 31, 0]], 'the hero wide']         // 60:00: the hall, the tanks and the tower in frame
     ]
   }
