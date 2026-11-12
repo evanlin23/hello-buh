@@ -22,10 +22,13 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'party',
     startAt: 'dye:-0.45',
-    endAfter: 'party:3.2',   // the whole line cycling, x6 after the payoff: ends ~0.55 s after it (r:r188b46)
-    speed: [['party:0.15', 'party:3.2', 6]],   // jeb_ is one colour per 25 ticks: x6 turns the line into a disco wave
+    endAfter: 'party:0.65',   // (output seconds) ~12 of the 16 colours at x30, then out (r:r188b46; rec_check: <= 1 s after the payoff, no 1 s still tail)
+    // a hard cut from the last tag (still) to the wide line (still): no walk back on screen (review: 2.85 s of nothing);
+    // jeb_ is one colour per 25 ticks, so the full 16-colour cycle is 20 s: x25 plays it once in ~0.8 s, a wave down the
+    // line (x6 over 3 s showed 2 muddy steps: review); x30 plays it in ~0.67 s
+    speed: [['tagged:-0.15', 'party:-0.05', 'cut'], ['party:0.1', 'party:15', 30]],   // x30: the end <= 1 s after the payoff (rec_check)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['tags', 'now name them all jeb_...', 1.6]],
     punch: [['party', 0, 1.08]],
     flash: [['party', 0, 0.3]],   // pace: a clear picture change on the payoff
@@ -165,9 +168,11 @@ module.exports = {
       ctx.mark('tag', { n: i })
       await bot.waitForTicks(3)
     }
+    await bot.waitForTicks(8)   // a still beat on the last tag: the edit's cut leaves from a rest (owner whip check)
+    ctx.mark('tagged')
     // the payoff: back off diagonally to the middle, ~7 out, eyes on the row: the whole line cycling at once
     const lineAt = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1.0, z + 0.5)
-    const goal = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 10)   // 10 out: all seven in frame
+    const goal = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 11.5)   // 11.5 out: all seven in frame, none clipped (10 clipped the ends)
     const lk = ctx.easeLookAt(lineAt, 1000)
     for (let t = 0; t < 90; t++) {   // (50 ticks stopped short, off-centre: the red end out of frame)
       const e = bot.entity.position, d = goal.minus(e)
@@ -185,7 +190,7 @@ module.exports = {
     ctx.log('jeb_ sheep:', named)
     if (named < N) return false
     ctx.mark('party')
-    await bot.waitForTicks(70)   // x6 in the edit
+    await bot.waitForTicks(410)   // the full jeb_ cycle (20 s), x25 in the edit
     return true
   }
 }
