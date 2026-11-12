@@ -722,6 +722,9 @@ STANDARDS.md in the same commit.
   with the genre's frame: "In my village..." (a local rule), "In my world..." (a rule for everyone), or "My twin / my
   grandpa / my best friend..." (a family premise), then the impossible fact and the "why?". All 10 approved scripts
   take it.
+- **Owner, 2026-11-12: "Do we need to say and nobody will tell me why?"** No: the opener makes the viewer ask why
+  without saying it. After the frame and the fact comes a short clause that makes it stranger ("...and not a single one
+  came out alive"; "Only MY window."), different every story; no stock "nobody will tell me why" tag.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
