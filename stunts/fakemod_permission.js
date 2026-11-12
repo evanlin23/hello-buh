@@ -33,7 +33,7 @@ module.exports = {
     popup: [
       FM.popup({ k: 1, mob: 'zombie', text: ['A ', ['Zombie', 'red'], ' is asking for permission to attack you.'], pick: 'Deny', done: ['Request ', ['DENIED', 'red'], '.'] }),
       FM.popup({ k: 2, mob: 'skeleton', text: ['A ', ['Skeleton', 'red'], ' is asking for permission to shoot you.'], pick: 'Deny', hover: ['Allow', 'Deny'], done: ['Request ', ['DENIED', 'red'], '.'] }),
-      FM.popup({ k: 3, mob: 'creeper', text: ['A ', ['Creeper', 'red'], ' is asking for permission to explode.'], hover: ['Deny', 'Roll'], roll: 'Allow', done: ['The dice say: ', ['ALLOW', 'green']], scale: 4 })   // the payoff popup big on a phone (no-op audit, r:r4607fa)
+      FM.popup({ k: 3, mob: 'creeper', text: ['A ', ['Creeper', 'red'], ' is asking for permission to explode.'], hover: ['Deny', 'Roll'], roll: 'Allow', done: ['The dice say: ', ['ALLOW', 'green']] })   // every popup big on a phone (format default: owner r:rb35549)
     ]
   },
   expectDeath: true,
@@ -139,7 +139,7 @@ module.exports = {
     await bot.waitForTicks(3); ctx.mark('cut2a'); await bot.waitForTicks(3)   // the cut's edges on a still view (whip: an edit cut mid-turn snaps)
 
     // 3. cut to my left: the creeper, right there, waiting. It asks. Deny... no: Roll.
-    await A.turnTo(FM.framePoint(ctx, cr, FM.gapFor(4)), { max: 50, hold: 4 })   // under the bigger scale-4 popup
+    await A.turnTo(FM.framePoint(ctx, cr), { max: 50, hold: 4 })   // under the bigger scale-4 popup
     ctx.mark('cut2b')
     ctx.log('creeper at', dist(cr).toFixed(2))
     await FM.ask(ctx, { k: 3, tag: 'fm_creeper', hover: ['Deny', 'Roll'], roll: 'Allow' })
