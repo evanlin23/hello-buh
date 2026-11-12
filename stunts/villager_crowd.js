@@ -271,7 +271,7 @@ module.exports = {
       // a slow look along them as every head turns up (no still hold on the reveal)
       await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
       // the sting (owner r:r4607fa, no-op audit: "end with a sting: they all step in"): the look comes to rest, then
-      // every villager, the 200 and the crowd behind, lurches 2 blocks in toward the pillar, all at once (6 ticks of
+      // villager in view (the crowd behind) lurches 2 blocks in toward the pillar, all at once (6 ticks of
       // 0.33, level: facing the pillar's x/z at each one's own height), and a chorus of "hrmm"s. Against a still camera (a
       // 1-block step under the pan barely read: stills r1)
       await bot.waitForTicks(3)
@@ -279,13 +279,14 @@ module.exports = {
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
       // (toward the pillar's foot by coordinates: 'facing entity <name>' with the player's name did nothing, r1)
       const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
-      const vill = Object.values(bot.entities).filter(e => e.name === 'villager').sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
+      const vill = Object.values(bot.entities).filter(e => e.name === 'villager' && e.position.z > bot.entity.position.z).sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
       const probe = vill[0], p0 = probe && probe.position.clone()
       for (let k = 0; k < 6; k++) {
-        bot.chat(`/execute as @e[type=villager] at @s facing ${px} ~ ${pz} run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
+        bot.chat(`/execute as @e[type=villager,tag=behind] at @s facing ${px} ~ ${pz} run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
         // NoAI mobs' moves reach the client only on the tracker's 3-tick beat: a metadata change each tick flushes them
-        // at 20 Hz (the kit's actor does the same; without it the recording showed no step at all, r1-r2)
-        bot.chat(`/execute as @e[type=villager] run data merge entity @s {Air:${k % 2 ? 298 : 299}s}`)
+        // at 20 Hz (the kit's actor does the same). Only the crowd in view (behind): moving all ~240 a tick, with the
+        // NBT merge, put the server 27 s behind and the take ended before anyone moved (r3)
+        bot.chat(`/execute as @e[type=villager,tag=behind] run data merge entity @s {Air:${k % 2 ? 298 : 299}s}`)
         await bot.waitForTicks(1)
       }
       await bot.waitForTicks(3)
