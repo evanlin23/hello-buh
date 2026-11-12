@@ -138,16 +138,18 @@ def panel(w, h):
     return im
 
 
-def button(w, label, color, state):
+def button(w, label, color, state, big_text=False):
     """A vanilla button widget (widget/button | button_highlighted | button_disabled) with its label centred, the game
-    font with its shadow; disabled: grey text."""
+    font with its shadow; disabled: grey text. big_text: the label at twice the size (the roll's ALLOW / DENY, readable
+    on a phone: the no-op audit 2026-11-12, r:r4607fa)."""
     path = {"hover": "gui/sprites/widget/button_highlighted", "off": "gui/sprites/widget/button_disabled"}.get(state, "gui/sprites/widget/button")
     im = nine_slice(path, w, BTN_H, 1 if state == "off" else 3)
     big = Image.new("RGBA", (w * S, BTN_H * S), (0, 0, 0, 0))
     big.alpha_composite(im.resize((w * S, BTN_H * S), Image.NEAREST))
     col = (160, 160, 160, 255) if state == "off" else BTN_COL.get(color, BTN_COL["white"])
     tw = text_w(label)
-    draw(big, label, (w - tw) // 2 * S, 6 * S, col, shadow=True, scale=S)
+    k = 2 if big_text else 1
+    draw(big, label, (w * S - tw * S * k) // 2, (BTN_H * S - 8 * S * k) // 2, col, shadow=True, scale=S * k)
     return big
 
 
@@ -287,7 +289,7 @@ def frame_img(key):
         x0 = min(r[0] for r in rects.values()); y0 = next(iter(rects.values()))[1]
         x1 = max(r[0] + r[2] for r in rects.values())
         col = "green" if word == "Allow" else "red"
-        b = button(x1 - x0, ("> " + word.upper() + " <") if landed else word.upper(), col, "hover" if landed else "normal")
+        b = button(x1 - x0, ("> " + word.upper() + " <") if landed else word.upper(), col, "hover" if landed else "normal", big_text=True)
         pan.alpha_composite(b, (x0 * S, y0 * S))
     else:
         for name, (x, y_, bw) in rects.items():

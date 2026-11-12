@@ -70,7 +70,7 @@ def _spec(s):
 def edit_marks(edit, nth=False) -> list:
     """[(event, offset, why, is_hit)]: every mark the edit hangs something on; is_hit: it marks a result (an impact /
     boom / hit / ding sound, a flash, a shake, the endAfter mark). nth=True: (event, offset, why, is_hit, n), n the
-    occurrence of the event it hangs on (an sfx's {"nth": n}, a sub's 4th field; edit.py / sfx.py count from 0)."""
+    occurrence of the event it hangs on (an sfx's {"nth": n}, a sub's 4th field, a card's 5th; edit.py / sfx.py count from 0)."""
     out = []
     def add(spec, why, hit, n=0):
         ev, off = _spec(spec)
@@ -86,7 +86,8 @@ def edit_marks(edit, nth=False) -> list:
         items = edit.get(k) or []
         for it in items if isinstance(items, list) else []:
             spec = it[0] if isinstance(it, list) and it else it if isinstance(it, str) else None
-            n = it[3] if k == "subs" and isinstance(it, list) and len(it) > 3 and isinstance(it[3], int) else 0
+            ni = {"subs": 3, "cards": 4}.get(k)   # the occurrence field: a sub's 4th, a card's 5th (scripts/retention.py)
+            n = it[ni] if ni and isinstance(it, list) and len(it) > ni and isinstance(it[ni], int) else 0
             if spec:
                 add(spec, k, k in HIT_FX, n)
     if edit.get("dropAt"):
@@ -128,7 +129,11 @@ def beats(rec, clock, edit, cam=None, in_view=None) -> list:
     for ev, off, why, hit, n in edit_marks(edit, nth=True):
         hits = [e for e in tl if e.get("event") == ev or (e.get("event") == "line" and e.get("id") == ev)]
         if len(hits) > n:   # (the occurrence it hangs on: the 6th reveal's pop and sub are a beat too)
-            put(hits[n]["t"] / 1000 + off, "edit", ev, 0.0, why, hit)
+            # 'EVENT:N' on an effect is N OUTPUT seconds after the event (edit.py / sfx.py resolve it on the sped-up
+            # timeline), not N source seconds: they differ after a speed span (tnt_1000's 'boom5:0.69' behind x5)
+            o = clock.out_of_src(hits[n]["t"] / 1000)
+            if o is not None:
+                out.append({"at": round(o + off, 2), "reads": round(o + off, 2), "kind": "edit", "name": ev, "why": why, "result": hit})
     # one row per (time, name): an edit mark named twice is one beat, a result if any use is
     merged = {}
     for b in out:

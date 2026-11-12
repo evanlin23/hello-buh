@@ -8,7 +8,8 @@
 //      then an enderman, one hit ("ender perls x12 (1 enderman)"), then digs straight down "dug strait down (pro tip)"
 //      (an eye of ender throw was tried: vanilla's eye flies 0.7-0.9 blocks a tick and rec_check reads it as a teleport)
 //   4. the stronghold: a roofless room, every eye in, LAVA inside the ring  "end portel is lit" -> jumps in
-//   5. "the end": an end stone island in a blue sky, no dragon anywhere      "dragon kiled (trust)" -> NEW WORLD RECORD
+//   5. "the end": an end stone island in a blue sky; "the ender dragon (real)" is a chicken, one hit: "dragon kiled
+//      (1 hit)" -> NEW WORLD RECORD (r:r4607fa, the no-op audit: the run's joke needed a dragon on screen)
 //      (a NoAI dragon was tried: the renderer drew it with one wing, read as a broken render, not a joke)
 // The clock counts to 0:09.41 over the whole run (it runs slow: on purpose, more for the comments).
 // Vanilla where it acts: the frame without corners does light (vanilla never needs the corners); the diamond ore
@@ -34,7 +35,8 @@ const LABELS = [
   ['end portel is lit', 1.6],
   ['THE END (looks diferent)', 1.8],
   ['end crystals: destroyd (all 0)', 1.6],
-  ['dragon kiled (trust)', 1.6]
+  ['the ender dragon (real)', 1.6],
+  ['dragon kiled (1 hit)', 1.4]
 ]
 const SLOT = { sword: 0, pick: 1, flint: 2 }
 
@@ -290,7 +292,7 @@ module.exports = {
     bot.setControlState('forward', false); bot.setControlState('jump', false)   // motion-ok: the walk's release
     ctx.log('over the lava', over, bot.entity.position)
 
-    // ---- 5. "the end": the island, the dragon (alive), the record
+    // ---- 5. "the end": the island, the "dragon" (a chicken), the record
     const E = SX.end
     await R.jump(ctx, 5, async () => {
       // hover where the jump is (inside the cut) so no tick reaches the lava before the teleport lands
@@ -303,6 +305,8 @@ module.exports = {
       rest: 0,
       onCut: async () => {
         ctx.select(SLOT.sword)
+        // "the ender dragon": a chicken on the island, 1 health (r:r4607fa: the run's joke pays off on screen)
+        await ctx.cmd(`/summon chicken ${X + E + 0.5} ${F + ISLE + 1} ${Z - 2.2} {NoAI:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_dragon"],Rotation:[0f,0f]}`)
       },
       after: 10
     })
@@ -310,19 +314,28 @@ module.exports = {
     ctx.sound('entity.enderman.teleport', 0.8, 1)
     // never a still frame here (rec_check: held): one slow pan, left to right
     const pan = async (a, b, ticks) => { for (let k = 1; k <= ticks; k++) { await A.view(a.plus(b.minus(a).scaled(k / ticks))); await still(1) } }
-    // no dragon anywhere (the label says it's dead: for the comments); the pan crosses the obsidian pillars
+    // the pan crosses the obsidian pillars first
     const Y = ISLE + 2   // a little under the eye: the island's edge and the pillars rising past it
     await drift(at(E - 8.5, Y, -12.5), 16)
     await pan(at(E - 8.5, Y, -12.5), at(E - 8.5, Y + 9, -12.5), 22)   // up the pillar to its empty top
     R.label(ctx, 10)
     await pan(at(E - 8.5, Y + 9, -12.5), at(E - 0.5, Y + 1, -19.5), 34)
+    // down off the pillar onto "the ender dragon" (a chicken), its roar, one hit
+    const dragon = Object.values(bot.entities).find(e => e.name === 'chicken')
+    if (!dragon) throw new Error('no dragon (chicken)')
+    await A.turnTo(dragon.position.offset(0, 0.4, 0), { max: 40 })
     R.label(ctx, 11)
-    bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
-    await pan(at(E - 0.5, Y + 1, -19.5), at(E + 7.5, Y + 1, -14.5), 30)
+    ctx.sound('entity.ender_dragon.growl', 0.9, 1.3)
+    await pan(dragon.position.offset(0, 0.4, 0), dragon.position.offset(0.15, 0.35, 0), 18)
+    await A.hit(dragon)
+    ctx.sound('entity.player.attack.crit', 1, 1); ctx.sound('entity.chicken.death', 1, 1)
+    ctx.mark('dragon_hit', { id: dragon.id })
+    R.label(ctx, 12)
+    await pan(dragon.position.offset(0.15, 0.3, 0), at(E + 0.6, ISLE + 2.2, -8), 18)
     R.finish(ctx)
     ctx.sound('ui.toast.challenge_complete', 1, 1)
     bot.swingArm('right')
-    await pan(at(E + 7.5, Y + 1, -14.5), at(E + 11, Y + 2, -11), 60)
+    await pan(at(E + 0.6, ISLE + 2.2, -8), at(E + 4, ISLE + 4.5, -12), 60)
     return lit && over
   }
 }

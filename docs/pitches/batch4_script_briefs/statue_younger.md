@@ -1,0 +1,2 @@
+# Batch 4 script: The Statue Gets Younger
+Read _common.md first. Premise A in the batch-4 doc (from blocky ep99 statue-years). Name: statue_younger, branch claude/script-statue-younger. Critic fixes to apply: the climax (the kid follows Mom; a wrinkle moves onto her face); Mom and Dad are player actors with grey-hair skins (grandpa_gullwick / grandma_island are taken by The Walk, which is benched; reuse is allowed only if canon has no conflict, otherwise mark 'new skin needed'). Place: the High Meadow top west of Larkfield, day 3900 (check canon).

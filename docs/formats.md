@@ -12,8 +12,8 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 |---|---|---|---|---|---|
 | `mega` | KRIZZIT: "Daylight Edition" | A giant fractal build on screen from frame 1, an elytra fly-around ending in a dive inside, one understated caption ("7 seconds of my life went into this build") | "new format to try" | r:r8bb1e3 | queued (mega_sponge, owner OK 2026-11-11) |
 | `mega` (time-lapse variant) | ItsMeMx: "Minas Tirith in Minecraft Timelapse" | An understated request ("We need a small castle to mark the spawn"), then a drone time-lapse of an absurd city rising | "this gimmick is like ridiculous megabuild" | r:r4449f0 | reviewed READY, for the lead to publish (mega_lapse_fountain; lib/mega_lapse.js: an episode gives stages, angles and the payoff) |
-| `mega` (time-lapse, bigger) | Necroncore: "what was your favorite version?" | A crater dug in a real landscape, a giant grass block rises in it, then a giant iron golem holding Steve and Alex with a wolf: scale against real terrain | "huge mega build, like ridiculously big" | r:rf8524b | rendering (mega_lapse_fox: a sleeping fox 177 blocks long in a real taiga; lib/mega_lapse.js player, outro, tally) |
-| `mega` (time-lapse, block counter) | struxo: "Beginner Friendly Nether Boss Build Timelapse" | A swamp cleared and a huge crimson/warped boss statue rising under a drone camera, block counters ticking in the corner | "another megabuild example" | r:rce78c5 | rendering (mega_lapse_fox: edit.tally, the live "blocks used" total) |
+| `mega` (time-lapse, bigger) | Necroncore: "what was your favorite version?" | A crater dug in a real landscape, a giant grass block rises in it, then a giant iron golem holding Steve and Alex with a wolf: scale against real terrain | "huge mega build, like ridiculously big" | r:rf8524b | reviewed READY, for the lead to publish (mega_lapse_fox: a sleeping fox 177 blocks long in a real taiga; lib/mega_lapse.js player, outro, tally, dress, openAt) |
+| `mega` (time-lapse, block counter) | struxo: "Beginner Friendly Nether Boss Build Timelapse" | A swamp cleared and a huge crimson/warped boss statue rising under a drone camera, block counters ticking in the corner | "another megabuild example" | r:rce78c5 | reviewed READY, for the lead to publish (mega_lapse_fox: edit.tally, the live "blocks used" total) |
 | `interrupt` | TECHSIN PLAYZ: "Finally, a CRAZY Minecraft illusion" | Plays straight as a normal build video; a skeleton shoots; the player walks over, "eats it", comes back and carries on as if nothing happened | "its a normal video with a skeleton shooting and he goes over and eats it and then pretneds nothing happened" | r:re05b89 | queued (interrupt_lamps, owner OK 2026-11-11) |
 | `mislabel` | "Top 5 things I found under ur dad's bed" | A parkour + dropper hook in second 1, then giant builds with wrong labels while falling; loops to the start. Ours is CLEAN (the reference is crude) | "very hook grabbing... mislabeled, but... alittle bit innapropirate so i dont like that, but its itneresting" | r:r05c651 | queued (mislabel_grandma, owner OK 2026-11-11) |
 | `logic` | Glowe: "Makes no sense" ("Minecraft logic 💀") | Rapid real vanilla quirks one after another under one caption | "Do we have any formats like this? like 'minevraft logic'" | r:r40f7c7 | building (logic_minecraft: lib/logic.js, own session 2026-11-11) |
@@ -124,7 +124,16 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   slime-block target that bounces), a "glass" shaft over a city, a 2-player race down twin shafts. Built
   (lib/dropper.js): make({ walls, layers: [{ depth, block, holes, via }], attempts: [{ n, fail }...], landing }) builds a
   376-block 9x9 shaft from the build limit to y -60, light rings every 8 blocks, a bullseye floor with a true vanilla
-  breaker in the middle; the steering is the movement keys only (lib/air_steer.js) and each fail is cut ~5 blocks over
-  the obstacle (nothing hits or dies on screen). Air control reaches ~1.5 blocks between layers 50 apart: run
+  breaker in the middle; the steering is the movement keys only (lib/air_steer.js) and each fail really splats on its
+  obstacle (fall damage: the hit, the hearts, the death tilt) and is cut 0.35 s later, before the poof (r:r4607fa: hiding
+  the hits made #47 feel unearned). Air control reaches ~1.5 blocks between layers 50 apart: run
   `node scripts/dropper_sim.js <stunt>` (prismarine-physics, the same pilot) before recording; it matched the server's
   cut heights to the hundredth.
+- **tnt (hidden core)**: tnt v2 (r:re197bb): a small visible pile at the foot of a hill whose core is real TNT (a grass
+  skin over ~3000 TNT, a TNT bed under the field); the chain erases the hill and the house on top, then a cut to the
+  crater's rim. Next: a TNT core under a whole village (before shot of the village, one block lit, the village goes);
+  a TNT mountain at night (the blasts light the dark, the crater by moonlight); "POV: you lit 1 TNT" on a snowy-peaked
+  TNT mountain. Lessons from the build: 3000 TNT flings primed TNT ~60 blocks (the vantage 50 back, knockback
+  resistance), the client's blocks go stale after ~2000 blasts (find the rim from the server: /execute positioned over
+  motion_blocking), bot.entities keeps stale primed TNT (wait on the last explosion packet instead), build the hill in
+  layered row fills (per-column fills ran past the bot timeout), edit sfx/subs offsets count in OUTPUT seconds.
