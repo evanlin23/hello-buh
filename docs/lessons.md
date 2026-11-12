@@ -656,3 +656,8 @@ lib/hb/test/fixtures/opening_calibration.json):
 - Elsewhere in the videos branch it blocks lapse_castle, lapse_house (a timer over plain grass before the build),
   pickaxe_race (a bare stone wall), rainbow_wool (sky in the middle) and wrong_bucket (sky): re-renders of those need
   a new opening. The sound hit is only a WARN: half the references open 6-15 dB under their peak.
+
+## Clutch drops start mid-fall (2026-11-12, owner on ladder_clutch v2 at 4.7 s)
+Owner: "maybe we should start as we are already falling?" A drop's walk-off, step and in-air turn are dead time before
+the stake: start each drop already falling, the camera still and looking down the wall (ladder_clutch: startAt and each
+teleport cut land on `fall<i>:0.95`, after the turn). Consider the same for boat_clutch's next version.

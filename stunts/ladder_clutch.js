@@ -19,15 +19,15 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'bro trusted ONE ladder with his life 😳',
   edit: {
-    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.45',   // r:r188b46: on the money shot (the 1x1 grass, the ladder above, lava both sides), before the look round (review: it turned onto blank lava)
+    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'fall0:0.95',   // owner 2026-11-12 on v2 at 4.7 s: "maybe we should start as we are already falling?": every drop starts mid-fall, the walk-off and the in-air turn cut (the camera still, looking down the wall, from fall+0.95) endAfter: 'final:0.45',   // r:r188b46: on the money shot (the 1x1 grass, the ladder above, lava both sides), before the look round (review: it turned onto blank lava)
     // r:r0f3da0 pace: silent until 1.61 s (a walk-off and fall make little vanilla sound): a wind bed from frame 0
     sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }]],   // (pace: a hit on the 80-block landing, the payoff)
     punch: [['final', 0, 1.08]],
     flash: [['final', 0, 0.3]],   // pace: a clear picture change on the payoff (the punch alone isn't one)
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     // the teleports between walls cut out; the long falls' middles at x2 (the camera holds still looking down the wall)
-    speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:0.9`, `catch${i + 1}:-0.6`, 2])],
-    subs: WALLS.map((w, i) => ['top', w.sub, 1.6, i])
+    speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `fall${i + 1}:0.95`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:1.0`, `catch${i + 1}:-0.6`, 2])],
+    subs: WALLS.map((w, i) => [`fall${i}:0.95`, w.sub, 1.5])
   },
 
   async setup (ctx) {
