@@ -1,0 +1,17 @@
+{
+ "name": "cooked_bedrock",
+ "stunt": "cooked_bedrock",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43166397682",
+ "source": "a02d7879",
+ "queued": "2026-11-12T06:11:28Z",
+ "finished": "2026-11-12T06:18:45Z",
+ "mp4": "renders/out/cooked_bedrock.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

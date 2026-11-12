@@ -1,0 +1,123 @@
+{
+ "stunt": "cooked_bedrock",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/cooked_bedrock.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT cooked_bedrock: 1 shots, scene 0.0-10.6 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-10.6  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 1 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (deepslate_diamond_ore, deepslate)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "29 visible sound-making events (break 6, hit 11, pickup 7, place 5), 15 with a sound mark, 14 without (audio.py adds those for a story)",
+    "     1.05s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     1.10s  placed light                       -> block.stone.place                  1.9 blocks in view  ",
+    "     1.15s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     1.50s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     1.90s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     1.95s  placed light                       -> block.stone.place                  1.9 blocks in view  ",
+    "     2.35s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     2.75s  placed light                       -> block.stone.place                  1.9 blocks in view  ",
+    "     3.60s  placed light                       -> block.stone.place                  1.7 blocks in view  ",
+    "     3.95s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     4.35s  placed light                       -> block.stone.place                  1.7 blocks in view  ",
+    "     4.75s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "     7.45s  digging bedrock                    -> block.stone.hit                    1.7 blocks in view  ",
+    "     7.55s  broke bedrock                      -> block.stone.break                  1.0 blocks in view  ",
+    "ambience per shot: -0.20-12.70s cave",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:12:46.304Z"
+}
