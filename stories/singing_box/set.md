@@ -34,7 +34,7 @@ and torch line sit small at frame left.
 ## The narration's claims, and what makes each true
 | claim (line) | true because | check |
 |---|---|---|
-| she has never kept a single diamond, 31 found (L01) | every delivery goes to his note block; her one is the allay's held item, which an allay keeps | the count in the bible |
+| I feed her diamonds to a wall, 31 so far (L01) | every delivery goes to his note block; her one is the allay's held item, which an allay keeps | the count in the bible |
 | she gave it her one diamond to find more (L02) | vanilla: an allay collects items matching its held item | [wiki](https://minecraft.wiki/w/Allay#Behavior) |
 | TNT: diamonds everywhere (L04) | ore broken by TNT drops its item (diamond ore: a diamond) | S04 |
 | the singing box in the wall (L05) | the note block's top edge shows in the hole | S05, S07 |

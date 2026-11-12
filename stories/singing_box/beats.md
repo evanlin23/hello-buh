@@ -15,9 +15,9 @@ over it (L15): "And there was the grumpy man, PLAYING the box, wearing every dia
 ## The format, beat by beat
 | format beat | line | |
 |---|---|---|
-| 1. impossible fact + the why, said | L01 | my best friend has never kept a single diamond, 31 found, "And I don't know WHY." Picture: the drop into the hole by 2 s |
+| 1. impossible fact + the why, said | L01 | "I feed my best friend's diamonds to a WALL. Thirty-one so far." (the viewer asks why; the line doesn't) Picture: the drop into the hole by 2 s |
 | 2. the rule in action, 3-5 two-way clues | L03-L08 | she runs; the hole by the lava; it sings first; gone |
-| 3. the narrator wants to know | L01, L14 | "I don't know WHY" ... "to see where they GO" |
+| 3. the narrator wants to know | L14 | "to see where they GO" |
 | 4. someone loved at stake | L09, L12 | "Tomorrow, I QUIT." / "I won't let her QUIT!" |
 | 5. the rule turned against itself | L14 | it follows the diamond into the box it feeds |
 | 6. the reveal SAID, one plain sentence | L15 | the kid names what it sees; the viewer makes the jump (he calls it, he keeps them) |

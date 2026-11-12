@@ -2,7 +2,7 @@
  "name": "singing_box",
  "stunt": "story_singing_box",
  "version": 2,
- "revision": "r4 (2026-11-11; r4b after the table read: L01 'hasn't gotten a single ONE' (casual reader: she gave her one away), L08 shorter, L09 cut (S09's empty hands carry it; lines renumbered), L11 'He sleeps all DAY, and the boom blocks WAKE him!' (critic 0a blocker: the kid's misreading; Java reader: 'never see him' named him), L12 'I won't let her QUIT!', L15 'the grumpy man' (critic length), mood mystery+funny): rewritten to the Roblox story format (docs/story_format.md, docs/rewrite_briefs/singing_box.md): L01 says the fact AND the why ('And I don't know WHY'); five two-way clues (she runs before the drop; the hole by the lava she never goes near; 'when it SINGS, I fly them right to it'; 'they're GONE'; 'I never see him in the DAY'); someone loved at stake ('Tomorrow, I QUIT'); the allay goes to look ('to see where they GO'); the reveal SAID in one plain sentence over S13b (L16: the grumpy man next door, playing the box, wearing every diamond it ever found); one beat (his 'Thirty-TWO.', echoing L01's THIRTY-ONE), cut. Premise, twist, place, days, cast and voices unchanged; 'every allay knows' and 'too BIG to throw' cut. Table read in reviews/r4-*.md. r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
+ "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'I feed my best friend's DIAMONDS to a WALL. Thirty-ONE so far.' replaces the frame + why opener; r4 (2026-11-11; r4b after the table read: L01 'hasn't gotten a single ONE' (casual reader: she gave her one away), L08 shorter, L09 cut (S09's empty hands carry it; lines renumbered), L11 'He sleeps all DAY, and the boom blocks WAKE him!' (critic 0a blocker: the kid's misreading; Java reader: 'never see him' named him), L12 'I won't let her QUIT!', L15 'the grumpy man' (critic length), mood mystery+funny): rewritten to the Roblox story format (docs/story_format.md, docs/rewrite_briefs/singing_box.md): L01 says the fact AND the why ('And I don't know WHY'); five two-way clues (she runs before the drop; the hole by the lava she never goes near; 'when it SINGS, I fly them right to it'; 'they're GONE'; 'I never see him in the DAY'); someone loved at stake ('Tomorrow, I QUIT'); the allay goes to look ('to see where they GO'); the reveal SAID in one plain sentence over S13b (L16: the grumpy man next door, playing the box, wearing every diamond it ever found); one beat (his 'Thirty-TWO.', echoing L01's THIRTY-ONE), cut. Premise, twist, place, days, cast and voices unchanged; 'every allay knows' and 'too BIG to throw' cut. Table read in reviews/r4-*.md. r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
  "caption": "where do her diamonds go 💎",
  "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, while she climbs out empty-handed every night and says tomorrow she quits; today it follows the biggest one yet through the hole to see where they go, and finds the grumpy man next door playing the box in her diamonds.",
  "question": "why has she never had more than one diamond?",
@@ -200,8 +200,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "My best FRIEND / has never kept / a single DIAMOND. / I've found her / THIRTY-ONE. / And I don't know WHY.",
-   "say": "My best friend has never kept a single diamond. I've found her thirty-one. And I don't know WHY.",
+   "text": "I FEED / my best friend's DIAMONDS / to a WALL. / THIRTY-ONE so far.",
+   "say": "I feed my best friend's DIAMONDS to a WALL. Thirty-ONE so far.",
    "shot": "S01",
    "shows": [
     {
@@ -228,7 +228,8 @@
     }
    ],
    "punch": true,
-   "direction": "amazed, then truly puzzled on the last sentence, one quick bright breath"
+   "direction": "amazed, then truly puzzled on the last sentence, one quick bright breath",
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; cheerful and proud: the allay thinks the singing box eats them (L08)"
   },
   {
    "id": "L02",
@@ -783,7 +784,7 @@
   "beats": [
    "S13b: L16, the neighbor, quiet, looking down at diamond 32 at his feet: 'Thirty-TWO.' Cut 0.8 s after the word."
   ],
-  "loop": "L16's THIRTY-TWO runs into L01's THIRTY-ONE: he has been counting her diamonds the whole time"
+  "loop": "L16's THIRTY-TWO runs into L01's 'THIRTY-ONE so far': he has been counting her diamonds the whole time"
  },
  "bible": "stories/singing_box/bible.md",
  "beats": "stories/singing_box/beats.md",
@@ -791,7 +792,7 @@
  "shotlist": "stories/singing_box/shots.md",
  "family": "helper_misdirected",
  "upload": {
-  "title": "I've found her 31 diamonds. she's never had more than one 💎 #minecraft #shorts",
+  "title": "i feed my best friend's diamonds to a wall. 31 so far 💎 #minecraft #shorts",
   "pinned": "Where did YOU think the diamonds were going?",
   "tags": [
    "minecraft allay",
