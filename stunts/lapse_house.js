@@ -184,8 +184,14 @@ function dress () {
     if (Math.abs(jx) <= 4 && jz > -66) continue                            // the road up the middle
     d.push([jx, jz, (jx + jz) % 3 === 0 ? 'minecraft:flower_plain' : 'minecraft:patch_grass'])
   }
-  // (no oak at (56, -16): the 'low right' showcase camera stands beside it)
-  for (const [tx, tz] of [[-54, -70], [-55, -40], [-56, -12], [54, -72], [55, -44], [-30, -74], [26, -75], [-50, 8], [52, 6]]) d.push([tx, tz, 'minecraft:fancy_oak'])
+  // trees all round the site's edges (r2: they break up the levelled rectangle and stand in front of the taper), and in
+  // the open lawn either side of the plots; none by the 'low right' showcase camera (x 52..55, z -15) or in the hero
+  // wide's lane (|x| < 14 in front)
+  const t = (tx, tz, f) => d.push([tx, tz, f || ((tx + tz) % 2 ? 'minecraft:fancy_oak' : 'minecraft:oak')])
+  for (let z = -74; z <= 28; z += 9) { t(-58, z); if (z < -26 || z > -4) t(58, z) }
+  for (let x = -49; x <= 49; x += 9) t(x, -77)
+  for (let x = 16; x <= 52; x += 9) { t(x, 31); t(-x, 31) }
+  for (const [tx, tz] of [[-30, 8], [-40, 20], [-24, 22], [30, 10], [40, 22], [26, 20]]) t(tx, tz)
   return d
 }
 
@@ -195,7 +201,7 @@ module.exports = makeStunt({
   // a real plain round it (owner 2026-11-12 on take 1: "it doesnt need to be superflat"): only the grounds and the two
   // small plots are levelled (x -60..60, z -78..14 from spawn; the mansion's centre is z - 45), the trees within 16 of
   // the taper go, the land beyond keeps its own ground, trees and water
-  site: [-60, 60, -78, 34], clearTrees: 16,   // (to z + 34: the hero wide's camera at z + 27 was inside the land past a z + 14 edge)
+  site: [-60, 60, -78, 34], clearTrees: 16, taperNoise: true,   // (to z + 34: the hero wide's camera at z + 27 was inside the land past a z + 14 edge)
   dress: dress(),
   endAfter: 'big_done:0.5',
   bigCuts: [6, 0.6, 57],
@@ -223,13 +229,13 @@ module.exports = makeStunt({
     // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the mansion
     angles: [
       [0, [[-2, 13, 27], [0, -1, 15]], [[-4, 13, 28], [0, -1, 14]], 'down on the pool'],          // the pool fills the frame
-      [126, [[-29, 6, 39], [0, 5, 2]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3
+      [126, [[-21, 6, 31], [0, 6, 0]], [[-24, 9, 32], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3 (r2: closer, the mansion half the frame, not a sliver over a lawn)
       [372, [[46, 12, 10], [0, 7, 0]], [[44, 16, 2], [0, 9, 0]], 'side'],                          // floor 3, the wings
       [612, [[0, 24, 48], [0, 6, 0]], [[0, 26, 42], [0, 7, 0]], 'high front, over the garden'],     // the wings, the garden, the roof going on (a close facade angle showed a wall of windows while they rose out of frame: review)
-      [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
+      [852, [[-42, 30, 46], [0, 12, 0]], [[-38, 32, 41], [0, 14, -2]], 'high wide'],                // roof, penthouse, rooftop pool (r2: lower and closer, the land beyond in the frame's top, not the levelled rectangle)
       // the showcase: the finished mansion from three angles, the helipad, the wall and the crown going on
       [1092, [[55, 12, 30], [8, 14, 0]], [[52, 13, 32], [8, 14, 0]], 'low right'],
-      [1210, [[50, 34, -38], [0, 6, 4]], [[47, 35, -34], [0, 6, 4]], 'high from the back corner'],
+      [1210, [[44, 20, -34], [0, 9, 2]], [[41, 21, -31], [0, 9, 2]], 'high from the back corner'],   // (r2: lower: the site's edge dropping to the water was a third of the frame)
       [1330, [[-2, 11, 72], [0, 10, 0]], [[-4, 11.5, 62], [0, 10, 0]], 'the hero wide, through the gates']
     ]
   }
