@@ -42,6 +42,7 @@ module.exports = makeStunt({
   start: [1.5, 1, 0.5, 90, 55],   // standing on A, looking west and down at B's top
   park: [-3.5, 1, 6.5, -125],
   endHold: 0.75,
+  payoffHit: false,   // the landing in the lava is the payoff: no impact on the trapdoor (its tail buried the landing's hit)
   edit: {
     // fast cuts (owner r:r188b46): the middle of the dig, the walk into hiding, his coast + shuffle onto the trapdoor,
     // and my walk to the edge; every edge sits on a rest (rec_check whip)
@@ -49,7 +50,7 @@ module.exports = makeStunt({
     // the last beat: straight down the shaft at him in the lava (owner: "all the way down and then lava"); a hit on it
     endAfter: 'splash:0.8',
     dropAt: 'splash',   // the song's drop on the landing (mixcheck: the hit was buried under the bed already dropped on the trapdoor)
-    sfx: [['dip', 'splash', 0.6], ['gamedip', 'splash', 0.5], ['impact', 'splash', { gain: 1.4 }], ['boom', 'splash']],   // the song and the game duck before the landing so its hit stands out (mixcheck)
+    sfx: [['dip', 'splash', 0.5], ['gamedip', 'splash', 0.5], ['impact', 'splash', { gain: 1.4 }], ['boom', 'splash']],   // the song and the game duck before the landing so its hit stands out (mixcheck)
     // the landing is the payoff pace/mixcheck time: a flash and a punch on it too (the trap edit has them on the trapdoor)
     flash: [['payoff', 0, 0.35], ['splash', 0, 0.35]],
     punch: [['payoff', 0, 1.06], ['splash', 0, 1.08]],
