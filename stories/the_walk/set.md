@@ -32,7 +32,7 @@
 | L08 | it never freezes here | the bay is cold_ocean (never frozen_ocean); no ice, no snow layers, no snowfall in any shot before S12 |
 | L08 | Mom says never | Mom on screen while she's named |
 | L09 | she held up a new book | the same set-up as S02, the book glinting, at dawn; S10 the tooltip on NEW |
-| L09b | Grandpa didn't break it | S11: the lectern standing in frame, his axe lowered |
+| L09b | Grandpa didn't break the lectern | S11: the lectern standing in frame, his axe lowered |
 | L10 | boots, off the dock, the sea froze under his feet | S12: the boots glinting on BOOTS, the step off on DOCK, the first frosted ice on FROZE, under each step after |
 | L11 | three hundred lecterns, a walk | (S12 continues: he walks on toward the window) |
 | L10 (picture) | the sea freezes under each step toward her window | frosted ice under each step only; the window lit with her figure at the end of his line |

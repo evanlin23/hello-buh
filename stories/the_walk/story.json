@@ -37,7 +37,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "the grandkid: a player with the default `kai` skin (not Steve, which reads as Buh; not zuri); never named; no armour. The kid does the trading (a merchant screen exists only for the player who opens it): at the counter beside Grandpa in S02 and S09 (shoulder only); the screen is the kid's in S10; small beside Mom in S08; not in S11."
+      "on_screen": "the grandkid: a player with the original `walk_kid` skin (canon conflict 19 resolved; not `kai`, Jonah's) (not Steve, which reads as Buh; not zuri); never named; no armour. The kid does the trading (a merchant screen exists only for the player who opens it): at the counter beside Grandpa in S02 and S09 (shoulder only); the screen is the kid's in S10; not in S11 (the book in Grandpa's hand); small beside Mom in S08; not in S12."
     },
     "Grandpa": {
       "role": "character",
@@ -46,7 +46,7 @@
       "model": "gemini-3.8-flash-tts",
       "color": "#D9A066",
       "profile": "An old man in his seventies, flat and tired",
-      "on_screen": "a player actor, a grey-haired old-man skin (to make: no old default skin exists; not zuri, not steve); iron axe in his main hand in the hut (S01-S03, S09), empty-handed on the dock; no boots until S11 (leather boots with the enchant glint, put on at the dock's end before the first step). One line, L03, on screen while he says it.",
+      "on_screen": "a player actor, a grey-haired old-man skin (to make: no old default skin exists; not zuri, not steve); iron axe in his main hand in the hut (S01-S03, S09, S11), empty-handed on the dock; no boots until S12 (leather boots with the enchant glint, put on at the dock's end before the first step). One line, L03, on screen while he says it.",
       "note": "Not `elder` (Charon): that is Ravenford's Grandpa (canon conflict 11). Iapetus here as the working pick; audition Iapetus vs Sadaltager (bible.md 'Voices'), the owner picks, then add a cast.json entry."
     },
     "Grandma": {
@@ -54,7 +54,7 @@
       "ref": "grandma_island",
       "name": "Grandma",
       "color": "#C9B6E8",
-      "on_screen": "a player actor, a grey-haired old-woman skin (to make); in the flashback (S06-S07) in an oak boat a few blocks off the dock, facing back at Grandpa; in the present, standing in her lit window on the island, the sill at floor level so she shows head to toe (S04, S08, S11). One line, L07, on screen while she says it.",
+      "on_screen": "a player actor, a grey-haired old-woman skin (to make); in the flashback (S06-S07) in an oak boat a few blocks off the dock, facing back at Grandpa; in the present, standing in her lit window on the island, the sill at floor level so she shows head to toe (S04, S08, S12). One line, L07, on screen while she says it.",
       "note": "cast `grandma_island` (Callirrhoe, owner 2026-11-11 \"calirrhoe is fine\"): her own voice, not Gold's Grandma (STANDARDS 7a). The first take must read 60-85 to the blind listener, else back to the owner."
     },
     "Mom": {
@@ -115,8 +115,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "My GRANDPA / has BROKEN / the same LECTERN / three hundred TIMES. / And he won't / tell me WHY.",
-      "say": "My grandpa has broken the same lectern three hundred times. And he won't tell me why.",
+      "text": "My GRANDPA broke / the same LECTERN / three hundred TIMES, / and won't tell me WHY.",
+      "say": "My grandpa broke the same lectern three hundred times, and won't tell me why.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -297,28 +297,28 @@
     {
       "id": "L09b",
       "who": "N",
-      "text": "And GRANDPA / DIDN'T / BREAK it.",
-      "say": "And Grandpa didn't break it.",
+      "text": "And GRANDPA / DIDN'T break / the LECTERN.",
+      "say": "And Grandpa didn't break the lectern.",
       "shot": "S11",
       "punch": true,
       "shows": [
         {
           "what": "lectern",
-          "word": "BREAK"
+          "word": "LECTERN"
         }
       ],
       "look": {
         "what": "Grandpa",
         "word": "GRANDPA"
       },
-      "direction": "surprised, a little slower, DIDN'T held; not scared",
+      "direction": "surprised, DIDN'T hit hard; no pause, not scared",
       "note": "the rule turned against itself (format beat 5): the lectern stands"
     },
     {
       "id": "L10",
       "who": "N",
-      "text": "He put it / on his BOOTS, / walked OFF / the DOCK, / and the SEA / FROZE / under his FEET.",
-      "say": "He put it on his boots, walked off the dock, and the sea froze under his feet.",
+      "text": "He put the BOOK / on his BOOTS, / walked OFF / the DOCK, / and the SEA / FROZE / under his FEET.",
+      "say": "He put the book on his boots, walked off the dock, and the sea froze under his feet.",
       "shot": "S12",
       "punch": true,
       "shows": [
@@ -373,7 +373,7 @@
       "size": "ms",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-0.6, 0, 1.0) at the counter (S02, S09), (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
       "camera": "at: (1.5, 1.7, 4.5) behind the kid looking at (-0.3, 1.4, -1.5), still. Camera shot, no GUI: the kid has the trade open (unseen), so the librarian holds up the offered enchanted book over her crossed arms (vanilla), glinting; Grandpa leans in at frame left, reads it, shakes his head; holds to 'reads it'",
-      "frame": "subject: the librarian holding up the glinting book, its name never shown; Grandpa's face at frame left; the kid's shoulder at frame right. Day 6000. Grandpa at (-0.6, 0, 1.0), in frame (L10 names him).",
+      "frame": "subject: the librarian holding up the glinting book, its name never shown; Grandpa's face at frame left; the kid's shoulder at frame right. Day 6000. Grandpa at (-0.6, 0, 1.0), in frame (L09b names him).",
       "look": {
         "time": 6000
       }
@@ -481,7 +481,7 @@
       "size": "ms",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-0.6, 0, 1.0) at the counter (S02, S09), (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
       "camera": "at: (-0.1, 1.7, 3.4) in front of Grandpa looking at his face and chest (-0.6, 1.4, 1.0), still",
-      "frame": "subject: Grandpa's face, close; he reads, goes still, no head shake; the axe lowers; the lectern stands, in frame lower right; by the end the book is in his own hand (no hand-off shown: cold read r6). On the cut to S12: an anvil clank off screen. Dawn 22800.",
+      "frame": "subject: Grandpa's face, close; he reads, goes still, no head shake; the axe lowers; the lectern stands, in frame lower right; the anvil in frame behind him; by the end the book is in his own hand (no hand-off shown: cold read r6). On the cut to S12: an anvil clank off screen. Dawn 22800.",
       "look": {
         "time": 22800
       }
@@ -522,7 +522,7 @@
       "note": "oak signs covered in tally marks"
     },
     "anvil": {
-      "at": "the hut, off screen until S10's cut (its clank)"
+      "at": "the hut, in frame behind Grandpa in S11 (the step between the book and the boots), its clank on S11's cut"
     }
   },
   "ending": {

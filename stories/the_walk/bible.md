@@ -24,8 +24,7 @@
 - **Claimed** 2026-11-11 (map.json `gullwick`, `grandmas_island`; the story's entry, day 4000, no cameo). The Ridge
   tower easter egg is dropped: it's 315 blocks from the dock, past any render distance we use. S05's inland view has
   Leo's stone cottage across the lagoon instead (geography, never named; a fan of One More Eye will know it).
-- **Costume flag (canon conflict 19):** the kid's `kai` skin is Jonah's (Six Thousand Torches). Recommended `noor`;
-  the lead's call.
+- **Costume (canon conflict 19, resolved on main):** the kid wears the original `walk_kid` skin (was `kai`, Jonah's).
 - **New canon facts:** Gullwick; Grandpa and Grandma (players, a couple apart for ten years); Mom (their daughter, a
   player) and the kid; the ice path on day 4000 (Frost Walker ice melts, so nothing is stamped after the day).
 
@@ -41,7 +40,7 @@
 ## Cast and costume
 | who | what | voice | shots |
 |---|---|---|---|
-| the kid (narrator) | player, the default `kai` skin (not Steve, not zuri); never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; not in S11 (the book is in Grandpa's hand); small next to Mom S08 |
+| the kid (narrator) | player, the original `walk_kid` skin (not Steve, not zuri); never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; not in S11 (the book is in Grandpa's hand); small next to Mom S08 |
 | Grandpa | player actor, a grey-haired old-man skin (to make); iron axe in the hut (S01-S03, S09, S11; lowered, unswung in S11), empty-handed on the dock and in the flashback; **no boots** until S12, put on at the dock's end, leather with the enchant glint | Iapetus directed old (not `elder`: canon conflict 11), one clause; to audition | S01-S09, S11 |
 | Grandma | player actor, a grey-haired old-woman skin (to make) | `grandma_island` (Callirrhoe) | in the boat S06-S07; head to toe in the window (sill at floor level) S04, S08, S12 |
 | Mom | player actor, the default `makena` skin | silent | S08 |
@@ -57,7 +56,7 @@
 | Grandma's boat | the one she rows away in; on the island's beach since | S06, S07 |
 | Grandma's window | 3x2 glass panes, lanterns inside; **dark** in the flashback, lit at dusk and dawn | S04, S06 (dark), S08, S12 |
 | leather boots | plain in the kid's inventory (S10); on Grandpa's feet, glinting, in S12 | S10, S12 |
-| anvil | in the hut, heard (clank) on the cut S11 to S12 | sound only |
+| anvil | in the hut, behind Grandpa in S11; its clank on the cut S11 to S12 | S11 |
 | frosted ice | forms under each of Grandpa's steps off the dock's end | S12 |
 
 ## Positions and screen direction
@@ -68,7 +67,7 @@
 
 ## What the narrator holds
 - The kid's inventory (only seen in S10's merchant screen): 64 emeralds, 63 lecterns, plain leather boots, a book,
-  bread, a cake, a milk bucket, 67 eggs, a pufferfish. The anvil is in the hut (heard on the S10 cut).
+  bread, a cake, a milk bucket, 67 eggs, a pufferfish. The anvil is in the hut (seen in S11, heard on the S11 cut).
 
 ## Who knows what
 - **Grandpa** knows all along what he's rolling for.
