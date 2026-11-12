@@ -729,6 +729,10 @@ STANDARDS.md in the same commit.
   Line 1 is absurd: a sentence nobody expects to hear, said flatly, that makes you stop scrolling ("I live under an
   old man's bed. With sixty-nine of my brothers."). Still true to the story, naive, and never a joke at a real group's
   expense. The casual cold reader judges it first: "would you stop scrolling?"
+- **Owner, 2026-11-12, on the absurd hooks: "contraversial to a point".** A hook may be edgy and provocative inside the
+  story's world (kidnapping, robbing, a kid "in love" with a bell, a grandpa "dumped"), the kind that makes people
+  comment. It stops short of real-world flashpoints (religion, gender, politics, real people or groups), which risk the
+  channel and aren't needed: the shock comes from the story's own absurd fact.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
