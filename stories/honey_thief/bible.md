@@ -14,16 +14,16 @@ S01-S07 at the hive and the field's south edge; S08-S10 out over the wing and up
 ## Cast
 | who | look | voice | on screen |
 |---|---|---|---|
-| the narrator, a worker bee | vanilla bee (POV; a dot in the reveal) | `narrator` (Pip, Leda), one_take, plain_say | POV S01, S03, S05, S06, S08-S10 |
+| the narrator, a worker bee | vanilla bee (POV; a dot in the reveal) | `narrator` (Pip, Leda), one_take, plain_say | POV S01, S01b, S01c, S02, S02b, S03, S04, S05, S06, S08-S10 |
 | the giant = Jonah (owner 2026-11-11) | player actor, `kai` skin, a teenage boy as in Torches, name tag HIDDEN, never named | L05 only: Jonah's cast (`friend`/Fenrir placeholder; the Jonah audition picks) | S01-S06, S10 (speck) |
-| her sisters, the hive's bees | 3 vanilla bees (+ the narrator = 4); named 'my sisters' (L02, L09) | none | S02, S07 |
+| her sisters, the hive's bees | 3 vanilla bees (+ the narrator = 4); named 'my sisters' (L02, L09) | none | S02, S02b, S02c, S07 |
 
 ## Props
 | prop | state | shots |
 |---|---|---|
 | beehive on a 1-block oak fence post | O + (0,1,0) over the pit campfire at O + (0,-1,0), face south, honey dripping at level 5 in S01 then empty | S01, S02, S07, S10 |
 | campfire | lit, open, in a 1-deep pit at O + (0,-1,0) | S02, S07, S10 (smoke) |
-| glass bottle -> honey bottle | main hand at the hive (S01, S02); fills on 'CLINK' (S03), then in his offhand (S03-S06) | S01-S06 |
+| glass bottle -> honey bottle | main hand at the hive (S01, S01c, S02b, S02c); fills on 'CLINK' (S03), then in his offhand (S03-S06) | S01-S06 |
 | wildflowers | placed as flat covers, rows east-west, at the head's crown | S03, S04, S10 |
 | the heart | pink_petals around the post, point south, a 2-tall rose-bush rim | S02, S07, S10 |
 | the bee picture | complete except the crown: row 51 planted in S03-S04, row 52 in S10 | S08-S10 |

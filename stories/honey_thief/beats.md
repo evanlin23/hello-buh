@@ -1,4 +1,6 @@
-# honey_thief: beat sheet and clue map (r8, 2026-11-12; r1 2026-11-11)
+# honey_thief: beat sheet and clue map (r9 opening, 2026-11-12; r1 2026-11-11)
+
+r9 opening (STANDARDS 0t): L01 is the hook frame study's tightened line, "A GIANT robbed my family FIFTY-TWO times. Then planted us FLOWERS."; the first 8 s re-shot to its plan (shots.md).
 
 Brief: docs/pitches/batch3_script_briefs/honey_thief.md. Premise: docs/pitches/batch3_round2_2026-11-11.md #4 (D12),
 branch claude/batch3-round2. Must-changes applied: line 1 puts the question on the flowers (not the smoke); a reason
@@ -19,8 +21,8 @@ crown planting the last row. Sting: "Fifty-two BOTTLES. Fifty-two ROWS." (echoes
 ## Beats (Pip's pace, ~3 words/s incl. breaths; ~122 words, ~40 s)
 | t (s) | format beat | line | picture | clue planted |
 |---|---|---|---|---|
-| 0-4 | 1. the fact + WHY | L01 | bee POV: the giant at the dripping hive with a bottle, flowers to the horizon | the trade: honey for flowers; 52 |
-| 4-8 | 2. rule in action | L02 | the campfire under the hive, smoke, her calm sisters | he's careful (two-way: trick / care); her sisters introduced |
+| 0-3.4 | 1. the fact + WHY | L01 | 0-1.8 the giant's face at the dripping hive (MCU), cut on FIFTY-TWO; a low pull-back, rows to the horizon; at the hive he turns to us, rows past his shoulder on FLOWERS | the trade: honey for flowers; 52 |
+| 3.4-7.4 | 2. rule in action | L02 | a sister's sleepy face in the smoke; a second drifting as his bottle comes in; the third bumping the hive, grumpy | he's careful (two-way: trick / care); her sisters introduced |
 | 8-12 | 2. | L03 | the bottle; he plants one straight row at the crown | one bottle = one row (52 rows) |
 | 12-14 | misread 1 | L04 | the giant crouched planting | guilt (wrong) |
 | 14-16 | his line | L05 | he looks at the bee and waves | "favorite" = the bees |

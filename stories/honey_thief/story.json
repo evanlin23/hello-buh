@@ -2,10 +2,10 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'A GIANT has robbed my family FIFTY-TWO times. And he plants us FLOWERS.' replaces the frame + why opener; r8 (2026-11-12): critic r3 APPROVE (7.6) + its should-fixes (L01 drops 'And'; S01 places no flower; S10 smoke marks home; footprint = set.md's; easter egg S07; 2-wide podzol outline is the plan); casual and gamer cold reads both get it (reviews/cold_reads.md). the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r9 opening (2026-11-12, STANDARDS 0t, hook frame study docs/research/hook_frames_2026-11-12.md): L01 the study's tightened line 'A GIANT robbed my family FIFTY-TWO times. Then planted us FLOWERS.' (FIFTY-TWO ~1.7-1.8 s); 0-8 s re-shot to its plan: S01 an MCU on the giant's face at the dripping hive, cut on FIFTY-TWO to S01b (a low pull-back, the rows to the horizon, never a shape), S01c his face to us among the rows on FLOWERS (nothing placed), S02/S02b/S02c the sisters' faces in the smoke and his bottle at the hive (the rule at work every ~1.2-1.6 s), S03's CLINK at most 0.8 s, S04 an MCU on his face on BAD; title CAPS FIFTY-TWO. hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'A GIANT has robbed my family FIFTY-TWO times. And he plants us FLOWERS.' replaces the frame + why opener; r8 (2026-11-12): critic r3 APPROVE (7.6) + its should-fixes (L01 drops 'And'; S01 places no flower; S10 smoke marks home; footprint = set.md's; easter egg S07; 2-wide podzol outline is the plan); casual and gamer cold reads both get it (reviews/cold_reads.md). the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
-  "title": "a giant has robbed my family 52 times 🐝 #minecraft #shorts",
+  "title": "a giant robbed my family FIFTY-TWO times. then planted us flowers 🐝 #minecraft #shorts",
   "pinned": "What would YOU plant for your bees?",
   "tags": [
    "minecraft bee",
@@ -57,7 +57,7 @@
    "ref": "narrator",
    "color": "#FFFFFF",
    "plain_say": true,
-   "on_screen": "a worker bee (vanilla bee), unnamed; POV in S01, S03, S05, S06, S08, S09, S10 (stunt.self = { model: 'bee', eye ~0.3, hover bob }, hud: false, hideHand: true); a yellow dot on the wingtip in the reveal. Pip's voice (cast `narrator`, Leda, flash-lite, plain_say), the house narrator voice as Good Boy's dog."
+   "on_screen": "a worker bee (vanilla bee), unnamed; POV in S01, S01b, S01c, S02, S02b, S03, S04, S05, S06, S08, S09, S10 (stunt.self = { model: 'bee', eye ~0.3, hover bob }, hud: false, hideHand: true); a yellow dot on the wingtip in the reveal. Pip's voice (cast `narrator`, Leda, flash-lite, plain_say), the house narrator voice as Good Boy's dog."
   },
   "Giant": {
    "role": "character",
@@ -130,8 +130,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "A GIANT / has ROBBED my family / FIFTY-TWO times. / And he plants us FLOWERS.",
-   "say": "A GIANT has robbed my family FIFTY-TWO times. And he plants us FLOWERS.",
+   "text": "A GIANT / ROBBED my family / FIFTY-TWO times. / Then planted us / FLOWERS.",
+   "say": "A GIANT robbed my family FIFTY-TWO times. Then planted us FLOWERS.",
    "shot": "S01",
    "shows": [
     {
@@ -155,12 +155,12 @@
     }
    ],
    "punch": true,
-   "direction": "a bubbly complaint, like telling on him; one breath, the WHY bright and baffled, up",
+   "direction": "a bubbly complaint, like telling on him; straight in with no lead-in pause, indignant on ROBBED, FIFTY-TWO big, then baffled and up on FLOWERS",
    "look": {
     "what": "actor:Giant",
     "word": "GIANT"
    },
-   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; a bit indignant on ROBBED, then baffled on FLOWERS"
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"; 0t, hook frame study 2026-11-12): said flat, as plain fact, the narrator believes it; no stock why tag. 0t: the key word FIFTY-TWO (the title's CAPS word) is word 6, about 1.7-1.8 s at Pip's pace; the first sentence is done by ~2.5 s, the line by ~3.4 s. S01 cuts on FIFTY-TWO. The study's tightened line (was 'A GIANT has robbed my family FIFTY-TWO times. And he plants us FLOWERS.': 'has' and 'And he' cut)."
   },
   {
    "id": "L02",
@@ -374,9 +374,55 @@
     "L01"
    ],
    "place": "hive",
-   "size": "ws",
-   "camera": "bee pov hovering 4 blocks out from the hive's front face, eye at the hive's middle; a slow drift (bee hover bob)",
-   "frame": "frame 1: the giant centred, big (a WS at 4 blocks: ~35 % of frame height), his glass bottle held to the dripping hive, already moving (0.0 s); behind him the flowers run yellow and purple to the horizon (the picture asks the question too). On 'FLOWERS' the field behind him fills the frame edge to edge (no flower placed here: rows are placed only in S03/S04/S10, one per bottle). The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky (time 3000).",
+   "size": "mcu",
+   "camera": "bee pov hovering 1.5 blocks out from the giant's face, at his eye height, beside the hive's front face; a slight hover bob, already moving on frame 1; holds 0-~1.8 s, cut on FIFTY-TWO",
+   "frame": "frame 1 (STANDARDS 0t): the giant's face centred, at least 1/3 of the game view's width (not a WS: 35 % of the height is too small inside our letterbox), his glass bottle held up to the dripping hive at frame edge, honey drips falling on frame 1. The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky behind (time 3000), cool-neutral.",
+   "look": {
+    "time": 3000
+   },
+   "subject": "actor:Giant",
+   "cut": {
+    "line": "L01",
+    "word": "FIFTY-TWO",
+    "at_s": 1.8
+   }
+  },
+  {
+   "id": "S01b",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "hive",
+   "size": "ews",
+   "camera": "bee pov, a fast eased pull-back from behind the giant's shoulder, LOW (eye at the hive's height, never above 4 blocks, tilted no more than 10 degrees down, the lilac wings and the dark outline kept out of frame: thin rows, never bands; the top-down shape is S10's reveal), ~0.8 s; cut in on FIFTY-TWO",
+   "frame": "the giant and the hive go small at frame left; the flower rows run yellow and purple, row after row, to the horizon behind them, seen low along the ground so they read as rows (the count), never as a shape. No flower placed.",
+   "subject": "actor:Giant",
+   "cut": {
+    "line": "L01",
+    "word": "FIFTY-TWO",
+    "at_s": 1.8
+   },
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S01c",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "hive",
+   "size": "ms",
+   "camera": "bee pov, 2.5 blocks out at the hive, at his chest height, still; cut in on 'Then' (~2.6 s), holds through FLOWERS (~0.9 s)",
+   "frame": "at the hive: the giant turns from the hive to face the bee (the camera), waist up, the empty glass bottle still in his main hand (bible: it fills in S03); past his shoulder the flower rows run away on FLOWERS. Nothing is placed (rows are placed one per bottle, only in S03, S04 and S10).",
+   "subject": "actor:Giant",
+   "cut": {
+    "line": "L01",
+    "word": "Then",
+    "at_s": 2.6
+   },
    "look": {
     "time": 3000
    }
@@ -388,9 +434,55 @@
     "L02"
    ],
    "place": "hive",
+   "size": "cu",
+   "camera": "bee pov close beside one sister, 0.6 out, drifting with her; cut in on 'First' (~3.4 s), holds through SMOKE (~1.2 s)",
+   "frame": "one sister bee's face big in frame (the stake on a face), drifting slow and sleepy, campfire smoke curling past her; the hive's face soft behind. (vanilla: a campfire within 5 below calms bees)",
+   "look": {
+    "time": 3000
+   },
+   "subject": "bee",
+   "cut": {
+    "line": "L02",
+    "word": "First",
+    "at_s": 3.4
+   }
+  },
+  {
+   "id": "S02b",
+   "line": "L02",
+   "lines": [
+    "L02"
+   ],
+   "place": "hive",
    "size": "ms",
-   "camera": "low, 3 blocks south-east of the hive, 1 block up, still; then a slow push",
-   "frame": "the hive on its post over the pit campfire, smoke rising past its face (vanilla calms bees within 5 below); three bees (her sisters) drifting slowly around it; the giant's bottle hand at frame edge; the pink-petal heart around the post, its rose-bush rim.",
+   "camera": "bee pov, 1.5 blocks out, level with the hive's entrance, a slow drift; cut in on 'Me' (~4.6 s), holds through SLEEPY (~1.6 s)",
+   "frame": "a second sister drifting slowly in the smoke by the hive's entrance, bumping lazily; on SLEEPY the giant's hand and empty bottle come in past them to the dripping hive (the rule at work on each of them).",
+   "subject": "bee",
+   "cut": {
+    "line": "L02",
+    "word": "Me",
+    "at_s": 4.6
+   },
+   "look": {
+    "time": 3000
+   }
+  },
+  {
+   "id": "S02c",
+   "line": "L02",
+   "lines": [
+    "L02"
+   ],
+   "place": "hive",
+   "size": "mcu",
+   "camera": "low, 3 blocks south-east of the hive, 1 block up, still; cut in on 'We' (~6.2 s), holds through HATE (~1.2 s)",
+   "frame": "the third sister's face, grumpy-sleepy, bumping into the hive's face in the smoke on HATE; the campfire's smoke and the hive's bottom edge soft behind her; his bottle at the frame edge. (The pink heart is shown in S07, where L07 names it.)",
+   "subject": "bee",
+   "cut": {
+    "line": "L02",
+    "word": "We",
+    "at_s": 6.2
+   },
    "look": {
     "time": 3000
    }
@@ -403,7 +495,7 @@
    ],
    "place": "hive_edge",
    "size": "full",
-   "camera": "cut 1: bee pov on the bottle as it fills on 'CLINK' at the hive; cut 2 (on 'ROW'): side-on FULL at the head's crown, the field's north edge (no long walk)",
+   "camera": "cut 1 (~7.4 s): bee pov on the bottle as it fills on 'CLINK' at the hive, 0.8 s at most (a prop); cut 2 (on 'ROW'): side-on FULL at the head's crown, the field's north edge (no long walk)",
    "frame": "'CLINK': the glass bottle fills to a honey bottle (he moves it to his offhand); 'ROW': at the crown he places wildflowers (flat covers) one per block along the row, each under his crosshair, fast; behind him the plateau rim and open meadow (not yet flowers).",
    "look": {
     "time": 3000
@@ -416,9 +508,9 @@
     "L04"
    ],
    "place": "hive_edge",
-   "size": "ws",
-   "camera": "wide from 10 blocks off, eye height",
-   "frame": "the giant crouched at the end of his row on the crown, placing a wildflower cover; the field behind him, the meadow rim beyond.",
+   "size": "mcu",
+   "camera": "bee pov, 2 blocks out at his crouched eye height, still",
+   "frame": "the giant's face, crouched at the end of his new row on the crown, placing a wildflower cover, glancing up at the bee on BAD; the field behind him soft.",
    "look": {
     "time": 3000
    }
