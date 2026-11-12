@@ -16,7 +16,8 @@ module.exports = makeStunt({
   // the payoff (owner r:r4607fa, docs/noop_audit_2026-11-12.md: "show someone walking the lava path, with a hit"): the
   // path comes back across the lava, and 56e, who keeps wearing it in, runs out of his door and straight along it over
   // the lava to the house across the road. A speck out of the door in the locked shot, then the hit, the card and a
-  // cut to a chase camera riding behind him over the lava; the end 0.5 s after he reaches the far doorstep
+  // cut to a camera running beside him over the lava, which eases to a stop in front of house S; the end 0.3 s after
+  // he reaches its doorstep
   // (the run sped up x1.8 between the reveal and the doorstep: at a sprint it held 4.2 s with nothing new, pace)
   walker: {
     sprint: true, wait: 0, card: 'IT WAS HIM 💀', endHold: 0.3,   // (he goes in under the eave ~0.3 s after the doorstep)

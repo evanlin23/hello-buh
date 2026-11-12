@@ -161,7 +161,8 @@ function run (h) {
   // cuts that land on the same framing
   for (let k = 1; k < report.length; k++) {
     const a = list.find(s => s.name === report[k - 1].name && s.t0 === report[k - 1].t0), b = list.find(s => s.name === report[k].name && s.t0 === report[k].t0)
-    if (!a || !b || a.spec.pov || b.spec.pov) continue
+    // (a crane is no cut: it carries the view before it on and eases out of it, render.js craneCam)
+    if (!a || !b || a.spec.pov || b.spec.pov || b.spec.crane) continue
     const ca = camAtShot(a, b.t0 - 1), cb = camAtShot(b, b.t0)
     if (!ca || !cb) continue
     const fa = basis(ca.yaw, ca.pitch).f, fb = basis(cb.yaw, cb.pitch).f

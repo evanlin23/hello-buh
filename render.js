@@ -1443,8 +1443,11 @@ function craneCam (sh, t, solidAt) {
   const C = sh.crane, key = `${sh.name}@${sh.t0}`
   let K = CRANE_MEMO.get(key)
   if (!K) {
+    // 'prev': the shot before this one, carried on to this shot's first tick (shotAt(t0) is this crane itself: the
+    // start fell back to the narrator's eyes, and desire_town's crane swung out of his head on its first frames)
+    const prev = C.from === 'prev' ? shotAt(sh.t0 - 1) : null
     const view = (tt) => {
-      if (C.from === 'prev') { const p = shotAt(tt); if (p && !p.pov && !p.crane) { const c = shotCam(p, tt, solidAt); if (c) return { ...c, fov: c.fov || 70 } } }
+      if (prev && !prev.pov && !prev.crane) { const c = shotCam(prev, tt, solidAt); if (c) return { ...c, fov: c.fov || 70 } }
       return povView(tt)
     }
     const a = view(sh.t0 - 1), b = view(sh.t0)
