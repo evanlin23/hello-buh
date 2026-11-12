@@ -1,0 +1,169 @@
+{
+ "stunt": "trap_free_diamonds",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/trap_free_diamonds.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "motion fixes: 1 cast member moved with a cut land on it",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT trap_free_diamonds: 1 shots, scene 0.0-23.6 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-23.6  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 1 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0.917,
+     "shot": 1,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: nothing -> diamond_shovel"
+    },
+    {
+     "level": "NOTE",
+     "out": 2.317,
+     "shot": 2,
+     "line": null,
+     "kind": "blocks",
+     "msg": "7 block(s) in view changed during the cut (e.g. air at 408 77 16): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "4 warning(s) over 7 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0.917,
+     "shot": 1,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 2.317,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 95% of the frame is within 3 blocks (stone)"
+    },
+    {
+     "level": "WARN",
+     "out": 3.5,
+     "shot": 3,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 64% of the frame is within 3 blocks (grass_block, dirt)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.217,
+     "shot": 6,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (grass_block, spruce_trapdoor)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "39 visible sound-making events (break 12, chest 10, door 1, hit 4, hurt 4, place 4, step 4), 21 with a sound mark, 18 without (audio.py adds those for a story)",
+    "     8.95s  digging stone                      -> block.stone.hit                    1.4 blocks in view  ",
+    "    19.40s  player step on grass_block         -> block.grass.step                   6.6 blocks in view  ",
+    "    19.85s  player step on grass_block         -> block.grass.step                   5.0 blocks in view  ",
+    "    20.35s  player step on grass_block         -> block.grass.step                   3.7 blocks in view  ",
+    "    20.75s  player step on grass_block         -> block.grass.step                   3.6 blocks in view  ",
+    "    22.85s  trapped_chest opened               -> block.chest.open                   4.5 blocks in view  ",
+    "    23.10s  trapped_chest opened               -> block.chest.open                   4.5 blocks in view  ",
+    "    23.35s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    23.40s  player hit                         -> entity.player.hurt                 9.2 blocks in view  ",
+    "    23.60s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    23.85s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    23.90s  player hit                         -> entity.player.hurt                11.5 blocks in view  ",
+    "    24.10s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    24.35s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    24.40s  player hit                         -> entity.player.hurt                11.6 blocks in view  ",
+    "    24.60s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    24.85s  trapped_chest opened               -> block.chest.open                   1.6 blocks in view  ",
+    "    24.90s  player hit                         -> entity.player.hurt                11.6 blocks in view  ",
+    "ambience per shot: -0.25-12.75s day, 12.75-23.20s day, 23.20-25.00s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T07:10:02.621Z"
+}
