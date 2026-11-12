@@ -130,8 +130,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "The GIANT / stole our HONEY / FIFTY-TWO times. / Every time, / he plants FLOWERS. / WHY?",
-   "say": "The giant stole our honey fifty-two times. Every time, he plants flowers. Why?",
+   "text": "In my world, / a GIANT / steals our honey, / and plants FLOWERS. / Fifty-two TIMES. / WHY?",
+   "say": "In my world, a giant steals our honey, and plants flowers. Fifty-two times. Why?",
    "shot": "S01",
    "shows": [
     {
@@ -542,7 +542,7 @@
   "beats": [
    "S10: on L10's first UP the camera rises off the bee to straight above; settled by L11's BEE (the reveal said over the picture); L12 the sting over the hold; mark `top` on the settle; cut 1.0 s after L12."
   ],
-  "loop": "L12 'Fifty-two BOTTLES. Fifty-two ROWS.' reframes line 1's 'stole our honey FIFTY-TWO times'"
+  "loop": "L12 'Fifty-two BOTTLES. Fifty-two ROWS.' reframes line 1's 'Fifty-two TIMES'"
  },
  "bible": "stories/honey_thief/bible.md",
  "beats": "stories/honey_thief/beats.md",
