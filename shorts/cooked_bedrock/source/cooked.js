@@ -28,7 +28,9 @@ const act = require('./act')
 const TRACKS = {
   // (bar: its build's accents fall at 1.0, 3.0, 5.0 and 7.0 s, a 2.0 s bar: the loop repeats 1.0-3.0 s; a 1.5 s "bar" from
   // the flood's 0.375 s beat dropped a beat at the seam, fix-check 2026-11-12. The flood keeps its recorded 0.375 s.)
-  'executioner.mp3': { drop: 7.0, quiet: 1.5, beat: 0.375, bar: 2.0, dip: true, loop: true },
+  // (quiet 0.7: owner 2026-11-12 on cooked_bedrock v4, "I think it falls ot black for too long": v4's 1.5 s gave ~1.2 s of
+  // black; 0.7 s leaves ~0.4 s, a beat to see the hole and hear the silence before the drop)
+  'executioner.mp3': { drop: 7.0, quiet: 0.7, beat: 0.375, bar: 2.0, dip: true, loop: true },
   'industry_kiss.mp3': { drop: 39.75, quiet: 1.5, beat: 0.39 }
 }
 // the flood's rhythm in beats from the drop: 4 on the beat, 5 on the half beat, the punchline a beat after the rest
