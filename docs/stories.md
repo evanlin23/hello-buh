@@ -776,6 +776,12 @@ STANDARDS.md in the same commit.
   - give viewers something to answer or argue in the comments;
   - premises that won: a rule with a number or mark, a person who changed overnight, warm twists; weaker: dark sets,
     monsters, sad family losses, warnings. Topics needn't be about Minecraft.
+- **Owner, 2026-11-12, on the lead's keep/drop list: "ok, only do the ones that have high potential."** Build only the
+  high-potential five: Pulled Away, The Honey Thief, Saving Up for a Bastion, The Statue Gets Younger and Sorry, Dear
+  (the last two new from blocky-stories). Benched: The Singing Box, The Walk, The Wall Grows, Six Thousand Torches.
+  Dropped: The Bell in the Window, Seventy Below, Red Sheep (monster reveals, dark sets). The four built stories stay.
+  Also: "can we also check what was going on the screen for the ones with good hooks vs bad hooks and see how we can
+  improve?" A frame study of Buhtown's high vs low stop-rate openings sets the opening-shot rules.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
