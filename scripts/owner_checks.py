@@ -124,6 +124,9 @@ FALLING = ("falling_block",)
 SETTLE_DIST = 32       # blocks from the camera
 SETTLE_CONE = 40       # degrees off the view axis (rec_check in_view)
 DEATH_TICKS = 20       # LivingEntity death: 20 ticks of falling over, then the poof
+NOT_LIVING = ("egg", "snowball", "arrow", "spectral_arrow", "trident", "ender_pearl", "experience_bottle", "potion",
+              "splash_potion", "lingering_potion", "fireball", "small_fireball", "wind_charge", "item", "experience_orb")
+                       # projectiles and items: their removal is no death (no fall-over, no poof; cells_lab's eggs)
 SETTLE_GRACE = 0.15    # s of motion left after a cut/end that still passes (a last bounce as it lands)
 BLAST_TICKS = 6        # the blast frame (the flash and first burst, ~0.3 s): = lib/settle.js BLAST_TICKS (lib/hb/test/
                        # settle.test.js checks both). Its smoke, poof clouds and crumbs live ~44 ticks more (SMOKE_TICKS)
@@ -148,7 +151,7 @@ def debris_tracks(rec, puffs=False) -> list:
             out.append({"kind": "falling", "name": (rs[0][9] or {}).get("block") or name, "id": eid, "t0": rs[0][0], "t1": rs[-1][0],
                         "pos": {r[0]: (r[3], r[4], r[5]) for r in rs}})
     for e in tl:
-        if e["event"] == "mob_death" and e.get("id") in rows:
+        if e["event"] == "mob_death" and e.get("id") in rows and rows[e["id"]][0][2] not in NOT_LIVING:
             k = e["t"] / 50
             rs = rows[e["id"]]
             out.append({"kind": "death", "name": rs[0][2], "id": e["id"], "t0": k, "t1": k + DEATH_TICKS, "pos": {r[0]: (r[3], r[4], r[5]) for r in rs}})
