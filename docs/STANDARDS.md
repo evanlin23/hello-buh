@@ -141,7 +141,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
-   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
+   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line, on the model the story will use (r:rdf844d). Check: review
    (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
    blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb; Saltmouth's Mom Kore, r:rd8f6ce; the island Grandma Callirrhoe, r:r83d791)
 7a. **Every character is tracked** (owner: "we need to keep track of our characters"): every speaking or recurring

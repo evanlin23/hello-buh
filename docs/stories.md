@@ -832,6 +832,11 @@ STANDARDS.md in the same commit.
   fine, sure thats fine".** Both approved. Sorry, Dear keeps order A (the rule first, then "My aunt is the size of a
   MUG."). The build list is now five approved scripts: Pulled Away, The Honey Thief, Saving Up for a Bastion, The
   Statue Gets Younger, Sorry, Dear.
+- **Lesson, 2026-11-12 (Light Sleeper's Mom re-voice):** the owner picked Pulcherrima from an audition made on
+  gemini-3.1-flash-tts-preview (176 Hz, heard as a woman 30-45); on gemini-3.8-flash-tts the same voice and bracket
+  came out ~6.5 st lower and the blind listener heard a man. A voice is auditioned on the model the story will use, and
+  the audition labels the model; a cast entry names its model. Light Sleeper's Mom is relocked to 3.1, the model the
+  owner heard.
 - **Owner, 2026-11-12, Review Room, on guess_sound: "Its kidna hard to hear the moo at the start. Also we should blur
   the parrot at hte start slightly i think?" (27.8 s) and "Er, is the warden sound overlapping the parrot sound? I
   couldnt hear the parrot" (36.8 s); on guess_sound_2: "should blur the starting" (10.1 s).** Every round's call is
