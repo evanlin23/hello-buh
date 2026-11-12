@@ -11,26 +11,44 @@
 // grass at y and dirt below it. On flat land the cuts at its edges are a block or two.
 const SKIP = /^(air|cave_air|short_grass|tall_grass|fern|large_fern|snow|dandelion|poppy|bush|vine|sugar_cane|pumpkin|melon|sweet_berry_bush|lily_pad|leaf_litter|wildflowers|firefly_bush|short_dry_grass|tall_dry_grass)$|_leaves$|_log$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of|mushroom/
 
-async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTrees = false } = {}) {
+async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTrees = false, noSnow = false, ring = 0, ringRange = 3 } = {}) {
   const { bot, Vec3 } = ctx
   const p = bot.entity.position.floored()
   const r4 = (v) => Math.floor(v / step) * step
   const [a0, a1, b0, b1] = [r4(area[0]), r4(area[1]), r4(area[2]), r4(area[3])]
-  const H = new Map()
-  const h = (x, z) => {   // ground height, -1 for bad ground, null for unloaded
-    const k = x * 65536 + z
-    if (H.has(k)) return H.get(k)
-    let v = null
-    for (let y = 200; y > 50; y--) {   // from high up: a scan from 120 read a hill above a y-120 plateau as flat ground
-      const b = bot.blockAt(new Vec3(x, y, z))
-      if (!b) break
-      if (noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree
-      if (SKIP.test(b.name)) continue
-      v = y >= 63 ? y : -1
-      break
+  // ground height, -1 for bad ground, null for unloaded; strict (the levelled core: no trees or snow if
+  // asked) or loose (the ring around it: only the height matters, trees stand there untouched)
+  const mk = (strict) => {
+    const H = new Map()
+    return (x, z) => {
+      const k = x * 65536 + z
+      if (H.has(k)) return H.get(k)
+      let v = null
+      for (let y = 200; y > 50; y--) {   // from high up: a scan from 120 read a hill above a y-120 plateau as flat ground
+        const b = bot.blockAt(new Vec3(x, y, z))
+        if (!b) break
+        if (strict && noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree
+        if (strict && noSnow && /^snow/.test(b.name)) { v = -1; break }   // a levelled patch in snow shows as a green box
+        if (SKIP.test(b.name)) continue
+        v = y >= 63 ? y : -1
+        break
+      }
+      H.set(k, v)
+      return v
     }
-    H.set(k, v)
-    return v
+  }
+  const h = mk(true), hl = mk(false)
+  // the ring: no ground much higher (it would stand as a cut wall at the levelled edge) or lower
+  const ringOk = (cx, cz, y) => {
+    if (!ring) return true
+    for (let dx = a0 - ring; dx <= a1 + ring; dx += step) {
+      for (let dz = b0 - ring; dz <= b1 + ring; dz += step) {
+        if (dx >= a0 && dx <= a1 && dz >= b0 && dz <= b1) continue
+        const v = hl(cx + dx, cz + dz)
+        if (v === null || v < 0 || Math.abs(v - y) > ringRange) return false
+      }
+    }
+    return true
   }
   let best = null
   const ox = r4(p.x), oz = r4(p.z)
@@ -51,6 +69,7 @@ async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTree
       }
       if (!ok) continue
       ys.sort((a, b) => a - b)
+      if (!ringOk(cx, cz, ys[ys.length >> 1])) continue
       best = { x: cx, z: cz, y: ys[ys.length >> 1], range: hi - lo }
       if (best.range <= 1) return best
     }
@@ -73,11 +92,12 @@ async function findSite (ctx, area, opts = {}) {
   const p0 = bot.entity.position.clone()
   for (const [dx, dz] of hops) {
     if (dx || dz) await ctx.cmd(`/tp @s ${Math.round(p0.x + dx)} 180 ${Math.round(p0.z + dz)}`)
-    let n = -1
-    for (let k = 0; k < 30; k++) {   // until the loaded chunks stop growing (max ~15 s)
+    let n = -1, same = 0
+    for (let k = 0; k < 40; k++) {   // at least 2 s, then until the loaded chunks stop growing for two checks (max ~20 s)
       await bot.waitForTicks(10)
       const m = bot.world.getColumns().length
-      if (m === n) break
+      same = m === n ? same + 1 : 0
+      if (k >= 3 && same >= 2) break
       n = m
     }
     const g = await findFlat(ctx, area, opts)
@@ -123,9 +143,9 @@ async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1,
   // every spot taken so far, so a hard spot doesn't push the rest of the set far away
   const out = []
   const A0 = axis === 'x' ? x : z, B0 = axis === 'x' ? z : x
-  // at least `gap` from every spot taken, and within `spread` of the first (a set strewn over hundreds of
-  // blocks leaves the recorded area and the fog)
-  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap) && (!out.length || Math.max(Math.abs(out[0].x - sx), Math.abs(out[0].z - sz)) <= spread)
+  // at least `gap` from every spot taken, and within `spread` of the start (x, z) (a set strewn over
+  // hundreds of blocks leaves the recorded area and the fog)
+  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap) && Math.max(Math.abs(x - sx), Math.abs(z - sz)) <= spread
   const settle = async () => {   // until the loaded chunks stop growing (max ~15 s): unloaded ground rules spots out
     let n = -1
     for (let k = 0; k < 30; k++) { await bot.waitForTicks(10); const m = bot.world.getColumns().length; if (m === n) break; n = m }

@@ -1,4 +1,4 @@
-// "ladder clutch 😳" (~32 s, eight beats): the bot stands on the edge of a stone-brick wall looking
+// "bro trusted ONE ladder with his life 😳" (was the label "ladder clutch 😳": reaction captions, r:r0f3da0) (~32 s, eight beats): the bot stands on the edge of a stone-brick wall looking
 // down the drop, walks off, turns to face the wall while falling and, a couple of ticks before the
 // ground, places one ladder on the wall (real block_place) in the row of its last airborne tick. It
 // grabs it (vanilla: a climbable block clamps the fall to 0.15 b/t and resets the fall distance) and
@@ -17,12 +17,14 @@ const { openSpots, clearPlants } = require('./_site')
 module.exports = {
   name: 'ladder_clutch',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: 'ladder clutch 😳',
+  caption: 'bro trusted ONE ladder with his life 😳',
   edit: {
-    caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.9',
+    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
+    // r:r0f3da0 pace: silent until 1.61 s (a walk-off and fall make little vanilla sound): a wind bed from frame 0
+    sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }]],   // (pace: no hit on the 80-block landing)
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     speed: WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),   // the teleports between walls, cut out
-    subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 2.4 + w.h / 40, i + 1])]
+    subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 1.2 + w.h / 40, i + 1])]
   },
 
   async setup (ctx) {
