@@ -5,7 +5,7 @@ blocks ahead; 8 blocks beyond it an evoker raises its arms, brown-orange particl
 "A grey man in the trees raised his ARMS, and my lamb turned RED." On 'RED' the lamb turns red (the red one she came to
 find). 1 s after 'RED' the arms drop and its head turns to us: it sees her. Cut.
 
-**The format beats (docs/story_format.md):** 1 the fact + the why, L01 ("All SIXTY sheep... are BLUE. And nobody will
+**The format beats (docs/story_format.md):** 1 the fact + the why, L01 ("In my village, all SIXTY sheep... are BLUE. And nobody will
 tell me WHY."); 2 five two-way clues, L02-L07; 3 the kid wants to know (L01, L10 "He never even says WHY"); 4 someone
 loved at stake: her lamb (and her); 5 the rule turned against itself: she goes into the woods (L11); 6 the reveal said
 in one plain sentence, L13; 7 one beat (the evoker's look), cut; "turned RED" loops into "are BLUE... WHY".
@@ -21,7 +21,7 @@ to the last word; she never hints, fears or explains. The viewer sees past every
 
 | # | line | picture | clue | the kid's innocent reading (on the line) |
 |---|---|---|---|---|
-| 1 | L01 All SIXTY sheep in our VILLAGE are BLUE. And NOBODY will tell me WHY. | crane over 60 blue sheep | the question, said: why blue? | she wants to know |
+| 1 | L01 In my village, all SIXTY sheep are BLUE. And NOBODY will tell me WHY. | crane over 60 blue sheep | the question, said: why blue? | she wants to know |
 | 2 | L02 Dad won't LET a WHITE one through the GATE. He REALLY likes BLUE. | Dad dyes a white stray | only BLUE will do | "He really likes blue" |
 | 3 | L03 Dad: They're our EYES, kid. | Dad at the pasture gate, turning to us | the sheep are an alarm | (Dad's line) |
 | 4 | L04 Sheep can't even SEE that good. But OKAY. | a blue sheep stares blankly | "eyes" is literal | she takes it as eyesight |
