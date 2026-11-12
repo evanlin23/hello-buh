@@ -1,0 +1,125 @@
+{
+ "stunt": "dropper_rainbow",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/dropper_rainbow.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT dropper_rainbow: 1 shots, scene 0.0-27.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-27.1  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 4 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 3 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 0.4,
+     "tick": 28,
+     "line": null,
+     "msg": "the player walks into something and stops dead for 1.35 s (1.0 blocks/s -> 0): reads as stuck. Owner: \"when we walk out we keep getting stuck on the door\": open it first, path around it, or cut before contact"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 2.95,
+     "tick": 79,
+     "line": null,
+     "msg": "the player walks into something and stops dead for 1.30 s (0.2 blocks/s -> 0): reads as stuck. Owner: \"when we walk out we keep getting stuck on the door\": open it first, path around it, or cut before contact"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 11.933,
+     "tick": 372,
+     "line": null,
+     "msg": "the player walks into something and stops dead for 1.30 s (1.8 blocks/s -> 0): reads as stuck. Owner: \"when we walk out we keep getting stuck on the door\": open it first, path around it, or cut before contact"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "0 visible sound-making events (), 0 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-5.55s day, 5.55-12.10s day, 12.10-20.20s day, 20.20-37.45s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:11:18.126Z"
+}

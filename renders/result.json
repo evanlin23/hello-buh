@@ -1,0 +1,17 @@
+{
+ "name": "dropper_rainbow",
+ "stunt": "dropper_rainbow",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43166224564",
+ "source": "226a62c2",
+ "queued": "2026-11-12T06:10:00Z",
+ "finished": "2026-11-12T06:21:55Z",
+ "mp4": "renders/out/dropper_rainbow.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
