@@ -21,7 +21,7 @@ when it's built. Snowy villagers; one snow layer stays on the ground outside the
 ## Claims the narration makes (check each on stills from every shot angle before recording)
 | claim | line | must hold |
 |---|---|---|
-| the wall grows ONE block every morning | L01 | S01b and S06 each show one brick put on at dawn |
+| the wall grows ONE block every morning | L01, L02 | S01b and S06 each show one brick put on at dawn |
 | the wall is FORTY blocks high | L02 | 40 above the village ground everywhere inside; Tomas's ladder has 40 rungs |
 | no GATE | L04 | no gate, door, opening or window in the wall anywhere in any shot (the hole only in S04) |
 | (implied) nobody sees outside | L04 | no shot before S11 shows the ground outside the wall (S04 pitched up at the sky; S01b, S05, S06 at or below the rim) |

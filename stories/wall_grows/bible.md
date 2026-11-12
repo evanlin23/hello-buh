@@ -41,7 +41,7 @@ claims are in `set.md`.
 | FORTY blocks high | L01 | the wall body is exactly 40 blocks above the village ground (y0+1 .. y0+40); single capping blocks at 41 along the north rim read as a crenellated crown, not as height |
 | ONE more every morning | L02, L08 | one stone brick placed by Tomas in S01b and S06 |
 | TWO blocks (a zombie can't jump) | L03 | the farm's wall of full cobblestone blocks (not cobblestone-wall blocks, 1.5 high) is exactly 2 high; the zombie bumps it and stays |
-| ONE block every morning | L01 | one brick a dawn on the north rim (S01b, S06); the player's dirt one more in S12 |
+| ONE block every morning | L02 | one brick a dawn on the north rim (S01b, S06); the player's dirt one more in S12 |
 | a HUNDRED of us | L15 | 4 rows x 25 cells = 100 villagers in the hall, all visible through the glass roof in S11 |
 | ONE block wide (not said: shown) | S11 | every cell is 1 x 1 x 2, glass-roofed, a workstation in front |
 
