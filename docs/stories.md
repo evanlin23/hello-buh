@@ -854,6 +854,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-12, on mega_sponge v3 at 18.3 s: "i feel like im wasting my time wsatching this. maybe we should be
   like building ti and then just zoom out."** A mega Short does not fly round a finished build for its length: it shows
   the build going up as a fast time-lapse (lib/mega_lapse.js), then one big zoom out to its scale, then it ends.
+- **Owner, 2026-11-12, on mega_sponge v4 at 5.8 s: "for the tiny squares,w e should start cutting the ones closer to us
+  first, not further bc we cant really see them."** In a build time-lapse, each wave of changes starts nearest the
+  camera filming it and sweeps away from it, so the viewer sees the work happen.
 - **Owner, 2026-11-12, on dropper_rainbow v2 at 3.8 s (the fail cut 0.35 s after the hit, hearts empty, still alive on
   screen): "we should die when we lose all life?"** A dropper fail shows the whole death: the hit, the hearts empty,
   the death tilt and vanilla's "You died!" screen, then the cut (before the poof); never cut away mid-death.
