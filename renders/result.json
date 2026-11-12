@@ -1,0 +1,17 @@
+{
+ "name": "story_nitwit",
+ "stunt": "story_nitwit",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43221385340",
+ "source": "531e4940",
+ "queued": "2026-11-12T12:48:58Z",
+ "finished": "2026-11-12T13:10:52Z",
+ "mp4": "renders/out/story_nitwit.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

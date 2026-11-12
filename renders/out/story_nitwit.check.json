@@ -1,0 +1,1066 @@
+{
+ "stunt": "story_nitwit",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_nitwit.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (cd0dc40da0ee)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "cut holds: 1 cast move and 10 narrator moves held to their cut",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "lightning light: 6 bolts light the world (shader light, flash only)",
+    "LINT story_nitwit: 11 shots, scene 0.0-58.8 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-14.0  pov    ",
+    "  pov           14.0-18.6  pov    ",
+    "  pov           18.6-19.8  pov    ",
+    "  pov           19.8-21.9  pov    ",
+    "  pov           21.9-24.9  pov    ",
+    "  pov           24.9-31.6  pov    ",
+    "  pov           31.6-35.6  pov    ",
+    "  pov           35.6-36.5  pov    ",
+    "  pov           36.5-44.6  pov    ",
+    "  pov           44.6-50.1  pov    ",
+    "  pov           50.1-58.8  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 10 warning(s), 4 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 10.95,
+     "shot": 5,
+     "line": "L04",
+     "kind": "time",
+     "msg": "time cut 6000 (noon) -> 14500 (night) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 12.7,
+     "shot": 6,
+     "line": "L05",
+     "kind": "appear",
+     "msg": "creeper #237 appears in the middle of the frame 1.25 s into the shot (17.1 blocks)"
+    },
+    {
+     "level": "NOTE",
+     "out": 12.7,
+     "shot": 6,
+     "line": "L05",
+     "kind": "time",
+     "msg": "time cut 14500 (night) -> 6000 (noon) (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 14,
+     "shot": 7,
+     "line": "L05",
+     "kind": "vanish",
+     "msg": "creeper #237 vanishes in the middle of the frame 0.90 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 21.95,
+     "shot": 11,
+     "line": "L08",
+     "kind": "position",
+     "msg": "villager (nitwit) #224 is 8.1 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 24.85,
+     "shot": 12,
+     "line": "L09",
+     "kind": "position",
+     "msg": "iron_golem #236 is 20.4 blocks from where it was at the end of the last shot (seen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 27.05,
+     "shot": 13,
+     "line": "L10",
+     "kind": "time",
+     "msg": "time cut 6000 (noon) -> 14500 (night) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 46.9,
+     "shot": 23,
+     "line": "L15",
+     "kind": "time",
+     "msg": "time cut 14500 (night) -> 6000 (noon) (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 50.15,
+     "shot": 24,
+     "line": "L17",
+     "kind": "time",
+     "msg": "time-lapse inside the shot: 71 time steps 6003 -> 12797 (noon -> sunset) from 3.45 to 6.95 s into it: intended?"
+    },
+    {
+     "level": "WARN",
+     "out": 50.15,
+     "shot": 24,
+     "line": "L17",
+     "kind": "position",
+     "msg": "villager (farmer) #231 is 6.1 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 50.15,
+     "shot": 24,
+     "line": "L17",
+     "kind": "position",
+     "msg": "villager (librarian) #232 is 5.3 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 50.15,
+     "shot": 24,
+     "line": "L17",
+     "kind": "position",
+     "msg": "villager (fisherman) #233 is 4.9 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 50.15,
+     "shot": 24,
+     "line": "L17",
+     "kind": "position",
+     "msg": "villager (butcher) #234 is 4.2 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 50.15,
+     "shot": 24,
+     "line": "L17",
+     "kind": "position",
+     "msg": "villager (cleric) #235 is 10.9 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 24 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 31.6,
+     "shot": 14,
+     "line": "L11",
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (FS full on villager (nitwit), median depth 4.7 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 141 x 120 blocks (ground y 65; its edge 32 blocks from the set's origin); built footprint 47 x 56; terrain relief around it sd 5.1 blocks: reads as a superflat world. docs/story_craft.md 9: build into natural ground (a hill, trees, water in view), fill to the fog",
+     "world": {
+      "level": 65,
+      "area": 2796,
+      "w": 141,
+      "d": 120,
+      "edge": 32,
+      "built": 158,
+      "footprint": {
+       "w": 47,
+       "d": 56,
+       "x0": -23,
+       "z0": -26
+      },
+      "relief": 5.1,
+      "outside": 2154
+     }
+    },
+    {
+     "level": "NOTE",
+     "check": "opening",
+     "out": 0,
+     "tick": 23,
+     "line": "L01",
+     "msg": "opening OK: nS (L01 look) villager (nitwit) #224: 56% across (middle third 33%-67%), 20% of the frame height on frame 1, 29% at most (readable from 8%), first 1.5 s; camera 2.94 blocks/s, turn 3.38 deg/s, push 0.46/s, subject 0.08 blocks/s, anything else in frame 0.08 blocks/s, 0 action(s)",
+     "opening": {
+      "subject": "nS",
+      "src": "L01 look",
+      "n": 31,
+      "motion": {
+       "cam": 2.94,
+       "turn": 3.38,
+       "grow": 0.46,
+       "sub": 0.08,
+       "other": 0.08,
+       "actions": 0
+      },
+      "seen": 1,
+      "x": 0.56,
+      "h0": 0.198,
+      "hMax": 0.295,
+      "label": "villager (nitwit) #224"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 8.55,
+     "tick": 194,
+     "line": "L03",
+     "msg": "walking forward, the player slows from 4.3 to 0.1 blocks/s for 0.35 s: it is sliding along a block it walked into. Owner: \"Gets stuck on the block while walking forward\": K.walkTo with a point around it"
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 14.25,
+     "tick": 308,
+     "line": "L05",
+     "msg": "the line names \"CREEPER\" but the camera is on it only 39% of 1.7 s: no creeper anywhere near the camera (inferred from the words: set lines[].look to make it exact and a blocker, or look: false). Owner: \"talking about X while looking elsewhere\""
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 31.85,
+     "tick": 659.8,
+     "line": "L11",
+     "low": 6.8,
+     "msg": "looking below \"nRuin\": the first-person look lands a median 6.8 deg under villager (nitwit) #230's eyes (~0.83 blocks at 6.9), its face 41% down. Aim at K.face(feet, type) (lib/story.js), not its chest, feet or a block's middle. Owner: \"it feels we are looking slightly too low\""
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 3 warning(s) over 23 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 16.3,
+     "tick": 341,
+     "line": "L05",
+     "msg": "pov -> pov: the eye goes from the aim (50% across, 50% down) to villager (nitwit) (44%, 24%): a jump of 25% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 19,
+     "tick": 395,
+     "line": "L06",
+     "msg": "pov -> pov: the eye goes from villager (nitwit) (57% across, 22% down) to the aim (50%, 50%): a jump of 27% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 36,
+     "tick": 735,
+     "line": "L12",
+     "msg": "pov -> pov: the cut comes 58 ms after \"EMPTY.\" starts (it splits the word): the sound runs ahead of the picture. Cut 33-150 ms before the word; a cut inside a line: start it on at.cut(i), not at(i) (lib/story.js cutTick)"
+    }
+   ],
+   "rows": [
+    {
+     "tick": 128,
+     "out": 5.65,
+     "line": "L01",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.52,
+      "y": 0.47,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.53,
+      "y": 0.46,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.008,
+     "timing": {
+      "next": "Today,",
+      "lead": 0.195,
+      "prev": "TIMES.",
+      "sincePrev": 0.43,
+      "pause": 0.625,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.015
+    },
+    {
+     "tick": 165,
+     "out": 7.5,
+     "line": "L02",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.55,
+      "y": 0.48,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.052,
+     "timing": {
+      "next": "He's",
+      "lead": 0.262,
+      "prev": "NAME.",
+      "sincePrev": 0.255,
+      "pause": 0.517,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.022
+    },
+    {
+     "tick": 215,
+     "out": 10,
+     "line": "L03",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "Under",
+      "lead": 0.195,
+      "prev": "WEIRD.",
+      "sincePrev": 0.498,
+      "pause": 0.693,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.005
+    },
+    {
+     "tick": 242,
+     "out": 11.35,
+     "line": "L04",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.58,
+      "y": 0.62,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.139,
+     "timing": {
+      "next": "That",
+      "lead": -0.015,
+      "prev": "TREE.",
+      "sincePrev": 0.535,
+      "pause": 0.52,
+      "inside": "That"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 277,
+     "out": 13.1,
+     "line": "L04",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.56,
+      "y": 0.48,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.065,
+     "timing": {
+      "next": "In",
+      "lead": 0.26,
+      "prev": "it.",
+      "sincePrev": 0.305,
+      "pause": 0.565,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.02
+    },
+    {
+     "tick": 303,
+     "out": 14.4,
+     "line": "L05",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.47,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.03,
+     "timing": {
+      "next": "CREEPER",
+      "lead": 0.02,
+      "prev": "A",
+      "sincePrev": 0.06,
+      "pause": 0.08,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 341,
+     "out": 16.3,
+     "line": "L05",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.44,
+      "y": 0.24,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.249,
+     "timing": {
+      "next": "By",
+      "lead": 0.19,
+      "prev": "BOOM.",
+      "sincePrev": 0.54,
+      "pause": 0.73,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.01
+    },
+    {
+     "tick": 395,
+     "out": 19,
+     "line": "L06",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.57,
+      "y": 0.22,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.271,
+     "timing": {
+      "next": "On",
+      "lead": 0.205,
+      "prev": "LAVA.",
+      "sincePrev": 0.43,
+      "pause": 0.635,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.055
+    },
+    {
+     "tick": 419,
+     "out": 20.2,
+     "line": "L07",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "The",
+      "lead": -0.035,
+      "prev": "roof.",
+      "sincePrev": 0.495,
+      "pause": 0.46,
+      "inside": "The"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 462,
+     "out": 22.35,
+     "line": "L07",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.6,
+      "y": 0.49,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "dist": 0.1,
+     "timing": {
+      "next": "The",
+      "lead": 0.188,
+      "prev": "ANVILS.",
+      "sincePrev": 0.625,
+      "pause": 0.813,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.052
+    },
+    {
+     "tick": 520,
+     "out": 25.25,
+     "line": "L08",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.42,
+      "y": 0.57,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.106,
+     "timing": {
+      "next": "Even",
+      "lead": 0.212,
+      "prev": "comes.",
+      "sincePrev": 0.512,
+      "pause": 0.724,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.068
+    },
+    {
+     "tick": 564,
+     "out": 27.45,
+     "line": "L09",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.43,
+      "y": 0.53,
+      "what": "iron_golem",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.42,
+      "y": 0.46,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.068,
+     "timing": {
+      "next": "So",
+      "lead": 0.41,
+      "prev": "him.",
+      "sincePrev": 0.068,
+      "pause": 0.478,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 655,
+     "out": 32,
+     "line": "L11",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.55,
+      "y": 0.42,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.088,
+     "timing": {
+      "next": "was",
+      "lead": -0.03,
+      "prev": "torch",
+      "sincePrev": 0.37,
+      "pause": 0.34,
+      "inside": "was"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 683,
+     "out": 33.4,
+     "line": "L11",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.46,
+      "y": 0.43,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.08,
+     "timing": {
+      "next": "MY",
+      "lead": 0.202,
+      "prev": "village.",
+      "sincePrev": 0.45,
+      "pause": 0.652,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.018
+    },
+    {
+     "tick": 715,
+     "out": 35,
+     "line": "L12",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "BURNED.",
+      "lead": -0.038,
+      "prev": "village.",
+      "sincePrev": 0.818,
+      "pause": 0.78,
+      "inside": "BURNED."
+     },
+     "optOut": false
+    },
+    {
+     "tick": 735,
+     "out": 36,
+     "line": "L12",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "EMPTY.",
+      "lead": -0.058,
+      "prev": "BURNED.",
+      "sincePrev": 0.618,
+      "pause": 0.56,
+      "inside": "EMPTY."
+     },
+     "optOut": false
+    },
+    {
+     "tick": 754,
+     "out": 36.95,
+     "line": "L12",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "The",
+      "lead": 0.225,
+      "prev": "EMPTY.",
+      "sincePrev": 0.668,
+      "pause": 0.893,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.075
+    },
+    {
+     "tick": 780,
+     "out": 38.25,
+     "line": "L13",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "The",
+      "lead": -0.015,
+      "prev": "TREE.",
+      "sincePrev": 0.535,
+      "pause": 0.52,
+      "inside": "The"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 799,
+     "out": 39.2,
+     "line": "L13",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "WELL.",
+      "lead": 0.155,
+      "prev": "WHEAT.",
+      "sincePrev": 0.505,
+      "pause": 0.66,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 836,
+     "out": 41.05,
+     "line": "L13",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.48,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.017,
+     "timing": {
+      "next": "He's",
+      "lead": 0.34,
+      "prev": "GONE.",
+      "sincePrev": 0.075,
+      "pause": 0.415,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 916,
+     "out": 45.05,
+     "line": "L14",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.59,
+      "y": 0.52,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.093,
+     "timing": {
+      "next": "They",
+      "lead": 0.128,
+      "prev": "ENDED.",
+      "sincePrev": 0.56,
+      "pause": 0.688,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.072
+    },
+    {
+     "tick": 961,
+     "out": 47.3,
+     "line": "L15",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.52,
+      "y": 0.47,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "dist": 0.038,
+     "timing": {
+      "next": "But",
+      "lead": 0.302,
+      "prev": "us.",
+      "sincePrev": 0.662,
+      "pause": 0.964,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.002
+    },
+    {
+     "tick": 1026,
+     "out": 50.55,
+     "line": "L16",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.47,
+      "y": 0.5,
+      "what": "villager (nitwit)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.58,
+      "y": 0.49,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "dist": 0.106,
+     "timing": {
+      "next": "And",
+      "lead": 0.27,
+      "prev": "word.",
+      "sincePrev": 0.748,
+      "pause": 1.018,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.07
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 0 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "OK: 0 blocker(s), 0 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    25.40s  villager step on grass_block       -> block.grass.step                  13.4 blocks in view  ",
+    "    25.40s  villager step on grass_block       -> block.grass.step                  13.4 blocks in view  ",
+    "    25.40s  villager step on grass_block       -> block.grass.step                  15.7 blocks in view  ",
+    "    25.40s  villager step on grass_block       -> block.grass.step                  12.1 blocks in view  ",
+    "    26.40s  villager idle voice                -> entity.villager.ambient            6.6 blocks          ",
+    "    27.10s  iron_golem step on grass_block     -> entity.iron_golem.step            14.8 blocks in view  key word",
+    "    27.60s  iron_golem step on grass_block     -> entity.iron_golem.step            13.7 blocks in view  key word",
+    "    29.00s  villager step on grass_block       -> block.grass.step                   7.9 blocks in view  ",
+    "    29.65s  villager step on grass_block       -> block.grass.step                   9.5 blocks in view  ",
+    "    31.00s  villager step on grass_block       -> block.grass.step                  12.8 blocks in view  ",
+    "    31.70s  villager step on grass_block       -> block.grass.step                  14.6 blocks in view  ",
+    "    33.50s  villager step on coarse_dirt       -> block.grass.step                   6.9 blocks in view  ",
+    "    33.90s  villager idle voice                -> entity.villager.ambient            7.5 blocks in view  ",
+    "    45.60s  villager idle voice                -> entity.villager.ambient            4.5 blocks in view  ",
+    "    46.55s  villager step on coarse_dirt       -> block.grass.step                   5.1 blocks          ",
+    "    47.45s  villager step on coarse_dirt       -> block.grass.step                   6.5 blocks in view  key word",
+    "    48.45s  villager idle voice                -> entity.villager.ambient            2.7 blocks in view  key word",
+    "    50.80s  villager idle voice                -> entity.villager.ambient            6.3 blocks          ",
+    "    52.55s  villager idle voice                -> entity.villager.ambient           12.2 blocks in view  ",
+    "    54.15s  villager step on grass_block       -> block.grass.step                  11.2 blocks          key word",
+    "    54.15s  villager step on grass_block       -> block.grass.step                  12.5 blocks          key word",
+    "    54.15s  villager step on grass_block       -> block.grass.step                  13.2 blocks          key word",
+    "    54.15s  villager step on grass_block       -> block.grass.step                  14.2 blocks          key word",
+    "    54.15s  villager step on grass_block       -> block.grass.step                  15.9 blocks          key word",
+    "    56.90s  villager step on grass_block       -> block.grass.step                  12.8 blocks          key word",
+    "    56.90s  villager step on grass_block       -> block.grass.step                  14.1 blocks          key word",
+    "    56.90s  villager step on grass_block       -> block.grass.step                  14.8 blocks          key word",
+    "    56.90s  villager step on grass_block       -> block.grass.step                  15.9 blocks          key word",
+    "ambience per shot: -0.25-0.75s day, 0.75-6.40s day, 6.40-8.25s day, 8.25-10.75s day, 10.75-12.10s day, 12.10-13.85s night, 13.85-17.05s day, 17.05-28.20s day, 28.20-34.15s night, 34.15-35.75s night, 35.75-39.00s night, 39.00-39.95s indoor_night, 39.95-41.80s night, 41.80-48.05s night, 48.05-54.75s day, 58.25-60.05s dusk",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T12:49:57.322Z"
+}
