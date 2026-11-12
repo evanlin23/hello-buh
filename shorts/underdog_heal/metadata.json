@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "twist",
     "drop_in_song_s": 13.0,
-    "drop_in_short_s": 12.8,
-    "song_start_s": 0.2
+    "drop_in_short_s": 10.4,
+    "song_start_s": 2.6
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 18.35,
+    "duration_s": 15.45,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15191638,
-    "sha256": "b618387974ade6e41cc94c3ba4d68d42774d7a2546c01005dc5af9edd854bd51",
+    "bytes": 12813885,
+    "sha256": "1711cb4d05e7405e099c2dc25dbc5e91dd358bdafb9a5161c3d042a0cb903e3b",
     "release": {
       "tag": "pkg-underdog_heal",
-      "asset": "underdog_heal.short.b618387974ade6e4.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.b618387974ade6e4.mp4",
-      "sha256": "b618387974ade6e41cc94c3ba4d68d42774d7a2546c01005dc5af9edd854bd51",
-      "bytes": 15191638
+      "asset": "underdog_heal.short.1711cb4d05e7405e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.1711cb4d05e7405e.mp4",
+      "sha256": "1711cb4d05e7405e099c2dc25dbc5e91dd358bdafb9a5161c3d042a0cb903e3b",
+      "bytes": 12813885
     },
     "nosong_release": {
       "tag": "pkg-underdog_heal",
-      "asset": "underdog_heal.short_nosong.47b515c8bb7cd6e0.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short_nosong.47b515c8bb7cd6e0.mp4",
-      "sha256": "47b515c8bb7cd6e0aa205bfda2d09fd508b9e53d0d9ed287ec9b239b53573559",
-      "bytes": 15104910
+      "asset": "underdog_heal.short_nosong.adae0e5d334d2103.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short_nosong.adae0e5d334d2103.mp4",
+      "sha256": "adae0e5d334d21038298cf2962d76c1fbf9a2556b13de8c0d59b9e69994f71c0",
+      "bytes": 12762681
     }
   },
   "edit": {
@@ -279,13 +279,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": -3666,
-      "y": 74,
-      "z": -3104
+      "x": -3669,
+      "y": 77,
+      "z": -3094
     },
     "biome": "minecraft:desert",
-    "ticks": 414,
-    "seconds": 20.7,
+    "ticks": 365,
+    "seconds": 18.25,
     "deaths": 0,
     "events": [
       {
@@ -309,211 +309,203 @@
         "event": "feed_wolf"
       },
       {
-        "t": 2.35,
-        "event": "swing"
-      },
-      {
-        "t": 2.35,
-        "event": "feed_wolf"
-      },
-      {
-        "t": 2.35,
+        "t": 2.15,
         "event": "fixed_wolf"
       },
       {
-        "t": 3.05,
+        "t": 2.4,
         "event": "cut"
       },
       {
-        "t": 3.35,
+        "t": 2.7,
         "event": "beat_cat"
       },
       {
-        "t": 4,
+        "t": 3.35,
         "event": "swing"
       },
       {
-        "t": 4,
+        "t": 3.35,
         "event": "feed_cat"
       },
       {
-        "t": 4.3,
+        "t": 3.55,
         "event": "swing"
       },
       {
-        "t": 4.3,
+        "t": 3.55,
         "event": "feed_cat"
       },
       {
-        "t": 4.3,
+        "t": 3.65,
         "event": "fixed_cat"
       },
       {
-        "t": 5,
+        "t": 3.9,
         "event": "cut"
       },
       {
-        "t": 5.3,
+        "t": 4.2,
         "event": "beat_horse"
       },
       {
-        "t": 5.95,
+        "t": 4.85,
         "event": "swing"
       },
       {
-        "t": 5.95,
+        "t": 4.85,
         "event": "feed_horse"
       },
       {
-        "t": 5.95,
+        "t": 4.95,
         "event": "fixed_horse"
       },
       {
-        "t": 6.65,
+        "t": 5.2,
         "event": "cut"
       },
       {
-        "t": 6.95,
+        "t": 5.5,
         "event": "beat_golem"
       },
       {
-        "t": 7.6,
+        "t": 6.15,
         "event": "swing"
       },
       {
-        "t": 7.6,
+        "t": 6.15,
         "event": "feed_golem"
       },
       {
-        "t": 7.9,
+        "t": 6.45,
         "event": "swing"
       },
       {
-        "t": 7.9,
+        "t": 6.45,
         "event": "feed_golem"
       },
       {
-        "t": 8.2,
+        "t": 6.75,
         "event": "swing"
       },
       {
-        "t": 8.2,
+        "t": 6.75,
         "event": "feed_golem"
       },
       {
-        "t": 8.2,
+        "t": 6.85,
         "event": "fixed_golem"
       },
       {
-        "t": 8.9,
+        "t": 7.1,
         "event": "cut"
       },
       {
-        "t": 9.2,
+        "t": 7.4,
         "event": "beat_zombie"
       },
       {
-        "t": 10.05,
+        "t": 8.25,
         "event": "swing"
       },
       {
-        "t": 10.05,
+        "t": 8.25,
         "event": "throw_zombie"
       },
       {
-        "t": 10.1,
+        "t": 8.25,
         "event": "vel"
       },
       {
-        "t": 10.45,
+        "t": 8.65,
         "event": "effect"
       },
       {
-        "t": 10.7,
+        "t": 8.9,
         "event": "applesel_zombie"
       },
       {
-        "t": 11.4,
+        "t": 9.6,
         "event": "swing"
       },
       {
-        "t": 11.45,
+        "t": 9.65,
         "event": "apple_zombie"
       },
       {
-        "t": 11.45,
+        "t": 9.65,
         "event": "pose"
       },
       {
-        "t": 12.55,
+        "t": 10.75,
         "event": "later_zombie"
       },
       {
-        "t": 12.85,
+        "t": 11.1,
         "event": "pose_off"
       },
       {
-        "t": 12.85,
+        "t": 11.1,
         "event": "fixed_zombie"
       },
       {
-        "t": 13.85,
+        "t": 11.45,
         "event": "cut"
       },
       {
-        "t": 14.15,
+        "t": 11.75,
         "event": "twist"
       },
       {
-        "t": 15.15,
+        "t": 12.75,
         "event": "sun"
       },
       {
-        "t": 16.2,
+        "t": 13.75,
         "event": "mob_hurt"
       },
       {
-        "t": 16.4,
+        "t": 13.95,
         "event": "melting"
       },
       {
-        "t": 16.7,
+        "t": 14.25,
         "event": "mob_hurt"
       },
       {
-        "t": 16.8,
+        "t": 14.35,
         "event": "try"
       },
       {
-        "t": 17.2,
+        "t": 14.75,
         "event": "mob_hurt"
       },
       {
-        "t": 17.7,
+        "t": 15.25,
         "event": "mob_hurt"
       },
       {
-        "t": 17.7,
+        "t": 15.25,
         "event": "mob_death"
       },
       {
-        "t": 17.7,
+        "t": 15.25,
         "event": "motion_start"
       },
       {
-        "t": 17.75,
+        "t": 15.3,
         "event": "melted"
       },
       {
-        "t": 18.7,
+        "t": 16.25,
         "event": "motion_settled"
       },
       {
-        "t": 18.7,
+        "t": 16.25,
         "event": "settle"
       },
       {
-        "t": 20.7,
+        "t": 18.25,
         "event": "end"
       }
     ]
@@ -521,10 +513,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "2b0fff73ba048df5dd69519ae809bc687ee347a3",
+    "commit": "b1319d9bc2a17e2277ca22dd35bd44620430d3e8",
     "rendered": "local",
-    "rendered_at": "2026-11-11T22:32:09.415Z",
-    "head_at_publish": "bce2b3b6defef3393de663aeb1b015f11e81e4c8",
+    "rendered_at": "2026-11-12T00:59:35.208Z",
+    "head_at_publish": "b1319d9bc2a17e2277ca22dd35bd44620430d3e8",
     "stunt": "stunts/underdog_heal.js",
     "source_snapshot": [
       "source/underdog_heal.js",
@@ -536,34 +528,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 2b0fff73ba04",
+    "git checkout b1319d9bc2a1",
     "gunzip -c shorts/underdog_heal/recording.json.gz > work/underdog_heal.rec.json",
     "node render.js work/underdog_heal.rec.json work/underdog_heal.frames 60 1080 1011",
     "python3 audio.py work/underdog_heal.rec.json work/underdog_heal.wav",
     "python3 edit.py --frames work/underdog_heal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/underdog_heal.rec.json --audio work/underdog_heal.wav --caption \"you can heal every mob in Minecraft...\" --self_name 56e --red every --subs \"[[\\\"later_zombie\\\",\\\"5 minutes later...\\\",1]]\" --subs_y 0.8 --punch [\"twist\",\"melted\"] --cards \"[[\\\"beat_wolf\\\",\\\"WOLF + STEAK\\\",1.15,\\\"white\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_cat\\\",\\\"CAT + FISH\\\",1.15,\\\"white\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_horse\\\",\\\"HORSE + HAY BALE\\\",1.15,\\\"white\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_golem\\\",\\\"IRON GOLEM + IRON\\\",1.15,\\\"yellow\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_zombie\\\",\\\"ZOMBIE VILLAGER\\\",0.9,\\\"orange\\\",0,null,{\\\"y\\\":0.12,\\\"size\\\":84}],[\\\"throw_zombie\\\",\\\"+ WEAKNESS\\\",0.9,\\\"white\\\",0,null,{\\\"y\\\":0.12,\\\"size\\\":84}],[\\\"applesel_zombie\\\",\\\"+ GOLDEN APPLE\\\",1.1,\\\"yellow\\\",0,null,{\\\"y\\\":0.12,\\\"size\\\":84}],[\\\"twist\\\",\\\"...but who heals HIM?\\\",2.6,\\\"yellow\\\",0,null,{\\\"y\\\":0.16}]]\" --sfx [[\"pop\",\"beat_wolf\",{\"gain\":1.3}],[\"pop\",\"beat_cat\",{\"gain\":0.7}],[\"pop\",\"beat_horse\",{\"gain\":0.7}],[\"pop\",\"beat_golem\",{\"gain\":0.7}],[\"pop\",\"beat_zombie\",{\"gain\":0.7}],[\"ding\",\"fixed_wolf\",{\"gain\":0.8}],[\"ding\",\"fixed_cat\",{\"gain\":0.8}],[\"ding\",\"fixed_horse\",{\"gain\":0.8}],[\"ding\",\"fixed_golem\",{\"gain\":0.8}],[\"ding\",\"fixed_zombie\",{\"gain\":0.8}],[\"scratch\",\"twist\"],[\"dip\",\"melted\",0.4],[\"heart\",\"melted\",{\"gain\":1}]] --start_at beat_wolf:-0.05 --end_after settle:1.0 --out out/underdog_heal.mp4"
   ],
   "status": "ready",
-  "notes": "underdog format ep 1: a fast heal list (wolf/steak, cat/cod, horse/hay bale, iron golem/ingots, zombie villager cure) then a snow golem melting in the desert sun; sad NCS (Holding On); 3 independent review rounds + an edit-only card fix (lead checked the 4 card frames: fully inside); pace 0/0, mixcheck OK (hook WARN under the music)",
-  "published_at": "2026-11-11T22:34:54.732Z",
+  "notes": "underdog ep 1, owner notes applied: overhead HUD hearts on every mob filling as it's healed (r:r337da9), cuts 0.35 s after each heal, end 0.6 s after the snow golem is gone (r:r188b46), wolf + card on frame 0; independent fix-checks READY; pace 0/0, mixcheck OK (true-peak WARN, mastering)",
+  "published_at": "2026-11-12T01:02:38.987Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:35:12+00:00",
+    "at": "2026-11-12T01:02:57+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 18.37 s vs the reviewed render 18.35 s"
+      "summary": "short.mp4 15.47 s vs the reviewed render 15.45 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 0,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:32:21.973Z",
+      "at": "2026-11-12T00:59:48.274Z",
       "report": "work/hb/underdog_heal.check.json"
     },
     "key_sounds": "n/a"
