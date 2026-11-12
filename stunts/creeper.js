@@ -128,7 +128,7 @@ module.exports = {
     for (let i = 0; i < 80 && mine() && !ctx.died; i++) { await bot.waitForTicks(1); const cc = mine(); if (cc) at = cc.position.clone() }
     if (ctx.died) { ctx.log('died in the blast'); return false }
     ctx.mark('boom')
-    await bot.waitForTicks(8)   // the smoke clears off the crater
+    await bot.waitForTicks(18)   // the smoke clears off the crater and the blast's roar dies down (at 8 ticks the reveal's hit sat in the blast's tail: mixcheck)
     // down into the crater: the vein it opened
     const ores = []
     for (let dx = -4; dx <= 4; dx++) for (let dz = -4; dz <= 4; dz++) for (let dy = -4; dy <= 0; dy++) {
