@@ -244,7 +244,7 @@ module.exports = {
     await line('L15', async (k, at, n) => {
       if (!guard) {
         const u = Math.min(1, k / Math.max(1, at.cut(4) - 2))
-        K.setTime(DAY + (NIGHT - DAY) * K.ease(u))
+        K.setTime(DAY + (NIGHT - DAY) * Math.min(1, u * 1.15))   // the sun going down from the first word (review: DOWN played over daylight)
         if (k === Math.round(at(1))) ctx.mark('dusk')
         if (k >= at(2) - 4) for (const [i, z] of zs.entries()) walk(z, 0.07 + i * 0.006, (i - 3) * 0.01)
         else for (const [i, z] of zs.entries()) z.yaw = -90 + Math.sin((ctx.tick + i * 9) / 7) * 30   // restless in the shade as the light goes
@@ -285,8 +285,9 @@ module.exports = {
         if (i === 4) ctx.sound('entity.phantom.swoop', 1.5, 1)
       }
       K.base = K.aim(P(diver.x, diver.y + 0.2, diver.z))
-      if (i === 14) say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`)
-      if (i === 24) { ctx.mark('second_hit'); say(`/damage @s 12 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
+      if (i === 12) say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`)   // three passes of a phantom's bite (review: 12 a hit is more than vanilla's)
+      if (i === 20) say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`)
+      if (i === 28) { ctx.mark('third_hit'); say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
       look(i)
       await bot.waitForTicks(1)
     }
