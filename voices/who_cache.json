@@ -14,6 +14,21 @@
   "clip": "gold_for_the_portal/L10",
   "at": "2026-11-11T16:28:03Z"
  },
+ "1debd1416b46": {
+  "model": "gemini-3.6-flash",
+  "sex": "man",
+  "age": [
+   45.0,
+   65.0
+  ],
+  "role": "father",
+  "confidence": 6,
+  "voice": "low, muffled, raspy, deep, quiet",
+  "could_be_mistaken_for": "grandfather",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-12T08:44:20Z"
+ },
  "257698417c77": {
   "model": "gemini-3.5-flash-lite",
   "sex": "unsure",
@@ -111,6 +126,21 @@
   "at": "2026-11-11T16:28:52Z"
  },
  "_about": "scripts/who.py: the blind listener's answer per take, keyed by the wav's sha1[:12] (':fwd' = played forwards); scripts/voice_contrast.py reads it so ./hb check never asks twice about the same take",
+ "aaa4bcc633e2": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   30.0,
+   45.0
+  ],
+  "role": "young man",
+  "confidence": 8,
+  "voice": "Resonant, warm, low-pitched, clear, steady",
+  "could_be_mistaken_for": "narrator",
+  "reversed": true,
+  "clip": "light_sleeper/L05",
+  "at": "2026-11-12T08:44:01Z"
+ },
  "bab01e9c7d89": {
   "model": "gemini-3.5-flash-lite",
   "sex": "man",
