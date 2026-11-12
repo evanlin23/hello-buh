@@ -38,7 +38,9 @@ module.exports = {
       // the payoff: every head snaps round (pace: a picture change on it; the punch alone didn't register)
     // room tone from frame 1 (the first sound was at 0.8 s); a pop on the look over the 200, so the hook (which opens
     // on it) has a hit on frame 0 (pace: none by 0.5 s)
-    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.02', { gain: 1.4 }]],
+    // and the payoff cuts through the NCS bed: the song dips 0.4 s before every head snaps round, then an impact
+    // (mixcheck: no hit within 0.3 s of 'behind' on the final mix once the hook moved the song)
+    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.02', { gain: 1.4 }], ['dip', 'behind', 0.4], ['impact', 'behind', { gain: 1.4 }]],
     // the opening (owner r:r0f3da0): frame 0 is the mass of 200 staring villagers, not the one. The look over the 200
     // from the pillar (moving, the crowd filling the frame) flashes first, then the count-up from 1
     hook: { at: 'overhead', before: 0, after: 1.2, text: 'wait for the 200 💀' }

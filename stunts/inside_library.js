@@ -107,8 +107,8 @@ module.exports = inside.make({
   // 0.3 s into the walk made the Short 7.6 s, under the 8 s floor
   sway: [[-0.6, 0.6], [1.4, -0.45], [2.7, 0]],
   pitch: [[-0.6, 0.5], [1.4, 0.14], [2.7, 0.02]],
-  // the end (owner r:r188b46, fast ends): 0.8 s after the turn lands on the hut. A loud pop on frame 0 (pace: the
-  // 0.7 one was 13 dB under the payoff's impact)
-  edit: { startAt: 'beat:-0.05', endAfter: 'reveal:0.8', sfx: [['pop', 'beat', { gain: 1.6 }], ['dip', 'reveal', 0.35], ['impact', 'reveal']] },
+  // the end (owner r:r188b46, fast ends): 0.8 s after the turn lands on the hut. A loud pop on frame 0 (pace: 0.7 was
+  // 13 dB under the payoff's impact, 1.6 still 8.8 dB)
+  edit: { startAt: 'beat:-0.05', endAfter: 'reveal:0.8', sfx: [['pop', 'beat', { gain: 2.2 }], ['dip', 'reveal', 0.35], ['impact', 'reveal']] },
   room
 })
