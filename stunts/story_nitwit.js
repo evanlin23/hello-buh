@@ -243,12 +243,13 @@ module.exports = {
     // L07: on MY roof; the next day it rained anvils
     await cutP(-10.5, -0.5, face(nRoof), () => away('nWell', nWell))
     let next7 = false, rained = 0
-    const anvil = (x, z) => say(`/summon falling_block ${(X + x).toFixed(2)} ${F + ROOF[1] + 12} ${(Z + z).toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,DropItem:0b}`)
+    const anvil = (x, z) => say(`/summon falling_block ${(X + x).toFixed(2)} ${F + ROOF[1] + 8} ${(Z + z).toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,DropItem:0b}`)
     const drops = [[-15.5, -22.5], [-17.5, -21.5], [-13.5, -23.5], [-19.5, -22.5], [-12.5, -21.5], [-16.5, -23.5], [-14.0, -21.0], [-18.5, -23.0], [-11.5, -22.5], [-20.5, -21.5]]
     await line('L07', async (k, at) => {
       nRoof.yaw = 90 + Math.sin(ctx.tick / 9) * 30
-      if (!next7 && k >= at.cut(1)) { next7 = true; await cutP(-8.5, -4.0, P(ROOF[0] - 0.5, ROOF[1] - 1.5, ROOF[2]), () => away('nRoof', nRoof)) }
+      if (!next7 && k >= at.cut(1)) { next7 = true; await cutP(-11.0, -8.5, P(ROOF[0] - 0.5, ROOF[1] - 0.5, ROOF[2]), () => away('nRoof', nRoof)) }
       if (next7 && k >= at(2) - 6 && rained < drops.length && (k - at(2)) % 2 === 0) { anvil(...drops[rained]); rained++ }
+      if (next7) K.base = { yaw: K.base.yaw + 0.002, pitch: K.base.pitch + 0.004 }   // a slow tilt up into the falling anvils
       look(k)
     })
 
