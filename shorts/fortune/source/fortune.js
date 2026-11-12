@@ -19,11 +19,17 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9',
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.7',
     // a white flash as the last 384 emeralds land in the inventory (pace: no picture change on the payoff, 2026-11-11)
+    // owner r:r188b46 (2026-11-11, fast cuts: "after the stunt is done, we just cut"): each ore's fountain is cut 0.6 s
+    // after the break, straight to the next ore's dig (the walk and the pickups between were ~3 s of dwell an ore); the
+    // last emerald's shower to its pickup plays at 2x; between digs only, never inside one (r:r52f94c)
+    speed: [...ORES.slice(0, -1).map((_, i) => [`burst${i}_0:0.6`, `mine${i + 1}_0:-0.05`, 'cut']), ['burst7_2:0.6', 'collected:-0.1', 2]],
     flash: [['collected', 0, 0.6]],
     // and a hit on it: under the NCS bed the pickup pops alone left the payoff with no sound hit (mixcheck, 2026-11-11)
-    sfx: [['dip', 'collected', 0.4], ['impact', 'collected', { gain: 1.4 }]], subs: [['ore', '128 emeralds', 1.3, 7], ['ore', '256', 1.3, 8], ['ore', '384 emeralds', 1.6, 9]] },   // the 2nd-6th stacks go to the hidden inventory: say it
+    sfx: [['impact', 'mine', { gain: 1.0 }], ['impact', 'ore', { gain: 0.9 }], ['dip', 'collected', 0.4], ['impact', 'collected', { gain: 1.4 }]],
+    // (sfx: a hit on frame 0 and a hit on the first burst: the opening's sound, r:r0f3da0)
+    subs: [['ore', '128 emeralds', 1.3, 7], ['ore', '256', 1.3, 8], ['ore', '384 emeralds', 1.6, 9]] },   // the 2nd-6th stacks go to the hidden inventory: say it
 
   async setup (ctx) {
     const { bot } = ctx
@@ -42,7 +48,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 10} ${floor + 6} ${this.wz - 2} ${x + 10} ${floor + 6} ${this.wz} grass_block`)
     this.ores = ORES.map((o, i) => ({ ...o, x: x - 7 + i * 2, y: floor + 2 }))
     for (const o of this.ores) for (const dy of (o.vein || [0])) await ctx.cmd(`/setblock ${o.x} ${o.y + dy} ${this.wz} ${o.block}`)
-    await ctx.hotbar(['diamond_pickaxe[enchantments={fortune:3}]'])   // enchanted: it glints
+    await ctx.hotbar(['diamond_pickaxe[enchantments={fortune:3,efficiency:5}]'])   // enchanted: it glints. Efficiency V: a 3-tick dig on ore (owner r:r188b46, fast pace: the 13-tick dig after each cut was 0.65 s of the same swing)
     await ctx.tpCheck(x - 6.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -74,12 +80,14 @@ module.exports = {
         const p = new Vec3(o.x, oy, this.wz)
         await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), 250)
         // a real survival dig (crack stages, the pickaxe's real break time) instead of swings + a command
+        ctx.mark(`mine${i}_${vi}`)   // (unique: the edit's jump cuts land on these)
         ctx.mark('mine')   // (not 'dig': a second dig mark without coordinates hid every crack overlay)
         // the vanilla packets for a real dig: start, swing through the diamond pickaxe's break time on a
         // hardness-3 ore (12 ticks), finish. (bot.dig took 4.5 s on every ore after the first.)
         const dig = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })
         dig(0)
-        for (let t = 0; t < 13; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
+        // (Efficiency V: speed 8 + 26 = 34 on hardness 3 -> 0.378 a tick, 3 ticks; 4 for the server's tolerance)
+        for (let t = 0; t < 4; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
         dig(2)
         await bot.waitForTicks(1)
         if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${oy} ${this.wz} air`) }
@@ -88,7 +96,7 @@ module.exports = {
         bot.chat(`/kill @e[type=item,x=${o.x + 0.5},y=${oy + 0.5},z=${this.wz + 0.5},distance=..1.2]`)
         if (i === 0 && vi === 0) ctx.mark('burst')
         if (i === this.ores.length - 1 && vi === 0) ctx.mark('finale')
-        ctx.mark('ore', { n: i, block: o.block })
+        ctx.mark('ore', { n: i, block: o.block }); ctx.mark(`burst${i}_${vi}`)
         // the fountain: spread spawn points (no merging), each item launched with vanilla physics on an
         // arc that comes down around the player (the renderer eases items between the server's syncs)
         const me = bot.entity.position, ground = this.floor + 1
