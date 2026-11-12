@@ -1,0 +1,102 @@
+{
+ "stunt": "race_grass_mycelium",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/race_grass_mycelium.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  1 camera shot(s), 100.3s: POV checks skipped there (1 held); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/race_grass_mycelium.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "player: the old 'HelloBuh' bot is drawn as 56e (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT race_grass_mycelium: 1 shots, scene 0.0-96.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  top            0.0-96.7  path   (no subject: add subject: [...] to check its framing)",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 1 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "0 visible sound-making events (), 0 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-101.10s indoor_day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T04:51:05.771Z"
+}
