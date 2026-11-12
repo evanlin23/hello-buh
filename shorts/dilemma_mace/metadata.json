@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20514100,
-    "sha256": "6ce365faa66d7c066fe5dd295424b5c833901374e27868e447af2eb21262261b",
+    "bytes": 20514398,
+    "sha256": "dc1c23b0dc93e84fd5cdcfa332b24b0e643b2f78a2a8d39f85963ea7f28e0da3",
     "release": {
       "tag": "pkg-dilemma_mace",
-      "asset": "dilemma_mace.short.6ce365faa66d7c06.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short.6ce365faa66d7c06.mp4",
-      "sha256": "6ce365faa66d7c066fe5dd295424b5c833901374e27868e447af2eb21262261b",
-      "bytes": 20514100
+      "asset": "dilemma_mace.short.dc1c23b0dc93e84f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short.dc1c23b0dc93e84f.mp4",
+      "sha256": "dc1c23b0dc93e84fd5cdcfa332b24b0e643b2f78a2a8d39f85963ea7f28e0da3",
+      "bytes": 20514398
     },
     "nosong_release": {
       "tag": "pkg-dilemma_mace",
@@ -405,12 +405,12 @@
     "python3 edit.py --frames work/dilemma_mace.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dilemma_mace.rec.json --audio work/dilemma_mace.wav --caption \"hit your dog 🐕 or lose hardcore?\" --self_name 56e --red hardcore --colors dog=yellow --speed [[\"beat0\",\"beat1\",0.12],[\"beat1\",\"beat2\",0.12],[\"beat2\",\"beat3\",0.1],[\"beat3\",\"beat4\",0.1],[\"beat4\",\"beats_end\",0.07]] --slowmo [] --cards \"[[\\\"drop:0.2\\\",\\\"HIT THE DOG = LIVE\\\",2.4,\\\"green\\\",0,{\\\"y\\\":0.17}],[\\\"beat1\\\",\\\"DON'T = HARDCORE OVER\\\",2.08,\\\"red\\\",0,{\\\"y\\\":0.21,\\\"size\\\":112}],[\\\"reveal\\\",\\\"FEATHER FALLING IV\\\",1.6,\\\"blue\\\"]]\" --ring [[\"land:0.05\",0.75,0.365,0.885,135]] --shake [\"land\"] --flash [\"reveal\"] --sfx [[\"whoosh\",\"drop\",{\"gain\":0.5}],[\"impact\",\"drop\",{\"gain\":0.9}],[\"whoosh\",\"beat0\",{\"gain\":0.45}],[\"heart\",\"beat0h\",{\"gain\":0.9}],[\"heart\",\"beat1h\",{\"gain\":0.9}],[\"heart\",\"beat2h\",{\"gain\":0.9}],[\"heart\",\"beat3h\",{\"gain\":0.9}],[\"heart\",\"beat4h\",{\"gain\":0.9}],[\"wind\",\"drop\",\"beat4\",{\"gain\":0.4}],[\"dip\",\"land\",0.4],[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.4}],[\"ding\",\"reveal\",{\"gain\":0.5}]] --hardcore --armor 16 --start_at drop:0 --end_after reveal:1.5 --out out/dilemma_mace.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 2026-11-12 'open further up, so its clear we are falling': frame 0 looks straight down the 37-block pillar mid-fall, crash-zoom onto the dog with HIT THE DOG = LIVE by 0.5 s; fix-check READY",
+  "notes": "owner note 2026-11-12 'open further up, so its clear we are falling': frame 0 looks straight down the 37-block pillar mid-fall, crash-zoom onto the dog with HIT THE DOG = LIVE by 0.5 s; fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T07:09:11.692Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T07:09:38+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:18:21+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 12.50 s vs the reviewed render 12.50 s"
@@ -425,9 +425,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T07:07:40.892Z",
-      "report": "work/hb/dilemma_mace.check.json"
+      "at": "2026-11-12T06:50:29.793Z",
+      "report": "out/dilemma_mace.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.86,
+      "pump_run": 0.0,
+      "under": 8.18,
+      "summary": "the master's gain spread 0.86 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 8.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.86,
+    "pump_run": 0.0,
+    "master_gain": -0.09,
+    "under": 8.18,
+    "windows": [
+      53,
+      136
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.86 dB (max 3.0), run 0.0 s (max 0.5), game over music 8.18 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:18:14+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "6ce365faa66d7c066fe5dd295424b5c833901374e27868e447af2eb21262261b",
+      "release": {
+        "tag": "pkg-dilemma_mace",
+        "asset": "dilemma_mace.short.6ce365faa66d7c06.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short.6ce365faa66d7c06.mp4",
+        "sha256": "6ce365faa66d7c066fe5dd295424b5c833901374e27868e447af2eb21262261b",
+        "bytes": 20514100
+      },
+      "song": {
+        "drop_in_short_s": 11.0,
+        "drop_in_song_s": 16.5,
+        "song_start_s": 5.5
+      }
+    },
+    "song_file_sha256": "cbd28e180dfac36e604ba2458ec768d14af5f5808b10bd07a47586b5d4c6629e",
+    "video_stream_md5": "971003f2b8b576f47a656e76adc7cc2c",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

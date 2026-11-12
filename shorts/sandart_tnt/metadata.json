@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 29943301,
-    "sha256": "85646a5fa8cecab8ad39a7a7391151e20943c69f489affefa168cb17006c02b4",
+    "bytes": 29943220,
+    "sha256": "51b0fc9cf2d34e6e6c91bc4a362d41fe66704c27e647e65031bb24111635d4ff",
     "release": {
       "tag": "pkg-sandart_tnt",
-      "asset": "sandart_tnt.short.85646a5fa8cecab8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short.85646a5fa8cecab8.mp4",
-      "sha256": "85646a5fa8cecab8ad39a7a7391151e20943c69f489affefa168cb17006c02b4",
-      "bytes": 29943301
+      "asset": "sandart_tnt.short.51b0fc9cf2d34e6e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short.51b0fc9cf2d34e6e.mp4",
+      "sha256": "51b0fc9cf2d34e6e6c91bc4a362d41fe66704c27e647e65031bb24111635d4ff",
+      "bytes": 29943220
     },
     "nosong_release": {
       "tag": "pkg-sandart_tnt",
@@ -489,12 +489,12 @@
     "python3 edit.py --frames work/sandart_tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sandart_tnt.rec.json --audio work/sandart_tnt.wav --caption \"dropping 11,760 blocks from the sky. guess what it is 👀\" --self_name 56e --red guess --punch [[\"reveal\",0,1.04],[\"boom\",0,1.1],[\"blast_last\",0,1.08]] --shake [\"boom\"] --flash [[\"boom\",0,0.45],[\"blast_last\",0,0.35]] --tally {\"event\":\"tally\",\"label\":\"blocks\",\"done\":\"complete\"} --sfx [[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"dip\",\"blast_last\",0.4],[\"impact\",\"blast_last\",{\"gain\":1.4}]] --start_at pour_start:4.55 --end_after settle:0.5 --out out/sandart_tnt.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): the 11,760-block TNT picture poured from the sky is real TNT and blows itself apart in one wave from the middle out; drop on the last blast; 13.35 s; independent full review READY",
+  "notes": "no-op fix (r:r4607fa): the 11,760-block TNT picture poured from the sky is real TNT and blows itself apart in one wave from the middle out; drop on the last blast; 13.35 s; independent full review READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T07:59:44.068Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T08:00:18+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:16:49+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 13.35 s vs the reviewed render 13.35 s"
@@ -502,16 +502,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T07:57:36.520Z",
-      "report": "work/hb/sandart_tnt.check.json"
+      "at": "2026-11-12T07:13:39.664Z",
+      "report": "out/sandart_tnt.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.85,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 0.85 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.85,
+    "pump_run": 0.0,
+    "master_gain": -0.11,
+    "under": null,
+    "windows": [
+      24,
+      8
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.85 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:16:34+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "85646a5fa8cecab8ad39a7a7391151e20943c69f489affefa168cb17006c02b4",
+      "release": {
+        "tag": "pkg-sandart_tnt",
+        "asset": "sandart_tnt.short.85646a5fa8cecab8.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short.85646a5fa8cecab8.mp4",
+        "sha256": "85646a5fa8cecab8ad39a7a7391151e20943c69f489affefa168cb17006c02b4",
+        "bytes": 29943301
+      },
+      "song": {
+        "drop_in_short_s": 12.55,
+        "drop_in_song_s": 14.5,
+        "song_start_s": 1.95
+      }
+    },
+    "song_file_sha256": "1a7973037e254622504963f940f469c64ed3185397851c3710f9f8c5b37e36e7",
+    "video_stream_md5": "a3c623b42c664e981720ed1057768af8",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

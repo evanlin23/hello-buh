@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 35450489,
-    "sha256": "d0d34e506971d00418f6d7a66eb6d73df5e01ddfc8a7743348ef67c4ec63cf5b",
+    "bytes": 35451482,
+    "sha256": "8767b7acb0fbe0dd0068969347aec7b92029ed45c9c7e63ed5a3686d03cededa",
     "release": {
       "tag": "pkg-pickaxe_race",
-      "asset": "pickaxe_race.short.d0d34e506971d004.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.d0d34e506971d004.mp4",
-      "sha256": "d0d34e506971d00418f6d7a66eb6d73df5e01ddfc8a7743348ef67c4ec63cf5b",
-      "bytes": 35450489
+      "asset": "pickaxe_race.short.8767b7acb0fbe0dd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.8767b7acb0fbe0dd.mp4",
+      "sha256": "8767b7acb0fbe0dd0068969347aec7b92029ed45c9c7e63ed5a3686d03cededa",
+      "bytes": 35451482
     },
     "nosong_release": {
       "tag": "pkg-pickaxe_race",
@@ -1073,12 +1073,12 @@
     "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"bro said TNT is a pickaxe 💀\" --self_name 56e --red TNT --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: D tier\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: C tier\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: B tier\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: A tier\\\",9,3],[\\\"beat\\\",\\\"gold...\\\",9,4],[\\\"mined\\\",\\\"gold: S tier?? it BROKE\\\",9,4],[\\\"beat\\\",\\\"efficiency V + haste...\\\",9,5],[\\\"mined\\\",\\\"efficiency V + haste: GOD tier\\\",9,5],[\\\"tntrun\\\",\\\"TNT...\\\",9,0],[\\\"boom\\\",\\\"TNT: ??? tier\\\",9,0]]\" --subs_y 0.2 --splits {\"reset\":\"beat\",\"split\":\"mined\",\"of\":6,\"hide\":\"finale\"} --speed [[\"mined0:0.5\",\"beat1:0.1\",\"cut\"],[\"mined1:0.5\",\"beat2:0.1\",\"cut\"],[\"mined2:0.5\",\"beat3:0.1\",\"cut\"],[\"mined3:0.5\",\"beat4:0.1\",\"cut\"],[\"mined4:0.5\",\"beat5:0.1\",\"cut\"],[\"tntwalk\",\"lit\",3],[\"lit:0.4\",\"boom:-0.5\",3.5]] --punch [[\"boom\",0,1.06],[\"boom6\",0,1.06],[\"lastboom\",0,1.12]] --shake [[\"boom\",0,6],[\"boom6\",0,6],[\"lastboom\",0,10]] --flash [[\"boom\",0,0.35],[\"lastboom\",0,0.6]] --sfx [[\"impact\",\"beat\",{\"gain\":1.5}],[\"impact\",\"boom\",{\"gain\":1}],[\"dip\",\"lastboom\",0.45],[\"gamedip\",\"lastboom\",0.4],[\"impact\",\"lastboom\",{\"gain\":1.4}],[\"boom\",\"lastboom\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/pickaxe_race.mp4"
   ],
   "status": "ready",
-  "notes": "v3 (owner r:rf557af): the full pickaxe ladder (wood→netherite Eff V+Haste), each tier one fast uncut timed take, cuts only between tiers; a 22-TNT row erases the whole 20-wide wall; 24.4 s; reviewed READY (independent subagent); mixcheck OK",
+  "notes": "v3 (owner r:rf557af): the full pickaxe ladder (wood→netherite Eff V+Haste), each tier one fast uncut timed take, cuts only between tiers; a 22-TNT row erases the whole 20-wide wall; 24.4 s; reviewed READY (independent subagent); mixcheck OK | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T07:23:55.595Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T07:24:32+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:17:40+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 24.41 s vs the reviewed render 24.41 s"
@@ -1093,9 +1093,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T07:21:59.841Z",
-      "report": "work/hb/pickaxe_race.check.json"
+      "at": "2026-11-12T06:57:44.748Z",
+      "report": "out/pickaxe_race.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.79,
+      "pump_run": 0.0,
+      "under": 5.22,
+      "summary": "the master's gain spread 0.79 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 5.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.79,
+    "pump_run": 0.0,
+    "master_gain": -0.04,
+    "under": 5.22,
+    "windows": [
+      68,
+      360
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.79 dB (max 3.0), run 0.0 s (max 0.5), game over music 5.22 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:17:32+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "d0d34e506971d00418f6d7a66eb6d73df5e01ddfc8a7743348ef67c4ec63cf5b",
+      "release": {
+        "tag": "pkg-pickaxe_race",
+        "asset": "pickaxe_race.short.d0d34e506971d004.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-pickaxe_race/pickaxe_race.short.d0d34e506971d004.mp4",
+        "sha256": "d0d34e506971d00418f6d7a66eb6d73df5e01ddfc8a7743348ef67c4ec63cf5b",
+        "bytes": 35450489
+      },
+      "song": {
+        "drop_in_short_s": 23.5,
+        "drop_in_song_s": 36.75,
+        "song_start_s": 13.25
+      }
+    },
+    "song_file_sha256": "bdf862685bd587c1b7909a20949dd7a22e4e24ba1461060d6387bc6691dd9a89",
+    "video_stream_md5": "c02c588a8ee59068f5f1f861b9e8d53d",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

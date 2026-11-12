@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 30217591,
-    "sha256": "561b67a09839451a5487c622f1982c3f9c24a5dd4c5e8e938dd6e449045139cf",
+    "bytes": 30219502,
+    "sha256": "380c4cb904ebac4d94ffaec4371ca10b97294a35c32a357889a6e1028eec390a",
     "release": {
       "tag": "pkg-mega_lapse_fox",
-      "asset": "mega_lapse_fox.short.561b67a09839451a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.561b67a09839451a.mp4",
-      "sha256": "561b67a09839451a5487c622f1982c3f9c24a5dd4c5e8e938dd6e449045139cf",
-      "bytes": 30217591
+      "asset": "mega_lapse_fox.short.380c4cb904ebac4d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.380c4cb904ebac4d.mp4",
+      "sha256": "380c4cb904ebac4d94ffaec4371ca10b97294a35c32a357889a6e1028eec390a",
+      "bytes": 30219502
     },
     "nosong_release": {
       "tag": "pkg-mega_lapse_fox",
@@ -856,12 +856,12 @@
     "python3 edit.py --frames work/mega_lapse_fox.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_lapse_fox.rec.json --audio work/mega_lapse_fox.wav --caption \"bro asked for a small fox statue 😭\" --self_name 56e --red small --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --cards [[\"reveal\",\"SMALL\",1.2,\"yellow\",0,null,{\"y\":0.86}]] --flash [[\"reveal\",0,0.5]] --tally \"{\\\"event\\\":\\\"blocks\\\",\\\"label\\\":\\\"blocks used\\\",\\\"done\\\":\\\"reveal\\\"}\" --sfx [[\"dip\",\"reveal\",0.3],[\"impact\",\"reveal\",{\"gain\":1.3}],[\"impact\",\"open\",{\"gain\":1}]] --start_at open:0 --end_after reveal:1.2 --out out/mega_lapse_fox.mp4"
   ],
   "status": "ready",
-  "notes": "mega_lapse_fox v3: owner 2026-11-12 notes applied (a ~12 s time-lapse ending on the reveal, no close pass; drop on the ears landing); 381,185-block sleeping fox in a real taiga; review round 2 READY (independent subagent); nit: ears flash 2 frames before the reveal cut",
+  "notes": "mega_lapse_fox v3: owner 2026-11-12 notes applied (a ~12 s time-lapse ending on the reveal, no close pass; drop on the ears landing); 381,185-block sleeping fox in a real taiga; review round 2 READY (independent subagent); nit: ears flash 2 frames before the reveal cut | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:53:45.046Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:54:24+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:18:05+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 13.29 s vs the reviewed render 13.28 s"
@@ -876,9 +876,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:51:22.315Z",
-      "report": "work/hb/mega_lapse_fox.check.json"
+      "at": "2026-11-12T06:17:00.895Z",
+      "report": "out/mega_lapse_fox.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.12,
+      "pump_run": 0.0,
+      "under": 9.08,
+      "summary": "the master's gain spread 2.12 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 9.1 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.12,
+    "pump_run": 0.0,
+    "master_gain": -0.09,
+    "under": 9.08,
+    "windows": [
+      22,
+      75
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.12 dB (max 3.0), run 0.0 s (max 0.5), game over music 9.08 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:17:52+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "561b67a09839451a5487c622f1982c3f9c24a5dd4c5e8e938dd6e449045139cf",
+      "release": {
+        "tag": "pkg-mega_lapse_fox",
+        "asset": "mega_lapse_fox.short.561b67a09839451a.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.561b67a09839451a.mp4",
+        "sha256": "561b67a09839451a5487c622f1982c3f9c24a5dd4c5e8e938dd6e449045139cf",
+        "bytes": 30217591
+      },
+      "song": {
+        "drop_in_short_s": 12.07,
+        "drop_in_song_s": 113.75,
+        "song_start_s": 101.67
+      }
+    },
+    "song_file_sha256": "efc5ddc9d822d5268632f1d2d921cda50f3c0043bcedf86ce64907d2d9104d55",
+    "video_stream_md5": "d7db4aac218511430794d4971380ab2d",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

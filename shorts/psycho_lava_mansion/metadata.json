@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19995962,
-    "sha256": "2e3aec0d317e4dde0a1039bcc7de1499d1b00615db79d36042d4a0804acd4378",
+    "bytes": 19999452,
+    "sha256": "1afda681ba57050a35e034a63b1e5bc84af3ed9dfa062270a318bb0dc16d8024",
     "release": {
       "tag": "pkg-psycho_lava_mansion",
-      "asset": "psycho_lava_mansion.short.2e3aec0d317e4dde.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short.2e3aec0d317e4dde.mp4",
-      "sha256": "2e3aec0d317e4dde0a1039bcc7de1499d1b00615db79d36042d4a0804acd4378",
-      "bytes": 19995962
+      "asset": "psycho_lava_mansion.short.1afda681ba57050a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short.1afda681ba57050a.mp4",
+      "sha256": "1afda681ba57050a35e034a63b1e5bc84af3ed9dfa062270a318bb0dc16d8024",
+      "bytes": 19999452
     },
     "nosong_release": {
       "tag": "pkg-psycho_lava_mansion",
@@ -357,12 +357,12 @@
     "python3 edit.py --frames work/psycho_lava_mansion.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/psycho_lava_mansion.rec.json --audio work/psycho_lava_mansion.wav --caption \"rate my cozy house 1-10\" --self_name 56e --red cozy --subs \"[[\\\"open\\\",\\\"front yard\\\",2.6],[\\\"door\\\",\\\"front door\\\",1.8],[\\\"inside\\\",\\\"hallway\\\",2.2],[\\\"room\\\",\\\"living room\\\",3,0],[\\\"room\\\",\\\"kitchen\\\",3,1],[\\\"room\\\",\\\"bathroom\\\",3,2],[\\\"finale\\\",\\\"bedroom\\\",3],[\\\"anchor\\\",\\\"night *light*\\\",1.5],[\\\"boom\\\",\\\"[Intentional Game Design]\\\",1.7]]\" --subs_y 0.7 --punch [[\"land\",0,1.06],[\"boom\",0,1.15]] --shake [[\"boom\",0,18]] --flash [[\"boom\",0,0.5]] --sfx [[\"pop\",\"open\",{\"gain\":1.8}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}]] --death_screen death --start_at open:0 --end_after boom:1.7 --out out/psycho_lava_mansion.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): the bed's 'night light' is a charged respawn anchor above the pillow, shown before the click; it blows the bedroom up: killed by [Intentional Game Design]; 16.0 s; fix-check READY r3",
+  "notes": "no-op fix (r:r4607fa): the bed's 'night light' is a charged respawn anchor above the pillow, shown before the click; it blows the bedroom up: killed by [Intentional Game Design]; 16.0 s; fix-check READY r3 | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:45:52.598Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:46:17+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:18:59+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 16.00 s vs the reviewed render 16.00 s"
@@ -370,16 +370,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:44:39.143Z",
-      "report": "work/hb/psycho_lava_mansion.check.json"
+      "at": "2026-11-12T06:32:42.118Z",
+      "report": "out/psycho_lava_mansion.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.61,
+      "pump_run": 0.0,
+      "under": 8.97,
+      "summary": "the master's gain spread 1.61 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 9.0 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.61,
+    "pump_run": 0.0,
+    "master_gain": -0.17,
+    "under": 8.97,
+    "windows": [
+      23,
+      30
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.61 dB (max 3.0), run 0.0 s (max 0.5), game over music 8.97 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:18:53+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "2e3aec0d317e4dde0a1039bcc7de1499d1b00615db79d36042d4a0804acd4378",
+      "release": {
+        "tag": "pkg-psycho_lava_mansion",
+        "asset": "psycho_lava_mansion.short.2e3aec0d317e4dde.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short.2e3aec0d317e4dde.mp4",
+        "sha256": "2e3aec0d317e4dde0a1039bcc7de1499d1b00615db79d36042d4a0804acd4378",
+        "bytes": 19995962
+      },
+      "song": {
+        "drop_in_short_s": 14.3,
+        "drop_in_song_s": 16.75,
+        "song_start_s": 2.45
+      }
+    },
+    "song_file_sha256": "c1e5ab02649567f08eef24d78910eea4e39576fb5af66769b342d59980a6936a",
+    "video_stream_md5": "61d828f327c8cd3dd258ab4d7330145c",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

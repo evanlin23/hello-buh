@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20747888,
-    "sha256": "159af5d3d062b21cef6f3ea0eb64d1df7e589dbdeb164cd4a524f5b32f0be5b0",
+    "bytes": 20748982,
+    "sha256": "4530fe6da4b171337e87e041eae1266be8f9b4d68692d78c50bf80ba1ed29032",
     "release": {
       "tag": "pkg-faketrick_gold_portal",
-      "asset": "faketrick_gold_portal.short.159af5d3d062b21c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.159af5d3d062b21c.mp4",
-      "sha256": "159af5d3d062b21cef6f3ea0eb64d1df7e589dbdeb164cd4a524f5b32f0be5b0",
-      "bytes": 20747888
+      "asset": "faketrick_gold_portal.short.4530fe6da4b17133.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.4530fe6da4b17133.mp4",
+      "sha256": "4530fe6da4b171337e87e041eae1266be8f9b4d68692d78c50bf80ba1ed29032",
+      "bytes": 20748982
     },
     "nosong_release": {
       "tag": "pkg-faketrick_gold_portal",
@@ -535,12 +535,12 @@
     "python3 edit.py --frames work/faketrick_gold_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/faketrick_gold_portal.rec.json --audio work/faketrick_gold_portal.wav --caption \"a nether portal out of GOLD?? nobody knows this 😱\" --self_name 56e --red GOLD?? --subs \"[[\\\"step\\\",\\\"step 1: gold blocks\\\",1.5,0],[\\\"step\\\",\\\"step 2: light it\\\",1.5,1],[\\\"step\\\",\\\"step 3: wait...\\\",1.5,2],[\\\"payoff\\\",\\\"IT WORKS\\\",1.2,0],[\\\"cut\\\",\\\"a GOLD nether??\\\",0.9,0]]\" --punch [[\"payoff\",0,1.08]] --hook \"{\\\"at\\\":\\\"walk\\\",\\\"before\\\":0.3,\\\"after\\\":0.9,\\\"text\\\":\\\"how is this working?? 😳\\\"}\" --flash [[\"payoff\",0,0.45],[\"cut\",0,0.35]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}],[\"whoosh\",\"cut:-0.15\"],[\"dip\",\"cut\",0.4],[\"gamedip\",\"cut\",0.35],[\"impact\",\"cut:0.03\",{\"gain\":1.4}]] --start_at go:-0.05 --end_after cut:0.9 --out out/faketrick_gold_portal.mp4"
   ],
   "status": "ready",
-  "notes": "no-op audit (r:r4607fa): walks through the gold portal into a GOLD nether full of piglins admiring gold (staged fake, F.fake marks); new take; fix-check READY",
+  "notes": "no-op audit (r:r4607fa): walks through the gold portal into a GOLD nether full of piglins admiring gold (staged fake, F.fake marks); new take; fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:58:01.272Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:58:32+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:18:41+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 10.88 s vs the reviewed render 10.87 s"
@@ -555,9 +555,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:55:44.718Z",
-      "report": "work/hb/faketrick_gold_portal.check.json"
+      "at": "2026-11-12T06:41:36.753Z",
+      "report": "out/faketrick_gold_portal.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.97,
+      "pump_run": 0.0,
+      "under": 9.26,
+      "summary": "the master's gain spread 0.97 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 9.3 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.97,
+    "pump_run": 0.0,
+    "master_gain": -0.07,
+    "under": 9.26,
+    "windows": [
+      42,
+      100
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.97 dB (max 3.0), run 0.0 s (max 0.5), game over music 9.26 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:18:30+00:00",
+    "code": "6efefd37df649437e679b15cdf0b0961976df5e4",
+    "from": {
+      "sha256": "159af5d3d062b21cef6f3ea0eb64d1df7e589dbdeb164cd4a524f5b32f0be5b0",
+      "release": {
+        "tag": "pkg-faketrick_gold_portal",
+        "asset": "faketrick_gold_portal.short.159af5d3d062b21c.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.159af5d3d062b21c.mp4",
+        "sha256": "159af5d3d062b21cef6f3ea0eb64d1df7e589dbdeb164cd4a524f5b32f0be5b0",
+        "bytes": 20747888
+      },
+      "song": {
+        "drop_in_short_s": 9.95,
+        "drop_in_song_s": 14.5,
+        "song_start_s": 4.55
+      }
+    },
+    "song_file_sha256": "1a7973037e254622504963f940f469c64ed3185397851c3710f9f8c5b37e36e7",
+    "video_stream_md5": "ef04006ffd30ba533d9f8efa76760a06",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
