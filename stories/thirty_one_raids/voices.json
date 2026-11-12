@@ -1,0 +1,85 @@
+[
+ {
+  "id": "p1",
+  "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]",
+  "speakers": {
+   "N": "Leda"
+  },
+  "lines": [
+   [
+    "N",
+    "L01",
+    "Grandpa has saved our village from thirty-one raids."
+   ],
+   [
+    "N",
+    "L02",
+    "Every single one started the night he came home."
+   ],
+   [
+    "N",
+    "L03",
+    "He says they follow him."
+   ],
+   [
+    "N",
+    "L04",
+    "Grandpa said, \"They know who beats them.\""
+   ],
+   [
+    "N",
+    "L05",
+    "When he walks by, the villagers throw him bread."
+   ],
+   [
+    "N",
+    "L06",
+    "He hunts at the old tower on the hill."
+   ],
+   [
+    "N",
+    "L07",
+    "He brings back grey bottles. He's got a whole chest."
+   ],
+   [
+    "N",
+    "L08",
+    "He calls it his courage. He drinks it at the gate."
+   ],
+   [
+    "N",
+    "L10",
+    "Since Grandma died a raid is the only time anyone's glad to see him."
+   ],
+   [
+    "N",
+    "L11",
+    "Tonight, he came home too tired to fight."
+   ],
+   [
+    "N",
+    "L12",
+    "So I drank his courage. Somebody had to fight."
+   ]
+  ]
+ },
+ {
+  "id": "g1",
+  "direction": "",
+  "speakers": {
+   "Grandpa": "Charon"
+  },
+  "lines": [
+   [
+    "Grandpa",
+    "L09",
+    "Lock the door, kid. They're coming."
+   ],
+   [
+    "Grandpa",
+    "L13",
+    "Now they'll love you too, kid."
+   ]
+  ]
+ }
+]

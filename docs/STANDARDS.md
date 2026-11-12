@@ -36,6 +36,14 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0y. **The Roblox story format, in Minecraft** (docs/story_format.md): the impossible fact AND its "why?" said in line 1
+   (by 3 s); 3-5 quick two-way clues; the narrator as the one who wants to know; someone loved at stake; the rule
+   turned against itself; the reveal SAID in one plain sentence (the naive narrator says what they see), never wordless;
+   one beat, cut within ~1 s; the last line echoes line 1. Check: story-critic (blockers), cold readers (casual and
+   gamer). r:rc8538b
+0z. **A casual viewer gets it** (a friend on Gold for the Portal: "im confsued bro"): the table read's cold readers
+   include a casual player watching once; the twist lands for them in one step from the picture, with no unshown name
+   or mechanic; if they can't say it in one sentence, the script goes back. Check: cold reader (casual), story-critic. r:rac4476
 0a. **Mystery through naivety** (owner: "We need to have that sense of mystery. And naivety"): the kid narrator
    trusts what they see and explains every clue the wrong, innocent way, in their own words; the viewer sees past it.
    The kid never hints, foreshadows, sounds afraid before the reveal or explains the twist. Every clue in the clue map
@@ -279,7 +287,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
 - **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
   **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
-- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: floor 8 s (lead decision 2026-11-11: the 25 s floor is the narration floor). Check: pace (length).
+- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: no fixed minimum, never padded (owner 2026-11-12: "no fixed minimum, just don't pad them"; the 30 s minimum is retired). Check: pace (length), review (padding). r:r064ca4
 
 ## 9. Review
 - An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
@@ -312,7 +320,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. New stories are made by hand in owner-audited stages: premise shortlist (owner picks), then one session per
-  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f r:rd2d42e. Premises: diverge by lens first, cold-read gate, then the checks and the critic; the owner sees a top 8 plus wild cards. r:rbf6467 r:rfc2828
+  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f r:rd2d42e. Premises: diverge by lens first, cold-read gate, then the checks and the critic; the owner sees a top 8 plus wild cards. r:rbf6467 r:rfc2828 (Honey Thief's giant is Jonah, r:r1a3843; Bastion approved, r:r7c6526; Pulled Away, Singing Box approved, r:r9a1a75; Seventy Below approved, r:rbb90ac)
 - **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
   swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
   Check: owner. r:r1f2a80
@@ -325,7 +333,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
   escalating to the full reveal. r:r4449f0 Ridiculously big: the build dwarfs a real landscape, shown from high up
   for scale, ending on a close pass beside the tiny player. r:rf8524b A ticking count of blocks used is a good
-  overlay. r:rce78c5
+  overlay. r:rce78c5 Depth and detail (layers, overhangs, varied heights and materials, never flat tiers), in a
+  real generated world, never superflat. Check: owner, review. r:r13865d
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
@@ -335,7 +344,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "logic"**: rapid real vanilla quirks, each set up and paid off in seconds, one caption. Check: owner,
   minecraft-audit (every quirk must be true vanilla). r:r40f7c7
 - **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
-  mods and menus. Check: owner. r:rd551de
+  mods and menus (the popup is edit.popup, scripts/popup.py; the stunt side is lib/fakemod.js: the asking mob waits
+  with NoAI, what follows is vanilla). Check: owner. r:rd551de
 - **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
   vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
 - **Format "cells"**: a walk past glass cells, each a mob stuck in an endless vanilla-built loop, a deadpan caption.
@@ -374,6 +384,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:rc40696
 - **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Format "cooked"**: the payoff plays an ominous, dread-building track on the drop (dark NCS or a low drone and
+  hit), never an upbeat bed. Check: owner, review. r:rcefdcc
 - **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
   gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
   picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
@@ -383,17 +395,35 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   block found is treated as treasure; generated from our own block swap. Check: owner. r:r62f46d
 - **Format "trap"**: an irresistible bait, how it works, then the friend (a second bot, never the owner's name) walks
   into it; the trap really works in vanilla. Check: owner, minecraft-audit (the trap). r:refc733
+- **The opening (frame 0 to 1.5 s)**: frame 0 shows the Short's subject (the mob, trap, TNT, build or the payoff's
+  setup), in motion by 0.5 s; never an empty field, plain grass, a bare wall or a still room. The caption reads as a
+  person reacting, not a label. Check: the opening check (scripts/opening.py in `./hb pace`, so check, review and
+  publish's gate run it, on the game view): BLOCK a flat frame 0 (the middle half under 0.20 and the view under 0.35
+  away from its main colour, with no mob in view in the recording) and nothing moving by 0.5 s; WARN a slow
+  opening, no sound hit within 6 dB of the peak by 0.5 s, no caption on frame 0, a caption over 10 words, a still
+  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
+- **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
+  (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
+- **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action.
+  Check: owner, review. r:r7ef6ec
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
   mob; fast is fine, off-aim reads as hacking. Check: the aim check (scripts/owner_checks.py + lib/aim.js, in
   rec_check (`./hb check`) and pace (gates v3): BLOCK an action over 15 deg off its target or off-screen, or over 10%
   of them past 6 deg; the numbers are in `./hb review`), review. r:rffba12
-- **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
-  end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
-  Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
-  frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
-  before it, gates v3). r:r24d99a
+- **Let the payoff settle**: no cut or end while falling blocks or a dying mob are still moving (or a blast is going
+  off); the end limit counts from when that action is over. Smoke, particles and drifting debris don't count (narrowed
+  by r:r188b46). Owner notes become automatic checks, not only review notes.
+  Check: the settle check (scripts/owner_checks.py: falling blocks, a dying mob in view, a blast's first 0.3 s at the
+  end, on the last frames before a hard cut or the end: BLOCK in rec_check; pace counts the tail from the settle and
+  BLOCKs an end before it, gates v3). r:r24d99a
+- **Fast cuts after each action**: cut about 0.3-0.6 s after an action's result reads and go straight to the next
+  beat; the end lands about 0.5-0.8 s after the payoff's result. Smoke, particles and drifting debris never hold a cut
+  (this narrows r:r24d99a: only the action itself, a falling block, a dying mob or a blast in progress, holds a cut).
+  Check: the dwell check (scripts/dwell.py in pace: a result held over 1.0 s with nothing new WARN; the end over 0.9 s
+  after the payoff's result WARN, over 1.2 s BLOCK; a text payoff keeps its 1.2-1.8 s), lib/settle.js (the `settle`
+  mark lands 0.3 s after the last blast), review, owner. r:r188b46
 - **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap

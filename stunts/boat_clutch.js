@@ -1,4 +1,4 @@
-// "boat clutch 💀" (~33 s, seven beats): the bot jumps off a cobblestone pillar looking straight down
+// "bro thinks a boat will save him 💀" (was the label "boat clutch 💀": reaction captions, r:r0f3da0) (~33 s, seven beats): the bot jumps off a cobblestone pillar looking straight down
 // the fall, places a boat on the grass right below a few ticks before the ground (real use_item with
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
 // into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
@@ -9,9 +9,9 @@ const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 })) 
 module.exports = {
   name: 'boat_clutch',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: 'boat clutch 💀',
+  caption: 'bro thinks a boat will save him 💀',
   edit: {
-    caption: 'boat clutch 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
+    caption: 'bro thinks a boat will save him 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
     // the label stays up through the fall
     subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.1 + Math.sqrt(p.h) * 0.3, i]),
     // the teleport between pillars is cut out (no hold around it)
@@ -23,7 +23,8 @@ module.exports = {
     // a wooden thud (the boat). Owner r:r4df33c, 2026-11-11: "The sound effect at the end of boat clutch sounds like a fart,
     // change it out": that was audio.py's old water-clutch rebuild playing a water bucket's pour on the boat placement,
     // stretched by the slow-mo; a boat recording gets none now, and lib/hb/banned_sfx.json bans a pour with no bucket
-    sfx: [['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
+    // r:r0f3da0 pace: the hook flash and the first fall were silent until 2.08 s (a fall makes no vanilla sound): a wind bed from frame 0
+    sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
   },
 
   async setup (ctx) {

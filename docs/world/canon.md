@@ -161,17 +161,21 @@ Ravenford 2300.
 |---|---|---|---|---|
 | the villager kid | The Wall Grows (Highwall, 3700) | baby villager, **snowy** (Highwall is in the White) | `narrator` (Leda) | cast |
 | Old Tomas | The Wall Grows (Highwall, 3700) | old snowy villager, mason, **no name tag** (link 17); escaped a trading hall | not `elder` (Charon is Ravenford's Grandpa): Sadaltager or Rasalgethi, audition | audition |
-| the player in the hall | The Wall Grows (Highwall, 3700) | player, nameless, no name tag; the script has the default Steve skin (conflict 18) | none | |
+| the player in the hall | The Wall Grows (Highwall, 3700) | player, nameless, no name tag; `hall_player` skin (original, engine-skins 2026-11-11: not Steve, resolves conflict 18) | none | |
 | the kid | The Bell in the Window (Saltmouth, 3800) | player, `alex` skin; Saltmouth's only player (Buh left on day 3400) | `narrator` (Leda) | cast |
 | Mom (Saltmouth) | The Bell in the Window (Saltmouth, 3800) | plains villager, no profession | `mom_saltmouth` (Kore, owner 2026-11-11 "A is fine") | cast |
-| the grandchild | The Walk (Gullwick, 4000) | player, `kai` skin | `narrator` (Leda) | cast |
-| Grandpa (Gullwick) | The Walk (Gullwick, 4000) | grey-haired old man (new skin) | audition Iapetus vs Sadaltager (not Charon: Ravenford's); the_walk bible "Voices" | audition |
-| Grandma (the island) | The Walk (Grandma's Island, ~350 and 4000) | grey-haired old woman (new skin) | `grandma_island` (Callirrhoe, owner 2026-11-11 "calirrhoe is fine") | cast |
+| the grandchild | The Walk (Gullwick, 4000) | player, `walk_kid` skin (original, engine-skins 2026-11-11; was `kai`, Jonah's: resolves conflict 19) | `narrator` (Leda) | cast |
+| Grandpa (Gullwick) | The Walk (Gullwick, 4000) | player actor, `grandpa_gullwick` skin (original: grey-haired old man, white beard) | audition Iapetus vs Sadaltager (not Charon: Ravenford's); the_walk bible "Voices" | audition |
+| Grandma (the island) | The Walk (Grandma's Island, ~350 and 4000) | player actor, `grandma_island` skin (original: grey-haired old woman) | `grandma_island` (Callirrhoe, owner 2026-11-11 "calirrhoe is fine") | cast |
 | Mom (Gullwick) | The Walk (Gullwick, 4000) | player, `makena` skin, silent | none | cast |
 | the villager kid | Six Thousand Torches (Larkfield, 4500) | baby villager, plains, Larkfield | `narrator` (Leda) | cast |
 | Jonah | Six Thousand Torches (Larkfield, 4500) | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
 | the kid | Red Sheep (Ravenford, 2300) | player, `alex` skin, Ravenford (POV; never named, not Buh) | `narrator` (Leda) | cast |
 | Dad | Red Sheep (Ravenford, 2300) | player, `sunny` skin, Ravenford's shepherd, crossbow | Alnilam or Rasalgethi (both unused), audition against Pip on L03 | audition |
+| the man | Pulled Away (Bramble Hollow) | player actor, nameless, `pulled_man` skin (original) | | |
+| the girl miner | The Singing Box Next Door | player, `miner_girl` skin (original) | | |
+| the neighbour | The Singing Box Next Door | player, `neighbour` skin (original; his face reads the same in diamond armour without a helmet) | | |
+| the barter-farm player | Saving Up for a Bastion | player, `barter_player` skin (original; was `efe`) | | |
 
 Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: Tomas and Dad): each pick takes it off the others' lists.
 | Grandpa (Ravenford), in the background | Red Sheep (Ravenford, 2300) | player actor, `zuri` skin, the slow walk; on his bench by his door; **never named, never called Grandpa** (conflict 11) | none | |
@@ -182,8 +186,24 @@ Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: 
 | who | story (place, day) | look | voice | status |
 |---|---|---|---|---|
 | the baby piglin | Saving Up for a Bastion (the Nether below the Portal Cottage, 5000) | vanilla baby piglin; never grows up | `narrator` (Leda), the house narrator voice | cast |
-| the player (barter farm) | Saving Up for a Bastion (the Nether below the Portal Cottage, 5000) | player, default `efe` skin, iron armour, no name tag, never named | new: Umbriel or Zubenelgenubi (both unused), audition against Pip on L10 | audition |
+| the player (barter farm) | Saving Up for a Bastion (the Nether below the Portal Cottage, 5000) | player, the original `barter_player` skin, iron armour, no name tag, never named | new: Umbriel or Zubenelgenubi (both unused), audition against Pip on L10 | audition |
 | the helmet piglin (background) | Saving Up for a Bastion (5000) | adult piglin in Grandpa's gold helmet with the lapis trim (Gold for the Portal) | none | |
+
+### Original skins (drawn by us: scripts/make_story_skins.py, skins/<name>.png; engine-skins 2026-11-11)
+One look per character (STANDARDS 7a). The spares belong to no one yet: give one to the next new player character and move it up here.
+
+| skin | who | look |
+|---|---|---|
+| `grandpa_gullwick` | Grandpa (Gullwick), The Walk | bald crown, white hair at the sides, a full white beard and bushy brows; oatmeal cardigan over a blue shirt, brown cords |
+| `grandma_island` | Grandma (the island), The Walk | silver hair in a bun, round glasses, rosy cheeks; a lavender shawl over a cream blouse, long navy skirt |
+| `walk_kid` | the grandchild, The Walk | curly black hair, a yellow raincoat, navy trousers, red wellies |
+| `pulled_man` | the man, Pulled Away | short black hair, stubble, a plain grey work shirt with rolled sleeves, dark brown trousers, black boots |
+| `hall_player` | the player in the hall, The Wall Grows | copper hair, freckles, a forest-green winter coat with a fur collar, grey trousers, black boots |
+| `miner_girl` | the girl miner, The Singing Box Next Door | brown pigtails under a teal bandana, a soot smudge, a rust-orange work shirt, tool belt, patched grey trousers |
+| `neighbour` | the neighbour, The Singing Box Next Door | bald with dark hair at the sides, black round glasses, a thick black moustache (the face that reads the same in diamond armour); navy sweater vest over a white shirt |
+| `barter_player` | the barter-farm player, Saving Up for a Bastion | an orange beanie, dark skin, a short black beard; a black hoodie with orange strings, khaki trousers |
+| `spare_boy` | spare (a boy) | chestnut hair with a swept fringe, a burgundy hoodie with white strings, grey joggers, white trainers (no character yet) |
+| `spare_girl` | spare (a girl) | long straight black hair with a fringe, a pink cardigan over a white top, light jeans, white trainers (no character yet) |
 
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
@@ -294,8 +314,8 @@ follow any Short.
 | 15 | Dog on the Hill's bible puts the hut west of D with the patch at D + (-3, 0, 0); its stunt (and render) builds the hut north-east of D, the patch at D + (3, 0, 0), the dog facing east | The render is canon. map.json's Dog Hill stamps are the stunt's own build, ported (meadow, ridge, hut, ledge, patch, bones, dog). |
 | 16 | The recorder on main doesn't save a wolf's sitting/tame/collar state (claude/story-cine-2's harness does), so a main recording shows the dog standing with no collar | The establishing still patches the recording's wolf entries. Merge story-cine-2's harness wolf metadata to main before any story films the dog. |
 | 17 | The Sign by the Bed and Same Spot (pilots, never made) set other "world rules" (signs from the future, frozen chunks) | Not canon. A pilot becomes canon only when it's made, and then it has to fit. |
-| 18 | The Wall Grows' hall player wears the default Steve skin, and Steve is Buh's look (STANDARDS: "Steve reads as Buh"). Day 3700 falls in Buh's gap (3400-4300), so it can't be him, but a viewer can't know that | Open question "who built the hall?" stays open. Recommended: give the player a non-Steve default skin no one else wears (`noor`; `ari` is Gold for the Portal's Grandpa, `efe` the barter player of Saving Up for a Bastion (planned); `kai` is Jonah's, `sunny` Red Sheep's Dad's, `alex` the kids', `makena` The Walk's Mom, `zuri` Grandpa's): the lead's and owner's call, since he's cast, not set. |
-| 19 | The Walk's kid and Jonah (Six Thousand Torches) both wear the `kai` skin | Players a viewer could confuse. Recommended: recast The Walk's kid (seen small, mostly POV) as `noor`. Lead's call. |
+| 18 | The Wall Grows' hall player wears the default Steve skin, and Steve is Buh's look (STANDARDS: "Steve reads as Buh"). Day 3700 falls in Buh's gap (3400-4300), so it can't be him, but a viewer can't know that | Open question "who built the hall?" stays open. Recommended: give the player a non-Steve default skin no one else wears (`ari`, `efe` or `noor`; `kai` is Jonah's, `sunny` Red Sheep's Dad's, `alex` the kids', `makena` The Walk's Mom, `zuri` Grandpa's): the lead's and owner's call, since he's cast, not set. **Done (engine-skins, 2026-11-11): the original `hall_player` skin.** |
+| 19 | The Walk's kid and Jonah (Six Thousand Torches) both wear the `kai` skin | Players a viewer could confuse. Recommended: recast The Walk's kid (seen small, mostly POV) as `noor`. Lead's call. **Done (engine-skins, 2026-11-11): the original `walk_kid` skin.** |
 | 20 | Canon called the stronghold's land "the islets in front of Leo's House"; the survey (2026-11-11) shows a low headland joined to the mainland in the north, across a lagoon from Leo's House, with no islet over the stronghold's pieces | Read as the headland. Gullwick stands on it. Grandma's island is the nearest true island (92 blocks north-west of the dock, 55 west of the stronghold's pieces). Nothing published says "islets". |
 | 21 | Good Boy's pad (rendered) buried Saltmouth's ruined portal at (-269, -366), and its set measures the village from (-304, -384), not the survey's (-286, -381) | Both are canon: the portal is under Buh's yard from day 3300. The Bell in the Window's old easter egg (the portal) is dropped for `buh_yard`. Good Boy's "village + (37, 16)" means (-304, -384) + (37, 16). |
 | 22 | The Bell in the Window's set asked for "a sheer stone cliff"; Saltmouth is flat. The only bank over it is Buh's pad, whose south-east corner stands 8 over the sea on four steps | The bank is the cliff (Good Boy already calls it one: "the wolf behind the camera on the cliff"). The house stands on a boardwalk at sea level; the skeleton's spot, the bell and the window keep the script's offsets (bell_window set.md). The live-AI gate decides. |
