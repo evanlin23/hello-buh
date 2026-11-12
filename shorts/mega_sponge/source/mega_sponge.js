@@ -9,7 +9,9 @@
 // off the south-east, down across the top | 3.6 rocket boost, a run along the south face, a second boost | 6.9 along the face from its
 // east end | 8.4 wide orbit over the forest | 10.7 high over the top face | 12.8 boost up the north face and over the top,
 // looking down the top hole at the core | 17.6 the west face from its south-west corner, tracking | 19.6 head-on on the hole's line, pushing in | 21.5 boost,
-// dive into the face hole (flash), slow down inside | 24.65 thread the core's hole (punch, flash, impact, the drop)
+// dive into the face hole (flash), slow down inside | 24.65 thread the core's hole (punch, flash, impact) | 25.4 56e on the
+// roof of his "starter house", the south-west top corner | 26.6 the scale: the whole sponge, him a speck on it (impact,
+// the drop) | end 0.8 s later (owner r:r4607fa: it used to end diving into empty sky)
 //
 // Minecraft-true: an elytra glide with rockets (~30 blocks/s with a boost, a rocket used per boost, the stack counts
 // down); the rider is first person, so the elytra itself isn't seen. Film licence: the speed eases off inside without
@@ -57,18 +59,25 @@ module.exports = {
     face: { path: [[0, -112, 74, 92], [2, -128, 64, 58]], lookPath: [[0, -40, 41.5, 4], [2, -40, 41.5, 0.5]], fov: 54, dof: false, drift: 0.3, scenery: true, subject: [[-40, 41.5, 0.5]] },
     // 5b. head-on, low on the hole's line and pushing in at ~20 blocks/s: the tunnel, the core, the far exit; it ends where
     // the dive starts (x -72), so the cut to first person carries the same move on (motion continues across the cut)
-    face2: { path: [[0, -110, 42, 0.5], [1.9, -73.5, 43.6, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 62, dof: false, drift: 0.2, scenery: true, subject: [[0, 41.5, 0.5]] }
+    face2: { path: [[0, -110, 42, 0.5], [1.9, -73.5, 43.6, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [1.9, 0, 41.5, 0.5]], fov: 62, dof: false, drift: 0.2, scenery: true, subject: [[0, 41.5, 0.5]] },
+    // 7. the ending: close on 56e standing on the south-west top corner, the top face running away behind him, easing back
+    roof: { path: [[0, -46, 84.6, 46], [1.2, -48.5, 85.6, 48.5]], lookPath: [[0, -39.5, 83.4, 39.5], [1.2, -37.5, 83, 37.5]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: ['self'] },
+    // 7b. the scale: far off the same corner, the whole sponge over the forest and 56e a speck on its nearest top corner
+    scale: { path: [[0, -118, 70, 118], [1.5, -124, 73, 124]], lookPath: [[0, -4, 46, 4], [1.5, -4, 46, 4]], fov: 52, dof: false, drift: 0.2, scenery: true, subject: ['self'] }
   },
   edit: {
     caption: 'rate my starter house',
-    dropAt: 'thread',                   // (no reference song: publish adds the NCS bed at -16 LUFS with its drop here)
-    startAt: 'start:0', endAfter: 'thread:0.8',
+    // the drop on the last cut, the scale (the payoff pace and mixcheck measure); the thread keeps its flash, punch and hit
+    dropAt: 'scale',                    // (no reference song: publish adds the NCS bed at -16 LUFS with its drop here)
+    startAt: 'start:0', endAfter: 'scale:0.8',   // (r:r188b46: the end 0.5-0.8 s after the payoff)
     flash: [['inside', 0, 0.45], ['thread', 0, 0.3]],   // into the build, into the core
     punch: [['thread', 0, 1.08]],          // the payoff: into the core's hole
     // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
     // boosts alone left 3.1 s with nothing new)
     // (an impact on frame 0: a sound hit by 0.3 s, r:r0f3da0)
-    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
+    // (the game audio ducks too before the scale's hit and the run's second boost: under the NCS bed they rose only
+    // ~8 dB, mixcheck wants 10)
+    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'scale', 0.4], ['gamedip', 'scale', 0.4], ['impact', 'scale', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['gamedip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 1.0 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {
@@ -162,6 +171,7 @@ module.exports = {
       }
       let d = 0
       for (let i = 0; i < ticks; i++) {
+        if (at.stop && at.stop()) break                // (a run can end early: the dive stops just past the core)
         if (at[i]) at[i]()
         const p = pointAt(d), ahead = pointAt(d + 10)
         if (d + 10 > total) { const q = pointAt(total - 2); ahead.x += (ahead.x - q.x) * 3; ahead.y += (ahead.y - q.y) * 3; ahead.z += (ahead.z - q.z) * 3 }
@@ -220,7 +230,16 @@ module.exports = {
         dist += v
         for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); }
         return v
-      }, (p, a) => a, { 2: boost })
+      }, (p, a) => a, { 2: boost, stop: () => done.has('threaded') && dist >= 80 })   // (r:r188b46: cut ~0.3 s after the thread reads; it flew on 1.75 s inside)
+      // 7. the ending (owner r:r4607fa, lead 2026-11-12: it ended diving into empty sky, "borderline"): 56e on the roof
+      // of his "starter house", on the sponge's south-west top corner (a solid cell: no digit position with two 1s),
+      // facing out over the forest; then the extreme wide, the sponge filling the frame and him a speck on its corner
+      want = { x: X - 39.5, y: F + 82, z: Z + 39.5, yaw: Math.atan2(6.5, -6.5), pitch: 0.05 }
+      M.shot(ctx, 'roof'); ctx.mark('cut'); ctx.mark('roof')
+      ctx.sound('block.deepslate_tiles.step', 1, 0.9); ctx.sound('block.deepslate_tiles.fall', 0.8, 1)
+      await bot.waitForTicks(24)
+      M.shot(ctx, 'scale'); ctx.mark('scale')
+      await bot.waitForTicks(30)
       ctx.mark('end')
     } finally {
       clearInterval(clock)
