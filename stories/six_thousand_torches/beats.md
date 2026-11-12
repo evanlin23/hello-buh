@@ -31,7 +31,7 @@ down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "Se
 ## Beat sheet (Pip ~3.2 words/s; 98 words, ~32-36 s)
 | # | line | picture | job / clue | the kid's innocent reading |
 |---|---|---|---|---|
-| 1 | L01 SOMEONE put six THOUSAND TORCHES on my village OVERNIGHT. I HAD to know WHY. | S01 dawn crane over a carpet of light | hook: the impossible fact + the why, said (format beat 1, 3) | amazed |
+| 1 | L01 In my village, six THOUSAND TORCHES appeared OVERNIGHT. I HAD to know WHY. | S01 dawn crane over a carpet of light | hook: the impossible fact + the why, said (format beat 1, 3) | amazed |
 | 2 | L02 FENCES. ROOFS. HAY bales. Not ONE DARK block. | S02 low dolly | escalation | delighted |
 | 3 | L03 ONE torch LIGHTS a whole HOUSE. | S03 golem, a house, one torch sharp | the excess (every night at once) | puzzling, happily |
 | 4 | L04 Something BIG must be COMING! Like a PARTY! | S04 lights end, dark forest | **decoy** (audit: kept) | a party |
@@ -47,7 +47,7 @@ down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "Se
 | 14 | L14 He FORGOT to SAY, "See you TOMORROW." | S14 he walks away, silent, no torch | **reveal**, said in one plain sentence | he forgot |
 | 15 | L15 TOMORROW, I'll ask him WHY. | S14 continues, Jonah smaller | **sting**: echoes L01's WHY; cut 0.3-0.6 s after | there'll be a tomorrow |
 
-Loop: "...TOMORROW, I'll ask him WHY." / "SOMEONE put six THOUSAND TORCHES on my village OVERNIGHT. I HAD to know WHY."
+Loop: "...TOMORROW, I'll ask him WHY." / "In my village, six THOUSAND TORCHES appeared OVERNIGHT. I HAD to know WHY."
 
 r3 (2026-11-11, docs/story_format.md): L01 says the fact AND the why; L03 loses its second "why" (L04 takes "So"); L14 is the reveal, said; L15 the sting echoing L01.
 
