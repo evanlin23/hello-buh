@@ -8,6 +8,12 @@ which_door  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
 lucky_dig  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
 one_in_a_million  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
 lapse_statue  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+tnt_1000  # first: owner OK 2026-11-12 (strong / fixed)
+tnt  # first: owner OK 2026-11-12 (strong / fixed)
+mega_lapse_fountain  # first: owner OK 2026-11-12 (strong / fixed)
+half_heart  # first: owner OK 2026-11-12 (strong / fixed)
+inside_library  # first: owner OK 2026-11-12 (strong / fixed)
+fakemod_permission  # first: owner OK 2026-11-12 (strong / fixed)
 ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
@@ -19,7 +25,6 @@ spot_wrong_2
 guess_sound_2
 worse_lava
 villager_fired
-tnt_1000
 spot_wrong_3
 end_portal_job
 guess_sound_3
@@ -33,14 +38,12 @@ worse_tnt
 fortune
 boat_clutch
 speed_build
-tnt
 villager_crowd
 creeper_art
 sand_tower
 water_vs_lava
 rainbow_sheep
 desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-inside_library   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 race_grass_mycelium   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 mislabel_grandma   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
@@ -54,16 +57,13 @@ love_cherry_heart   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r
 faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 herobrine_bridge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-mega_lapse_fountain   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 fakerun_any   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cooked_bedrock   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 logic_minecraft   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cave_reveal
-half_heart
 stages_friends   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 trap_free_diamonds   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-fakemod_permission   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 underdog_heal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 lava_crossing
 quest_pyramid   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)

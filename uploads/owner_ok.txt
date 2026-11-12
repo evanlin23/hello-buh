@@ -14,7 +14,6 @@ one_in_a_million  5df9f64bf48c09b5  # 2026-11-11: owner pressed 'OK for YouTube'
 rainbow_sheep  07a2c2a88884a166  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 skull_art  90fb02c533792bde  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 sword_art  371a726d38ca931c  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
-tnt  94a8290be1534cae  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 villager_crowd  0313230f22df513e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 villager_fired  ac9c6fb47e9dd85e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 psycho_lava_mansion  14b70bd2fadc1cc0  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:44 UTC
@@ -25,3 +24,9 @@ fakeworld_diamond  e3e2aaebc6ac2831  # 2026-11-12: owner pressed OK for YouTube 
 friend_new_world  af35a2c2b5d76a4e  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
 mobpov_baby_zombie  590704a75c6a451b  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
 which_door  2060e5056d50f933  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+fakemod_permission  0157c5e5591178ec  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+half_heart  adc314afcbec6b57  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+inside_library  afd020dcb719d1ca  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+mega_lapse_fountain  07d5ae1f880e9f2a  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+tnt  adea555f2b9215d3  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+tnt_1000  b9dbc555bb04ac05  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched

@@ -454,6 +454,18 @@ STANDARDS.md in the same commit.
   happy and satisfied."** No Short ships unless an independent reviewer's takeaway says it makes sense and pays off.
   No-ops are redone or dropped; borderline Shorts get one bigger, clearer last beat. The audit and every fix:
   docs/noop_audit_2026-11-12.md.
+- **Owner, 2026-11-12, Review Room notes:** on mislabel_grandma "wtf is this parkour. the double extension is like
+  you jump, place 2 blocks, and then land etc (without the blocks, the jump would hav ebeen impopssile)", "we should
+  move our camera... like the art should be vertical, and we look at it tracking it as we fall", "we should have the
+  name whenver the number pops up, like 4. lime jello for the full time, not 4 before", "the loop needs ot work too";
+  on trap_free_diamonds "We should have more setup for the trap. Like go all the way down and then lava or fire etc";
+  on mega_lapse_fox "the beaet drops before the ears appear"; on lapse_house "make the house more fancy, and it doesnt
+  need to be superflat"; on guess_sound "nothing really happens this first bit, people will scroll". The general
+  rules: a double extension is a mid-air clutch (jump a gap you can't make, place 2 blocks under you in the air,
+  land on them); a list item's number and name appear together and stay up for the whole item; a Short that loops
+  must loop seamlessly (the last frame leads into the first); a build sits in a real world, not superflat, and is
+  detailed; the music drop lands on the payoff's reveal, never before it; and something happens from the first
+  frame (r:r0f3da0).
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

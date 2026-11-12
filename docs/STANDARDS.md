@@ -429,6 +429,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Shorts get one bigger last beat (docs/noop_audit_2026-11-12.md). Check: review, owner. r:r4607fa
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
+- **Owner notes 2026-11-12 (general)**: a double extension is a mid-air clutch (jump an impossible gap, place 2
+  blocks under you mid-air, land); list items show number + name together for the whole item; a looping Short loops
+  seamlessly; builds sit in a real world (no superflat) with detail; the music drop lands on the reveal, never
+  before it. Check: review, owner. r:r489883
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
