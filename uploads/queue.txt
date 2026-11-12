@@ -55,7 +55,7 @@ worse_tnt
 speed_build
 sand_tower
 water_vs_lava
-rainbow_sheep
+# rainbow_sheep  # dropped 2026-11-12: still a no-op after 2 redos (owner: "fix all of them or just drop", r:r4607fa)
 desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 interrupt_lamps   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
