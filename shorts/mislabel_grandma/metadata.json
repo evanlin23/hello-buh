@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 64606811,
-    "sha256": "506c2a0b9b5dccad60aff967d3b30a9ae714a570bcda3cf98313bf60e4a9502f",
+    "bytes": 64608048,
+    "sha256": "a8f554f3dd08e7fd0f4f7732dbcce41520866af21d9e76fd08005ac3fed519b5",
     "release": {
       "tag": "pkg-mislabel_grandma",
-      "asset": "mislabel_grandma.short.506c2a0b9b5dccad.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short.506c2a0b9b5dccad.mp4",
-      "sha256": "506c2a0b9b5dccad60aff967d3b30a9ae714a570bcda3cf98313bf60e4a9502f",
-      "bytes": 64606811
+      "asset": "mislabel_grandma.short.a8f554f3dd08e7fd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short.a8f554f3dd08e7fd.mp4",
+      "sha256": "a8f554f3dd08e7fd0f4f7732dbcce41520866af21d9e76fd08005ac3fed519b5",
+      "bytes": 64608048
     },
     "nosong_release": {
       "tag": "pkg-mislabel_grandma",
@@ -2656,12 +2656,12 @@
     "python3 edit.py --frames work/mislabel_grandma.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mislabel_grandma.rec.json --audio work/mislabel_grandma.wav --caption \"Minecraft items, named by my grandma 👵\" --self_name 56e --colors 1=yellow,2=yellow,3=yellow,4=yellow,5=yellow,6=yellow --captions \"[[\\\"item1\\\",\\\"1. Red crayons\\\"],[\\\"item2\\\",\\\"2. Tomato soup\\\"],[\\\"item3\\\",\\\"3. Ice cube\\\"],[\\\"item4\\\",\\\"4. Lime jello\\\"],[\\\"item5\\\",\\\"5. Angry lemon\\\"],[\\\"item6\\\",\\\"6. Sad cucumber\\\"],[\\\"home\\\",\\\"Minecraft items, named by my grandma 👵\\\"]]\" --speed [[\"end1\",\"item2\",\"cut\"],[\"end2\",\"item3\",\"cut\"],[\"end3\",\"item4\",\"cut\"],[\"end4\",\"item5\",\"cut\"],[\"end5\",\"item6\",\"cut\"],[\"end6\",\"home\",\"cut\"]] --sfx [[\"dip\",\"land\",0.4]] --start_at land0:0.1 --end_after land:0.1 --out out/mislabel_grandma.mp4"
   ],
   "status": "ready",
-  "notes": "mislabel v4: all 4 owner notes (r:r489883): first-person mid-air double/triple extensions over impossible gaps, vertical builds tracked as you fall, 'N. label' for the whole item, a seamless loop; independent review READY",
+  "notes": "mislabel v4: all 4 owner notes (r:r489883): first-person mid-air double/triple extensions over impossible gaps, vertical builds tracked as you fall, 'N. label' for the whole item, a seamless loop; independent review READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T05:23:21.298Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:23:53+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:10:58+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 28.42 s vs the reviewed render 28.40 s"
@@ -2669,16 +2669,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:20:58.967Z",
-      "report": "work/hb/mislabel_grandma.check.json"
+      "at": "2026-11-12T04:56:57.554Z",
+      "report": "out/mislabel_grandma.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.34,
+      "pump_run": 0.0,
+      "under": 5.4,
+      "summary": "the master's gain spread 0.34 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 5.4 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.34,
+    "pump_run": 0.0,
+    "master_gain": -0.06,
+    "under": 5.4,
+    "windows": [
+      13,
+      520
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.34 dB (max 3.0), run 0.0 s (max 0.5), game over music 5.4 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:10:46+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "506c2a0b9b5dccad60aff967d3b30a9ae714a570bcda3cf98313bf60e4a9502f",
+      "release": {
+        "tag": "pkg-mislabel_grandma",
+        "asset": "mislabel_grandma.short.506c2a0b9b5dccad.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short.506c2a0b9b5dccad.mp4",
+        "sha256": "506c2a0b9b5dccad60aff967d3b30a9ae714a570bcda3cf98313bf60e4a9502f",
+        "bytes": 64606811
+      },
+      "song": {
+        "drop_in_short_s": 28.3,
+        "drop_in_song_s": 47.5,
+        "song_start_s": 19.2
+      }
+    },
+    "song_file_sha256": "7cfaf6119ddf44be81996838f9620b75ef7ced05af346c9405e310b36748027e",
+    "video_stream_md5": "661d2775f1cbe1fd07d7b65f9c7757f4",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

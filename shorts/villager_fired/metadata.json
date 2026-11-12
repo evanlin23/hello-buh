@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21847994,
-    "sha256": "baa103404df94de85b891be06004e5ed1ac25ce850e43948517f9a56106b5821",
+    "bytes": 21842638,
+    "sha256": "c3d8ed0721339474128d94161790b25bba64d34eb6d4997d799cc347e95b675d",
     "release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short.baa103404df94de8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.baa103404df94de8.mp4",
-      "sha256": "baa103404df94de85b891be06004e5ed1ac25ce850e43948517f9a56106b5821",
-      "bytes": 21847994
+      "asset": "villager_fired.short.c3d8ed0721339474.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.c3d8ed0721339474.mp4",
+      "sha256": "c3d8ed0721339474128d94161790b25bba64d34eb6d4997d799cc347e95b675d",
+      "bytes": 21842638
     },
     "nosong_release": {
       "tag": "pkg-villager_fired",
@@ -1567,12 +1567,12 @@
     "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --self_name 56e --red every --subs \"[[\\\"job\\\",\\\"job 1/13: librarian\\\",0.9,0],[\\\"job\\\",\\\"job 2/13: farmer\\\",0.9,1],[\\\"job\\\",\\\"job 3/13: fisherman\\\",0.9,2],[\\\"job\\\",\\\"job 4/13: armorer\\\",0.6,3],[\\\"job\\\",\\\"job 5/13: butcher\\\",0.6,4],[\\\"job\\\",\\\"job 6/13: cartographer\\\",0.6,5],[\\\"job\\\",\\\"job 7/13: cleric\\\",0.6,6],[\\\"job\\\",\\\"job 8/13: fletcher\\\",0.6,7],[\\\"job\\\",\\\"job 9/13: weaponsmith\\\",0.45,8],[\\\"job\\\",\\\"job 10/13: shepherd\\\",0.45,9],[\\\"job\\\",\\\"job 11/13: toolsmith\\\",0.45,10],[\\\"job\\\",\\\"job 12/13: leatherworker\\\",0.45,11],[\\\"job\\\",\\\"job 13/13: mason\\\",0.45,12],[\\\"all_jobs\\\",\\\"ALL 13 AT ONCE\\\",1.6,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",1.4,0],[\\\"lit:1.0\\\",\\\"now FIRE him\\\",1.4,0],[\\\"ring_boom\\\",\\\"FIRED from 13 jobs at once\\\",1.5,0],[\\\"gone\\\",\\\"permanently\\\",1.5,0]]\" --subs_y 0.15 --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4]] --punch [[\"gone\",0,1.3]] --flash [[\"mob_death\",0,0.6],[\"gone\",0,0.9]] --sfx [[\"pop\",\"job\",{\"gain\":2}],[\"dip\",\"gone\",0.4],[\"gamedip\",\"gone\",0.35],[\"impact\",\"gone\",{\"gain\":1.3}]] --start_at job:-0.3 --end_after gone:0.65 --out out/villager_fired.mp4"
   ],
   "status": "ready",
-  "notes": "owner 2026-11-12 'too slow to start / dont understand the premise': redesigned, the first job down and robe change at 0.3 s, villager big and centred, no hire/fire act, TNT hidden until one TNT lit in plain sight, 15.8 s (was 31.6); fix-check READY (cold read got the premise in 1 s)",
+  "notes": "owner 2026-11-12 'too slow to start / dont understand the premise': redesigned, the first job down and robe change at 0.3 s, villager big and centred, no hire/fire act, TNT hidden until one TNT lit in plain sight, 15.8 s (was 31.6); fix-check READY (cold read got the premise in 1 s) | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T05:57:40.626Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:58:06+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:12:05+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 15.81 s vs the reviewed render 15.80 s"
@@ -1587,9 +1587,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:55:25.935Z",
-      "report": "work/hb/villager_fired.check.json"
+      "at": "2026-11-12T05:35:00.375Z",
+      "report": "out/villager_fired.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.16,
+      "pump_run": 0.05,
+      "under": 5.64,
+      "summary": "the master's gain spread 2.16 dB (max 3), longest hard-limited run 0.05 s (max 0.5), the game 5.6 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.16,
+    "pump_run": 0.05,
+    "master_gain": -0.06,
+    "under": 5.64,
+    "windows": [
+      33,
+      191
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.16 dB (max 3.0), run 0.05 s (max 0.5), game over music 5.64 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:11:56+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "baa103404df94de85b891be06004e5ed1ac25ce850e43948517f9a56106b5821",
+      "release": {
+        "tag": "pkg-villager_fired",
+        "asset": "villager_fired.short.baa103404df94de8.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.baa103404df94de8.mp4",
+        "sha256": "baa103404df94de85b891be06004e5ed1ac25ce850e43948517f9a56106b5821",
+        "bytes": 21847994
+      },
+      "song": {
+        "drop_in_short_s": 5.9,
+        "drop_in_song_s": 9.0,
+        "song_start_s": 3.1
+      }
+    },
+    "song_file_sha256": "449c12c049be95eedc1809342ef3764213f6161be37e000c660ba63de7cb77cd",
+    "video_stream_md5": "c797024e533be09db7427adbeb4084a4",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 10647993,
-    "sha256": "272b23a5166f0a95aeb9f3a58b8a0dcf7d66bbd9a150fc370e52ce9a133b2a7e",
+    "bytes": 10647349,
+    "sha256": "078a5734f2900c4634ec5fbf3cb703ef51e70d2284b3e82947de766ff83eb4e8",
     "release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short.272b23a5166f0a95.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.272b23a5166f0a95.mp4",
-      "sha256": "272b23a5166f0a95aeb9f3a58b8a0dcf7d66bbd9a150fc370e52ce9a133b2a7e",
-      "bytes": 10647993
+      "asset": "creeper_art.short.078a5734f2900c46.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.078a5734f2900c46.mp4",
+      "sha256": "078a5734f2900c4634ec5fbf3cb703ef51e70d2284b3e82947de766ff83eb4e8",
+      "bytes": 10647349
     },
     "nosong_release": {
       "tag": "pkg-creeper_art",
@@ -383,12 +383,12 @@
     "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --self_name 56e --subs [[\"hiss\",\"wait...\",1.3]] --subs_y 0.12 --speed [[\"build0:0.1\",\"built0:-0.4\",2],[\"complete:0.4\",\"hiss\",2]] --punch [[\"complete\",0,1.08],[\"boom\",0,1.14]] --flash [[\"boom\",0,0.5]] --sfx [[\"air\",\"start\",\"boom\",{\"gain\":0.35}],[\"impact\",\"complete\",{\"gain\":0.6}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.4}]] --start_at build0:0.9 --end_after clear:0.8 --out out/creeper_art.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): 7 s; the pixel-art creeper face hisses (a real primed-TNT fuse) and blows itself off the wall; built on real terrain (not superflat, r:r489883); fix-check READY r3",
+  "notes": "no-op fix (r:r4607fa): 7 s; the pixel-art creeper face hisses (a real primed-TNT fuse) and blows itself off the wall; built on real terrain (not superflat, r:r489883); fix-check READY r3 | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:07:46.574Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:08:10+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:12:56+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 6.95 s vs the reviewed render 6.95 s"
@@ -403,9 +403,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:06:36.433Z",
-      "report": "work/hb/creeper_art.check.json"
+      "at": "2026-11-12T05:14:57.026Z",
+      "report": "out/creeper_art.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.01,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 1.01 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.01,
+    "pump_run": 0.0,
+    "master_gain": -0.1,
+    "under": null,
+    "windows": [
+      15,
+      5
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.01 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:12:51+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "272b23a5166f0a95aeb9f3a58b8a0dcf7d66bbd9a150fc370e52ce9a133b2a7e",
+      "release": {
+        "tag": "pkg-creeper_art",
+        "asset": "creeper_art.short.272b23a5166f0a95.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.272b23a5166f0a95.mp4",
+        "sha256": "272b23a5166f0a95aeb9f3a58b8a0dcf7d66bbd9a150fc370e52ce9a133b2a7e",
+        "bytes": 10647993
+      },
+      "song": {
+        "drop_in_short_s": 6.15,
+        "drop_in_song_s": 16.5,
+        "song_start_s": 10.35
+      }
+    },
+    "song_file_sha256": "cbd28e180dfac36e604ba2458ec768d14af5f5808b10bd07a47586b5d4c6629e",
+    "video_stream_md5": "f406514af4859a02f0ee28a4b10079a3",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

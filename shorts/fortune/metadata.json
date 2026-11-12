@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 13159151,
-    "sha256": "5ac3c857f5ef0bef2c6c3387807e31be96000ded833d0dd75fa55a5ce521f6be",
+    "bytes": 13158985,
+    "sha256": "ef1012efe8a1c479b72c4430c7bea2db607f3b04126bcb78e900c37bc053add7",
     "release": {
       "tag": "pkg-fortune",
-      "asset": "fortune.short.5ac3c857f5ef0bef.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fortune/fortune.short.5ac3c857f5ef0bef.mp4",
-      "sha256": "5ac3c857f5ef0bef2c6c3387807e31be96000ded833d0dd75fa55a5ce521f6be",
-      "bytes": 13159151
+      "asset": "fortune.short.ef1012efe8a1c479.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fortune/fortune.short.ef1012efe8a1c479.mp4",
+      "sha256": "ef1012efe8a1c479b72c4430c7bea2db607f3b04126bcb78e900c37bc053add7",
+      "bytes": 13158985
     },
     "nosong_release": {
       "tag": "pkg-fortune",
@@ -15100,12 +15100,12 @@
     "python3 edit.py --frames work/fortune.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fortune.rec.json --audio work/fortune.wav --caption \"POV: fortune 1000 💀\" --self_name 56e --red 1000 --subs_y 0.15 --speed [[\"seen0\",\"walk1\",\"cut\"],[\"seen1\",\"walk2\",\"cut\"],[\"seen2\",\"walk3\",\"cut\"],[\"seen3\",\"walk4\",\"cut\"],[\"walk1\",\"mine1:-0.05\",1.5],[\"walk2\",\"mine2:-0.05\",1.5],[\"walk3\",\"mine3:-0.05\",1.5],[\"walk4\",\"mine4:-0.05\",1.5]] --punch [[\"flood\",0,1.1]] --shake [[\"flood\",0,10]] --flash [[\"flood\",0,0.45]] --sfx [[\"impact\",\"mine0:0.02\",{\"gain\":2}],[\"impact\",\"burst0\",{\"gain\":2.6}],[\"dip\",\"flood\",0.4],[\"impact\",\"flood\",{\"gain\":1.5}]] --start_at mine0:-0.1 --end_after flood:0.7 --out out/fortune.mp4"
   ],
   "status": "ready",
-  "notes": "v4 (owner notes on v3, r:ra8d5da): crosshair on each ore through its break, the camera follows each shower to where it lands, the walk along the wall is back, the emerald ore explodes and it ends 0.7 s later; reviewed READY (independent subagent, v4 round 2 fix-check approved by the lead); pace/mixcheck OK",
+  "notes": "v4 (owner notes on v3, r:ra8d5da): crosshair on each ore through its break, the camera follows each shower to where it lands, the walk along the wall is back, the emerald ore explodes and it ends 0.7 s later; reviewed READY (independent subagent, v4 round 2 fix-check approved by the lead); pace/mixcheck OK | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T06:09:53.872Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:10:14+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:11:42+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 7.76 s vs the reviewed render 7.75 s"
@@ -15120,9 +15120,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:08:49.275Z",
-      "report": "work/hb/fortune.check.json"
+      "at": "2026-11-12T05:47:43.405Z",
+      "report": "out/fortune.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.8,
+      "pump_run": 0.05,
+      "under": 9.46,
+      "summary": "the master's gain spread 0.8 dB (max 3), longest hard-limited run 0.05 s (max 0.5), the game 9.5 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.8,
+    "pump_run": 0.05,
+    "master_gain": -0.09,
+    "under": 9.46,
+    "windows": [
+      14,
+      92
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.8 dB (max 3.0), run 0.05 s (max 0.5), game over music 9.46 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:11:36+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "5ac3c857f5ef0bef2c6c3387807e31be96000ded833d0dd75fa55a5ce521f6be",
+      "release": {
+        "tag": "pkg-fortune",
+        "asset": "fortune.short.5ac3c857f5ef0bef.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fortune/fortune.short.5ac3c857f5ef0bef.mp4",
+        "sha256": "5ac3c857f5ef0bef2c6c3387807e31be96000ded833d0dd75fa55a5ce521f6be",
+        "bytes": 13159151
+      },
+      "song": {
+        "drop_in_short_s": 7.05,
+        "drop_in_song_s": 39.75,
+        "song_start_s": 32.7
+      }
+    },
+    "song_file_sha256": "62d6091544049bbf6672fe522fa69515b243378b2e919110af8a0ac0505367cf",
+    "video_stream_md5": "f067337d3dc67c259a5c8f5fb926b407",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

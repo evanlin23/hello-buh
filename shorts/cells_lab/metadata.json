@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 10254549,
-    "sha256": "6fcef8652fe0311a484851a840ea9db4c61558730c3d449f1f63191317dafd99",
+    "bytes": 10256245,
+    "sha256": "34a982e61eb2f0bd013b988851884afbba1bc375be6451488422d9588db39ccb",
     "release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short.6fcef8652fe0311a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.6fcef8652fe0311a.mp4",
-      "sha256": "6fcef8652fe0311a484851a840ea9db4c61558730c3d449f1f63191317dafd99",
-      "bytes": 10254549
+      "asset": "cells_lab.short.34a982e61eb2f0bd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.34a982e61eb2f0bd.mp4",
+      "sha256": "34a982e61eb2f0bd013b988851884afbba1bc375be6451488422d9588db39ccb",
+      "bytes": 10256245
     },
     "nosong_release": {
       "tag": "pkg-cells_lab",
@@ -1412,12 +1412,12 @@
     "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --self_name 56e --red nobody --subs \"[[\\\"cell\\\",\\\"cell 1\\\",1.4,0],[\\\"cell\\\",\\\"cell 2\\\",1.4,1],[\\\"cell\\\",\\\"cell 3\\\",1.8,2],[\\\"finale\\\",\\\"cell 4\\\",1.6],[\\\"padlook\\\",\\\"cell 5...?\\\",1]]\" --speed [[\"cellout0\",\"cellin1\",\"cut\"],[\"cellout1\",\"cellin2\",\"cut\"],[\"cellout2\",\"finale\",\"cut\"]] --punch [[\"selfland\",0,1.08]] --cards \"[[\\\"selfland\\\",\\\"CELL 5: YOU\\\",1.4,\\\"red\\\"]]\" --shake [[\"selflaunch\",0,6],[\"selfland\",0,8]] --flash [[\"selflaunch\",0,0.3],[\"selfland\",0,0.4]] --sfx [[\"impact\",\"open:0.35\",{\"gain\":0.9}],[\"impact\",\"selflaunch\",{\"gain\":1.1}],[\"dip\",\"selfland\",0.4],[\"impact\",\"selfland\",{\"gain\":1.4}]] --start_at open:0.1 --end_after selfland:1.3 --out out/cells_lab.mp4"
   ],
   "status": "ready",
-  "notes": "No-op fix (audit 2026-11-12): cells_lab redone around a twist: hallway opening, 3 cells with hard cuts, the golem's launch, then the floor launches 56e on the same pad, card CELL 5: YOU; 12.2 s; reviewed READY (independent subagent), check/pace/mixcheck OK",
+  "notes": "No-op fix (audit 2026-11-12): cells_lab redone around a twist: hallway opening, 3 cells with hard cuts, the golem's launch, then the floor launches 56e on the same pad, card CELL 5: YOU; 12.2 s; reviewed READY (independent subagent), check/pace/mixcheck OK | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T05:53:42.843Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:54:04+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:12:20+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 12.20 s vs the reviewed render 12.20 s"
@@ -1432,9 +1432,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:52:20.040Z",
-      "report": "work/hb/cells_lab.check.json"
+      "at": "2026-11-12T04:56:33.642Z",
+      "report": "out/cells_lab.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.82,
+      "pump_run": 0.0,
+      "under": 11.86,
+      "summary": "the master's gain spread 0.82 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 11.9 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.82,
+    "pump_run": 0.0,
+    "master_gain": -0.12,
+    "under": 11.86,
+    "windows": [
+      35,
+      69
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.82 dB (max 3.0), run 0.0 s (max 0.5), game over music 11.86 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:12:13+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "6fcef8652fe0311a484851a840ea9db4c61558730c3d449f1f63191317dafd99",
+      "release": {
+        "tag": "pkg-cells_lab",
+        "asset": "cells_lab.short.6fcef8652fe0311a.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.6fcef8652fe0311a.mp4",
+        "sha256": "6fcef8652fe0311a484851a840ea9db4c61558730c3d449f1f63191317dafd99",
+        "bytes": 10254549
+      },
+      "song": {
+        "drop_in_short_s": 9.65,
+        "drop_in_song_s": 16.5,
+        "song_start_s": 6.85
+      }
+    },
+    "song_file_sha256": "cbd28e180dfac36e604ba2458ec768d14af5f5808b10bd07a47586b5d4c6629e",
+    "video_stream_md5": "d101069b8468d00ce9e04cb6b3bdcc95",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

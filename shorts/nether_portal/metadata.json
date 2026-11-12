@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14930699,
-    "sha256": "ca01773e839f959f59e62a2d648d6c8eb422a3492233eb0993cd355428d4006c",
+    "bytes": 14928828,
+    "sha256": "e5975e0aaea8b650b4dcbeacdf949aa233c6d01bbab9c3f57603e1c5dd8fb386",
     "release": {
       "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short.ca01773e839f959f.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.ca01773e839f959f.mp4",
-      "sha256": "ca01773e839f959f59e62a2d648d6c8eb422a3492233eb0993cd355428d4006c",
-      "bytes": 14930699
+      "asset": "nether_portal.short.e5975e0aaea8b650.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.e5975e0aaea8b650.mp4",
+      "sha256": "e5975e0aaea8b650b4dcbeacdf949aa233c6d01bbab9c3f57603e1c5dd8fb386",
+      "bytes": 14928828
     },
     "nosong_release": {
       "tag": "pkg-nether_portal",
@@ -1384,12 +1384,12 @@
     "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"rating every way to light a nether portal 😳\" --self_name 56e --red every --subs \"[[\\\"st\\\",\\\"flint and steel\\\",1.4,0],[\\\"st\\\",\\\"fire charge\\\",1.4,1],[\\\"st\\\",\\\"TNT\\\",1.4,2],[\\\"st\\\",\\\"redstone\\\",1.4,3],[\\\"st\\\",\\\"lava\\\",1.4,4],[\\\"st\\\",\\\"respawn anchor\\\",1.4,5],[\\\"lava_a\\\",\\\"x6\\\",0.8,0]]\" --subs_y 0.15 --speed [[\"lit0:0.5\",\"cut1b\",\"cut\"],[\"lit1:0.5\",\"cut2b\",\"cut\"],[\"lit2:0.6\",\"cut3b\",\"cut\"],[\"lit3:0.5\",\"cut4b\",\"cut\"],[\"lit4:0.5\",\"cut5b\",\"cut\"],[\"fuse_a\",\"boom:-0.35\",\"cut\"],[\"boom:0.45\",\"lit2\",\"cut\"],[\"lava_a\",\"lava_b\",6],[\"charge:0.95\",\"lit5:-0.1\",\"cut\"]] --punch [[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]] --counter {\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6} --cards [[\"lit0\",\"1/10\",0.5,\"white\"],[\"lit1\",\"3/10\",0.5,\"white\"],[\"lit2\",\"0/10\",0.6,\"red\"],[\"lit3\",\"5/10\",0.5,\"yellow\"],[\"lit4\",\"8/10\",0.5,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]] --shake [[\"boom\",0,12],[\"boom\",1,20]] --sfx [[\"pop\",\"st\",{\"gain\":0.9}],[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]] --armor 20 --start_at st:-0.05 --end_after settle:-0.65 --out out/nether_portal.mp4"
   ],
   "status": "ready",
-  "notes": "owner 2026-11-12 'need faster cuts' (r:r188b46): each rating cuts 0.5 s after its result, fuse and anchor waits cut, 12.0 s (was 17.7); fix-check READY r2",
+  "notes": "owner 2026-11-12 'need faster cuts' (r:r188b46): each rating cuts 0.5 s after its result, fuse and anchor waits cut, 12.0 s (was 17.7); fix-check READY r2 | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T05:39:24.232Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:39:47+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:11:15+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 12.01 s vs the reviewed render 12.00 s"
@@ -1404,9 +1404,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:37:49.236Z",
-      "report": "work/hb/nether_portal.check.json"
+      "at": "2026-11-12T05:06:12.753Z",
+      "report": "out/nether_portal.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.66,
+      "pump_run": 0.0,
+      "under": 8.36,
+      "summary": "the master's gain spread 1.66 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 8.4 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.66,
+    "pump_run": 0.0,
+    "master_gain": -0.13,
+    "under": 8.36,
+    "windows": [
+      32,
+      39
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.66 dB (max 3.0), run 0.0 s (max 0.5), game over music 8.36 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:11:09+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "ca01773e839f959f59e62a2d648d6c8eb422a3492233eb0993cd355428d4006c",
+      "release": {
+        "tag": "pkg-nether_portal",
+        "asset": "nether_portal.short.ca01773e839f959f.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.ca01773e839f959f.mp4",
+        "sha256": "ca01773e839f959f59e62a2d648d6c8eb422a3492233eb0993cd355428d4006c",
+        "bytes": 14930699
+      },
+      "song": {
+        "drop_in_short_s": 10.5,
+        "drop_in_song_s": 16.75,
+        "song_start_s": 6.25
+      }
+    },
+    "song_file_sha256": "c1e5ab02649567f08eef24d78910eea4e39576fb5af66769b342d59980a6936a",
+    "video_stream_md5": "cf97778352fbeedc25f98b4586127976",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

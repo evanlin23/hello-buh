@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 27060167,
-    "sha256": "d3470607308c506e741e0860791f5d016a8d2d983130d63d8d7e70215a704e38",
+    "bytes": 27059659,
+    "sha256": "4893eda9f99ad90ac6e1c7a4cea17574ead64df7cfe41900a7c6bb98bdd88939",
     "release": {
       "tag": "pkg-fakerun_any",
-      "asset": "fakerun_any.short.d3470607308c506e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.d3470607308c506e.mp4",
-      "sha256": "d3470607308c506e741e0860791f5d016a8d2d983130d63d8d7e70215a704e38",
-      "bytes": 27060167
+      "asset": "fakerun_any.short.4893eda9f99ad90a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.4893eda9f99ad90a.mp4",
+      "sha256": "4893eda9f99ad90ac6e1c7a4cea17574ead64df7cfe41900a7c6bb98bdd88939",
+      "bytes": 27059659
     },
     "nosong_release": {
       "tag": "pkg-fakerun_any",
@@ -603,12 +603,12 @@
     "python3 edit.py --frames work/fakerun_any.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakerun_any.rec.json --audio work/fakerun_any.wav --caption \"FASTEST SPEEDRUN EVER (not fake)\" --self_name 56e --red EVER --subs \"[[\\\"label0\\\",\\\"0:00 spawned in ful netherite\\\",2.4],[\\\"label1\\\",\\\"diamods (after netherite??)\\\",2.2],[\\\"label2\\\",\\\"portal (corners are optinal)\\\",2.4],[\\\"label3\\\",\\\"nether fortres found (its 1 wall)\\\",2],[\\\"label4\\\",\\\"blaze rods: 1 of 6 (enuf)\\\",2],[\\\"label5\\\",\\\"ender perls x12 (1 enderman)\\\",2.2],[\\\"label6\\\",\\\"dug strait down (pro tip)\\\",1.6],[\\\"label7\\\",\\\"found strongold 1st try\\\",1.8],[\\\"label8\\\",\\\"end portel is lit\\\",1.6],[\\\"label9\\\",\\\"THE END (looks diferent)\\\",1.8],[\\\"label10\\\",\\\"end crystals: destroyd (all 0)\\\",1.6],[\\\"label11\\\",\\\"the ender dragon (real)\\\",1.6],[\\\"label12\\\",\\\"dragon kiled (1 hit)\\\",1.4]]\" --subs_y 0.72 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"ender_hit:1.0\",\"ender_hit:1.45\",3]] --clock \"[[\\\"go\\\",\\\"wr\\\",9.41,\\\"WORLD RECORD PASE\\\"]]\" --punch [[\"wr\",0,1.1]] --cards \"[[\\\"wr\\\",\\\"NEW WORLD RECORD!!1\\\",1.4,\\\"gold\\\"]]\" --flash [\"wr\"] --sfx [[\"air\",\"go\",\"wr:-0.45\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"hit\",\"go\",{\"gain\":0.9}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"gamedip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]] --armor 20 --start_at go:0 --end_after wr:1.4 --out out/fakerun_any.mp4"
   ],
   "status": "ready",
-  "notes": "fakerun 1 + r:r4607fa dragon beat (a chicken 'ender dragon', one hit); payoff hit independent of the song (air ends before the WR dip, 518efb4c); fix-check READY",
+  "notes": "fakerun 1 + r:r4607fa dragon beat (a chicken 'ender dragon', one hit); payoff hit independent of the song (air ends before the WR dip, 518efb4c); fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T05:51:02.279Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:51:31+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:12:42+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 21.63 s vs the reviewed render 21.62 s"
@@ -623,9 +623,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:48:32.789Z",
-      "report": "work/hb/fakerun_any.check.json"
+      "at": "2026-11-12T05:07:44.483Z",
+      "report": "out/fakerun_any.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.25,
+      "pump_run": 0.0,
+      "under": 4.69,
+      "summary": "the master's gain spread 1.25 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.7 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.25,
+    "pump_run": 0.0,
+    "master_gain": -0.1,
+    "under": 4.69,
+    "windows": [
+      63,
+      12
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.25 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.69 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:12:34+00:00",
+    "code": "40ec3a8c4455f5dca8baec81e74c9c09ef27ffb2",
+    "from": {
+      "sha256": "d3470607308c506e741e0860791f5d016a8d2d983130d63d8d7e70215a704e38",
+      "release": {
+        "tag": "pkg-fakerun_any",
+        "asset": "fakerun_any.short.d3470607308c506e.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.d3470607308c506e.mp4",
+        "sha256": "d3470607308c506e741e0860791f5d016a8d2d983130d63d8d7e70215a704e38",
+        "bytes": 27060167
+      },
+      "song": {
+        "drop_in_short_s": 20.22,
+        "drop_in_song_s": 39.75,
+        "song_start_s": 19.53
+      }
+    },
+    "song_file_sha256": "62d6091544049bbf6672fe522fa69515b243378b2e919110af8a0ac0505367cf",
+    "video_stream_md5": "efa16515a5a11d0d7184008780c20f34",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
