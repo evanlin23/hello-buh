@@ -1,5 +1,7 @@
 # pulled_away: continuity bible (r4)
 
+r5 (2026-11-11): the Roblox story format rewrite (docs/story_format.md): new lines, S03 cut, the edit order S01 S02 S07 S07b S08 S04 S04b S05 S06 S09 S10 S11; S06 now on the ridge's far slope (after S08's look back from the crest); the reveal is said over S11 (L08); S11 holds about 40 villagers up the path. Places, cast, props and times otherwise unchanged.
+
 r4: the lead's calls (2026-11-11): the family moves from Oakend to a new untagged homestead, Bramble Hollow, behind the
 ridge with no sightline to Fernbank; one easter egg (the empty boat); the man's skin a new plain one; lines unchanged.
 
@@ -33,21 +35,21 @@ lit village shows only from the dock; the man tows her boat from his own; the re
 ## Scenes and time
 | scene | shots | time | light |
 |---|---|---|---|
-| Bramble Hollow, its field and the ridge (present) | S01, S02, S03, S06, S08 | 11500-11700 | late afternoon, warm |
+| Bramble Hollow, its field and the ridge (present) | S01, S02, S08, S06 | 11500-11700 | late afternoon, warm |
 | Flashback: the first time he came (about day 5700) | S04, S04b, S05 | 13000 | dusk, graded warm and soft; Fernbank dark but one window |
 | Flashbacks: Mom (last week), Uncle (before) | S07, S07b | 2000 | morning, graded |
 | The inlet | S09 | 12600 | dusk |
 | Fernbank dock | S10, S11 | 13000 | dusk, the houses near the dock lit |
 
 **Order of the day:** the narration runs in time order apart from the two flashbacks. The man walks her boat down the
-Hollow's field (S01-S03), up the ridge (S06), she looks back from the crest at the shut doors (S08), down to the inlet where he gets in his own boat and tows hers
+Hollow's field (S01-S02), up to the ridge's crest where she looks back at the shut doors (S08), down the far slope (S06) to the inlet where he gets in his own boat and tows hers
 across (S09), they reach Fernbank at dusk (S10-S11).
 
 ## Cast and costume
 | who | look | where |
 |---|---|---|
-| the kid (N) | baby plains villager, no profession; a girl, never named | front seat of her oak boat S01-S03, S06, S08-S10; her doorway (small) S07 |
-| the man | player actor, nameless, no name tag, a new plain skin needed (commissioned at build), never Steve | on foot with the lead S01-S03, S06, S08; alone on the bank S04-S05 (flashback); rowing his own boat S09; off frame S10; not in S11 |
+| the kid (N) | baby plains villager, no profession; a girl, never named | front seat of her oak boat S01, S02, S06, S08-S10; her doorway (small) S07 |
+| the man | player actor, nameless, no name tag, `pulled_man` skin (canon.md Original skins), never Steve | on foot with the lead S01, S02, S06, S08; alone on the bank S04-S05 (flashback); rowing his own boat S09; off frame S10; not in S11 |
 | Mom | villager, plains fletcher (feathered hat) | boat S07 (flashback); dock's foot S11 |
 | Uncle | villager, plains butcher | boat S07b (flashback); dock's foot S11 |
 | the librarian | Fernbank's canon librarian | her lit upstairs west window S04, S04b (flashback; at (-368.5, 71, -1051.5) facing west); dock's foot, middle, S11 |
@@ -68,7 +70,7 @@ Only one librarian in the Short. In S11 only these three villagers are within 8 
 
 ## Positions and screen direction
 - The trip runs west to east = left to right in every travel shot (S01, S02, S07, S07b, S09); the camera stays on the
-  route's south side. S03 is a head-on, S04 looks east-south-east from behind the man, S06 looks north-east up the bank's slope
+  route's south side. S04 looks east-south-east from behind the man, S06 looks east down the ridge's far slope
   from behind the boat, S08 looks back west over the kid's shoulder (motivated by her turned head), S10 and S11 look
   east (the same axis as S04).
 - On land the man is always ahead of the boat (screen right). On the water his boat leads hers.
@@ -88,7 +90,7 @@ Nothing (a baby villager). No hotbar, no HUD.
   in hers. A player riding his own boat can hold a lead (as a rider leads a horse); verify the towed boat follows on
   water in the engine test.
 - A mob in a boat's front seat: a player can't steer that boat (why he rows his own).
-- A villager can't leave a boat on its own; a mob walking into a boat gets in (L08's "I got in the boat").
+- A villager can't leave a boat on its own; a mob walking into a boat gets in (L02's "I got in MYSELF").
 - Villagers walk to their beds at dusk (S11's background).
 - Villagers don't wave: the librarian turns (S11).
 - No bell: Fernbank has none (dropped from the premise's ending).
@@ -98,4 +100,4 @@ Nothing (a baby villager). No hotbar, no HUD.
 - The man: a new speaking character. **Algieba** (working pick: no character on main or any script branch uses it) and
   **Umbriel** (only named as a spare for Jonah on the six_thousand_torches script; free if Jonah stays Fenrir). Every
   other unused male voice is taken or proposed elsewhere (Zubenelgenubi, Sadachbia: Jonah's candidates; Enceladus:
-  breathy). Audition both against Pip on L05; the owner picks; then cast.json and canon.md.
+  breathy). Audition both against Pip on L05 (the man's one line); the owner picks; then cast.json and canon.md.
