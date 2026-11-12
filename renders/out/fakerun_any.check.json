@@ -1,0 +1,292 @@
+{
+ "stunt": "fakerun_any",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/fakerun_any.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  1 camera shot(s), 1.6s: POV checks skipped there; run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/fakerun_any.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT fakerun_any: 2 shots, scene 0.0-25.9 s (scene seconds from edit.startAt, before slow motion)",
+    "  intro          0.0-1.6   path   self 100% seen, 44% tall",
+    "  pov            1.6-25.9  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 7 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.3,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: netherite_sword -> netherite_pickaxe"
+    },
+    {
+     "level": "WARN",
+     "out": 2.883,
+     "shot": 3,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: netherite_pickaxe -> flint_and_steel"
+    },
+    {
+     "level": "WARN",
+     "out": 5.067,
+     "shot": 4,
+     "line": null,
+     "kind": "vanish",
+     "msg": "blaze #2257 vanishes in the middle of the frame 3.48 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 5.067,
+     "shot": 4,
+     "line": null,
+     "kind": "vanish",
+     "msg": "enderman #2258 vanishes in the middle of the frame 5.83 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 5.067,
+     "shot": 4,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: flint_and_steel -> netherite_sword"
+    },
+    {
+     "level": "WARN",
+     "out": 15.133,
+     "shot": 6,
+     "line": null,
+     "kind": "vanish",
+     "msg": "chicken #2286 vanishes in the middle of the frame 5.13 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 15.133,
+     "shot": 6,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: netherite_pickaxe -> netherite_sword"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "2 warning(s) over 6 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.3,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 64% of the frame is within 3 blocks (grass_block, diamond_ore)"
+    },
+    {
+     "level": "WARN",
+     "out": 5.067,
+     "shot": 4,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (FS full on blaze, median depth 7.7 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 5 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 48,
+     "out": 1.65,
+     "line": null,
+     "from": "intro",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.33,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.157,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 84,
+     "out": 3.45,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 139,
+     "out": 6.2,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 317,
+     "out": 15.1,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 381,
+     "out": 18.3,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "13 visible sound-making events (break 2, death 3, hit 2, hurt 3, place 1, voice 2), 8 with a sound mark, 5 without (audio.py adds those for a story)",
+    "     3.15s  digging diamond_ore                -> block.stone.hit                    2.9 blocks in view  ",
+    "     3.35s  digging diamond_ore                -> block.stone.hit                    2.9 blocks in view  ",
+    "     5.70s  placed nether_portal               -> block.stone.place                  2.9 blocks in view  ",
+    "    10.35s  blaze idle voice                   -> entity.blaze.ambient               4.1 blocks in view  ",
+    "    22.90s  chicken idle voice                 -> entity.chicken.ambient             3.8 blocks in view  ",
+    "ambience per shot: -0.25-2.05s day, 2.05-4.20s day, 4.20-6.95s day, 6.95-15.85s day, 15.85-19.05s day, 19.05-30.20s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:07:44.483Z"
+}
