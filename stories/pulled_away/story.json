@@ -127,8 +127,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "A PLAYER took / THIRTY-NINE of us / in his BOAT. / NONE came BACK. / WHERE did they GO?",
-   "say": "A player took thirty-nine of us in his boat. None came back. Where did they go?",
+   "text": "In my village, / a PLAYER / takes us away / in his BOAT. / THIRTY-NINE so far. / NONE came BACK. / WHERE did they GO?",
+   "say": "In my village, a player takes us away in his boat. Thirty-nine so far. None came back. Where did they go?",
    "shot": "S01",
    "punch": true,
    "shows": [

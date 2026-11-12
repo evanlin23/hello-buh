@@ -29,7 +29,7 @@ dusk villagers walk home to their beds.
 
 | format beat | # | shot | picture | line |
 |---|---|---|---|---|
-| 1. the impossible fact + the question (0-3 s) | 1 | S01 | the kid in an oak boat dragged over grass by a player on a lead | N: "A PLAYER took THIRTY-NINE of us in his BOAT. NONE came BACK. WHERE did they GO?" |
+| 1. the impossible fact + the question (0-3 s) | 1 | S01 | the kid in an oak boat dragged over grass by a player on a lead | N: "In my village, a PLAYER takes us away in his BOAT. THIRTY-NINE so far. NONE came BACK. WHERE did they GO?" |
 | 3, 5. the narrator wants to know and goes to look | 2 | S02 | tracking beside the boat; the man glances back on FORTY | N: "So TODAY, I got in MYSELF. I'm number FORTY." |
 | 4. someone loved at stake (+ clue) | 3 | S07, S07b, S08 | flashbacks: Mom in a boat; Uncle another day; present: the kid looks back from the crest at the two shut doors on LOVE | N: "He took MOM last WEEK. And my UNCLE. They must LOVE it there." |
 | 2. clue | 4 | S04, S04b | flashback: the man alone on the bank, dark Fernbank across the water; on WINDOW the long lens on the one lit window, the librarian in it | N: "The FIRST time he came, he stared across the WATER at the old EMPTY village. Somebody left a light on in ONE WINDOW." |
