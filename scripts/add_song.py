@@ -203,8 +203,11 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         kwin = key_sounds.windows(key_sounds.pcm(src), keys, kstop) if keys else []
         duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)) + kwin, key_sounds.DUCK)
         import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
+        # edit.songGain (dB, opt-in): the bed this much under BED_LUFS (owner 2026-11-12 on desire_town: "can we jsut
+        # have it sit underneath the sound effects but still there")
+        bed = BED_LUFS + float(stunt.get("songGain") or 0)
         lat = f",adelay={int(round(late * 1000))}:all=1" if late else ""
-        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, BED_LUFS, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, bed, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
                  f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)

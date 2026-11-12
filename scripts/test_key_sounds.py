@@ -78,6 +78,21 @@ class KeySounds(unittest.TestCase):
         f = sfx.duck_filter([(1.0, 2.0)], K.DUCK)
         self.assertIn("1-0.940*", f)
 
+    def test_gentle_dip(self):
+        # an sfx 'dip' with {depth} (desire_town, owner 2026-11-12 "the music jumps too much"): its own depth; plain
+        # dips keep the default, the deepest wins where they overlap
+        spec = [["dip", "a", 0.4, {"depth": 0.5}], ["dip", "b", 0.3]]
+        tl = [{"t": 2000, "event": "a"}, {"t": 5000, "event": "b"}]
+        w = sfx.dips(spec, tl, 0.0)
+        self.assertEqual(len(w), 2)
+        self.assertEqual(len(w[0]), 3)
+        self.assertAlmostEqual(w[0][2], 0.5)
+        self.assertEqual(len(w[1]), 2)
+        f = sfx.duck_filter(w, K.DUCK)
+        self.assertIn("0.500*", f)
+        self.assertIn("0.940*", f)
+        self.assertTrue(f.startswith(",volume='1-max("))
+
 
 if __name__ == "__main__":
     unittest.main()
