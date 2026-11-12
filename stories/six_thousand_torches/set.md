@@ -40,7 +40,7 @@ the dressing skips the growing row's cells and the door spot; the easter egg is 
 | L13 | "his LAST torch" | Jonah holds exactly 1 torch, places it on the door spot after 'LAST torch', hand empty after | S13 frames |
 | L13 | "NEVER in the DARK" | the kid lit by the new torch, gold sunrise around | S13 still |
 | L14 | "He FORGOT to SAY" | no chat, no speech; Jonah walking away west, empty-handed, ~10-14 blocks out at 'TOMORROW' | S14 frames |
-| L15 | "I'll ask him WHY... TOMORROW" | the same: Jonah further away (~14-18 blocks), still walking, the chat empty | S14 frames (the shot runs ~2 s longer) |
+| L15 | "TOMORROW, I'll ask him WHY" | the same: Jonah further away (~14-18 blocks), still walking, the chat empty | S14 frames (the shot runs ~2 s longer) |
 | (picture) | flashback (B) | **zero** story torches in S05-S07 (the whole-box swap) | a B still per shot |
 
 ## Site, library pieces, dressing, scene swaps
@@ -53,7 +53,7 @@ Jonah's birch cottage in B only; our chest with the 11 items; the growing-row st
   frame); he steps to the doorstep in the cut to S13.
 - **S13-S14 (D):** after placing the last torch and waving (S13), Jonah turns west and walks down the main street toward his bare plot
   (`M.walk` / pathfinder along the dirt path, a player's walk, never sprint), 3 blocks from the kid at S14's start, ~10-14
-  at L14's 'TOMORROW' and ~14-18 at L15's. Clear the path of anything that would make him swerve.
+  at L14's 'TOMORROW' and ~14-18 at L15's 'WHY'. Clear the path of anything that would make him swerve.
 - **S14 view:** the kid's eye at (-24, 8), turned west along the main street: check the street runs west 20+ blocks
   to the plot's torch square and the west hills fill the end; the sunrise (23720, east) is behind the camera and lights
   Jonah's back.

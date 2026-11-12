@@ -2,10 +2,10 @@
  "name": "six_thousand_torches",
  "stunt": "story_six_thousand_torches",
  "version": 2,
- "revision": "r3 (2026-11-11, the Roblox story format, docs/story_format.md, STANDARDS 0y/0z): L01 now says the fact AND the why ('I HAD to know WHY'); L03/L04 merged into one thought ('One torch lights a whole house. So something big must be coming!'), the second 'why' cut; the reveal L14 is said over S14 and a new sting L15 'I'll ask him WHY... TOMORROW' echoes line 1 and loops. Before: r2 (2026-11-11): the r1 critic's must-fixes (the nightly walk home with his torch, not a torch left by the door; the L08 'one last night' line cut; L14 a quote with no sign-off comma; Jonah's skin and voice flagged for the owner), the r1 cold read (75% sure at the midpoint: the 'last night' line removed so the midpoint stays open), and STANDARDS 0a naivety (r:rb89776): every clue gets the kid's innocent misreading (a PARTY, PRESENTS, MOVING in with US, he FORGOT). r2b: 'So I'm NEVER in the DARK' moved from L06 to L13, the kid's happy read of the last torch (the r2 midpoint cold read was still 75% with it next to the 6,000). reviews/ has the table read",
+ "revision": "r3 (2026-11-11, the Roblox story format, docs/story_format.md, STANDARDS 0y/0z): L01 now says the fact AND the why ('I HAD to know WHY'); L03 loses its second 'why' ('One torch lights a whole HOUSE.') and L04 takes 'So' ('So something big must be coming!'); the reveal L14 is said over S14 and a new sting L15 'TOMORROW, I'll ask him WHY' echoes line 1 and loops. Before: r2 (2026-11-11): the r1 critic's must-fixes (the nightly walk home with his torch, not a torch left by the door; the L08 'one last night' line cut; L14 a quote with no sign-off comma; Jonah's skin and voice flagged for the owner), the r1 cold read (75% sure at the midpoint: the 'last night' line removed so the midpoint stays open), and STANDARDS 0a naivety (r:rb89776): every clue gets the kid's innocent misreading (a PARTY, PRESENTS, MOVING in with US, he FORGOT). r2b: 'So I'm NEVER in the DARK' moved from L06 to L13, the kid's happy read of the last torch (the r2 midpoint cold read was still 75% with it next to the 6,000). reviews/ has the table read",
  "caption": "who put 6,000 torches on my village 🔥",
  "upload": {
-  "title": "someone put 6,000 torches on my village last night 🔥 #minecraft #shorts",
+  "title": "someone put 6,000 torches on my village overnight 🔥 #minecraft #shorts",
   "pinned": "What would YOU leave behind for your villager friend?",
   "tags": [
    "minecraft village",
@@ -43,7 +43,7 @@
   "where": "Larkfield: the village, our door, Jonah's plot, the north-east edge on the plateau's rim",
   "day": 4500,
   "canon": "The departing player is Jonah (not Buh, and not Milo, who stopped playing on day 3400). The narrator is a new baby villager of Larkfield, unnamed. From day 4500 a torch stands on every sturdy top in Larkfield and Jonah's plot is a 9 x 9 square of torches. Jonah walks away; nothing in this story shows him quit. Bible: World.",
-  "easter_egg": "pip_and_dog: from the north-east corner in S04, Pip and the dog are two pale specks on Dog Hill's top on the far skyline (185 blocks, line of sight checked on the survey; true on the day: they sit there every night from 4300). Never named."
+  "easter_egg": "pip_and_dog: from the north-east corner in S04, a speck on the hilltop (the dog and Pip side by side) on Dog Hill's top on the far skyline (185 blocks, line of sight checked on the survey; true on the day: they sit there every night from 4300). Never named."
  },
  "voice": {
   "engine": "gemini",
@@ -423,14 +423,14 @@
   {
    "id": "L15",
    "who": "N",
-   "text": "I'll ask him WHY... / TOMORROW.",
-   "say": "I'll ask him why... TOMORROW.",
-   "direction": "bright and sure, like it's easy; a small lift on WHY, then TOMORROW plain and light, no sadness, no slowing",
+   "text": "TOMORROW, / I'll ask him WHY.",
+   "say": "Tomorrow, I'll ask him WHY.",
+   "direction": "bright and sure, one breath, straight on from L14, a lift on WHY; no sadness, no slowing",
    "shot": "S14",
    "beat": 5,
    "look": {
     "what": "actor:Jonah",
-    "word": "TOMORROW"
+    "word": "WHY"
    }
   }
  ],
@@ -439,11 +439,11 @@
   "picture": "S14: Jonah, empty-handed, walks away west down the torch-lit street toward where his house stood, his back to us; he says nothing",
   "echo": "S06-S07 showed the ordinary night: Jonah walking the kid home with his torch, the wave, 'See you TOMORROW!' in his own voice. S13-S14 repeat the torch and the wave without the words, and he walks away without his torch",
   "chat": "none: no chat line, no quit, no 'left the game'",
-  "hold": "L15 follows L14 with no gap on the same S14 picture; cut 0.3-0.6 s after L15's 'TOMORROW', Jonah still walking; nothing after it"
+  "hold": "L15 follows L14 with no gap on the same S14 picture; cut 0.3-0.6 s after L15's 'WHY', Jonah still walking; nothing after it"
  },
  "ending": {
   "after": "L14",
-  "loop": "L15 'I'll ask him WHY... TOMORROW' echoes L01's 'I HAD to know WHY' (the question the kid never gets to ask; there is no tomorrow) and runs into L01's 'overnight'; cause and effect: the goodbye is why line 1's village has six thousand torches; 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
+  "loop": "L15 'TOMORROW, I'll ask him WHY' echoes L01's 'I HAD to know WHY' (the question the kid never gets to ask; there is no tomorrow) and ends on L01's last word and loops ('...ask him WHY. / SOMEONE put six thousand torches...'); cause and effect: the goodbye is why line 1's village has six thousand torches; 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
  },
  "shots": [
   {
@@ -569,7 +569,7 @@
    "place": "our_street",
    "size": "wide",
    "camera": "pov (kid's eye, 0.81) from the kid's S13 spot at (-24, 8), turning to look west down the main street; still once turned; FOV 50",
-   "frame": "subject: Jonah, back to us, stepping round the kid and walking away west down the torch-lit street at a player's walk, empty-handed (his torch is at our door now), about 2 blocks out at the line's start and ~10-14 at 'TOMORROW', his name over him; he walks toward where his house stood (the bare torch square at the street's end); he never looks back and says nothing; the chat is empty; bg: the street of torches, the plot's torch square, the west hills lit gold by the sunrise behind the camera (no sun in frame). Sunrise (23770). It rhymes with S07, where he walked home west to a house that existed. L15 ('I'll ask him WHY... TOMORROW') follows with no gap on the same picture, Jonah smaller (~14-18 blocks out); cut within 0.3-0.6 s of L15's 'TOMORROW', Jonah still walking."
+   "frame": "subject: Jonah, back to us, stepping round the kid and walking away west down the torch-lit street at a player's walk, empty-handed (his torch is at our door now), about 2 blocks out at the line's start and ~10-14 at 'TOMORROW', his name over him; he walks toward where his house stood (the bare torch square at the street's end); he never looks back and says nothing; the chat is empty; bg: the street of torches, the plot's torch square, the west hills lit gold by the sunrise behind the camera (no sun in frame). Sunrise (23770). It rhymes with S07, where he walked home west to a house that existed. L15 ('TOMORROW, I'll ask him WHY') follows with no gap on the same picture, Jonah smaller (~14-18 blocks out); cut within 0.3-0.6 s of L15's 'WHY', Jonah still walking."
   }
  ],
  "props": {

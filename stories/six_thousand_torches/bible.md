@@ -117,4 +117,4 @@ Coordinates: the village bell is (0,0); +x east, +z south. Real numbers come fro
 | L08-L10 | the chest (presents), the plot (he's moving in) | he gave it all away | **he's leaving** (~25 s), not sure |
 | L11-L13 | a row is growing; it ends at his door; Jonah's last torch is for him | goodbye | the walk-home torch, left behind |
 | L14 | he forgot to say "see you tomorrow" | | he isn't coming back |
-| L15 | he'll ask him why tomorrow | | there is no tomorrow |
+| L15 | tomorrow he'll ask Jonah why | | there is no tomorrow |

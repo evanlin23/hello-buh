@@ -18,7 +18,7 @@ the DARK" moved from L06 to L13 (the r2 midpoint read was still 75% with it next
 
 ## The ending first
 S14: from the path, Jonah walks away empty-handed west down the torch-lit street toward his bare plot. He set his own torch
-down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "See you TOMORROW."" Then, sure: "I'll ask him WHY... TOMORROW." Cut.
+down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "See you TOMORROW."" Then, sure: "TOMORROW, I'll ask him WHY." Cut.
 
 ## Spine
 - Every night, Jonah, the village's only player, walks me home with his torch so I'm never in the dark, and says
@@ -45,9 +45,9 @@ down by our door and waved; he said nothing. Pip, bright: "He FORGOT to SAY, "Se
 | 12 | L12 I FOLLOWED it to MY door. | S12 follow round the corner, the gap at the door | the last spot | |
 | 13 | L13 It was JONAH! With his LAST torch. So I'm NEVER in the DARK! | S13 he sets his own torch down, waves | the walk-home torch, left behind; the gesture in the kid's words (audit #6.2) | a present for me |
 | 14 | L14 He FORGOT to SAY, "See you TOMORROW." | S14 he walks away, silent, no torch | **reveal**, said in one plain sentence | he forgot |
-| 15 | L15 I'll ask him WHY... TOMORROW. | S14 continues, Jonah smaller | **sting**: echoes L01's WHY; cut 0.3-0.6 s after | there'll be a tomorrow |
+| 15 | L15 TOMORROW, I'll ask him WHY. | S14 continues, Jonah smaller | **sting**: echoes L01's WHY; cut 0.3-0.6 s after | there'll be a tomorrow |
 
-Loop: "...I'll ask him WHY... TOMORROW." / "SOMEONE put six THOUSAND TORCHES on my village OVERNIGHT. I HAD to know WHY."
+Loop: "...TOMORROW, I'll ask him WHY." / "SOMEONE put six THOUSAND TORCHES on my village OVERNIGHT. I HAD to know WHY."
 
 r3 (2026-11-11, docs/story_format.md): L01 says the fact AND the why; L03 loses its second "why" (L04 takes "So"); L14 is the reveal, said; L15 the sting echoing L01.
 
@@ -61,10 +61,10 @@ r3 (2026-11-11, docs/story_format.md): L01 says the fact AND the why; L03 loses 
 | his stuff in our chest | L08, S08 | presents for the party (L09) | a goodbye gift |
 | his house gone | L10, S10 | he's moving in with us (L10) | nothing left of him here |
 | the row ending at my door, his own torch | L11-L13, S11-S13 | a mystery to follow, then "it was Jonah!" | I'm his last stop; he leaves his torch with me |
-| no "see you tomorrow", he walks away | L14, S14 | he forgot (L14); I'll ask him tomorrow (L15) | he isn't coming back; there is no tomorrow |
+| no "see you tomorrow", he walks away | L14, S14 | he forgot (L14); tomorrow I'll ask him (L15) | he isn't coming back; there is no tomorrow |
 
 ## Twist checklist
-- [x] Changes line 1: "SOMEONE" is Jonah; "I HAD to know WHY" comes back as "I'll ask him WHY... TOMORROW" (L15); "COMING" becomes going; the "party" is a goodbye.
+- [x] Changes line 1: "SOMEONE" is Jonah; "I HAD to know WHY" comes back as "TOMORROW, I'll ask him WHY" (L15); "COMING" becomes going; the "party" is a goodbye.
 - [x] Fair play: the habit, the words, the gifts, the house, the row all come before L14; the reveal adds no fact.
 - [x] Planted twice+, in the picture (S06, S08, S10, S13).
 - [x] Misread, not hidden: each clue's innocent reading is on a line; the kid never hints or sounds afraid.
