@@ -26,7 +26,7 @@ module.exports = {
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['shears', 'now the best part', 1.2]],
     punch: [['lastshear', 0, 1.06]],
     flash: [['lastshear', 0, 0.35]],   // pace: a clear picture change on the payoff (the punch alone isn't one)
-    sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'lastshear', 0.3], ['ding', 'lastshear']]   // a hit on the payoff over the song; room tone from frame 1
+    sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'lastshear', 0.45], ['impact', 'lastshear', { gain: 1.3 }], ['ding', 'lastshear']]   // a hit on the payoff over the song; room tone from frame 1
   },
 
   async setup (ctx) {
