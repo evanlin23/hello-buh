@@ -48,6 +48,7 @@ module.exports = {
     subsY: 0.15,   // up in the sky, off the frames being filled
     subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
     cards: [['sea', 'IT NEVER ENDS 💀', 1.4, 'red']],
+    punch: [['sea', 0, 1.08]], flash: [['sea', 0, 0.4]],   // a zoom punch and a white flash on the reveal: the picture changes on the hit (pace)
     // the speedrun timer (owner request, 2026-11-07) times one portal (owner r:r32b983, 2026-11-11: "the timer should reset
     // every single time like we start a new ender portal"): 0:00.00 on each ring, green with "n/7" when its portal opens,
     // then red and running from 0 on the spare ring ("8/∞"). Built in the edit (edit.py split_timer), so ./hb check's lint
