@@ -353,7 +353,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   escalating to the full reveal. r:r4449f0 Ridiculously big: the build dwarfs a real landscape, shown from high up
   for scale, ending on a close pass beside the tiny player. r:rf8524b A ticking count of blocks used is a good
   overlay. r:rce78c5 Depth and detail (layers, overhangs, varied heights and materials, never flat tiers), in a
-  real generated world, never superflat. Check: owner, review. r:r13865d
+  real generated world, never superflat. Check: owner, review. r:r13865d Build it, then zoom out: a fast
+  time-lapse of the build going up, one big zoom out to its scale, then the end; never a long fly-round of a finished
+  build. Check: owner, review. r:rb5f36a
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
