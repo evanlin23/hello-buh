@@ -146,7 +146,7 @@ module.exports = {
     const { bot } = ctx
     for (let i = 0; i < 4; i++) {
       bot.chat(`/tp @s ${x} ${y} ${z} 180 -4`)
-      for (let t = 0; t < 10; t++) {
+      for (let t = 0; t < 30; t++) {   // 30: under a big crowd's load 10 ticks ran out (3 of 4 takes failed)
         await bot.waitForTicks(1)
         if (Math.abs(bot.entity.position.x - x) < 0.1 && Math.abs(bot.entity.position.z - z) < 0.1) { await bot.waitForTicks(2); if (Math.abs(bot.entity.position.x - x) < 0.1) return }
       }
