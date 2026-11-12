@@ -35,10 +35,10 @@ module.exports = makeStunt({
   endHold: 0.75,   // owner r:r188b46: the end 0.5-0.8 s after the payoff's result
   // fast cuts (owner r:r188b46): jump over the walk into hiding and his coast + shuffle onto the trapdoor
   edit: {
-    speed: [['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut'], ['get_up:0.05', 'peek', 'cut']],
+    speed: [['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut'], ['get_up:0.05', 'peek:-0.05', 'cut']],
     // the last beat is the close look down at him in the pit (owner r:r4607fa): a hit on it, and the end 0.8 s after
     endAfter: 'peek:0.8',
-    sfx: [['impact', 'peek', { gain: 1.4 }]]
+    sfx: [['dip', 'peek', 0.3], ['impact', 'peek', { gain: 1.4 }]]   // the cut ends just before 'peek' so the mark (and its hit) survives the cut
   },   // south-west, behind me while I build and ~67 deg off my view from the hide; the turn into hiding goes round by the north
 
   async set (ctx, T) {
