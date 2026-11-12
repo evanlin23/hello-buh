@@ -1,0 +1,287 @@
+{
+ "stunt": "which_door",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/which_door.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "speed span lava_a:1.85..lava_dead skipped (event missing or empty)",
+    "speed span strafe_a0..strafe_b0 skipped (event missing or empty)",
+    "speed span strafe_a1..strafe_b1 skipped (event missing or empty)",
+    "speed span strafe_a4..strafe_b4 skipped (event missing or empty)"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "player: the old 'HelloBuh' bot is drawn as 56e (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT which_door: 1 shots, scene 0.0-43.2 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-43.2  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 11 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 8.9,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "zombie #1088 appears in the middle of the frame 1.60 s into the shot (5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.9,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "zombie #1096 appears in the middle of the frame 1.60 s into the shot (8.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.9,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "zombie #1094 appears in the middle of the frame 1.85 s into the shot (7.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.9,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "zombie #1090 appears in the middle of the frame 2.00 s into the shot (6.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.9,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "zombie #1095 appears in the middle of the frame 3.35 s into the shot (5.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "appear",
+     "msg": "creeper #1106 appears in the middle of the frame 0.53 s into the shot (8.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "appear",
+     "msg": "creeper #1098 appears in the middle of the frame 0.63 s into the shot (4.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "appear",
+     "msg": "creeper #1103 appears in the middle of the frame 0.68 s into the shot (5.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "appear",
+     "msg": "creeper #1100 appears in the middle of the frame 0.78 s into the shot (3.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "vanish",
+     "msg": "creeper #1098 vanishes in the middle of the frame 3.38 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "vanish",
+     "msg": "creeper #1101 vanishes in the middle of the frame 3.38 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "6 warning(s) over 7 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 2.1,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 62% of the frame is within 3 blocks (deepslate_bricks, spruce_door)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.817,
+     "shot": 3,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 69% of the frame is within 3 blocks (stone, lava)"
+    },
+    {
+     "level": "WARN",
+     "out": 8.9,
+     "shot": 4,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (deepslate_bricks, spruce_door)"
+    },
+    {
+     "level": "WARN",
+     "out": 12.367,
+     "shot": 5,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (deepslate_bricks, spruce_door)"
+    },
+    {
+     "level": "WARN",
+     "out": 17.35,
+     "shot": 6,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (spruce_door, deepslate_bricks)"
+    },
+    {
+     "level": "WARN",
+     "out": 20.983,
+     "shot": 7,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (deepslate_bricks, spruce_door)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 15.2,
+     "tick": 542,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 171 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 25.383,
+     "tick": 805,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 141 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    34.70s  creeper died                       -> entity.creeper.death               4.1 blocks in view  ",
+    "    34.70s  creeper hit                        -> entity.creeper.hurt                4.7 blocks          ",
+    "    34.70s  creeper hit                        -> entity.creeper.hurt                3.0 blocks in view  ",
+    "    34.70s  creeper died                       -> entity.creeper.death               3.0 blocks in view  ",
+    "    34.70s  creeper hit                        -> entity.creeper.hurt                2.6 blocks          ",
+    "    34.70s  creeper died                       -> entity.creeper.death               2.6 blocks          ",
+    "    34.70s  creeper hit                        -> entity.creeper.hurt                3.3 blocks          ",
+    "    34.70s  creeper died                       -> entity.creeper.death               3.3 blocks          ",
+    "    34.70s  creeper hit                        -> entity.creeper.hurt                3.0 blocks in view  ",
+    "    34.70s  creeper died                       -> entity.creeper.death               3.0 blocks in view  ",
+    "    34.90s  zombie idle voice                  -> entity.zombie.ambient             11.1 blocks in view  ",
+    "    34.95s  creeper step on grass_block        -> block.grass.step                   5.5 blocks          ",
+    "    35.05s  zombie step on stone_bricks        -> entity.zombie.step                11.2 blocks in view  ",
+    "    35.10s  creeper step on grass_block        -> block.grass.step                   5.1 blocks in view  ",
+    "    35.25s  creeper step on grass_block        -> block.grass.step                   5.6 blocks          ",
+    "    35.30s  zombie step on stone_bricks        -> entity.zombie.step                10.7 blocks in view  ",
+    "    35.35s  zombie step on stone_bricks        -> entity.zombie.step                11.7 blocks in view  ",
+    "    35.35s  zombie step on stone_bricks        -> entity.zombie.step                14.6 blocks in view  ",
+    "    35.55s  creeper step on grass_block        -> block.grass.step                   4.9 blocks in view  ",
+    "    38.70s  oak_pressure_plate broke           -> block.stone.break                  1.2 blocks in view  ",
+    "    38.70s  tnt broke                          -> block.stone.break                  2.2 blocks          ",
+    "    39.15s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "    39.25s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    39.25s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    39.25s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    39.25s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    39.25s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    39.30s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "ambience per shot: -0.20-47.50s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T23:54:00.765Z"
+}
