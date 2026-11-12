@@ -810,8 +810,17 @@ def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption
             f"crop={W}:{GAME_H},format=rgba")
     # "blur": a soft blur over the clip (not the text), so a tease of the answer doesn't give it away (owner on
     # guess_sound's parrot tease, 2026-11-12: "we should blur the parrot at the start slightly")
+    # "blurBox": [x0, y0, x1, y1] (fractions of the game view): blur only there, the rest sharp (owner on guess_sound,
+    # 2026-11-12: "only blur the animal at the start, not the full screen")
     if float(h.get("blur", 0) or 0) > 0:
-        push += f",gblur=sigma={float(h['blur']):.2f}"
+        bb = h.get("blurBox")
+        if bb:
+            bx, by = int(W * bb[0]) // 2 * 2, int(GAME_H * bb[1]) // 2 * 2
+            bw, bh = int(W * (bb[2] - bb[0])) // 2 * 2, int(GAME_H * (bb[3] - bb[1])) // 2 * 2
+            push += (f",split[hbA][hbB];[hbB]crop={bw}:{bh}:{bx}:{by},gblur=sigma={float(h['blur']):.2f}[hbC];"
+                     f"[hbA][hbC]overlay={bx}:{by}")
+        else:
+            push += f",gblur=sigma={float(h['blur']):.2f}"
     if frames and caption:
         # -t on the clip's inputs: read only the hook's frames (decoding the whole sequence while the
         # main video queued behind the concat took 5+ GB and many minutes)

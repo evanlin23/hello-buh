@@ -23,7 +23,8 @@ module.exports = guessSound({
   // the end (owner: "is the warden sound overlapping the parrot sound? I couldnt hear the parrot"): the 'impact' is a
   // 1.1 s low boom (110 -> 40 Hz) that buried the parrot's hiss 0.3 s after the reveal, with the song's drop on top. Now
   // a short pop is the hit, the song stays ducked through the hiss and drops after it
-  edit: { startAt: 'cd2:-0.1', hook: { at: 'final_reveal', before: 0, after: 1.0, blur: 7, text: 'the last one is IMPOSSIBLE 😭' },
+  // the blur on the parrot only, the room sharp (owner 2026-11-12 at 4 s: "only blur the animal at the start, not the full screen")
+  edit: { startAt: 'cd2:-0.1', hook: { at: 'final_reveal', before: 0, after: 1.0, blur: 9, blurBox: [0.40, 0.32, 0.61, 0.64], text: 'the last one is IMPOSSIBLE 😭' },
     dropAt: 'final_reveal:0.8',
     sfx: [['dip', 'final_reveal:0.8', 1.2], ['gamedip', 'final_reveal', 0.35], ['pop', 'final_reveal', { gain: 1.6 }]] },
   rounds: [
