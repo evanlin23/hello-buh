@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "lit5",
     "drop_in_song_s": 16.75,
-    "drop_in_short_s": 16.18,
-    "song_start_s": 0.57
+    "drop_in_short_s": 10.5,
+    "song_start_s": 6.25
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 17.68,
+    "duration_s": 12,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21616662,
-    "sha256": "692e352ee1903a3e3566f8ab6e814745fcead5f7b3eb72a971f998db2f708269",
+    "bytes": 14930699,
+    "sha256": "ca01773e839f959f59e62a2d648d6c8eb422a3492233eb0993cd355428d4006c",
     "release": {
       "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short.692e352ee1903a3e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.692e352ee1903a3e.mp4",
-      "sha256": "692e352ee1903a3e3566f8ab6e814745fcead5f7b3eb72a971f998db2f708269",
-      "bytes": 21616662
+      "asset": "nether_portal.short.ca01773e839f959f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short.ca01773e839f959f.mp4",
+      "sha256": "ca01773e839f959f59e62a2d648d6c8eb422a3492233eb0993cd355428d4006c",
+      "bytes": 14930699
     },
     "nosong_release": {
       "tag": "pkg-nether_portal",
-      "asset": "nether_portal.short_nosong.7e18f53a2b0cd1d9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.7e18f53a2b0cd1d9.mp4",
-      "sha256": "7e18f53a2b0cd1d9b23848f9212f9777e913d92482a731557dbb97e735eb40fb",
-      "bytes": 21609657
+      "asset": "nether_portal.short_nosong.1ed829662266af01.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-nether_portal/nether_portal.short_nosong.1ed829662266af01.mp4",
+      "sha256": "1ed829662266af019c366c11abbb5e047c9b5000f0c3d1fba0a76208600e3227",
+      "bytes": 14925375
     }
   },
   "edit": {
@@ -98,39 +98,49 @@
     ],
     "speed": [
       [
-        "cut1a",
+        "lit0:0.5",
         "cut1b",
         "cut"
       ],
       [
-        "cut2a",
+        "lit1:0.5",
         "cut2b",
         "cut"
       ],
       [
-        "cut3a",
+        "lit2:0.6",
         "cut3b",
         "cut"
       ],
       [
-        "cut4a",
+        "lit3:0.5",
         "cut4b",
         "cut"
       ],
       [
-        "cut5a",
+        "lit4:0.5",
         "cut5b",
         "cut"
       ],
       [
         "fuse_a",
-        "fuse_b",
+        "boom:-0.35",
+        "cut"
+      ],
+      [
+        "boom:0.45",
+        "lit2",
         "cut"
       ],
       [
         "lava_a",
         "lava_b",
         6
+      ],
+      [
+        "charge:0.95",
+        "lit5:-0.1",
+        "cut"
       ]
     ],
     "subs": [
@@ -181,31 +191,31 @@
       [
         "lit0",
         "1/10",
-        0.9,
+        0.5,
         "white"
       ],
       [
         "lit1",
         "3/10",
-        0.9,
+        0.5,
         "white"
       ],
       [
         "lit2",
         "0/10",
-        0.9,
+        0.6,
         "red"
       ],
       [
         "lit3",
         "5/10",
-        0.9,
+        0.5,
         "yellow"
       ],
       [
         "lit4",
         "8/10",
-        0.9,
+        0.5,
         "yellow"
       ],
       [
@@ -300,13 +310,13 @@
       "--subs_y",
       "0.15",
       "--speed",
-      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse_a\",\"fuse_b\",\"cut\"],[\"lava_a\",\"lava_b\",6]]",
+      "[[\"lit0:0.5\",\"cut1b\",\"cut\"],[\"lit1:0.5\",\"cut2b\",\"cut\"],[\"lit2:0.6\",\"cut3b\",\"cut\"],[\"lit3:0.5\",\"cut4b\",\"cut\"],[\"lit4:0.5\",\"cut5b\",\"cut\"],[\"fuse_a\",\"boom:-0.35\",\"cut\"],[\"boom:0.45\",\"lit2\",\"cut\"],[\"lava_a\",\"lava_b\",6],[\"charge:0.95\",\"lit5:-0.1\",\"cut\"]]",
       "--punch",
       "[[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]]",
       "--counter",
       "{\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6}",
       "--cards",
-      "[[\"lit0\",\"1/10\",0.9,\"white\"],[\"lit1\",\"3/10\",0.9,\"white\"],[\"lit2\",\"0/10\",0.9,\"red\"],[\"lit3\",\"5/10\",0.9,\"yellow\"],[\"lit4\",\"8/10\",0.9,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]]",
+      "[[\"lit0\",\"1/10\",0.5,\"white\"],[\"lit1\",\"3/10\",0.5,\"white\"],[\"lit2\",\"0/10\",0.6,\"red\"],[\"lit3\",\"5/10\",0.5,\"yellow\"],[\"lit4\",\"8/10\",0.5,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]]",
       "--shake",
       "[[\"boom\",0,12],[\"boom\",1,20]]",
       "--sfx",
@@ -1354,10 +1364,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "59a06225d9cce4ee5b3e0dfc19320f2a8e686c85",
+    "commit": "91f02d4691de6cdfb3e50afc2dadf4332869fa71",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:03:38.332Z",
-    "head_at_publish": "e0add096ef689e3beccce3b4bf550904e2ae89af",
+    "rendered_at": "2026-11-12T05:37:34.607Z",
+    "head_at_publish": "91f02d4691de6cdfb3e50afc2dadf4332869fa71",
     "stunt": "stunts/nether_portal.js",
     "source_snapshot": [
       "source/nether_portal.js",
@@ -1367,34 +1377,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 59a06225d9cc",
+    "git checkout 91f02d4691de",
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"rating every way to light a nether portal 😳\" --self_name 56e --red every --subs \"[[\\\"st\\\",\\\"flint and steel\\\",1.4,0],[\\\"st\\\",\\\"fire charge\\\",1.4,1],[\\\"st\\\",\\\"TNT\\\",1.4,2],[\\\"st\\\",\\\"redstone\\\",1.4,3],[\\\"st\\\",\\\"lava\\\",1.4,4],[\\\"st\\\",\\\"respawn anchor\\\",1.4,5],[\\\"lava_a\\\",\\\"x6\\\",0.8,0]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse_a\",\"fuse_b\",\"cut\"],[\"lava_a\",\"lava_b\",6]] --punch [[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]] --counter {\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6} --cards [[\"lit0\",\"1/10\",0.9,\"white\"],[\"lit1\",\"3/10\",0.9,\"white\"],[\"lit2\",\"0/10\",0.9,\"red\"],[\"lit3\",\"5/10\",0.9,\"yellow\"],[\"lit4\",\"8/10\",0.9,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]] --shake [[\"boom\",0,12],[\"boom\",1,20]] --sfx [[\"pop\",\"st\",{\"gain\":0.9}],[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]] --armor 20 --start_at st:-0.05 --end_after settle:-0.65 --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"rating every way to light a nether portal 😳\" --self_name 56e --red every --subs \"[[\\\"st\\\",\\\"flint and steel\\\",1.4,0],[\\\"st\\\",\\\"fire charge\\\",1.4,1],[\\\"st\\\",\\\"TNT\\\",1.4,2],[\\\"st\\\",\\\"redstone\\\",1.4,3],[\\\"st\\\",\\\"lava\\\",1.4,4],[\\\"st\\\",\\\"respawn anchor\\\",1.4,5],[\\\"lava_a\\\",\\\"x6\\\",0.8,0]]\" --subs_y 0.15 --speed [[\"lit0:0.5\",\"cut1b\",\"cut\"],[\"lit1:0.5\",\"cut2b\",\"cut\"],[\"lit2:0.6\",\"cut3b\",\"cut\"],[\"lit3:0.5\",\"cut4b\",\"cut\"],[\"lit4:0.5\",\"cut5b\",\"cut\"],[\"fuse_a\",\"boom:-0.35\",\"cut\"],[\"boom:0.45\",\"lit2\",\"cut\"],[\"lava_a\",\"lava_b\",6],[\"charge:0.95\",\"lit5:-0.1\",\"cut\"]] --punch [[\"lit0\",0,1.06],[\"lit1\",0,1.06],[\"lit2\",0,1.06],[\"lit3\",0,1.06],[\"lit4\",0,1.06],[\"lit5\",0,1.12]] --counter {\"at\":[[\"st\",0],[\"st\",1],[\"st\",2],[\"st\",3],[\"st\",4],[\"st\",5]],\"total\":6} --cards [[\"lit0\",\"1/10\",0.5,\"white\"],[\"lit1\",\"3/10\",0.5,\"white\"],[\"lit2\",\"0/10\",0.6,\"red\"],[\"lit3\",\"5/10\",0.5,\"yellow\"],[\"lit4\",\"8/10\",0.5,\"yellow\"],[\"lit5\",\"11/10\",3.2,\"gold\"]] --shake [[\"boom\",0,12],[\"boom\",1,20]] --sfx [[\"pop\",\"st\",{\"gain\":0.9}],[\"air\",\"start\",\"lit5\",{\"gain\":0.5}],[\"dip\",\"boom\",0.4,{\"nth\":1}],[\"gamedip\",\"boom\",0.35,{\"nth\":1}],[\"impact\",\"boom\",{\"gain\":1.4,\"nth\":1}]] --armor 20 --start_at st:-0.05 --end_after settle:-0.65 --out out/nether_portal.mp4"
   ],
   "status": "ready",
-  "notes": "fast cuts r:r188b46: the end 1.2 s after the 11/10 card (was 2.5 s); frame-0 pop; fix-check READY",
-  "published_at": "2026-11-12T01:05:56.100Z",
+  "notes": "owner 2026-11-12 'need faster cuts' (r:r188b46): each rating cuts 0.5 s after its result, fuse and anchor waits cut, 12.0 s (was 17.7); fix-check READY r2",
+  "published_at": "2026-11-12T05:39:24.232Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:06:20+00:00",
+    "at": "2026-11-12T05:39:47+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 17.68 s vs the reviewed render 17.68 s"
+      "summary": "short.mp4 12.01 s vs the reviewed render 12.00 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:03:55.118Z",
+      "at": "2026-11-12T05:37:49.236Z",
       "report": "work/hb/nether_portal.check.json"
     },
     "key_sounds": "n/a"
