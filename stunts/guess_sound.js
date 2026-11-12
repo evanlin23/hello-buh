@@ -9,11 +9,15 @@ module.exports = guessSound({
   name: 'guess_sound',
   caption: 'guess the mob from its sound 🔊',
   red: 'sound',
-  endAfter: 1.45,   // the payoff ends on a text line ("parrots copy creepers"): reading time
+  endAfter: 1.2,   // the payoff ends on a text line ("parrots copy creepers"): reading time (owner r:r188b46: 1.2 s max; was 1.45)
   // the twist's hit under the NCS bed (pace/mixcheck: no sound hit on the final reveal): the song and the game (the
   // parrot's hiss filled the 0.3 s before it) dip, then an impact
   // and a pop with the round counter on frame 0 (pace: silent until 0.71 s)
-  edit: { sfx: [['pop', 'count', { gain: 0.7 }], ['dip', 'final_reveal', 0.4], ['gamedip', 'final_reveal', 0.35], ['impact', 'final_reveal', { gain: 1.4 }]] },
+  // the opening (owner on guess_sound at 0 s: "nothing really happens this first bit, people will scroll"; r:r0f3da0,
+  // r:r4607fa): a 1.0 s flash of the twist first, the last room lit, the parrot doing its creeper hiss (no label: the
+  // twist stays for the end), then the first round from its countdown, the cow's call already playing (as pt 2)
+  edit: { startAt: 'cd3:-0.02', hook: { at: 'final_reveal', before: 0, after: 1.0, text: 'the last one is IMPOSSIBLE 😭' },
+    sfx: [['pop', 'cd3', { gain: 0.7 }], ['dip', 'final_reveal', 0.4], ['gamedip', 'final_reveal', 0.35], ['impact', 'final_reveal', { gain: 1.4 }]] },
   rounds: [
     { mob: 'cow', room: 'barn', sound: 'entity.cow.ambient', label: 'EASY', answer: 'COW', react: 'moo', leanTicks: 6, lookY: 1.2 },
     { mob: 'llama', room: 'savanna', sound: 'entity.llama.ambient', label: 'MEDIUM', answer: 'LLAMA', react: 'call', reactSound: 'entity.llama.angry', lean: 0, back: 4, lookY: 1.7, color: 'gold' },
