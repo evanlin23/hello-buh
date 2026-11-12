@@ -1,0 +1,13 @@
+guess_sound_2: CHECK OK
+ok   motion lint: clean
+ok   rec_check: no blockers
+ok   lint: clean
+ok   continuity: 0 problem(s), 0 warning(s), 0 note(s)
+ok   framing: 0 warning(s) over 7 shots
+ok   owner: 0 blocker(s), 0 warning(s)
+ok   cuts: 0 blocker(s), 0 warning(s) over 0 cuts
+ok   caption sync: skipped (not a story)
+ok   voice contrast: skipped (not a story)
+ok   on-screen sound: every visible action has its sound
+ok   pace: skipped: no rendered Short yet (runs after ./hb render --fetch)
+ok   audible sound: skipped: no fresh rendered Short (the levels are rec_check's)
