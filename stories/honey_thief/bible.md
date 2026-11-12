@@ -2,7 +2,7 @@
 
 ## World
 - **Place:** `honey_meadow` (claimed on this branch), the High Meadow's top west of Larkfield; set.md has the plan.
-- **Day:** 4200. Before Six Thousand Torches (4500): Larkfield is unlit by torches; its west roofs show in S08.
+- **Day:** 4200. Before Six Thousand Torches (4500): Larkfield is unlit by torches; its west roofs show at the end of S07's orbit (50-75 blocks).
 - **Canon created:** from day 4200 the flower bee (52 rows) is a permanent stamp on the plateau's top; the giant
   is Jonah of Larkfield (owner 2026-11-11), never named, name tag hidden. Added to docs/world/canon.md.
 - **Easter egg:** Larkfield's west roofs on the east skyline at the end of S07's orbit (50-75 blocks). Never named.
@@ -25,7 +25,6 @@ S01-S07 at the hive and the field's south edge; S08-S10 out over the wing and up
 | campfire | lit, open, in a 1-deep pit at O + (0,-1,0) | S02, S07, S10 (smoke) |
 | glass bottle -> honey bottle | main hand at the hive (S01, S02); fills on 'CLINK' (S03), then in his offhand (S03-S06) | S01-S06 |
 | wildflowers | placed as flat covers, rows east-west, at the head's crown | S03, S04, S10 |
-| pink petals | one cover placed at the heart's edge on 'FLOWERS' | S01 |
 | the heart | pink_petals around the post, point south, a 2-tall rose-bush rim | S02, S07, S10 |
 | the bee picture | complete except the crown: row 51 planted in S03-S04, row 52 in S10 | S08-S10 |
 | hotbar (his) | glass bottles, wildflowers x64, pink petals, lilac, rose bushes, campfire, milk bucket, 67 eggs, cake | his POV never shown; consistent if seen |

@@ -2,7 +2,7 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r8 (2026-11-12): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r8 (2026-11-12): critic r3 APPROVE (7.6) + its should-fixes (L01 drops 'And'; S01 places no flower; S10 smoke marks home; footprint = set.md's; easter egg S07; 2-wide podzol outline is the plan); casual and gamer cold reads both get it (reviews/cold_reads.md). the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
   "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
@@ -38,7 +38,7 @@
  },
  "weather": "clear",
  "world": {
-  "place": "honey_meadow (claimed on this branch, docs/world/map.json): the High Meadow's top west of Larkfield, footprint (-484, -746, -420, -686), O = (-452, 118, -716): the hive's campfire block (read the ground y off the survey before build: the meadow top is y 116-120). The bee runs north-south: head at z ~ -742, tail at z ~ -690 (52 rows), the hive at the heart about (-452, -716), wings to x ~ -482 and -422.",
+  "place": "honey_meadow (claimed on this branch, docs/world/map.json): the High Meadow's top west of Larkfield, footprint (-484, -754, -420, -678), O = (-452, 118, -716): the hive's campfire block (read the ground y off the survey before build: the meadow top is y 116-120). The bee runs north-south: head at z ~ -742, tail at z ~ -690 (52 rows), the hive at the heart about (-452, -716), wings to x ~ -482 and -422.",
   "day": 4200,
   "canon": "The giant is Jonah, Larkfield's one player (owner 2026-11-11: \"giant can be jonah. no name tag\"), 300 days before he leaves (Six Thousand Torches, 4500); never named, name tag hidden. From day 4200 the bee meadow is a permanent stamp on the plateau's top, west of Larkfield's box.",
   "easter_egg": "Larkfield's west roofs, small on the east skyline at the end of S07's orbit (pre-torch: day 4200). Never named."
@@ -130,8 +130,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "The GIANT / stole our HONEY / FIFTY-TWO times. / And every time, / he plants FLOWERS. / WHY?",
-   "say": "The giant stole our honey fifty-two times. And every time, he plants flowers. Why?",
+   "text": "The GIANT / stole our HONEY / FIFTY-TWO times. / Every time, / he plants FLOWERS. / WHY?",
+   "say": "The giant stole our honey fifty-two times. Every time, he plants flowers. Why?",
    "shot": "S01",
    "shows": [
     {
@@ -148,7 +148,8 @@
     },
     {
      "what": [
-      "pink_petals"
+      "wildflowers",
+      "lilac"
      ],
      "word": "FLOWERS"
     }
@@ -374,7 +375,7 @@
    "place": "hive",
    "size": "ws",
    "camera": "bee pov hovering 4 blocks out from the hive's front face, eye at the hive's middle; a slow drift (bee hover bob)",
-   "frame": "frame 1: the giant centred, big (a WS at 4 blocks: ~35 % of frame height), his glass bottle held to the dripping hive, already moving (0.0 s); behind him the flowers run yellow and purple to the horizon (the picture asks the question too). On 'FLOWERS' he turns and places one pink petal cover at the heart's edge, under his crosshair (the heart's last pink: the pink L07 names; the 52 rows are the yellow/lilac ones, S03). The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky (time 3000).",
+   "frame": "frame 1: the giant centred, big (a WS at 4 blocks: ~35 % of frame height), his glass bottle held to the dripping hive, already moving (0.0 s); behind him the flowers run yellow and purple to the horizon (the picture asks the question too). On 'FLOWERS' the field behind him fills the frame edge to edge (no flower placed here: rows are placed only in S03/S04/S10, one per bottle). The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky (time 3000).",
    "look": {
     "time": 3000
    }
@@ -502,7 +503,7 @@
    "place": "bee_picture",
    "size": "ews",
    "camera": "bee pov at the left wingtip: on the first 'UP' the camera lifts with her and keeps going (crane: from 'pov', to O + (0, 90, 0), yaw 0, pitch -90, fov 70, tilt 0.6), a fast smooth ease, settling straight down by 'BEE' in L11; she falls behind as a yellow dot",
-   "frame": "the reveal: from straight above, the meadow is one huge bee, head north, drawn in what reads from above (camera_world flower_readability): a wildflower body inside a bare podzol outline, three podzol stripes, lilac wings 61 wide outlined in podzol, podzol eyes and antennae; where its heart would be, a pink-petal heart with the tiny hive in it. The giant is a speck at the crown of the head, planting the last row (row 52); our bee a yellow dot below the lens. L11 is said over the settled picture; L12 over the hold; payoff mark `top` on the settle; cut 1.0 s after L12.",
+   "frame": "the reveal: from straight above, the meadow is one huge bee, head north, drawn in what reads from above (camera_world flower_readability): a wildflower body inside a bare podzol outline, three podzol stripes, lilac wings 61 wide outlined in podzol, podzol eyes and antennae; where its heart would be, a pink-petal heart with the tiny hive in it, the campfire smoke rising from it so the eye finds HOME (the hive is ~4 px at 300 px wide). The giant is a speck at the crown of the head, planting the last row (row 52); our bee a yellow dot below the lens. L11 is said over the settled picture; L12 over the hold; payoff mark `top` on the settle; cut 1.0 s after L12.",
    "look": {
     "time": 3000
    },

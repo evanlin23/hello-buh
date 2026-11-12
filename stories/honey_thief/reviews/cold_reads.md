@@ -29,3 +29,24 @@
   Still naive at the end: yes.
 - Notes for the build: strong stripe contrast; the rise must let the eye find the heart and the giant before the cut
   (the shape forms during the ~2 s lift from "TELL", then 1 s hold); L10 needs a clear shot of him (fov ~28, S10).
+
+## r8 (the Roblox story format, 2026-11-12): two fresh readers, picture + lines, first half then second half
+**(a) Casual viewer** (plays a little, one watch at phone speed)
+- Midpoint (after L07): 55 % "he's farming them: more flowers, more honey"; 35 % "he really does love the bees".
+  Wouldn't swipe ("the talking bee plus the 'why?' hook got me"); "one bottle, one row" went by fast.
+- After the reveal: **surprised: yes** ("didn't see the giant bee coming"). One sentence: "He's slowly building a huge
+  bee out of flowers, with their hive as its heart, adding one row for every bottle he takes, because he loves the
+  bees." Correct. Notes: the heart shape needed a second look; wanted one more beat after "Fifty-two ROWS". Rewatch:
+  yes, to spot the shape earlier.
+
+**(b) Java gamer**
+- Midpoint: 45 % "pixel art seen from above, probably of the bee ('my FAVORITE little guy')"; 30 % farming.
+  Vanilla checks passed (campfire calms bees, full hive drips); nit: bees don't use flowers to find home (the bee
+  waves it off itself).
+- After the reveal: **surprised: a little** (guessed it). One sentence: "He's turning the meadow into a giant picture
+  of his favorite bee, with its home right in the heart, one row for every bottle he takes." Correct. Notes: a bee
+  flying that far and that high isn't vanilla ("I'll allow it for the story"); the last line a bit flat, a callback to
+  "You're my FAVORITE" would hit harder. Rewatch: once, to spot the outline.
+
+Gate: both get it in one sentence; the casual reader is surprised, the gamer half-guesses (the mystery test's
+"between obvious and confusing"). Passes 0z.

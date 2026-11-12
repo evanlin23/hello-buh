@@ -7,7 +7,7 @@ block; read the real ground y off the survey before building and move O in whole
 
 ## The picture (top view, head north, all relative to O; x east, z south)
 - **52 flower rows**, one per honey bottle, plus three unplanted stripes: the body runs z -32..+28.
-- **Body:** a rounded oval 21 wide (x -10..+10) of wildflowers (flat covers) on grass, inside a 1-wide bare podzol
+- **Body:** a rounded oval 21 wide (x -10..+10) of wildflowers (flat covers) on grass, inside a 2-wide bare podzol
   outline round the whole bee (head, body, tail and wings): the outline carries the shape from above.
 - **Stripes:** three bands of bare podzol, 3 rows deep, straight-edged and equal (so they read as design, not
   unfinished dirt): z -8..-6, +3..+5, +14..+16. Flower rows: 61 rows - 9 stripe rows = **52**.
@@ -28,7 +28,7 @@ block; read the real ground y off the survey before building and move O in whole
   every cross-sprite flower (dandelion, poppy, daisy, lily of the valley) vanishes into the grass (dE 1-6); bare
   podzol (52) and pink_petals (35) read, lilac (19) and rose bushes (18) nearly. So the bee is drawn in flat covers,
   2-tall bushes and bare podzol (the plan above). Gate still holds: a 300 px top-down still of the built bee must read
-  as a bee to a cold eye before recording; if the wildflower body is too faint, widen the podzol outline to 2. Never
+  as a bee to a cold eye before recording; the podzol outline is 2 wide from the start (critic r3: the outline and the pink heart carry the read). Never
   paint the ground (concrete, wool): it's a meadow, and bees must still reach real flowers.
 - **Framing:** S10 from ~90 blocks up: a 9:16 frame at vfov 70 is ~71 wide x ~126 tall; the 61-wide wings and the
   69-long bee fit with margin.
@@ -53,4 +53,4 @@ block; read the real ground y off the survey before building and move O in whole
 - A lib/sets build (`flower_bee`) from this plan; world.build stamps it from day 4200.
 - Flowers are placed as blocks (wildflowers/pink_petals as flat covers, lilac/rose bushes 2 tall); the S03/S04/S10
   rows are placed live by the actor (under his crosshair).
-- Render distance: the reveal needs only ~60 blocks; Larkfield's west roofs in S08 are 30-50 blocks east.
+- Render distance: the reveal needs only ~60 blocks; Larkfield's west roofs at the end of S07's orbit are 50-75 blocks east.
