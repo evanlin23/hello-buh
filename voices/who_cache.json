@@ -155,5 +155,20 @@
   "reversed": true,
   "clip": "dog_hill/L15",
   "at": "2026-11-11T16:28:35Z"
+ },
+ "f9703fd328ff": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   35.0
+  ],
+  "role": "young man",
+  "confidence": 8,
+  "voice": "Deep, resonant, warm, clear, friendly",
+  "could_be_mistaken_for": "teenager",
+  "reversed": true,
+  "clip": "good_boy/L13",
+  "at": "2026-11-12T08:24:59Z"
  }
 }
