@@ -180,8 +180,11 @@ module.exports = {
     })
     // L08: it's a LEVER. And I pulled it (a slow push onto the lever on its post; it's ON)
     const LV = P(LEVER[0] + 0.5, LEVER[1] + 0.2, LEVER[2] + 0.5)
-    await cut(LEVER[0] + 4.5, LEVER[2] + 0.5, LV)
-    await line('L08', async (k) => { look(k, 0, -0.02 * K.ease(k / 30)) })
+    await cut(LEVER[0] + 6.5, LEVER[2] + 0.5, LV)
+    await line('L08', async (k) => { K.go(k > 3 && k < 13); K.base = K.aim(LV); look(k)   // a few steps up to it
+      for (const [i, g] of gaze.entries()) { g.yaw = 90 + Math.sin((ctx.tick + i * 7) / 9) * 20; g.pitch = -40 }   // the villagers behind it still staring up at the sun
+    })
+    K.go(false)
 
     // L09: because at night the zombies come out (the tree, close: the shade full of them), and Grandpa is way too slow
     // to run (cut to the square: him crossing it at an old man's shuffle)
@@ -198,13 +201,13 @@ module.exports = {
     const IN = rel(this.inside)
     await K.cutShot('pov', () => Object.assign(gp, { x: HOME.x, z: HOME.z, y: HOME.y, yaw: 90 }), { self: { x: IN.x, y: IN.y, z: IN.z, yaw: 180 - K.aimFrom(new ctx.Vec3(X + IN.x, F + IN.y + 1.62, Z + IN.z), P(bedA.x, bedA.y + 0.4, bedA.z)).yaw * 180 / Math.PI, pitch: 25 } })
     K.base = K.aimFrom(new ctx.Vec3(X + IN.x, F + IN.y + 1.62, Z + IN.z), P(bedA.x, bedA.y + 0.4, bedA.z)); await K.look(0)
-    await line('L10', async (k) => { look(k) })
+    await line('L10', async (k) => { K.base = { yaw: K.base.yaw + 0.009, pitch: K.base.pitch - 0.002 }; look(k) })   // a slow pan across the room
 
     // L11-L12: but today Grandpa said: let the night come; you need sleep, kid (at his door, close)
     ctx.select(2)
     await cut(step0.x + 0.4, step0.z + 0.2, gpFace())
-    await line('L11', async (k) => { gp.yaw = 90; look(k) })
-    await line('L12', async (k) => { gp.yaw = 90; gp.pitch = k % 26 < 8 ? 10 : 0; look(k) })
+    await line('L11', async (k) => { gp.yaw = 90 + 18 * Math.sin(ctx.tick / 8); gp.pitch = 4 * Math.sin(ctx.tick / 5); look(k) })
+    await line('L12', async (k) => { gp.yaw = 90 + 12 * Math.sin(ctx.tick / 9); gp.pitch = k % 20 < 7 ? 14 : 0; look(k) })   // he nods at me
 
     // L13: me? HE's the one who's tired (he looks at the lever post, then turns to go in)
     await cut(step0.x + 1.5, step0.z + 0.6, gpFace())
@@ -214,7 +217,7 @@ module.exports = {
       look(k)
     })
     // L14: so I walked him home (in through his door); then I pulled the lever BACK
-    let leverCut = false, pulled = false
+    let leverCut = false, pulled = false, leverDone = false
     await line('L14', async (k, at) => {
       if (!leverCut) {
         gp.yaw = -90
@@ -225,10 +228,11 @@ module.exports = {
         leverCut = true
         await cutP(LEVER[0] + 3.3, LEVER[2] + 0.7, LV, () => away('gp', gp))
       }
+      if (leverDone) { K.base = K.aim(LV); look(k); return }   // pulled: the camera breathes again
       if (leverCut) {   // K.use turns the view onto the lever and clicks it (on BACK): no look() of ours from the cut on
         if (pulled || k < at(3) - 8) return
         pulled = true
-        K.use(new ctx.Vec3(X + LEVER[0], F + LEVER[1], Z + LEVER[2]), { max: 60, deg: 3 }).then(() => ctx.mark('lever')).catch(e => ctx.log('lever', e.message))
+        K.use(new ctx.Vec3(X + LEVER[0], F + LEVER[1], Z + LEVER[2]), { max: 60, deg: 3 }).then(() => { ctx.mark('lever'); leverDone = true }).catch(e => ctx.log('lever', e.message))
       }
       look(k)
     })
