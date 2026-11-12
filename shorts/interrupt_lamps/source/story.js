@@ -938,6 +938,8 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
   K.act = require('./act')(ctx, { K })
   // boats, leads and riders (lib/boats.js): K.board / K.unboard / K.leash / K.row / K.rowing / K.entity
   { const bk = require('./boats').boatKit(ctx, K, { X, Z, F }); for (const k of ['entity', 'board', 'unboard', 'leash', 'row', 'rowing']) K[k] = bk[k] }
+  // story-kit extras (lib/kit_extras.js): K.scale / K.skin / K.trail / K.setBlocks / K.prop / K.propOff
+  { const kx = require('./kit_extras').kit(ctx, K, { X, Z, F }); for (const k of ['scale', 'skin', 'trail', 'setBlocks', 'prop', 'propOff']) K[k] = kx[k] }
   // a stall: the forward key held on the ground and the player slowed to under 60% of its walk (a block corner, a door
   // frame): marked 'stuck' and logged at once (lib/hb/owner.js reads it; K.walkTo paths around blocks)
   let walkV = 0, stall = 0
