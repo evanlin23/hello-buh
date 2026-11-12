@@ -4,7 +4,7 @@
   "caption": "hit your dog 🐕 or lose hardcore?",
   "youtube": {
     "title": "hit your dog 🐕 or lose hardcore? #minecraft #shorts",
-    "description": "hit your dog 🐕 or lose hardcore?\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "hit your dog 🐕 or lose hardcore?\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,14 +14,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "com_bota.mp3",
-    "title": "COM BOTA",
-    "artist": "cape, crysstales",
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal",
-    "drop_in_song_s": 16.75,
+    "drop_in_song_s": 16.5,
     "drop_in_short_s": 11.0,
-    "song_start_s": 5.75
+    "song_start_s": 5.5
   },
   "video": {
     "file": "short.mp4",
@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 18878013,
-    "sha256": "3e0a774f28d916f1564305cbd3b791babaa67799ce68ca0a09a909276cde0270",
+    "bytes": 20514100,
+    "sha256": "6ce365faa66d7c066fe5dd295424b5c833901374e27868e447af2eb21262261b",
     "release": {
       "tag": "pkg-dilemma_mace",
-      "asset": "dilemma_mace.short.3e0a774f28d916f1.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short.3e0a774f28d916f1.mp4",
-      "sha256": "3e0a774f28d916f1564305cbd3b791babaa67799ce68ca0a09a909276cde0270",
-      "bytes": 18878013
+      "asset": "dilemma_mace.short.6ce365faa66d7c06.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short.6ce365faa66d7c06.mp4",
+      "sha256": "6ce365faa66d7c066fe5dd295424b5c833901374e27868e447af2eb21262261b",
+      "bytes": 20514100
     },
     "nosong_release": {
       "tag": "pkg-dilemma_mace",
-      "asset": "dilemma_mace.short_nosong.eb60083b70605589.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short_nosong.eb60083b70605589.mp4",
-      "sha256": "eb60083b706055898fb0799b3215e23d4765c199730f56417c6ebb8c657d9413",
-      "bytes": 18843259
+      "asset": "dilemma_mace.short_nosong.50604dad1fce03fb.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short_nosong.50604dad1fce03fb.mp4",
+      "sha256": "50604dad1fce03fb5edeba0e4977489b1dabdf31eedda27bbdd48713b798fd8a",
+      "bytes": 20480749
     }
   },
   "edit": {
@@ -84,9 +84,9 @@
     "slowmo": [],
     "cards": [
       [
-        "drop",
+        "drop:0.2",
         "HIT THE DOG = LIVE",
-        2.6,
+        2.4,
         "green",
         0,
         {
@@ -232,7 +232,7 @@
       "--slowmo",
       "[]",
       "--cards",
-      "[[\"drop\",\"HIT THE DOG = LIVE\",2.6,\"green\",0,{\"y\":0.17}],[\"beat1\",\"DON'T = HARDCORE OVER\",2.08,\"red\",0,{\"y\":0.21,\"size\":112}],[\"reveal\",\"FEATHER FALLING IV\",1.6,\"blue\"]]",
+      "[[\"drop:0.2\",\"HIT THE DOG = LIVE\",2.4,\"green\",0,{\"y\":0.17}],[\"beat1\",\"DON'T = HARDCORE OVER\",2.08,\"red\",0,{\"y\":0.21,\"size\":112}],[\"reveal\",\"FEATHER FALLING IV\",1.6,\"blue\"]]",
       "--ring",
       "[[\"land:0.05\",0.75,0.365,0.885,135]]",
       "--shake",
@@ -385,10 +385,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ae07831048d40727eb0ca818da227dcc19e85c75",
+    "commit": "7c6b939745b580738ddd54909d6c50ce5c233029",
     "rendered": "local",
-    "rendered_at": "2026-11-12T06:23:41.936Z",
-    "head_at_publish": "36b1dcf0e65c0f449f4a10c0dd503b95427b3356",
+    "rendered_at": "2026-11-12T07:07:20.264Z",
+    "head_at_publish": "f15d8745d5722f825e1d11e5d17fcc5f7027c433",
     "stunt": "stunts/dilemma_mace.js",
     "source_snapshot": [
       "source/dilemma_mace.js",
@@ -398,18 +398,18 @@
     ]
   },
   "rebuild": [
-    "git checkout ae07831048d4",
+    "git checkout 7c6b939745b5",
     "gunzip -c shorts/dilemma_mace/recording.json.gz > work/dilemma_mace.rec.json",
     "node render.js work/dilemma_mace.rec.json work/dilemma_mace.frames 60 1080 1011",
     "python3 audio.py work/dilemma_mace.rec.json work/dilemma_mace.wav",
-    "python3 edit.py --frames work/dilemma_mace.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dilemma_mace.rec.json --audio work/dilemma_mace.wav --caption \"hit your dog 🐕 or lose hardcore?\" --self_name 56e --red hardcore --colors dog=yellow --speed [[\"beat0\",\"beat1\",0.12],[\"beat1\",\"beat2\",0.12],[\"beat2\",\"beat3\",0.1],[\"beat3\",\"beat4\",0.1],[\"beat4\",\"beats_end\",0.07]] --slowmo [] --cards \"[[\\\"drop\\\",\\\"HIT THE DOG = LIVE\\\",2.6,\\\"green\\\",0,{\\\"y\\\":0.17}],[\\\"beat1\\\",\\\"DON'T = HARDCORE OVER\\\",2.08,\\\"red\\\",0,{\\\"y\\\":0.21,\\\"size\\\":112}],[\\\"reveal\\\",\\\"FEATHER FALLING IV\\\",1.6,\\\"blue\\\"]]\" --ring [[\"land:0.05\",0.75,0.365,0.885,135]] --shake [\"land\"] --flash [\"reveal\"] --sfx [[\"whoosh\",\"drop\",{\"gain\":0.5}],[\"impact\",\"drop\",{\"gain\":0.9}],[\"whoosh\",\"beat0\",{\"gain\":0.45}],[\"heart\",\"beat0h\",{\"gain\":0.9}],[\"heart\",\"beat1h\",{\"gain\":0.9}],[\"heart\",\"beat2h\",{\"gain\":0.9}],[\"heart\",\"beat3h\",{\"gain\":0.9}],[\"heart\",\"beat4h\",{\"gain\":0.9}],[\"wind\",\"drop\",\"beat4\",{\"gain\":0.4}],[\"dip\",\"land\",0.4],[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.4}],[\"ding\",\"reveal\",{\"gain\":0.5}]] --hardcore --armor 16 --start_at drop:0 --end_after reveal:1.5 --out out/dilemma_mace.mp4"
+    "python3 edit.py --frames work/dilemma_mace.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dilemma_mace.rec.json --audio work/dilemma_mace.wav --caption \"hit your dog 🐕 or lose hardcore?\" --self_name 56e --red hardcore --colors dog=yellow --speed [[\"beat0\",\"beat1\",0.12],[\"beat1\",\"beat2\",0.12],[\"beat2\",\"beat3\",0.1],[\"beat3\",\"beat4\",0.1],[\"beat4\",\"beats_end\",0.07]] --slowmo [] --cards \"[[\\\"drop:0.2\\\",\\\"HIT THE DOG = LIVE\\\",2.4,\\\"green\\\",0,{\\\"y\\\":0.17}],[\\\"beat1\\\",\\\"DON'T = HARDCORE OVER\\\",2.08,\\\"red\\\",0,{\\\"y\\\":0.21,\\\"size\\\":112}],[\\\"reveal\\\",\\\"FEATHER FALLING IV\\\",1.6,\\\"blue\\\"]]\" --ring [[\"land:0.05\",0.75,0.365,0.885,135]] --shake [\"land\"] --flash [\"reveal\"] --sfx [[\"whoosh\",\"drop\",{\"gain\":0.5}],[\"impact\",\"drop\",{\"gain\":0.9}],[\"whoosh\",\"beat0\",{\"gain\":0.45}],[\"heart\",\"beat0h\",{\"gain\":0.9}],[\"heart\",\"beat1h\",{\"gain\":0.9}],[\"heart\",\"beat2h\",{\"gain\":0.9}],[\"heart\",\"beat3h\",{\"gain\":0.9}],[\"heart\",\"beat4h\",{\"gain\":0.9}],[\"wind\",\"drop\",\"beat4\",{\"gain\":0.4}],[\"dip\",\"land\",0.4],[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.4}],[\"ding\",\"reveal\",{\"gain\":0.5}]] --hardcore --armor 16 --start_at drop:0 --end_after reveal:1.5 --out out/dilemma_mace.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): frame 0 a zoom onto the dog with HIT THE DOG = LIVE, he refuses, slams in as hardcore hearts crash 10 -> 1.5, lives on Feather Falling IV; 12.5 s; independent review READY r2",
-  "published_at": "2026-11-12T06:25:29.919Z",
+  "notes": "owner note 2026-11-12 'open further up, so its clear we are falling': frame 0 looks straight down the 37-block pillar mid-fall, crash-zoom onto the dog with HIT THE DOG = LIVE by 0.5 s; fix-check READY",
+  "published_at": "2026-11-12T07:09:11.692Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:25:53+00:00",
+    "at": "2026-11-12T07:09:38+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -418,14 +418,14 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:24:03.204Z",
+      "at": "2026-11-12T07:07:40.892Z",
       "report": "work/hb/dilemma_mace.check.json"
     },
     "key_sounds": "n/a"
