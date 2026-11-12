@@ -5,17 +5,19 @@
 const guessSound = require('../lib/guess_sound')
 module.exports = guessSound({
   name: 'guess_sound_2',
-  endAfter: 1.0,   // ends on the hint line (owner r:r188b46: the end 0.5-0.8 s after the result, 1.2 s max; 1.45 blocked)
+  endAfter: 1.2,   // (review r2: two text lines need 1.2 s) ends on the hint line (owner r:r188b46: the end 0.5-0.8 s after the result, 1.2 s max; 1.45 blocked)
   caption: 'guess the mob from its sound pt 2 🔊',
   red: 'sound',
   // frame 0 on the first countdown (the call already sounding, the 3-2-1 and the round's label up): it opened on 0.4 s
   // of a dark bare wall (owner r:r0f3da0: never a bare wall or a still room)
   // the opening (owner r:r4607fa / r:r0f3da0, no-op audit: open on a tease of the parrot twist, not a dark room): a
   // 1.0 s flash of the last room lit, the parrot doing its ghast impression (no label: the twist stays for the end)
-  // the twist's hit on the final mix (mixcheck with the song: no sound hit within 0.3 s of the payoff): the song and the
-  // game dip, then an impact, as pt 1
-  edit: { startAt: 'cd3:-0.02', hook: { at: 'final_reveal', before: 0, after: 1.0, text: 'the last one is IMPOSSIBLE 😭' },
-    sfx: [['dip', 'final_reveal', 0.4], ['gamedip', 'final_reveal', 0.35], ['impact', 'final_reveal', { gain: 1.4 }]] },
+  // the twist (as pt 1, owner 2026-11-12: "is the warden sound overlapping the parrot sound? I couldnt hear the
+  // parrot"): no low 'impact' boom over the parrot's ghast moan; a short pop is the hit, the game dips before it, the
+  // song stays ducked through the moan and drops 0.8 s after the reveal
+  edit: { startAt: 'cd3:-0.02', hook: { at: 'final_reveal', before: 0, after: 1.0, blur: 7, text: 'the last one is IMPOSSIBLE 😭' },   // blurred (owner 2026-11-12 at 10.1 s: "should blur the starting")
+    dropAt: 'final_reveal:0.8',
+    sfx: [['dip', 'final_reveal:0.8', 1.2], ['gamedip', 'final_reveal', 0.35], ['pop', 'final_reveal', { gain: 1.6 }]] },
   rounds: [
     { mob: 'pig', room: 'farm', sound: 'entity.pig.ambient', label: 'EASY', answer: 'PIG', react: 'call', leanTicks: 5, lookY: 0.8 },
     { mob: 'zombie', room: 'cave', sound: 'entity.zombie.ambient', label: 'MEDIUM', answer: 'ZOMBIE', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'green' },
