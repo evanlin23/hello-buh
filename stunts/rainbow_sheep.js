@@ -22,9 +22,10 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
     startAt: 'dye:-0.45',
-    endAfter: 'lastshear:0.95',   // r:r188b46: the last burst (red) is the payoff, the wool landing, the look along the sheared rainbow starting (the end <= 1 s after the payoff)
+    endAfter: 'lastshear:0.75',   // r:r188b46: the last burst (red) is the payoff, the wool landing, the look along the sheared rainbow starting (the end <= 1 s after the payoff)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['shears', 'now the best part', 1.2]],
     punch: [['lastshear', 0, 1.06]],
+    flash: [['lastshear', 0, 0.35]],   // pace: a clear picture change on the payoff (the punch alone isn't one)
     sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'lastshear', 0.3], ['ding', 'lastshear']]   // a hit on the payoff over the song; room tone from frame 1
   },
 

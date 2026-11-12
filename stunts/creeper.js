@@ -12,7 +12,7 @@ module.exports = {
   caption: 'POV: you hear tssss 💀',
   edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'boom', startAt: 'first:0', endAfter: 'found:0.9',   // r:r188b46: 0.9 s on the diamonds
     subs: [['found', 'wait... DIAMONDS?', 1.0]],
-    sfx: [['air', 'start', 'boom', { gain: 0.5 }], ['heart', 'first', { gain: 1.6 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.4 }], ['dip', 'found', 0.3], ['impact', 'found', { gain: 0.9 }], ['ding', 'found', { gain: 1.4 }]] },   // (pace: the ding alone wasn't a hit on the payoff under the song)   // mixcheck: under the NCS bed the blast needs dip + impact
+    sfx: [['air', 'start', 'boom', { gain: 0.5 }], ['heart', 'first', { gain: 1.6 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.4 }], ['dip', 'found', 0.4], ['gamedip', 'found', 0.4], ['impact', 'found', { gain: 1.2 }], ['ding', 'found', { gain: 1.4 }]] },   // (pace: the hit on the diamonds sat in the blast's tail: the game ducks 0.4 s before it so it lands as a hit)   // mixcheck: under the NCS bed the blast needs dip + impact
 
   async setup (ctx) {
     const { bot } = ctx
