@@ -18,41 +18,41 @@
     "title": "X2",
     "artist": "MUPP",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "payoff",
+    "drop_on_event": "cut",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 7.7,
-    "song_start_s": 6.8
+    "drop_in_short_s": 9.95,
+    "song_start_s": 4.55
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.52,
+    "duration_s": 10.87,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 17739432,
-    "sha256": "4241db5e3179820041e22bf033662a2e77138270fd76dd07e1197afcec6ddbc0",
+    "bytes": 20747888,
+    "sha256": "159af5d3d062b21cef6f3ea0eb64d1df7e589dbdeb164cd4a524f5b32f0be5b0",
     "release": {
       "tag": "pkg-faketrick_gold_portal",
-      "asset": "faketrick_gold_portal.short.4241db5e31798200.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.4241db5e31798200.mp4",
-      "sha256": "4241db5e3179820041e22bf033662a2e77138270fd76dd07e1197afcec6ddbc0",
-      "bytes": 17739432
+      "asset": "faketrick_gold_portal.short.159af5d3d062b21c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short.159af5d3d062b21c.mp4",
+      "sha256": "159af5d3d062b21cef6f3ea0eb64d1df7e589dbdeb164cd4a524f5b32f0be5b0",
+      "bytes": 20747888
     },
     "nosong_release": {
       "tag": "pkg-faketrick_gold_portal",
-      "asset": "faketrick_gold_portal.short_nosong.1ad68b1130a9ea8d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short_nosong.1ad68b1130a9ea8d.mp4",
-      "sha256": "1ad68b1130a9ea8d2bfb357a6dac1a0ca0735f9bc82714925b876467f7fa8d6d",
-      "bytes": 17732454
+      "asset": "faketrick_gold_portal.short_nosong.fd6c04e481cd2ca1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-faketrick_gold_portal/faketrick_gold_portal.short_nosong.fd6c04e481cd2ca1.mp4",
+      "sha256": "fd6c04e481cd2ca1ff076412e749b3370e78b35c1cc47b356907e92d511220ee",
+      "bytes": 20744648
     }
   },
   "edit": {
     "caption": "a nether portal out of GOLD?? nobody knows this 😱",
     "red": "GOLD??",
     "startAt": "go:-0.05",
-    "endAfter": "payoff:0.8",
-    "dropAt": "payoff",
+    "endAfter": "cut:0.9",
+    "dropAt": "cut",
     "subs": [
       [
         "step",
@@ -77,6 +77,12 @@
         "IT WORKS",
         1.2,
         0
+      ],
+      [
+        "cut",
+        "a GOLD nether??",
+        0.9,
+        0
       ]
     ],
     "flash": [
@@ -84,6 +90,11 @@
         "payoff",
         0,
         0.45
+      ],
+      [
+        "cut",
+        0,
+        0.35
       ]
     ],
     "punch": [
@@ -173,12 +184,33 @@
           "nth": 12,
           "gain": 0.8
         }
+      ],
+      [
+        "whoosh",
+        "cut:-0.15"
+      ],
+      [
+        "dip",
+        "cut",
+        0.4
+      ],
+      [
+        "gamedip",
+        "cut",
+        0.35
+      ],
+      [
+        "impact",
+        "cut:0.03",
+        {
+          "gain": 1.4
+        }
       ]
     ],
     "hook": {
-      "at": "payoff",
-      "before": 0,
-      "after": 0.8,
+      "at": "walk",
+      "before": 0.3,
+      "after": 0.9,
       "text": "how is this working?? 😳"
     },
     "args": [
@@ -189,19 +221,19 @@
       "--red",
       "GOLD??",
       "--subs",
-      "[[\"step\",\"step 1: gold blocks\",1.5,0],[\"step\",\"step 2: light it\",1.5,1],[\"step\",\"step 3: wait...\",1.5,2],[\"payoff\",\"IT WORKS\",1.2,0]]",
+      "[[\"step\",\"step 1: gold blocks\",1.5,0],[\"step\",\"step 2: light it\",1.5,1],[\"step\",\"step 3: wait...\",1.5,2],[\"payoff\",\"IT WORKS\",1.2,0],[\"cut\",\"a GOLD nether??\",0.9,0]]",
       "--punch",
       "[[\"payoff\",0,1.08]]",
       "--hook",
-      "{\"at\":\"payoff\",\"before\":0,\"after\":0.8,\"text\":\"how is this working?? 😳\"}",
+      "{\"at\":\"walk\",\"before\":0.3,\"after\":0.9,\"text\":\"how is this working?? 😳\"}",
       "--flash",
-      "[[\"payoff\",0,0.45]]",
+      "[[\"payoff\",0,0.45],[\"cut\",0,0.35]]",
       "--sfx",
-      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}]]",
+      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}],[\"whoosh\",\"cut:-0.15\"],[\"dip\",\"cut\",0.4],[\"gamedip\",\"cut\",0.35],[\"impact\",\"cut:0.03\",{\"gain\":1.4}]]",
       "--start_at",
       "go:-0.05",
       "--end_after",
-      "payoff:0.8"
+      "cut:0.9"
     ]
   },
   "recording": {
@@ -217,8 +249,8 @@
       "z": 16
     },
     "biome": "minecraft:plains",
-    "ticks": 190,
-    "seconds": 9.5,
+    "ticks": 233,
+    "seconds": 11.65,
     "deaths": 0,
     "events": [
       {
@@ -234,71 +266,71 @@
         "event": "step"
       },
       {
-        "t": 1.15,
+        "t": 1.1,
         "event": "place_on"
       },
       {
-        "t": 1.15,
+        "t": 1.1,
         "event": "swing"
       },
       {
-        "t": 1.2,
+        "t": 1.15,
         "event": "gold"
+      },
+      {
+        "t": 1.4,
+        "event": "place_on"
+      },
+      {
+        "t": 1.4,
+        "event": "swing"
       },
       {
         "t": 1.45,
+        "event": "gold"
+      },
+      {
+        "t": 1.7,
         "event": "place_on"
       },
       {
-        "t": 1.45,
+        "t": 1.7,
         "event": "swing"
-      },
-      {
-        "t": 1.5,
-        "event": "gold"
       },
       {
         "t": 1.75,
+        "event": "gold"
+      },
+      {
+        "t": 2,
         "event": "place_on"
       },
       {
-        "t": 1.75,
+        "t": 2,
         "event": "swing"
-      },
-      {
-        "t": 1.8,
-        "event": "gold"
       },
       {
         "t": 2.05,
-        "event": "place_on"
-      },
-      {
-        "t": 2.05,
-        "event": "swing"
-      },
-      {
-        "t": 2.1,
         "event": "gold"
       },
       {
-        "t": 2.35,
+        "t": 2.3,
         "event": "place_on"
       },
       {
-        "t": 2.35,
+        "t": 2.3,
         "event": "swing"
       },
       {
-        "t": 2.4,
+        "t": 2.35,
         "event": "gold"
       },
       {
-        "t": 2.65,
+        "t": 2.6,
         "event": "place_on"
       },
       {
-        "t": 2.65,
+        "t": 2.6,
         "event": "swing"
       },
       {
@@ -306,151 +338,175 @@
         "event": "gold"
       },
       {
-        "t": 2.95,
+        "t": 2.9,
         "event": "place_on"
       },
       {
-        "t": 2.95,
+        "t": 2.9,
         "event": "swing"
       },
       {
-        "t": 3,
+        "t": 2.95,
         "event": "gold"
+      },
+      {
+        "t": 3.2,
+        "event": "place_on"
+      },
+      {
+        "t": 3.2,
+        "event": "swing"
       },
       {
         "t": 3.25,
+        "event": "gold"
+      },
+      {
+        "t": 3.5,
         "event": "place_on"
       },
       {
-        "t": 3.25,
+        "t": 3.5,
         "event": "swing"
-      },
-      {
-        "t": 3.3,
-        "event": "gold"
       },
       {
         "t": 3.55,
+        "event": "gold"
+      },
+      {
+        "t": 3.8,
         "event": "place_on"
       },
       {
-        "t": 3.55,
+        "t": 3.8,
         "event": "swing"
-      },
-      {
-        "t": 3.6,
-        "event": "gold"
       },
       {
         "t": 3.85,
+        "event": "gold"
+      },
+      {
+        "t": 4.1,
         "event": "place_on"
       },
       {
-        "t": 3.85,
+        "t": 4.1,
         "event": "swing"
-      },
-      {
-        "t": 3.9,
-        "event": "gold"
       },
       {
         "t": 4.15,
+        "event": "gold"
+      },
+      {
+        "t": 4.55,
         "event": "place_on"
       },
       {
-        "t": 4.15,
+        "t": 4.55,
         "event": "swing"
-      },
-      {
-        "t": 4.2,
-        "event": "gold"
       },
       {
         "t": 4.6,
+        "event": "gold"
+      },
+      {
+        "t": 4.85,
         "event": "place_on"
       },
       {
-        "t": 4.6,
+        "t": 4.85,
         "event": "swing"
-      },
-      {
-        "t": 4.65,
-        "event": "gold"
       },
       {
         "t": 4.9,
-        "event": "place_on"
-      },
-      {
-        "t": 4.9,
-        "event": "swing"
-      },
-      {
-        "t": 4.95,
         "event": "gold"
       },
       {
-        "t": 5.2,
+        "t": 5.15,
         "event": "place_on"
       },
       {
-        "t": 5.2,
+        "t": 5.15,
         "event": "swing"
       },
       {
-        "t": 5.25,
+        "t": 5.2,
         "event": "gold"
       },
       {
-        "t": 5.5,
+        "t": 5.45,
         "event": "place_on"
       },
       {
-        "t": 5.5,
+        "t": 5.45,
         "event": "swing"
       },
       {
-        "t": 5.55,
+        "t": 5.5,
+        "event": "gold"
+      },
+      {
+        "t": 5.75,
+        "event": "place_on"
+      },
+      {
+        "t": 5.75,
+        "event": "swing"
+      },
+      {
+        "t": 5.8,
         "event": "gold"
       },
       {
         "t": 5.8,
-        "event": "place_on"
-      },
-      {
-        "t": 5.8,
-        "event": "swing"
-      },
-      {
-        "t": 5.85,
-        "event": "gold"
-      },
-      {
-        "t": 5.85,
         "event": "step"
       },
       {
-        "t": 6.25,
+        "t": 6.2,
         "event": "swing"
       },
       {
-        "t": 6.25,
+        "t": 6.2,
         "event": "flint"
       },
       {
-        "t": 6.5,
+        "t": 6.45,
         "event": "step"
       },
       {
-        "t": 7.45,
+        "t": 7.4,
         "event": "fake"
       },
       {
-        "t": 7.65,
+        "t": 7.6,
         "event": "payoff"
       },
       {
+        "t": 8.2,
+        "event": "walk"
+      },
+      {
+        "t": 9.45,
+        "event": "enter"
+      },
+      {
         "t": 9.5,
+        "event": "cut"
+      },
+      {
+        "t": 9.5,
+        "event": "fake"
+      },
+      {
+        "t": 9.5,
+        "event": "cut"
+      },
+      {
+        "t": 10.6,
+        "event": "gold_world"
+      },
+      {
+        "t": 11.65,
         "event": "end"
       }
     ]
@@ -458,10 +514,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
+    "commit": "5044c6b2f8df83242b2014e0c6f64f22d6a795f3",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:15:33.796Z",
-    "head_at_publish": "70d22037ae43ac25a7ecbb33bfa26b43099330ac",
+    "rendered_at": "2026-11-12T06:55:02.080Z",
+    "head_at_publish": "bf2d55cf1212fa5091efc20f9995df32f3e1bfe9",
     "stunt": "stunts/faketrick_gold_portal.js",
     "source_snapshot": [
       "source/faketrick_gold_portal.js",
@@ -472,34 +528,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 70d22037ae43",
+    "git checkout 5044c6b2f8df",
     "gunzip -c shorts/faketrick_gold_portal/recording.json.gz > work/faketrick_gold_portal.rec.json",
     "node render.js work/faketrick_gold_portal.rec.json work/faketrick_gold_portal.frames 60 1080 1011",
     "python3 audio.py work/faketrick_gold_portal.rec.json work/faketrick_gold_portal.wav",
-    "python3 edit.py --frames work/faketrick_gold_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/faketrick_gold_portal.rec.json --audio work/faketrick_gold_portal.wav --caption \"a nether portal out of GOLD?? nobody knows this 😱\" --self_name 56e --red GOLD?? --subs \"[[\\\"step\\\",\\\"step 1: gold blocks\\\",1.5,0],[\\\"step\\\",\\\"step 2: light it\\\",1.5,1],[\\\"step\\\",\\\"step 3: wait...\\\",1.5,2],[\\\"payoff\\\",\\\"IT WORKS\\\",1.2,0]]\" --punch [[\"payoff\",0,1.08]] --hook \"{\\\"at\\\":\\\"payoff\\\",\\\"before\\\":0,\\\"after\\\":0.8,\\\"text\\\":\\\"how is this working?? 😳\\\"}\" --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}]] --start_at go:-0.05 --end_after payoff:0.8 --out out/faketrick_gold_portal.mp4"
+    "python3 edit.py --frames work/faketrick_gold_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/faketrick_gold_portal.rec.json --audio work/faketrick_gold_portal.wav --caption \"a nether portal out of GOLD?? nobody knows this 😱\" --self_name 56e --red GOLD?? --subs \"[[\\\"step\\\",\\\"step 1: gold blocks\\\",1.5,0],[\\\"step\\\",\\\"step 2: light it\\\",1.5,1],[\\\"step\\\",\\\"step 3: wait...\\\",1.5,2],[\\\"payoff\\\",\\\"IT WORKS\\\",1.2,0],[\\\"cut\\\",\\\"a GOLD nether??\\\",0.9,0]]\" --punch [[\"payoff\",0,1.08]] --hook \"{\\\"at\\\":\\\"walk\\\",\\\"before\\\":0.3,\\\"after\\\":0.9,\\\"text\\\":\\\"how is this working?? 😳\\\"}\" --flash [[\"payoff\",0,0.45],[\"cut\",0,0.35]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"air\",\"go\",\"payoff\",{\"gain\":0.1}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"pop\",\"gold\",{\"nth\":0,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":4,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":8,\"gain\":0.8}],[\"pop\",\"gold\",{\"nth\":12,\"gain\":0.8}],[\"whoosh\",\"cut:-0.15\"],[\"dip\",\"cut\",0.4],[\"gamedip\",\"cut\",0.35],[\"impact\",\"cut:0.03\",{\"gain\":1.4}]] --start_at go:-0.05 --end_after cut:0.9 --out out/faketrick_gold_portal.mp4"
   ],
   "status": "ready",
-  "notes": "opening re-cut (r:r0f3da0): the lit gold portal flashes first; fast end (r:r188b46); fix-check READY",
-  "published_at": "2026-11-12T01:17:44.698Z",
+  "notes": "no-op audit (r:r4607fa): walks through the gold portal into a GOLD nether full of piglins admiring gold (staged fake, F.fake marks); new take; fix-check READY",
+  "published_at": "2026-11-12T06:58:01.272Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:18:09+00:00",
+    "at": "2026-11-12T06:58:32+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 8.53 s vs the reviewed render 8.52 s"
+      "summary": "short.mp4 10.88 s vs the reviewed render 10.87 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:16:03.201Z",
+      "at": "2026-11-12T06:55:44.718Z",
       "report": "work/hb/faketrick_gold_portal.check.json"
     },
     "key_sounds": "n/a"
