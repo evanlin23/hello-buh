@@ -2,16 +2,19 @@
  "name": "singing_box",
  "stunt": "story_singing_box",
  "version": 2,
- "revision": "r4 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, docs/rewrite_briefs/singing_box.md): L01 says the fact AND the why ('And I don't know WHY'); five two-way clues (she runs before the drop; the hole by the lava she never goes near; 'when it SINGS, I fly them right to it'; 'they're GONE'; 'I never see him in the DAY'); someone loved at stake ('Tomorrow, I QUIT'); the allay goes to look ('to see where they GO'); the reveal SAID in one plain sentence over S13b (L16: the grumpy man next door, playing the box, wearing every diamond it ever found); one beat (his 'Thirty-TWO.', echoing L01's THIRTY-ONE), cut. Premise, twist, place, days, cast and voices unchanged; 'every allay knows' and 'too BIG to throw' cut. Table read in reviews/r4-*.md. r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
+ "revision": "r4 (2026-11-11; r4b after the table read: L01 'hasn't gotten a single ONE' (casual reader: she gave her one away), L08 shorter, L09 cut (S09's empty hands carry it; lines renumbered), L11 'He sleeps all DAY, and the boom blocks WAKE him!' (critic 0a blocker: the kid's misreading; Java reader: 'never see him' named him), L12 'I won't let her QUIT!', L15 'the grumpy man' (critic length), mood mystery+funny): rewritten to the Roblox story format (docs/story_format.md, docs/rewrite_briefs/singing_box.md): L01 says the fact AND the why ('And I don't know WHY'); five two-way clues (she runs before the drop; the hole by the lava she never goes near; 'when it SINGS, I fly them right to it'; 'they're GONE'; 'I never see him in the DAY'); someone loved at stake ('Tomorrow, I QUIT'); the allay goes to look ('to see where they GO'); the reveal SAID in one plain sentence over S13b (L16: the grumpy man next door, playing the box, wearing every diamond it ever found); one beat (his 'Thirty-TWO.', echoing L01's THIRTY-ONE), cut. Premise, twist, place, days, cast and voices unchanged; 'every allay knows' and 'too BIG to throw' cut. Table read in reviews/r4-*.md. r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
  "caption": "where do her diamonds go 💎",
  "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, while she climbs out empty-handed every night and says tomorrow she quits; today it follows the biggest one yet through the hole to see where they go, and finds the grumpy man next door playing the box in her diamonds.",
  "question": "why has she never had more than one diamond?",
  "premise": "A miner under Torch Hill gives her allay her only diamond so it finds more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, by the lava she never goes near. Whenever the box sings the allay flies its finds right to it, and they vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. Tomorrow, I quit.' The grumpy man next door shouts that some of us are trying to sleep; the allay never sees him in the day.",
  "twist": "The note block isn't hers. The neighbor dug a secret room beside her tunnel and plays his note block behind the hole every few seconds. Vanilla: an allay that hears a note block played within 16 blocks delivers its items there instead of to its player, for 30 s, and each note resets it. So her allay has delivered all 31 diamonds to him, and he wears them (diamond chestplate, leggings, boots, pickaxe and sword: 24 of them; his helmet off so his face reads). Diamond 32 lands at his feet as he taps. Cut on the tap.",
  "key_color": "#4AEDD9",
- "mood": "funny",
+ "mood": [
+  "mystery",
+  "funny"
+ ],
  "payoff": "tap",
- "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13b, on 'PLAYING' in L16; diamond 32 lands at his feet on 'FOUND'; he says L17 'Thirty-TWO.' looking down at it; the Short ends 0.8 s after L17 (STANDARDS 0y: the reveal SAID, one beat, cut).",
+ "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13b, on 'PLAYING' in L15; diamond 32 lands at his feet on 'FOUND'; he says L16 'Thirty-TWO.' looking down at it; the Short ends 0.8 s after L16 (STANDARDS 0y: the reveal SAID, one beat, cut).",
  "look": {
   "note": "surface shots: day one 1489 at 1000, the night before 1499 at dusk 12600; the mine is underground (torch light and the lava's glow)"
  },
@@ -46,9 +49,9 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#9FE3A0",
    "skin": "new skin needed",
-   "on_screen": "a player, a NEW original skin (lead 2026-11-11: noor and efe clash with other planned characters; commissioned at build; not Steve), iron pickaxe; S02, S03, S06, S09 (says L10 there: 'Nothing AGAIN. Tomorrow, I QUIT.'), S10 (her shoulder in fg), S11. Never named.",
+   "on_screen": "a player, a NEW original skin (lead 2026-11-11: noor and efe clash with other planned characters; commissioned at build; not Steve), iron pickaxe; S02, S03, S06, S09 (says L09 there: 'Nothing AGAIN. Tomorrow, I QUIT.'), S10 (her shoulder in fg), S11. Never named.",
    "audition": {
-    "line": "L10 \"Nothing AGAIN. Tomorrow, I QUIT.\"",
+    "line": "L09 \"Nothing AGAIN. Tomorrow, I QUIT.\"",
     "bracket": "[A tired young woman, flat and worn out, full voice]",
     "candidates": [
      {
@@ -71,9 +74,9 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#7FB2FF",
    "skin": "new skin needed",
-   "on_screen": "a player, a NEW original skin (commissioned at build; distinct from hers and from Steve; the same in S10 and S13b), plain clothes and no armour in S10 (at his window, says L11); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin; says L17 'Thirty-TWO.' quietly, looking down at diamond 32. Never named.",
+   "on_screen": "a player, a NEW original skin (commissioned at build; distinct from hers and from Steve; the same in S10 and S13b), plain clothes and no armour in S10 (at his window, says L10); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin; says L16 'Thirty-TWO.' quietly, looking down at diamond 32. Never named.",
    "audition": {
-    "line": "L11 \"Some of us are trying to SLEEP!\"",
+    "line": "L10 \"Some of us are trying to SLEEP!\"",
     "bracket": "[A grumpy grown man, loud and annoyed, shouting from a window]",
     "candidates": [
      {
@@ -104,12 +107,11 @@
     "L06",
     "L07",
     "L08",
-    "L09",
+    "L11",
     "L12",
     "L13",
     "L14",
-    "L15",
-    "L16"
+    "L15"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -120,7 +122,7 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L10"
+    "L09"
    ],
    "direction": "[A tired young woman, flat and worn out, full voice]"
   },
@@ -131,9 +133,9 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L11"
+    "L10"
    ],
-   "direction": "[A grumpy grown man, loud and annoyed, shouting from a window]"
+   "direction": "[A grumpy grown man, loud and annoyed, shouting from a window about all the booming today]"
   },
   {
    "id": "rB2",
@@ -142,7 +144,7 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L17"
+    "L16"
    ],
    "direction": "[A grown man, quiet and pleased with himself, counting under his breath]"
   }
@@ -176,7 +178,7 @@
   {
    "under": "S10",
    "sound": "block.wooden_trapdoor.open",
-   "note": "his shutter bangs open before L11 (S10), slams on 'DOOR' in L12 (S10b)"
+   "note": "his shutter bangs open before L10 (S10), slams on 'DOOR' in L11 (S10b)"
   },
   {
    "under": "S12",
@@ -191,15 +193,15 @@
   {
    "under": "S13b",
    "sound": "block.note_block.harp",
-   "note": "the tap on the `tap` mark ('PLAYING' in L16): the note sounds (dirt under the note block: harp)"
+   "note": "the tap on the `tap` mark ('PLAYING' in L15): the note sounds (dirt under the note block: harp)"
   }
  ],
  "lines": [
   {
    "id": "L01",
    "who": "N",
-   "text": "I've found her / THIRTY-ONE diamonds. / She's never had / more than ONE. / And I don't know WHY.",
-   "say": "I've found her thirty-one diamonds. She's never had more than one. And I don't know WHY.",
+   "text": "I found her / THIRTY-ONE diamonds. / She hasn't gotten / a single ONE. / And I don't know WHY.",
+   "say": "I found her thirty-one diamonds. She hasn't gotten a single one. And I don't know WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -407,8 +409,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "I drop them ON it, / and they're GONE. / It must be / so HUNGRY.",
-   "say": "I drop them on it, and they're gone. It must be so HUNGRY.",
+   "text": "I drop them ON it. / GONE! / It must be / so HUNGRY.",
+   "say": "I drop them on it. Gone! It must be so HUNGRY.",
    "shot": "S08",
    "shows": [
     {
@@ -431,39 +433,13 @@
     },
     {
      "what": "block:note_block",
-     "word": "HUNGRY"
+     "word": "GONE"
     }
    ],
    "direction": "sweet, worried for the box"
   },
   {
    "id": "L09",
-   "who": "N",
-   "text": "But every NIGHT, / she climbs out / with EMPTY hands.",
-   "say": "But every night, she climbs out with EMPTY hands.",
-   "shot": "S09",
-   "shows": [
-    {
-     "what": [
-      "ladder"
-     ],
-     "word": "NIGHT"
-    }
-   ],
-   "look": [
-    {
-     "what": "block:ladder",
-     "word": "NIGHT"
-    },
-    {
-     "what": "Her",
-     "word": "EMPTY"
-    }
-   ],
-   "direction": "the bounce drops a little, puzzled"
-  },
-  {
-   "id": "L10",
    "who": "Her",
    "text": "Nothing AGAIN. / Tomorrow, I QUIT.",
    "say": "Nothing again. Tomorrow, I QUIT.",
@@ -476,7 +452,7 @@
    ]
   },
   {
-   "id": "L11",
+   "id": "L10",
    "who": "Neighbor",
    "text": "Some of us / are trying / to SLEEP!",
    "say": "Some of us are trying to SLEEP!",
@@ -489,10 +465,10 @@
    ]
   },
   {
-   "id": "L12",
+   "id": "L11",
    "who": "N",
-   "text": "That's the grumpy man / next DOOR. / I never see him / in the DAY.",
-   "say": "That's the grumpy man next door. I never see him in the DAY.",
+   "text": "That's the grumpy man / next DOOR. / He sleeps all DAY, / and the boom blocks / WAKE him!",
+   "say": "That's the grumpy man next door. He sleeps all day, and the boom blocks WAKE him!",
    "shot": "S10b",
    "look": [
     {
@@ -501,16 +477,16 @@
     },
     {
      "what": "entity:allay",
-     "word": "DAY"
+     "word": "WAKE"
     }
    ],
-   "direction": "matter-of-fact, a little shrug, then straight on"
+   "direction": "matter-of-fact, a little sorry for him; it believes him"
   },
   {
-   "id": "L13",
+   "id": "L12",
    "who": "N",
-   "text": "She CAN'T quit! / So today, / she lit THREE.",
-   "say": "She can't quit! So today, she lit THREE.",
+   "text": "I won't let her QUIT! / Today, / she lit THREE.",
+   "say": "I won't let her quit! Today, she lit THREE.",
    "shot": "S11",
    "shows": [
     {
@@ -522,8 +498,8 @@
    ],
    "look": [
     {
-     "what": "Her",
-     "word": "CAN'T"
+     "what": "entity:allay",
+     "word": "QUIT"
     },
     {
      "what": "block:tnt",
@@ -531,10 +507,10 @@
     }
    ],
    "punch": true,
-   "direction": "worried for her, then determined"
+   "direction": "determined, a little promise"
   },
   {
-   "id": "L14",
+   "id": "L13",
    "who": "N",
    "text": "BOOM! / The BIGGEST one / YET!",
    "say": "Boom! The biggest one YET!",
@@ -557,7 +533,7 @@
    "direction": "thrilled"
   },
   {
-   "id": "L15",
+   "id": "L14",
    "who": "N",
    "text": "The box SANG, / so I flew it / through the HOLE, / to see / where they GO.",
    "say": "The box sang, so I flew it through the hole, to see where they GO.",
@@ -590,10 +566,10 @@
    "direction": "curious and brave, running straight into the next line"
   },
   {
-   "id": "L16",
+   "id": "L15",
    "who": "N",
-   "text": "And there was / the grumpy man / next DOOR, / PLAYING the box, / wearing every diamond / I ever FOUND.",
-   "say": "And there was the grumpy man next door, playing the box, wearing every diamond I ever FOUND.",
+   "text": "And there was / the grumpy man, / PLAYING the box, / wearing every diamond / I ever FOUND.",
+   "say": "And there was the grumpy man, playing the box, wearing every diamond I ever FOUND.",
    "shot": "S13b",
    "shows": [
     {
@@ -612,7 +588,7 @@
    "look": [
     {
      "what": "Neighbor",
-     "word": "DOOR"
+     "word": "PLAYING"
     },
     {
      "what": "block:note_block",
@@ -627,7 +603,7 @@
    "direction": "surprised and plain, just saying what it sees; no gasp, no sadness, the last word bright"
   },
   {
-   "id": "L17",
+   "id": "L16",
    "who": "Neighbor",
    "text": "Thirty-TWO.",
    "say": "Thirty-TWO.",
@@ -725,32 +701,31 @@
    "id": "S09",
    "line": "L09",
    "lines": [
-    "L09",
-    "L10"
+    "L09"
    ],
    "place": "cottages",
    "size": "full",
    "time": "1499 dusk 12600",
    "camera": "ground level about 5 blocks north-west of the shaft mouth, looking south-east (~140 deg), still",
    "subject": "Her",
-   "frame": "on 'climbs' she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, both hands empty (main hand empty: the pickaxe in her hotbar, not held), stands and says L10 to herself ('Tomorrow, I QUIT': she sounds done, not angry); the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
+   "frame": "from the first frame her empty hands read (main hand empty: the pickaxe in her hotbar, not held): she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, stands and says L09 to herself ('Tomorrow, I QUIT': she sounds done, not angry); the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
   },
   {
    "id": "S10",
-   "line": "L11",
+   "line": "L10",
    "lines": [
-    "L11"
+    "L10"
    ],
    "place": "cottages",
    "size": "ms",
    "time": "1499 dusk 12600",
    "camera": "over her shoulder north-east to his cottage window (his cottage 4-5 blocks away), still",
    "subject": "Neighbor",
-   "frame": "the neighbor (his new skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms are his cue by day; at night he is home); her shoulder and head in frame-right fg. His face is the face of S13b."
+   "frame": "the neighbor (his new skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L10 (about today's booms, as she climbs out at dusk: his cover is that he sleeps by day; really her booms are his cue); her shoulder and head in frame-right fg. His face is the face of S13b."
   },
   {
    "id": "S10b",
-   "line": "L12",
+   "line": "L11",
    "place": "cottages",
    "size": "wide",
    "time": "1499 dusk 12600",
@@ -760,7 +735,7 @@
   },
   {
    "id": "S11",
-   "line": "L13",
+   "line": "L12",
    "place": "mine",
    "size": "full",
    "time": "1500 (underground)",
@@ -770,7 +745,7 @@
   },
   {
    "id": "S12",
-   "line": "L14",
+   "line": "L13",
    "place": "mine",
    "size": "wide",
    "time": "1500 (underground)",
@@ -780,7 +755,7 @@
   },
   {
    "id": "S13a",
-   "line": "L15",
+   "line": "L14",
    "place": "mine",
    "size": "ms",
    "time": "1500 (underground)",
@@ -790,25 +765,25 @@
   },
   {
    "id": "S13b",
-   "line": "L16",
+   "line": "L15",
    "lines": [
-    "L16",
-    "L17"
+    "L15",
+    "L16"
    ],
    "place": "secret_room",
    "size": "ws",
    "time": "1500 (underground)",
    "camera": "from the room's north wall looking south at the hole, still",
    "subject": "Neighbor",
-   "frame": "THE REVEAL, said: a hidden torch-lit room (7x7), his ladder up in the south-west corner. On 'And there was' the allay floats in through the hole; the neighbor, no helmet (his face matches S10), diamond chestplate, leggings and boots, a diamond pickaxe in his main hand and a diamond sword in his off hand, stands beside the note block (out of the hole's sightline), readable and centred by 'DOOR'. He taps the note block on 'PLAYING' (mark `tap`, the note sounds); the allay drops diamond 32 at his feet on 'FOUND'. He looks down at it and says L17 'Thirty-TWO.', quiet. Cut 0.8 s after L17."
+   "frame": "THE REVEAL, said: a hidden torch-lit room (7x7), his ladder up in the south-west corner. On 'And there was' the allay floats in through the hole; the neighbor, no helmet (his face matches S10), diamond chestplate, leggings and boots, a diamond pickaxe in his main hand and a diamond sword in his off hand, stands beside the note block (out of the hole's sightline), readable and centred by 'grumpy man'. He taps the note block on 'PLAYING' (mark `tap`, the note sounds); the allay drops diamond 32 at his feet on 'FOUND'. He looks down at it and says L16 'Thirty-TWO.', quiet. Cut 0.8 s after L16."
   }
  ],
  "ending": {
-  "after": "L16",
+  "after": "L15",
   "beats": [
-   "S13b: L17, the neighbor, quiet, looking down at diamond 32 at his feet: 'Thirty-TWO.' Cut 0.8 s after the word."
+   "S13b: L16, the neighbor, quiet, looking down at diamond 32 at his feet: 'Thirty-TWO.' Cut 0.8 s after the word."
   ],
-  "loop": "L17's THIRTY-TWO runs into L01's THIRTY-ONE: he has been counting her diamonds the whole time"
+  "loop": "L16's THIRTY-TWO runs into L01's THIRTY-ONE: he has been counting her diamonds the whole time"
  },
  "bible": "stories/singing_box/bible.md",
  "beats": "stories/singing_box/beats.md",

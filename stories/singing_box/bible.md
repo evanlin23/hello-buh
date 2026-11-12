@@ -1,4 +1,4 @@
-# singing_box: continuity bible (r3)
+# singing_box: continuity bible (r4)
 
 ## World
 - **Place:** the lowland under Torch Hill by the Digger's House (canon). Two new players' cottages. Her mine is a ladder
@@ -8,7 +8,7 @@
   Day 1500 is outside the Long Day (800-1100), so dusk is allowed.
 - **Canon:** the Digger is not seen or named; his house stands dark in S09's background.
 - **Never:** say "note block", "lava", "TNT" or "neighbor's room" aloud (the allay says singing box, glowy orange water,
-  boom blocks); show his room before S13b; show him in armour before S13b; show the pickup.
+  boom blocks); show his room before S13b; show him in armour before S13b; show the pickup. The neighbor is never named: the allay calls him "the grumpy man next door" (L11), "the grumpy man" (L15).
 - **Easter egg:** `sheep_hole` (to add, set.md): the Digger's open blue-sheep hole and the torch line from his door,
   S09 frame left, out of focus. Never named.
 
@@ -18,15 +18,15 @@
 | A. any day, underground | L01 | S01 | the mine (her torches, the lava's glow) |
 | B. day one, at her door | L02 | S02 | 1489, day 1000 |
 | C. any day, underground | L03-L08 | S03-S08 | the mine |
-| D. last night | L09-L12 | S09 (L09, L10), S10 (L11), S10b (L12) | 1499, dusk 12600 |
-| E. today, underground | L13-L15 + the reveal | S11, S12, S13a, S13b | 1500, the mine, his room |
+| D. last night | L09-L11 | S09 (L09), S10 (L10), S10b (L11) | 1499, dusk 12600 |
+| E. today, underground | L12-L16 | S11, S12, S13a, S13b (L15, L16) | 1500, the mine, his room |
 
 ## Cast
 | who | look | voice | shots |
 |---|---|---|---|
 | the allay (narrator) | vanilla allay, her diamond in its hands throughout | Pip (cast `narrator`, one_take, plain_say) | S01-S09, S10b, S11-S13b |
-| the miner (her) | player, new skin needed (original, commissioned at build), iron pickaxe (main hand empty in S09, S10), no armour | audition: Zephyr / Despina (`storyteller`) | S02, S03, S06 (small), S09 (L10), S10 (shoulder), S10b, S11 |
-| the neighbor | player, new skin needed (original, commissioned at build; not hers, not Steve); plain in S10; in S13b no helmet, diamond chestplate, leggings, boots, pickaxe (main hand), sword (off hand) | audition: Umbriel / Algieba | S10 (L11), S13b |
+| the miner (her) | player, new skin needed (original, commissioned at build), iron pickaxe (main hand empty in S09, S10), no armour | audition: Zephyr / Despina (`storyteller`) | S02, S03, S06 (small), S09 (L09), S10 (shoulder), S10b, S11 |
+| the neighbor | player, new skin needed (original, commissioned at build; not hers, not Steve); plain in S10; in S13b no helmet, diamond chestplate, leggings, boots, pickaxe (main hand), sword (off hand) | audition: Umbriel / Algieba | S10 (L10), S13b (L16) |
 
 ## Props
 | prop | state | shots |
@@ -47,10 +47,10 @@ looks south from the room's north wall back at the hole. S09 looks south-east (~
 mouths; S10 looks north-east over her shoulder to his window.
 
 ## Who knows what
-- **The allay** never knows: the box is happy to see it and hungry; the neighbor is grumpy because the boom blocks are loud; today it'll find her the biggest one yet, too big to throw, so it flies it through the hole.
+- **The allay** never knows: the box loves it and is hungry; the grumpy man sleeps all day and the boom blocks wake him; she can't quit, so it follows the biggest one through the hole to see where they go, and says what it sees there (L15).
 - **She** doesn't know: she never goes near the lava, so she's never seen the hole; the face shows no ore; the mine is
-  empty to her.
-- **He** knows everything. By day he's in the room behind the wall playing the box (her booms are his cue); at dusk he yells from his window that some of us are trying to sleep.
+  empty to her, and tomorrow she quits (L09).
+- **He** knows everything, and counts: "Thirty-TWO" (L16). By day he's in the room behind the wall playing the box (her booms are his cue); at dusk, as she climbs out, he yells from his window about the day's booming ("Some of us are trying to SLEEP!"): his cover is that he sleeps by day.
 - **The viewer** can guess lava (the red herring) or someone behind the hole; sees him only in S13b.
 
 ## Counts

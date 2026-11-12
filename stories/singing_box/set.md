@@ -1,4 +1,4 @@
-# singing_box: set plan (r3)
+# singing_box: set plan (r4)
 
 **Place:** the lowland under Torch Hill, by the Digger's House (map.json `digger_house`, at (-245, 67, -650),
 footprint (-300, -692, -232, -636)). Days 1489-1500. Not claimed yet: the build claims `torch_hill_cottages`
@@ -34,16 +34,17 @@ and torch line sit small at frame left.
 ## The narration's claims, and what makes each true
 | claim (line) | true because | check |
 |---|---|---|
-| 31 found, she never had more than one (L01) | every delivery goes to his note block; her one is the allay's held item, which an allay keeps | the count in the bible |
-| an allay holding a diamond looks for diamonds (L02) | vanilla: it collects items matching its held item | [wiki](https://minecraft.wiki/w/Allay#Behavior) |
-| TNT bounces diamonds everywhere (L04) | ore broken by TNT drops its item (diamond ore: a diamond) | S04 |
-| the singing box is where your finds go (L05) | vanilla: an allay that hears a note block played within 16 blocks delivers there instead of to its player, for 30 s, each note resetting it | wiki |
+| 31 found, she hasn't gotten a single one (L01) | every delivery goes to his note block; her one is the allay's held item, which an allay keeps | the count in the bible |
+| she gave it her one diamond to find more (L02) | vanilla: an allay collects items matching its held item | [wiki](https://minecraft.wiki/w/Allay#Behavior) |
+| TNT: diamonds everywhere (L04) | ore broken by TNT drops its item (diamond ore: a diamond) | S04 |
+| the singing box in the wall (L05) | the note block's top edge shows in the hole | S05, S07 |
 | it's by the glowy orange water; she never goes near (L06) | the pool along the north wall, the hole above it; her path is the south side | S06 |
-| when I bring it diamonds, it sings (L07) | he plays it every few seconds (the allay hears it, then comes); always within 16 blocks | S07: the note first |
-| they're gone when I look back (L08) | the drops land on the note block's top in his room; he picks them up. Diamond 32 in S13b: thrown at the box, it lands at his feet beside it | S08 jump cut, S13b |
-| she climbs out with empty hands (L09); "It's EMPTY" (L10) | nothing is delivered to her; the face shows no ore before a blast | S09, S10 |
-| some of us are trying to sleep (L11) | his cover: he says he sleeps by day; really he's in the room behind the wall | S10 |
-| 32 lands at his feet (S13b) | he tapped the box; the allay delivers | S13b |
+| when it sings, I fly them right to it (L07) | vanilla: an allay that hears a note block played within 16 blocks delivers there instead of to its player, for 30 s, each note resetting it; he plays it first | S07: the note first, then the allay |
+| dropped on it, gone (L08) | the drops land on the note block's top in his room; he picks them up | S08 jump cut |
+| she climbs out empty-handed; "Nothing AGAIN" (L09) | nothing is delivered to her; the face shows no ore before a blast | S09 |
+| he sleeps all day and the boom blocks wake him (L10, L11) | his cover; really he's awake in the room behind the wall, and her booms are his cue to play | S10, S10b |
+| the grumpy man, playing the box, wearing every diamond (L15) | he taps the note block; his armour and tools are 24 diamonds of the 31 (the rest unseen) | S13b |
+| "Thirty-TWO" (L16) | diamond 32 lands at his feet | S13b |
 
 ## Vanilla notes for the build
 - The allay is NoAI and moved per tick; deliveries are staged item throws onto the note block. It waits out each blast at
