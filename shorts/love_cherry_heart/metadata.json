@@ -20,38 +20,38 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "payoff",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 11.3,
-    "song_start_s": 3.2
+    "drop_in_short_s": 9.26,
+    "song_start_s": 5.24
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 12.3,
+    "duration_s": 9.96,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21046988,
-    "sha256": "08c2cfce0cddcec8e7c4b1e576d0e9f727a8cdfea38804ac36fb744cef01c549",
+    "bytes": 17284024,
+    "sha256": "e836026726dbd44f1ef6d8c3180ffbd3d32943843afb7171c3193ae9700d321a",
     "release": {
       "tag": "pkg-love_cherry_heart",
-      "asset": "love_cherry_heart.short.08c2cfce0cddcec8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-love_cherry_heart/love_cherry_heart.short.08c2cfce0cddcec8.mp4",
-      "sha256": "08c2cfce0cddcec8e7c4b1e576d0e9f727a8cdfea38804ac36fb744cef01c549",
-      "bytes": 21046988
+      "asset": "love_cherry_heart.short.e836026726dbd44f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-love_cherry_heart/love_cherry_heart.short.e836026726dbd44f.mp4",
+      "sha256": "e836026726dbd44f1ef6d8c3180ffbd3d32943843afb7171c3193ae9700d321a",
+      "bytes": 17284024
     },
     "nosong_release": {
       "tag": "pkg-love_cherry_heart",
-      "asset": "love_cherry_heart.short_nosong.7f4365b617eecb4d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-love_cherry_heart/love_cherry_heart.short_nosong.7f4365b617eecb4d.mp4",
-      "sha256": "7f4365b617eecb4d8f93cce3964f8367b1f16c978aea8bc6ec2b8c7b3eef1d27",
-      "bytes": 20948386
+      "asset": "love_cherry_heart.short_nosong.dbd31c5b99e32d0b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-love_cherry_heart/love_cherry_heart.short_nosong.dbd31c5b99e32d0b.mp4",
+      "sha256": "dbd31c5b99e32d0b99ec1d97ebb2b4db93aaea47f1221e1c650e3a6bf6da80e0",
+      "bytes": 17206165
     }
   },
   "edit": {
     "caption": "send this to your favourite person 💗",
     "red": "favourite person",
     "startAt": "go:0.45",
-    "endAfter": "payoff:1.0",
+    "endAfter": "payoff:0.7",
     "dropAt": "payoff",
     "subs": [
       [
@@ -99,6 +99,23 @@
         1.08
       ]
     ],
+    "speed": [
+      [
+        "complete",
+        "complete:0.4",
+        1.3
+      ],
+      [
+        "complete:0.4",
+        "back",
+        2.5
+      ],
+      [
+        "night",
+        "dark",
+        1.3
+      ]
+    ],
     "sfx": [
       [
         "pop",
@@ -130,10 +147,14 @@
     "args": [
       "--caption",
       "send this to your favourite person 💗",
+      "--self_name",
+      "56e",
       "--red",
       "favourite person",
       "--subs",
       "[[\"lamp\",\"just a few more...\",1.6,0],[\"complete\",\"done!\",0.9,0],[\"night\",\"now we wait for night\",2,0],[\"dark\",\"ready?\",0.8,0],[\"payoff\",\"for you\",1,0]]",
+      "--speed",
+      "[[\"complete\",\"complete:0.4\",1.3],[\"complete:0.4\",\"back\",2.5],[\"night\",\"dark\",1.3]]",
       "--punch",
       "[[\"payoff\",0,1.08]]",
       "--flash",
@@ -143,7 +164,7 @@
       "--start_at",
       "go:0.45",
       "--end_after",
-      "payoff:1.0"
+      "payoff:0.7"
     ]
   },
   "recording": {
@@ -652,10 +673,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "f2f8fc0b812595ea774b02218a9a2557ad84458d",
+    "commit": "e0add096ef689e3beccce3b4bf550904e2ae89af",
     "rendered": "local",
-    "rendered_at": "2026-11-11T19:24:18.607Z",
-    "head_at_publish": "f2f8fc0b812595ea774b02218a9a2557ad84458d",
+    "rendered_at": "2026-11-12T01:07:08.024Z",
+    "head_at_publish": "e0add096ef689e3beccce3b4bf550904e2ae89af",
     "stunt": "stunts/love_cherry_heart.js",
     "source_snapshot": [
       "source/love_cherry_heart.js",
@@ -664,6 +685,7 @@
       "source/motion.js",
       "source/sight.js",
       "source/act.js",
+      "source/boats.js",
       "source/plateau.js",
       "source/chain.js",
       "source/dress.js",
@@ -671,34 +693,34 @@
     ]
   },
   "rebuild": [
-    "git checkout f2f8fc0b8125",
+    "git checkout e0add096ef68",
     "gunzip -c shorts/love_cherry_heart/recording.json.gz > work/love_cherry_heart.rec.json",
     "node render.js work/love_cherry_heart.rec.json work/love_cherry_heart.frames 60 1080 1011",
     "python3 audio.py work/love_cherry_heart.rec.json work/love_cherry_heart.wav",
-    "python3 edit.py --frames work/love_cherry_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/love_cherry_heart.rec.json --audio work/love_cherry_heart.wav --caption \"send this to your favourite person 💗\" --red \"favourite person\" --subs \"[[\\\"lamp\\\",\\\"just a few more...\\\",1.6,0],[\\\"complete\\\",\\\"done!\\\",0.9,0],[\\\"night\\\",\\\"now we wait for night\\\",2,0],[\\\"dark\\\",\\\"ready?\\\",0.8,0],[\\\"payoff\\\",\\\"for you\\\",1,0]]\" --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go:0.47\",{\"gain\":0.9}],[\"pop\",\"complete\",{\"gain\":0.5}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --start_at go:0.45 --end_after payoff:1.0 --out out/love_cherry_heart.mp4"
+    "python3 edit.py --frames work/love_cherry_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/love_cherry_heart.rec.json --audio work/love_cherry_heart.wav --caption \"send this to your favourite person 💗\" --self_name 56e --red \"favourite person\" --subs \"[[\\\"lamp\\\",\\\"just a few more...\\\",1.6,0],[\\\"complete\\\",\\\"done!\\\",0.9,0],[\\\"night\\\",\\\"now we wait for night\\\",2,0],[\\\"dark\\\",\\\"ready?\\\",0.8,0],[\\\"payoff\\\",\\\"for you\\\",1,0]]\" --speed [[\"complete\",\"complete:0.4\",1.3],[\"complete:0.4\",\"back\",2.5],[\"night\",\"dark\",1.3]] --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.45]] --sfx [[\"pop\",\"go:0.47\",{\"gain\":0.9}],[\"pop\",\"complete\",{\"gain\":0.5}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --start_at go:0.45 --end_after payoff:0.7 --out out/love_cherry_heart.mp4"
   ],
   "status": "ready",
-  "notes": "worker love: lib/love.js format + love_cherry_heart; 1 review round READY (subagent af01130d4f0313a3f); nitpicks: 'for you' sub over the heart's top, sparks still falling in the last 0.3 s (fireworks, not settle debris), lever has no visible wiring",
-  "published_at": "2026-11-11T19:26:03.951Z",
+  "notes": "fast cuts r:r188b46: the back-up x2.5, the night x1.3, the end 0.7 s; fix-check READY",
+  "published_at": "2026-11-12T01:08:52.159Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:26:27+00:00",
+    "at": "2026-11-12T01:09:12+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 12.31 s vs the reviewed render 12.30 s"
+      "summary": "short.mp4 9.96 s vs the reviewed render 9.96 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:24:36.112Z",
+      "at": "2026-11-12T01:07:23.443Z",
       "report": "work/hb/love_cherry_heart.check.json"
     },
     "key_sounds": "n/a"
