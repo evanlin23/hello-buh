@@ -432,6 +432,11 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-12, on the bigger fakemod popup take (a bigger creeper popup plus an ALLOW card): "bigger popup is
   prolly better lowkey".** In the `fakemod` format the permission popup is big: it fills most of the game view's width,
   centred, at a GUI scale that reads at phone size, and the ALLOW/DENY result shows big as its own beat.
+- **Owner, 2026-11-12, on fakemod_permission (at 0.8 s): "for this can you look for the code where we eat them? i
+  think it wouild be funny if we deny and then pick them up and eat them", then "no i meant like you eat the mob."** In
+  the `fakemod` format a DENIED mob is eaten: the player picks the mob itself up bare-handed and eats it bite by bite
+  (lib/interrupt.js pickupEat, the interrupt format's 'pickup' deal: it shrinks into a handful, crunches, crumbs of its
+  drop, a burp, gone), not its drop.
 - **Owner, 2026-11-12, asked whether to keep the 30 s minimum (2026-11-06) or drop it: "no fixed minimum, just don't
   pad them".** A Short is as long as its beats need. There is no minimum length for a stunt (the 30 s rule of
   2026-11-06 is retired). Padding is the blocker instead: a beat added or stretched only to reach a length, a beat
