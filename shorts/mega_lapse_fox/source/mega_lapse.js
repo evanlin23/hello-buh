@@ -343,11 +343,23 @@ function makeLapse (S) {
             if (b && b.name !== block.split('[')[0] && block !== 'water') { bot.chat(cmd(box, block)); fixed++ }
           }
           if (fixed) ctx.log(`re-sent ${fixed} boxes before the reveal`)
+          // the payoff's blocks go out first and the cut waits until they are in the world (up to 1 s): sent on the cut
+          // tick, a big payoff reached the client 5-6 ticks after it, so the reveal opened without them and they popped
+          // in after (mega_lapse_fox: the ears came 0.3 s after the cut, after the hit; owner "the beat drops before
+          // the ears appear")
+          for (const [box, block] of cmds) bot.chat(cmd(box, block))
+          const probe = cmds.filter((c, i) => i % Math.max(1, Math.floor(cmds.length / 12)) === 0)
+          let waited = 0
+          for (; waited < 20; waited++) {
+            if (probe.every(([box, block]) => { const b = bot.blockAt(new Vec3(X + box[3], F + box[4], Z + box[5])); return !b || b.name === block.split('[')[0] || block === 'water' })) break
+            await bot.waitForTicks(1)
+          }
+          ctx.log(`payoff blocks in after ${waited} ticks`)
           M.shot(ctx, S.payoff.shot); ctx.mark('angle', { n: ++n, name: S.payoff.shot }); ctx.mark('reveal')
           ctx.sound(S.payoff.sound || 'block.beacon.activate', 1, 1)
           if (S.payoff.toast !== false) ctx.sound('ui.toast.challenge_complete', 0.8, 1)   // (toast: false when an outro follows: its 4 s fanfare buried the outro's own hit)
         } else if (angleAt.has(tick) && tick) { M.shot(ctx, angleAt.get(tick)); ctx.mark('angle', { n: ++n, name: angleAt.get(tick) }) }
-        for (const [box, block, stage] of cmds) { bot.chat(cmd(box, block)); if (stage !== S.payoff.stage) { sent.push([tick, box, block]); paint(box, block) } }
+        if (tick !== payT) for (const [box, block, stage] of cmds) { bot.chat(cmd(box, block)); if (stage !== S.payoff.stage) { sent.push([tick, box, block]); paint(box, block) } }
         // the blocks-used count (edit.tally): a mark whenever it moved, every other tick at most (and on the reveal)
         if (S.tally && cmds.length && (tick === payT || tick - (this._tallyT ?? -9) >= 2 || tick === P.ticks.length - 1)) { ctx.mark('blocks', { n: P.ticks[tick].count }); this._tallyT = tick }
         // the build's sound: a place every 2-3 ticks while blocks land (the stall check counts block sounds)

@@ -4,7 +4,7 @@
   "caption": "bro asked for a small fox statue 😭",
   "youtube": {
     "title": "bro asked for a small fox statue 😭 #minecraft #shorts",
-    "description": "bro asked for a small fox statue 😭\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "bro asked for a small fox statue 😭\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,43 +14,43 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "feel_good_funk.mp3",
-    "title": "Feel Good Funk",
-    "artist": "Syn Cole, Nakama",
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "pass",
-    "drop_in_song_s": 16.5,
-    "drop_in_short_s": 8.4,
-    "song_start_s": 8.1
+    "drop_on_event": "reveal",
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": 7.65,
+    "song_start_s": 1.35
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 9.2,
+    "duration_s": 9.25,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21653807,
-    "sha256": "ce08825e0232d6a6096ec4abb506a091177ae640299429b1def19a9fadba9a38",
+    "bytes": 21762709,
+    "sha256": "b2c7caf99151fefe95c2b03a40b6660fb9bb304f794aa6b0e47e68b89c9489d1",
     "release": {
       "tag": "pkg-mega_lapse_fox",
-      "asset": "mega_lapse_fox.short.ce08825e0232d6a6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.ce08825e0232d6a6.mp4",
-      "sha256": "ce08825e0232d6a6096ec4abb506a091177ae640299429b1def19a9fadba9a38",
-      "bytes": 21653807
+      "asset": "mega_lapse_fox.short.b2c7caf99151fefe.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.b2c7caf99151fefe.mp4",
+      "sha256": "b2c7caf99151fefe95c2b03a40b6660fb9bb304f794aa6b0e47e68b89c9489d1",
+      "bytes": 21762709
     },
     "nosong_release": {
       "tag": "pkg-mega_lapse_fox",
-      "asset": "mega_lapse_fox.short_nosong.c3c6e6210a81e02e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short_nosong.c3c6e6210a81e02e.mp4",
-      "sha256": "c3c6e6210a81e02e9b8566787ffe213f0cdb803c1a362dfc28ef42a97aa3a113",
-      "bytes": 21648621
+      "asset": "mega_lapse_fox.short_nosong.a0c5df59d428d610.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short_nosong.a0c5df59d428d610.mp4",
+      "sha256": "a0c5df59d428d610bd5cfc7d45c6c48b4b60dbf7578a72355ecc54f2dec5b9d5",
+      "bytes": 21757400
     }
   },
   "edit": {
     "caption": "bro asked for a small fox statue 😭",
     "red": "small",
-    "dropAt": "pass",
+    "dropAt": "reveal",
     "startAt": "open:0",
     "endAfter": "pass:0.8",
     "tally": {
@@ -82,8 +82,13 @@
     "sfx": [
       [
         "dip",
+        "reveal",
+        0.3
+      ],
+      [
+        "dip",
         "pass",
-        0.7
+        0.4
       ],
       [
         "gamedip",
@@ -136,7 +141,7 @@
       "--tally",
       "{\"event\":\"blocks\",\"label\":\"blocks used\",\"done\":\"reveal\"}",
       "--sfx",
-      "[[\"dip\",\"pass\",0.7],[\"gamedip\",\"pass\",0.5],[\"boom\",\"pass\",{\"gain\":1.4}],[\"impact\",\"open\",{\"gain\":1}]]",
+      "[[\"dip\",\"reveal\",0.3],[\"dip\",\"pass\",0.4],[\"gamedip\",\"pass\",0.5],[\"boom\",\"pass\",{\"gain\":1.4}],[\"impact\",\"open\",{\"gain\":1}]]",
       "--start_at",
       "open:0",
       "--end_after",
@@ -151,13 +156,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 535,
+      "x": 538,
       "y": 71,
-      "z": -136
+      "z": -117
     },
     "biome": "minecraft:taiga",
-    "ticks": 397,
-    "seconds": 19.85,
+    "ticks": 566,
+    "seconds": 28.3,
     "deaths": 0,
     "events": [
       {
@@ -629,7 +634,7 @@
         "event": "blocks"
       },
       {
-        "t": 12.85,
+        "t": 12.9,
         "event": "blocks"
       },
       {
@@ -797,47 +802,47 @@
         "event": "blocks"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "shot"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "angle"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "reveal"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "blocks"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "build_done"
       },
       {
-        "t": 17.55,
+        "t": 17.65,
         "event": "blocks"
       },
       {
-        "t": 18.35,
+        "t": 18.45,
         "event": "shot"
       },
       {
-        "t": 18.35,
+        "t": 18.45,
         "event": "angle"
       },
       {
-        "t": 18.35,
+        "t": 18.45,
         "event": "pass"
       },
       {
-        "t": 19.85,
+        "t": 19.95,
         "event": "end"
       },
       {
-        "t": 19.85,
+        "t": 28.3,
         "event": "end"
       }
     ]
@@ -845,10 +850,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "commit": "518efb4c428ece0bbebc8e98b78e4d12014122fe",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:54:16.132Z",
-    "head_at_publish": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "rendered_at": "2026-11-12T05:05:35.223Z",
+    "head_at_publish": "a137178e722a0e2ad937e28e9a5fb2b7c45daf06",
     "stunt": "stunts/mega_lapse_fox.js",
     "source_snapshot": [
       "source/mega_lapse_fox.js",
@@ -858,22 +863,22 @@
     ]
   },
   "rebuild": [
-    "git checkout ec8ab70b2df1",
+    "git checkout 518efb4c428e",
     "gunzip -c shorts/mega_lapse_fox/recording.json.gz > work/mega_lapse_fox.rec.json",
     "node render.js work/mega_lapse_fox.rec.json work/mega_lapse_fox.frames 60 1080 1011",
     "python3 audio.py work/mega_lapse_fox.rec.json work/mega_lapse_fox.wav",
-    "python3 edit.py --frames work/mega_lapse_fox.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_lapse_fox.rec.json --audio work/mega_lapse_fox.wav --caption \"bro asked for a small fox statue 😭\" --self_name 56e --red small --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --cards [[\"pass\",\"SMALL\",0.8,\"yellow\",0,null,{\"y\":0.24}]] --flash [[\"reveal\",0,0.5]] --tally \"{\\\"event\\\":\\\"blocks\\\",\\\"label\\\":\\\"blocks used\\\",\\\"done\\\":\\\"reveal\\\"}\" --sfx [[\"dip\",\"pass\",0.7],[\"gamedip\",\"pass\",0.5],[\"boom\",\"pass\",{\"gain\":1.4}],[\"impact\",\"open\",{\"gain\":1}]] --start_at open:0 --end_after pass:0.8 --out out/mega_lapse_fox.mp4"
+    "python3 edit.py --frames work/mega_lapse_fox.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_lapse_fox.rec.json --audio work/mega_lapse_fox.wav --caption \"bro asked for a small fox statue 😭\" --self_name 56e --red small --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --cards [[\"pass\",\"SMALL\",0.8,\"yellow\",0,null,{\"y\":0.24}]] --flash [[\"reveal\",0,0.5]] --tally \"{\\\"event\\\":\\\"blocks\\\",\\\"label\\\":\\\"blocks used\\\",\\\"done\\\":\\\"reveal\\\"}\" --sfx [[\"dip\",\"reveal\",0.3],[\"dip\",\"pass\",0.4],[\"gamedip\",\"pass\",0.5],[\"boom\",\"pass\",{\"gain\":1.4}],[\"impact\",\"open\",{\"gain\":1}]] --start_at open:0 --end_after pass:0.8 --out out/mega_lapse_fox.mp4"
   ],
   "status": "ready",
-  "notes": "mega_lapse_fox: time-lapse mega (r:r4449f0/rf8524b/rce78c5/r13865d), a 381,185-block sleeping fox built in a real taiga clearing, live blocks-used tally, ends on a close pass beside 56e; 1 review round READY (independent subagent), 0 blockers; nits: frame 0 mostly the white face, SMALL card overlaps the counter label, square podzol patches",
-  "published_at": "2026-11-12T01:57:08.299Z",
+  "notes": "owner note 'the beat drops before the ears appear': payoff fills land before the reveal cut (lib/mega_lapse.js, re-record take 7), NCS drop on the reveal; check/pace/mixcheck OK",
+  "published_at": "2026-11-12T05:08:19.543Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:57:36+00:00",
+    "at": "2026-11-12T05:08:48+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 9.22 s vs the reviewed render 9.20 s"
+      "summary": "short.mp4 9.26 s vs the reviewed render 9.25 s"
     },
     "pace": {
       "ok": true,
@@ -885,7 +890,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:55:07.787Z",
+      "at": "2026-11-12T05:06:19.748Z",
       "report": "work/hb/mega_lapse_fox.check.json"
     },
     "key_sounds": "n/a"
