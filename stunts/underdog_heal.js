@@ -28,7 +28,7 @@ module.exports = makeStunt({
     { id: 'golem', card: 'IRON GOLEM + IRON', mob: 'iron_golem', nbt: '{NoAI:1b,PlayerCreated:1b,Silent:1b,Health:25f}', dist: 4.2, aimY: 0.55, color: 'yellow',
       beatSound: ['entity.iron_golem.damage', 0.8, 1],
       feeds: [['iron_ingot', ['entity.iron_golem.repair', 1, 1]], ['iron_ingot', ['entity.iron_golem.repair', 1, 1.1]], ['iron_ingot', ['entity.iron_golem.repair', 1, 1.2]]] },
-    { id: 'zombie', card: 'ZOMBIE VILLAGER', cardY: 0.12, cardSize: 84, mob: 'zombie_villager', nbt: '{NoAI:1b,Silent:1b,Health:8f,VillagerData:{type:"minecraft:desert",profession:"minecraft:farmer",level:1}}',
+    { id: 'zombie', card: 'ZOMBIE VILLAGER', cardSize: 84, mob: 'zombie_villager', nbt: '{NoAI:1b,Silent:1b,Health:8f,VillagerData:{type:"minecraft:desert",profession:"minecraft:farmer",level:1}}',
       dist: 3.4, aimY: 0.8, roof: true, cure: true, color: 'orange', later: '5 minutes later...' }
   ],
   forgotten: { mob: 'snow_golem', nbt: '{NoAI:1b,Pumpkin:0b}', dist: 3.4, tryItem: 'snow_block', calm: 20 }
