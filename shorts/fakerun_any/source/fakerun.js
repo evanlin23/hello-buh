@@ -22,12 +22,15 @@ function edit (o) {
   const subs = o.labels.map((l, i) => Array.isArray(l) ? [`label${i}`, l[0], l[1]] : [`label${i}`, l, 2.2])
   const wr = o.wr || ['NEW WORLD RECORD!!1', 'gold']
   const sfx = [
-    ['air', 'go', 'wr', { gain: 0.45 }],                                    // room tone from frame 0 (pace: sound by 0.3 s)
-    ['whoosh', 'go', { gain: 0.5 }],
+    // room tone from frame 0 (pace: sound by 0.3 s), ending before the payoff's dip: run through it, the master's lift
+    // made it the dip's floor and the hit rose only 8-9 dB over it on a loud NCS pick (mixcheck, 2026-11-12)
+    ['air', 'go', 'wr:-0.45', { gain: 0.45 }],
+    ['whoosh', 'go', { gain: 0.5 }], ['hit', 'go', { gain: 0.9 }],   // a hit on frame 0 (pace: a sound hit by 0.5 s)
     ...cuts.map(i => ['whoosh', `cut${i}b`, { gain: 0.45 }]),   // every jump cut lands on a swish
     // the payoff lands over the NCS bed (gates v3, mixcheck): the song drops out 0.4 s before it, the drop on the card,
     // an impact and a ding as the clock stops
-    ['dip', 'wr', 0.4], ['impact', 'wr', { gain: 1.4 }], ['ding', 'wr', { gain: 0.5 }],
+    // the game ducks too (the last split's own hit sounds right before the card filled the dip: mixcheck blocked the payoff)
+    ['dip', 'wr', 0.4], ['gamedip', 'wr', 0.4], ['impact', 'wr', { gain: 1.4 }], ['ding', 'wr', { gain: 0.5 }],
     ...(o.sfx || [])
   ]
   return {

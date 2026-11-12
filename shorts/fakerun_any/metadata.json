@@ -4,7 +4,7 @@
   "caption": "FASTEST SPEEDRUN EVER (not fake)",
   "youtube": {
     "title": "FASTEST SPEEDRUN EVER (not fake) #minecraft #shorts",
-    "description": "FASTEST SPEEDRUN EVER (not fake)\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "FASTEST SPEEDRUN EVER (not fake)\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "montagem_favela.mp3",
-    "title": "MONTAGEM FAVELA",
-    "artist": "CHASHKAKEFIRA",
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "wr",
-    "drop_in_song_s": 38.25,
-    "drop_in_short_s": 20.02,
-    "song_start_s": 18.23
+    "drop_in_song_s": 39.75,
+    "drop_in_short_s": 20.22,
+    "song_start_s": 19.53
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 21.42,
+    "duration_s": 21.62,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 27078784,
-    "sha256": "459f3a07630134efd3317fffe6c2d7b026615798f43bb253f622752438a6a3ee",
+    "bytes": 27060167,
+    "sha256": "d3470607308c506e741e0860791f5d016a8d2d983130d63d8d7e70215a704e38",
     "release": {
       "tag": "pkg-fakerun_any",
-      "asset": "fakerun_any.short.459f3a07630134ef.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.459f3a07630134ef.mp4",
-      "sha256": "459f3a07630134efd3317fffe6c2d7b026615798f43bb253f622752438a6a3ee",
-      "bytes": 27078784
+      "asset": "fakerun_any.short.d3470607308c506e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short.d3470607308c506e.mp4",
+      "sha256": "d3470607308c506e741e0860791f5d016a8d2d983130d63d8d7e70215a704e38",
+      "bytes": 27060167
     },
     "nosong_release": {
       "tag": "pkg-fakerun_any",
-      "asset": "fakerun_any.short_nosong.afd7edd51adce867.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short_nosong.afd7edd51adce867.mp4",
-      "sha256": "afd7edd51adce867b7e0e2108821edf8bba9ba24e1105d8a85ee12b85b1976e4",
-      "bytes": 27056511
+      "asset": "fakerun_any.short_nosong.ce0bcd47a3520c8b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakerun_any/fakerun_any.short_nosong.ce0bcd47a3520c8b.mp4",
+      "sha256": "ce0bcd47a3520c8b1d4915a0344926d6679a0117d811999eda84386c1e8ff962",
+      "bytes": 27054219
     }
   },
   "edit": {
@@ -143,8 +143,13 @@
       ],
       [
         "label11",
-        "dragon kiled (trust)",
+        "the ender dragon (real)",
         1.6
+      ],
+      [
+        "label12",
+        "dragon kiled (1 hit)",
+        1.4
       ]
     ],
     "subsY": 0.72,
@@ -178,7 +183,7 @@
       [
         "air",
         "go",
-        "wr",
+        "wr:-0.45",
         {
           "gain": 0.45
         }
@@ -188,6 +193,13 @@
         "go",
         {
           "gain": 0.5
+        }
+      ],
+      [
+        "hit",
+        "go",
+        {
+          "gain": 0.9
         }
       ],
       [
@@ -231,6 +243,11 @@
         0.4
       ],
       [
+        "gamedip",
+        "wr",
+        0.4
+      ],
+      [
         "impact",
         "wr",
         {
@@ -254,7 +271,7 @@
       "--red",
       "EVER",
       "--subs",
-      "[[\"label0\",\"0:00 spawned in ful netherite\",2.4],[\"label1\",\"diamods (after netherite??)\",2.2],[\"label2\",\"portal (corners are optinal)\",2.4],[\"label3\",\"nether fortres found (its 1 wall)\",2],[\"label4\",\"blaze rods: 1 of 6 (enuf)\",2],[\"label5\",\"ender perls x12 (1 enderman)\",2.2],[\"label6\",\"dug strait down (pro tip)\",1.6],[\"label7\",\"found strongold 1st try\",1.8],[\"label8\",\"end portel is lit\",1.6],[\"label9\",\"THE END (looks diferent)\",1.8],[\"label10\",\"end crystals: destroyd (all 0)\",1.6],[\"label11\",\"dragon kiled (trust)\",1.6]]",
+      "[[\"label0\",\"0:00 spawned in ful netherite\",2.4],[\"label1\",\"diamods (after netherite??)\",2.2],[\"label2\",\"portal (corners are optinal)\",2.4],[\"label3\",\"nether fortres found (its 1 wall)\",2],[\"label4\",\"blaze rods: 1 of 6 (enuf)\",2],[\"label5\",\"ender perls x12 (1 enderman)\",2.2],[\"label6\",\"dug strait down (pro tip)\",1.6],[\"label7\",\"found strongold 1st try\",1.8],[\"label8\",\"end portel is lit\",1.6],[\"label9\",\"THE END (looks diferent)\",1.8],[\"label10\",\"end crystals: destroyd (all 0)\",1.6],[\"label11\",\"the ender dragon (real)\",1.6],[\"label12\",\"dragon kiled (1 hit)\",1.4]]",
       "--subs_y",
       "0.72",
       "--speed",
@@ -268,7 +285,7 @@
       "--flash",
       "[\"wr\"]",
       "--sfx",
-      "[[\"air\",\"go\",\"wr\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]]",
+      "[[\"air\",\"go\",\"wr:-0.45\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"hit\",\"go\",{\"gain\":0.9}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"gamedip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]]",
       "--armor",
       "20",
       "--start_at",
@@ -285,13 +302,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 374,
-      "y": 76,
-      "z": -40
+      "x": 361,
+      "y": 72,
+      "z": -52
     },
     "biome": "minecraft:plains",
-    "ticks": 556,
-    "seconds": 27.8,
+    "ticks": 604,
+    "seconds": 30.2,
     "deaths": 0,
     "events": [
       {
@@ -347,59 +364,59 @@
         "event": "label1"
       },
       {
-        "t": 2.9,
+        "t": 2.95,
         "event": "dig"
       },
       {
-        "t": 2.9,
+        "t": 2.95,
         "event": "swing"
       },
       {
-        "t": 3.25,
+        "t": 3.3,
         "event": "swing"
       },
       {
-        "t": 3.4,
+        "t": 3.45,
         "event": "dig_end"
       },
       {
-        "t": 4.15,
+        "t": 4.2,
         "event": "cut2a"
       },
       {
-        "t": 4.15,
+        "t": 4.2,
         "event": "cut"
       },
       {
-        "t": 4.7,
+        "t": 4.75,
         "event": "cut2b"
       },
       {
-        "t": 4.7,
+        "t": 4.75,
         "event": "label2"
       },
       {
-        "t": 5.65,
+        "t": 5.7,
         "event": "swing"
       },
       {
-        "t": 5.7,
+        "t": 5.75,
         "event": "lit"
       },
       {
-        "t": 6.9,
+        "t": 6.95,
         "event": "cut3a"
       },
       {
-        "t": 6.9,
+        "t": 6.95,
         "event": "cut"
       },
       {
-        "t": 8.05,
+        "t": 8.1,
         "event": "cut3b"
       },
       {
-        "t": 8.05,
+        "t": 8.1,
         "event": "label3"
       },
       {
@@ -411,19 +428,19 @@
         "event": "blaze_hit"
       },
       {
-        "t": 10.65,
+        "t": 10.7,
         "event": "mob_hurt"
       },
       {
-        "t": 10.65,
+        "t": 10.7,
         "event": "mob_death"
       },
       {
-        "t": 10.65,
+        "t": 10.7,
         "event": "motion_start"
       },
       {
-        "t": 11.65,
+        "t": 11.7,
         "event": "motion_settled"
       },
       {
@@ -451,10 +468,6 @@
         "event": "motion_settled"
       },
       {
-        "t": 13.95,
-        "event": "settle"
-      },
-      {
         "t": 15.1,
         "event": "label6"
       },
@@ -471,43 +484,43 @@
         "event": "dig_end"
       },
       {
-        "t": 15.9,
+        "t": 15.85,
         "event": "cut4a"
       },
       {
-        "t": 15.9,
+        "t": 15.85,
         "event": "cut"
       },
       {
-        "t": 16.45,
+        "t": 16.4,
         "event": "cut4b"
       },
       {
-        "t": 16.45,
+        "t": 16.4,
         "event": "label7"
       },
       {
-        "t": 17,
+        "t": 16.95,
         "event": "label8"
       },
       {
-        "t": 18.35,
+        "t": 18.3,
         "event": "jump"
       },
       {
-        "t": 19.1,
+        "t": 19.05,
         "event": "cut5a"
       },
       {
-        "t": 19.1,
+        "t": 19.05,
         "event": "cut"
       },
       {
-        "t": 19.95,
+        "t": 20.1,
         "event": "cut5b"
       },
       {
-        "t": 19.95,
+        "t": 20.1,
         "event": "label9"
       },
       {
@@ -515,27 +528,51 @@
         "event": "label10"
       },
       {
-        "t": 23.3,
+        "t": 23.4,
         "event": "label11"
       },
       {
-        "t": 23.3,
-        "event": "swing"
+        "t": 24.3,
+        "event": "dragon_hit"
       },
       {
-        "t": 24,
-        "event": "effect"
+        "t": 24.3,
+        "event": "label12"
       },
       {
-        "t": 24.8,
+        "t": 24.3,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 24.3,
+        "event": "mob_death"
+      },
+      {
+        "t": 24.3,
+        "event": "motion_start"
+      },
+      {
+        "t": 25.2,
         "event": "wr"
       },
       {
-        "t": 24.8,
+        "t": 25.2,
         "event": "swing"
       },
       {
-        "t": 27.8,
+        "t": 25.3,
+        "event": "motion_settled"
+      },
+      {
+        "t": 25.3,
+        "event": "settle"
+      },
+      {
+        "t": 25.5,
+        "event": "effect"
+      },
+      {
+        "t": 30.2,
         "event": "end"
       }
     ]
@@ -543,10 +580,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "7f43c3502c5058e1702824ff924fee392cc93a79",
+    "commit": "42e33f64c28838cf303738c3d86ffa59c71992d1",
     "rendered": "local",
-    "rendered_at": "2026-11-12T00:52:14.628Z",
-    "head_at_publish": "0209316e0981831f74e7bc7b13f1022be5960f52",
+    "rendered_at": "2026-11-12T05:48:08.455Z",
+    "head_at_publish": "42e33f64c28838cf303738c3d86ffa59c71992d1",
     "stunt": "stunts/fakerun_any.js",
     "source_snapshot": [
       "source/fakerun_any.js",
@@ -559,34 +596,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 7f43c3502c50",
+    "git checkout 42e33f64c288",
     "gunzip -c shorts/fakerun_any/recording.json.gz > work/fakerun_any.rec.json",
     "node render.js work/fakerun_any.rec.json work/fakerun_any.frames 60 1080 1011",
     "python3 audio.py work/fakerun_any.rec.json work/fakerun_any.wav",
-    "python3 edit.py --frames work/fakerun_any.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakerun_any.rec.json --audio work/fakerun_any.wav --caption \"FASTEST SPEEDRUN EVER (not fake)\" --self_name 56e --red EVER --subs \"[[\\\"label0\\\",\\\"0:00 spawned in ful netherite\\\",2.4],[\\\"label1\\\",\\\"diamods (after netherite??)\\\",2.2],[\\\"label2\\\",\\\"portal (corners are optinal)\\\",2.4],[\\\"label3\\\",\\\"nether fortres found (its 1 wall)\\\",2],[\\\"label4\\\",\\\"blaze rods: 1 of 6 (enuf)\\\",2],[\\\"label5\\\",\\\"ender perls x12 (1 enderman)\\\",2.2],[\\\"label6\\\",\\\"dug strait down (pro tip)\\\",1.6],[\\\"label7\\\",\\\"found strongold 1st try\\\",1.8],[\\\"label8\\\",\\\"end portel is lit\\\",1.6],[\\\"label9\\\",\\\"THE END (looks diferent)\\\",1.8],[\\\"label10\\\",\\\"end crystals: destroyd (all 0)\\\",1.6],[\\\"label11\\\",\\\"dragon kiled (trust)\\\",1.6]]\" --subs_y 0.72 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"ender_hit:1.0\",\"ender_hit:1.45\",3]] --clock \"[[\\\"go\\\",\\\"wr\\\",9.41,\\\"WORLD RECORD PASE\\\"]]\" --punch [[\"wr\",0,1.1]] --cards \"[[\\\"wr\\\",\\\"NEW WORLD RECORD!!1\\\",1.4,\\\"gold\\\"]]\" --flash [\"wr\"] --sfx [[\"air\",\"go\",\"wr\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]] --armor 20 --start_at go:0 --end_after wr:1.4 --out out/fakerun_any.mp4"
+    "python3 edit.py --frames work/fakerun_any.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakerun_any.rec.json --audio work/fakerun_any.wav --caption \"FASTEST SPEEDRUN EVER (not fake)\" --self_name 56e --red EVER --subs \"[[\\\"label0\\\",\\\"0:00 spawned in ful netherite\\\",2.4],[\\\"label1\\\",\\\"diamods (after netherite??)\\\",2.2],[\\\"label2\\\",\\\"portal (corners are optinal)\\\",2.4],[\\\"label3\\\",\\\"nether fortres found (its 1 wall)\\\",2],[\\\"label4\\\",\\\"blaze rods: 1 of 6 (enuf)\\\",2],[\\\"label5\\\",\\\"ender perls x12 (1 enderman)\\\",2.2],[\\\"label6\\\",\\\"dug strait down (pro tip)\\\",1.6],[\\\"label7\\\",\\\"found strongold 1st try\\\",1.8],[\\\"label8\\\",\\\"end portel is lit\\\",1.6],[\\\"label9\\\",\\\"THE END (looks diferent)\\\",1.8],[\\\"label10\\\",\\\"end crystals: destroyd (all 0)\\\",1.6],[\\\"label11\\\",\\\"the ender dragon (real)\\\",1.6],[\\\"label12\\\",\\\"dragon kiled (1 hit)\\\",1.4]]\" --subs_y 0.72 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"ender_hit:1.0\",\"ender_hit:1.45\",3]] --clock \"[[\\\"go\\\",\\\"wr\\\",9.41,\\\"WORLD RECORD PASE\\\"]]\" --punch [[\"wr\",0,1.1]] --cards \"[[\\\"wr\\\",\\\"NEW WORLD RECORD!!1\\\",1.4,\\\"gold\\\"]]\" --flash [\"wr\"] --sfx [[\"air\",\"go\",\"wr:-0.45\",{\"gain\":0.45}],[\"whoosh\",\"go\",{\"gain\":0.5}],[\"hit\",\"go\",{\"gain\":0.9}],[\"whoosh\",\"cut1b\",{\"gain\":0.45}],[\"whoosh\",\"cut2b\",{\"gain\":0.45}],[\"whoosh\",\"cut3b\",{\"gain\":0.45}],[\"whoosh\",\"cut4b\",{\"gain\":0.45}],[\"whoosh\",\"cut5b\",{\"gain\":0.45}],[\"dip\",\"wr\",0.4],[\"gamedip\",\"wr\",0.4],[\"impact\",\"wr\",{\"gain\":1.4}],[\"ding\",\"wr\",{\"gain\":0.5}]] --armor 20 --start_at go:0 --end_after wr:1.4 --out out/fakerun_any.mp4"
   ],
   "status": "ready",
-  "notes": "fast cuts r:r188b46: the hold after the enderman x3, card 1.4 s; fix-check READY",
-  "published_at": "2026-11-12T00:54:41.422Z",
+  "notes": "fakerun 1 + r:r4607fa dragon beat (a chicken 'ender dragon', one hit); payoff hit independent of the song (air ends before the WR dip, 518efb4c); fix-check READY",
+  "published_at": "2026-11-12T05:51:02.279Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:55:11+00:00",
+    "at": "2026-11-12T05:51:31+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 21.42 s vs the reviewed render 21.42 s"
+      "summary": "short.mp4 21.63 s vs the reviewed render 21.62 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T00:52:34.408Z",
+      "at": "2026-11-12T05:48:32.789Z",
       "report": "work/hb/fakerun_any.check.json"
     },
     "key_sounds": "n/a"
