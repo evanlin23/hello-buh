@@ -11,7 +11,7 @@ judges against a fixed bar, and stops after **2 rounds**.
 
 The three checklists still apply. This skill doesn't repeat them; it says how to use them quickly:
 - frame review: `docs/reviewer_prompt.md`
-- retention: `.claude/skills/retention-audit/SKILL.md` (hook, buildup, payoff, dead space, ending, 30 s)
+- retention: `.claude/skills/retention-audit/SKILL.md` (hook, buildup, payoff, dead space, ending, no padding)
 - Minecraft: `.claude/skills/minecraft-audit/SKILL.md`
 
 ## Before anyone reviews (the maker does this; it costs minutes)
@@ -41,7 +41,7 @@ story.json `"payoff": "L18"` or `--payoff MARK`, not by ignoring the line). WARN
   the biggest hit in the last 40% (a guess: never blocks). BLOCK: no sound hit and no line on it, no picture change
   within 0.3 s, or the end > 1.8 s after it / any line after it (> 2.3 s for a text payoff). WARN 1.0-1.8 s
   (1.8-2.3 s text). A reveal that lands only on a voice line is a WARN (add a sting).
-- length: BLOCK < 30 s, WARN > 45 s for a story.
+- length: no minimum for a stunt (owner 2026-11-12); BLOCK padding; stories keep their 25 s narration floor.
 Calibrated on the published stories (2026-11-10): story_runaway (the owner's "good") passes clean; sheep_stares
 ("hooked but delivery bad") blocks on a silent payoff; respawn_tax ("mid") blocks on a 2.7 s tail.
 
@@ -86,7 +86,7 @@ Work in this order, and stop collecting once you have the verdict's evidence:
 2. Watch the structure: the first 2 s, every cut (frames -3..+3), every caption/card change, the payoff
    and the last second. Extract full-resolution frames only where something looks wrong.
 3. Run the retention-audit checks (hook, beats ≤3 s apart, payoff, end ≤1 s after the payoff or 1.2-1.8 s
-   for a text payoff, ≥30 s unless the owner allowed less).
+   for a text payoff, no padding).
 4. Run the Minecraft-audit checks on what's on screen (mechanics, mobs, items, HUD, physics).
 
 ## The bar
@@ -101,7 +101,7 @@ Work in this order, and stop collecting once you have the verdict's evidence:
   - an "accident" with no visible in-game cause (owner: "you can't really trip in Minecraft, so it just looks like
     him intentionally walking into the lava");
   - black or void terrain, a cut world edge in shot, a broken render;
-  - under 30 s without the owner's OK;
+  - padding: a beat added or stretched only to reach a length (owner 2026-11-12: "just don't pad them");
   - the story not understandable without pausing;
   - **a line in the wrong voice** (a character's line read by the narrator's voice or the other way round, owner
     2026-11-10: "make sure the voices are distinct and correct"), a word in the wrong line, a direction read aloud,
