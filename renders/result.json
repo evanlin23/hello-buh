@@ -1,0 +1,17 @@
+{
+ "name": "story_dog_hill",
+ "stunt": "story_dog_hill",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43182659572",
+ "source": "610c5be",
+ "queued": "2026-11-12T08:24:16Z",
+ "finished": "2026-11-12T08:46:49Z",
+ "mp4": "renders/out/story_dog_hill.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

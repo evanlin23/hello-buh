@@ -1,0 +1,947 @@
+{
+ "stunt": "story_dog_hill",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_dog_hill.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (b99b35434ca1)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  17 camera shot(s), 62.5s: POV checks skipped there (7 cuts, 20 held); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/story_dog_hill.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "cut holds: 1 cast move and 0 narrator moves held to their cut",
+    "motion fixes: 1 cast member moved with a cut land on it",
+    "lightning light: 1 bolt light the world (shader light, flash only)",
+    "LINT story_dog_hill: 17 shots, scene 0.0-52.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  open           0.0-3.1   path   actor:dog 88% seen, 28% tall",
+    "  rain           3.1-4.0   path   actor:dog 100% seen, 23% tall",
+    "  storm          4.0-4.8   path   actor:dog 100% seen, 53% tall",
+    "  creeper        4.8-6.1   path   actor:cr 100% seen, 23% tall",
+    "  zombies        6.1-7.5   path   actor:dog 100% seen, 118% tall",
+    "  bone           7.5-13.6  path   actor:pip 100% seen, 72% tall",
+    "  collar        13.6-17.2  path   actor:dog 100% seen, 101% tall",
+    "  patch         17.2-22.0  path   3.5,1,0.5 100% seen, 36% tall",
+    "  hut           22.0-26.5  path   5,5.4,-6 100% seen, 11% tall",
+    "  beg           26.5-29.2  path   actor:pip 100% seen, 46% tall",
+    "  gramps        29.2-34.1  path   actor:gramps 100% seen, 47% tall",
+    "  rightback     34.1-36.4  path   actor:gramps 100% seen, 30% tall",
+    "  dusk          36.4-38.6  path   actor:pip 100% seen, 37% tall; actor:dog 100% seen, 35% tall",
+    "  night         38.6-42.7  path   actor:dog 100% seen, 68% tall",
+    "  reveal        42.7-44.5  path   self 100% seen, 27% tall",
+    "  reunion       44.5-47.1  path   actor:dog 85% seen, 50% tall; self 100% seen, 43% tall",
+    "  sit           47.1-52.7  path   actor:dog 100% seen, 17% tall",
+    "NOTES (2)",
+    "  - 1.9 s  open: actor:dog: hidden behind blocks",
+    "  - 44.5 s  reunion: actor:dog: out of frame",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 12 warning(s), 8 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 3.15,
+     "shot": 2,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 23800 (dawn) -> 6000 (noon) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 3.15,
+     "shot": 2,
+     "line": "L02",
+     "kind": "weather",
+     "msg": "weather jumps clear -> rain across the cut"
+    },
+    {
+     "level": "WARN",
+     "out": 4,
+     "shot": 3,
+     "line": "L02",
+     "kind": "appear",
+     "msg": "creeper #283 appears in the middle of the frame 0.75 s into the shot (7.6 blocks)"
+    },
+    {
+     "level": "NOTE",
+     "out": 4,
+     "shot": 3,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 6000 (noon) -> 18000 (midnight) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 4,
+     "shot": 3,
+     "line": "L02",
+     "kind": "weather",
+     "msg": "weather jumps rain -> thunder across the cut"
+    },
+    {
+     "level": "WARN",
+     "out": 4.85,
+     "shot": 4,
+     "line": "L02",
+     "kind": "appear",
+     "msg": "zombie #284 appears in the middle of the frame 1.10 s into the shot (6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 4.85,
+     "shot": 4,
+     "line": "L02",
+     "kind": "weather",
+     "msg": "weather jumps thunder -> clear across the cut"
+    },
+    {
+     "level": "NOTE",
+     "out": 7.5,
+     "shot": 6,
+     "line": "L03",
+     "kind": "time",
+     "msg": "time cut 18000 (midnight) -> 1000 (morning) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.5,
+     "shot": 6,
+     "line": "L03",
+     "kind": "position",
+     "msg": "villager #264 is 61.5 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 7.5,
+     "shot": 6,
+     "line": "L03",
+     "kind": "position",
+     "msg": "creeper #283 is 60.1 blocks from where it was at the end of the last shot (seen there, unseen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 7.5,
+     "shot": 6,
+     "line": "L03",
+     "kind": "position",
+     "msg": "zombie #284 is 61.8 blocks from where it was at the end of the last shot (seen there, unseen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 7.5,
+     "shot": 6,
+     "line": "L03",
+     "kind": "position",
+     "msg": "zombie #285 is 63.2 blocks from where it was at the end of the last shot (seen there, unseen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 17.2,
+     "shot": 8,
+     "line": "L06",
+     "kind": "time",
+     "msg": "time cut 1000 (morning) -> 6000 (noon) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 26.5,
+     "shot": 10,
+     "line": "L08",
+     "kind": "time",
+     "msg": "time cut 6000 (noon) -> 9000 (afternoon) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 29.2,
+     "shot": 11,
+     "line": "L09",
+     "kind": "time",
+     "msg": "time cut 9000 (afternoon) -> 11500 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 29.2,
+     "shot": 11,
+     "line": "L09",
+     "kind": "position",
+     "msg": "villager #264 is 9.8 blocks from where it was at the end of the last shot (seen there, unseen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 36.35,
+     "shot": 13,
+     "line": "L12",
+     "kind": "time",
+     "msg": "time cut 11500 (sunset) -> 12700 (sunset) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 36.35,
+     "shot": 13,
+     "line": "L12",
+     "kind": "position",
+     "msg": "villager #264 is 8.1 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 38.65,
+     "shot": 14,
+     "line": "L12",
+     "kind": "time",
+     "msg": "time cut 12700 (sunset) -> 18000 (midnight) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 51.7,
+     "shot": 18,
+     "line": "L17",
+     "kind": "position",
+     "msg": "the narrator (player) #self is 6.0 blocks from where it was at the end of the last shot (seen there, unseen here): a continuity jump unless the story skips time"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 18 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 15 x 19 blocks (ground y 108; its edge 6 blocks from the set's origin); built footprint 12 x 5; terrain relief around it sd 12.2 blocks",
+     "world": {
+      "level": 108,
+      "area": 191,
+      "w": 15,
+      "d": 19,
+      "edge": 6,
+      "built": 5,
+      "footprint": {
+       "w": 12,
+       "d": 5,
+       "x0": -4,
+       "z0": -6
+      },
+      "relief": 12.2,
+      "outside": 2271
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 0,
+     "tick": 17,
+     "line": "L01",
+     "msg": "mostly flat ground (3/5 moments): flat ground fills 45% of the frame (45% of the world in view; hills/trees/water 23%, the set 32%, sky 0%) at 1.55 s; the plain is 15 x 19, the set's footprint 12 x 5, relief around it sd 12.2"
+    },
+    {
+     "level": "WARN",
+     "check": "opening",
+     "out": 0,
+     "tick": 17,
+     "line": null,
+     "msg": "opening: dog (shots.open.subject) is a speck on frame 1 and only reads at phone size later (wolf #241: 50% across (middle third 33%-67%), 5% of the frame height on frame 1, 12% at most (readable from 8%), first 1.5 s; camera 2.43 blocks/s, turn 3.38 deg/s, push 0.13/s, subject 0.06 blocks/s, anything else in frame 0.06 blocks/s, 0 action(s)). Frame 1 is the thumbnail: start the push closer",
+     "opening": {
+      "subject": "dog",
+      "src": "shots.open.subject",
+      "n": 31,
+      "motion": {
+       "cam": 2.43,
+       "turn": 3.38,
+       "grow": 0.13,
+       "sub": 0.06,
+       "other": 0.06,
+       "actions": 0
+      },
+      "seen": 1,
+      "x": 0.5,
+      "h0": 0.046,
+      "hMax": 0.118,
+      "label": "wolf #241"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 7.5,
+     "tick": 167,
+     "line": "L03",
+     "msg": "mostly flat ground (5/5 moments): flat ground fills 35% of the frame (52% of the world in view; hills/trees/water 9%, the set 24%, sky 25%) at 8.15 s; the plain is 15 x 19, the set's footprint 12 x 5, relief around it sd 12.2"
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 26.5,
+     "tick": 547,
+     "line": "L08",
+     "msg": "mostly flat ground (5/5 moments): flat ground fills 36% of the frame (43% of the world in view; hills/trees/water 24%, the set 24%, sky 15%) at 27.85 s; the plain is 15 x 19, the set's footprint 12 x 5, relief around it sd 12.2"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s) over 17 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 3.25,
+     "tick": 80,
+     "line": "L02",
+     "msg": "open -> rain opens L02 117 ms before its voice starts (the picture is ahead of the words): time the stunt with K.line (lib/story.js: marks on the take's own offsets, the line before a cut ended early by the cut's landing time); a stunt clock of its own (dur + a gap per line) drifts later every line"
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 4.1,
+     "tick": 97,
+     "line": "L02",
+     "msg": "rain -> storm: the cut comes 333 ms after \"RAIN.\" starts (it splits the word): the sound runs ahead of the picture. Cut 33-150 ms before the word; a cut inside a line: start it on at.cut(i), not at(i) (lib/story.js cutTick)"
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 4.95,
+     "tick": 114,
+     "line": "L02",
+     "msg": "storm -> creeper: the cut comes 303 ms after \"THUNDER.\" starts (it splits the word): the sound runs ahead of the picture. Cut 33-150 ms before the word; a cut inside a line: start it on at.cut(i), not at(i) (lib/story.js cutTick)"
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 42.8,
+     "tick": 871,
+     "line": "L14",
+     "msg": "night -> reveal: the eye goes from villager (28% across, 38% down) to the narrator (56%, 45%): a jump of 29% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    }
+   ],
+   "rows": [
+    {
+     "tick": 17,
+     "out": 0.1,
+     "line": null,
+     "from": "pov",
+     "to": "open",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.003,
+     "timing": {
+      "next": "The",
+      "lead": 0.29,
+      "prev": null,
+      "sincePrev": null,
+      "pause": null,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.05
+    },
+    {
+     "tick": 80,
+     "out": 3.25,
+     "line": "L02",
+     "from": "open",
+     "to": "rain",
+     "before": {
+      "x": 0.51,
+      "y": 0.47,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.48,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.019,
+     "timing": {
+      "next": "Not",
+      "lead": 0.177,
+      "prev": "DAYS.",
+      "sincePrev": 0.22,
+      "pause": 0.397,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.117
+    },
+    {
+     "tick": 97,
+     "out": 4.1,
+     "line": "L02",
+     "from": "rain",
+     "to": "storm",
+     "before": {
+      "x": 0.5,
+      "y": 0.49,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.51,
+      "y": 0.47,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "dist": 0.019,
+     "timing": {
+      "next": "RAIN.",
+      "lead": -0.333,
+      "prev": "for",
+      "sincePrev": 0.413,
+      "pause": 0.08,
+      "inside": "RAIN."
+     },
+     "optOut": false
+    },
+    {
+     "tick": 114,
+     "out": 4.95,
+     "line": "L02",
+     "from": "storm",
+     "to": "creeper",
+     "before": {
+      "x": 0.52,
+      "y": 0.48,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.48,
+      "what": "creeper",
+      "kind": "cast"
+     },
+     "dist": 0.024,
+     "timing": {
+      "next": "THUNDER.",
+      "lead": -0.303,
+      "prev": "for",
+      "sincePrev": 0.403,
+      "pause": 0.1,
+      "inside": "THUNDER."
+     },
+     "optOut": false
+    },
+    {
+     "tick": 139,
+     "out": 6.2,
+     "line": "L02",
+     "from": "creeper",
+     "to": "zombies",
+     "before": {
+      "x": 0.49,
+      "y": 0.45,
+      "what": "creeper",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.48,
+      "y": 0.45,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "dist": 0.016,
+     "timing": {
+      "next": "Not",
+      "lead": 0.107,
+      "prev": "CREEPERS.",
+      "sincePrev": 0.273,
+      "pause": 0.38,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 167,
+     "out": 7.6,
+     "line": "L02",
+     "from": "zombies",
+     "to": "bone",
+     "before": {
+      "x": 0.41,
+      "y": 0.47,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.4,
+      "y": 0.47,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "dist": 0.004,
+     "timing": {
+      "next": "Kids",
+      "lead": 0.122,
+      "prev": "ZOMBIES.",
+      "sincePrev": 0.453,
+      "pause": 0.575,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.038
+    },
+    {
+     "tick": 289,
+     "out": 13.7,
+     "line": "L05",
+     "from": "bone",
+     "to": "collar",
+     "before": {
+      "x": 0.62,
+      "y": 0.43,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.62,
+      "y": 0.43,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "He's",
+      "lead": 0.29,
+      "prev": "LOOKS.",
+      "sincePrev": 0.333,
+      "pause": 0.623,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.01
+    },
+    {
+     "tick": 361,
+     "out": 17.3,
+     "line": "L05",
+     "from": "collar",
+     "to": "patch",
+     "before": {
+      "x": 0.56,
+      "y": 0.34,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.56,
+      "y": 0.34,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "He",
+      "lead": 0.207,
+      "prev": "him.",
+      "sincePrev": 0.41,
+      "pause": 0.617,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.033
+    },
+    {
+     "tick": 457,
+     "out": 22.1,
+     "line": "L07",
+     "from": "patch",
+     "to": "hut",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "And",
+      "lead": 0.5,
+      "prev": "GRASS.",
+      "sincePrev": 0.473,
+      "pause": 0.973,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    },
+    {
+     "tick": 547,
+     "out": 26.6,
+     "line": "L07",
+     "from": "hut",
+     "to": "beg",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "dist": 0.001,
+     "timing": {
+      "next": "I",
+      "lead": 0.337,
+      "prev": "it.",
+      "sincePrev": 0.48,
+      "pause": 0.817,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.063
+    },
+    {
+     "tick": 601,
+     "out": 29.3,
+     "line": "L08",
+     "from": "beg",
+     "to": "gramps",
+     "before": {
+      "x": 0.64,
+      "y": 0.46,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.55,
+      "y": 0.46,
+      "what": "villager (cartographer)",
+      "kind": "cast"
+     },
+     "dist": 0.099,
+     "timing": {
+      "next": "Then",
+      "lead": 0.272,
+      "prev": "BEGGED.",
+      "sincePrev": 0.423,
+      "pause": 0.695,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.048
+    },
+    {
+     "tick": 700,
+     "out": 34.25,
+     "line": "L11",
+     "from": "gramps",
+     "to": "rightback",
+     "before": {
+      "x": 0.56,
+      "y": 0.49,
+      "what": "villager (cartographer)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.56,
+      "y": 0.49,
+      "what": "villager (cartographer)",
+      "kind": "cast"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "Somebody",
+      "lead": 0.245,
+      "prev": "UP.",
+      "sincePrev": 0.05,
+      "pause": 0.295,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    },
+    {
+     "tick": 744,
+     "out": 36.45,
+     "line": "L11",
+     "from": "rightback",
+     "to": "dusk",
+     "before": {
+      "x": 0.53,
+      "y": 0.52,
+      "what": "villager (cartographer)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.53,
+      "y": 0.52,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "So",
+      "lead": 0.295,
+      "prev": "BACK.",
+      "sincePrev": 0.5,
+      "pause": 0.795,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.045
+    },
+    {
+     "tick": 790,
+     "out": 38.75,
+     "line": "L12",
+     "from": "dusk",
+     "to": "night",
+     "before": {
+      "x": 0.41,
+      "y": 0.51,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.41,
+      "y": 0.51,
+      "what": "wolf",
+      "kind": "cast"
+     },
+     "dist": 0.001,
+     "timing": {
+      "next": "should",
+      "lead": 0.335,
+      "prev": "there.",
+      "sincePrev": 0.625,
+      "pause": 0.96,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 871,
+     "out": 42.8,
+     "line": "L14",
+     "from": "night",
+     "to": "reveal",
+     "before": {
+      "x": 0.28,
+      "y": 0.38,
+      "what": "villager",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.56,
+      "y": 0.45,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.286,
+     "timing": {
+      "next": "A",
+      "lead": 0.228,
+      "prev": "up.",
+      "sincePrev": 0.458,
+      "pause": 0.686,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.008
+    },
+    {
+     "tick": 907,
+     "out": 44.6,
+     "line": "L15",
+     "from": "reveal",
+     "to": "reunion",
+     "before": {
+      "x": 0.31,
+      "y": 0.39,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.4,
+      "y": 0.36,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.099,
+     "timing": {
+      "next": "Hey,",
+      "lead": 0.12,
+      "prev": "PATCH.",
+      "sincePrev": 0.132,
+      "pause": 0.252,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    },
+    {
+     "tick": 959,
+     "out": 47.2,
+     "line": "L16",
+     "from": "reunion",
+     "to": "sit",
+     "before": {
+      "x": 0.66,
+      "y": 0.34,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.72,
+      "y": 0.35,
+      "what": "the narrator",
+      "kind": "cast"
+     },
+     "dist": 0.054,
+     "timing": {
+      "next": "Then",
+      "lead": 0.3,
+      "prev": "again.",
+      "sincePrev": 0.04,
+      "pause": 0.34,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 1 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "WARN  L10: the aligner starts the first word at 0.66 s, the sound starts at 0.48 s (+0.18 s): a breath or a hum before the word? listen",
+    "OK: 0 blocker(s), 1 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "     6.80s  creeper step on grass_block        -> block.grass.step                  13.0 blocks          ",
+    "     7.95s  zombie step on grass_block         -> entity.zombie.step                12.6 blocks          ",
+    "     7.95s  zombie step on grass_block         -> entity.zombie.step                12.8 blocks          ",
+    "     8.85s  wolf idle voice                    -> entity.wolf.ambient               13.7 blocks          key word",
+    "    12.05s  villager step on grass_block       -> block.grass.step                  12.8 blocks          ",
+    "    12.90s  villager idle voice                -> entity.villager.ambient           13.8 blocks          key word",
+    "    14.15s  wolf idle voice                    -> entity.wolf.ambient               13.7 blocks          key word",
+    "    17.85s  villager idle voice                -> entity.villager.ambient           13.8 blocks          ",
+    "    20.60s  wolf idle voice                    -> entity.wolf.ambient               13.7 blocks          key word",
+    "    22.65s  villager idle voice                -> entity.villager.ambient           13.7 blocks          ",
+    "    26.75s  wolf idle voice                    -> entity.wolf.ambient               13.7 blocks          key word",
+    "    27.35s  villager step on grass_block       -> block.grass.step                  13.1 blocks          ",
+    "    28.65s  villager step on grass_block       -> block.grass.step                  13.1 blocks          ",
+    "    30.20s  villager idle voice                -> entity.villager.ambient           15.3 blocks          ",
+    "    31.90s  villager step on dirt_path         -> block.grass.step                  14.9 blocks          ",
+    "    34.60s  villager idle voice                -> entity.villager.ambient           15.3 blocks          key word",
+    "    36.25s  villager idle voice                -> entity.villager.ambient           15.3 blocks          key word",
+    "    37.45s  wolf idle voice                    -> entity.wolf.ambient               13.7 blocks          ",
+    "    42.00s  villager idle voice                -> entity.villager.ambient            3.3 blocks in view  key word",
+    "    44.40s  wolf idle voice                    -> entity.wolf.ambient                3.1 blocks in view  key word",
+    "    45.90s  wolf step on grass_block           -> entity.wolf.step                   2.0 blocks in view  key word",
+    "    47.05s  villager idle voice                -> entity.villager.ambient            3.3 blocks in view  key word",
+    "    49.35s  wolf idle voice                    -> entity.wolf.ambient                1.3 blocks in view  key word",
+    "    51.50s  wolf step on grass_block           -> entity.wolf.step                   2.0 blocks          ",
+    "    54.40s  villager idle voice                -> entity.villager.ambient           13.8 blocks          ",
+    "    55.65s  wolf idle voice                    -> entity.wolf.pant                  14.2 blocks          ",
+    "    59.95s  villager idle voice                -> entity.villager.ambient           13.8 blocks          ",
+    "    62.45s  wolf idle voice                    -> entity.wolf.ambient               14.2 blocks          ",
+    "ambience per shot: -0.25-4.00s cave, 4.00-4.85s rain_indoor, 4.85-8.35s rain_indoor, 8.35-18.05s cave, 18.05-27.35s cave, 27.35-30.05s cave, 30.05-37.20s cave, 37.20-39.50s cave, 39.50-52.55s night, 52.55-63.30s cave",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T08:25:36.533Z"
+}
