@@ -13,7 +13,7 @@ the Short is the worst judge of their own pacing.
 Owner rules (2026-11-06):
 - "without any dead space";
 - "we should end as soon as the payoff comes";
-- at least 30 s, built from several escalating beats, not one long wait ("I would prefer like 30 seconds at least");
+- no fixed minimum length, never padded ("no fixed minimum, just don't pad them", 2026-11-12; the old 30 s rule is retired);
 - held reveals are bad ("we land on the reveal for the pixel art for a while").
 
 ## Inputs
@@ -69,11 +69,11 @@ change of shot.
   makes people re-watch. Stories should loop back to line 1.
 
 **5. Length and density.**
-- **30 s minimum** (owner rule). Under 30 s is a FAIL. The fix is more beats, not slower ones: turn the
-  stunt into an escalating series, a ranked list, X vs Y vs Z, or a story.
-- Over 30 s, every beat must still earn its place. If a beat could be cut without losing anything, it's
+- **No fixed minimum length** (owner 2026-11-12: "no fixed minimum, just don't pad them"). Never FAIL a
+  Short for being short. FAIL padding: a beat added or stretched only to reach a length.
+- Every beat must earn its place. If a beat could be cut without losing anything, it's
   padding: FAIL, and name it.
-- Count the beats: aim for 3+ per 10 s. A 30 s Short with only one payoff at the end needs visible tension
+- Count the beats: aim for 3+ per 10 s. A long Short with only one payoff at the end needs visible tension
   the whole way (a timer, a counter, a growing threat).
 - Each beat has its own mini hook -> payoff, and the beats escalate toward the final payoff.
 
