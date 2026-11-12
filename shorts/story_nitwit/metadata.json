@@ -842,7 +842,7 @@
     "python3 audio.py work/story_nitwit.rec.json work/story_nitwit.wav",
     "python3 edit.py --frames work/story_nitwit.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_nitwit.rec.json --audio work/story_nitwit.wav --caption \"the nitwit finally said something 😳\" --red nitwit --punch [\"name_word\",\"today_word\"] --cards [[\"hmm\",\"HMM.\",0.9,\"white\"]] --chat_align center --story stories/nitwit --start_at line:0 --end_after today_word:1.2 --out out/story_nitwit.mp4"
   ],
-  "status": "held",
+  "status": "ready",
   "notes": "HELD for owner OK. Fixes owner note @41.9: re-voiced (full-voice Pip directions), rebuilt on Fernbank seed terrain (no superflat). Review r3 READY (a84c827d5f1c92322).",
   "published_at": "2026-11-12T13:25:39.037Z",
   "gates": {
@@ -867,5 +867,11 @@
       "report": "out/story_nitwit.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "owner_ok": {
+    "at": "2026-11-12T18:42Z",
+    "words": "owner pressed 'OK for YouTube' on story_nitwit in the HelloBuh Review Room, 2026-11-12 18:42 UTC",
+    "by": "owner, Review Room",
+    "cut": "5ca4315ac4cfadec"
   }
 }
