@@ -20,6 +20,7 @@ const { makeStunt } = require('../lib/trap')
 
 const FRIEND = 'Dylan'
 const HIDE = [3.5, 1, 2.5]
+const PEEK = [1.65, 1, 0.5]   // on the grass east of the hole, close enough to look straight down at him
 
 module.exports = makeStunt({
   name: 'trap_free_diamonds',
@@ -33,7 +34,12 @@ module.exports = makeStunt({
   park: [-3.5, 1, 6.5, -125],
   endHold: 0.75,   // owner r:r188b46: the end 0.5-0.8 s after the payoff's result
   // fast cuts (owner r:r188b46): jump over the walk into hiding and his coast + shuffle onto the trapdoor
-  edit: { speed: [['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut']] },   // south-west, behind me while I build and ~67 deg off my view from the hide; the turn into hiding goes round by the north
+  edit: {
+    speed: [['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut'], ['get_up:0.05', 'peek', 'cut']],
+    // the last beat is the close look down at him in the pit (owner r:r4607fa): a hit on it, and the end 0.8 s after
+    endAfter: 'peek:0.8',
+    sfx: [['impact', 'peek', { gain: 1.4 }]]
+  },   // south-west, behind me while I build and ~67 deg off my view from the hide; the turn into hiding goes round by the north
 
   async set (ctx, T) {
     // a few bushes round the pad's edge (persistent leaves on the grass) so it isn't a bare square
@@ -101,9 +107,19 @@ module.exports = makeStunt({
     const fell = await F.waitFall({ minDrop: 1.5, max: 30 })
     if (!fell) { ctx.log('trap: the friend did not fall'); return false }
     ctx.sound('block.gravel.fall', 0.6, 0.9)
+    await T.hold(8)   // he lands; the view rests for the edit cut's out edge
+    // the close shot (owner r:r4607fa: the fall was small in frame): I get up, walk to the hole's edge and look straight
+    // down at him; he looks up at me. The walk is cut (edges on rests); the impact lands on the look (edit sfx 'peek').
+    ctx.mark('get_up')
+    T.sneak(false)
+    await T.walk([PEEK])
+    await T.look(0.5, 0.55, 0.5, { max: 30 })
+    await T.hold(4)
+    ctx.mark('peek')
     F.say('bro.')
+    await F.lookAt(PEEK[0], PEEK[1] + 1.62, PEEK[2], 6)
     T.still()
-    await T.hold(40)
+    await T.hold(24)
     const p = F.pos()
     ctx.log(`trap: ${FRIEND} ends at ${(p.x - T.O.x).toFixed(2)} ${(p.y - T.O.y).toFixed(2)} ${(p.z - T.O.z).toFixed(2)}`)
     return p.y - T.O.y < 0
