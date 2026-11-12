@@ -36,6 +36,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0v. **The hook is absurd** (owner: "we need to make our hooks absurd"): line 1 is a sentence nobody expects, said
+   flatly, true to the story and naive, never a joke at a real group's expense; a casual reader would stop scrolling.
+   Check: cold reader (casual), story-critic. r:rb14c39
 0w. **The genre opener**: line 1 starts "In my village...", "In my world..." or "My [twin/grandpa/friend]...", then the
    impossible fact and a short clause that makes it stranger; the viewer asks "why?", the line doesn't say it (no stock "nobody will tell me why"). Check: story-critic. r:rd2f8e4 r:r208f5c
 0y. **The Roblox story format, in Minecraft** (docs/story_format.md): the impossible fact AND its "why?" said in line 1
