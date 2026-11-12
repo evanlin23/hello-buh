@@ -748,6 +748,19 @@ STANDARDS.md in the same commit.
   waht the grandpa one".** An absurd hook must still parse on first hearing (The Walk's "got DUMPED. Now he breaks
   LECTERNS" didn't) and carry tension (The Wall's "forty blocks high, still growing" had none). Each hook is gated by
   two fresh casual readers: understood instantly, a clear question, would keep watching.
+- **Owner, 2026-11-12: "ask the buhtown what its found with its shorts metrics stuff, and what we can do to apply it
+  to our content. We dont necessarily need them to all be grounded in minecraeft like topic sin my option."** Buhtown's
+  Studio data (20 story Shorts, Nov 2-11; evanlin23/blocky-stories metrics/studio/2026-11-12.md, RULES.md): the stop
+  rate (viewed vs swiped) is the gate: every Short at >= 81% viewed passed 10k views, every one under 80% stayed under
+  2.6k even with great retention. The biggest drop is at 0:04-0:08, the beat after the hook. What we apply:
+  - the first frame and the title are ONE strange, checkable fact, stated plainly ("The Elevator Mirror Shows FIVE",
+    "Everyone's Born With HALF a Mark"); warning titles ("Never...", "...is DANGEROUS") did worse;
+  - seconds 4-8 escalate: no setup, no backstory, no who's-who;
+  - the reveal is one plain line that recasts the rule (confusion kills: "where did lemonade go?");
+  - 30-45 s and loopable is the sweet spot; longer only with a very strong hook;
+  - give viewers something to answer or argue in the comments;
+  - premises that won: a rule with a number or mark, a person who changed overnight, warm twists; weaker: dark sets,
+    monsters, sad family losses, warnings. Topics needn't be about Minecraft.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

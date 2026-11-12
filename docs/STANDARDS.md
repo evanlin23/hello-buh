@@ -36,6 +36,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0u. **Built for the stop rate** (Buhtown's Studio data: >= 81% viewed = 10k+ views, < 80% = under 2.6k): the first
+   frame and the title are one strange, checkable fact stated plainly (no warning titles); seconds 4-8 escalate (no
+   setup, backstory or who's-who); 30-45 s and loopable; something for viewers to answer or argue; prefer a rule with a
+   number or mark, a person changed overnight, warm twists; dark sets, monsters and sad losses carry a higher bar.
+   Check: story-critic, owner, Studio (stop rate). r:rac1ae3
 0v. **The hook is absurd** (owner: "we need to make our hooks absurd"): line 1 is a sentence nobody expects, said
    flatly, true to the story and naive, never a joke at a real group's expense; a casual reader would stop scrolling.
    Edgy inside the story's world is fine; no real-world flashpoints (religion, gender, politics, real groups). It parses on first hearing and carries tension (two casual readers). Check: cold reader (casual), story-critic. r:rb14c39 r:r4419c8 r:r581039
