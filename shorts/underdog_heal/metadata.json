@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 12874681,
-    "sha256": "f48a7c39cfacca9de19d5dceb33e676b4470228111c5804e6f9ca8f6f5dfa58c",
+    "bytes": 12877624,
+    "sha256": "b5968d2ee815a78398d3cd39cf8935f9bd5e281c4302a5f4871e644244c92b9e",
     "release": {
       "tag": "pkg-underdog_heal",
-      "asset": "underdog_heal.short.f48a7c39cfacca9d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.f48a7c39cfacca9d.mp4",
-      "sha256": "f48a7c39cfacca9de19d5dceb33e676b4470228111c5804e6f9ca8f6f5dfa58c",
-      "bytes": 12874681
+      "asset": "underdog_heal.short.b5968d2ee815a783.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.b5968d2ee815a783.mp4",
+      "sha256": "b5968d2ee815a78398d3cd39cf8935f9bd5e281c4302a5f4871e644244c92b9e",
+      "bytes": 12877624
     },
     "nosong_release": {
       "tag": "pkg-underdog_heal",
@@ -553,12 +553,12 @@
     "python3 edit.py --frames work/underdog_heal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/underdog_heal.rec.json --audio work/underdog_heal.wav --caption \"you can heal every mob in Minecraft...\" --self_name 56e --red every --subs \"[[\\\"later_zombie\\\",\\\"5 minutes later...\\\",0.6]]\" --subs_y 0.62 --punch [\"twist\",\"melted\"] --cards \"[[\\\"beat_wolf\\\",\\\"WOLF + STEAK\\\",0.85,\\\"white\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_cat\\\",\\\"CAT + FISH\\\",0.85,\\\"white\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_horse\\\",\\\"HORSE + HAY BALE\\\",0.85,\\\"white\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_golem\\\",\\\"IRON GOLEM + IRON\\\",0.85,\\\"yellow\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_zombie\\\",\\\"ZOMBIE VILLAGER\\\",0.85,\\\"orange\\\",0,null,{\\\"y\\\":0.76,\\\"size\\\":84}],[\\\"throw_zombie\\\",\\\"+ WEAKNESS\\\",0.9,\\\"white\\\",0,null,{\\\"y\\\":0.76,\\\"size\\\":84}],[\\\"applesel_zombie\\\",\\\"+ GOLDEN APPLE\\\",1.1,\\\"yellow\\\",0,null,{\\\"y\\\":0.76,\\\"size\\\":84}],[\\\"twist\\\",\\\"...but who heals HIM?\\\",2,\\\"yellow\\\",0,null,{\\\"y\\\":0.76}],[\\\"melted\\\",\\\"NOBODY.\\\",1.8,\\\"red\\\",0,null,{\\\"y\\\":0.9}]]\" --sfx [[\"pop\",\"beat_wolf\",{\"gain\":1.3}],[\"pop\",\"beat_cat\",{\"gain\":0.7}],[\"pop\",\"beat_horse\",{\"gain\":0.7}],[\"pop\",\"beat_golem\",{\"gain\":0.7}],[\"pop\",\"beat_zombie\",{\"gain\":0.7}],[\"ding\",\"fixed_wolf\",{\"gain\":0.8}],[\"ding\",\"fixed_cat\",{\"gain\":0.8}],[\"ding\",\"fixed_horse\",{\"gain\":0.8}],[\"ding\",\"fixed_golem\",{\"gain\":0.8}],[\"ding\",\"fixed_zombie\",{\"gain\":0.8}],[\"scratch\",\"twist\"],[\"dip\",\"melted\",0.5],[\"impact\",\"melted\",{\"gain\":0.6}],[\"heart\",\"melted\",{\"gain\":1}]] --start_at beat_wolf:0 --end_after melted:1.6 --out out/underdog_heal.mp4"
   ],
   "status": "ready",
-  "notes": "underdog ep 1 (owner notes + no-op audit): overhead HUD hearts filling on every heal (r:r337da9), fast cuts (r:r188b46), the snow golem's hearts drain to 0 under 'who heals HIM?' and a red 'NOBODY.' + sting land on the last heart (r:r4607fa); independent fix-checks READY with takeaway; pace 0 blockers, mixcheck OK",
+  "notes": "underdog ep 1 (owner notes + no-op audit): overhead HUD hearts filling on every heal (r:r337da9), fast cuts (r:r188b46), the snow golem's hearts drain to 0 under 'who heals HIM?' and a red 'NOBODY.' + sting land on the last heart (r:r4607fa); independent fix-checks READY with takeaway; pace 0 blockers, mixcheck OK | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T04:49:05.912Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T04:49:22+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:09:54+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 15.51 s vs the reviewed render 15.50 s"
@@ -573,9 +573,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T04:46:59.471Z",
-      "report": "work/hb/underdog_heal.check.json"
+      "at": "2026-11-12T04:34:59.646Z",
+      "report": "out/underdog_heal.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.78,
+      "pump_run": 0.0,
+      "under": 10.48,
+      "summary": "the master's gain spread 1.78 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 10.5 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.78,
+    "pump_run": 0.0,
+    "master_gain": -0.1,
+    "under": 10.48,
+    "windows": [
+      48,
+      152
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.78 dB (max 3.0), run 0.0 s (max 0.5), game over music 10.48 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:09:49+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "f48a7c39cfacca9de19d5dceb33e676b4470228111c5804e6f9ca8f6f5dfa58c",
+      "release": {
+        "tag": "pkg-underdog_heal",
+        "asset": "underdog_heal.short.f48a7c39cfacca9d.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.f48a7c39cfacca9d.mp4",
+        "sha256": "f48a7c39cfacca9de19d5dceb33e676b4470228111c5804e6f9ca8f6f5dfa58c",
+        "bytes": 12874681
+      },
+      "song": {
+        "drop_in_short_s": 10.35,
+        "drop_in_song_s": 13.0,
+        "song_start_s": 2.65
+      }
+    },
+    "song_file_sha256": "0a4f0afd31746ed9f7d5f17b5fadfa57933f55f41cfce8bb8ea9721780e52147",
+    "video_stream_md5": "c89cb9b6030cfd8e6f712bfe88ef3b0b",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15056044,
-    "sha256": "afd020dcb719d1caa2a1800722d37ed3c8247837b7598b42852c801225af7111",
+    "bytes": 15056630,
+    "sha256": "ff1a83624fd936fd610ca4083e2f748efa03e1d43cf2451f9bef79e316b6662d",
     "release": {
       "tag": "pkg-inside_library",
-      "asset": "inside_library.short.afd020dcb719d1ca.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.afd020dcb719d1ca.mp4",
-      "sha256": "afd020dcb719d1caa2a1800722d37ed3c8247837b7598b42852c801225af7111",
-      "bytes": 15056044
+      "asset": "inside_library.short.ff1a83624fd936fd.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.ff1a83624fd936fd.mp4",
+      "sha256": "ff1a83624fd936fd610ca4083e2f748efa03e1d43cf2451f9bef79e316b6662d",
+      "bytes": 15056630
     },
     "nosong_release": {
       "tag": "pkg-inside_library",
@@ -183,12 +183,12 @@
     "python3 edit.py --frames work/inside_library.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/inside_library.rec.json --audio work/inside_library.wav --caption \"rate my tiny house 🏠\" --self_name 56e --red tiny --punch [[\"reveal\",0,0.8]] --flash [[\"reveal\",0,0.25]] --sfx [[\"pop\",\"beat\",{\"gain\":2.2}],[\"dip\",\"reveal\",0.35],[\"impact\",\"reveal\"]] --start_at beat:-0.05 --end_after reveal:0.8 --out out/inside_library.mp4"
   ],
   "status": "ready",
-  "notes": "opening re-take (r:r0f3da0): opens mid-turn on the chandeliers; fast end (r:r188b46); fix-check READY",
+  "notes": "opening re-take (r:r0f3da0): opens mid-turn on the chandeliers; fast end (r:r188b46); fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T01:19:55.195Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:20:12+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:08:23+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 8.11 s vs the reviewed render 8.10 s"
@@ -203,9 +203,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:19:08.162Z",
-      "report": "work/hb/inside_library.check.json"
+      "at": "2026-11-12T00:32:53.431Z",
+      "report": "out/inside_library.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.62,
+      "pump_run": 0.0,
+      "under": 4.21,
+      "summary": "the master's gain spread 1.62 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.62,
+    "pump_run": 0.0,
+    "master_gain": -0.09,
+    "under": 4.21,
+    "windows": [
+      21,
+      104
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.62 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.21 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:08:18+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "afd020dcb719d1caa2a1800722d37ed3c8247837b7598b42852c801225af7111",
+      "release": {
+        "tag": "pkg-inside_library",
+        "asset": "inside_library.short.afd020dcb719d1ca.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-inside_library/inside_library.short.afd020dcb719d1ca.mp4",
+        "sha256": "afd020dcb719d1caa2a1800722d37ed3c8247837b7598b42852c801225af7111",
+        "bytes": 15056044
+      },
+      "song": {
+        "drop_in_short_s": 0.0,
+        "drop_in_song_s": 4.0,
+        "song_start_s": 4.0
+      }
+    },
+    "song_file_sha256": "4e80811f8d26a14b4665ec68f7357bf63ee7ca18ee23fbdaac8859ace846d430",
+    "video_stream_md5": "4f972683b723f0d7d47c6154f565e439",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28228476,
-    "sha256": "2d2325d6d40999567942c2401798a2af3d6bc86fdfa8592c2c2d7be534ab997a",
+    "bytes": 28229791,
+    "sha256": "02d93c45b65febaac97d5e756b0676621b4ba5a4710dd00e75ed941fe8d1de9e",
     "release": {
       "tag": "pkg-stages_friends",
-      "asset": "stages_friends.short.2d2325d6d4099956.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short.2d2325d6d4099956.mp4",
-      "sha256": "2d2325d6d40999567942c2401798a2af3d6bc86fdfa8592c2c2d7be534ab997a",
-      "bytes": 28228476
+      "asset": "stages_friends.short.02d93c45b65febaa.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short.02d93c45b65febaa.mp4",
+      "sha256": "02d93c45b65febaac97d5e756b0676621b4ba5a4710dd00e75ed941fe8d1de9e",
+      "bytes": 28229791
     },
     "nosong_release": {
       "tag": "pkg-stages_friends",
@@ -997,12 +997,12 @@
     "python3 edit.py --frames work/stages_friends.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/stages_friends.rec.json --audio work/stages_friends.wav --caption \"minecraft friendships in 3 stages 💀\" --self_name 56e --red \"3 stages\" --speed [[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"loot:0.15\",\"rich\",2.3],[\"rich:0.6\",\"ch3\",\"cut\"],[\"chain_end:0.4\",\"crater\",\"cut\"],[\"notice\",\"boom\",1.5]] --punch [[\"push\",0,1.06],[\"lever\",0,1.05]] --tags \"[[\\\"ch1\\\",\\\"death\\\",\\\"1. BETRAYAL\\\",\\\"red\\\"],[\\\"ch2\\\",\\\"ch3\\\",\\\"2. RISE\\\",\\\"blue\\\"],[\\\"ch3\\\",null,\\\"3. REVENGE\\\",\\\"gold\\\"]]\" --shake [\"crater\"] --flash [\"crater\"] --sfx [[\"whoosh\",\"ch1\",{\"gain\":0.45}],[\"whoosh\",\"ch2\",{\"gain\":0.5}],[\"whoosh\",\"ch3\",{\"gain\":0.5}],[\"air\",\"ch2\",\"crater\",{\"gain\":0.5}],[\"dip\",\"push\",0.3],[\"hit\",\"push\",{\"gain\":1.6}],[\"boom\",\"boom\",{\"gain\":0.9}],[\"ding\",\"loot\",{\"gain\":0.6}],[\"boom\",\"crater\",{\"gain\":0.8}],[\"dip\",\"crater\",0.6],[\"gamedip\",\"crater\",0.6],[\"impact\",\"crater\",{\"gain\":1.2}]] --death_screen death --item_names {} --start_at ch1:0 --end_after crater:0.6 --out out/stages_friends.mp4"
   ],
   "status": "ready",
-  "notes": "fast cuts r:r188b46: end crater:0.6; the chain's smoke cut out; to chapter 3 0.33 s after the diamond is up in hand; the loot glance x2.3; fix-check READY r2",
+  "notes": "fast cuts r:r188b46: end crater:0.6; the chain's smoke cut out; to chapter 3 0.33 s after the diamond is up in hand; the loot glance x2.3; fix-check READY r2 | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T00:46:17.147Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:46:44+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:09:37+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 16.77 s vs the reviewed render 16.75 s"
@@ -1010,16 +1010,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 0,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T00:44:36.245Z",
-      "report": "work/hb/stages_friends.check.json"
+      "at": "2026-11-12T00:30:27.629Z",
+      "report": "out/stages_friends.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.78,
+      "pump_run": 0.0,
+      "under": 8.86,
+      "summary": "the master's gain spread 1.78 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 8.9 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.78,
+    "pump_run": 0.0,
+    "master_gain": -0.16,
+    "under": 8.86,
+    "windows": [
+      49,
+      104
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.78 dB (max 3.0), run 0.0 s (max 0.5), game over music 8.86 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:09:29+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "2d2325d6d40999567942c2401798a2af3d6bc86fdfa8592c2c2d7be534ab997a",
+      "release": {
+        "tag": "pkg-stages_friends",
+        "asset": "stages_friends.short.2d2325d6d4099956.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short.2d2325d6d4099956.mp4",
+        "sha256": "2d2325d6d40999567942c2401798a2af3d6bc86fdfa8592c2c2d7be534ab997a",
+        "bytes": 28228476
+      },
+      "song": {
+        "drop_in_short_s": 16.15,
+        "drop_in_song_s": 29.5,
+        "song_start_s": 13.35
+      }
+    },
+    "song_file_sha256": "502e3c474b275f518eff3f5248b6aafef96315c04591cb1cd0c4494bd1a2b55b",
+    "video_stream_md5": "a67b976937f06adddca298213b49e7bd",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

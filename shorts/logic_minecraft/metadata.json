@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 16544653,
-    "sha256": "1127162452f6f69866e9bcde220f0b43ba0e4814a43a33512492c77004f69ad2",
+    "bytes": 16545618,
+    "sha256": "2a1d7235319fa68c8d9aa86c0a2e12eab662b3ce290f32bf305abb47cdf10945",
     "release": {
       "tag": "pkg-logic_minecraft",
-      "asset": "logic_minecraft.short.1127162452f6f698.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-logic_minecraft/logic_minecraft.short.1127162452f6f698.mp4",
-      "sha256": "1127162452f6f69866e9bcde220f0b43ba0e4814a43a33512492c77004f69ad2",
-      "bytes": 16544653
+      "asset": "logic_minecraft.short.2a1d7235319fa68c.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-logic_minecraft/logic_minecraft.short.2a1d7235319fa68c.mp4",
+      "sha256": "2a1d7235319fa68c8d9aa86c0a2e12eab662b3ce290f32bf305abb47cdf10945",
+      "bytes": 16545618
     },
     "nosong_release": {
       "tag": "pkg-logic_minecraft",
@@ -628,12 +628,12 @@
     "python3 edit.py --frames work/logic_minecraft.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/logic_minecraft.rec.json --audio work/logic_minecraft.wav --caption \"minecraft logic 💀\" --self_name 56e --red logic --subs \"[[\\\"q0\\\",\\\"trees: float\\\",1.4,0],[\\\"q1\\\",\\\"sand: falls\\\",1.4,0],[\\\"q2\\\",\\\"break ice: get water\\\",1.4,0],[\\\"q3\\\",\\\"1 sponge vs a whole pool\\\",1.4,0],[\\\"q4\\\",\\\"iron + carved pumpkin = golem\\\",1.4,0],[\\\"q5\\\",\\\"TNT under water: no crater\\\",1.4,0],[\\\"tnt_lit\\\",\\\"TNT under water...\\\",1,0],[\\\"q6\\\",\\\"it only works in the nether\\\",3,0],[\\\"anchor_charged\\\",\\\"respawn anchor in the overworld:\\\",0.8,0]]\" --subs_y 0.1 --speed [[\"q0:1\",\"s1\",\"cut\"],[\"q1:1.5\",\"s2\",\"cut\"],[\"q2:0.6\",\"s3\",\"cut\"],[\"q3:0.55\",\"s4\",\"cut\"],[\"q4:0.9\",\"s5\",\"cut\"],[\"tnt_fuse:0.1\",\"tnt_boom:-0.6\",\"cut\"],[\"q5:0.9\",\"s6\",\"cut\"]] --punch [[\"q6\",0,1.06]] --flash [[\"q6\",0,0.4]] --sfx [[\"pop\",\"q0\",{\"gain\":2}],[\"pop\",\"q0\",{\"gain\":0.45}],[\"pop\",\"q1\",{\"gain\":0.45}],[\"pop\",\"q2\",{\"gain\":0.45}],[\"pop\",\"q3\",{\"gain\":0.45}],[\"pop\",\"q4\",{\"gain\":0.45}],[\"pop\",\"q5\",{\"gain\":0.45}],[\"dip\",\"q6\",0.4],[\"impact\",\"q6\",{\"gain\":1.4}]] --start_at q0:-0.02 --end_after q6:0.7 --out out/logic_minecraft.mp4"
   ],
   "status": "ready",
-  "notes": "logic #1 v3: ends on the respawn-anchor blast in the Overworld (the strongest quirk, r:r4607fa), TNT under water sixth; 9.1 s; fresh fix-check READY with takeaway",
+  "notes": "logic #1 v3: ends on the respawn-anchor blast in the Overworld (the strongest quirk, r:r4607fa), TNT under water sixth; 9.1 s; fresh fix-check READY with takeaway | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T04:30:22.235Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T04:30:42+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:08:55+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 9.13 s vs the reviewed render 9.12 s"
@@ -641,16 +641,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T04:28:54.757Z",
-      "report": "work/hb/logic_minecraft.check.json"
+      "at": "2026-11-12T04:16:02.531Z",
+      "report": "out/logic_minecraft.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.42,
+      "pump_run": 0.0,
+      "under": 4.0,
+      "summary": "the master's gain spread 0.42 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.0 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.42,
+    "pump_run": 0.0,
+    "master_gain": -0.08,
+    "under": 4.0,
+    "windows": [
+      23,
+      102
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.42 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.0 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:08:49+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "1127162452f6f69866e9bcde220f0b43ba0e4814a43a33512492c77004f69ad2",
+      "release": {
+        "tag": "pkg-logic_minecraft",
+        "asset": "logic_minecraft.short.1127162452f6f698.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-logic_minecraft/logic_minecraft.short.1127162452f6f698.mp4",
+        "sha256": "1127162452f6f69866e9bcde220f0b43ba0e4814a43a33512492c77004f69ad2",
+        "bytes": 16544653
+      },
+      "song": {
+        "drop_in_short_s": 8.4,
+        "drop_in_song_s": 16.75,
+        "song_start_s": 8.35
+      }
+    },
+    "song_file_sha256": "c1e5ab02649567f08eef24d78910eea4e39576fb5af66769b342d59980a6936a",
+    "video_stream_md5": "682d395455657885aa2f549574e7ff73",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

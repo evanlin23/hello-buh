@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 11316198,
-    "sha256": "e328dfbb2e452dfee68b5225e3e65963052bfeeb6f5c68f37ada4bd9c93e76f5",
+    "bytes": 11312227,
+    "sha256": "3448a8e95a369da7e5b932ec1b5f7a59362b8328973cd61acac85b6d65dab851",
     "release": {
       "tag": "pkg-fakemod_permission",
-      "asset": "fakemod_permission.short.e328dfbb2e452dfe.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.e328dfbb2e452dfe.mp4",
-      "sha256": "e328dfbb2e452dfee68b5225e3e65963052bfeeb6f5c68f37ada4bd9c93e76f5",
-      "bytes": 11316198
+      "asset": "fakemod_permission.short.3448a8e95a369da7.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.3448a8e95a369da7.mp4",
+      "sha256": "3448a8e95a369da7e5b932ec1b5f7a59362b8328973cd61acac85b6d65dab851",
+      "bytes": 11312227
     },
     "nosong_release": {
       "tag": "pkg-fakemod_permission",
@@ -924,12 +924,12 @@
     "python3 edit.py --frames work/fakemod_permission.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakemod_permission.rec.json --audio work/fakemod_permission.wav --caption \"why is every mob asking me for permission 💀\" --self_name 56e --red permission --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"]] --cards [[\"fm1_click\",\"DENIED\",0.6,\"red\",0,{\"y\":0.16}],[\"fm2_click\",\"DENIED\",0.6,\"red\",0,{\"y\":0.16}],[\"fm3_result\",\"ALLOW\",0.9,\"green\",0,{\"y\":0.16}]] --popup \"[{\\\"at\\\":[\\\"fm1_open\\\",\\\"fm1_click\\\",\\\"fm1_close\\\"],\\\"marks\\\":[\\\"fm1_hover0\\\"],\\\"mob\\\":\\\"zombie\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Zombie\\\",\\\"red\\\"],\\\" is asking for permission to attack you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm2_open\\\",\\\"fm2_click\\\",\\\"fm2_close\\\"],\\\"marks\\\":[\\\"fm2_hover0\\\",\\\"fm2_hover1\\\"],\\\"mob\\\":\\\"skeleton\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Skeleton\\\",\\\"red\\\"],\\\" is asking for permission to shoot you.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Deny\\\",\\\"hover\\\":[\\\"Allow\\\",\\\"Deny\\\"],\\\"done\\\":[\\\"Request \\\",[\\\"DENIED\\\",\\\"red\\\"],\\\".\\\"]},{\\\"at\\\":[\\\"fm3_open\\\",\\\"fm3_click\\\",\\\"fm3_close\\\"],\\\"marks\\\":[\\\"fm3_hover0\\\",\\\"fm3_hover1\\\",\\\"fm3_roll0\\\",\\\"fm3_roll1\\\",\\\"fm3_roll2\\\",\\\"fm3_roll3\\\",\\\"fm3_roll4\\\",\\\"fm3_roll5\\\",\\\"fm3_roll6\\\",\\\"fm3_roll7\\\",\\\"fm3_roll8\\\"],\\\"mob\\\":\\\"creeper\\\",\\\"title\\\":\\\"Permission Request\\\",\\\"tag\\\":\\\"MobPerms\\\",\\\"text\\\":[\\\"A \\\",[\\\"Creeper\\\",\\\"red\\\"],\\\" is asking for permission to explode.\\\"],\\\"buttons\\\":[[\\\"Allow\\\",\\\"green\\\"],[\\\"Deny\\\",\\\"red\\\"],[\\\"Roll\\\",\\\"yellow\\\"]],\\\"pick\\\":\\\"Roll\\\",\\\"hover\\\":[\\\"Deny\\\",\\\"Roll\\\"],\\\"done\\\":[\\\"The dice say: \\\",[\\\"ALLOW\\\",\\\"green\\\"]],\\\"roll\\\":{\\\"ticks\\\":\\\"fm3_roll\\\",\\\"at\\\":\\\"fm3_result\\\",\\\"result\\\":\\\"Allow\\\"}}]\" --sfx [[\"air\",\"first\",\"boom\",{\"gain\":0.4}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.3}],[\"pop\",\"fm1_open\"],[\"pop\",\"fm2_open\"],[\"pop\",\"fm3_open\"],[\"riser\",\"fm3_click\",\"fm3_result\",{\"gain\":0.35}]] --death_screen death --start_at first:0.25 --end_after boom:0.8 --out out/fakemod_permission.mp4"
   ],
   "status": "ready",
-  "notes": "fakemod v4 (owner: you eat the mob; bigger popups): DENY -> eat the zombie and the skeleton bite by bite (pickupEat), every popup big with a red DENIED / green ALLOW card, the creeper's Roll -> ALLOW -> boom. Fix-checks READY. Nits: bare arm renders sleeve-cyan, shrink happens below frame, skeleton purple at dusk, DENIED fade lingers.",
+  "notes": "fakemod v4 (owner: you eat the mob; bigger popups): DENY -> eat the zombie and the skeleton bite by bite (pickupEat), every popup big with a red DENIED / green ALLOW card, the creeper's Roll -> ALLOW -> boom. Fix-checks READY. Nits: bare arm renders sleeve-cyan, shrink happens below frame, skeleton purple at dusk, DENIED fade lingers. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T05:42:02.532Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:42:25+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:08:39+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 17.43 s vs the reviewed render 17.42 s"
@@ -944,9 +944,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:40:33.947Z",
-      "report": "work/hb/fakemod_permission.check.json"
+      "at": "2026-11-12T05:23:54.966Z",
+      "report": "out/fakemod_permission.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.23,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 1.23 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.23,
+    "pump_run": 0.0,
+    "master_gain": -0.12,
+    "under": null,
+    "windows": [
+      84,
+      0
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.23 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:08:34+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "e328dfbb2e452dfee68b5225e3e65963052bfeeb6f5c68f37ada4bd9c93e76f5",
+      "release": {
+        "tag": "pkg-fakemod_permission",
+        "asset": "fakemod_permission.short.e328dfbb2e452dfe.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakemod_permission/fakemod_permission.short.e328dfbb2e452dfe.mp4",
+        "sha256": "e328dfbb2e452dfee68b5225e3e65963052bfeeb6f5c68f37ada4bd9c93e76f5",
+        "bytes": 11316198
+      },
+      "song": {
+        "drop_in_short_s": 16.62,
+        "drop_in_song_s": 16.75,
+        "song_start_s": 0.13
+      }
+    },
+    "song_file_sha256": "c1e5ab02649567f08eef24d78910eea4e39576fb5af66769b342d59980a6936a",
+    "video_stream_md5": "e858167e6b02dc941df11409bf2c56d9",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28864661,
-    "sha256": "adc314afcbec6b574033403c70542e2f78a81f3eb059a11f49838b332efa73c2",
+    "bytes": 28864550,
+    "sha256": "6fe28c4e138dda539b463180e8bb215c041062705ab6548146b85de16c137bb4",
     "release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short.adc314afcbec6b57.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.adc314afcbec6b57.mp4",
-      "sha256": "adc314afcbec6b574033403c70542e2f78a81f3eb059a11f49838b332efa73c2",
-      "bytes": 28864661
+      "asset": "half_heart.short.6fe28c4e138dda53.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.6fe28c4e138dda53.mp4",
+      "sha256": "6fe28c4e138dda539b463180e8bb215c041062705ab6548146b85de16c137bb4",
+      "bytes": 28864550
     },
     "nosong_release": {
       "tag": "pkg-half_heart",
@@ -367,12 +367,12 @@
     "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --self_name 56e --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.2 --end_after death:1.2 --out out/half_heart.mp4"
   ],
   "status": "ready",
-  "notes": "opening r:r0f3da0 (frame 0 = the drop with the half heart); end 1.2 s after the death; review READY r1",
+  "notes": "opening r:r0f3da0 (frame 0 = the drop with the half heart); end 1.2 s after the death; review READY r1 | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T01:42:37.223Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:43:01+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:08:09+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 14.72 s vs the reviewed render 14.70 s"
@@ -387,9 +387,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:41:25.336Z",
-      "report": "work/hb/half_heart.check.json"
+      "at": "2026-11-11T23:45:29.932Z",
+      "report": "out/half_heart.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.25,
+      "pump_run": 0.05,
+      "under": 8.82,
+      "summary": "the master's gain spread 1.25 dB (max 3), longest hard-limited run 0.05 s (max 0.5), the game 8.8 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.25,
+    "pump_run": 0.05,
+    "master_gain": -0.08,
+    "under": 8.82,
+    "windows": [
+      16,
+      229
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.25 dB (max 3.0), run 0.05 s (max 0.5), game over music 8.82 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:08:02+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "adc314afcbec6b574033403c70542e2f78a81f3eb059a11f49838b332efa73c2",
+      "release": {
+        "tag": "pkg-half_heart",
+        "asset": "half_heart.short.adc314afcbec6b57.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.adc314afcbec6b57.mp4",
+        "sha256": "adc314afcbec6b574033403c70542e2f78a81f3eb059a11f49838b332efa73c2",
+        "bytes": 28864661
+      },
+      "song": {
+        "drop_in_short_s": 2.0,
+        "drop_in_song_s": 3.0,
+        "song_start_s": 1.0
+      }
+    },
+    "song_file_sha256": "1a0d933f1e7edc01cc6f1c3963a9b35244e5c1e7c7f7f1a85d1a17ff4b7f5fe3",
+    "video_stream_md5": "0c2ab7f9cf1b50c64ae36d9651944c90",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

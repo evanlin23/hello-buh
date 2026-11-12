@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 42573491,
-    "sha256": "07d5ae1f880e9f2ad827f8abc8376629440b5f69f6e26dea057be75c4b311a9d",
+    "bytes": 42584631,
+    "sha256": "d3efcb7947d424d5bc535690ff21212c8d2d9b0bd8ff7e4e6c665b9f0ac6e27f",
     "release": {
       "tag": "pkg-mega_lapse_fountain",
-      "asset": "mega_lapse_fountain.short.07d5ae1f880e9f2a.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fountain/mega_lapse_fountain.short.07d5ae1f880e9f2a.mp4",
-      "sha256": "07d5ae1f880e9f2ad827f8abc8376629440b5f69f6e26dea057be75c4b311a9d",
-      "bytes": 42573491
+      "asset": "mega_lapse_fountain.short.d3efcb7947d424d5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fountain/mega_lapse_fountain.short.d3efcb7947d424d5.mp4",
+      "sha256": "d3efcb7947d424d5bc535690ff21212c8d2d9b0bd8ff7e4e6c665b9f0ac6e27f",
+      "bytes": 42584631
     },
     "nosong_release": {
       "tag": "pkg-mega_lapse_fountain",
@@ -20009,12 +20009,12 @@
     "python3 edit.py --frames work/mega_lapse_fountain.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_lapse_fountain.rec.json --audio work/mega_lapse_fountain.wav --caption \"bro asked for a SMALL fountain at spawn 😭\" --self_name 56e --red SMALL --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --flash [[\"reveal\",0,0.5]] --tally \"{\\\"event\\\":\\\"blocks\\\",\\\"label\\\":\\\"blocks used\\\",\\\"done\\\":\\\"reveal\\\"}\" --sfx [[\"pop\",\"build_start\",{\"gain\":1.2}],[\"dip\",\"pass\",0.5],[\"impact\",\"pass\",{\"gain\":1.8}]] --start_at build_start:0 --end_after pass:0.8 --out out/mega_lapse_fountain.mp4"
   ],
   "status": "ready",
-  "notes": "mega time-lapse ep1 (rebuild for r:r13865d): 'SMALL fountain' -> a 192k-block terraced city rising out of real plains, 11 drone angles, gold tips on the reveal, close pass beside 56e; 2 review rounds (r1: flat lawn/tier, carved clearing edge), READY incl. no-op/hook (r:r8d6af1); nitpicks: tier tops flat ~1 s mid-build, opening sound under the peak, reveal's first 0.1 s washed by the flash",
+  "notes": "mega time-lapse ep1 (rebuild for r:r13865d): 'SMALL fountain' -> a 192k-block terraced city rising out of real plains, 11 drone angles, gold tips on the reveal, close pass beside 56e; 2 review rounds (r1: flat lawn/tier, carved clearing edge), READY incl. no-op/hook (r:r8d6af1); nitpicks: tier tops flat ~1 s mid-build, opening sound under the peak, reveal's first 0.1 s washed by the flash | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T01:32:00.004Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:32:33+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:07:49+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 18.41 s vs the reviewed render 18.40 s"
@@ -20029,9 +20029,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:29:47.458Z",
-      "report": "work/hb/mega_lapse_fountain.check.json"
+      "at": "2026-11-12T01:04:51.805Z",
+      "report": "out/mega_lapse_fountain.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.56,
+      "pump_run": 0.05,
+      "under": 5.22,
+      "summary": "the master's gain spread 2.56 dB (max 3), longest hard-limited run 0.05 s (max 0.5), the game 5.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.56,
+    "pump_run": 0.05,
+    "master_gain": -0.42,
+    "under": 5.22,
+    "windows": [
+      177,
+      53
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.56 dB (max 3.0), run 0.05 s (max 0.5), game over music 5.22 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:07:35+00:00",
+    "code": "0b749bd4552db6ce1629610a56c7eb1b4bd266a3",
+    "from": {
+      "sha256": "07d5ae1f880e9f2ad827f8abc8376629440b5f69f6e26dea057be75c4b311a9d",
+      "release": {
+        "tag": "pkg-mega_lapse_fountain",
+        "asset": "mega_lapse_fountain.short.07d5ae1f880e9f2a.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fountain/mega_lapse_fountain.short.07d5ae1f880e9f2a.mp4",
+        "sha256": "07d5ae1f880e9f2ad827f8abc8376629440b5f69f6e26dea057be75c4b311a9d",
+        "bytes": 42573491
+      },
+      "song": {
+        "drop_in_short_s": 17.6,
+        "drop_in_song_s": 113.75,
+        "song_start_s": 96.15
+      }
+    },
+    "song_file_sha256": "efc5ddc9d822d5268632f1d2d921cda50f3c0043bcedf86ce64907d2d9104d55",
+    "video_stream_md5": "5aa279c519fcb9e618a0864ce94d8205",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
