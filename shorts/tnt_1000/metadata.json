@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "boom4",
     "drop_in_song_s": 29.5,
-    "drop_in_short_s": 27.76,
-    "song_start_s": 1.74
+    "drop_in_short_s": 20.94,
+    "song_start_s": 8.56
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 43.93,
+    "duration_s": 32.31,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 89119508,
-    "sha256": "314ebdceeec58fb7d0a6275ffd710c58ea6db7721805bf820adbbdb9c5c705e9",
+    "bytes": 63124385,
+    "sha256": "b9dbc555bb04ac054f383c40e8aff27b69870209b83136b2bb666f42b6560926",
     "release": {
       "tag": "pkg-tnt_1000",
-      "asset": "tnt_1000.short.314ebdceeec58fb7.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short.314ebdceeec58fb7.mp4",
-      "sha256": "314ebdceeec58fb7d0a6275ffd710c58ea6db7721805bf820adbbdb9c5c705e9",
-      "bytes": 89119508
+      "asset": "tnt_1000.short.b9dbc555bb04ac05.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short.b9dbc555bb04ac05.mp4",
+      "sha256": "b9dbc555bb04ac054f383c40e8aff27b69870209b83136b2bb666f42b6560926",
+      "bytes": 63124385
     },
     "nosong_release": {
       "tag": "pkg-tnt_1000",
-      "asset": "tnt_1000.short_nosong.6080a7d1c1e771f8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short_nosong.6080a7d1c1e771f8.mp4",
-      "sha256": "6080a7d1c1e771f82183b0d2caede9b4c12cf8c83a5399815d024a9760ec81c0",
-      "bytes": 88743255
+      "asset": "tnt_1000.short_nosong.9882a3fc92552634.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt_1000/tnt_1000.short_nosong.9882a3fc92552634.mp4",
+      "sha256": "9882a3fc92552634ae9dbea914d9bc4601a92dcb48e44e34c86d12efe7dc1364",
+      "bytes": 62809008
     }
   },
   "edit": {
@@ -52,12 +52,15 @@
     "red": "SECRET",
     "dropAt": "boom4",
     "startAt": "tier1:-0.05",
-    "endAfter": "settle:-0.15",
+    "endAfter": "settle:-0.6",
     "deathScreen": true,
     "sfx": [
       [
         "pop",
-        "tier1"
+        "tier1",
+        {
+          "gain": 1
+        }
       ],
       [
         "dip",
@@ -66,17 +69,17 @@
       ],
       [
         "dip",
-        "boom5:1.85",
+        "boom5:0.69",
         0.4
       ],
       [
         "gamedip",
-        "boom5:1.85",
+        "boom5:0.69",
         0.35
       ],
       [
         "impact",
-        "boom5:1.85",
+        "boom5:0.69",
         {
           "gain": 1.4
         }
@@ -84,16 +87,31 @@
     ],
     "flash": [
       [
-        "boom5:1.85",
+        "boom5:0.69",
         0,
         0.8
       ]
     ],
     "punch": [
       [
-        "boom5:1.85",
+        "boom5:0.69",
         0,
         1.15
+      ],
+      [
+        "crater1",
+        0,
+        1.04
+      ],
+      [
+        "crater2",
+        0,
+        1.04
+      ],
+      [
+        "crater3",
+        0,
+        1.04
       ]
     ],
     "subs": [
@@ -135,7 +153,17 @@
         "cut"
       ],
       [
-        "cut2a",
+        "crater1:-1.35",
+        "crater1:-0.85",
+        1.4
+      ],
+      [
+        "crater1:-0.85",
+        "crater1",
+        4
+      ],
+      [
+        "crater1:0.6",
         "cut2b",
         "cut"
       ],
@@ -145,7 +173,12 @@
         "cut"
       ],
       [
-        "cut3a",
+        "crater2:-0.75",
+        "crater2",
+        4
+      ],
+      [
+        "crater2:0.6",
         "cut3b",
         "cut"
       ],
@@ -155,12 +188,7 @@
         "cut"
       ],
       [
-        "crater3:0.5",
-        "cut4a",
-        2
-      ],
-      [
-        "cut4a",
+        "crater3:0.6",
         "cut4b",
         "cut"
       ],
@@ -172,7 +200,7 @@
       [
         "boom4:1.5",
         "rim4a",
-        2
+        4
       ],
       [
         "rim4a",
@@ -180,14 +208,24 @@
         "cut"
       ],
       [
-        "cut5a",
+        "crater4:1.4",
         "cut5b",
         "cut"
+      ],
+      [
+        "cut5b",
+        "lit5",
+        1.45
       ],
       [
         "fuse5a",
         "fuse5b",
         "cut"
+      ],
+      [
+        "boom5:0.35",
+        "boom5:1.8",
+        5
       ]
     ],
     "args": [
@@ -200,19 +238,19 @@
       "--subs",
       "[[\"tier1\",\"1 TNT\",2.6,0],[\"tier2\",\"10 TNT\",2.6,0],[\"tier3\",\"100 TNT\",2.6,0],[\"tier4\",\"1000 TNT\",2.6,0],[\"tier5\",\"1000 TNT... but I'm ON it\",3.5,0]]",
       "--speed",
-      "[[\"fuse1a\",\"fuse1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fuse2a\",\"fuse2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"fuse3a\",\"fuse3b\",\"cut\"],[\"crater3:0.5\",\"cut4a\",2],[\"cut4a\",\"cut4b\",\"cut\"],[\"fuse4a\",\"fuse4b\",\"cut\"],[\"boom4:1.5\",\"rim4a\",2],[\"rim4a\",\"rim4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse5a\",\"fuse5b\",\"cut\"]]",
+      "[[\"fuse1a\",\"fuse1b\",\"cut\"],[\"crater1:-1.35\",\"crater1:-0.85\",1.4],[\"crater1:-0.85\",\"crater1\",4],[\"crater1:0.6\",\"cut2b\",\"cut\"],[\"fuse2a\",\"fuse2b\",\"cut\"],[\"crater2:-0.75\",\"crater2\",4],[\"crater2:0.6\",\"cut3b\",\"cut\"],[\"fuse3a\",\"fuse3b\",\"cut\"],[\"crater3:0.6\",\"cut4b\",\"cut\"],[\"fuse4a\",\"fuse4b\",\"cut\"],[\"boom4:1.5\",\"rim4a\",4],[\"rim4a\",\"rim4b\",\"cut\"],[\"crater4:1.4\",\"cut5b\",\"cut\"],[\"cut5b\",\"lit5\",1.45],[\"fuse5a\",\"fuse5b\",\"cut\"],[\"boom5:0.35\",\"boom5:1.8\",5]]",
       "--punch",
-      "[[\"boom5:1.85\",0,1.15]]",
+      "[[\"boom5:0.69\",0,1.15],[\"crater1\",0,1.04],[\"crater2\",0,1.04],[\"crater3\",0,1.04]]",
       "--flash",
-      "[[\"boom5:1.85\",0,0.8]]",
+      "[[\"boom5:0.69\",0,0.8]]",
       "--sfx",
-      "[[\"pop\",\"tier1\"],[\"dip\",\"death\",0.35],[\"dip\",\"boom5:1.85\",0.4],[\"gamedip\",\"boom5:1.85\",0.35],[\"impact\",\"boom5:1.85\",{\"gain\":1.4}]]",
+      "[[\"pop\",\"tier1\",{\"gain\":1}],[\"dip\",\"death\",0.35],[\"dip\",\"boom5:0.69\",0.4],[\"gamedip\",\"boom5:0.69\",0.35],[\"impact\",\"boom5:0.69\",{\"gain\":1.4}]]",
       "--death_screen",
       "death",
       "--start_at",
       "tier1:-0.05",
       "--end_after",
-      "settle:-0.15"
+      "settle:-0.6"
     ]
   },
   "recording": {
@@ -38989,12 +39027,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/56e-tnt_1000",
-    "commit": "879fb8832850a4e30efe22d86a845e1db5a139d0",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43091438616",
-    "rendered_at": "2026-11-11T20:16:46.683Z",
-    "head_at_publish": "1d318a724c6bb99e010e792822d0c040f8495520",
+    "branch": "main",
+    "commit": "5c5e4a7a0b30302ed27f36908414fd09c0a30287",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T01:24:39.224Z",
+    "head_at_publish": "5c5e4a7a0b30302ed27f36908414fd09c0a30287",
     "stunt": "stunts/tnt_1000.js",
     "source_snapshot": [
       "source/tnt_1000.js",
@@ -39006,35 +39043,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 879fb8832850",
+    "git checkout 5c5e4a7a0b30",
     "gunzip -c shorts/tnt_1000/recording.json.gz > work/tnt_1000.rec.json",
     "node render.js work/tnt_1000.rec.json work/tnt_1000.frames 60 1080 1011",
     "python3 audio.py work/tnt_1000.rec.json work/tnt_1000.wav",
-    "python3 edit.py --frames work/tnt_1000.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt_1000.rec.json --audio work/tnt_1000.wav --caption \"1 TNT vs 10 vs 100 vs 1000 vs SECRET 💀\" --self_name 56e --red SECRET --subs \"[[\\\"tier1\\\",\\\"1 TNT\\\",2.6,0],[\\\"tier2\\\",\\\"10 TNT\\\",2.6,0],[\\\"tier3\\\",\\\"100 TNT\\\",2.6,0],[\\\"tier4\\\",\\\"1000 TNT\\\",2.6,0],[\\\"tier5\\\",\\\"1000 TNT... but I'm ON it\\\",3.5,0]]\" --speed [[\"fuse1a\",\"fuse1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fuse2a\",\"fuse2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"fuse3a\",\"fuse3b\",\"cut\"],[\"crater3:0.5\",\"cut4a\",2],[\"cut4a\",\"cut4b\",\"cut\"],[\"fuse4a\",\"fuse4b\",\"cut\"],[\"boom4:1.5\",\"rim4a\",2],[\"rim4a\",\"rim4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"fuse5a\",\"fuse5b\",\"cut\"]] --punch [[\"boom5:1.85\",0,1.15]] --flash [[\"boom5:1.85\",0,0.8]] --sfx [[\"pop\",\"tier1\"],[\"dip\",\"death\",0.35],[\"dip\",\"boom5:1.85\",0.4],[\"gamedip\",\"boom5:1.85\",0.35],[\"impact\",\"boom5:1.85\",{\"gain\":1.4}]] --death_screen death --start_at tier1:-0.05 --end_after settle:-0.15 --out out/tnt_1000.mp4"
+    "python3 edit.py --frames work/tnt_1000.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt_1000.rec.json --audio work/tnt_1000.wav --caption \"1 TNT vs 10 vs 100 vs 1000 vs SECRET 💀\" --self_name 56e --red SECRET --subs \"[[\\\"tier1\\\",\\\"1 TNT\\\",2.6,0],[\\\"tier2\\\",\\\"10 TNT\\\",2.6,0],[\\\"tier3\\\",\\\"100 TNT\\\",2.6,0],[\\\"tier4\\\",\\\"1000 TNT\\\",2.6,0],[\\\"tier5\\\",\\\"1000 TNT... but I'm ON it\\\",3.5,0]]\" --speed [[\"fuse1a\",\"fuse1b\",\"cut\"],[\"crater1:-1.35\",\"crater1:-0.85\",1.4],[\"crater1:-0.85\",\"crater1\",4],[\"crater1:0.6\",\"cut2b\",\"cut\"],[\"fuse2a\",\"fuse2b\",\"cut\"],[\"crater2:-0.75\",\"crater2\",4],[\"crater2:0.6\",\"cut3b\",\"cut\"],[\"fuse3a\",\"fuse3b\",\"cut\"],[\"crater3:0.6\",\"cut4b\",\"cut\"],[\"fuse4a\",\"fuse4b\",\"cut\"],[\"boom4:1.5\",\"rim4a\",4],[\"rim4a\",\"rim4b\",\"cut\"],[\"crater4:1.4\",\"cut5b\",\"cut\"],[\"cut5b\",\"lit5\",1.45],[\"fuse5a\",\"fuse5b\",\"cut\"],[\"boom5:0.35\",\"boom5:1.8\",5]] --punch [[\"boom5:0.69\",0,1.15],[\"crater1\",0,1.04],[\"crater2\",0,1.04],[\"crater3\",0,1.04]] --flash [[\"boom5:0.69\",0,0.8]] --sfx [[\"pop\",\"tier1\",{\"gain\":1}],[\"dip\",\"death\",0.35],[\"dip\",\"boom5:0.69\",0.4],[\"gamedip\",\"boom5:0.69\",0.35],[\"impact\",\"boom5:0.69\",{\"gain\":1.4}]] --death_screen death --start_at tier1:-0.05 --end_after settle:-0.6 --out out/tnt_1000.mp4"
   ],
   "status": "ready",
-  "notes": "re-render (r:r52f94c): 56e on the death screen; caption '1 TNT vs 10 vs 100 vs 1000 vs SECRET' (owner: 'vs SECRET'), the secret tier is tier 5; independent fix-check READY; nitpick: the tier-5 sub doesn't say SECRET",
-  "published_at": "2026-11-11T21:08:08.292Z",
+  "notes": "fast cuts r:r188b46 (owner: 'need faster cuts generally between shots'): walk to each crater x4, cut to the next pile 0.6 s in; the big crater sweep cut at rest; secret tier setup x1.45; death screen ~2.3 s (chain behind it x5); 44 -> 32 s; fix-check READY",
+  "published_at": "2026-11-12T01:27:34.694Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T21:09:00+00:00",
+    "at": "2026-11-12T01:28:15+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 43.95 s vs the reviewed render 43.93 s"
+      "summary": "short.mp4 32.32 s vs the reviewed render 32.31 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 7,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:56:17.195Z",
-      "report": "out/tnt_1000.check.json"
+      "at": "2026-11-12T01:25:07.110Z",
+      "report": "work/hb/tnt_1000.check.json"
     },
     "key_sounds": "n/a"
   }
