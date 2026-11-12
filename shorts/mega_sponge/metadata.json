@@ -4,7 +4,7 @@
   "caption": "rate my starter house",
   "youtube": {
     "title": "rate my starter house #minecraft #shorts",
-    "description": "rate my starter house\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "rate my starter house\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,14 +14,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "ayuda.mp3",
-    "title": "AYUDA",
-    "artist": "MXRCVRY",
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal",
-    "drop_in_song_s": 9.0,
+    "drop_in_song_s": 14.5,
     "drop_in_short_s": 7.35,
-    "song_start_s": 1.65
+    "song_start_s": 7.15
   },
   "video": {
     "file": "short.mp4",
@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20485444,
-    "sha256": "41689641289c5905e8285941547ba3632e82d02e13dc0a823b08db243fdf9009",
+    "bytes": 20427407,
+    "sha256": "19e7f853b7ddd93982d787a10a58191b6cec70ecc4552d1c49de36517432d485",
     "release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short.41689641289c5905.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.41689641289c5905.mp4",
-      "sha256": "41689641289c5905e8285941547ba3632e82d02e13dc0a823b08db243fdf9009",
-      "bytes": 20485444
+      "asset": "mega_sponge.short.19e7f853b7ddd939.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.19e7f853b7ddd939.mp4",
+      "sha256": "19e7f853b7ddd93982d787a10a58191b6cec70ecc4552d1c49de36517432d485",
+      "bytes": 20427407
     },
     "nosong_release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short_nosong.67d1c8a0e5775573.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short_nosong.67d1c8a0e5775573.mp4",
-      "sha256": "67d1c8a0e5775573d343b4237285f71c23fbd6eea7a2f044fcf6c508435fa0f5",
-      "bytes": 20477944
+      "asset": "mega_sponge.short_nosong.27651de626e03226.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short_nosong.27651de626e03226.mp4",
+      "sha256": "27651de626e0322682742b90ef66453cde9356d1b84a80c93c6a8af2169d5dd6",
+      "bytes": 20423069
     }
   },
   "edit": {
@@ -188,10 +188,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "eac54b1a3a82e463f5924a7c123513c865d4a535",
+    "commit": "c0523c50378b905eff5c5e7009c85168966c3188",
     "rendered": "local",
-    "rendered_at": "2026-11-12T07:30:53.816Z",
-    "head_at_publish": "eac54b1a3a82e463f5924a7c123513c865d4a535",
+    "rendered_at": "2026-11-12T21:06:57.564Z",
+    "head_at_publish": "3a25e4298af5ae2e6320bbb6c9c6a4ceab32853e",
     "stunt": "stunts/mega_sponge.js",
     "source_snapshot": [
       "source/mega_sponge.js",
@@ -201,18 +201,18 @@
     ]
   },
   "rebuild": [
-    "git checkout eac54b1a3a82",
+    "git checkout c0523c50378b",
     "gunzip -c shorts/mega_sponge/recording.json.gz > work/mega_sponge.rec.json",
     "node render.js work/mega_sponge.rec.json work/mega_sponge.frames 60 1080 1011",
     "python3 audio.py work/mega_sponge.rec.json work/mega_sponge.wav",
     "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --self_name 56e --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --flash [[\"reveal\",0,0.5]] --sfx [[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.3}]] --start_at build_start:0 --end_after reveal:0.9 --out out/mega_sponge.mp4"
   ],
   "status": "ready",
-  "notes": "mega_sponge v4 (owner r:rb5f36a): a build time-lapse of the sponge (cubes rise, holes cut level by level) then one zoom out from 56e to its scale; 2 rounds (r1: the zoom cut off), READY",
-  "published_at": "2026-11-12T07:33:57.552Z",
+  "notes": "mega_sponge v4 + owner r:r759917: the holes cut nearest the camera first, sweeping away; fix-check READY",
+  "published_at": "2026-11-12T21:09:33.022Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T07:34:29+00:00",
+    "at": "2026-11-12T21:09:58+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -221,14 +221,14 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T07:31:51.261Z",
+      "at": "2026-11-12T21:07:45.463Z",
       "report": "work/hb/mega_sponge.check.json"
     },
     "key_sounds": "n/a"
