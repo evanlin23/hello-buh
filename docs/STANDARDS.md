@@ -410,6 +410,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
 - **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action.
   Check: owner, review. r:r7ef6ec
+- **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
+  ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
+- **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
+  one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or

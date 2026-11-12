@@ -433,6 +433,16 @@ STANDARDS.md in the same commit.
   pad them".** A Short is as long as its beats need. There is no minimum length for a stunt (the 30 s rule of
   2026-11-06 is retired). Padding is the blocker instead: a beat added or stretched only to reach a length, a beat
   that could be cut without losing anything, or dwell after a result (r:r188b46).
+- **Owner, 2026-11-11, Review Room notes: on tnt (9.5 s) "This needs to be longer, this is low-key a no op reel. Every
+  one we make must give the viewer satisfaction"; on logic_minecraft "We spend too long looking at the fire after the
+  TNT"; on tnt_1000 "Need faster cuts generally between shots.."** Every Short must pay the viewer off with a real,
+  satisfying result: big enough to be worth the watch, never a setup with a small or quick fizzle ("no-op"). Short is
+  fine (r:r064ca4), but a Short whose payoff doesn't land needs a bigger payoff, not padding. The two cut notes are
+  r:r188b46.
+- **Owner, 2026-11-12, on mislabel_grandma v2: "Need to be like left right doubel extensions not this going up. Also
+  the cuts need to be cleaner, we should do into a hole 1x1 and then come out of the sky? need cleaner"** The
+  `mislabel` parkour uses sideways (left/right) double extensions, the classic bridge-out move, not blocks placed
+  upward. The transition is one clean move: drop into a 1x1 hole, cut, come out of the sky.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
