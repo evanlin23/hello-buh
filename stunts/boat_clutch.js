@@ -14,7 +14,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'bro thinks a boat will save him 💀',
   edit: {
-    caption: 'bro thinks a boat will save him 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'seen2:0.6',   // r:r188b46 (was 0.9)
+    caption: 'bro thinks a boat will save him 💀', red: 'boat', song: null, dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.6',   // r:r188b46: the seat view in the lava, 0.6 s (review: the look round ran 2.8 s past it)   // r:r188b46 (was 0.9)
     // the label stays up through the fall
     subs: PILLARS.map((p, i) => ['jump', p.sub, 1.6, i]),
     // the teleport between pillars is cut out (no hold around it); the long falls' middles x2 (the view holds still, down)
@@ -27,8 +27,8 @@ module.exports = {
     // change it out": that was audio.py's old water-clutch rebuild playing a water bucket's pour on the boat placement,
     // stretched by the slow-mo; a boat recording gets none now, and lib/hb/banned_sfx.json bans a pour with no bucket
     // r:r0f3da0 pace: the hook flash and the first fall were silent until 2.08 s (a fall makes no vanilla sound): a wind bed from frame 0
-    punch: [['seen2', 0, 1.08]], flash: [['seen2', 0, 0.3]],   // the payoff is the look at the lava round the boat: a picture hit on it (pace)
-    sfx: [['impact', 'seen2', { gain: 0.8 }], ['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
+    punch: [['final', 0, 1.08]], flash: [['final', 0, 0.3]],   // a picture hit on the landing in the lava (pace)
+    sfx: [['file', 'landed', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.7, { nth: 0 }], ['file', 'landed', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.7, { nth: 1 }], ['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.35], ['impact', 'final'], ['file', 'final', 'sfx/kenney/impact-sounds/impactWood_heavy_000.ogg', 0.8]]
   },
 
   async setup (ctx) {
@@ -43,7 +43,8 @@ module.exports = {
     try { await bot.waitForChunksToLoad() } catch (e) {}
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    this.spots = await openSpots(ctx, x, z, PILLARS.map(P => P.h), { axis: 'x', gap: 13, foot: [-1, 1, -4, 1], level: [-1, 1, -4, 1] })
+    this.spots = await openSpots(ctx, x, z, PILLARS.map(P => P.h), { axis: 'x', gap: 28,   // (13 put the lava pool in the first two drops' shots: review)
+ foot: [-1, 1, -4, 1], level: [-1, 1, -4, 1] })
     for (const [i, P] of PILLARS.entries()) ctx.log('pillar', P.h, 'at', this.spots[i])
     for (const [i, P] of PILLARS.entries()) {
       const S = this.spots[i]
@@ -53,6 +54,7 @@ module.exports = {
       const F = S.floor, X0 = S.x - 5, X1 = S.x + 5, Z0 = S.z - 8, Z1 = S.z + 4
       const pad = (dx, dz) => dx >= -1 && dx <= 1 && dz >= -4 && dz <= 1
       if (P.stake === 'lava') {
+        await clearPlants(ctx, X0 - 4, F, Z0 - 4, X1 + 4, F + 3, Z1 + 4)   // nothing for the lava to set alight (fire beside the pool: review)
         await ctx.cmd(`/fill ${X0} ${F + 1} ${Z0} ${X1} ${F + 4} ${Z1} air replace #minecraft:replaceable`, { mayFail: true })
         await ctx.cmd(`/fill ${X0} ${F - 1} ${Z0} ${X1} ${F - 1} ${Z1} stone`)
         await ctx.cmd(`/fill ${X0} ${F} ${Z0} ${X1} ${F} ${Z1} lava`)
@@ -73,6 +75,7 @@ module.exports = {
     const n = this.spots.length
     this.mid = { x: Math.round(this.spots.reduce((a, S) => a + S.x, 0) / n), y: S0.floor, z: Math.round(this.spots.reduce((a, S) => a + S.z, 0) / n) }
     await ctx.cmd('/gamerule fall_damage true')
+    await ctx.cmd('/gamerule fire_spread_radius_around_player 0', { mayFail: true })
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6.5')   // vanilla 4.5: nudged so the boat can go down 2 ticks early
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 6.5')   // vanilla 3: nudged the same way
     await ctx.hotbar(['diamond_sword', ...PILLARS.map(() => 'oak_boat'), ['bread', 16]])   // boats don't stack: one per slot
@@ -148,16 +151,19 @@ module.exports = {
     // turn round to the pillar and look up it
     const { Vec3 } = ctx
     await ctx.easeLook(bot.entity.yaw, -0.6, 150)
-    await ctx.easeLookAt(new Vec3(px + 0.5, floor + 3, z + 0.5), 500)
     ctx.log('health', bot.health, 'vehicle', !!bot.vehicle, 'pos', bot.entity.position)
     if (ctx.died || bot.health < 20) return false
-    if (P.stake === 'grass') await ctx.easeLookAt(new Vec3(px + 0.5, floor + P.h * 0.6, z + 0.5), 700)   // up the pillar it came down
-    else {
-      // round at the stake it just missed, close (the cacti / the lava a block past the pad)
-      const b = bot.entity.position
-      await ctx.easeLookAt(new Vec3(b.x + 3.5, floor + 0.6, b.z - 1.5), 1300)   // (800 ms peaked at 295 deg/s)
+    if (P.stake === 'grass') {
+      await ctx.easeLookAt(new Vec3(px + 0.5, floor + 3, z + 0.5), 500)
+      await ctx.easeLookAt(new Vec3(px + 0.5, floor + P.h * 0.6, z + 0.5), 700)   // up the pillar it came down
+    } else if (P.stake === 'cactus') {
+      // no spin to the pillar (review: a 370 deg/s turn and 2.5 s past the result): one slow pan across the cacti
+      await ctx.easeLook(bot.entity.yaw + 0.8, -0.35, 900)
       ctx.mark(`seen${i}`)
-      await ctx.easeLookAt(new Vec3(b.x - 3.5, floor + 0.6, b.z - 2), 1400)
+      await bot.waitForTicks(8)   // the cacti read, then the cut (r:r188b46)
+    } else {
+      // the finale: the seat view, lava all round the boat (the end lands here, edit endAfter final:0.6)
+      await bot.waitForTicks(20)
     }
     if (i < PILLARS.length - 1) ctx.mark(`cut${i + 1}a`)   // from here to the next pillar's top is cut out
     if (bot.vehicle) { await ctx.cmd('/ride @s dismount'); await bot.waitForTicks(4) }
