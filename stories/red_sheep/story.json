@@ -2,7 +2,7 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r4.5 (2026-11-11): owner approved (new kid narrator, end on the evoker's look); Dad's skin sunny (kai is Jonah's), a second voice candidate (Rasalgethi); r4.4: r4 continuity must-fixes (S13 camera clears the hiding trunk, S07 crossbow in the off hand, S10 Dad in the field 13 blocks out) and should-fixes; r4.3: r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
+  "revision": "r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why ('All SIXTY sheep in our village are BLUE. And nobody will tell me WHY.'); five two-way clues (the dye, EYES, the count, the red one, the crossbow week); the snaps (L08, S08) cut: a sound-only clue a casual viewer can't read; L10 carries the why ('He never even says WHY'); the reveal is now SAID (L13, the kid naming what she sees: 'A grey man in the trees raised his ARMS, and my lamb turned RED.') over S13, RED on the cast tick, cut 1.0 s later on the evoker's look; r4.5 (2026-11-11): owner approved (new kid narrator, end on the evoker's look); Dad's skin sunny (kai is Jonah's), a second voice candidate (Rasalgethi); r4.4: r4 continuity must-fixes (S13 camera clears the hiding trunk, S07 crossbow in the off hand, S10 Dad in the field 13 blocks out) and should-fixes; r4.3: r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
   "caption": "why is every sheep in our village blue 🐑",
   "upload": {
     "title": "every sheep in our village is blue. all sixty of them 🐑 #minecraft #shorts",
@@ -16,21 +16,21 @@
     ]
   },
   "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste red_sheep prints it). pinned = the question, without the 👇",
-  "logline": "A kid who thinks red sheep are the prettiest thing in the world follows her blue lamb into the woods Dad is so boring about, hoping to find more red ones, and finds out why Dad dyes every sheep blue.",
+  "logline": "A kid who wants to know why every sheep in her village is blue follows her blue lamb into the woods Dad never explains, hoping to find more red ones, and sees what turns a blue sheep red.",
   "question": "why tf is every sheep in the village blue?",
-  "premise": "Every sheep in Ravenford is blue, all sixty: Dad won't let a white one through the gate ('He really likes blue') and counts them every night. 'They're our EYES, kid.' (Sheep can't even see that good.) Last spring one came back from the woods red, the prettiest one ever; Dad sat at the gate with his crossbow for a week (she thinks he wanted more red ones); one night the trees went snap, snap, snap, like clapping. Today she forgets to shut the gate, her lamb gets out, Dad is boring about the woods, so she goes in happily to find more red ones.",
+  "premise": "All sixty sheep in Ravenford are blue, and nobody will tell the kid why: Dad won't let a white one through the gate ('He really likes blue') and counts them every night. 'They're our EYES, kid.' (Sheep can't even see that good.) Last spring one came back from the woods red, the prettiest one ever; Dad sat at the gate with his crossbow for a week (she thinks he wanted more red ones). Today she forgets to shut the gate, her lamb gets out, Dad never even says why the woods are off limits, so she goes in happily to find more red ones.",
   "family": "mob_alarm",
-  "twist": "The sheep are an alarm. In vanilla Java an evoker that isn't fighting casts its 'wololo' spell on a BLUE sheep within 16 blocks and turns it RED (minecraft.wiki/w/Evoker 'Sheep color conversion spell'; Evoker.EvokerWololoSpellGoal; mobGriefing on; only blue ones, which is why Dad dyes every white one). One lives in the woods. She went in to find more red ones. In the trees the lamb stops; a faint 'wololo'; beyond the lamb an evoker with its arms raised, and the lamb's wool turns red. The arms drop and its head turns to her. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near. The snaps a year ago were its fangs.",
+  "twist": "The sheep are an alarm. In vanilla Java an evoker that isn't fighting casts its 'wololo' spell on a BLUE sheep within 16 blocks and turns it RED (minecraft.wiki/w/Evoker 'Sheep color conversion spell'; Evoker.EvokerWololoSpellGoal; mobGriefing on; only blue ones, which is why Dad dyes every white one). One lives in the woods. She went in to find more red ones. In the trees the lamb stops; beyond it an evoker raises its arms and the lamb's wool turns red, and the kid says exactly that (L13). The arms drop and its head turns to her. Cut. 'They're our EYES' was literal: blue means safe, red means it is near. Casual one-sentence read: the blue sheep are a warning, they turn red when the thing in the woods is close.",
   "key_color": "#3B6CF0",
   "mood": [
     "tense",
     "eerie"
   ],
-  "payoff": "S13+0.3",
+  "payoff": "S13+2.0",
   "look": {
     "time": 1000,
     "fog": false,
-    "note": "per shot (shots[].time): morning 1000 (S01-S04), nightfall 13000 (S05), day 6000 (S06), dusk 12300 (S07), night 18000 (S08), late afternoon 12000-12200 (S09-S13: low sun on the lamb so blue and red read)"
+    "note": "per shot (shots[].time): morning 1000 (S01-S04), nightfall 13000 (S05), day 6000 (S06), dusk 12300 (S07), late afternoon 12000-12200 (S09-S13: low sun on the lamb so blue and red read)"
   },
   "weather": "clear",
   "world": {
@@ -78,7 +78,7 @@
     "Evoker": {
       "role": "character",
       "silent": true,
-      "on_screen": "a vanilla evoker; S13 only (never seen before; its 'wololo' sound is under L12)"
+      "on_screen": "a vanilla evoker; S13 only (never seen before); the kid calls it 'a grey man in the trees' (L13)"
     }
   },
   "requests": [
@@ -96,11 +96,11 @@
         "L05",
         "L06",
         "L07",
-        "L08",
         "L09",
         "L10",
         "L11",
-        "L12"
+        "L12",
+        "L13"
       ],
       "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
     },
@@ -144,27 +144,22 @@
       "note": "a few baas as Dad walks among the flock"
     },
     {
-      "under": "S08",
-      "sound": "entity.evoker_fangs.attack",
-      "note": "three snaps, one on each SNAP, distant, deep in the trees"
-    },
-    {
-      "under": "S12",
+      "under": "S13",
       "sound": "entity.evoker.prepare_wololo",
-      "note": "faint, from the dark gap, starting 2.0 s (40 ticks) before S13+0.3 (under 'Like she was LISTENING'): vanilla plays it as the cast starts"
+      "note": "+0.0 s, as the arms go up (vanilla plays it as the 40-tick warm-up starts), under 'A grey MAN'"
     },
     {
       "under": "S13",
       "sound": "entity.evoker.cast_spell",
-      "note": "+0.3 s: the lamb turns red on the cast tick (the hit)"
+      "note": "+2.0 s: the lamb turns red on the cast tick, on L13's 'RED' (the hit)"
     }
   ],
   "lines": [
     {
       "id": "L01",
       "who": "N",
-      "text": "Every SHEEP / in our VILLAGE / is BLUE. / All SIXTY of them.",
-      "say": "Every sheep in our village is BLUE. All SIXTY of them.",
+      "text": "All SIXTY sheep / in our VILLAGE / are BLUE. / And NOBODY / will tell me WHY.",
+      "say": "All SIXTY sheep in our village are BLUE. And nobody will tell me WHY.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -175,7 +170,7 @@
         "what": "entity:sheep",
         "word": "SHEEP"
       },
-      "note": "hook: proud of her weird village, one quick breath, a lift on SIXTY"
+      "note": "hook: the fact, then the question, a little indignant on WHY; one breath, a lift on SIXTY"
     },
     {
       "id": "L02",
@@ -275,21 +270,6 @@
       "note": "impressed, then sure of her own explanation (the misreading)"
     },
     {
-      "id": "L08",
-      "who": "N",
-      "text": "One NIGHT, / the TREES went / SNAP, SNAP, SNAP. / Like they were / CLAPPING.",
-      "say": "One night, the trees went snap, snap, snap. Like they were CLAPPING.",
-      "shot": "S08",
-      "shows": [
-        "trees (the black birch treeline past the ford)"
-      ],
-      "look": {
-        "what": "prop:treeline",
-        "word": "TREES"
-      },
-      "note": "delighted, playing the snaps like a game; never scared"
-    },
-    {
       "id": "L09",
       "who": "N",
       "text": "Today I FORGOT / to shut the GATE. / My LAMB / got OUT.",
@@ -308,8 +288,8 @@
     {
       "id": "L10",
       "who": "N",
-      "text": "Dad says / NEVER go / in the WOODS. / Dad's so BORING.",
-      "say": "Dad says never go in the WOODS. Dad's so BORING.",
+      "text": "Dad says / NEVER go / in the WOODS. / He never even / says WHY.",
+      "say": "Dad says never go in the WOODS. He never even says WHY.",
       "shot": "S10",
       "shows": [
         "Dad (13 blocks out, back to the ford path, mending the field fence)",
@@ -319,7 +299,7 @@
         "what": "prop:treeline",
         "word": "WOODS"
       },
-      "note": "a cheeky eye-roll"
+      "note": "a cheeky eye-roll: Dad's rules never come with reasons (her innocent reading of the danger)"
     },
     {
       "id": "L11",
@@ -340,8 +320,8 @@
     {
       "id": "L12",
       "who": "N",
-      "text": "Then she STOPPED. / Like she was / LISTENING.",
-      "say": "Then she STOPPED. Like she was LISTENING.",
+      "text": "Then my lamb STOPPED. / Like she was / LISTENING.",
+      "say": "Then my lamb STOPPED. Like she was LISTENING.",
       "shot": "S12",
       "punch": true,
       "shows": [
@@ -351,7 +331,25 @@
         "what": "prop:lamb",
         "word": "STOPPED"
       },
-      "note": "curious and delighted, leaning in; not afraid, not hushed; a faint 'wololo' starts in the trees under it"
+      "note": "curious and delighted, leaning in; not afraid, not hushed; silence under it (the evoker is not heard before S13)"
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "A GREY man / in the TREES / raised his ARMS, / and my lamb / turned RED.",
+      "say": "A grey man in the trees raised his ARMS, and my lamb turned RED.",
+      "shot": "S13",
+      "punch": true,
+      "shows": [
+        "grey man (the evoker, between the trunks, arms raised)",
+        "trees (birch trunks)",
+        "lamb (blue, then RED on 'RED')"
+      ],
+      "look": {
+        "what": "prop:evoker",
+        "word": "MAN"
+      },
+      "note": "THE REVEAL, said plainly: wonder, not fear, just telling what she saw; placed so 'RED' lands on the cast tick (S13+2.0)"
     }
   ],
   "shots": [
@@ -419,15 +417,6 @@
       "frame": "subject: Dad sitting on a log in the east gateway, 3/4 from behind, facing the woods, the crossbow held up in his LEFT (off) hand, on the camera's side (lib/movie.js offhand item), against the sky (it reads at 300 px); mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk."
     },
     {
-      "id": "S08",
-      "line": "L08",
-      "place": "east_gate",
-      "size": "ews",
-      "time": 18000,
-      "camera": "at: (-4, 10, 0) over the palisade aimed east at the treeline (45, 4, 0), still",
-      "frame": "subject: the black birch treeline past the ford under the moon; on each 'SNAP' an evoker-fangs snap sound deep in the trees; NOTHING seen (no fangs, no evoker, no particles). Night, lanterns on the palisade."
-    },
-    {
       "id": "S09",
       "line": "L09",
       "place": "pasture_gate",
@@ -452,7 +441,7 @@
       "size": "wide",
       "time": 12100,
       "camera": "pov walking into the woods, following the lamb 4 blocks ahead",
-      "frame": "subject: the blue lamb 4 blocks ahead between birch trunks, walking; low sun through the trunks; bg: dark trunks, nothing moving. No evoker anywhere (it is summoned only after S11; S01, S08 and S10 look at this treeline)."
+      "frame": "subject: the blue lamb 4 blocks ahead between birch trunks, walking; low sun through the trunks; bg: dark trunks, nothing moving. No evoker anywhere (it is summoned only after S11; S01 and S10 look at this treeline)."
     },
     {
       "id": "S12",
@@ -461,16 +450,16 @@
       "size": "full",
       "time": 12200,
       "camera": "pov: the kid at K (0, 1.6, 0) in the clearing facing EAST; the lamb walks ahead and stops 1.5 blocks away at (1.5, 0, 0) on 'STOPPED', turning to face north-east (toward the evoker's spot); the view tilts down a little to her",
-      "frame": "subject: the lamb, still blue, big in frame (ms), walking, then stopped on 'STOPPED', head turned north-east toward a dark gap between birch trunks off frame left; low sun on her (the blue must read). The evoker stands at (7.5, 0, -6), hidden from K by a birch log column at x 1..2, z -2..-1 and outside this frame. Sound: entity.evoker.prepare_wololo, faint, from the gap, 2.0 s (40 ticks) before S13+0.3, i.e. under 'Like she was LISTENING' (the cast has started)."
+      "frame": "subject: the lamb, still blue, big in frame (ms), walking, then stopped on 'STOPPED', head turned north-east toward a dark gap between birch trunks off frame left; low sun on her (the blue must read). The evoker stands at (7.5, 0, -6), hidden from K by a birch log column at x 1..2, z -2..-1 and outside this frame. Sound: nothing from the gap (the spell starts on S13's first frame)."
     },
     {
       "id": "S13",
-      "line": "L12",
+      "line": "L13",
       "place": "clearing",
       "size": "wide",
       "time": 12200,
-      "camera": "at: (-1.5, 1.8, 2.5) clearing-relative, behind and to the RIGHT of the kid (who faces east; right is +z), aimed at the evoker (7.5, 1.0, -6), FOV 35 (the evoker about a quarter of the frame height, the lamb low in frame under it); the trunk that hides the evoker from K (the log column x 1..2, z -2..-1) clears this camera's line by about 0.6 blocks; the cut lands at the end of L12",
-      "frame": "The reveal, one continuous wide (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, cast 60). fg: the kid's right shoulder (the lead in her hand); the evoker is 8.5 blocks from the lamb (inside its 16-block spell range) and 9.6 from the kid (inside its 12-block follow range), level with both; mid: the lamb; subject: the evoker between the trunks, ARMS RAISED and waving (spellcasting pose), brownish-orange spell particles at its hands only, looking at the lamb. +0.3 s: the lamb's wool turns from blue to RED on the cast tick (cast-spell sound; no puff on the sheep) = THE REVEAL. +1.3 s: the cast ends, its arms come down and its head turns to the lens: it sees her. CUT there (~1.0 s after the reveal). No line. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
+      "camera": "at: (-1.5, 1.8, 2.5) clearing-relative, behind and to the RIGHT of the kid (who faces east; right is +z), aimed at the evoker (7.5, 1.0, -6), FOV 35 (the evoker about a quarter of the frame height, the lamb low in frame under it); the trunk that hides the evoker from K (the log column x 1..2, z -2..-1) clears this camera's line by about 0.6 blocks; the cut lands 1.0 s after L13's 'RED'",
+      "frame": "The reveal, one continuous wide under L13 (vanilla timing, Evoker.EvokerWololoSpellGoal: warm-up 40 ticks, then the cast; the spellcasting pose lasts 60 ticks from the start). fg: the kid's right shoulder (the lead in her hand); the evoker is 8.5 blocks from the lamb (inside its 16-block spell range) and 9.6 from the kid (inside its 12-block follow range), level with both; mid: the lamb, still blue; subject: the evoker between the trunks, looking at the lamb. +0.0 s: its ARMS go up and wave (spellcasting pose), brownish-orange spell particles at its hands only, prepare_wololo, under 'A grey MAN in the trees raised his ARMS'. +2.0 s: the lamb's wool turns from blue to RED on the cast tick, on L13's 'RED' (cast-spell sound; no puff on the sheep) = THE REVEAL. +3.0 s: the pose ends, its arms come down and its head turns to the lens: it sees her. CUT there (1.0 s after the reveal). No line after L13. No fangs (real AI would summon vexes next: Summon goal priority 4 beats fangs 5)."
     }
   ],
   "props": {
@@ -498,15 +487,15 @@
         0,
         -6
       ],
-      "note": "clearing-relative (K = the kid's stop point); summoned only after S11; hidden from K by the log column x 1..2, z -2..-1"
+      "note": "clearing-relative (K = the kid's stop point); summoned only after S11; hidden from K by the log column x 1..2, z -2..-1; L13's 'grey man'"
     }
   },
   "ending": {
-    "after": "L12",
+    "after": "L13",
     "beats": [
-      "S13 (no line): the evoker, arms raised, beyond the lamb; +0.3 s the lamb's wool turns red (the reveal, and her wish for a red one granted); +1.3 s its arms drop and its head turns to the lens; cut."
+      "S13 under L13: the evoker's arms go up ('A grey MAN in the trees raised his ARMS'); +2.0 s the lamb's wool turns red on 'RED' (the reveal, said, and her wish for a red one granted); +3.0 s its arms drop and its head turns to the lens; cut."
     ],
-    "loop": "line 1 again: sixty blue sheep are sixty alarms"
+    "loop": "'...my lamb turned RED.' -> 'All SIXTY sheep in our village are BLUE. And nobody will tell me WHY.': line 1's why is answered; sixty blue sheep are sixty alarms"
   },
   "bible": "stories/red_sheep/bible.md",
   "beats": "stories/red_sheep/beats.md",
