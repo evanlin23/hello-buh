@@ -160,6 +160,16 @@ class MixGate(unittest.TestCase):
             self.assertFalse(g["ok"])   # the package's own short.mp4 decides, not the recorded 9.0
             self.assertIn("on short.mp4", g["summary"])
 
+    def test_a_failed_remeasure_keeps_the_recorded_value(self):
+        # review of 920679d: short_nosong.mp4 there but unreadable: under() found nothing and replaced a FAILING record
+        with tempfile.TemporaryDirectory() as d:
+            (pathlib.Path(d) / "short_nosong.mp4").write_bytes(b"not a video")
+            v = pathlib.Path(d) / "short.mp4"
+            v.write_bytes(b"not a video either")
+            g = gates.mix_gate("x", {**self.SONG, "mix": {"pump": 1.0, "pump_run": 0.0, "under": 1.0}}, v)
+            self.assertFalse(g["ok"])
+            self.assertIn("as mixed", g["summary"])
+
     def test_skipped_for_stories_no_song_and_old_packages(self):
         v = pathlib.Path("/nonexistent/short.mp4")
         self.assertIsNone(gates.mix_gate("story_torch", {**self.SONG, "mix": {"pump": 13.0}}, v))

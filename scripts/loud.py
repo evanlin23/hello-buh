@@ -73,14 +73,18 @@ SILENT_GAME = -45.0   # LUFS: a game stem this quiet is (near) silent: nothing i
 GAIN_RANGE = 20.0     # dB: the most the game stem is raised or lowered
 
 
-def stunt_levels(stem_lufs, stem_peak, bed, target, limit_db=-1.0, max_reduction=MAX_REDUCTION):
+def stunt_levels(stem_lufs, stem_peak, bed, target, limit_db=-1.0, max_reduction=MAX_REDUCTION, raw_lufs=None):
     """(game gain dB, song LUFS) for the stunt mix from the game stem's measured loudness and true peak: the game toward
     `target`, capped so its peak needs <= max_reduction dB of limiting (and to +-GAIN_RANGE), the song at its fixed
     offset under the game as it measures (bed is the song's level for a game at -15 LUFS: song = bed + 15 + stem + g).
     A near-silent game (<= SILENT_GAME, measure() says -70 for silence) raises nothing and the song sits at `bed`: the
-    old tame_gain read silence as +57 dB of headroom and the song came in ~30 dB hot (review of e78b8f1)."""
-    if stem_lufs <= SILENT_GAME:
-        return 0.0, bed
+    old tame_gain read silence as +57 dB of headroom and the song came in ~30 dB hot (review of e78b8f1).
+    raw_lufs: the game's loudness BEFORE the stem's static pre-gain (add_song raises it toward -15 LUFS by up to +30 dB):
+    near-silence is judged on that, and a near-silent game's gain undoes the pre-gain (its hiss is never raised: a -60
+    LUFS game became a -30.8 stem and got +48 dB in all, review of 920679d)."""
+    raw = stem_lufs if raw_lufs is None else raw_lufs
+    if raw <= SILENT_GAME:
+        return (raw - stem_lufs if raw > -69 else 0.0), bed
     g = min(target - stem_lufs, limit_db + max_reduction - stem_peak)
     g = max(-GAIN_RANGE, min(GAIN_RANGE, g))
     return g, bed + 15.0 + stem_lufs + g

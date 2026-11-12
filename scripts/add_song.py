@@ -119,6 +119,20 @@ def story_score(name, d, meta, stunt, rec, tl, start, src, out_override=None):
     print(name, f"score in -> {out}")
 
 
+def game_first_levels(src, bed, limit, stem):
+    """The stunt mix's game-first levels: the game stem as the mix builds it (static -15 LUFS pre-gain), measured, then
+    loud.stunt_levels with the RAW game loudness (a near-silent game is judged before its pre-gain).
+    -> (the game's ffmpeg gain filter, extra gain dB, song LUFS, stem LUFS, raw LUFS)"""
+    import loud
+    pre = loud.static(src, -15)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vn", "-af", f"{pre},aresample=48000", "-c:a", "pcm_f32le", str(stem)], check=True)
+    stem_lufs, stem_peak = loud.measure(stem), loud.true_peak(stem)
+    pathlib.Path(stem).unlink()
+    raw = loud.measure(src)
+    g, song_lufs = loud.stunt_levels(stem_lufs, stem_peak, bed, GAME_LUFS, limit, raw_lufs=raw)
+    return f"{pre},volume={g:.2f}dB", g, song_lufs, stem_lufs, raw
+
+
 def settle_song(song_db, under_db, remix, want=None, most=12.0, tries=2):
     """Lower the song until the game's block sounds sit `want` dB over it (scripts/mix_pump.py under; default its
     UNDER_MIN + 1). under_db: the first mix's value (None: not judged, nothing done); remix(song_db) mixes again and
@@ -237,15 +251,9 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
             # the game + sfx stem mastered first (a static gain, capped so its peaks need <= 3 dB of limiting), the song
             # at its fixed offset under the game as measured (bed + 15 + stem LUFS + gain), and later only a peak
             # limiter: no makeup gain that the limiter takes back on every hit (the bed pumped ~11 dB on desire_town)
-            stem = pathlib.Path(str(out) + ".game.wav")
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vn", "-af", f"{loud.static(src, -15)},aresample=48000",
-                            "-c:a", "pcm_f32le", str(stem)], check=True)
-            stem_lufs, stem_peak = loud.measure(stem), loud.true_peak(stem)
-            stem.unlink()
-            g, song_lufs = loud.stunt_levels(stem_lufs, stem_peak, bed, GAME_LUFS, limit)
-            game_gain = f"{loud.static(src, -15)},volume={g:.2f}dB"
-            print(name, f"mix: game + sfx stem {stem_lufs:.1f} LUFS {g:+.1f} dB (to {GAME_LUFS} LUFS, <= {loud.MAX_REDUCTION:.0f} dB of limiting"
-                  f"{'; a near-silent game: nothing raised' if stem_lufs <= loud.SILENT_GAME else ''}), the song at {song_lufs:.1f} LUFS")
+            game_gain, g, song_lufs, stem_lufs, raw = game_first_levels(src, bed, limit, pathlib.Path(str(out) + ".game.wav"))
+            print(name, f"mix: the game {raw:.1f} LUFS, its stem {stem_lufs:.1f} LUFS {g:+.1f} dB (to {GAME_LUFS} LUFS, <= {loud.MAX_REDUCTION:.0f} dB of limiting"
+                  f"{'; a near-silent game: nothing raised' if raw <= loud.SILENT_GAME else ''}), the song at {song_lufs:.1f} LUFS")
         song_measured = loud.measure(ROOT / song, song_start, dur - late)
         song_db = max(-40.0, min(30.0, song_lufs - song_measured))   # (as loud.static: a numeric gain, so the lowering below can change it)
         graph_of = lambda sdb: (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,volume={sdb:.2f}dB,afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
@@ -257,12 +265,21 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     if not stunt.get("story") and not LEGACY_MASTER:
         # the song under the game's block sounds (scripts/mix_pump.py `under`, mixcheck's gate: >= 3 dB): a bed that comes
         # out on top of a quiet or sparse game track is lowered by what it misses and mixed again, re-measured (twice at most)
+        # (measured after the peak limiter, as the gate measures short.mp4: the limiter takes most off the block sounds)
         import mix_pump
         game_rms = mix_pump.rms_db(src)
+        def under_limited():
+            tmp = pathlib.Path(str(out) + ".try.mp4")
+            import shutil
+            shutil.copy(out, tmp)
+            loud.limit_peaks(tmp, limit)
+            u_ = mix_pump.under(mix_pump.rms_db(tmp), game_rms)[0]
+            tmp.unlink()
+            return u_
         def measure_under(sdb):
             mix_with(graph_of(sdb))
-            return mix_pump.under(mix_pump.rms_db(out), game_rms)[0]
-        settled, cuts = settle_song(song_db, mix_pump.under(mix_pump.rms_db(out), game_rms)[0], measure_under)
+            return under_limited()
+        settled, cuts = settle_song(song_db, under_limited(), measure_under)
         for c, u_ in cuts:
             print(name, f"mix: the song {c:.1f} dB lower (the game sounds were {u_:+.1f} dB over it; want >= {mix_pump.UNDER_MIN + 1:.0f})")
     mix_stats = None
@@ -290,6 +307,9 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
             else:
                 print(name, "key sounds over the music: none before the drop to measure")
             if bad:
+                if not out_override:   # (short.mp4 is this mix now: its `mix` record goes with it, never the old one's)
+                    meta["mix"] = mix_stats
+                    (d / "metadata.json").write_text(json.dumps(meta, indent=2) + "\n")
                 sys.exit(f"{name}: BLOCK [keysound] the music covers {len(bad)} key sound(s): " + ", ".join(f"{r['t']:.2f} s ({r['margin_db']:+.1f} dB)" for r in bad))
     f = pathlib.Path(song).name
     f = LOOPED.get(f, f)   # a looped build (edit.songLoop) credits the track itself

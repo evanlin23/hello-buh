@@ -202,8 +202,12 @@ def mix_gate(name: str, meta: dict, video: pathlib.Path) -> dict | None:
     u, where = rec.get("under"), "as mixed"
     nos = video.parent / "short_nosong.mp4"
     if nos.exists():
-        u, _, _ = mix_pump.under(mix_pump.rms_db(video), mix_pump.rms_db(nos))
-        where = "on short.mp4"
+        try:
+            u2 = mix_pump.under(mix_pump.rms_db(video), mix_pump.rms_db(nos))[0]
+        except Exception:   # noqa: BLE001
+            u2 = None
+        if u2 is not None:   # (nothing measured, e.g. ffmpeg failed: the recorded value stands, never a pass)
+            u, where = u2, "on short.mp4"
     sp, run = rec.get("pump"), rec.get("pump_run") or 0.0
     bad = [k for k, b in (("pump", sp is not None and (sp > mix_pump.PUMP_MAX or run >= mix_pump.RUN_S)),
                           ("under", u is not None and u < mix_pump.UNDER_MIN)) if b]
