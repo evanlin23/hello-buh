@@ -22,6 +22,13 @@ of these, and more when they come up"). Build them (docs/engine_features.md). Ad
 | 2026-11-11 | red_sheep | evoker spellcasting arms + wololo particles; crossed-vs-free arms; a sheep's colour change mid-shot | DONE (claude/engine-mob_poses): metadata 17 or `pose { spell: 'wololo' }`; the colour change already worked |
 | 2026-11-11 | saving_up_bastion | baby piglin admiring a gold ingot in the off hand | DONE (claude/engine-mob_poses): automatic from the off-hand item (vanilla's rule) |
 | 2026-11-11 | singing_box | the allay's held item (diamond) and its holding arms (build blocker) | DONE (claude/engine-mob_poses): automatic from the main-hand item |
+| 2026-11-12 | sorry_dear | entity scale (aunt 0.3 -> 0.286 eased, the kid 1.0 -> 0.986, S02's three sizes by jump cuts); name tag, shadow, held items follow | DONE (claude/engine-story_kit_extras): `K.scale`, recorded `minecraft:scale`; docs/engine_features.md "Entity scale, skin swaps, trails..." |
+| 2026-11-12 | sorry_dear | mug and teacup props; static emerald heap and flat cards (no bob/spin) | DONE (claude/engine-story_kit_extras): block_display / item_display drawn; `K.prop('mug' / 'teacup' / 'heap' / 'cards')` |
+| 2026-11-12 | sorry_dear | her fan "appears" flat; a two-arm pat; a climb onto the heap (actor poses) | OPEN: props appear with `K.prop` on the beat; the pat and the climb poses not built (renderer/poses.js) |
+| 2026-11-12 | statue_younger | mid-shot skin swap (statue_mom -> _1 -> _2) | DONE (claude/engine-story_kit_extras): `K.skin` (cast_skin marks) |
+| 2026-11-12 | statue_younger | a particle trail head <-> stone on a mark | DONE (claude/engine-story_kit_extras): `K.trail` (vanilla minecraft:trail) |
+| 2026-11-12 | statue_younger | a block change on a mark mid-shot (wrinkle row -> calcite) | DONE (already worked: recorded block updates); `K.setBlocks` names it |
+| 2026-11-12 | statue_younger | Dad's eased head turn while seated | DONE (claude/engine-story_kit_extras): `M.headTo(ctx, who, at, { secs })`; M.headTo's shadowing bug fixed |
 
 ## Backlog (lead, 2026-11-10 night): next engine round, by value to the stories (worked by agent/engine-2, 2026-11-10)
 | # | needed | why | status |
