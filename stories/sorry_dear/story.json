@@ -2,7 +2,7 @@
  "name": "sorry_dear",
  "stunt": "story_sorry_dear",
  "version": 2,
- "revision": "r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
+ "revision": "r2 (2026-11-12): critic r1 REVISE + three cold reads (all guessed the gloat at midpoint 55-75 %, all unsure whether the kid shrinks at the end): L05 'pats my HAND' replaces 'smiles' (two-way: comfort or condescension; no smile until L10); L11 'She wasn't SORRY. She was SHOWING OFF.' (the critic withdrew 'WINNING': it restated L04); L09 'She laid hers down SO fast.'; L12 adds 'Worth the INCH.' (the kid's own shrink said); L03 trimmed; the teacup is big (~0.5, she fits after one inch, paid off in S11); no facial animation (a baked closed smile on sorry_aunt, body poses only); no kicked card fans (they appear on the beat); S12 a CU with his hair on the sill line. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
  "caption": "why won't my tiny aunt stop saying sorry ☕",
  "upload": {
   "title": "in my village every sorry shrinks you an inch. my aunt is the size of a mug ☕ #minecraft #shorts",
@@ -17,10 +17,10 @@
   ]
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): built by lib/buhstories_upload.js; pinned = the question, without the 👇. The title is line 1's strange, checkable fact (STANDARDS 0u).",
- "logline": "In a village where every sorry shrinks you an inch, a kid's aunt is the size of a mug and keeps saying it; he plays cards to win so she'll have nothing to be sorry for, and she lays down her winning hand, grins 'Oh, sorry, dear' and shrinks: she was never sorry, she was gloating.",
+ "logline": "In a village where every sorry shrinks you an inch, a kid's aunt is the size of a mug and keeps saying it; he plays cards to win so she'll have nothing to be sorry for, she beats him again, says 'Oh, sorry, dear' and shrinks: she was never sorry, she was showing off.",
  "question": "if every sorry shrinks you an inch, why won't the nicest lady alive stop saying it?",
  "premise": "In Stillwater, every 'sorry' you say shrinks you an inch. The kid's aunt used to be taller than the door; now she is the size of a mug, standing on her own card table. She shrinks most on Sundays, which is cards day: they play for emeralds, her pile is taller than her ('luck', she says), and every time she lays her cards down she smiles and says 'sorry, dear'. The kid thinks she feels bad for him. One more inch and she'll fit in a teacup, so this Sunday he plays to WIN, so she'll have nothing to be sorry for.",
- "twist": "She isn't sorry for him. 'Sorry, dear' is how she gloats: she says it every time she beats him, and sixty-odd wins took her from taller than the door to the size of a mug. She would rather win and gloat than stay tall. The kid's best hand ever loses, she grins 'Oh. Sorry, DEAR.' and shrinks again, and the kid says what he sees: 'She wasn't SORRY. She was WINNING.' The sting: he wins the next hand and says 'Oh. Sorry, AUNTIE.', and shrinks an inch himself.",
+ "twist": "She isn't sorry for him. 'Sorry, dear' is how she shows off: she says it every time she beats him, and sixty-odd wins took her from taller than the door to the size of a mug. She would rather win and brag than stay tall. The kid's best hand ever loses, she says 'Oh. Sorry, DEAR.' and shrinks again, and the kid says it plainly: 'She wasn't SORRY. She was SHOWING OFF.' The sting: he wins the next hand, says 'Oh. Sorry, AUNTIE.', and shrinks an inch himself ('Worth the INCH.').",
  "family": "village_custom",
  "key_color": "#FF7F6B",
  "mood": "funny",
@@ -64,7 +64,7 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#FF7F6B",
    "profile": "A sweet old lady, sugary and smug",
-   "on_screen": "a player actor at entity scale 0.3 (about 0.54 blocks tall: the mug's height), 0.286 after L10 (one inch less); new skin `sorry_aunt` (NEW SKIN NEEDED: a grey perm, red cat-eye glasses, a coral cardigan with pearl buttons, a lavender skirt, sensible brown shoes). Stands on the card table, north side, all film. One voiced line, L10, on screen (CU) while she says it.",
+   "on_screen": "a player actor at entity scale 0.3 (about 0.54 blocks tall: the mug's height), 0.286 after L10 (one inch less); new skin `sorry_aunt` (NEW SKIN NEEDED: a grey perm, red cat-eye glasses, a coral cardigan with pearl buttons, a lavender skirt, sensible brown shoes, and a small closed sweet smile baked into the face: it reads both ways, kind or smug; skins don't animate, so every beat is a body pose). Stands on the card table, north side, all film. One voiced line, L10, on screen (CU) while she says it.",
    "skin": "sorry_aunt (new skin needed)",
    "audition": {
     "line": "L10 \"Oh. Sorry, DEAR.\" (say: Oh. Sorry, dear.), gemini-3.8-flash-tts, single-speaker, one take each, judged against Pip (Leda) for contrast (STANDARDS 7, 7a)",
@@ -190,8 +190,8 @@
   {
    "id": "L03",
    "who": "N",
-   "text": "She shrinks the MOST / on SUNDAYS. / CARDS day. / She's EXTRA nice / on cards day.",
-   "say": "She shrinks the MOST on SUNDAYS. CARDS day. She's EXTRA nice on cards day.",
+   "text": "She shrinks the MOST / on SUNDAYS. / CARDS day. / Her EXTRA-nice day.",
+   "say": "She shrinks the MOST on SUNDAYS. CARDS day. Her EXTRA-nice day.",
    "shot": "S03",
    "shows": [
     {
@@ -210,8 +210,8 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "We play for EMERALDS. / Her pile's / taller than HER. / She says it's LUCK.",
-   "say": "We play for EMERALDS. Her pile's taller than HER. She says it's LUCK.",
+   "text": "We play for EMERALDS. / Her pile's / taller than HER. / Grown-ups are just LUCKY.",
+   "say": "We play for EMERALDS. Her pile's taller than HER. Grown-ups are just LUCKY.",
    "shot": "S04",
    "shows": [
     {
@@ -225,14 +225,14 @@
     "what": "prop:emerald_pile",
     "word": "PILE"
    },
-   "direction": "impressed, a little giggle on HER, then totally believing LUCK",
-   "note": "clue 2 (the score: she wins every game) with its misreading (luck). The critic's fix: the score is an emerald pile, never cards."
+   "direction": "impressed, a little giggle on HER, then a sure little shrug on LUCKY",
+   "note": "clue 2 (the score: she wins every game) with the kid's OWN misreading (r2: 'She says it's LUCK' made her sound like a liar; now the excuse is his)"
   },
   {
    "id": "L05",
    "who": "N",
-   "text": "Every time / she lays her cards DOWN, / she smiles / and says, / \"sorry, DEAR.\"",
-   "say": "Every time she lays her cards DOWN, she smiles and says, sorry, DEAR.",
+   "text": "Every time / she lays her cards DOWN, / she pats my HAND / and says, / \"sorry, DEAR.\"",
+   "say": "Every time she lays her cards DOWN, she pats my HAND and says, sorry, DEAR.",
    "shot": "S05",
    "shows": [
     {
@@ -244,10 +244,10 @@
    ],
    "look": {
     "what": "actor:Aunt",
-    "word": "SMILES"
+    "word": "HAND"
    },
    "direction": "warm and quick, copying her sweet little voice on the quote",
-   "note": "clue 3 (the sorry comes with her winning hand, and a smile); the narrator quotes it, so her own voice in L10 is the payoff"
+   "note": "clue 3 (critic r1 must-fix 1): the sorry comes WITH her winning hand, and a pat that reads two ways (comfort or condescension); no smile until L10. The narrator quotes it, so her own voice in L10 is the payoff"
   },
   {
    "id": "L06",
@@ -298,8 +298,8 @@
   {
    "id": "L09",
    "who": "N",
-   "text": "My best hand EVER. / Then she laid / hers DOWN.",
-   "say": "My best hand EVER. Then she laid hers DOWN.",
+   "text": "My best hand EVER. / She laid hers down / SO fast.",
+   "say": "My best hand EVER. She laid hers down SO fast.",
    "shot": "S09",
    "shows": [
     {
@@ -313,8 +313,8 @@
     "what": "actor:Aunt",
     "word": "HERS"
    },
-   "direction": "proud on EVER, then a quick little drop on DOWN",
-   "note": "the climax: his try meets hers"
+   "direction": "proud on EVER, then a little baffled on SO fast",
+   "note": "the climax (critic r1 should-fix): his try meets hers; 'SO fast' is one more two-way clue (eager, or just good)"
   },
   {
    "id": "L10",
@@ -326,14 +326,14 @@
     "what": "actor:Aunt",
     "size": "cu"
    },
-   "direction": "sugary sweet with a smug little grin in it",
+   "direction": "sugary sweet with a smug little smile in the voice",
    "note": "her one line, on screen (CU) while she says it; she shrinks one inch on DEAR (a soft 'bloop' + the dip, the camera holds)"
   },
   {
    "id": "L11",
    "who": "N",
-   "text": "She wasn't SORRY. / She was WINNING.",
-   "say": "She wasn't SORRY. She was WINNING.",
+   "text": "She wasn't SORRY. / She was SHOWING OFF.",
+   "say": "She wasn't SORRY. She was SHOWING OFF.",
    "shot": "S11",
    "punch": true,
    "shows": [
@@ -341,27 +341,27 @@
      "what": [
       "emerald"
      ],
-     "word": "WINNING"
+     "word": "SHOWING"
     }
    ],
    "look": {
     "what": "actor:Aunt",
-    "word": "WINNING"
+    "word": "SHOWING"
    },
    "direction": "the reveal, plain and amazed, slower: he says what he sees",
-   "note": "the reveal SAID in one plain line (format beat 6), over the picture that proves it: she rakes his emerald onto her pile, climbs it and throws her arms up"
+   "note": "the reveal SAID in one plain line in kid words (critic r1 must-fix 2: recasts the rule: she says sorry to brag, and doesn't care that it shrinks her), over the picture that proves it: she drags his emerald onto her pile, climbs it, arms up, now level with the teacup's rim"
   },
   {
    "id": "L12",
    "who": "N",
-   "text": "Next hand, / I WON. / Oh. / Sorry, AUNTIE.",
-   "say": "Next hand, I WON. Oh. Sorry, AUNTIE.",
+   "text": "Next hand, / I WON. / \"Oh. Sorry, AUNTIE.\" / Worth the INCH.",
+   "say": "Next hand, I WON. Oh. Sorry, AUNTIE. Worth the INCH.",
    "shot": "S12",
    "look": {
     "what": "actor:N"
    },
-   "direction": "quick and cheeky, a sweet fake-innocent grin on Sorry, AUNTIE",
-   "note": "the one beat (format beat 7) and the loop: the rule now bites him (a soft 'bloop', his head drops an inch against the sill); 'Sorry, AUNTIE' runs into L01's 'every SORRY shrinks you an inch'. Cut 1.0 s after the shrink."
+   "direction": "quick and cheeky, a sweet fake-innocent sing-song on Sorry, AUNTIE, then a proud little shrug on INCH",
+   "note": "the one beat (format beat 7) and the loop: the rule bites him and he says so ('Worth the INCH': all three r1 cold readers asked whether the kid shrinks); a soft 'bloop', his hair drops below the sill line; 'Sorry, AUNTIE' + INCH run into L01's 'every SORRY shrinks you an INCH'. Cut 1.0 s after the dip settles."
   }
  ],
  "shots": [
@@ -404,7 +404,7 @@
    "place": "card_table",
    "size": "full",
    "camera": "side-on from the east, eye height of the seated kid, still",
-   "frame": "the whole table: the kid seated on the south side (spruce stair chair) dealing cards (paper) flat onto the cloth; the aunt standing on the north edge, giving a sweet little bow; the mug, her emerald pile and his one emerald all on the cloth.",
+   "frame": "the whole table: the kid seated on the south side (spruce stair chair) dealing cards (paper) flat onto the cloth; the aunt standing on the north edge, a little bow; the mug, the teacup, her emerald pile and his one emerald all on the cloth.",
    "subject": "actor:Aunt",
    "look": {
     "time": 6000
@@ -434,7 +434,7 @@
    "place": "card_table",
    "size": "mcu",
    "camera": "tabletop, her eye level, 0.8 out from the south",
-   "frame": "she pushes her cards flat into a fan with her shoe (hands at her sides), then looks up past the lens at the kid and smiles (a closed-mouth, sly little smile); her mouth moves on the narrator's quote (no voice of hers here).",
+   "frame": "her cards appear in a flat fan at her feet on DOWN as she spreads her arms (no kicking: the engine can't), then she reaches up and pats the kid's huge fingertip with both arms on HAND (comfort or condescension: both reads). Her face is the skin's baked small closed smile, never animated.",
    "subject": "actor:Aunt",
    "look": {
     "time": 6100
@@ -464,7 +464,7 @@
    "place": "card_table",
    "size": "full",
    "camera": "tabletop, side-on from the west, a slow push",
-   "frame": "three heights in a row on the cloth: the mug, the aunt (the mug's height), and a white teacup half her height; she peers into the teacup. The push ends on the teacup on TEACUP.",
+   "frame": "three heights in a row on the cloth: the mug (her height), the aunt, and a big white teacup on a saucer, ~0.5 tall and wider than her (one inch less and she fits inside); she peers over its rim on tiptoe. The push ends on the teacup on TEACUP.",
    "subject": "prop:teacup",
    "look": {
     "time": 6200
@@ -479,7 +479,7 @@
    "place": "card_table",
    "size": "mcu",
    "camera": "over the aunt's head (she soft, foreground bottom), on the kid, a quick push in on WIN",
-   "frame": "the kid, brows down, slaps a card flat on the cloth on WIN, tongue out in focus; determined.",
+   "frame": "the kid leans in hard (body pose: shoulders forward, a head nod) and slaps a card flat on the cloth on WIN; determined. No facial animation (skins are static).",
    "subject": "actor:N",
    "look": {
     "time": 6300
@@ -494,7 +494,7 @@
    "place": "card_table",
    "size": "ws",
    "camera": "high side angle from the east, 2.5 blocks up, still",
-   "frame": "the table from above at an angle: the kid lays his hand down in a proud fan on EVER; then on DOWN she kicks her fan out flat on her side, longer than his; both cards' faces unreadable (paper), so the read is her pose: she straightens up.",
+   "frame": "the table from above at an angle: the kid lays his hand down in a proud fan on EVER; her fan appears flat on her side the instant he's done (on 'SO fast'), longer than his; she straightens up with a little hop. Card faces unreadable (paper): the read is the speed and her pose.",
    "subject": "actor:Aunt",
    "look": {
     "time": 6400
@@ -509,7 +509,7 @@
    "place": "card_table",
    "size": "cu",
    "camera": "tabletop, her eye level, 0.6 out, still (it holds while she shrinks)",
-   "frame": "her face and shoulders, red cat-eye glasses, a sugary grin; on DEAR a soft 'bloop' and she dips one inch (scale 0.3 -> 0.286 over 0.25 s), her head sinking in the held frame.",
+   "frame": "her face and shoulders, red cat-eye glasses, the skin's baked small closed smile; a head tilt on 'Oh', then on DEAR a soft 'bloop' and she dips one inch (scale 0.3 -> 0.286 over 0.25 s), her head sinking in the held frame. No animated grin.",
    "subject": "actor:Aunt",
    "look": {
     "time": 6400
@@ -524,7 +524,7 @@
    "place": "card_table",
    "size": "ms",
    "camera": "tabletop, her eye level from the south, 1.3 out, a slow push",
-   "frame": "the reveal picture: she drags the kid's one emerald across the cloth to her pile, climbs onto the heap and throws both arms up, grinning; the mug behind her now a bit taller than her. Held through L11.",
+   "frame": "the reveal picture: she drags the kid's one emerald across the cloth to her pile, climbs onto the heap and throws both arms up with a little hop; beside her the mug is now taller than her and the big teacup's rim is level with her (the stakes paid off). Held through L11.",
    "subject": "actor:Aunt",
    "look": {
     "time": 6500
@@ -537,9 +537,9 @@
     "L12"
    ],
    "place": "card_table",
-   "size": "mcu",
+   "size": "cu",
    "camera": "the kid from the east at his eye level, the north-east window's sill a straight line across the frame behind his head; the camera holds",
-   "frame": "he slaps his winning fan down (cards flat at frame bottom), grins a fake-innocent grin on 'Sorry, AUNTIE', then a soft 'bloop' and his head drops one inch against the sill line (scale 1.0 -> 0.986); the aunt's tiny head pops into frame bottom left, mouth open. Cut 1.0 s after the dip settles.",
+   "frame": "a close-up on the kid's head and shoulders from the east, the window sill a straight line across the frame with the top of his hair just touching it; he slaps his winning fan down (frame bottom), a head tilt on 'Sorry, AUNTIE', then a soft 'bloop' and his hair drops below the sill line (scale 1.0 -> 0.986: ~20 px at 300 px wide); the aunt's tiny figure pops up at frame bottom left with her arms up in protest. Cut 1.0 s after the dip settles.",
    "subject": "actor:N",
    "look": {
     "time": 6600
@@ -560,7 +560,7 @@
    "note": "a white mug with a red stripe and a handle, exactly the aunt's start height (~0.54 blocks): NEW PROP (no vanilla mug: a block_display/item_display model or a small custom model)"
   },
   "teacup": {
-   "note": "a white teacup on a saucer, ~0.27 blocks tall (half her height): NEW PROP"
+   "note": "a big white teacup on a saucer, ~0.5 tall and wider than her (critic r1 must-fix 3): one inch less and she fits inside; level with her after L10: NEW PROP"
   },
   "emerald_pile": {
    "note": "a heap of emerald items ~0.7 tall on her side (north half of the table), static (no bob or spin): item_display entities or a static item heap"
@@ -601,7 +601,7 @@
    "an entity scale in the renderer (the critic's estimate ~1-2 h: renderer/entities.js has no per-entity scale): the aunt at 0.3 (0.286 after L10) and the kid at 0.986 after L12, eased over 0.25 s; in-game the vanilla `minecraft:scale` attribute (1.20.5+) sets it, so the hitbox and the eye follow",
    "the mug and the teacup props (no vanilla mug or cup): block_display/item_display entities or two small custom models",
    "static item heaps: the emerald pile and the flat cards (paper) without the dropped-item bob and spin (item_display support, or a 'static' flag on dropped items)",
-   "a player actor kicking/pushing a flat item along the table with a foot (or the cards simply appear in a fan on the beat)"
+   "her card fans appear flat on the beat (no kicking or hand-placing at 0.3 scale); a two-arm pat on the kid's fingertip (S05) and a climb onto the emerald heap (S11) as actor poses"
   ]
  }
 }

@@ -1,4 +1,4 @@
-# sorry_dear: set plan (r1, 2026-11-12)
+# sorry_dear: set plan (r2, 2026-11-12)
 
 Place: **Stillwater** (canon, docs/world/map.json `stillwater`), inside the neighbour's cottage (piece `neighbour`:
 `cottage`, spruce palette, seed 32, at (-236, 70, -1028), facing east). No new place claim: the story's map.json
@@ -18,7 +18,7 @@ pulled back since 1100; Gary is a night stamp, so he is not built by day).
   if the piece has one there), with **one spruce button 2.2 blocks above the floor** on the wall over it: her old
   height mark. No signs, no text anywhere.
 - **On the table** (all relative to O, north half hers, south half his): the mug (west), the aunt (middle), the
-  teacup (east of her), the emerald pile (north-east corner), the cards; his emerald and his cards on the south half.
+  big teacup (east of her), the emerald pile (north-east corner), the cards; his emerald and his cards on the south half.
 
 ## The narration's claims, and what makes each true
 | claim (line) | true because | check |
@@ -28,11 +28,11 @@ pulled back since 1100; Gary is a night stamp, so he is not built by day).
 | she used to be taller than the door (L02) | the one height mark is 2.2 up over a 2-tall door | S02 still |
 | cards day (L03) | paper cards dealt on the cloth | S03 |
 | we play for emeralds; her pile's taller than her (L04) | a ~0.7 emerald heap beside her 0.54; his one emerald | S04 still |
-| every time she lays her cards down she says sorry, dear (L05) | her fan flat at her feet, her mouth moving on the quote | S05 |
-| one more inch and she'll fit in a teacup (L07) | the teacup is 0.27, half her height (she could sit in it) | S07 still |
-| she laid hers down (L09) | her fan kicked out flat, longer than his | S09 |
-| she wasn't sorry, she was winning (L11) | she takes his emerald and climbs her pile, arms up | S11 |
-| next hand, I won; sorry, auntie (L12) | his fan down, the bloop, his head dropping an inch against the sill | S12 |
+| every time she lays her cards down she pats my hand and says sorry, dear (L05) | her fan flat at her feet; she pats his fingertip with both arms | S05 |
+| one more inch and she'll fit in a teacup (L07) | the big teacup is ~0.5 tall and wider than her: after L10's inch its rim is level with her (S11) | S07, S11 stills |
+| she laid hers down (L09) | her fan appears flat the instant his is down, longer than his | S09 |
+| she wasn't sorry, she was showing off (L11) | she takes his emerald and climbs her pile, arms up | S11 |
+| next hand, I won; sorry, auntie; worth the inch (L12) | his fan down, the bloop, his hair dropping below the sill line in a CU | S12 |
 
 ## Build notes
 - Entity scale is the engine need (story.json `engine.missing`): in-game set `minecraft:scale` on the actors
