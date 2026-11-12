@@ -25,26 +25,26 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 14.2,
+    "duration_s": 13.95,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 18223369,
-    "sha256": "14b70bd2fadc1cc0cdc747da7bfa75fc6bdb023b88c412944f774ea6fc829763",
+    "bytes": 18152577,
+    "sha256": "86c66e1bfa6856c4c4862e5ba20d9855626c44585e14068df74ead491d1e8f9d",
     "release": {
       "tag": "pkg-psycho_lava_mansion",
-      "asset": "psycho_lava_mansion.short.14b70bd2fadc1cc0.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short.14b70bd2fadc1cc0.mp4",
-      "sha256": "14b70bd2fadc1cc0cdc747da7bfa75fc6bdb023b88c412944f774ea6fc829763",
-      "bytes": 18223369
+      "asset": "psycho_lava_mansion.short.86c66e1bfa6856c4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short.86c66e1bfa6856c4.mp4",
+      "sha256": "86c66e1bfa6856c4c4862e5ba20d9855626c44585e14068df74ead491d1e8f9d",
+      "bytes": 18152577
     },
     "nosong_release": {
       "tag": "pkg-psycho_lava_mansion",
-      "asset": "psycho_lava_mansion.short_nosong.58a11486fec797bb.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short_nosong.58a11486fec797bb.mp4",
-      "sha256": "58a11486fec797bbf22a271fd9a1f6449c39d67c01dd59ccb3afa6edab947be9",
-      "bytes": 18214581
+      "asset": "psycho_lava_mansion.short_nosong.13fb217c2744f5c9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short_nosong.13fb217c2744f5c9.mp4",
+      "sha256": "13fb217c2744f5c906ff4d83328bf293b598b6ef948a6bd7960c9b78f98dedc1",
+      "bytes": 18142562
     }
   },
   "edit": {
@@ -92,14 +92,14 @@
     ],
     "subsY": 0.7,
     "startAt": "open:0",
-    "endAfter": "land:0.9",
+    "endAfter": "land:0.65",
     "dropAt": "land",
     "sfx": [
       [
         "pop",
         "open",
         {
-          "gain": 0.35
+          "gain": 0.8
         }
       ],
       [
@@ -122,6 +122,8 @@
     "args": [
       "--caption",
       "rate my cozy house 1-10",
+      "--self_name",
+      "56e",
       "--red",
       "cozy",
       "--subs",
@@ -131,11 +133,11 @@
       "--punch",
       "[[\"land\",0,0.6]]",
       "--sfx",
-      "[[\"pop\",\"open\",{\"gain\":0.35}],[\"dip\",\"land\",0.4],[\"impact\",\"land\"]]",
+      "[[\"pop\",\"open\",{\"gain\":0.8}],[\"dip\",\"land\",0.4],[\"impact\",\"land\"]]",
       "--start_at",
       "open:0",
       "--end_after",
-      "land:0.9"
+      "land:0.65"
     ]
   },
   "recording": {
@@ -232,10 +234,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "dfe0f7b36e68866efbe02fed20575a841ba99270",
+    "commit": "e948c66cbbca5551b2bdfbeac16de4fd56c1f237",
     "rendered": "local",
-    "rendered_at": "2026-11-11T19:35:02.255Z",
-    "head_at_publish": "dfe0f7b36e68866efbe02fed20575a841ba99270",
+    "rendered_at": "2026-11-12T01:09:44.304Z",
+    "head_at_publish": "e948c66cbbca5551b2bdfbeac16de4fd56c1f237",
     "stunt": "stunts/psycho_lava_mansion.js",
     "source_snapshot": [
       "source/psycho_lava_mansion.js",
@@ -248,34 +250,34 @@
     ]
   },
   "rebuild": [
-    "git checkout dfe0f7b36e68",
+    "git checkout e948c66cbbca",
     "gunzip -c shorts/psycho_lava_mansion/recording.json.gz > work/psycho_lava_mansion.rec.json",
     "node render.js work/psycho_lava_mansion.rec.json work/psycho_lava_mansion.frames 60 1080 1011",
     "python3 audio.py work/psycho_lava_mansion.rec.json work/psycho_lava_mansion.wav",
-    "python3 edit.py --frames work/psycho_lava_mansion.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/psycho_lava_mansion.rec.json --audio work/psycho_lava_mansion.wav --caption \"rate my cozy house 1-10\" --red cozy --subs \"[[\\\"open\\\",\\\"front yard\\\",2.6],[\\\"door\\\",\\\"front door\\\",1.8],[\\\"inside\\\",\\\"hallway\\\",2.2],[\\\"room\\\",\\\"living room\\\",3,0],[\\\"room\\\",\\\"kitchen\\\",3,1],[\\\"room\\\",\\\"bathroom\\\",3,2],[\\\"finale\\\",\\\"bedroom\\\",3]]\" --subs_y 0.7 --punch [[\"land\",0,0.6]] --sfx [[\"pop\",\"open\",{\"gain\":0.35}],[\"dip\",\"land\",0.4],[\"impact\",\"land\"]] --start_at open:0 --end_after land:0.9 --out out/psycho_lava_mansion.mp4"
+    "python3 edit.py --frames work/psycho_lava_mansion.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/psycho_lava_mansion.rec.json --audio work/psycho_lava_mansion.wav --caption \"rate my cozy house 1-10\" --self_name 56e --red cozy --subs \"[[\\\"open\\\",\\\"front yard\\\",2.6],[\\\"door\\\",\\\"front door\\\",1.8],[\\\"inside\\\",\\\"hallway\\\",2.2],[\\\"room\\\",\\\"living room\\\",3,0],[\\\"room\\\",\\\"kitchen\\\",3,1],[\\\"room\\\",\\\"bathroom\\\",3,2],[\\\"finale\\\",\\\"bedroom\\\",3]]\" --subs_y 0.7 --punch [[\"land\",0,0.6]] --sfx [[\"pop\",\"open\",{\"gain\":0.8}],[\"dip\",\"land\",0.4],[\"impact\",\"land\"]] --start_at open:0 --end_after land:0.65 --out out/psycho_lava_mansion.mp4"
   ],
   "status": "ready",
-  "notes": "worker psycho: fake psycho house tour (burning wheat field, fire-ringed door, nether-brick mansion over lava, bed jump), 1 review round READY (independent subagent), nitpicks: jump gap barely visible, ~0.45 s near-still tail, pace WARNs picture/buildup",
-  "published_at": "2026-11-11T19:36:19.156Z",
+  "notes": "fast cuts r:r188b46: the end 0.65 s after the bed landing; louder frame-0 pop; fix-check READY",
+  "published_at": "2026-11-12T01:11:04.616Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:36:43+00:00",
+    "at": "2026-11-12T01:11:27+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 14.21 s vs the reviewed render 14.20 s"
+      "summary": "short.mp4 13.95 s vs the reviewed render 13.95 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:35:11.816Z",
+      "at": "2026-11-12T01:09:54.220Z",
       "report": "work/hb/psycho_lava_mansion.check.json"
     },
     "key_sounds": "n/a"
