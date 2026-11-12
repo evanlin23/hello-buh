@@ -42,7 +42,9 @@ module.exports = {
       flash: [['boom', 0, 0.35], ['lastboom', 0, 0.6]],
       punch: [['boom', 0, 1.06], ['boom6', 0, 1.06], ['lastboom', 0, 1.12]], shake: [['boom', 0, 6], ['boom6', 0, 6], ['lastboom', 0, 10]],
       // the first blast and the last (the whole wall gone: the payoff, the song's drop on it after a 0.4 s dip)
-      sfx: [['impact', 'beat', { gain: 1.0 }], ['impact', 'boom', { gain: 1.0 }], ['dip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }]] }
+      // (mixcheck: the chain's previous blasts flattened the last one's hit under the NCS bed: the game audio dips before it
+      // too, and a boom rides on the impact, as the old cut did; the opening's hit louder: none read over the bed by 1.5 s)
+      sfx: [['impact', 'beat', { gain: 1.5 }], ['impact', 'boom', { gain: 1.0 }], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']] }
   },
 
   async setup (ctx) {
