@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "in_lava",
     "drop_in_song_s": 16.5,
-    "drop_in_short_s": 15.83,
-    "song_start_s": 0.67
+    "drop_in_short_s": 10.7,
+    "song_start_s": 5.8
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 20.48,
+    "duration_s": 15.37,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 28391201,
-    "sha256": "9b848807d13ff0ac37ee9bd1451d303a062b982fc11659d876ed855b81eb8005",
+    "bytes": 20654367,
+    "sha256": "3acb0988d1f4977b79ea8976c5ab18a295d96a2f151bb1ef6303700300410887",
     "release": {
       "tag": "pkg-lava_crossing",
-      "asset": "lava_crossing.short.9b848807d13ff0ac.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.9b848807d13ff0ac.mp4",
-      "sha256": "9b848807d13ff0ac37ee9bd1451d303a062b982fc11659d876ed855b81eb8005",
-      "bytes": 28391201
+      "asset": "lava_crossing.short.3acb0988d1f4977b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.3acb0988d1f4977b.mp4",
+      "sha256": "3acb0988d1f4977b79ea8976c5ab18a295d96a2f151bb1ef6303700300410887",
+      "bytes": 20654367
     },
     "nosong_release": {
       "tag": "pkg-lava_crossing",
-      "asset": "lava_crossing.short_nosong.85214a57d963a5bf.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.85214a57d963a5bf.mp4",
-      "sha256": "85214a57d963a5bf633f034de7d39729e22ac155c7c90dc0846422c056574346",
-      "bytes": 28382526
+      "asset": "lava_crossing.short_nosong.081bc776ce7cad64.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short_nosong.081bc776ce7cad64.mp4",
+      "sha256": "081bc776ce7cad642a7bf3e8f65c7faa41930e8514b006455f838899b643b6d0",
+      "bytes": 20649047
     }
   },
   "edit": {
@@ -53,8 +53,14 @@
     "dropAt": "in_lava",
     "onFire": "in_lava:death",
     "deathScreen": true,
-    "startAt": "beat:0.4",
+    "startAt": "crossed:1.6",
     "endAfter": "death:1.15",
+    "hook": {
+      "at": "in_lava",
+      "before": 0.35,
+      "after": 0.85,
+      "text": "wait for the last one 💀"
+    },
     "subs": [
       [
         "beat",
@@ -114,7 +120,7 @@
     "sfx": [
       [
         "whoosh",
-        "beat:0.4"
+        "crossed:1.62"
       ],
       [
         "pop",
@@ -155,13 +161,6 @@
         "death"
       ]
     ],
-    "speed": [
-      [
-        "bridged",
-        "crossed",
-        2
-      ]
-    ],
     "args": [
       "--caption",
       "every way to cross lava (rated) 💀",
@@ -171,16 +170,16 @@
       "every",
       "--subs",
       "[[\"beat\",\"bridging...\",9,0],[\"crossed\",\"bridging: 6/10\",9,0],[\"beat\",\"water bucket...\",9,1],[\"crossed\",\"water bucket: 9/10\",9,1],[\"beat\",\"ender pearl...\",9,2],[\"crossed\",\"ender pearl: 10/10\",9,2],[\"beat\",\"walking...\",9,3],[\"in_lava\",\"walking: 0/10\",9,0],[\"death\",\" \",0.05,0]]",
-      "--speed",
-      "[[\"bridged\",\"crossed\",2]]",
+      "--hook",
+      "{\"at\":\"in_lava\",\"before\":0.35,\"after\":0.85,\"text\":\"wait for the last one 💀\"}",
       "--sfx",
-      "[[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]]",
+      "[[\"whoosh\",\"crossed:1.62\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]]",
       "--on_fire",
       "in_lava:death",
       "--death_screen",
       "death",
       "--start_at",
-      "beat:0.4",
+      "crossed:1.6",
       "--end_after",
       "death:1.15"
     ]
@@ -423,12 +422,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/56e-lava_crossing",
-    "commit": "813ef23ec3a0f54f6f2e3b9619fa8b2afc0a936c",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43109503504",
-    "rendered_at": "2026-11-11T22:25:33.355Z",
-    "head_at_publish": "aca28a71d31a5b553ec5cbf8a0d9a45a238527af",
+    "branch": "main",
+    "commit": "a137178e722a0e2ad937e28e9a5fb2b7c45daf06",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T05:10:08.183Z",
+    "head_at_publish": "a137178e722a0e2ad937e28e9a5fb2b7c45daf06",
     "stunt": "stunts/lava_crossing.js",
     "source_snapshot": [
       "source/lava_crossing.js",
@@ -439,35 +437,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 813ef23ec3a0",
+    "git checkout a137178e722a",
     "gunzip -c shorts/lava_crossing/recording.json.gz > work/lava_crossing.rec.json",
     "node render.js work/lava_crossing.rec.json work/lava_crossing.frames 60 1080 1011",
     "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
-    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --self_name 56e --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"bridged\",\"crossed\",2]] --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:1.15 --out out/lava_crossing.mp4"
+    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --self_name 56e --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --hook \"{\\\"at\\\":\\\"in_lava\\\",\\\"before\\\":0.35,\\\"after\\\":0.85,\\\"text\\\":\\\"wait for the last one 💀\\\"}\" --sfx [[\"whoosh\",\"crossed:1.62\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at crossed:1.6 --end_after death:1.15 --out out/lava_crossing.mp4"
   ],
   "status": "ready",
-  "notes": "re-render (r:r52f94c): the player is 56e (death screen '56e tried to swim in lava', 56e's own skin on the bare arm), picture otherwise unchanged; independent fix-check READY (round 2: the arm-stripe fix)",
-  "published_at": "2026-11-11T22:36:59.478Z",
+  "notes": "no-op audit (r:r4607fa): opens on a flash of the step into lava, the bridging cut; READY r1",
+  "published_at": "2026-11-12T05:12:21.743Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:37:29+00:00",
+    "at": "2026-11-12T05:12:49+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 20.50 s vs the reviewed render 20.48 s"
+      "summary": "short.mp4 15.38 s vs the reviewed render 15.37 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:15:45.793Z",
-      "report": "out/lava_crossing.check.json"
+      "at": "2026-11-12T05:10:42.613Z",
+      "report": "work/hb/lava_crossing.check.json"
     },
     "key_sounds": "n/a"
   }
