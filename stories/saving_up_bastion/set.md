@@ -1,4 +1,4 @@
-# Saving Up for a Bastion: set (r3)
+# Saving Up for a Bastion: set (r4)
 
 **Place:** `portal_cottage_nether` (claimed on this branch, docs/world/map.json, `dimension: the_nether`): the Nether
 side of the Portal Cottage's cellar portal, about (-16, 80, -118) in Nether coordinates. Day 5000. Crimson Nether fog.
@@ -22,8 +22,7 @@ view (an engine/world gap, see the report).
   - one **glass window** on the cell's west side, looking down at the shelf, the portal and the lake;
   - the **catch hole**: a 1 x 1 hole on the cliff ledge, trapdoor-edged, chuting down into the cell's hopper side
     (how the baby got in);
-  - the **sign** (from S08's day): an oak sign standing on the shelf below the window, facing west to the piglins at the portal: PLEASE / WORK;
-  - the **lava moat** (from S07's day): a 1-wide trench round the base, a 1-wide bridge to the door.
+  - the **sign** (from S07's day): an oak sign standing on the shelf below the window, facing west to the piglins at the portal: PLEASE / WORK;
 - **The bastion remnant** across the lava lake (S03): blackstone, a few gold blocks, big on the skyline.
 - **The cutaway** (S06, S11): the column's south wall hidden for the camera (a cinematic cutaway). Engine: per-shot
   hidden blocks (see the report).
@@ -31,14 +30,16 @@ view (an engine/world gap, see the report).
 ## The narration's claims (they must hold in every shot)
 | claim | line | holds |
 |---|---|---|
-| gold falls on it (every 6.05 s, never said until the count) | L01, L12 | the dropper fires on a 6.05 s clock in every cell shot (S01, S02, S06, S11) |
+| gold falls on it (every 6.05 s, never said) | L01, L13 | the dropper fires on a 6.05 s clock in every cell shot (S01, S02, S06, S11) |
 | it falls from above | L01 | an ingot drops into S01 from the top of frame |
-| four hundred kept | L01 | not countable on screen (a piglin's inventory is hidden); 400 at 6.05 s = 40 min of loaded farm over 2 days; at most 512 fit (8 slots) |
+| four hundred so far (four hundred and one in L13) | L01, L13 | not countable on screen (a piglin's inventory is hidden); 400 at 6.05 s = 40 min of loaded farm over 2 days; at most 512 fit (8 slots) |
 | the grown-ups stare | L02 | S02: several adults look up at the window |
 | a whole bastion | L03 | on screen in S03 |
-| somebody threw the first one, a hole | L04 | S04: the toss and the catch hole |
+| a guy threw the first one, a hole | L04 | S04: the toss and the catch hole |
 | a new floor | L06 | S06: the new hopper pops in beside the baby; shiny in S11 |
-| a lava moat | L07 | S07 builds it; in every later outside shot (S09 if the base is in frame, S11's base) |
-| a note | L08 | readable in S08 |
-| gold for gravel | L09 | S09: an ingot in, gravel out; no adult is in the farm |
-| the chest is empty | L10, S10, S11 | S10's chest screen: 27 empty slots; never shown with anything in it |
+| a note | L07 | readable in S07 |
+| gold for gravel | L08 | S08: an ingot in, gravel out; no adult is in the farm |
+| my friend got so sad | L09 | S09: the player slumped on the roof, hands empty |
+| looked down past my floor | L11 | S11: the baby leans over its hopper; the camera follows its look down the hopper line |
+| the chest (his box) is empty | L10, L12, S10, S11 | S10's chest screen: 27 empty slots; never shown with anything in it |
+| all the gold he sent is up here with me | L12 | S11's L-frame: the baby above the chest, hugging gold, under the dropper |

@@ -2,7 +2,7 @@
  "name": "saving_up_bastion",
  "stunt": "story_saving_up_bastion",
  "version": 2,
- "revision": "r3 (2026-11-11): table read r2 (critic revise 7.5; cold reader 60 % at the midpoint): 'six seconds' leaves line 1 (the six is only in L12, where the dropper fires on it: the clock is shown, not said); L04/L05/L08 rewritten for the out-of-context read (critic r2); the sign faces the piglins on the shelf; S11 framed as an L. L07 (the moat) kept: it is one of the premise's must-fix gifts, and length is not a criterion (r:r08fd98). See reviews/.",
+ "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's best friend and he's sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12: his box was empty, and all the gold he sent was up here with me); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md.",
  "caption": "why does gold keep falling on this baby piglin 🪙",
  "upload": {
   "title": "gold falls from the sky just for me and i've kept all of it 🐷 #minecraft #shorts",
@@ -18,14 +18,14 @@
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\": the upload text is built from `upload` (lib/buhstories_upload.js). pinned = the question, without the 👇",
  "family": "narrator_is_the_problem",
- "logline": "A baby piglin catches a gold ingot that falls from the sky every six seconds and is saving all of them for a bastion of its own, grateful to the generous stranger up there who keeps giving it gifts, until we see the stranger's barter farm: the baby is stuck in the cell, and babies never barter.",
+ "logline": "A baby piglin catches a gold ingot that falls from the sky, four hundred so far, and doesn't know why; it's saving them for a bastion of its own and loves the guy up there who keeps sending gifts. When he gets sad, it looks down to find out why: his box is empty, and all the gold he sent is up here with it. It's stuck in his barter farm, and babies never barter.",
  "question": "why tf does gold keep falling on this baby piglin?",
  "premise": "In the Nether by the Portal Cottage's portal, a player (efe skin) built a barter farm: a dropper drops one gold ingot every six seconds onto a one-piglin cell, the piglin barters, the hoppers carry the barters to a chest. A baby piglin chased an ingot down the farm's catch hole and landed in the cell. It thinks the cell is its room, the gold is a gift from a generous stranger, and it is saving up for a bastion of its own, for when it's big.",
- "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a lava moat, a PLEASE WORK sign) the baby read as a present. The reveal is the picture: the farm's output chest open and empty under the hopper floor, the baby above it hugging an ingot as the dropper clicks out another. Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
+ "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a PLEASE WORK sign) the baby read as a present. The reveal is SAID over the picture: the baby looks down and says what it sees, 'His box was EMPTY. And all the gold he sent was up here, with ME.' (the farm's output chest open and empty under the hopper line, the slumped player at it, the baby above hugging gold); the dropper clicks out another: 'Four hundred and ONE.' Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
  "key_color": "#F2C14E",
  "mood": "funny",
  "payoff": "drop",
- "payoff_note": "`drop`: the stunt mark when the dropper fires the next ingot in S11, on 'SIX'; the Short ends <= 1.0 s after it (owner: cut right on the reveal). No line after L12.",
+ "payoff_note": "`drop`: the stunt mark when the next ingot lands in the baby's arms in S11, on 'ONE' (L13); the dropper clicked ~0.5 s before. The Short ends <= 1.0 s after it. No line after L13.",
  "look": {
   "time": "nether",
   "fog": "nether (crimson)"
@@ -51,7 +51,7 @@
    "ref": "narrator",
    "name": "the baby piglin",
    "color": "#FFFFFF",
-   "on_screen": "a vanilla baby piglin, holding one ingot in its off hand from L01 on (the admiring pose: ingot up, head down to it); on screen in S01-S03, S04 (two days ago, before it's in the cell), S06, S11 (small in S07's and S09's background is not needed). Pip's voice (cast `narrator`, plain_say), the house narrator voice, as for Good Boy's dog. Never named."
+   "on_screen": "a vanilla baby piglin, holding one ingot in its off hand from L01 on (the admiring pose: ingot up, head down to it); on screen in S01-S03, S04 (two days ago, before it's in the cell), S06, S07 (small, in the window), S11. Pip's voice (cast `narrator`, plain_say), the house narrator voice, as for Good Boy's dog. Never named."
   },
   "P": {
    "role": "character",
@@ -60,7 +60,7 @@
    "voice": "Umbriel",
    "model": "gemini-3.8-flash-tts",
    "profile": "[A tired man in his twenties, flat and fed up, full volume]",
-   "on_screen": "a player, default `efe` skin (not Steve: Steve reads as Buh), iron chestplate and leggings with GOLD boots (so the adults leave him alone, vanilla; not a gold helmet: that's the easter egg's tell), no name tag; seen in S04-S08, S10, S11; one line (L10), on screen while he says it.",
+   "on_screen": "a player, default `efe` skin (not Steve: Steve reads as Buh), iron chestplate and leggings with GOLD boots (so the adults leave him alone, vanilla; not a gold helmet: that's the easter egg's tell), no name tag; seen in S04-S07, S09, S10, S11; one line (L10), on screen while he says it.",
    "note": "NEW character (STANDARDS 7a, docs/world/canon.md Planned characters). Voice candidates, both unused by any character in voices/cast.json or canon.md: Umbriel (easy-going male) and Zubenelgenubi (casual male). Audition both against Pip on L10; the owner picks. No TTS requested (quota booked)."
   }
  },
@@ -81,7 +81,8 @@
     "L08",
     "L09",
     "L11",
-    "L12"
+    "L12",
+    "L13"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -112,25 +113,20 @@
   {
    "under": "S11",
    "sound": "block.dispenser.dispense",
-   "note": "on the `drop` mark ('SIX'): the click and the ingot; the music has dropped 0.45 s before"
+   "note": "the dropper's click ~0.5 s before `drop`, the ingot landing in the baby's arms on 'ONE'; the music has dropped 0.45 s before the click"
   },
   {
-   "under": "S09",
+   "under": "S08",
    "sound": "entity.piglin.admiring_item",
    "note": "the adult admires, then the gravel"
-  },
-  {
-   "under": "S07",
-   "sound": "block.lava.pop",
-   "note": "the moat; a hoglin grunt"
   }
  ],
  "lines": [
   {
    "id": "L01",
    "who": "N",
-   "text": "Gold falls / from the SKY, / just for ME. / I've kept / all FOUR HUNDRED.",
-   "say": "Gold falls from the sky, just for me. I've kept all four HUNDRED.",
+   "text": "Gold falls / from the SKY, / just for ME. / Four HUNDRED so far. / And I don't know WHY.",
+   "say": "Gold falls from the sky, just for me. Four hundred so far. And I don't know WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -147,13 +143,13 @@
     }
    ],
    "punch": true,
-   "direction": "proud and amazed, one quick breath; the number lands"
+   "direction": "proud and amazed, quick; the number lands, then a real little puzzle on WHY"
   },
   {
    "id": "L02",
    "who": "N",
-   "text": "The grown-ups / out there / STARE at me / SO hard. / They're just / JEALOUS.",
-   "say": "The grown-ups out there stare at me so hard. They're just JEALOUS.",
+   "text": "The grown-ups / STARE at me. / They're just / JEALOUS.",
+   "say": "The grown-ups stare at me. They're just JEALOUS.",
    "shot": "S02",
    "shows": [
     {
@@ -186,8 +182,8 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "A guy up there / tossed the first one. / I BEAT the grown-ups / down the HOLE.",
-   "say": "A guy up there tossed the first one. I beat the grown-ups down the HOLE.",
+   "text": "A guy up there / threw the first one. / I beat EVERYONE / down the HOLE.",
+   "say": "A guy up there threw the first one. I beat everyone down the HOLE.",
    "shot": "S04",
    "shows": [
     {
@@ -204,12 +200,6 @@
     },
     {
      "what": [
-      "piglin"
-     ],
-     "word": "GROWN-UPS"
-    },
-    {
-     "what": [
       "trapdoor"
      ],
      "word": "HOLE"
@@ -220,8 +210,8 @@
   {
    "id": "L05",
    "who": "N",
-   "text": "And he keeps / sending MORE. / He's SO / GENEROUS.",
-   "say": "And he keeps sending more. He's so GENEROUS.",
+   "text": "Now he keeps / sending MORE. / He's my / best FRIEND.",
+   "say": "Now he keeps sending more. He's my best FRIEND.",
    "shot": "S05",
    "shows": [
     {
@@ -232,7 +222,7 @@
      "word": "MORE"
     }
    ],
-   "direction": "grateful, sweet"
+   "direction": "warm, sweet, totally sure"
   },
   {
    "id": "L06",
@@ -253,25 +243,9 @@
   {
    "id": "L07",
    "who": "N",
-   "text": "A MOAT / of LAVA, / like a real / CASTLE.",
-   "say": "A moat of lava, like a real CASTLE.",
+   "text": "And a NOTE. / I can't READ, / but I think it says / WELCOME HOME.",
+   "say": "And a note. I can't read, but I think it says welcome HOME.",
    "shot": "S07",
-   "shows": [
-    {
-     "what": [
-      "lava"
-     ],
-     "word": "LAVA"
-    }
-   ],
-   "direction": "bigger, can't believe it"
-  },
-  {
-   "id": "L08",
-   "who": "N",
-   "text": "And a NOTE. / I can't READ. / But I think it says / WELCOME HOME.",
-   "say": "And a note. I can't read. But I think it says welcome HOME.",
-   "shot": "S08",
    "shows": [
     {
      "what": [
@@ -284,11 +258,11 @@
    "direction": "beaming, bright, giggly"
   },
   {
-   "id": "L09",
+   "id": "L08",
    "who": "N",
    "text": "The grown-ups / give their gold AWAY. / For GRAVEL. / FOOLS.",
    "say": "The grown-ups give their gold away. For gravel. FOOLS.",
-   "shot": "S09",
+   "shot": "S08",
    "shows": [
     {
      "what": [
@@ -304,6 +278,22 @@
     }
    ],
    "direction": "a tiny scoff, very superior"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "But my friend / got SO sad. / I had to / find out WHY.",
+   "say": "But my friend got so sad. I had to find out WHY.",
+   "shot": "S09",
+   "shows": [
+    {
+     "what": [
+      "player"
+     ],
+     "word": "FRIEND"
+    }
+   ],
+   "direction": "the first worry in its voice, small, then determined on WHY"
   },
   {
    "id": "L10",
@@ -325,59 +315,69 @@
   {
    "id": "L11",
    "who": "N",
-   "text": "He LOVES gravel. / Grown-ups / are SO weird.",
-   "say": "He loves gravel. Grown-ups are SO weird.",
+   "text": "So I looked DOWN, / past my / shiny floor.",
+   "say": "So I looked down, past my shiny FLOOR.",
    "shot": "S11",
    "shows": [
     {
      "what": [
-      "player",
-      "chest"
+      "piglin",
+      "hopper"
      ],
-     "word": "HE"
+     "word": "DOWN"
     }
    ],
-   "direction": "a fond eye-roll, giggly"
+   "direction": "curious, leaning in, quieter"
   },
   {
    "id": "L12",
    "who": "N",
-   "text": "So I hug my GOLD, / and I count / to SIX.",
-   "say": "So I hug my gold, and I count to SIX.",
+   "text": "His box / was EMPTY. / And all the gold he sent / was up here, / with ME.",
+   "say": "His box was empty. And all the gold he sent was up here, with ME.",
    "shot": "S11",
    "shows": [
     {
      "what": [
-      "gold_ingot"
+      "chest"
      ],
-     "word": "GOLD"
+     "word": "EMPTY"
     },
     {
      "what": [
       "piglin",
-      "hopper",
-      "chest"
+      "gold_ingot"
      ],
-     "word": "HUG"
-    },
-    {
-     "what": [
-      "dropper"
-     ],
-     "word": "SIX"
+     "word": "ME"
     }
    ],
    "punch": true,
-   "direction": "cosy and content, counting under its breath on the last word"
+   "direction": "plain and puzzled, just saying what it sees; no gasp, no understanding"
+  },
+  {
+   "id": "L13",
+   "who": "N",
+   "text": "Four hundred / and ONE.",
+   "say": "Four hundred and ONE.",
+   "shot": "S11",
+   "shows": [
+    {
+     "what": [
+      "gold_ingot",
+      "dropper"
+     ],
+     "word": "ONE"
+    }
+   ],
+   "direction": "a happy little automatic count as it catches it, cosy"
   }
  ],
- "punch_note": "4 punches: L01 hook, L03 the want, L08 the biggest misreading, L12 the reveal.",
+ "punch_note": "4 punches: L01 hook + question, L03 the want, L07 the biggest misreading, L12 the reveal (said).",
  "ending": {
   "after": "L12",
   "beats": [
-   "S11: the cutaway: the slumped player at his open chest (L11), crane up along the hopper to the baby hugging its gold (L12); on 'SIX' the dropper clicks and an ingot drops onto the baby, who catches it. Cut 1.0 s after `drop`. No line."
+   "S11: L13 'Four hundred and ONE.' as the dropper clicks and the next ingot lands in the baby's arms (`drop`). Cut 1.0 s after. No other line."
   ],
-  "loop": "L12 'I count to SIX' (the dropper clicks on it) runs into L01 'Gold falls from the SKY, just for ME.'"
+  "loop": "L13 'Four hundred and ONE.' (an ingot falling on the baby) runs into L01 'Gold falls from the SKY, just for ME. Four HUNDRED so far.'"
  },
  "beats": "stories/saving_up_bastion/beats.md",
  "set": "stories/saving_up_bastion/set.md",
@@ -414,7 +414,7 @@
    "line": "L04",
    "place": "ledge",
    "size": "wide",
-   "camera": "low on the ledge above the tower's roof, tracking (two days ago: no moat, no sign, the hopper the old one)",
+   "camera": "low on the ledge above the tower's roof, tracking (two days ago: no sign, the hopper the old one)",
    "frame": "the PLAYER (efe skin, iron chest and legs, GOLD boots) on the ledge tosses one ingot beside the catch hole to lure an adult; two adults and the baby run for it; the baby beats the adults to it, grabs it, and drops with it into the 1x1 catch hole (trapdoor-edged) that chutes into the cell. The player has already turned to the bridge."
   },
   {
@@ -436,26 +436,26 @@
   {
    "id": "S07",
    "line": "L07",
-   "place": "base",
-   "size": "ms",
-   "camera": "outside, low at the base room's wall",
-   "frame": "the player glances up at the tower, shakes his head, then pours lava from a bucket into a 1-wide trench round the base; a HOGLIN paces just beyond it and turns back (why a moat); a 1-wide bridge to the base room's door."
-  },
-  {
-   "id": "S08",
-   "line": "L08",
    "place": "shelf",
    "size": "cu",
    "camera": "outside on the shelf below the window, at the sign's height",
    "frame": "an oak sign the player has just planted on the shelf below the window, facing west toward the piglins by the portal (it's addressed to them), readable at phone size: 'PLEASE' / 'WORK'; the player walking off toward the portal, back to the tower, never looking up. The window is in the top of frame, the baby small in it, looking down at the sign. The only close-up before the reveal."
   },
   {
-   "id": "S09",
-   "line": "L09",
+   "id": "S08",
+   "line": "L08",
    "place": "shelf",
    "size": "wide",
    "camera": "outside on the shelf at piglin height, slow drift right",
    "frame": "an adult piglin holds an ingot up (admiring), then tosses out GRAVEL on 'GRAVEL'; the others mill by the portal."
+  },
+  {
+   "id": "S09",
+   "line": "L09",
+   "place": "tower_top",
+   "size": "ms",
+   "camera": "low angle up the tower's outside wall to its roof (S05's set-up, the same side: he's in the same place)",
+   "frame": "the player sitting on the roof's edge by the input hopper, in the sneak pose, head down, his hands empty; his last gold already in. The roof is solid: he can't see into the cell."
   },
   {
    "id": "S10",
@@ -467,11 +467,11 @@
   },
   {
    "id": "S11",
-   "line": "L11,L12",
+   "line": "L11,L12,L13",
    "place": "cutaway",
    "size": "wide",
-   "camera": "the reveal: the cutaway, tight on about 6 blocks, a short crane UP from the base room to the cell",
-   "frame": "start (L11): the player in the sneak pose (slumped) at the OPEN chest in the base room (he's still at it, so the lid stays open), the hopper line running DOWN from the cell into the chest (items go down; only the camera rises). On 'GOLD' (L12) crane up along the hopper line to the cell: the baby on its block NEXT TO the top hopper, hugging its ingot, the dropper straight above the baby. Framed as an L: the chest and the slumped player bottom left, the hopper line up the left, the baby top right under the dropper. On 'SIX' (`drop`) the dropper clicks and the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
+   "camera": "the reveal: the cutaway (south wall hidden), starting tight on the baby at the cell, then a slow crane DOWN the hopper line and pull back, settling on the L-frame by 'EMPTY' and holding",
+   "frame": "start (L11): the baby on its block, leaning over its new hopper, looking down. The camera follows its look DOWN the hopper line (items go down) to the base room: the player in the sneak pose (slumped) at the OPEN chest (he's still at it, so the lid stays open). By 'EMPTY' (L12) it has pulled back to the L-frame: the chest and the slumped player bottom left, the hopper line up the left, the baby top right hugging its ingot under the dropper; on 'ME' the baby is lit and readable. Holds. After L12 the dropper clicks; on 'ONE' (L13, `drop`) the ingot lands on the baby, not in the hopper; it catches it. Cut 1.0 s after.",
    "marks": [
     "drop"
    ]

@@ -1,4 +1,4 @@
-# Saving Up for a Bastion: continuity bible (r3)
+# Saving Up for a Bastion: continuity bible (r4)
 
 ## World
 - Place `portal_cottage_nether` (the Nether, about (-16, 80, -118)), day 5000. Before Gold for the Portal (9300): the
@@ -10,10 +10,10 @@
 ## Story time (the props follow this, not the shot order)
 | when | shots | state |
 |---|---|---|
-| two days ago (day ~4998) | S04 | farm new, old hopper, no moat, no sign, chest empty |
-| between (days 4998-5000) | S05, S06, S07, S08 | the player tries his fixes: S06 the new hopper, S07 the moat, S08 the sign |
-| any time (the adults) | S09 | the shelf by the portal |
-| now (day 5000) | S01, S02, S03, S10, S11 | new hopper, moat, sign all there; the baby holding an ingot |
+| two days ago (day ~4998) | S04 | farm new, old hopper, no sign, chest empty |
+| between (days 4998-5000) | S05, S06, S07 | the player tries his fixes: S06 the new hopper, S07 the sign |
+| any time (the adults) | S08 | the shelf by the portal |
+| now (day 5000) | S01, S02, S03, S09, S10, S11 | new hopper and sign there; the baby holding an ingot; the player out of gold (S09) |
 
 The Nether has no time of day: crimson fog and lava light in every shot.
 
@@ -21,19 +21,17 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 | who | look | in shots | holds |
 |---|---|---|---|
 | the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S02 (back of head), S03 (silhouette), S04, S06, S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
-| the player | default `efe` skin, iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07, S08 (back, walking to the portal), S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), a lava bucket (S07), nothing (S08, S10); the sneak pose at the chest (S11) |
-| adult piglins | vanilla adults, gold swords | S02, S04, S09 | one admires an ingot and drops gravel (S09) |
+| the player | default `efe` skin, iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07 (back, walking to the portal), S09, S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), nothing (S07, S09, S10); the sneak pose on the roof (S09) and at the chest (S11) |
+| adult piglins | vanilla adults, gold swords | S02, S04, S08 | one admires an ingot and drops gravel (S08) |
 | the helmet piglin (easter egg) | adult, `golden_helmet[trim={pattern:"sentry",material:"lapis"}]` (Gold for the Portal's item) | S02 only, frame left, mid-ground | a gold sword |
-| a hoglin | vanilla adult | S07 only, beyond the moat | |
 
 ## Props and states
 | prop | state |
 |---|---|
-| dropper (cell ceiling) | fires every 6.05 s while the farm runs; fires on `drop` in S11 |
+| dropper (cell ceiling) | fires every 6.05 s while the farm runs; fires ~0.5 s before `drop` in S11 (the ingot lands on 'ONE') |
 | hopper (beside the baby) | old until S06; new and shiny after (S11) |
 | chest (base room) | closed until S10; open while the player is at it (S10, S11); EMPTY (S10's screen) |
-| sign (on the shelf below the window, facing west to the piglins) | from S08 on: PLEASE / WORK |
-| lava moat (round the base) | from S07 on |
+| sign (on the shelf below the window, facing west to the piglins) | from S07 on: PLEASE / WORK |
 | portal | lit, always |
 | bastion | across the lake (S03) |
 
@@ -44,11 +42,13 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 - The cutaway (S06, S11) is the column's south face: west is screen left, the baby's block screen right of the hopper.
 
 ## Who knows what
-- The baby: thinks the cell is its room, the gold a gift, the gifts love, the grown-ups jealous; doesn't know what
-  bartering is for; never learns.
+- The baby: thinks the cell is its room, the gold a gift, the giver its best friend, the grown-ups jealous; doesn't
+  know what bartering is for. In S11 it SEES the empty box below and the gold with it and says so (L12), plainly; it
+  never says what it means, and L13 shows it still counting its gold.
 - The player: knows his farm makes nothing; has never seen into the cell (the roof is solid over the dropper; he works
   from the roof, the base room and the ledge; he turned away before the baby fell in); doesn't know about the baby.
-- The viewer: sees the sign and the player's face before the baby does; learns the jam in S11.
+- The viewer: sees the sign and the player's face before the baby does; hears the box is empty (L10); makes the one
+  jump on L12 (the gold he sent for trading is with the baby, who never trades).
 
 ## Clue map
 beats.md "Clue map".
