@@ -20,12 +20,12 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'pile',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
     startAt: 'dye:-0.45',
-    endAfter: 'pile:0.9',   // r:r188b46: 0.9 s on the rainbow of wool
+    endAfter: 'pile:0.4',   // r:r188b46: the last burst (red), then 0.4 s into the look along the sheared rainbow
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['shears', 'now the best part', 1.2]],
-    punch: [['pile', 0, 1.06]],
-    sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'pile', 0.3], ['ding', 'pile']]   // a hit on the payoff over the song; room tone from frame 1
+    punch: [['lastshear', 0, 1.06]],
+    sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'lastshear', 0.3], ['ding', 'lastshear']]   // a hit on the payoff over the song; room tone from frame 1
   },
 
   async setup (ctx) {
@@ -52,7 +52,6 @@ module.exports = {
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 5')
     // everything it uses is in the hotbar from the start (items used to appear from nowhere mid-video)
     await ctx.hotbar([...COLORS.map(c => c.dye), 'shears'])
-    await ctx.cmd('/gamerule do_entity_drops true', { mayFail: true })   // the wool drops (vanilla default)
     await bot.waitForTicks(4)
     await ctx.tpCheck(x0 + 0.5 - 1.2, floor + 1, z + 3.3, 200, 20)
     await ctx.cmd('/gamemode survival')
@@ -135,7 +134,7 @@ module.exports = {
       const sh = this.sheepAt(ctx, i)
       if (!sh) { ctx.log('no sheep at', i); return false }
       const tx = x0 + i * STEP + 0.5
-      const look = ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.4, z + 0.5), first ? 450 : 300)
+      const look = ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.4, z + 0.5), first ? 600 : 420)   // (450/300 ms touched 242-261 deg/s)
       // stand a little right of it, at the row distance (strafe left along the line, forward/back to hold the row)
       for (let t = 0; t < 60; t++) {
         const e = bot.entity.position
@@ -151,16 +150,14 @@ module.exports = {
       if (first) { ctx.mark('shears'); first = false }
       await A.useOn(sh)                              // lib/act.js: only with the crosshair on this sheep
       ctx.mark('shear', { n: i })
+      if (i === 0) ctx.mark('lastshear')
       await bot.waitForTicks(4)
     }
-    // the rainbow of wool on the grass: a step back, eyes down on it
-    const pileAt = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 1.5)
-    bot.setControlState('back', true)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
-    const lk = ctx.easeLookAt(pileAt, 600)
-    await bot.waitForTicks(8)
-    bot.setControlState('back', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
-    await lk
-    await bot.waitForTicks(6)   // the last wool lands
+    // the payoff shot: from the red end, close, eyes along the line: the last wool still in the air in front, the sheared
+    // rainbow and its wool receding (backed off to the middle 7 blocks out, the wool read as specks: review of the take)
+    const pileAt = new ctx.Vec3(x0 + 3 * STEP + 0.5, floor + 0.8, z + 1.0)
+    await ctx.easeLookAt(pileAt, 700)
+    await bot.waitForTicks(2)
     const wool = Object.values(bot.entities).filter(e => e.name === 'item').length
     ctx.log('wool items on the ground:', wool)
     if (wool < N) return false
