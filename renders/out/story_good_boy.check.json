@@ -1,0 +1,874 @@
+{
+ "stunt": "story_good_boy",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_good_boy.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (7733821dbbd8)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  12 camera shot(s), 33.0s: POV checks skipped there (3 cuts, 5 turns); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/story_good_boy.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "cut holds: 2 cast moves and 9 narrator moves held to their cut",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT story_good_boy: 14 shots, scene 0.0-36.0 s (scene seconds from edit.startAt, before slow motion)",
+    "  dog_start      0.0-2.0   at     self 100% seen, 87% tall; actor:Buh 100% seen, 20% tall",
+    "  run_ahead      2.0-3.7   follow self 100% seen, 37% tall; actor:Buh 100% seen, 46% tall",
+    "  pov            3.7-6.5   pov    ",
+    "  est            6.5-7.0   path   actor:Buh 100% seen, 7% tall",
+    "  yard_pair      7.0-7.9   at     actor:Buh 100% seen, 67% tall; self 100% seen, 53% tall",
+    "  wheat_cam      7.9-9.3   at     actor:Buh 100% seen, 45% tall",
+    "  hills_night    9.3-10.0  at     actor:Buh 100% seen, 23% tall",
+    "  beach         10.0-10.6  at     actor:Buh 100% seen, 28% tall",
+    "  other_wolf    10.6-19.1  at     actor:Buh 100% seen, 55% tall; 18.5,1.3,-6.4 100% seen, 39% tall",
+    "  step          19.1-22.4  at     actor:Buh 100% seen, 66% tall",
+    "  dog_sea       22.4-26.1  at     actor:Buh 100% seen, 41% tall; self 100% seen, 34% tall",
+    "  pov           26.1-27.1  pov    ",
+    "  hill_walk     27.1-28.7  path   actor:Buh 100% seen, 16% tall",
+    "  hill_lock     28.7-36.0  at     105.5,41.3,-513.5 100% seen, 60% tall",
+    "NOTES (3)",
+    "  - 6.5 s  est: only 0.5 s: too short to read",
+    "  - 9.3 s  hills_night: only 0.8 s: too short to read",
+    "  - 10.0 s  beach: only 0.6 s: too short to read",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 13 warning(s), 4 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 2.05,
+     "shot": 2,
+     "line": "L01",
+     "kind": "position",
+     "msg": "the narrator (wolf) #self is 17.0 blocks from where it was at the end of the last shot (seen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 7,
+     "shot": 5,
+     "line": "L02",
+     "kind": "vanish",
+     "msg": "the narrator (wolf) #self vanishes in the middle of the frame 0.85 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7,
+     "shot": 5,
+     "line": "L02",
+     "kind": "position",
+     "msg": "the narrator (wolf) #self is 6.2 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 7.9,
+     "shot": 6,
+     "line": "L02",
+     "kind": "vanish",
+     "msg": "the narrator (wolf) #self vanishes in the middle of the frame 1.30 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.9,
+     "shot": 6,
+     "line": "L02",
+     "kind": "position",
+     "msg": "player Buh #493 is 17.1 blocks from where it was at the end of the last shot (seen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 9.25,
+     "shot": 7,
+     "line": "L03",
+     "kind": "appear",
+     "msg": "the narrator (wolf) #self appears in the middle of the frame 0.35 s into the shot (10.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 9.25,
+     "shot": 7,
+     "line": "L03",
+     "kind": "vanish",
+     "msg": "the narrator (wolf) #self vanishes in the middle of the frame 0.60 s into the shot"
+    },
+    {
+     "level": "NOTE",
+     "out": 9.25,
+     "shot": 7,
+     "line": "L03",
+     "kind": "time",
+     "msg": "time cut 12300 (sunset) -> 18000 (midnight) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 9.25,
+     "shot": 7,
+     "line": "L03",
+     "kind": "position",
+     "msg": "player Buh #493 is 15.3 blocks from where it was at the end of the last shot (seen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 10,
+     "shot": 8,
+     "line": "L03",
+     "kind": "vanish",
+     "msg": "the narrator (wolf) #self vanishes in the middle of the frame 0.55 s into the shot"
+    },
+    {
+     "level": "NOTE",
+     "out": 10,
+     "shot": 8,
+     "line": "L03",
+     "kind": "time",
+     "msg": "time cut 18000 (midnight) -> 12300 (sunset) (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.6,
+     "shot": 9,
+     "line": "L03",
+     "kind": "appear",
+     "msg": "the narrator (wolf) #self appears in the middle of the frame 0.30 s into the shot (10.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.6,
+     "shot": 9,
+     "line": "L03",
+     "kind": "vanish",
+     "msg": "the narrator (wolf) #self vanishes in the middle of the frame 1.40 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 19.05,
+     "shot": 10,
+     "line": "L06",
+     "kind": "position",
+     "msg": "player Buh #493 is 31.3 blocks from where it was at the end of the last shot (seen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 22.4,
+     "shot": 11,
+     "line": "L07",
+     "kind": "time",
+     "msg": "time cut 12300 (sunset) -> 13000 (night) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 22.4,
+     "shot": 11,
+     "line": "L07",
+     "kind": "position",
+     "msg": "player Buh #493 is 4.5 blocks from where it was at the end of the last shot (seen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 26.15,
+     "shot": 12,
+     "line": "L09",
+     "kind": "time",
+     "msg": "time cut 13000 (night) -> 1500 (morning) (on its time mark)"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "7 warning(s) over 14 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 7,
+     "shot": 5,
+     "line": "L02",
+     "kind": "tight",
+     "msg": "too tight (MS medium): player Buh #493 fills 71% of the frame height, 2.6 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 9.25,
+     "shot": 7,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "camera against the set: 44% of the frame is within 3 blocks (grass_block, dirt_path)"
+    },
+    {
+     "level": "WARN",
+     "out": 9.25,
+     "shot": 7,
+     "line": "L03",
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (WS wide on player Buh, median depth 2.2 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 10.6,
+     "shot": 9,
+     "line": "L03",
+     "kind": "tight",
+     "msg": "camera against the set: 54% of the frame is within 3 blocks (grass_block, dirt_path)"
+    },
+    {
+     "level": "WARN",
+     "out": 19.05,
+     "shot": 10,
+     "line": "L06",
+     "kind": "tight",
+     "msg": "too tight (MS medium): player Buh #493 fills 67% of the frame height, 2.9 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 26.15,
+     "shot": 12,
+     "line": "L09",
+     "kind": "tight",
+     "msg": "camera against the set: 40% of the frame is within 3 blocks (grass_block, cornflower)"
+    },
+    {
+     "level": "WARN",
+     "out": 26.15,
+     "shot": 12,
+     "line": "L09",
+     "kind": "establish",
+     "msg": "opens place P3 without an establishing shot (no cast, median depth 2.5 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 5 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 131 x 77 blocks (ground y 70; its edge 12 blocks from the set's origin); built footprint 68 x 42; terrain relief around it sd 4.5 blocks: reads as a superflat world. docs/story_craft.md 9: build into natural ground (a hill, trees, water in view), fill to the fog",
+     "world": {
+      "level": 70,
+      "area": 3125,
+      "w": 131,
+      "d": 77,
+      "edge": 12,
+      "built": 368,
+      "footprint": {
+       "w": 68,
+       "d": 42,
+       "x0": -23,
+       "z0": -6
+      },
+      "relief": 4.5,
+      "outside": 2042
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 0,
+     "tick": 32,
+     "line": "L01",
+     "msg": "mostly flat ground (5/5 moments): flat ground fills 20% of the frame (49% of the world in view; hills/trees/water 2%, the set 19%, sky 58%) at 1.40 s; the plain is 131 x 77, the set's footprint 68 x 42, relief around it sd 4.5"
+    },
+    {
+     "level": "NOTE",
+     "check": "opening",
+     "out": 0,
+     "tick": 32,
+     "line": "L01",
+     "msg": "opening OK: the narrator (shots.dog_start.subject) the narrator (wolf): 41% across (middle third 33%-67%), 44% of the frame height on frame 1, 44% at most (readable from 8%), first 1.5 s; camera 0.02 blocks/s, turn 0.28 deg/s, push 0/s, subject 0 blocks/s, anything else in frame 5.26 blocks/s, 0 action(s)",
+     "opening": {
+      "subject": "the narrator",
+      "src": "shots.dog_start.subject",
+      "n": 31,
+      "motion": {
+       "cam": 0.02,
+       "turn": 0.28,
+       "grow": 0,
+       "sub": 0,
+       "other": 5.26,
+       "actions": 0
+      },
+      "seen": 1,
+      "x": 0.41,
+      "h0": 0.439,
+      "hMax": 0.441,
+      "label": "the narrator (wolf)"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 2.05,
+     "tick": 73,
+     "line": "L01",
+     "msg": "mostly flat ground (4/5 moments): flat ground fills 42% of the frame (49% of the world in view; hills/trees/water 16%, the set 27%, sky 15%) at 2.55 s; the plain is 131 x 77, the set's footprint 68 x 42, relief around it sd 4.5"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 4.65,
+     "tick": 125,
+     "line": "L02",
+     "msg": "the story kit saw the player walk into something here (-288.7 69.94 -389.06): K.walkTo with a point around it"
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 10,
+     "tick": 232,
+     "line": "L03",
+     "msg": "mostly flat ground (5/5 moments): flat ground fills 43% of the frame (46% of the world in view; hills/trees/water 37%, the set 14%, sky 6%) at 10.10 s; the plain is 131 x 77, the set's footprint 68 x 42, relief around it sd 4.5"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s) over 14 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 23.25,
+     "tick": 480,
+     "line": "L06",
+     "msg": "step -> dog_sea: the eye goes from player Buh (50% across, 25% down) to the narrator (50%, 57%): a jump of 30% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    },
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 27,
+     "tick": 555,
+     "line": "L07",
+     "msg": "dog_sea -> pov: the eye goes from player Buh (29% across, 42% down) to the aim (50%, 50%): a jump of 22% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    }
+   ],
+   "rows": [
+    {
+     "tick": 20,
+     "out": 0.25,
+     "line": null,
+     "from": "pov",
+     "to": "dog_start",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.41,
+      "y": 0.61,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.139,
+     "timing": {
+      "next": "My",
+      "lead": 0.94,
+      "prev": null,
+      "sincePrev": null,
+      "pause": null,
+      "inside": null
+     },
+     "optOut": true
+    },
+    {
+     "tick": 73,
+     "out": 2.9,
+     "line": "L01",
+     "from": "dog_start",
+     "to": "run_ahead",
+     "before": {
+      "x": 0.41,
+      "y": 0.61,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.52,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.124,
+     "timing": {
+      "next": "thirty-seven",
+      "lead": 0.13,
+      "prev": "me",
+      "sincePrev": 0.07,
+      "pause": 0.2,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 106,
+     "out": 4.55,
+     "line": "L01",
+     "from": "run_ahead",
+     "to": "pov",
+     "before": {
+      "x": 0.45,
+      "y": 0.47,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.47,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.051,
+     "timing": {
+      "next": "He",
+      "lead": 0.205,
+      "prev": "TIMES.",
+      "sincePrev": 0.4,
+      "pause": 0.605,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.085
+    },
+    {
+     "tick": 163,
+     "out": 7.4,
+     "line": "L02",
+     "from": "pov",
+     "to": "est",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.003,
+     "timing": {
+      "next": "POP",
+      "lead": 0.095,
+      "prev": "I",
+      "sincePrev": 0.005,
+      "pause": 0.1,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 172,
+     "out": 7.85,
+     "line": "L02",
+     "from": "est",
+     "to": "yard_pair",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.34,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.154,
+     "timing": {
+      "next": "right",
+      "lead": 0.125,
+      "prev": "up",
+      "sincePrev": 0.055,
+      "pause": 0.18,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 190,
+     "out": 8.75,
+     "line": "L02",
+     "from": "yard_pair",
+     "to": "wheat_cam",
+     "before": {
+      "x": 0.47,
+      "y": 0.25,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.47,
+      "y": 0.3,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.049,
+     "timing": {
+      "next": "He",
+      "lead": 0.4,
+      "prev": "him.",
+      "sincePrev": 0.175,
+      "pause": 0.575,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 217,
+     "out": 10.1,
+     "line": "L03",
+     "from": "wheat_cam",
+     "to": "hills_night",
+     "before": {
+      "x": 0.48,
+      "y": 0.23,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.29,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.056,
+     "timing": {
+      "next": "The",
+      "lead": 0.05,
+      "prev": "WHEAT.",
+      "sincePrev": 0.25,
+      "pause": 0.3,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 232,
+     "out": 10.85,
+     "line": "L03",
+     "from": "hills_night",
+     "to": "beach",
+     "before": {
+      "x": 0.5,
+      "y": 0.27,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.37,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.087,
+     "timing": {
+      "next": "ISLAND.",
+      "lead": 0.2,
+      "prev": "An",
+      "sincePrev": 0.02,
+      "pause": 0.22,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 244,
+     "out": 11.45,
+     "line": "L03",
+     "from": "beach",
+     "to": "other_wolf",
+     "before": {
+      "x": 0.52,
+      "y": 0.33,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.58,
+      "y": 0.33,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.058,
+     "timing": {
+      "next": "But",
+      "lead": 0.385,
+      "prev": "ISLAND.",
+      "sincePrev": 0.04,
+      "pause": 0.425,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 413,
+     "out": 19.9,
+     "line": "L05",
+     "from": "other_wolf",
+     "to": "step",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.53,
+      "y": 0.3,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.187,
+     "timing": {
+      "next": "He",
+      "lead": 0.127,
+      "prev": "him.",
+      "sincePrev": 0.545,
+      "pause": 0.672,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.073
+    },
+    {
+     "tick": 480,
+     "out": 23.25,
+     "line": "L06",
+     "from": "step",
+     "to": "dog_sea",
+     "before": {
+      "x": 0.5,
+      "y": 0.25,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.57,
+      "what": "the narrator",
+      "kind": "subject"
+     },
+     "dist": 0.298,
+     "timing": {
+      "next": "Every",
+      "lead": 0.205,
+      "prev": "AWAY.",
+      "sincePrev": 0.543,
+      "pause": 0.748,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.055
+    },
+    {
+     "tick": 555,
+     "out": 27,
+     "line": "L07",
+     "from": "dog_sea",
+     "to": "pov",
+     "before": {
+      "x": 0.29,
+      "y": 0.42,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.22,
+     "timing": {
+      "next": "This",
+      "lead": 0.285,
+      "prev": "FOR.",
+      "sincePrev": 0.605,
+      "pause": 0.89,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.005
+    },
+    {
+     "tick": 575,
+     "out": 28,
+     "line": "L09",
+     "from": "pov",
+     "to": "hill_walk",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.51,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "dist": 0.006,
+     "timing": {
+      "next": "WALKED",
+      "lead": 0.005,
+      "prev": "he",
+      "sincePrev": 0.055,
+      "pause": 0.06,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 606,
+     "out": 29.55,
+     "line": "L09",
+     "from": "hill_walk",
+     "to": "hill_lock",
+     "before": {
+      "x": 0.62,
+      "y": 0.51,
+      "what": "player Buh",
+      "kind": "subject"
+     },
+     "after": {
+      "x": 0.62,
+      "y": 0.52,
+      "what": "player Buh",
+      "kind": "cast"
+     },
+     "dist": 0.011,
+     "timing": {
+      "next": "STAY",
+      "lead": 0.45,
+      "prev": "HILL.",
+      "sincePrev": 0.185,
+      "pause": 0.635,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 1 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "WARN  L13: the aligner starts the first word at 0.90 s, the sound starts at 0.47 s (+0.43 s): a breath or a hum before the word? listen",
+    "OK: 0 blocker(s), 1 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "     5.55s  player step on dirt_path           -> block.grass.step                   3.0 blocks          key word",
+    "     5.65s  cat step on grass_block            -> block.grass.step                  14.4 blocks          key word",
+    "     5.85s  player step on dirt_path           -> block.grass.step                   2.6 blocks          key word",
+    "     6.15s  player step on dirt_path           -> block.grass.step                   2.9 blocks in view  ",
+    "     6.40s  cat step on dirt_path              -> block.grass.step                  14.0 blocks          key word",
+    "     6.45s  player step on mossy_cobblestone   -> block.moss.step                    4.6 blocks in view  key word",
+    "     7.00s  cat step on dirt_path              -> block.grass.step                  14.7 blocks          ",
+    "     7.05s  player step on dirt_path           -> block.grass.step                   5.9 blocks in view  ",
+    "     7.35s  player step on cobblestone_stairs  -> block.wood.step                    6.5 blocks in view  key word",
+    "     7.35s  player hit                         -> entity.player.hurt                 6.5 blocks in view  key word",
+    "     7.65s  player step on cobblestone_stairs  -> block.wood.step                    8.1 blocks in view  key word",
+    "     7.95s  player step on cobblestone         -> block.stone.step                   9.9 blocks in view  key word",
+    "    12.30s  villager idle voice                -> entity.villager.ambient            9.0 blocks          ",
+    "    12.70s  player step on dirt_path           -> block.grass.step                   3.3 blocks          key word",
+    "    13.10s  player step on dirt_path           -> block.grass.step                   5.4 blocks          ",
+    "    13.60s  player step on dirt_path           -> block.grass.step                   5.9 blocks in view  key word",
+    "    13.90s  cat step on dirt_path              -> block.grass.step                  11.0 blocks          key word",
+    "    13.90s  wolf idle voice                    -> entity.wolf.ambient                5.2 blocks in view  key word",
+    "    14.65s  cat step on dirt_path              -> block.grass.step                  11.8 blocks          key word",
+    "    15.25s  cat step on dirt_path              -> block.grass.step                  13.0 blocks          key word",
+    "    15.35s  cat idle voice                     -> entity.cat.ambient                12.9 blocks          key word",
+    "    16.30s  cat step on grass_block            -> block.grass.step                  14.3 blocks          ",
+    "    16.75s  player step on dirt_path           -> block.grass.step                   5.4 blocks in view  key word",
+    "    16.95s  villager idle voice                -> entity.villager.ambient            5.0 blocks          key word",
+    "    18.60s  villager idle voice                -> entity.villager.ambient            5.1 blocks          key word",
+    "    20.45s  wolf idle voice                    -> entity.wolf.pant                   1.8 blocks in view  ",
+    "    29.45s  player step on grass_block         -> block.grass.step                   1.9 blocks          key word",
+    "    30.20s  player step on grass_block         -> block.grass.step                   2.0 blocks          key word",
+    "ambience per shot: -0.25-5.30s dusk, 5.30-11.60s indoor_day, 11.60-24.00s indoor_day, 24.00-27.75s night, 27.75-37.85s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T09:13:46.258Z"
+}
