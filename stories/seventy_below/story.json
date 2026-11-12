@@ -2,7 +2,7 @@
   "name": "seventy_below",
   "stunt": "story_seventy_below",
   "version": 2,
-  "revision": "r3.1 (2026-11-11): critic r3 APPROVE (7.9); continuity r3: S15 lens to (-2056.5, 86, -435) so the flock is in frame, S08 waist-down, the general stands at the hole's north edge head down 90 so his head hangs over the shaft (S05, S06, S12, S16), S05/S16 lens in the hole's column with the cell kept clear, S04 lid in frame, S07 lens raised, the baby in the cell under the hole (S01, S02). r3 (2026-11-11): critic r2 must-fixes (L08 the sleepy night gives the daylight opening a cause; L07 'the world's all FULL of us'; L03 'right ABOVE us'; L14 'a new SOLDIER'; bedtime after the count) and continuity r2 (hole moved to (-2057, -492), room cameras re-placed, near-vertical lenses up the shaft for S05/S16 and inside it for S06/S12, S04/S14 lenses out of the grass, bed to (-2058, 73, -500), waist-down framing, checkable `shows` ids, the narrator HEARS the spider (L13, L15), counts before bed at 13200, S15 lens over the flock); renumbered L01-L16 / S01-S16. r2 (2026-11-11): cold read r1 (60 % at the midpoint, partly, a little surprised): L07 'No monsters. Just us.' cut (it winked: the reader heard 'we are the monsters'), L08 'one MORNING he OPENED it' -> 'one DAY he came EARLY' (morning gave away the sun), L12 adds 'The FIRST one ever.' (the spider's link to the count), the easter egg moves to S14. r1 (2026-11-11): first script from the batch-3 round-3 brief (docs/pitches/batch3_script_briefs/seventy_below.md) with the round-3 must-fixes applied: un-named zombies, the room within 32 blocks of the bed and 8 below it, Grandpa never named or shown above the knees, no Gary. Line 1 changed from the pitch's (see bible.md 'Changes from the pitch').",
+  "revision": "r4.1 (2026-11-12): critic r4 must-fixes: L15 'When we're SEVENTY, no monster comes NEAR the general, but at sixty-NINE there was ROOM for one.' (the reason, not only the pattern; pays off L07 'FULL'); L01 shortened to 13 words ('Our general keeps SEVENTY of us under his BED. And I don't know WHY.'); L05 drops 'Like a real ARMY.'; L13 'at the general's WINDOW'; L09 'So he opened the HOLE in the MORNING.' (casual reader read 'he came' as him coming down). r4 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the fact and the why ('Our general keeps SEVENTY of us in the DARK under his BED. And I don't know WHY.'); L02 two-way clue (never takes us to fight); L07 'Always SEVENTY'; L13 the spider climbs to the general's WINDOW (the loved one at stake); L15 is the spoken reveal ('Since we CAME, no monster has ever come NEAR the general, except the ONE night we were sixty-NINE.'); L16 'Seventy.' is the one beat, cut. Shots unchanged (same L/S mapping). r3.1 (2026-11-11): critic r3 APPROVE (7.9); continuity r3: S15 lens to (-2056.5, 86, -435) so the flock is in frame, S08 waist-down, the general stands at the hole's north edge head down 90 so his head hangs over the shaft (S05, S06, S12, S16), S05/S16 lens in the hole's column with the cell kept clear, S04 lid in frame, S07 lens raised, the baby in the cell under the hole (S01, S02). r3 (2026-11-11): critic r2 must-fixes (L08 the sleepy night gives the daylight opening a cause; L07 'the world's all FULL of us'; L03 'right ABOVE us'; L14 'a new SOLDIER'; bedtime after the count) and continuity r2 (hole moved to (-2057, -492), room cameras re-placed, near-vertical lenses up the shaft for S05/S16 and inside it for S06/S12, S04/S14 lenses out of the grass, bed to (-2058, 73, -500), waist-down framing, checkable `shows` ids, the narrator HEARS the spider (L13, L15), counts before bed at 13200, S15 lens over the flock); renumbered L01-L16 / S01-S16. r2 (2026-11-11): cold read r1 (60 % at the midpoint, partly, a little surprised): L07 'No monsters. Just us.' cut (it winked: the reader heard 'we are the monsters'), L08 'one MORNING he OPENED it' -> 'one DAY he came EARLY' (morning gave away the sun), L12 adds 'The FIRST one ever.' (the spider's link to the count), the easter egg moves to S14. r1 (2026-11-11): first script from the batch-3 round-3 brief (docs/pitches/batch3_script_briefs/seventy_below.md) with the round-3 must-fixes applied: un-named zombies, the room within 32 blocks of the bed and 8 below it, Grandpa never named or shown above the knees, no Gary. Line 1 changed from the pitch's (see bible.md 'Changes from the pitch').",
   "caption": "why are 70 zombies waiting under his bed 🧟",
   "upload": {
     "title": "seventy of us wait in the dark under his bed 🧟 #minecraft #shorts",
@@ -24,9 +24,9 @@
   "twist": "They aren't an army. They're seventy ordinary un-named zombies kept within 32 blocks of the player's bed to fill his hostile mob cap: in Java 1.21 natural monster spawning near a player stops while 70 monsters that count toward his cap are near him (minecraft.wiki/w/Mob_spawning#Java_Edition_mob_cap, per player since 1.18). So no monster can spawn anywhere near him or the village. When one burned, the count fell to 69 and a spider spawned and came for him; he brings it back to seventy himself. 'Seventy.' Cut on the seventy faces turned up to him.",
   "key_color": "#5E8C4A",
   "mood": "eerie",
-  "payoff": "L16",
-  "payoff_note": "L16 is the general's 'Seventy.' over S16; the lid goes back on, black, cut 1.0 s after the word. No line after L16. It loops into L01.",
-  "punch_note": "hook L01, turn L08 (too sleepy to count), reveal L16 (the count back at seventy)",
+  "payoff": "L15",
+  "payoff_note": "L15 is the reveal, said: 'When we're SEVENTY, no monster comes NEAR the general, but at sixty-NINE there was ROOM for one.' over S15 (the bare wall, the quiet village). Then the one beat: L16 the general's 'Seventy.' over S16; the lid goes back on, black, cut 1.0 s after the word. It loops into L01 ('Our general keeps SEVENTY of us...').",
+  "punch_note": "hook L01 (fact + why), turn L08 (too sleepy to count), reveal L15 (at seventy no monster comes near him; at 69 there was room for one), sting L16 (the count back at seventy)",
   "look": {
     "time": 18000,
     "fog": false,
@@ -218,7 +218,7 @@
     "beats": [
       "S16: upturned faces ring the frame, the general's dark head in the moonlit shaft; 'SEVENTY.'; +0.4 s the lid goes back on, black; cut 1.0 s after the word. No line after it."
     ],
-    "loop": "'Seventy.' runs straight into line 1, 'SEVENTY of us stand in the dark.' S16 and S01 are the same room in the same light."
+    "loop": "'Seventy.' runs straight into line 1, 'Our general keeps SEVENTY of us under his bed.' S16 and S01 are the same room in the same light."
   },
   "bible": "stories/seventy_below/bible.md",
   "beats": "stories/seventy_below/beats.md",
@@ -228,8 +228,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "SEVENTY of us / stand in the DARK. / We've been WAITING / two hundred NIGHTS.",
-      "say": "Seventy of us stand in the dark. We've been waiting two hundred nights.",
+      "text": "Our general keeps SEVENTY of us / under his BED. / And I don't know WHY.",
+      "say": "Our general keeps seventy of us under his bed. And I don't know why.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -244,20 +244,20 @@
             "stone",
             "cobblestone"
           ],
-          "word": "DARK"
+          "word": "BED"
         }
       ],
       "look": {
         "what": "entity:zombie",
         "word": "SEVENTY"
       },
-      "note": "hook: proud and patient, one quick bright breath; a soldier reporting"
+      "note": "hook (story_format beat 1): the impossible, countable fact AND the why, said by 3 s; proud and bright, then a genuinely curious 'why' (the kid wants to know, never scared)"
     },
     {
       "id": "L02",
       "who": "N",
-      "text": "I'm the LITTLEST / SOLDIER / in our ARMY.",
-      "say": "I'm the littlest soldier in our army.",
+      "text": "I'm the LITTLEST SOLDIER. / He never takes us to FIGHT. / I think he's SAVING us / for something BIG.",
+      "say": "I'm the littlest soldier. He never takes us to fight. I think he's saving us for something big.",
       "shot": "S02",
       "shows": [
         {
@@ -270,14 +270,14 @@
           "what": [
             "zombie"
           ],
-          "word": "ARMY"
+          "word": "SOLDIER"
         }
       ],
       "look": {
         "what": "entity:zombie",
         "word": "LITTLEST"
       },
-      "note": "proud, chin up (the first misreading: an army)"
+      "note": "proud, chin up (two-way clue: an army that never fights; misreading: saved for a big battle)"
     },
     {
       "id": "L03",
@@ -328,8 +328,8 @@
     {
       "id": "L05",
       "who": "N",
-      "text": "Every NIGHT / he opens the HOLE / and COUNTS us. / Like a real ARMY.",
-      "say": "Every night he opens the hole and counts us. Like a real army.",
+      "text": "Every NIGHT / he opens the HOLE / and COUNTS us.",
+      "say": "Every night he opens the hole and counts us.",
       "shot": "S05",
       "shows": [
         {
@@ -344,12 +344,6 @@
             "player"
           ],
           "word": "COUNTS"
-        },
-        {
-          "what": [
-            "zombie"
-          ],
-          "word": "ARMY"
         }
       ],
       "look": {
@@ -381,10 +375,16 @@
     {
       "id": "L07",
       "who": "N",
-      "text": "No new SOLDIERS / ever come. / I think the world's / all FULL of us.",
-      "say": "No new soldiers ever come. I think the world's all full of us.",
+      "text": "Always SEVENTY. / No new SOLDIERS ever come. / I think the world's / all FULL of us.",
+      "say": "Always seventy. No new soldiers ever come. I think the world's all full of us.",
       "shot": "S07",
       "shows": [
+        {
+          "what": [
+            "zombie"
+          ],
+          "word": "SEVENTY"
+        },
         {
           "what": [
             "zombie"
@@ -396,7 +396,7 @@
         "what": "entity:zombie",
         "word": "FULL"
       },
-      "note": "proud and certain: the army is so big there's nobody left to join (the misreading of the full cap)"
+      "note": "proud and certain: the army is so big there's nobody left to join (two-way clue: the number never changes, nothing new comes; misreading of the full cap)"
     },
     {
       "id": "L08",
@@ -428,8 +428,8 @@
     {
       "id": "L09",
       "who": "N",
-      "text": "So he came / in the MORNING.",
-      "say": "So he came in the morning.",
+      "text": "So he opened the HOLE / in the MORNING.",
+      "say": "So he opened the hole in the morning.",
       "shot": "S09",
       "shows": [
         {
@@ -516,8 +516,8 @@
     {
       "id": "L13",
       "who": "N",
-      "text": "That NIGHT, / we HEARD a SPIDER / on the general's WALL. / The FIRST one ever. / I think it was LOOKING / for Brother SEVENTY.",
-      "say": "That night, we heard a spider on the general's wall. The first one ever. I think it was looking for Brother Seventy.",
+      "text": "That NIGHT, / we HEARD a SPIDER / at the general's WINDOW. / The FIRST one ever. / I think it was LOOKING / for Brother SEVENTY.",
+      "say": "That night, we heard a spider at the general's window. The first one ever. I think it was looking for Brother Seventy.",
       "shot": "S13",
       "shows": [
         {
@@ -528,18 +528,16 @@
         },
         {
           "what": [
-            "cobblestone",
-            "spruce_planks",
             "glass_pane"
           ],
-          "word": "WALL"
+          "word": "WINDOW"
         }
       ],
       "look": {
         "what": "prop:spider",
         "word": "SPIDER"
       },
-      "note": "sweet and sure: a friend came to find him (the misreading)"
+      "note": "sweet and sure: a friend came to find him (the misreading); the general (the one the kid loves) is what it's climbing toward"
     },
     {
       "id": "L14",
@@ -576,8 +574,8 @@
     {
       "id": "L15",
       "who": "N",
-      "text": "We never HEARD / another ONE. / I think they're SCARED / of US.",
-      "say": "We never heard another one. I think they're scared of us.",
+      "text": "When we're SEVENTY, / no monster comes NEAR the general, / but at sixty-NINE / there was ROOM for one.",
+      "say": "When we're seventy, no monster comes near the general, but at sixty-nine there was room for one.",
       "shot": "S15",
       "shows": [
         {
@@ -586,14 +584,14 @@
             "spruce_planks",
             "glass_pane"
           ],
-          "word": "ONE"
+          "word": "NEAR"
         }
       ],
       "look": {
         "what": "block:glass_pane",
-        "word": "ONE"
+        "word": "NEAR"
       },
-      "note": "the proudest line: the army works (the last misreading); full volume, never knowing"
+      "note": "THE REVEAL (story_format beat 6), one plain sentence: the kid, proud, thinking of room in the army, says what it noticed; it pays off L07's 'the world's all FULL of us'. The casual viewer makes the one jump: only so many monsters fit near him, and he fills every place. Proud, light on ROOM, no dread"
     },
     {
       "id": "L16",

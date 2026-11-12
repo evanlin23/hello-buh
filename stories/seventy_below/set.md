@@ -19,20 +19,20 @@ looks the same as in Thirty-One Raids and Red Sheep (the hole is invisible from 
 ## What the narration claims (check each on stills from every shot angle before recording)
 | claim | line | check |
 |---|---|---|
-| seventy of us stand in the dark | L01 | S01: dozens of zombies by 'NIGHTS'; S07/S16: count 70 in the room (the baby is one); dark beyond the moonlit square |
-| I'm the littlest soldier | L02 | S02: the baby zombie full-figure, adults cut at the chest by the frame top |
+| our general keeps seventy of us under his bed | L01 | S01: dozens of zombies by 'BED'; S07/S16: count 70 in the room (the baby is one); dark beyond the moonlit square |
+| I'm the littlest soldier; he never takes us to fight | L02 | S02: the baby zombie full-figure, adults cut at the chest by the frame top |
 | our general sleeps right above us | L03 | S03: his waist-down (zuri), the red bed; the plank floor: the room is below |
 | he never goes far | L04 | S04: waist-down on the bench in his own yard, crossbow in hand; the lid in the lower-left third |
 | every night he opens the hole and counts us | L05, L06 | S05: the lid breaks, night sky in the shaft end-on, his dark head; S06: his head (MCU) in the square while he counts |
 | no new soldiers ever come; the world's full | L07 | S07: the room full wall to wall, no gap |
 | too sleepy to count | L08 | S08: waist-down straight to the bed, the lid shut (dusk) |
-| so he came in the morning | L09 | S09: a square of DAYLIGHT on the floor (time 1000) |
+| so he opened the hole in the morning | L09 | S09: a square of DAYLIGHT on the floor (time 1000) |
 | Brother Seventy ran to see him, into the sun | L10 | S10: one adult zombie, no helmet, steps into the lit cell, face up |
 | he went all glowy, then he was gone | L11 | S11: the vanilla fire overlay on 'GLOWY'; time cut on 'Then'; empty light, last smoke, no drops |
 | sixty-nine | L12 | S12: his head in the bright square; the lid back on |
-| we heard a spider on the general's wall | L13 | S13: one spider on the house's south wall by the east window, at night |
+| we heard a spider at the general's window | L13 | S13: one spider on the house's south wall by the east window, at night |
 | the general brought a new soldier, down the hole | L14 | S14: his waist-down by the open hole; a zombie follows, one hit, it drops in |
-| we never heard another one | L15 | S15: the south wall bare at night; no mob in frame (villagers and sheep only) |
+| (reveal) at seventy no monster comes near the general; at 69 there was room for one | L15 | S15: the south wall bare at night; no mob in frame (villagers and sheep only) |
 | seventy | L16 | S16: upturned faces ring the frame, his head in the moonlit shaft |
 
 ## Light

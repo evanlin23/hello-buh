@@ -116,14 +116,15 @@ of the last few days. Every count happens before bed (sleep skips the night).
 
 ## Who knows what
 - **The narrator:** believes they're an army, the general loves them, the world is full of them, the spider came for
-  Brother Seventy, monsters fear them. Never afraid, never knowing (STANDARDS 0a). Doesn't know what the sun does.
-  Underground, it only HEARS the wall (L13, L15).
+  Brother Seventy. It has noticed (and says, proudly, at L15) that at seventy no monster comes near the general and at
+  69 there was "room for one" (it means room in the army); it never says why. Never afraid, never knowing (STANDARDS 0a). Doesn't know what the sun does.
+  Underground, it only HEARS the wall (L13); L15 is its own belief from never hearing one.
 - **The general:** knows exactly what they're for. Says only numbers.
 - **The viewer:** told nothing; gets it from 69 -> the first spider ever, 70 -> nothing.
 
 ## Numbers the picture must match
 - 70 zombies in the room in S01, S07 and S16 (count them on the stills; the baby is one); 69 after S11 until S14.
-- 3 numbers in L06; 69 in L12; 70 in L16. "two hundred nights" (L01): a canon fact (built ~day 2000).
+- 3 numbers in L06; 69 in L12; 70 in L16. L15 says "sixty-NINE" (the one night). (r4 dropped "two hundred nights" from L01; the room is still built ~day 2000.)
 - One spider (S13). One new zombie (S14). The drop is 7 blocks; the shaft is 4 deep once open.
 
 ## The narrator

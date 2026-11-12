@@ -40,3 +40,22 @@
 - **Confusing:** why skipping one night means opening at dawn is a bit fuzzy; casual viewers who don't know the cap is
   70 may not see why the spider matters. "Every line moves the story."
 - Share 7. "WAIT he's using them to fill the mob cap?? 70 is the cap. That old man is a genius and a monster."
+
+## r4 (Roblox story format, 2026-11-11; lines + picture per shot; midpoint after L09)
+### Casual viewer (plays a little, one watch at phone speed)
+- **Midpoint:** "He isn't a general; he's trapping zombies, and the morning hole means sunlight will burn them: a farm
+  (XP/drops). Side thought: he keeps them so the night is safe for him, but I didn't know how." **50 %.**
+- **After:** a little surprised. "As long as the seventy zombies are locked under his bed, no new monsters can spawn
+  anywhere near him, so they're his shield." Right.
+- **Confusing:** the "only so many monsters" rule isn't shown, so the end lands "huh, okay"; "So he came in the
+  morning" read as him coming down; S03-S04 slow (swipe risk); why he counts every night.
+- **Applied in r4.1:** L09 "So he opened the HOLE in the MORNING."; L15 rewritten (critic must-fix: "there was ROOM
+  for one", the reason not only the pattern); L01 shortened.
+### Java gamer
+- **Midpoint:** "70 is the hostile mob cap; he keeps exactly 70 zombies in a dark room so nothing else spawns near his
+  house. L07 'the world's all full of us' pretty much gave it away." **70 %.**
+- **After:** a little surprised (the follow-through). "He keeps exactly 70 zombies under his bed to fill the hostile
+  mob cap so no monster spawns near him; when one burned a spider showed up, so he trapped a new one to get back to 70."
+- **Vanilla notes:** sleeping with hostiles within 8 horizontal / 5 vertical of the bed is blocked (ours: zombies'
+  feet y 65, bed y 73, so 8 below: OK, already in bible.md); 70 holds per player since 1.18 (bible.md); blue sheep
+  must read as dyed (canon: Ravenford's flock, blue since day 1900). S02-S04 drag ~10 s.
