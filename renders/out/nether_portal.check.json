@@ -1,0 +1,213 @@
+{
+ "stunt": "nether_portal",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/nether_portal.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "6 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 144,
+     "col": 24,
+     "text": "await ctx.cmd(`/tp @s ${x.toFixed(2)} ${y.toFixed(2)} ${z.toFixed(2)} ${yaw} ${pitch}`)   // decimals: a whole number is centred (+0.5)",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    },
+    {
+     "line": 168,
+     "col": 7,
+     "text": "bot.setControlState('back', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 170,
+     "col": 22,
+     "text": "if (k === 9) bot.setControlState('back', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 173,
+     "col": 7,
+     "text": "bot.setControlState('back', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 231,
+     "col": 9,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 233,
+     "col": 9,
+     "text": "bot.setControlState('forward', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT nether_portal: 1 shots, scene 0.0-26.3 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-26.3  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 4 warning(s), 1 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.4,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: flint_and_steel -> fire_charge"
+    },
+    {
+     "level": "WARN",
+     "out": 2.733,
+     "shot": 3,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: fire_charge -> tnt"
+    },
+    {
+     "level": "WARN",
+     "out": 6.317,
+     "shot": 7,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: nothing -> lava_bucket"
+    },
+    {
+     "level": "WARN",
+     "out": 8.733,
+     "shot": 8,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: bucket -> glowstone"
+    },
+    {
+     "level": "NOTE",
+     "out": 10.417,
+     "shot": 9,
+     "line": null,
+     "kind": "blocks",
+     "msg": "63 block(s) in view changed during the cut (e.g. air, fire, nether_portal at 428 68 -53): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "2 warning(s) over 9 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 5.183,
+     "shot": 6,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (no cast, median depth 3.2 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 10.417,
+     "shot": 9,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 43% of the frame is within 3 blocks (grass_block, respawn_anchor)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 10.9,
+     "tick": 517,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 162 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "4 visible sound-making events (break 1, hurt 2, primed 1), 1 with a sound mark, 3 without (audio.py adds those for a story)",
+    "     7.20s  tnt broke                          -> block.stone.break                  2.4 blocks in view  ",
+    "    12.00s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "    12.50s  generic hit                        -> entity.generic.hurt                0.0 blocks          ",
+    "ambience per shot: -0.25-3.00s day, 3.00-5.75s day, 5.75-7.45s day, 7.45-12.85s day, 12.85-15.40s day, 15.40-22.15s day, 22.15-29.60s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:06:12.753Z"
+}
