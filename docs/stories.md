@@ -813,6 +813,11 @@ STANDARDS.md in the same commit.
   fine, sure thats fine".** Both approved. Sorry, Dear keeps order A (the rule first, then "My aunt is the size of a
   MUG."). The build list is now five approved scripts: Pulled Away, The Honey Thief, Saving Up for a Bastion, The
   Statue Gets Younger, Sorry, Dear.
+- **Owner, 2026-11-12, on dropper_rainbow v2: "also the dropper should be fancier please".** A dropper's shaft is a
+  build to show off, not a coloured tube: patterned walls (glazed terracotta trims, quartz corner pillars), lit
+  stained-glass neon rings and windows, obstacles with trims and glowing hole rims, a glass layer, lanterns on chains,
+  freestanding pillars to fall past, a crowned rim and a decorated pool (lib/dropper.js blueprint). Every decoration that
+  could touch a fall is flown first in scripts/dropper_sim.js, which builds the same world.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

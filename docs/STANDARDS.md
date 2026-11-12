@@ -413,6 +413,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
 - **Format "dropper"**: a HUGE first-person dropper with an attempt counter, quick fails cut before any death puff,
   a true-vanilla clean landing as the payoff. Check: owner, minecraft-audit (the landing), the settle check. r:r304cb5
+  The shaft is a fancy build, never a plain tube: patterned walls, lit glass rings, trimmed obstacles with lit hole
+  rims, lanterns, pillars, a crowned rim, a decorated pool; every decoration flown in scripts/dropper_sim.js first.
+  Check: owner, review. r:r8fad06
 - **Format "fakeworld"**: a world where everything is one wrong block, played as normal survival; the one ordinary
   block found is treated as treasure; generated from our own block swap. Check: owner. r:r62f46d
 - **Format "trap"**: an irresistible bait, how it works, then the friend (a second bot, never the owner's name) walks
