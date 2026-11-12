@@ -20,40 +20,47 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "slam",
     "drop_in_song_s": 113.75,
-    "drop_in_short_s": 30.6,
-    "song_start_s": 83.15
+    "drop_in_short_s": 29.85,
+    "song_start_s": 83.9
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 31.6,
+    "duration_s": 30.85,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20909120,
-    "sha256": "7f2692daf9a43504f69bb06a2d1c7b2445b7c64e2ab35795607b4eb5a895fc44",
+    "bytes": 20965158,
+    "sha256": "a3b84297905115390984e22c8a316be728c77cb0a939382d8e8df6a584efb6d1",
     "release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short.7f2692daf9a43504.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.7f2692daf9a43504.mp4",
-      "sha256": "7f2692daf9a43504f69bb06a2d1c7b2445b7c64e2ab35795607b4eb5a895fc44",
-      "bytes": 20909120
+      "asset": "cells_lab.short.a3b8429790511539.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short.a3b8429790511539.mp4",
+      "sha256": "a3b84297905115390984e22c8a316be728c77cb0a939382d8e8df6a584efb6d1",
+      "bytes": 20965158
     },
     "nosong_release": {
       "tag": "pkg-cells_lab",
-      "asset": "cells_lab.short_nosong.9661adf6998b6fa3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short_nosong.9661adf6998b6fa3.mp4",
-      "sha256": "9661adf6998b6fa315de332970d894c953bc4b9cbb45130a5bfeee1402ad56f8",
-      "bytes": 20887427
+      "asset": "cells_lab.short_nosong.1c8d5e82b9d85f9f.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cells_lab/cells_lab.short_nosong.1c8d5e82b9d85f9f.mp4",
+      "sha256": "1c8d5e82b9d85f9fa656ae0ee234c6ed0bf3bd687d7d43343ac4e3e0b6200472",
+      "bytes": 20947475
     }
   },
   "edit": {
     "caption": "nobody remembers who built this place",
     "red": "nobody",
-    "startAt": "open:0",
+    "startAt": "open:0.1",
     "endAfter": "slam:1.0",
     "dropAt": "slam",
     "sfx": [
+      [
+        "impact",
+        "open:0.12",
+        {
+          "gain": 0.8
+        }
+      ],
       [
         "dip",
         "slam",
@@ -93,9 +100,9 @@
       "--flash",
       "[[\"slam\",0,0.5]]",
       "--sfx",
-      "[[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]]",
+      "[[\"impact\",\"open:0.12\",{\"gain\":0.8}],[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]]",
       "--start_at",
-      "open:0",
+      "open:0.1",
       "--end_after",
       "slam:1.0"
     ]
@@ -108,9 +115,9 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 382,
+      "x": 383,
       "y": 110,
-      "z": -70
+      "z": -62
     },
     "biome": "minecraft:plains",
     "ticks": 713,
@@ -118,19 +125,19 @@
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.2,
         "event": "vel"
       },
       {
-        "t": 0.2,
+        "t": 0.6,
         "event": "mob_hurt"
       },
       {
-        "t": 0.2,
+        "t": 0.6,
         "event": "mob_death"
       },
       {
-        "t": 0.2,
+        "t": 0.6,
         "event": "motion_start"
       },
       {
@@ -166,11 +173,11 @@
         "event": "vel"
       },
       {
-        "t": 1,
+        "t": 1.05,
         "event": "mob_hurt"
       },
       {
-        "t": 1,
+        "t": 1.05,
         "event": "mob_death"
       },
       {
@@ -190,7 +197,7 @@
         "event": "block_action"
       },
       {
-        "t": 1.45,
+        "t": 1.55,
         "event": "vel"
       },
       {
@@ -206,11 +213,27 @@
         "event": "block_action"
       },
       {
-        "t": 1.6,
-        "event": "mob_death"
+        "t": 1.65,
+        "event": "hall_end"
       },
       {
         "t": 1.65,
+        "event": "cell"
+      },
+      {
+        "t": 1.65,
+        "event": "vel"
+      },
+      {
+        "t": 1.7,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 1.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 1.75,
         "event": "vel"
       },
       {
@@ -230,8 +253,8 @@
         "event": "vel"
       },
       {
-        "t": 1.95,
-        "event": "hall_end"
+        "t": 1.85,
+        "event": "vel"
       },
       {
         "t": 2,
@@ -248,16 +271,20 @@
       {
         "t": 2,
         "event": "block_action"
-      },
-      {
-        "t": 2.3,
-        "event": "cell"
       },
       {
         "t": 2.35,
         "event": "vel"
       },
       {
+        "t": 2.35,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.35,
+        "event": "mob_death"
+      },
+      {
         "t": 2.4,
         "event": "push"
       },
@@ -270,24 +297,24 @@
         "event": "block_action"
       },
       {
-        "t": 2.45,
-        "event": "vel"
-      },
-      {
         "t": 2.5,
         "event": "block_action"
       },
       {
-        "t": 2.5,
-        "event": "mob_death"
+        "t": 2.55,
+        "event": "vel"
       },
       {
-        "t": 2.5,
+        "t": 2.7,
         "event": "mob_hurt"
       },
       {
-        "t": 2.5,
+        "t": 2.7,
         "event": "mob_death"
+      },
+      {
+        "t": 2.75,
+        "event": "vel"
       },
       {
         "t": 2.75,
@@ -310,15 +337,19 @@
         "event": "block_action"
       },
       {
-        "t": 3.05,
+        "t": 2.85,
         "event": "vel"
       },
       {
         "t": 3.05,
+        "event": "vel"
+      },
+      {
+        "t": 3.15,
         "event": "mob_hurt"
       },
       {
-        "t": 3.05,
+        "t": 3.15,
         "event": "mob_death"
       },
       {
@@ -326,19 +357,19 @@
         "event": "push"
       },
       {
-        "t": 3.25,
+        "t": 3.2,
         "event": "block_action"
       },
       {
-        "t": 3.25,
+        "t": 3.2,
         "event": "block_action"
       },
       {
-        "t": 3.25,
+        "t": 3.2,
         "event": "block_action"
       },
       {
-        "t": 3.45,
+        "t": 3.55,
         "event": "vel"
       },
       {
@@ -354,7 +385,11 @@
         "event": "block_action"
       },
       {
-        "t": 3.6,
+        "t": 3.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.65,
         "event": "mob_death"
       },
       {
@@ -366,22 +401,26 @@
         "event": "vel"
       },
       {
-        "t": 3.8,
+        "t": 3.75,
+        "event": "vel"
+      },
+      {
+        "t": 3.75,
         "event": "vel"
       },
       {
         "t": 3.8,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 3.8,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 3.85,
         "event": "vel"
       },
       {
+        "t": 3.9,
+        "event": "mob_death"
+      },
+      {
         "t": 4,
         "event": "push"
       },
@@ -422,16 +461,24 @@
         "event": "mob_death"
       },
       {
-        "t": 4.5,
+        "t": 4.55,
         "event": "vel"
       },
       {
-        "t": 4.6,
+        "t": 4.65,
         "event": "mob_hurt"
       },
       {
-        "t": 4.6,
+        "t": 4.65,
         "event": "mob_death"
+      },
+      {
+        "t": 4.75,
+        "event": "vel"
+      },
+      {
+        "t": 4.75,
+        "event": "vel"
       },
       {
         "t": 4.8,
@@ -462,6 +509,14 @@
         "event": "vel"
       },
       {
+        "t": 5.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.15,
+        "event": "mob_death"
+      },
+      {
         "t": 5.2,
         "event": "push"
       },
@@ -474,15 +529,7 @@
         "event": "block_action"
       },
       {
-        "t": 5.2,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 5.2,
-        "event": "mob_death"
-      },
-      {
-        "t": 5.5,
+        "t": 5.55,
         "event": "vel"
       },
       {
@@ -490,20 +537,32 @@
         "event": "push"
       },
       {
-        "t": 5.6,
-        "event": "block_action"
-      },
-      {
-        "t": 5.6,
-        "event": "block_action"
-      },
-      {
-        "t": 5.6,
+        "t": 5.65,
         "event": "block_action"
       },
       {
         "t": 5.65,
+        "event": "block_action"
+      },
+      {
+        "t": 5.65,
+        "event": "block_action"
+      },
+      {
+        "t": 5.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.65,
         "event": "mob_death"
+      },
+      {
+        "t": 5.75,
+        "event": "vel"
+      },
+      {
+        "t": 5.75,
+        "event": "vel"
       },
       {
         "t": 5.8,
@@ -514,7 +573,7 @@
         "event": "vel"
       },
       {
-        "t": 5.85,
+        "t": 5.9,
         "event": "vel"
       },
       {
@@ -523,18 +582,22 @@
       },
       {
         "t": 6,
-        "event": "block_action"
-      },
-      {
-        "t": 6,
-        "event": "block_action"
+        "event": "mob_hurt"
       },
       {
         "t": 6,
         "event": "mob_death"
       },
       {
-        "t": 6.1,
+        "t": 6.05,
+        "event": "block_action"
+      },
+      {
+        "t": 6.05,
+        "event": "block_action"
+      },
+      {
+        "t": 6.15,
         "event": "block_action"
       },
       {
@@ -542,15 +605,15 @@
         "event": "push"
       },
       {
-        "t": 6.4,
+        "t": 6.45,
         "event": "block_action"
       },
       {
-        "t": 6.4,
+        "t": 6.45,
         "event": "block_action"
       },
       {
-        "t": 6.5,
+        "t": 6.55,
         "event": "vel"
       },
       {
@@ -566,54 +629,66 @@
         "event": "mob_death"
       },
       {
-        "t": 6.7,
-        "event": "mob_death"
-      },
-      {
-        "t": 6.8,
-        "event": "push"
-      },
-      {
-        "t": 6.8,
-        "event": "vel"
-      },
-      {
-        "t": 6.8,
-        "event": "block_action"
-      },
-      {
-        "t": 6.8,
-        "event": "block_action"
-      },
-      {
-        "t": 6.8,
-        "event": "block_action"
-      },
-      {
-        "t": 6.85,
-        "event": "vel"
-      },
-      {
-        "t": 7.2,
-        "event": "push"
-      },
-      {
-        "t": 7.2,
-        "event": "block_action"
-      },
-      {
-        "t": 7.2,
-        "event": "block_action"
-      },
-      {
-        "t": 7.25,
-        "event": "vel"
-      },
-      {
-        "t": 7.3,
+        "t": 6.65,
         "event": "cell"
       },
       {
+        "t": 6.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.65,
+        "event": "mob_death"
+      },
+      {
+        "t": 6.7,
+        "event": "vel"
+      },
+      {
+        "t": 6.7,
+        "event": "vel"
+      },
+      {
+        "t": 6.75,
+        "event": "vel"
+      },
+      {
+        "t": 6.8,
+        "event": "push"
+      },
+      {
+        "t": 6.8,
+        "event": "vel"
+      },
+      {
+        "t": 6.8,
+        "event": "block_action"
+      },
+      {
+        "t": 6.8,
+        "event": "block_action"
+      },
+      {
+        "t": 6.8,
+        "event": "block_action"
+      },
+      {
+        "t": 7.2,
+        "event": "push"
+      },
+      {
+        "t": 7.2,
+        "event": "block_action"
+      },
+      {
+        "t": 7.2,
+        "event": "block_action"
+      },
+      {
+        "t": 7.3,
+        "event": "vel"
+      },
+      {
         "t": 7.3,
         "event": "block_action"
       },
@@ -626,7 +701,7 @@
         "event": "mob_death"
       },
       {
-        "t": 7.5,
+        "t": 7.55,
         "event": "vel"
       },
       {
@@ -635,19 +710,27 @@
       },
       {
         "t": 7.6,
-        "event": "mob_hurt"
+        "event": "block_action"
       },
       {
         "t": 7.6,
+        "event": "block_action"
+      },
+      {
+        "t": 7.7,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.7,
         "event": "mob_death"
       },
       {
-        "t": 7.65,
-        "event": "block_action"
+        "t": 7.75,
+        "event": "vel"
       },
       {
-        "t": 7.65,
-        "event": "block_action"
+        "t": 7.75,
+        "event": "vel"
       },
       {
         "t": 7.8,
@@ -658,31 +741,31 @@
         "event": "vel"
       },
       {
-        "t": 8,
-        "event": "push"
-      },
-      {
-        "t": 8,
+        "t": 7.95,
         "event": "vel"
       },
       {
-        "t": 8,
+        "t": 7.95,
         "event": "mob_hurt"
       },
       {
-        "t": 8,
+        "t": 7.95,
         "event": "mob_death"
       },
       {
-        "t": 8.05,
+        "t": 8,
+        "event": "push"
+      },
+      {
+        "t": 8,
         "event": "block_action"
       },
       {
-        "t": 8.05,
+        "t": 8,
         "event": "block_action"
       },
       {
-        "t": 8.05,
+        "t": 8,
         "event": "block_action"
       },
       {
@@ -696,10 +779,6 @@
       {
         "t": 8.4,
         "event": "block_action"
-      },
-      {
-        "t": 8.45,
-        "event": "vel"
       },
       {
         "t": 8.5,
@@ -707,11 +786,7 @@
       },
       {
         "t": 8.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 8.55,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 8.65,
@@ -719,11 +794,11 @@
       },
       {
         "t": 8.65,
-        "event": "mob_hurt"
+        "event": "mob_death"
       },
       {
-        "t": 8.65,
-        "event": "mob_death"
+        "t": 8.75,
+        "event": "vel"
       },
       {
         "t": 8.75,
@@ -746,6 +821,14 @@
         "event": "block_action"
       },
       {
+        "t": 8.8,
+        "event": "mob_death"
+      },
+      {
+        "t": 8.85,
+        "event": "vel"
+      },
+      {
         "t": 9.2,
         "event": "push"
       },
@@ -766,24 +849,16 @@
         "event": "vel"
       },
       {
-        "t": 9.4,
+        "t": 9.35,
         "event": "mob_hurt"
       },
       {
-        "t": 9.4,
+        "t": 9.35,
         "event": "mob_death"
       },
       {
-        "t": 9.45,
+        "t": 9.55,
         "event": "vel"
-      },
-      {
-        "t": 9.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 9.55,
-        "event": "mob_death"
       },
       {
         "t": 9.6,
@@ -802,11 +877,23 @@
         "event": "block_action"
       },
       {
+        "t": 9.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 9.75,
+        "event": "vel"
+      },
+      {
         "t": 9.75,
         "event": "vel"
       },
       {
         "t": 9.8,
+        "event": "vel"
+      },
+      {
+        "t": 9.85,
         "event": "vel"
       },
       {
@@ -826,11 +913,11 @@
         "event": "vel"
       },
       {
-        "t": 10.2,
+        "t": 10.05,
         "event": "mob_hurt"
       },
       {
-        "t": 10.2,
+        "t": 10.05,
         "event": "mob_death"
       },
       {
@@ -850,15 +937,15 @@
         "event": "block_action"
       },
       {
-        "t": 10.45,
+        "t": 10.55,
         "event": "vel"
       },
       {
-        "t": 10.6,
+        "t": 10.65,
         "event": "mob_hurt"
       },
       {
-        "t": 10.6,
+        "t": 10.65,
         "event": "mob_death"
       },
       {
@@ -870,6 +957,18 @@
         "event": "vel"
       },
       {
+        "t": 10.75,
+        "event": "vel"
+      },
+      {
+        "t": 10.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 10.75,
+        "event": "mob_death"
+      },
+      {
         "t": 10.8,
         "event": "push"
       },
@@ -886,16 +985,12 @@
         "event": "block_action"
       },
       {
+        "t": 10.85,
+        "event": "vel"
+      },
+      {
         "t": 10.9,
         "event": "block_action"
-      },
-      {
-        "t": 10.9,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 10.9,
-        "event": "mob_death"
       },
       {
         "t": 11.2,
@@ -908,6 +1003,10 @@
       {
         "t": 11.2,
         "event": "block_action"
+      },
+      {
+        "t": 11.4,
+        "event": "cell"
       },
       {
         "t": 11.45,
@@ -915,23 +1014,15 @@
       },
       {
         "t": 11.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 11.45,
+        "event": "mob_death"
+      },
+      {
+        "t": 11.55,
         "event": "vel"
-      },
-      {
-        "t": 11.5,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 11.5,
-        "event": "mob_death"
-      },
-      {
-        "t": 11.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 11.55,
-        "event": "mob_death"
       },
       {
         "t": 11.6,
@@ -948,6 +1039,18 @@
       {
         "t": 11.6,
         "event": "block_action"
+      },
+      {
+        "t": 11.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 11.65,
+        "event": "mob_death"
+      },
+      {
+        "t": 11.75,
+        "event": "vel"
       },
       {
         "t": 11.75,
@@ -958,6 +1061,10 @@
         "event": "vel"
       },
       {
+        "t": 11.85,
+        "event": "vel"
+      },
+      {
         "t": 12,
         "event": "push"
       },
@@ -968,10 +1075,6 @@
       {
         "t": 12,
         "event": "block_action"
-      },
-      {
-        "t": 12.05,
-        "event": "cell"
       },
       {
         "t": 12.1,
@@ -982,12 +1085,36 @@
         "event": "vel"
       },
       {
-        "t": 12.2,
+        "t": 12.25,
         "event": "mob_hurt"
       },
       {
-        "t": 12.2,
+        "t": 12.25,
         "event": "mob_death"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
       },
       {
         "t": 12.4,
@@ -1002,16 +1129,16 @@
         "event": "block_action"
       },
       {
-        "t": 12.45,
+        "t": 12.55,
         "event": "vel"
       },
       {
-        "t": 12.55,
-        "event": "mob_hurt"
+        "t": 12.65,
+        "event": "mob_death"
       },
       {
-        "t": 12.55,
-        "event": "mob_death"
+        "t": 12.75,
+        "event": "vel"
       },
       {
         "t": 12.75,
@@ -1020,6 +1147,10 @@
       {
         "t": 12.8,
         "event": "push"
+      },
+      {
+        "t": 12.8,
+        "event": "vel"
       },
       {
         "t": 12.8,
@@ -1042,43 +1173,23 @@
         "event": "vel"
       },
       {
-        "t": 12.95,
+        "t": 12.85,
         "event": "vel"
       },
       {
-        "t": 12.95,
-        "event": "vel"
-      },
-      {
-        "t": 12.95,
-        "event": "vel"
-      },
-      {
-        "t": 12.95,
-        "event": "vel"
-      },
-      {
-        "t": 12.95,
-        "event": "vel"
-      },
-      {
-        "t": 12.95,
-        "event": "vel"
-      },
-      {
-        "t": 12.95,
+        "t": 12.9,
         "event": "mob_hurt"
       },
       {
-        "t": 12.95,
+        "t": 12.9,
         "event": "mob_death"
       },
       {
-        "t": 13.15,
+        "t": 13,
         "event": "vel"
       },
       {
-        "t": 13.15,
+        "t": 13.05,
         "event": "vel"
       },
       {
@@ -1095,11 +1206,11 @@
       },
       {
         "t": 13.3,
-        "event": "block_action"
+        "event": "vel"
       },
       {
-        "t": 13.45,
-        "event": "vel"
+        "t": 13.3,
+        "event": "block_action"
       },
       {
         "t": 13.45,
@@ -1110,6 +1221,18 @@
         "event": "vel"
       },
       {
+        "t": 13.55,
+        "event": "vel"
+      },
+      {
+        "t": 13.55,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 13.55,
+        "event": "mob_death"
+      },
+      {
         "t": 13.6,
         "event": "push"
       },
@@ -1122,24 +1245,16 @@
         "event": "block_action"
       },
       {
-        "t": 13.6,
+        "t": 13.65,
         "event": "mob_hurt"
       },
       {
-        "t": 13.6,
+        "t": 13.65,
         "event": "mob_death"
       },
       {
-        "t": 13.65,
+        "t": 13.75,
         "event": "vel"
-      },
-      {
-        "t": 13.65,
-        "event": "vel"
-      },
-      {
-        "t": 13.7,
-        "event": "mob_death"
       },
       {
         "t": 13.75,
@@ -1150,11 +1265,7 @@
         "event": "vel"
       },
       {
-        "t": 13.95,
-        "event": "vel"
-      },
-      {
-        "t": 13.95,
+        "t": 13.85,
         "event": "vel"
       },
       {
@@ -1163,10 +1274,6 @@
       },
       {
         "t": 14,
-        "event": "vel"
-      },
-      {
-        "t": 14,
         "event": "block_action"
       },
       {
@@ -1176,22 +1283,22 @@
       {
         "t": 14,
         "event": "block_action"
-      },
-      {
-        "t": 14.1,
-        "event": "vel"
       },
       {
         "t": 14.25,
         "event": "vel"
       },
       {
-        "t": 14.35,
+        "t": 14.25,
         "event": "mob_hurt"
       },
       {
-        "t": 14.35,
+        "t": 14.25,
         "event": "mob_death"
+      },
+      {
+        "t": 14.3,
+        "event": "vel"
       },
       {
         "t": 14.4,
@@ -1214,12 +1321,20 @@
         "event": "block_action"
       },
       {
-        "t": 14.6,
+        "t": 14.55,
+        "event": "vel"
+      },
+      {
+        "t": 14.65,
         "event": "mob_hurt"
       },
       {
-        "t": 14.6,
+        "t": 14.65,
         "event": "mob_death"
+      },
+      {
+        "t": 14.75,
+        "event": "vel"
       },
       {
         "t": 14.75,
@@ -1242,7 +1357,7 @@
         "event": "block_action"
       },
       {
-        "t": 14.95,
+        "t": 14.85,
         "event": "vel"
       },
       {
@@ -1250,19 +1365,11 @@
         "event": "vel"
       },
       {
-        "t": 14.95,
-        "event": "vel"
+        "t": 15.05,
+        "event": "mob_hurt"
       },
       {
-        "t": 15,
-        "event": "vel"
-      },
-      {
-        "t": 15.1,
-        "event": "vel"
-      },
-      {
-        "t": 15.1,
+        "t": 15.05,
         "event": "mob_death"
       },
       {
@@ -1280,6 +1387,10 @@
       {
         "t": 15.2,
         "event": "block_action"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
       },
       {
         "t": 15.45,
@@ -1287,15 +1398,15 @@
       },
       {
         "t": 15.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 15.55,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 15.6,
         "event": "push"
+      },
+      {
+        "t": 15.6,
+        "event": "cell"
       },
       {
         "t": 15.6,
@@ -1322,6 +1433,18 @@
         "event": "block_action"
       },
       {
+        "t": 15.7,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 15.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 15.75,
+        "event": "vel"
+      },
+      {
         "t": 15.75,
         "event": "vel"
       },
@@ -1330,11 +1453,7 @@
         "event": "vel"
       },
       {
-        "t": 15.95,
-        "event": "vel"
-      },
-      {
-        "t": 15.95,
+        "t": 15.85,
         "event": "vel"
       },
       {
@@ -1343,29 +1462,29 @@
       },
       {
         "t": 16,
-        "event": "vel"
-      },
-      {
-        "t": 16,
         "event": "block_action"
       },
       {
         "t": 16,
         "event": "block_action"
-      },
-      {
-        "t": 16.1,
-        "event": "vel"
       },
       {
         "t": 16.3,
-        "event": "cell"
+        "event": "vel"
       },
       {
         "t": 16.35,
         "event": "vel"
       },
       {
+        "t": 16.35,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 16.35,
+        "event": "mob_death"
+      },
+      {
         "t": 16.4,
         "event": "push"
       },
@@ -1382,24 +1501,28 @@
         "event": "block_action"
       },
       {
-        "t": 16.4,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 16.4,
-        "event": "mob_death"
-      },
-      {
-        "t": 16.5,
+        "t": 16.45,
         "event": "vel"
       },
       {
-        "t": 16.6,
+        "t": 16.55,
+        "event": "vel"
+      },
+      {
+        "t": 16.65,
         "event": "mob_hurt"
       },
       {
-        "t": 16.6,
+        "t": 16.65,
         "event": "mob_death"
+      },
+      {
+        "t": 16.75,
+        "event": "vel"
+      },
+      {
+        "t": 16.75,
+        "event": "vel"
       },
       {
         "t": 16.8,
@@ -1426,23 +1549,7 @@
         "event": "block_action"
       },
       {
-        "t": 17,
-        "event": "vel"
-      },
-      {
-        "t": 17,
-        "event": "vel"
-      },
-      {
         "t": 17.05,
-        "event": "vel"
-      },
-      {
-        "t": 17.05,
-        "event": "vel"
-      },
-      {
-        "t": 17.15,
         "event": "vel"
       },
       {
@@ -1466,7 +1573,15 @@
         "event": "block_action"
       },
       {
-        "t": 17.5,
+        "t": 17.3,
+        "event": "vel"
+      },
+      {
+        "t": 17.45,
+        "event": "vel"
+      },
+      {
+        "t": 17.55,
         "event": "vel"
       },
       {
@@ -1486,12 +1601,20 @@
         "event": "block_action"
       },
       {
-        "t": 17.6,
+        "t": 17.65,
         "event": "mob_hurt"
       },
       {
-        "t": 17.6,
+        "t": 17.65,
         "event": "mob_death"
+      },
+      {
+        "t": 17.75,
+        "event": "vel"
+      },
+      {
+        "t": 17.75,
+        "event": "vel"
       },
       {
         "t": 17.75,
@@ -1506,11 +1629,7 @@
         "event": "vel"
       },
       {
-        "t": 17.85,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 17.85,
+        "t": 17.9,
         "event": "mob_death"
       },
       {
@@ -1519,30 +1638,18 @@
       },
       {
         "t": 18,
-        "event": "vel"
-      },
-      {
-        "t": 18,
-        "event": "vel"
-      },
-      {
-        "t": 18,
         "event": "block_action"
       },
       {
         "t": 18,
         "event": "block_action"
-      },
-      {
-        "t": 18.05,
-        "event": "vel"
       },
       {
         "t": 18.1,
         "event": "block_action"
       },
       {
-        "t": 18.15,
+        "t": 18.3,
         "event": "vel"
       },
       {
@@ -1562,20 +1669,32 @@
         "event": "vel"
       },
       {
-        "t": 18.5,
+        "t": 18.45,
         "event": "vel"
       },
       {
-        "t": 18.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 18.6,
+        "t": 18.45,
         "event": "mob_hurt"
       },
       {
-        "t": 18.6,
+        "t": 18.45,
         "event": "mob_death"
+      },
+      {
+        "t": 18.55,
+        "event": "vel"
+      },
+      {
+        "t": 18.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 18.75,
+        "event": "vel"
+      },
+      {
+        "t": 18.75,
+        "event": "vel"
       },
       {
         "t": 18.8,
@@ -1602,22 +1721,6 @@
         "event": "vel"
       },
       {
-        "t": 19,
-        "event": "vel"
-      },
-      {
-        "t": 19,
-        "event": "vel"
-      },
-      {
-        "t": 19.05,
-        "event": "vel"
-      },
-      {
-        "t": 19.15,
-        "event": "vel"
-      },
-      {
         "t": 19.15,
         "event": "vel"
       },
@@ -1642,8 +1745,16 @@
         "event": "mob_death"
       },
       {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
         "t": 19.3,
         "event": "block_action"
+      },
+      {
+        "t": 19.4,
+        "event": "vel"
       },
       {
         "t": 19.5,
@@ -1655,77 +1766,69 @@
       },
       {
         "t": 19.6,
-        "event": "block_action"
-      },
-      {
-        "t": 19.6,
-        "event": "block_action"
-      },
-      {
-        "t": 19.6,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 19.6,
-        "event": "mob_death"
-      },
-      {
-        "t": 19.8,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 19.85,
-        "event": "mob_death"
-      },
-      {
-        "t": 20,
-        "event": "push"
-      },
-      {
-        "t": 20,
-        "event": "vel"
-      },
-      {
-        "t": 20,
-        "event": "vel"
-      },
-      {
-        "t": 20,
-        "event": "block_action"
-      },
-      {
-        "t": 20,
-        "event": "block_action"
-      },
-      {
-        "t": 20,
-        "event": "block_action"
-      },
-      {
-        "t": 20.05,
-        "event": "vel"
-      },
-      {
-        "t": 20.15,
-        "event": "vel"
-      },
-      {
-        "t": 20.25,
         "event": "cell"
       },
       {
+        "t": 19.6,
+        "event": "block_action"
+      },
+      {
+        "t": 19.6,
+        "event": "block_action"
+      },
+      {
+        "t": 19.6,
+        "event": "mob_death"
+      },
+      {
+        "t": 19.75,
+        "event": "vel"
+      },
+      {
+        "t": 19.75,
+        "event": "vel"
+      },
+      {
+        "t": 19.75,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.85,
+        "event": "mob_death"
+      },
+      {
+        "t": 20,
+        "event": "push"
+      },
+      {
+        "t": 20,
+        "event": "block_action"
+      },
+      {
+        "t": 20,
+        "event": "block_action"
+      },
+      {
+        "t": 20,
+        "event": "block_action"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
         "t": 20.4,
         "event": "push"
       },
@@ -1738,11 +1841,15 @@
         "event": "block_action"
       },
       {
+        "t": 20.45,
+        "event": "vel"
+      },
+      {
         "t": 20.5,
         "event": "block_action"
       },
       {
-        "t": 20.5,
+        "t": 20.55,
         "event": "vel"
       },
       {
@@ -1758,12 +1865,20 @@
         "event": "mob_death"
       },
       {
-        "t": 20.6,
+        "t": 20.65,
         "event": "mob_hurt"
       },
       {
-        "t": 20.6,
+        "t": 20.65,
         "event": "mob_death"
+      },
+      {
+        "t": 20.75,
+        "event": "vel"
+      },
+      {
+        "t": 20.75,
+        "event": "vel"
       },
       {
         "t": 20.8,
@@ -1774,31 +1889,15 @@
         "event": "vel"
       },
       {
-        "t": 20.85,
-        "event": "vel"
-      },
-      {
-        "t": 20.85,
+        "t": 20.8,
         "event": "block_action"
       },
       {
-        "t": 20.85,
+        "t": 20.8,
         "event": "block_action"
       },
       {
-        "t": 21,
-        "event": "vel"
-      },
-      {
-        "t": 21,
-        "event": "vel"
-      },
-      {
-        "t": 21.05,
-        "event": "vel"
-      },
-      {
-        "t": 21.15,
+        "t": 20.9,
         "event": "vel"
       },
       {
@@ -1806,31 +1905,39 @@
         "event": "push"
       },
       {
-        "t": 21.25,
+        "t": 21.2,
+        "event": "block_action"
+      },
+      {
+        "t": 21.2,
+        "event": "block_action"
+      },
+      {
+        "t": 21.2,
         "event": "block_action"
       },
       {
         "t": 21.25,
-        "event": "block_action"
+        "event": "vel"
       },
       {
         "t": 21.25,
-        "event": "block_action"
+        "event": "mob_hurt"
+      },
+      {
+        "t": 21.25,
+        "event": "mob_death"
       },
       {
         "t": 21.3,
         "event": "vel"
       },
       {
-        "t": 21.4,
-        "event": "mob_hurt"
+        "t": 21.45,
+        "event": "vel"
       },
       {
-        "t": 21.4,
-        "event": "mob_death"
-      },
-      {
-        "t": 21.5,
+        "t": 21.55,
         "event": "vel"
       },
       {
@@ -1838,12 +1945,16 @@
         "event": "push"
       },
       {
-        "t": 21.65,
+        "t": 21.6,
+        "event": "block_action"
+      },
+      {
+        "t": 21.6,
         "event": "block_action"
       },
       {
         "t": 21.65,
-        "event": "block_action"
+        "event": "mob_hurt"
       },
       {
         "t": 21.65,
@@ -1854,32 +1965,28 @@
         "event": "block_action"
       },
       {
-        "t": 21.8,
+        "t": 21.75,
+        "event": "vel"
+      },
+      {
+        "t": 21.75,
         "event": "vel"
       },
       {
         "t": 21.8,
+        "event": "vel"
+      },
+      {
+        "t": 21.85,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
         "event": "vel"
       },
       {
         "t": 22,
         "event": "push"
-      },
-      {
-        "t": 22,
-        "event": "vel"
-      },
-      {
-        "t": 22,
-        "event": "vel"
-      },
-      {
-        "t": 22,
-        "event": "vel"
-      },
-      {
-        "t": 22,
-        "event": "vel"
       },
       {
         "t": 22,
@@ -1898,7 +2005,7 @@
         "event": "mob_death"
       },
       {
-        "t": 22.1,
+        "t": 22.3,
         "event": "vel"
       },
       {
@@ -1923,23 +2030,27 @@
       },
       {
         "t": 22.55,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 22.65,
         "event": "vel"
       },
       {
+        "t": 22.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 22.65,
+        "event": "mob_death"
+      },
+      {
         "t": 22.75,
         "event": "vel"
       },
       {
         "t": 22.75,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 22.75,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 22.8,
@@ -1956,28 +2067,24 @@
       {
         "t": 22.8,
         "event": "block_action"
+      },
+      {
+        "t": 22.8,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 22.8,
+        "event": "mob_death"
+      },
+      {
+        "t": 22.85,
+        "event": "vel"
       },
       {
         "t": 22.9,
         "event": "block_action"
       },
       {
-        "t": 22.95,
-        "event": "vel"
-      },
-      {
-        "t": 22.95,
-        "event": "vel"
-      },
-      {
-        "t": 23,
-        "event": "vel"
-      },
-      {
-        "t": 23.1,
-        "event": "vel"
-      },
-      {
         "t": 23.2,
         "event": "push"
       },
@@ -1988,26 +2095,26 @@
       {
         "t": 23.2,
         "event": "block_action"
+      },
+      {
+        "t": 23.3,
+        "event": "vel"
       },
       {
         "t": 23.35,
         "event": "vel"
       },
       {
-        "t": 23.4,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 23.4,
-        "event": "mob_death"
-      },
-      {
         "t": 23.45,
         "event": "vel"
       },
       {
-        "t": 23.55,
+        "t": 23.5,
         "event": "mob_death"
+      },
+      {
+        "t": 23.55,
+        "event": "vel"
       },
       {
         "t": 23.6,
@@ -2024,6 +2131,18 @@
       {
         "t": 23.6,
         "event": "block_action"
+      },
+      {
+        "t": 23.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 23.65,
+        "event": "mob_death"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
       },
       {
         "t": 23.75,
@@ -2034,20 +2153,12 @@
         "event": "vel"
       },
       {
-        "t": 23.95,
-        "event": "vel"
-      },
-      {
-        "t": 23.95,
+        "t": 23.85,
         "event": "vel"
       },
       {
         "t": 24,
         "event": "push"
-      },
-      {
-        "t": 24,
-        "event": "vel"
       },
       {
         "t": 24,
@@ -2071,11 +2182,11 @@
       },
       {
         "t": 24.1,
-        "event": "vel"
+        "event": "block_action"
       },
       {
-        "t": 24.1,
-        "event": "block_action"
+        "t": 24.3,
+        "event": "vel"
       },
       {
         "t": 24.4,
@@ -2095,10 +2206,14 @@
       },
       {
         "t": 24.55,
+        "event": "vel"
+      },
+      {
+        "t": 24.65,
         "event": "mob_hurt"
       },
       {
-        "t": 24.55,
+        "t": 24.65,
         "event": "mob_death"
       },
       {
@@ -2108,6 +2223,18 @@
       {
         "t": 24.75,
         "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 24.75,
+        "event": "mob_death"
       },
       {
         "t": 24.8,
@@ -2130,27 +2257,11 @@
         "event": "block_action"
       },
       {
-        "t": 24.8,
-        "event": "mob_hurt"
+        "t": 24.85,
+        "event": "cell"
       },
       {
-        "t": 24.8,
-        "event": "mob_death"
-      },
-      {
-        "t": 24.95,
-        "event": "vel"
-      },
-      {
-        "t": 24.95,
-        "event": "vel"
-      },
-      {
-        "t": 25,
-        "event": "vel"
-      },
-      {
-        "t": 25.1,
+        "t": 24.85,
         "event": "vel"
       },
       {
@@ -2167,14 +2278,18 @@
       },
       {
         "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "block_action"
+      },
+      {
+        "t": 25.4,
         "event": "block_action"
       },
       {
         "t": 25.45,
-        "event": "cell"
-      },
-      {
-        "t": 25.45,
         "event": "vel"
       },
       {
@@ -2183,11 +2298,7 @@
       },
       {
         "t": 25.55,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 25.55,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 25.6,
@@ -2204,21 +2315,29 @@
       {
         "t": 25.6,
         "event": "mob_death"
+      },
+      {
+        "t": 25.7,
+        "event": "block_action"
       },
       {
         "t": 25.75,
         "event": "vel"
       },
       {
+        "t": 25.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.75,
+        "event": "mob_death"
+      },
+      {
         "t": 25.8,
         "event": "vel"
       },
       {
-        "t": 25.95,
-        "event": "vel"
-      },
-      {
-        "t": 25.95,
+        "t": 25.85,
         "event": "vel"
       },
       {
@@ -2227,10 +2346,6 @@
       },
       {
         "t": 26,
-        "event": "vel"
-      },
-      {
-        "t": 26,
         "event": "block_action"
       },
       {
@@ -2240,26 +2355,22 @@
       {
         "t": 26,
         "event": "block_action"
-      },
-      {
-        "t": 26,
-        "event": "block_action"
-      },
-      {
-        "t": 26.1,
-        "event": "vel"
       },
       {
         "t": 26.15,
         "event": "vel"
       },
       {
-        "t": 26.3,
-        "event": "block_action"
+        "t": 26.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.2,
+        "event": "mob_death"
       },
       {
         "t": 26.3,
-        "event": "mob_death"
+        "event": "vel"
       },
       {
         "t": 26.4,
@@ -2283,11 +2394,19 @@
       },
       {
         "t": 26.55,
+        "event": "vel"
+      },
+      {
+        "t": 26.65,
         "event": "mob_hurt"
       },
       {
-        "t": 26.55,
+        "t": 26.65,
         "event": "mob_death"
+      },
+      {
+        "t": 26.75,
+        "event": "vel"
       },
       {
         "t": 26.75,
@@ -2315,6 +2434,10 @@
       },
       {
         "t": 26.85,
+        "event": "vel"
+      },
+      {
+        "t": 26.85,
         "event": "mob_hurt"
       },
       {
@@ -2322,22 +2445,6 @@
         "event": "mob_death"
       },
       {
-        "t": 26.95,
-        "event": "vel"
-      },
-      {
-        "t": 26.95,
-        "event": "vel"
-      },
-      {
-        "t": 27,
-        "event": "vel"
-      },
-      {
-        "t": 27.1,
-        "event": "vel"
-      },
-      {
         "t": 27.2,
         "event": "push"
       },
@@ -2352,12 +2459,28 @@
       {
         "t": 27.2,
         "event": "block_action"
+      },
+      {
+        "t": 27.2,
+        "event": "block_action"
+      },
+      {
+        "t": 27.3,
+        "event": "vel"
       },
       {
         "t": 27.45,
         "event": "vel"
       },
       {
+        "t": 27.5,
+        "event": "block_action"
+      },
+      {
+        "t": 27.55,
+        "event": "vel"
+      },
+      {
         "t": 27.55,
         "event": "vel"
       },
@@ -2382,35 +2505,31 @@
         "event": "block_action"
       },
       {
-        "t": 27.6,
+        "t": 27.65,
         "event": "mob_hurt"
       },
       {
-        "t": 27.6,
+        "t": 27.65,
         "event": "mob_death"
-      },
-      {
-        "t": 27.7,
-        "event": "block_action"
       },
       {
         "t": 27.75,
         "event": "vel"
       },
       {
-        "t": 27.8,
+        "t": 27.75,
         "event": "vel"
       },
       {
-        "t": 27.8,
+        "t": 27.75,
         "event": "block_action"
       },
       {
-        "t": 27.95,
+        "t": 27.8,
         "event": "vel"
       },
       {
-        "t": 27.95,
+        "t": 27.85,
         "event": "vel"
       },
       {
@@ -2418,51 +2537,51 @@
         "event": "push"
       },
       {
-        "t": 28,
+        "t": 28.05,
+        "event": "block_action"
+      },
+      {
+        "t": 28.05,
+        "event": "block_action"
+      },
+      {
+        "t": 28.3,
         "event": "vel"
       },
       {
-        "t": 28,
-        "event": "block_action"
-      },
-      {
-        "t": 28,
-        "event": "block_action"
-      },
-      {
-        "t": 28.1,
+        "t": 28.3,
         "event": "vel"
       },
       {
-        "t": 28.1,
-        "event": "block_action"
+        "t": 28.35,
+        "event": "mob_hurt"
       },
       {
-        "t": 28.25,
-        "event": "vel"
-      },
-      {
-        "t": 28.4,
-        "event": "push"
-      },
-      {
-        "t": 28.4,
-        "event": "block_action"
-      },
-      {
-        "t": 28.4,
-        "event": "block_action"
-      },
-      {
-        "t": 28.4,
-        "event": "block_action"
-      },
-      {
-        "t": 28.4,
+        "t": 28.35,
         "event": "mob_death"
       },
       {
-        "t": 28.45,
+        "t": 28.4,
+        "event": "push"
+      },
+      {
+        "t": 28.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "block_action"
+      },
+      {
+        "t": 28.4,
+        "event": "block_action"
+      },
+      {
+        "t": 28.4,
+        "event": "block_action"
+      },
+      {
+        "t": 28.55,
         "event": "vel"
       },
       {
@@ -2472,6 +2591,14 @@
       {
         "t": 28.6,
         "event": "mob_death"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
       },
       {
         "t": 28.75,
@@ -2502,28 +2629,20 @@
         "event": "vel"
       },
       {
-        "t": 28.95,
-        "event": "vel"
-      },
-      {
-        "t": 28.95,
-        "event": "vel"
+        "t": 29,
+        "event": "block_action"
       },
       {
         "t": 29,
-        "event": "vel"
-      },
-      {
-        "t": 29.05,
         "event": "mob_hurt"
       },
       {
-        "t": 29.05,
+        "t": 29,
         "event": "mob_death"
       },
       {
         "t": 29.1,
-        "event": "vel"
+        "event": "finale"
       },
       {
         "t": 29.2,
@@ -2538,7 +2657,31 @@
         "event": "block_action"
       },
       {
-        "t": 29.45,
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "block_action"
+      },
+      {
+        "t": 29.4,
+        "event": "launch"
+      },
+      {
+        "t": 29.4,
+        "event": "payoff"
+      },
+      {
+        "t": 29.4,
+        "event": "vel"
+      },
+      {
+        "t": 29.4,
+        "event": "block_action"
+      },
+      {
+        "t": 29.55,
         "event": "vel"
       },
       {
@@ -2556,34 +2699,26 @@
       {
         "t": 29.6,
         "event": "block_action"
-      },
-      {
-        "t": 29.6,
-        "event": "block_action"
-      },
-      {
-        "t": 29.6,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 29.6,
-        "event": "mob_death"
       },
       {
         "t": 29.65,
         "event": "vel"
       },
       {
-        "t": 29.7,
-        "event": "finale"
-      },
-      {
-        "t": 29.7,
+        "t": 29.65,
         "event": "mob_hurt"
       },
       {
-        "t": 29.7,
+        "t": 29.65,
         "event": "mob_death"
+      },
+      {
+        "t": 29.7,
+        "event": "block_action"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
       },
       {
         "t": 29.75,
@@ -2594,15 +2729,11 @@
         "event": "vel"
       },
       {
-        "t": 29.9,
-        "event": "block_action"
+        "t": 29.8,
+        "event": "mob_death"
       },
       {
-        "t": 29.95,
-        "event": "vel"
-      },
-      {
-        "t": 29.95,
+        "t": 29.85,
         "event": "vel"
       },
       {
@@ -2611,31 +2742,11 @@
       },
       {
         "t": 30,
-        "event": "launch"
-      },
-      {
-        "t": 30,
-        "event": "payoff"
-      },
-      {
-        "t": 30,
-        "event": "vel"
-      },
-      {
-        "t": 30,
         "event": "block_action"
       },
       {
         "t": 30,
         "event": "block_action"
-      },
-      {
-        "t": 30,
-        "event": "block_action"
-      },
-      {
-        "t": 30.1,
-        "event": "vel"
       },
       {
         "t": 30.1,
@@ -2643,7 +2754,19 @@
       },
       {
         "t": 30.3,
-        "event": "block_action"
+        "event": "vel"
+      },
+      {
+        "t": 30.35,
+        "event": "vel"
+      },
+      {
+        "t": 30.35,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.35,
+        "event": "mob_death"
       },
       {
         "t": 30.4,
@@ -2651,26 +2774,18 @@
       },
       {
         "t": 30.4,
+        "event": "block_action"
+      },
+      {
+        "t": 30.4,
+        "event": "block_action"
+      },
+      {
+        "t": 30.45,
         "event": "vel"
       },
       {
-        "t": 30.4,
-        "event": "block_action"
-      },
-      {
-        "t": 30.4,
-        "event": "block_action"
-      },
-      {
-        "t": 30.4,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 30.4,
-        "event": "mob_death"
-      },
-      {
-        "t": 30.5,
+        "t": 30.55,
         "event": "vel"
       },
       {
@@ -2682,12 +2797,32 @@
         "event": "mob_death"
       },
       {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
         "t": 30.8,
         "event": "push"
       },
       {
         "t": 30.8,
+        "event": "land"
+      },
+      {
+        "t": 30.8,
+        "event": "slam"
+      },
+      {
+        "t": 30.8,
         "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "block_action"
       },
       {
         "t": 30.8,
@@ -2706,32 +2841,20 @@
         "event": "vel"
       },
       {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31,
-        "event": "vel"
-      },
-      {
-        "t": 31.05,
-        "event": "vel"
-      },
-      {
         "t": 31.05,
         "event": "vel"
       },
       {
         "t": 31.1,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31.1,
-        "event": "mob_death"
+        "event": "block_action"
       },
       {
         "t": 31.15,
-        "event": "vel"
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31.15,
+        "event": "mob_death"
       },
       {
         "t": 31.2,
@@ -2747,22 +2870,18 @@
       },
       {
         "t": 31.3,
-        "event": "block_action"
+        "event": "vel"
       },
       {
-        "t": 31.4,
+        "t": 31.3,
         "event": "block_action"
       },
       {
         "t": 31.45,
-        "event": "land"
+        "event": "vel"
       },
       {
-        "t": 31.45,
-        "event": "slam"
-      },
-      {
-        "t": 31.5,
+        "t": 31.55,
         "event": "vel"
       },
       {
@@ -2778,16 +2897,8 @@
         "event": "block_action"
       },
       {
-        "t": 31.65,
-        "event": "mob_hurt"
-      },
-      {
-        "t": 31.65,
-        "event": "mob_death"
-      },
-      {
-        "t": 31.7,
-        "event": "block_action"
+        "t": 31.75,
+        "event": "vel"
       },
       {
         "t": 31.75,
@@ -2795,7 +2906,7 @@
       },
       {
         "t": 31.75,
-        "event": "mob_hurt"
+        "event": "vel"
       },
       {
         "t": 31.75,
@@ -2804,6 +2915,14 @@
       {
         "t": 31.8,
         "event": "vel"
+      },
+      {
+        "t": 31.8,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31.8,
+        "event": "mob_death"
       },
       {
         "t": 31.85,
@@ -2815,14 +2934,6 @@
       },
       {
         "t": 32,
-        "event": "vel"
-      },
-      {
-        "t": 32,
-        "event": "vel"
-      },
-      {
-        "t": 32,
         "event": "block_action"
       },
       {
@@ -2834,24 +2945,12 @@
         "event": "block_action"
       },
       {
-        "t": 32.05,
+        "t": 32.3,
         "event": "vel"
       },
       {
-        "t": 32.15,
+        "t": 32.45,
         "event": "vel"
-      },
-      {
-        "t": 32.4,
-        "event": "push"
-      },
-      {
-        "t": 32.4,
-        "event": "block_action"
-      },
-      {
-        "t": 32.4,
-        "event": "block_action"
       },
       {
         "t": 32.45,
@@ -2859,15 +2958,15 @@
       },
       {
         "t": 32.5,
-        "event": "block_action"
+        "event": "mob_hurt"
       },
       {
         "t": 32.5,
-        "event": "vel"
+        "event": "mob_death"
       },
       {
-        "t": 32.6,
-        "event": "mob_death"
+        "t": 32.55,
+        "event": "vel"
       },
       {
         "t": 32.65,
@@ -2878,43 +2977,31 @@
         "event": "mob_death"
       },
       {
-        "t": 32.8,
-        "event": "push"
+        "t": 32.75,
+        "event": "vel"
       },
       {
-        "t": 32.8,
+        "t": 32.75,
         "event": "vel"
       },
       {
         "t": 32.8,
-        "event": "block_action"
-      },
-      {
-        "t": 32.8,
-        "event": "block_action"
+        "event": "vel"
       },
       {
         "t": 32.85,
         "event": "vel"
       },
       {
-        "t": 33,
+        "t": 33.3,
         "event": "vel"
       },
       {
-        "t": 33,
+        "t": 33.45,
         "event": "vel"
       },
       {
-        "t": 33.05,
-        "event": "vel"
-      },
-      {
-        "t": 33.15,
-        "event": "vel"
-      },
-      {
-        "t": 33.5,
+        "t": 33.55,
         "event": "vel"
       },
       {
@@ -2924,6 +3011,14 @@
       {
         "t": 33.65,
         "event": "mob_death"
+      },
+      {
+        "t": 33.75,
+        "event": "vel"
+      },
+      {
+        "t": 33.75,
+        "event": "vel"
       },
       {
         "t": 33.8,
@@ -2934,23 +3029,15 @@
         "event": "vel"
       },
       {
-        "t": 34,
+        "t": 34.3,
         "event": "vel"
       },
       {
-        "t": 34,
+        "t": 34.45,
         "event": "vel"
       },
       {
-        "t": 34.05,
-        "event": "vel"
-      },
-      {
-        "t": 34.15,
-        "event": "vel"
-      },
-      {
-        "t": 34.5,
+        "t": 34.55,
         "event": "vel"
       },
       {
@@ -2962,6 +3049,14 @@
         "event": "mob_death"
       },
       {
+        "t": 34.75,
+        "event": "vel"
+      },
+      {
+        "t": 34.75,
+        "event": "vel"
+      },
+      {
         "t": 34.8,
         "event": "vel"
       },
@@ -2970,23 +3065,15 @@
         "event": "vel"
       },
       {
-        "t": 35,
-        "event": "vel"
-      },
-      {
-        "t": 35,
-        "event": "vel"
-      },
-      {
-        "t": 35.05,
-        "event": "vel"
-      },
-      {
-        "t": 35.15,
+        "t": 35.3,
         "event": "vel"
       },
       {
         "t": 35.45,
+        "event": "vel"
+      },
+      {
+        "t": 35.55,
         "event": "vel"
       },
       {
@@ -3006,11 +3093,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/cells_lab",
-    "commit": "ff4d8a794a14e0be7b5c67566314f540e307c66b",
+    "commit": "4296a39167870da5ebeefaa7315a53b2de21366b",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43109457943",
-    "rendered_at": "2026-11-11T22:23:32.355Z",
-    "head_at_publish": "b6cd08c0de9e21306b24f6727c812653975ab7c6",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43120632404",
+    "rendered_at": "2026-11-11T23:58:07.628Z",
+    "head_at_publish": "7dc94a67d1b607c6cf35476723b8940a15720b58",
     "stunt": "stunts/cells_lab.js",
     "source_snapshot": [
       "source/cells_lab.js",
@@ -3020,22 +3107,22 @@
     ]
   },
   "rebuild": [
-    "git checkout ff4d8a794a14",
+    "git checkout 4296a3916787",
     "gunzip -c shorts/cells_lab/recording.json.gz > work/cells_lab.rec.json",
     "node render.js work/cells_lab.rec.json work/cells_lab.frames 60 1080 1011",
     "python3 audio.py work/cells_lab.rec.json work/cells_lab.wav",
-    "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --self_name 56e --red nobody --shake [[\"slam\",0,8]] --flash [[\"slam\",0,0.5]] --sfx [[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]] --start_at open:0 --end_after slam:1.0 --out out/cells_lab.mp4"
+    "python3 edit.py --frames work/cells_lab.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cells_lab.rec.json --audio work/cells_lab.wav --caption \"nobody remembers who built this place\" --self_name 56e --red nobody --shake [[\"slam\",0,8]] --flash [[\"slam\",0,0.5]] --sfx [[\"impact\",\"open:0.12\",{\"gain\":0.8}],[\"dip\",\"slam\",0.4],[\"impact\",\"slam\",{\"gain\":1.4}]] --start_at open:0.1 --end_after slam:1.0 --out out/cells_lab.mp4"
   ],
   "status": "ready",
-  "notes": "r:r52f94c Review Room note (@5.8 s 'the opening should look down the hallway, then go to the first.'): opens at the corridor's mouth looking down the hallway while walking in, then an eased turn and walk to the first cell (lib/cells.js openHall). Independent review READY.",
-  "published_at": "2026-11-11T22:37:26.830Z",
+  "notes": "r:r52f94c Review Room note (@5.8 s 'the opening should look down the hallway, then go to the first.'): opens walking in down the hallway (cells receding to the golem tube), pans, then an eased turn onto the first cell (lib/cells.js openHall); moving from frame 0 with a hit (r:r0f3da0); pace dwell clean (r:r188b46). Independent review READY (round 2).",
+  "published_at": "2026-11-12T00:03:39.147Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:37:59+00:00",
+    "at": "2026-11-12T00:04:13+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 31.62 s vs the reviewed render 31.60 s"
+      "summary": "short.mp4 30.87 s vs the reviewed render 30.85 s"
     },
     "pace": {
       "ok": true,
@@ -3047,7 +3134,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:13:18.115Z",
+      "at": "2026-11-11T23:34:29.251Z",
       "report": "out/cells_lab.check.json"
     },
     "key_sounds": "n/a"
