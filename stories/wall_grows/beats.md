@@ -19,8 +19,8 @@ tiny BOX." One beat: he looks up and puts down ONE more (line 1's "ONE block eve
 ## Beats (Pip at about 3 words/s: 163 words, about 50-55 s; length is not a criterion, r:r08fd98)
 | ~t | line | picture | format beat / plants / the kid's innocent misreading (STANDARDS 0a) |
 |---|---|---|---|
-| 0-4 | L01 our village WALL is FORTY blocks high, and it's still GROWING | EWS from the plaza up the wall | beat 1: the impossible fact + the why, said |
-| 4-7 | L02 it's FORTY blocks high; old Tomas puts the new one on | Tomas on the rim placing one block | the rule in action; proud of Tomas |
+| 0-4 | L01 something outside our village is TALLER than our WALL, and it's still GROWING | EWS from the plaza up the wall | beat 1: the impossible fact (a thing outside, beating the wall); the viewer asks what is it? |
+| 4-7 | L02 our wall's FORTY blocks high, so old Tomas puts a new one ON every MORNING | Tomas on the rim placing one block | the rule in action; proud of Tomas |
 | 6-10 | L03 a zombie can't jump two blocks, so we're super safe! | a zombie stuck at the farm's 2-high wall at night | clue: then what is 40 for? the kid: extra safe |
 | 10-13 | L04 no gate; who needs one? everything's in here | kids playing along the unbroken wall | clue: no gate; the kid: we don't need outside |
 | 13-19 | L05 a block vanished; blocks do that, I guess | a one-block hole (sky through it), then Tomas by the patched spot | clue: someone peeked; the kid: blocks just do that |
@@ -34,7 +34,7 @@ tiny BOX." One beat: he looks up and puts down ONE more (line 1's "ONE block eve
 | 41-44 | L13 this morning old Tomas was too tired to climb | Tomas at the ladder's foot steps up one rung, steps back, drops his brick at the kid's feet | beat 4: someone loved at stake (the race has no one to run it) |
 | 44-49 | L14 I took his brick and went up for him, to see the monster! | crane up with the kid, brick in hand | beat 5: the rule turned (the kid goes up and looks over); excited, never scared |
 | 49-55 | L15 a man was standing on the brown plant; behind him a hundred of us, each in a tiny box | over the kid's head down the outside: the player on his dirt column just under the rim, then the hall's cells | beat 6: the reveal SAID, what the kid sees; the viewer's one jump: the plant was him, the boxes are for us |
-| 55-58 | L16 he looked up at me, and put down one more | the player looks up, pillars one higher, eyes level with the rim. CUT ~1 s after | beat 7: one beat, cut; echoes L01's "still GROWING" and L02's "ONE block every morning" and answers its why: the wall is a race |
+| 55-58 | L16 he looked up at me, and put down one more | the player looks up, pillars one higher, eyes level with the rim. CUT ~1 s after | beat 7: one beat, cut; echoes L01's "something outside... still GROWING" and L02's "ONE block every morning" and answers its why: the wall is a race |
 
 ## Clue map
 | clue | where | misread as | after the twist |

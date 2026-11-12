@@ -2,11 +2,11 @@
  "name": "wall_grows",
  "stunt": "story_wall_grows",
  "version": 2,
- "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'Our village WALL is FORTY blocks high. And it's still GROWING.' replaces the frame + why opener; L02 'Old Tomas puts a new one ON every MORNING.' ('forty blocks high' now in L01); r3 (2026-11-11; critic r3 fixes: 'ONE block every morning' moved into line 1 so L16 echoes it, trims to 163 words; the cold readers' pillar fix: the player stands just under the rim, so ONE more puts him over): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/wall_grows.md): line 1 says the fact AND the why; Tomas too tired one morning (someone loved at stake, L13); the kid climbs FOR him with his brick (L14: the rule turned); the reveal SAID in one plain sentence over the picture (L15: a man standing on the brown plant, a hundred of us in tiny boxes behind him); one beat (L16: he looks up and puts down ONE more, echoing line 1); cut. Earlier: r2 (2026-11-11): the critic's r1 must-fixes (L01 split, S04 still dirt, S09 at the ladder foot, S12 long lens, the dirt/brick heights, Tomas in S07), the hall run deep, and STANDARDS 0a naivety: every clue has the kid's innocent misreading; the brown-plant beat moved after the midpoint (r2 cold reader read the pillar at 45 %); continuity r1's must-fixes (S01 split into S01/S01b, the dirt/brick geometry, the farm ring closed with the rail inside, S04 sky-only hole, S12 stub dropped, looks and props); see reviews/",
+ "revision": "hook r2 (2026-11-12, owner's friend: 'didnt like the wall'): L01 'Something outside our village is TALLER than our WALL. And it's still GROWING.' (the wall alone had no who and no threat; two fresh casual readers: both stop, both understood on first hearing; reviews/opener.md); L02 'Our wall's FORTY blocks high. So old Tomas puts a new one ON every MORNING.' Earlier: hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'Our village WALL is FORTY blocks high. And it's still GROWING.' replaces the frame + why opener; L02 'Old Tomas puts a new one ON every MORNING.' ('forty blocks high' now in L01); r3 (2026-11-11; critic r3 fixes: 'ONE block every morning' moved into line 1 so L16 echoes it, trims to 163 words; the cold readers' pillar fix: the player stands just under the rim, so ONE more puts him over): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/wall_grows.md): line 1 says the fact AND the why; Tomas too tired one morning (someone loved at stake, L13); the kid climbs FOR him with his brick (L14: the rule turned); the reveal SAID in one plain sentence over the picture (L15: a man standing on the brown plant, a hundred of us in tiny boxes behind him); one beat (L16: he looks up and puts down ONE more, echoing line 1); cut. Earlier: r2 (2026-11-11): the critic's r1 must-fixes (L01 split, S04 still dirt, S09 at the ladder foot, S12 long lens, the dirt/brick heights, Tomas in S07), the hall run deep, and STANDARDS 0a naivety: every clue has the kid's innocent misreading; the brown-plant beat moved after the midpoint (r2 cold reader read the pillar at 45 %); continuity r1's must-fixes (S01 split into S01/S01b, the dirt/brick geometry, the farm ring closed with the rail inside, S04 sky-only hole, S12 stub dropped, looks and props); see reviews/",
  "caption": "why does our village wall grow every morning 🧱",
  "upload": {
-  "title": "our village wall is 40 blocks high. and it's still growing 🧱 #minecraft #shorts",
-  "hook": "The wall around my village is 40 blocks high",
+  "title": "something outside our village is taller than our wall 🧱 #minecraft #shorts",
+  "hook": "Something outside our village is taller than our wall",
   "pinned": "Be honest: how many villagers are in YOUR trading hall?",
   "tags": [
    "minecraft village",
@@ -137,8 +137,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Our village WALL / is FORTY blocks high. / And it's STILL growing.",
-   "say": "Our village WALL is FORTY blocks high. And it's still GROWING.",
+   "text": "Something OUTSIDE our village / is TALLER / than our WALL. / And it's still GROWING.",
+   "say": "Something outside our village is TALLER than our WALL. And it's still GROWING.",
    "shot": "S01",
    "shows": [
     {
@@ -147,7 +147,7 @@
     }
    ],
    "punch": true,
-   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; proud, a flat brag; L16 shows what it's growing against",
+   "note": "hook (STANDARDS 0v; r2 after the owner's friend 'didnt like the wall'): a thing outside, a threat, said flat as plain fact; the kid believes it's a plant (L07); never seen in S01 (only the wall it beats); true: at every dawn the dirt's top is one over the rim (S05); L16 shows what it is and why it grows",
    "look": {
     "what": "prop:wall",
     "word": "WALL"
@@ -156,8 +156,8 @@
   {
    "id": "L02",
    "who": "N",
-   "text": "Old Tomas / puts a new one ON / every MORNING.",
-   "say": "Old Tomas puts a new one ON every MORNING.",
+   "text": "Our wall's FORTY blocks high. / So old Tomas / puts a new one ON / every MORNING.",
+   "say": "Our wall's FORTY blocks high. So old Tomas puts a new one ON every MORNING.",
    "shot": "S01b",
    "shows": [
     {
@@ -169,7 +169,7 @@
      "word": "ON"
     }
    ],
-   "note": "proud of Tomas; the brick lands on 'ON'",
+   "note": "proud of Tomas; the wall's height said here now (L03's TWO contrasts it); the brick lands on 'ON'",
    "look": {
     "what": "Tomas",
     "word": "Tomas"
@@ -763,6 +763,6 @@
  },
  "props_note": "village-local: x east, y above the village ground y0 (y0+1 = the first block above ground), z south; the plaza bell at (0, y0+1, 0)",
  "ending": {
-  "loop": "L16 '...and put down one MORE.' runs into L01 'And it's still GROWING': the wall grows because his pillar does"
+  "loop": "L16 '...and put down one MORE.' runs into L01 'something outside... still GROWING': the thing outside is his pillar"
  }
 }

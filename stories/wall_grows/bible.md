@@ -38,7 +38,7 @@ claims are in `set.md`.
 ## Every number said vs the picture
 | said | line | the picture |
 |---|---|---|
-| FORTY blocks high | L01 | the wall body is exactly 40 blocks above the village ground (y0+1 .. y0+40); single capping blocks at 41 along the north rim read as a crenellated crown, not as height |
+| FORTY blocks high | L02 | the wall body is exactly 40 blocks above the village ground (y0+1 .. y0+40); single capping blocks at 41 along the north rim read as a crenellated crown, not as height |
 | ONE more every morning | L02, L08 | one stone brick placed by Tomas in S01b and S06 |
 | TWO blocks (a zombie can't jump) | L03 | the farm's wall of full cobblestone blocks (not cobblestone-wall blocks, 1.5 high) is exactly 2 high; the zombie bumps it and stays |
 | ONE block every morning | L02 | one brick a dawn on the north rim (S01b, S06); the player's dirt one more in S12 |
