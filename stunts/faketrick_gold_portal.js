@@ -56,13 +56,13 @@ module.exports = makeStunt({
   // the opening (owner r:r0f3da0): frame 0 is the impossible thing. The lit gold portal (the player stepping back
   // from it, the swirl going) flashes first, then the tutorial from step 1. The end (owner r:r188b46, fast ends):
   // 0.8 s after it lights; the flash stays inside that (its sound is cut from the finished Short's last 0.8 s)
-  edit: { sfx: [...[0, 4, 8, 12].map(n => ['pop', 'gold', { nth: n, gain: 0.8 }]), ['whoosh', 'cut:-0.15'], ['dip', 'gold_world', 0.4], ['gamedip', 'gold_world', 0.35], ['impact', 'gold_world', { gain: 1.4 }]],   // (gamedip: the portal's travel sound ran loud into the reveal: mixcheck no hit)
+  edit: { sfx: [...[0, 4, 8, 12].map(n => ['pop', 'gold', { nth: n, gain: 0.8 }]), ['whoosh', 'cut:-0.15'], ['dip', 'cut', 0.4], ['gamedip', 'cut', 0.35], ['impact', 'cut:0.03', { gain: 1.4 }]],   // the hit on the reveal itself (review r1: it came 1.1 s after the cut into the gold nether, which played silent)
     // the last beat (owner r:r4607fa): the walk through the gold portal and out into a GOLD nether full of piglins
     // admiring gold (white flash on the cut, a dip + impact and the drop on the reveal); the end 0.9 s after it. The
     // hook: the walk up to the lit gold portal (moving from frame 0)
-    endAfter: 'gold_world:0.9', dropAt: 'gold_world', hook: { at: 'walk', before: 0, after: 0.9, text: 'how is this working?? 😳' },
+    endAfter: 'cut:0.9', dropAt: 'cut', hook: { at: 'walk', before: 0.3, after: 0.9, text: 'how is this working?? 😳' },   // (the payoff is the cut into the gold nether: review r1)
     flash: [['payoff', 0, 0.45], ['cut', 0, 0.35]],
-    subs: [['gold_world', 'a GOLD nether??', 1.0, 0]] },   // (no emoji in subs: the sub font draws them as boxes)
+    subs: [['cut', 'a GOLD nether??', 0.9, 0]] },   // (no emoji in subs: the sub font draws them as boxes)
   start: [0.5, 4, 2.4, 180, 45],
 
   async build (ctx, F) {
