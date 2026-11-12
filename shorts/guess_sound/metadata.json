@@ -790,12 +790,12 @@
     "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1,null],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2,null],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3,null],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4,null],[\\\"lit\\\",\\\"PARROT??\\\",1.5,\\\"red\\\",5,null]]\" --hook \"{\\\"at\\\":\\\"final_reveal\\\",\\\"before\\\":0,\\\"after\\\":1,\\\"blur\\\":9,\\\"blurBox\\\":[0.4,0.32,0.61,0.64],\\\"text\\\":\\\"the last one is IMPOSSIBLE 😭\\\"}\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"dip\",\"final_reveal:0.8\",1.2],[\"gamedip\",\"final_reveal\",0.35],[\"pop\",\"final_reveal\",{\"gain\":1.6}]] --start_at cd2:-0.1 --end_after final_reveal:1.2 --out out/guess_sound.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 2026-11-12: only the animal blurred in the tease; fix-check READY",
+  "notes": "owner note 2026-11-12: only the animal blurred in the tease; fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T21:14:12.409Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T21:14:44+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:48:16+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 36.12 s vs the reviewed render 36.12 s"
@@ -810,8 +810,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T21:11:45.270Z",
-      "report": "work/hb/guess_sound.check.json"
+      "at": "2026-11-12T20:44:55.257Z",
+      "report": "out/guess_sound.check.json"
     },
     "key_sounds": {
       "ok": true,
@@ -819,6 +819,50 @@
         "hear"
       ],
       "summary": "key sounds over the music: worst +20.8 dB over 11 clips (need >= 8 dB)"
+    },
+    "mix": {
+      "ok": true,
+      "pump": 1.06,
+      "pump_run": 0.0,
+      "under": 5.8,
+      "summary": "the master's gain spread 1.06 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 5.8 dB over the music on short.mp4 (min 3)"
     }
+  },
+  "mix": {
+    "pump": 1.06,
+    "pump_run": 0.0,
+    "master_gain": -0.06,
+    "under": 5.8,
+    "windows": [
+      165,
+      340
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.06 dB (max 3.0), run 0.0 s (max 0.5), game over music 5.8 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:48:03+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "638e9a57d2dfaccde72c760a3cafafd7beee3b5e9fb1bd9599890a08e3df2884",
+      "release": {
+        "tag": "pkg-guess_sound",
+        "asset": "guess_sound.short.638e9a57d2dfaccd.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short.638e9a57d2dfaccd.mp4",
+        "sha256": "638e9a57d2dfaccde72c760a3cafafd7beee3b5e9fb1bd9599890a08e3df2884",
+        "bytes": 19686543
+      },
+      "song": {
+        "drop_in_short_s": 35.7,
+        "drop_in_song_s": 47.5,
+        "song_start_s": 11.8
+      }
+    },
+    "song_file_sha256": "7cfaf6119ddf44be81996838f9620b75ef7ced05af346c9405e310b36748027e",
+    "video_stream_md5": "c6f10520a2c511f94c646143b3cc0248",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

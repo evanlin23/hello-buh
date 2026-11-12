@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20427407,
-    "sha256": "19e7f853b7ddd93982d787a10a58191b6cec70ecc4552d1c49de36517432d485",
+    "bytes": 20431223,
+    "sha256": "b5e466501c32652a6a9d824f870acc9927089a2a356b83fe3224eebb30580bad",
     "release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short.19e7f853b7ddd939.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.19e7f853b7ddd939.mp4",
-      "sha256": "19e7f853b7ddd93982d787a10a58191b6cec70ecc4552d1c49de36517432d485",
-      "bytes": 20427407
+      "asset": "mega_sponge.short.b5e466501c32652a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.b5e466501c32652a.mp4",
+      "sha256": "b5e466501c32652a6a9d824f870acc9927089a2a356b83fe3224eebb30580bad",
+      "bytes": 20431223
     },
     "nosong_release": {
       "tag": "pkg-mega_sponge",
@@ -208,12 +208,12 @@
     "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --self_name 56e --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --flash [[\"reveal\",0,0.5]] --sfx [[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.3}]] --start_at build_start:0 --end_after reveal:0.9 --out out/mega_sponge.mp4"
   ],
   "status": "ready",
-  "notes": "mega_sponge v4 + owner r:r759917: the holes cut nearest the camera first, sweeping away; fix-check READY",
+  "notes": "mega_sponge v4 + owner r:r759917: the holes cut nearest the camera first, sweeping away; fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T21:09:33.022Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T21:09:58+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:47:46+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 8.26 s vs the reviewed render 8.25 s"
@@ -221,16 +221,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T21:07:45.463Z",
-      "report": "work/hb/mega_sponge.check.json"
+      "at": "2026-11-12T20:47:34.183Z",
+      "report": "out/mega_sponge.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.4,
+      "pump_run": 0.0,
+      "under": 4.16,
+      "summary": "the master's gain spread 2.4 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.4,
+    "pump_run": 0.0,
+    "master_gain": -0.35,
+    "under": 4.16,
+    "windows": [
+      65,
+      26
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.4 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.16 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:47:35+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "19e7f853b7ddd93982d787a10a58191b6cec70ecc4552d1c49de36517432d485",
+      "release": {
+        "tag": "pkg-mega_sponge",
+        "asset": "mega_sponge.short.19e7f853b7ddd939.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.19e7f853b7ddd939.mp4",
+        "sha256": "19e7f853b7ddd93982d787a10a58191b6cec70ecc4552d1c49de36517432d485",
+        "bytes": 20427407
+      },
+      "song": {
+        "drop_in_short_s": 7.35,
+        "drop_in_song_s": 14.5,
+        "song_start_s": 7.15
+      }
+    },
+    "song_file_sha256": "1a7973037e254622504963f940f469c64ed3185397851c3710f9f8c5b37e36e7",
+    "video_stream_md5": "93bccb91a008ba336c1aa0f8f397aefb",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

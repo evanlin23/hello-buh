@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 23599597,
-    "sha256": "03933cb26a5849d0a7486434d91150b8123fef1a5d05c63910ac58068c708aa7",
+    "bytes": 23603663,
+    "sha256": "124653c4843b1a800e82a77db3f0213d3eca272409c32340ecb481bd66f1c959",
     "release": {
       "tag": "pkg-lapse_rocket",
-      "asset": "lapse_rocket.short.03933cb26a5849d0.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.03933cb26a5849d0.mp4",
-      "sha256": "03933cb26a5849d0a7486434d91150b8123fef1a5d05c63910ac58068c708aa7",
-      "bytes": 23599597
+      "asset": "lapse_rocket.short.124653c4843b1a80.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.124653c4843b1a80.mp4",
+      "sha256": "124653c4843b1a800e82a77db3f0213d3eca272409c32340ecb481bd66f1c959",
+      "bytes": 23603663
     },
     "nosong_release": {
       "tag": "pkg-lapse_rocket",
@@ -8198,12 +8198,12 @@
     "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --self_name 56e --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done:-1.65\",3],[\"mid_done:-1.65\",\"mid_done\",4],[\"mid_done:0.4\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\",{\\\"hide\\\":\\\"launch_cut\\\"}]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"liftoff\",0.4],[\"gamedip\",\"liftoff\",0.3],[\"impact\",\"liftoff\",{\"gain\":1.4}]] --start_at small_start:-0.1 --end_after liftoff:0.9 --out out/lapse_rocket.mp4"
   ],
   "status": "ready",
-  "notes": "owner notes 2026-11-12: place sounds only for blocks landing on screen (19.9 s); the cut to the launch faster (60:00 -> liftoff 0.95 -> 0.45 s), the launch kept; new mix path",
+  "notes": "owner notes 2026-11-12: place sounds only for blocks landing on screen (19.9 s); the cut to the launch faster (60:00 -> liftoff 0.95 -> 0.45 s), the launch kept; new mix path | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T21:37:17.764Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T21:37:44+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:49:48+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.93 s vs the reviewed render 30.92 s"
@@ -8211,16 +8211,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T21:35:36.973Z",
-      "report": "work/hb/lapse_rocket.check.json"
+      "at": "2026-11-12T21:12:20.355Z",
+      "report": "out/lapse_rocket.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.69,
+      "pump_run": 0.0,
+      "under": 6.09,
+      "summary": "the master's gain spread 1.69 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 6.1 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.69,
+    "pump_run": 0.0,
+    "master_gain": -0.14,
+    "under": 6.09,
+    "windows": [
+      275,
+      147
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.69 dB (max 3.0), run 0.0 s (max 0.5), game over music 6.09 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:49:37+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "03933cb26a5849d0a7486434d91150b8123fef1a5d05c63910ac58068c708aa7",
+      "release": {
+        "tag": "pkg-lapse_rocket",
+        "asset": "lapse_rocket.short.03933cb26a5849d0.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.03933cb26a5849d0.mp4",
+        "sha256": "03933cb26a5849d0a7486434d91150b8123fef1a5d05c63910ac58068c708aa7",
+        "bytes": 23599597
+      },
+      "song": {
+        "drop_in_short_s": 30.01,
+        "drop_in_song_s": 38.25,
+        "song_start_s": 8.24
+      }
+    },
+    "song_file_sha256": "dc57ef5b2cb4f265f5aae1d04e647ac68e7f7cc184416712ceb77943ef4b180c",
+    "video_stream_md5": "663c1d162b56ffbbd582b7643d8aedb1",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

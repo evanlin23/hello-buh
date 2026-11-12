@@ -491,12 +491,12 @@
     "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --self_name 56e --red REALLY --speed [[\"walker:0.5\",\"home:-0.3\",1.8]] --punch [\"flood\",\"final\",\"walker\",\"home\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}],[\\\"walker\\\",\\\"IT WAS HIM 💀\\\",1.2,\\\"yellow\\\",0,null,{\\\"y\\\":0.84}],[\\\"road\\\",\\\"NOT EVEN LAVA 💀\\\",1,\\\"orange\\\",0,null,{\\\"y\\\":0.9,\\\"size\\\":84}]]\" --flash [[\"home\",0,0.3]] --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4,{\"depth\":0.5}],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4,{\"depth\":0.5}],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]] --start_at start:0 --end_after home:0.3 --out out/desire_town.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 2026-11-12 (16.6 s, 'the music jumps too much'): the song sits steady under the sfx on the new mix path (pump 2.3 dB, under +5.8 dB); the payoff hits from the sfx",
+  "notes": "owner note 2026-11-12 (16.6 s, 'the music jumps too much'): the song sits steady under the sfx on the new mix path (pump 2.3 dB, under +5.8 dB); the payoff hits from the sfx | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T21:42:19.139Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T21:42:37+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:50:05+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 16.64 s vs the reviewed render 16.64 s"
@@ -511,8 +511,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T21:40:49.558Z",
-      "report": "work/hb/desire_town.check.json"
+      "at": "2026-11-12T20:47:23.803Z",
+      "report": "out/desire_town.check.json"
     },
     "key_sounds": {
       "ok": true,
@@ -521,6 +521,50 @@
         "break"
       ],
       "summary": "not measured (no short_nosong.mp4 beside the video)"
+    },
+    "mix": {
+      "ok": true,
+      "pump": 1.66,
+      "pump_run": 0.0,
+      "under": 11.03,
+      "summary": "the master's gain spread 1.66 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 11.0 dB over the music on short.mp4 (min 3)"
     }
+  },
+  "mix": {
+    "pump": 1.66,
+    "pump_run": 0.0,
+    "master_gain": -0.08,
+    "under": 11.03,
+    "windows": [
+      86,
+      124
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.66 dB (max 3.0), run 0.0 s (max 0.5), game over music 11.03 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:49:59+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "da5722cc3d850243aa123ef0aec58dd09a5e557297d05f07d8e64a36e3dd11df",
+      "release": {
+        "tag": "pkg-desire_town",
+        "asset": "desire_town.short.da5722cc3d850243.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.da5722cc3d850243.mp4",
+        "sha256": "da5722cc3d850243aa123ef0aec58dd09a5e557297d05f07d8e64a36e3dd11df",
+        "bytes": 15649792
+      },
+      "song": {
+        "drop_in_short_s": 0.0,
+        "drop_in_song_s": 3.0,
+        "song_start_s": 3.0
+      }
+    },
+    "song_file_sha256": "e5c1d849fa0102c70cc7187cd87b032bf49efb63ffdd57b5f7f8e2af0eb60972",
+    "video_stream_md5": "74a4314885fa63edf8ac002a144368ac",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

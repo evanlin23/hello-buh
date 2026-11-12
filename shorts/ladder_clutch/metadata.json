@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21727550,
-    "sha256": "1613d3d6f52a23c806d56c8a7a67aec17bb22fab1e6fb33fe2500d7a928d61ea",
+    "bytes": 21725345,
+    "sha256": "11ef0905da8c640095187003b0099cdbe0de04ad983f2a017d3eb14f29ab2faf",
     "release": {
       "tag": "pkg-ladder_clutch",
-      "asset": "ladder_clutch.short.1613d3d6f52a23c8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short.1613d3d6f52a23c8.mp4",
-      "sha256": "1613d3d6f52a23c806d56c8a7a67aec17bb22fab1e6fb33fe2500d7a928d61ea",
-      "bytes": 21727550
+      "asset": "ladder_clutch.short.11ef0905da8c6400.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short.11ef0905da8c6400.mp4",
+      "sha256": "11ef0905da8c640095187003b0099cdbe0de04ad983f2a017d3eb14f29ab2faf",
+      "bytes": 21725345
     },
     "nosong_release": {
       "tag": "pkg-ladder_clutch",
@@ -328,12 +328,12 @@
     "python3 edit.py --frames work/ladder_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/ladder_clutch.rec.json --audio work/ladder_clutch.wav --caption \"bro trusted ONE ladder with his life 😳\" --self_name 56e --red ladder --subs \"[[\\\"fall0:1.0\\\",\\\"30 blocks\\\",1.5],[\\\"top\\\",\\\"60 blocks... into cactus\\\",1.6,1],[\\\"top\\\",\\\"80 blocks... into LAVA\\\",1.6,2]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fall1:1.0\",\"catch1:-0.6\",2],[\"fall2:1.0\",\"catch2:-0.6\",2]] --punch [[\"final\",0,1.08]] --flash [[\"final\",0,0.3]] --sfx [[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}]] --start_at fall0:0.95 --end_after final:0.45 --out out/ladder_clutch.mp4"
   ],
   "status": "ready",
-  "notes": "owner notes on v2/v3: the first drop opens mid-fall, the later drops show the jump off the top; 3 drops with stakes (30 grass, 60 cactus field, 80 onto a 1x1 grass block in lava); ends 0.45 s after the lava landing with a hit and a flash.",
+  "notes": "owner notes on v2/v3: the first drop opens mid-fall, the later drops show the jump off the top; 3 drops with stakes (30 grass, 60 cactus field, 80 onto a 1x1 grass block in lava); ends 0.45 s after the lava landing with a hit and a flash. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T20:50:19.961Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T20:50:39+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:47:24+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 10.32 s vs the reviewed render 10.32 s"
@@ -341,16 +341,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T20:49:00.965Z",
-      "report": "work/hb/ladder_clutch.check.json"
+      "at": "2026-11-12T20:42:05.192Z",
+      "report": "out/ladder_clutch.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.61,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 0.61 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.61,
+    "pump_run": 0.0,
+    "master_gain": -0.06,
+    "under": null,
+    "windows": [
+      193,
+      0
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.61 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:47:18+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "1613d3d6f52a23c806d56c8a7a67aec17bb22fab1e6fb33fe2500d7a928d61ea",
+      "release": {
+        "tag": "pkg-ladder_clutch",
+        "asset": "ladder_clutch.short.1613d3d6f52a23c8.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short.1613d3d6f52a23c8.mp4",
+        "sha256": "1613d3d6f52a23c806d56c8a7a67aec17bb22fab1e6fb33fe2500d7a928d61ea",
+        "bytes": 21727550
+      },
+      "song": {
+        "drop_in_short_s": 0.65,
+        "drop_in_song_s": 4.5,
+        "song_start_s": 3.85
+      }
+    },
+    "song_file_sha256": "e997ea626537a677a5d5d325c345f712b711bd33340eb869e6e0ec455248fb2d",
+    "video_stream_md5": "635eecc54c6cf67a47b6bafb6618c3c9",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

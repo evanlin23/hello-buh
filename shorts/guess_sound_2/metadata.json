@@ -1005,12 +1005,12 @@
     "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1,null],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2,null],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.5,\\\"red\\\",5,null,{\\\"y\\\":0.2,\\\"size\\\":92}]]\" --hook \"{\\\"at\\\":\\\"final_reveal\\\",\\\"before\\\":0,\\\"after\\\":1,\\\"blur\\\":9,\\\"blurBox\\\":[0.4,0.32,0.61,0.64],\\\"text\\\":\\\"the last one is IMPOSSIBLE 😭\\\"}\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"dip\",\"final_reveal:0.8\",1.2],[\"gamedip\",\"final_reveal\",0.35],[\"pop\",\"final_reveal\",{\"gain\":1.6}]] --start_at cd3:-0.02 --end_after final_reveal:1.2 --out out/guess_sound_2.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 2026-11-12: only the animal blurred in the tease; music -6 dB under the game (new mixcheck); fix-check READY",
+  "notes": "owner note 2026-11-12: only the animal blurred in the tease; music -6 dB under the game (new mixcheck); fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T21:25:23.540Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T21:25:54+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:48:49+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 37.01 s vs the reviewed render 37.00 s"
@@ -1025,8 +1025,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T21:22:51.922Z",
-      "report": "work/hb/guess_sound_2.check.json"
+      "at": "2026-11-12T20:46:52.989Z",
+      "report": "out/guess_sound_2.check.json"
     },
     "key_sounds": {
       "ok": true,
@@ -1034,6 +1034,50 @@
         "hear"
       ],
       "summary": "key sounds over the music: worst +18.1 dB over 11 clips (need >= 8 dB)"
+    },
+    "mix": {
+      "ok": true,
+      "pump": 1.34,
+      "pump_run": 0.0,
+      "under": 7.13,
+      "summary": "the master's gain spread 1.34 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 7.1 dB over the music on short.mp4 (min 3)"
     }
+  },
+  "mix": {
+    "pump": 1.34,
+    "pump_run": 0.0,
+    "master_gain": -0.06,
+    "under": 7.13,
+    "windows": [
+      103,
+      482
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.34 dB (max 3.0), run 0.0 s (max 0.5), game over music 7.13 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:48:34+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "d7923aa75f631857cc94b80de474ffccbcd89a6fe01b3e80f4f7ddb1571feab9",
+      "release": {
+        "tag": "pkg-guess_sound_2",
+        "asset": "guess_sound_2.short.d7923aa75f631857.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.d7923aa75f631857.mp4",
+        "sha256": "d7923aa75f631857cc94b80de474ffccbcd89a6fe01b3e80f4f7ddb1571feab9",
+        "bytes": 20029161
+      },
+      "song": {
+        "drop_in_short_s": 36.57,
+        "drop_in_song_s": 39.75,
+        "song_start_s": 3.18
+      }
+    },
+    "song_file_sha256": "62d6091544049bbf6672fe522fa69515b243378b2e919110af8a0ac0505367cf",
+    "video_stream_md5": "bba383a04053a4f2a945eaf54c409e8a",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

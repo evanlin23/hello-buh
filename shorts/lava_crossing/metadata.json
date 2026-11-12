@@ -469,12 +469,12 @@
     "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) 💀\" --self_name 56e --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --speed [[\"beat:0.4\",\"place_on:-0.35\",2],[\"place_on:0.05\",\"bridged:-0.05\",2.5],[\"bridged:0.4\",\"crossed\",3],[\"in_lava:0.5\",\"death:-0.2\",2.5]] --hook \"{\\\"at\\\":\\\"in_lava\\\",\\\"before\\\":0.35,\\\"after\\\":0.85,\\\"text\\\":\\\"wait for the last one 💀\\\"}\" --sfx [[\"whoosh\",\"beat:0.4\"],[\"pop\",\"place_on\",{\"nth\":0,\"gain\":0.5}],[\"pop\",\"crossed\",{\"nth\":0}],[\"pop\",\"crossed\",{\"nth\":1}],[\"pop\",\"crossed\",{\"nth\":2}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --on_fire in_lava:death --death_screen death --start_at beat:0.4 --end_after death:0.9 --out out/lava_crossing.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 2026-11-12: the damage and death sped up, a quick end; music -3 dB under the game (new mixcheck); fix-check READY",
+  "notes": "owner note 2026-11-12: the damage and death sped up, a quick end; music -3 dB under the game (new mixcheck); fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T21:29:01.641Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T21:29:28+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:49:16+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 17.66 s vs the reviewed render 17.65 s"
@@ -489,9 +489,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T21:27:18.316Z",
-      "report": "work/hb/lava_crossing.check.json"
+      "at": "2026-11-12T20:45:09.084Z",
+      "report": "out/lava_crossing.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.56,
+      "pump_run": 0.0,
+      "under": 6.06,
+      "summary": "the master's gain spread 1.56 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 6.1 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.56,
+    "pump_run": 0.0,
+    "master_gain": -0.12,
+    "under": 6.06,
+    "windows": [
+      99,
+      48
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.56 dB (max 3.0), run 0.0 s (max 0.5), game over music 6.06 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:49:04+00:00",
+    "code": "f77c5e782628299da245f3617bfe7b975ca8c430",
+    "from": {
+      "sha256": "d1a3bc577c321a8c90e4f12708e8d3f110429669812b4fd3382993f4285d3238",
+      "release": {
+        "tag": "pkg-lava_crossing",
+        "asset": "lava_crossing.short.d1a3bc577c321a8c.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lava_crossing/lava_crossing.short.d1a3bc577c321a8c.mp4",
+        "sha256": "d1a3bc577c321a8c90e4f12708e8d3f110429669812b4fd3382993f4285d3238",
+        "bytes": 25220381
+      },
+      "song": {
+        "drop_in_short_s": 14.91,
+        "drop_in_song_s": 16.5,
+        "song_start_s": 1.59
+      }
+    },
+    "song_file_sha256": "cbd28e180dfac36e604ba2458ec768d14af5f5808b10bd07a47586b5d4c6629e",
+    "video_stream_md5": "716dd47dadf16fc7526b65455498f815",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
