@@ -26,10 +26,12 @@ module.exports = {
     flash: [['final', 0, 0.3]],   // pace: a clear picture change on the payoff (the punch alone isn't one)
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     // the teleports between walls cut out; the long falls' middles at x2 (the camera holds still looking down the wall)
-    speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `fall${i + 1}:0.95`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:1.0`, `catch${i + 1}:-0.6`, 2])],
+    // owner 2026-11-12 on v3 at 0.7 s: "for the first, we have the fall. but the rest we should have the jumping off.": drop 1
+    // opens mid-fall (frame 0); drops 2-3 cut to the wall top and show the jump off it again (the teleport alone is cut)
+    speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:1.0`, `catch${i + 1}:-0.6`, 2])],
     // on each drop's first frame: the edit's timeline is in output time and a mark inside a cut sits on the cut, so drops 2-3
     // key on fall<i> itself (fall<i>:1.0 put them 1 s late); drop 1's fall0 is before the start
-    subs: WALLS.map((w, i) => [i ? `fall${i}:0.02` : 'fall0:1.0', w.sub, 1.5])
+    subs: WALLS.map((w, i) => i ? ['top', w.sub, 1.6, i] : ['fall0:1.0', w.sub, 1.5])
   },
 
   async setup (ctx) {
