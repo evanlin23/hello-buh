@@ -12,6 +12,7 @@ module.exports = makeStunt({
   caption: 'you can heal every mob in Minecraft...',
   red: 'every',
   twist: '...but who heals HIM?',
+  answer: 'NOBODY.',
   beats: [
     { id: 'wolf', card: 'WOLF + STEAK', mob: 'wolf', nbt: '{Owner:{owner},Sitting:1b,NoAI:1b,CollarColor:14b,Silent:1b,attributes:[{id:"minecraft:max_health",base:40}],Health:30f}', dist: 2.3, aimY: 0.6, yaw: 45, untilFull: true, maxFeeds: 8, feedGap: 4,
       beatSound: ['entity.wolf.whine', 1, 1],
