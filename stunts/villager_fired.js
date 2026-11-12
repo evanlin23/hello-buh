@@ -39,6 +39,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
+    subsY: 0.15,   // the labels in the sky above him: centred they lay across his robe, the evidence of each job (fix-check)
     // frame 0: the crosshair landing on job 1's spot (right behind him), the lectern down and his robe changing 0.3 s in
     // (r:r0f3da0)
     startAt: 'job:-0.3', endAfter: 'gone:0.65',   // r:r188b46: 0.65 s after his death reads
@@ -55,7 +56,7 @@ module.exports = {
     // a pop on frame 0; on the payoff ('gone': his death puff ends as the ring's last blasts go off; pace's payoff, the
     // endAfter event) a flash, punch, song dip + impact (a number for the ring's last blast changed with every take)
     flash: [['mob_death', 0, 0.6], ['gone', 0, 0.9]], punch: [['gone', 0, 1.3]],
-    sfx: [['pop', 'job', { gain: 0.9 }], ['dip', 'gone', 0.4], ['gamedip', 'gone', 0.35], ['impact', 'gone', { gain: 1.3 }]]
+    sfx: [['pop', 'job', { gain: 1.4 }], ['dip', 'gone', 0.4], ['gamedip', 'gone', 0.35], ['impact', 'gone', { gain: 1.3 }]]
   },
 
   async setup (ctx) {
