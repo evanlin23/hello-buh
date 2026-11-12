@@ -2143,8 +2143,15 @@ def main():
     if args.subs and args.timeline:
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
         sub_starts = []
+        def sub_ts(ev_):   # 'EVENT' or 'EVENT:OFFSET_S' (as captions, flash and punch take it; tnt's 'hill:2.0' was skipped silently)
+            name, _, off = str(ev_).rpartition(":") if ":" in str(ev_) else (str(ev_), "", "0")
+            try:
+                off = float(off)
+            except ValueError:
+                name, off = str(ev_), 0.0
+            return [e["t"] / 1000 + off for e in all_ev if e["event"] == name]
         for sub in json.loads(args.subs):
-            tts = [e["t"] / 1000 for e in all_ev if e["event"] == sub[0]]
+            tts = sub_ts(sub[0])
             nth_ = sub[3] if len(sub) > 3 else 0
             if len(tts) > nth_:
                 t_ = tts[nth_] - args.start
@@ -2156,8 +2163,9 @@ def main():
             ev_name, text = sub[0], sub[1]
             dur_s = sub[2] if len(sub) > 2 else 1.8
             nth = sub[3] if len(sub) > 3 else 0                 # which occurrence of the event
-            ts = [e["t"] / 1000 for e in all_ev if e["event"] == ev_name]
+            ts = sub_ts(ev_name)
             if len(ts) <= nth:
+                print(f"WARNING subs: no {ev_name!r} mark (#{nth}), {text!r} skipped")
                 continue
             t0 = ts[nth] - args.start
             for c in cut_times(args):
