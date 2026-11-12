@@ -171,6 +171,7 @@ module.exports = {
       }
       let d = 0
       for (let i = 0; i < ticks; i++) {
+        if (at.stop && at.stop()) break                // (a run can end early: the dive stops just past the core)
         if (at[i]) at[i]()
         const p = pointAt(d), ahead = pointAt(d + 10)
         if (d + 10 > total) { const q = pointAt(total - 2); ahead.x += (ahead.x - q.x) * 3; ahead.y += (ahead.y - q.y) * 3; ahead.z += (ahead.z - q.z) * 3 }
@@ -229,7 +230,7 @@ module.exports = {
         dist += v
         for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); }
         return v
-      }, (p, a) => a, { 2: boost })
+      }, (p, a) => a, { 2: boost, stop: () => done.has('threaded') && dist >= 80 })   // (r:r188b46: cut ~0.3 s after the thread reads; it flew on 1.75 s inside)
       // 7. the ending (owner r:r4607fa, lead 2026-11-12: it ended diving into empty sky, "borderline"): 56e on the roof
       // of his "starter house", on the sponge's south-west top corner (a solid cell: no digit position with two 1s),
       // facing out over the forest; then the extreme wide, the sponge filling the frame and him a speck on its corner
