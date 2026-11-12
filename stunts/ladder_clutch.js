@@ -21,7 +21,7 @@ module.exports = {
   edit: {
     caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
     // r:r0f3da0 pace: silent until 1.61 s (a walk-off and fall make little vanilla sound): a wind bed from frame 0
-    sfx: [['air', 'start', 'final', { gain: 0.5 }]],
+    sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }]],   // (pace: no hit on the 80-block landing)
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     speed: WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),   // the teleports between walls, cut out
     subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 1.2 + w.h / 40, i + 1])]
