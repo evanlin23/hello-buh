@@ -1,0 +1,17 @@
+{
+ "name": "desire_town",
+ "stunt": "desire_town",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43303532276",
+ "source": "f8e217b",
+ "queued": "2026-11-12T20:45:49Z",
+ "finished": "2026-11-12T20:53:10Z",
+ "mp4": "renders/out/desire_town.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
