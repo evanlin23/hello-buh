@@ -92,3 +92,5 @@ looks_wrong  78ab78b250acfce0  # sound-only re-mix of OK'd cut 416d9b9d1ef28212 
 midas_touch  d1aeb9417bee0c2c  # sound-only re-mix of OK'd cut ba89270c834b403e (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
 skull_art  b9fa9a1a03e0dced  # sound-only re-mix of OK'd cut 90fb02c533792bde (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
 sword_art  1fcb8441603b1842  # sound-only re-mix of OK'd cut 371a726d38ca931c (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905)
+villager_crowd  048274d4792d6c3b  # sound-only re-mix of OK'd cut 65ddd7b4d88ae695 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905) (songGain adjusted)
+cave_reveal  f6cc41d3d52e9f23  # sound-only re-mix of OK'd cut 45f28f31693464e5 (owner 2026-11-12: 're mix only the sound, keep existing OKs', r:r6ae905) (songGain adjusted)
