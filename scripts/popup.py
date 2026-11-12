@@ -13,7 +13,9 @@ edit.popup: a list of entries (lib/fakemod.js builds them; every time is a timel
    "done": ["Request ", ["DENIED", "red"]],     the body after the click (optional)
    "roll": {"ticks": EVENT, "result": "Allow", "at": RESULT_EVENT},   Roll: each EVENT mark after CLICK switches the
                                      slot (ALLOW / DENY ...), RESULT_EVENT lands it on the result
-   "y": 0.06}                        the panel's top as a fraction of the game view (default 0.06)
+   "y": 0.5,                         the panel's centre as a fraction of the game view (default 0.5: centred like a
+                                     modal, owner r:r7ef6ec; lib/fakemod.js frames the mob under it)
+   "scale": 3}                       GUI scale (default 3: 666 x 249 px, the game font 24 px tall)
 
 `frame_key(windows, t)` gives a hashable state for the overlay track (scripts/retention.py fx_concat caches one PNG per
 state) and `frame_img(key)` draws it. Times are Short seconds (the timeline already warped, minus the start).
@@ -25,7 +27,8 @@ import zipfile
 from PIL import Image, ImageDraw
 
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
-S = 4                                    # GUI scale: the game font 32 px tall, readable on a phone
+SCALE = 3                                # default GUI scale: the panel 666 px wide, centred, the mob framed under it
+S = SCALE
 PANEL_W = 222                            # GUI px (888 px of the 1080)
 PAD = 8
 BTN_H = 20
@@ -252,9 +255,11 @@ def register(wins):
 
 def frame_img(key):
     """The full-frame RGBA overlay (1080x1920) for a frame_key."""
+    global S
     wid, scale, alpha, cx, cy, hov, clicked, press, slot, show_done = key
     w = _wins_by_id[wid]
     e = w["e"]
+    S = int(e.get("scale", SCALE))
     h, body, done, rects = layout(e)
     pick = e.get("pick")
     gw, gh = PANEL_W * S, h * S
@@ -302,8 +307,8 @@ def frame_img(key):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     dim = Image.new("RGBA", (W, GAME_H), (8, 8, 12, int(80 * alpha)))   # the world dims a little behind a screen
     img.alpha_composite(dim, (0, BAND))
-    top = BAND + int(GAME_H * float(e.get("y", 0.06)))
-    px, py = (W - pan.width) // 2, top + (gh - pan.height) // 2
+    mid = BAND + int(GAME_H * float(e.get("y", 0.5)))      # the panel's centre (centred by default: r:r7ef6ec)
+    px, py = (W - pan.width) // 2, mid - pan.height // 2
     img.alpha_composite(pan, (px, py))
     # the cursor, over everything, while the panel is fully open (not on the landed roll's last moments)
     if scale == 1.0 and alpha >= 1 and not (slot and slot[1] and slot[2] >= 1):
@@ -312,7 +317,7 @@ def frame_img(key):
             for xx, ch in enumerate(row):
                 if ch in "X.":
                     cur.putpixel((xx, yy), (0, 0, 0, 255) if ch == "X" else (255, 255, 255, 255))
-        cur = cur.resize((cur.width * 3, cur.height * 3), Image.NEAREST)
+        cur = cur.resize((cur.width * max(2, S - 1), cur.height * max(2, S - 1)), Image.NEAREST)
         x, y = px + int(cx * S), py + int(cy * S)
         if 0 <= x <= W - cur.width and 0 <= y <= H - cur.height:
             img.alpha_composite(cur, (x, y))
