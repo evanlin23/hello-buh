@@ -2,7 +2,7 @@
  "name": "bell_window",
  "stunt": "story_bell_window",
  "version": 2,
- "revision": "r7 (2026-11-12; critic r7 must-fix: L11 one sentence; should-fixes: L01 trimmed so RINGS lands by 3 s, S08 `raise` + `draw` marks): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 adds the 'why?' ('And nobody will tell me WHY.'); L05 'Mom won't SAY why' (he wants to know); the reveal is now spoken, L11 over S08 ('He had a BOW, and this time the bell wasn't in the WAY.'), cut 1.0 s after the draw on 'WAY'; the last line echoes line 1's bell. r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom recast `mom_saltmouth` (Kore, the owner's pick). r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
+ "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'My village BELL is in LOVE with me. Every time I open my WINDOW, it SCREAMS.' replaces the frame + why opener; L04 'It's a little bit CLINGY.' (was 'I think the bell LIKES me', a repeat of 'in LOVE'); r7 (2026-11-12; critic r7 must-fix: L11 one sentence; should-fixes: L01 trimmed so RINGS lands by 3 s, S08 `raise` + `draw` marks): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 adds the 'why?' ('And nobody will tell me WHY.'); L05 'Mom won't SAY why' (he wants to know); the reveal is now spoken, L11 over S08 ('He had a BOW, and this time the bell wasn't in the WAY.'), cut 1.0 s after the draw on 'WAY'; the last line echoes line 1's bell. r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom recast `mom_saltmouth` (Kore, the owner's pick). r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
  "caption": "why does the bell ring when I open my window 🔔",
  "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he climbs out past it to wave hi to the pale guy on the cliff.",
  "question": "why does the bell ring every time he opens his window?",
@@ -85,8 +85,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "In my village, / the bell RINGS / every time / I open my WINDOW. / And nobody / will tell me / WHY.",
-   "say": "In my village, the bell RINGS every time I open my window. And nobody will tell me WHY.",
+   "text": "My village BELL / is in LOVE with me. / Every TIME / I open my WINDOW, / it SCREAMS.",
+   "say": "My village BELL is in LOVE with me. Every time I open my WINDOW, it SCREAMS.",
    "shot": "S01",
    "shows": [
     {
@@ -107,7 +107,8 @@
    "look": {
     "what": "prop:bell",
     "word": "BELL"
-   }
+   },
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; pleased with himself, flat on SCREAMS"
   },
   {
    "id": "L02",
@@ -151,21 +152,21 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "I think / the bell / LIKES me.",
-   "say": "I think the bell LIKES me.",
+   "text": "It's a LITTLE / bit CLINGY.",
+   "say": "It's a little bit CLINGY.",
    "shot": "S02",
    "shows": [
     {
      "what": [
       "bell"
      ],
-     "word": "BELL"
+     "word": "CLINGY"
     }
    ],
    "direction": "sure of it, beaming",
    "look": {
     "what": "prop:bell",
-    "word": "BELL"
+    "word": "CLINGY"
    }
   },
   {
@@ -333,7 +334,7 @@
    "place": "bedroom",
    "size": "wide",
    "camera": "pov at the 1x2 window: the hand opens the spruce-trapdoor shutters on 'WINDOW'; on 'VILLAGE' the pov tilts down to the boardwalk",
-   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'RINGS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) the villagers on the boardwalk below (staged within ~15 deg of the bell axis) run west along it, out of frame left toward the shore houses; doors slam off screen. bg: the dark bank and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
+   "frame": "frame 1: the closed shutters centred, the hand on them (moving from 0.0 s). On 'WINDOW' they swing open: the bell centred 3 blocks out, at eye level, hung between its two posts; on 'SCREAMS' it swings and rings (no arrow seen: it sticks in the bell's far, north side); on 'INSIDE' (L02) the villagers on the boardwalk below (staged within ~15 deg of the bell axis) run west along it, out of frame left toward the shore houses; doors slam off screen. bg: the dark bank and the lone oak against the deep-blue dusk sky, straight behind the bell. Dusk 12600 (sun down, sky deep blue).",
    "look": {
     "time": 12600
    }
@@ -500,14 +501,14 @@
    "S07: the bell rings; he climbs out past it onto the porch roof and waves",
    "S08 under L11: over the skeleton's shoulder down the axis: the bell with tonight's arrow in it, the kid clear of it; it draws on 'WAY'; cut 1.0 s after the `draw` mark."
   ],
-  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'In my village, the bell RINGS every time I open my WINDOW.': the bell rang because it was in the way"
+  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'My village BELL is in LOVE with me': the bell screamed because it was in the way"
  },
  "bible": "stories/bell_window/bible.md",
  "beats": "stories/bell_window/beats.md",
  "set": "stories/bell_window/set.md",
  "shotlist": "stories/bell_window/shots.md",
  "upload": {
-  "title": "every time I open my window, the village bell rings 🔔 #minecraft #shorts",
+  "title": "my village bell is in love with me 🔔 #minecraft #shorts",
   "pinned": "How many arrows do you think that bell has taken? Wrong answers only",
   "tags": [
    "minecraft village",

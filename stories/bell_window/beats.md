@@ -14,9 +14,9 @@ of it, waving. The skeleton raises its bow and draws, under the one spoken revea
 - **Until finally,** from the cliff we see it, and he says it: "He had a BOW, and this time the bell wasn't in the WAY." The bell that was in the way every time is not in the way now.
 
 ## The format (docs/story_format.md)
-1. Fact + why, out loud: L01 "In my village, the bell RINGS every time I open my WINDOW. And nobody will tell me WHY."
+1. Fact + why, out loud: L01 "My village BELL is in LOVE with me. Every time I open my WINDOW, it SCREAMS."
 2. Quick two-way clues: the village runs inside (L02), only his window (L03), Mom's shutters (L06), the pale guy in the shade (L08), the feather (L09).
-3. He wants to know: "nobody will tell me WHY" (L01), "Mom won't SAY why" (L05).
+3. He wants to know: "Mom won't SAY why" (L05).
 4. Someone loved at stake: the kid himself, Mom's "honey" (L06): she keeps his shutters shut.
 5. The rule turned against itself: when it rings he goes OUT, past the bell (L10).
 6. The reveal said in one plain sentence of what he sees: L11.
@@ -28,7 +28,7 @@ The kid is cheerful from the first word to "HI": no hint, no fear, no foreshadow
 ## Beat sheet (~108 words, ~36-40 s at Pip's pace, cut 1.0 s after L11)
 | beat | line | picture | plants |
 |---|---|---|---|
-| **the question** (0-3 s) | L01 "In my village, the bell RINGS every time I open my WINDOW. And nobody will tell me WHY." (punch) | S01 POV: shutters open, the bell centred 3 blocks out rings | why does a window ring a bell? |
+| **the question** (0-3 s) | L01 "My village BELL is in LOVE with me. Every time I open my WINDOW, it SCREAMS." (punch) | S01 POV: shutters open, the bell centred 3 blocks out rings | why does a window ring a bell? |
 | worse | L02 "The WHOLE village runs INSIDE. Everybody's so SHY." | S01: villagers run for their doors | they're scared, not shy (vanilla: a rung bell sends villagers home) |
 | only me | L03-L04 "Three hundred NIGHTS, and it only rings for MY window. I think the bell LIKES me." | **S02 the axis**: window, bell, dark cliff in one line | it's about him; the line of fire, hidden |
 | the plant | L05-L06 "Mom won't SAY why. She just goes:" / Mom: "Shutters SHUT, honey." | S03 Mom (unarmed) at his door | Mom knows: shut = safe |
@@ -42,9 +42,9 @@ The kid is cheerful from the first word to "HI": no hint, no fear, no foreshadow
 ## Clue map (every clue with its misreading on a line)
 | clue | where | the kid's reading (on a line) | means after the twist |
 |---|---|---|---|
-| the bell rings when he opens the window | L01, S01 | the bell likes him (L04) | a skeleton shoots the moment he shows himself; the bell takes the arrow |
+| the bell rings when he opens the window | L01, S01 | the bell is in love with him (L01), clingy (L04) | a skeleton shoots the moment he shows himself; the bell takes the arrow |
 | the village runs inside | L02, S01 | everybody's so shy (L02) | vanilla: a rung bell sends villagers home |
-| it only rings for his window | L03 | the bell likes him (L04) | he's the only player: the only target |
+| it only rings for his window | L03 | the bell is in love with him (L01), clingy (L04) | he's the only player: the only target |
 | window, bell, cliff on one line | S02 (picture) | (picture only) | the line of fire |
 | "Shutters SHUT, honey." | L06 | she thinks I'll catch a cold (L07) | shut shutters = no target |
 | every window open but his by day | S04 (picture) | (picture only, under L07) | only he is shot at |
