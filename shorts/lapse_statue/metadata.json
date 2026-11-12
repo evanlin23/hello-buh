@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 25431073,
-    "sha256": "f16d41ecce372ba3d8d357f523e8d539686adaed336499c7d7ad528aa004dc2f",
+    "bytes": 25431261,
+    "sha256": "af387111df29ecbe0305d84e86e4540bf0225f3510af626fce35a32a33c04515",
     "release": {
       "tag": "pkg-lapse_statue",
-      "asset": "lapse_statue.short.f16d41ecce372ba3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short.f16d41ecce372ba3.mp4",
-      "sha256": "f16d41ecce372ba3d8d357f523e8d539686adaed336499c7d7ad528aa004dc2f",
-      "bytes": 25431073
+      "asset": "lapse_statue.short.af387111df29ecbe.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short.af387111df29ecbe.mp4",
+      "sha256": "af387111df29ecbe0305d84e86e4540bf0225f3510af626fce35a32a33c04515",
+      "bytes": 25431261
     },
     "nosong_release": {
       "tag": "pkg-lapse_statue",
@@ -6080,12 +6080,12 @@
     "python3 edit.py --frames work/lapse_statue.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_statue.rec.json --audio work/lapse_statue.wav --caption \"building a statue in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_statue.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 lapse worker: owner r:r66efa4 ('more angles when we're showing the last thing'; the 1-minute round's turns 'too slow'): the x3 1-minute round turns fast between placements (no 220/speed cap; crosshair dead on all 46 actions, r:rffba12; no stall, r:r478786); the 1-hour build from 7 clearly different steady angles joined by hard cuts (low front, side, face close, high wide; showcase: low right looking up, over the head, hero wide), each a slow straight move (r:r200cfe per angle). Recorded as 56e. check/pace/mixcheck OK; independent review READY round 1. Nitpicks: terracotta wall fills view 1.3-2.5 s; showcase while crown still going on",
+  "notes": "2026-11-11 lapse worker: owner r:r66efa4 ('more angles when we're showing the last thing'; the 1-minute round's turns 'too slow'): the x3 1-minute round turns fast between placements (no 220/speed cap; crosshair dead on all 46 actions, r:rffba12; no stall, r:r478786); the 1-hour build from 7 clearly different steady angles joined by hard cuts (low front, side, face close, high wide; showcase: low right looking up, over the head, hero wide), each a slow straight move (r:r200cfe per angle). Recorded as 56e. check/pace/mixcheck OK; independent review READY round 1. Nitpicks: terracotta wall fills view 1.3-2.5 s; showcase while crown still going on | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-11T17:15:39.646Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T17:16:16+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:03:04+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.55 s vs the reviewed render 30.53 s"
@@ -6093,7 +6093,7 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 0,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
@@ -6103,6 +6103,50 @@
       "at": "2026-11-11T16:44:50.072Z",
       "report": "out/lapse_statue.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.15,
+      "pump_run": 0.0,
+      "under": 7.82,
+      "summary": "the master's gain spread 2.15 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 7.8 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.15,
+    "pump_run": 0.0,
+    "master_gain": -0.2,
+    "under": 7.82,
+    "windows": [
+      327,
+      123
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.15 dB (max 3.0), run 0.0 s (max 0.5), game over music 7.82 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:02:55+00:00",
+    "code": "89d2a3eb9fe6ed29e4aad4a160fa7dd8a6239538",
+    "from": {
+      "sha256": "f16d41ecce372ba3d8d357f523e8d539686adaed336499c7d7ad528aa004dc2f",
+      "release": {
+        "tag": "pkg-lapse_statue",
+        "asset": "lapse_statue.short.f16d41ecce372ba3.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_statue/lapse_statue.short.f16d41ecce372ba3.mp4",
+        "sha256": "f16d41ecce372ba3d8d357f523e8d539686adaed336499c7d7ad528aa004dc2f",
+        "bytes": 25431073
+      },
+      "song": {
+        "drop_in_short_s": 30.03,
+        "drop_in_song_s": 38.25,
+        "song_start_s": 8.22
+      }
+    },
+    "song_file_sha256": "dc57ef5b2cb4f265f5aae1d04e647ac68e7f7cc184416712ceb77943ef4b180c",
+    "video_stream_md5": "393172772b540bb428a92575b21d059a",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

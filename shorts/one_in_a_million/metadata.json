@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 62850591,
-    "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124",
+    "bytes": 62851682,
+    "sha256": "ba580d59bf91a0b1e352b3f24fcb5d271af683564ea07613cd14c158df8fc7f7",
     "release": {
       "tag": "pkg-one_in_a_million",
-      "asset": "one_in_a_million.short.5df9f64bf48c09b5.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-one_in_a_million/one_in_a_million.short.5df9f64bf48c09b5.mp4",
-      "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124",
-      "bytes": 62850591
+      "asset": "one_in_a_million.short.ba580d59bf91a0b1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-one_in_a_million/one_in_a_million.short.ba580d59bf91a0b1.mp4",
+      "sha256": "ba580d59bf91a0b1e352b3f24fcb5d271af683564ea07613cd14c158df8fc7f7",
+      "bytes": 62851682
     },
     "nosong_release": {
       "tag": "pkg-one_in_a_million",
@@ -2009,12 +2009,12 @@
     "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing, but it gets harder 😳\" --red harder --subs \"[[\\\"look1\\\",\\\"40 blocks, 5x5\\\",0.55,0],[\\\"look2\\\",\\\"100 blocks, 3x3\\\",0.55,0],[\\\"look3\\\",\\\"160 blocks, 1x1\\\",0.55,0],[\\\"look4\\\",\\\"BUILD LIMIT, 1x1... IN CACTUS\\\",0.55,0],[\\\"look5\\\",\\\"BUILD LIMIT... INTO LAVA\\\",0.55,0]]\" --subs_y 0.12 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"look3:0\",\"look3:0.2\",\"cut\"],[\"look4:0\",\"look4:0.6\",\"cut\"],[\"look5:0\",\"look5:1.2\",\"cut\"],[\"drop4:0.5\",\"drop4:2.4\",2],[\"drop5:0\",\"drop5:0.6\",2],[\"drop5:0.6\",\"drop5:3.3\",2.5]] --slowmo [[\"drift3\",0,0.6],[\"drift4\",0,0.6],[\"drift5\",0,0.6],[\"splash5\",0.25,0.25]] --punch [\"splash1\",\"splash2\",\"splash3\",\"splash4\",\"splash5\"] --counter {\"at\":[\"look1\",\"look2\",\"look3\",\"look4\",\"look5\"],\"total\":5} --cards \"[[\\\"splash1\\\",\\\"EASY\\\",0.8,\\\"green\\\"],[\\\"splash2\\\",\\\"CLEAN\\\",0.8,\\\"green\\\"],[\\\"splash3\\\",\\\"TIGHT 😬\\\",0.8,\\\"yellow\\\"],[\\\"splash4\\\",\\\"INSANE\\\",0.8,\\\"orange\\\"],[\\\"splash5\\\",\\\"1 IN A MILLION\\\",1.2,\\\"red\\\",0,\\\"stamp\\\"]]\" --hook \"{\\\"at\\\":\\\"splash5\\\",\\\"before\\\":1.7,\\\"after\\\":-0.2,\\\"text\\\":\\\"wait for the last one 😳\\\"}\" --shake [\"splash5\"] --flash [[\"splash5\",0,0.5]] --fallen [[\"drop1\",\"splash1\",\"blocks\",-1],[\"drop2\",\"splash2\",\"blocks\",-1],[\"drop3\",\"splash3\",\"blocks\",-1],[\"drop4\",\"splash4\",\"blocks\",-1],[\"drop5\",\"splash5\",\"blocks\",-1]] --loop true --sfx [[\"whoosh\",\"cut1b\"],[\"whoosh\",\"cut2b\"],[\"whoosh\",\"cut3b\"],[\"whoosh\",\"cut4b\"],[\"wind\",\"drop1\",\"splash1\"],[\"wind\",\"drop2\",\"splash2\"],[\"wind\",\"drop3\",\"splash3\"],[\"wind\",\"drop4\",\"splash4\"],[\"wind\",\"drop5\",\"splash5\"],[\"riser\",\"drop5\",\"splash5\"],[\"impact\",\"splash1\",{\"gain\":0.5}],[\"impact\",\"splash2\",{\"gain\":0.6}],[\"impact\",\"splash3\",{\"gain\":0.7}],[\"impact\",\"splash4\",{\"gain\":0.8}],[\"boom\",\"splash5\"],[\"dip\",\"splash5\",0.3],[\"pops\"],[\"whoosh\",\"drift2\",{\"gain\":0.6}],[\"whoosh\",\"drift3\",{\"gain\":0.6}],[\"whoosh\",\"drift4\",{\"gain\":0.6}],[\"whoosh\",\"drift5\",{\"gain\":0.6}]] --start_at drop1:-0.85 --end_after splash5:1.15 --song songs/ncs/fearless_funk.mp3 --song_drop_at splash5 --out out/one_in_a_million.mp4"
   ],
   "status": "ready",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md);  | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; same track, drop and picture. ./hb pace OK (0 blockers), ./hb check OK (lint clean once it skips footage the edit cuts), key_sounds --hits worst -0.1 dB (report only)",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md);  | 2026-11-11 remix at the new stunt bed (owner: \"fix all i think\", r:r662041): NCS -16 LUFS (was -13) under the game at -15; same track, drop and picture. ./hb pace OK (0 blockers), ./hb check OK (lint clean once it skips footage the edit cuts), key_sounds --hits worst -0.1 dB (report only) | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-08T02:05:14.222Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:09:21+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-12T22:02:54+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 29.20 s vs the reviewed render 29.20 s"
@@ -2030,8 +2030,53 @@
       "label": "CHECK OK",
       "blockers": 0,
       "at": "2026-11-11T09:38:09.674Z",
-      "report": "work/hb/one_in_a_million.check.json"
+      "report": "work/hb/one_in_a_million.check.json",
+      "carried": "from the 2026-11-11 stamp: same recording, sound-only re-mix"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.43,
+      "pump_run": 0.0,
+      "under": 4.87,
+      "summary": "the master's gain spread 0.43 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.9 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.43,
+    "pump_run": 0.0,
+    "master_gain": -0.06,
+    "under": 4.87,
+    "windows": [
+      48,
+      399
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.43 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.87 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:02:37+00:00",
+    "code": "89d2a3eb9fe6ed29e4aad4a160fa7dd8a6239538",
+    "from": {
+      "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124",
+      "release": {
+        "tag": "pkg-one_in_a_million",
+        "asset": "one_in_a_million.short.5df9f64bf48c09b5.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-one_in_a_million/one_in_a_million.short.5df9f64bf48c09b5.mp4",
+        "sha256": "5df9f64bf48c09b53e140dc010b2a05aee7e3f820b116c38ee8aa000e7090124",
+        "bytes": 62850591
+      },
+      "song": {
+        "drop_in_short_s": 28.01,
+        "drop_in_song_s": 39.75,
+        "song_start_s": 11.74
+      }
+    },
+    "song_file_sha256": "62d6091544049bbf6672fe522fa69515b243378b2e919110af8a0ac0505367cf",
+    "video_stream_md5": "6a707a8441f0812caa51514d577df00f",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

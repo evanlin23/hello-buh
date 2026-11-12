@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 17973716,
-    "sha256": "adea555f2b9215d3e6be5eb894b29d78cbdaa3e2ab8181cbdb77652aefd8b24b",
+    "bytes": 17972734,
+    "sha256": "a504c460b17e34a3702309043b6ec6442222345b948619e48f925931156cc091",
     "release": {
       "tag": "pkg-tnt",
-      "asset": "tnt.short.adea555f2b9215d3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt/tnt.short.adea555f2b9215d3.mp4",
-      "sha256": "adea555f2b9215d3e6be5eb894b29d78cbdaa3e2ab8181cbdb77652aefd8b24b",
-      "bytes": 17973716
+      "asset": "tnt.short.a504c460b17e34a3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt/tnt.short.a504c460b17e34a3.mp4",
+      "sha256": "a504c460b17e34a3702309043b6ec6442222345b948619e48f925931156cc091",
+      "bytes": 17972734
     },
     "nosong_release": {
       "tag": "pkg-tnt",
@@ -326,12 +326,12 @@
     "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT 💀\" --self_name 56e --red 75 --subs \"[[\\\"hill\\\",\\\"wait... THE HILL??\\\",1.6,0],[\\\"hill:2.0\\\",\\\"IT KEEPS GOING\\\",1.5,0]]\" --speed [[\"lit:0.45\",\"fuse_b\",\"cut\"],[\"hill:1.6\",\"rim_a\",2.6],[\"rim_a\",\"rim_b\",\"cut\"]] --punch [[\"crater\",0,1.08]] --shake [[\"boom\",0,8],[\"hill\",0,14],[\"hill:2.0\",0,10]] --flash [[\"boom\",0,0.4],[\"hill\",0,0.5],[\"hill:2.0\",0,0.3],[\"crater\",0,0.4]] --sfx [[\"impact\",\"start\",{\"gain\":1.2}],[\"pop\",\"start\",{\"gain\":1}],[\"riser\",\"fuse_b\",\"boom\"],[\"boom\",\"boom\"],[\"boom\",\"hill\",{\"gain\":0.85}],[\"riser\",\"hill:2.2\",\"crater:-0.5\"],[\"boom\",\"hill:1.6\",{\"gain\":0.9}],[\"boom\",\"hill:3.0\",{\"gain\":0.8}],[\"dip\",\"crater\",0.45],[\"gamedip\",\"crater\",0.45],[\"impact\",\"crater\",{\"gain\":1.4}]] --start_at lit:-1.2 --end_after crater:0.7 --out out/tnt.mp4"
   ],
   "status": "ready",
-  "notes": "tnt v2 (owner r:re197bb 'no-op reel'): the 75-TNT wall sets off a hill of ~3000 TNT with a house on top (one real vanilla chain, 1831 blasts), then a cut to the village-sized crater. 8.8 s, no padding. Reviewed READY round 2 (independent subagent; takeaway passes r:r8d6af1); pace OK (2 WARN accepted: no cut mid-blast), mixcheck OK.",
+  "notes": "tnt v2 (owner r:re197bb 'no-op reel'): the 75-TNT wall sets off a hill of ~3000 TNT with a house on top (one real vanilla chain, 1831 blasts), then a cut to the village-sized crater. 8.8 s, no padding. Reviewed READY round 2 (independent subagent; takeaway passes r:r8d6af1); pace OK (2 WARN accepted: no cut mid-blast), mixcheck OK. | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T02:08:31.566Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T02:08:53+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:03:24+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 8.85 s vs the reviewed render 8.84 s"
@@ -346,9 +346,53 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T02:07:07.550Z",
-      "report": "work/hb/tnt.check.json"
+      "at": "2026-11-12T01:51:05.746Z",
+      "report": "out/tnt.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.8,
+      "pump_run": 0.0,
+      "under": 6.48,
+      "summary": "the master's gain spread 0.8 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 6.5 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.8,
+    "pump_run": 0.0,
+    "master_gain": -0.12,
+    "under": 6.48,
+    "windows": [
+      92,
+      36
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.8 dB (max 3.0), run 0.0 s (max 0.5), game over music 6.48 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:03:18+00:00",
+    "code": "89d2a3eb9fe6ed29e4aad4a160fa7dd8a6239538",
+    "from": {
+      "sha256": "adea555f2b9215d3e6be5eb894b29d78cbdaa3e2ab8181cbdb77652aefd8b24b",
+      "release": {
+        "tag": "pkg-tnt",
+        "asset": "tnt.short.adea555f2b9215d3.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-tnt/tnt.short.adea555f2b9215d3.mp4",
+        "sha256": "adea555f2b9215d3e6be5eb894b29d78cbdaa3e2ab8181cbdb77652aefd8b24b",
+        "bytes": 17973716
+      },
+      "song": {
+        "drop_in_short_s": 8.14,
+        "drop_in_song_s": 16.75,
+        "song_start_s": 8.61
+      }
+    },
+    "song_file_sha256": "c1e5ab02649567f08eef24d78910eea4e39576fb5af66769b342d59980a6936a",
+    "video_stream_md5": "d5ae7030f99db46445515c749401ae87",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

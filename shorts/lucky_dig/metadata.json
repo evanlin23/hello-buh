@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 12625905,
-    "sha256": "6a6cbe726b07b07b53ff1e7c913608617a95d2b153cf6157d184afb14132f100",
+    "bytes": 12625695,
+    "sha256": "0917c343418a90b9f4902d58e6d2e976e945b4dba9945619b7477a3ff9c86e34",
     "release": {
       "tag": "pkg-lucky_dig",
-      "asset": "lucky_dig.short.6a6cbe726b07b07b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lucky_dig/lucky_dig.short.6a6cbe726b07b07b.mp4",
-      "sha256": "6a6cbe726b07b07b53ff1e7c913608617a95d2b153cf6157d184afb14132f100",
-      "bytes": 12625905
+      "asset": "lucky_dig.short.0917c343418a90b9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lucky_dig/lucky_dig.short.0917c343418a90b9.mp4",
+      "sha256": "0917c343418a90b9f4902d58e6d2e976e945b4dba9945619b7477a3ff9c86e34",
+      "bytes": 12625695
     },
     "nosong_release": {
       "tag": "pkg-lucky_dig",
@@ -697,12 +697,12 @@
     "python3 edit.py --frames work/lucky_dig.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lucky_dig.rec.json --audio work/lucky_dig.wav --caption \"luckiest dig in Minecraft history 🍀\" --red luckiest --subs \"[[\\\"l0\\\",\\\"DIAMONDS??\\\",1.4],[\\\"lava\\\",\\\"LAVA\\\",0.7],[\\\"splash\\\",\\\"WATER BUCKET\\\",1.1],[\\\"l3\\\",\\\"EMERALDS?!\\\",1.4],[\\\"room\\\",\\\"a STRONGHOLD??\\\",0.6],[\\\"land\\\",\\\"11 EYES ALREADY IN?!\\\",0.9]]\" --subs_y 0.15 --sfx [[\"pop\",\"l0\",{\"gain\":0.5}],[\"dip\",\"portal\",0.4]] --start_at dig0:-0.05 --end_after portal:0.9 --out out/lucky_dig.mp4"
   ],
   "status": "ready",
-  "notes": "lucky #1 (lib/lucky.js): a dig straight down, every block luckier: diamonds 3 blocks under the grass, lava lake saved by a water bucket (obsidian), an emerald vein, a stronghold portal room with 11 eyes in; the 12th opens it. 3 independent rounds (r1 payoff look, r2 subtitle over the portal, r3 READY). Nitpicks: pace build-up WARN, mixcheck hook WARN; only the 4 lake cells touching the water turn to obsidian (vanilla).",
+  "notes": "lucky #1 (lib/lucky.js): a dig straight down, every block luckier: diamonds 3 blocks under the grass, lava lake saved by a water bucket (obsidian), an emerald vein, a stronghold portal room with 11 eyes in; the 12th opens it. 3 independent rounds (r1 payoff look, r2 subtitle over the portal, r3 READY). Nitpicks: pace build-up WARN, mixcheck hook WARN; only the 4 lake cells touching the water turn to obsidian (vanilla). | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-11T19:58:58.924Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T19:59:23+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:02:37+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 11.90 s vs the reviewed render 11.90 s"
@@ -710,16 +710,60 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:57:26.661Z",
-      "report": "work/hb/lucky_dig.check.json"
+      "at": "2026-11-11T19:49:54.428Z",
+      "report": "out/lucky_dig.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.16,
+      "pump_run": 0.0,
+      "under": 4.55,
+      "summary": "the master's gain spread 1.16 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 4.6 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.16,
+    "pump_run": 0.0,
+    "master_gain": -0.07,
+    "under": 4.55,
+    "windows": [
+      42,
+      102
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.16 dB (max 3.0), run 0.0 s (max 0.5), game over music 4.55 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:02:32+00:00",
+    "code": "89d2a3eb9fe6ed29e4aad4a160fa7dd8a6239538",
+    "from": {
+      "sha256": "6a6cbe726b07b07b53ff1e7c913608617a95d2b153cf6157d184afb14132f100",
+      "release": {
+        "tag": "pkg-lucky_dig",
+        "asset": "lucky_dig.short.6a6cbe726b07b07b.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lucky_dig/lucky_dig.short.6a6cbe726b07b07b.mp4",
+        "sha256": "6a6cbe726b07b07b53ff1e7c913608617a95d2b153cf6157d184afb14132f100",
+        "bytes": 12625905
+      },
+      "song": {
+        "drop_in_short_s": 11.0,
+        "drop_in_song_s": 14.5,
+        "song_start_s": 3.5
+      }
+    },
+    "song_file_sha256": "f1bcf6f219f55c7ab5f6ac2c14e606e22b8bccd046d24d17d29ac9d99c104e40",
+    "video_stream_md5": "cb245309f1843424118beabfeb2fcca7",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

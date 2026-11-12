@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 38328387,
-    "sha256": "2060e5056d50f933409f77d82048c52f7529476a65ffe7bfc70a86f8ac57264e",
+    "bytes": 38334533,
+    "sha256": "e32e579bd9d60618f2cf242edeac65ae736a40272f18c0f7bdd6b0c5ac955582",
     "release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short.2060e5056d50f933.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.2060e5056d50f933.mp4",
-      "sha256": "2060e5056d50f933409f77d82048c52f7529476a65ffe7bfc70a86f8ac57264e",
-      "bytes": 38328387
+      "asset": "which_door.short.e32e579bd9d60618.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.e32e579bd9d60618.mp4",
+      "sha256": "e32e579bd9d60618f2cf242edeac65ae736a40272f18c0f7bdd6b0c5ac955582",
+      "bytes": 38334533
     },
     "nosong_release": {
       "tag": "pkg-which_door",
@@ -7531,12 +7531,12 @@
     "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --self_name 56e --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2],[\"big_blast\",0,1.15]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.6],[\"big_blast\",0,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"],[\"dip\",\"big_blast\",0.35],[\"gamedip\",\"big_blast\",0.35]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after settle:-0.15 --out out/which_door.mp4"
   ],
   "status": "ready",
-  "notes": "re-render (r:r52f94c): the player is 56e (all three death screens, 56e's own skin on the bare arm), picture otherwise unchanged; independent fix-check READY (round 2: the arm-stripe fix)",
+  "notes": "re-render (r:r52f94c): the player is 56e (all three death screens, 56e's own skin on the bare arm), picture otherwise unchanged; independent fix-check READY (round 2: the arm-stripe fix) | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-11T22:38:04.551Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:38:41+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:00:57+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.80 s vs the reviewed render 30.80 s"
@@ -7544,7 +7544,7 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
@@ -7554,6 +7554,50 @@
       "at": "2026-11-11T22:13:29.993Z",
       "report": "out/which_door.check.json"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 2.37,
+      "pump_run": 0.0,
+      "under": 8.51,
+      "summary": "the master's gain spread 2.37 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 8.5 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 2.37,
+    "pump_run": 0.0,
+    "master_gain": -0.12,
+    "under": 8.51,
+    "windows": [
+      73,
+      429
+    ],
+    "ok": true,
+    "summary": "master gain spread 2.37 dB (max 3.0), run 0.0 s (max 0.5), game over music 8.51 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:00:47+00:00",
+    "code": "89d2a3eb9fe6ed29e4aad4a160fa7dd8a6239538",
+    "from": {
+      "sha256": "2060e5056d50f933409f77d82048c52f7529476a65ffe7bfc70a86f8ac57264e",
+      "release": {
+        "tag": "pkg-which_door",
+        "asset": "which_door.short.2060e5056d50f933.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.2060e5056d50f933.mp4",
+        "sha256": "2060e5056d50f933409f77d82048c52f7529476a65ffe7bfc70a86f8ac57264e",
+        "bytes": 38328387
+      },
+      "song": {
+        "drop_in_short_s": 24.4,
+        "drop_in_song_s": 29.5,
+        "song_start_s": 5.1
+      }
+    },
+    "song_file_sha256": "502e3c474b275f518eff3f5248b6aafef96315c04591cb1cd0c4494bd1a2b55b",
+    "video_stream_md5": "fe5d0bc1041afc4413ec6be18873afc0",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
