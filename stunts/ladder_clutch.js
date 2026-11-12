@@ -19,7 +19,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'bro trusted ONE ladder with his life 😳',
   edit: {
-    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
+    caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.7',   // r:r188b46 (was 0.9)
     // r:r0f3da0 pace: silent until 1.61 s (a walk-off and fall make little vanilla sound): a wind bed from frame 0
     sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }]],   // (pace: no hit on the 80-block landing)
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
