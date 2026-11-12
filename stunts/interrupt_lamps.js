@@ -1,14 +1,18 @@
 // "interrupt" #1 (owner's new format, 2026-11-11, r:re05b89; lib/interrupt.js): played straight as a normal build
 // video. The player lays a 7x8 floor of redstone lamps on a grass plain, row by row, stepping back a block after each
-// row, a lever on a post at the near corner. Five rows in, a skeleton a few blocks off shoots the player: a real hit
+// row, a lever on a post at the near corner. Six rows in, a skeleton a few blocks off shoots the player: a real hit
 // (the hurt tilt, knockback, a heart gone). The player turns, walks up to it, picks it up with a bare hand and eats it
 // (owner, 2026-11-11: "picking it up and eating it"), shuffling back toward the build as it eats: crunches, bone crumbs,
 // a burp. Then straight on to the same spot, the same row, as if nothing happened (no cut on the way back). Last row,
-// the lever: the floor lights up in a ripple from the corner (hidden redstone under it). One caption, no reaction.
+// the lever: a hard cut on the music drop to a drone straight overhead, and the whole floor lights up in a ripple from
+// the corner (hidden redstone under it) at dusk, held lit ~1 s. One caption, no reaction.
+// No-op audit 2026-11-12 (r:r8d6af1): the lit floor showed under 1 s after ~25 s of building. Now five rows are down
+// when it opens (the build on screen is seconds, sped up after the walk back) and the payoff is the floor top-down.
 const { storyKit, plainsBiome } = require('../lib/story')
 const { plateau } = require('../lib/plateau')
 const I = require('../lib/interrupt')
 const act = require('../lib/act')
+const M = require('../lib/movie')
 
 const CAPTION = 'this dance floor is gonna be so clean 😌'   // a person reacting, not a label (r:r0f3da0)
 const ROWS = [-8, -7, -6, -5, -4, -3, -2, -1]   // dz of each lamp row, the far one first
@@ -20,20 +24,28 @@ const BACK = 2.7                         // the player's feet stand this far sou
 const PX = 0.5                           // ...at this dx
 const POST = [-4, -1]                    // the lever's post, beside the floor's south-west corner
 const SKEL = [7.5, -1.0]                 // the skeleton, a short way off across the field to the east
-const PRE = 1                            // rows already down when the video starts (laid by command in setup)
-const BEFORE = 5                         // the row the interruption comes in (two lamps into it)
+const PRE = 5                            // rows already down when the video starts (laid by command in setup)
+const BEFORE = 6                         // the row the interruption comes in (INTO lamps into it)
+const INTO = 4
 
 module.exports = {
   name: 'interrupt_lamps',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
+  time: 12700,   // dusk: the lit lamps glow against a darkening sky (a noon floor barely read as lit)
+  // the payoff camera: straight down over the floor (north up: the lever corner bottom-left), sinking slowly so it never
+  // reads as a still photo
+  shots: {
+    top: { path: [[0, 0.5, 13.2, -2.7], [4, 0.5, 12.0, -2.7]], ease: 'linear', yaw: 0, pitch: -90, fov: 70, drift: 0, eyeTrace: false }
+  },
   edit: {
     caption: CAPTION, red: 'so clean', dropAt: 'lit',
-    startAt: 'hook:-0.1', endAfter: 'lit:1.0',
+    startAt: 'hook:-0.1', endAfter: 'floor_lit:0.9',   // the floor fully lit 0.9 s (the end limit is 1.0), after the ripple across it (r:r188b46)
     // the walk back stays one continuous walk (owner: the jump cut there "looks weird"), a touch brisker (x1.3: the
-    // whole 3 s of it uncut was a span with nothing new, pace)
-    speed: [['intr_back:0.1', 'intr_resume:-0.1', 1.3]],
-    punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.4]],   // the payoff's picture change (the lights coming on), with the ripple and the drop
+    // whole 3 s of it uncut was a span with nothing new, pace); the rest of the floor after it plays fast (x2: the
+    // build is the setup, seconds of it), never cut mid-place
+    speed: [['intr_back:0.1', 'intr_resume:-0.1', 1.3], ['intr_resume', 'lever', 2]],
+    punch: [['lit', 0, 1.08]], flash: [['lit', 0, 0.3]],   // the payoff's picture change: the cut to overhead as the lights come on, with the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_bite', 'intr_gone'],   // the hit, the grab, every bite, the last one: over the music
     // room tone from frame 1; the music dips before the lights and an impact lands on them (mixcheck: the payoff hit over the NCS bed)
     sfx: [['air', 'start', 'lit', { gain: 0.5 }], ['dip', 'lit', 0.4], ['impact', 'lit', { gain: 1.4 }]]
@@ -53,7 +65,6 @@ module.exports = {
     await plainsBiome(ctx, A, 44, -4, 20)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
-    await ctx.cmd('/time set 5000')
     // the first row already down, the lever on its post
     for (const dz of ROWS.slice(0, PRE)) await ctx.cmd(`/fill ${A(COLS[0], 1, dz)} ${A(COLS[COLS.length - 1], 1, dz)} redstone_lamp`)
     await ctx.cmd(`/setblock ${A(POST[0], 1, POST[1])} polished_andesite`)
@@ -87,7 +98,7 @@ module.exports = {
         await A.place(P(dx, 1, dz), { block: 'redstone_lamp', sound: 'block.glass.place', against: P(dx, 1, dz - 1) })   // a redstone lamp's sound type is glass
         K.say('/clear @s redstone_lamp 1')                                                   // the stack goes down, one a lamp
         ctx.mark('lamp', { n: n++ })
-        if (n === 2) ctx.mark('hook')   // the video opens two lamps in: already building on frame 1
+        if (n === 1) ctx.mark('hook')   // the video opens one lamp in: already building on frame 1
       }
     }
     // a step back to the next row's spot, eyes on its first lamp (as a player backs up laying a floor)
@@ -110,12 +121,12 @@ module.exports = {
     await K.aimAt(K.top(P(ORDER[0], 0, ROWS[PRE])))
     for (let r = PRE; r < BEFORE - 1; r++) { if (r > PRE) await stepBack(ROWS[r]); await lay(ROWS[r]) }
     await stepBack(ROWS[BEFORE - 1])
-    await lay(ROWS[BEFORE - 1], ORDER.slice(0, 2))   // two lamps into the row, the crosshair on the east side
+    await lay(ROWS[BEFORE - 1], ORDER.slice(0, INTO))   // a few lamps into the row
 
     // the interruption: the skeleton shoots the player mid-row
     await I.interrupt(ctx, K, {
       mob: 'skeleton', tag: 'intr',
-      resume: K.top(P(ORDER[2], 0, ROWS[BEFORE - 1])),
+      resume: K.top(P(ORDER[INTO], 0, ROWS[BEFORE - 1])),
       cue: { hit: true },                                  // it shoots the player: a real hit, knockback, a heart gone
       deal: { how: 'pickup', slot: 1, crumbs: 'bone' },   // picks it up and eats it, bite by bite (owner)
       stand: 1.5,
@@ -123,23 +134,30 @@ module.exports = {
     })
     K.sway = 0.1
 
-    // ...and on with the floor, as if nothing happened
+    // ...and on with the floor, as if nothing happened (the edit plays it x2: turns at <= 105 deg/s, so on screen they
+    // stay under the 220 cap; at 180 the step-back turns showed at 364 deg/s, rec_check whip)
+    K.turnLimit(105)
     await stepBack(ROWS[BEFORE - 1])
-    await lay(ROWS[BEFORE - 1], ORDER.slice(2))
+    await lay(ROWS[BEFORE - 1], ORDER.slice(INTO))
     for (let r = BEFORE; r < ROWS.length; r++) { await stepBack(ROWS[r]); await lay(ROWS[r]) }
 
-    // the lever: the floor lights up in a ripple from the corner (redstone blocks under the lamps, hidden)
+    // the lever, then a hard cut on the drop to the drone overhead: the floor lights up in a ripple from the corner
+    // (redstone blocks under the lamps, hidden), two ticks a ring, and holds lit
+    K.turnLimit()
     const lever = P(POST[0], 2, POST[1])
-    await A.use(lever, { sound: 'block.lever.click', volume: 0.6 })
+    await A.use(lever, { sound: 'block.lever.click', volume: 0.8 })
+    ctx.mark('lever')
+    for (let k = 0; k < 4; k++) { K.look(k); await bot.waitForTicks(1) }   // the click reads
+    M.shot(ctx, 'top')
     ctx.mark('lit')
     const ring = (dx, dz) => Math.abs(dx - COLS[0]) + Math.abs(dz - ROWS[ROWS.length - 1])
     const maxRing = ring(COLS[COLS.length - 1], ROWS[0])
-    K.base = K.aim(P(0.5, 1.2, -4.5))   // the whole floor in frame while it lights
     for (let r = 0; r <= maxRing; r++) {
       for (const dz of ROWS) for (const dx of COLS) if (ring(dx, dz) === r) K.say(`/setblock ${X + dx} ${F} ${Z + dz} redstone_block`)
-      K.look(r); await bot.waitForTicks(1)
+      await bot.waitForTicks(2)
     }
-    for (let k = 0; k < 30; k++) { K.look(k); await bot.waitForTicks(1) }
+    ctx.mark('floor_lit')
+    await bot.waitForTicks(50)
     let lit = 0
     for (const dz of ROWS) for (const dx of COLS) { const b = bot.blockAt(P(dx, 1, dz)); if (b && b.name === 'redstone_lamp' && b.getProperties().lit) lit++ }
     ctx.log(`lamps lit: ${lit}/${ROWS.length * COLS.length}`)
