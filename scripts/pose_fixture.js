@@ -14,7 +14,10 @@
 //   0-19 all ten facing the camera, 20-39 all ten turned 3/4; 40-79 the first five closer (facing, then 3/4), 80-119 the
 //   other five; 120-139 the neighbour plain, the neighbour in diamond without a helmet, the barter player in iron and
 //   gold boots (the faces must match with and without armour); 140-159 the skins already taken (the jar's nine and
-//   hellobuh), framed as ticks 0-19, to compare.
+//   hellobuh), framed as ticks 0-19, to compare. Batch 4 (skins-2): 160-179 the five new ones facing (sorry_aunt,
+//   statue_dad, statue_mom, _1, _2), 180-199 at 3/4, 200-219 from behind (the ponytail streaks, S11); 220-239 the
+//   aunt's size at entity scale 0.3 (no player scale in the renderer yet, so she stands 1/0.3 as far as spare_boy:
+//   the same size on screen); 240-259 the three Moms close (S08/S10's CU: each state must read apart).
 // --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
 // Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
@@ -31,7 +34,7 @@ const STAGED = args.includes('--staged')
 const src = opt('src', path.join(ROOT, '..', 'hb-videos', 'shorts', 'story_nitwit', 'recording.json.gz'))
 const outPath = path.resolve(opt('out', path.join(ROOT, 'work', '_poses_test.rec.json')))
 const SKINS = args.includes('--skins')
-const N = Number(opt('ticks', SKINS ? 160 : 80))
+const N = Number(opt('ticks', SKINS ? 260 : 80))
 
 const rec = loadRec(src)
 const p0 = rec.poses[0]
@@ -103,6 +106,7 @@ if (SKINS) {   // the line-ups (see --skins above); the actors' usernames are th
   out.poses.forEach(p => { p[5] = 0 })   // a level camera (the faces at eye height)
   const NAMES = ['grandpa_gullwick', 'grandma_island', 'walk_kid', 'pulled_man', 'hall_player', 'miner_girl', 'neighbour', 'barter_player', 'spare_boy', 'spare_girl']
   const OLD = ['steve', 'alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri', 'hellobuh']   // the skins already taken
+  const NEW = ['sorry_aunt', 'statue_dad', 'statue_mom', 'statue_mom_1', 'statue_mom_2']   // batch 4 (skins-2)
   out.entities = out.entities.filter(e => e[2] !== 'warden')
   const turn = 0.9   // the 3/4 view: bodies and heads turned this far from the camera (to the camera's left)
   const put = (t, id, user, ahead, right, yaw, extra = {}) => { const [x, y, z] = at(ahead, right); out.entities.push([t, id, 'player', +x.toFixed(3), y, +z.toFixed(3), +yaw.toFixed(4), 0, +yaw.toFixed(4), { user, sneak: false, ...extra }]) }
@@ -115,7 +119,11 @@ if (SKINS) {   // the line-ups (see --skins above); the actors' usernames are th
     else if (t < 80) row(t, NAMES.slice(0, 5), 8, 1.05, yaw)
     else if (t < 120) row(t, NAMES.slice(5), 8, 1.05, yaw)
     else if (t < 140) row(t, ['neighbour', 'neighbour', 'barter_player'], 5.5, 1.2, faceCam + (t < 130 ? 0 : turn), [{}, DIAMOND, BARTER])
-    else row(t, OLD, 9, 1.05, faceCam)
+    else if (t < 160) row(t, OLD, 9, 1.05, faceCam)
+    else if (t < 200) row(t, NEW, 6, 1.05, yaw)
+    else if (t < 220) row(t, NEW, 6, 1.05, faceCam + Math.PI)
+    else if (t < 240) { put(t, 9500, 'spare_boy', 4, -0.5, faceCam); put(t, 9501, 'sorry_aunt', 4 / 0.3, 0.6 / 0.3, faceCam) }
+    else row(t, NEW.slice(2), 3.2, 0.9, faceCam)
   }
   // the second neighbour is another entity with the same username: give it its own id
   for (const e of out.entities) if (e[0] >= 120 && e[0] < 140 && e[1] === 9501) e[1] = 9511
