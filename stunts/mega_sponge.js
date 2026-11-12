@@ -87,7 +87,7 @@ module.exports = L.makeLapse({
   perTick: 60,
   angles: [['rise', 'rise'], ['carve2', 'face'], ['carve4', 'high']],
   payoff: { stage: 'lights', shot: 'zoom', hold: 40, toast: false, sound: 'block.beacon.activate' },
-  endAfter: 1.0,
+  endAfter: 0.8,                          // (r:r188b46: 0.5-0.8 s after the payoff; 1.0 warned)
   shots: {
     // 1. high off the south-west over the forest: the footprint at frame 0, the cubes rising, the drone easing up with them
     rise: { path: [[0, -100, 60, 100], [2.7, -92, 64, 92]], lookPath: [[0, 0, 6, 0], [2.7, 0, 34, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[-42, 12, 42]] },   // (high over the forest, above every hill: from the levelled ground the rising corner column filled the frame)
