@@ -480,7 +480,7 @@ STANDARDS.md in the same commit.
   move our camera... like the art should be vertical, and we look at it tracking it as we fall", "we should have the
   name whenver the number pops up, like 4. lime jello for the full time, not 4 before", "the loop needs ot work too";
   on trap_free_diamonds "We should have more setup for the trap. Like go all the way down and then lava or fire etc";
-  on mega_lapse_fox "the beaet drops before the ears appear"; on lapse_house "make the house more fancy, and it doesnt
+  on mega_lapse_fox "the beaet drops before the ears appear" and, on v2, "I think we can spend longer creating it. ANd we dont ened the second cut at the end." (the time-lapse runs longer and the Short ends on the reveal, no close pass after it); on lapse_house "make the house more fancy, and it doesnt
   need to be superflat"; on guess_sound "nothing really happens this first bit, people will scroll". The general
   rules: a double extension is a mid-air clutch (jump a gap you can't make, place 2 blocks under you in the air,
   land on them); a list item's number and name appear together and stay up for the whole item; a Short that loops
