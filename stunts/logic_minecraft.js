@@ -18,6 +18,7 @@ const SLOT = { axe: 0, shovel: 1, pick: 2, sponge: 3, pumpkin: 4, flint: 5, glow
 const quirks = [
   {
     key: 'tree',
+    dwell: 1.0,
     label: 'trees: float',
     slot: SLOT.axe,
     start: { pitch: -6 },
@@ -32,15 +33,19 @@ const quirks = [
     async perform (ctx, L) {
       await L.A.dig(L.block(0, 1, -3))
       await L.A.dig(L.block(0, 2, -3))
+      // the Short opens HERE (openOn 'q0', owner r:r0f3da0: frame 0 = the subject): already stepped back, the view on the
+      // gap, the whole canopy hanging over thin air, "trees: float" up; the chop and the step back before it are cut
+      await L.A.back(10, { look: L.at(0.5, 2.8, -2.5) })
+      await L.A.turnTo(L.at(0.5, 3.0, -2.5), { hold: 2 })
       L.quirk()
-      // step back, eyes on the gap: the whole tree hanging over the stump
-      await L.A.back(7, { look: L.at(0.5, 3.0, -2.5) })
-      await L.hold(8, L.at(0.5, 3.6, -2.5))
+      // and it moves at once: a slow tilt up the floating tree
+      await L.hold(24, L.at(0.5, 4.4, -2.5))
     },
     hold: 4
   },
   {
     key: 'sand',
+    dwell: 1.5,                                               // the pillar lands and thuds, then the cut (a falling block holds a cut; 1.1 cut it mid-fall)
     label: 'sand: falls',
     slot: SLOT.shovel,
     start: { z: 1.5, pitch: 4 },
@@ -60,6 +65,7 @@ const quirks = [
   },
   {
     key: 'ice',
+    dwell: 0.6,
     label: 'break ice: get water',
     slot: SLOT.pick,
     start: { pitch: 14 },
@@ -76,6 +82,7 @@ const quirks = [
   },
   {
     key: 'sponge',
+    dwell: 0.55,
     label: '1 sponge vs a whole pool',
     slot: SLOT.sponge,
     start: { z: -0.5, pitch: 8 },
@@ -92,6 +99,7 @@ const quirks = [
   },
   {
     key: 'golem',
+    dwell: 0.9,
     label: 'iron + carved pumpkin = golem',
     slot: SLOT.pumpkin,
     start: { y: 2, pitch: 6 },
@@ -117,6 +125,7 @@ const quirks = [
   },
   {
     key: 'anchor',
+    dwell: 0.75,
     label: 'nope',
     slot: SLOT.glow,
     start: { z: 1.3, pitch: 8 },                             // at the edge of reach: the blast throws him out past its fire
@@ -191,10 +200,11 @@ const quirks = [
 
 ]
 
-// settle-ok: lib/logic.js's edit ends on endAfter 'settle:0.6'
+// settle-ok: lib/logic.js ends 0.7 s after the last payoff (owner r:r188b46 fast cuts: smoke never holds the end)
 module.exports = makeLogic({
   name: 'logic_minecraft',
   caption: 'minecraft logic 💀',
+  openOn: 'q0',
   red: 'logic',
   // two of each block placed: the hand is never empty (review 1: the bare arm drew wrong)
   hotbar: ['diamond_axe', 'diamond_shovel', 'diamond_pickaxe', ['sponge', 2], ['carved_pumpkin', 2], 'flint_and_steel', ['glowstone', 4]],

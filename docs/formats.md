@@ -37,7 +37,7 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
 | `psycho` | Beazle: "BRO" ("Genuinely gotta check if everything is okay at home after ts") | A house tour that looks almost normal at the door (a ring of fire, a burning wheat field) and inside is a nether-brick mansion over open lava, with a bed and furnaces on one-wide walkways; played straight | "fake psycho house" | r:rc40696 | building (own session, 2026-11-11) |
 | `fakerun` | (via the Buh Connects operator) "Fastest Speedrun Ever" | An obviously impossible speedrun in jump cuts (a portal missing corners lit anyway, full netherite already, lava in the end portal, typo labels), one banner, music only, 67 s; comment bait | "obviously fake, badly made, with typos and everything" | r:r9105ba | building (own session, 2026-11-11) (also track comments per 1k views) |
 | `sandart` | Technoblade: "Sand Art" | A giant pixel picture poured from the sky in concrete powder: the blocks fall and pile into pyramids, the camera rides down the slopes of colour, then the whole picture shows | "huge sand art" | r:r718ec5 | building (sandart_tnt: lib/sandart.js, an episode gives a pixel picture and a palette) |
-| `dropper` | (owner upload "fananimation") | A towering yellow dropper in first person, "Attempt #1, #3, #15" on screen, quick fails, the clean landing on the target far below | "Huge dropper?" | r:r304cb5 | building (own session, 2026-11-11) |
+| `dropper` | (owner upload "fananimation") | A towering yellow dropper in first person, "Attempt #1, #3, #15" on screen, quick fails, the clean landing on the target far below | "Huge dropper?" | r:r304cb5 | built: `lib/dropper.js` (an episode gives the walls, the layers and the target), `scripts/dropper_sim.js` flies it offline; first Short `dropper_rainbow` |
 | `fakeworld` | "Minecraft Dirt Moment" ("bro found dirt for ONCE") | A whole world made of one wrong block, played as normal survival; finding one patch of real dirt is the treasure | "fake world?" | r:r62f46d | built: lib/fakeworld.js, fakeworld_diamond (2026-11-11) |
 | `trap` | NoschiTech: "#memeanimation" ("a diabolical trap that made my friend hate me...") | A glass-roofed "underwater base" as bait; the friend dives in, the base is a fake, a hidden drop ends in a glass cage | "trapping friend" | r:refc733 | building: `lib/trap.js` (a bait over a real vanilla trap, the friend a second player bot on his own physics), first Short `trap_free_diamonds` (a trapped chest opens the trapdoor he stands on) |
 
@@ -119,3 +119,12 @@ Status: **idea** (saved, not started) · **building** (a worker is on it) · **q
   the turn to a lone treasure block on the shore, dug by hand and held (the challenge sound, dip and flash).
   A new episode only names the block: gold, sponge, melon, glass, TNT (never lit), honey, slime, sculk, pumpkins.
   `near` pins /locate (the seed is fixed): fakeworld_diamond uses near [136, 22] -> the river bank at (512, 62, 22).
+- **dropper**: a rainbow shaft (dropper_rainbow); a Nether-coloured shaft (blackstone and crimson bands, magma
+  obstacles; still in the Overworld, still a water target: hay only cuts a fall by 80%, fatal from 376 blocks), an ocean shaft (prismarine and sea lanterns, a
+  slime-block target that bounces), a "glass" shaft over a city, a 2-player race down twin shafts. Built
+  (lib/dropper.js): make({ walls, layers: [{ depth, block, holes, via }], attempts: [{ n, fail }...], landing }) builds a
+  376-block 9x9 shaft from the build limit to y -60, light rings every 8 blocks, a bullseye floor with a true vanilla
+  breaker in the middle; the steering is the movement keys only (lib/air_steer.js) and each fail is cut ~5 blocks over
+  the obstacle (nothing hits or dies on screen). Air control reaches ~1.5 blocks between layers 50 apart: run
+  `node scripts/dropper_sim.js <stunt>` (prismarine-physics, the same pilot) before recording; it matched the server's
+  cut heights to the hundredth.

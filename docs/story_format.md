@@ -15,7 +15,7 @@ owner's Roblox-style channel) is a premise source.
 1. **0-3 s, the genre opener + the impossible fact + the question, said out loud.** Open with "In my village..."
    (a local rule), "In my world..." (a rule for everyone) or "My twin / my grandpa / my best friend..." (owner, 2026-11-12). Line 1 is a strange, concrete, countable fact that
    touches everyone, and it makes the "why?" explicit: "This man adopted 10 kids, and not a single one came out alive."
-   "In this town, nobody is allowed to speak." Ours: "Every sheep in our village is BLUE. And nobody will tell me WHY."
+   "In this town, nobody is allowed to speak." Ours: "In my village, every sheep is BLUE. And if one turns RED, Dad says RUN." The fact makes you ask why; never a stock "nobody will tell me why" tag (owner, 2026-11-12).
    The picture shows the fact by 2 s.
 2. **3-15 s, the rule in action: 3-5 quick examples**, a cut every 1-2 s, each one a clue that reads two ways.
 3. **The narrator is the exception**: the one who doesn't know, wants to know, and says the viewer's question for
