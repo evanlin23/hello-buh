@@ -292,6 +292,22 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, Review Room notes on the ready Shorts: "still says hellobuh" / "all of these still say hellobuh
+  instead of 56e" (cave_reveal, creeper, half_heart, lava_crossing, tnt_1000, which_door); pickaxe_race: "why is there a
+  cut when we are using the wooden pick?" "actually theres a cut for all." "Also, we should have like a timer...";
+  guess_sound_2: "when we look over at the mob, we arent looking directly at it."; fortune: "The items are all
+  upsidedown?? Also we should have more drop."; mega_sponge: "the cuts are too jarring, it looks like we get stuck";
+  tnt_1000: "the title could be like vs SECRET or smth idk bc i wouldve swiped after 1000".** Every Short shows the player
+  as 56e (death messages, chat, command feedback), re-renders of older recordings included. No cut in the middle of an
+  action (a dig, a place, a use): cut between actions. When the view turns to a mob or thing, it lands centred on it.
+  Dropped items render the right way up (an engine bug). Cuts never look like the player got stuck. A title promises
+  something past the obvious end point, so the viewer stays for it.
+- **Owner, 2026-11-11: "make everything, then put all of it into a review folder. dont let anything go to youtube
+  anymore without an OK from me"; "the \"review folder\" is the review artifact"; "show what i need to review there,
+  then archive the rest (still available)".** Nothing uploads without the owner's OK for that exact cut:
+  scripts/youtube_upload.py skips any Short without a line in uploads/owner_ok.txt naming the sha256 of the video the
+  owner watched (scripts/owner_ok.py add, only after the owner says OK); a re-published Short needs a new OK. Every
+  ready Short goes on the review artifact; what is already decided is archived there, still viewable.
 - **Owner, 2026-11-11, on the skin stills: "i want it to be regular arms, the slim dont look good".** The player 56e
   renders with regular (wide, classic) arms; the slim-painted arm art is widened to the wide layout (a duplicated column
   per arm face) so no black stripes show. Supersedes the slim-arm auto-detect for 56e.
@@ -354,6 +370,144 @@ STANDARDS.md in the same commit.
   an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
   obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
   (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
+- **Owner, 2026-11-11, sharing Technoblade's "Sand Art" Short: "huge sand art".** (A giant pixel picture made of
+  concrete powder poured from the sky: the blocks fall and pile into pyramids, the camera rides down the slopes of
+  colour, a subscriber-counter overlay ticks to 1,000,000.) HelloBuh adds a sand-art format (family `sandart`): a
+  HUGE picture made of falling concrete powder (or sand and gravel) dropped from above, so it builds itself by gravity;
+  the camera sits close in the falling blocks, then pulls up to reveal the whole picture. Our own picture and caption;
+  no other creator's name, likeness or overlay. The settle rule holds: never cut or end while blocks still fall.
+- **Owner, 2026-11-11, sharing Necroncore's "what was your favorite version?" time-lapse (a crater dug in a real
+  landscape, a giant grass block rising in it, then a giant iron golem holding Steve and Alex, a wolf beside it):
+  "huge mega build, like ridiculously big".** The `mega` time-lapse variant goes BIGGER: the build must dwarf the
+  landscape (hundreds of blocks across, a real terrain around it for scale), shown from high up so the scale reads,
+  ending on a close pass that shows how small the player is next to it.
+- **Owner, 2026-11-11, sharing a "fananimation" dropper Short (a yellow shaft, "Attempt #1", "#3", "#15" captions,
+  a red-and-green target far below, the landing on #15): "Huge dropper?"** HelloBuh adds a dropper format (family
+  `dropper`): a HUGE, tall dropper fallen in first person, an attempt counter on screen, quick failed attempts cut
+  together, then the clean landing as the payoff. Our own shaft, obstacles and target; failed attempts end on a cut
+  before the death (no death puff left on screen), and the landing must be true vanilla (water, slime, hay, etc.).
+- **Owner, 2026-11-11, sharing "Minecraft Dirt Moment" (caption "bro found dirt for ONCE": a whole world where the
+  ground, hills and everything are one other block, and the player digs a lone patch of real dirt under a tree like
+  it's treasure): "fake world?"** HelloBuh adds a fake-world format (family `fakeworld`): a world where everything is
+  one wrong block (planks, glass, gold, sponge...) shown as normal survival, and the one ordinary block found in it
+  is treated like a rare treasure. Built by generating the world from our own block swap, never a copied map.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "a diabolical trap that made my friend hate
+  me...": a lake with a glass-roofed underwater base, the friend dives for it, the real base is a fake, a tunnel
+  and a hidden drop end in a glass cage): "trapping friend".** HelloBuh adds a friend-trap format (family `trap`):
+  build an irresistible bait (a base, loot, a portal), show how it works, then the friend walks into it; the trap
+  must really work in vanilla (minecraft-audit) and the friend is a second bot, never the owner's name.
+- **Owner, 2026-11-11, sharing struxo's "Beginner Friendly Nether Boss Build Timelapse" (a drone time-lapse of a
+  mangrove swamp cleared and a huge crimson/warped boss statue rising, with block counters ticking in a corner):
+  "another megabuild example".** For the `mega` time-lapse: a running count of blocks used, ticking up, is a good
+  overlay; the build stays our own design, at a ridiculous scale.
+- **Owner, 2026-11-11, Review Room note on mega_lapse_fountain: "can we make the build more complicated, it looks a
+  bti flat right now. also we should put it in a real world, not superflat..."** Mega builds need depth and detail
+  (layers, overhangs, varied heights and materials, not flat tiers), and they sit in a real generated world (terrain,
+  trees, water) instead of superflat, so the scale reads against real land.
+- **Owner, 2026-11-11, Review Room note on cooked_bedrock: "need to have the ominous music".** The `cooked` payoff
+  plays an ominous, dread-building track on the drop (dark NCS or a low drone and hit), not an upbeat bed.
+- **Owner, 2026-11-11: "We should focus on making our opening phrase more eye-catching. And you do research on how
+  the other opening frames, like on big YouTubers ... Minecraft shorts specifically?" then, after the queue review,
+  "Fix everything, please."** Every Short's frame 0 shows the thing the video is about (the subject or the payoff's
+  setup: the creeper, the trap, the TNT, the build), already in motion by 0.5 s; never an empty field, plain grass, a
+  bare wall or a still room. The caption reads like a person reacting ("I hate this job 😭", "Am I cooked?", "bro
+  found dirt for ONCE 💀"), not a label ("ladder clutch"). Measured on the owner's 32 references: all show the subject
+  at frame 0, nearly all with a reaction-style caption in the top band.
+- **Owner, 2026-11-11: "Generally, I think we need to have faster cuts. Like, after the stunt is done, we just cut.
+  After we have done something, like, we just cut, go to the next thing. ... it can't be too fast, but it can't be so
+  slow either. It's like, right now, we blow up the TNT, wait for, like, what feels like forever, then we cut. We
+  should need to, like, go boom, boom, boom, fast, fast pace."** Cut as soon as an action's result reads: about
+  0.3-0.6 s after the hit (the block lands, the boom's flash and blast), then straight to the next beat. Never wait
+  for smoke, particles or drifting debris to clear. This narrows the settle rule (r:r24d99a): still no cut while the
+  thing itself is happening (a block mid-fall, a mob mid-death, the blast still going off), but smoke and particles
+  no longer hold a cut or the end. The end comes about 0.5-0.8 s after the payoff's result.
+- **Owner, 2026-11-11, on underdog_heal: "For the one where we're feeding like the health, like we started to show
+  like their health overhead, like with like hearts and like empty hearts and stuff."** In the `underdog` (healing)
+  format, each hurt mob shows its health above its head as a row of Minecraft hearts (full, half and empty, the HUD
+  heart style), and the row fills up as it's healed, so the heal reads at a glance. The hearts track the mob's real
+  health from the recording.
+- **Owner, 2026-11-11, on fakemod_permission: "Also, for the fake mod thing, I think the pop-up should be in the middle
+  of the screen rather than at the top."** In the `fakemod` format, the permission popup sits centred in the game view
+  (like a real modal dialog over the action), not at the top.
+- **Owner, 2026-11-12, on the bigger fakemod popup take (a bigger creeper popup plus an ALLOW card): "bigger popup is
+  prolly better lowkey".** In the `fakemod` format the permission popup is big: it fills most of the game view's width,
+  centred, at a GUI scale that reads at phone size, and the ALLOW/DENY result shows big as its own beat.
+- **Owner, 2026-11-12, on fakemod_permission (at 0.8 s): "for this can you look for the code where we eat them? i
+  think it wouild be funny if we deny and then pick them up and eat them", then "no i meant like you eat the mob."** In
+  the `fakemod` format a DENIED mob is eaten: the player picks the mob itself up bare-handed and eats it bite by bite
+  (lib/interrupt.js pickupEat, the interrupt format's 'pickup' deal: it shrinks into a handful, crunches, crumbs of its
+  drop, a burp, gone), not its drop.
+- **Owner, 2026-11-12, asked whether to keep the 30 s minimum (2026-11-06) or drop it: "no fixed minimum, just don't
+  pad them".** A Short is as long as its beats need. There is no minimum length for a stunt (the 30 s rule of
+  2026-11-06 is retired). Padding is the blocker instead: a beat added or stretched only to reach a length, a beat
+  that could be cut without losing anything, or dwell after a result (r:r188b46).
+- **Owner, 2026-11-11, Review Room notes: on tnt (9.5 s) "This needs to be longer, this is low-key a no op reel. Every
+  one we make must give the viewer satisfaction"; on logic_minecraft "We spend too long looking at the fire after the
+  TNT"; on tnt_1000 "Need faster cuts generally between shots.."** Every Short must pay the viewer off with a real,
+  satisfying result: big enough to be worth the watch, never a setup with a small or quick fizzle ("no-op"). Short is
+  fine (r:r064ca4), but a Short whose payoff doesn't land needs a bigger payoff, not padding. The two cut notes are
+  r:r188b46.
+- **Owner, 2026-11-12, on mislabel_grandma v2: "Need to be like left right doubel extensions not this going up. Also
+  the cuts need to be cleaner, we should do into a hole 1x1 and then come out of the sky? need cleaner"** The
+  `mislabel` parkour uses sideways (left/right) double extensions, the classic bridge-out move, not blocks placed
+  upward. The transition is one clean move: drop into a 1x1 hole, cut, come out of the sky.
+- **Owner, 2026-11-12: "We need to be optimizing our hook as well as the viewer satisfaction. They need to look at the
+  reel, and when they're done watching it, be like, I got something out of that. It can't be a no-op, bro. It
+  absolutely cannot be a no-op."** Every Short is judged on two things before anything else: the hook (r:r0f3da0) and
+  the takeaway. The takeaway test: in one sentence, what did the viewer get out of it (a laugh at a clear joke, a
+  "whoa" at a big result, a satisfying finish, a thing they didn't know)? If the honest answer is "nothing much", a
+  small result, or "it just ends", the Short is a no-op and does not ship: make the payoff bigger or drop it.
+- **Owner, 2026-11-12, on the no-op audit: "We should not ship any no ops. we should fix all of them or just drop or
+  redo or anyhting yk" and "Also fix the borderline as well. All of them need to 'make sense' and leave teh viewer
+  happy and satisfied."** No Short ships unless an independent reviewer's takeaway says it makes sense and pays off.
+  No-ops are redone or dropped; borderline Shorts get one bigger, clearer last beat. The audit and every fix:
+  docs/noop_audit_2026-11-12.md.
+- **Owner, 2026-11-12, Review Room notes on the no-op fixes: interrupt_lamps (at 14.3 s) "We need to spend longe
+  rbuilding, we need to have the skeleton hit us at least like 3 times or something"; quest_pyramid (at 0 s) "this can
+  be longer. also we need text indications for like tunnel etc. and we should hav emore steps." and "also end sooner as
+  soon as you walk into the room."; pickaxe_race (at 11.6 s) "we should still have the other pickaxes.."** A fix keeps
+  what made the Short work: interrupt shows more of the build and the mob interrupts it about 3 times before the player
+  deals with it; quest has more stages, each named on screen as it starts ("the tunnel", "the lava"...), runs longer,
+  and ends as the player steps into the reward room; pickaxe ranking keeps the full ladder of tools (wood to netherite),
+  fast, before its finale. Length follows the content (r:r064ca4): longer is fine when each beat is new.
+- **Owner, 2026-11-12, on fortune v3 (at 2.8 s): "we should look at the block we are breaking. and i think the moving
+  around was fine...", "like we should keep looking at the shower." and "And we should end faster, right after the
+  shower explodes in emeralds".** The crosshair stays on the block while it breaks (r:r52f94c, r:rffba12); after a
+  burst the camera follows the drops where they fly, never back off them; the walk between ores stays; the Short ends
+  0.5-0.8 s after the payoff's burst, no hold or counter beats after it (r:r188b46).
+- **Owner, 2026-11-12, Review Room notes:** on mislabel_grandma "wtf is this parkour. the double extension is like
+  you jump, place 2 blocks, and then land etc (without the blocks, the jump would hav ebeen impopssile)", "we should
+  move our camera... like the art should be vertical, and we look at it tracking it as we fall", "we should have the
+  name whenver the number pops up, like 4. lime jello for the full time, not 4 before", "the loop needs ot work too";
+  on trap_free_diamonds "We should have more setup for the trap. Like go all the way down and then lava or fire etc";
+  on mega_lapse_fox "the beaet drops before the ears appear" and, on v2, "I think we can spend longer creating it. ANd we dont ened the second cut at the end." (the time-lapse runs longer and the Short ends on the reveal, no close pass after it); on lapse_house "make the house more fancy, and it doesnt
+  need to be superflat"; on guess_sound "nothing really happens this first bit, people will scroll". The general
+  rules: a double extension is a mid-air clutch (jump a gap you can't make, place 2 blocks under you in the air,
+  land on them); a list item's number and name appear together and stay up for the whole item; a Short that loops
+  must loop seamlessly (the last frame leads into the first); a build sits in a real world, not superflat, and is
+  detailed; the music drop lands on the payoff's reveal, never before it; and something happens from the first
+  frame (r:r0f3da0).
+- **Owner, 2026-11-12, Review Room notes: on nether_portal v3 at 11.0 s "need faster cuts".** The fast-cuts rule
+  (r:r188b46) applied to a rating list: each method's result (the portal lights, or doesn't) holds about 0.5 s with
+  its card, then a hard cut to the next method. No step back, no look at the swirl, no smoke clearing in between.
+- **Owner, 2026-11-12, Review Room notes: on villager_fired v2 at 1.2 s "too slow to start in the opening, also i dont
+  understand the premise of this short".** The opening rule (r:r0f3da0): something happens on frame 0. Also, the
+  premise reads in the first second from the picture and the caption together (the subject big and centred, the first
+  step of the premise happening on screen as the title states it), and every later step reads on one watch at full
+  speed: no act that fights the title (v2 fired the villager before giving him "every job"), no set dressing that raises
+  a question the Short doesn't answer (v2's TNT showed in the ground from frame 0), no change too small to see (his
+  robe 6 blocks away). If the premise can't be made that clear, redesign it.
+- **Owner, 2026-11-12, Review Room notes: on cooked_bedrock v3 at 1.0 s "why does the music start late?".** A Short's
+  music plays from frame 0. When a pinned track's drop comes earlier in the track than the drop event, the track
+  repeats a whole bar of its build until the drop lands on the event (edit.songLoop, scripts/add_song.py). It never
+  starts late after silence (the old edit.songLate). In the `cooked` format the ominous track (r:rcefdcc) plays from
+  the first frame, goes quiet on the black, and drops on the flood.
+- **Owner, 2026-11-12, Review Room notes: on cooked_bedrock v4 at 11.3 s "I think it falls ot black for too long. Also
+  the color grading changes while we are looking at the bedrock."** A fade to black before a reveal is a beat, not a
+  wait: about 0.3-0.5 s of full black, then the reveal (v4 held 1.2 s). And the light and the grade stay constant
+  inside a shot: no light level, tint or brightness change while the camera holds on the same subject, unless the
+  change is the event itself (a blast, a fade on the payoff). v4 raised the block light from 13 to 15 as the bedrock
+  appeared, so the warm torch-lit shaft turned grey mid-shot. Light a set at its final level from the first frame.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -535,8 +689,179 @@ STANDARDS.md in the same commit.
   current length is fine, we shouldnt harp too much on length".** About 50 s at Pip's natural pace is fine. Length is
   not a reason to cut lines or re-voice; a line goes only if it doesn't move the question. pace keeps only its floor
   BLOCK; anything over 45 s is a note, never a blocker or a fix request.
+- **Owner, 2026-11-11, on Good Boy's voiced preview: "The opening scene is not very exciting? Also not centered."**
+  Its first 4 s were Buh walking a dirt road with the dog (the narrator, the story's subject) small at the right edge.
+  The opening shot puts the story's subject (the shot's `subject`, else line 1's) in frame from frame 1, in the middle
+  third of the frame and big enough to read at phone size, with something story-relevant already moving (the subject,
+  the cast, an action or a camera push) in the first 0.5 s; never a static or empty establishing frame.
 - **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
   stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
+- **Owner, 2026-11-11: "keep the producer off. We should be doing the stories more manually just for now until our
+  process is good... try and get the premises first. I want good premises. And then good premises can turn into good
+  scripts and good stories. And then once we audit those... we can start writing the scripts for them. One session
+  per script."** The daily story producer stays off. New stories go in owner-audited stages: a premise shortlist first
+  (the owner picks), then one session per picked premise writes its script (the writers' room, critic, cold read),
+  and the owner audits the scripts before any voice or build.
+- **Owner, 2026-11-11, on the batch-2 premise audit (docs/pitches/batch2_premise_audit_2026-11-11.md): "Whatever is
+  suggested".** Batch 2 is the critic's five: The Wall Grows, The Bell in the Window, The Walk, Six Thousand Torches
+  (in place of Goat Horn, which needs a goat model), Red Sheep (Grandpa becomes Dad). One session writes each script,
+  with the audit's "must change" notes applied; the owner audits the scripts before voice or build.
+- **Owner, 2026-11-11, on batch 2's scripts: "We need to have that sense of mystery. And naivety".** Every script
+  is told by a kid who doesn't understand what they're seeing and says so plainly, with full trust: the kid explains
+  each clue the wrong, innocent way (the wall keeps us safe, the bell is just loud, Grandpa is being silly), and the
+  viewer starts to see what the kid can't. The kid never hints, foreshadows, sounds scared too early or explains the
+  twist; the gap between what the kid believes and what the viewer suspects is the mystery. Every clue in the clue
+  map has its innocent misreading in the kid's own words.
+- **Owner, 2026-11-11, auditing batch 2's scripts:**
+  - The Wall Grows: "ok for villagers to place blocks and climb ladders"; leaving "why doesn't the player dig in?"
+    unanswered: "sure for that, we can have it as arguing in the comments".
+  - Six Thousand Torches: "ok for the goodbye thats fine" (about 65% guess it at the midpoint; dramatic irony is
+    fine); "Jonah is fine" (a new character, not Buh); his voice: "we should test. we need to keep track of our
+    characters".
+  - The Bell in the Window: the implied death is fine ("we dont actually show it"); "whole village runs inside is
+    fine"; L10 takes "so he could see me".
+  - The Walk: "sea freezes is good" (Grandma: "Come back when the sea FREEZES." N: "Mom says it NEVER freezes
+    here."); "3 hundred is fine"; asked why its grandpa can't reuse a grandpa voice.
+  - Red Sheep: "new kid is fine"; ending on the evoker's look with no fangs: "sure".
+  Every speaking character is tracked in one place, docs/world/canon.md "Recurring characters" (who, look, cast id
+  and voice, stories), and a new character's voice is auditioned against Pip before it's cast.
+- **Owner, 2026-11-11, on Dog on the Hill (already OK'd): "maybe we can have buh say 'i just wanted to see you again,
+  but I need to go already' or smth bc its kinda jarring to join then immediately leave".** A player who appears and
+  leaves at once needs a word on why: Buh says why he came and that he can't stay before "Sit, BOY. Be right BACK."
+  (L15 "Hey, BUDDY! I just wanted to SEE you again." L17 "But I gotta GO already. Sit, BOY. Be right BACK."). The
+  OK'd package goes back to held until the owner re-OKs it.
+- **Owner, 2026-11-11, on The Bell in the Window's Mom (Saltmouth, not Buh's Mom), candidates A Kore / E Callirrhoe
+  from the Mom/Grandma audition: "A is fine".** Saltmouth's Mom is cast `mom_saltmouth`, Kore.
+- **Owner, 2026-11-11, on The Walk's Grandma (not Gold's Grandma), candidate E Callirrhoe: "calirrhoe is fine".**
+  The island Grandma is cast `grandma_island`, Callirrhoe, directed as an old woman; the first take must still read as
+  an old woman to the blind listener (reads_as 60-85), or it comes back to the owner.
+- **Owner, 2026-11-11, on the world: "i really liked how the hill and the place the dog was left was the same place and
+  people watching both will be able to see its connected".** The strongest link between stories is the same exact
+  place, seen again: the same spot, the same build, the same thing left behind (Good Boy's last login is Dog on the
+  Hill's first frame). Every new story looks for one: set it where an earlier story happened, or leave something
+  that a later story will show on the skyline.
+- **Owner, 2026-11-11, on batch 3's first premise round: "theyre all ok, but we should review further... im not exactly
+  sure how these were created, but i want to be more creative".** Premises are made in two phases: diverge first
+  (several writers, each with one lens: strange narrators, player habits seen from the other side, game systems as
+  mysteries, new moods; no other rules), then a cold-read gate (keep only ideas a fresh player can't guess at the
+  midpoint, or guesses wrong), and only then the house rules, vanilla, place and build checks and the critic. The
+  owner sees a ranked top 8 plus a wild-cards list, and how each idea was made.
+- **Owner, 2026-11-11, on the batch-3 premises (round 1 and round 2): "do whatever you think is the best".** Batch 3's
+  scripts: Pulled Away (round 1), Saving Up for a Bastion, The Singing Box Next Door, The Honey Thief (round 2), one
+  session each (briefs: docs/pitches/batch3_script_briefs/); a round 3 of premises from the moods lens only (the lens
+  readers couldn't predict). A Ghost for Five Minutes (hardcore, outside the shared world) is banked, not made.
+- **Owner, 2026-11-11, auditing The Honey Thief: "giant can be jonah. no name tag".** The giant is Jonah (Six
+  Thousand Torches' player, kai skin, his voice), 300 days before Torches; never named, his name tag hidden (the bees
+  don't know his name; fans know the skin).
+- **Owner, 2026-11-11, auditing Saving Up for a Bastion (cold read 60-65 %, dramatic irony; the second piglin-gold
+  story, at Gold for the Portal's portal with the helmet piglin in the background): "ok all".** Approved as written;
+  the player's voice is auditioned (Umbriel vs Zubenelgenubi; whichever Jonah doesn't take).
+- **Owner, 2026-11-11, auditing Pulled Away and The Singing Box Next Door, and on the lead's note that the bottleneck is now
+  building (voices, renderer pieces, skins) rather than pitching: "ok all".** Both scripts approved as written (with the
+  lead's calls: Bramble Hollow, one egg, original skins); next, the engine work the approved scripts need, one
+  session per piece.
+- **Owner, 2026-11-11, auditing Seventy Below (the general is Ravenford's Grandpa in his `elder` voice, never named;
+  one zombie burns in the sun, no gore): "Ok".** Approved as written.
+- **Owner, 2026-11-11, relaying a friend's reaction to Gold for the Portal (upload #1): "im confsued bro, feel like i
+  just wasted 10 seconds of my life bro".** A real first viewer didn't get it. Gold's twist takes several unspoken
+  steps (piglins barter; Grandpa died there; a piglin wears his helmet; Grandma knows) and an unexplained name
+  (Nico). From now on every script's cold read includes a CASUAL viewer (plays a little, not a Java expert, watching
+  once at phone speed): the twist must land for them in one step from the picture, with no name or mechanic they
+  weren't shown. A script the casual viewer can't explain in one sentence goes back to the writer.
+- **Owner, 2026-11-11, asking how the Roblox story Shorts set up the mystery, then: "Yes, please rewrite all the
+  stories as needed. We should be following the format, the tried and true format that already works for the Roblox
+  stories, but now we're doing Minecraft stories instead."** Every script follows docs/story_format.md: the impossible
+  fact and its "why?" said out loud in line 1, 3-5 two-way clues, the narrator as the one who wants to know, someone
+  loved at stake, the rule turned against itself, the reveal SAID in one plain sentence (the naive narrator says what
+  they see), one beat, cut, the last line echoing line 1. All 10 approved scripts are rewritten to it, one session
+  each, and come back to the owner.
+- **Owner, 2026-11-12: "What i want is more roblox style. Like the premise. Like in my town, nobody etc. Or in my
+  world. Or my twin etc. its a crazy premise. it doesnt necessarily need to be minefrcaft themed yk?"** The premise is
+  a crazy Roblox-story premise ("In my town, nobody...", "In my world...", "My twin...", "This man adopted 10 kids
+  and..."): a strange rule or impossible fact about people, families, towns. Minecraft is the look (the world, the
+  blocky characters, the places), not the twist: the twist no longer has to be a vanilla mechanic. Premises can come
+  straight from blocky-stories (the owner's Roblox-style channel) and the Roblox hits. Everything else holds: the
+  format (docs/story_format.md), naivety, the casual viewer gets it, the shared world as background.
+- **Owner, 2026-11-12, asked "Should we do the likle 'in my world,... ' sort of intro or 'in my town'", then on the
+  lead's plan (In my village / In my world / My [family member]): "sure lets do this, for all of them".** Line 1 opens
+  with the genre's frame: "In my village..." (a local rule), "In my world..." (a rule for everyone), or "My twin / my
+  grandpa / my best friend..." (a family premise), then the impossible fact and the "why?". All 10 approved scripts
+  take it.
+- **Owner, 2026-11-12: "Do we need to say and nobody will tell me why?"** No: the opener makes the viewer ask why
+  without saying it. After the frame and the fact comes a short clause that makes it stranger ("...and not a single one
+  came out alive"; "Only MY window."), different every story; no stock "nobody will tell me why" tag.
+- **Owner, 2026-11-12: "I just heard a hook 'in the beginning, god was non binary' we need to make our hooks absurd".**
+  Line 1 is absurd: a sentence nobody expects to hear, said flatly, that makes you stop scrolling ("I live under an
+  old man's bed. With sixty-nine of my brothers."). Still true to the story, naive, and never a joke at a real group's
+  expense. The casual cold reader judges it first: "would you stop scrolling?"
+- **Owner, 2026-11-12, on the absurd hooks: "contraversial to a point".** A hook may be edgy and provocative inside the
+  story's world (kidnapping, robbing, a kid "in love" with a bell, a grandpa "dumped"), the kind that makes people
+  comment. It stops short of real-world flashpoints (religion, gender, politics, real people or groups), which risk the
+  channel and aren't needed: the shock comes from the story's own absurd fact.
+- **Owner, 2026-11-12, relaying a friend on the absurd hooks: "my friend said he didnt like the wall, and didnt knwo
+  waht the grandpa one".** An absurd hook must still parse on first hearing (The Walk's "got DUMPED. Now he breaks
+  LECTERNS" didn't) and carry tension (The Wall's "forty blocks high, still growing" had none). Each hook is gated by
+  two fresh casual readers: understood instantly, a clear question, would keep watching.
+- **Owner, 2026-11-12: "ask the buhtown what its found with its shorts metrics stuff, and what we can do to apply it
+  to our content. We dont necessarily need them to all be grounded in minecraeft like topic sin my option."** Buhtown's
+  Studio data (20 story Shorts, Nov 2-11; evanlin23/blocky-stories metrics/studio/2026-11-12.md, RULES.md): the stop
+  rate (viewed vs swiped) is the gate: every Short at >= 81% viewed passed 10k views, every one under 80% stayed under
+  2.6k even with great retention. The biggest drop is at 0:04-0:08, the beat after the hook. What we apply:
+  - the first frame and the title are ONE strange, checkable fact, stated plainly ("The Elevator Mirror Shows FIVE",
+    "Everyone's Born With HALF a Mark"); warning titles ("Never...", "...is DANGEROUS") did worse;
+  - seconds 4-8 escalate: no setup, no backstory, no who's-who;
+  - the reveal is one plain line that recasts the rule (confusion kills: "where did lemonade go?");
+  - 30-45 s and loopable is the sweet spot; longer only with a very strong hook;
+  - give viewers something to answer or argue in the comments;
+  - premises that won: a rule with a number or mark, a person who changed overnight, warm twists; weaker: dark sets,
+    monsters, sad family losses, warnings. Topics needn't be about Minecraft.
+- **Owner, 2026-11-12, on the lead's keep/drop list: "ok, only do the ones that have high potential."** Build only the
+  high-potential five: Pulled Away, The Honey Thief, Saving Up for a Bastion, The Statue Gets Younger and Sorry, Dear
+  (the last two new from blocky-stories). Benched: The Singing Box, The Walk, The Wall Grows, Six Thousand Torches.
+  Dropped: The Bell in the Window, Seventy Below, Red Sheep (monster reveals, dark sets). The four built stories stay.
+  Also: "can we also check what was going on the screen for the ones with good hooks vs bad hooks and see how we can
+  improve?" A frame study of Buhtown's high vs low stop-rate openings sets the opening-shot rules.
+  The study (docs/research/hook_frames_2026-11-12.md on claude/hook-frame-study; 22 Buhtown Shorts, leads only):
+  frame 1 is a person or body the rule acts on (face >= 1/4 of the width), never a prop still life (prop openers
+  averaged 62.8% viewed, none over 75%; the rest 75.7%); the strange fact is a person doubled, split or replaced, or a
+  person acting wrong; the key word (the title's CAPS word) is spoken by 1.8 s and line 1 ends by about 2.5 s; shot 1
+  cuts on the key word to line 1's second half; 2-4 s a personal stake on a face; 4-8 s the rule at work on a new
+  person every 1.2-1.6 s (no backstory, layout, who's who, object list, HUD POV, near-black); a cool or neutral bright
+  grade. Our game view is 53% of the frame under a title band: Buhtown is full-bleed 9:16. A/B it.
+- **Owner, 2026-11-12, auditing Sorry, Dear and The Statue Gets Younger (both with the 0-8 s openings applied): "A is
+  fine, sure thats fine".** Both approved. Sorry, Dear keeps order A (the rule first, then "My aunt is the size of a
+  MUG."). The build list is now five approved scripts: Pulled Away, The Honey Thief, Saving Up for a Bastion, The
+  Statue Gets Younger, Sorry, Dear.
+- **Lesson, 2026-11-12 (Light Sleeper's Mom re-voice):** the owner picked Pulcherrima from an audition made on
+  gemini-3.1-flash-tts-preview (176 Hz, heard as a woman 30-45); on gemini-3.8-flash-tts the same voice and bracket
+  came out ~6.5 st lower and the blind listener heard a man. A voice is auditioned on the model the story will use, and
+  the audition labels the model; a cast entry names its model. Light Sleeper's Mom is relocked to 3.1, the model the
+  owner heard.
+- **Owner, 2026-11-12, Review Room, on guess_sound: "Its kidna hard to hear the moo at the start. Also we should blur
+  the parrot at hte start slightly i think?" (27.8 s) and "Er, is the warden sound overlapping the parrot sound? I
+  couldnt hear the parrot" (36.8 s); on guess_sound_2: "should blur the starting" (10.1 s).** Every round's call is
+  heard in full: the cut never starts after a round's first call, and no sfx sits on a call (the song ducks under each,
+  keySounds). A tease of the answer is blurred (edit hook.blur): it promises, it doesn't give the answer away. Nothing
+  covers the payoff's own sound: no low 'impact' boom on a sound that IS the payoff (it read as a warden's rumble over
+  the parrot); a short pop is the hit, the song stays ducked through it and drops after (dropAt 'EVENT:OFFSET').
+- **Owner, 2026-11-12, Review Room, on lava_crossing at 2.4 s: "huh? no brdige?"** A method that is named and rated is
+  shown: the bridge is built and crossed on screen (sped up), never cut while its sub stays up.
+- **Owner, 2026-11-12, on dropper_rainbow v2: "also the dropper should be fancier please".** A dropper's shaft is a
+  build to show off, not a coloured tube: patterned walls (glazed terracotta trims, quartz corner pillars), lit
+  stained-glass neon rings and windows, obstacles with trims and glowing hole rims, a glass layer, lanterns on chains,
+  freestanding pillars to fall past, a crowned rim and a decorated pool (lib/dropper.js blueprint). Every decoration that
+  could touch a fall is flown first in scripts/dropper_sim.js, which builds the same world.
+- **Owner, 2026-11-12, on mega_sponge v3 at 18.3 s: "i feel like im wasting my time wsatching this. maybe we should be
+  like building ti and then just zoom out."** A mega Short does not fly round a finished build for its length: it shows
+  the build going up as a fast time-lapse (lib/mega_lapse.js), then one big zoom out to its scale, then it ends.
+- **Owner, 2026-11-12, on dropper_rainbow v2 at 3.8 s (the fail cut 0.35 s after the hit, hearts empty, still alive on
+  screen): "we should die when we lose all life?"** A dropper fail shows the whole death: the hit, the hearts empty,
+  the death tilt and vanilla's "You died!" screen, then the cut (before the poof); never cut away mid-death.
+- **Owner, 2026-11-12, on trap_free_diamonds v3 at 8.6 s: "we should timelaspe the digging."** A long dig in a trap
+  (or any build step that is only labour) plays as a time-lapse: one steady sped-up move with a live depth counter
+  (edit `tally`), never seconds of stone walls. Keep it to one steady camera (no jump cuts in a lapse, r:r200cfe) and
+  cap the turns at 220 / x deg/s while it is sped up (K.turnLimit, r:r38374d); dig straight down where the trap
+  allows (no turns at all), and aim a hair off straight down (an exact 90 deg look never lands).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

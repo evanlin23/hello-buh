@@ -17,6 +17,12 @@ Read, in order: `docs/stories.md` (house rules and owner quotes: they outrank ev
 Sleeper: Mom's "walk soft, the ground's a light sleeper" plants it, the carpets everywhere are the clue, the warden is
 the answer) and earlier "the creeper was good" (runaway).
 
+**The format (owner, 2026-11-11, docs/story_format.md; STANDARDS 0y/0z), each a blocker:** line 1 states the impossible
+fact AND its "why?" out loud; 3-5 two-way clues; the narrator wants to know; someone loved at stake; the reveal is ONE
+spoken plain sentence (never a wordless picture, never a mechanic the viewer wasn't shown, no unintroduced name); one
+beat then cut; the last line echoes line 1; a CASUAL cold reader (plays a little, watches once) can explain it in one
+sentence. Where this conflicts with an older note below ("no explaining line", "cut on the reveal" with no words), this wins.
+
 **Owner's mystery test (2026-11-10), applied to every pitch and script, each a blocker:**
 - **A question to the viewer in the first 3 s**: line 1 (or the first image) makes the viewer ask a specific "why?"
   that only the ending answers. A story that just tells events in order fails ("there's no like question to the
@@ -58,6 +64,10 @@ the top 3 and one sentence each on what would make them as good as runaway.
    - **Twist**: the checklist in `docs/story_craft.md` section 3, box by box. Name the line whose meaning flips.
    - **Fairness**: list every clue with its line and how it's misread; is everything the twist needs shown first?
    - **Rewatch**: name three lines that sound different the second time.
+   - **Naivety** (owner 2026-11-11, "sense of mystery. And naivety", STANDARDS 0a): does the kid trust what they see
+     and say each clue's innocent misreading out loud, in their own words? Blocker: a clue with no misreading, a kid
+     who hints or foreshadows ("little did I know", "I should have"), sounds afraid before the reveal, or explains the
+     twist.
    - **Agency**: does the character want something and try? Any accident without a visible in-game cause is an
      automatic must-fix (owner: "you can't really 'Trip' in minecraft").
    - **Character and dialogue**: distinct voices (swap test), subtext, few words, every character line carries a

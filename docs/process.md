@@ -13,7 +13,7 @@ idea -> stunt module -> run.sh (bot + render + edit) -> qa_frames.py -> independ
 ## 1. Make
 - One stunt module per Short in `stunts/`. See `docs/worker.md` for the brief and the harness helpers.
 - The format must read **in the first second**: the thing the caption promises is on screen (or audible, e.g. the hiss) by ~1 s. Use `startAt: 'EVENT:-1.5'` to trim.
-- **Length: 30 s minimum** (owner, 2026-11-06: "We don't want the shorts to be too short as well. I would prefer like 30 seconds at least"). Get there with MORE BEATS, never by stretching one: a single stunt is one beat inside a bigger format (an escalating series, "every X, rated", X vs Y vs Z, a narrated story). Aim for 30-45 s with something new every ~2 s; each beat obeys the no-dead-space rule, and the video still ends <= 1.0 s after the final payoff.
+- **Length: no fixed minimum, never padded** (owner, 2026-11-12: "no fixed minimum, just don't pad them". Retired: the 30 s minimum, owner 2026-11-06: "We don't want the shorts to be too short as well. I would prefer like 30 seconds at least"). Get there with MORE BEATS, never by stretching one: a single stunt is one beat inside a bigger format (an escalating series, "every X, rated", X vs Y vs Z, a narrated story). Aim for 30-45 s with something new every ~2 s; each beat obeys the no-dead-space rule, and the video still ends <= 1.0 s after the final payoff.
 - **No dead space.** Never a still shot of 1 s or more: waits get glances, endings get motion. A reveal lands with a move (a pull-back or a drift), and the Short ends **<= 1.0 s after the payoff** (owner: "we should end as soon as the payoff comes"). No frozen pause of 0.5 s or more anywhere, the payoff included. Owner, 2026-11-06, on pixel art: "we land on the reveal for the pixel art for a while, which idk how good that is".
 - Build in a big cleared area: water, caves and hills at the edge show up in craters, behind crowds and in long shots.
 
@@ -64,6 +64,7 @@ Every quality rule is built into the kit first and checked second; the owner sho
 - `node scripts/publish.js <name> --pass` packages the Short and bakes in an NCS track with its official credit. It never uses a label song. Without `--pass` the package is `pending-qa`, and the uploader only posts `ready` ones.
 - **Freshness:** before sending anything to the owner, check that the package is the newest render (`metadata.json` `code.rendered_at` against the mtime of `out/<name>.mp4`), and say when it was rendered.
 - Packages that aren't ready get `status: needs-fix`, which the uploader skips.
+- **Review Room (owner, 2026-11-12: "whenever we use the review room, move all of the stuff i've already looked at to archive, so i only review the new ones"):** before adding new cuts, and whenever the owner says they've reviewed, archive every Short they have already looked at: anything OK'd, anything with a note on its current cut, and anything up before their last review. Only cuts they haven't seen stay unarchived.
 
 ## Parallel workers
 - Worker sessions (other cloud containers) each run their own server, so the work splits by Short. The orchestrator owns the engine. Workers report engine bugs with frame numbers and may work around them inside their stunt, but they don't patch the renderer.

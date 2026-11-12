@@ -4,7 +4,7 @@
 // lava. The path never gives an inch (owner r:r81cb9c): each obstacle lands on it and the path breaks straight
 // through it (a slot cut through the fence, the bushes, the tree, the boulder, a causeway across the pond, gaps in the
 // walls, a hole through the shed); the next one replaces the wreck on that side of the road. After the lava it comes
-// back dead straight across it.
+// back dead straight across it, and the one who keeps walking it runs out of his door and across the lava on it.
 const { makeStunt, SHAPES } = require('../lib/desire')
 
 const LEAVES = ['azalea_leaves[persistent=true]', 'flowering_azalea_leaves[persistent=true]', 'oak_leaves[persistent=true]']
@@ -13,6 +13,17 @@ module.exports = makeStunt({
   name: 'desire_town',
   caption: 'the town REALLY hates this shortcut 💀',
   red: 'REALLY',
+  // the payoff (owner r:r4607fa, docs/noop_audit_2026-11-12.md: "show someone walking the lava path, with a hit"): the
+  // path comes back across the lava, and 56e, who keeps wearing it in, runs out of his door and straight along it over
+  // the lava to the house across the road. A speck out of the door in the locked shot, then the hit, the card and a
+  // cut to a camera running beside him over the lava, which eases to a stop in front of house S; the end 0.3 s after
+  // he reaches its doorstep
+  // (the run sped up x1.8 between the reveal and the doorstep: at a sprint it held 4.2 s with nothing new, pace)
+  walker: {
+    sprint: true, wait: 0, card: 'IT WAS HIM 💀', endHold: 0.3,   // (he goes in under the eave ~0.3 s after the doorstep)
+    cards: [['road', 'NOT EVEN LAVA 💀', 1.0, 'orange', 0, null, { y: 0.9, size: 84 }]],
+    speed: [['walker:0.5', 'home:-0.3', 1.8]]
+  },
   rounds: [
     { id: 'fence', card: 'FENCE', c: [-5, -5], slot: 'N', shape: SHAPES.fence(9, 'dark_oak_fence', 2), sound: [['block.wood.place', 1, 1], ['block.wood.place', 1, 0.8]] },
     { id: 'bush', card: 'BUSHES', c: [5, 5], slot: 'S', shape: SHAPES.blob(3, 3, LEAVES), sound: [['block.azalea_leaves.place', 1, 1], ['block.grass.place', 1, 0.8]] },

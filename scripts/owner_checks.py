@@ -11,10 +11,12 @@ Short; scripts/gates.py stamps pace on every package, so the uploader skips a Sh
           actions over AIM_MAX_DEG (a build that doesn't track). Not counted: F1 (the drone camera) and camera shots
           (the picture isn't the player's eye), cut spans, outside the edit.
   settle  (r:r24d99a, owner 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall
-          before we end/cut"). Falling blocks (sand, gravel, anvils, concrete powder), explosion debris (items and
-          blocks thrown by a blast) and a mob's death (the 1 s fall-over and the poof) still moving in view on the last
-          frames before a hard cut or the end: BLOCK. settle_after() gives the time it all comes to rest, so pace's
-          "1 s after the payoff" counts from there.
+          before we end/cut"; narrowed by r:r188b46: "we blow up the TNT, wait for what feels like forever, then we
+          cut"). Only the ACTION holds a cut: falling blocks (sand, gravel, anvils, concrete powder) in the air, a
+          mob's death (the 1 s fall-over and the poof) and, at the end, a blast going off (its first BLAST_TICKS) still
+          moving in view on the last frames before a hard cut or the end: BLOCK. Smoke, explosion particles and items
+          drifting out of a blast never hold a cut. settle_after() gives the time the action is over, so pace's tail
+          and dwell checks count from there.
 
     python3 scripts/owner_checks.py <rec.json[.gz]>       # the raw aim table and the debris tracks (debugging)
 """
@@ -96,57 +98,60 @@ def aim_report(sight_res: dict, keep) -> dict:
         w = max(over, key=lambda a: a["deg"])
         F.append(("WARN", w["tick"], f"{len(over)}/{len(acts)} actions over {AIM_MAX_DEG:g} deg off the crosshair (under the "
                   f"{AIM_SHARE_MAX * 100:.0f}% that blocks); worst {what(w)} {w['deg']:.1f} deg"))
+    # 'look at' beats (r:r52f94c, guess_sound_2: "when we look over at the mob, we arent looking directly at it"): the
+    # turn onto a mob or thing ends with it more than LOOK_MAX_DEG off the view's centre (lib/aim.js lookAts)
+    aim = sight_res.get("aim") or {}
+    looks = [L for L in aim.get("looks", []) if keep(L["tick"])]
+    lmax = aim.get("lookMax", 6)
+    for L in looks:
+        if L["deg"] > lmax:
+            F.append(("BLOCK", L["tick"], f"the look at {L['what']} ends {L['deg']:.1f} deg off the centre of the view (max {lmax:g}): "
+                      "the turn has to land with the crosshair on its body/head (lib/act.js A.turnTo onto the target's eye-height point, "
+                      "and mark the landing ctx.mark('look_at', { id }); r:r52f94c)"))
     fix = (" (aim before the action: lib/act.js A.place / A.dig / A.use / A.useOn, or K.place / K.dig / K.use / K.useOn in a story;"
            " a factory's own packet through A.click / A.breakStart / A.strike, gated on the crosshair; STANDARDS r:rffba12)")
-    F = [(lvl, t, m + (fix if lvl == "BLOCK" else "")) for lvl, t, m in F]
+    F = [(lvl, t, m + (fix if lvl == "BLOCK" and "look at" not in m else "")) for lvl, t, m in F]
     nb = sum(1 for f in F if f[0] == "BLOCK")
     summ = (f"{len(acts)} action(s): median {q(0.5):.1f} deg, p90 {q(0.9):.1f}, worst {D[-1]:.1f}, {len(over)} over {AIM_MAX_DEG:g} deg "
             f"({share * 100:.0f}%), {sum(1 for a in acts if a['deg'] == 0)} dead on" if acts else "no player actions in the Short")
     return {"n": len(acts), "median": q(0.5), "p90": q(0.9), "worst": D[-1] if D else None, "over": len(over), "share": round(share, 3),
-            "ok": nb == 0, "blockers": nb, "findings": F, "summary": summ}
+            "looks": looks, "ok": nb == 0, "blockers": nb, "findings": F,
+            "summary": summ + (f"; {len(looks)} look-at beat(s), worst {max(L['deg'] for L in looks):.1f} deg off centre" if looks else "")}
 
 
 # ---------------------------------------------------------------- settle
 FALLING = ("falling_block",)
 SETTLE_DIST = 32       # blocks from the camera
 SETTLE_CONE = 40       # degrees off the view axis (rec_check in_view)
-DEBRIS_V = 0.1         # blocks/tick (2 b/s): an item moving faster than this is still flying (slower: sliding to rest)
 DEATH_TICKS = 20       # LivingEntity death: 20 ticks of falling over, then the poof
+NOT_LIVING = ("egg", "snowball", "arrow", "spectral_arrow", "trident", "ender_pearl", "experience_bottle", "potion",
+              "splash_potion", "lingering_potion", "fireball", "small_fireball", "wind_charge", "item", "experience_orb")
+                       # projectiles and items: their removal is no death (no fall-over, no poof; cells_lab's eggs)
 SETTLE_GRACE = 0.15    # s of motion left after a cut/end that still passes (a last bounce as it lands)
-PUFF_TICKS = 44        # an explosion's RENDERED smoke, poof clouds and crumbs (renderer/particles.js) keep moving this
-                       # long after the blast: = lib/settle.js EXPLOSION_TICKS (lib/hb/test/settle.test.js checks both).
-                       # which_door ended 0.15 s after the old 20-tick window with debris still falling past "You Died!"
+BLAST_TICKS = 6        # the blast frame (the flash and first burst, ~0.3 s): = lib/settle.js BLAST_TICKS (lib/hb/test/
+                       # settle.test.js checks both). Its smoke, poof clouds and crumbs live ~44 ticks more (SMOKE_TICKS)
+                       # but never hold a cut (r:r188b46: tnt waited ~2 s of smoke before the cut)
+SMOKE_TICKS = 44       # (information: pace's tail picture check reads moving pixels inside this as particles)
 
 
 def debris_tracks(rec, puffs=False) -> list:
-    """Things whose motion is a payoff: [{kind, name, id, t0, t1 (ticks), pos: {tick: (x, y, z)}}].
-    falling blocks (alive = falling), items/falling blocks thrown by an explosion (while they still move), a mob's death
-    (its mark to +DEATH_TICKS); puffs: also every explosion's rendered smoke and debris particles (+PUFF_TICKS), for the
-    end of the Short (a cut mid-chain is judged on the entities only)."""
+    """Things whose motion is the action, which holds a cut (r:r24d99a as narrowed by r:r188b46):
+    [{kind, name, id, t0, t1 (ticks), pos: {tick: (x, y, z)}}]. Falling blocks (alive = falling), a mob's death (its
+    mark to +DEATH_TICKS); puffs: also every explosion's blast frame (+BLAST_TICKS), for the end of the Short (a cut
+    mid-chain is judged on the entities only). Items thrown by a blast, smoke and particles are not tracked: they never
+    hold a cut."""
     tl = rec.get("timeline", [])
     rows = {}
     for r in rec.get("entities") or []:
         rows.setdefault(r[1], []).append(r)
-    booms = sorted(e["t"] / 50 for e in tl if e["event"] == "particles" and e.get("type") == "explosion")
     out = []
     for eid, rs in rows.items():
         name = rs[0][2]
         if name in FALLING:
             out.append({"kind": "falling", "name": (rs[0][9] or {}).get("block") or name, "id": eid, "t0": rs[0][0], "t1": rs[-1][0],
                         "pos": {r[0]: (r[3], r[4], r[5]) for r in rs}})
-        elif name == "item" and booms:
-            t0 = rs[0][0]
-            if not any(0 <= t0 - b <= 10 for b in booms):
-                continue
-            last = t0
-            for a, b in zip(rs, rs[1:]):
-                if math.dist(a[3:6], b[3:6]) / max(1, b[0] - a[0]) > DEBRIS_V:
-                    last = b[0]
-            if last > t0:
-                out.append({"kind": "debris", "name": (rs[0][9] or {}).get("item") or "item", "id": eid, "t0": t0, "t1": last,
-                            "pos": {r[0]: (r[3], r[4], r[5]) for r in rs}})
     for e in tl:
-        if e["event"] == "mob_death" and e.get("id") in rows:
+        if e["event"] == "mob_death" and e.get("id") in rows and rows[e["id"]][0][2] not in NOT_LIVING:
             k = e["t"] / 50
             rs = rows[e["id"]]
             out.append({"kind": "death", "name": rs[0][2], "id": e["id"], "t0": k, "t1": k + DEATH_TICKS, "pos": {r[0]: (r[3], r[4], r[5]) for r in rs}})
@@ -154,7 +159,7 @@ def debris_tracks(rec, puffs=False) -> list:
         for e in tl:
             if e["event"] == "particles" and e.get("type") == "explosion" and e.get("x") is not None:
                 k = e["t"] / 50
-                out.append({"kind": "puff", "name": "explosion", "id": None, "t0": k, "t1": k + PUFF_TICKS, "pos": {k: (e["x"], e["y"], e["z"])}})
+                out.append({"kind": "puff", "name": "explosion", "id": None, "t0": k, "t1": k + BLAST_TICKS, "pos": {k: (e["x"], e["y"], e["z"])}})
     return out
 
 
@@ -215,8 +220,8 @@ def settle_after(tracks, k, cam_at, horizon=200, any_view=False):
 def describe(trs) -> str:
     by = {}
     for t in trs:
-        key = {"falling": "falling " + ("block" if t["name"] == "falling_block" else t["name"]), "debris": f"flying {t['name']} (explosion debris)", "death": f"{t['name']} dying",
-               "puff": "blast smoke and debris (rendered particles)"}[t["kind"]]
+        key = {"falling": "falling " + ("block" if t["name"] == "falling_block" else t["name"]), "death": f"{t['name']} dying",
+               "puff": "a blast going off"}[t["kind"]]
         by[key] = by.get(key, 0) + 1
     return ", ".join(f"{n} {k}" if n > 1 else k for k, n in by.items())
 

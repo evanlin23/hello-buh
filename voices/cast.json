@@ -1,11 +1,17 @@
 {
- "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ only; never asetrate (docs/voices.md \"Realism\"). `tempo` and `rate` (optional; the Roblox narrator only, owner-approved 2026-11-10) speed up the WHOLE raw take before anything else: `tempo` = atempo (pitch kept), then `rate` = a resample that raises pitch, formants and tempo together (docs/voices.md \"The Roblox narrator\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person).",
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ only; never asetrate (docs/voices.md \"Realism\"). `tempo` and `rate` (optional; the Roblox narrator only, owner-approved 2026-11-10) speed up the WHOLE raw take before anything else: `tempo` = atempo (pitch kept), then `rate` = a resample that raises pitch, formants and tempo together (docs/voices.md \"The Roblox narrator\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person). `reads_as` ({sex, age: [lo, hi]}) is the age and sex the voice must be heard as at first hearing (STANDARDS 2.7; scripts/voice_contrast.py asks a blind listener and the pitch; no sex = a kid, whose sex the check leaves alone).",
  "narrator": {
   "name": "Narrator",
   "voice": "Leda",
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
   "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
+  "reads_as": {
+   "age": [
+    6,
+    13
+   ]
+  },
   "post": "",
   "max_pause": {
    "rest": 0.95
@@ -22,6 +28,13 @@
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
   "profile": "A deep-voiced American guy in his twenties telling a crazy true story from his own life, first person, straight into a phone mic; confident, punchy and matter-of-fact, every sentence driven forward with no gaps between sentences, a little smug, landing each line hard on the last word; full, close and clear, not an announcer, not an audiobook, never whispery; steady natural speaking pace",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    18,
+    35
+   ]
+  },
   "post": "",
   "tempo": 0.95,
   "rate": 1.45,
@@ -38,6 +51,13 @@
   "color": "#D9C8FF",
   "color_why": "pale lilac: a late-night story told close (white whenever she is the story's narrator)",
   "profile": "the storyteller: a woman in her thirties telling a friend a story late at night, low and close, plain and conversational, never an announcer; she lets the strange detail land with a small pause before it",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    25,
+    45
+   ]
+  },
   "post": "",
   "fallback": "bf_emma",
   "from": "the AI-dilemma Shorts' narrator (thin_ice, dirk_willems)",
@@ -49,6 +69,13 @@
   "color": "#4FD8E6",
   "color_why": "cyan: Steve's shirt (Milo is the default Steve skin)",
   "profile": "Buh, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    13,
+    20
+   ]
+  },
   "post": "",
   "fallback": "am_michael",
   "from": "the AI-dilemma voice for Claude, the trailer's Buh (renamed Milo, owner 2026-11-10) and the movie's brothers",
@@ -60,6 +87,13 @@
   "color": "#F0A845",
   "color_why": "warm amber: an old villager's brown-gold robe in lantern light",
   "profile": "the village elder: an old man in his seventies, tired, low and a little rough in the throat, speaks slowly and quietly; he has seen this before, and that is what makes him unsettling",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    60,
+    85
+   ]
+  },
   "post": "",
   "fallback": "bm_george",
   "from": "the trailer's Highkeeper (Grok in the AI Shorts is the same voice, directed deep and heroic)",
@@ -71,6 +105,12 @@
   "color": "#FFEE70",
   "color_why": "sunny yellow: small, bright and quick",
   "profile": "a real village kid, about nine: small and quick, breath catching, words tumbling out a little too fast; scared but trying to be brave",
+  "reads_as": {
+   "age": [
+    6,
+    13
+   ]
+  },
   "post": "",
   "fallback": "af_sky",
   "from": "new",
@@ -82,6 +122,13 @@
   "color": "#9C9C9C",
   "color_why": "iron grey: the anvil, and the iron golem he also voices",
   "profile": "the blacksmith: a big, gruff man in his fifties, low and blunt, short sentences, no patience for nonsense, a soft heart he hides",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    40,
+    65
+   ]
+  },
   "post": "equalizer=f=110:t=q:w=1:g=3",
   "fallback": "am_onyx",
   "from": "new",
@@ -93,6 +140,13 @@
   "color": "#B39BFF",
   "color_why": "dusk violet: the hooded stranger at the edge of render distance, a little enderman",
   "profile": "a mysterious hooded stranger: very old and gravelly, a slow low whisper, knows a terrible secret and says less than he knows",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    60,
+    90
+   ]
+  },
   "post": "",
   "fallback": "bm_fable",
   "from": "the movie's Fen",
@@ -104,6 +158,13 @@
   "color": "#F03A47",
   "color_why": "redstone red: the danger colour; the only red in the cast",
   "profile": "the villain: a man in his forties, cold, flat and quiet, perfectly calm, never shouts, sounds faintly amused; the threat is in how polite he is",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    30,
+    55
+   ]
+  },
   "post": "equalizer=f=3000:t=q:w=1:g=-2",
   "fallback": "bm_daniel",
   "from": "the AI-dilemma voice for DeepSeek",
@@ -115,10 +176,35 @@
   "color": "#FFC2A8",
   "color_why": "warm peach: home, the hearth, the normal life before the strange thing",
   "profile": "A warm mother around forty, low, calm and steady",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    30,
+    50
+   ]
+  },
   "post": "",
   "fallback": "af_sarah",
   "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Pulcherrima, 176 Hz, 3.5 st under Pip",
   "notes": "Home scenes, the normal life before the strange thing. Her ordinary line is often the scariest one in the twist. History: was Sulafat (\"Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it\") until 2026-11-11; the owner: \"The moms voice is too similar to narrator\" (r:rc31bfe): Sulafat sat at Pip's own 215 Hz, speaker similarity 0.85. The profile is the one-clause bracket the audition used, verbatim (3.8 reads a long bracket aloud)."
+ },
+ "mom_saltmouth": {
+  "name": "Mom",
+  "voice": "Kore",
+  "color": "#F2B8C6",
+  "color_why": "soft rose: a different home from Hushwell's Mom",
+  "profile": "A warm mother around forty, low, calm and steady",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    30,
+    50
+   ]
+  },
+  "post": "",
+  "fallback": "af_sarah",
+  "from": "owner 2026-11-11: \"A is fine\" (r:rd8f6ce), candidate A of the audition brand/auditions/2026-11-11_mom_grandma (branch claude/audition-mom-grandma): Kore, f0 180 Hz, 0.755 similarity to Pip, the furthest Mom from Pip",
+  "notes": "Saltmouth's Mom (The Bell in the Window), not Buh's Mom in Hushwell (`mom`): one voice per character (STANDARDS 7a)."
  },
  "grandma": {
   "name": "Grandma",
@@ -126,10 +212,35 @@
   "color": "#F2C66B",
   "color_why": "warm gold: the family's elder (Gold for the Portal's Grandma colour)",
   "profile": "An old grandmother in her seventies, warm, slow and a little dry",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    60,
+    85
+   ]
+  },
   "post": "",
   "fallback": "af_nicole",
   "from": "owner 2026-11-11: \"mom D / grandma J\" (r:r3dabdb), from the audition brand/auditions/2026-11-11_mom_grandma: Autonoe, 237 Hz (heard as a woman of 65-85 by the blind listener; furthest from Pip of all candidates, 0.66)",
   "notes": "An old woman, never a man: earlier Grandmas (Gacrux, Vindemiatrix) read low and gravelly, as a man (owner: \"Grandma sounds like a dude still\", r:rc31bfe). The profile is the audition's one-clause bracket, verbatim."
+ },
+ "grandma_island": {
+  "name": "Grandma",
+  "voice": "Callirrhoe",
+  "color": "#C9B6E8",
+  "color_why": "soft lavender: a different grandmother from Gold's (gold)",
+  "profile": "An old woman in her seventies, stubborn, a dare",
+  "reads_as": {
+   "sex": "female",
+   "age": [
+    60,
+    85
+   ]
+  },
+  "post": "",
+  "fallback": "af_nicole",
+  "from": "owner 2026-11-11: \"calirrhoe is fine\" (r:r83d791), candidate E of the audition brand/auditions/2026-11-11_mom_grandma: Callirrhoe, f0 162 Hz, 4.9 st under Pip (auditioned there as a mom)",
+  "notes": "The Walk's Grandma on the island, not Gold for the Portal's (`grandma`): one voice per character (STANDARDS 7a). Never auditioned as an old woman: the first take must read 60-85 to the blind listener, else back to the owner."
  },
  "friend": {
   "name": "Max",
@@ -137,6 +248,13 @@
   "color": "#7DF07D",
   "color_why": "lime: loud, quick and loyal, all energy (a slime's green)",
   "profile": "Milo's best friend: a sixteen-year-old boy, loud, excitable and loyal, talks fast, jokes, always up for it",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    13,
+    20
+   ]
+  },
   "post": "",
   "fallback": "am_puck",
   "from": "new",
@@ -158,6 +276,12 @@
   "color": "#FFFFFF",
   "color_why": "white: Pip is a narrator voice (a kid telling his own story)",
   "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
+  "reads_as": {
+   "age": [
+    6,
+    13
+   ]
+  },
   "post": "",
   "fallback": "am_adam",
   "from": "Pip, Dog on the Hill voices v3 (owner 2026-11-10: 'i kinda like the pip here'; the 1.5x audition takes were 'too sped up')",
@@ -171,6 +295,13 @@
   "color": "#FFFFFF",
   "color_why": "white: an alternative narrator voice",
   "profile": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences.",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    9,
+    15
+   ]
+  },
   "post": "",
   "fallback": "am_adam",
   "from": "Good Boy narrator audition, owner 2026-11-10: \"kid puck is fine\" (Leda was 'so high pitched and annoying'; wants a kid 'like the roblox shorts but more refined')",
@@ -183,6 +314,13 @@
   "color": "#4FD8E6",
   "color_why": "cyan: Steve's shirt (Milo is the default Steve skin)",
   "profile": "Buh, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
+  "reads_as": {
+   "sex": "male",
+   "age": [
+    13,
+    20
+   ]
+  },
   "post": "",
   "fallback": "am_michael",
   "from": "the AI-dilemma voice for Claude, the trailer's Buh (renamed Milo, owner 2026-11-10) and the movie's brothers",
@@ -194,6 +332,12 @@
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
   "profile": "A kid telling a spooky-funny story at a sleepover, fast and gleeful, every sentence a bit more excited, one breath, punching only the capitalised key word; full voice, never whispering",
+  "reads_as": {
+   "age": [
+    6,
+    13
+   ]
+  },
   "post": "",
   "tempo": 1.1,
   "semitones": 1,

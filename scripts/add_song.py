@@ -17,22 +17,54 @@ BED_LUFS = -16.0   # the stunt NCS bed, under the game at -15 (owner 2026-11-11,
 SONGS = {"misery.mp3": ("misery.", "pupsies"), "payphone.mp3": ("Payphone", "Radio Top Singers"), "funk_abnormal.mp3": ("FUNK ABNORMAL (ULTRA SLOWED)", "")}
 
 
+LOOPED = {}   # work/loop_*.wav -> the NCS file it was made from
+
+
+def loop_song(song, drop, bar, at):
+    """The track with one bar of its build repeated n times (n = the fewest whole bars that bring the drop to >= at s
+    of song): track[0:b1] + track[b0:b1] * n + track[b1:], where b1 is the earliest bar line counted back from the drop
+    in whole bars (drop - k*bar) that has a whole bar of song before it (b0 = b1 - bar >= 0). Every seam sits on a bar line of the same material, so it
+    plays as a longer build. Returns (path relative to ROOT, the new drop)."""
+    import math
+    n = math.ceil((at - drop - 1e-6) / bar)
+    b1 = drop - math.floor((drop - bar) / bar + 1e-9) * bar   # the first bar line after one whole bar of song
+    b0 = b1 - bar
+    (ROOT / "work").mkdir(exist_ok=True)
+    out = f"work/loop_{pathlib.Path(song).stem}_{bar:.3f}x{n}.wav"
+    parts = [f"[0:a]atrim=0:{b1:.4f},asetpts=PTS-STARTPTS[p0]"] + \
+        [f"[{i + 1}:a]atrim={b0:.4f}:{b1:.4f},asetpts=PTS-STARTPTS[p{i + 1}]" for i in range(n)] + \
+        [f"[{n + 1}:a]atrim=start={b1:.4f},asetpts=PTS-STARTPTS[p{n + 1}]"]
+    graph = ";".join(parts) + ";" + "".join(f"[p{i}]" for i in range(n + 2)) + f"concat=n={n + 2}:v=0:a=1[a]"
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    for _ in range(n + 2):
+        cmd += ["-i", str(ROOT / song)]
+    subprocess.run(cmd + ["-filter_complex", graph, "-map", "[a]", "-ar", "48000", str(ROOT / out)], check=True)
+    LOOPED[pathlib.Path(out).name] = pathlib.Path(song).name
+    print(f"song loop: {pathlib.Path(song).name} with the bar {b0:.2f}-{b1:.2f} s repeated x{n}: drop {drop:.2f} -> {drop + n * bar:.2f} s (the event at {at:.2f} s)")
+    return out, drop + n * bar
+
+
 def song_drop(path):
     return float(subprocess.run(["python3", str(ROOT / "scripts" / "song_drop.py"), str(path)], capture_output=True, text=True, check=True).stdout.split()[0])
 
 
-def pick_ncs(name, at=0.0):
+def pick_ncs(name, at=0.0, mood=None):
     """The NCS track used least across the packages so far (ties: a fixed per-Short choice), among
     the tracks whose drop comes at or after the Short's drop event: an earlier drop can't line up
-    (song_start clamps to 0) and played the drop seconds before the payoff (clutch_harder review)."""
+    (song_start clamps to 0) and played the drop seconds before the payoff (clutch_harder review).
+    mood (the stunt's edit.ncsMood, e.g. 'sad' for the underdog format's soft sung track): only the tracks
+    music/ncs.json tags with it; without one, only the untagged phonk beds (a sad track never lands on a stunt)."""
     used = {}
     for m in (VID / "shorts").glob("*/metadata.json"):
         f = (json.loads(m.read_text()).get("song") or {}).get("file")
         if m.parent.name != name and f in NCS:
             used[f] = used.get(f, 0) + 1
-    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists()]
+    if mood and not any((ROOT / "songs" / "ncs" / f).exists() for f in NCS if NCS[f].get("mood") == mood):
+        import ncs   # a mood's tracks were added after this machine downloaded the phonk beds: fetch them now
+        ncs.download([t for t in NCS.values() if t.get("mood") == mood])
+    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists() and not NCS[f].get("pin_only") and NCS[f].get("mood") == mood]   # (pin_only: a format's own track, edit.ncs; mood: edit.ncsMood)
     if not have:
-        sys.exit("no NCS tracks downloaded: python3 scripts/ncs.py --download")
+        sys.exit(f"no NCS tracks downloaded{' with mood ' + mood if mood else ''}: python3 scripts/ncs.py --download")
     late = [f for f in have if song_drop(ROOT / "songs" / "ncs" / f) >= at - 0.05]
     if late:
         have = late
@@ -112,11 +144,26 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                         "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(src)], check=True)
         print(name, "made short_nosong.mp4 from game_audio.flac")
     drop_at = stunt.get("dropAt")
-    at = (ev[drop_at] - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
+    drop_off = 0.0
+    if drop_at and drop_at not in ev and ":" in str(drop_at):   # 'EVENT:OFFSET_S' (the drop just after a sound it must not cover)
+        k_, _, o_ = str(drop_at).rpartition(":")
+        try:
+            drop_off, drop_at = float(o_), k_
+        except ValueError:
+            pass
+    at = (ev[drop_at] + drop_off - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
     if stunt.get("story") and not song_override and not gen:   # a story: the mood score (scripts/story_audio.py, docs/audio.md)
         return story_score(name, d, meta, stunt, rec, tl, start, src, out_override)
     if ncs and not song_override:
-        song_override = pick_ncs(name, at)
+        # edit.ncs pins one NCS track (format cooked, r:r12cb71: the music timing IS the joke, so the drop must be this
+        # track's drop on the flood); else the least-used track whose drop can line up
+        pin = stunt.get("ncs")
+        if pin and (ROOT / "songs" / "ncs" / pin).exists():
+            song_override = "songs/ncs/" + pin
+        else:
+            if pin:   # (another track would land the wrong drop: the joke is this one)
+                sys.exit(f"{name}: edit.ncs '{pin}' is not in songs/ncs: python3 scripts/ncs.py --download")
+            song_override = pick_ncs(name, at, stunt.get("ncsMood"))
     song = song_override or stunt.get("song")
     if not gen and (not song or not (ROOT / song).exists()):
         print(name, "no song file"); return
@@ -130,9 +177,19 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                         "--drop", f"{drop:.3f}", "--length", f"{dur + 0.5:.3f}"], check=True, capture_output=True)
     else:
         drop = song_drop(ROOT / song)
+        loop = float(stunt.get("songLoop") or 0)
+        if loop and drop < at - 0.05 and not stunt.get("story"):
+            # edit.songLoop (a bar, s): a track whose drop comes before the drop event repeats one whole bar of its build
+            # (the bar just before the drop's phrase) until the drop lands on the event, so the song plays from frame 0
+            # (owner 2026-11-12 on cooked_bedrock: "why does the music start late?"; edit.songLate's silence is retired)
+            song, drop = loop_song(song, drop, loop, at)
         if drop < at - 0.05:
-            print(f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
+            print(f"{name}: the song starts {at - drop:.2f}s into the Short so its drop lands on the event (edit.songLate)" if stunt.get("songLate") and not stunt.get("story")
+                  else f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
     song_start = max(0.0, drop - at)
+    # edit.songLate: a track whose drop comes before the drop event starts late instead (silence, then the song) so the
+    # drop still lands on the event (format cooked: EXECUTIONER drops 7.0 s in, the flood is ~8.4 s into the Short)
+    late = max(0.0, at - drop) if stunt.get("songLate") and not stunt.get("story") and not gen else 0.0
     out = pathlib.Path(out_override) if out_override else d / "short.mp4"
     if stunt.get("story"):   # narrated story (docs/stories.md): the song is a quiet bed under the voice, master -14 LUFS
         song_start = max(0.0, drop - 1.0) if not gen else 0.0   # start a little before the drop: the bed builds into it
@@ -146,7 +203,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         kwin = key_sounds.windows(key_sounds.pcm(src), keys, kstop) if keys else []
         duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)) + kwin, key_sounds.DUCK)
         import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
-        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, BED_LUFS, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+        lat = f",adelay={int(round(late * 1000))}:all=1" if late else ""
+        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, BED_LUFS, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
                  f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
@@ -165,6 +223,7 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
             if bad:
                 sys.exit(f"{name}: BLOCK [keysound] the music covers {len(bad)} key sound(s): " + ", ".join(f"{r['t']:.2f} s ({r['margin_db']:+.1f} dB)" for r in bad))
     f = pathlib.Path(song).name
+    f = LOOPED.get(f, f)   # a looped build (edit.songLoop) credits the track itself
     t, a = SONGS.get(f, (f, ""))
     if gen:
         t, a = f"HelloBuh phonk ({gen}, original)", ""
@@ -176,7 +235,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         credit, licence = "", "original (scripts/phonk.py), ours"
     else:
         credit, licence = f"Song: {t}{' · ' + a if a else ''}", "unlicensed: owner-supplied, expect a Content ID claim"
-    meta["song"] = {"file": f, "title": t, "artist": a, "licence": licence, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2)}
+    meta["song"] = {"file": f, "title": t, "artist": a, "licence": licence, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2),
+                    **({"song_enters_short_s": round(late, 2)} if late else {})}
     # rebuild the description: caption, credit, hashtags (any older song credit goes)
     yt = meta["youtube"]
     yt["description"] = meta.get("caption", name) + (f"\n\n{credit}" if credit else "") + "\n\n" + " ".join(yt.get("hashtags", []))

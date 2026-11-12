@@ -11,6 +11,9 @@
 //   poof    - a mob vanishing: 20 light-grey poof clouds in its box (ev.w, ev.h)
 //   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
 //   dust    - DustParticle specks (redstone dust: mining redstone ore)
+//   spell   - an evoker's spell at its hands (SpellParticle, ev.color the spell's colour)
+//   trail   - TrailParticle (1.21.2+, `minecraft:trail{target, color, duration}`): specks that fly in a straight
+//             line to a target and arrive on the duration's last tick (lib/kit_extras.js K.trail)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
 function spawn (ev, blockTex) {
@@ -39,6 +42,20 @@ function spawn (ev, blockTex) {
       const uo = r() * 3, vo = r() * 3   // TerrainParticle: a quarter of the sprite at a continuous random offset
       P({ x: ev.x + ox, y: ev.y + oy, z: ev.z + oz, vx: (ox - 0.5) * 0.2 + (r() - 0.5) * 0.1, vy: (oy - 0.5) * 0.2 + r() * 0.1, vz: (oz - 0.5) * 0.2 + (r() - 0.5) * 0.1,
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.05 * (r() * 0.5 + 0.5) * 2, collide: true,
+        tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: ev.tint ? ev.tint.map(c => c * 0.6) : [0.6, 0.6, 0.6] })
+    }
+  } else if (ev.type === 'block_hit' && blockTex) {
+    // mining a block (ParticleEngine.crack, every tick the player keeps digging): one TerrainParticle on a random point
+    // 0.1 off the hit face (ev.face [nx, ny, nz], default up), setPower(0.2) (a slow drift: xd * 0.2, yd (yd - 0.1) *
+    // 0.2 + 0.1), scale 0.6. The visible sign of progress on a dark block whose crack overlay barely shows (bedrock)
+    const n = ev.face || [0, 1, 0]
+    for (let i = 0; i < (ev.count || 1); i++) {
+      const at = (k) => n[k] > 0 ? 1.1 : n[k] < 0 ? -0.1 : 0.1 + r() * 0.8
+      const sp = (r() + r() + 1) * 0.15 * 0.4
+      const d = [r() * 2 - 1, r() * 2 - 1, r() * 2 - 1], m = Math.hypot(...d) || 1
+      const uo = r() * 3, vo = r() * 3
+      P({ x: ev.x + at(0), y: ev.y + at(1), z: ev.z + at(2), vx: d[0] / m * sp * 0.2, vy: (d[1] / m * sp + 0.1 - 0.1) * 0.2 + 0.1, vz: d[2] / m * sp * 0.2,
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.05 * (r() * 0.5 + 0.5) * 2 * 0.6, collide: true,
         tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: ev.tint ? ev.tint.map(c => c * 0.6) : [0.6, 0.6, 0.6] })
     }
   } else if (ev.type === 'portal') {
@@ -201,6 +218,22 @@ function spawn (ev, blockTex) {
       P({ x: ev.x, y: ev.y, z: ev.z, vx, vy, vz, g: 0, drag: 0.96, life: Math.floor(8 / (r() * 0.8 + 0.2)), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: col })
     }
   }
+  if (ev.type === 'trail') {
+    // TrailParticle: quadSize 0.26, the colour x 0.875..1.125 per channel, full bright (getLightColor 15728880),
+    // sprite generic_0 (particles/trail.json), lifetime = duration; each tick x = lerp(1 / (lifetime - age), x,
+    // target): a straight line at constant speed, on the target at age lifetime - 1. The /particle command's delta
+    // spreads the start (gaussian x delta); every particle of a command shares the target. A stream (ev.ticks > 1)
+    // is one command per tick for that many ticks, `count` each.
+    const c = ev.color || [1, 1, 1], dur = Math.max(2, Math.round(ev.dur || 20)), n = ev.count || 3, sp = ev.spread ?? 0.15
+    const g = () => { let u = 0; for (let k = 0; k < 6; k++) u += r(); return (u - 3) / Math.sqrt(0.5) }   // ~N(0, 1)
+    for (let k = 0; k < (ev.ticks || 1); k++) {
+      for (let i = 0; i < n; i++) {
+        const x = ev.x + g() * sp, y = ev.y + g() * sp, z = ev.z + g() * sp
+        const col = c.map(v => Math.min(1, v * (0.875 + r() * 0.25)))
+        out.push({ t0: T0 + k, x, y, z, target: [ev.tx, ev.ty, ev.tz], life: dur, size: 0.26 * (ev.size || 1), tex: 'particle/generic_0', bright: true, color: col })
+      }
+    }
+  }
   if (ev.type === 'item_break') {
     // LivingEntity.spawnItemParticles(stack, 5): velocity ((r-0.5)*0.1, r*0.1+0.1, 0) and offset
     // ((r-0.5)*0.3, -r*0.6-0.3, 0.6), both turned by the view (xRot then yRot), + 0.05 up; each a
@@ -217,6 +250,16 @@ function spawn (ev, blockTex) {
       const uo = r() * 3, vo = r() * 3
       P({ x: ev.x + o[0], y: ev.y + o[1], z: ev.z + o[2], vx: v[0], vy: v[1] + 0.05, vz: v[2],
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * 2 / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
+    }
+  }
+  if (ev.type === 'crumbs') {
+    // eating crumbs from a held thing at (x, y, z) (a stunt's item_crumbs mark with a position: lib/interrupt.js eats a
+    // held mob): ev.n bits of the item sprite (BreakingItemParticle: a random quarter, gravity 0.04, friction 0.98,
+    // life 4/(r*0.9+0.1)), thrown a little up and out, ev.scale times vanilla's size
+    for (let i = 0; i < (ev.n || 5); i++) {
+      const uo = r() * 3, vo = r() * 3
+      P({ x: ev.x + (r() - 0.5) * 0.12, y: ev.y + (r() - 0.5) * 0.08, z: ev.z + (r() - 0.5) * 0.12, vx: (r() - 0.5) * 0.08, vy: r() * 0.06 + 0.02, vz: (r() - 0.5) * 0.08,
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * (ev.scale ?? 1) / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
     }
   }
   if (ev.type === 'poof') {
@@ -243,6 +286,17 @@ function spawn (ev, blockTex) {
         g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/effect_', 8], bright: !!ev.instant, color: [cr * f, cg * f, cb * f] })
     }
   }
+  if (ev.type === 'spell') {
+    // an evoker casting (SpellcasterIllager.tick, client): one ENTITY_EFFECT particle at a hand, at rest but for
+    // Particle's random kick (0.4 x (r + r + 1) x 0.15, then SpellParticle: y x 0.2, x and z x 0.1 as it was given
+    // none), rising (gravity -0.1 x 0.04, friction 0.96), effect_7 -> effect_0 over 8 / (r x 0.8 + 0.2) ticks,
+    // quadSize x 0.75, in the spell's colour (IllagerSpell: wololo 0.7 0.5 0.2)
+    let kx = r() * 2 - 1, ky = r() * 2 - 1, kz = r() * 2 - 1
+    const kd = Math.hypot(kx, ky, kz) || 1, ks = (r() + r() + 1) * 0.15 * 0.4
+    kx = kx / kd * ks; ky = ky / kd * ks + 0.1; kz = kz / kd * ks
+    P({ x: ev.x, y: ev.y, z: ev.z, vx: kx * 0.1, vy: ky * 0.2, vz: kz * 0.1, g: -0.004, drag: 0.96, life: Math.floor(8 / (r() * 0.8 + 0.2)),
+      size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/effect_', 8, 'rev'], color: ev.color || [0.7, 0.5, 0.2] })
+  }
   if (ev.type === 'firework_trail') {
     // FireworkRocketEntity.tick (client): a FIREWORK spark every tick at the rocket, moving
     // (gaussian x 0.05, -yd x 0.5, gaussian x 0.05); SparkParticle as for the explosion, white
@@ -254,7 +308,13 @@ function spawn (ev, blockTex) {
     // size 2; large ball: 0.5, 4; others drawn as a ball too) in its colours; SparkParticle: friction
     // 0.91, lives 48-60 ticks, falls slowly, full bright
     const exps = (ev.explosions && ev.explosions.length) ? ev.explosions : []
-    if (exps.length) P({ x: ev.x, y: ev.y, z: ev.z, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 4, size: 2.0, tex: 'particle/flash', bright: true, color: [1, 1, 1] })
+    // the flash (FireworkParticles.OverlayParticle): the first explosion's first colour, quad size 7.1 x sin((age - 1)
+    // x pi/4), alpha 0.6 - (age - 1) / 8: a translucent glow that swells and fades in 4 ticks (it was an opaque white
+    // 2-block disc: love_cherry_heart's ring of bursts read as white plates)
+    if (exps.length) {
+      const c0 = ((exps[0].colors && exps[0].colors[0]) ?? 0xFFFFFF)
+      P({ x: ev.x, y: ev.y, z: ev.z, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 4, size: 0, flash: true, alpha: 0.6, tex: 'particle/flash', bright: true, color: [((c0 >> 16) & 255) / 255, ((c0 >> 8) & 255) / 255, (c0 & 255) / 255] })
+    }
     for (const e of exps) {
       const big = /large|creeper|star/.test(e.shape || ''), speed = big ? 0.5 : 0.25, size = big ? 4 : 2
       const cols = (e.colors && e.colors.length ? e.colors : [0xFFFFFF]).map(c => [((c >> 16) & 255) / 255, ((c >> 8) & 255) / 255, (c & 255) / 255])
@@ -273,6 +333,15 @@ function spawn (ev, blockTex) {
 function state (p, t, solidAt) {
   const age = t - p.t0
   if (age < 0 || age >= p.life) return null
+  if (p.flash) {
+    const a = age - 1
+    if (a <= 0) return null
+    return { x: p.x, y: p.y, z: p.z, size: 2 * 7.1 * Math.sin(a * Math.PI / 4), alpha: Math.max(0, 0.6 - a / 8) }
+  }
+  if (p.target) {   // TrailParticle: on its target at age life - 1 (a straight line at constant speed)
+    const k = Math.min(1, age / Math.max(1, p.life - 1)), T = p.target
+    return { x: p.x + (T[0] - p.x) * k, y: p.y + (T[1] - p.y) * k, z: p.z + (T[2] - p.z) * k, size: p.size, tex: p.tex }
+  }
   if (p.portal) {
     const k = age / p.life, f = 1 - (-k + k * k * 2)   // vanilla's ease for portal particles
     return { x: p.x + p.ox * f, y: p.y + p.oy * f + (1 - k), z: p.z + p.oz * f, size: p.size * (1 - (1 - k) * (1 - k) * 0.5) }

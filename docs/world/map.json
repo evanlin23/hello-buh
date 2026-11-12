@@ -1233,11 +1233,264 @@
      "generated": true
     }
    ],
-   "about": "The village on the south peninsula, a ruined portal on its east edge. Good Boy's yard is at its north-east (village + (37, 16)). Where Buh lived with the dog at 16.",
+   "about": "The village on the south peninsula (survey start (-286, -381); Good Boy's set measures from (-304, -384)). Buh lived here with the dog at 16, in the cottage on the pad above the south-east shore (Good Boy). From day 3450 a family's stilt house stands on the boardwalk under that bank with the village bell on a belfry outside his window (The Bell in the Window, day 3800).",
    "pieces": [],
-   "stamps": [],
+   "stamps": [
+    {
+     "id": "buh_yard",
+     "since": 3300,
+     "what": "Buh's yard and cottage on the pad at village + (29..44, 9..33), the village origin being Good Boy's (-304, -384): level grass at y 70 whose south-east corner stands 8 blocks over the sea on a stepped bank (Good Boy's \"cliff\"), the spruce-fenced yard, the cottage, the fancy oak (-273, 71, -353) and the old oak (-261, 71, -353) on the bank's corner. Ported verbatim from stunts/story_good_boy.js (the pad, the cottage, the yard, its trees; the trees are /place feature, so their shape varies a little per build; the wheat field west of it is still the stunt's). The pad buried the ruined portal at (-269, -366). Empty from day 3400: no dog, no Buh, the chimney cold",
+     "do": "cmds",
+     "cmds": [
+      "/fill -275 71 -375 -260 86 -351 air",
+      "/fill -275 66 -375 -260 69 -351 dirt",
+      "/fill -275 70 -375 -260 70 -351 grass_block",
+      "/fill -276 69 -376 -259 69 -350 grass_block replace air",
+      "/fill -277 68 -377 -258 68 -349 grass_block replace air",
+      "/fill -278 67 -378 -257 67 -348 grass_block replace air",
+      "/fill -279 66 -379 -256 66 -347 grass_block replace air",
+      "/fill -271 67 -364 -265 70 -356 cobblestone",
+      "/fill -271 71 -364 -265 71 -356 cobblestone",
+      "/fill -270 71 -363 -266 71 -357 air",
+      "/setblock -271 71 -363 mossy_cobblestone",
+      "/setblock -265 71 -359 mossy_cobblestone",
+      "/setblock -269 71 -356 mossy_cobblestone",
+      "/setblock -271 71 -358 mossy_cobblestone",
+      "/fill -271 72 -364 -265 74 -356 oak_planks hollow",
+      "/fill -270 72 -363 -266 74 -357 air",
+      "/fill -270 70 -363 -266 70 -357 spruce_planks",
+      "/fill -271 71 -364 -271 74 -364 spruce_log",
+      "/fill -265 71 -364 -265 74 -364 spruce_log",
+      "/fill -271 71 -356 -271 74 -356 spruce_log",
+      "/fill -265 71 -356 -265 74 -356 spruce_log",
+      "/fill -271 71 -360 -271 74 -360 spruce_log",
+      "/fill -265 71 -360 -265 74 -360 spruce_log",
+      "/fill -272 71 -360 -272 73 -360 stripped_spruce_log",
+      "/fill -264 71 -360 -264 73 -360 stripped_spruce_log",
+      "/fill -271 74 -364 -265 74 -364 spruce_log[axis=x]",
+      "/fill -271 74 -356 -265 74 -356 spruce_log[axis=x]",
+      "/fill -271 74 -363 -271 74 -357 spruce_log[axis=z]",
+      "/fill -265 74 -363 -265 74 -357 spruce_log[axis=z]",
+      "/fill -271 72 -362 -271 73 -362 air",
+      "/fill -270 72 -362 -270 73 -362 glass_pane",
+      "/fill -272 72 -363 -272 73 -363 spruce_trapdoor[facing=west,open=true,half=bottom]",
+      "/fill -272 72 -361 -272 73 -361 spruce_trapdoor[facing=west,open=true,half=bottom]",
+      "/fill -265 72 -362 -265 73 -362 air",
+      "/fill -266 72 -362 -266 73 -362 glass_pane",
+      "/fill -264 72 -363 -264 73 -363 spruce_trapdoor[facing=east,open=true,half=bottom]",
+      "/fill -264 72 -361 -264 73 -361 spruce_trapdoor[facing=east,open=true,half=bottom]",
+      "/fill -271 72 -358 -271 73 -358 air",
+      "/fill -270 72 -358 -270 73 -358 glass_pane",
+      "/fill -272 72 -359 -272 73 -359 spruce_trapdoor[facing=west,open=true,half=bottom]",
+      "/fill -272 72 -357 -272 73 -357 spruce_trapdoor[facing=west,open=true,half=bottom]",
+      "/fill -265 72 -358 -265 73 -358 air",
+      "/fill -266 72 -358 -266 73 -358 glass_pane",
+      "/fill -264 72 -359 -264 73 -359 spruce_trapdoor[facing=east,open=true,half=bottom]",
+      "/fill -264 72 -357 -264 73 -357 spruce_trapdoor[facing=east,open=true,half=bottom]",
+      "/fill -270 72 -364 -270 73 -364 air",
+      "/fill -270 72 -363 -270 73 -363 glass_pane",
+      "/fill -266 72 -364 -266 73 -364 air",
+      "/fill -266 72 -363 -266 73 -363 glass_pane",
+      "/setblock -268 71 -364 spruce_door[half=lower,facing=north,open=false]",
+      "/setblock -268 72 -364 spruce_door[half=upper,facing=north,open=false]",
+      "/setblock -268 74 -365 spruce_slab[type=top]",
+      "/setblock -269 73 -365 lantern[hanging=false]",
+      "/setblock -269 72 -365 air",
+      "/fill -269 71 -365 -269 72 -365 spruce_fence",
+      "/setblock -267 71 -365 spruce_fence",
+      "/setblock -267 72 -365 lantern",
+      "/fill -272 74 -365 -272 74 -355 dark_oak_stairs[facing=east]",
+      "/fill -264 74 -365 -264 74 -355 dark_oak_stairs[facing=west]",
+      "/fill -271 75 -365 -271 75 -355 dark_oak_stairs[facing=east]",
+      "/fill -265 75 -365 -265 75 -355 dark_oak_stairs[facing=west]",
+      "/fill -270 76 -365 -270 76 -355 dark_oak_stairs[facing=east]",
+      "/fill -266 76 -365 -266 76 -355 dark_oak_stairs[facing=west]",
+      "/fill -269 77 -365 -269 77 -355 dark_oak_stairs[facing=east]",
+      "/fill -267 77 -365 -267 77 -355 dark_oak_stairs[facing=west]",
+      "/fill -268 78 -365 -268 78 -355 dark_oak_slab[type=bottom]",
+      "/fill -268 77 -365 -268 77 -355 dark_oak_planks",
+      "/fill -270 75 -364 -266 75 -364 oak_planks",
+      "/fill -269 76 -364 -267 76 -364 oak_planks",
+      "/setblock -268 76 -364 spruce_trapdoor[facing=north,half=bottom,open=true]",
+      "/fill -270 75 -356 -266 75 -356 oak_planks",
+      "/fill -269 76 -356 -267 76 -356 oak_planks",
+      "/setblock -268 76 -356 spruce_trapdoor[facing=north,half=bottom,open=true]",
+      "/setblock -268 77 -364 dark_oak_planks",
+      "/setblock -268 77 -356 dark_oak_planks",
+      "/fill -266 71 -358 -266 79 -358 cobblestone",
+      "/setblock -266 80 -358 campfire[lit=true]",
+      "/setblock -270 71 -362 spruce_fence",
+      "/setblock -270 72 -362 lantern",
+      "/setblock -266 71 -362 spruce_fence",
+      "/setblock -266 72 -362 lantern",
+      "/setblock -270 71 -357 spruce_fence",
+      "/setblock -270 72 -357 lantern",
+      "/fill -274 71 -372 -274 71 -355 spruce_fence",
+      "/fill -261 71 -372 -261 71 -355 spruce_fence",
+      "/fill -274 71 -372 -270 71 -372 spruce_fence",
+      "/fill -266 71 -372 -261 71 -372 spruce_fence",
+      "/fill -270 71 -372 -270 72 -372 spruce_fence",
+      "/setblock -270 73 -372 lantern",
+      "/fill -266 71 -372 -266 72 -372 spruce_fence",
+      "/setblock -266 73 -372 lantern",
+      "/setblock -268 70 -365 dirt_path",
+      "/setblock -269 70 -365 coarse_dirt keep",
+      "/setblock -267 70 -365 gravel",
+      "/setblock -268 70 -366 dirt_path",
+      "/setblock -269 70 -366 coarse_dirt keep",
+      "/setblock -267 70 -366 gravel",
+      "/setblock -268 70 -367 dirt_path",
+      "/setblock -269 70 -367 coarse_dirt keep",
+      "/setblock -267 70 -367 gravel",
+      "/setblock -269 70 -368 dirt_path",
+      "/setblock -270 70 -368 coarse_dirt keep",
+      "/setblock -268 70 -368 gravel",
+      "/setblock -269 70 -369 dirt_path",
+      "/setblock -270 70 -369 coarse_dirt keep",
+      "/setblock -268 70 -369 gravel",
+      "/setblock -269 70 -370 dirt_path",
+      "/setblock -270 70 -370 coarse_dirt keep",
+      "/setblock -268 70 -370 gravel",
+      "/setblock -268 70 -371 dirt_path",
+      "/setblock -269 70 -371 coarse_dirt keep",
+      "/setblock -267 70 -371 gravel",
+      "/setblock -268 70 -372 dirt_path",
+      "/setblock -269 70 -372 coarse_dirt keep",
+      "/setblock -267 70 -372 gravel",
+      "/setblock -268 70 -373 dirt_path",
+      "/setblock -269 70 -373 coarse_dirt keep",
+      "/setblock -267 70 -373 gravel",
+      "/setblock -267 70 -374 dirt_path",
+      "/setblock -268 70 -374 coarse_dirt keep",
+      "/setblock -266 70 -374 gravel",
+      "/setblock -267 70 -375 dirt_path",
+      "/setblock -268 70 -375 coarse_dirt keep",
+      "/setblock -266 70 -375 gravel",
+      "/setblock -272 71 -365 poppy",
+      "/setblock -264 71 -365 dandelion",
+      "/setblock -273 71 -362 cornflower",
+      "/setblock -263 71 -361 oxeye_daisy",
+      "/setblock -272 71 -370 allium",
+      "/setblock -263 71 -369 poppy",
+      "/setblock -273 71 -367 azure_bluet",
+      "/setblock -272 71 -364 flowering_azalea",
+      "/setblock -264 71 -357 flowering_azalea",
+      "/setblock -272 71 -356 flowering_azalea",
+      "/setblock -270 71 -370 spruce_fence",
+      "/setblock -270 72 -370 lantern",
+      "/setblock -266 71 -365 barrel[facing=up]",
+      "/setblock -265 71 -365 hay_block",
+      "/place feature minecraft:fancy_oak -273 71 -353",
+      "/place feature minecraft:oak -261 71 -353",
+      "/setblock -273 71 -369 azalea",
+      "/setblock -262 71 -361 azalea",
+      "/setblock -263 71 -371 azalea",
+      "/setblock -272 71 -359 azalea",
+      "/setblock -273 71 -369 azalea",
+      "/setblock -262 71 -361 azalea",
+      "/setblock -263 71 -371 azalea",
+      "/setblock -272 71 -359 azalea",
+      "/setblock -273 71 -369 azalea",
+      "/setblock -262 71 -361 azalea",
+      "/setblock -263 71 -371 azalea",
+      "/setblock -272 71 -359 azalea",
+      "/fill -260 71 -370 -260 72 -370 mossy_cobblestone",
+      "/fill -259 71 -369 -259 72 -369 mossy_cobblestone",
+      "/fill -276 71 -364 -276 72 -364 mossy_cobblestone",
+      "/fill -276 71 -363 -276 72 -363 mossy_cobblestone",
+      "/fill -270 68 -387 -266 76 -373 air replace oak_fence",
+      "/fill -270 68 -387 -266 76 -373 air replace stripped_oak_wood",
+      "/fill -270 68 -387 -266 76 -373 air replace oak_log",
+      "/fill -270 68 -387 -266 76 -373 air replace white_wool",
+      "/fill -270 68 -387 -266 76 -373 air replace oak_fence_gate",
+      "/fill -269 71 -387 -267 76 -373 air replace lantern"
+     ]
+    },
+    {
+     "id": "buh_yard_cold",
+     "since": 3401,
+     "what": "Buh's yard after he left: the chimney's campfire out, the eight lanterns (gate posts, yard, cottage) gone dark (removed). Through day 3400 (Good Boy, which builds with day 3400) the yard is lit as Good Boy built it",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -266 80 -358 campfire[lit=false]",
+      "/setblock -269 73 -365 air",
+      "/setblock -267 72 -365 air",
+      "/setblock -270 72 -362 air",
+      "/setblock -266 72 -362 air",
+      "/setblock -270 72 -357 air",
+      "/setblock -270 73 -372 air",
+      "/setblock -266 73 -372 air",
+      "/setblock -270 72 -370 air"
+     ]
+    },
+    {
+     "id": "kid_house",
+     "since": 3450,
+     "what": "the Bell in the Window family's two-storey stilt house on a plank boardwalk over the sea under Buh's yard's south-east bank: its north wall at z -340, his upstairs window (1 x 2, y 66-67) at x -263 facing north at the bank, a porch roof (walking surface y 66) east of it, the upstairs door east at O + (4, 4, 2), the boardwalk at y 62. Inside 7 x 7 on both floors (the owner's interior minimum); the ground floor is y 63-64, the upstairs floor y 65. Origin O = (-263, 62, -340), bell_window's set-relative (0, 0, 0). The bell set's live gate may move it in half-blocks",
+     "do": "cmds",
+     "cmds": [
+      "/fill -272 62 -346 -252 62 -328 spruce_planks replace water",
+      "/fill -264 62 -343 -262 62 -343 cobblestone",
+      "/fill -267 40 -340 -267 61 -340 oak_log replace water",
+      "/fill -259 40 -340 -259 61 -340 oak_log replace water",
+      "/fill -267 40 -332 -267 61 -332 oak_log replace water",
+      "/fill -259 40 -332 -259 61 -332 oak_log replace water",
+      "/fill -263 40 -336 -263 61 -336 oak_log replace water",
+      "/fill -272 40 -346 -272 61 -346 oak_log replace water",
+      "/fill -252 40 -346 -252 61 -346 oak_log replace water",
+      "/fill -272 40 -328 -272 61 -328 oak_log replace water",
+      "/fill -252 40 -328 -252 61 -328 oak_log replace water",
+      "/fill -262 40 -346 -262 61 -346 oak_log replace water",
+      "/fill -252 40 -337 -252 61 -337 oak_log replace water",
+      "/fill -272 40 -337 -272 61 -337 oak_log replace water",
+      "/fill -267 62 -340 -259 70 -332 spruce_planks hollow",
+      "/fill -267 63 -340 -267 70 -340 stripped_spruce_log",
+      "/fill -259 63 -340 -259 70 -340 stripped_spruce_log",
+      "/fill -267 63 -332 -267 70 -332 stripped_spruce_log",
+      "/fill -259 63 -332 -259 70 -332 stripped_spruce_log",
+      "/fill -266 65 -339 -260 65 -333 spruce_planks",
+      "/fill -263 66 -340 -263 67 -340 air",
+      "/fill -265 63 -332 -265 64 -332 glass_pane",
+      "/fill -261 63 -332 -261 64 -332 glass_pane",
+      "/setblock -263 63 -332 spruce_door[half=lower,facing=south]",
+      "/setblock -263 64 -332 spruce_door[half=upper,facing=south]",
+      "/setblock -259 66 -338 spruce_door[half=lower,facing=east]",
+      "/setblock -259 67 -338 spruce_door[half=upper,facing=east]",
+      "/fill -268 71 -341 -258 71 -331 dark_oak_slab[type=bottom]",
+      "/fill -263 65 -342 -256 65 -341 spruce_slab[type=top]",
+      "/fill -258 65 -340 -256 65 -336 spruce_slab[type=top]",
+      "/setblock -262 66 -335 lantern",
+      "/setblock -264 63 -335 lantern"
+     ]
+    },
+    {
+     "id": "belfry_bell",
+     "since": 3450,
+     "what": "Saltmouth's meeting-point bell re-hung on a two-post belfry 3 north of his window, O + (0, 7, -3) = (-263, 69, -343), double_wall between oak-fence posts capped with oak logs, on a cobblestone base, nothing above it. The bell that catches the skeleton's arrows (an arrow sticks in it a minute, then despawns)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -264 63 -343 -264 68 -343 oak_fence",
+      "/fill -262 63 -343 -262 68 -343 oak_fence",
+      "/setblock -264 69 -343 oak_log",
+      "/setblock -262 69 -343 oak_log",
+      "/setblock -263 69 -343 bell[attachment=double_wall,facing=east]"
+     ]
+    },
+    {
+     "id": "skeleton",
+     "since": 3500,
+     "until": 3801,
+     "live": true,
+     "what": "the pale guy: a skeleton in the old oak's shade on Buh's yard's south-east bank, feet O + (0, 9, -12) = (-262.5, 71, -351.5), bow, facing his window. Moved in about 100 days after Buh left (300 nights before day 3800). After day 3800 never shown (the Short ends on the draw)",
+     "do": "cmds",
+     "cmds": [
+      "/summon skeleton -262.5 71 -351.5 {PersistenceRequired:1b,Rotation:[0f,0f],equipment:{mainhand:{id:\"minecraft:bow\",count:1}}}"
+     ]
+    }
+   ],
    "stories": [
-    "good_boy"
+    "good_boy",
+    "bell_window"
    ],
    "status": "claimed",
    "label_dir": "e"
@@ -1300,7 +1553,7 @@
      "generated": true
     }
    ],
-   "about": "Grandpa's village across the White, 2 km west of Hushwell: the log palisade and its east gate (the origin), Grandpa's house and yard just inside it with the totem wall, the road east over the ford and up onto the Ridge. A real pillager outpost stands 200 blocks further east, the stronghold 250 blocks west under the islets.",
+   "about": "Grandpa's village across the White, 2 km west of Hushwell: the log palisade and its east gate (the origin), Grandpa's house and yard just inside it with the totem wall (32 full from raid 32), the shepherd family's pasture south of the gate (blue sheep from raid 32: the evoker alarm), the road east over the ford and up onto the Ridge. A real pillager outpost stands 200 blocks further east, the stronghold 250 blocks west under the low headland past Leo's lagoon (Gullwick).",
    "pieces": [
     {
      "id": "tower",
@@ -1312,10 +1565,279 @@
      "note": "the old tower on the hill: Thirty-One Raids builds it here (gate O + (44, 40))"
     }
    ],
-   "stamps": [],
-   "story_builds": "the palisade, the gate, Grandpa's house, yard and totem wall are built by stunts/story_thirty_one_raids.js (gate-relative); move them into this entry when the next Ravenford story needs them",
+   "stamps": [
+    {
+     "id": "grandpa_house",
+     "since": 0,
+     "what": "Grandpa's house and yard just inside the east gate (gate + (-18..-3, -19..-2)): cobblestone and spruce, door south at x -10, two south windows (x -13, -7) and one east; the bench, grindstone, lantern post and fence of the yard. Ported verbatim from stunts/story_thirty_one_raids.js grandpaHouse() and its yard (that stunt still builds its own copy)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -2062 72 -504 -2047 85 -487 air",
+      "/fill -2063 73 -505 -2047 85 -487 air",
+      "/fill -2064 74 -506 -2047 85 -487 air",
+      "/fill -2065 75 -507 -2047 85 -487 air",
+      "/fill -2062 68 -504 -2047 70 -487 dirt replace air",
+      "/fill -2062 71 -504 -2047 71 -487 grass_block",
+      "/fill -2063 72 -505 -2047 72 -487 grass_block replace #minecraft:base_stone_overworld",
+      "/fill -2063 72 -505 -2047 72 -487 grass_block replace dirt",
+      "/fill -2063 72 -505 -2047 72 -487 grass_block replace coarse_dirt",
+      "/fill -2064 73 -506 -2047 73 -487 grass_block replace #minecraft:base_stone_overworld",
+      "/fill -2064 73 -506 -2047 73 -487 grass_block replace dirt",
+      "/fill -2064 73 -506 -2047 73 -487 grass_block replace coarse_dirt",
+      "/fill -2065 74 -507 -2047 74 -487 grass_block replace #minecraft:base_stone_overworld",
+      "/fill -2065 74 -507 -2047 74 -487 grass_block replace dirt",
+      "/fill -2065 74 -507 -2047 74 -487 grass_block replace coarse_dirt",
+      "/fill -2059 68 -502 -2049 72 -494 cobblestone",
+      "/setblock -2059 72 -497 mossy_cobblestone",
+      "/setblock -2055 72 -494 mossy_cobblestone",
+      "/setblock -2049 72 -499 mossy_cobblestone",
+      "/setblock -2052 72 -502 mossy_cobblestone",
+      "/setblock -2057 72 -494 mossy_cobblestone",
+      "/fill -2058 72 -501 -2050 72 -495 spruce_planks",
+      "/fill -2059 73 -502 -2049 77 -494 spruce_planks hollow",
+      "/fill -2058 73 -501 -2050 77 -495 air",
+      "/fill -2059 73 -502 -2059 77 -502 spruce_log",
+      "/fill -2049 73 -502 -2049 77 -502 spruce_log",
+      "/fill -2059 73 -494 -2059 77 -494 spruce_log",
+      "/fill -2049 73 -494 -2049 77 -494 spruce_log",
+      "/fill -2054 73 -502 -2054 77 -502 spruce_log",
+      "/fill -2059 77 -502 -2049 77 -502 spruce_log[axis=x]",
+      "/fill -2059 77 -494 -2049 77 -494 spruce_log[axis=x]",
+      "/fill -2059 77 -501 -2059 77 -495 spruce_log[axis=z]",
+      "/fill -2049 77 -501 -2049 77 -495 spruce_log[axis=z]",
+      "/fill -2059 78 -502 -2049 78 -494 spruce_planks",
+      "/setblock -2056 78 -498 glowstone",
+      "/setblock -2052 78 -498 glowstone",
+      "/setblock -2054 78 -496 glowstone",
+      "/setblock -2054 78 -500 glowstone",
+      "/fill -2057 74 -494 -2057 75 -494 glass_pane",
+      "/fill -2051 74 -494 -2051 75 -494 glass_pane",
+      "/fill -2049 74 -498 -2049 75 -498 glass_pane",
+      "/setblock -2058 74 -493 spruce_trapdoor[facing=south,open=true,half=bottom]",
+      "/setblock -2056 74 -493 spruce_trapdoor[facing=south,open=true,half=bottom]",
+      "/setblock -2052 74 -493 spruce_trapdoor[facing=south,open=true,half=bottom]",
+      "/setblock -2050 74 -493 spruce_trapdoor[facing=south,open=true,half=bottom]",
+      "/setblock -2054 73 -494 spruce_door[half=lower,facing=south,open=false]",
+      "/setblock -2054 74 -494 spruce_door[half=upper,facing=south,open=false]",
+      "/setblock -2054 76 -493 spruce_slab[type=top]",
+      "/setblock -2053 75 -493 lantern[hanging=true]",
+      "/setblock -2053 76 -493 spruce_fence",
+      "/fill -2060 78 -503 -2048 78 -503 dark_oak_stairs[facing=south]",
+      "/fill -2060 78 -493 -2048 78 -493 dark_oak_stairs[facing=north]",
+      "/fill -2060 79 -502 -2048 79 -502 dark_oak_stairs[facing=south]",
+      "/fill -2060 79 -494 -2048 79 -494 dark_oak_stairs[facing=north]",
+      "/fill -2060 80 -501 -2048 80 -501 dark_oak_stairs[facing=south]",
+      "/fill -2060 80 -495 -2048 80 -495 dark_oak_stairs[facing=north]",
+      "/fill -2060 81 -500 -2048 81 -500 dark_oak_stairs[facing=south]",
+      "/fill -2060 81 -496 -2048 81 -496 dark_oak_stairs[facing=north]",
+      "/fill -2060 82 -499 -2048 82 -499 dark_oak_stairs[facing=south]",
+      "/fill -2060 82 -497 -2048 82 -497 dark_oak_stairs[facing=north]",
+      "/fill -2060 83 -498 -2048 83 -498 dark_oak_slab[type=bottom]",
+      "/fill -2060 82 -498 -2048 82 -498 dark_oak_planks",
+      "/fill -2059 79 -501 -2059 79 -495 spruce_planks",
+      "/fill -2059 80 -500 -2059 80 -496 spruce_planks",
+      "/fill -2059 81 -499 -2059 81 -497 spruce_planks",
+      "/fill -2059 82 -498 -2059 82 -498 spruce_planks",
+      "/fill -2049 79 -501 -2049 79 -495 spruce_planks",
+      "/fill -2049 80 -500 -2049 80 -496 spruce_planks",
+      "/fill -2049 81 -499 -2049 81 -497 spruce_planks",
+      "/fill -2049 82 -498 -2049 82 -498 spruce_planks",
+      "/fill -2056 78 -500 -2056 84 -500 cobblestone",
+      "/setblock -2056 85 -500 cobblestone_wall",
+      "/fill -2057 73 -497 -2051 73 -495 brown_carpet",
+      "/fill -2054 73 -498 -2053 73 -498 spruce_slab[type=top]",
+      "/setblock -2055 73 -498 spruce_stairs[facing=west]",
+      "/setblock -2053 73 -497 spruce_stairs[facing=south]",
+      "/setblock -2050 73 -498 chest[facing=west]",
+      "/fill -2058 73 -501 -2058 75 -501 bookshelf",
+      "/setblock -2050 73 -501 lantern",
+      "/setblock -2058 73 -495 barrel[facing=up]",
+      "/setblock -2058 74 -495 lantern",
+      "/setblock -2058 73 -498 composter",
+      "/setblock -2057 73 -501 lantern",
+      "/setblock -2054 73 -501 lantern",
+      "/setblock -2057 78 -501 glowstone",
+      "/setblock -2054 78 -501 glowstone",
+      "/setblock -2051 78 -501 glowstone",
+      "/setblock -2055 73 -501 spruce_wall_sign[facing=south]{front_text:{has_glowing_text:1b,color:\"yellow\",messages:[\"\",\"RAIDS WON\",\"31\",\"\"]}}",
+      "/setblock -2051 77 -496 lantern[hanging=true]",
+      "/fill -2062 72 -493 -2062 72 -487 spruce_fence",
+      "/fill -2062 72 -487 -2056 72 -487 spruce_fence",
+      "/setblock -2050 72 -490 grindstone[face=floor,facing=east]",
+      "/fill -2059 72 -488 -2059 73 -488 spruce_fence",
+      "/setblock -2059 74 -488 lantern",
+      "/setblock -2054 72 -493 spruce_stairs[facing=north]",
+      "/fill -2052 72 -493 -2051 72 -493 spruce_stairs[facing=north]",
+      "/setblock -2060 72 -491 poppy",
+      "/setblock -2058 72 -492 cornflower",
+      "/setblock -2061 72 -489 dandelion",
+      "/setblock -2048 72 -493 oxeye_daisy",
+      "/setblock -2048 72 -492 barrel[facing=up]",
+      "/setblock -2048 72 -491 hay_block"
+     ]
+    },
+    {
+     "id": "totem_wall",
+     "since": 1900,
+     "what": "the totem wall after raid 32: all 32 frames full (4 rows of 8 on the north wall inside, gate + (-13..-6, 3..6, -16); frame 32 a glow frame), the four bottle frames by the east window, the bowl, and the sign under it (RAIDS WON 32). Seen from outside through the south windows (x -13 and -7). Before day 1900 the wall is Thirty-One Raids' own (30, then 31, of 32)",
+     "do": "cmds",
+     "cmds": [
+      "/summon item_frame -2056.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2055.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2054.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2053.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2052.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2051.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2050.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon glow_item_frame -2049.5 74.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2056.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2055.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2054.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2053.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2052.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2051.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2050.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2049.5 75.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2056.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2055.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2054.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2053.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2052.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2051.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2050.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2049.5 76.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2056.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2055.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2054.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2053.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2052.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2051.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2050.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2049.5 77.5 -500.5 {Facing:3b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:totem_of_undying\",count:1}}",
+      "/summon item_frame -2049.5 75.5 -499.5 {Facing:4b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:ominous_bottle\",count:1}}",
+      "/summon item_frame -2049.5 75.5 -498.5 {Facing:4b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:ominous_bottle\",count:1}}",
+      "/summon item_frame -2049.5 75.5 -496.5 {Facing:4b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:ominous_bottle\",count:1}}",
+      "/summon item_frame -2049.5 75.5 -495.5 {Facing:4b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:ominous_bottle\",count:1}}",
+      "/summon item_frame -2053.5 74.5 -497.5 {Facing:1b,Fixed:1b,Invulnerable:1b,Item:{id:\"minecraft:bowl\",count:1}}",
+      "/setblock -2055 73 -501 spruce_wall_sign[facing=south]{front_text:{has_glowing_text:1b,color:\"yellow\",messages:[\"\",\"RAIDS WON\",\"32\",\"\"]}}"
+     ]
+    },
+    {
+     "id": "pasture",
+     "since": 1900,
+     "what": "the shepherd family's pasture inside the palisade south of the east gate: an oak fence on the natural ground round gate + (-29..-1, 13..40), the palisade its east side with the pasture gate in it at gate + (0, 15), a lantern on the corner post. The flock in it is dyed blue from raid 32 on (Red Sheep)",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -2073 72 -472 oak_fence",
+      "/setblock -2073 67 -445 oak_fence",
+      "/setblock -2072 73 -472 oak_fence",
+      "/setblock -2072 67 -445 oak_fence",
+      "/setblock -2071 74 -472 oak_fence",
+      "/setblock -2071 67 -445 oak_fence",
+      "/setblock -2070 75 -472 oak_fence",
+      "/setblock -2070 67 -445 oak_fence",
+      "/setblock -2069 75 -472 oak_fence",
+      "/setblock -2069 68 -445 oak_fence",
+      "/setblock -2068 75 -472 oak_fence",
+      "/setblock -2068 68 -445 oak_fence",
+      "/setblock -2067 75 -472 oak_fence",
+      "/setblock -2067 68 -445 oak_fence",
+      "/setblock -2066 75 -472 oak_fence",
+      "/setblock -2066 68 -445 oak_fence",
+      "/setblock -2065 76 -472 oak_fence",
+      "/setblock -2065 68 -445 oak_fence",
+      "/setblock -2064 76 -472 oak_fence",
+      "/setblock -2064 68 -445 oak_fence",
+      "/setblock -2063 76 -472 oak_fence",
+      "/setblock -2063 68 -445 oak_fence",
+      "/setblock -2062 76 -472 oak_fence",
+      "/setblock -2062 68 -445 oak_fence",
+      "/setblock -2061 76 -472 oak_fence",
+      "/setblock -2061 68 -445 oak_fence",
+      "/setblock -2060 75 -472 oak_fence",
+      "/setblock -2060 68 -445 oak_fence",
+      "/setblock -2059 75 -472 oak_fence",
+      "/setblock -2059 68 -445 oak_fence",
+      "/setblock -2058 75 -472 oak_fence",
+      "/setblock -2058 68 -445 oak_fence",
+      "/setblock -2057 74 -472 oak_fence",
+      "/setblock -2057 68 -445 oak_fence",
+      "/setblock -2056 73 -472 oak_fence",
+      "/setblock -2056 68 -445 oak_fence",
+      "/setblock -2055 73 -472 oak_fence",
+      "/setblock -2055 70 -445 oak_fence",
+      "/setblock -2054 73 -472 oak_fence",
+      "/setblock -2054 72 -445 oak_fence",
+      "/setblock -2053 73 -472 oak_fence",
+      "/setblock -2053 75 -445 oak_fence",
+      "/setblock -2052 73 -472 oak_fence",
+      "/setblock -2052 78 -445 oak_fence",
+      "/setblock -2051 73 -472 oak_fence",
+      "/setblock -2051 78 -445 oak_fence",
+      "/setblock -2050 73 -472 oak_fence",
+      "/setblock -2050 77 -445 oak_fence",
+      "/setblock -2049 73 -472 oak_fence",
+      "/setblock -2049 76 -445 oak_fence",
+      "/setblock -2048 73 -472 oak_fence",
+      "/setblock -2048 76 -445 oak_fence",
+      "/setblock -2047 73 -472 oak_fence",
+      "/setblock -2047 76 -445 oak_fence",
+      "/setblock -2046 73 -472 oak_fence",
+      "/setblock -2046 76 -445 oak_fence",
+      "/setblock -2045 73 -472 oak_fence",
+      "/setblock -2045 76 -445 oak_fence",
+      "/setblock -2073 72 -471 oak_fence",
+      "/setblock -2073 73 -470 oak_fence",
+      "/setblock -2073 74 -469 oak_fence",
+      "/setblock -2073 75 -468 oak_fence",
+      "/setblock -2073 73 -467 oak_fence",
+      "/setblock -2073 72 -466 oak_fence",
+      "/setblock -2073 72 -465 oak_fence",
+      "/setblock -2073 71 -464 oak_fence",
+      "/setblock -2073 70 -463 oak_fence",
+      "/setblock -2073 70 -462 oak_fence",
+      "/setblock -2073 70 -461 oak_fence",
+      "/setblock -2073 69 -460 oak_fence",
+      "/setblock -2073 69 -459 oak_fence",
+      "/setblock -2073 69 -458 oak_fence",
+      "/setblock -2073 69 -457 oak_fence",
+      "/setblock -2073 69 -456 oak_fence",
+      "/setblock -2073 69 -455 oak_fence",
+      "/setblock -2073 69 -454 oak_fence",
+      "/setblock -2073 69 -453 oak_fence",
+      "/setblock -2073 68 -452 oak_fence",
+      "/setblock -2073 68 -451 oak_fence",
+      "/setblock -2073 68 -450 oak_fence",
+      "/setblock -2073 68 -449 oak_fence",
+      "/setblock -2073 68 -448 oak_fence",
+      "/setblock -2073 68 -447 oak_fence",
+      "/setblock -2073 68 -446 oak_fence",
+      "/setblock -2045 73 -471 oak_fence",
+      "/setblock -2045 74 -471 lantern"
+     ]
+    },
+    {
+     "id": "blue_flock",
+     "since": 1900,
+     "live": true,
+     "what": "eight of Ravenford's blue sheep (Color 11) in the pasture: the evoker alarm (a blue sheep in an evoker's 16 blocks turns red). Red Sheep brings its own 60",
+     "do": "cmds",
+     "cmds": [
+      "/summon sheep -2055.5 71 -450.5 {Color:11b,PersistenceRequired:1b,Rotation:[238f,0f]}",
+      "/summon sheep -2055.5 72 -451.5 {Color:11b,PersistenceRequired:1b,Rotation:[300f,0f]}",
+      "/summon sheep -2063.5 69 -462.5 {Color:11b,PersistenceRequired:1b,Rotation:[262f,0f]}",
+      "/summon sheep -2054.5 70 -447.5 {Color:11b,PersistenceRequired:1b,Rotation:[314f,0f]}",
+      "/summon sheep -2064.5 70 -464.5 {Color:11b,PersistenceRequired:1b,Rotation:[228f,0f]}",
+      "/summon sheep -2060.5 70 -463.5 {Color:11b,PersistenceRequired:1b,Rotation:[46f,0f]}",
+      "/summon sheep -2052.5 75 -447.5 {Color:11b,PersistenceRequired:1b,Rotation:[21f,0f]}",
+      "/summon sheep -2050.5 77 -455.5 {Color:11b,PersistenceRequired:1b,Rotation:[231f,0f]}"
+     ]
+    }
+   ],
+   "story_builds": "the palisade and the east gate are still built by stunts/story_thirty_one_raids.js (gate-relative, on the terrain); Grandpa's house, yard and the totem wall are ported here (stamps). Port the palisade before the next Ravenford story builds (Red Sheep's set.md)",
    "stories": [
-    "thirty_one_raids"
+    "thirty_one_raids",
+    "red_sheep"
    ],
    "status": "canon"
   },
@@ -1334,7 +1856,7 @@
     -2180,
     -535
    ],
-   "about": "A stone cottage on the shore west of Ravenford, facing the islets over the real stronghold. Leo left for the End six years before One More Eye; the basement holds an end portal frame that gains an eye a night.",
+   "about": "A stone cottage on the shore west of Ravenford, facing a lagoon and, across it, the low headland over the real stronghold (Gullwick stands on it from day ~350; the survey found no islet over the stronghold). Leo left for the End six years before One More Eye; the basement holds an end portal frame that gains an eye a night.",
    "pieces": [
     {
      "id": "house",
@@ -1458,6 +1980,115 @@
     "names_in_the_woods"
    ],
    "status": "claimed 2026-11-10 by names_in_the_woods"
+  },
+  "larkfield": {
+   "name": "Larkfield",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -360,
+    116,
+    -712
+   ],
+   "footprint": [
+    -405,
+    -757,
+    -316,
+    -668
+   ],
+   "about": "A plains-style village on the High Meadow's north-east top (meadow, y 116-119), built (not generated): Jonah's village. From day 4500 a torch stands on every sturdy top in the 90 x 90 box and Jonah's plot is a 9 x 9 square of torches. Every block is 181+ from Dog Hill's D and 185+ from Hushwell's well (outside Dog on the Hill's, Good Boy's and Light Sleeper's render distance); from D the north-east rim's roofs and torches show over the plateau's edge, south-west, 185-190 blocks out.",
+   "pieces": [],
+   "stamps": [
+    {
+     "id": "six_thousand_torches",
+     "since": 4501,
+     "what": "a torch on every sturdy top in the 90 x 90 box (about 6,000-6,300): fences, roofs, hay, Jonah's 9 x 9 plot. Permanent: from Dog Hill at night the High Meadow's north-east rim glows on the south-west skyline, 185-190 blocks out (needs renderDistance 13+ there). Needs Larkfield's houses as pieces first (Six Thousand Torches' claim of its pieces); on day 4500 itself the story dresses the box (its own skip list, and none in its flashback)",
+     "do": "torches",
+     "box": [
+      -405,
+      -757,
+      -316,
+      -668
+     ],
+     "yTop": 160
+    }
+   ],
+   "stories": [
+    "six_thousand_torches"
+   ],
+   "status": "claimed 2026-11-11 by six_thousand_torches (pieces to add before building)"
+  },
+  "highwall": {
+   "name": "Highwall",
+   "kind": "village",
+   "region": "the_white",
+   "at": [
+    -1594,
+    133,
+    -524
+   ],
+   "footprint": [
+    -1634,
+    -624,
+    -1554,
+    -484
+   ],
+   "about": "The walled village on a snowy plateau in the middle of the White (y 133-141, snowy plains), 40 blocks from the line of the old road between Frostgate and Ravenford: a square stone-brick wall 40 high on day 3700 (old Tomas adds one block a morning), no gate; outside its north side a player's trading hall, 12 x 52, running north on level ground. The wall's top (~y 175) stands over the White for kilometres: the road's landmark. Built by the story (wall, village, hall). No rendered Short within 450 blocks (Ravenford is 452 west, Frostgate 812 east).",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "wall_grows"
+   ],
+   "status": "claimed 2026-11-11 by wall_grows",
+   "story_builds": "the wall, the village inside it and the trading hall are the story's set (stories/wall_grows/set.md, origin the plaza bell at the claim's at). The wall is 40 high on day 3700 and grows one block a morning while Tomas keeps at it; a later story that shows it must show it at 40 or more (never lower), and none may show it before day 3660"
+  },
+  "gullwick": {
+   "name": "Gullwick",
+   "kind": "village",
+   "region": "the_west_march",
+   "at": [
+    -2301,
+    62,
+    -566
+   ],
+   "footprint": [
+    -2306,
+    -580,
+    -2262,
+    -546
+   ],
+   "about": "A shore hamlet on the low headland west of Leo's lagoon, over the world's only stronghold (never said): the library hut, and a dock (the origin is its end, flush at sea level) pointing north-west across 92 blocks of open cold ocean (never frozen) to Grandma's island. Leo's House is 100 blocks east across the lagoon.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "the_walk"
+   ],
+   "status": "claimed 2026-11-11 by the_walk",
+   "story_builds": "the dock (12 long, flush at sea level, pointing north-west at the island), the library hut ~20 blocks inland, the shingle shore, the empty oak boat: the_walk's set. The stronghold's pieces (-2313..-2272, -600..-534) run under the headland: never dig here on screen"
+  },
+  "grandmas_island": {
+   "name": "Grandma's Island",
+   "kind": "homestead",
+   "region": "the_west_march",
+   "at": [
+    -2374,
+    62,
+    -630
+   ],
+   "footprint": [
+    -2381,
+    -639,
+    -2367,
+    -621
+   ],
+   "about": "A natural sand-and-grass islet (13 x 17, at sea level) in the cold ocean north-west of Gullwick's dock, 92 blocks out: Grandma's cottage (one lit window facing the dock) and her boat on its beach since about day 350. The nearest true island to the stronghold (55 blocks west of its pieces).",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "the_walk"
+   ],
+   "status": "claimed 2026-11-11 by the_walk",
+   "story_builds": "Grandma's cottage (one 3 x 2 glass-pane window facing the dock, lit) and her boat on the beach: the_walk's set, since about day 350"
   }
  },
  "stories": {
@@ -1566,6 +2197,16 @@
    "status": "pilot (not made: canon only once made)",
    "cameos": []
   },
+  "red_sheep": {
+   "day": 2300,
+   "places": [
+    "ravenford"
+   ],
+   "cameos": [
+    "totem_wall"
+   ],
+   "status": "script approved (owner audit 2026-11-11): to build"
+  },
   "one_block_higher": {
    "day": 2600,
    "places": [
@@ -1576,6 +2217,16 @@
    "suggested_cameos": [
     "lighthouse"
    ]
+  },
+  "names_in_the_woods": {
+   "day": 2700,
+   "places": [
+    "oakend"
+   ],
+   "cameos": [
+    "empty_boat"
+   ],
+   "status": "claimed"
   },
   "more_golems": {
    "day": 2900,
@@ -1608,6 +2259,33 @@
     "boxed_bell"
    ]
   },
+  "wall_grows": {
+   "day": 3700,
+   "places": [
+    "highwall"
+   ],
+   "cameos": [],
+   "status": "script approved (owner audit 2026-11-11): to build"
+  },
+  "bell_window": {
+   "day": 3800,
+   "places": [
+    "saltmouth"
+   ],
+   "cameos": [
+    "buh_yard"
+   ],
+   "status": "script approved (owner audit 2026-11-11): to build"
+  },
+  "the_walk": {
+   "day": 4000,
+   "places": [
+    "gullwick",
+    "grandmas_island"
+   ],
+   "cameos": [],
+   "status": "script approved (owner audit 2026-11-11): to build"
+  },
   "dog_hill": {
    "day": 4300,
    "places": [
@@ -1616,6 +2294,16 @@
    ],
    "status": "rendered",
    "cameos": []
+  },
+  "six_thousand_torches": {
+   "day": 4500,
+   "places": [
+    "larkfield"
+   ],
+   "cameos": [
+    "pip_and_dog"
+   ],
+   "status": "script approved (owner audit 2026-11-11): to build"
   },
   "gold_for_the_portal": {
    "day": 9300,
@@ -1626,16 +2314,6 @@
     "boxed_bell"
    ],
    "status": "made"
-  },
-  "names_in_the_woods": {
-   "day": 2700,
-   "places": [
-    "oakend"
-   ],
-   "cameos": [
-    "empty_boat"
-   ],
-   "status": "claimed"
   }
  },
  "cameos": {
@@ -1660,7 +2338,7 @@
     "hut"
    ],
    "since": 4300,
-   "what": "the dog and Pip sitting together on the hilltop at night"
+   "what": "the dog and Pip sitting together on the hilltop at night (from Hushwell; from Larkfield's north-east rim, a speck on the hilltop 185 blocks north-east, the dog and Pip side by side)"
   },
   "boxed_bell": {
    "place": "hushwell",
@@ -1750,9 +2428,38 @@
   },
   "totem_wall": {
    "place": "ravenford",
-   "needs": [],
+   "needs": [
+    "grandpa_house",
+    "totem_wall"
+   ],
    "since": 0,
-   "what": "Grandpa's totem wall: 31 totems and one empty frame until day 1900, all 32 full after (built by the Thirty-One Raids set for now)"
+   "what": "Grandpa's totem wall: 31 totems and one empty frame until day 1900, all 32 full after (glinting through his house's south windows from the yard and the pasture). One totem per dead evoker"
+  },
+  "blue_flock": {
+   "place": "ravenford",
+   "needs": [
+    "pasture",
+    "blue_flock"
+   ],
+   "since": 1900,
+   "what": "Ravenford's blue sheep in the pasture by the east gate (the evoker alarm, from raid 32)"
+  },
+  "buh_yard": {
+   "place": "saltmouth",
+   "needs": [
+    "buh_yard",
+    "buh_yard_cold"
+   ],
+   "since": 3400,
+   "what": "Buh's empty yard on the bank above Saltmouth's south-east shore: the cottage, the fence, the old oak, no dog"
+  },
+  "larkfield_glow": {
+   "place": "larkfield",
+   "needs": [
+    "six_thousand_torches"
+   ],
+   "since": 4501,
+   "what": "Larkfield's 6,000 torches: the High Meadow's north-east rim glowing on the skyline south-west of Dog Hill at night (from the hilltop, Hushwell's north road; 185+ blocks: renderDistance 13+)"
   }
  }
 }

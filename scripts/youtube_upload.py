@@ -69,6 +69,23 @@ def channel_of(meta: dict) -> str:
 
 UP = ROOT / "uploads" if CHANNEL == "hellobuh" else ROOT / "uploads" / CHANNEL
 QUEUE, RECORD, PAUSED, SCORES = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED", UP / "scores.json"
+OWNER_OK = UP / "owner_ok.txt"   # owner 2026-11-11: "dont let anything go to youtube anymore without an OK from me"
+
+
+def owner_ok(name: str, meta: dict) -> str:
+    """"" when the owner OK'd THIS cut of the Short: uploads/owner_ok.txt has a line "<name> <sha256 prefix of the
+    package's video.release> ..." (scripts/owner_ok.py add <name> writes it after the owner watched that file). A
+    re-published Short needs a new OK. Otherwise the reason it can't go up."""
+    sha = ((meta.get("video") or {}).get("release") or {}).get("sha256", "")
+    if not OWNER_OK.exists():
+        return "no owner OK (uploads/owner_ok.txt missing)"
+    for line in OWNER_OK.read_text().splitlines():
+        parts = line.split("#")[0].split()
+        if len(parts) >= 2 and parts[0] == name:
+            if sha and len(parts[1]) >= 12 and sha.startswith(parts[1]):
+                return ""
+            return f"the owner OK'd another cut ({parts[1][:12]}), not this one ({sha[:12] or 'no release'})"
+    return "no owner OK yet (scripts/owner_ok.py add " + name + " once the owner says OK)"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
 PER_DAY = int(env("YT_PER_DAY", "3") or 3)
 WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
@@ -107,6 +124,100 @@ def save_record(done: dict, msg: str) -> None:
             return
         subprocess.run(["git", "pull", "--rebase", "origin", ref], check=True)
     sys.exit("could not push uploads/uploads.json after 6 tries: record the upload by hand before the next run")
+
+
+def story_youtube(meta: dict) -> tuple[dict, list]:
+    """Buh Stories only: the upload text rebuilt from main's story.json `upload` block (lib/buhstories_upload.js, the
+    same builder as publish.js and ./hb paste), so a corrected title or question needs no re-packaging. Returns
+    (youtube, blocks): a BLOCK (HelloBuh hashtags, no music credit, no title/pinned question...) means don't upload."""
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
+        json.dump({**meta, "channel": channel_of(meta)}, f)
+    try:
+        r = subprocess.run(["node", str(ROOT / "lib" / "buhstories_upload.js"), f.name, "--json"], cwd=ROOT,
+                           capture_output=True, text=True)
+    finally:
+        os.unlink(f.name)
+    try:
+        out = json.loads(r.stdout)
+    except ValueError:
+        return meta.get("youtube") or {}, [f"lib/buhstories_upload.js failed: {(r.stderr or r.stdout).strip()[:200]}"]
+    return out["youtube"], out["blocks"]
+
+
+def upload_body(yt_meta: dict, title: str, desc: str, when: str) -> dict:
+    """The videos.insert body. HelloBuh's is exactly what it always was; Buh Stories adds its tags (brand keywords +
+    the story's), made-for-kids from the metadata (false) and altered content "No" (research 5a)."""
+    body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
+                        "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
+            "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,
+                       "containsSyntheticMedia": False}}
+    if CHANNEL == "buhstories":
+        body["snippet"]["tags"] = list(yt_meta.get("tags") or body["snippet"]["tags"])
+        body["status"]["selfDeclaredMadeForKids"] = bool(yt_meta.get("made_for_kids", False))
+        body["status"]["containsSyntheticMedia"] = bool(yt_meta.get("altered_content", False))
+    return body
+
+
+def playlist_id(yt, title: str) -> str:
+    """The channel's playlist with this title (Buh Stories: "All Buh Stories"), created public if it isn't there."""
+    req = yt.playlists().list(part="snippet", mine=True, maxResults=50)
+    while req is not None:
+        resp = req.execute(num_retries=3)
+        for p in resp.get("items", []):
+            if p["snippet"]["title"].strip() == title:
+                return p["id"]
+        req = yt.playlists().list_next(req, resp)
+    p = yt.playlists().insert(part="snippet,status", body={"snippet": {"title": title, "description": ""},
+                                                             "status": {"privacyStatus": "public"}}).execute(num_retries=3)
+    return p["id"]
+
+
+SCOPE_FIX = ("the Buh Stories token needs the youtube.force-ssl scope for playlists and comments "
+             "(docs/upload-setup.md \"A second channel\" step 3); do it by hand in Studio meanwhile")
+
+
+def add_to_playlist(yt, vid: str, yt_meta: dict, entry: dict) -> None:
+    """Buh Stories: put the new upload in its playlist. Never fails the upload: a refusal is recorded and printed."""
+    title = yt_meta.get("playlist")
+    if not title:
+        return
+    try:
+        pid = playlist_id(yt, title)
+        yt.playlistItems().insert(part="snippet", body={"snippet": {"playlistId": pid, "resourceId": {
+            "kind": "youtube#video", "videoId": vid}}}).execute(num_retries=3)
+        entry["playlist"] = title
+        print(f"added {vid} to the playlist {title!r}")
+    except Exception as e:
+        entry["playlist_error"] = str(e)[:200]
+        print(f"could not add {vid} to {title!r} ({str(e)[:160]}): {SCOPE_FIX}")
+
+
+def post_pinned_comments(yt, done: dict, now: dt.datetime | None = None) -> list:
+    """Buh Stories: the pinned question, posted once its video is public (a comment can't go on a private video, and
+    the API can't pin: the owner pins it in Studio). Returns (posted, failed): the names it changed, so the record is
+    saved only when something did."""
+    now = now or dt.datetime.now(dt.timezone.utc)
+    posted, failed = [], []
+    for name, e in done.items():
+        text, when = e.get("pinned_comment"), e.get("publish_at", "")
+        if not text or e.get("comment_id") or e.get("comment_error") or not e.get("video_id"):
+            continue
+        try:
+            if dt.datetime.fromisoformat(when.replace("Z", "+00:00")) > now:
+                continue
+        except ValueError:
+            continue
+        try:
+            c = yt.commentThreads().insert(part="snippet", body={"snippet": {"videoId": e["video_id"], "topLevelComment": {
+                "snippet": {"textOriginal": text}}}}).execute(num_retries=3)
+            e["comment_id"] = c["id"]
+            posted.append(name)
+            print(f"{name}: posted the pinned question (pin it in Studio: the API can't pin): {text}")
+        except Exception as ex:
+            e["comment_error"] = str(ex)[:200]
+            failed.append(name)
+            print(f"{name}: could not post the pinned question ({str(ex)[:160]}): {SCOPE_FIX}")
+    return posted, failed
 
 
 def videos_checkout(d: Path) -> Path:
@@ -217,12 +328,20 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
             if name in queued:
                 why.append(f"{name}: status {meta.get('status')!r}, not ready")
             continue
+        ok = owner_ok(name, meta)
+        if ok:
+            why.append(f"{name}: {ok}"); continue
         gw = gates.stale({"name": name, **meta})
         if gw:
             why.append(f"{name}: {gw}"); continue
         lic = (meta.get("song") or {}).get("licence", "")
-        if meta.get("song") and not lic.startswith(("NCS", "original")):
+        # (Buh Stories' scores are CC BY: cleared with the credit in the description, which story_youtube checks)
+        if meta.get("song") and not lic.startswith(("NCS", "original")) and not (CHANNEL == "buhstories" and lic.startswith("CC BY")):
             why.append(f"{name}: its song isn't cleared ({lic or 'no licence'})"); continue
+        if CHANNEL == "buhstories":
+            blocks = story_youtube(meta)[1]
+            if blocks:
+                why.append(f"{name}: upload text BLOCKED: {'; '.join(blocks)} (./hb paste {name})"); continue
         if not mix_ok(history, name):
             why.append(f"{name}: same format as the last upload, or a 2nd pixel-art in 3"); continue
         if not has_video(vd, name, meta):
@@ -598,6 +717,15 @@ def main() -> None:
                 print(f"scores unavailable ({str(e)[:160]}): queue order", flush=True)
         if PAUSED.exists():
             print(f"uploads are paused (uploads/PAUSED: {PAUSED.read_text().strip()}). Nothing done."); return
+        if CHANNEL == "buhstories" and ok and not a.dry_run and any(
+                e.get("pinned_comment") and not e.get("comment_id") and not e.get("comment_error") for e in done.values()):
+            yc = youtube()   # the pinned questions of videos that went public since the last run
+            if env("YT_CHANNEL_ID").strip() not in [c["id"] for c in yc.channels().list(part="id", mine=True).execute().get("items", [])]:
+                sys.exit(f"the token is not YT_CHANNEL_ID{SUFFIX}'s: refusing to comment as {NAME}")
+            posted, failed = post_pinned_comments(yc, done)
+            if posted or failed:
+                save_record(done, f"uploads: pinned questions posted on {', '.join(posted) or 'none'}"
+                                  + (f"; failed on {', '.join(failed)} (comment_error)" if failed else ""))
         today = central_now().date().isoformat()
         n_today = sum(1 for e in done.values() if e.get("uploaded") == today)
         if n_today >= PER_DAY and not a.dry_run:
@@ -611,6 +739,9 @@ def main() -> None:
                 history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
                 if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short) or channel_of(meta) != CHANNEL:
                     sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, breaks the mix, or belongs to another channel")
+                ok = owner_ok(a.short, meta)
+                if ok:
+                    sys.exit(f"{a.short}: {ok}")
                 gw = gates.stale({"name": a.short, **meta})
                 if gw:
                     sys.exit(f"{a.short}: {gw}")
@@ -627,12 +758,20 @@ def main() -> None:
                 return
             meta = meta_of(vd, name)
             yt_meta = meta["youtube"]
+            if CHANNEL == "buhstories":
+                yt_meta, blocks = story_youtube(meta)
+                if blocks:
+                    sys.exit(f"{name}: upload text BLOCKED: {'; '.join(blocks)} (./hb paste {name})")
             title, desc = yt_meta["title"].strip()[:100], yt_meta["description"]
             if "#shorts" not in (title + desc).lower():
                 desc = desc.rstrip() + "\n\n#shorts"
             when = publish_at(slot)
             print(f"next: {name}: {title!r}, publish at {when} UTC (series {series(name)})")
             if a.dry_run:
+                if CHANNEL == "buhstories":
+                    print(f"  description: {desc!r}\n  tags: {yt_meta.get('tags')}\n  playlist: {yt_meta.get('playlist')!r}; "
+                          f"pinned question once public: {yt_meta.get('pinned_comment')!r}; made for kids: "
+                          f"{yt_meta.get('made_for_kids')}; altered content: {yt_meta.get('altered_content')}")
                 done[name] = {"uploaded": today, "video_id": ""}   # only so the next pick follows on
                 continue
             if yt is None:
@@ -660,10 +799,7 @@ def main() -> None:
                 sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
                          "or record it in uploads/uploads.json if it was uploaded by hand")
             f = fetch_short(vd, name, meta)
-            body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
-                                "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
-                    "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,
-                               "containsSyntheticMedia": False}}
+            body = upload_body(yt_meta, title, desc, when)
             from googleapiclient.http import MediaFileUpload
             req = yt.videos().insert(part="snippet,status", body=body,
                                      media_body=MediaFileUpload(str(f), mimetype="video/mp4", chunksize=16 << 20, resumable=True))
@@ -675,6 +811,10 @@ def main() -> None:
             vid = resp["id"]
             f.unlink()   # keep the runner's disk small between uploads
             done[name] = {"video_id": vid, "uploaded": today, "publish_at": when, "title": title, "by": "auto"}
+            if CHANNEL == "buhstories":
+                add_to_playlist(yt, vid, yt_meta, done[name])
+                if yt_meta.get("pinned_comment"):
+                    done[name]["pinned_comment"] = yt_meta["pinned_comment"]   # posted once it is public (next runs)
             save_record(done, f"uploads: {name} ({vid}), public at {when} UTC")
             print(f"uploaded {name}: https://youtube.com/shorts/{vid} (private until {when} UTC)")
 

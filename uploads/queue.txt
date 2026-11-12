@@ -1,20 +1,47 @@
 # @HelloBuh posting order (scripts/youtube_upload.py takes the next 3 not uploaded yet each morning).
 # Rules (owner): never the same format twice in a row, at most 1 pixel-art per 3. Check: python3 scripts/check_queue.py
 # After this list runs out, any other "ready" Short on the videos branch goes up, still keeping the mix.
-ai_thin_ice   # first: owner, 2026-11-09
+fakeworld_diamond  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+friend_new_world  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+mobpov_baby_zombie  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+which_door  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+lucky_dig  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+one_in_a_million  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+lapse_statue  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+tnt_1000  # first: owner OK 2026-11-12 (strong / fixed)
+tnt  # first: owner OK 2026-11-12 (strong / fixed)
+mega_lapse_fountain  # first: owner OK 2026-11-12 (strong / fixed)
+half_heart  # first: owner OK 2026-11-12 (strong / fixed)
+inside_library  # first: owner OK 2026-11-12 (strong / fixed)
+fakemod_permission  # first: owner OK 2026-11-12 (strong / fixed)
+logic_minecraft  # first: owner OK 2026-11-12 (fixed)
+love_cherry_heart  # first: owner OK 2026-11-12 (fixed)
+stages_friends  # first: owner OK 2026-11-12 (fixed)
+underdog_heal  # first: owner OK 2026-11-12 (fixed)
+mislabel_grandma  # first: owner OK 2026-11-12 (fixed)
+nether_portal  # first: owner OK 2026-11-12 (fixed)
+race_grass_mycelium  # first: owner OK 2026-11-12 (fixed)
+fortune  # first: owner OK 2026-11-12 (fixed)
+villager_fired  # first: owner OK 2026-11-12 (fixed)
+cells_lab  # first: owner OK 2026-11-12 (fixed)
+fakerun_any  # first: owner OK 2026-11-12 (fixed)
+creeper_art  # first: owner OK 2026-11-12 (fixed)
+villager_crowd  # first: owner OK 2026-11-12 (fixed)
+hack_banner_door  # first: owner OK 2026-11-12 (fixed)
+cave_reveal  # first: owner OK 2026-11-12 (fixed)
+lapse_house  # first: owner OK 2026-11-12 (fixed)
+herobrine_bridge  # first: owner OK 2026-11-12 (fixed)
+boat_clutch  # first: owner OK 2026-11-12 (fixed)
+cooked_bedrock  # first: owner OK 2026-11-12 (fixed)
+ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
-lapse_house
 chain_reaction
 story_respawn_tax
 hide_seek
 spot_wrong_2
-one_in_a_million
 guess_sound_2
-lapse_statue
 worse_lava
-villager_fired
-tnt_1000
 spot_wrong_3
 end_portal_job
 guess_sound_3
@@ -22,27 +49,24 @@ lapse_rocket
 worse_sky
 it_rains
 ladder_clutch
-which_door
 noob_pro_hacker
 lava_cast
 worse_tnt
-fortune
-boat_clutch
 speed_build
-tnt
-villager_crowd
-creeper_art
 sand_tower
 water_vs_lava
-rainbow_sheep
-desire_town   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-inside_library   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-dilemma_mace   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-race_grass_mycelium   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-mislabel_grandma   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-hack_banner_door   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-interrupt_lamps   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-mega_sponge   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-creeper
-nether_portal
-cells_lab   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+# rainbow_sheep  # dropped 2026-11-12: still a no-op after 2 redos (owner: "fix all of them or just drop", r:r4607fa)
+desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+interrupt_lamps   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+# creeper  # dropped 2026-11-12: not READY after its redo (owner: "fix all of them or just drop", r:r4607fa)
+faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+trap_free_diamonds   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+lava_crossing
+quest_pyramid   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+dropper_rainbow   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+pickaxe_race   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+mega_lapse_fox   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)

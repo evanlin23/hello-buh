@@ -46,6 +46,7 @@ SILENCE_BEFORE_HIT = 0.45
 RISER_LEN = 1.9
 WHOOSH_MIN_GAP = 6.0
 WHOOSH_PEAK, RISER_PEAK, HIT_PEAK, SUB_PEAK, SCRATCH_PEAK = -32.0, -24.0, -6.0, -12.0, -18.0
+KEY_DUCK_DB = 24.0   # the score under a key sound (edit.keySounds), as add_song.py ducks a stunt's bed (key_sounds.DUCK): the gate wants the sound >= 8 dB over it
 CLEAR_DB, GUARD_MAX_DB = 9.0, 8.0   # the clarity guard: the sfx this far under the voice in the speech band, at most 8 dB down
 BED_CLEAR_DB, BED_GUARD_MAX_DB = 6.0, 4.0   # and the bed's swells (the reference's bed sits 16+ dB under in that band 90% of the time)
 MASTER_LUFS, MASTER_TP = -14.0, -1.0
@@ -445,12 +446,15 @@ def clarity_gain(voice, others, spans, clear_db=CLEAR_DB, hop=0.05, max_cut=GUAR
 
 # ------------------------------------------------------------------ edit.py: the whole story mix
 def mix_story(narration_wav, game, game_ss, story_dir, timeline, start, dur, out_wav, song=None, song_start=0.0, stunt_sfx=None,
-              end_after=None, name=None, rec=None, stems=None):
+              end_after=None, name=None, rec=None, stems=None, key_marks=None):
     """Voice (clarity chain, -15 LUFS) + game (-27, ducked) + the scene's ambience + design + the mood score (or an
     explicit --song as the bed) + room tone, the clarity guard over everything but the voice. Writes a float wav of
     `dur` s and, next to it, <out_wav>.json: the score's tracks and credit and every layer's loudness (edit.py stamps
     the score into the mp4 for publish). The master (-14 LUFS, -1 dBTP) is applied to the encoded file by master().
-    rec: the recording (with "_path") for the ambience; stems: a folder to write each layer to (for measuring)."""
+    rec: the recording (with "_path") for the ambience; stems: a folder to write each layer to (for measuring).
+    key_marks: edit.keySounds: the bed ducks KEY_DUCK_DB under each mark's sound in the game layer, over the clip
+    scripts/key_sounds.py measures (its audible part, at most 2.5 s; thirty_one_raids' raid horns, 2026-11-11: the
+    score sat 10 dB over the L09 horn and nothing ducked it, since add_song.py's duck only runs on a stunt's NCS bed)."""
     n = int(dur * SR)
     opts = audio_opts(story_dir)
     with tempfile.TemporaryDirectory() as td:
@@ -485,6 +489,13 @@ def mix_story(narration_wav, game, game_ss, story_dir, timeline, start, dur, out
         bed, score = score_bed(story_dir, name, dur, spans, P)
         if bed is not None:
             layers["bed"] = bed
+    key_win = []
+    if key_marks and "bed" in layers and "game" in layers:
+        import key_sounds
+        kt = sorted(e["t"] / 1000 - start for e in timeline if e["event"] in set(key_marks) and 0 <= e["t"] / 1000 - start < dur)
+        key_win = key_sounds.windows(layers["game"].mean(axis=1), kt)
+        if key_win:
+            layers["bed"] = layers["bed"] * duck_gain(n, key_win, KEY_DUCK_DB, attack=0.03, release=0.3, lead=0.0)
     # the clarity guard, in two parts: the sound effects (game, ambience, design) are held CLEAR_DB under the voice in
     # the speech band (a dig or a hit can't cover a word); the bed, already 13.5 dB under the voice and EQ'd, only has
     # its swells caught (BED_CLEAR_DB, at most BED_GUARD_MAX_DB): guarding it like the sfx dragged a mid-heavy track
@@ -503,7 +514,7 @@ def mix_story(narration_wav, game, game_ss, story_dir, timeline, start, dur, out
     for k, x in layers.items():
         levels[k] = round(lufs(x * gains[k]), 1)
     meta = {"score": score, "levels_lufs_premaster": levels, "clarity_guard_max_db": round(deepest, 1), "payoff_s": P,
-            "ambience": amb_notes, "design": notes}
+            "ambience": amb_notes, "design": notes, "key_duck": [[round(a, 2), round(b, 2)] for a, b in key_win]}
     pathlib.Path(str(out_wav) + ".json").write_text(json.dumps(meta, indent=1))
     if stems:
         pathlib.Path(stems).mkdir(parents=True, exist_ok=True)
@@ -513,6 +524,8 @@ def mix_story(narration_wav, game, game_ss, story_dir, timeline, start, dur, out
     m1, m2 = mood_of(story_dir)
     print("story audio:", ", ".join(notes) or "no design sounds", f"(mood {m1}/{m2}, payoff {P or 0:.2f}s)")
     print("  score:", (score or {}).get("title") or (score or {}).get("song") or "NONE", "| ambience:", "; ".join(amb_notes) or "none")
+    if key_win:
+        print(f"  key sounds ({', '.join(key_marks)}): the score ducked {KEY_DUCK_DB:g} dB over", ", ".join(f"{a:.2f}-{b:.2f}s" for a, b in key_win))
     print("  layers (LUFS, pre-master):", ", ".join(f"{k} {v}" for k, v in levels.items()), f"| clarity guard down to {deepest:.1f} dB")
     return out_wav
 

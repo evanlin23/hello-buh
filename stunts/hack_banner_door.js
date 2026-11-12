@@ -4,9 +4,11 @@
 // into the middle banner of a bookshelf wall (~0.9 s) and comes out in a hidden stash; every secret room hides the
 // next banner door, deeper each time: the stash (a chest of diamonds) -> a stair down -> an underground farm -> a
 // hidden library whose wall has five banners (only one is a door) -> a mine tunnel (a diamond ore on the way) -> the
-// vault. Everything on screen is walking, opening a chest and mining; commands only build the set.
+// vault: a cathedral-size treasure hall seen from a balcony on a cliff, then a camera pull-back off the player's face to
+// the hall's far end (the no-op audit's fix, r:r4607fa: the scale is the payoff). Everything on screen is walking, opening a chest and mining; commands only build the set.
 // Local frame (lib/hack.js): floor y 0, the den x 1..11 z 1..9, the trick wall z 0, mineflayer yaw 0 = north (-z).
 const { makeStunt, bannerDoor } = require('../lib/hack')
+const M = require('../lib/movie')
 
 const DS = 'deepslate_bricks'
 const ROCK = (b) => b.mix({ deepslate_bricks: 5, cracked_deepslate_bricks: 1, deepslate_tiles: 2, polished_deepslate: 1 })
@@ -33,14 +35,15 @@ function wall (b) {
 // everything under the ground, in the den's frame: the stair, the farm, the library, the tunnel, the vault
 function under (b) {
   const rock = ROCK(b)
-  // the stair down from the landing: step k at x 11 + k, y 1 - k (high side west), 3 of headroom, 1 wide (z -3)
+  // the stair down from the landing: step k at x 11 + k, y 1 - k (high side west), 3 of headroom, 3 wide (z -4..-2;
+  // 1 wide, the player's shoulders caught the side walls on every step: rec_check "stops dead", a stutter)
   for (let k = 1; k <= 9; k++) {
     const x = 11 + k, y = 1 - k
-    b.fill(x, y - 3, -4, x, 5 - k, -2, rock)                      // the shell round this slice
-    b.set(x, y, -3, 'deepslate_brick_stairs[facing=west]')
-    b.fill(x, y + 1, -3, x, 4 - k, -3, 'air')
+    b.fill(x, y - 3, -5, x, 5 - k, -1, rock)                      // the shell round this slice
+    b.fill(x, y, -4, x, y, -2, 'deepslate_brick_stairs[facing=west]')
+    b.fill(x, y + 1, -4, x, 4 - k, -2, 'air')
   }
-  for (const k of [2, 4, 6, 8]) for (const z of [-4, -2]) b.set(11 + k, 3 - k, z, 'lantern')   // lanterns in niches in the stair's walls (a hanging one is in the head's way; shroomlights read as lava)
+  for (const k of [2, 4, 6, 8]) for (const z of [-5, -1]) b.set(11 + k, 3 - k, z, 'lantern')   // lanterns in niches in the stair's walls (a hanging one is in the head's way; shroomlights read as lava)
   // the bottom landing x 21..22 (floor -9, feet -8)
   b.fill(21, -10, -4, 22, -5, -2, rock); b.fill(21, -8, -3, 22, -6, -3, 'air'); b.fill(21, -9, -3, 22, -9, -3, 'polished_deepslate')
   b.set(22, -7, -4, 'lantern')
@@ -91,33 +94,43 @@ function under (b) {
   b.set(45, -6, 2, 'lantern[hanging=true]'); b.set(50, -6, 2, 'lantern[hanging=true]'); b.set(51, -8, 2, 'lantern')
   b.set(53, -8, 2, 'cobweb'); b.set(44, -6, 0, 'cobweb')
 
-  // ---- the vault: x 55..75, z -10..12, floor -17, inside -16..-2, ceiling -1; the balcony x 55..57, z 0..2 at -9
-  b.fill(54, -17, -11, 76, -1, 13, rock, 'hollow')
-  b.fill(55, -17, -10, 75, -17, 12, b.mix({ smooth_quartz: 4, quartz_bricks: 2, chiseled_quartz_block: 1 }))
-  for (let x = 57; x <= 73; x += 4) for (let z = -8; z <= 10; z += 4) b.set(x, -17, z, 'sea_lantern')
-  b.fill(55, -1, -10, 75, -1, 12, 'polished_blackstone_bricks')
-  for (let x = 56; x <= 74; x += 3) for (let z = -9; z <= 11; z += 3) b.set(x, -1, z, 'shroomlight')
-  for (let z = -9; z <= 11; z += 4) for (const y of [-12, -6]) { b.set(75, y, z, 'shroomlight'); b.set(55, y, z, 'shroomlight') }
-  for (let x = 58; x <= 74; x += 4) for (const y of [-12, -6]) { b.set(x, y, -10, 'shroomlight'); b.set(x, y, 12, 'shroomlight') }
-  b.fill(55, -17, 1, 75, -17, 1, 'gold_block')                              // a gold aisle down the middle
-  // the balcony: a deepslate tower with a railed top
-  b.fill(55, -16, -1, 57, -9, 3, DS); b.fill(55, -9, -1, 57, -9, 3, 'polished_deepslate')
+  // ---- the vault (the payoff; no-op audit r:r4607fa: "a jaw-drop vault or a pull-back reveal"): a treasure hall the
+  // size of a cathedral, x 55..115, z -24..26, floor -40, inside -39..-3, ceiling -2; the balcony x 55..57, z -1..3 at
+  // -9 on top of a 31-block deepslate cliff. Lit for a far camera: sea lanterns in the floor, glowstone in the heaps,
+  // shroomlights in every wall and the ceiling (light 15 dies out in 15 blocks: every surface needs its own)
+  const VX1 = 115, VZ0 = -24, VZ1 = 26, VF = -40, VC = -2
+  b.fill(54, VF - 1, VZ0 - 1, VX1 + 1, VC + 1, VZ1 + 1, rock, 'hollow')
+  b.fill(55, VF, VZ0, VX1, VF, VZ1, b.mix({ gold_block: 7, raw_gold_block: 1, diamond_block: 1 }))
+  for (let x = 58; x <= VX1 - 2; x += 6) for (let z = VZ0 + 2; z <= VZ1 - 2; z += 6) b.set(x, VF, z, 'sea_lantern')
+  b.fill(55, VC, VZ0, VX1, VC, VZ1, 'polished_blackstone_bricks')
+  for (let x = 57; x <= VX1 - 1; x += 4) for (let z = VZ0 + 1; z <= VZ1 - 1; z += 4) b.set(x, VC, z, 'shroomlight')
+  for (let y = VF + 5; y <= VC - 3; y += 7) {
+    for (let z = VZ0 + 1; z <= VZ1 - 1; z += 5) { b.set(55, y, z, 'shroomlight'); b.set(VX1, y, z, 'shroomlight') }
+    for (let x = 57; x <= VX1 - 1; x += 5) { b.set(x, y, VZ0, 'shroomlight'); b.set(x, y, VZ1, 'shroomlight') }
+  }
+  // gold bands round the walls (the hall's scale reads off them from the far end)
+  for (const y of [VF + 12, VF + 26]) { b.fill(55, y, VZ0, 55, y, VZ1, 'gold_block'); b.fill(VX1, y, VZ0, VX1, y, VZ1, 'gold_block'); b.fill(55, y, VZ0, VX1, y, VZ0, 'gold_block'); b.fill(55, y, VZ1, VX1, y, VZ1, 'gold_block') }
+  // giant quartz columns, floor to ceiling
+  for (const x of [72, 90, 108]) for (const z of [-15, 17]) { b.fill(x - 1, VF + 1, z - 1, x + 1, VC - 1, z + 1, 'quartz_pillar[axis=y]'); b.fill(x - 1, VF + 1, z - 1, x + 1, VF + 1, z + 1, 'chiseled_quartz_block'); b.fill(x - 1, VC - 1, z - 1, x + 1, VC - 1, z + 1, 'chiseled_quartz_block') }
+  // the balcony: a deepslate cliff from the floor with a railed top, the banner door behind it
+  b.fill(55, VF + 1, -1, 57, -9, 3, DS); b.fill(55, -9, -1, 57, -9, 3, 'polished_deepslate')
   b.fill(55, -8, -1, 56, -8, -1, 'dark_oak_fence'); b.fill(55, -8, 3, 56, -8, 3, 'dark_oak_fence')
   b.set(56, -7, -1, 'lantern'); b.set(56, -7, 3, 'lantern')
+  for (const y of [-30, -20]) { b.set(57, y, 0, 'shroomlight'); b.set(57, y, 2, 'shroomlight') }   // the cliff's face lit
   bannerDoor(b, 54, -8, 1, 'light_blue', 4)
-  // pillars with lanterns
-  for (const [x, z] of [[63, -9], [63, 11], [72, -9], [72, 11]]) b.fill(x, -16, z, x, -2, z, 'quartz_pillar[axis=y]')
-  // the beacon on a gold / diamond / emerald pyramid (no beam: underground, as in vanilla)
-  const tier = b.mix({ gold_block: 3, diamond_block: 2, emerald_block: 1, iron_block: 1 })
-  b.fill(63, -16, -1, 67, -16, 3, tier); b.fill(64, -15, 0, 66, -15, 2, tier); b.set(65, -14, 1, 'beacon')
-  // hoards: heaps of gold, diamonds, emeralds; netherite and ancient debris; chests along the walls
-  const heap = (x, z, blk, r = 2) => { for (let y = 0; y <= r; y++) b.fill(x - r + y, -16 + y, z - r + y, x + r - y, -16 + y, z + r - y, blk) }
-  heap(60, -5, b.mix({ gold_block: 5, raw_gold_block: 1 }), 3); heap(70, -5, 'diamond_block', 3); heap(60, 7, 'emerald_block', 3); heap(70, 7, b.mix({ gold_block: 3, diamond_block: 1 }), 3)
-  heap(66, -8, 'gold_block', 1); heap(66, 10, 'diamond_block', 1); b.set(63, -16, 6, 'netherite_block'); b.set(68, -16, -4, 'ancient_debris')
-  for (let x = 57; x <= 73; x += 2) { b.set(x, -16, -10, 'chest[facing=south]'); b.set(x, -16, 12, 'chest[facing=north]') }
+  // mountains of treasure: stepped heaps (glowstone in the mix lights their slopes)
+  const heap = (x, z, r, blk) => { for (let y = 0; y <= r; y++) b.fill(x - r + y, VF + 1 + y, z - r + y, x + r - y, VF + 1 + y, z + r - y, blk) }
+  const GOLD = b.mix({ gold_block: 8, raw_gold_block: 2, glowstone: 1 })
+  const GEMS = b.mix({ diamond_block: 6, emerald_block: 2, gold_block: 2, glowstone: 1 })
+  const EMER = b.mix({ emerald_block: 6, gold_block: 2, glowstone: 1 })
+  heap(86, 1, 10, GOLD)                                                     // the great pile in the middle ...
+  b.fill(85, VF + 12, 0, 87, VF + 12, 2, 'diamond_block'); b.set(86, VF + 13, 1, 'beacon')   // ... crowned with a beacon
+  for (const [x, z, r, m] of [[68, -12, 6, GEMS], [68, 14, 6, EMER], [100, -10, 7, GEMS], [102, 13, 7, GOLD], [76, 2, 4, GEMS],
+    [95, 2, 4, EMER], [110, 0, 5, GEMS], [79, -20, 4, GOLD], [79, 22, 4, GOLD], [95, -21, 3, EMER], [95, 23, 3, GEMS], [62, 0, 3, GOLD]]) heap(x, z, r, m)
+  b.set(66, VF + 1, 5, 'netherite_block'); b.set(70, VF + 1, -4, 'ancient_debris'); b.set(92, VF + 1, -6, 'netherite_block')
+  for (let x = 60; x <= VX1 - 2; x += 3) { b.set(x, VF + 1, VZ0 + 1, 'chest[facing=south]'); b.set(x, VF + 1, VZ1 - 1, 'chest[facing=north]') }
   // a lit nether portal on the far wall
-  b.fill(75, -16, -1, 75, -12, 3, 'obsidian'); b.fill(75, -15, 0, 75, -13, 2, 'nether_portal[axis=z]')
-  for (const [x, z] of [[60, 1], [70, 1], [65, -5], [65, 7]]) b.hang(x, -4, z, 2)
+  b.fill(VX1, VF + 1, -1, VX1, VF + 7, 3, 'obsidian'); b.fill(VX1, VF + 2, 0, VX1, VF + 6, 2, 'nether_portal[axis=z]')
 }
 
 const SUBS = [
@@ -130,7 +143,7 @@ const SUBS = [
   ['which', 'but which one is real?', 1.8, 0],
   ['reveal', 'secret room 5', 1.6, 4],
   ['nope', 'nope', 0.9, 0],
-  ['reveal', 'secret room 6', 1.6, 5]
+  ['reveal', 'secret room 6', 1.2, 5]   // (gone before the pull-back: at 1.6 s it sat on the player's face)
 ]
 
 module.exports = makeStunt({
@@ -139,7 +152,21 @@ module.exports = makeStunt({
   red: 'hitbox',
   reveals: 6,
   subs: SUBS,
-  edit: { sfx: [['pop', 'deeper', { gain: 0.45 }]] },
+  // (pace: a hit by 0.5 s and in the first 1.5 s over the NCS bed: a light impact on frame 0 under the format's pop and
+  // on the first banner; a pop as he commits to the middle banner, inside the 2.2 s library sweep)
+  edit: { sfx: [['impact', 'go', { gain: 0.7 }], ['impact', 'reveal', { nth: 0, gain: 0.8 }], ['pop', 'deeper', { gain: 0.45 }],
+    ['pop', 'nope_try', { gain: 0.5 }], ['whoosh', 'payoff', { gain: 0.6 }]],
+    // the pull-back plays 1.0 s, tilting down onto the treasure as it goes; the end lands 0.85 s in, the camera easing out (the payoff is
+    // the move itself: the scale reads as it pulls away; pace: 0.5-0.8 s after the result, WARN over 0.9)
+    endAfter: 'payoff:0.85',
+    // r:r188b46 (no-op audit: trim rooms 2-5): the straight walks sped up mark to mark, no turn inside a span (whip
+    // cap); the farm's pasture look, the library's enchanting-table look and the second diamond are gone
+    speed: [['stair_a', 'stair_b', 2.2], ['farm_a', 'farm_b', 1.8], ['lib_a', 'lib_b', 1.6], ['side_a', 'side_b', 2], ['diamond:0.3', 'mine_b', 'cut']] },
+  // the payoff camera (local frame - the start (6.5, 1, 5.3)): from 2.5 blocks in front of the player's face on the
+  // balcony (57.3, -6.4, 1.5) back and up to the hall's far end (105, -4.2, 1.5), tilting down onto the treasure below the cliff
+  shots: {
+    pull: { path: [[0, 53.3, -7.4, -3.8], [1.0, 98.5, -5.2, -3.8]], lookPath: [[0, 50.8, -7.5, -3.8], [1.0, 55.5, -29, -3.8]], fov: 72, dof: false, drift: 0, subject: ['self'] }
+  },
   wall,
   pieces: { under },
   hotbar: ['diamond_pickaxe', ['white_banner', 16], ['red_banner', 16], ['lantern', 32], ['bookshelf', 64], ['torch', 64], ['cookie', 64], 'cake', ['oak_sign', 16]],
@@ -167,35 +194,43 @@ module.exports = makeStunt({
       await H.walk(pts, { ...o, during: async (k) => { if (!done && inBlock(bx, bz)) { done = true; o.payoff ? H.payoff() : H.reveal() } if (o.during) await o.during(k) } })
       if (!done) throw new Error(`hack_banner_door: never passed the banner at ${bx} ${bz}`)
     }
-    let deeper = false   // halfway down the stair: a caption beat (the final mix's NCS bed hides the footsteps)
+    // one-shot marks at an x along a walk (the edit's speed spans run mark to mark: r:r188b46, trim rooms 2-5)
+    const atX = (marks) => async () => { const x = bot.entity.position.x - H.O.x; for (const m of marks) if (!m.done && x >= m.x) { m.done = true; ctx.mark(m.ev) } }
     ctx.mark('go')
     // 1. the den: straight into the middle banner -> the stash
     await through([[6.5, 1, -2.4]], 6, 0)
     ctx.mark('stash')
     await K.open(H.at(6, 1, -5))
     ctx.mark('open_chest')
-    await bot.waitForTicks(22)
+    await bot.waitForTicks(16)
     K.close()
     // the how: a look back at the door from inside (the banner's back, the den's light round it)
     await H.look(6.5, 1.6, 0.5, { max: 30 })
     ctx.mark('lookback')
     await H.hold(8)
-    // 2. the blue banner on the stash's east wall -> the stair down
+    // 2. the blue banner on the stash's east wall -> the stair down (its straight middle at x2.2)
     await H.look(9.5, 1.8, -2.5, { max: 22 })
-    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.9, -7.6, -2.5], [22.4, -8, -2.5]], 9, -3, { pitch: -0.55, during: async () => { if (!deeper && bot.entity.position.x >= H.O.x + 16) { deeper = true; ctx.mark('deeper') } } })
-    // 3. the lime banner at the bottom -> the farm
+    const stair = atX([{ x: 13.5, ev: 'stair_a' }, { x: 16, ev: 'deeper' }, { x: 20.2, ev: 'stair_b' }])
+    await through([[8.2, 1, -2.5], [11.9, 1, -2.5], [12.0, 1.85, -2.5], [21.0, -7.15, -2.5], [21.9, -7.6, -2.5], [22.4, -8, -2.5]], 9, -3, { pitch: -0.55, during: stair })
+    // 3. the lime banner at the bottom -> the farm, walked straight through (the middle at x1.8)
     await H.look(24.5, -6.6, -2.5, { max: 12 })
-    await through([[24.4, -8, -2.5], [27.5, -8, -2.5]], 23, -3)
-    await H.look(28.5, -7.0, -6.5, { max: 16 })     // the pasture
-    await H.look(33.5, -6.6, -2.5, { max: 16 })   // eyes back down the walk
-    await through([[33.4, -8, -2.5], [35.5, -8, -2.5]], 33, -3, { during: async (k) => { if (k === 6) ctx.mark('farm_walk') } })
-    // 4. the library: the enchanting table, then straight at the wall of five banners (the diagonal keeps it ahead)
-    await H.look(38.5, -7.6, -5.5, { max: 14 })
-    await H.look(41.5, -6.6, -1.0, { max: 14 })
-    await H.walk([[41.4, -8, -2.5]])
+    // (one walk through both banners, no stop between: the lime one's reveal, then the cyan one's)
+    const farm = atX([{ x: 26.2, ev: 'farm_a' }, { x: 31.6, ev: 'farm_b' }])
+    let r3 = false, r4 = false
+    await H.walk([[24.4, -8, -2.5], [33.4, -8, -2.5], [35.5, -8, -2.5]], { during: async () => {
+      if (!r3 && inBlock(23, -3)) { r3 = true; H.reveal() }
+      if (!r4 && inBlock(33, -3)) { r4 = true; H.reveal() }
+      await farm()
+    } })
+    if (!r3 || !r4) throw new Error('hack_banner_door: never passed the farm\'s banners')
+    // 4. the library: straight at the wall of five banners (the walk at x1.6)
+    await H.look(41.5, -6.6, -1.0, { max: 12 })
+    const lib = atX([{ x: 36.4, ev: 'lib_a' }, { x: 40.4, ev: 'lib_b' }])
+    await H.walk([[41.4, -8, -2.5]], { during: lib })
     ctx.mark('which')
     await H.look(43.5, -7.0, -6.5, { max: 18 })     // the sweep: purple, orange ...
     await H.look(43.5, -7.0, 1.5, { max: 24 })      // ... magenta, yellow
+    await H.hold(5)                                  // (a rest on the yellow one before swinging back: r:r38374d)
     await H.look(43.5, -7.0, -2.5, { max: 14 })     // the obvious one, in the middle
     // try it: the black banner is a decoy, rock behind the cloth (a real, deliberate bump: nothing breaks)
     ctx.mark('nope_try')
@@ -203,11 +238,13 @@ module.exports = makeStunt({
     ctx.mark('nope')
     await H.hold(8)
     K.go(true, 'back'); for (let k = 0; k < 6; k++) { K.look(k); await bot.waitForTicks(1) } K.go(false, 'back')
-    // sidestep along the wall, eyes on the banners, to the yellow one
+    // sidestep along the wall, eyes on the banners, to the yellow one (at x2: no turn in it)
     await H.look(60, -6.8, -2.5, { max: 10 })        // square to the wall (due east): 'right' is then a sidestep south along it
     K.go(true, 'right')
+    ctx.mark('side_a')
     for (let k = 0; k < 40 && bot.entity.position.z < H.O.z + 1.05; k++) { K.look(k); await bot.waitForTicks(1) }
     K.go(false, 'right')
+    ctx.mark('side_b')
     for (let k = 0; k < 5; k++) { K.look(k); await bot.waitForTicks(1) }   // (the sidestep's momentum carries ~0.4 block: release early, settle on z 1.5)
     await H.look(44.5, -6.6, 1.5, { max: 12 })
     // 5. through it into the mine; a diamond on the way
@@ -216,19 +253,23 @@ module.exports = makeStunt({
     // vanilla: deepslate diamond ore (hardness 4.5) with a diamond pickaxe (speed 8) breaks in 17 ticks
     await K.dig(bot.blockAt(H.at(48, -7, 3)), 850)
     ctx.mark('diamond')
-    await K.dig(bot.blockAt(H.at(48, -6, 3)), 850)
-    ctx.mark('diamond')
-    await H.look(52.5, -6.6, 1.5, { max: 14 })
-    await H.walk([[48.9, -8, 1.5]])
-    // 6. the white banner -> the vault (the payoff), the look out over it from the balcony
-    await H.look(54.5, -7.2, 1.5, { max: 10 })
+    await H.hold(8)   // still on the mined hole (the diamond pops out and is picked up): the edit cuts away 0.3 s in
+    // 6. the light blue banner -> the vault. The turn and the walk to it are cut out (r:r188b46: pace's 1.7 s dwell
+    // after the dig): a jump cut from the still hole to standing still in front of the banner ('mine_b')
+    await H.look(52.5, -6.6, 1.5, { max: 12 })
     K.base.pitch = 0.05
-    await through([[52.5, -8, 1.5], [56.9, -8, 1.5]], 54, 1)
-    await H.hold(12)
-    // the payoff: the look down off the balcony at the hoard
+    await H.walk([[52.2, -8, 1.5]])
+    await H.hold(5)
+    ctx.mark('mine_b')
+    await H.hold(3)   // (still on both sides of the cut: the whip check's 2 ticks)
+    await through([[56.9, -8, 1.5]], 54, 1)
+    // out on the balcony: the eyes drop to the hall below (POV), settle, then the payoff: a pull-back off the player's
+    // face to the far end of the hall, the player a speck on the cliff (no-op audit r:r4607fa: the scale reveal)
+    await H.look(72, -22, 1.5, { max: 12 })
+    await H.hold(4)
     H.payoff()
-    await H.look(66, -15, 1.5, { max: 24 })
-    await H.hold(10)
+    M.shot(ctx, 'pull')
+    await H.hold(34)
     return true
   }
 })

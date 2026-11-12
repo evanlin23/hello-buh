@@ -27,25 +27,33 @@ function blobCmds (cx, cy, cz, r, block) {
 
 module.exports = {
   name: 'cave_reveal',
+  botTimeout: 300,   // the deep cavern's setup (stone to F-80, a bigger lava lake) ran past the default 180 s
   brightness: 1,   // Options > Brightness: Bright (underground the default reads near-black)
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight down 💀',
   expectDeath: true,
   edit: {
     caption: 'never dig straight down 💀', red: 'never', dropAt: 'l5',
-    onFire: 'in_lava:death', deathScreen: true, endAfter: 'death:1.6',
+    onFire: 'in_lava:death', deathScreen: true, endAfter: 'death:1.2',   // r:r188b46 + a text payoff's 1.2 s to read the death message (lead 2026-11-11; was 1.6)
     // opens 0.35 s before the first crack (from dig0 the first 2.3 s were the setup's cut pit wall and a slow tilt
     // down over grass under "just digging down...": independent review 2026-11-11)
-    startAt: 'dig0:1.9',
+    // owner r:r4607fa (no-op audit: ~15 s and a stronger end): starts on the dig to the mineshaft (the first cave layer
+    // is cut: 4.4 s), the long last dig x2, the burn x4; the end is a ~16-block fall into a huge lava cavern
+    startAt: 'dig1:-0.05',
+    // r:r0f3da0: frame 0 was plain grass. A 0.9 s flash of the bottom first: the floor breaks open onto the lava lake and
+    // the fall starts (cut before the death), then the dig from the top
+    hook: { at: 'l5', before: 0.0, after: 0.9, text: 'how it ends 💀' },
     subs: [
-      ['dig0', 'just digging down...', 3], ['l1', 'oh, a cave', 2.2], ['dig1', 'keep going', 2],
-      ['l2', 'a mineshaft??', 2.4], ['dig2', 'keep going...', 2], ['l3', 'a DUNGEON', 2.2], ['dig3', 'one more...', 1.8],
-      ['l4', 'a GEODE?!', 2.4], ['dig4', 'just one more', 1.8], ['l5', 'oh no', 3]
+      ['dig1', 'just digging down...', 1.4],
+      ['l2', 'a mineshaft??', 1.6], ['dig2', 'keep going...', 1.4], ['l3', 'a DUNGEON', 1.6], ['dig3', 'one more...', 1.4],
+      ['l4', 'a GEODE?!', 1.6], ['dig4', 'just one more', 1.4], ['l5', 'oh no', 3]
     ],
     // the burn sped up (6 s of one shot in the lava: pace), and a hit on the death (pace: no sound hit on the payoff;
     // the lava's burning keeps the game track busy, so the impact doesn't flatten the rest)
-    speed: [['in_lava:1.0', 'death:-0.4', 2]],
-    sfx: [['pop', 'dig0:1.9'], ['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]   // (a pop on the opening: the no-song cut was silent until the first block broke at 2.7 s, pace hook)
+    // r:r188b46: after each reveal reads (the look lands + 0.3 s still on it) a hard cut to the next dig, which starts
+    // still and looking down: no look-down between (pace: 2-3 s dwell after each landing, a 3.05 s dead span at the geode)
+    speed: [['seen1', 'dig1', 'cut'], ['seen2', 'dig2', 'cut'], ['seen3', 'dig3', 'cut'], ['seen4', 'dig4', 'cut'], ['dig1:0.3', 'l2:-0.35', 2], ['dig2:0.3', 'l3:-0.35', 2], ['dig3:0.3', 'l4:-0.35', 2], ['dig4:0.3', 'l5:-0.35', 2], ['in_lava:1.0', 'death:-0.4', 4]],   // every dig x2 (the view straight down: ~19 -> ~15.5 s)
+    sfx: [['pop', 'dig1'], ['whoosh', 'l5:0.15'], ['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]   // (a pop on the opening: the no-song cut was silent until the first block broke at 2.7 s, pace hook)
   },
 
   async setup (ctx) {
@@ -63,7 +71,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 1} ${F} ${z - 1} ${x + 1} ${F} ${z + 1} grass_block`)
     await ctx.cmd(`/fill ${x - 1} ${F - 2} ${z - 1} ${x + 1} ${F - 1} ${z + 1} dirt`)
     // solid stone under it all (29 x 29, in slabs under the /fill cap)
-    for (let y1 = F - 3; y1 > F - 66; y1 -= 30) await ctx.cmd(`/fill ${x - 14} ${Math.max(F - 66, y1 - 29)} ${z - 14} ${x + 14} ${y1} ${z + 14} stone`)
+    for (let y1 = F - 3; y1 > F - 80; y1 -= 30) await ctx.cmd(`/fill ${x - 14} ${Math.max(F - 80, y1 - 29)} ${z - 14} ${x + 14} ${y1} ${z + 14} stone`)   // (to F-80: the deep lava cavern)
     let seed = 11
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const ores = (blobs, n, list, minY, maxY) => {
@@ -106,25 +114,27 @@ module.exports = {
     for (const [dx, dz] of [[-6, -1], [4, 1], [-12, 1]]) await ctx.cmd(`/setblock ${x + dx} ${F - 17} ${z + dz} oak_planks`)
     this.minecart = { x: x + 5.5, y: F - 16, z: z + 0.5 }
 
-    // 5. the lava cavern: a big chamber under the geode, its roof over the column at F-40 (a 5-block drop into a 1-deep
-    //    lava lake, so the eyes stay above the surface), lavafalls down the walls. (Built before the geode, which
-    //    overwrites the roof's top; D: 16 blocks deeper than the three-layer cut)
+    // 5. the lava cavern (owner r:r4607fa, no-op audit: a stronger end): a HUGE chamber under the geode. The column
+    //    breaks through its roof at F-24-D and you fall ~16 blocks, eyes on a lava lake rushing up (3 deep: the lava
+    //    halves the fall distance every tick, so it is the burn that kills, not the landing), lavafalls down the walls.
+    //    (Built before the geode, which overwrites the roof's top; D: 16 blocks deeper than the three-layer cut.)
+    //    The old one was a 5-block drop into a 1-deep lake: over in a blink.
     const D = 16
-    const c4 = [[x + 4, F - 28 - D, z - 3, 8], [x - 7, F - 29 - D, z + 5, 7], [x + 8, F - 30 - D, z + 7, 6]]
+    const c4 = [[x + 3, F - 34 - D, z - 2, 11], [x - 6, F - 36 - D, z + 4, 10], [x + 7, F - 37 - D, z + 6, 9], [x - 2, F - 38 - D, z - 6, 9]]
     for (const [cx, cy, cz, r] of c4) for (const c of blobCmds(cx, cy, cz, r, 'cave_air')) await ctx.cmd(c)
     await ctx.cmd(`/fill ${x - 2} ${F - 24 - D} ${z - 2} ${x + 2} ${F - 18 - D} ${z + 2} stone`)   // the roof over the column
-    for (const c of ores(c4, 50, ['diamond_ore', 'gold_ore', 'redstone_ore', 'iron_ore', 'lapis_ore'], F - 38 - D, F - 21 - D)) await ctx.cmd(c)
-    await ctx.cmd(`/fill ${x - 14} ${F - 50 - D} ${z - 14} ${x + 14} ${F - 30 - D} ${z + 14} stone replace cave_air`)
-    await ctx.cmd(`/fill ${x - 14} ${F - 29 - D} ${z - 14} ${x + 14} ${F - 29 - D} ${z + 14} lava replace cave_air`)
+    for (const c of ores(c4, 70, ['diamond_ore', 'gold_ore', 'redstone_ore', 'iron_ore', 'lapis_ore'], F - 40 - D, F - 21 - D)) await ctx.cmd(c)
+    await ctx.cmd(`/fill ${x - 14} ${F - 64 - D} ${z - 14} ${x + 14} ${F - 44 - D} ${z + 14} stone replace cave_air`)
+    await ctx.cmd(`/fill ${x - 14} ${F - 43 - D} ${z - 14} ${x + 14} ${F - 41 - D} ${z + 14} lava replace cave_air`)
     await bot.waitForTicks(10)                                    // the client has the carved blocks
-    for (const [fx, fz] of [[x + 9, z - 5], [x - 9, z + 4], [x + 6, z + 9]]) {
-      let top = F - 29 - D
-      while (top < F - 20 - D && ctx.bot.blockAt(new ctx.Vec3(fx, top + 1, fz))?.name === 'cave_air') top++
-      if (top <= F - 29 - D) continue
-      await ctx.cmd(`/fill ${fx} ${F - 28 - D} ${fz} ${fx} ${top} ${fz} lava[level=8] replace cave_air`)
+    for (const [fx, fz] of [[x + 10, z - 5], [x - 11, z + 4], [x + 6, z + 11], [x - 4, z - 12]]) {
+      let top = F - 41 - D
+      while (top < F - 22 - D && ctx.bot.blockAt(new ctx.Vec3(fx, top + 1, fz))?.name === 'cave_air') top++
+      if (top <= F - 41 - D) continue
+      await ctx.cmd(`/fill ${fx} ${F - 40 - D} ${fz} ${fx} ${top} ${fz} lava[level=8] replace cave_air`)
       await ctx.cmd(`/setblock ${fx} ${top + 1} ${fz} lava`)
     }
-    this.lake = F - 29 - D
+    this.lake = F - 41 - D
 
     // 3. the dungeon: a 7x7 room (air F-24..F-21) in a mossy cobblestone shell, its ceiling under the column at F-20 (a
     //    4-block drop), a zombie spawner and two chests against the walls, as vanilla's dungeons are
@@ -205,6 +215,9 @@ module.exports = {
       return false
     }
     const land = async () => {
+      // the fall starts a tick or two after the break: at the break the bot still reads onGround (an aim taken
+      // "after land()" was taken from 4 blocks up: the spawner look ended at pitch -63, review 2026-11-12)
+      for (let w = 0; w < 10 && bot.entity.onGround && !ctx.died; w++) await bot.waitForTicks(1)
       for (let w = 0; w < 60 && !bot.entity.onGround && !ctx.died; w++) await bot.waitForTicks(1)
       ctx.sound('entity.player.small_fall', 1); ctx.sound('entity.generic.hurt', 0.7)
     }
@@ -222,45 +235,45 @@ module.exports = {
     const DOWN = -Math.PI / 2 + 0.02
     const looks = async (list) => { for (const [yaw, pitch, ms] of list) { await ease(yaw, pitch, ms); await rest() } }
 
+    await ctx.cmd('/kill @e[type=!player]', { mayFail: true })   // no surface animals: a far cow's sparse updates read as teleporting (rec_check cast BLOCK)
     ctx.mark('dig0')
-    await ease(0, DOWN, 250)
+    // every look-down ends at yaw pi, where A.dig aims at the block underfoot: ending elsewhere, its turn rolled the
+    // picture 75-90 deg round the crosshair at pitch -89 (review 2026-11-12, five times)
+    const YD = Math.PI
+    await ease(YD, DOWN, 250)
     // 0 -> 1: the cave
     if (!await digDown(1)) return false
-    const lift1 = ease(-0.6, -0.35, 900)
-    await land(); await lift1; await rest()
-    ctx.sound('ambient.cave', 1)
-    await looks([[-1.9, -0.25, 800]])                               // the lava trickle, ores and glow lichen
-    await ease(-1.9, DOWN, 400)
+    // r:r188b46 (fast cuts): one look per layer, straight at what it shows, a short rest, back to digging (two looks
+    // and a pan held each layer 2.3-3.5 s after the reveal: pace dwell)
+    const lift1 = ease(-1.9, -0.25, 900)                              // the lava trickle, ores and glow lichen
+    await land(); ctx.sound('ambient.cave', 1); await lift1; await rest(); ctx.mark('seen1')   // the edit cuts from here (still on the reveal) to dig1 (still, looking down)
+    await ease(YD, DOWN, 400)
     ctx.mark('dig1')
     // 1 -> 2: the mineshaft
     if (!await digDown(2)) return false
-    const lift2 = ease(Math.PI / 2, -0.15, 800)                       // down the corridor (west)
-    await land(); await lift2; await rest()
     ctx.mark('minecart')
     bot.chat(`/summon chest_minecart ${this.minecart.x} ${this.minecart.y} ${this.minecart.z}`)
-    await looks([[-Math.PI / 2, -0.15, 1000]])                     // along the other way: the minecart
-    await ease(-Math.PI / 2, DOWN, 400)
+    const lift2 = ease(-Math.PI / 2, -0.15, 900)                      // along the corridor: the minecart
+    await land(); await lift2; await rest(); ctx.mark('seen2')
+    await ease(YD, DOWN, 400)
     ctx.mark('dig2')
     // 2 -> 3: the dungeon
     if (!await digDown(3)) return false
-    const lift3 = easeAt(new Vec3(x + 3.5, F - 23.5, z + 1.5), 700)   // the spawner, its zombie spinning inside
-    await land(); await lift3; await rest()
-    ctx.mark('spawner')
-    await easeAt(new Vec3(x - 1.5, F - 23.5, z - 2.5), 900); await rest()   // ...and a chest in the corner
-    await ease(bot.entity.yaw, DOWN, 400)
+    // aimed from the floor, after the landing (aimed mid-fall from 4 blocks up it ended at pitch -64 and the spawner sat
+    // above the frame: review 2026-11-12)
+    await land(); ctx.mark('spawner'); await easeAt(new Vec3(x + 3.5, F - 23.5, z + 1.5), 700); await rest(); ctx.mark('seen3')   // the spawner, its zombie spinning inside
+    await ease(YD, DOWN, 400)
     ctx.mark('dig3')
     // 3 -> 4: the geode
     if (!await digDown(4)) return false
-    const lift5 = easeAt(new Vec3(this.geode.x + 2.5, this.geode.y - 1, this.geode.z - 1.5), 700)   // amethyst all round
-    await land(); await lift5; await rest()
-    ctx.sound('block.amethyst_block.chime', 1)
-    await looks([[bot.entity.yaw + 1.6, -0.35, 1100]])            // the whole hollow
-    ctx.sound('block.amethyst_block.chime', 0.8, 1.2)
-    await ease(bot.entity.yaw, DOWN, 450)
+    await land(); ctx.sound('block.amethyst_block.chime', 1)
+    await easeAt(new Vec3(this.geode.x + 2.5, this.geode.y - 1, this.geode.z - 1.5), 700)   // amethyst all round (aimed from the floor, as the spawner)
+    ctx.sound('block.amethyst_block.chime', 0.8, 1.2); await rest(); ctx.mark('seen4')
+    await ease(YD, DOWN, 450)
     ctx.mark('dig4')
     // 4 -> 5: the lava cavern
     if (!await digDown(5)) return false
-    const lift4 = ease(-0.6, -0.45, 900)                             // the cavern opens to the north-east
+    const lift4 = ease(-0.6, -0.95, 800)                             // the cavern opens below: eyes down on the lake rushing up
     ctx.sound('block.lava.ambient', 1)
     let inLava = false
     for (let w = 0; w < 200 && !ctx.died; w++) {

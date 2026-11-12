@@ -10,7 +10,7 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
                                                    of footage) so it never reads as dead space.
   counter: {"at": [EVENT, ...], "total": N}        "3/5" beat counter in the top-left of the game
            or [EVENT, ...]                         view, popping up on each mark
-  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?, STYLE?, {y}?]]  big impact text popping on a mark ("10/10",
+  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?, STYLE?, {y, size}?]]  big impact text popping on a mark ("10/10",
                                                    "NO WAY"); COLOR: white|red|green|yellow|blue|gold;
                                                    {"y": 0.8}: its height in the game view (default 0.36)
   zoom:    [[START[:off], END[:off], SCALE]]       a held push-in on the crosshair (eases in 0.4 s,
@@ -23,6 +23,9 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
   flash:   [EVENT | [EVENT, NTH, ALPHA]]          white flash on the game view (0.7, ~0.2 s)
   freeze:  [[EVENT, SECONDS, TEXT?, COLOR?]]      freeze frame on a mark with a slow push-in and a
                                                    stamped label ("1 IN A MILLION"); it adds SECONDS
+  tally:   {"event": "blocks", "label": "blocks used", "done": EVENT}   a live running total (top right) from the
+                                                   marks' "n" (linear between them, so it ticks every frame), gold from
+                                                   the "done" event on (format mega: lib/mega_lapse.js, r:rce78c5)
   fallen:  [[EVENT_A, EVENT_B, LABEL?]]           live "blocks fallen" counter (top right) from the
                                                    recorded altitude, turning green on EVENT_B
   hook:    {"at": EVENT, "before": 1.5, "after": 0.0, "text": "wait for the last one"}
@@ -453,6 +456,31 @@ def score_track(spec, timeline, start):
     return pts, sp
 
 
+def tally_track(spec, timeline, start):
+    """[(t, n)] in Short time for edit.tally = {"event": "blocks", "label": ..., "done": EVENT} (the marks' n), and
+    the done time (None without one)."""
+    sp = _load(spec)
+    if not sp:
+        return [], None, None
+    ev = sp.get("event", "blocks")
+    pts = sorted((e["t"] / 1000 - start, float(e["n"])) for e in timeline if e["event"] == ev and "n" in e)
+    done = event_times(timeline, sp["done"]) if sp.get("done") else []
+    return pts, sp, (done[0] - start if done else None)
+
+
+def tally_at(pts, t):
+    """The running total at Short time t: linear between marks, 0 before the first, held after the last."""
+    if not pts or t < pts[0][0]:
+        return 0
+    k = 0
+    while k + 1 < len(pts) and pts[k + 1][0] <= t:
+        k += 1
+    if k + 1 >= len(pts):
+        return int(pts[-1][1])
+    (t0, a), (t1, b) = pts[k], pts[k + 1]
+    return int(a + (b - a) * (t - t0) / max(1e-6, t1 - t0))
+
+
 def score_at(pts, t):
     """The two shares at Short time t, linear between marks (held before the first and after the last)."""
     if not pts:
@@ -557,7 +585,7 @@ def chat_img(typed, cursor, feedback, fb_alpha=1.0):
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None):
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=(), score=None, tally=None, popup=None):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -584,13 +612,21 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             cds.append((t0, t0 + (float(cd[2]) if len(cd) > 2 and cd[2] else 1.0), cd[1],
                         COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
                         "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4),
-                        float(next((o for o in cd[5:] if isinstance(o, dict)), {}).get("y", 0.36))))   # (desire: off the obstacle)
+                        float(next((o for o in cd[5:] if isinstance(o, dict)), {}).get("y", 0.36)),   # (desire: off the obstacle)
+                        next((o for o in cd[5:] if isinstance(o, dict)), {}).get("size")))   # a text size (px) instead of 150/116: one line over a mob's head (underdog)
     cdw = countdown_windows(countdowns, timeline, start)
     rgw = ring_windows(rings, timeline, start)
     tgw = tag_windows(tags, timeline, start, dur)
     chw = chat_windows(chat, timeline, start)
     scp, scs = score_track(score, timeline, start)
-    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp:
+    tlp, tls, tl_done = tally_track(tally, timeline, start)
+    pops = []
+    if popup:                                        # the fake mod's permission popups (scripts/popup.py)
+        sys.path.insert(0, str(HERE / "scripts"))
+        import popup as POP
+        pops = POP.windows(_load(popup), lambda n: event_at(timeline, n), lambda n: event_times(timeline, n), start)
+        POP.register(pops)
+    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw and not scp and not tlp and not pops:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -604,9 +640,9 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         cc = None
         on = [cd for cd in cds if cd[0] <= t + 1e-6 < cd[1]]
         if on:
-            t0, t1, text, color, tilt, cy_frac = on[-1]
+            t0, t1, text, color, tilt, cy_frac, size = on[-1]
             fade = min(1.0, (t1 - t) / 0.12)
-            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1), cy_frac)
+            cc = (text, color, tilt, round(_pop(t - t0), 3), round(fade, 1), cy_frac, size)   # 3 decimals: at 2 the pop's turn gave two identical frames over a still view (qa dup, fakemod_permission v3 13.38 s)
         fk = None
         for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
             if t0 <= t + 1e-6 < hold - 1e-6:
@@ -657,7 +693,11 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             sk = (int(math.floor(sa * 1000 + 1e-6)), int(math.floor(sb * 1000 + 1e-6)))
             if sa + sb >= 0.9999:            # all taken: the two add to 100.0
                 ra = int(round(sa * 1000)); sk = (ra, 1000 - ra)
-        key = (ck, cc, fk, cwk, rk, tk, chk, sk)
+        tak = None
+        if tlp and t >= tlp[0][0] - 1e-6:    # the blocks-used total, ticking up; gold once the build is done
+            tak = (tally_at(tlp, t), tl_done is not None and t >= tl_done - 1e-6)
+        pk = POP.frame_key(pops, t) if pops else None
+        key = (ck, cc, fk, cwk, rk, tk, chk, sk, tak, pk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if sk:
@@ -676,11 +716,11 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 cx, cy = 40 + imgs[("c", k)].width // 2, BAND + 26 + imgs[("c", k)].height // 2
                 img.alpha_composite(im, (cx - im.width // 2, cy - im.height // 2))
             if cc:
-                text, color, tilt, s, fade, cy_frac = cc
-                if ("t", text, color) not in imgs:
-                    imgs[("t", text, color)] = stamp_img(text, color) if tilt == "stamp" else \
-                        block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
-                im = imgs[("t", text, color)]
+                text, color, tilt, s, fade, cy_frac, size = cc
+                if ("t", text, color, size) not in imgs:
+                    imgs[("t", text, color, size)] = stamp_img(text, color) if tilt == "stamp" else \
+                        block_text(text, int(size) if size else 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
+                im = imgs[("t", text, color, size)]
                 s = min(s, W * 0.95 / im.width)   # the slam-in never clips the frame edges (the stamp did for 3 frames)
                 if s != 1.0:
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
@@ -696,6 +736,15 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 img.alpha_composite(tag_img(*tk))
             if chk:
                 img.alpha_composite(chat_img(*chk))
+            if tak:
+                v, done = tak
+                num = rich_text(f"{v:,}", 92, COLORS["gold"] if done else COLORS["white"])
+                lab = rich_text(tls.get("label", "blocks used"), 48, COLORS["white"])
+                x1 = W - 40
+                img.alpha_composite(num, (x1 - num.width, BAND + 22))
+                img.alpha_composite(lab, (x1 - lab.width, BAND + 22 + num.height - 14))
+            if pk:
+                img.alpha_composite(POP.frame_img(pk))
             if fk:
                 v, label, done = fk
                 num = rich_text(f"{v}", 92, COLORS["green"] if done else COLORS["white"])
@@ -753,6 +802,10 @@ def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption
     zoom = f"1+0.08*t/{d:.3f}"                 # a slow push-in, so the flash never sits still
     push = (f"scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
             f"crop={W}:{GAME_H},format=rgba")
+    # "blur": a soft blur over the clip (not the text), so a tease of the answer doesn't give it away (owner on
+    # guess_sound's parrot tease, 2026-11-12: "we should blur the parrot at the start slightly")
+    if float(h.get("blur", 0) or 0) > 0:
+        push += f",gblur=sigma={float(h['blur']):.2f}"
     if frames and caption:
         # -t on the clip's inputs: read only the hook's frames (decoding the whole sequence while the
         # main video queued behind the concat took 5+ GB and many minutes)

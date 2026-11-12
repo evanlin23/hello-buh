@@ -4,9 +4,21 @@
  "version": 2,
  "revision": "r3 (2026-11-10): r2 continuity's S13 fix and notes, and the r2 critic's 'one more ingot'; see reviews/r1-response.md",
  "caption": "why does grandma feed the nether portal 😶",
+ "upload": {
+  "title": "my grandma has thrown 9,000 gold into a portal 🪙 #minecraft #shorts",
+  "pinned": "What would YOU send through the portal to Grandpa?",
+  "tags": [
+   "minecraft village",
+   "minecraft grandma",
+   "minecraft nether portal",
+   "minecraft gold"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste gold_for_the_portal prints it). pinned = the question, without the 👇",
  "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Nico is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
  "question": "why tf does grandma throw gold into a nether portal every night?",
  "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Nico keeps the gifts in a barrel and knows Grandpa is alive.",
+ "family": "grandparent_secret",
  "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Nico. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
  "key_color": "#B07CFF",
  "mood": [

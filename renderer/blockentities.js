@@ -136,6 +136,27 @@ export async function nameTagTexture (text) {
   return { tex: t, w: W, h: H }
 }
 
+// A row of HUD hearts (Gui.renderHearts' sprites: container, full, half) for hp of mhp, at most 10 hearts, each worth
+// mhp / count, rounded to half hearts; 8 px apart as in the HUD (stunt.healthHearts). -> { tex, w, h } in sprite pixels
+const HEART = {}
+const heartImg = (n) => HEART[n] || (HEART[n] = new Promise((res) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = `/assets/env/gui/heart/${n}.png` }))
+export async function heartsTexture (hp, mhp) {
+  const [c0, full, half] = await Promise.all(['container', 'full', 'half'].map(heartImg))
+  if (!c0 || !full || !half) return null
+  const n = Math.max(1, Math.min(10, Math.ceil(mhp / 2))), halves = Math.round(hp / (mhp / n) * 2)
+  const SC = 4, W = 8 * n + 1, H = 9
+  const c = document.createElement('canvas'); c.width = W * SC; c.height = H * SC
+  const g = c.getContext('2d'); g.imageSmoothingEnabled = false
+  for (let i = 0; i < n; i++) {
+    g.drawImage(c0, i * 8 * SC, 0, 9 * SC, 9 * SC)
+    if (halves >= 2 * i + 2) g.drawImage(full, i * 8 * SC, 0, 9 * SC, 9 * SC)
+    else if (halves === 2 * i + 1) g.drawImage(half, i * 8 * SC, 0, 9 * SC, 9 * SC)
+  }
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
+  return { tex: t, w: W, h: H }
+}
+
 // --- models (pixels, as the Java model layers define them)
 function signParts (standing) {
   const p = [{ cubes: [[[-12, -14, -1], [24, 12, 2], [0, 0]]] }]

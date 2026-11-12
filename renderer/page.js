@@ -923,6 +923,21 @@ async function drawShadows (list) {
   shadowMesh = new THREE.Mesh(g, shadowMat); shadowMesh.frustumCulled = false; shadowMesh.renderOrder = 1
   scene.add(shadowMesh)
 }
+// Leads (LeashFeatureRenderer, RenderType.leash: untextured, both sides, vertex colours lit per segment): render.js sends
+// each rope's triangles (lib/riding.js leashMesh) as cam.leashes; nothing is built without one
+let leashMesh = null
+const leashMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, fog: true })
+function drawLeashes (list) {
+  if (leashMesh) { scene.remove(leashMesh); leashMesh.geometry.dispose(); leashMesh = null }
+  if (!list || !list.length) return
+  const pos = [], col = []
+  for (const l of list) { for (const v of l.pos) pos.push(v); for (const v of l.col) col.push(v) }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3))
+  leashMesh = new THREE.Mesh(g, leashMat); leashMesh.frustumCulled = false
+  scene.add(leashMesh)
+}
 async function drawParticles (parts) {
   for (const m of partMeshes) { scene.remove(m); m.geometry.dispose() }
   partMeshes.length = 0
@@ -1189,6 +1204,7 @@ window.HB = {
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawShadows(cam.shadows)
+    if (cam.leashes || leashMesh) drawLeashes(cam.leashes)
     drawBolts(cam.bolts)
     await drawParticles(parts)
     await drawWeather(cam)
@@ -1567,11 +1583,11 @@ function armBox (w, h, d, grow, u, v) {
   uv.needsUpdate = true
   return g
 }
-async function armObject (skin = null, slim = false) {
-  const ck = skin ? `${skin}|${slim ? 'slim' : 'wide'}` : ''
+async function armObject (skin = null, model = 'auto', profileSlim = false) {
+  const ck = skin ? `${skin}|${model}|${profileSlim}` : ''
   if (ARMS.has(ck)) return ARMS.get(ck)
-  const st = skin ? await skinTexture(skin) : null
-  if (st && st.slimLayout) slim = true   // a slim-painted skin uploaded as classic (entities.js isSlimLayout)
+  const st = skin ? await skinTexture(skin, model, profileSlim) : null   // the same texture and arm model as third person
+  const slim = !!(st && st.slim)
   const t = st ? st.tex : await loadTexture('/assets/env/entity/player/wide/steve.png')
   t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
   const w = slim ? 3 : 4
@@ -1598,7 +1614,7 @@ async function drawHand (cam) {
   const h = cam.hand
   if (!h || cam.dead) return false
   if (!h.key) {   // empty hand: the arm
-    const r = await armObject(h.skin || null, !!h.slim)
+    const r = await armObject(h.skin || null, h.model || 'auto', !!h.slim)
     const a = h.swing || 0, g = Math.sqrt(a)
     const M = HAND_TURN.clone().multiply(new THREE.Matrix4().makeTranslation(-0.3 * Math.sin(g * Math.PI) + 0.64, 0.4 * Math.sin(g * Math.PI * 2) - 0.6 + (h.equip || 0) * -0.6, -0.4 * Math.sin(a * Math.PI) - 0.72))
     M.multiply(new THREE.Matrix4().makeRotationY(45 * D2R))
