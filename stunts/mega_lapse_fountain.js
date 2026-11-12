@@ -23,7 +23,7 @@ const T2 = { in: [50, 52], out: [62, 64], top: 26 }     // tier 2, set back on t
 const GIANTS = [[-57, -57, 74, R], [57, -57, 86, SL], [-57, 57, 80, SL], [57, 57, 68, R]]   // x, z, top, roof: four heights
 const CORNERS = [[-73, -73], [73, -73], [-73, 73], [73, 73]]
 const GATES = [[0, -73], [73, 0], [0, 73], [-73, 0]]
-const PLAYER = [-4, -5]                                  // 56e on the plaza, beside the fountain
+const PLAYER = [-4, 2]                                   // 56e on the plaza, beside the fountain (r1: at -4, -5 it hid behind it)
 
 // a stable pseudo-random number per lot (the same city every take)
 const rnd = (i, k = 1) => { const v = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return v - Math.floor(v) }
@@ -110,8 +110,10 @@ function houses () {
 function tier1 () {
   const c = [], b = []
   const st = (y) => Math.floor(y / 2)
-  kit.squareFace(c, T1.out[0], T1.out[1], 1, T1.top, { side: 'out', every: 9, arch: [3, 7], step: st })
-  kit.squareFace(c, T1.in[0], T1.in[1], 1, T1.top, { side: 'in', every: 8, arch: [2, 5], step: st })
+  // the faces go down 6 into the real ground (no gap under them where the land dips; r2: the city stands in the forest,
+  // not on a cleared field), their stone base at ground level
+  kit.squareFace(c, T1.out[0], T1.out[1], -6, T1.top, { side: 'out', every: 9, arch: [3, 7], arch2: [9, 10], lowerTo: 2, step: st })
+  kit.squareFace(c, T1.in[0], T1.in[1], -6, T1.top, { side: 'in', every: 8, arch: [2, 5], arch2: [7, 9], lowerTo: 2, step: st })
   kit.squareRing(b, T1.in[1] + 1, T1.out[0] - 1, T1.top, T1.top, 'grass_block', () => 8)
   return { name: 'tier1', ticks: 44, cells: c, boxes: b }
 }
@@ -126,20 +128,41 @@ function town1 () {
     kit.house(c, cx - 3, cz - 3, 6, 6, y0, two ? 4 : 4 + Math.floor(rnd(i, 3) * 4), { step: l.side * 100 + l.t + 50, roof: ROOFS[Math.floor(rnd(i, 4) * 3)], upper: two ? { h: 3 } : null })
   })
   sides(42, 9, 40, 4).forEach((l, i) => { const [x, z] = l.xz; const s = Math.sign(l.t) * 4; kit.tree(c, x + (l.side % 2 ? 0 : s), y0, z + (l.side % 2 ? s : 0), 4, 2, { step: l.side * 100 + l.t + 52 }) })
-  sides(68, 8, 64, 3).forEach((l) => { const [x, z] = l.xz; kit.tree(c, x, y0, z, 5, 2.2, { step: l.side * 100 + l.t + 54 }) })
-  return { name: 'town1', ticks: 34, cells: c }
+  // the outer ledge (a 65..71): a garden on two levels, not a flat strip: trees, small ponds in stone rims, raised
+  // flower planters, and a hedge along the parapet
+  sides(68, 8, 64, 3).forEach((l, i) => {
+    const [x, z] = l.xz, st = l.side * 100 + l.t + 54, along = l.side % 2 === 0
+    const k = i % 3
+    if (k === 0) kit.tree(c, x, y0, z, 5, 2.2, { step: st })
+    else if (k === 1) {                                                // a pond: a stone rim, water a block down
+      for (let u = -2; u <= 2; u++) for (let v = -1; v <= 1; v++) {
+        const [px, pz] = along ? [x + u, z + v] : [x + v, z + u], rim = Math.abs(u) === 2 || Math.abs(v) === 1
+        c.push([px, T1.top, pz, rim ? 'mossy_stone_bricks' : 'water', st], [px, y0, pz, rim ? 'stone_brick_wall' : 'air', st])
+      }
+    } else {                                                           // a raised planter of flowers
+      for (let u = -2; u <= 2; u++) for (let v = -1; v <= 1; v++) {
+        const [px, pz] = along ? [x + u, z + v] : [x + v, z + u], rim = Math.abs(u) === 2 || Math.abs(v) === 1
+        c.push([px, y0, pz, rim ? B : 'grass_block', st])
+        if (!rim) c.push([px, y0 + 1, pz, ['poppy', 'cornflower', 'oxeye_daisy'][(u + 2) % 3], st])
+      }
+    }
+  })
+  for (const a of [71]) for (const [x0, z0, x1, z1] of [[-a, -a, a, -a], [-a, a, a, a], [-a, -a, -a, a], [a, -a, a, a]]) {
+    for (let x = Math.min(x0, x1); x <= Math.max(x0, x1); x++) for (let z = Math.min(z0, z1); z <= Math.max(z0, z1); z++) if ((x + z) % 9) c.push([x, y0, z, 'oak_leaves[persistent=true]', 400])
+  }
+  return { name: 'town1', ticks: 30, cells: c }
 }
 
 // tier 2, set back on tier 1, its faces dressed the same way; the corner and gate towers rise from the ground with it
 function tier2 () {
   const c = [], b = []
   const st = (y) => Math.floor(y / 2)
-  kit.squareFace(c, T2.out[0], T2.out[1], T1.top + 1, T2.top, { side: 'out', every: 8, arch: [T1.top + 3, T1.top + 7], step: st })
-  kit.squareFace(c, T2.in[0], T2.in[1], T1.top + 1, T2.top, { side: 'in', every: 7, arch: [T1.top + 2, T1.top + 5], step: st })
+  kit.squareFace(c, T2.out[0], T2.out[1], T1.top + 1, T2.top, { side: 'out', every: 8, arch: [T1.top + 3, T1.top + 7], arch2: [T1.top + 9, T1.top + 11], step: st })
+  kit.squareFace(c, T2.in[0], T2.in[1], T1.top + 1, T2.top, { side: 'in', every: 7, arch: [T1.top + 2, T1.top + 5], arch2: [T1.top + 8, T1.top + 10], step: st })
   kit.squareRing(b, T2.in[1] + 1, T2.out[0] - 1, T2.top, T2.top, 'grass_block', () => 13)
-  for (const [x, z] of CORNERS) kit.tower(c, x, z, 6, 1, 44, { roofH: 10, win: 7, balcony: 13, roof: R, step: (y) => Math.floor(y / 3) })
-  for (const [x, z] of GATES) kit.tower(c, x, z, 4.5, 1, 32, { roofH: 7, win: 6, balcony: 11, roof: SL, step: (y) => Math.floor(y / 3) })
-  return { name: 'tier2', ticks: 54, cells: c, boxes: b }
+  for (const [x, z] of CORNERS) kit.tower(c, x, z, 6, -6, 44, { roofH: 10, win: 7, balcony: 13, roof: R, step: (y) => Math.floor((y + 6) / 3) })
+  for (const [x, z] of GATES) kit.tower(c, x, z, 4.5, -6, 32, { roofH: 7, win: 6, balcony: 11, roof: SL, step: (y) => Math.floor((y + 6) / 3) })
+  return { name: 'tier2', ticks: 66, cells: c, boxes: b }
 }
 
 // the top town on tier 2: taller blocks, heights 7 to 13, roofs varied, a few slender towers between them
@@ -184,27 +207,30 @@ module.exports = L.makeLapse({
   name: 'mega_lapse_fountain',
   caption: 'bro asked for a SMALL fountain at spawn 😭',   // (a reaction, not a label: r:r0f3da0; take 2's 'the server asked me for a small fountain at spawn')
   red: 'SMALL',
-  biome: 'minecraft:flower_forest',
-  near: [-2757, -206],                    // a flower forest among hills (ground 63-83: mega_sponge's site), a real world round the city
-  fieldBiome: 'minecraft:flower_forest',
+  // a real forest round it (r:r13865d). r2: only the core (plaza and houses, half-size 38) is cleared and levelled;
+  // the terraces rise out of the forest floor on sunk foundations (the hilly flower-forest site of take 3 was cut into
+  // stepped stone faces, and a 172-block cleared lawn read as superflat)
+  biome: 'minecraft:forest',
+  fieldBiome: 'minecraft:forest',
   time: 11000,                            // late afternoon: a low warm sun raking the arcades
   look: { mood: 'golden_hour', bloom: 0.35, bloomThreshold: 0.86, bloomPasses: 1, sharpen: 0.4, rays: 0.4, raysOverBlocks: 0.3, shadows: true, vignette: 0.25, grain: 0.01 },
-  field: 86,                              // only the city's own site is cleared (its outer buttresses at 75); the forest and the hills start just past it
+  field: 38,                              // the core only; the taper (16) runs under tier 1
   height: 100,
-  clearTrees: 4,
+  clearTrees: 28,                         // no trees inside the walls (to half-size 82): the forest stands outside them
   renderDistance: 16, recordRadius: 256,
   chunkStops: [[-160, -160], [160, -160], [-160, 160], [160, 160]],
   botTimeout: 1500,
-  player: { at: PLAYER, yaw: -141, pitch: 0 },   // facing the fountain (mineflayer yaw: atan2(-dx, -dz))
+  player: { at: PLAYER, yaw: -63, pitch: 0 },   // facing the fountain (mineflayer yaw: atan2(-dx, -dz))
   tally: 'blocks used',
+  startSound: 'block.stone.place',        // a hit on frame 1 (mixcheck: the hook's sound under the music)
   // the small fountain is already standing at frame 0, 56e beside it in the flower forest, and the plaza starts
   // spreading round it on the first tick (owner r:r0f3da0: the subject in view at frame 0, moving by 0.5 s; take 2
   // opened on 1.3 s of an empty grass square while the fountain went in)
   dress: L.steps(fountain()).flat().map(({ box, block }) => [...box, block]),
-  stages: [plaza(), walls(), houses(), tier1(), town1(), tier2(), town2(), giants(), giants2(), lights()],
+  stages: [plaza(), walls(), houses(), tier1(), tier2(), town1(), town2(), giants(), giants2(), lights()],   // (r2: tier 2 before the tier-1 town: the town shot showed tier 1's top as a bare 30-block ring)
   perTick: 60,
   // each stage its own steady drone angle, joined by hard cuts (r:r66efa4); every move slow and even
-  angles: [['plaza', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['town1', 'town'], ['tier2', 'far'], ['town2', 'roofs'], ['giants', 'giants'], ['giants2', 'scale']],
+  angles: [['plaza', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['tier2', 'far'], ['town1', 'town'], ['town2', 'roofs'], ['giants', 'giants'], ['giants2', 'scale']],
   // the reveal holds 0.6 s, then straight to the pass (owner r:r188b46: cut 0.3-0.6 s after a result reads); a short
   // firework blast on it, not the beacon's chime or the toast's fanfare (they rang over the pass: no hit there)
   payoff: { stage: 'lights', shot: 'reveal', hold: 12, toast: false, sound: 'entity.firework_rocket.blast' },
@@ -245,6 +271,6 @@ module.exports = L.makeLapse({
     // 10. the reveal: the whole city from high on its south axis, the forest and hills round it (1x: the drift after)
     reveal: { path: [[0, 0, 112, 128], [1.5, 0, 107, 121]], lookPath: [[0, 0, 10, -2], [1.5, 0, 10, -2]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] },   // (under the clouds: at 130 up the frame was in them, a white haze)
     // 11. the close pass: low beside 56e and the fountain, sliding past, the towers over them (1x)
-    pass: { path: [[0, -9, 2.2, -11.5], [2.0, -11.5, 2.4, -7.5]], lookPath: [[0, 6, 9, 7], [2.0, 7, 10, 5]], fov: 70, dof: false, drift: 0.3, scenery: true, subject: [[-4, 2.5, -5]] }
+    pass: { path: [[0, -8.5, 2.2, 0.5], [2.0, -8.2, 2.3, 3.0]], lookPath: [[0, 10, 12, -2], [2.0, 10, 13, -1]], fov: 70, dof: false, drift: 0.3, scenery: true, subject: [[-4, 2.5, 2]] }   // (between two lamp posts, clear of both: r1)
   }
 })
