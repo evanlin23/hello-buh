@@ -201,7 +201,8 @@ module.exports = makeStunt({
   bigCuts: [6, 0.6, 57],
   payoffFlash: true, song: null,   // pace: a flash + punch + dip/impact on 60:00 (no picture change on the payoff), NCS at publish
   botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 3 tries on a busy box   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
-  caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
+  caption: 'house in 1 second vs 1 minute vs 1 hour 💀',   // (9 words: the opening check's cap is 10; was 'building a house in ...')
+  sfx: [['pop', 'small_start', { gain: 1.2 }]],   // a hit by 0.5 s (pace's opening check: the first dirt was 16 dB under the peak)
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
