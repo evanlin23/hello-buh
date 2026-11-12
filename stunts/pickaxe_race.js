@@ -40,7 +40,7 @@ module.exports = {
       splits: { reset: 'beat', split: 'mined', of: TOOLS.length, hide: 'finale' },
       speed: [
         // each tier's result reads ~0.5 s, then straight to the next tier's first swing (no strafe on screen, r:r188b46)
-        ...TOOLS.slice(0, -1).map((t, i) => [`mined${i}:0.5`, `beat${i + 1}:-0.25`, 'cut']),
+        ...TOOLS.slice(0, -1).map((t, i) => [`mined${i}:0.5`, `beat${i + 1}:0.1`, 'cut']),
         ['tntwalk', 'lit', 3],                     // the row of 20 TNT going down (turns capped at 73 deg/s: 220 on screen)
         ['lit:0.4', 'boom:-0.5', 3.5]],            // the back-off during the fuse (a slow look: under 60 deg/s)
       subs: subs(),
@@ -122,9 +122,11 @@ module.exports = {
         // onto the section's first block before the beat, then still: the edit's cut lands on a rest both sides (whip)
         const fb = new Vec3(this.secX[i], floor + 2, wz)
         await A.aimAt(fb.offset(0.5, 0.5, 1), { on: fb })
+        // the tier starts here (its caption and timer on the cut's first frame: cut at beat-0.25 showed the last tier's
+        // caption and frozen time over the new pick for 0.25 s); the cut lands 0.1 s in, on the rest
+        ctx.mark('beat', { n: i }); ctx.mark(`beat${i}`)   // (unique: the edit's speed spans take a mark's first time)
         await bot.waitForTicks(7)
-      } else ctx.select(i)
-      ctx.mark('beat', { n: i }); ctx.mark(`beat${i}`)   // (unique: the edit's speed spans take a mark's first time)
+      } else { ctx.select(i); ctx.mark('beat', { n: i }); ctx.mark(`beat${i}`) }
       const xs = this.secX[i], w = TOOLS[i].w
       const order = []
       for (const [r, dir] of ROWS) for (let c = 0; c < w; c++) order.push(new Vec3(xs + (dir > 0 ? c : w - 1 - c), floor + r, wz))
