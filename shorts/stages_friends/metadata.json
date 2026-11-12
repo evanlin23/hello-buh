@@ -20,38 +20,38 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "crater",
     "drop_in_song_s": 29.5,
-    "drop_in_short_s": 16.98,
-    "song_start_s": 12.52
+    "drop_in_short_s": 16.15,
+    "song_start_s": 13.35
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 17.98,
+    "duration_s": 16.75,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 30310129,
-    "sha256": "edc63ea2f3f8e7936dd1f232192992ca2df851421fdc03342cb79ec915ccb89a",
+    "bytes": 28228476,
+    "sha256": "2d2325d6d40999567942c2401798a2af3d6bc86fdfa8592c2c2d7be534ab997a",
     "release": {
       "tag": "pkg-stages_friends",
-      "asset": "stages_friends.short.edc63ea2f3f8e793.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short.edc63ea2f3f8e793.mp4",
-      "sha256": "edc63ea2f3f8e7936dd1f232192992ca2df851421fdc03342cb79ec915ccb89a",
-      "bytes": 30310129
+      "asset": "stages_friends.short.2d2325d6d4099956.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short.2d2325d6d4099956.mp4",
+      "sha256": "2d2325d6d40999567942c2401798a2af3d6bc86fdfa8592c2c2d7be534ab997a",
+      "bytes": 28228476
     },
     "nosong_release": {
       "tag": "pkg-stages_friends",
-      "asset": "stages_friends.short_nosong.6dd1faa3726938b8.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short_nosong.6dd1faa3726938b8.mp4",
-      "sha256": "6dd1faa3726938b8b91d5522d85ad9403801bfaa002dce2b75bb24fa4a0309a4",
-      "bytes": 30304216
+      "asset": "stages_friends.short_nosong.1f66d1f763fbe773.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-stages_friends/stages_friends.short_nosong.1f66d1f763fbe773.mp4",
+      "sha256": "1f66d1f763fbe77317ecc073c572ebef11407dc4cb234617c2bdb28207719955",
+      "bytes": 28220023
     }
   },
   "edit": {
     "caption": "minecraft friendships in 3 stages 💀",
     "red": "3 stages",
     "startAt": "ch1:0",
-    "endAfter": "crater:1.0",
+    "endAfter": "crater:0.6",
     "dropAt": "crater",
     "tags": [
       [
@@ -177,9 +177,19 @@
         2
       ],
       [
-        "chain_end",
+        "loot:0.15",
+        "rich",
+        2.3
+      ],
+      [
+        "rich:0.6",
+        "ch3",
+        "cut"
+      ],
+      [
+        "chain_end:0.4",
         "crater",
-        2
+        "cut"
       ],
       [
         "notice",
@@ -209,7 +219,7 @@
       "--red",
       "3 stages",
       "--speed",
-      "[[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"chain_end\",\"crater\",2],[\"notice\",\"boom\",1.5]]",
+      "[[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"loot:0.15\",\"rich\",2.3],[\"rich:0.6\",\"ch3\",\"cut\"],[\"chain_end:0.4\",\"crater\",\"cut\"],[\"notice\",\"boom\",1.5]]",
       "--punch",
       "[[\"push\",0,1.06],[\"lever\",0,1.05]]",
       "--tags",
@@ -227,7 +237,7 @@
       "--start_at",
       "ch1:0",
       "--end_after",
-      "crater:1.0"
+      "crater:0.6"
     ]
   },
   "recording": {
@@ -964,10 +974,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "def2885d723717b06281e4a796bca112b8a04416",
+    "commit": "5990267ee8bad904832eca0dfd6212d4efbf3585",
     "rendered": "local",
-    "rendered_at": "2026-11-11T22:19:32.019Z",
-    "head_at_publish": "a5e22f7e296f44a5fe8a1af6a43d05826d5a3f40",
+    "rendered_at": "2026-11-12T00:44:18.028Z",
+    "head_at_publish": "716b2d40bcd9ff4a01353fe14938a924db89a01d",
     "stunt": "stunts/stages_friends.js",
     "source_snapshot": [
       "source/stages_friends.js",
@@ -980,22 +990,22 @@
     ]
   },
   "rebuild": [
-    "git checkout def2885d7237",
+    "git checkout 5990267ee8ba",
     "gunzip -c shorts/stages_friends/recording.json.gz > work/stages_friends.rec.json",
     "node render.js work/stages_friends.rec.json work/stages_friends.frames 60 1080 1011",
     "python3 audio.py work/stages_friends.rec.json work/stages_friends.wav",
-    "python3 edit.py --frames work/stages_friends.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/stages_friends.rec.json --audio work/stages_friends.wav --caption \"minecraft friendships in 3 stages 💀\" --self_name 56e --red \"3 stages\" --speed [[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"chain_end\",\"crater\",2],[\"notice\",\"boom\",1.5]] --punch [[\"push\",0,1.06],[\"lever\",0,1.05]] --tags \"[[\\\"ch1\\\",\\\"death\\\",\\\"1. BETRAYAL\\\",\\\"red\\\"],[\\\"ch2\\\",\\\"ch3\\\",\\\"2. RISE\\\",\\\"blue\\\"],[\\\"ch3\\\",null,\\\"3. REVENGE\\\",\\\"gold\\\"]]\" --shake [\"crater\"] --flash [\"crater\"] --sfx [[\"whoosh\",\"ch1\",{\"gain\":0.45}],[\"whoosh\",\"ch2\",{\"gain\":0.5}],[\"whoosh\",\"ch3\",{\"gain\":0.5}],[\"air\",\"ch2\",\"crater\",{\"gain\":0.5}],[\"dip\",\"push\",0.3],[\"hit\",\"push\",{\"gain\":1.6}],[\"boom\",\"boom\",{\"gain\":0.9}],[\"ding\",\"loot\",{\"gain\":0.6}],[\"boom\",\"crater\",{\"gain\":0.8}],[\"dip\",\"crater\",0.6],[\"gamedip\",\"crater\",0.6],[\"impact\",\"crater\",{\"gain\":1.2}]] --death_screen death --item_names {} --start_at ch1:0 --end_after crater:1.0 --out out/stages_friends.mp4"
+    "python3 edit.py --frames work/stages_friends.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/stages_friends.rec.json --audio work/stages_friends.wav --caption \"minecraft friendships in 3 stages 💀\" --self_name 56e --red \"3 stages\" --speed [[\"burn\",\"death\",2],[\"respawn\",\"ch2\",\"cut\"],[\"vein\",\"vein_end\",2],[\"loot:0.15\",\"rich\",2.3],[\"rich:0.6\",\"ch3\",\"cut\"],[\"chain_end:0.4\",\"crater\",\"cut\"],[\"notice\",\"boom\",1.5]] --punch [[\"push\",0,1.06],[\"lever\",0,1.05]] --tags \"[[\\\"ch1\\\",\\\"death\\\",\\\"1. BETRAYAL\\\",\\\"red\\\"],[\\\"ch2\\\",\\\"ch3\\\",\\\"2. RISE\\\",\\\"blue\\\"],[\\\"ch3\\\",null,\\\"3. REVENGE\\\",\\\"gold\\\"]]\" --shake [\"crater\"] --flash [\"crater\"] --sfx [[\"whoosh\",\"ch1\",{\"gain\":0.45}],[\"whoosh\",\"ch2\",{\"gain\":0.5}],[\"whoosh\",\"ch3\",{\"gain\":0.5}],[\"air\",\"ch2\",\"crater\",{\"gain\":0.5}],[\"dip\",\"push\",0.3],[\"hit\",\"push\",{\"gain\":1.6}],[\"boom\",\"boom\",{\"gain\":0.9}],[\"ding\",\"loot\",{\"gain\":0.6}],[\"boom\",\"crater\",{\"gain\":0.8}],[\"dip\",\"crater\",0.6],[\"gamedip\",\"crater\",0.6],[\"impact\",\"crater\",{\"gain\":1.2}]] --death_screen death --item_names {} --start_at ch1:0 --end_after crater:0.6 --out out/stages_friends.mp4"
   ],
   "status": "ready",
-  "notes": "worker: stages format ep 1 (lib/stages.js); 3 independent review rounds (r1 5 blockers fixed, r2 diamond colour fixed, r3 fix-check READY); pace 0/0, mixcheck OK",
-  "published_at": "2026-11-11T22:21:34.516Z",
+  "notes": "fast cuts r:r188b46: end crater:0.6; the chain's smoke cut out; to chapter 3 0.33 s after the diamond is up in hand; the loot glance x2.3; fix-check READY r2",
+  "published_at": "2026-11-12T00:46:17.147Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:22:01+00:00",
+    "at": "2026-11-12T00:46:44+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 17.98 s vs the reviewed render 17.98 s"
+      "summary": "short.mp4 16.77 s vs the reviewed render 16.75 s"
     },
     "pace": {
       "ok": true,
@@ -1007,7 +1017,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:19:49.964Z",
+      "at": "2026-11-12T00:44:36.245Z",
       "report": "work/hb/stages_friends.check.json"
     },
     "key_sounds": "n/a"
