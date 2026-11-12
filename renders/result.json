@@ -1,0 +1,17 @@
+{
+ "name": "villager_crowd",
+ "stunt": "villager_crowd",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43164703863",
+ "source": "49729be3",
+ "queued": "2026-11-12T05:56:32Z",
+ "finished": "2026-11-12T06:01:55Z",
+ "mp4": "renders/out/villager_crowd.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

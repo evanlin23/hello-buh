@@ -1,0 +1,1083 @@
+{
+ "stunt": "villager_crowd",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/villager_crowd.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "8 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 162,
+     "col": 36,
+     "text": "const track = () => bot.chat(`/execute as @e[type=villager,tag=on] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes`)",
+     "what": "a /tp of a cast member through /execute ... run tp",
+     "use": "K.actor(tag, state) (walks to its mark at 20 Hz; jumps only on a cut: K.cutShot / K.cut), or K.flee(tag, speed)"
+    },
+    {
+     "line": 171,
+     "col": 7,
+     "text": "bot.look(bot.entity.yaw + d * 0.35, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.35, true)",
+     "what": "a raw bot.look / bot.lookAt",
+     "use": "K.aimAt(p) (waits until the turn lands), K.turnTo / K.base = K.aim(p) + K.look(k) (the governor eases it)"
+    },
+    {
+     "line": 189,
+     "col": 7,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 192,
+     "col": 7,
+     "text": "bot.setControlState('forward', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 208,
+     "col": 7,
+     "text": "bot.setControlState('left', true); await bot.waitForTicks(c.n >= 20 ? 14 : 10); bot.setControlState('left', false)   // (long sweeps on the ",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 209,
+     "col": 51,
+     "text": "if (c.n >= 20) { await bot.waitForTicks(3); bot.setControlState('right', true); await bot.waitForTicks(22); bot.setControlState('right', fal",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 219,
+     "col": 43,
+     "text": "const gemTrack = () => bot.chat(`/execute as @e[type=villager,tag=on] at @s run tp @s ~ ~ ~ facing entity @e[type=item,limit=1,sort=nearest]",
+     "what": "a /tp of a cast member through /execute ... run tp",
+     "use": "K.actor(tag, state) (walks to its mark at 20 Hz; jumps only on a cut: K.cutShot / K.cut), or K.flee(tag, speed)"
+    },
+    {
+     "line": 227,
+     "col": 9,
+     "text": "bot.setControlState('forward', true); await bot.waitForTicks(6); bot.setControlState('forward', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT villager_crowd: 1 shots, scene 0.0-56.4 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-56.4  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 109 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.217,
+     "shot": 1,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: oak_log -> emerald"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12101 appears in the middle of the frame 5.48 s into the shot (7.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12099 appears in the middle of the frame 5.48 s into the shot (7.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12100 appears in the middle of the frame 5.53 s into the shot (8.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12098 appears in the middle of the frame 5.63 s into the shot (8.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12122 appears in the middle of the frame 5.93 s into the shot (9.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12097 appears in the middle of the frame 5.93 s into the shot (9.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (toolsmith) #12120 appears in the middle of the frame 5.98 s into the shot (9.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12121 appears in the middle of the frame 6.03 s into the shot (9.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12294 appears in the middle of the frame 6.08 s into the shot (8.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12119 appears in the middle of the frame 6.38 s into the shot (9.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12118 appears in the middle of the frame 6.38 s into the shot (10.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12117 appears in the middle of the frame 6.38 s into the shot (10.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12141 appears in the middle of the frame 6.38 s into the shot (10.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12140 appears in the middle of the frame 6.38 s into the shot (10.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12142 appears in the middle of the frame 6.38 s into the shot (10.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12138 appears in the middle of the frame 6.38 s into the shot (10.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12139 appears in the middle of the frame 6.38 s into the shot (10.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12143 appears in the middle of the frame 6.38 s into the shot (11 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12116 appears in the middle of the frame 6.38 s into the shot (11.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (weaponsmith) #12137 appears in the middle of the frame 6.38 s into the shot (11.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12159 appears in the middle of the frame 6.38 s into the shot (11.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12161 appears in the middle of the frame 6.38 s into the shot (11.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (toolsmith) #12162 appears in the middle of the frame 6.38 s into the shot (11.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12115 appears in the middle of the frame 6.38 s into the shot (11.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12160 appears in the middle of the frame 6.38 s into the shot (11.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12136 appears in the middle of the frame 6.38 s into the shot (12.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12163 appears in the middle of the frame 6.38 s into the shot (12.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12135 appears in the middle of the frame 6.38 s into the shot (12.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12183 appears in the middle of the frame 6.38 s into the shot (12.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12158 appears in the middle of the frame 6.43 s into the shot (12 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12157 appears in the middle of the frame 6.43 s into the shot (12.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12180 appears in the middle of the frame 6.43 s into the shot (12.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12156 appears in the middle of the frame 6.43 s into the shot (12.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12182 appears in the middle of the frame 6.43 s into the shot (12.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (weaponsmith) #12179 appears in the middle of the frame 6.43 s into the shot (12.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12181 appears in the middle of the frame 6.43 s into the shot (12.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12155 appears in the middle of the frame 6.43 s into the shot (13.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12178 appears in the middle of the frame 6.43 s into the shot (13.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12177 appears in the middle of the frame 6.43 s into the shot (13.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12184 appears in the middle of the frame 6.43 s into the shot (13.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12201 appears in the middle of the frame 6.43 s into the shot (13.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12200 appears in the middle of the frame 6.43 s into the shot (13.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (toolsmith) #12176 appears in the middle of the frame 6.43 s into the shot (13.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12198 appears in the middle of the frame 6.43 s into the shot (14 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12199 appears in the middle of the frame 6.43 s into the shot (14.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12154 appears in the middle of the frame 6.43 s into the shot (14.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12202 appears in the middle of the frame 6.43 s into the shot (14.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12203 appears in the middle of the frame 6.43 s into the shot (14.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12197 appears in the middle of the frame 6.43 s into the shot (14.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12175 appears in the middle of the frame 6.43 s into the shot (14.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12222 appears in the middle of the frame 6.43 s into the shot (14.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12174 appears in the middle of the frame 6.43 s into the shot (15.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12224 appears in the middle of the frame 6.43 s into the shot (15.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12196 appears in the middle of the frame 6.48 s into the shot (15 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12219 appears in the middle of the frame 6.48 s into the shot (15 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (weaponsmith) #12221 appears in the middle of the frame 6.48 s into the shot (15 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12220 appears in the middle of the frame 6.48 s into the shot (15.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12195 appears in the middle of the frame 6.48 s into the shot (15.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (toolsmith) #12218 appears in the middle of the frame 6.48 s into the shot (15.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12223 appears in the middle of the frame 6.48 s into the shot (15.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12217 appears in the middle of the frame 6.48 s into the shot (15.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12194 appears in the middle of the frame 6.48 s into the shot (15.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12216 appears in the middle of the frame 6.48 s into the shot (16 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12240 appears in the middle of the frame 6.48 s into the shot (16 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12239 appears in the middle of the frame 6.48 s into the shot (16.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12242 appears in the middle of the frame 6.48 s into the shot (16.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12243 appears in the middle of the frame 6.48 s into the shot (16.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12241 appears in the middle of the frame 6.48 s into the shot (16.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12215 appears in the middle of the frame 6.48 s into the shot (16.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12237 appears in the middle of the frame 6.48 s into the shot (16.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12238 appears in the middle of the frame 6.48 s into the shot (16.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12236 appears in the middle of the frame 6.48 s into the shot (17 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12244 appears in the middle of the frame 6.48 s into the shot (17 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12214 appears in the middle of the frame 6.48 s into the shot (17.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12264 appears in the middle of the frame 6.48 s into the shot (17.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12234 appears in the middle of the frame 6.48 s into the shot (17.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12265 appears in the middle of the frame 6.48 s into the shot (18.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12261 appears in the middle of the frame 6.53 s into the shot (17.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (toolsmith) #12260 appears in the middle of the frame 6.53 s into the shot (17.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12258 appears in the middle of the frame 6.53 s into the shot (17.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12262 appears in the middle of the frame 6.53 s into the shot (17.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (weaponsmith) #12263 appears in the middle of the frame 6.53 s into the shot (17.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (weaponsmith) #12235 appears in the middle of the frame 6.53 s into the shot (17.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12259 appears in the middle of the frame 6.53 s into the shot (17.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12257 appears in the middle of the frame 6.53 s into the shot (17.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12255 appears in the middle of the frame 6.53 s into the shot (18.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12256 appears in the middle of the frame 6.53 s into the shot (18.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12279 appears in the middle of the frame 6.53 s into the shot (18.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12282 appears in the middle of the frame 6.53 s into the shot (18.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12281 appears in the middle of the frame 6.53 s into the shot (18.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cartographer) #12280 appears in the middle of the frame 6.53 s into the shot (18.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fisherman) #12278 appears in the middle of the frame 6.53 s into the shot (18.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12283 appears in the middle of the frame 6.53 s into the shot (19 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #12276 appears in the middle of the frame 6.53 s into the shot (19.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #12284 appears in the middle of the frame 6.53 s into the shot (19.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (weaponsmith) #12277 appears in the middle of the frame 6.53 s into the shot (19.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12254 appears in the middle of the frame 6.53 s into the shot (19.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12285 appears in the middle of the frame 6.53 s into the shot (19.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (mason) #12275 appears in the middle of the frame 6.53 s into the shot (19.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (shepherd) #12286 appears in the middle of the frame 6.53 s into the shot (20.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (toolsmith) #12274 appears in the middle of the frame 6.53 s into the shot (20.4 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (librarian) #12273 appears in the middle of the frame 6.53 s into the shot (20.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12310 appears in the middle of the frame 9.73 s into the shot (11.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (fletcher) #12313 appears in the middle of the frame 9.78 s into the shot (9.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (cleric) #12321 appears in the middle of the frame 9.78 s into the shot (11.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (nitwit) #12295 appears in the middle of the frame 9.83 s into the shot (7.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (armorer) #12296 appears in the middle of the frame 9.88 s into the shot (7.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.7,
+     "shot": 4,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (butcher) #12297 appears in the middle of the frame 9.93 s into the shot (7.7 blocks)"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 5 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 2.967,
+     "shot": 2,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P3 without an establishing shot (WS wide on villager (farmer), median depth 7.2 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 11.233,
+     "tick": 1033,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 210 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 13.75,
+     "tick": 1100,
+     "line": null,
+     "msg": "the view whips at 254 deg/s (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    32.85s  villager hit                       -> entity.villager.hurt              11.2 blocks in view  ",
+    "    32.85s  villager died                      -> entity.villager.death             11.2 blocks in view  ",
+    "    32.85s  villager hit                       -> entity.villager.hurt              11.0 blocks in view  ",
+    "    32.85s  villager died                      -> entity.villager.death             11.0 blocks in view  ",
+    "    32.85s  villager hit                       -> entity.villager.hurt              10.9 blocks in view  ",
+    "    32.85s  villager died                      -> entity.villager.death             10.9 blocks in view  ",
+    "    32.85s  villager hit                       -> entity.villager.hurt              11.6 blocks in view  ",
+    "    32.85s  villager died                      -> entity.villager.death             11.6 blocks in view  ",
+    "    32.85s  villager hit                       -> entity.villager.hurt              11.7 blocks in view  ",
+    "    32.85s  villager died                      -> entity.villager.death             11.7 blocks in view  ",
+    "    35.25s  villager idle voice                -> entity.villager.ambient           10.9 blocks in view  ",
+    "    36.50s  villager idle voice                -> entity.villager.ambient           14.8 blocks in view  ",
+    "    37.70s  villager idle voice                -> entity.villager.ambient           14.8 blocks in view  ",
+    "    38.95s  villager idle voice                -> entity.villager.ambient            8.5 blocks in view  ",
+    "    40.25s  villager idle voice                -> entity.villager.ambient            8.3 blocks in view  ",
+    "    41.45s  villager idle voice                -> entity.villager.ambient           15.5 blocks in view  ",
+    "    42.65s  villager idle voice                -> entity.villager.ambient           10.9 blocks in view  ",
+    "    43.90s  villager idle voice                -> entity.villager.ambient           10.1 blocks in view  ",
+    "    45.10s  villager idle voice                -> entity.villager.ambient           14.7 blocks in view  ",
+    "    47.55s  villager idle voice                -> entity.villager.ambient           10.9 blocks in view  ",
+    "    48.75s  villager idle voice                -> entity.villager.ambient           15.8 blocks in view  ",
+    "    50.00s  villager idle voice                -> entity.villager.ambient           10.3 blocks          ",
+    "    51.20s  villager idle voice                -> entity.villager.ambient            9.6 blocks          ",
+    "    52.45s  villager idle voice                -> entity.villager.ambient           10.5 blocks          ",
+    "    53.65s  villager idle voice                -> entity.villager.ambient           14.4 blocks in view  ",
+    "    54.85s  villager idle voice                -> entity.villager.ambient           10.4 blocks in view  ",
+    "    56.05s  villager idle voice                -> entity.villager.ambient           12.2 blocks          ",
+    "    57.30s  villager idle voice                -> entity.villager.ambient           12.4 blocks          ",
+    "ambience per shot: -0.25-58.10s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:57:34.992Z"
+}
