@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 17106180,
-    "sha256": "fdd9693914e290e09f8acf81d5fea4c484b534e3a2c234baf744df79d4be0cbe",
+    "bytes": 17106702,
+    "sha256": "a15f74a46924417555a0bac1533df371e3c6bef632bd23e807fa2fd990a51705",
     "release": {
       "tag": "pkg-rainbow_sheep",
-      "asset": "rainbow_sheep.short.fdd9693914e290e0.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-rainbow_sheep/rainbow_sheep.short.fdd9693914e290e0.mp4",
-      "sha256": "fdd9693914e290e09f8acf81d5fea4c484b534e3a2c234baf744df79d4be0cbe",
-      "bytes": 17106180
+      "asset": "rainbow_sheep.short.a15f74a469244175.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-rainbow_sheep/rainbow_sheep.short.a15f74a469244175.mp4",
+      "sha256": "a15f74a46924417555a0bac1533df371e3c6bef632bd23e807fa2fd990a51705",
+      "bytes": 17106702
     },
     "nosong_release": {
       "tag": "pkg-rainbow_sheep",
@@ -333,12 +333,12 @@
     "python3 edit.py --frames work/rainbow_sheep.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_sheep.rec.json --audio work/rainbow_sheep.wav --caption \"dyeing sheep until it's a rainbow 🌈\" --self_name 56e --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",0.9,0],[\\\"dye\\\",\\\"orange\\\",0.9,1],[\\\"dye\\\",\\\"yellow\\\",0.9,2],[\\\"dye\\\",\\\"lime\\\",0.9,3],[\\\"dye\\\",\\\"light blue\\\",0.9,4],[\\\"dye\\\",\\\"blue\\\",0.9,5],[\\\"dye\\\",\\\"purple\\\",0.9,6]]\" --subs_y 0.15 --speed [[\"jeb:0.1\",\"jeb:7.6\",8]] --punch [[\"jeb\",0,1.06]] --sfx [[\"air\",\"start\",\"jeb\",{\"gain\":0.5}],[\"dip\",\"jeb\",0.3],[\"ding\",\"jeb\"]] --start_at dye:-0.45 --end_after jeb:0.75 --out out/rainbow_sheep.mp4"
   ],
   "status": "ready",
-  "notes": "fast cuts r:r188b46: the end 0.75 s into the jeb_ cycle; fix-check READY",
+  "notes": "fast cuts r:r188b46: the end 0.75 s into the jeb_ cycle; fix-check READY | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T00:58:13.759Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:58:42+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:36:36+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 12.86 s vs the reviewed render 12.85 s"
@@ -354,8 +354,53 @@
       "label": "CHECK OK",
       "blockers": 0,
       "at": "2026-11-12T00:56:23.985Z",
-      "report": "work/hb/rainbow_sheep.check.json"
+      "report": "work/hb/rainbow_sheep.check.json",
+      "carried": "from the previous stamp: same recording, sound-only re-mix"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 0.78,
+      "pump_run": 0.0,
+      "under": null,
+      "summary": "the master's gain spread 0.78 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game None dB over the music as mixed (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 0.78,
+    "pump_run": 0.0,
+    "master_gain": -0.13,
+    "under": null,
+    "windows": [
+      83,
+      3
+    ],
+    "ok": true,
+    "summary": "master gain spread 0.78 dB (max 3.0), run 0.0 s (max 0.5), game over music None dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:36:31+00:00",
+    "code": "365e81ec2a80705a0ec309468369a656db47990e",
+    "from": {
+      "sha256": "fdd9693914e290e09f8acf81d5fea4c484b534e3a2c234baf744df79d4be0cbe",
+      "release": {
+        "tag": "pkg-rainbow_sheep",
+        "asset": "rainbow_sheep.short.fdd9693914e290e0.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-rainbow_sheep/rainbow_sheep.short.fdd9693914e290e0.mp4",
+        "sha256": "fdd9693914e290e09f8acf81d5fea4c484b534e3a2c234baf744df79d4be0cbe",
+        "bytes": 17106180
+      },
+      "song": {
+        "drop_in_short_s": 12.1,
+        "drop_in_song_s": 16.5,
+        "song_start_s": 4.4
+      }
+    },
+    "song_file_sha256": "cbd28e180dfac36e604ba2458ec768d14af5f5808b10bd07a47586b5d4c6629e",
+    "video_stream_md5": "26d34e71b12fc391f247c4a4c251c78d",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }

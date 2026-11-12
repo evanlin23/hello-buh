@@ -30,14 +30,14 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19922975,
-    "sha256": "47a57fa1f7b8b2ae4cf461de548356a100a7529a8071683cb0b4c3d875b12beb",
+    "bytes": 19922361,
+    "sha256": "f4bd6e18087d4849b83d586e92673bb79e0e77ea462bcf39f0e712cac8bc2e50",
     "release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short.47a57fa1f7b8b2ae.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.47a57fa1f7b8b2ae.mp4",
-      "sha256": "47a57fa1f7b8b2ae4cf461de548356a100a7529a8071683cb0b4c3d875b12beb",
-      "bytes": 19922975
+      "asset": "creeper.short.f4bd6e18087d4849.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.f4bd6e18087d4849.mp4",
+      "sha256": "f4bd6e18087d4849b83d586e92673bb79e0e77ea462bcf39f0e712cac8bc2e50",
+      "bytes": 19922361
     },
     "nosong_release": {
       "tag": "pkg-creeper",
@@ -285,12 +285,12 @@
     "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --self_name 56e --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"heart\",\"first\",{\"gain\":1.6}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:0 --end_after death:1.2 --out out/creeper.mp4"
   ],
   "status": "ready",
-  "notes": "re-take r:r0f3da0: opens on the creeper walking up; end 1.2 s after the blast (r:r188b46); review READY r1. Nitpicks: hiss ~0.7 s before the swell; quiet footsteps",
+  "notes": "re-take r:r0f3da0: opens on the creeper walking up; end 1.2 s after the blast (r:r188b46); review READY r1. Nitpicks: hiss ~0.7 s before the swell; quiet footsteps | sound-only re-mix 2026-11-12 (r:r6ae905): picture identical, new stunt mix",
   "published_at": "2026-11-12T01:35:49.437Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:36:13+00:00",
-    "by": "publish.js",
+    "at": "2026-11-12T22:36:18+00:00",
+    "by": "remix (sound only, r:r6ae905)",
     "package": {
       "ok": true,
       "summary": "short.mp4 9.96 s vs the reviewed render 9.95 s"
@@ -298,7 +298,7 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
@@ -306,8 +306,53 @@
       "label": "CHECK OK",
       "blockers": 0,
       "at": "2026-11-12T01:34:27.439Z",
-      "report": "work/hb/creeper.check.json"
+      "report": "work/hb/creeper.check.json",
+      "carried": "from the previous stamp: same recording, sound-only re-mix"
     },
-    "key_sounds": "n/a"
+    "key_sounds": "n/a",
+    "mix": {
+      "ok": true,
+      "pump": 1.8,
+      "pump_run": 0.0,
+      "under": 11.19,
+      "summary": "the master's gain spread 1.8 dB (max 3), longest hard-limited run 0.0 s (max 0.5), the game 11.2 dB over the music on short.mp4 (min 3)"
+    }
+  },
+  "mix": {
+    "pump": 1.8,
+    "pump_run": 0.0,
+    "master_gain": -0.06,
+    "under": 11.19,
+    "windows": [
+      19,
+      138
+    ],
+    "ok": true,
+    "summary": "master gain spread 1.8 dB (max 3.0), run 0.0 s (max 0.5), game over music 11.19 dB (min 3.0)"
+  },
+  "remix": {
+    "what": "sound-only re-mix: the same no-song video, recording, metadata edit and NCS file through scripts/add_song.py's 2026-11-12 stunt mix (game + sfx mastered first, the song steady under them, a peak limiter only)",
+    "why": "owner 2026-11-12: 're mix only the sound, keep existing OKs' (r:r6ae905)",
+    "at": "2026-11-12T22:36:12+00:00",
+    "code": "365e81ec2a80705a0ec309468369a656db47990e",
+    "from": {
+      "sha256": "47a57fa1f7b8b2ae4cf461de548356a100a7529a8071683cb0b4c3d875b12beb",
+      "release": {
+        "tag": "pkg-creeper",
+        "asset": "creeper.short.47a57fa1f7b8b2ae.mp4",
+        "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.47a57fa1f7b8b2ae.mp4",
+        "sha256": "47a57fa1f7b8b2ae4cf461de548356a100a7529a8071683cb0b4c3d875b12beb",
+        "bytes": 19922975
+      },
+      "song": {
+        "drop_in_short_s": 8.75,
+        "drop_in_song_s": 9.0,
+        "song_start_s": 0.25
+      }
+    },
+    "song_file_sha256": "449c12c049be95eedc1809342ef3764213f6161be37e000c660ba63de7cb77cd",
+    "video_stream_md5": "ba788b222d959d59421b7d7ec3953f91",
+    "video_stream_unchanged": true,
+    "drop_unchanged": true
   }
 }
