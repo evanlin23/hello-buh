@@ -418,8 +418,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
 - **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
   (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
-- **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action.
-  Check: owner, review. r:r7ef6ec
+- **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action, and
+  is big: most of the view's width at a GUI scale that reads on a phone, with the ALLOW/DENY result big as its own
+  beat. Check: owner, review. r:r7ef6ec r:rb35549
 - **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
   ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
   The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a

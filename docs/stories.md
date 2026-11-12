@@ -429,6 +429,9 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on fakemod_permission: "Also, for the fake mod thing, I think the pop-up should be in the middle
   of the screen rather than at the top."** In the `fakemod` format, the permission popup sits centred in the game view
   (like a real modal dialog over the action), not at the top.
+- **Owner, 2026-11-12, on the bigger fakemod popup take (a bigger creeper popup plus an ALLOW card): "bigger popup is
+  prolly better lowkey".** In the `fakemod` format the permission popup is big: it fills most of the game view's width,
+  centred, at a GUI scale that reads at phone size, and the ALLOW/DENY result shows big as its own beat.
 - **Owner, 2026-11-12, asked whether to keep the 30 s minimum (2026-11-06) or drop it: "no fixed minimum, just don't
   pad them".** A Short is as long as its beats need. There is no minimum length for a stunt (the 30 s rule of
   2026-11-06 is retired). Padding is the blocker instead: a beat added or stretched only to reach a length, a beat
