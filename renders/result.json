@@ -1,0 +1,17 @@
+{
+ "name": "stages_friends",
+ "stunt": "stages_friends",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43127574819",
+ "source": "734cf49",
+ "queued": "2026-11-12T00:28:46Z",
+ "finished": "2026-11-12T00:36:30Z",
+ "mp4": "renders/out/stages_friends.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
