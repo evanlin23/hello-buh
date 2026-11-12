@@ -1,7 +1,8 @@
 // "building a house in 1 second vs 1 minute vs 1 hour 💀" (lib/time_lapse.js): a dirt hut, a little
 // plank cottage (roofed from inside), then a three-storey quartz mansion rising as a time-lapse in stages: a pool and a
-// road that runs up between the two small builds, three floors with window bands, two side wings,
-// a roof with a glass penthouse, a garden of trees and hedges, and last a gold crown on top.
+// road that runs up between the two small builds, three floors with pilasters and cornices, a columned portico, corner
+// turrets, two wings with balconies and hip roofs, a roof terrace with a glass penthouse and a pool, a formal garden,
+// the wall round the grounds, and last the gold crown. On a real plain (owner r2: "doesnt need to be superflat").
 const { makeStunt } = require('../lib/time_lapse')
 
 // 1 second: a dirt hut (two stubs and a lintel)
@@ -27,33 +28,52 @@ function cottage () {
   return out
 }
 
-// 1 hour: the mansion, local to its centre (front faces +z, toward the camera)
+// 1 hour: the mansion, local to its centre (front faces +z, toward the camera). Owner on take 1 (2026-11-12, at 22.3 s):
+// "make the house more fancy, and it doesnt need to be superflat": nothing here is a flat box now. Pilasters stand out
+// from every wall, a cornice juts out at each floor, a columned portico with a balcony on top covers the door, round
+// turrets with balconies and slate cones stand on the four corners, the wings get balconies and hip roofs, the roof a
+// balustrade, and the grounds a formal garden (a fountain, hedges, flower beds, trees, lamp posts); it stands on a real
+// plain, only its own grounds levelled (stage numbers as before: the angles' timing still fits).
+const { kit } = require('../lib/mega_lapse')
 function mansion () {
   const out = new Map()
   const put = (x, y, z, name, stage) => { const k = `${x},${y},${z}`; if (!out.has(k)) out.set(k, [x, y, z, name, stage]) }
+  // a mega_lapse kit shape (y = 0 the ground's top, 1 the first block) -> this build's cells (y = 0 the first block)
+  const kitPut = (cells, stageOf) => { for (const c of cells) put(c[0], c[1] - 1, c[2], c[3], stageOf(c[1] - 1)) }
   const X = 18, Z = 10
-  // stage 0: the pool in front (quartz rim, water), and the road in
-  for (let x = -9; x <= 9; x++) {
-    for (let z = 13; z <= 21; z++) {
-      const rim = Math.abs(x) === 9 || z === 13 || z === 21
-      put(x, -1, z, rim ? 'smooth_quartz' : 'water', 0)
-      if (!rim) put(x, -2, z, 'water', 0)
-    }
+  const floorStage = (y) => y < 5 ? 1 : y < 10 ? 2 : y < 15 ? 3 : 5
+  // the corner turrets first (they win over the walls they stand in): radius 3, to y 20, a balcony ring, slate cones;
+  // the cone and its tip go on with the rooftop stage (6)
+  for (const [tx, tz] of [[-X, -Z], [X, -Z], [-X, Z], [X, Z]]) {
+    kitPut(kit.tower([], tx, tz, 3, 1, 21, { wall: 'quartz_block', base: 'polished_andesite', glass: 'glass', roof: 'deepslate_tiles', roofH: 7, win: 5, balcony: 15, balconyBlock: 'polished_andesite' }), (y) => y > 21 ? 6 : floorStage(y))
   }
-  for (let z = 22; z <= 46; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'smooth_stone', 0)
-  for (let z = 11; z <= 12; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'smooth_stone', 0)
-  for (let x = -12; x <= 12; x++) for (let z = 11; z <= 22; z++) if (Math.abs(x) >= 10 || z === 22) if (!(Math.abs(x) <= 1)) put(x, -1, z, 'smooth_stone', 0)
-  // stages 1-3: three floors, 5 high each: quartz walls, pillar corners and ribs, window bands
+  // the portico: six columns, an entablature carrying a balcony with a balustrade, steps up to the door
+  for (const cx of [-9, -6, -3, 3, 6, 9]) for (let y = 0; y <= 8; y++) put(cx, y, Z + 4, y === 0 ? 'chiseled_quartz_block' : 'quartz_pillar', y < 5 ? 1 : 2)
+  for (let x = -10; x <= 10; x++) for (let z = Z + 1; z <= Z + 5; z++) {
+    put(x, 9, z, z === Z + 5 || Math.abs(x) === 10 ? 'chiseled_quartz_block' : 'smooth_quartz', 2)
+    if ((z === Z + 5 || Math.abs(x) === 10) && (x + z) % 2 === 0) put(x, 10, z, 'quartz_pillar', 3)
+    else if (z === Z + 5 || Math.abs(x) === 10) put(x, 10, z, 'quartz_slab', 3)
+  }
+  for (let z = Z + 1; z <= Z + 6; z++) for (let x = -3; x <= 3; x++) put(x, -1, z, 'smooth_stone', 0)
+  // three floors, 5 high each: quartz walls with window bands, pilasters standing a block out, a cornice ring
+  // jutting out at each floor line
   for (let f = 0; f < 3; f++) {
     for (let y = f * 5; y < f * 5 + 5; y++) {
-      for (let x = -X; x <= X; x++) {
-        for (let z = -Z; z <= Z; z++) {
+      for (let x = -X - 1; x <= X + 1; x++) {
+        for (let z = -Z - 1; z <= Z + 1; z++) {
+          const ox = Math.abs(x) === X + 1, oz = Math.abs(z) === Z + 1          // the ring a block outside the walls
           const ex = Math.abs(x) === X, ez = Math.abs(z) === Z
+          const along = ex || ox ? z : x
+          const rib = Math.abs(along) % 4 === 0
+          if (ox || oz) {
+            if (ox && oz) continue
+            if (y === f * 5 + 4) put(x, y, z, 'smooth_quartz', 1 + f)                       // the cornice
+            else if (rib && !(f === 0 && oz && z > 0 && Math.abs(x) <= 10)) put(x, y, z, 'quartz_pillar', 1 + f)   // pilasters (not inside the portico)
+            continue
+          }
           const slab = y === f * 5
           if (slab) { put(x, y, z, ex || ez ? 'polished_andesite' : 'quartz_block', 1 + f); continue }
           if (!ex && !ez) continue
-          const along = ex ? z : x
-          const rib = (ex && ez) || Math.abs(along) % 4 === 0
           if (f === 0 && ez && z > 0 && Math.abs(x) <= 1 && y <= f * 5 + 3) continue          // the front door
           const win = !rib && y >= f * 5 + 1 && y <= f * 5 + 3
           put(x, y, z, rib ? 'quartz_pillar' : win ? 'glass' : 'quartz_block', 1 + f)
@@ -61,14 +81,13 @@ function mansion () {
       }
     }
   }
-  // stage 4: two-storey wings either side, with their own window bands and a dark roof
+  // stage 4: two-storey wings either side, pilasters, a balcony along each front, a stepped hip roof
   for (const side of [-1, 1]) {
-    for (let y = 0; y <= 10; y++) {
+    for (let y = 0; y <= 9; y++) {
       for (let ax = X + 1; ax <= X + 10; ax++) {
         for (let z = -8; z <= 8; z++) {
           const x = side * ax
           const ex = ax === X + 10, ez = Math.abs(z) === 8
-          if (y === 10) { put(x, y, z, ex || ez ? 'dark_oak_planks' : 'quartz_block', 4); continue }
           if (y % 5 === 0) { put(x, y, z, ex || ez ? 'polished_andesite' : 'quartz_block', 4); continue }
           if (!ex && !ez) continue
           const along = ex ? z : ax
@@ -77,13 +96,31 @@ function mansion () {
         }
       }
     }
+    for (let ax = X + 2; ax <= X + 9; ax++) {                                            // the balcony on the upper floor
+      put(side * ax, 5, 9, 'polished_andesite', 4); put(side * ax, 5, 10, 'polished_andesite', 4)
+      put(side * ax, 6, 10, ax % 2 ? 'quartz_pillar' : 'quartz_slab', 4)
+    }
+    for (let k = 0; k <= 5; k++) {                                                      // the hip roof
+      for (let ax = X + 1 + k - 1; ax <= X + 11 - k; ax++) for (let z = -9 + k; z <= 9 - k; z++) put(side * ax, 10 + k, z, 'deepslate_tiles', 4)
+    }
   }
-  // stage 5: the roof (a dark rim, a flat top) and a glass penthouse
-  for (let x = -X - 1; x <= X + 1; x++) {
-    for (let z = -Z - 1; z <= Z + 1; z++) {
-      const rim = Math.abs(x) === X + 1 || Math.abs(z) === Z + 1
+  // stage 0: the pool in front (quartz rim, water) and the road in, lantern posts along it
+  for (let x = -9; x <= 9; x++) {
+    for (let z = 17; z <= 25; z++) {
+      const rim = Math.abs(x) === 9 || z === 17 || z === 25
+      put(x, -1, z, rim ? 'smooth_quartz' : 'water', 0)
+      if (!rim) put(x, -2, z, 'water', 0)
+    }
+  }
+  for (let z = 26; z <= 46; z++) for (let x = -1; x <= 1; x++) if (z < 28 || z > 32) put(x, -1, z, 'smooth_stone', 0)
+  for (let x = -12; x <= 12; x++) for (let z = 14; z <= 16; z++) put(x, -1, z, 'smooth_stone', 0)
+  for (const z of [27, 33]) for (const x of [-3, 3]) { put(x, 0, z, 'polished_andesite', 0); put(x, 1, z, 'polished_andesite', 0); put(x, 2, z, 'sea_lantern', 0) }
+  // stage 5: the roof: a jutting dark rim, a balustrade, the glass penthouse
+  for (let x = -X - 2; x <= X + 2; x++) {
+    for (let z = -Z - 2; z <= Z + 2; z++) {
+      const rim = Math.abs(x) >= X + 1 || Math.abs(z) >= Z + 1
       put(x, 15, z, rim ? 'dark_oak_planks' : 'quartz_block', 5)
-      if (rim) put(x, 16, z, 'dark_oak_planks', 5)
+      if (Math.abs(x) === X + 2 || Math.abs(z) === Z + 2) put(x, 16, z, (x + z) % 2 === 0 ? 'quartz_pillar' : 'quartz_slab', 5)
     }
   }
   for (let y = 16; y <= 19; y++) {
@@ -95,57 +132,83 @@ function mansion () {
       }
     }
   }
-  for (let x = -7; x <= 7; x++) for (let z = -6; z <= 4; z++) put(x, 20, z, 'dark_oak_planks', 5)
-  // stage 5: the garden - hedges along the road and the pool, four trees
-  for (let z = 24; z <= 33; z++) for (const x of [-3, 3]) if (z % 4 !== 0) put(x, 0, z, 'oak_leaves', 4)   // stops short of the two small builds
-  for (let x = -12; x <= 12; x++) if (Math.abs(x) >= 3) put(x, 0, 23, 'oak_leaves', 4)
-  for (const [tx, tz] of [[-34, 18], [34, 18], [-15, 27], [15, 27]]) {
-    for (let y = 0; y < 5; y++) put(tx, y, tz, 'oak_log', 4)
-    for (let y = 3; y <= 7; y++) {
-      const r = y <= 5 ? 2 : 1
-      for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) if (!(x === 0 && z === 0 && y < 5) && Math.abs(x) + Math.abs(z) < r + 2) put(tx + x, y, tz + z, 'oak_leaves', 4)
-    }
-  }
-  // stage 6: a rooftop infinity pool on the west half; stage 7: a helipad on the east wing
+  for (let k = 0; k <= 3; k++) for (let x = -7 + k; x <= 7 - k; x++) for (let z = -6 + k; z <= 4 - k; z++) put(x, 20 + k, z, k === 0 ? 'dark_oak_planks' : 'deepslate_tiles', 5)
+  // stage 6: a rooftop infinity pool on the west half (with the turret cones, above)
   for (let x = -16; x <= -8; x++) {
     for (let z = -8; z <= 8; z++) {
       const rim = x === -16 || x === -8 || Math.abs(z) === 8
-      put(x, 16, z, rim ? 'glass' : 'water', rim ? 5 : 6)   // the rim before the water (it spilled over the roof)
+      put(x, 16, z, rim ? 'glass' : 'water', rim ? 5 : 6)
     }
   }
-  for (let x = 21; x <= 27; x++) {
-    for (let z = -3; z <= 3; z++) {
-      const dx = x - 24, H = (Math.abs(dx) === 2 && Math.abs(z) <= 2) || (z === 0 && Math.abs(dx) <= 2)
-      put(x, 11, z, H ? 'yellow_concrete' : 'gray_concrete', 7)
+  // stage 7: the helipad on the east wing's roof ridge is gone (a hip roof now): the formal garden instead, either side
+  // of the road: hedges round flower beds, a small fountain, trees
+  for (const sx of [-1, 1]) {
+    for (let ax = 6; ax <= 26; ax++) for (let z = 28; z <= 34; z++) {
+      const edge = ax === 6 || ax === 26 || z === 28 || z === 34
+      if (edge && !(z === 31 && ax === 6)) put(sx * ax, 0, z, 'oak_leaves', 7)
+      else if (!edge) put(sx * ax, 0, z, ['poppy', 'allium', 'cornflower', 'oxeye_daisy'][(ax + z) % 4], 7)
     }
+    for (const [tx, tz] of [[30, 20], [34, 30], [40, 8], [40, -12]]) kitPut(kit.tree([], sx * tx, 1, tz, 5, 2.2, { leaves: 'oak_leaves' }), () => 7)
   }
-  // stage 8: a wall round the grounds, the gates opening onto the road (the hut and the cottage stand
-  // just outside them): quartz, pillar posts with lanterns, tall gate posts with gold tops
+  // the fountain on the road between the beds (the hut and the cottage stand just outside the gates: nothing past z 34)
+  for (let x = -2; x <= 2; x++) for (let z = 28; z <= 32; z++) {
+    if (Math.abs(x) <= 1 && z >= 29 && z <= 31) { if (!(x === 0 && z === 30)) put(x, 0, z, 'water', 7) } else put(x, 0, z, 'chiseled_stone_bricks', 7)
+  }
+  for (let y = 0; y <= 2; y++) put(0, y, 30, y === 2 ? 'sea_lantern' : 'chiseled_stone_bricks', 7)
+  // stage 8: a wall round the grounds, the gates opening onto the road: quartz, pillar posts with lanterns, tall gate
+  // posts with gold tops
   for (let x = -46; x <= 46; x++) for (let z = -20; z <= 36; z++) {
     if (Math.abs(x) !== 46 && z !== -20 && z !== 36) continue
-    if (z === 36 && Math.abs(x) <= 2) continue                                         // the gateway
+    if (z === 36 && Math.abs(x) <= 2) continue
     const post = (x + z) % 6 === 0 || (Math.abs(x) === 46 && (z === -20 || z === 36))
     for (let y = 0; y <= 2; y++) put(x, y, z, post ? 'quartz_pillar' : 'quartz_block', 8)
     if (post) put(x, 3, z, 'sea_lantern', 8)
   }
   for (const gx of [-3, 3]) { for (let y = 0; y <= 4; y++) put(gx, y, 36, 'quartz_pillar', 8); put(gx, 5, 36, 'gold_block', 8) }
-  // stage 9: a gold crown round the penthouse roof, the last blocks of all
-  for (let x = -7; x <= 7; x++) for (let z = -6; z <= 4; z++) {
-    if (Math.abs(x) !== 7 && z !== -6 && z !== 4) continue
-    put(x, 21, z, 'gold_block', 9)
-    if ((x + z) % 2 === 0) put(x, 22, z, 'gold_block', 9)
-  }
+  // stage 9: the gold crown: a gold tip on every turret and a gold ring on the penthouse roof, the last blocks of all
+  for (const [tx, tz] of [[-X, -Z], [X, -Z], [-X, Z], [X, Z]]) for (let k = 0; k < 3; k++) put(tx, 29 + k, tz, 'gold_block', 9)
+  for (let x = -4; x <= 4; x++) for (let z = -3; z <= 1; z++) if (Math.abs(x) === 4 || z === -3 || z === 1) put(x, 24, z, 'gold_block', 9)
+  for (let y = 24; y <= 27; y++) put(0, y, -1, 'gold_block', 9)
   return [...out.values()]
+}
+
+// the levelled site planted like the plain round it (lib/time_lapse.js S.dress, from spawn; the mansion's centre is
+// z - 45, its grounds x -46..46, z -65..-9): grass and flower patches everywhere but the two small plots and the road
+// (the 1-second and 1-minute builds and the bot's walk round them stay clear), oak trees round the site's edges, off
+// every camera's line
+function dress () {
+  const d = []
+  for (let dx = -56; dx <= 56; dx += 7) for (let dz = -74; dz <= 30; dz += 7) {
+    const jx = dx + Math.round(Math.sin(dx * 3.1 + dz) * 2), jz = dz + Math.round(Math.cos(dz * 2.3 + dx) * 2)
+    if (jx >= -14 && jx <= 16 && jz >= -16 && jz <= 12) continue          // the small plots, the bot's walk round them
+    if (Math.abs(jx) <= 4 && jz > -66) continue                            // the road up the middle
+    d.push([jx, jz, (jx + jz) % 3 === 0 ? 'minecraft:flower_plain' : 'minecraft:patch_grass'])
+  }
+  // trees all round the site's edges (r2: they break up the levelled rectangle and stand in front of the taper), and in
+  // the open lawn either side of the plots; none by the 'low right' showcase camera (x 52..55, z -15) or in the hero
+  // wide's lane (|x| < 14 in front)
+  const t = (tx, tz, f) => d.push([tx, tz, f || ((tx + tz) % 2 ? 'minecraft:fancy_oak' : 'minecraft:oak')])
+  for (let z = -74; z <= 28; z += 9) { t(-58, z); if (z < -26 || z > -4) t(58, z) }
+  for (let x = -49; x <= 49; x += 9) t(x, -77)
+  for (let x = 16; x <= 52; x += 9) { t(x, 31); t(-x, 31) }
+  for (const [tx, tz] of [[-30, 8], [-40, 20], [-24, 22], [30, 10], [40, 22], [26, 20]]) t(tx, tz)
+  return d
 }
 
 module.exports = makeStunt({
   name: 'lapse_house',
   recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
+  // a real plain round it (owner 2026-11-12 on take 1: "it doesnt need to be superflat"): only the grounds and the two
+  // small plots are levelled (x -60..60, z -78..14 from spawn; the mansion's centre is z - 45), the trees within 16 of
+  // the taper go, the land beyond keeps its own ground, trees and water
+  site: [-60, 60, -78, 34], clearTrees: 16, taperNoise: true,   // (to z + 34: the hero wide's camera at z + 27 was inside the land past a z + 14 edge)
+  dress: dress(),
   endAfter: 'big_done:0.5',
   bigCuts: [6, 0.6, 57],
   payoffFlash: true, song: null,   // pace: a flash + punch + dip/impact on 60:00 (no picture change on the payoff), NCS at publish
   botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 3 tries on a busy box   // jump cuts through the 1-hour round (a steady angle with no cut for 5+ s read as dead air)
-  caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
+  caption: 'house in 1 second vs 1 minute vs 1 hour 💀',   // (9 words: the opening check's cap is 10; was 'building a house in ...')
+  sfx: [['pop', 'small_start', { gain: 1.2 }]],   // a hit by 0.5 s (pace's opening check: the first dirt was 16 dB under the peak)
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
@@ -166,13 +229,13 @@ module.exports = makeStunt({
     // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the mansion
     angles: [
       [0, [[-2, 13, 27], [0, -1, 15]], [[-4, 13, 28], [0, -1, 14]], 'down on the pool'],          // the pool fills the frame
-      [126, [[-29, 6, 39], [0, 5, 2]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3
+      [126, [[-21, 6, 31], [0, 6, 0]], [[-24, 9, 32], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3 (r2: closer, the mansion half the frame, not a sliver over a lawn)
       [372, [[46, 12, 10], [0, 7, 0]], [[44, 16, 2], [0, 9, 0]], 'side'],                          // floor 3, the wings
       [612, [[0, 24, 48], [0, 6, 0]], [[0, 26, 42], [0, 7, 0]], 'high front, over the garden'],     // the wings, the garden, the roof going on (a close facade angle showed a wall of windows while they rose out of frame: review)
-      [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
+      [852, [[-42, 30, 46], [0, 12, 0]], [[-38, 32, 41], [0, 14, -2]], 'high wide'],                // roof, penthouse, rooftop pool (r2: lower and closer, the land beyond in the frame's top, not the levelled rectangle)
       // the showcase: the finished mansion from three angles, the helipad, the wall and the crown going on
       [1092, [[55, 12, 30], [8, 14, 0]], [[52, 13, 32], [8, 14, 0]], 'low right'],
-      [1210, [[50, 34, -38], [0, 6, 4]], [[47, 35, -34], [0, 6, 4]], 'high from the back corner'],
+      [1210, [[44, 20, -34], [0, 9, 2]], [[41, 21, -31], [0, 9, 2]], 'high from the back corner'],   // (r2: lower: the site's edge dropping to the water was a third of the frame)
       [1330, [[-2, 11, 72], [0, 10, 0]], [[-4, 11.5, 62], [0, 10, 0]], 'the hero wide, through the gates']
     ]
   }
