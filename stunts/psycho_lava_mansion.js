@@ -15,7 +15,7 @@ module.exports = P.makeStunt({
     // a pop on frame 1 under the fire's crackle (the audio hook); the landing on the bed gets a small punch; the payoff
     // is the anchor's blast: the song dips 0.4 s before it, then a boom, a flash, a shake, and the death screen with
     // its message ("56e was killed by [Intentional Game Design]") read for 1.7 s
-    sfx: [['pop', 'open', { gain: 1.0 }],   /* r:r0f3da0: 0.35 sat 7.4 dB under the peak */ ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }]],
+    sfx: [['pop', 'open', { gain: 1.8 }],   /* r:r0f3da0: 0.35 sat 7.4 dB under the peak; 1.0 still 14.6 dB on the no-song track */ ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.3 }]],
     punch: [['land', 0, 1.06], ['boom', 0, 1.15]],
     flash: [['boom', 0, 0.5]],
     shake: [['boom', 0, 18]]
