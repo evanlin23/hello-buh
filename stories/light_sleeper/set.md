@@ -19,23 +19,26 @@ is built big and on real ground. Every set follows `docs/building_guide.md` and 
 - **The well** at the centre: 5 x 5 cobblestone rim, 1 high, **bare stone (no carpet on the rim: S15 depends on it)**,
   around a 3 x 3 dry shaft 5 deep. **The lid**: 3 x 3 white wool filling the shaft's top layer, flush with the rim's
   top; from S01's step (eye ~4.5 above the plaza, 14 blocks away) it must read as a white square on the grey rim: check
-  the frame and, if it reads thin, raise S01's step a block. Walls mossy cobble with sculk veins creeping up the bottom
-  2 blocks. Floor: sculk blocks, 2 sculk sensors (corners), 1 sculk shrieker (`can_summon=true`) in the middle. Through
-  the open slot (the lid's middle row) the shaft looks dark with a faint teal glow at the bottom: check at S06's and
-  S11's angles. The lid is re-laid whole between the flashback and tonight.
-- **The bell post**: oak post with a bell, 6 blocks east of the well. Boxed in white wool on 3 sides and the top
-  (5 wool blocks), open to the west so the gold shows in S04.
-- **Houses**: varied heights and woods (spruce, oak, birch), pitched roofs with overhang, every roof covered in carpet
-  (red and orange carpet on the roofs, so they read warm against the cool plaza), carpeted stairs to every door,
+  the frame and, if it reads thin, raise S01's step a block. Walls mossy cobble; the **top 2 blocks of the wall, right under the lid,** lined with sculk, sculk veins and glow
+  lichen, so the open slot reads dark teal from the POV (the bottom can't be seen through a 1-block slot from the
+  carpet: the sightline hits the south wall ~1.2 blocks under the lid). Never stand him on the rim to look down: the
+  rim's first footstep is S15's. Floor: sculk blocks, 2 sculk sensors (corners), 1 sculk shrieker (`can_summon=true`) in the middle. Through
+  the open slot (the lid's middle row) the shaft looks dark with sculk on the walls: check at S06's and S11's angles. The lid is re-laid whole between the flashback and tonight.
+- **The bell frame**: a vanilla-style bell frame (two oak posts and a beam, 3 wide and 4 high) with the bell under
+  the beam, 6 blocks east of the well, wrapped in white wool on 3 sides and the top, open to the west so the gold shows
+  in S04 and the white box reads in a wide.
+- **Houses**: varied heights and woods (spruce, oak, birch), roofs stepped in full blocks (1 up per 1 in) with red or orange carpet on every step, upside-down stairs under the
+  eaves and a 1-block overhang (carpet floats half a block over a stair or slab, so never carpet a stair block; the roof
+  contrast comes from the carpet colour against the walls), steps to every door built as 1-high full blocks each topped with carpet,
   carpet on every floor inside our house. Lanterns on posts (not torches). Doors on every plaza house (S10-S11 shut,
   S12 open with a villager in each).
 - **Our house** on the plaza's north edge: 9 x 9, two storeys, the door at (0,-8) facing south, **8 blocks from the
-  well's centre** (S13 is shot from the boy's spot north of the well, 5 blocks from it); a window toward the well; a
+  well's centre**, 2 steps (full blocks, carpeted) above the plaza so the lid reads as a square from the doorway (S13 is shot from the boy's spot north of the well, 5 blocks from it); a window toward the well; a
   lantern post by the steps; inside: table and two chairs (one never used), a bed, a lantern, a chest, carpet floor.
-- **Carpet street** from the plaza's north-west corner up the north slope, carpeted stairs to the houses on both sides;
+- **Carpet street** from the plaza's north-west corner up the north slope, carpeted full-block steps to the houses on both sides;
   **the doghouse** at its top (-18,-26): a 3 x 3 x 3 hut (big enough to read lower-centre in S02's last frame from ~6
   blocks) with a carpet roof, a sitting wolf with a red collar in front.
-- **The south street** with 3 carpeted steps down into the plaza (S01): houses with carpeted front stairs on both sides,
+- **The south street** with 3 carpeted full-block steps down into the plaza (S01): houses with carpeted front steps on both sides,
   one at frame left in S01's foreground.
 - **Sheep meadow** on the far (south-east) slope: fenced, 40 x 30, ~80 sheep in S03's frame (white, half sheared), a
   pile of wool blocks by the gate. Distant sheep beyond the rise imply more.
@@ -43,7 +46,7 @@ is built big and on real ground. Every set follows `docs/building_guide.md` and 
   blocks out (S09 needs the line in the foreground).
 - **Fill to the fog**: from the hill (S02) the camera sees the whole valley: forest on both slopes, the meadow, the
   stream, hills behind. From S01's step: the plaza, our house, roofs, then the north slope. From the plaza at night
-  (S11-S17) the Darkness fog (15 blocks, black) is the edge: every subject is within 12 blocks of the lens.
+  (S11-S17) the Darkness fog (15 blocks, black) is the edge: every subject is within 11 blocks of the lens.
 
 ## Lighting and look
 - Night scenes (S10-S17): half moon, lanterns on every house and around the plaza; a lantern on a post beside the well

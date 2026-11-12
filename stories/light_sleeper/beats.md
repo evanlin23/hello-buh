@@ -1,5 +1,9 @@
 # light_sleeper: beat sheet, clue map, writer's checks (r2)
 
+**r4 (2026-11-10, owner rules of the day):** L03 (the sheep) is cut for the 35-45 s target (the half-sheared meadow stays in
+S02's last frame); L04, L09, L11, L14 are shorter; Mom says "Milo", not "sweetie", and only L07 and L13 are hushed (mystery and
+fear). The timings below are r2's; the real ones are in voice/voice.json.
+
 r2 (2026-11-10) applies the r1 critic's must-fixes: the carpet rule holds to the end (he steps off the carpet onto the
 well's bare stone to dance), the well wears a white wool lid from S01, pulling the wool off is the vibration (the egg
 is gone), "Wells ECHO" gives the jukebox its reason, our door is on the plaza 8 blocks from the well (S13 is
@@ -31,7 +35,7 @@ Everything between plants silence.
 | 6.6-10.4 | test 1 | L03 N: "We keep THREE HUNDRED sheep. We shear them every MORNING." | S03 WS meadow: half the flock sheared bald | they need more carpet all the time |
 | 10.7-14.6 | test 2 | L04 N: "Our BELL is wrapped in WOOL. I've never HEARD it." | S04 POV past the lidded well to the boxed bell | **picture clue**: wool around the two things that would make noise (bell, well) |
 | 14.9-18.8 | **A character speaks** | L05 Mom: "Walk SOFT, sweetie. The ground's a light SLEEPER." | S05 FS: Mom in our doorway on the plaza | **the key line**: literally true, heard as a saying |
-| 19.1-21.4 | test 3 (setup) | L06 N: "Once, I pulled the WOOL off the WELL." | S06 MS POV: the shears take the lid's middle row off, the teal glow below | a choice, a visible cause; **picture clue**: the glow |
+| 19.1-21.4 | test 3 (setup) | L06 N: "Once, I pulled the WOOL off the WELL." | S06 MS POV: the shears take the lid's middle row off, sculk on the walls under it | a choice, a visible cause; **picture clue**: the sculk |
 | 21.7-24.2 | test 3 (pivot) | L07 N: "The bottom of the well SCREAMED." | S07 WS: the boy at the opened well, the shriek, a teal pulse, he steps back | **the bomb under the table**: every player knows that sound. **The attentive player gets ahead here (~24 s, 44%).** |
 | 24.5-28.4 | the misread | L08 N: "Mom held me in the DARK. She said it was a FOX." | S08 MS: Mom close indoors as the Darkness fades in | the dark is an effect, not night; "fox" (foxes do scream, so it passes) |
 | 28.7-34.0 | **The want arrives** | L09 N: "Then a skeleton shot a CREEPER by the farm. It dropped a music DISC." | S09 WS: past the last carpet, the skeleton shoots at him, the creeper between takes the arrow, a push to the disc | vanilla, a visible cause; outside the carpet, the world is loud |
@@ -42,7 +46,7 @@ Everything between plants silence.
 | 49.3-53.1 | the misread at its peak | L14 N: "The music made the lights go DARK. Like a real PARTY." | S14 WS POV: note particles, villagers frozen in doorways, the light pulsing (shriek 2) | the Darkness, misread as party lights; **his voice rises out of the hush** |
 | 53.4-55.4 | **The act** | L15 N: "I'd never DANCED before." | S15 FS POV: he jumps off the carpet onto the bare stone rim and jumps there (shriek 3) | carpet is silent, stone isn't: the first vibration he makes with his feet |
 | 55.4-58.4 | **The reveal (the game)** | (no line) | S16 WS: shriek 4, the warden rises out of the square across the well, roaring. S17 MS POV: the sonic boom | the warden; nothing explained |
-| 58.4-59.9 | **The sting** | (no line) | death screen: "HelloBuh was obliterated by a sonically-charged shriek", the song still playing | ends 0.25 s after the hold; loops to L01 by cause and effect |
+| 58.4-59.9 | **The sting** | (no line) | death screen: "Milo was obliterated by a sonically-charged shriek", the song still playing | ends 0.25 s after the hold; loops to L01 by cause and effect |
 
 ## Clue map
 
@@ -54,7 +58,7 @@ Everything between plants silence.
 | the well's white wool lid | S01, S02, S04 (picture), L06 (line) | a lid to keep kids out | wool blocks stop vibrations: it seals the shaft |
 | "The ground's a light sleeper" | L05, S05, 15-19 s | a warm saying, a mom being a mom | literally true: the ground listens |
 | pulling the wool off made it scream | L06-L07, S06-S07, 19-24 s | a fox down the well | a broken block is a vibration; the shrieker heard it |
-| the teal glow at the bottom | S06, S11 (picture only) | nothing said; "the well" | sculk, sensors and a shrieker, 5 blocks down |
+| sculk on the walls under the lid | S06, S11 (picture only) | nothing said; "the well" | the ancient city under the village: sensors and a shrieker below |
 | the dark | L08, S08, 25-28 s | Mom holding him at night | the shrieker's Darkness, in the afternoon |
 | "Don't. Move." | L13, S13, 46-49 s | Mom is scared of the noise | a warden hunts by vibration, and it's coming |
 | the lights going dark with the music | L14, S14, 49-53 s | party lights | the Darkness from the shrieks |

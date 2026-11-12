@@ -144,6 +144,22 @@ class Story(unittest.TestCase):
         self.assertFalse([f for f in rep["findings"] if f["level"] in ("BLOCK", "WARN")], rep["findings"])
         self.assertIn("OK: 0 blocker(s)", vc.table(rep))
 
+    def run_waived(self, mom_angle, heard, waiver="lead: owner's pick"):
+        lines = {f"L0{i}": ("N", self.vec(0.05 * (i % 3)), 215.0) for i in range(1, 7)}
+        lines["L09"] = ("Mom", self.vec(mom_angle), 120.0)
+        d, cf = self.story(lines, {"N": {"role": "narrator"}, "Mom": {"role": "character", "ref": "mom", "read_waiver": waiver}})
+        m = {f"{k}.wav": (v, f) for k, (_, v, f) in lines.items()}
+        return vc.check(d, cast_file=cf, measure=lambda p: m[pathlib.Path(p).name], hearer=lambda p, label: (heard, "cache"))
+
+    def test_read_waiver_waives_the_read_only(self):
+        rep = self.run_waived(1.2, {"sex": "man", "age": [30, 45]})
+        lv = {(f["check"], f["level"]) for f in rep["findings"]}
+        self.assertIn(("read", "WAIVED"), lv)
+        self.assertNotIn("BLOCK", {f["level"] for f in rep["findings"]})
+        self.assertIn("waived: lead: owner's pick", vc.table(rep))
+        rep = self.run_waived(0.02, {"sex": "man", "age": [30, 45]})   # on the narrator: the contrast still blocks
+        self.assertIn(("contrast", "BLOCK"), {(f["check"], f["level"]) for f in rep["findings"]})
+
 
 class Who(unittest.TestCase):
     def test_age_range(self):

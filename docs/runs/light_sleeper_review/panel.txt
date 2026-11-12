@@ -1,0 +1,32 @@
+watching out/story_light_sleeper.mp4 (Gemini, 2 calls, ~1-3 min; cached per mp4)
+viewer panel: story_light_sleeper (story_light_sleeper.mp4, 52.3 s) — gemini-3.8-flash, 2 call(s), 160 s, 13004 tokens
+  kid      9/10, watches to the end
+           ending: "The entire village was covered in wool carpets to muffle footsteps because a Warden was dormant right underneath the well, and the kid accidentally summoned it by playing music and stepping on stone." -> yes
+           voices: narrator=female/child/mid (curious, bright, youthful, clear, expressive); Mom=female/adult/mid (gentle, worried, cautious, maternal, soft)
+           weakest: 21.0 s: The villager mom model not actually having moving lips, standard Minecraft limitation.
+           comment: "BRO AS SOON AS I SAW WOOL ON THE WELL I KNEW IT WAS A WARDEN 💀 rip bro"
+  scroller 8/10, watches to the end
+           ending: "The village muffled everything with carpets to keep a subterranean monster asleep, but the naive narrator woke it up with sound." -> yes
+           voices: narrator=female/child/mid (cheerful, engaging, crisp, animated, innocent); Mom=female/adult/mid (hushed, urgent, protective, tense, serious)
+           weakest: 30.0 s: Slight lull in action while setting down the jukebox, though dialogue keeps the pace.
+           comment: "The build up and sound design at the end was genuinely terrifying!"
+  editor   9/10, watches to the end
+           ending: "The villagers silenced all movement with wool to suppress vibrations from awakening a Warden hidden under the well, which is triggered when the child plays music and steps off the carpet." -> yes
+           voices: narrator=female/child/mid (clean, articulate, well-paced, lively, focused); Mom=female/adult/mid (soft, tense, cautious, clear, believable)
+           weakest: 41.0 s: The villager mom head turn is a bit static compared to the cinematic lighting and audio build-up.
+           comment: "Excellent narrative pacing, clever use of vanilla mechanics for suspense, and perfectly timed jump scare ending."
+PASS  [hook in 2 s] nobody noticed it
+PASS  [swipe away] nobody noticed it
+PASS  [word cut off] nobody noticed it
+PASS  [voice drift] nobody noticed it
+BLOCK [voice fits character (sex/age)] 3/3 (kid, scroller, editor): kid: narrator heard as female child, meant male child; scroller: narrator heard as female child, meant male child; editor: narrator heard as female child, meant male child
+PASS  [annoying voice] nobody noticed it
+FLAG  [intimate / ASMR read] 1/3 (scroller): scroller: Mom (hushed, urgent, protective, tense, serious): Adds good suspense.
+PASS  [pause in the opening] nobody noticed it
+PASS  [dead air / mumbled] nobody noticed it
+PASS  [ending understood] all three explained the twist back
+PASS  [confusing] nobody noticed it
+PASS  [picture (blurry/dark/zoomed/subject)] nobody noticed it
+PASS  [length] feels right
+FAIL: 1 blocker(s) (2+ viewers agree on a cut word, drift, a wrong-sex/age voice or a missed ending), 1 flag(s) (review inputs: confirm by ear and eye). twist: The carpet is silence (vanilla: walking on wool and carpet makes no vibration, and wool blocks stop vibrations). The village sits on an ancient city and the bot
+NEXT: each BLOCK is 2+ viewers agreeing on a cut word, drift, a wrong voice or a missed ending: confirm it by ear/eye (short-review), then fix the take or the ending

@@ -1,0 +1,713 @@
+{
+ "lines": {
+  "L01": {
+   "who": "N",
+   "text": "My village is covered in nine thousand carpets.",
+   "dur": 3.12,
+   "onset": 0.32,
+   "end": 2.88,
+   "chunks": [
+    [
+     0.32,
+     0.88
+    ],
+    [
+     1.0,
+     1.52
+    ],
+    [
+     1.68,
+     2.88
+    ]
+   ],
+   "captions": [
+    "My VILLAGE",
+    "is COVERED in",
+    "nine thousand CARPETS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "ecab146b53c7",
+   "gap": 0
+  },
+  "L02": {
+   "who": "N",
+   "text": "The road? carpet. The stairs? carpet. The doghouse? Also carpet.",
+   "dur": 4.593,
+   "onset": 0.18,
+   "end": 4.3,
+   "chunks": [
+    [
+     0.18,
+     1.16
+    ],
+    [
+     1.46,
+     2.44
+    ],
+    [
+     2.8,
+     3.4
+    ],
+    [
+     3.68,
+     4.3
+    ]
+   ],
+   "captions": [
+    "The road? CARPET.",
+    "The stairs? CARPET.",
+    "The DOGHOUSE?",
+    "Also CARPET."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 3.12,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "58a857f66fb2",
+   "gap": 0
+  },
+  "L03": {
+   "who": "N",
+   "text": "Even the bell wears a sweater.",
+   "dur": 2.39,
+   "onset": 0.24,
+   "end": 1.84,
+   "chunks": [
+    [
+     0.24,
+     0.92
+    ],
+    [
+     1.02,
+     1.84
+    ]
+   ],
+   "captions": [
+    "Even the BELL",
+    "wears a SWEATER."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 7.713,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "eab22b35d5a0",
+   "gap": 0
+  },
+  "L04": {
+   "who": "N",
+   "text": "Mom says:",
+   "dur": 1.09,
+   "onset": 0.24,
+   "end": 0.84,
+   "chunks": [
+    [
+     0.24,
+     0.84
+    ]
+   ],
+   "captions": [
+    "Mom SAYS:"
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 10.102,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "8b13987a2c9c"
+  },
+  "L05": {
+   "who": "Mom",
+   "text": "Walk SOFT, sweetie. The ground's a light SLEEPER.",
+   "dur": 5.55,
+   "onset": 0.36,
+   "end": 5.1,
+   "chunks": [
+    [
+     0.36,
+     2.36
+    ],
+    [
+     3.06,
+     3.8
+    ],
+    [
+     3.96,
+     5.1
+    ]
+   ],
+   "captions": [
+    "Walk SOFT, sweetie.",
+    "The GROUND'S",
+    "a light SLEEPER."
+   ],
+   "with": [
+    "Mom"
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "beat": "L05",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "39bc4b7f2843"
+  },
+  "L06": {
+   "who": "N",
+   "text": "But one time, I pulled the wool off the well.",
+   "dur": 2.93,
+   "onset": 0.04,
+   "end": 2.62,
+   "chunks": [
+    [
+     0.04,
+     0.7
+    ],
+    [
+     1.02,
+     1.38
+    ],
+    [
+     1.44,
+     1.76
+    ],
+    [
+     2.08,
+     2.62
+    ]
+   ],
+   "captions": [
+    "But ONE time,",
+    "I PULLED",
+    "the WOOL",
+    "off the WELL."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "8cf4d4f563a8",
+   "gap": 0
+  },
+  "L07": {
+   "who": "N",
+   "text": "Then something down the well just screamed.",
+   "dur": 2.635,
+   "onset": 0.24,
+   "end": 2.16,
+   "chunks": [
+    [
+     0.24,
+     0.72
+    ],
+    [
+     0.78,
+     1.24
+    ],
+    [
+     1.32,
+     2.16
+    ]
+   ],
+   "captions": [
+    "Then SOMETHING",
+    "down the WELL",
+    "just SCREAMED."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 2.93,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "765c51d35395",
+   "gap": 0
+  },
+  "L08": {
+   "who": "N",
+   "text": "Mom said it was a fox. I didn't know foxes lived in wells.",
+   "dur": 4.46,
+   "onset": 0.24,
+   "end": 3.72,
+   "chunks": [
+    [
+     0.24,
+     0.62
+    ],
+    [
+     0.66,
+     1.08
+    ],
+    [
+     1.76,
+     2.22
+    ],
+    [
+     2.35,
+     3.12
+    ],
+    [
+     3.18,
+     3.72
+    ]
+   ],
+   "captions": [
+    "Mom SAID it",
+    "was a FOX.",
+    "I didn't KNOW",
+    "FOXES lived",
+    "in WELLS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 5.565,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "5a44a5ab9d42",
+   "gap": 0
+  },
+  "L09": {
+   "who": "N",
+   "text": "Then I found a music disc by the farm.",
+   "dur": 2.54,
+   "onset": 0.26,
+   "end": 2.28,
+   "chunks": [
+    [
+     0.26,
+     0.9
+    ],
+    [
+     0.96,
+     1.64
+    ],
+    [
+     1.76,
+     2.28
+    ]
+   ],
+   "captions": [
+    "Then I FOUND",
+    "a music DISC",
+    "by the FARM."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 10.025,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "4497aac8f1c5",
+   "gap": 0
+  },
+  "L10": {
+   "who": "N",
+   "text": "A real song. Nobody here has heard one.",
+   "dur": 3.263,
+   "onset": 0.14,
+   "end": 2.82,
+   "chunks": [
+    [
+     0.14,
+     1.04
+    ],
+    [
+     1.58,
+     2.08
+    ],
+    [
+     2.12,
+     2.82
+    ]
+   ],
+   "captions": [
+    "A real SONG.",
+    "Nobody HERE",
+    "has HEARD one."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 12.565,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "1d8e8d0d2713",
+   "gap": 0
+  },
+  "L11": {
+   "who": "N",
+   "text": "So tonight, I put a jukebox on the well. Wells echo, you know.",
+   "dur": 3.855,
+   "onset": 0.165,
+   "end": 3.5,
+   "chunks": [
+    [
+     0.165,
+     0.7
+    ],
+    [
+     0.82,
+     1.06
+    ],
+    [
+     1.12,
+     1.6
+    ],
+    [
+     1.74,
+     2.12
+    ],
+    [
+     2.68,
+     3.2
+    ],
+    [
+     3.3,
+     3.5
+    ]
+   ],
+   "captions": [
+    "So TONIGHT,",
+    "I PUT",
+    "a JUKEBOX",
+    "on the WELL.",
+    "Wells ECHO,",
+    "you KNOW."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 15.827,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "ea16d2c075d9",
+   "gap": 0
+  },
+  "L12": {
+   "who": "N",
+   "text": "The fox screamed again. It loved the music.",
+   "dur": 3.152,
+   "onset": 0.26,
+   "end": 2.6,
+   "chunks": [
+    [
+     0.26,
+     0.5
+    ],
+    [
+     0.52,
+     1.24
+    ],
+    [
+     1.58,
+     2.1
+    ],
+    [
+     2.18,
+     2.6
+    ]
+   ],
+   "captions": [
+    "The FOX",
+    "screamed AGAIN.",
+    "It LOVED",
+    "the MUSIC."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 19.682,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "eda6fbf3f264",
+   "gap": 0
+  },
+  "L13": {
+   "who": "N",
+   "text": "Then the lights went dark. Just like a party.",
+   "dur": 2.953,
+   "onset": 0.14,
+   "end": 2.64,
+   "chunks": [
+    [
+     0.14,
+     0.8
+    ],
+    [
+     0.84,
+     1.2
+    ],
+    [
+     1.72,
+     2.06
+    ],
+    [
+     2.1,
+     2.64
+    ]
+   ],
+   "captions": [
+    "Then the LIGHTS",
+    "went DARK.",
+    "Just LIKE",
+    "a PARTY."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 22.835,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "fcbd00a51293",
+   "gap": 0
+  },
+  "L14": {
+   "who": "N",
+   "text": "Mom froze in the door.",
+   "dur": 2.033,
+   "onset": 0.3,
+   "end": 1.52,
+   "chunks": [
+    [
+     0.3,
+     0.9
+    ],
+    [
+     0.96,
+     1.52
+    ]
+   ],
+   "captions": [
+    "Mom FROZE",
+    "in the DOOR."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 25.787,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "08c3f2ec6a3a"
+  },
+  "L15": {
+   "who": "Mom",
+   "text": "Sweetie, don't MOVE.",
+   "dur": 2.62,
+   "onset": 0.27,
+   "end": 2.08,
+   "chunks": [
+    [
+     0.27,
+     2.08
+    ]
+   ],
+   "captions": [
+    "Sweetie, don't MOVE."
+   ],
+   "with": [
+    "Mom"
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "beat": "L15",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "8a3ac98e9b23"
+  },
+  "L16": {
+   "who": "N",
+   "text": "But I'd never danced before. So I stepped off the carpet onto the stone.",
+   "dur": 4.263,
+   "onset": 0.18,
+   "end": 4.0,
+   "chunks": [
+    [
+     0.18,
+     0.94
+    ],
+    [
+     1.02,
+     1.64
+    ],
+    [
+     1.955,
+     2.54
+    ],
+    [
+     2.58,
+     3.12
+    ],
+    [
+     3.34,
+     4.0
+    ]
+   ],
+   "captions": [
+    "But I'd NEVER",
+    "danced BEFORE.",
+    "So I STEPPED",
+    "off the CARPET",
+    "onto the STONE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L16",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "1771bcd40ff6"
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts",
+  "Mom": "gemini-3.1-flash-tts-preview"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 11.193,
+   "offsets": [
+    0.0,
+    3.12,
+    7.713,
+    10.102
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L01",
+   "take_at": 0.0
+  },
+  "L05": {
+   "lines": [
+    "L05"
+   ],
+   "file": "beat_L05.wav",
+   "dur": 5.55,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": []
+  },
+  "L06": {
+   "lines": [
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14"
+   ],
+   "file": "beat_L06.wav",
+   "dur": 27.82,
+   "offsets": [
+    0.0,
+    2.93,
+    5.565,
+    10.025,
+    12.565,
+    15.827,
+    19.682,
+    22.835,
+    25.787
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L01",
+   "take_at": 11.193
+  },
+  "L16": {
+   "lines": [
+    "L16"
+   ],
+   "file": "beat_L16.wav",
+   "dur": 4.263,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L01",
+   "take_at": 39.013
+  },
+  "L15": {
+   "lines": [
+    "L15"
+   ],
+   "file": "beat_L15.wav",
+   "dur": 2.62,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": []
+  }
+ },
+ "total": 52.7
+}

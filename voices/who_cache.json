@@ -185,5 +185,80 @@
   "reversed": true,
   "clip": "dog_hill/L17",
   "at": "2026-11-12T08:22:55Z"
+ },
+ "09dd644c3d96": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   50.0,
+   70.0
+  ],
+  "role": "grandfather",
+  "confidence": 8,
+  "voice": "Low-pitched, gravelly, cold, raspy, distorted",
+  "could_be_mistaken_for": "monster",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-12T08:21:06Z"
+ },
+ "39bc4b7f2843": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   45.0,
+   65.0
+  ],
+  "role": "grandfather",
+  "confidence": 7,
+  "voice": "Gravelly, cold, low, slow, distorted",
+  "could_be_mistaken_for": "father",
+  "reversed": true,
+  "clip": "light_sleeper/L05",
+  "at": "2026-11-12T08:21:00Z"
+ },
+ "4605bad641ae": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 3,
+  "voice": "Deep, resonant, clear, masculine, steady",
+  "could_be_mistaken_for": "teenager",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-12T08:17:20Z"
+ },
+ "8a3ac98e9b23": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 7,
+  "voice": "Deep, resonant, masculine, clear, steady",
+  "could_be_mistaken_for": "father",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-12T08:25:24Z"
+ },
+ "9f16200b0848": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 9,
+  "voice": "Deep, raspy, low-pitched, resonant, fast",
+  "could_be_mistaken_for": "father",
+  "reversed": true,
+  "clip": "light_sleeper/L05",
+  "at": "2026-11-12T08:17:16Z"
  }
 }
