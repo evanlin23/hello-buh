@@ -16,21 +16,32 @@ const stunt = require(path.resolve(__dirname, '../stunts', process.argv[2] + '.j
 const spec = stunt.dropperSpec
 if (!spec) { console.error(`${process.argv[2]} isn't a dropper episode (no dropperSpec)`); process.exit(2) }
 const X = 0, Z = 0, layers = D.layout(spec.layers)
-const st = (name) => Block.fromStateId(mcData.blocksByName[name].defaultState, 0)
-const AIR = st('air'), WALL = st('stone'), WATER = st(spec.landing.block === 'water' ? 'water' : spec.landing.block)
+// the world: exactly the stunt's build (lib/dropper.js blueprint), every /fill and /setblock in order
+const cells = new Map()
+const key = (x, y, z) => `${x},${y},${z}`
+for (const c of D.blueprint(spec, X, Z)) {
+  const m = /^\/(fill|setblock) (\S+) (\S+) (\S+)(?: (\S+) (\S+) (\S+))? (\S+)$/.exec(c)
+  if (!m) throw new Error(`can't read ${c}`)
+  const n = m.slice(2, 5).map(Number), e = m[1] === 'fill' ? m.slice(5, 8).map(Number) : n, b = m[8]
+  for (let x = Math.min(n[0], e[0]); x <= Math.max(n[0], e[0]); x++) for (let y = Math.min(n[1], e[1]); y <= Math.max(n[1], e[1]); y++) for (let z = Math.min(n[2], e[2]); z <= Math.max(n[2], e[2]); z++) {
+    if (b === 'air') cells.delete(key(x, y, z)); else cells.set(key(x, y, z), b)
+  }
+}
+const blocks = new Map()
+const blockOf = (spec) => {
+  if (!blocks.has(spec)) {
+    const [, name, props] = /^([a-z_]+)(?:\[(.*)\])?$/.exec(spec)
+    const p = Object.fromEntries((props || '').split(',').filter(Boolean).map(kv => kv.split('=')))
+    blocks.set(spec, Block.fromProperties ? Block.fromProperties(name, p, 0) : Block.fromStateId(mcData.blocksByName[name].defaultState, 0))
+  }
+  return blocks.get(spec)
+}
+const AIR = blockOf('air')
 const world = {
   getBlock (p) {
-    const x = Math.floor(p.x) - X, y = Math.floor(p.y), z = Math.floor(p.z) - Z
-    let b = AIR
-    if (y > D.TOP || y < D.FLOOR - 1) b = AIR
-    else if (Math.abs(x) > D.R || Math.abs(z) > D.R) b = (Math.abs(x) === D.R + 1 || Math.abs(z) === D.R + 1) && Math.abs(x) <= D.R + 1 && Math.abs(z) <= D.R + 1 ? WALL : AIR
-    else if (y === D.FLOOR) b = x === 0 && z === 0 ? WATER : WALL
-    else if (y < D.FLOOR) b = WALL
-    else {
-      const L = layers.find(l => y <= l.y && y >= l.bottom)
-      if (L && !L.holes.some(h => x >= h[0] && x <= h[2] && z >= h[1] && z <= h[3])) b = WALL
-    }
-    b = Object.create(b); b.position = new Vec3(Math.floor(p.x), Math.floor(p.y), Math.floor(p.z))
+    const x = Math.floor(p.x), y = Math.floor(p.y), z = Math.floor(p.z)
+    const b = Object.create(blockOf(cells.get(key(x, y, z)) || 'air'))
+    b.position = new Vec3(x, y, z)
     return b
   }
 }
@@ -58,6 +69,7 @@ spec.attempts.forEach((a, i) => {
       passes.push(`L${li} ${(Math.min(c.hx - Math.abs(e.position.x - c.x), c.hz - Math.abs(e.position.z - c.z)) - 0.3).toFixed(2)}`)
       li++
     }
+    if (e.isCollidedHorizontally && e.position.y < s.y - 1) { out = `WRONG: brushed a wall or decoration at y ${e.position.y.toFixed(1)} (x ${e.position.x.toFixed(2)} z ${e.position.z.toFixed(2)})`; bad++; break }
     if (e.position.y > s.y - 0.5) continue   // still on the rim
     if (a.fail !== undefined) {
       const L = layers[a.fail]
