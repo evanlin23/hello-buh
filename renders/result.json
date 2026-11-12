@@ -1,0 +1,17 @@
+{
+ "name": "pickaxe_race",
+ "stunt": "pickaxe_race",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43171609217",
+ "source": "c472ad0",
+ "queued": "2026-11-12T06:56:07Z",
+ "finished": "2026-11-12T07:07:23Z",
+ "mp4": "renders/out/pickaxe_race.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
