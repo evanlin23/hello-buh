@@ -231,7 +231,7 @@ module.exports = {
     // yard: he is home, catching his breath, and the wolf pops in beside him
     await K.cut(buh.x + 2.6, buh.z, P(buh.x - 6, buh.y + 3.8, buh.z), gy(buh.x + 2.6, buh.z), { shot: 'pov' })   // aimed above him: he lands low in frame where run_ahead left him (at +1.2 the eye jumped 34%: cuts)   // (in his lane: on roadZ it landed in the ditch by the road)
     K.ctl('sprint', true); K.go(true)
-    await line('L02', async (k, at) => {
+    await line('L02', async (k, at, n) => {
       if (k < at.cut(3)) {
         walkG(buh, k < at(2) ? -0.27 : -0.3, 0)
         if (once('L02away', k >= at(2))) K.go(false)   // he pulls away: twelve blocks
@@ -242,14 +242,17 @@ module.exports = {
       if (once('L02pair', k >= at.cut(4))) {   // "right NEXT to him": a cut to the two of them, the wolf already at his side (no jump on screen)
         await scut(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1, { shot: 'yard_pair', stop: false, after: () => { buh.yaw = 0; buh.pitch = 35 } })
       }
-      if (k > at.cut(4)) { buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.2; buh.pitch = 35 + Math.sin(k / 5) * 4; look(k) }
+      if (k > at.cut(4) && k < n - 6) { buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.2; buh.pitch = 35 + Math.sin(k / 5) * 4; look(k) }
+      if (k > n - 6) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }   // in the wheat already
+      // the cut to the wheat in L02's last ticks: made at L03's start it waited for the cast to land and L03's mark (and its
+      // first caption) came 0.26 s after its voice: 'He' spoken uncaptioned (caption coverage)
+      if (once('L03wheat', k >= n - 6)) { await scut(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6), { shot: 'wheat_cam', after: moveWith({ x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 }) }); sneak(true) }
     })
 
     // L03 "He tried the WHEAT. / The HILLS. / An ISLAND." (r5: one shot a phrase): crouched in the wheat (the lens over
     // the crop); the north road at night by the lantern post; climbing onto the island's far beach. In each the wolf is
     // already at his side on the cut (owner, 2026-11-11: "we can see the dog teleport": no pop on screen)
-    await scut(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6), { shot: 'wheat_cam', after: moveWith({ x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 }) })   // beside him, not in front of his face
-    sneak(true)
+    if (once('L03wheat', true)) { await scut(21.4, 18.6, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.4, 18.6), { shot: 'wheat_cam', after: moveWith({ x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 }) }); sneak(true) }   // (normally done in L02's last ticks)
     await line('L03', async (k, at) => {
       if (k < at.cut(1)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
       if (once('L03cut1', k >= at.cut(1))) {
