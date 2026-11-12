@@ -60,7 +60,7 @@ desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1
 dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 interrupt_lamps   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-creeper
+# creeper  # dropped 2026-11-12: not READY after its redo (owner: "fix all of them or just drop", r:r4607fa)
 faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
