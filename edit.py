@@ -2399,7 +2399,7 @@ def main():
             graph.append("[song]anull[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(graph), *maps,
-           "-t", f"{dur:.3f}", "-c:v", "libx264", *retention.x264(), "-pix_fmt", "yuv420p", *tag,
+           "-t", f"{dur:.3f}", "-c:v", "libx264", *retention.x264(dur), "-pix_fmt", "yuv420p", *tag,
            "-movflags", "+faststart", args.out]
     subprocess.run(cmd, check=True)
     got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.out], capture_output=True, text=True).stdout or 0)

@@ -65,12 +65,18 @@ def event_times(timeline, name):
     return [e["t"] / 1000 for e in timeline if e["event"] == name]
 
 
-def x264():
+def x264(dur=None):
     """The x264 settings of every full-video encode. HB_PREVIEW=1 (edit.py --preview, scripts/preview.py) trades
-    quality for speed: the preview is cut down to 360x640 anyway."""
+    quality for speed: the preview is cut down to 360x640 anyway. dur (s): the Short's length, so the peak rate is
+    capped to keep the file under GitHub's 100 MB file limit (the Actions render commits out/<name>.mp4 to its render
+    branch; a 57 s story at 18M came out 121 MB, the push was refused and the Short never came back: story_nitwit,
+    2026-11-12). CRF 18 is unchanged: only busy stretches of a long Short are capped."""
     if os.environ.get("HB_PREVIEW"):
         return ["-preset", "ultrafast", "-crf", "26"]
-    return ["-preset", "medium", "-crf", "18", "-maxrate", "18M", "-bufsize", "36M"]
+    rate = 18.0
+    if dur and dur > 0:
+        rate = min(rate, round(88 * 8 / dur - 0.2, 1))   # ~88 MB of video at the cap (the audio and container ride on top)
+    return ["-preset", "medium", "-crf", "18", "-maxrate", f"{rate:g}M", "-bufsize", f"{2 * rate:g}M"]
 
 
 def hook_len(edit):
