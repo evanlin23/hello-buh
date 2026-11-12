@@ -70,7 +70,7 @@ module.exports = {
     start: 'drop:0',   // (render 1 opened 0.25 s early on the pillar's top block, which hid the dog)
     // on frame 0 (the zoomed POV on the dog, the mace in hand) through the dog's beat, then on you
     // (high in the view: at the default 0.36 it covered the dog's head in both shots)
-    choices: [['HIT THE DOG = LIVE', 'green', 'drop', 2.6, { y: 0.17 }], ["DON'T = HARDCORE OVER", 'red', 'beat1', 2.08, { y: 0.17 }]],   // (beat 1's 2.08 s; high: it sat on your face)
+    choices: [['HIT THE DOG = LIVE', 'green', 'drop', 2.6, { y: 0.17 }], ["DON'T = HARDCORE OVER", 'red', 'beat1', 2.08, { y: 0.21, size: 112 }]],   // (beat 1's 2.08 s; high: it sat on your face; review r1: at the default size it wrapped to 3 lines under the caption band)
     openHit: 0.9,   // a hit on frame 0 with the card (pace: the whoosh alone was 7.9 dB under the peak)
     land: 'land',
     reveal: 'reveal',
