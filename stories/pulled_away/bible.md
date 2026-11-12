@@ -1,5 +1,7 @@
 # pulled_away: continuity bible (r4)
 
+r6 opening (2026-11-12, STANDARDS 0t): S01 an MS on the kid's face in the boat; new S01b (the wide, the shut doors) and S01c (the hull on the grass); S08 her face in front of the boat on LOVE, not the doors from the crest. Edit order S01 S01b S01c S02 S07 S07b S08 ...
+
 r5 (2026-11-11): the Roblox story format rewrite (docs/story_format.md): new lines, S03 cut, the edit order S01 S02 S07 S07b S08 S04 S04b S05 S06 S09 S10 S11; S06 now on the ridge's far slope (after S08's look back from the crest); the reveal is said over S11 (L08); S11 holds about 40 villagers up the path. Places, cast, props and times otherwise unchanged.
 
 r4: the lead's calls (2026-11-11): the family moves from Oakend to a new untagged homestead, Bramble Hollow, behind the
@@ -35,20 +37,20 @@ lit village shows only from the dock; the man tows her boat from his own; the re
 ## Scenes and time
 | scene | shots | time | light |
 |---|---|---|---|
-| Bramble Hollow, its field and the ridge (present) | S01, S02, S08, S06 | 11500-11700 | late afternoon, warm |
+| Bramble Hollow, its field and the ridge (present) | S01, S01b, S01c, S02, S08, S06 | 11500-11700 | late afternoon, warm |
 | Flashback: the first time he came (about day 5700) | S04, S04b, S05 | 13000 | dusk, graded warm and soft; Fernbank dark but one window |
 | Flashbacks: Mom (last week), Uncle (before) | S07, S07b | 2000 | morning, graded |
 | The inlet | S09 | 12600 | dusk |
 | Fernbank dock | S10, S11 | 13000 | dusk, the houses near the dock lit |
 
 **Order of the day:** the narration runs in time order apart from the two flashbacks. The man walks her boat down the
-Hollow's field (S01-S02), up to the ridge's crest where she looks back at the shut doors (S08), down the far slope (S06) to the inlet where he gets in his own boat and tows hers
+Hollow's field (S01-S02), up toward the ridge, her hopeful face on LOVE (S08; r6: the shut doors are now seen behind the boat in S01b), down the far slope (S06) to the inlet where he gets in his own boat and tows hers
 across (S09), they reach Fernbank at dusk (S10-S11).
 
 ## Cast and costume
 | who | look | where |
 |---|---|---|
-| the kid (N) | baby plains villager, no profession; a girl, never named | front seat of her oak boat S01, S02, S06, S08-S10; her doorway (small) S07 |
+| the kid (N) | baby plains villager, no profession; a girl, never named | front seat of her oak boat S01, S01b, S01c (legs), S02, S06, S08-S10; her doorway (small) S07 |
 | the man | player actor, nameless, no name tag, `pulled_man` skin (canon.md Original skins), never Steve | on foot with the lead S01, S02, S06, S08; alone on the bank S04-S05 (flashback); rowing his own boat S09; off frame S10; not in S11 |
 | Mom | villager, plains fletcher (feathered hat) | boat S07 (flashback); dock's foot S11 |
 | Uncle | villager, plains butcher | boat S07b (flashback); dock's foot S11 |
@@ -65,13 +67,13 @@ Only one librarian in the Short. In S11 only these three villagers are within 8 
 | Mom's and Uncle's boats | flashback only | S07, S07b |
 | the fisherman's empty boat | at the end of Fernbank's dock, unchanged | S10 (background) |
 | Fernbank windows | S04 flashback: all dark but the librarian's upstairs west window; S11: every house within 30 blocks of the dock lit | |
-| the kid's / Mom's cottage and Uncle's, in the Hollow | doors shut, windows dark; seen from the ridge looking west in S08: Uncle's left, hers right | S07 (her doorway, flashback), S07b, S08 |
+| the kid's / Mom's cottage and Uncle's, in the Hollow | doors shut, windows dark; seen behind the boat in S01b (r6; was S08 from the ridge): Uncle's left, hers right | S07 (her doorway, flashback), S07b, S01b |
 | lanterns | over the dock's foot and along the path (since 6000) | S11 |
 
 ## Positions and screen direction
 - The trip runs west to east = left to right in every travel shot (S01, S02, S07, S07b, S09); the camera stays on the
-  route's south side. S04 looks east-south-east from behind the man, S06 looks east down the ridge's far slope
-  from behind the boat, S08 looks back west over the kid's shoulder (motivated by her turned head), S10 and S11 look
+  route's south side (S01b, S01c too). S04 looks east-south-east from behind the man, S06 looks east down the ridge's far slope
+  from behind the boat, S08 looks back west at the kid's face from just ahead of the boat (r6; she still faces east, the way they travel), S10 and S11 look
   east (the same axis as S04).
 - On land the man is always ahead of the boat (screen right). On the water his boat leads hers.
 - S05: the man faces screen right; S06: the kid looks up at him ahead. The eyelines match.

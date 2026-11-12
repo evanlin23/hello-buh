@@ -23,9 +23,9 @@
 ## Claims (the narration and the picture must agree, checked on stills from every shot angle)
 | line | claim | the set must show |
 |---|---|---|
-| L01 | a man is kidnapping my whole village, one at a time, in a boat, on the grass | the boat on grass with the kid in it, the Hollow's cottages behind, the man ahead with the lead (gap: the lead must draw) |
+| L01 | a man is kidnapping my village, in a boat, on the grass | the boat on grass with the kid in it, the kid's face big in the moving boat (S01), the Hollow's shut cottages behind (S01b), the man ahead with the lead (gap: the lead must draw) |
 | L02 | I got in myself; number forty | the kid sitting in the boat, the man glancing back |
-| L03 | he took Mom, and Uncle; they must love it there | each in a boat behind the man, in its flashback shot, while named; on LOVE the two cottages shut and dark (S08) |
+| L03 | he took Mom, and Uncle; they must love it there | each in a boat behind the man, in its flashback shot, while named; the two cottages shut and dark in S01b (on VILLAGE); on LOVE the kid's hopeful face (S08) |
 | L04 | (flashback) across the water, the old empty village; a light on in one window | open water; Fernbank dark but exactly one lit window (the librarian's upstairs west window), her figure in it (S04b) |
 | L07 | we crossed the water; when it got dark, we bumped into the old empty village | two boats on the water, his rowing, hers following on the lead (S09); the bow knocks the dock post (S10); then S11's lit houses contradict "empty" |
 | L08 | Mom, my uncle, the lady from the window; every house full | Mom, the librarian, Uncle, the only villagers near the dock's foot, all three readable at phone size, by their cottage door under the lantern; no boats at the dock but the two that just came in; every house within 30 blocks lit, about 40 villagers readable up the path |

@@ -2,7 +2,7 @@
  "name": "pulled_away",
  "stunt": "story_pulled_away",
  "version": 2,
- "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'A man is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS.' replaces the frame + why opener; r5.1 (2026-11-12): critic r3 must-fixes: L01 'A PLAYER took THIRTY-NINE of us in his BOAT. NONE came BACK. WHERE did they GO?' (14 words); L04 ends 'Somebody left a light on in ONE WINDOW.' (plants L08's WINDOW; S04b cuts on it); S11: their cottage door under the lantern, no boats at the dock but the two. r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the impossible fact (thirty-nine villagers taken, none came back) and the question (WHERE does he take them?); she gets in herself to find out (L02, number forty); Mom and Uncle at stake with the misread (L03); the lit window and the man's line (L04-L06); the crossing and the bump (L07); the reveal SAID over S11 (L08: Mom, Uncle, the lady from the window, every house full); one beat echoing L01 (L09); S03 and 'best trip ever' / 'good at counting' / 'my boat got to swim' cut; 9 lines, ~110 words. Earlier: r4 (2026-11-11): the lead's calls: the title says 'a player'; the kid's family moves from Oakend to a new untagged homestead, Bramble Hollow, behind the ridge with no sightline to Fernbank (claimed); one easter egg (the empty boat, S10); the man's skin a new plain one; lines unchanged. Earlier: r3 (2026-11-11): continuity r2: the lit window is the librarian house's upstairs west window and S04's camera moves to about (-452, 66, -1076); the flashback at dusk 13000; S06 ms up the slope; S08's doors swapped; the hidden new quarter dropped (it can't be hidden: S11 and Oakend's bank share an axis), the lit houses within 30 blocks of the dock. Earlier: r2 (2026-11-11): critic r1 and continuity r1 must-fixes: the look across the water is a flashback ('The FIRST time he came'), 'Somebody left ONE light ON' (0a), S04b long lens on the librarian, he tows her boat from his own (vanilla: she sat in the front first), the reveal in one shot cut on EMPTY, 'A PLAYER', 'So TODAY, I sat in his BOAT and WAITED' (agency), the new lit quarter out of Oakend's sight; L05 plain. Script only, nothing voiced (r:ra5bc8f); r2.1: L08 'I got in the BOAT' (critic r2: 'his boat' clashed with L09's 'his OWN boat')",
+ "revision": "r6 opening (2026-11-12, STANDARDS 0t, hook frame study docs/research/hook_frames_2026-11-12.md): L01 tightened to 'A man is KIDNAPPING my village. In a BOAT. On the GRASS.' (KIDNAPPING ~1.3-1.7 s); 0-8 s re-shot to the study's plan: S01 an MS on the kid's face in the sliding boat, cut on VILLAGE to S01b (the wide, the Hollow's shut doors behind), S01c along the hull, her face leaning over the gunwale (the stake), L02 'Today, I got in MYSELF.' ('So' cut), S02 the stake on her face with the man's glance on FORTY, S07/S07b Mom then Uncle (a new person each ~1.2 s; flashbacks kept bright, not warm), S08 now her hopeful face on LOVE (was the shut doors from the crest); title CAPS KIDNAPPING. hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'A man is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS.' replaces the frame + why opener; r5.1 (2026-11-12): critic r3 must-fixes: L01 'A PLAYER took THIRTY-NINE of us in his BOAT. NONE came BACK. WHERE did they GO?' (14 words); L04 ends 'Somebody left a light on in ONE WINDOW.' (plants L08's WINDOW; S04b cuts on it); S11: their cottage door under the lantern, no boats at the dock but the two. r5 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the impossible fact (thirty-nine villagers taken, none came back) and the question (WHERE does he take them?); she gets in herself to find out (L02, number forty); Mom and Uncle at stake with the misread (L03); the lit window and the man's line (L04-L06); the crossing and the bump (L07); the reveal SAID over S11 (L08: Mom, Uncle, the lady from the window, every house full); one beat echoing L01 (L09); S03 and 'best trip ever' / 'good at counting' / 'my boat got to swim' cut; 9 lines, ~110 words. Earlier: r4 (2026-11-11): the lead's calls: the title says 'a player'; the kid's family moves from Oakend to a new untagged homestead, Bramble Hollow, behind the ridge with no sightline to Fernbank (claimed); one easter egg (the empty boat, S10); the man's skin a new plain one; lines unchanged. Earlier: r3 (2026-11-11): continuity r2: the lit window is the librarian house's upstairs west window and S04's camera moves to about (-452, 66, -1076); the flashback at dusk 13000; S06 ms up the slope; S08's doors swapped; the hidden new quarter dropped (it can't be hidden: S11 and Oakend's bank share an axis), the lit houses within 30 blocks of the dock. Earlier: r2 (2026-11-11): critic r1 and continuity r1 must-fixes: the look across the water is a flashback ('The FIRST time he came'), 'Somebody left ONE light ON' (0a), S04b long lens on the librarian, he tows her boat from his own (vanilla: she sat in the front first), the reveal in one shot cut on EMPTY, 'A PLAYER', 'So TODAY, I sat in his BOAT and WAITED' (agency), the new lit quarter out of Oakend's sight; L05 plain. Script only, nothing voiced (r:ra5bc8f); r2.1: L08 'I got in the BOAT' (critic r2: 'his boat' clashed with L09's 'his OWN boat')",
  "caption": "where does he take them 🛶",
  "logline": "A villager kid says a player took thirty-nine villagers in his boat and none came back, so today she got in herself to find out where; he took her Mom and her uncle, and the first time he came he stared at the old empty village across the water where a light was on in one window; at dusk her boat bumps that village and Mom, her uncle and the lady from the window are waiting, every house full.",
  "question": "why has this player taken thirty-nine villagers in his boat, and where did they go?",
@@ -127,8 +127,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "A man is KIDNAPPING / my whole VILLAGE. / One at a TIME. / In a BOAT. / On the GRASS.",
-   "say": "A man is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS.",
+   "text": "A man is / KIDNAPPING / my VILLAGE. / In a BOAT. / On the GRASS.",
+   "say": "A man is KIDNAPPING my village. In a BOAT. On the GRASS.",
    "shot": "S01",
    "punch": true,
    "shows": [
@@ -142,17 +142,17 @@
     }
    ],
    "look": {
-    "what": "Man",
-    "word": "MAN"
+    "what": "N",
+    "word": "KIDNAPPING"
    },
-   "direction": "bright and quick, telling a friend a real mystery; the question curious, never scared",
-   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; flat, matter-of-fact, a tiny beat before each short fragment; the picture (a villager dragged over grass in a boat by a player) shows it by 2 s. 'Kidnapping' is her word; L09 turns it ('I'm not going back either')"
+   "direction": "bright and quick, telling a friend a real mystery; straight into KIDNAPPING with no lead-in pause; no beats, the fragments clipped and quick; never scared",
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"; 0t, hook frame study 2026-11-12): said flat, as plain fact, the narrator believes it; no stock why tag. 0t: the key word KIDNAPPING (the title's CAPS word) is word 4, about 1.3-1.7 s at Pip's pace (~3 words/s); the first sentence is done by ~2.1 s, the whole line by ~3.4 s. S01 holds on the kid's face in the moving boat until KIDNAPPING ends; the cut to S01b lands on VILLAGE. Tightened from 'A man is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS.' (the study's line; 'whole' and 'One at a TIME' cut, L02's 'number FORTY' carries the one-at-a-time count). 'Kidnapping' is her word; L09 turns it ('I'm not going back either')"
   },
   {
    "id": "L02",
    "who": "N",
-   "text": "So TODAY, / I got in MYSELF. / I'm number FORTY.",
-   "say": "So today, I got in myself. I'm number forty.",
+   "text": "Today, / I got in MYSELF. / I'm number FORTY.",
+   "say": "Today, I got in myself. I'm number forty.",
    "shot": "S02",
    "shows": [
     {
@@ -165,7 +165,7 @@
     "word": "FORTY"
    },
    "direction": "proud of her own plan, a little giggle on FORTY",
-   "note": "beat 3 and 5: the narrator is the one who wants to know and goes to look (vanilla: a mob that walks into a boat gets in). Two-way clue 1: 'number forty' (a hall's stock count / the fortieth neighbour); the man glances back on FORTY"
+   "note": "beat 3 and 5: the narrator is the one who wants to know and goes to look (vanilla: a mob that walks into a boat gets in). Two-way clue 1: 'number forty' (a hall's stock count / the fortieth neighbour); the man glances back on FORTY r6 opening (critic 0t): 'So' cut (the study's line 2) so S02 ends ~5.6 s and Mom/Uncle land a new face every ~1.2 s."
   },
   {
    "id": "L03",
@@ -336,7 +336,7 @@
     "what": "Librarian"
    },
    "direction": "happy, settled, quick; the last word bright",
-   "note": "beat 7, the one beat after the reveal: echoes L01's 'NONE came BACK' and turns it (they stayed because they wanted to); cut 1.0 s after. Critic r3 should-fix 1 (why didn't Mom come back to say?) answered in the picture: villagers can't row, and no boat waits at Fernbank's dock but the two that just came in"
+   "note": "beat 7, the one beat after the reveal: turns L01's 'KIDNAPPING' into 'not going back either' and turns it (they stayed because they wanted to); cut 1.0 s after. Critic r3 should-fix 1 (why didn't Mom come back to say?) answered in the picture: villagers can't row, and no boat waits at Fernbank's dock but the two that just came in"
   }
  ],
  "shots": [
@@ -344,9 +344,49 @@
    "id": "S01",
    "line": "L01",
    "place": "bramble_hollow",
+   "size": "ms",
+   "camera": "at: low beside the boat's south side, 2 blocks off, eye at the kid's head height, tracking with the boat at its speed, a slight push; the boat is already sliding on frame 1 (preroll). Holds 0-~1.6 s; cuts when KIDNAPPING ends (on VILLAGE)",
+   "frame": "frame 1 (STANDARDS 0t): subject: the kid (baby villager) sitting in the oak boat, her face about 1/3 of the game view's width, centred, looking ahead; the oak gunwale low in frame scraping over grass blocks, moving left to right; the man's arm and the taut lead at frame right (engine gap: leads don't draw). Bright late light, cool-neutral, no orange sunset. Late afternoon 11500.",
+   "look": {
+    "time": 11500
+   },
+   "subject": "actor:N",
+   "cut": {
+    "line": "L01",
+    "word": "VILLAGE",
+    "at_s": 1.6
+   }
+  },
+  {
+   "id": "S01b",
+   "line": "L01",
+   "place": "bramble_hollow",
    "size": "wide",
-   "camera": "at: 7 blocks south of the boat's path, eye 1.2 above the grass, looking north-north-east, a slow pan right with the boat (no push); the boat enters frame centre-left on frame 1 already moving and ends centre-right",
-   "frame": "subject: the oak boat sliding left to right over the grass, the baby villager sitting in it (head and shoulders over the gunwale), the man walking ahead at frame right holding the lead, its line taut to the boat's bow (engine gap: leads don't draw); bg: Bramble Hollow's two cottages and its field fence, warm late light. Screen direction for the whole trip: west (left) to east (right). Late afternoon 11500.",
+   "camera": "at: 7 blocks south of the boat's path, eye 1.2 above the grass, looking north-north-east, a slow pan right with the boat; cut in on VILLAGE (~1.6 s), holds ~0.8 s",
+   "frame": "subject: the oak boat sliding left to right over the grass with the kid in it, the man walking ahead at frame right holding the lead, its line taut to the bow; bg: Bramble Hollow's two cottages, doors shut, windows dark (the empty homes are the clue L03 used to carry), its field fence. 11500.",
+   "subject": "actor:N",
+   "cut": {
+    "line": "L01",
+    "word": "VILLAGE",
+    "at_s": 1.6
+   },
+   "look": {
+    "time": 11500
+   }
+  },
+  {
+   "id": "S01c",
+   "line": "L01",
+   "place": "bramble_hollow",
+   "size": "mcu",
+   "camera": "at: at ground level, 1 block off the boat's side, looking along the hull, tracking at its speed; cut in on BOAT (~2.4 s), holds through GRASS (~1.0 s)",
+   "frame": "the stake on a face (0t 2-4 s): ground-level along the hull, the grass flicking past under the bow in the foreground; the kid's face leaning over the gunwale looking down at the grass, bright and curious, at least 1/4 of the game view's width; the lead taut at frame right. 11500.",
+   "subject": "actor:N",
+   "cut": {
+    "line": "L01",
+    "word": "BOAT",
+    "at_s": 2.4
+   },
    "look": {
     "time": 11500
    }
@@ -357,9 +397,14 @@
    "place": "bramble_hollow",
    "size": "ms",
    "camera": "at: tracking beside the boat at its speed, 3 blocks off its south side, eye at the kid's head height",
-   "frame": "subject: the kid in the boat, frame left of centre, looking ahead at the man; the man's back and shoulders at frame right, glancing back over his shoulder at FORTY (an eased head turn), the lead between them; bg: cottages sliding past. 11550.",
+   "frame": "subject: the kid in the boat, her face big at frame left of centre (the stake on a face, 3.4-5.6 s), looking ahead at the man, hopeful; the man's back and shoulders at frame right, glancing back over his shoulder at FORTY (an eased head turn): two faces; the lead between them; bg: cottages sliding past. 11550.",
    "look": {
     "time": 11550
+   },
+   "cut": {
+    "line": "L02",
+    "word": "Today",
+    "at_s": 3.4
    }
   },
   {
@@ -367,11 +412,16 @@
    "line": "L03",
    "place": "bramble_hollow",
    "size": "wide",
-   "camera": "at: across the lane from the kid's door, 8 blocks, looking north, still. Flashback, graded warm and soft",
-   "frame": "subject: on MOM (L03): Mom (villager, plains fletcher: the feathered hat) sitting in an oak boat sliding left to right past the Hollow's field, the same man ahead with the lead; the kid small in the doorway of their cottage at frame left (the left of S08's two doors) watching, swaying her head. Morning 2000, about day 5993.",
+   "camera": "at: across the lane from the kid's door, 8 blocks, looking north, still. Flashback, graded warm and soft. 0t: keep the flashback bright and cool-neutral (a light desaturation or soft vignette, not orange warmth) through 8 s",
+   "frame": "subject: on MOM (L03, ~5.6-6.8 s; 0t: the rule on a new person): Mom (villager, plains fletcher: the feathered hat) sitting in an oak boat sliding left to right past the Hollow's field, the same man ahead with the lead; the kid small in the doorway of their cottage at frame left (the left of S08's two doors) watching, swaying her head. Morning 2000, about day 5993.",
    "look": {
     "time": 2000,
     "grade": "flashback"
+   },
+   "cut": {
+    "line": "L03",
+    "word": "He",
+    "at_s": 5.6
    }
   },
   {
@@ -379,23 +429,29 @@
    "line": "L03",
    "place": "bramble_hollow",
    "size": "full",
-   "camera": "at: 5 blocks south of the lane, near Uncle's cottage (the right of S08's two doors), looking north, still; cut in on UNCLE. Flashback, graded as S07",
-   "frame": "subject: Uncle (plains villager, butcher: the white apron and red headband) in an oak boat, head to stern in frame, sliding left to right, the man's legs and the lead at frame right; bg: a different cottage than S07 (another day). Morning 2000.",
+   "camera": "at: 5 blocks south of the lane, near Uncle's cottage (the right of S08's two doors), looking north, still; cut in on UNCLE. Flashback, graded as S07. 0t: keep the flashback bright and cool-neutral (a light desaturation or soft vignette, not orange warmth) through 8 s",
+   "frame": "subject (~6.8-8.0 s; 0t: the rule on a new person): Uncle (plains villager, butcher: the white apron and red headband) in an oak boat, head to stern in frame, sliding left to right, the man's legs and the lead at frame right; bg: a different cottage than S07 (another day). Morning 2000.",
    "look": {
     "time": 2000,
     "grade": "flashback"
+   },
+   "cut": {
+    "line": "L03",
+    "word": "And",
+    "at_s": 6.8
    }
   },
   {
    "id": "S08",
    "line": "L03",
    "place": "bramble_hollow_ridge",
-   "size": "wide",
-   "camera": "at: on the ridge's crest, 3 blocks east of the boat and 2 up, looking back west over the kid's shoulder down into the Hollow, still (a look back, not a travel shot); the cut lands on LOVE",
-   "frame": "fg: the kid in the boat from behind, her head turned back toward the Hollow; subject: the Hollow's two cottages about 20 blocks below, side by side, doors shut, windows dark: Uncle's (left) and hers and Mom's (right); the man's legs at frame left. Present, 11600 (the trip has just left the Hollow; S06 follows, further on).",
+   "size": "mcu",
+   "camera": "at: in front of the boat, 2 blocks off, at the kid's eye height, looking back at her, tracking with the boat; the cut lands on LOVE",
+   "frame": "subject: the kid's face in the boat, hopeful and sure (a little head sway), Bramble Hollow soft and small behind her as they leave it; the man's arm and the lead at frame edge. Present, 11600. (r6, 0t: was the two shut doors from the crest; the shut doors now show in S01b's background.)",
    "look": {
     "time": 11600
-   }
+   },
+   "subject": "actor:N"
   },
   {
    "id": "S04",
@@ -534,14 +590,14 @@
    "S11 on EMPTY; L08 the reveal said over it: Mom, Uncle, the lady from the window, every house full",
    "L09 the one beat: 'None of them came BACK. I'm not going back EITHER.' (echoes L01); 1.0 s; cut"
   ],
-  "loop": "L09 'None of them came BACK. I'm not going back either.' runs into L01 'A man is kidnapping my whole VILLAGE': the 'kidnapping' was a move, and she chose it"
+  "loop": "L09 'None of them came BACK. I'm not going back either.' runs into L01 'A man is KIDNAPPING my village': the 'kidnapping' was a move, and she chose it"
  },
  "bible": "stories/pulled_away/bible.md",
  "set": "stories/pulled_away/set.md",
  "shotlist": "stories/pulled_away/shots.md",
  "beats": "stories/pulled_away/beats.md",
  "upload": {
-  "title": "a man is kidnapping my whole village. in a boat. on the grass 🛶 #minecraft #shorts",
+  "title": "a man is KIDNAPPING my village. in a boat. on the grass 🛶 #minecraft #shorts",
   "pinned": "Be honest: where did YOU think he was taking her?",
   "tags": [
    "minecraft villager",

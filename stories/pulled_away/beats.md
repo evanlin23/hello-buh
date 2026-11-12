@@ -1,4 +1,6 @@
-# pulled_away: beat sheet and clue map (r5.1)
+# pulled_away: beat sheet and clue map (r6 opening)
+
+r6 opening (2026-11-12, STANDARDS 0t): L01 tightened to the hook frame study's line ("A man is KIDNAPPING my village. In a BOAT. On the GRASS."); the first 8 s re-shot to its plan (shots.md). The shut doors (the empty homes) move from S08 to S01b's background.
 
 r5.1 (2026-11-12): critic r3 must-fixes: L01 shortened to one breath ("of us"); L04 plants WINDOW for the reveal; S11 shows their door under the lantern and no boats at the dock but the two.
 
@@ -29,9 +31,9 @@ dusk villagers walk home to their beds.
 
 | format beat | # | shot | picture | line |
 |---|---|---|---|---|
-| 1. the impossible fact + the question (0-3 s) | 1 | S01 | the kid in an oak boat dragged over grass by a player on a lead | N: "A MAN is kidnapping my whole VILLAGE. One at a TIME. In a BOAT. On the GRASS." |
-| 3, 5. the narrator wants to know and goes to look | 2 | S02 | tracking beside the boat; the man glances back on FORTY | N: "So TODAY, I got in MYSELF. I'm number FORTY." |
-| 4. someone loved at stake (+ clue) | 3 | S07, S07b, S08 | flashbacks: Mom in a boat; Uncle another day; present: the kid looks back from the crest at the two shut doors on LOVE | N: "He took MOM last WEEK. And my UNCLE. They must LOVE it there." |
+| 1. the impossible fact + the question (0-3.4 s) | 1 | S01, S01b, S01c | 0-1.6 the kid's face in an oak boat sliding over grass, cut on VILLAGE; 1.6 the wide, the man leading, the Hollow's shut doors; 2.4 along the hull, her face leaning over the gunwale | N: "A man is KIDNAPPING my village. In a BOAT. On the GRASS." (KIDNAPPING ~1.3-1.7 s) |
+| 3, 5. the narrator wants to know and goes to look | 2 | S02 | tracking beside the boat; the man glances back on FORTY | N: "Today, I got in MYSELF. I'm number FORTY." |
+| 4. someone loved at stake (+ clue) | 3 | S07, S07b, S08 | flashbacks: Mom in a boat (~5.6 s); Uncle another day (~6.8 s): the rule on a new person every ~1.3 s; present: the kid's hopeful face on LOVE | N: "He took MOM last WEEK. And my UNCLE. They must LOVE it there." |
 | 2. clue | 4 | S04, S04b | flashback: the man alone on the bank, dark Fernbank across the water; on WINDOW the long lens on the one lit window, the librarian in it | N: "The FIRST time he came, he stared across the WATER at the old EMPTY village. Somebody left a light on in ONE WINDOW." |
 | 2. clue | 5 | S05 | flashback: the man in profile | Man: "Someone's been ALONE a long TIME." |
 | 2. clue, misread | 6 | S06 | present: the kid in her boat behind him, down the ridge's far slope | N: "I think he means HIMSELF. He doesn't have any FRIENDS." |
@@ -59,6 +61,6 @@ lit window and the lonely one).
   every house full = he filled her village). No mechanic needed; "trading hall" is a bonus read for players only.
 - Planted twice where a rewatch catches it: the lit window (S04, S04b) with the man's line (L05); "They must LOVE it
   there" (L03).
-- Loop: L09 "None of them came BACK. I'm not going back either." runs into L01 "A man is kidnapping my whole VILLAGE": the kidnapping was a move.
+- Loop: L09 "None of them came BACK. I'm not going back either." runs into L01 "A man is KIDNAPPING my village": the kidnapping was a move.
 - Agency: she got in herself (L02); every motion has a visible cause (the man pulls, rows; the boat bumps the dock).
 - Fair to the canon: Fernbank has been empty but for the librarian and the golem since day 520 (Respawn Tax).
