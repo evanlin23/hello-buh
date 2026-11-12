@@ -20,13 +20,18 @@ module.exports = {
   recordRadius: 128,
   botTimeout: 600,
   edit: {
-    caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.2', endAfter: 'crater:0.7',   // settle-ok: the crater cut comes after the chain's last blast (perform waits out every primed TNT); r:r188b46 ends 0.7 s into the crater
-    speed: [['fuse_a', 'fuse_b', 'cut'], ['rim_a', 'rim_b', 'cut']],   // most of the fuse; the chain's end to the crater's rim
-    subs: [['hill', 'wait... THE HILL??', 2.2, 0]],
-    sfx: [['pop', 'start', { gain: 1.0 }], ['riser', 'fuse_b', 'boom'], ['boom', 'boom'], ['boom', 'hill', { gain: 1.0 }],
-      ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.3 }]],
-    flash: [['boom', 0, 0.4], ['hill', 0, 0.5], ['crater', 0, 0.3]],
-    shake: [['boom', 0, 8], ['hill', 0, 14]], punch: [['crater', 0, 1.06]]
+    // pace r1 (Actions render 1): the chain's 9 s of blasts merged into one roar and one smoke wall, 8.3 s with nothing new
+    // (BLOCK), and the crater's reveal had no hit on the final mix (mixcheck BLOCK). The chain's smoke-heavy middle plays
+    // at x2 (the blasts keep going on screen: no cut while it goes off, r:r24d99a), a second reaction and two booms ride
+    // the escalation, and the NCS drop, a dip, a game dip and an impact land on the crater (the payoff, the after).
+    caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'crater', startAt: 'lit:-1.2', endAfter: 'crater:0.7',   // settle-ok: the crater cut comes after the chain's last blast (perform waits 1 s with no blast); r:r188b46 ends 0.7 s into the crater
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['hill:1.6', 'rim_a', 2], ['rim_a', 'rim_b', 'cut']],   // most of the fuse; the chain's middle; to the crater's rim
+    subs: [['hill', 'wait... THE HILL??', 1.6, 0], ['hill:4.4', 'IT KEEPS GOING', 1.4, 0]],
+    sfx: [['impact', 'start', { gain: 1.2 }], ['pop', 'start', { gain: 1.0 }], ['riser', 'fuse_b', 'boom'], ['boom', 'boom'], ['boom', 'hill', { gain: 1.0 }],
+      ['boom', 'hill:4.4', { gain: 0.9 }], ['boom', 'hill:7.2', { gain: 0.9 }],
+      ['dip', 'crater', 0.4], ['gamedip', 'crater', 0.35], ['impact', 'crater', { gain: 1.4 }]],
+    flash: [['boom', 0, 0.4], ['hill', 0, 0.5], ['hill:4.4', 0, 0.3], ['crater', 0, 0.4]],
+    shake: [['boom', 0, 8], ['hill', 0, 14], ['hill:4.4', 0, 10]], punch: [['crater', 0, 1.08]]
   },
 
   async setup (ctx) {
