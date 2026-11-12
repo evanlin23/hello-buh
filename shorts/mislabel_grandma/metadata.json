@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "land",
     "drop_in_song_s": 47.5,
-    "drop_in_short_s": 31.6,
-    "song_start_s": 15.9
+    "drop_in_short_s": 33.0,
+    "song_start_s": 14.5
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 32,
+    "duration_s": 33.6,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 73531510,
-    "sha256": "bc31d0ea3aa58242531e2a82bfc61c189135bc8803afea06a5566ec7736d03ac",
+    "bytes": 72370447,
+    "sha256": "a6712ace4e65fddf7387dfa5500f4e5fe2cce310b32dddf4c8d4e17a9c312fbd",
     "release": {
       "tag": "pkg-mislabel_grandma",
-      "asset": "mislabel_grandma.short.bc31d0ea3aa58242.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short.bc31d0ea3aa58242.mp4",
-      "sha256": "bc31d0ea3aa58242531e2a82bfc61c189135bc8803afea06a5566ec7736d03ac",
-      "bytes": 73531510
+      "asset": "mislabel_grandma.short.a6712ace4e65fddf.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short.a6712ace4e65fddf.mp4",
+      "sha256": "a6712ace4e65fddf7387dfa5500f4e5fe2cce310b32dddf4c8d4e17a9c312fbd",
+      "bytes": 72370447
     },
     "nosong_release": {
       "tag": "pkg-mislabel_grandma",
-      "asset": "mislabel_grandma.short_nosong.480c7840bf3a5be6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short_nosong.480c7840bf3a5be6.mp4",
-      "sha256": "480c7840bf3a5be6aa1482711a70f779f7813029f0db38a3257ca0cfcf027b8a",
-      "bytes": 72870630
+      "asset": "mislabel_grandma.short_nosong.32bf5e0da5a939f5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short_nosong.32bf5e0da5a939f5.mp4",
+      "sha256": "32bf5e0da5a939f5a22b36e55ddedc538f24c01ab7493f324de3b52f1087c9cd",
+      "bytes": 71696638
     }
   },
   "edit": {
@@ -137,7 +137,7 @@
       ]
     ],
     "startAt": "go:0.55",
-    "endAfter": "land:0.4",
+    "endAfter": "land:0.6",
     "shake": [
       [
         "land",
@@ -171,7 +171,7 @@
       "--start_at",
       "go:0.55",
       "--end_after",
-      "land:0.4"
+      "land:0.6"
     ]
   },
   "recording": {
@@ -182,13 +182,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 3391,
-      "y": 290,
-      "z": 911
+      "x": 3390,
+      "y": 220,
+      "z": 907
     },
     "biome": "minecraft:jungle",
-    "ticks": 815,
-    "seconds": 40.75,
+    "ticks": 826,
+    "seconds": 41.3,
     "deaths": 0,
     "events": [
       {
@@ -200,8 +200,16 @@
         "event": "go"
       },
       {
+        "t": 0.8,
+        "event": "shot"
+      },
+      {
         "t": 1,
         "event": "jump"
+      },
+      {
+        "t": 1.25,
+        "event": "vel"
       },
       {
         "t": 1.55,
@@ -216,375 +224,415 @@
         "event": "land_jump"
       },
       {
+        "t": 2.25,
+        "event": "vel"
+      },
+      {
         "t": 2.3,
-        "event": "jump"
+        "event": "f1_on"
       },
       {
-        "t": 2.85,
-        "event": "land_jump"
+        "t": 2.3,
+        "event": "shot"
       },
       {
-        "t": 3.8,
-        "event": "extend"
+        "t": 2.6,
+        "event": "vel"
       },
       {
-        "t": 3.8,
+        "t": 3.05,
+        "event": "vel"
+      },
+      {
+        "t": 3.25,
+        "event": "vel"
+      },
+      {
+        "t": 3.45,
         "event": "swing"
       },
       {
-        "t": 3.8,
+        "t": 3.45,
         "event": "place_on"
       },
       {
-        "t": 4.25,
+        "t": 3.45,
         "event": "extend"
       },
       {
-        "t": 4.25,
+        "t": 3.65,
+        "event": "vel"
+      },
+      {
+        "t": 5,
         "event": "swing"
       },
       {
-        "t": 4.25,
+        "t": 5,
         "event": "place_on"
       },
       {
-        "t": 5.1,
-        "event": "jump"
+        "t": 5,
+        "event": "extend"
       },
       {
         "t": 5.65,
-        "event": "land_jump"
+        "event": "f1_off"
       },
       {
-        "t": 6.25,
-        "event": "vel"
+        "t": 5.65,
+        "event": "shot"
       },
       {
-        "t": 6.4,
+        "t": 5.7,
         "event": "jump"
       },
       {
-        "t": 6.4,
-        "event": "dropper"
+        "t": 6.25,
+        "event": "land_jump"
       },
       {
         "t": 6.9,
-        "event": "vel"
+        "event": "f1_on"
       },
       {
-        "t": 7,
-        "event": "vel"
+        "t": 6.9,
+        "event": "shot"
       },
       {
-        "t": 7.9,
-        "event": "vel"
+        "t": 7.55,
+        "event": "swing"
       },
       {
-        "t": 8,
-        "event": "vel"
+        "t": 7.55,
+        "event": "place_on"
       },
       {
-        "t": 8.05,
+        "t": 7.55,
+        "event": "extend"
+      },
+      {
+        "t": 8.65,
+        "event": "swing"
+      },
+      {
+        "t": 8.65,
+        "event": "place_on"
+      },
+      {
+        "t": 8.65,
+        "event": "extend"
+      },
+      {
+        "t": 9.05,
+        "event": "f1_off"
+      },
+      {
+        "t": 9.05,
+        "event": "shot"
+      },
+      {
+        "t": 9.25,
+        "event": "jump"
+      },
+      {
+        "t": 9.8,
+        "event": "land_jump"
+      },
+      {
+        "t": 10.45,
+        "event": "jump"
+      },
+      {
+        "t": 10.45,
+        "event": "dropper"
+      },
+      {
+        "t": 12.1,
         "event": "item1"
       },
       {
-        "t": 8.9,
-        "event": "vel"
-      },
-      {
-        "t": 9,
-        "event": "vel"
-      },
-      {
-        "t": 9.9,
-        "event": "vel"
-      },
-      {
-        "t": 10,
-        "event": "vel"
-      },
-      {
-        "t": 10.4,
-        "event": "pass1"
-      },
-      {
-        "t": 10.65,
-        "event": "level1"
-      },
-      {
-        "t": 10.9,
-        "event": "vel"
-      },
-      {
-        "t": 11,
-        "event": "vel"
-      },
-      {
-        "t": 11.65,
+        "t": 14.7,
         "event": "hole1"
       },
       {
-        "t": 11.85,
-        "event": "vel"
-      },
-      {
-        "t": 11.9,
+        "t": 15,
         "event": "end1"
       },
       {
-        "t": 11.9,
-        "event": "cut"
-      },
-      {
-        "t": 12,
-        "event": "vel"
-      },
-      {
-        "t": 12.75,
-        "event": "cut"
-      },
-      {
-        "t": 12.9,
-        "event": "vel"
-      },
-      {
-        "t": 13,
-        "event": "vel"
-      },
-      {
-        "t": 13.15,
-        "event": "item2"
-      },
-      {
-        "t": 13.9,
-        "event": "vel"
-      },
-      {
-        "t": 14,
-        "event": "vel"
-      },
-      {
-        "t": 14.9,
-        "event": "vel"
-      },
-      {
         "t": 15,
-        "event": "vel"
+        "event": "cut"
       },
       {
-        "t": 15.3,
-        "event": "pass2"
-      },
-      {
-        "t": 15.7,
-        "event": "level2"
-      },
-      {
-        "t": 15.9,
-        "event": "vel"
+        "t": 15.6,
+        "event": "cut"
       },
       {
         "t": 16,
-        "event": "vel"
+        "event": "item2"
       },
       {
-        "t": 16.85,
+        "t": 19.35,
         "event": "hole2"
       },
       {
-        "t": 16.9,
-        "event": "vel"
-      },
-      {
-        "t": 17,
-        "event": "vel"
-      },
-      {
-        "t": 17.1,
+        "t": 19.65,
         "event": "end2"
       },
       {
-        "t": 17.1,
+        "t": 19.65,
         "event": "cut"
       },
       {
-        "t": 17.75,
+        "t": 20.2,
         "event": "cut"
       },
       {
-        "t": 18.15,
+        "t": 20.6,
         "event": "item3"
       },
       {
-        "t": 20.4,
-        "event": "pass3"
+        "t": 22.15,
+        "event": "vel"
       },
       {
-        "t": 20.8,
-        "event": "level3"
+        "t": 23.1,
+        "event": "vel"
       },
       {
-        "t": 21.85,
+        "t": 23.45,
+        "event": "vel"
+      },
+      {
+        "t": 23.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.05,
         "event": "hole3"
       },
       {
-        "t": 22.1,
+        "t": 24.15,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
         "event": "end3"
       },
       {
-        "t": 22.1,
+        "t": 24.35,
         "event": "cut"
       },
       {
-        "t": 22.75,
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.45,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.55,
+        "event": "vel"
+      },
+      {
+        "t": 24.9,
         "event": "cut"
       },
       {
-        "t": 23.15,
+        "t": 24.95,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
         "event": "item4"
       },
       {
-        "t": 25.65,
-        "event": "pass4"
+        "t": 25.45,
+        "event": "vel"
       },
       {
-        "t": 26.05,
-        "event": "level4"
+        "t": 25.5,
+        "event": "vel"
       },
       {
-        "t": 26.85,
+        "t": 26.45,
+        "event": "vel"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 27.45,
+        "event": "vel"
+      },
+      {
+        "t": 27.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
         "event": "hole4"
       },
       {
-        "t": 27.1,
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
         "event": "end4"
       },
       {
-        "t": 27.1,
+        "t": 28.75,
         "event": "cut"
       },
       {
-        "t": 27.1,
+        "t": 28.75,
         "event": "vel"
       },
       {
-        "t": 27.1,
+        "t": 28.75,
         "event": "vel"
       },
       {
-        "t": 27.85,
+        "t": 28.75,
         "event": "vel"
       },
       {
-        "t": 28,
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.9,
+        "event": "vel"
+      },
+      {
+        "t": 28.9,
+        "event": "vel"
+      },
+      {
+        "t": 28.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.35,
         "event": "cut"
       },
       {
-        "t": 28,
+        "t": 29.45,
         "event": "vel"
       },
       {
-        "t": 28,
+        "t": 29.5,
         "event": "vel"
       },
       {
-        "t": 28.05,
+        "t": 29.5,
         "event": "vel"
       },
       {
-        "t": 28.4,
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
         "event": "item5"
       },
       {
-        "t": 28.85,
+        "t": 29.75,
         "event": "vel"
       },
       {
-        "t": 29,
+        "t": 29.9,
         "event": "vel"
       },
       {
-        "t": 29,
+        "t": 29.9,
         "event": "vel"
       },
       {
-        "t": 29.05,
+        "t": 29.95,
         "event": "vel"
       },
       {
-        "t": 29.85,
+        "t": 30.45,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30.05,
+        "t": 30.55,
         "event": "vel"
       },
       {
-        "t": 30.35,
-        "event": "pass5"
+        "t": 30.75,
+        "event": "vel"
       },
       {
-        "t": 30.85,
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
         "event": "vel"
       },
       {
         "t": 30.95,
-        "event": "level5"
-      },
-      {
-        "t": 31,
         "event": "vel"
       },
       {
-        "t": 31,
+        "t": 31.45,
         "event": "vel"
       },
       {
-        "t": 31.05,
+        "t": 31.5,
         "event": "vel"
       },
       {
-        "t": 31.8,
+        "t": 31.5,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.75,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
         "event": "vel"
       },
       {
         "t": 31.95,
-        "event": "vel"
-      },
-      {
-        "t": 31.95,
-        "event": "vel"
-      },
-      {
-        "t": 32,
-        "event": "vel"
-      },
-      {
-        "t": 32.1,
-        "event": "hole5"
-      },
-      {
-        "t": 32.35,
-        "event": "end5"
-      },
-      {
-        "t": 32.35,
-        "event": "cut"
-      },
-      {
-        "t": 32.35,
-        "event": "vel"
-      },
-      {
-        "t": 32.35,
         "event": "vel"
       },
       {
@@ -592,7 +640,27 @@
         "event": "vel"
       },
       {
-        "t": 32.85,
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "hole5"
+      },
+      {
+        "t": 32.9,
         "event": "vel"
       },
       {
@@ -600,119 +668,55 @@
         "event": "vel"
       },
       {
-        "t": 33,
+        "t": 32.95,
         "event": "vel"
       },
       {
-        "t": 33,
-        "event": "vel"
+        "t": 33.2,
+        "event": "end5"
       },
       {
-        "t": 33,
-        "event": "vel"
-      },
-      {
-        "t": 33.05,
-        "event": "vel"
-      },
-      {
-        "t": 33.1,
+        "t": 33.2,
         "event": "cut"
       },
       {
-        "t": 33.3,
-        "event": "vel"
-      },
-      {
-        "t": 33.4,
+        "t": 33.5,
         "event": "vel"
       },
       {
         "t": 33.5,
-        "event": "item6"
-      },
-      {
-        "t": 33.65,
         "event": "vel"
       },
       {
-        "t": 33.7,
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.55,
         "event": "vel"
       },
       {
         "t": 33.8,
-        "event": "vel"
+        "event": "cut"
       },
       {
-        "t": 33.85,
-        "event": "vel"
-      },
-      {
-        "t": 33.95,
-        "event": "vel"
-      },
-      {
-        "t": 33.95,
-        "event": "vel"
-      },
-      {
-        "t": 33.95,
-        "event": "vel"
-      },
-      {
-        "t": 34.05,
-        "event": "vel"
-      },
-      {
-        "t": 34.35,
-        "event": "vel"
+        "t": 34.2,
+        "event": "item6"
       },
       {
         "t": 34.45,
         "event": "vel"
       },
       {
-        "t": 34.7,
+        "t": 34.5,
         "event": "vel"
       },
       {
-        "t": 34.85,
+        "t": 34.5,
         "event": "vel"
       },
       {
-        "t": 34.9,
-        "event": "vel"
-      },
-      {
-        "t": 35,
-        "event": "vel"
-      },
-      {
-        "t": 35,
-        "event": "vel"
-      },
-      {
-        "t": 35,
-        "event": "vel"
-      },
-      {
-        "t": 35.05,
-        "event": "vel"
-      },
-      {
-        "t": 35.2,
-        "event": "vel"
-      },
-      {
-        "t": 35.25,
-        "event": "pass6"
-      },
-      {
-        "t": 35.35,
-        "event": "vel"
-      },
-      {
-        "t": 35.4,
+        "t": 34.55,
         "event": "vel"
       },
       {
@@ -720,43 +724,15 @@
         "event": "vel"
       },
       {
-        "t": 35.7,
+        "t": 35.5,
         "event": "vel"
       },
       {
-        "t": 35.8,
+        "t": 35.5,
         "event": "vel"
       },
       {
-        "t": 35.85,
-        "event": "vel"
-      },
-      {
-        "t": 35.9,
-        "event": "level6"
-      },
-      {
-        "t": 35.9,
-        "event": "vel"
-      },
-      {
-        "t": 36,
-        "event": "vel"
-      },
-      {
-        "t": 36,
-        "event": "vel"
-      },
-      {
-        "t": 36,
-        "event": "vel"
-      },
-      {
-        "t": 36.05,
-        "event": "vel"
-      },
-      {
-        "t": 36.35,
+        "t": 35.55,
         "event": "vel"
       },
       {
@@ -764,95 +740,83 @@
         "event": "vel"
       },
       {
-        "t": 36.7,
+        "t": 36.5,
         "event": "vel"
       },
       {
-        "t": 36.8,
+        "t": 36.5,
         "event": "vel"
       },
       {
-        "t": 36.85,
+        "t": 36.55,
         "event": "vel"
       },
       {
-        "t": 36.9,
+        "t": 37.45,
         "event": "vel"
       },
       {
-        "t": 37,
+        "t": 37.5,
         "event": "vel"
       },
       {
-        "t": 37,
+        "t": 37.5,
         "event": "vel"
       },
       {
-        "t": 37,
-        "event": "vel"
-      },
-      {
-        "t": 37.05,
-        "event": "vel"
-      },
-      {
-        "t": 37.2,
+        "t": 37.55,
         "event": "hole6"
       },
       {
-        "t": 37.35,
+        "t": 37.55,
         "event": "vel"
       },
       {
-        "t": 37.45,
+        "t": 37.85,
         "event": "end6"
       },
       {
-        "t": 37.45,
-        "event": "cut"
-      },
-      {
-        "t": 37.75,
-        "event": "vel"
-      },
-      {
-        "t": 37.8,
-        "event": "vel"
-      },
-      {
-        "t": 37.95,
+        "t": 37.85,
         "event": "cut"
       },
       {
         "t": 38.35,
+        "event": "cut"
+      },
+      {
+        "t": 38.4,
+        "event": "vel"
+      },
+      {
+        "t": 38.45,
+        "event": "vel"
+      },
+      {
+        "t": 38.8,
         "event": "home"
       },
       {
-        "t": 38.65,
+        "t": 39.45,
         "event": "vel"
       },
       {
-        "t": 38.75,
+        "t": 39.5,
         "event": "vel"
       },
       {
-        "t": 39.7,
-        "event": "vel"
-      },
-      {
-        "t": 39.75,
+        "t": 40.3,
         "event": "land"
       },
       {
-        "t": 39.8,
+        "t": 40.45,
         "event": "vel"
       },
       {
-        "t": 40.7,
+        "t": 40.5,
         "event": "vel"
       },
       {
-        "t": 40.75,
+        "t": 41.3,
         "event": "end"
       }
     ]
@@ -860,48 +824,49 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "fc29a4659d64639f55bec8fda608262cead0e031",
+    "commit": "44b031e3ef2fd44930853374e64411dc698a6a42",
     "rendered": "local",
-    "rendered_at": "2026-11-11T23:41:09.664Z",
-    "head_at_publish": "fc29a4659d64639f55bec8fda608262cead0e031",
+    "rendered_at": "2026-11-12T03:15:53.356Z",
+    "head_at_publish": "44b031e3ef2fd44930853374e64411dc698a6a42",
     "stunt": "stunts/mislabel_grandma.js",
     "source_snapshot": [
       "source/mislabel_grandma.js",
       "source/mislabel.js",
       "source/act.js",
       "source/motion.js",
-      "source/sight.js"
+      "source/sight.js",
+      "source/movie.js"
     ]
   },
   "rebuild": [
-    "git checkout fc29a4659d64",
+    "git checkout 44b031e3ef2f",
     "gunzip -c shorts/mislabel_grandma/recording.json.gz > work/mislabel_grandma.rec.json",
     "node render.js work/mislabel_grandma.rec.json work/mislabel_grandma.frames 60 1080 1011",
     "python3 audio.py work/mislabel_grandma.rec.json work/mislabel_grandma.wav",
-    "python3 edit.py --frames work/mislabel_grandma.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mislabel_grandma.rec.json --audio work/mislabel_grandma.wav --caption \"Minecraft items, named by my grandma 👵\" --self_name 56e --colors 1=yellow,2=yellow,3=yellow,4=yellow,5=yellow,6=yellow --captions \"[[\\\"item1\\\",\\\"1.\\\"],[\\\"item1:1.1\\\",\\\"1. Red crayons\\\"],[\\\"item2\\\",\\\"2.\\\"],[\\\"item2:1.1\\\",\\\"2. Tomato soup\\\"],[\\\"item3\\\",\\\"3.\\\"],[\\\"item3:1.1\\\",\\\"3. Ice cube\\\"],[\\\"item4\\\",\\\"4.\\\"],[\\\"item4:1.1\\\",\\\"4. Lime jello\\\"],[\\\"item5\\\",\\\"5.\\\"],[\\\"item5:1.1\\\",\\\"5. Angry lemon\\\"],[\\\"item6\\\",\\\"6.\\\"],[\\\"item6:1.1\\\",\\\"6. Sad cucumber\\\"],[\\\"home\\\",\\\"Minecraft items, named by my grandma 👵\\\"]]\" --speed [[\"end1\",\"item2\",\"cut\"],[\"end2\",\"item3\",\"cut\"],[\"end3\",\"item4\",\"cut\"],[\"end4\",\"item5\",\"cut\"],[\"end5\",\"item6\",\"cut\"],[\"end6\",\"home\",\"cut\"]] --shake [[\"land\",0,14]] --sfx [[\"dip\",\"land\",0.4]] --start_at go:0.55 --end_after land:0.4 --out out/mislabel_grandma.mp4"
+    "python3 edit.py --frames work/mislabel_grandma.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mislabel_grandma.rec.json --audio work/mislabel_grandma.wav --caption \"Minecraft items, named by my grandma 👵\" --self_name 56e --colors 1=yellow,2=yellow,3=yellow,4=yellow,5=yellow,6=yellow --captions \"[[\\\"item1\\\",\\\"1.\\\"],[\\\"item1:1.1\\\",\\\"1. Red crayons\\\"],[\\\"item2\\\",\\\"2.\\\"],[\\\"item2:1.1\\\",\\\"2. Tomato soup\\\"],[\\\"item3\\\",\\\"3.\\\"],[\\\"item3:1.1\\\",\\\"3. Ice cube\\\"],[\\\"item4\\\",\\\"4.\\\"],[\\\"item4:1.1\\\",\\\"4. Lime jello\\\"],[\\\"item5\\\",\\\"5.\\\"],[\\\"item5:1.1\\\",\\\"5. Angry lemon\\\"],[\\\"item6\\\",\\\"6.\\\"],[\\\"item6:1.1\\\",\\\"6. Sad cucumber\\\"],[\\\"home\\\",\\\"Minecraft items, named by my grandma 👵\\\"]]\" --speed [[\"end1\",\"item2\",\"cut\"],[\"end2\",\"item3\",\"cut\"],[\"end3\",\"item4\",\"cut\"],[\"end4\",\"item5\",\"cut\"],[\"end5\",\"item6\",\"cut\"],[\"end6\",\"home\",\"cut\"]] --shake [[\"land\",0,14]] --sfx [[\"dip\",\"land\",0.4]] --start_at go:0.55 --end_after land:0.6 --out out/mislabel_grandma.mp4"
   ],
   "status": "ready",
-  "notes": "mislabel owner notes: parkour hook with jumps + a placed double extension (oak planks, aimed); fall through a 7x7 hole in the world after each build, then from the sky; loops to the start. Fix-check r2 READY (fresh session; r1 blocker: hook didn't read as parkour, fixed by re-record). Nitpicks: ~1 s of sky at 4-5 s, shaft at the frame edge for 1 s.",
-  "published_at": "2026-11-11T23:43:48.258Z",
+  "notes": "mislabel owner note (r:re392f9): sideways double extensions shown in short 3rd-person shots (right, then left), clean 1x1-hole transitions straight out of the sky, loop to the start; fast cuts (r:r188b46); round-3 fix-check READY (fresh session); timing tweaks after it re-recorded, lead checked the bridge-out frames",
+  "published_at": "2026-11-12T03:19:06.176Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T23:44:21+00:00",
+    "at": "2026-11-12T03:19:39+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 32.00 s vs the reviewed render 32.00 s"
+      "summary": "short.mp4 33.60 s vs the reviewed render 33.60 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 5,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T23:41:39.243Z",
+      "at": "2026-11-12T03:16:31.826Z",
       "report": "work/hb/mislabel_grandma.check.json"
     },
     "key_sounds": "n/a"
