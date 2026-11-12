@@ -16,7 +16,11 @@ module.exports = {
   caption: 'every way to cross lava (rated) 💀',
   edit: {
     caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
-    onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:1.15',
+    onFire: 'in_lava:death', deathScreen: true, startAt: 'crossed:1.6', endAfter: 'death:1.15',
+    // the opening (owner r:r4607fa / r:r0f3da0, no-op audit: open on the step into lava, cut the bridging): the Short
+    // starts on the water bucket's beat (1.6 s after the bridge's 'crossed'; the 7 s of bridging are gone), and a
+    // 1.2 s flash of the walk into the lava (the step, the burn) comes first: the 0/10 everyone waits for
+    hook: { at: 'in_lava', before: 0.35, after: 0.85, text: 'wait for the last one 💀' },
     subs: [
       ['beat', 'bridging...', 9, 0], ['crossed', 'bridging: 6/10', 9, 0],
       ['beat', 'water bucket...', 9, 1], ['crossed', 'water bucket: 9/10', 9, 1],
@@ -25,10 +29,9 @@ module.exports = {
       ['death', ' ', 0.05, 0]       // blank: ends the rating as the death screen opens (it drew over the buttons)
     ],
     // pace: sound by 0.3 s (a whoosh into the first beat), a pop on each rating, a song dip + impact on the death
-    sfx: [['whoosh', 'beat:0.4'], ['pop', 'place_on', { nth: 0, gain: 0.5 }], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
+    sfx: [['whoosh', 'crossed:1.62'], ['pop', 'place_on', { nth: 0, gain: 0.5 }], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
       ['dip', 'death', 0.3], ['impact', 'death']],
-    // the sneak along the finished bridge to the bank (nothing new: review nitpick) at 2x
-    speed: [['bridged', 'crossed', 2]]
+    // (the bridge and its 2x sneak to the bank are before the start now)
   },
   expectDeath: true,
 
