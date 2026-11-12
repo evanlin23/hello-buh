@@ -38,19 +38,20 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.3',   // (the camera drifts through it: settle:0.6 on a parked camera held a still frame 2 s, independent review)
+    return { subsY: 0.2, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.7',   // 0.7 s after the last blast (owner r:r188b46: the end 0.5-0.8 s after the result; smoke and debris never hold it)
       // a speedrun timer per tier (edit.splits, as end_portal_job: r:r32b983): 0:00.00 on each tier's 'beat', frozen
       // green on its 'mined' with n/6; real time, no cut inside a tier (subsY 0.2: the tier line clears the timer strip)
-      splits: { reset: 'beat', split: 'mined', of: TOOLS.length },
+      // (hidden from the finale: the TNT run is no timed attempt, and the frozen netherite split read as TNT's time, review)
+      splits: { reset: 'beat', split: 'mined', of: TOOLS.length, hide: 'finale' },
       speed: [
       ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
       ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
-      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
+      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['impact', 'beat', { gain: 1.0 }], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
       // gamedip: the chain's previous blast 0.54 s before the last (+ the limiter) flattened its hit in the NCS mix (pace)
       // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
-        // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
+        // an impact on the first tier card at 0.05 s (pace opening: a pop was 20 dB under the peak, r:r0f3da0)
       punch: [['boom', 0, 1.12], ['boom:1.3', 0, 1.06], ['boom:2.76', 0, 1.06]], shake: [['boom', 0, 10], ['boom:1.3', 0, 6], ['boom:2.76', 0, 6]],
       // (boom:1.3 / boom:2.76: the chain's 3rd and 5th blasts in output seconds of this take, 1.75x: a 3.6 s stretch of
       // same-looking booms under the song had no new event, pace dead BLOCK (the punches alone don't register); a card on

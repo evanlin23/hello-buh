@@ -24,7 +24,7 @@ module.exports = {
     startAt: 'dye:-0.45',
     // the short cut (lead 2026-11-11: as short as it reads): the seven dyes, the rainbow, then the jeb_ tag turns
     // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)
-    endAfter: 'jeb:1.0',
+    endAfter: 'jeb:0.75',   // r:r188b46: 0.75 s into the jeb_ cycle (~5 colours at x8; was 1.0)
     // the jeb_ sheep cycles a colour per 25 ticks (vanilla): held big and centred for 8 s after the tag, x8, so the last
     // 0.9 s runs through ~6 colours; the tag is timed onto a bright run (review 2026-11-11: x3 over a back-off showed red,
     // black, white; x5-6 covers 4-5 colours, which from most phases holds only 3 bright ones)

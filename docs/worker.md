@@ -29,18 +29,18 @@ adds songs.
 - One run at a time in your container (the server port is fixed). Never edit `run.sh` while it runs.
 - Copy the patterns of existing stunts: `tnt_scale.js`, `every_clutch.js`, `creeper.js`,
   `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action (a payoff that is a blast or
-  a fall ends on `endAfter: 'settle:0.6'`: 0.6 s after the harness's `settle` mark, once the TNT, debris and falling
-  blocks have stopped; lib/settle.js), `subs`
+  a fall ends on `endAfter: 'settle:0.5'`: 0.5 s after the harness's `settle` mark, once the TNT, falling blocks
+  and deaths are over; smoke doesn't count; lib/settle.js; see "Ending a beat fast" below), `subs`
   for beat labels (no emoji in subs), `deathScreen` + `expectDeath` for deaths.
 - 1.21.11 game rules are snake_case (`immediate_respawn`, `spawn_mobs`...). `/fill` is capped
   at 32768 blocks. Check logs for `COMMAND ERROR:`. During set-up (before the recording starts) a command error
   fails the attempt ("SETUP FAILED", exit 6, run.sh retries), except benign ones (/kill with nothing to kill, a /setblock
   to the same block); a command that may fail on purpose: `ctx.cmd(c, { mayFail: true })` (or `allowSetupErrors: true`
   on the stunt, `ALLOW_SETUP_ERRORS=1`).
-- **30 s minimum** (owner rule, 2026-11-06), reached with MORE escalating beats, never by stretching
-  one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
+- **No fixed minimum length** (owner, 2026-11-12: "no fixed minimum, just don't pad them"; the 30 s rule of
+  2026-11-06 is retired). Never pad: no beat added or stretched to reach a length. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
   Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
-  as soon as the payoff comes" / "I would prefer like 30 seconds at least".
+  as soon as the payoff comes".
 - **Gate the final mix, not the no-song render**: `./hb mixcheck <name>` builds the exact NCS mix publish makes and
   runs the publish gate's `./hb pace` on it (`./hb review` runs it too, as a blocker). Under the music, game sounds
   stop counting as hits: a payoff with no hit and a stretch carried only by game sounds both BLOCK at publish. Fixes:
@@ -49,6 +49,31 @@ adds songs.
   stretch; re-run ./hb check after. (lessons 2026-11-11)
 - Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
   anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
+
+## Ending a beat fast (owner r:r188b46, 2026-11-11)
+"After the stunt is done, we just cut... it can't be too fast, but it can't be so slow either... right now, we blow up
+the TNT, wait for what feels like forever, then we cut... boom, boom, boom, fast pace." Cut about 0.3-0.6 s after an
+action's result reads and go straight to the next beat; the end lands 0.5-0.8 s after the payoff's result. Only the
+action holds a cut (a block mid-fall, a mob mid-death, a blast's first 0.3 s); smoke, particles and drifting debris
+never do. `./hb pace` measures it (scripts/dwell.py): every result (a place, break, blast, hit, death, landing, and
+each mark the edit hangs an impact/boom/hit/ding sound, a flash or a shake on) to the next new thing (a cut, the next
+beat or mark, a line, a caption, a build block) or to the action going on (a fuse, a falling block, a mob walking up,
+the player falling: from the recording, never the pixels). WARN over 1.0 s mid-video; the end WARN over 0.9 s, BLOCK
+over 1.2 s (a text payoff, a death screen or a card, keeps its 1.2-1.8 s reading time).
+- **When does a result read?** A place, break or hit at once; a blast 0.3 s after it (its frame); a death 1.0 s after
+  it (the fall-over and poof); a reveal on its mark. So: a blast payoff ends ~0.9-1.1 s after the blast, a death ~1.6 s.
+- **The end: lower the endAfter offset**, never past the action: `crater:1.0` -> `crater:0.6`; a blast payoff on a new
+  recording `settle:0.5` (the mark is 0.3 s after the last blast). On a recording made before 2026-11-11 23:00 the
+  `settle` mark still sits ~1.9 s after the last blast (the old smoke wait): use `settle:-1.3` to `-1.1` there (pace's
+  dwell finding prints the time to end at; its fix says how much to take off).
+- **Mid-video: cut the wait out with a speed span.** `speed: [['boom:0.9', 'crater', 'cut']]` drops everything from
+  0.6 s after a blast's result to the next beat (offsets are source seconds after the mark). Inside one continuous
+  camera move (a tilt or a sweep), speed it up instead of a hard cut (`['boom:2.8', 'crater:-0.1', 4]`), so the view
+  doesn't jump (r:r52f94c). A cut between two tiers or piles can start sooner: `['crater1:0.8', 'cut2b', 'cut']`.
+- **In the stunt**, don't wait on smoke: no `waitForTicks(44)` or `L.hold(36)` "for the debris and smoke to settle";
+  the harness's settle already waits for falling blocks and deaths. A look into a crater is fine, but cut 0.5-0.8 s
+  into it.
+- An edit-only change (endAfter, speed spans, sfx) re-renders with `./hb render <stunt> --reuse` (frames reused).
 
 ## Check the recording before rendering (scripts/rec_check.py)
 Run rec_check before rendering, and fix blockers by re-recording. The render takes 25+ minutes; most of what reviews send

@@ -35,6 +35,13 @@ export const POSES = {
     limbs: { rightArm: { add: [-PI / 5, 0, 0] }, leftArm: { add: [-PI / 5, 0, 0] }, rightLeg: { set: [-1.4137167, PI / 10, 0.07853982] }, leftLeg: { set: [-1.4137167, -PI / 10, -0.07853982] } },
     drop: seatDrop
   },
+  // riding (a boat, a minecart): HumanoidModel.setupAnim's riding limbs with no drop (the rider already sits where
+  // Entity.positionRider puts it: lib/riding.js). Applied by render.js to any player actor the recording has riding
+  // (extra.ride), at once, as the model switches (blend 1)
+  ride: {
+    blend: 1,
+    limbs: { rightArm: { add: [-PI / 5, 0, 0] }, leftArm: { add: [-PI / 5, 0, 0] }, rightLeg: { set: [-1.4137167, PI / 10, 0.07853982] }, leftLeg: { set: [-1.4137167, -PI / 10, -0.07853982] } }
+  },
   // on the floor, legs flat out in front, hands in the lap: against a door frame or a wall
   sit_ground: {
     blend: 4,

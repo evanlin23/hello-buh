@@ -11,6 +11,7 @@
 //   poof    - a mob vanishing: 20 light-grey poof clouds in its box (ev.w, ev.h)
 //   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
 //   dust    - DustParticle specks (redstone dust: mining redstone ore)
+//   spell   - an evoker's spell at its hands (SpellParticle, ev.color the spell's colour)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
 function spawn (ev, blockTex) {
@@ -233,6 +234,16 @@ function spawn (ev, blockTex) {
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * 2 / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
     }
   }
+  if (ev.type === 'crumbs') {
+    // eating crumbs from a held thing at (x, y, z) (a stunt's item_crumbs mark with a position: lib/interrupt.js eats a
+    // held mob): ev.n bits of the item sprite (BreakingItemParticle: a random quarter, gravity 0.04, friction 0.98,
+    // life 4/(r*0.9+0.1)), thrown a little up and out, ev.scale times vanilla's size
+    for (let i = 0; i < (ev.n || 5); i++) {
+      const uo = r() * 3, vo = r() * 3
+      P({ x: ev.x + (r() - 0.5) * 0.12, y: ev.y + (r() - 0.5) * 0.08, z: ev.z + (r() - 0.5) * 0.12, vx: (r() - 0.5) * 0.08, vy: r() * 0.06 + 0.02, vz: (r() - 0.5) * 0.08,
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * (ev.scale ?? 1) / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
+    }
+  }
   if (ev.type === 'poof') {
     // a mob vanishing (LivingEntity.makePoofParticles): 20 ExplodeParticles (poof) at random points in
     // its box (ev.w, ev.h; default a player-sized 0.6 x 1.8, from ev.y up), gaussian x 0.02 plus +-0.05
@@ -256,6 +267,17 @@ function spawn (ev, blockTex) {
       P({ x: ev.x + dx * 0.1, y: ev.y + 0.3, z: ev.z + dz * 0.1, vx: dx * 0.05, vy: ((vy0 - 0.1) * d + 0.1) * 0.5, vz: dz * 0.05,
         g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/effect_', 8], bright: !!ev.instant, color: [cr * f, cg * f, cb * f] })
     }
+  }
+  if (ev.type === 'spell') {
+    // an evoker casting (SpellcasterIllager.tick, client): one ENTITY_EFFECT particle at a hand, at rest but for
+    // Particle's random kick (0.4 x (r + r + 1) x 0.15, then SpellParticle: y x 0.2, x and z x 0.1 as it was given
+    // none), rising (gravity -0.1 x 0.04, friction 0.96), effect_7 -> effect_0 over 8 / (r x 0.8 + 0.2) ticks,
+    // quadSize x 0.75, in the spell's colour (IllagerSpell: wololo 0.7 0.5 0.2)
+    let kx = r() * 2 - 1, ky = r() * 2 - 1, kz = r() * 2 - 1
+    const kd = Math.hypot(kx, ky, kz) || 1, ks = (r() + r() + 1) * 0.15 * 0.4
+    kx = kx / kd * ks; ky = ky / kd * ks + 0.1; kz = kz / kd * ks
+    P({ x: ev.x, y: ev.y, z: ev.z, vx: kx * 0.1, vy: ky * 0.2, vz: kz * 0.1, g: -0.004, drag: 0.96, life: Math.floor(8 / (r() * 0.8 + 0.2)),
+      size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/effect_', 8, 'rev'], color: ev.color || [0.7, 0.5, 0.2] })
   }
   if (ev.type === 'firework_trail') {
     // FireworkRocketEntity.tick (client): a FIREWORK spark every tick at the rocket, moving

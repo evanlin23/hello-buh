@@ -142,5 +142,36 @@
     "slug": "MortalsFunk",
     "mp3": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/001/836/mortals-funk-remix-1737075672-B868z8NMpI.mp3",
     "credit": "Song: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube"
+  },
+  {
+    "file": "executioner.mp3",
+    "title": "EXECUTIONER",
+    "artist": "DJ FKU",
+    "genre": "Phonk",
+    "slug": "EXECUTIONER",
+    "mp3": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/001/738/1723718204_7CFlBpXrJX_01-DJ-FKU---EXECUTIONER-NCS-Release.mp3",
+    "credit": "Song: DJ FKU - EXECUTIONER [NCS Release]\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/EXECUTIONER\nWatch: http://ncs.lnk.to/EXECUTIONERAT/youtube",
+    "pin_only": true,
+    "mood": "dark (ncs.io mood Dark): the cooked format's ominous drop (owner r:rcefdcc)"
+  },
+  {
+    "file": "holding_on.mp3",
+    "title": "Holding On",
+    "artist": "Floatinurboat, Chris Linton",
+    "genre": "Chill",
+    "mood": "sad",
+    "slug": "HoldingOn",
+    "mp3": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/478/holding-on-1586954397-18O2459H31.mp3",
+    "credit": "Song: Floatinurboat x Chris Linton - Holding On [NCS Release]\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/HoldingOn\nWatch: http://youtu.be/X5n9OwR6taQ"
+  },
+  {
+    "file": "limbo_feat_elliot.mp3",
+    "title": "Limbo (feat. ELIØTT)",
+    "artist": "Floatinurboat, ELIØTT",
+    "genre": "Chill",
+    "mood": "sad",
+    "slug": "Limbo",
+    "mp3": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/529/limbo-feat-elliot-1586955697-wCf7DYFWYL.mp3",
+    "credit": "Song: Floatinurboat - Limbo (feat. ELIØTT) [NCS Release]\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/Limbo\nWatch: http://youtu.be/n2kldFRUCpM"
   }
 ]

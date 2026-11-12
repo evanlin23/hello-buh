@@ -17,5 +17,11 @@ module.exports = love.makeStunt({
     ['night', 'now we wait for night', 2.0, 0],
     ['dark', 'ready?', 0.8, 0],
     ['payoff', 'for you', 1.0, 0]
-  ]
+  ],
+  edit: {
+    endAfter: 'payoff:0.7',   // r:r188b46: 0.7 s after the heart lights (the format's default is 1.0)
+    // r:r188b46: the back-up after the last lamp (2.15 s with nothing new): its turn at x1.3 (180 deg/s: under the whip
+    // cap), the walk back at x2.5
+    speed: [['complete', 'complete:0.4', 1.3], ['complete:0.4', 'back', 2.5]]
+  }
 })

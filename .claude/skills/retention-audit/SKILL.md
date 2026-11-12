@@ -13,7 +13,7 @@ the Short is the worst judge of their own pacing.
 Owner rules (2026-11-06):
 - "without any dead space";
 - "we should end as soon as the payoff comes";
-- at least 30 s, built from several escalating beats, not one long wait ("I would prefer like 30 seconds at least");
+- no fixed minimum length, never padded ("no fixed minimum, just don't pad them", 2026-11-12; the old 30 s rule is retired);
 - held reveals are bad ("we land on the reveal for the pixel art for a while").
 
 ## Inputs
@@ -69,11 +69,11 @@ change of shot.
   makes people re-watch. Stories should loop back to line 1.
 
 **5. Length and density.**
-- **30 s minimum** (owner rule). Under 30 s is a FAIL. The fix is more beats, not slower ones: turn the
-  stunt into an escalating series, a ranked list, X vs Y vs Z, or a story.
-- Over 30 s, every beat must still earn its place. If a beat could be cut without losing anything, it's
+- **No fixed minimum length** (owner 2026-11-12: "no fixed minimum, just don't pad them"). Never FAIL a
+  Short for being short. FAIL padding: a beat added or stretched only to reach a length.
+- Every beat must earn its place. If a beat could be cut without losing anything, it's
   padding: FAIL, and name it.
-- Count the beats: aim for 3+ per 10 s. A 30 s Short with only one payoff at the end needs visible tension
+- Count the beats: aim for 3+ per 10 s. A long Short with only one payoff at the end needs visible tension
   the whole way (a timer, a counter, a growing threat).
 - Each beat has its own mini hook -> payoff, and the beats escalate toward the final payoff.
 
@@ -101,7 +101,11 @@ Verdict: **ready** or **not ready**. Any FAIL in checks 1-5 means not ready.
 ## Common fixes
 - **Late hook:** `startAt: 'EVENT:-1.0'`, aim the camera so the subject sits beside the crosshair, not under it.
 - **Freeze on a wait or after the payoff:** add a glance, a step or a look-up in the stunt (`ctx.easeLook`). Waits get motion.
-- **Long tail:** `endAfter: 'PAYOFF:0.8'`. A blast or fall payoff: `endAfter: 'settle:0.6'` (0.6 s after the motion has
-  settled: the harness's `settle` mark, lib/settle.js; never earlier, owner r:r24d99a).
+- **Long tail:** `endAfter: 'PAYOFF:0.6'`. A blast or fall payoff: `endAfter: 'settle:0.5'` (0.5 s after the action is
+  over: the harness's `settle` mark, lib/settle.js; never mid-fall or mid-death, owner r:r24d99a; smoke never holds it,
+  r:r188b46).
+- **Dwell after a result** (pace's dwell check, r:r188b46): cut 0.3-0.6 s after each result reads; a speed span
+  `['boom:0.9', 'NEXT', 'cut']` (or a fast speed inside one camera move) takes out the wait (docs/worker.md "Ending a
+  beat fast").
 - **Flat middle:** escalate (more TNT, a higher drop, a faster cycle), or cut a repeated beat.
 - **Weak payoff:** more particles or a bigger effect, the song drop exactly on it, the camera reacting.
