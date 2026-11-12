@@ -59,3 +59,15 @@
 - **Vanilla notes:** sleeping with hostiles within 8 horizontal / 5 vertical of the bed is blocked (ours: zombies'
   feet y 65, bed y 73, so 8 below: OK, already in bible.md); 70 holds per player since 1.18 (bible.md); blue sheep
   must read as dyed (canon: Ravenford's flock, blue since day 1900). S02-S04 drag ~10 s.
+
+## r4.1 (fresh casual viewer; midpoint after L09)
+- **Midpoint:** "Not a real general: an old guy trapped zombies in a pit under his house; the morning sun will burn
+  them." **60 %**; "some spawn-blocking trick" **25 %**.
+- **After:** a little surprised (the spider at 69 and the replacement). "The zombies aren't his army, they're his
+  monster repellent: he keeps exactly seventy trapped down there, and when one burned up a spider showed up right
+  away, so he caught a replacement." Right.
+- **Why seventy keeps monsters away:** "The game only lets a certain number of monsters exist near you at once.
+  Seventy zombies 'use up' that number, so nothing new can spawn near his house." Learned from L15's "at sixty-nine
+  there was room for one"; didn't know the rule before. Right.
+- **Notes:** general/soldiers took a beat; "why exactly 70?" (comments bait); the S04 grass lid won't read on a phone
+  (it is a rewatch plant only); swipe risk around S04-S05; the blue sheep distract; "Seventy." lands.
