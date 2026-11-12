@@ -20,38 +20,38 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "placed",
     "drop_in_song_s": 4.5,
-    "drop_in_short_s": 1.85,
-    "song_start_s": 2.65
+    "drop_in_short_s": 0.65,
+    "song_start_s": 3.85
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 11.42,
+    "duration_s": 7.12,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 25402981,
-    "sha256": "786aaa7945d24701d930172327d2f6b40eaa4c08cfaad07c3a5c9b8fe5de3588",
+    "bytes": 11479066,
+    "sha256": "d95fc85117308b8aaf292b948ffc5132e403bd6979657d484aae5bcb31fbb846",
     "release": {
       "tag": "pkg-ladder_clutch",
-      "asset": "ladder_clutch.short.786aaa7945d24701.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short.786aaa7945d24701.mp4",
-      "sha256": "786aaa7945d24701d930172327d2f6b40eaa4c08cfaad07c3a5c9b8fe5de3588",
-      "bytes": 25402981
+      "asset": "ladder_clutch.short.d95fc85117308b8a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short.d95fc85117308b8a.mp4",
+      "sha256": "d95fc85117308b8aaf292b948ffc5132e403bd6979657d484aae5bcb31fbb846",
+      "bytes": 11479066
     },
     "nosong_release": {
       "tag": "pkg-ladder_clutch",
-      "asset": "ladder_clutch.short_nosong.dbf583a668447190.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short_nosong.dbf583a668447190.mp4",
-      "sha256": "dbf583a66844719064388c0ac87c393ee3aeb94d9e574b667957a69d9d2e5b1d",
-      "bytes": 25399976
+      "asset": "ladder_clutch.short_nosong.1b3c6c89ee6e89e8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-ladder_clutch/ladder_clutch.short_nosong.1b3c6c89ee6e89e8.mp4",
+      "sha256": "1b3c6c89ee6e89e84e4676b5e0c107ac455d0be97d2e7ba2e49c387eb1434b2c",
+      "bytes": 11477446
     }
   },
   "edit": {
     "caption": "bro trusted ONE ladder with his life 😳",
     "red": "ladder",
     "dropAt": "placed",
-    "startAt": "jump:-0.25",
+    "startAt": "fall0:0.95",
     "endAfter": "final:0.45",
     "sfx": [
       [
@@ -93,43 +93,40 @@
     "speed": [
       [
         "cut1a",
-        "cut1b",
+        "fall1:0.95",
         "cut"
       ],
       [
         "cut2a",
-        "cut2b",
+        "fall2:0.95",
         "cut"
       ],
       [
-        "fall1:0.9",
+        "fall1:1.0",
         "catch1:-0.6",
         2
       ],
       [
-        "fall2:0.9",
+        "fall2:1.0",
         "catch2:-0.6",
         2
       ]
     ],
     "subs": [
       [
-        "top",
+        "fall0:1.0",
         "30 blocks",
-        1.6,
-        0
+        1.5
       ],
       [
-        "top",
+        "fall1:0.02",
         "60 blocks... into cactus",
-        1.6,
-        1
+        1.5
       ],
       [
-        "top",
+        "fall2:0.02",
         "80 blocks... into LAVA",
-        1.6,
-        2
+        1.5
       ]
     ],
     "args": [
@@ -140,11 +137,11 @@
       "--red",
       "ladder",
       "--subs",
-      "[[\"top\",\"30 blocks\",1.6,0],[\"top\",\"60 blocks... into cactus\",1.6,1],[\"top\",\"80 blocks... into LAVA\",1.6,2]]",
+      "[[\"fall0:1.0\",\"30 blocks\",1.5],[\"fall1:0.02\",\"60 blocks... into cactus\",1.5],[\"fall2:0.02\",\"80 blocks... into LAVA\",1.5]]",
       "--subs_y",
       "0.15",
       "--speed",
-      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fall1:0.9\",\"catch1:-0.6\",2],[\"fall2:0.9\",\"catch2:-0.6\",2]]",
+      "[[\"cut1a\",\"fall1:0.95\",\"cut\"],[\"cut2a\",\"fall2:0.95\",\"cut\"],[\"fall1:1.0\",\"catch1:-0.6\",2],[\"fall2:1.0\",\"catch2:-0.6\",2]]",
       "--punch",
       "[[\"final\",0,1.08]]",
       "--flash",
@@ -152,7 +149,7 @@
       "--sfx",
       "[[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}]]",
       "--start_at",
-      "jump:-0.25",
+      "fall0:0.95",
       "--end_after",
       "final:0.45"
     ]
@@ -311,10 +308,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "dae5dff8e604eba100049688c962471772b3122c",
+    "commit": "1a1df6204a4cc327daf8d5dcb9182f8306f1cd38",
     "rendered": "local",
-    "rendered_at": "2026-11-12T06:26:29.348Z",
-    "head_at_publish": "dae5dff8e604eba100049688c962471772b3122c",
+    "rendered_at": "2026-11-12T07:25:08.144Z",
+    "head_at_publish": "1a1df6204a4cc327daf8d5dcb9182f8306f1cd38",
     "stunt": "stunts/ladder_clutch.js",
     "source_snapshot": [
       "source/ladder_clutch.js",
@@ -322,22 +319,22 @@
     ]
   },
   "rebuild": [
-    "git checkout dae5dff8e604",
+    "git checkout 1a1df6204a4c",
     "gunzip -c shorts/ladder_clutch/recording.json.gz > work/ladder_clutch.rec.json",
     "node render.js work/ladder_clutch.rec.json work/ladder_clutch.frames 60 1080 1011",
     "python3 audio.py work/ladder_clutch.rec.json work/ladder_clutch.wav",
-    "python3 edit.py --frames work/ladder_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/ladder_clutch.rec.json --audio work/ladder_clutch.wav --caption \"bro trusted ONE ladder with his life 😳\" --self_name 56e --red ladder --subs \"[[\\\"top\\\",\\\"30 blocks\\\",1.6,0],[\\\"top\\\",\\\"60 blocks... into cactus\\\",1.6,1],[\\\"top\\\",\\\"80 blocks... into LAVA\\\",1.6,2]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fall1:0.9\",\"catch1:-0.6\",2],[\"fall2:0.9\",\"catch2:-0.6\",2]] --punch [[\"final\",0,1.08]] --flash [[\"final\",0,0.3]] --sfx [[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}]] --start_at jump:-0.25 --end_after final:0.45 --out out/ladder_clutch.mp4"
+    "python3 edit.py --frames work/ladder_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/ladder_clutch.rec.json --audio work/ladder_clutch.wav --caption \"bro trusted ONE ladder with his life 😳\" --self_name 56e --red ladder --subs \"[[\\\"fall0:1.0\\\",\\\"30 blocks\\\",1.5],[\\\"fall1:0.02\\\",\\\"60 blocks... into cactus\\\",1.5],[\\\"fall2:0.02\\\",\\\"80 blocks... into LAVA\\\",1.5]]\" --subs_y 0.15 --speed [[\"cut1a\",\"fall1:0.95\",\"cut\"],[\"cut2a\",\"fall2:0.95\",\"cut\"],[\"fall1:1.0\",\"catch1:-0.6\",2],[\"fall2:1.0\",\"catch2:-0.6\",2]] --punch [[\"final\",0,1.08]] --flash [[\"final\",0,0.3]] --sfx [[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}]] --start_at fall0:0.95 --end_after final:0.45 --out out/ladder_clutch.mp4"
   ],
   "status": "ready",
-  "notes": "no-op redo (r:r4607fa): 3 drops with stakes (30 onto grass, 60 into a cactus field, 80 onto a 1x1 grass block in a lava pool), one ladder each; ends 0.45 s after the lava landing with a hit and a flash on it. Nitpicks: the last 0.3 s catches the start of the look-round; no hit in the first 0.5 s (wind bed only).",
-  "published_at": "2026-11-12T06:28:17.656Z",
+  "notes": "no-op redo (r:r4607fa) + the owner's note on v2 ('maybe we should start as we are already falling?'): 3 drops with stakes (30 grass, 60 cactus field, 80 onto a 1x1 grass block in lava), each starting mid-fall; ends 0.45 s after the lava landing, with a hit and a flash.",
+  "published_at": "2026-11-12T07:26:32.966Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T06:28:45+00:00",
+    "at": "2026-11-12T07:26:56+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 11.43 s vs the reviewed render 11.42 s"
+      "summary": "short.mp4 7.12 s vs the reviewed render 7.12 s"
     },
     "pace": {
       "ok": true,
@@ -349,7 +346,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T06:26:45.664Z",
+      "at": "2026-11-12T07:25:22.647Z",
       "report": "work/hb/ladder_clutch.check.json"
     },
     "key_sounds": "n/a"
