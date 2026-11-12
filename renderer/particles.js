@@ -12,6 +12,8 @@
 //   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
 //   dust    - DustParticle specks (redstone dust: mining redstone ore)
 //   spell   - an evoker's spell at its hands (SpellParticle, ev.color the spell's colour)
+//   trail   - TrailParticle (1.21.2+, `minecraft:trail{target, color, duration}`): specks that fly in a straight
+//             line to a target and arrive on the duration's last tick (lib/kit_extras.js K.trail)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
 function spawn (ev, blockTex) {
@@ -216,6 +218,22 @@ function spawn (ev, blockTex) {
       P({ x: ev.x, y: ev.y, z: ev.z, vx, vy, vz, g: 0, drag: 0.96, life: Math.floor(8 / (r() * 0.8 + 0.2)), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: col })
     }
   }
+  if (ev.type === 'trail') {
+    // TrailParticle: quadSize 0.26, the colour x 0.875..1.125 per channel, full bright (getLightColor 15728880),
+    // sprite generic_0 (particles/trail.json), lifetime = duration; each tick x = lerp(1 / (lifetime - age), x,
+    // target): a straight line at constant speed, on the target at age lifetime - 1. The /particle command's delta
+    // spreads the start (gaussian x delta); every particle of a command shares the target. A stream (ev.ticks > 1)
+    // is one command per tick for that many ticks, `count` each.
+    const c = ev.color || [1, 1, 1], dur = Math.max(2, Math.round(ev.dur || 20)), n = ev.count || 3, sp = ev.spread ?? 0.15
+    const g = () => { let u = 0; for (let k = 0; k < 6; k++) u += r(); return (u - 3) / Math.sqrt(0.5) }   // ~N(0, 1)
+    for (let k = 0; k < (ev.ticks || 1); k++) {
+      for (let i = 0; i < n; i++) {
+        const x = ev.x + g() * sp, y = ev.y + g() * sp, z = ev.z + g() * sp
+        const col = c.map(v => Math.min(1, v * (0.875 + r() * 0.25)))
+        out.push({ t0: T0 + k, x, y, z, target: [ev.tx, ev.ty, ev.tz], life: dur, size: 0.26 * (ev.size || 1), tex: 'particle/generic_0', bright: true, color: col })
+      }
+    }
+  }
   if (ev.type === 'item_break') {
     // LivingEntity.spawnItemParticles(stack, 5): velocity ((r-0.5)*0.1, r*0.1+0.1, 0) and offset
     // ((r-0.5)*0.3, -r*0.6-0.3, 0.6), both turned by the view (xRot then yRot), + 0.05 up; each a
@@ -319,6 +337,10 @@ function state (p, t, solidAt) {
     const a = age - 1
     if (a <= 0) return null
     return { x: p.x, y: p.y, z: p.z, size: 2 * 7.1 * Math.sin(a * Math.PI / 4), alpha: Math.max(0, 0.6 - a / 8) }
+  }
+  if (p.target) {   // TrailParticle: on its target at age life - 1 (a straight line at constant speed)
+    const k = Math.min(1, age / Math.max(1, p.life - 1)), T = p.target
+    return { x: p.x + (T[0] - p.x) * k, y: p.y + (T[1] - p.y) * k, z: p.z + (T[2] - p.z) * k, size: p.size, tex: p.tex }
   }
   if (p.portal) {
     const k = age / p.life, f = 1 - (-k + k * k * 2)   // vanilla's ease for portal particles

@@ -638,6 +638,43 @@ render pixel-identical (docs/engine_proofs/mob_poses/README.md).
   (its converted bones are lower case too: published pillagers show none, so it stays off), the allay's body tilt
   while flying fast.
 
+## Entity scale, skin swaps, trails, block changes, head turns, display props (story-kit extras, 2026-11-12)
+For Sorry, Dear and The Statue Gets Younger (docs/engine_briefs/story_kit_extras.md). Code: `lib/kit_extras.js` (pure
+helpers + the kit verbs, on K from lib/story.js), the harness, render.js, renderer/entities.js, renderer/particles.js.
+Every piece is off unless the recording asks for it (a new `extra` key or a new mark), so published Shorts render as before.
+- **Entity scale** (vanilla 1.20.5+ `minecraft:scale`, LivingEntity.getScale): `K.scale(who, v, { secs })` sends
+  `/attribute <who> minecraft:scale base set v` (in game: the hitbox, the eye) and marks `scale` { user | tag | ids,
+  scale, ticks }; the picture eases to it (smoothstep) over `secs` (0: at once, S02's jump cuts). `who`: a player
+  actor's / mannequin's name, a kit actor's tag, or 'self'. A size set any other way is recorded too (the harness reads
+  the attribute: `extra.entScale` when it isn't 1); marks win from their first one. The renderer scales the model about
+  its feet (LivingEntityRenderer: poses, the crouch drop and held items scale with it), the name tag rides at hitbox x
+  scale + 0.5 (EntityAttachments), the shadow radius x scale (LivingEntityRenderer.getShadowRadius), look targets at the
+  scaled eye. The narrator's own eye in POV: `K.self(extra, 1.62 * scale)`.
+- **Skin swap mid-shot**: `K.skin('Mom', 'statue_mom_1')` (a `cast_skin` mark, the format lib/herobrine.js already used):
+  that actor's skin from the mark's tick. Skins are `skins/<name>.png` (scripts/make_story_skins.py) or the jar's.
+- **Trails** (vanilla 1.21.2+ `minecraft:trail`, TrailParticle): `K.trail(from, to, { secs, dur, count, spread, color,
+  size })` (set-relative [dx, dy, dz]): a stream of specks (generic_0, full bright, quadSize 0.26, colour x 0.875-1.125)
+  starting round `from` that fly in a straight line and land on `to` after `dur` ticks; `count` a tick for `secs`. The
+  same /particle command goes to the server. `size` > 1 enlarges the picture's specks (vanilla's are small dots).
+- **A block change on a mark**: the kit always could (a /fill or /setblock in perform is recorded as a block update and
+  re-meshed on its tick); `K.setBlocks(a, b, 'calcite')` is the named verb (no swing, no sound) and marks `set_change`.
+- **An eased head turn** (seated or not): `M.headTo(ctx, 'Dad', 'Mom', { secs: 0.8 })` (look_at's ease, default 8
+  ticks, now per mark). Fixed: M.headTo was shadowed by M.say's own helper of the same name, so the documented call
+  turned the bot instead of marking look_at; that helper is `turnHeadTo` now.
+- **Props from display entities** (DisplayRenderer): block_display and item_display are recorded (`extra.display`: block
+  state or item, translation / left rotation / scale / right rotation, brightness override) and drawn: the block from
+  its corner, the item centred and turned 180 (ItemDisplayRenderer, context `none` or its own), under the entity's
+  orientation, lit at its block. No bob, no spin. `K.prop(name, at, { tag, yaw, ... })` (or in setup:
+  `for (const c of KX.propCommands(name, x, y, z, o)) await ctx.cmd(c)`) summons a recipe: `mug` (h 0.54, a handle),
+  `teacup` (h 0.5 on a saucer), `cards` (a fan of n white cards with red/black pips; `item: 'paper'` for paper
+  sprites), `heap` (items lying every which way, h tall: the emerald pile), or a parts list
+  `[['b', block, corner, size, { rot }], ['i', item, centre, scale, { rot }]]`. `K.propOff(tag)` removes one.
+- Test: `./hb record _test_story_kit_extras --no-strict` then `./hb still _test_story_kit_extras t_table+0.5 t_jump1+0.3
+  t_trail+0.6 t_wrinkle+0.3 t_reverse+0.6 t_head+1.5`. Stills: docs/engine_proofs/story_kit_extras/. `npm test`
+  (lib/hb/test/kit_extras.test.js).
+- Not done: the 7-dawn lapse cut (S03) is a stunt's cuts with `K.setBlocks` per cut, not an engine piece; display
+  entities' interpolation (transformation_interpolation_duration) is drawn as the recorded steps; text_display.
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

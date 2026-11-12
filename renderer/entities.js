@@ -875,7 +875,18 @@ export class EntityLayer {
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.hearts) this.scene.remove(cur.hearts); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
     let obj = null, bones = {}, mat = null, woolMat = null, underMat = null
-    if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
+    if ((name === 'block_display' || name === 'item_display') && extra && extra.disp) {
+      // display entities (DisplayRenderer; render.js sends extra.disp and the transformation as s.dispM): a block from
+      // its corner (BlockDisplay: renderSingleBlock, 0..1), an item centred and turned 180 about y (ItemDisplayRenderer)
+      // under its display context. Only recordings with the harness's extra.display (2026-11-12 on) have extra.disp
+      obj = new THREE.Group(); obj.matrixAutoUpdate = false; bones = { display: true }
+      if (extra.disp.kind === 'block' && this.blockModels.has(extra.disp.state)) {
+        const bm = this.blockModels.get(extra.disp.state), m = new THREE.Mesh(bm.geo, bm.mat.clone()); obj.add(m); mat = m.material
+      } else if (extra.disp.kind === 'item' && this.itemFactory) {
+        const it = await this.itemFactory(extra.disp.held)
+        if (it) { const w = new THREE.Group(); w.rotation.y = Math.PI; w.add(it.obj); obj.add(w); mat = it.mat }
+      }
+    } else if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
       obj = new THREE.Group(); obj.add(m); mat = m.material
@@ -1107,6 +1118,12 @@ export class EntityLayer {
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      if (r.bones.display) {   // a display entity: T(position) x orientation x transformation (lib/kit_extras.js displayMatrix)
+        r.obj.matrix.makeTranslation(s.x, s.y, s.z)
+        if (s.dispM) r.obj.matrix.multiply(new THREE.Matrix4().fromArray(s.dispM))
+        r.obj.matrixWorldNeedsUpdate = true
+        continue
+      }
       if (r.bones.armorMats && !(s.name === 'player' || s.name === 'mannequin')) for (const m of r.bones.armorMats) m.color.setRGB(...LL)
       // zombifying outside the Nether (Piglin/Hoglin.isConverting -> LivingEntityRenderer.isShaking): the whole body
       // turns by cos(age x 3.25) x PI x 0.4 degrees every frame (a staged pose mark { converting: true })
@@ -1231,6 +1248,13 @@ export class EntityLayer {
       }
       if (s.name === 'player' || s.name === 'mannequin') {
         posePlayer(r, s)
+        // the minecraft:scale attribute (LivingEntityRenderer: poseStack.scale(state.scale) about the feet, so every
+        // pose offset, the crouch's drop and the held items scale with it); render.js sets s.entScale, unset = 1
+        if (s.entScale !== undefined || r.scaled) {
+          const k = s.entScale ?? 1, by = s.y + (r.yOff || 0)
+          r.obj.position.set(s.x + (r.obj.position.x - s.x) * k, by + (r.obj.position.y - by) * k, s.z + (r.obj.position.z - s.z) * k)
+          r.obj.scale.setScalar(k); r.scaled = k !== 1
+        }
         if (r.bones.armorMats) for (const m of r.bones.armorMats) m.color.setRGB(...LL)
         // the held item (ItemInHandLayer), built by the page (block models / extruded sprites)
         const held = s.player && s.player.held, hk = held ? held.key : null
@@ -1276,6 +1300,7 @@ export class EntityLayer {
         if (r.mat?.userData.white) r.mat.userData.white.value = 0
       }
       if (s.mobScale !== undefined && s.mobScale !== 1) r.obj.scale.multiplyScalar(Math.max(0.001, s.mobScale))   // render.js mob_scale marks
+      if (s.entScale !== undefined && s.entScale !== 1) r.obj.scale.multiplyScalar(s.entScale)   // the minecraft:scale attribute (render.js)
       if (s.extra && s.extra.baby && !B_isBlock(s.name)) poseBaby(r, s.name)
       // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
       // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so

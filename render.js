@@ -489,6 +489,12 @@ function mobScaleAt (id, t) {
   const k = MOB_SCALE.get(id); if (!k || t < k[0][0]) return undefined
   for (let i = k.length - 1; i >= 0; i--) if (t >= k[i][0]) { const n = k[i + 1]; return n ? k[i][1] + (n[1] - k[i][1]) * (t - k[i][0]) / (n[0] - k[i][0]) : k[i][1] }
 }
+// entity scale (lib/kit_extras.js, docs/engine_features.md "Entity scale"): the recorded minecraft:scale attribute
+// (harness extra.entScale, only when it isn't 1) or staged `scale` marks ({ ids | user | tag, scale, ticks }: eased
+// over `ticks`), which win from their first mark. Recordings with neither are unchanged
+const KX = require('./lib/kit_extras')
+const SCALE_RUNS = KX.scaleRuns(rec.timeline)
+const HAS_ENT_SCALE = SCALE_RUNS.size > 0 || (rec.entities || []).some(r => r[9] && r[9].entScale !== undefined)
 for (const e of rec.timeline || []) {
   if (e.event === 'mob_hurt') { if (!MOB_HURT.has(e.id)) MOB_HURT.set(e.id, []); MOB_HURT.get(e.id).push(e.t / 50) }
   if (e.event === 'mob_death' && !MOB_DEATH.has(e.id)) MOB_DEATH.set(e.id, e.t / 50)
@@ -1182,7 +1188,7 @@ const LOOK_AT = new Map()   // id -> [[a, b, at]]
     if (e.event !== 'look_at' && e.event !== 'look_at_off') continue
     for (const id of e.ids || []) {
       if (open.has(id)) { open.get(id)[1] = e.t / 50; open.delete(id) }
-      if (e.event === 'look_at') { const run = [e.t / 50, Infinity, e.at]; if (!LOOK_AT.has(id)) LOOK_AT.set(id, []); LOOK_AT.get(id).push(run); open.set(id, run) }
+      if (e.event === 'look_at') { const run = [e.t / 50, Infinity, e.at, e.ticks || 8]; if (!LOOK_AT.has(id)) LOOK_AT.set(id, []); LOOK_AT.get(id).push(run); open.set(id, run) }
     }
   }
 }
@@ -3077,6 +3083,29 @@ else:
     for (const e of ents) if (POTION_COLOR.has(e.id)) e.extra = { ...(e.extra || {}), color: POTION_COLOR.get(e.id) }
     // an enderman's carried block: its model, sent once
     for (const e of ents) if (e.name === 'enderman' && e.extra && e.extra.carried && !sentBlocks.has(e.extra.carried)) { sentBlocks.add(e.extra.carried); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.carried, mesher.meshSingle(e.extra.carried)]) }
+    // display entities (block_display / item_display; the harness's extra.display from 2026-11-12, lib/kit_extras.js):
+    // the block or item under the entity's transformation (DisplayRenderer), lit at its own block (or its
+    // brightness override). Older recordings carry no extra.display: their display entities stay undrawn, as before
+    for (const e of ents) {
+      if ((e.name !== 'block_display' && e.name !== 'item_display') || !e.extra || !e.extra.display) continue
+      const d = e.extra.display
+      e.dispM = KX.displayMatrix(d, e.yaw, e.pitch)
+      { const [ls, lb] = d.bright ? d.bright : mesher.world.getLight(new Vec3(Math.floor(e.x), Math.floor(e.y), Math.floor(e.z))); e.light = lightmap(ls, lb) }
+      if (e.name === 'block_display') {
+        if (!sentBlocks.has(d.state)) { sentBlocks.add(d.state); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [d.state, mesher.meshSingle(d.state)]) }
+        e.extra = { disp: { kind: 'block', state: d.state } }
+      } else {
+        const n = d.item, c = d.ctx || 'none'
+        const held = { key: `${n}|display|${c}`, display: c === 'none' ? { rotation: [0, 0, 0], translation: [0, 0, 0], scale: [1, 1, 1] } : thirdPersonDisplay(n, false, c), glint: d.glint || GLINT_ITEMS.has(n) || undefined }
+        const bl = MC.blocksByName[n]
+        if (spriteOf(n)) held.tex = spriteOf(n)
+        else if (bl) {
+          held.state = bl.defaultState
+          if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+        }
+        e.extra = { disp: { kind: 'item', held } }
+      }
+    }
     // item frames: the frame model (sent once per kind) and the held item with its 'fixed' display
     for (const e of ents) {
       if (e.name !== 'item_frame' && e.name !== 'glow_item_frame') continue
@@ -3204,6 +3233,19 @@ else:
       }
       e.mobOff = oh
     }
+    // entity scale: e.entScale (the page scales the model about its feet; the name tag, the shadow and look targets follow)
+    if (HAS_ENT_SCALE) {
+      for (const e of ents) {
+        let rs
+        if (e.extra && e.extra.entScale !== undefined) { rs = e.extra.entScale; const { entScale, ...rest } = e.extra; e.extra = Object.keys(rest).length ? rest : null }
+        const user = (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user) || (e.id === -1 ? SELF_NAME : null)
+        const tag = KIT_TAG.get(e.id)
+        const runs = SCALE_RUNS.get(`id:${e.id}`) || (user && SCALE_RUNS.get(`user:${user}`)) || (tag && SCALE_RUNS.get(`tag:${tag}`))
+        const st = runs ? KX.scaleAt(runs, t) : undefined
+        const sc = st ?? rs
+        if (sc !== undefined && sc !== 1) e.entScale = sc
+      }
+    }
     // actors (other players: the movie cast, lib/movie.js): the skin from stunt.cast, the body turn and
     // walk from their recorded positions (ACTOR), the arm swing from ent_swing marks, the main-hand item
     for (const e of ents) {
@@ -3285,7 +3327,7 @@ else:
     // past 75 degrees, BodyRotationControl in entities.js) and back over 8 after
     if (LOOK_AT.size || SPEAKER_RANGE) {
       const nameOf = (e) => (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user) || null
-      const headOf = (e) => ({ x: e.x, y: e.y + (ENT_H[e.name] || 1.8) * 0.85, z: e.z })
+      const headOf = (e) => ({ x: e.x, y: e.y + (ENT_H[e.name] || 1.8) * 0.85 * (e.entScale || 1), z: e.z })
       const find = (at) => {
         if (Array.isArray(at)) return rec.set ? { x: rec.set.x + at[0], y: rec.set.y + at[1], z: rec.set.z + at[2] } : null
         if (typeof at === 'number') { const o = ents.find(x => x.id === at); return o ? headOf(o) : null }
@@ -3295,8 +3337,8 @@ else:
       for (const e of ents) {
         if (e.headYaw === null || e.headYaw === undefined) continue
         let tgt = null, w = 0
-        const run = LOOK_AT.has(e.id) && LOOK_AT.get(e.id).find(([a, b]) => t >= a && t < b + 8)
-        if (run) { tgt = find(run[2]); w = Math.min(1, (t - run[0]) / 8, run[1] === Infinity ? 1 : (run[1] + 8 - t) / 8) }
+        const run = LOOK_AT.has(e.id) && LOOK_AT.get(e.id).find(([a, b, , n]) => t >= a && t < b + n)   // n: the ease (look_at ticks, 8)
+        if (run) { const n = run[3]; tgt = find(run[2]); w = Math.min(1, (t - run[0]) / n, run[1] === Infinity ? 1 : (run[1] + n - t) / n) }
         if (!tgt && SPEAKER_RANGE) {
           const me = nameOf(e), l = LINES.find(x => x.who && x.who !== me && t >= x.t0 && t < x.t1 + 8)
           if (l) {
@@ -3427,10 +3469,10 @@ else:
       if (!e.extra || !(e.extra.name || e.extra.jeb)) continue
       if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
       const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
-      if (near && (e.extra.nameVisible || e.id === cam.targetEntity) && !nameHidden(e)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+      if (near && (e.extra.nameVisible || e.id === cam.targetEntity) && !nameHidden(e)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) * (e.entScale || 1) + 0.5 }
       // stunt.playerNames: a crouching player's plate sits on the 1.5-tall hitbox and its text is drawn at half alpha
       // (EntityRenderer.renderNameTag: isDiscrete -> 0x80FFFFFF, no see-through pass)
-      if (STUNT_MOD.playerNames && e.nameTag && e.player) { const sn = !!e.extra.sneak; e.nameDim = sn; if (sn) e.nameY = 1.5 + 0.5 }
+      if (STUNT_MOD.playerNames && e.nameTag && e.player) { const sn = !!e.extra.sneak; e.nameDim = sn; if (sn) e.nameY = 1.5 * (e.entScale || 1) + 0.5 }
     }
     // overhead health (stunt.healthHearts, owner r:r337da9: the underdog format): a row of HUD hearts over each mob
     // the recording gives a health for (stunt.mobHealth: extra.hp / mhp), full, half and empty, at most 10 (each worth
@@ -3472,7 +3514,7 @@ else:
         if (e.hidden) continue
         const sn = e.shadowName || e.name
         const r = SHADOW_R[sn] ?? (/_boat$|^boat$/.test(sn) ? 0.8 : null)
-        if (r) shadowOf(e.x, e.shadowY ?? e.y, e.z, r * (e.name === 'slime' || e.name === 'magma_cube' ? (e.extra && e.extra.size || 1) : 1) * (e.extra && e.extra.baby ? 0.5 : 1))
+        if (r) shadowOf(e.x, e.shadowY ?? e.y, e.z, r * (e.name === 'slime' || e.name === 'magma_cube' ? (e.extra && e.extra.size || 1) : 1) * (e.extra && e.extra.baby ? 0.5 : 1) * (e.entScale || 1))
       }
     }
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
