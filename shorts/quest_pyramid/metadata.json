@@ -1,10 +1,10 @@
 {
   "name": "quest_pyramid",
   "channel": "hellobuh",
-  "caption": "bro found the SECRET chest 😱",
+  "caption": "bro found the SECRET vault 😱",
   "youtube": {
-    "title": "bro found the SECRET chest 😱 #minecraft #shorts",
-    "description": "bro found the SECRET chest 😱\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "bro found the SECRET vault 😱 #minecraft #shorts",
+    "description": "bro found the SECRET vault 😱\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,43 +14,43 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "industry_kiss.mp3",
-    "title": "INDUSTRY KISS",
-    "artist": "DIPIENS, HRXSTAL",
+    "file": "mortals_funk_remix.mp3",
+    "title": "Mortals Funk Remix",
+    "artist": "Warriyo, LXNGVX",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "payoff",
-    "drop_in_song_s": 39.75,
-    "drop_in_short_s": 30.8,
-    "song_start_s": 8.95
+    "drop_in_song_s": 113.75,
+    "drop_in_short_s": 17.21,
+    "song_start_s": 96.54
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 31.5,
+    "duration_s": 17.92,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 34325909,
-    "sha256": "eb69dc85d68735b1606614d896b5641d717ef56ea8473ec03e076c19b21b1193",
+    "bytes": 17841733,
+    "sha256": "3905f2a55227bd41c40d0835c54ce57b24753057fe311e00991e0a749793373a",
     "release": {
       "tag": "pkg-quest_pyramid",
-      "asset": "quest_pyramid.short.eb69dc85d68735b1.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short.eb69dc85d68735b1.mp4",
-      "sha256": "eb69dc85d68735b1606614d896b5641d717ef56ea8473ec03e076c19b21b1193",
-      "bytes": 34325909
+      "asset": "quest_pyramid.short.3905f2a55227bd41.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short.3905f2a55227bd41.mp4",
+      "sha256": "3905f2a55227bd41c40d0835c54ce57b24753057fe311e00991e0a749793373a",
+      "bytes": 17841733
     },
     "nosong_release": {
       "tag": "pkg-quest_pyramid",
-      "asset": "quest_pyramid.short_nosong.e8adb89afb56e975.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short_nosong.e8adb89afb56e975.mp4",
-      "sha256": "e8adb89afb56e97583a1a504179c8e6734573f295813e48e82932f8c7714be4a",
-      "bytes": 34087225
+      "asset": "quest_pyramid.short_nosong.ed456650a60eca59.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-quest_pyramid/quest_pyramid.short_nosong.ed456650a60eca59.mp4",
+      "sha256": "ed456650a60eca59fe9c593b52289ff341eceaa3cea06ef18282e700b17af923",
+      "bytes": 17675213
     }
   },
   "edit": {
-    "caption": "bro found the SECRET chest 😱",
+    "caption": "bro found the SECRET vault 😱",
     "red": "SECRET",
-    "startAt": "go:-0.05",
+    "startAt": "dug:-0.45",
     "endAfter": "payoff:0.7",
     "dropAt": "payoff",
     "guiScale": 4,
@@ -58,66 +58,38 @@
       [
         "room",
         "everyone loots these 4 chests...",
-        1.4
+        1.1
       ],
       [
         "press",
         "but nobody presses THIS",
-        1.5
+        1.2
       ],
       [
         "stage",
-        "LEVEL 1: the tunnel",
-        1.6,
-        0
-      ],
-      [
-        "stage",
-        "LEVEL 2: lava parkour",
-        1.6,
+        "lava parkour 😬",
+        1.1,
         1
-      ],
-      [
-        "stage",
-        "LEVEL 3: the arrow trap",
-        1.6,
-        2
-      ],
-      [
-        "run",
-        "NOW",
-        0.7
-      ],
-      [
-        "stage",
-        "LEVEL 4: even deeper",
-        1.6,
-        3
-      ],
-      [
-        "stage",
-        "LEVEL 5: harder parkour",
-        1.6,
-        4
-      ],
-      [
-        "stage",
-        "LEVEL 6: the secret wall",
-        1.6,
-        5
       ],
       [
         "press2",
         "the eye was a button",
-        1.4
+        1
       ]
     ],
     "sfx": [
       [
-        "pop",
-        "go",
+        "impact",
+        "go:0.02",
         {
-          "gain": 0.45
+          "gain": 1.4
+        }
+      ],
+      [
+        "impact",
+        "dug",
+        {
+          "gain": 1.4
         }
       ],
       [
@@ -128,26 +100,88 @@
         }
       ],
       [
+        "whoosh",
+        "reveal:-0.15",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "impact",
+        "reveal",
+        {
+          "gain": 1.2
+        }
+      ],
+      [
         "dip",
         "payoff",
         0.4
+      ],
+      [
+        "impact",
+        "payoff",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "subsY": 0.15,
+    "speed": [
+      [
+        "stage0",
+        "mine:-0.15",
+        1.6
+      ],
+      [
+        "dug_through:0.1",
+        "stage1:-0.1",
+        1.6
+      ],
+      [
+        "made_it:0.1",
+        "face:-0.1",
+        1.6
+      ],
+      [
+        "walk2",
+        "reveal:-0.3",
+        1.5
+      ]
+    ],
+    "flash": [
+      [
+        "reveal",
+        0,
+        0.35
+      ],
+      [
+        "payoff",
+        0,
+        0.3
       ]
     ],
     "args": [
       "--caption",
-      "bro found the SECRET chest 😱",
+      "bro found the SECRET vault 😱",
       "--self_name",
       "56e",
       "--red",
       "SECRET",
       "--subs",
-      "[[\"room\",\"everyone loots these 4 chests...\",1.4],[\"press\",\"but nobody presses THIS\",1.5],[\"stage\",\"LEVEL 1: the tunnel\",1.6,0],[\"stage\",\"LEVEL 2: lava parkour\",1.6,1],[\"stage\",\"LEVEL 3: the arrow trap\",1.6,2],[\"run\",\"NOW\",0.7],[\"stage\",\"LEVEL 4: even deeper\",1.6,3],[\"stage\",\"LEVEL 5: harder parkour\",1.6,4],[\"stage\",\"LEVEL 6: the secret wall\",1.6,5],[\"press2\",\"the eye was a button\",1.4]]",
+      "[[\"room\",\"everyone loots these 4 chests...\",1.1],[\"press\",\"but nobody presses THIS\",1.2],[\"stage\",\"lava parkour 😬\",1.1,1],[\"press2\",\"the eye was a button\",1]]",
+      "--subs_y",
+      "0.15",
+      "--speed",
+      "[[\"stage0\",\"mine:-0.15\",1.6],[\"dug_through:0.1\",\"stage1:-0.1\",1.6],[\"made_it:0.1\",\"face:-0.1\",1.6],[\"walk2\",\"reveal:-0.3\",1.5]]",
+      "--flash",
+      "[[\"reveal\",0,0.35],[\"payoff\",0,0.3]]",
       "--sfx",
-      "[[\"pop\",\"go\",{\"gain\":0.45}],[\"whoosh\",\"drop\",{\"gain\":0.35}],[\"dip\",\"payoff\",0.4]]",
+      "[[\"impact\",\"go:0.02\",{\"gain\":1.4}],[\"impact\",\"dug\",{\"gain\":1.4}],[\"whoosh\",\"drop\",{\"gain\":0.35}],[\"whoosh\",\"reveal:-0.15\",{\"gain\":0.6}],[\"impact\",\"reveal\",{\"gain\":1.2}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
       "--gui_scale",
       "4",
       "--start_at",
-      "go:-0.05",
+      "dug:-0.45",
       "--end_after",
       "payoff:0.7"
     ]
@@ -162,19 +196,19 @@
     "set": {
       "x": -3529.5,
       "y": 73,
-      "z": -3433.25
+      "z": -3443.25
     },
     "biome": "minecraft:desert",
-    "ticks": 831,
-    "seconds": 41.55,
+    "ticks": 589,
+    "seconds": 29.45,
     "deaths": 0,
     "events": [
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "go"
       },
       {
@@ -190,469 +224,357 @@
         "event": "dig_end"
       },
       {
-        "t": 1.65,
+        "t": 1.5,
         "event": "dug"
       },
       {
-        "t": 2.15,
+        "t": 2,
         "event": "drop"
       },
       {
-        "t": 2.75,
+        "t": 2.6,
         "event": "land"
       },
       {
-        "t": 2.75,
+        "t": 2.6,
         "event": "hurt",
         "type": "fall"
       },
       {
-        "t": 3.25,
+        "t": 3.1,
         "event": "room"
       },
       {
-        "t": 3.85,
+        "t": 4.05,
         "event": "swing"
       },
       {
-        "t": 3.85,
+        "t": 4.05,
         "event": "press"
       },
       {
-        "t": 3.95,
+        "t": 4.15,
         "event": "block_action"
       },
       {
-        "t": 3.95,
+        "t": 4.15,
         "event": "block_action"
       },
       {
-        "t": 4,
+        "t": 4.2,
         "event": "open"
       },
       {
-        "t": 5.9,
+        "t": 4.9,
+        "event": "walk1"
+      },
+      {
+        "t": 6.5,
         "event": "stage"
       },
       {
-        "t": 6.55,
+        "t": 6.5,
+        "event": "stage0"
+      },
+      {
+        "t": 6.95,
         "event": "mine"
       },
       {
-        "t": 6.65,
+        "t": 7.05,
         "event": "dig"
       },
       {
-        "t": 6.65,
+        "t": 7.05,
         "event": "swing"
-      },
-      {
-        "t": 6.8,
-        "event": "dig_end"
       },
       {
         "t": 7.25,
-        "event": "dig"
-      },
-      {
-        "t": 7.25,
-        "event": "swing"
-      },
-      {
-        "t": 7.45,
         "event": "dig_end"
       },
       {
-        "t": 7.55,
+        "t": 7.85,
+        "event": "dig"
+      },
+      {
+        "t": 7.85,
+        "event": "swing"
+      },
+      {
+        "t": 8.05,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.15,
         "event": "dug_through"
       },
       {
-        "t": 9.4,
+        "t": 9.75,
         "event": "stage"
       },
       {
-        "t": 9.65,
+        "t": 9.75,
+        "event": "stage1"
+      },
+      {
+        "t": 10.1,
         "event": "jump"
       },
       {
-        "t": 10.2,
+        "t": 10.65,
         "event": "hop_land"
       },
       {
-        "t": 10.25,
+        "t": 10.7,
         "event": "jump"
       },
       {
-        "t": 10.8,
+        "t": 11.25,
         "event": "hop_land"
       },
       {
-        "t": 10.85,
+        "t": 11.3,
         "event": "jump"
       },
       {
-        "t": 11.4,
+        "t": 11.85,
         "event": "hop_land"
       },
       {
-        "t": 11.45,
+        "t": 11.95,
         "event": "jump"
       },
       {
-        "t": 12,
+        "t": 12.5,
         "event": "hop_land"
       },
       {
-        "t": 12.05,
-        "event": "jump"
-      },
-      {
-        "t": 12.6,
-        "event": "hop_land"
-      },
-      {
-        "t": 12.75,
+        "t": 12.65,
         "event": "made_it"
       },
       {
-        "t": 13.15,
+        "t": 12.95,
         "event": "stage"
       },
       {
-        "t": 13.3,
-        "event": "volley"
+        "t": 12.95,
+        "event": "stage2"
       },
       {
-        "t": 14.45,
-        "event": "volley"
-      },
-      {
-        "t": 15.2,
-        "event": "run"
-      },
-      {
-        "t": 16.05,
-        "event": "volley"
-      },
-      {
-        "t": 16.55,
-        "event": "volley"
-      },
-      {
-        "t": 17.1,
-        "event": "volley"
-      },
-      {
-        "t": 17.45,
-        "event": "safe"
-      },
-      {
-        "t": 17.5,
-        "event": "stage"
-      },
-      {
-        "t": 18.55,
-        "event": "mine"
-      },
-      {
-        "t": 18.7,
-        "event": "dig"
-      },
-      {
-        "t": 18.7,
-        "event": "swing"
-      },
-      {
-        "t": 18.9,
-        "event": "dig_end"
-      },
-      {
-        "t": 19.45,
-        "event": "dig"
-      },
-      {
-        "t": 19.45,
-        "event": "swing"
-      },
-      {
-        "t": 19.6,
-        "event": "dig_end"
-      },
-      {
-        "t": 19.75,
-        "event": "dug_through"
-      },
-      {
-        "t": 22.5,
-        "event": "stage"
-      },
-      {
-        "t": 22.8,
-        "event": "jump"
-      },
-      {
-        "t": 23.35,
-        "event": "hop_land"
-      },
-      {
-        "t": 23.45,
-        "event": "jump"
-      },
-      {
-        "t": 23.85,
-        "event": "hop_land"
-      },
-      {
-        "t": 23.9,
-        "event": "jump"
-      },
-      {
-        "t": 24.45,
-        "event": "hop_land"
-      },
-      {
-        "t": 24.5,
-        "event": "jump"
-      },
-      {
-        "t": 24.9,
-        "event": "hop_land"
-      },
-      {
-        "t": 24.95,
-        "event": "jump"
-      },
-      {
-        "t": 25.5,
-        "event": "hop_land"
-      },
-      {
-        "t": 25.55,
-        "event": "jump"
-      },
-      {
-        "t": 26.1,
-        "event": "hop_land"
-      },
-      {
-        "t": 26.25,
-        "event": "made_it"
-      },
-      {
-        "t": 26.6,
-        "event": "stage"
-      },
-      {
-        "t": 27.25,
+        "t": 14.1,
         "event": "face"
       },
       {
-        "t": 28.05,
+        "t": 14.8,
         "event": "swing"
       },
       {
-        "t": 28.05,
+        "t": 14.8,
         "event": "press2"
       },
       {
-        "t": 28.25,
+        "t": 14.95,
         "event": "block_action"
       },
       {
-        "t": 28.25,
+        "t": 14.95,
         "event": "block_action"
       },
       {
-        "t": 28.3,
+        "t": 15,
         "event": "door2"
       },
       {
-        "t": 31.3,
+        "t": 15.5,
+        "event": "walk2"
+      },
+      {
+        "t": 17.25,
+        "event": "reveal"
+      },
+      {
+        "t": 19.05,
         "event": "vault"
       },
       {
-        "t": 31.5,
+        "t": 19.85,
         "event": "swing"
       },
       {
-        "t": 31.5,
+        "t": 19.85,
         "event": "container",
         "type": "minecraft:generic_9x3"
       },
       {
-        "t": 31.5,
+        "t": 19.85,
         "event": "payoff"
       },
       {
-        "t": 31.5,
+        "t": 19.85,
+        "event": "container_close"
+      },
+      {
+        "t": 19.85,
         "event": "block_action"
       },
       {
-        "t": 31.55,
+        "t": 19.9,
         "event": "gui_freeze"
       },
       {
-        "t": 31.7,
+        "t": 20.05,
         "event": "block_action"
       },
       {
-        "t": 31.95,
+        "t": 20.3,
         "event": "block_action"
       },
       {
-        "t": 32.2,
+        "t": 20.55,
         "event": "block_action"
       },
       {
-        "t": 32.45,
+        "t": 20.8,
         "event": "block_action"
       },
       {
-        "t": 32.7,
+        "t": 21.05,
         "event": "block_action"
       },
       {
-        "t": 32.9,
+        "t": 21.3,
         "event": "block_action"
       },
       {
-        "t": 33.15,
+        "t": 21.55,
         "event": "block_action"
       },
       {
-        "t": 33.4,
+        "t": 21.8,
         "event": "block_action"
       },
       {
-        "t": 33.65,
+        "t": 22.1,
         "event": "block_action"
       },
       {
-        "t": 33.9,
+        "t": 22.35,
         "event": "block_action"
       },
       {
-        "t": 34.15,
+        "t": 22.6,
         "event": "block_action"
       },
       {
-        "t": 34.4,
+        "t": 22.85,
         "event": "block_action"
       },
       {
-        "t": 34.65,
+        "t": 23.1,
         "event": "block_action"
       },
       {
-        "t": 34.9,
+        "t": 23.35,
         "event": "block_action"
       },
       {
-        "t": 35.15,
+        "t": 23.6,
         "event": "block_action"
       },
       {
-        "t": 35.4,
+        "t": 23.85,
         "event": "block_action"
       },
       {
-        "t": 35.65,
+        "t": 24.1,
         "event": "block_action"
       },
       {
-        "t": 35.9,
+        "t": 24.3,
         "event": "block_action"
       },
       {
-        "t": 36.15,
+        "t": 24.55,
         "event": "block_action"
       },
       {
-        "t": 36.4,
+        "t": 24.8,
         "event": "block_action"
       },
       {
-        "t": 36.65,
+        "t": 25.05,
         "event": "block_action"
       },
       {
-        "t": 36.9,
+        "t": 25.3,
         "event": "block_action"
       },
       {
-        "t": 37.15,
+        "t": 25.55,
         "event": "block_action"
       },
       {
-        "t": 37.4,
+        "t": 25.8,
         "event": "block_action"
       },
       {
-        "t": 37.65,
+        "t": 26.05,
         "event": "block_action"
       },
       {
-        "t": 37.9,
+        "t": 26.3,
         "event": "block_action"
       },
       {
-        "t": 38.2,
+        "t": 26.55,
         "event": "block_action"
       },
       {
-        "t": 38.45,
+        "t": 26.8,
         "event": "block_action"
       },
       {
-        "t": 38.7,
+        "t": 27.05,
         "event": "block_action"
       },
       {
-        "t": 38.95,
+        "t": 27.3,
         "event": "block_action"
       },
       {
-        "t": 39.2,
+        "t": 27.55,
         "event": "block_action"
       },
       {
-        "t": 39.45,
+        "t": 27.8,
         "event": "block_action"
       },
       {
-        "t": 39.7,
+        "t": 28.05,
         "event": "block_action"
       },
       {
-        "t": 39.95,
+        "t": 28.3,
         "event": "block_action"
       },
       {
-        "t": 40.2,
+        "t": 28.55,
         "event": "block_action"
       },
       {
-        "t": 40.45,
+        "t": 28.8,
         "event": "block_action"
       },
       {
-        "t": 40.7,
+        "t": 29.05,
         "event": "block_action"
       },
       {
-        "t": 40.95,
+        "t": 29.3,
         "event": "block_action"
       },
       {
-        "t": 41.2,
-        "event": "block_action"
-      },
-      {
-        "t": 41.45,
-        "event": "block_action"
-      },
-      {
-        "t": 41.55,
+        "t": 29.45,
         "event": "end"
       }
     ]
@@ -660,10 +582,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "85dc28aaeb7df787a2406752c20616a30cb2a4dc",
+    "commit": "91b32438e9ce035d7c1c0b0c49eb2de387558648",
     "rendered": "local",
-    "rendered_at": "2026-11-11T23:34:43.652Z",
-    "head_at_publish": "a9ad78dec19a5e12eef230f6c070af2ba0d5640e",
+    "rendered_at": "2026-11-12T05:30:40.931Z",
+    "head_at_publish": "f3f4aa773e5efbdd2f18fce66006f03b2494f563",
     "stunt": "stunts/quest_pyramid.js",
     "source_snapshot": [
       "source/quest_pyramid.js",
@@ -678,34 +600,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 85dc28aaeb7d",
+    "git checkout 91b32438e9ce",
     "gunzip -c shorts/quest_pyramid/recording.json.gz > work/quest_pyramid.rec.json",
     "node render.js work/quest_pyramid.rec.json work/quest_pyramid.frames 60 1080 1011",
     "python3 audio.py work/quest_pyramid.rec.json work/quest_pyramid.wav",
-    "python3 edit.py --frames work/quest_pyramid.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/quest_pyramid.rec.json --audio work/quest_pyramid.wav --caption \"bro found the SECRET chest 😱\" --self_name 56e --red SECRET --subs \"[[\\\"room\\\",\\\"everyone loots these 4 chests...\\\",1.4],[\\\"press\\\",\\\"but nobody presses THIS\\\",1.5],[\\\"stage\\\",\\\"LEVEL 1: the tunnel\\\",1.6,0],[\\\"stage\\\",\\\"LEVEL 2: lava parkour\\\",1.6,1],[\\\"stage\\\",\\\"LEVEL 3: the arrow trap\\\",1.6,2],[\\\"run\\\",\\\"NOW\\\",0.7],[\\\"stage\\\",\\\"LEVEL 4: even deeper\\\",1.6,3],[\\\"stage\\\",\\\"LEVEL 5: harder parkour\\\",1.6,4],[\\\"stage\\\",\\\"LEVEL 6: the secret wall\\\",1.6,5],[\\\"press2\\\",\\\"the eye was a button\\\",1.4]]\" --sfx [[\"pop\",\"go\",{\"gain\":0.45}],[\"whoosh\",\"drop\",{\"gain\":0.35}],[\"dip\",\"payoff\",0.4]] --gui_scale 4 --start_at go:-0.05 --end_after payoff:0.7 --out out/quest_pyramid.mp4"
+    "python3 edit.py --frames work/quest_pyramid.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/quest_pyramid.rec.json --audio work/quest_pyramid.wav --caption \"bro found the SECRET vault 😱\" --self_name 56e --red SECRET --subs \"[[\\\"room\\\",\\\"everyone loots these 4 chests...\\\",1.1],[\\\"press\\\",\\\"but nobody presses THIS\\\",1.2],[\\\"stage\\\",\\\"lava parkour 😬\\\",1.1,1],[\\\"press2\\\",\\\"the eye was a button\\\",1]]\" --subs_y 0.15 --speed [[\"stage0\",\"mine:-0.15\",1.6],[\"dug_through:0.1\",\"stage1:-0.1\",1.6],[\"made_it:0.1\",\"face:-0.1\",1.6],[\"walk2\",\"reveal:-0.3\",1.5]] --flash [[\"reveal\",0,0.35],[\"payoff\",0,0.3]] --sfx [[\"impact\",\"go:0.02\",{\"gain\":1.4}],[\"impact\",\"dug\",{\"gain\":1.4}],[\"whoosh\",\"drop\",{\"gain\":0.35}],[\"whoosh\",\"reveal:-0.15\",{\"gain\":0.6}],[\"impact\",\"reveal\",{\"gain\":1.2}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --gui_scale 4 --start_at dug:-0.45 --end_after payoff:0.7 --out out/quest_pyramid.mp4"
   ],
   "status": "ready",
-  "notes": "Quest #1 (lib/quest.js): the secret chest under the desert pyramid; tunnel, lava parkour, arrow trap, deeper tunnel, harder parkour, a creeper-face button wall, one chest. Review r1 NOT READY (water in the pit, 25 s), r2 NOT READY (water); fixed after the cap (waterlogged lanterns), lead checked stills 7.5/9/21/22.5 s: pure lava. Opening + end 0.7 s (r:r0f3da0, r:r188b46).",
-  "published_at": "2026-11-11T23:37:11.558Z",
+  "notes": "No-op fix (audit 2026-11-12): quest_pyramid v2: 17.9 s, 3 stages; the payoff is a 15x8 vault heaped with gold/diamond/emerald blocks, a look across it, the chest lid opens on the room; dark button, door shown opening; reviewed READY round 2 (independent subagent); check/pace/mixcheck OK",
+  "published_at": "2026-11-12T05:32:28.140Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T23:37:50+00:00",
+    "at": "2026-11-12T05:32:55+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 31.51 s vs the reviewed render 31.50 s"
+      "summary": "short.mp4 17.92 s vs the reviewed render 17.92 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 6,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T23:35:11.817Z",
+      "at": "2026-11-12T05:31:02.850Z",
       "report": "work/hb/quest_pyramid.check.json"
     },
     "key_sounds": "n/a"

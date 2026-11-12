@@ -897,6 +897,10 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     const m = (ctx.stunt && ctx.stunt.motion) || {}
     return { speed: (m.turnSpeed ?? 180) * MOTION.DEG / 20, accel: (m.turnAccel ?? 900) * MOTION.DEG / 400 }
   })()
+  // K.turnLimit(degPerSec): change the top turn speed from here on (a stretch the edit speeds up x N needs turns at
+  // <= 220 / N on screen, r:r38374d); K.turnLimit() restores the stunt's own
+  const lim0 = { ...lim }
+  K.turnLimit = (deg) => { lim.speed = deg == null ? lim0.speed : deg * MOTION.DEG / 20 }
   const raw = { look: typeof bot.look === 'function' ? bot.look.bind(bot) : null }
   K._gov = { cur: { yaw: bot.entity.yaw, pitch: bot.entity.pitch }, vel: { yaw: 0, pitch: 0 }, target: null }
   K._govSnap = () => {

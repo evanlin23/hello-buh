@@ -34,7 +34,7 @@ const WALL = (b) => b.mix({ sandstone: 6, cut_sandstone: 2, smooth_sandstone: 1 
 const ENVELOPE = 'sandstone'
 
 // ---- the pyramid: stepped sandstone over the hall, the treasure room below, the shaft between
-function pyramid (b) {
+function pyramid (b, ep = {}) {
   // foundation and the body, layers y 1..11 (half-size 11 - y), the floor at y 0
   b.fill(-10, -14, -10, 10, -1, 10, ENVELOPE)
   b.fill(-10, 0, -10, 10, 0, 10, 'sandstone')
@@ -77,7 +77,7 @@ function pyramid (b) {
   // the door's column (x 2, z -3) from F-2 to F+5 is left empty: the pistons and their power go in live
   b.fill(AX, F - 2, -3, AX, F + 5, -3, 'air')
   // the hidden button: a birch button (sandstone's colour) low on the north wall, left of the hidden door at x 2
-  b.set(1, F + 2, -2, 'birch_button[face=wall,facing=south]')
+  b.set(1, F + 2, -2, `${ep.roomButton || 'birch'}_button[face=wall,facing=south]`)
   // the shaft under the blue terracotta, down through the room's ceiling
   b.fill(0, F + 5, 0, 0, -1, 0, 'air')
 }
@@ -170,7 +170,7 @@ const STAGES = {
         const targets = [...pillars.map(p => ({ z: p.z + 0.5, f: p.top })), { z: farZ + 0.5, f: farTop, last: true }]
         await Q.hops(targets)
         ctx.mark('made_it')
-        await Q.dash(zEnd + 0.5, { sprint: true, pitch: -0.1, settle: 0 })
+        await Q.dash(zEnd + 0.5, { sprint: true, pitch: st.exitPitch ?? -0.1, settle: 0 })
       }
     }
   },
@@ -256,21 +256,55 @@ const STAGES = {
     // button there kept that piston powered (quasi-connectivity), so it never pulled its half of the door up
     const eye = { x: AX - 1, y: f + 6, z: wz + 1 }
     b.set(eye.x, eye.y, eye.z, `${st.button || 'birch'}_button[face=wall,facing=south]`)
-    // the vault behind: gold floor, gold pillars, the ONE chest on a gold pedestal in the middle
-    const vz0 = wz - 2, vz1 = wz - 8
-    b.fill(AX - 3, f + 1, vz1, AX + 3, f + 5, vz0, 'air')
-    b.fill(AX - 3, f, vz1, AX + 3, f, vz0, b.mix({ gold_block: 3, cut_sandstone: 2 }))
-    b.fill(AX - 3, f + 6, vz1, AX + 3, f + 6, vz0, 'smooth_sandstone')
-    for (const [x, z] of [[AX - 3, vz0], [AX + 3, vz0], [AX - 3, vz1], [AX + 3, vz1]]) b.fill(x, f + 1, z, x, f + 5, z, 'gold_block')
-    for (const x of [AX - 2, AX + 2]) for (const z of [vz0 - 1, vz1 + 1]) b.set(x, f + 6, z, 'glowstone')
-    b.set(AX - 2, f + 1, vz1, 'lantern'); b.set(AX + 2, f + 1, vz1, 'lantern')
-    const cz = vz1 + 2
+    // the vault behind (the payoff, owner audit 2026-11-12: "a vault room of gold/diamond blocks", worth the whole
+    // way down; review r1: "much bigger", "heaps, not wallpaper or benches"): a 15-wide, 8-high, 13-deep sandstone hall
+    // with uneven stepped HEAPS of gold, diamond and emerald blocks piled up its walls (each heap a rough pyramid:
+    // height = peak - distance, jagged), a clear aisle down the middle and a clearing round the ONE chest on its
+    // plinth, glowstone in the ceiling. He walks in from the dark passage and the room opens up round him.
+    const W = st.w ?? 7, H = st.h ?? 8, D = st.d ?? 13
+    const vz0 = wz - 2, vz1 = wz - 1 - D
+    const cz = vz1 + (st.chestBack ?? 6)
+    b.fill(AX - W, f + 1, vz1, AX + W, f + H, vz0, 'air')
+    b.fill(AX - W, f, vz1, AX + W, f, vz0, b.mix({ cut_sandstone: 3, smooth_sandstone: 1 }))
+    // the walls: cut sandstone, gold pillars every 4 (the piles read against plain stone, not a tiled wall)
+    for (const x of [AX - W - 1, AX + W + 1]) b.fill(x, f + 1, vz1, x, f + H, vz0, 'cut_sandstone')
+    b.fill(AX - W, f + 1, vz1 - 1, AX + W, f + H, vz1 - 1, 'cut_sandstone')
+    for (let x = AX - W; x <= AX + W; x++) if (x !== AX) b.fill(x, f + 1, vz0 + 1, x, f + H, vz0 + 1, 'cut_sandstone')
+    b.fill(AX - 1, f + 3, vz0 + 1, AX + 1, f + H, vz0 + 1, 'cut_sandstone')   // over the passage's mouth
+    for (let z = vz0; z >= vz1; z -= 4) for (const x of [AX - W - 1, AX + W + 1]) b.fill(x, f + 1, z, x, f + H, z, 'gold_block')
+    for (let x = AX - W + 2; x <= AX + W - 2; x += 4) b.fill(x, f + 1, vz1 - 1, x, f + H, vz1 - 1, 'gold_block')
+    b.fill(AX - W - 1, f + H, vz1 - 1, AX + W + 1, f + H, vz0 + 1, 'chiseled_sandstone', 'walls')
+    // the ceiling: sandstone, glowstone every 3
+    b.fill(AX - W, f + H + 1, vz1, AX + W, f + H + 1, vz0, 'smooth_sandstone')
+    for (let x = AX - W + 1; x <= AX + W; x += 3) for (let z = vz0 - 1; z >= vz1; z -= 3) b.set(x, f + H + 1, z, 'glowstone')
+    b.set(AX, f + H + 1, cz, 'sea_lantern')
+    // the heaps: rough pyramids against the walls and corners (x offset from the aisle, depth from the door, peak)
+    let hseed = st.seed ?? 7
+    const hr = () => { hseed = (hseed * 16807) % 2147483647; return hseed / 2147483647 }
+    const peaks = st.peaks || [
+      [-7, 1, 5], [7, 2, 5], [-7, 5, 7], [7, 6, 7], [-6, 9, 7], [6, 10, 7], [-7, 12, 7], [7, 12, 7],
+      [0, 12, 7], [-3, 12, 6], [3, 12, 6]
+    ]
+    const chestDz = vz0 - cz
+    const clear = (dx, dz) => Math.abs(dx) <= 1 || (Math.abs(dx) <= 2 && Math.abs(vz0 - dz - cz) <= 2) || (Math.abs(dx) <= 2 && dz <= 1)
+    const heapBlock = (y, h) => { const r = hr(); return r < 0.5 ? 'gold_block' : r < 0.85 ? 'diamond_block' : 'emerald_block' }
+    for (let x = AX - W; x <= AX + W; x++) for (let z = vz1; z <= vz0; z++) {
+      const dx = x - AX, dz = vz0 - z
+      if (clear(dx, dz)) continue
+      let h = 0
+      for (const [px, pz, ph] of peaks) h = Math.max(h, ph - Math.max(Math.abs(dx - px), Math.abs(dz - pz)) * 1.15)
+      // piles slope down to the aisle (no wall of blocks along it) and to the chest's clearing; behind the chest they rise
+      const cap = Math.max((Math.abs(dx) - 1) * 1.3, (dz - chestDz - 2) * 1.6)
+      h = Math.min(H - 1, cap, Math.round(h + (hr() - 0.5) * 1.1))
+      h = Math.floor(h)
+      for (let y = 1; y <= h; y++) b.set(x, f + y, z, heapBlock(y, h))
+    }
+    // the chest on its plinth in the clearing
     b.set(AX, f + 1, cz, 'gold_block')
     b.set(AX, f + 2, cz, 'chest[facing=south]')
-    b.set(AX, f + 6, cz, 'sea_lantern')
     const door = pistonDoor(AX, f, wz, 'blue_terracotta', { topPower: [AX, f + 4, wz - 1] })
     return {
-      end: { z: vz1 - 1, f },
+      end: { z: vz1 - 2, f },
       doors: [door],
       async setup (Q) {
         for (const [slot, item, count] of Q.ep.loot) await Q.cmd(`/item replace block ${Q.A(AX, f + 2, cz)} container.${slot} with ${item} ${count}`)
@@ -278,11 +312,11 @@ const STAGES = {
       async play (Q) {
         const { ctx, K, bot } = Q
         K.base.pitch = 0
-        await Q.dash(wz + 5.6, { pitch: 0.3 })
+        await Q.dash(wz + (st.stand ?? 5.6), { pitch: 0.3 })
         ctx.mark('face')
         // the whole face (just a wall?), then its eye
         await Q.look(AX + 0.5, f + 3.6, wz + 1, { max: 14 })
-        await Q.hold(6)
+        await Q.hold(st.faceHold ?? 6)
         const sway = K.sway
         K.sway = 0.3
         await K.use(Q.at(eye.x, eye.y, eye.z), { sound: 'block.wooden_button.click_on', volume: 0.8, max: 60 })
@@ -292,17 +326,30 @@ const STAGES = {
         await Q.openDoor(door)
         ctx.mark('door2')
         await Q.look(AX + 0.5, f + 1.8, wz - 2, { max: 12 })
-        await Q.dash(cz + 1.8, { pitch: -0.25 })
+        ctx.mark('walk2')   // (the edit's speed span starts here: after the turn, never on it)
+        // through the dark passage and out into the vault: 'reveal' as the eye clears the inner wall; he stops 1-2
+        // blocks inside, one eased look up and across the heaps (left, sweep right), landing on the chest; then the walk
+        let shown = false
+        await Q.dash(wz - (st.inside ?? 3.2), { pitch: 0.05, during: async () => {
+          if (!shown && bot.entity.position.z - Q.O.z < wz - 1.7) { shown = true; ctx.mark('reveal') }
+        } })
+        if (!shown) ctx.mark('reveal')
+        const sweep = st.sweep || [[-4.5, 5, 11, 9], [4.5, 5, 11, 13], [0, 2.4, 0, 10]]   // [dx, dy, depth past the door, ticks]
+        for (const [dx, dy, dd, t] of sweep) await Q.look(AX + 0.5 + dx, f + dy, dd ? wz - 1 - dd : cz + 0.5, { max: t })
         ctx.mark('vault')
+        K.base.pitch = -0.2
+        await Q.dash(cz + (st.chestStand ?? 2.4), { pitch: -0.22 })
         {
-          const p = bot.entity.position, col = []
-          for (let y = f - 2; y <= f + 4; y++) for (const zz of [wz, wz - 1]) { const q = bot.blockAt(Q.at(AX, y, zz)); col.push(`${y},${zz}:${q ? q.name : '?'}`) }
-          ctx.log(`vault: at ${(p.x - Q.O.x).toFixed(2)} ${(p.y - Q.O.y).toFixed(2)} ${(p.z - Q.O.z).toFixed(2)}; chest z ${cz}; door ${col.join(' ')}`)
+          const p = bot.entity.position
+          ctx.log(`vault: at ${(p.x - Q.O.x).toFixed(2)} ${(p.y - Q.O.y).toFixed(2)} ${(p.z - Q.O.z).toFixed(2)}; chest z ${cz}`)
         }
         const w = await K.open(Q.at(AX, f + 2, cz))
         ctx.mark('payoff')
+        // the lid opens on the room: the chest screen is left off the picture (review r1: "the last image must be the
+        // treasure room, not a menu of icons"); the window stays open, so the lid does too and the view holds
+        if (st.noScreen) ctx.mark('container_close')
         ctx.sound('block.chest.open', 0.9, 1, { key: true })
-        await bot.waitForTicks(40)
+        await bot.waitForTicks(st.after ?? 40)
         return !!w
       }
     }
@@ -319,7 +366,7 @@ function buildCourse (ep) {
   // (its top 3+ blocks over every ceiling: parkour 2's ceiling at -4 met natural ground, an aquifer flooded the
   // ledge and turned the lava to stone)
   b.fill(AX - 9, minF - 9, zMin, AX + 9, -1, -4, WALL(b))
-  pyramid(b)
+  pyramid(b, ep)
   const plan = []
   cur = { z: -4, f: ROOM_F }
   const door1 = pistonDoor(AX, ROOM_F, -3, 'cut_sandstone')
@@ -484,12 +531,15 @@ function makeQuest (ep) {
       await Q.look(0.5, ROOM_F + 1.5, -2.5, { max: 14 })
       ctx.mark('room')
       await Q.hold(6)
-      await K.use(Q.at(1, ROOM_F + 2, -2), { sound: 'block.wooden_button.click_on', volume: 0.8 })
+      if (ep.pressLook) { await Q.look(1.5, ROOM_F + 2.45, -2.85, { max: 22 }); await Q.hold(3) }   // the button centred under the crosshair
+      await K.use(Q.at(1, ROOM_F + 2, -2), { sound: ep.roomButtonSound || 'block.wooden_button.click_on', volume: 0.8 })
       ctx.mark('press')
       await Q.hold(2)
       await Q.openDoor(this.door1)
       ctx.mark('open')
+      await Q.hold(ep.openHold ?? 0)   // the hidden door seen sliding open before the turn to it
       await Q.look(AX + 0.5, ROOM_F + 1.6, -4, { max: 10 })
+      ctx.mark('walk1')   // (the edit's speed span starts here: after the turn, never on it)
       // walk to the doorway's line (x 2.5) and through it
       await Q.walk([[AX + 0.5, ROOM_F + 1, -0.4], [AX + 0.5, ROOM_F + 1, -1.8], [AX + 0.5, ROOM_F + 1, -3.6]], { pitch: -0.1 })
       // 3. the stages
@@ -499,6 +549,7 @@ function makeQuest (ep) {
         // the build-time scan was clean) is cleared before every stage, while the pits are still out of view
         await Q.dry(this.plan.filter(q => q.pit).map(q => q.pit))
         ctx.mark('stage', { n: i, kind: p.st.kind })
+        ctx.mark(`stage${i}`)   // (unique: the edit's speed spans land on these)
         const r = await p.play(Q)
         if (r === false) ok = false
       }
