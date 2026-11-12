@@ -22,9 +22,11 @@ module.exports = {
   name: 'villager_crowd',
   botTimeout: 420,   // the field (cleared to z + 150) takes ~150 s to set up: the default 180 killed all 5 attempts
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
+  // a reaction, 7 words (owner r:r0f3da0; fix-check r1: the 11-word '1 vs 10 vs 100 vs 200 villagers staring at me 💀'
+  // read as a label and broke the 10-word cap; the count-up is in the subs)
+  caption: 'why are they ALL staring at me 💀',
   edit: {
-    subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', dropAt: 'behind',
+    subsY: 0.15, caption: 'why are they ALL staring at me 💀', red: 'ALL', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:0.7',   // fast end (owner r:r188b46): 0.7 s after every head snaps round
     // the short cut (lead 2026-11-11: as short as it reads, ~8-20 s): 1, 10, 100, 200 and the crowd behind; the 5,
     // 20 (emerald) and 50 crowds are recorded but cut out whole
@@ -40,10 +42,12 @@ module.exports = {
     // on it) has a hit on frame 0 (pace: none by 0.5 s)
     // and the payoff cuts through the NCS bed: the song dips 0.4 s before every head snaps round, then an impact
     // (mixcheck: no hit within 0.3 s of 'behind' on the final mix once the hook moved the song)
-    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.02', { gain: 1.4 }], ['dip', 'behind', 0.4], ['impact', 'behind', { gain: 1.4 }]],
+    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.27', { gain: 1.4 }], ['whoosh', 'beat'], ['dip', 'behind', 0.4], ['impact', 'behind', { gain: 1.4 }]],
     // the opening (owner r:r0f3da0): frame 0 is the mass of 200 staring villagers, not the one. The look over the 200
     // from the pillar (moving, the crowd filling the frame) flashes first, then the count-up from 1
-    hook: { at: 'overhead', before: 0, after: 1.2, text: 'wait for the 200 💀' }
+    // (fix-check r1: it starts 0.25 s into the look, on a full frame of crowd, not the pillar's log; the text on one
+    // line; a whoosh on the cut into the 1, over the hole where the bed came back in)
+    hook: { at: 'overhead', before: -0.25, after: 1.45, text: 'wait for the 200...' }
   },
 
   async setup (ctx) {
