@@ -48,6 +48,7 @@ module.exports = makeStunt({
     speed: [['deep_a:0.05', 'deep_b', 'cut'], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut']],
     // the last beat: straight down the shaft at him in the lava (owner: "all the way down and then lava"); a hit on it
     endAfter: 'splash:0.8',
+    dropAt: 'splash',   // the song's drop on the landing (mixcheck: the hit was buried under the bed already dropped on the trapdoor)
     sfx: [['dip', 'splash', 0.3], ['impact', 'splash', { gain: 1.4 }], ['boom', 'splash']],
     // the landing is the payoff pace/mixcheck time: a flash and a punch on it too (the trap edit has them on the trapdoor)
     flash: [['payoff', 0, 0.35], ['splash', 0, 0.35]],
