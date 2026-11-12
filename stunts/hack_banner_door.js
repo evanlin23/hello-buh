@@ -35,14 +35,15 @@ function wall (b) {
 // everything under the ground, in the den's frame: the stair, the farm, the library, the tunnel, the vault
 function under (b) {
   const rock = ROCK(b)
-  // the stair down from the landing: step k at x 11 + k, y 1 - k (high side west), 3 of headroom, 1 wide (z -3)
+  // the stair down from the landing: step k at x 11 + k, y 1 - k (high side west), 3 of headroom, 3 wide (z -4..-2;
+  // 1 wide, the player's shoulders caught the side walls on every step: rec_check "stops dead", a stutter)
   for (let k = 1; k <= 9; k++) {
     const x = 11 + k, y = 1 - k
-    b.fill(x, y - 3, -4, x, 5 - k, -2, rock)                      // the shell round this slice
-    b.set(x, y, -3, 'deepslate_brick_stairs[facing=west]')
-    b.fill(x, y + 1, -3, x, 4 - k, -3, 'air')
+    b.fill(x, y - 3, -5, x, 5 - k, -1, rock)                      // the shell round this slice
+    b.fill(x, y, -4, x, y, -2, 'deepslate_brick_stairs[facing=west]')
+    b.fill(x, y + 1, -4, x, 4 - k, -2, 'air')
   }
-  for (const k of [2, 4, 6, 8]) for (const z of [-4, -2]) b.set(11 + k, 3 - k, z, 'lantern')   // lanterns in niches in the stair's walls (a hanging one is in the head's way; shroomlights read as lava)
+  for (const k of [2, 4, 6, 8]) for (const z of [-5, -1]) b.set(11 + k, 3 - k, z, 'lantern')   // lanterns in niches in the stair's walls (a hanging one is in the head's way; shroomlights read as lava)
   // the bottom landing x 21..22 (floor -9, feet -8)
   b.fill(21, -10, -4, 22, -5, -2, rock); b.fill(21, -8, -3, 22, -6, -3, 'air'); b.fill(21, -9, -3, 22, -9, -3, 'polished_deepslate')
   b.set(22, -7, -4, 'lantern')
@@ -142,7 +143,7 @@ const SUBS = [
   ['which', 'but which one is real?', 1.8, 0],
   ['reveal', 'secret room 5', 1.6, 4],
   ['nope', 'nope', 0.9, 0],
-  ['reveal', 'secret room 6', 1.6, 5]
+  ['reveal', 'secret room 6', 1.2, 5]   // (gone before the pull-back: at 1.6 s it sat on the player's face)
 ]
 
 module.exports = makeStunt({
@@ -151,13 +152,16 @@ module.exports = makeStunt({
   red: 'hitbox',
   reveals: 6,
   subs: SUBS,
-  edit: { sfx: [['pop', 'deeper', { gain: 0.45 }], ['whoosh', 'payoff', { gain: 0.6 }]],
-    // the pull-back plays 1.2 s; the end lands 1.0 s into it, the camera still easing out over the hall (the payoff is
-    // the move itself: the scale reads as it pulls away)
-    endAfter: 'payoff:1.0',
+  // (pace: a hit by 0.5 s and in the first 1.5 s over the NCS bed: a light impact on frame 0 under the format's pop and
+  // on the first banner; a pop as he commits to the middle banner, inside the 2.2 s library sweep)
+  edit: { sfx: [['impact', 'go', { gain: 0.7 }], ['impact', 'reveal', { nth: 0, gain: 0.8 }], ['pop', 'deeper', { gain: 0.45 }],
+    ['pop', 'nope_try', { gain: 0.5 }], ['whoosh', 'payoff', { gain: 0.6 }]],
+    // the pull-back plays 1.2 s; the end lands 0.85 s into it, the camera easing out over the hall (the payoff is
+    // the move itself: the scale reads as it pulls away; pace: 0.5-0.8 s after the result, WARN over 0.9)
+    endAfter: 'payoff:0.85',
     // r:r188b46 (no-op audit: trim rooms 2-5): the straight walks sped up mark to mark, no turn inside a span (whip
     // cap); the farm's pasture look, the library's enchanting-table look and the second diamond are gone
-    speed: [['stair_a', 'stair_b', 2.2], ['farm_a', 'farm_b', 1.8], ['lib_a', 'lib_b', 1.6], ['side_a', 'side_b', 2], ['mine_a', 'mine_b', 2]] },
+    speed: [['stair_a', 'stair_b', 2.2], ['farm_a', 'farm_b', 1.8], ['lib_a', 'lib_b', 1.6], ['side_a', 'side_b', 2], ['diamond:0.3', 'mine_b', 'cut']] },
   // the payoff camera (local frame - the start (6.5, 1, 5.3)): from 2.5 blocks in front of the player's face on the
   // balcony (57.3, -6.4, 1.5) back and up to the hall's far end (105, -4.2, 1.5), tilting down onto the treasure below the cliff
   shots: {
@@ -224,9 +228,10 @@ module.exports = makeStunt({
     const lib = atX([{ x: 36.4, ev: 'lib_a' }, { x: 40.4, ev: 'lib_b' }])
     await H.walk([[41.4, -8, -2.5]], { during: lib })
     ctx.mark('which')
-    await H.look(43.5, -7.0, -6.5, { max: 14 })     // the sweep: purple, orange ...
-    await H.look(43.5, -7.0, 1.5, { max: 18 })      // ... magenta, yellow
-    await H.look(43.5, -7.0, -2.5, { max: 12 })     // the obvious one, in the middle
+    await H.look(43.5, -7.0, -6.5, { max: 18 })     // the sweep: purple, orange ...
+    await H.look(43.5, -7.0, 1.5, { max: 24 })      // ... magenta, yellow
+    await H.hold(5)                                  // (a rest on the yellow one before swinging back: r:r38374d)
+    await H.look(43.5, -7.0, -2.5, { max: 14 })     // the obvious one, in the middle
     // try it: the black banner is a decoy, rock behind the cloth (a real, deliberate bump: nothing breaks)
     ctx.mark('nope_try')
     K.go(true); for (let k = 0; k < 9; k++) { K.look(k); await bot.waitForTicks(1) } K.go(false)
@@ -248,11 +253,16 @@ module.exports = makeStunt({
     // vanilla: deepslate diamond ore (hardness 4.5) with a diamond pickaxe (speed 8) breaks in 17 ticks
     await K.dig(bot.blockAt(H.at(48, -7, 3)), 850)
     ctx.mark('diamond')
+    await H.hold(8)   // still on the mined hole (the diamond pops out and is picked up): the edit cuts away 0.3 s in
+    // 6. the light blue banner -> the vault. The turn and the walk to it are cut out (r:r188b46: pace's 1.7 s dwell
+    // after the dig): a jump cut from the still hole to standing still in front of the banner ('mine_b')
     await H.look(52.5, -6.6, 1.5, { max: 12 })
-    // 6. the light blue banner -> the vault (the walk to it at x2)
     K.base.pitch = 0.05
-    const mine = atX([{ x: 48.6, ev: 'mine_a' }, { x: 52.3, ev: 'mine_b' }])
-    await through([[52.5, -8, 1.5], [56.9, -8, 1.5]], 54, 1, { during: mine })
+    await H.walk([[52.2, -8, 1.5]])
+    await H.hold(5)
+    ctx.mark('mine_b')
+    await H.hold(3)   // (still on both sides of the cut: the whip check's 2 ticks)
+    await through([[56.9, -8, 1.5]], 54, 1)
     // out on the balcony: the eyes drop to the hall below (POV), settle, then the payoff: a pull-back off the player's
     // face to the far end of the hall, the player a speck on the cliff (no-op audit r:r4607fa: the scale reveal)
     await H.look(72, -22, 1.5, { max: 12 })
