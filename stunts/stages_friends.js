@@ -71,7 +71,7 @@ module.exports = {
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
       ['respawn', 'ch2', 'cut'],     // the respawn's first ticks (the camera switching to your eyes)
       ['vein', 'vein_end', 2],       // the vein at 2x (the aim at <= 100 deg/s)
-      ['rich:0.35', 'ch3', 'cut'],   // r:r188b46: to chapter 3 as the diamonds come up in hand (was 1.3 s after the loot)
+      ['rich:0.6', 'ch3', 'cut'],   // r:r188b46: to chapter 3 ~0.33 s after the diamond is up in hand (fix-check r1: 0.35 flashed it for 3 frames; was 1.3 s after the loot)
       ['chain_end:0.4', 'crater', 'cut'],   // r:r188b46: the chain's smoke cut out (was x2: 1.2 s after the last blast)
       ['notice', 'boom', 1.5]        // his look down, at you and the run (the fuse: no turns of ours, fixed cameras)     // the smoke settling at 2x (no turns: the wide is a fixed camera)
     ],
