@@ -32,7 +32,7 @@ pulled back since 1100; Gary is a night stamp, so he is not built by day).
 | one more inch and she'll fit in a teacup (L07) | the big teacup is ~0.5 tall and wider than her: after L10's inch its rim is level with her (S11) | S07, S11 stills |
 | she laid hers down (L09) | her fan appears flat the instant his is down, longer than his | S09 |
 | she wasn't sorry, she was showing off (L11) | she takes his emerald and climbs her pile, arms up | S11 |
-| next hand, I won; sorry, auntie; worth the inch (L12) | his fan down, the bloop, his hair dropping below the sill line in a CU | S12 |
+| next hand, I won; sorry, auntie; I shrank an inch, worth it (L12) | his fan down, the bloop, his hair dropping below the sill line in a CU | S12 |
 
 ## Build notes
 - Entity scale is the engine need (story.json `engine.missing`): in-game set `minecraft:scale` on the actors

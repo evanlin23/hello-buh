@@ -2,7 +2,7 @@
  "name": "sorry_dear",
  "stunt": "story_sorry_dear",
  "version": 2,
- "revision": "r2 (2026-11-12): critic r1 REVISE + three cold reads (all guessed the gloat at midpoint 55-75 %, all unsure whether the kid shrinks at the end): L05 'pats my HAND' replaces 'smiles' (two-way: comfort or condescension; no smile until L10); L11 'She wasn't SORRY. She was SHOWING OFF.' (the critic withdrew 'WINNING': it restated L04); L09 'She laid hers down SO fast.'; L12 adds 'Worth the INCH.' (the kid's own shrink said); L03 trimmed; the teacup is big (~0.5, she fits after one inch, paid off in S11); no facial animation (a baked closed smile on sorry_aunt, body poses only); no kicked card fans (they appear on the beat); S12 a CU with his hair on the sill line. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
+ "revision": "r3 (2026-11-12): critic r2 APPROVE (7.9) with its condition (S06: no facial animation) and should-fixes (canon wording; S12 keeps her protest small); L12 'I shrank an INCH. WORTH it.' (a round-2 casual reader still thought the aunt shrinks at the end). r2 (2026-11-12): critic r1 REVISE + three cold reads (all guessed the gloat at midpoint 55-75 %, all unsure whether the kid shrinks at the end): L05 'pats my HAND' replaces 'smiles' (two-way: comfort or condescension; no smile until L10); L11 'She wasn't SORRY. She was SHOWING OFF.' (the critic withdrew 'WINNING': it restated L04); L09 'She laid hers down SO fast.'; L12 adds 'Worth the INCH.' (the kid's own shrink said); L03 trimmed; the teacup is big (~0.5, she fits after one inch, paid off in S11); no facial animation (a baked closed smile on sorry_aunt, body poses only); no kicked card fans (they appear on the beat); S12 a CU with his hair on the sill line. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
  "caption": "why won't my tiny aunt stop saying sorry ☕",
  "upload": {
   "title": "in my village every sorry shrinks you an inch. my aunt is the size of a mug ☕ #minecraft #shorts",
@@ -20,7 +20,7 @@
  "logline": "In a village where every sorry shrinks you an inch, a kid's aunt is the size of a mug and keeps saying it; he plays cards to win so she'll have nothing to be sorry for, she beats him again, says 'Oh, sorry, dear' and shrinks: she was never sorry, she was showing off.",
  "question": "if every sorry shrinks you an inch, why won't the nicest lady alive stop saying it?",
  "premise": "In Stillwater, every 'sorry' you say shrinks you an inch. The kid's aunt used to be taller than the door; now she is the size of a mug, standing on her own card table. She shrinks most on Sundays, which is cards day: they play for emeralds, her pile is taller than her ('luck', she says), and every time she lays her cards down she smiles and says 'sorry, dear'. The kid thinks she feels bad for him. One more inch and she'll fit in a teacup, so this Sunday he plays to WIN, so she'll have nothing to be sorry for.",
- "twist": "She isn't sorry for him. 'Sorry, dear' is how she shows off: she says it every time she beats him, and sixty-odd wins took her from taller than the door to the size of a mug. She would rather win and brag than stay tall. The kid's best hand ever loses, she says 'Oh. Sorry, DEAR.' and shrinks again, and the kid says it plainly: 'She wasn't SORRY. She was SHOWING OFF.' The sting: he wins the next hand, says 'Oh. Sorry, AUNTIE.', and shrinks an inch himself ('Worth the INCH.').",
+ "twist": "She isn't sorry for him. 'Sorry, dear' is how she shows off: she says it every time she beats him, and sixty-odd wins took her from taller than the door to the size of a mug. She would rather win and brag than stay tall. The kid's best hand ever loses, she says 'Oh. Sorry, DEAR.' and shrinks again, and the kid says it plainly: 'She wasn't SORRY. She was SHOWING OFF.' The sting: he wins the next hand, says 'Oh. Sorry, AUNTIE.', and shrinks an inch himself ('I shrank an INCH. WORTH it.').",
  "family": "village_custom",
  "key_color": "#FF7F6B",
  "mood": "funny",
@@ -354,14 +354,14 @@
   {
    "id": "L12",
    "who": "N",
-   "text": "Next hand, / I WON. / \"Oh. Sorry, AUNTIE.\" / Worth the INCH.",
-   "say": "Next hand, I WON. Oh. Sorry, AUNTIE. Worth the INCH.",
+   "text": "Next hand, / I WON. / \"Oh. Sorry, AUNTIE.\" / I shrank an INCH. / WORTH it.",
+   "say": "Next hand, I WON. Oh. Sorry, AUNTIE. I shrank an INCH. WORTH it.",
    "shot": "S12",
    "look": {
     "what": "actor:N"
    },
-   "direction": "quick and cheeky, a sweet fake-innocent sing-song on Sorry, AUNTIE, then a proud little shrug on INCH",
-   "note": "the one beat (format beat 7) and the loop: the rule bites him and he says so ('Worth the INCH': all three r1 cold readers asked whether the kid shrinks); a soft 'bloop', his hair drops below the sill line; 'Sorry, AUNTIE' + INCH run into L01's 'every SORRY shrinks you an INCH'. Cut 1.0 s after the dip settles."
+   "direction": "quick and cheeky, a sweet fake-innocent sing-song on Sorry, AUNTIE, then a proud little shrug on WORTH it",
+   "note": "the one beat (format beat 7) and the loop: the rule bites him and he says so ('I shrank an INCH. WORTH it.': all three r1 cold readers asked whether the kid shrinks); a soft 'bloop', his hair drops below the sill line; 'Sorry, AUNTIE' + INCH run into L01's 'every SORRY shrinks you an INCH'. Cut 1.0 s after the dip settles. r3: 'Worth the INCH.' -> 'I shrank an INCH. WORTH it.' (a round-2 casual reader still thought the aunt shrinks at the end)."
   }
  ],
  "shots": [
@@ -449,7 +449,7 @@
    "place": "card_table",
    "size": "ms",
    "camera": "from her eye level on the tabletop looking up at the kid (a low angle), still",
-   "frame": "the kid's face and shoulders, a sheepish touched smile, his losing cards flat in front of him, his one emerald by his hand.",
+   "frame": "the kid's face and shoulders, head tipped down, a small shoulder shrug, his losing cards flat in front of him, his one emerald by his hand.",
    "subject": "actor:N",
    "look": {
     "time": 6200
@@ -539,7 +539,7 @@
    "place": "card_table",
    "size": "cu",
    "camera": "the kid from the east at his eye level, the north-east window's sill a straight line across the frame behind his head; the camera holds",
-   "frame": "a close-up on the kid's head and shoulders from the east, the window sill a straight line across the frame with the top of his hair just touching it; he slaps his winning fan down (frame bottom), a head tilt on 'Sorry, AUNTIE', then a soft 'bloop' and his hair drops below the sill line (scale 1.0 -> 0.986: ~20 px at 300 px wide); the aunt's tiny figure pops up at frame bottom left with her arms up in protest. Cut 1.0 s after the dip settles.",
+   "frame": "a close-up on the kid's head and shoulders from the east, the window sill a straight line across the frame with the top of his hair just touching it; he slaps his winning fan down (frame bottom), a head tilt on 'Sorry, AUNTIE', then a soft 'bloop' and his hair drops below the sill line (scale 1.0 -> 0.986: ~20 px at 300 px wide); the aunt's tiny figure small in the bottom-left corner, arms up in a small protest (the kid's drop past the sill stays the one thing to read). Cut 1.0 s after the dip settles.",
    "subject": "actor:N",
    "look": {
     "time": 6600

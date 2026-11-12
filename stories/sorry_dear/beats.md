@@ -10,7 +10,7 @@ is an engine need.
 The kid's best hand ever hits the cloth; hers lands beside it SO fast, she tilts her head, and in her own voice:
 "Oh. Sorry, DEAR." She shrinks an inch on the spot. He says it plainly as she drags his last emerald onto her pile
 and climbs it, arms up: "She wasn't SORRY. She was SHOWING OFF." One beat: next hand he wins, "Oh. Sorry, AUNTIE.
-Worth the INCH.", bloop, he drops an inch. Cut.
+I shrank an INCH. WORTH it.", bloop, he drops an inch. Cut.
 
 ## Spine
 - In my village every sorry shrinks you an inch, and my aunt, who says it all the time, is the size of a mug. WHY? (L01-L02)
@@ -18,7 +18,7 @@ Worth the INCH.", bloop, he drops an inch. Cut.
 - Because one more inch and she fits in a teacup, I play to WIN so she'll have nothing to be sorry for.
 - Until finally she beats my best hand ever, says "Oh. Sorry, DEAR." and shrinks: she was never sorry, she was showing off.
 
-## Beats (Pip's pace, ~3 words/s; 131 words, ~43-45 s)
+## Beats (Pip's pace, ~3 words/s; 134 words, ~44-46 s)
 | t (s) | format beat | line | picture | clue planted |
 |---|---|---|---|---|
 | 0-4 | 1. the fact + why | L01 | tabletop eye level: the aunt beside a mug her own height | the rule (sorry = an inch); her size |
@@ -26,13 +26,13 @@ Worth the INCH.", bloop, he drops an inch. Cut.
 | 8-12 | 2. rule in action | L03 | the whole table: the kid deals, she bows | clue 1: she shrinks most on cards day |
 | 12-16 | 2. | L04 | her emerald pile, taller than her; his one emerald; the lever out the window (egg) | clue 2: she wins every game |
 | 16-21 | 2. | L05 | her cards fan out flat; she pats his huge fingertip | clue 3: the sorry comes WITH the winning hand, and a pat (comfort or condescension) |
-| 21-23 | misread | L06 | the kid, touched | (she feels bad for me) |
+| 21-23 | misread | L06 | the kid, head tipped down, a small shrug | (she feels bad for me) |
 | 23-26 | 4. someone loved at stake | L07 | mug, aunt, teacup in a row | one more inch: a teacup |
 | 26-30 | 3/5. he wants to save her: plays to win | L08 | the kid slaps a card down | the rule turned: if he wins, no sorry |
 | 30-33 | 5. the climax | L09 | his best hand; hers lands flat SO fast (one more two-way clue: eager, or just good) | |
 | 33-35 | her line | L10 | CU: "Oh. Sorry, DEAR.", a head tilt, she shrinks an inch | her own voice |
 | 35-38 | 6. REVEAL, said | L11 | "She wasn't SORRY. She was SHOWING OFF.": she drags his emerald onto her pile and climbs it, arms up, level with the teacup rim | |
-| 38-43 | 7. one beat + the echo, cut | L12 | he wins the next hand: "Oh. Sorry, AUNTIE. Worth the INCH.", bloop, his hair drops below the sill | the rule bites him, said: echoes L01 |
+| 38-43 | 7. one beat + the echo, cut | L12 | he wins the next hand: "Oh. Sorry, AUNTIE. I shrank an INCH. WORTH it.", bloop, his hair drops below the sill | the rule bites him, said: echoes L01 |
 
 **Where the attentive viewer gets ahead:** L04-L05 (the pile taller than her; the pat with the winning hand). A
 gamer can guess it there; a casual viewer has the kid's reading ("she feels SO bad for me") to lean on until L10.
