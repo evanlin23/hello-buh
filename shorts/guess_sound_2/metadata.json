@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 19634707,
-    "sha256": "6814fca2596577d5dfb8b90afbfbfee21ce5898c0e2fa5a0f6acecb00e50c4f3",
+    "bytes": 20029161,
+    "sha256": "d7923aa75f631857cc94b80de474ffccbcd89a6fe01b3e80f4f7ddb1571feab9",
     "release": {
       "tag": "pkg-guess_sound_2",
-      "asset": "guess_sound_2.short.6814fca2596577d5.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.6814fca2596577d5.mp4",
-      "sha256": "6814fca2596577d5dfb8b90afbfbfee21ce5898c0e2fa5a0f6acecb00e50c4f3",
-      "bytes": 19634707
+      "asset": "guess_sound_2.short.d7923aa75f631857.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short.d7923aa75f631857.mp4",
+      "sha256": "d7923aa75f631857cc94b80de474ffccbcd89a6fe01b3e80f4f7ddb1571feab9",
+      "bytes": 20029161
     },
     "nosong_release": {
       "tag": "pkg-guess_sound_2",
-      "asset": "guess_sound_2.short_nosong.770e9b7462e2f433.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short_nosong.770e9b7462e2f433.mp4",
-      "sha256": "770e9b7462e2f433ed947f02dd7e5de1a9395349b494ea7db1c806f0dcfaf5b4",
-      "bytes": 19209810
+      "asset": "guess_sound_2.short_nosong.e0df12263be32fa1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound_2/guess_sound_2.short_nosong.e0df12263be32fa1.mp4",
+      "sha256": "e0df12263be32fa17280374387e53fd0ad010bbdd5d19c55841b17743f4b3f0d",
+      "bytes": 19605163
     }
   },
   "edit": {
@@ -236,11 +236,18 @@
       ]
     ],
     "subsY": 0.77,
+    "songGain": -6,
     "hook": {
       "at": "final_reveal",
       "before": 0,
       "after": 1,
-      "blur": 7,
+      "blur": 9,
+      "blurBox": [
+        0.4,
+        0.32,
+        0.61,
+        0.64
+      ],
       "text": "the last one is IMPOSSIBLE 😭"
     },
     "sfx": [
@@ -280,7 +287,7 @@
       "--cards",
       "[[\"lit\",\"PIG\",1.25,\"green\",0,null],[\"lit\",\"ZOMBIE\",1.25,\"green\",1,null],[\"lit\",\"SPIDER\",1.25,\"red\",2,null],[\"lit\",\"WITCH\",1.25,\"blue\",3,null,{\"y\":0.3}],[\"lit\",\"ALLAY\",1.25,\"blue\",4,null,{\"y\":0.3}],[\"lit\",\"THE PARROT AGAIN\",1.5,\"red\",5,null,{\"y\":0.2,\"size\":92}]]",
       "--hook",
-      "{\"at\":\"final_reveal\",\"before\":0,\"after\":1,\"blur\":7,\"text\":\"the last one is IMPOSSIBLE 😭\"}",
+      "{\"at\":\"final_reveal\",\"before\":0,\"after\":1,\"blur\":9,\"blurBox\":[0.4,0.32,0.61,0.64],\"text\":\"the last one is IMPOSSIBLE 😭\"}",
       "--countdowns",
       "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
       "--sfx",
@@ -977,10 +984,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "1527797dd7404f884199610e3fce2cbe61e9fdb7",
+    "commit": "52f60d187d22b43df0bb0702df503b060275b1c8",
     "rendered": "local",
-    "rendered_at": "2026-11-12T07:50:29.436Z",
-    "head_at_publish": "1527797dd7404f884199610e3fce2cbe61e9fdb7",
+    "rendered_at": "2026-11-12T21:22:06.596Z",
+    "head_at_publish": "52f60d187d22b43df0bb0702df503b060275b1c8",
     "stunt": "stunts/guess_sound_2.js",
     "source_snapshot": [
       "source/guess_sound_2.js",
@@ -991,18 +998,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 1527797dd740",
+    "git checkout 52f60d187d22",
     "gunzip -c shorts/guess_sound_2/recording.json.gz > work/guess_sound_2.rec.json",
     "node render.js work/guess_sound_2.rec.json work/guess_sound_2.frames 60 1080 1011",
     "python3 audio.py work/guess_sound_2.rec.json work/guess_sound_2.wav",
-    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1,null],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2,null],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.5,\\\"red\\\",5,null,{\\\"y\\\":0.2,\\\"size\\\":92}]]\" --hook \"{\\\"at\\\":\\\"final_reveal\\\",\\\"before\\\":0,\\\"after\\\":1,\\\"blur\\\":7,\\\"text\\\":\\\"the last one is IMPOSSIBLE 😭\\\"}\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"dip\",\"final_reveal:0.8\",1.2],[\"gamedip\",\"final_reveal\",0.35],[\"pop\",\"final_reveal\",{\"gain\":1.6}]] --start_at cd3:-0.02 --end_after final_reveal:1.2 --out out/guess_sound_2.mp4"
+    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1,null],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2,null],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4,null,{\\\"y\\\":0.3}],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.5,\\\"red\\\",5,null,{\\\"y\\\":0.2,\\\"size\\\":92}]]\" --hook \"{\\\"at\\\":\\\"final_reveal\\\",\\\"before\\\":0,\\\"after\\\":1,\\\"blur\\\":9,\\\"blurBox\\\":[0.4,0.32,0.61,0.64],\\\"text\\\":\\\"the last one is IMPOSSIBLE 😭\\\"}\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"dip\",\"final_reveal:0.8\",1.2],[\"gamedip\",\"final_reveal\",0.35],[\"pop\",\"final_reveal\",{\"gain\":1.6}]] --start_at cd3:-0.02 --end_after final_reveal:1.2 --out out/guess_sound_2.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 2026-11-12: blurred tease; no boom over the parrot's moan; fix-check READY",
-  "published_at": "2026-11-12T07:55:03.821Z",
+  "notes": "owner note 2026-11-12: only the animal blurred in the tease; music -6 dB under the game (new mixcheck); fix-check READY",
+  "published_at": "2026-11-12T21:25:23.540Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T07:55:54+00:00",
+    "at": "2026-11-12T21:25:54+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -1018,7 +1025,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T07:51:24.983Z",
+      "at": "2026-11-12T21:22:51.922Z",
       "report": "work/hb/guess_sound_2.check.json"
     },
     "key_sounds": {
@@ -1026,7 +1033,7 @@
       "keys": [
         "hear"
       ],
-      "summary": "key sounds over the music: worst +10.5 dB over 11 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +18.1 dB over 11 clips (need >= 8 dB)"
     }
   }
 }
