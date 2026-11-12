@@ -4,7 +4,7 @@
   "caption": "rate my starter house",
   "youtube": {
     "title": "rate my starter house #minecraft #shorts",
-    "description": "rate my starter house\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "rate my starter house\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,130 +14,76 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "vem_lenta.mp3",
-    "title": "VEM LENTA!",
-    "artist": "KPHK, Eluvo, Sayfalse",
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "scale",
-    "drop_in_song_s": 36.75,
-    "drop_in_short_s": 26.7,
-    "song_start_s": 10.05
+    "drop_on_event": "reveal",
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": 7.35,
+    "song_start_s": 1.65
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 27.5,
+    "duration_s": 8.25,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 62777671,
-    "sha256": "fe120394d7f3671865d69fcdb7a9803428ef3c18534ef3edc54c8bf0961333e5",
+    "bytes": 20485444,
+    "sha256": "41689641289c5905e8285941547ba3632e82d02e13dc0a823b08db243fdf9009",
     "release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short.fe120394d7f36718.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.fe120394d7f36718.mp4",
-      "sha256": "fe120394d7f3671865d69fcdb7a9803428ef3c18534ef3edc54c8bf0961333e5",
-      "bytes": 62777671
+      "asset": "mega_sponge.short.41689641289c5905.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short.41689641289c5905.mp4",
+      "sha256": "41689641289c5905e8285941547ba3632e82d02e13dc0a823b08db243fdf9009",
+      "bytes": 20485444
     },
     "nosong_release": {
       "tag": "pkg-mega_sponge",
-      "asset": "mega_sponge.short_nosong.f4740f9529c3de1c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short_nosong.f4740f9529c3de1c.mp4",
-      "sha256": "f4740f9529c3de1ca11f2b312db3b2058a5eae3057ad21c51a038a64631a3e3c",
-      "bytes": 62761642
+      "asset": "mega_sponge.short_nosong.67d1c8a0e5775573.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_sponge/mega_sponge.short_nosong.67d1c8a0e5775573.mp4",
+      "sha256": "67d1c8a0e5775573d343b4237285f71c23fbd6eea7a2f044fcf6c508435fa0f5",
+      "bytes": 20477944
     }
   },
   "edit": {
     "caption": "rate my starter house",
-    "dropAt": "scale",
-    "startAt": "start:0",
-    "endAfter": "scale:0.8",
+    "dropAt": "reveal",
+    "startAt": "build_start:0",
+    "endAfter": "reveal:0.9",
+    "speed": [
+      [
+        "build_start",
+        "reveal",
+        2
+      ]
+    ],
     "flash": [
       [
-        "inside",
+        "reveal",
         0,
-        0.45
-      ],
-      [
-        "thread",
-        0,
-        0.3
+        0.5
       ]
     ],
     "punch": [
       [
-        "thread",
+        "reveal",
         0,
         1.08
       ]
     ],
     "sfx": [
       [
-        "impact",
-        "start",
-        {
-          "gain": 0.8
-        }
-      ],
-      [
         "dip",
-        "thread",
+        "reveal",
         0.4
       ],
       [
         "impact",
-        "thread",
+        "reveal",
         {
-          "gain": 1.4
-        }
-      ],
-      [
-        "dip",
-        "scale",
-        0.4
-      ],
-      [
-        "gamedip",
-        "scale",
-        0.4
-      ],
-      [
-        "impact",
-        "scale",
-        {
-          "gain": 1.4
-        }
-      ],
-      [
-        "dip",
-        "swing",
-        0.25,
-        {
-          "nth": 1
-        }
-      ],
-      [
-        "gamedip",
-        "swing",
-        0.25,
-        {
-          "nth": 1
-        }
-      ],
-      [
-        "impact",
-        "swing",
-        {
-          "nth": 1,
-          "gain": 1
-        }
-      ],
-      [
-        "dip",
-        "swing",
-        0.25,
-        {
-          "nth": 3
+          "gain": 1.3
         }
       ]
     ],
@@ -146,16 +92,18 @@
       "rate my starter house",
       "--self_name",
       "56e",
+      "--speed",
+      "[[\"build_start\",\"reveal\",2]]",
       "--punch",
-      "[[\"thread\",0,1.08]]",
+      "[[\"reveal\",0,1.08]]",
       "--flash",
-      "[[\"inside\",0,0.45],[\"thread\",0,0.3]]",
+      "[[\"reveal\",0,0.5]]",
       "--sfx",
-      "[[\"impact\",\"start\",{\"gain\":0.8}],[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"scale\",0.4],[\"gamedip\",\"scale\",0.4],[\"impact\",\"scale\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"gamedip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":1}],[\"dip\",\"swing\",0.25,{\"nth\":3}]]",
+      "[[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.3}]]",
       "--start_at",
-      "start:0",
+      "build_start:0",
       "--end_after",
-      "scale:0.8"
+      "reveal:0.9"
     ]
   },
   "recording": {
@@ -167,532 +115,72 @@
     },
     "set": {
       "x": -2757,
-      "y": 66,
+      "y": 63,
       "z": -206
     },
     "biome": "minecraft:flower_forest",
-    "ticks": 743,
-    "seconds": 37.15,
+    "ticks": 513,
+    "seconds": 25.65,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
-        "event": "vel"
-      },
-      {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "f1_on"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "shot"
       },
       {
-        "t": 0.8,
-        "event": "start"
+        "t": 0.75,
+        "event": "angle"
       },
       {
-        "t": 0.8,
-        "event": "effect"
-      },
-      {
-        "t": 1.2,
-        "event": "vel"
-      },
-      {
-        "t": 1.6,
-        "event": "vel"
-      },
-      {
-        "t": 2.05,
-        "event": "vel"
-      },
-      {
-        "t": 2.2,
-        "event": "vel"
-      },
-      {
-        "t": 2.25,
-        "event": "vel"
-      },
-      {
-        "t": 2.45,
-        "event": "vel"
-      },
-      {
-        "t": 2.8,
-        "event": "shot"
-      },
-      {
-        "t": 2.8,
-        "event": "rise2"
-      },
-      {
-        "t": 2.85,
-        "event": "vel"
-      },
-      {
-        "t": 3.2,
-        "event": "vel"
-      },
-      {
-        "t": 3.25,
-        "event": "vel"
-      },
-      {
-        "t": 4.15,
-        "event": "vel"
-      },
-      {
-        "t": 4.2,
-        "event": "vel"
-      },
-      {
-        "t": 4.4,
-        "event": "f1_off"
-      },
-      {
-        "t": 4.4,
-        "event": "shot"
-      },
-      {
-        "t": 4.4,
-        "event": "cut"
-      },
-      {
-        "t": 4.4,
-        "event": "pass"
-      },
-      {
-        "t": 4.4,
-        "event": "motion_start"
-      },
-      {
-        "t": 4.5,
-        "event": "swing"
-      },
-      {
-        "t": 5.15,
-        "event": "vel"
-      },
-      {
-        "t": 5.2,
-        "event": "vel"
-      },
-      {
-        "t": 5.8,
-        "event": "motion_settled"
-      },
-      {
-        "t": 6.1,
-        "event": "swing"
+        "t": 0.75,
+        "event": "build_start"
       },
       {
         "t": 6.15,
-        "event": "vel"
-      },
-      {
-        "t": 6.2,
-        "event": "vel"
-      },
-      {
-        "t": 7.15,
-        "event": "vel"
-      },
-      {
-        "t": 7.2,
-        "event": "vel"
-      },
-      {
-        "t": 7.7,
-        "event": "f1_on"
-      },
-      {
-        "t": 7.7,
         "event": "shot"
       },
       {
-        "t": 7.7,
-        "event": "cut"
+        "t": 6.15,
+        "event": "angle"
       },
       {
-        "t": 7.7,
-        "event": "south"
-      },
-      {
-        "t": 8.15,
-        "event": "vel"
-      },
-      {
-        "t": 8.2,
-        "event": "vel"
-      },
-      {
-        "t": 9.15,
-        "event": "vel"
-      },
-      {
-        "t": 9.2,
+        "t": 10.35,
         "event": "shot"
       },
       {
-        "t": 9.2,
-        "event": "wide"
+        "t": 10.35,
+        "event": "angle"
       },
       {
-        "t": 9.2,
-        "event": "vel"
-      },
-      {
-        "t": 10.15,
-        "event": "vel"
-      },
-      {
-        "t": 10.2,
-        "event": "vel"
-      },
-      {
-        "t": 11.15,
-        "event": "vel"
-      },
-      {
-        "t": 11.2,
-        "event": "vel"
-      },
-      {
-        "t": 11.5,
+        "t": 15.45,
         "event": "shot"
       },
       {
-        "t": 11.5,
-        "event": "top"
+        "t": 15.45,
+        "event": "angle"
       },
       {
-        "t": 12.15,
-        "event": "vel"
+        "t": 15.45,
+        "event": "reveal"
       },
       {
-        "t": 12.2,
-        "event": "vel"
+        "t": 15.45,
+        "event": "build_done"
       },
       {
-        "t": 13.15,
-        "event": "vel"
-      },
-      {
-        "t": 13.2,
-        "event": "vel"
-      },
-      {
-        "t": 13.6,
-        "event": "f1_off"
-      },
-      {
-        "t": 13.6,
-        "event": "shot"
-      },
-      {
-        "t": 13.6,
-        "event": "cut"
-      },
-      {
-        "t": 13.6,
-        "event": "climb"
-      },
-      {
-        "t": 13.7,
-        "event": "swing"
-      },
-      {
-        "t": 14.15,
-        "event": "vel"
-      },
-      {
-        "t": 14.2,
-        "event": "vel"
-      },
-      {
-        "t": 15.15,
-        "event": "vel"
-      },
-      {
-        "t": 15.2,
-        "event": "vel"
-      },
-      {
-        "t": 15.9,
-        "event": "swing"
-      },
-      {
-        "t": 16.15,
-        "event": "vel"
-      },
-      {
-        "t": 16.2,
-        "event": "vel"
-      },
-      {
-        "t": 17.15,
-        "event": "vel"
-      },
-      {
-        "t": 17.2,
-        "event": "vel"
-      },
-      {
-        "t": 18.15,
-        "event": "vel"
-      },
-      {
-        "t": 18.2,
-        "event": "vel"
-      },
-      {
-        "t": 18.4,
-        "event": "f1_on"
-      },
-      {
-        "t": 18.4,
-        "event": "shot"
-      },
-      {
-        "t": 18.4,
-        "event": "cut"
-      },
-      {
-        "t": 18.4,
-        "event": "face"
-      },
-      {
-        "t": 19.15,
-        "event": "vel"
-      },
-      {
-        "t": 19.2,
-        "event": "vel"
-      },
-      {
-        "t": 20.15,
-        "event": "vel"
-      },
-      {
-        "t": 20.2,
-        "event": "vel"
-      },
-      {
-        "t": 20.4,
-        "event": "shot"
-      },
-      {
-        "t": 20.4,
-        "event": "face2"
-      },
-      {
-        "t": 21.15,
-        "event": "vel"
-      },
-      {
-        "t": 21.2,
-        "event": "vel"
-      },
-      {
-        "t": 22.15,
-        "event": "vel"
-      },
-      {
-        "t": 22.2,
-        "event": "vel"
-      },
-      {
-        "t": 22.3,
-        "event": "f1_off"
-      },
-      {
-        "t": 22.3,
-        "event": "shot"
-      },
-      {
-        "t": 22.3,
-        "event": "cut"
-      },
-      {
-        "t": 22.3,
-        "event": "dive"
-      },
-      {
-        "t": 22.3,
-        "event": "motion_start"
-      },
-      {
-        "t": 22.4,
-        "event": "swing"
-      },
-      {
-        "t": 23,
-        "event": "motion_settled"
-      },
-      {
-        "t": 23,
-        "event": "settle"
-      },
-      {
-        "t": 23.15,
-        "event": "vel"
-      },
-      {
-        "t": 23.2,
-        "event": "vel"
-      },
-      {
-        "t": 23.45,
-        "event": "inside"
-      },
-      {
-        "t": 24.15,
-        "event": "vel"
-      },
-      {
-        "t": 24.2,
-        "event": "vel"
-      },
-      {
-        "t": 25.1,
-        "event": "vel"
-      },
-      {
-        "t": 25.15,
-        "event": "vel"
-      },
-      {
-        "t": 25.55,
-        "event": "thread"
-      },
-      {
-        "t": 26.1,
-        "event": "threaded"
-      },
-      {
-        "t": 26.1,
-        "event": "vel"
-      },
-      {
-        "t": 26.15,
-        "event": "vel"
-      },
-      {
-        "t": 26.3,
-        "event": "f1_on"
-      },
-      {
-        "t": 26.3,
-        "event": "shot"
-      },
-      {
-        "t": 26.3,
-        "event": "cut"
-      },
-      {
-        "t": 26.3,
-        "event": "roof"
-      },
-      {
-        "t": 27.1,
-        "event": "vel"
-      },
-      {
-        "t": 27.15,
-        "event": "vel"
-      },
-      {
-        "t": 27.5,
-        "event": "shot"
-      },
-      {
-        "t": 27.5,
-        "event": "scale"
-      },
-      {
-        "t": 28.1,
-        "event": "vel"
-      },
-      {
-        "t": 28.15,
-        "event": "vel"
-      },
-      {
-        "t": 29,
+        "t": 17.45,
         "event": "end"
       },
       {
-        "t": 29.1,
-        "event": "vel"
-      },
-      {
-        "t": 29.15,
-        "event": "vel"
-      },
-      {
-        "t": 30.1,
-        "event": "vel"
-      },
-      {
-        "t": 30.15,
-        "event": "vel"
-      },
-      {
-        "t": 31.1,
-        "event": "vel"
-      },
-      {
-        "t": 31.15,
-        "event": "vel"
-      },
-      {
-        "t": 32.1,
-        "event": "vel"
-      },
-      {
-        "t": 32.15,
-        "event": "vel"
-      },
-      {
-        "t": 33.1,
-        "event": "vel"
-      },
-      {
-        "t": 33.15,
-        "event": "vel"
-      },
-      {
-        "t": 34.1,
-        "event": "vel"
-      },
-      {
-        "t": 34.15,
-        "event": "vel"
-      },
-      {
-        "t": 35.15,
-        "event": "vel"
-      },
-      {
-        "t": 35.2,
-        "event": "vel"
-      },
-      {
-        "t": 36.15,
-        "event": "vel"
-      },
-      {
-        "t": 36.2,
-        "event": "vel"
-      },
-      {
-        "t": 37.15,
+        "t": 25.65,
         "event": "end"
       }
     ]
@@ -700,46 +188,47 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "b6848e40fcd06d99895e197651c7204345cff8d1",
+    "commit": "eac54b1a3a82e463f5924a7c123513c865d4a535",
     "rendered": "local",
-    "rendered_at": "2026-11-12T05:33:29.879Z",
-    "head_at_publish": "91f02d4691de6cdfb3e50afc2dadf4332869fa71",
+    "rendered_at": "2026-11-12T07:30:53.816Z",
+    "head_at_publish": "eac54b1a3a82e463f5924a7c123513c865d4a535",
     "stunt": "stunts/mega_sponge.js",
     "source_snapshot": [
       "source/mega_sponge.js",
-      "source/movie.js",
-      "source/mega.js"
+      "source/mega_lapse.js",
+      "source/mega.js",
+      "source/movie.js"
     ]
   },
   "rebuild": [
-    "git checkout b6848e40fcd0",
+    "git checkout eac54b1a3a82",
     "gunzip -c shorts/mega_sponge/recording.json.gz > work/mega_sponge.rec.json",
     "node render.js work/mega_sponge.rec.json work/mega_sponge.frames 60 1080 1011",
     "python3 audio.py work/mega_sponge.rec.json work/mega_sponge.wav",
-    "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --self_name 56e --punch [[\"thread\",0,1.08]] --flash [[\"inside\",0,0.45],[\"thread\",0,0.3]] --sfx [[\"impact\",\"start\",{\"gain\":0.8}],[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"scale\",0.4],[\"gamedip\",\"scale\",0.4],[\"impact\",\"scale\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"gamedip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":1}],[\"dip\",\"swing\",0.25,{\"nth\":3}]] --start_at start:0 --end_after scale:0.8 --out out/mega_sponge.mp4"
+    "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --self_name 56e --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --flash [[\"reveal\",0,0.5]] --sfx [[\"dip\",\"reveal\",0.4],[\"impact\",\"reveal\",{\"gain\":1.3}]] --start_at build_start:0 --end_after reveal:0.9 --out out/mega_sponge.mp4"
   ],
   "status": "ready",
-  "notes": "mega_sponge re-end (r:r4607fa): the dive stops past the core, then 56e on the roof of his 'starter house' and the scale wide with him a speck; fix-check READY",
-  "published_at": "2026-11-12T05:36:22.810Z",
+  "notes": "mega_sponge v4 (owner r:rb5f36a): a build time-lapse of the sponge (cubes rise, holes cut level by level) then one zoom out from 56e to its scale; 2 rounds (r1: the zoom cut off), READY",
+  "published_at": "2026-11-12T07:33:57.552Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:36:58+00:00",
+    "at": "2026-11-12T07:34:29+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 27.52 s vs the reviewed render 27.50 s"
+      "summary": "short.mp4 8.26 s vs the reviewed render 8.25 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 7,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:34:03.732Z",
+      "at": "2026-11-12T07:31:51.261Z",
       "report": "work/hb/mega_sponge.check.json"
     },
     "key_sounds": "n/a"
