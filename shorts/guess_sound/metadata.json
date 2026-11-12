@@ -1,5 +1,6 @@
 {
   "name": "guess_sound",
+  "channel": "hellobuh",
   "caption": "guess the mob from its sound 🔊",
   "youtube": {
     "title": "guess the mob from its sound 🔊 #minecraft #shorts",
@@ -19,38 +20,40 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "final_reveal",
     "drop_in_song_s": 36.75,
-    "drop_in_short_s": 31.6,
-    "song_start_s": 5.15
+    "drop_in_short_s": 35.15,
+    "song_start_s": 1.6
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 33.05,
+    "duration_s": 36.6,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15339592,
-    "sha256": "05c15a8985336aba4054f8bc6d194a70c2b443d1d8f981cec64787c717e8ac58",
+    "bytes": 20747612,
+    "sha256": "742d65307eb3feac819d3e92a53cc8e3738fca42f4f52b0996394fcf7c23f281",
     "release": {
       "tag": "pkg-guess_sound",
-      "asset": "guess_sound.short.05c15a8985336aba.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short.05c15a8985336aba.mp4",
-      "sha256": "05c15a8985336aba4054f8bc6d194a70c2b443d1d8f981cec64787c717e8ac58",
-      "bytes": 15339592
+      "asset": "guess_sound.short.742d65307eb3feac.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short.742d65307eb3feac.mp4",
+      "sha256": "742d65307eb3feac819d3e92a53cc8e3738fca42f4f52b0996394fcf7c23f281",
+      "bytes": 20747612
     },
     "nosong_release": {
       "tag": "pkg-guess_sound",
-      "asset": "guess_sound.short_nosong.09c846ebb79fd57d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short_nosong.09c846ebb79fd57d.mp4",
-      "sha256": "09c846ebb79fd57d6db891495691f704dd85f21b228d6df984811766444417bc",
-      "bytes": 15125932
+      "asset": "guess_sound.short_nosong.3354f573e2ee4b5b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short_nosong.3354f573e2ee4b5b.mp4",
+      "sha256": "3354f573e2ee4b5beb762f26a965ea00e3c16bdae089fec06a24d61c15116765",
+      "bytes": 20460587
     }
   },
   "edit": {
     "caption": "guess the mob from its sound 🔊",
     "red": "sound",
-    "song": "songs/funk_abnormal.mp3",
     "dropAt": "final_reveal",
+    "keySounds": [
+      "hear"
+    ],
     "startAt": "round:-0.05",
     "endAfter": "final_reveal:1.45",
     "counter": {
@@ -138,42 +141,48 @@
         "COW",
         1.25,
         "green",
-        0
+        0,
+        null
       ],
       [
         "lit",
         "LLAMA",
         1.25,
         "gold",
-        1
+        1,
+        null
       ],
       [
         "lit",
         "POLAR BEAR",
         1.25,
         "white",
-        2
+        2,
+        null
       ],
       [
         "lit",
         "ENDERMAN",
         0.8,
         "blue",
-        3
+        3,
+        null
       ],
       [
         "lit",
         "WARDEN",
         1.25,
         "red",
-        4
+        4,
+        null
       ],
       [
         "lit",
         "PARROT??",
         1.75,
         "red",
-        5
+        5,
+        null
       ]
     ],
     "punch": [
@@ -217,9 +226,37 @@
       ]
     ],
     "subsY": 0.77,
+    "sfx": [
+      [
+        "pop",
+        "count",
+        {
+          "gain": 0.7
+        }
+      ],
+      [
+        "dip",
+        "final_reveal",
+        0.4
+      ],
+      [
+        "gamedip",
+        "final_reveal",
+        0.35
+      ],
+      [
+        "impact",
+        "final_reveal",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
     "args": [
       "--caption",
       "guess the mob from its sound 🔊",
+      "--self_name",
+      "56e",
       "--red",
       "sound",
       "--subs",
@@ -231,9 +268,11 @@
       "--counter",
       "{\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6}",
       "--cards",
-      "[[\"lit\",\"COW\",1.25,\"green\",0],[\"lit\",\"LLAMA\",1.25,\"gold\",1],[\"lit\",\"POLAR BEAR\",1.25,\"white\",2],[\"lit\",\"ENDERMAN\",0.8,\"blue\",3],[\"lit\",\"WARDEN\",1.25,\"red\",4],[\"lit\",\"PARROT??\",1.75,\"red\",5]]",
+      "[[\"lit\",\"COW\",1.25,\"green\",0,null],[\"lit\",\"LLAMA\",1.25,\"gold\",1,null],[\"lit\",\"POLAR BEAR\",1.25,\"white\",2,null],[\"lit\",\"ENDERMAN\",0.8,\"blue\",3,null],[\"lit\",\"WARDEN\",1.25,\"red\",4,null],[\"lit\",\"PARROT??\",1.75,\"red\",5,null]]",
       "--countdowns",
       "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
+      "--sfx",
+      "[[\"pop\",\"count\",{\"gain\":0.7}],[\"dip\",\"final_reveal\",0.4],[\"gamedip\",\"final_reveal\",0.35],[\"impact\",\"final_reveal\",{\"gain\":1.4}]]",
       "--start_at",
       "round:-0.05",
       "--end_after",
@@ -248,425 +287,473 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 369,
-      "y": 69,
-      "z": -47
+      "x": 363,
+      "y": 68,
+      "z": -43
     },
     "biome": "minecraft:plains",
-    "ticks": 703,
-    "seconds": 35.15,
+    "ticks": 773,
+    "seconds": 38.65,
     "deaths": 0,
     "events": [
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "count"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "round"
       },
       {
-        "t": 0.95,
+        "t": 0.9,
         "event": "hear"
       },
       {
-        "t": 1.1,
+        "t": 1.05,
         "event": "cd3"
       },
       {
-        "t": 2.1,
+        "t": 2.05,
         "event": "cd2"
       },
       {
-        "t": 2.1,
+        "t": 2.05,
         "event": "hear"
       },
       {
-        "t": 3.1,
+        "t": 3.05,
         "event": "cd1"
       },
       {
-        "t": 4.1,
+        "t": 4.05,
         "event": "turn"
-      },
-      {
-        "t": 4.5,
-        "event": "place"
-      },
-      {
-        "t": 4.5,
-        "event": "swing"
-      },
-      {
-        "t": 4.5,
-        "event": "reveal"
-      },
-      {
-        "t": 4.8,
-        "event": "react"
-      },
-      {
-        "t": 4.8,
-        "event": "face_on"
       },
       {
         "t": 4.95,
-        "event": "lit"
+        "event": "turned"
       },
       {
-        "t": 6.2,
-        "event": "face_off"
-      },
-      {
-        "t": 6.4,
-        "event": "cut"
-      },
-      {
-        "t": 6.4,
-        "event": "count"
-      },
-      {
-        "t": 6.45,
-        "event": "round"
-      },
-      {
-        "t": 6.6,
-        "event": "hear"
-      },
-      {
-        "t": 6.75,
-        "event": "cd3"
-      },
-      {
-        "t": 7.75,
-        "event": "cd2"
-      },
-      {
-        "t": 7.75,
-        "event": "hear"
-      },
-      {
-        "t": 8.75,
-        "event": "cd1"
-      },
-      {
-        "t": 9.75,
-        "event": "turn"
-      },
-      {
-        "t": 10.15,
+        "t": 4.95,
         "event": "place"
       },
       {
-        "t": 10.15,
+        "t": 4.95,
         "event": "swing"
       },
       {
-        "t": 10.15,
+        "t": 4.95,
         "event": "reveal"
       },
       {
-        "t": 10.45,
+        "t": 5.25,
+        "event": "look_at"
+      },
+      {
+        "t": 5.25,
         "event": "react"
       },
       {
-        "t": 10.45,
+        "t": 5.25,
         "event": "face_on"
       },
       {
-        "t": 10.6,
+        "t": 5.4,
         "event": "lit"
       },
       {
-        "t": 10.75,
-        "event": "again"
-      },
-      {
-        "t": 11.65,
+        "t": 6.65,
         "event": "face_off"
       },
       {
-        "t": 11.85,
+        "t": 6.85,
         "event": "cut"
       },
       {
-        "t": 11.85,
+        "t": 6.85,
         "event": "count"
       },
       {
-        "t": 11.9,
+        "t": 6.95,
         "event": "round"
       },
       {
-        "t": 12.05,
+        "t": 7.1,
         "event": "hear"
       },
       {
-        "t": 12.2,
+        "t": 7.25,
         "event": "cd3"
       },
       {
-        "t": 13.2,
+        "t": 8.25,
         "event": "cd2"
       },
       {
-        "t": 13.2,
+        "t": 8.25,
         "event": "hear"
       },
       {
-        "t": 14.2,
+        "t": 9.25,
         "event": "cd1"
       },
       {
-        "t": 15.2,
+        "t": 10.25,
         "event": "turn"
       },
       {
-        "t": 15.6,
+        "t": 11.15,
+        "event": "turned"
+      },
+      {
+        "t": 11.15,
         "event": "place"
       },
       {
-        "t": 15.6,
+        "t": 11.15,
         "event": "swing"
       },
       {
-        "t": 15.6,
+        "t": 11.15,
         "event": "reveal"
       },
       {
-        "t": 15.9,
+        "t": 11.55,
+        "event": "look_at"
+      },
+      {
+        "t": 11.55,
         "event": "react"
       },
       {
-        "t": 15.9,
-        "event": "pose"
+        "t": 11.55,
+        "event": "face_on"
       },
       {
-        "t": 15.9,
-        "event": "roar"
-      },
-      {
-        "t": 16.05,
+        "t": 11.7,
         "event": "lit"
       },
       {
-        "t": 17.1,
-        "event": "pose_off"
+        "t": 11.85,
+        "event": "again"
       },
       {
-        "t": 17.3,
+        "t": 12.75,
+        "event": "face_off"
+      },
+      {
+        "t": 13,
         "event": "cut"
       },
       {
-        "t": 17.3,
+        "t": 13,
         "event": "count"
       },
       {
-        "t": 17.4,
+        "t": 13.05,
         "event": "round"
       },
       {
-        "t": 17.55,
+        "t": 13.2,
         "event": "hear"
       },
       {
-        "t": 17.7,
+        "t": 13.35,
         "event": "cd3"
       },
       {
-        "t": 18.7,
+        "t": 14.35,
         "event": "cd2"
       },
       {
-        "t": 18.7,
+        "t": 14.35,
         "event": "hear"
       },
       {
-        "t": 19.7,
+        "t": 15.35,
         "event": "cd1"
       },
       {
-        "t": 20.7,
+        "t": 16.35,
         "event": "turn"
       },
       {
-        "t": 21.2,
+        "t": 17.2,
+        "event": "turned"
+      },
+      {
+        "t": 17.2,
         "event": "place"
       },
       {
-        "t": 21.2,
+        "t": 17.2,
         "event": "swing"
       },
       {
-        "t": 21.2,
+        "t": 17.2,
         "event": "reveal"
       },
       {
-        "t": 21.5,
+        "t": 17.65,
+        "event": "look_at"
+      },
+      {
+        "t": 17.65,
         "event": "react"
       },
       {
-        "t": 21.5,
+        "t": 17.65,
         "event": "pose"
       },
       {
-        "t": 21.5,
+        "t": 17.65,
+        "event": "roar"
+      },
+      {
+        "t": 17.8,
+        "event": "lit"
+      },
+      {
+        "t": 18.85,
+        "event": "pose_off"
+      },
+      {
+        "t": 19.1,
+        "event": "cut"
+      },
+      {
+        "t": 19.1,
+        "event": "count"
+      },
+      {
+        "t": 19.15,
+        "event": "round"
+      },
+      {
+        "t": 19.3,
+        "event": "hear"
+      },
+      {
+        "t": 19.45,
+        "event": "cd3"
+      },
+      {
+        "t": 20.45,
+        "event": "cd2"
+      },
+      {
+        "t": 20.45,
+        "event": "hear"
+      },
+      {
+        "t": 21.45,
+        "event": "cd1"
+      },
+      {
+        "t": 22.45,
+        "event": "turn"
+      },
+      {
+        "t": 23.35,
+        "event": "turned"
+      },
+      {
+        "t": 23.35,
+        "event": "place"
+      },
+      {
+        "t": 23.35,
+        "event": "swing"
+      },
+      {
+        "t": 23.35,
+        "event": "reveal"
+      },
+      {
+        "t": 23.8,
+        "event": "look_at"
+      },
+      {
+        "t": 23.8,
+        "event": "react"
+      },
+      {
+        "t": 23.8,
+        "event": "pose"
+      },
+      {
+        "t": 23.8,
         "event": "stare"
       },
       {
-        "t": 21.65,
+        "t": 23.95,
         "event": "lit"
       },
       {
-        "t": 22.3,
+        "t": 24.6,
         "event": "teleport"
       },
       {
-        "t": 22.3,
+        "t": 24.6,
         "event": "pose_off"
       },
       {
-        "t": 22.75,
+        "t": 25.05,
         "event": "cut"
       },
       {
-        "t": 22.75,
+        "t": 25.05,
         "event": "count"
-      },
-      {
-        "t": 22.8,
-        "event": "round"
-      },
-      {
-        "t": 22.95,
-        "event": "hear"
-      },
-      {
-        "t": 23.1,
-        "event": "cd3"
-      },
-      {
-        "t": 24.1,
-        "event": "cd2"
-      },
-      {
-        "t": 24.1,
-        "event": "hear"
       },
       {
         "t": 25.1,
-        "event": "cd1"
-      },
-      {
-        "t": 26.1,
-        "event": "turn"
-      },
-      {
-        "t": 26.5,
-        "event": "place"
-      },
-      {
-        "t": 26.5,
-        "event": "swing"
-      },
-      {
-        "t": 26.5,
-        "event": "reveal"
-      },
-      {
-        "t": 26.8,
-        "event": "react"
-      },
-      {
-        "t": 26.8,
-        "event": "roar"
-      },
-      {
-        "t": 26.8,
-        "event": "pose"
-      },
-      {
-        "t": 26.95,
-        "event": "lit"
-      },
-      {
-        "t": 28.3,
-        "event": "cut"
-      },
-      {
-        "t": 28.3,
-        "event": "count"
-      },
-      {
-        "t": 28.35,
         "event": "round"
       },
       {
-        "t": 28.5,
+        "t": 25.25,
         "event": "hear"
       },
       {
-        "t": 28.65,
+        "t": 25.4,
         "event": "cd3"
       },
       {
-        "t": 29.65,
+        "t": 26.4,
         "event": "cd2"
       },
       {
-        "t": 29.65,
+        "t": 26.4,
         "event": "hear"
       },
       {
-        "t": 30.65,
+        "t": 27.4,
         "event": "cd1"
       },
       {
-        "t": 31.65,
+        "t": 28.4,
         "event": "turn"
       },
       {
-        "t": 32.05,
+        "t": 29.4,
+        "event": "turned"
+      },
+      {
+        "t": 29.4,
         "event": "place"
       },
       {
-        "t": 32.05,
+        "t": 29.4,
         "event": "swing"
       },
       {
-        "t": 32.05,
+        "t": 29.4,
         "event": "reveal"
       },
       {
-        "t": 32.35,
-        "event": "final_reveal"
+        "t": 29.8,
+        "event": "look_at"
       },
       {
-        "t": 32.35,
+        "t": 29.8,
         "event": "react"
       },
       {
-        "t": 32.35,
-        "event": "face_on"
+        "t": 29.8,
+        "event": "roar"
       },
       {
-        "t": 32.5,
+        "t": 29.8,
+        "event": "pose"
+      },
+      {
+        "t": 29.95,
         "event": "lit"
       },
       {
-        "t": 32.6,
-        "event": "hint"
+        "t": 31.3,
+        "event": "cut"
+      },
+      {
+        "t": 31.3,
+        "event": "count"
+      },
+      {
+        "t": 31.35,
+        "event": "round"
+      },
+      {
+        "t": 31.5,
+        "event": "hear"
+      },
+      {
+        "t": 31.65,
+        "event": "cd3"
       },
       {
         "t": 32.65,
+        "event": "cd2"
+      },
+      {
+        "t": 32.65,
+        "event": "hear"
+      },
+      {
+        "t": 33.65,
+        "event": "cd1"
+      },
+      {
+        "t": 34.65,
+        "event": "turn"
+      },
+      {
+        "t": 35.55,
+        "event": "turned"
+      },
+      {
+        "t": 35.55,
+        "event": "place"
+      },
+      {
+        "t": 35.55,
+        "event": "swing"
+      },
+      {
+        "t": 35.55,
+        "event": "reveal"
+      },
+      {
+        "t": 35.85,
+        "event": "look_at"
+      },
+      {
+        "t": 35.85,
+        "event": "final_reveal"
+      },
+      {
+        "t": 35.85,
+        "event": "react"
+      },
+      {
+        "t": 35.85,
+        "event": "face_on"
+      },
+      {
+        "t": 36,
+        "event": "lit"
+      },
+      {
+        "t": 36.1,
+        "event": "hint"
+      },
+      {
+        "t": 36.15,
         "event": "again"
       },
       {
-        "t": 35.15,
+        "t": 38.65,
         "event": "end"
       }
     ]
@@ -674,48 +761,56 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "f38b055c3c3b561596763e410347c9c4bf02a37d",
-    "rendered_at": "2026-11-07T14:51:47.663Z",
-    "head_at_publish": "f38b055c3c3b561596763e410347c9c4bf02a37d",
+    "commit": "9ebf5288c2e4fcf9a30d0ec3ca06cc7e01a804b6",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T02:01:30.992Z",
+    "head_at_publish": "9ebf5288c2e4fcf9a30d0ec3ca06cc7e01a804b6",
     "stunt": "stunts/guess_sound.js",
     "source_snapshot": [
       "source/guess_sound.js",
-      "source/guess_sound.js"
+      "source/guess_sound.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
     ]
   },
   "rebuild": [
-    "git checkout f38b055c3c3b",
+    "git checkout 9ebf5288c2e4",
     "gunzip -c shorts/guess_sound/recording.json.gz > work/guess_sound.rec.json",
     "node render.js work/guess_sound.rec.json work/guess_sound.frames 60 1080 1011",
     "python3 audio.py work/guess_sound.rec.json work/guess_sound.wav",
-    "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound 🔊\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4],[\\\"lit\\\",\\\"PARROT??\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound.mp4"
+    "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1,null],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2,null],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3,null],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4,null],[\\\"lit\\\",\\\"PARROT??\\\",1.75,\\\"red\\\",5,null]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"pop\",\"count\",{\"gain\":0.7}],[\"dip\",\"final_reveal\",0.4],[\"gamedip\",\"final_reveal\",0.35],[\"impact\",\"final_reveal\",{\"gain\":1.4}]] --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound.mp4"
   ],
   "status": "ready",
-  "notes": "worker 13: guess the mob from its sound (cow, llama, polar bear, enderman, warden, then a parrot imitating a creeper); independent review r5 ready on retention, minecraft and frame review. Post before pt 2 and pt 3 (they call back to the parrot).",
-  "published_at": "2026-11-07T15:06:09.294Z",
+  "notes": "re-recorded for the centred-turn rule (r:r52f94c): every reveal lands on the mob's eyes (worst 2.9 deg); a hit on the parrot reveal; fix-check READY r1. Nitpick: ENDERMAN card covers the top of its head",
+  "published_at": "2026-11-12T02:04:06.117Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T08:24:29+00:00",
-    "by": "scripts/gates.py v3 re-stamp (checks worker)",
+    "version": 4,
+    "at": "2026-11-12T02:04:39+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 33.07 s vs the reviewed render 33.05 s"
+      "summary": "short.mp4 36.61 s vs the reviewed render 36.60 s"
     },
     "pace": {
-      "ok": false,
-      "blockers": 13,
+      "ok": true,
+      "blockers": 0,
       "warnings": 2,
-      "summary": "keysound: the music covers a key sound (hear): +4.9 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -3.3 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -11.3 dB over the music (need >= 8); keysound: the music covers a key sound (hear): +1.4 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -3.2 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -4.1 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -5.2 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -2.6 dB over the music (need >= 8); keysound: the music covers a key sound (hear): +0.3 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -1.6 dB over the music (need >= 8); keysound: the music covers a key sound (hear): -0.0 dB over the music (need >= 8); keysound: the music covers a key sound (hear): +1.7 dB over the music (need >= 8); payoff: no sound hit within 0.3 s of the payoff"
+      "summary": "OK"
     },
     "check": {
-      "label": "no ./hb check report on this box"
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-12T02:02:02.588Z",
+      "report": "work/hb/guess_sound.check.json"
     },
     "key_sounds": {
-      "ok": false,
+      "ok": true,
       "keys": [
         "hear"
       ],
-      "summary": "key sounds over the music: worst -11.3 dB over 12 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +14.7 dB over 12 clips (need >= 8 dB)"
     }
   }
 }
