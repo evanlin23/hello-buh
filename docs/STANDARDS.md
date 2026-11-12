@@ -452,6 +452,12 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: review (short-review takeaway line), owner. r:r8d6af1
   Nothing ships unless it makes sense and leaves the viewer satisfied: no-ops are redone or dropped, borderline
   Shorts get one bigger last beat (docs/noop_audit_2026-11-12.md). Check: review, owner. r:r4607fa
+- **Every call is heard, nothing covers the payoff's own sound**: a guess-the-sound round's call plays in full and
+  clearly (the cut never starts after a round's first call; no sfx on a call; the song ducks under each); a tease of the
+  answer is blurred (edit hook.blur); no low 'impact' boom on a payoff whose own sound IS the joke (a short pop; the
+  song ducked through it, its drop after: dropAt 'EVENT:OFFSET'). Check: mixcheck, review, owner. r:rfe4f62
+- **A method that is named is shown**: every method a list names and rates is on screen (built and crossed, sped up if
+  long), never cut while its sub stays up. Check: review, owner. r:r32a80c
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Labour steps play as a time-lapse**: a long dig (a trap's shaft) or any build step that is only labour is one

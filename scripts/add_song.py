@@ -144,7 +144,14 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                         "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(src)], check=True)
         print(name, "made short_nosong.mp4 from game_audio.flac")
     drop_at = stunt.get("dropAt")
-    at = (ev[drop_at] - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
+    drop_off = 0.0
+    if drop_at and drop_at not in ev and ":" in str(drop_at):   # 'EVENT:OFFSET_S' (the drop just after a sound it must not cover)
+        k_, _, o_ = str(drop_at).rpartition(":")
+        try:
+            drop_off, drop_at = float(o_), k_
+        except ValueError:
+            pass
+    at = (ev[drop_at] + drop_off - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
     if stunt.get("story") and not song_override and not gen:   # a story: the mood score (scripts/story_audio.py, docs/audio.md)
         return story_score(name, d, meta, stunt, rec, tl, start, src, out_override)
     if ncs and not song_override:

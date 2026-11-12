@@ -832,6 +832,15 @@ STANDARDS.md in the same commit.
   fine, sure thats fine".** Both approved. Sorry, Dear keeps order A (the rule first, then "My aunt is the size of a
   MUG."). The build list is now five approved scripts: Pulled Away, The Honey Thief, Saving Up for a Bastion, The
   Statue Gets Younger, Sorry, Dear.
+- **Owner, 2026-11-12, Review Room, on guess_sound: "Its kidna hard to hear the moo at the start. Also we should blur
+  the parrot at hte start slightly i think?" (27.8 s) and "Er, is the warden sound overlapping the parrot sound? I
+  couldnt hear the parrot" (36.8 s); on guess_sound_2: "should blur the starting" (10.1 s).** Every round's call is
+  heard in full: the cut never starts after a round's first call, and no sfx sits on a call (the song ducks under each,
+  keySounds). A tease of the answer is blurred (edit hook.blur): it promises, it doesn't give the answer away. Nothing
+  covers the payoff's own sound: no low 'impact' boom on a sound that IS the payoff (it read as a warden's rumble over
+  the parrot); a short pop is the hit, the song stays ducked through it and drops after (dropAt 'EVENT:OFFSET').
+- **Owner, 2026-11-12, Review Room, on lava_crossing at 2.4 s: "huh? no brdige?"** A method that is named and rated is
+  shown: the bridge is built and crossed on screen (sped up), never cut while its sub stays up.
 - **Owner, 2026-11-12, on dropper_rainbow v2: "also the dropper should be fancier please".** A dropper's shaft is a
   build to show off, not a coloured tube: patterned walls (glazed terracotta trims, quartz corner pillars), lit
   stained-glass neon rings and windows, obstacles with trims and glowing hole rims, a glass layer, lanterns on chains,
