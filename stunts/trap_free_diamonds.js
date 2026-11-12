@@ -46,7 +46,7 @@ module.exports = makeStunt({
   edit: {
     // fast cuts (owner r:r188b46): the middle of the dig, the walk into hiding, his coast + shuffle onto the trapdoor,
     // and my walk to the edge; every edge sits on a rest (rec_check whip)
-    speed: [['go', 'lapse_end', LAPSE], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close:0.15', 'friend_there', 'cut']],
+    speed: [['go', 'd8e', LAPSE], ['d8e:0.05', 'lapse_end:-0.2', 'cut'], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close:0.15', 'friend_there', 'cut']],
     tally: { event: 'depth', label: 'blocks deep', done: 'lava_in' },
     // the last beat: straight down the shaft at him in the lava (owner: "all the way down and then lava"); a hit on it
     endAfter: 'splash:0.8',
