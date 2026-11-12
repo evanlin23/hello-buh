@@ -804,6 +804,10 @@ STANDARDS.md in the same commit.
   cuts on the key word to line 1's second half; 2-4 s a personal stake on a face; 4-8 s the rule at work on a new
   person every 1.2-1.6 s (no backstory, layout, who's who, object list, HUD POV, near-black); a cool or neutral bright
   grade. Our game view is 53% of the frame under a title band: Buhtown is full-bleed 9:16. A/B it.
+- **Owner, 2026-11-12, auditing Sorry, Dear and The Statue Gets Younger (both with the 0-8 s openings applied): "A is
+  fine, sure thats fine".** Both approved. Sorry, Dear keeps order A (the rule first, then "My aunt is the size of a
+  MUG."). The build list is now five approved scripts: Pulled Away, The Honey Thief, Saving Up for a Bastion, The
+  Statue Gets Younger, Sorry, Dear.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

@@ -40,7 +40,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    frame and the title are one strange, checkable fact stated plainly (no warning titles); seconds 4-8 escalate (no
    setup, backstory or who's-who); 30-45 s and loopable; something for viewers to answer or argue; prefer a rule with a
    number or mark, a person changed overnight, warm twists; dark sets, monsters and sad losses carry a higher bar.
-   Check: story-critic, owner, Studio (stop rate). r:rac1ae3 (the build list: r:rd25bba)
+   Check: story-critic, owner, Studio (stop rate). r:rac1ae3 (the build list: r:rd25bba; Sorry Dear and Statue approved, r:r434f6f)
 0t. **The first 8 seconds** (hook frame study 2026-11-12, docs/research/hook_frames_2026-11-12.md): frame 1 is a
    medium/close of a person or body the rule acts on (face >= 1/4 width), the odd thing visible and moving; the key
    (title CAPS) word spoken by 1.8 s, line 1 done by ~2.5 s; shot 1 cuts on the key word; 2-4 s a stake on a face; 4-8 s
