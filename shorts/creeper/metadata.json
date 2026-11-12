@@ -18,42 +18,42 @@
     "title": "AYUDA",
     "artist": "MXRCVRY",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "hiss",
+    "drop_on_event": "death",
     "drop_in_song_s": 9.0,
-    "drop_in_short_s": 5.35,
-    "song_start_s": 3.65
+    "drop_in_short_s": 8.75,
+    "song_start_s": 0.25
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 9.2,
+    "duration_s": 9.95,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14683531,
-    "sha256": "cda63602eb3e241b1048ad4545b9e35ce6c801b43eb71b53a146b2b1272baa5a",
+    "bytes": 19922975,
+    "sha256": "47a57fa1f7b8b2ae4cf461de548356a100a7529a8071683cb0b4c3d875b12beb",
     "release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short.cda63602eb3e241b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.cda63602eb3e241b.mp4",
-      "sha256": "cda63602eb3e241b1048ad4545b9e35ce6c801b43eb71b53a146b2b1272baa5a",
-      "bytes": 14683531
+      "asset": "creeper.short.47a57fa1f7b8b2ae.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short.47a57fa1f7b8b2ae.mp4",
+      "sha256": "47a57fa1f7b8b2ae4cf461de548356a100a7529a8071683cb0b4c3d875b12beb",
+      "bytes": 19922975
     },
     "nosong_release": {
       "tag": "pkg-creeper",
-      "asset": "creeper.short_nosong.bba7abf123a23c57.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.bba7abf123a23c57.mp4",
-      "sha256": "bba7abf123a23c572cdf1aa31ebb9bae8e485630b84fda002f095c81883c5932",
-      "bytes": 14684067
+      "asset": "creeper.short_nosong.0f72b224803bd97e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper/creeper.short_nosong.0f72b224803bd97e.mp4",
+      "sha256": "0f72b224803bd97ee872ddcf93842381f0b1a52e95e6f3567531cee677cf2e28",
+      "bytes": 19923115
     }
   },
   "edit": {
     "caption": "POV: you hear tssss 💀",
     "red": "tssss",
-    "dropAt": "hiss",
-    "startAt": "first:-0.1",
+    "dropAt": "death",
+    "startAt": "first:0",
     "deathScreen": true,
-    "endAfter": "settle:0.1",
+    "endAfter": "death:1.2",
     "sfx": [
       [
         "air",
@@ -61,6 +61,13 @@
         "death",
         {
           "gain": 0.5
+        }
+      ],
+      [
+        "heart",
+        "first",
+        {
+          "gain": 1.6
         }
       ],
       [
@@ -84,13 +91,13 @@
       "--red",
       "tssss",
       "--sfx",
-      "[[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]]",
+      "[[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"heart\",\"first\",{\"gain\":1.6}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]]",
       "--death_screen",
       "death",
       "--start_at",
-      "first:-0.1",
+      "first:0",
       "--end_after",
-      "settle:0.1"
+      "death:1.2"
     ]
   },
   "recording": {
@@ -101,37 +108,37 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 377,
-      "y": 86,
-      "z": -38
+      "x": 381,
+      "y": 82,
+      "z": -49
     },
     "biome": "minecraft:plains",
-    "ticks": 265,
-    "seconds": 13.25,
+    "ticks": 317,
+    "seconds": 15.85,
     "deaths": 1,
     "death_message": {
       "with": [
         {
           "click_event": {
             "action": "suggest_command",
-            "command": "/tell HelloBuh "
+            "command": "/tell 56e "
           },
-          "insertion": "HelloBuh",
-          "text": "HelloBuh",
+          "insertion": "56e",
+          "text": "56e",
           "hover_event": {
-            "name": "HelloBuh",
+            "name": "56e",
             "action": "show_entity",
             "id": "minecraft:player",
             "uuid": [
-              -1688406928,
-              1483093035,
-              -1563762988,
-              2064141885
+              -1501766631,
+              -1382728230,
+              -1353399714,
+              429653331
             ]
           }
         },
         {
-          "insertion": "c61f3378-4312-4432-ab02-683bbf119446",
+          "insertion": "82b4db4d-1af4-43e1-8142-0d9e8da96552",
           "hover_event": {
             "name": {
               "translate": "entity.minecraft.creeper"
@@ -139,10 +146,10 @@
             "action": "show_entity",
             "id": "minecraft:creeper",
             "uuid": [
-              -971033736,
-              1125270578,
-              -1425905605,
-              -1089366970
+              -2102076595,
+              452215777,
+              -2126377570,
+              -1918278318
             ]
           },
           "translate": "entity.minecraft.creeper"
@@ -152,92 +159,115 @@
     },
     "events": [
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 1.9,
+        "t": 2.55,
         "event": "first"
       },
       {
-        "t": 2.25,
-        "event": "place_on"
-      },
-      {
-        "t": 2.25,
-        "event": "swing"
-      },
-      {
-        "t": 2.35,
+        "t": 2.9,
         "event": "glance"
       },
       {
-        "t": 4.7,
+        "t": 3.85,
+        "event": "walk"
+      },
+      {
+        "t": 5.6,
         "event": "place_on"
       },
       {
-        "t": 4.7,
+        "t": 5.6,
         "event": "swing"
       },
       {
-        "t": 5.2,
+        "t": 6.15,
         "event": "place_on"
       },
       {
-        "t": 5.2,
+        "t": 6.15,
         "event": "swing"
       },
       {
-        "t": 5.7,
+        "t": 6.65,
         "event": "place_on"
       },
       {
-        "t": 5.7,
+        "t": 6.65,
         "event": "swing"
-      },
-      {
-        "t": 6,
-        "event": "glance2"
       },
       {
         "t": 7.15,
+        "event": "place_on"
+      },
+      {
+        "t": 7.15,
+        "event": "swing"
+      },
+      {
+        "t": 7.9,
+        "event": "place_on"
+      },
+      {
+        "t": 7.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.4,
+        "event": "place_on"
+      },
+      {
+        "t": 8.4,
+        "event": "swing"
+      },
+      {
+        "t": 8.95,
+        "event": "place_on"
+      },
+      {
+        "t": 8.95,
+        "event": "swing"
+      },
+      {
+        "t": 9.25,
         "event": "hiss"
       },
       {
-        "t": 8.7,
+        "t": 11.3,
         "event": "hurt",
         "type": "player_explosion"
       },
       {
-        "t": 8.7,
+        "t": 11.3,
         "event": "death"
       },
       {
-        "t": 8.7,
+        "t": 11.3,
         "event": "motion_start"
       },
       {
-        "t": 10.9,
+        "t": 13.5,
         "event": "motion_settled"
       },
       {
-        "t": 10.9,
+        "t": 13.5,
         "event": "settle"
       },
       {
-        "t": 13.25,
+        "t": 15.85,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/56e-creeper",
-    "commit": "385505d362cb909e75a0e216a2571f094cb49914",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43091392575",
-    "rendered_at": "2026-11-11T20:05:15.707Z",
-    "head_at_publish": "304dc3369c27e12bb9da99376536c9430838e419",
+    "branch": "main",
+    "commit": "51f498d34e9d03a2618eba59e52fc4b43145ce95",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T01:34:13.168Z",
+    "head_at_publish": "51f498d34e9d03a2618eba59e52fc4b43145ce95",
     "stunt": "stunts/creeper.js",
     "source_snapshot": [
       "source/creeper.js",
@@ -248,35 +278,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 385505d362cb",
+    "git checkout 51f498d34e9d",
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --self_name 56e --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:-0.1 --end_after settle:0.1 --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --self_name 56e --red tssss --sfx [[\"air\",\"start\",\"death\",{\"gain\":0.5}],[\"heart\",\"first\",{\"gain\":1.6}],[\"dip\",\"hurt\",0.4],[\"impact\",\"hurt\",{\"gain\":1.4}]] --death_screen death --start_at first:0 --end_after death:1.2 --out out/creeper.mp4"
   ],
   "status": "ready",
-  "notes": "re-render (r:r52f94c): 56e on the death screen; ends 0.5 s earlier (settle:0.1, still after the debris rests, r:r24d99a); independent fix-check READY; nitpick: a faint smoke wisp in the last frames",
-  "published_at": "2026-11-11T21:05:54.167Z",
+  "notes": "re-take r:r0f3da0: opens on the creeper walking up; end 1.2 s after the blast (r:r188b46); review READY r1. Nitpicks: hiss ~0.7 s before the swell; quiet footsteps",
+  "published_at": "2026-11-12T01:35:49.437Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T21:06:17+00:00",
+    "at": "2026-11-12T01:36:13+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 9.22 s vs the reviewed render 9.20 s"
+      "summary": "short.mp4 9.96 s vs the reviewed render 9.95 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:57:52.540Z",
-      "report": "out/creeper.check.json"
+      "at": "2026-11-12T01:34:27.439Z",
+      "report": "work/hb/creeper.check.json"
     },
     "key_sounds": "n/a"
   }
