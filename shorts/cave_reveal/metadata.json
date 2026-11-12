@@ -4,7 +4,7 @@
   "caption": "never dig straight down 💀",
   "youtube": {
     "title": "never dig straight down 💀 #minecraft #shorts",
-    "description": "never dig straight down 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "never dig straight down 💀\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "vem_lenta.mp3",
-    "title": "VEM LENTA!",
-    "artist": "KPHK, Eluvo, Sayfalse",
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "l5",
-    "drop_in_song_s": 36.75,
-    "drop_in_short_s": 18.98,
-    "song_start_s": 17.77
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 12.81,
+    "song_start_s": 3.69
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 23.2,
+    "duration_s": 17.04,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 23568040,
-    "sha256": "6fb100fd9d69be9d1550e5c8ff589230cf40dd89109150dacefbd92e54fc3347",
+    "bytes": 21752782,
+    "sha256": "45f28f31693464e5796b325ffd493e53f8408dbcbd9bd855629eba43b9857104",
     "release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short.6fb100fd9d69be9d.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.6fb100fd9d69be9d.mp4",
-      "sha256": "6fb100fd9d69be9d1550e5c8ff589230cf40dd89109150dacefbd92e54fc3347",
-      "bytes": 23568040
+      "asset": "cave_reveal.short.45f28f31693464e5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short.45f28f31693464e5.mp4",
+      "sha256": "45f28f31693464e5796b325ffd493e53f8408dbcbd9bd855629eba43b9857104",
+      "bytes": 21752782
     },
     "nosong_release": {
       "tag": "pkg-cave_reveal",
-      "asset": "cave_reveal.short_nosong.05a4ea22de59f664.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.05a4ea22de59f664.mp4",
-      "sha256": "05a4ea22de59f6648c29578835deaf2602553dd0eaf4d27066ee7e371ca59df5",
-      "bytes": 23519490
+      "asset": "cave_reveal.short_nosong.f1b90773e7f521c0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-cave_reveal/cave_reveal.short_nosong.f1b90773e7f521c0.mp4",
+      "sha256": "f1b90773e7f521c060a4bf342d8354a04d52b1eff1affd807c19b87be346d977",
+      "bytes": 21715737
     }
   },
   "edit": {
@@ -54,7 +54,7 @@
     "onFire": "in_lava:death",
     "deathScreen": true,
     "endAfter": "death:1.2",
-    "startAt": "dig0:1.9",
+    "startAt": "dig1:-0.05",
     "hook": {
       "at": "l5",
       "before": 0,
@@ -63,18 +63,8 @@
     },
     "subs": [
       [
-        "dig0",
-        "just digging down...",
-        2.2
-      ],
-      [
-        "l1",
-        "oh, a cave",
-        1.6
-      ],
-      [
         "dig1",
-        "keep going",
+        "just digging down...",
         1.4
       ],
       [
@@ -135,15 +125,39 @@
         "cut"
       ],
       [
+        "dig1:0.3",
+        "l2:-0.35",
+        2
+      ],
+      [
+        "dig2:0.3",
+        "l3:-0.35",
+        2
+      ],
+      [
+        "dig3:0.3",
+        "l4:-0.35",
+        2
+      ],
+      [
+        "dig4:0.3",
+        "l5:-0.35",
+        2
+      ],
+      [
         "in_lava:1.0",
         "death:-0.4",
-        2
+        4
       ]
     ],
     "sfx": [
       [
         "pop",
-        "dig0:1.9"
+        "dig1"
+      ],
+      [
+        "whoosh",
+        "l5:0.15"
       ],
       [
         "dip",
@@ -166,19 +180,19 @@
       "--red",
       "never",
       "--subs",
-      "[[\"dig0\",\"just digging down...\",2.2],[\"l1\",\"oh, a cave\",1.6],[\"dig1\",\"keep going\",1.4],[\"l2\",\"a mineshaft??\",1.6],[\"dig2\",\"keep going...\",1.4],[\"l3\",\"a DUNGEON\",1.6],[\"dig3\",\"one more...\",1.4],[\"l4\",\"a GEODE?!\",1.6],[\"dig4\",\"just one more\",1.4],[\"l5\",\"oh no\",3]]",
+      "[[\"dig1\",\"just digging down...\",1.4],[\"l2\",\"a mineshaft??\",1.6],[\"dig2\",\"keep going...\",1.4],[\"l3\",\"a DUNGEON\",1.6],[\"dig3\",\"one more...\",1.4],[\"l4\",\"a GEODE?!\",1.6],[\"dig4\",\"just one more\",1.4],[\"l5\",\"oh no\",3]]",
       "--speed",
-      "[[\"seen1\",\"dig1\",\"cut\"],[\"seen2\",\"dig2\",\"cut\"],[\"seen3\",\"dig3\",\"cut\"],[\"seen4\",\"dig4\",\"cut\"],[\"in_lava:1.0\",\"death:-0.4\",2]]",
+      "[[\"seen1\",\"dig1\",\"cut\"],[\"seen2\",\"dig2\",\"cut\"],[\"seen3\",\"dig3\",\"cut\"],[\"seen4\",\"dig4\",\"cut\"],[\"dig1:0.3\",\"l2:-0.35\",2],[\"dig2:0.3\",\"l3:-0.35\",2],[\"dig3:0.3\",\"l4:-0.35\",2],[\"dig4:0.3\",\"l5:-0.35\",2],[\"in_lava:1.0\",\"death:-0.4\",4]]",
       "--hook",
       "{\"at\":\"l5\",\"before\":0,\"after\":0.9,\"text\":\"how it ends 💀\"}",
       "--sfx",
-      "[[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]]",
+      "[[\"pop\",\"dig1\"],[\"whoosh\",\"l5:0.15\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]]",
       "--on_fire",
       "in_lava:death",
       "--death_screen",
       "death",
       "--start_at",
-      "dig0:1.9",
+      "dig1:-0.05",
       "--end_after",
       "death:1.2"
     ]
@@ -191,13 +205,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 364,
+      "x": 361,
       "y": 70,
-      "z": -47
+      "z": -41
     },
     "biome": "minecraft:plains",
-    "ticks": 641,
-    "seconds": 32.05,
+    "ticks": 651,
+    "seconds": 32.55,
     "deaths": 1,
     "death_message": {
       "with": [
@@ -250,11 +264,23 @@
       },
       {
         "t": 0.75,
+        "event": "vel"
+      },
+      {
+        "t": 0.75,
+        "event": "vel"
+      },
+      {
+        "t": 0.75,
         "event": "mob_death"
       },
       {
         "t": 0.75,
         "event": "mob_hurt"
+      },
+      {
+        "t": 0.75,
+        "event": "vel"
       },
       {
         "t": 0.75,
@@ -318,10 +344,6 @@
       },
       {
         "t": 0.75,
-        "event": "vel"
-      },
-      {
-        "t": 0.75,
         "event": "mob_death"
       },
       {
@@ -354,27 +376,11 @@
       },
       {
         "t": 0.75,
-        "event": "vel"
-      },
-      {
-        "t": 0.75,
-        "event": "vel"
-      },
-      {
-        "t": 0.75,
         "event": "mob_death"
       },
       {
         "t": 0.75,
         "event": "mob_hurt"
-      },
-      {
-        "t": 0.75,
-        "event": "vel"
-      },
-      {
-        "t": 0.75,
-        "event": "vel"
       },
       {
         "t": 0.75,
@@ -401,24 +407,8 @@
         "event": "vel"
       },
       {
-        "t": 1.2,
-        "event": "vel"
-      },
-      {
-        "t": 1.2,
-        "event": "vel"
-      },
-      {
         "t": 1.25,
         "event": "dig0"
-      },
-      {
-        "t": 1.6,
-        "event": "vel"
-      },
-      {
-        "t": 1.65,
-        "event": "vel"
       },
       {
         "t": 1.65,
@@ -434,14 +424,6 @@
       },
       {
         "t": 1.7,
-        "event": "vel"
-      },
-      {
-        "t": 1.75,
-        "event": "vel"
-      },
-      {
-        "t": 1.75,
         "event": "vel"
       },
       {
@@ -469,16 +451,8 @@
         "event": "vel"
       },
       {
-        "t": 1.8,
-        "event": "vel"
-      },
-      {
         "t": 1.85,
         "event": "dig_end"
-      },
-      {
-        "t": 1.85,
-        "event": "vel"
       },
       {
         "t": 1.85,
@@ -493,7 +467,7 @@
         "event": "vel"
       },
       {
-        "t": 2,
+        "t": 1.95,
         "event": "vel"
       },
       {
@@ -507,10 +481,6 @@
       {
         "t": 2.1,
         "event": "swing"
-      },
-      {
-        "t": 2.15,
-        "event": "vel"
       },
       {
         "t": 2.2,
@@ -521,15 +491,15 @@
         "event": "vel"
       },
       {
-        "t": 2.25,
+        "t": 2.3,
         "event": "vel"
       },
       {
-        "t": 2.3,
-        "event": "collect"
+        "t": 2.35,
+        "event": "vel"
       },
       {
-        "t": 2.4,
+        "t": 2.35,
         "event": "vel"
       },
       {
@@ -543,10 +513,6 @@
       {
         "t": 2.45,
         "event": "swing"
-      },
-      {
-        "t": 2.45,
-        "event": "vel"
       },
       {
         "t": 2.55,
@@ -558,21 +524,13 @@
       },
       {
         "t": 2.65,
+        "event": "vel"
+      },
+      {
+        "t": 2.65,
         "event": "collect"
       },
       {
-        "t": 2.7,
-        "event": "vel"
-      },
-      {
-        "t": 2.75,
-        "event": "vel"
-      },
-      {
-        "t": 2.75,
-        "event": "vel"
-      },
-      {
         "t": 2.75,
         "event": "vel"
       },
@@ -586,14 +544,6 @@
       },
       {
         "t": 2.8,
-        "event": "vel"
-      },
-      {
-        "t": 2.8,
-        "event": "vel"
-      },
-      {
-        "t": 2.85,
         "event": "vel"
       },
       {
@@ -657,23 +607,7 @@
         "event": "vel"
       },
       {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
-        "t": 3.75,
-        "event": "vel"
-      },
-      {
         "t": 3.8,
-        "event": "vel"
-      },
-      {
-        "t": 3.8,
-        "event": "vel"
-      },
-      {
-        "t": 3.85,
         "event": "vel"
       },
       {
@@ -721,23 +655,7 @@
         "event": "vel"
       },
       {
-        "t": 4.75,
-        "event": "vel"
-      },
-      {
-        "t": 4.75,
-        "event": "vel"
-      },
-      {
         "t": 4.8,
-        "event": "vel"
-      },
-      {
-        "t": 4.8,
-        "event": "vel"
-      },
-      {
-        "t": 4.85,
         "event": "vel"
       },
       {
@@ -774,23 +692,7 @@
         "event": "vel"
       },
       {
-        "t": 5.75,
-        "event": "vel"
-      },
-      {
-        "t": 5.75,
-        "event": "vel"
-      },
-      {
         "t": 5.8,
-        "event": "vel"
-      },
-      {
-        "t": 5.8,
-        "event": "vel"
-      },
-      {
-        "t": 5.85,
         "event": "vel"
       },
       {
@@ -826,23 +728,7 @@
         "event": "vel"
       },
       {
-        "t": 6.75,
-        "event": "vel"
-      },
-      {
-        "t": 6.75,
-        "event": "vel"
-      },
-      {
         "t": 6.8,
-        "event": "vel"
-      },
-      {
-        "t": 6.8,
-        "event": "vel"
-      },
-      {
-        "t": 6.85,
         "event": "vel"
       },
       {
@@ -854,7 +740,7 @@
         "event": "vel"
       },
       {
-        "t": 7,
+        "t": 6.95,
         "event": "dig_end"
       },
       {
@@ -862,11 +748,11 @@
         "event": "vel"
       },
       {
-        "t": 7.25,
+        "t": 7.2,
         "event": "dig"
       },
       {
-        "t": 7.25,
+        "t": 7.2,
         "event": "swing"
       },
       {
@@ -874,51 +760,35 @@
         "event": "collect"
       },
       {
-        "t": 7.55,
+        "t": 7.5,
         "event": "dig_end"
       },
       {
-        "t": 7.55,
+        "t": 7.5,
         "event": "vel"
       },
       {
         "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.75,
-        "event": "vel"
-      },
-      {
-        "t": 7.8,
         "event": "dig"
       },
       {
-        "t": 7.8,
+        "t": 7.75,
         "event": "swing"
       },
       {
-        "t": 7.8,
+        "t": 7.75,
+        "event": "vel"
+      },
+      {
+        "t": 7.75,
+        "event": "vel"
+      },
+      {
+        "t": 7.75,
         "event": "vel"
       },
       {
         "t": 7.8,
-        "event": "vel"
-      },
-      {
-        "t": 7.85,
         "event": "vel"
       },
       {
@@ -930,7 +800,7 @@
         "event": "vel"
       },
       {
-        "t": 8,
+        "t": 7.95,
         "event": "collect"
       },
       {
@@ -939,6 +809,10 @@
       },
       {
         "t": 8.1,
+        "event": "vel"
+      },
+      {
+        "t": 8.25,
         "event": "vel"
       },
       {
@@ -970,26 +844,6 @@
         "event": "vel"
       },
       {
-        "t": 8.75,
-        "event": "vel"
-      },
-      {
-        "t": 8.75,
-        "event": "vel"
-      },
-      {
-        "t": 8.75,
-        "event": "vel"
-      },
-      {
-        "t": 8.75,
-        "event": "vel"
-      },
-      {
-        "t": 8.75,
-        "event": "vel"
-      },
-      {
         "t": 8.8,
         "event": "vel"
       },
@@ -998,7 +852,7 @@
         "event": "vel"
       },
       {
-        "t": 8.85,
+        "t": 8.8,
         "event": "vel"
       },
       {
@@ -1007,6 +861,10 @@
       },
       {
         "t": 8.9,
+        "event": "vel"
+      },
+      {
+        "t": 8.95,
         "event": "vel"
       },
       {
@@ -1019,26 +877,6 @@
         "event": "collect"
       },
       {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
-        "t": 9.75,
-        "event": "vel"
-      },
-      {
         "t": 9.8,
         "event": "vel"
       },
@@ -1047,7 +885,7 @@
         "event": "vel"
       },
       {
-        "t": 9.85,
+        "t": 9.8,
         "event": "vel"
       },
       {
@@ -1059,23 +897,23 @@
         "event": "vel"
       },
       {
+        "t": 9.95,
+        "event": "vel"
+      },
+      {
         "t": 10.15,
         "event": "seen2"
       },
       {
-        "t": 10.8,
+        "t": 10.75,
         "event": "vel"
       },
       {
-        "t": 10.8,
+        "t": 10.75,
         "event": "vel"
       },
       {
-        "t": 10.8,
-        "event": "vel"
-      },
-      {
-        "t": 10.8,
+        "t": 10.75,
         "event": "vel"
       },
       {
@@ -1087,31 +925,19 @@
         "event": "vel"
       },
       {
-        "t": 10.85,
-        "event": "vel"
-      },
-      {
         "t": 10.9,
         "event": "vel"
       },
       {
-        "t": 10.9,
-        "event": "vel"
-      },
-      {
-        "t": 10.95,
-        "event": "vel"
-      },
-      {
-        "t": 11.4,
+        "t": 11.35,
         "event": "dig2"
       },
       {
-        "t": 11.4,
+        "t": 11.35,
         "event": "dig"
       },
       {
-        "t": 11.4,
+        "t": 11.35,
         "event": "swing"
       },
       {
@@ -1119,35 +945,27 @@
         "event": "dig_end"
       },
       {
-        "t": 11.7,
+        "t": 11.65,
         "event": "vel"
       },
       {
-        "t": 11.7,
+        "t": 11.65,
         "event": "vel"
       },
       {
-        "t": 11.8,
+        "t": 11.75,
         "event": "vel"
       },
       {
-        "t": 11.8,
+        "t": 11.75,
         "event": "vel"
       },
       {
-        "t": 11.8,
-        "event": "vel"
-      },
-      {
-        "t": 11.8,
+        "t": 11.75,
         "event": "vel"
       },
       {
         "t": 11.8,
-        "event": "vel"
-      },
-      {
-        "t": 11.85,
         "event": "vel"
       },
       {
@@ -1167,19 +985,11 @@
         "event": "vel"
       },
       {
-        "t": 11.9,
-        "event": "vel"
-      },
-      {
-        "t": 11.95,
-        "event": "vel"
-      },
-      {
-        "t": 12.15,
+        "t": 12.1,
         "event": "collect"
       },
       {
-        "t": 12.15,
+        "t": 12.1,
         "event": "collect"
       },
       {
@@ -1199,6 +1009,10 @@
         "event": "swing"
       },
       {
+        "t": 12.45,
+        "event": "vel"
+      },
+      {
         "t": 12.65,
         "event": "collect"
       },
@@ -1211,19 +1025,15 @@
         "event": "vel"
       },
       {
-        "t": 12.8,
+        "t": 12.75,
         "event": "vel"
       },
       {
-        "t": 12.8,
+        "t": 12.75,
         "event": "vel"
       },
       {
-        "t": 12.8,
-        "event": "vel"
-      },
-      {
-        "t": 12.8,
+        "t": 12.75,
         "event": "vel"
       },
       {
@@ -1232,14 +1042,6 @@
       },
       {
         "t": 12.85,
-        "event": "vel"
-      },
-      {
-        "t": 12.85,
-        "event": "vel"
-      },
-      {
-        "t": 12.9,
         "event": "vel"
       },
       {
@@ -1255,23 +1057,19 @@
         "event": "swing"
       },
       {
-        "t": 12.95,
-        "event": "vel"
-      },
-      {
         "t": 13.15,
         "event": "collect"
       },
       {
-        "t": 13.25,
+        "t": 13.3,
         "event": "swing"
       },
       {
-        "t": 13.3,
+        "t": 13.35,
         "event": "dig_end"
       },
       {
-        "t": 13.3,
+        "t": 13.35,
         "event": "l3"
       },
       {
@@ -1279,19 +1077,15 @@
         "event": "vel"
       },
       {
-        "t": 13.8,
+        "t": 13.75,
         "event": "vel"
       },
       {
-        "t": 13.8,
+        "t": 13.75,
         "event": "vel"
       },
       {
-        "t": 13.8,
-        "event": "vel"
-      },
-      {
-        "t": 13.8,
+        "t": 13.75,
         "event": "vel"
       },
       {
@@ -1300,23 +1094,6 @@
       },
       {
         "t": 13.85,
-        "event": "vel"
-      },
-      {
-        "t": 13.85,
-        "event": "vel"
-      },
-      {
-        "t": 13.9,
-        "event": "spawner"
-      },
-      {
-        "t": 13.9,
-        "event": "hurt",
-        "type": "fall"
-      },
-      {
-        "t": 13.9,
         "event": "vel"
       },
       {
@@ -1325,26 +1102,27 @@
       },
       {
         "t": 13.95,
-        "event": "vel"
+        "event": "spawner"
+      },
+      {
+        "t": 13.95,
+        "event": "hurt",
+        "type": "fall"
       },
       {
         "t": 14.1,
         "event": "collect"
       },
       {
-        "t": 14.8,
+        "t": 14.75,
         "event": "vel"
       },
       {
-        "t": 14.8,
+        "t": 14.75,
         "event": "vel"
       },
       {
-        "t": 14.8,
-        "event": "vel"
-      },
-      {
-        "t": 14.8,
+        "t": 14.75,
         "event": "vel"
       },
       {
@@ -1356,39 +1134,23 @@
         "event": "vel"
       },
       {
-        "t": 14.85,
-        "event": "vel"
-      },
-      {
         "t": 14.9,
         "event": "vel"
       },
       {
-        "t": 14.9,
-        "event": "vel"
-      },
-      {
-        "t": 14.95,
-        "event": "vel"
-      },
-      {
-        "t": 15.2,
+        "t": 15.25,
         "event": "seen3"
       },
       {
-        "t": 15.8,
+        "t": 15.75,
         "event": "vel"
       },
       {
-        "t": 15.8,
+        "t": 15.75,
         "event": "vel"
       },
       {
-        "t": 15.8,
-        "event": "vel"
-      },
-      {
-        "t": 15.8,
+        "t": 15.75,
         "event": "vel"
       },
       {
@@ -1400,59 +1162,43 @@
         "event": "vel"
       },
       {
-        "t": 15.85,
-        "event": "vel"
-      },
-      {
         "t": 15.9,
         "event": "vel"
       },
       {
-        "t": 15.9,
-        "event": "vel"
-      },
-      {
-        "t": 15.95,
-        "event": "vel"
-      },
-      {
-        "t": 16.2,
+        "t": 16.25,
         "event": "dig3"
       },
       {
-        "t": 16.2,
+        "t": 16.25,
         "event": "dig"
       },
       {
-        "t": 16.2,
-        "event": "swing"
-      },
-      {
-        "t": 16.55,
+        "t": 16.25,
         "event": "swing"
       },
       {
         "t": 16.6,
+        "event": "swing"
+      },
+      {
+        "t": 16.65,
         "event": "dig_end"
       },
       {
-        "t": 16.6,
+        "t": 16.65,
         "event": "vel"
       },
       {
-        "t": 16.8,
+        "t": 16.75,
         "event": "vel"
       },
       {
-        "t": 16.8,
+        "t": 16.75,
         "event": "vel"
       },
       {
-        "t": 16.8,
-        "event": "vel"
-      },
-      {
-        "t": 16.8,
+        "t": 16.75,
         "event": "vel"
       },
       {
@@ -1461,102 +1207,70 @@
       },
       {
         "t": 16.85,
+        "event": "vel"
+      },
+      {
+        "t": 16.9,
         "event": "dig"
       },
       {
-        "t": 16.85,
+        "t": 16.9,
         "event": "swing"
       },
       {
-        "t": 16.85,
-        "event": "vel"
-      },
-      {
-        "t": 16.85,
-        "event": "vel"
-      },
-      {
         "t": 16.9,
         "event": "vel"
-      },
-      {
-        "t": 16.9,
-        "event": "vel"
-      },
-      {
-        "t": 16.95,
-        "event": "vel"
-      },
-      {
-        "t": 17.05,
-        "event": "collect"
       },
       {
         "t": 17.1,
-        "event": "dig_end"
-      },
-      {
-        "t": 17.15,
-        "event": "vel"
-      },
-      {
-        "t": 17.35,
-        "event": "dig"
-      },
-      {
-        "t": 17.35,
-        "event": "swing"
-      },
-      {
-        "t": 17.6,
-        "event": "dig_end"
-      },
-      {
-        "t": 17.6,
-        "event": "vel"
-      },
-      {
-        "t": 17.6,
         "event": "collect"
       },
       {
-        "t": 17.8,
+        "t": 17.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 17.2,
         "event": "vel"
       },
       {
-        "t": 17.8,
-        "event": "vel"
-      },
-      {
-        "t": 17.8,
-        "event": "vel"
-      },
-      {
-        "t": 17.8,
-        "event": "vel"
-      },
-      {
-        "t": 17.8,
-        "event": "vel"
-      },
-      {
-        "t": 17.85,
+        "t": 17.45,
         "event": "dig"
       },
       {
-        "t": 17.85,
+        "t": 17.45,
         "event": "swing"
       },
       {
-        "t": 17.85,
+        "t": 17.65,
+        "event": "collect"
+      },
+      {
+        "t": 17.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 17.7,
+        "event": "vel"
+      },
+      {
+        "t": 17.75,
+        "event": "vel"
+      },
+      {
+        "t": 17.75,
+        "event": "vel"
+      },
+      {
+        "t": 17.75,
+        "event": "vel"
+      },
+      {
+        "t": 17.8,
         "event": "vel"
       },
       {
         "t": 17.85,
-        "event": "vel"
-      },
-      {
-        "t": 17.9,
         "event": "vel"
       },
       {
@@ -1565,58 +1279,58 @@
       },
       {
         "t": 17.95,
-        "event": "vel"
-      },
-      {
-        "t": 18,
-        "event": "dig_end"
-      },
-      {
-        "t": 18,
-        "event": "vel"
-      },
-      {
-        "t": 18.05,
-        "event": "collect"
-      },
-      {
-        "t": 18.25,
         "event": "dig"
       },
       {
-        "t": 18.25,
+        "t": 17.95,
         "event": "swing"
       },
       {
-        "t": 18.45,
-        "event": "collect"
-      },
-      {
-        "t": 18.55,
+        "t": 18.1,
         "event": "dig_end"
       },
       {
+        "t": 18.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.15,
+        "event": "collect"
+      },
+      {
+        "t": 18.35,
+        "event": "dig"
+      },
+      {
+        "t": 18.35,
+        "event": "swing"
+      },
+      {
         "t": 18.55,
+        "event": "collect"
+      },
+      {
+        "t": 18.65,
+        "event": "dig_end"
+      },
+      {
+        "t": 18.65,
         "event": "l4"
       },
       {
-        "t": 18.55,
+        "t": 18.65,
         "event": "vel"
       },
       {
-        "t": 18.8,
+        "t": 18.75,
         "event": "vel"
       },
       {
-        "t": 18.8,
+        "t": 18.75,
         "event": "vel"
       },
       {
-        "t": 18.8,
-        "event": "vel"
-      },
-      {
-        "t": 18.8,
+        "t": 18.75,
         "event": "vel"
       },
       {
@@ -1628,28 +1342,16 @@
         "event": "vel"
       },
       {
-        "t": 18.85,
-        "event": "vel"
-      },
-      {
         "t": 18.9,
         "event": "vel"
       },
       {
-        "t": 18.9,
-        "event": "vel"
-      },
-      {
-        "t": 18.95,
-        "event": "vel"
-      },
-      {
-        "t": 19.05,
+        "t": 19.15,
         "event": "hurt",
         "type": "fall"
       },
       {
-        "t": 19.15,
+        "t": 19.3,
         "event": "collect"
       },
       {
@@ -1665,23 +1367,7 @@
         "event": "vel"
       },
       {
-        "t": 19.8,
-        "event": "vel"
-      },
-      {
-        "t": 19.8,
-        "event": "vel"
-      },
-      {
         "t": 19.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.85,
-        "event": "vel"
-      },
-      {
-        "t": 19.9,
         "event": "vel"
       },
       {
@@ -1693,7 +1379,19 @@
         "event": "vel"
       },
       {
-        "t": 20.7,
+        "t": 20.75,
+        "event": "vel"
+      },
+      {
+        "t": 20.75,
+        "event": "vel"
+      },
+      {
+        "t": 20.75,
+        "event": "vel"
+      },
+      {
+        "t": 20.8,
         "event": "seen4"
       },
       {
@@ -1701,47 +1399,11 @@
         "event": "vel"
       },
       {
-        "t": 20.8,
-        "event": "vel"
-      },
-      {
-        "t": 20.8,
-        "event": "vel"
-      },
-      {
-        "t": 20.8,
-        "event": "vel"
-      },
-      {
-        "t": 20.8,
-        "event": "vel"
-      },
-      {
-        "t": 20.85,
-        "event": "vel"
-      },
-      {
         "t": 20.85,
         "event": "vel"
       },
       {
         "t": 20.9,
-        "event": "vel"
-      },
-      {
-        "t": 20.9,
-        "event": "vel"
-      },
-      {
-        "t": 20.95,
-        "event": "vel"
-      },
-      {
-        "t": 21.75,
-        "event": "vel"
-      },
-      {
-        "t": 21.75,
         "event": "vel"
       },
       {
@@ -1758,14 +1420,6 @@
       },
       {
         "t": 21.8,
-        "event": "vel"
-      },
-      {
-        "t": 21.8,
-        "event": "vel"
-      },
-      {
-        "t": 21.85,
         "event": "vel"
       },
       {
@@ -1777,72 +1431,52 @@
         "event": "vel"
       },
       {
-        "t": 22.05,
+        "t": 22.15,
         "event": "dig4"
       },
       {
-        "t": 22.05,
+        "t": 22.15,
         "event": "dig"
       },
       {
-        "t": 22.05,
+        "t": 22.15,
         "event": "swing"
       },
       {
-        "t": 22.35,
+        "t": 22.45,
         "event": "dig_end"
       },
       {
-        "t": 22.35,
+        "t": 22.45,
         "event": "vel"
       },
       {
-        "t": 22.6,
+        "t": 22.7,
         "event": "dig"
       },
       {
-        "t": 22.6,
+        "t": 22.7,
         "event": "swing"
       },
       {
         "t": 22.75,
+        "event": "vel"
+      },
+      {
+        "t": 22.75,
+        "event": "vel"
+      },
+      {
+        "t": 22.75,
+        "event": "vel"
+      },
+      {
+        "t": 22.8,
+        "event": "vel"
+      },
+      {
+        "t": 22.85,
         "event": "dig_end"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.75,
-        "event": "vel"
-      },
-      {
-        "t": 22.8,
-        "event": "vel"
-      },
-      {
-        "t": 22.8,
-        "event": "vel"
-      },
-      {
-        "t": 22.8,
-        "event": "collect"
       },
       {
         "t": 22.85,
@@ -1857,63 +1491,47 @@
         "event": "vel"
       },
       {
-        "t": 23,
-        "event": "dig"
-      },
-      {
-        "t": 23,
-        "event": "swing"
-      },
-      {
-        "t": 23.2,
+        "t": 22.9,
         "event": "collect"
       },
       {
-        "t": 23.25,
-        "event": "dig_end"
-      },
-      {
-        "t": 23.25,
-        "event": "vel"
-      },
-      {
-        "t": 23.5,
+        "t": 23.1,
         "event": "dig"
       },
       {
-        "t": 23.5,
+        "t": 23.1,
         "event": "swing"
       },
       {
-        "t": 23.7,
+        "t": 23.3,
         "event": "collect"
       },
       {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.75,
-        "event": "vel"
-      },
-      {
-        "t": 23.8,
+        "t": 23.35,
         "event": "dig_end"
       },
       {
-        "t": 23.8,
+        "t": 23.35,
+        "event": "vel"
+      },
+      {
+        "t": 23.6,
+        "event": "dig"
+      },
+      {
+        "t": 23.6,
+        "event": "swing"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.75,
         "event": "vel"
       },
       {
@@ -1922,11 +1540,7 @@
       },
       {
         "t": 23.8,
-        "event": "vel"
-      },
-      {
-        "t": 23.85,
-        "event": "vel"
+        "event": "collect"
       },
       {
         "t": 23.85,
@@ -1934,34 +1548,42 @@
       },
       {
         "t": 23.9,
-        "event": "vel"
-      },
-      {
-        "t": 24.05,
-        "event": "dig"
-      },
-      {
-        "t": 24.05,
-        "event": "swing"
-      },
-      {
-        "t": 24.25,
-        "event": "collect"
-      },
-      {
-        "t": 24.35,
         "event": "dig_end"
       },
       {
-        "t": 24.35,
+        "t": 23.9,
         "event": "vel"
       },
       {
-        "t": 24.6,
+        "t": 23.9,
+        "event": "vel"
+      },
+      {
+        "t": 24.15,
         "event": "dig"
       },
       {
-        "t": 24.6,
+        "t": 24.15,
+        "event": "swing"
+      },
+      {
+        "t": 24.35,
+        "event": "collect"
+      },
+      {
+        "t": 24.4,
+        "event": "dig_end"
+      },
+      {
+        "t": 24.45,
+        "event": "vel"
+      },
+      {
+        "t": 24.65,
+        "event": "dig"
+      },
+      {
+        "t": 24.65,
         "event": "swing"
       },
       {
@@ -1977,27 +1599,7 @@
         "event": "vel"
       },
       {
-        "t": 24.75,
-        "event": "vel"
-      },
-      {
-        "t": 24.75,
-        "event": "vel"
-      },
-      {
         "t": 24.8,
-        "event": "vel"
-      },
-      {
-        "t": 24.8,
-        "event": "vel"
-      },
-      {
-        "t": 24.8,
-        "event": "collect"
-      },
-      {
-        "t": 24.85,
         "event": "vel"
       },
       {
@@ -2006,14 +1608,18 @@
       },
       {
         "t": 24.9,
-        "event": "dig_end"
-      },
-      {
-        "t": 24.9,
         "event": "vel"
       },
       {
         "t": 24.9,
+        "event": "collect"
+      },
+      {
+        "t": 24.9,
+        "event": "dig_end"
+      },
+      {
+        "t": 24.95,
         "event": "vel"
       },
       {
@@ -2023,13 +1629,13 @@
       {
         "t": 25.15,
         "event": "swing"
-      },
-      {
-        "t": 25.35,
-        "event": "collect"
       },
       {
         "t": 25.4,
+        "event": "collect"
+      },
+      {
+        "t": 25.45,
         "event": "dig_end"
       },
       {
@@ -2037,11 +1643,11 @@
         "event": "vel"
       },
       {
-        "t": 25.65,
+        "t": 25.7,
         "event": "dig"
       },
       {
-        "t": 25.65,
+        "t": 25.7,
         "event": "swing"
       },
       {
@@ -2057,23 +1663,7 @@
         "event": "vel"
       },
       {
-        "t": 25.75,
-        "event": "vel"
-      },
-      {
-        "t": 25.75,
-        "event": "vel"
-      },
-      {
         "t": 25.8,
-        "event": "vel"
-      },
-      {
-        "t": 25.8,
-        "event": "vel"
-      },
-      {
-        "t": 25.85,
         "event": "vel"
       },
       {
@@ -2097,24 +1687,7 @@
         "event": "l5"
       },
       {
-        "t": 25.95,
-        "event": "vel"
-      },
-      {
-        "t": 26.5,
-        "event": "in_lava"
-      },
-      {
-        "t": 26.5,
-        "event": "hurt",
-        "type": "lava"
-      },
-      {
-        "t": 26.75,
-        "event": "vel"
-      },
-      {
-        "t": 26.75,
+        "t": 26,
         "event": "vel"
       },
       {
@@ -2131,18 +1704,6 @@
       },
       {
         "t": 26.8,
-        "event": "vel"
-      },
-      {
-        "t": 26.8,
-        "event": "vel"
-      },
-      {
-        "t": 26.8,
-        "event": "collect"
-      },
-      {
-        "t": 26.85,
         "event": "vel"
       },
       {
@@ -2155,8 +1716,16 @@
       },
       {
         "t": 27,
+        "event": "vel"
+      },
+      {
+        "t": 27,
         "event": "hurt",
         "type": "lava"
+      },
+      {
+        "t": 27.05,
+        "event": "in_lava"
       },
       {
         "t": 27.5,
@@ -2164,12 +1733,8 @@
         "type": "lava"
       },
       {
-        "t": 27.75,
-        "event": "vel"
-      },
-      {
-        "t": 27.75,
-        "event": "vel"
+        "t": 27.7,
+        "event": "collect"
       },
       {
         "t": 27.75,
@@ -2185,14 +1750,6 @@
       },
       {
         "t": 27.8,
-        "event": "vel"
-      },
-      {
-        "t": 27.8,
-        "event": "vel"
-      },
-      {
-        "t": 27.85,
         "event": "vel"
       },
       {
@@ -2226,23 +1783,7 @@
         "event": "vel"
       },
       {
-        "t": 28.75,
-        "event": "vel"
-      },
-      {
-        "t": 28.75,
-        "event": "vel"
-      },
-      {
         "t": 28.8,
-        "event": "vel"
-      },
-      {
-        "t": 28.8,
-        "event": "vel"
-      },
-      {
-        "t": 28.85,
         "event": "vel"
       },
       {
@@ -2276,23 +1817,7 @@
         "event": "vel"
       },
       {
-        "t": 29.75,
-        "event": "vel"
-      },
-      {
-        "t": 29.75,
-        "event": "vel"
-      },
-      {
         "t": 29.8,
-        "event": "vel"
-      },
-      {
-        "t": 29.8,
-        "event": "vel"
-      },
-      {
-        "t": 29.85,
         "event": "vel"
       },
       {
@@ -2309,86 +1834,67 @@
         "type": "lava"
       },
       {
-        "t": 30,
+        "t": 30.5,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "vel"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "death"
       },
       {
-        "t": 30,
+        "t": 30.5,
         "event": "motion_start"
       },
       {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.65,
-        "event": "vel"
-      },
-      {
-        "t": 30.75,
-        "event": "vel"
-      },
-      {
-        "t": 30.75,
-        "event": "vel"
-      },
-      {
         "t": 30.75,
         "event": "vel"
       },
@@ -2402,14 +1908,6 @@
       },
       {
         "t": 30.8,
-        "event": "vel"
-      },
-      {
-        "t": 30.8,
-        "event": "vel"
-      },
-      {
-        "t": 30.85,
         "event": "vel"
       },
       {
@@ -2421,15 +1919,47 @@
         "event": "vel"
       },
       {
-        "t": 31,
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.5,
         "event": "motion_settled"
       },
       {
-        "t": 31,
+        "t": 31.5,
         "event": "settle"
       },
       {
-        "t": 32.05,
+        "t": 32.55,
         "event": "end"
       }
     ]
@@ -2437,10 +1967,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "bbdeaff5316f2aa2a720f2169c452365f60d8638",
+    "commit": "dae5dff8e604eba100049688c962471772b3122c",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:36:45.688Z",
-    "head_at_publish": "bbdeaff5316f2aa2a720f2169c452365f60d8638",
+    "rendered_at": "2026-11-12T06:29:21.420Z",
+    "head_at_publish": "7af609f231364d7968b818c59fe396936b205a72",
     "stunt": "stunts/cave_reveal.js",
     "source_snapshot": [
       "source/cave_reveal.js",
@@ -2450,34 +1980,34 @@
     ]
   },
   "rebuild": [
-    "git checkout bbdeaff5316f",
+    "git checkout dae5dff8e604",
     "gunzip -c shorts/cave_reveal/recording.json.gz > work/cave_reveal.rec.json",
     "node render.js work/cave_reveal.rec.json work/cave_reveal.frames 60 1080 1011",
     "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
-    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --self_name 56e --red never --subs \"[[\\\"dig0\\\",\\\"just digging down...\\\",2.2],[\\\"l1\\\",\\\"oh, a cave\\\",1.6],[\\\"dig1\\\",\\\"keep going\\\",1.4],[\\\"l2\\\",\\\"a mineshaft??\\\",1.6],[\\\"dig2\\\",\\\"keep going...\\\",1.4],[\\\"l3\\\",\\\"a DUNGEON\\\",1.6],[\\\"dig3\\\",\\\"one more...\\\",1.4],[\\\"l4\\\",\\\"a GEODE?!\\\",1.6],[\\\"dig4\\\",\\\"just one more\\\",1.4],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"seen1\",\"dig1\",\"cut\"],[\"seen2\",\"dig2\",\"cut\"],[\"seen3\",\"dig3\",\"cut\"],[\"seen4\",\"dig4\",\"cut\"],[\"in_lava:1.0\",\"death:-0.4\",2]] --hook \"{\\\"at\\\":\\\"l5\\\",\\\"before\\\":0,\\\"after\\\":0.9,\\\"text\\\":\\\"how it ends 💀\\\"}\" --sfx [[\"pop\",\"dig0:1.9\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig0:1.9 --end_after death:1.2 --out out/cave_reveal.mp4"
+    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --self_name 56e --red never --subs \"[[\\\"dig1\\\",\\\"just digging down...\\\",1.4],[\\\"l2\\\",\\\"a mineshaft??\\\",1.6],[\\\"dig2\\\",\\\"keep going...\\\",1.4],[\\\"l3\\\",\\\"a DUNGEON\\\",1.6],[\\\"dig3\\\",\\\"one more...\\\",1.4],[\\\"l4\\\",\\\"a GEODE?!\\\",1.6],[\\\"dig4\\\",\\\"just one more\\\",1.4],[\\\"l5\\\",\\\"oh no\\\",3]]\" --speed [[\"seen1\",\"dig1\",\"cut\"],[\"seen2\",\"dig2\",\"cut\"],[\"seen3\",\"dig3\",\"cut\"],[\"seen4\",\"dig4\",\"cut\"],[\"dig1:0.3\",\"l2:-0.35\",2],[\"dig2:0.3\",\"l3:-0.35\",2],[\"dig3:0.3\",\"l4:-0.35\",2],[\"dig4:0.3\",\"l5:-0.35\",2],[\"in_lava:1.0\",\"death:-0.4\",4]] --hook \"{\\\"at\\\":\\\"l5\\\",\\\"before\\\":0,\\\"after\\\":0.9,\\\"text\\\":\\\"how it ends 💀\\\"}\" --sfx [[\"pop\",\"dig1\"],[\"whoosh\",\"l5:0.15\"],[\"dip\",\"death\",0.4],[\"impact\",\"death\",{\"gain\":1.4}]] --on_fire in_lava:death --death_screen death --start_at dig1:-0.05 --end_after death:1.2 --out out/cave_reveal.mp4"
   ],
   "status": "ready",
-  "notes": "re-take: hook flash of the lava drop at frame 0; one look per layer, fast cuts to the next dig; end 1.2 s after the death; review READY r2. Nitpicks: click at the 3.42 s seam; look-ups roll ~45 deg at the mineshaft",
-  "published_at": "2026-11-12T01:39:36.048Z",
+  "notes": "no-op audit (r:r4607fa): ~17 s (first cave layer cut, digs x2) and a stronger end, a ~16-block fall into a huge lava cavern; new take; READY",
+  "published_at": "2026-11-12T06:31:43.815Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:40:14+00:00",
+    "at": "2026-11-12T06:32:16+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 23.21 s vs the reviewed render 23.20 s"
+      "summary": "short.mp4 17.05 s vs the reviewed render 17.04 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 6,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:37:22.282Z",
+      "at": "2026-11-12T06:29:56.917Z",
       "report": "work/hb/cave_reveal.check.json"
     },
     "key_sounds": "n/a"
