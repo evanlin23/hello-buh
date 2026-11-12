@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "big_done",
     "drop_in_song_s": 38.25,
-    "drop_in_short_s": 29.88,
-    "song_start_s": 8.37
+    "drop_in_short_s": 29.55,
+    "song_start_s": 8.7
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.38,
+    "duration_s": 30.05,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21627710,
-    "sha256": "90232e1e32bbde83515344457c15277434415ba7499e1b682d622bae1cb48f86",
+    "bytes": 21338206,
+    "sha256": "277a04e8af0a5ef8fcd5501307d56dbcebef37aa8dfb3c91614c8eae44299921",
     "release": {
       "tag": "pkg-lapse_rocket",
-      "asset": "lapse_rocket.short.90232e1e32bbde83.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.90232e1e32bbde83.mp4",
-      "sha256": "90232e1e32bbde83515344457c15277434415ba7499e1b682d622bae1cb48f86",
-      "bytes": 21627710
+      "asset": "lapse_rocket.short.277a04e8af0a5ef8.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short.277a04e8af0a5ef8.mp4",
+      "sha256": "277a04e8af0a5ef8fcd5501307d56dbcebef37aa8dfb3c91614c8eae44299921",
+      "bytes": 21338206
     },
     "nosong_release": {
       "tag": "pkg-lapse_rocket",
-      "asset": "lapse_rocket.short_nosong.7645e5f50639aac3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short_nosong.7645e5f50639aac3.mp4",
-      "sha256": "7645e5f50639aac36f500162b7f56402145a66b258568ca42cbd4d8d26c10618",
-      "bytes": 21547362
+      "asset": "lapse_rocket.short_nosong.3030cfd066f079aa.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_rocket/lapse_rocket.short_nosong.3030cfd066f079aa.mp4",
+      "sha256": "3030cfd066f079aa00a786e990ca0748223df9602b289ccebdaf9b7eba496ac2",
+      "bytes": 21261749
     }
   },
   "edit": {
@@ -62,11 +62,16 @@
       ],
       [
         "mid_start",
-        "mid_done",
+        "mid_done:-1.65",
         3
       ],
       [
-        "cut2_a",
+        "mid_done:-1.65",
+        "mid_done",
+        4
+      ],
+      [
+        "mid_done:0.4",
         "cut2_b",
         "cut"
       ],
@@ -214,10 +219,12 @@
     "args": [
       "--caption",
       "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
+      "--self_name",
+      "56e",
       "--red",
       "hour",
       "--speed",
-      "[[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]]",
+      "[[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done:-1.65\",3],[\"mid_done:-1.65\",\"mid_done\",4],[\"mid_done:0.4\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]]",
       "--clock",
       "[[\"small_start\",\"small_done\",1,\"1 SECOND\"],[\"mid_start\",\"mid_done\",60,\"1 MINUTE\"],[\"big_start\",\"big_done\",3600,\"1 HOUR\"]]",
       "--punch",
@@ -8385,12 +8392,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/lapse_rocket",
-    "commit": "9d15ee54be4909392c2d6c8ab62362cc58bfe92c",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43061064120",
-    "rendered_at": "2026-11-11T16:57:19.778Z",
-    "head_at_publish": "4e9c583bfc0ee7e2b331441dfe382d14ca94f1c8",
+    "branch": "main",
+    "commit": "99afdffe83be7ae3a4d41622163396aaf137e233",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T00:31:45.984Z",
+    "head_at_publish": "99afdffe83be7ae3a4d41622163396aaf137e233",
     "stunt": "stunts/lapse_rocket.js",
     "source_snapshot": [
       "source/lapse_rocket.js",
@@ -8401,35 +8407,35 @@
     ]
   },
   "rebuild": [
-    "git checkout 9d15ee54be49",
+    "git checkout 99afdffe83be",
     "gunzip -c shorts/lapse_rocket/recording.json.gz > work/lapse_rocket.rec.json",
     "node render.js work/lapse_rocket.rec.json work/lapse_rocket.frames 60 1080 1011",
     "python3 audio.py work/lapse_rocket.rec.json work/lapse_rocket.wav",
-    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
+    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --self_name 56e --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done:-1.65\",3],[\"mid_done:-1.65\",\"mid_done\",4],[\"mid_done:0.4\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 lapse worker: owner r:r66efa4 ('more angles when we're showing the last thing'; the 1-minute round's turns 'too slow'): the x3 1-minute round turns fast between placements (no 220/speed cap; crosshair dead on all placements, r:rffba12; no stall, r:r478786); the 1-hour build from 7 clearly different steady angles joined by hard cuts (low front, side, nose close, high wide; showcase: low right, over the nose, hero wide), each a slow straight move (r:r200cfe per angle). Recorded as 56e. check/pace/mixcheck OK; independent review READY round 1. Nitpicks: nose shot ~1.1 s few new blocks, faint flash, high wide rocket small",
-  "published_at": "2026-11-11T17:14:18.030Z",
+  "notes": "fast cuts r:r188b46: 1.2 s after the last scaffold break -> 0.75 s (x4 tail, cut 0.4 s into the 1:00 pull-back); fix-check READY (fresh reviewer)",
+  "published_at": "2026-11-12T00:34:11.749Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T17:14:52+00:00",
+    "at": "2026-11-12T00:34:49+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.40 s vs the reviewed render 30.38 s"
+      "summary": "short.mp4 30.06 s vs the reviewed render 30.05 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T16:44:23.575Z",
-      "report": "out/lapse_rocket.check.json"
+      "at": "2026-11-12T00:32:10.273Z",
+      "report": "work/hb/lapse_rocket.check.json"
     },
     "key_sounds": "n/a"
   }
