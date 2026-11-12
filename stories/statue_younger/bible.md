@@ -1,4 +1,4 @@
-# statue_younger: continuity bible (r1)
+# statue_younger: continuity bible (r2)
 
 ## Places
 | place | where (map.json) | what fills it | used in |
@@ -28,19 +28,18 @@ No rain or cloud in any shot ("the rain" is Dad's cover).
 |---|---|---|---|
 | the kid (narrator) | player, `spare_boy` skin (chestnut swept fringe, burgundy hoodie), about 9; never named, no name tag | `narrator` (Leda, Pip) | seen S05; POV S06-S11 |
 | Dad | player actor, NEW `statue_dad`: forties, short grey hair, grey stubble, rust-red flannel, dark jeans; no name tag | Umbriel or Alnilam (audition, L04) | S01 (small, at the bench), S04, S05, S11 |
-| Mom | player actor, NEW `statue_mom` (dark brown low ponytail, sage-green dress, brown boots); `statue_mom_1` one grey streak, left temple; `statue_mom_2` two streaks; brown leather cap (dyed leather helmet) S08-S10; no name tag | Vindemiatrix or Zephyr (audition, L07) | S05, S06, S07, S08, S09, S10, S11 |
+| Mom | player actor, NEW `statue_mom` (dark brown low ponytail, sage-green dress, brown boots); `statue_mom_1` one grey streak from the left temple back through the ponytail; `statue_mom_2` two streaks + a one-pixel dark brow line (the stone rows' colour); brown leather cap (dyed leather helmet) S08-S10; no name tag | Vindemiatrix or Zephyr (audition, L07) | S05, S06, S07, S08, S09, S10, S11 |
 | the neighbour | plains villager (no profession, or farmer) | none | S02, S01/S05 background |
 | other neighbours | 2-3 plains villagers | none | S01, S05 |
 
 Mom's skin by shot: S05-S07 `statue_mom` (no grey); S08 `statue_mom_1` then cap on HAT; S09 cap on; S10 cap off in her
-left hand, `statue_mom_1` -> `statue_mom_2` on FACE (the mark); S11 `statue_mom_2`, cap in her lap.
+left hand, `statue_mom_1` -> `statue_mom_2` on FACE (the mark); S11 `statue_mom_2`, cap in her lap. The kid holds nothing (S06-S11).
 
 ## Props and their states
 | prop | state | shots |
 |---|---|---|
-| the statue's wrinkles (cobbled deepslate rows; a removed row leaves a pale smooth-stone stripe) | 19 rows on day 3892 (20 never shown); S02 shows a row being added on day ~3880 (that row is part of the 19); S03: 19 -> 12 over seven dawns; S01 and S08's day (3899): 12 rows + 7 stripes; S10: 12 -> 11, 8 stripes; S11: 11 + 8 | S01, S02, S03, S10, S11 |
+| the statue's wrinkles (cobbled deepslate rows; a removed row leaves a pale calcite stripe) | 19 rows on day 3892 (20 never shown); S02 shows a row being added on day ~3880 (that row is part of the 19); S03: 19 -> 12 over seven dawns; S01 and S08's day (3899): 12 rows + 7 stripes; S10: 12 -> 11, 8 stripes; S11: 11 + 8 | S01, S02, S03, S10, S11 |
 | candle cakes on the plinth | S02: one lit; S05: three older ones, candles out | S02, S05 |
-| the poppy | in the kid's main hand | S09, S10, S11 |
 | Mom's cap | on from S08's HAT; off in her hand at S10; in her lap S11 | S08-S11 |
 | Dad's bread | on the table | S04 |
 | bench | two oak stairs with sign arms at the plinth's east foot | S01, S05, S11 |
@@ -53,11 +52,12 @@ left hand, `statue_mom_1` -> `statue_mom_2` on FACE (the mark); S11 `statue_mom_
 
 ## Who knows what
 - The kid: the rule; that rows vanish; Dad's "rain"; Mom's "walks"; Mom's grey hair. Not why, until S10.
-- Dad: knows (he is on the bench waiting in S11); covers with "the rain".
+- Dad: knows (he is on the bench waiting in S11); covers with "just rain".
 - Mom: everything; hides the grey to keep it quiet until she's caught up.
 - The neighbours: nothing.
 
 ## Positions and screen direction
+- The Cliff House (canon, -514, 121, -765) is ~70 blocks behind the statue in the west-facing shots (S01, S03, S09, S10): frame it out behind the statue's bulk or keep it as a far speck (it exists on day 3900, so a speck is canon-true).
 - The statue faces east; the camera looks west at it in S01, S03, S09, S10, S11; the sunrise (east) is behind the
   camera in S01 and S03 and in front of it in S11 (the reverse: S11 looks east over the bench at the sunrise, the
   statue's chin at frame left). Mom walks right-to-left (east to west) to the statue in S09.

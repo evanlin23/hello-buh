@@ -1,4 +1,4 @@
-# statue_younger: shot list (r1)
+# statue_younger: shot list (r2)
 
 Screen direction: the statue faces east; the hamlet's cottages are east of it; the kid's cottage is the east one.
 Every shot in Stonefold, days 3893-3900 (S02 day ~3880). WS by default; the size changes at every cut; close-ups only
@@ -14,6 +14,6 @@ for the hidden grey hair (S08). story.json `shots` holds the camera and frame te
 | S06 | L06 | WS | 23000 | kid POV from bed through the doorways | Mom eases the front door open and slips out; the statue not in frame |
 | S07 | L07 | MCU | 0 | kid POV at the door, eye 1.1, looking up | Mom back at sunrise, smiling, no grey yet; says L07 |
 | S08 | L08 | CU | 1000 (day 3899) | kid POV across the table | one grey streak; on HAT she pulls on the brown cap |
-| S09 | L09 | WS | 23200 (day 3899/3900) | kid POV low at a cottage corner, poppy bottom-right | Mom in her cap crossing the meadow to the dark statue |
-| S10 | L10 | MCU | 23600 | kid POV at a cottage corner 6 south-east of the plinth, slight push; the bench out of frame left | cap off, hand on the stone; trail stone -> Mom; one row goes; on FACE her second streak (mark `wrinkle`, the hit) |
-| S11 | L11, L12 | WS | 0 (day 3900) | kid POV by the plinth, 8 behind the bench, looking east, still, poppy bottom-right | from behind: Dad already on the bench; Mom sits; their grey heads side by side; he takes her hand on DAD; sunrise east, Larkfield's west roofs and bell dark on the skyline (easter egg); hold; cut 1.0 s after L12 |
+| S09 | L09 | WS | 23200 (day 3899/3900) | kid POV low at a cottage corner, looking west | Mom in her cap crossing the meadow to the dark statue; the Cliff House framed out |
+| S10 | L10 | MS -> MCU | 23600 | kid POV at a cottage corner 6 south-east of the plinth, push in; the bench out of frame left | cap off, hand on the stone; trail stone -> Mom; one row -> calcite stripe; she turns east on STONE; MCU of her face on FACE: brow line + second streak (statue_mom_2, mark `wrinkle`, the hit) |
+| S11 | L11 | WS | 0 (day 3900) | kid POV by the plinth, 8 behind the bench, looking east, still | from behind: Dad already on the bench; Mom sits; grey hair and streaks through her ponytail side by side; he turns his head to her on DAD; sunrise east, Larkfield's west roofs and bell dark on the skyline (easter egg); hold; cut 1.0 s after L11 |

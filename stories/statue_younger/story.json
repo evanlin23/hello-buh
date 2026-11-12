@@ -2,7 +2,7 @@
  "name": "statue_younger",
  "stunt": "story_statue_younger",
  "version": 2,
- "revision": "r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/statue_younger.md; premise A on claude/batch4-blocky, from blocky ep99 statue-years). The critic's fixes applied: L01 as fixed (no stock 'nobody will tell me why': STANDARDS 0w, owner 2026-11-12); a number (SEVEN this week); the climax (the kid follows Mom before sunrise) and the reveal over her hand on the statue as a wrinkle moves onto her face; clue 4 bright ('I think she's EMBARRASSED'); Mom and Dad are player actors with grey-hair skins (new skins: grandpa_gullwick / grandma_island are The Walk's and read as grandparents); first frame the giant stone face beside a hamlet with one grey head.",
+ "revision": "r2 (2026-11-12): critic r1 REVISE (6.8) must-fixes: L11 'Mom was taking her years back...' CUT (the kid says what she sees, L10; 0a); S10 she turns east on STONE and the push lands on her face on FACE (statue_mom_2 gets a brow line + a second streak); S11 streaks through the ponytail so they read from behind, Dad turns his head to her (no hand-hold pose); L09 the want ('Where does she even WALK?') and full voice. Should-fixes: L04 Dad's own voice ('Just RAIN. Wears the stone SMOOTH.'); L06 no longer echoes L03 ('And Mom goes on a WALK. Every DAY.'); L07 Mom's own voice ('Gotta keep my LEGS young!'); calcite stripes; the face 24 tall; the Cliff House framed out. Readers r1 (2 casual + 1 gamer) all guessed it by L08 (60/75/60 %) and flagged the unpaid poppy: the flower is cut. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/statue_younger.md; premise A on claude/batch4-blocky, from blocky ep99 statue-years). The critic's fixes applied: L01 as fixed (no stock 'nobody will tell me why': STANDARDS 0w, owner 2026-11-12); a number (SEVEN this week); the climax (the kid follows Mom before sunrise) and the reveal over her hand on the statue as a wrinkle moves onto her face; clue 4 bright ('I think she's EMBARRASSED'); Mom and Dad are player actors with grey-hair skins (new skins: grandpa_gullwick / grandma_island are The Walk's and read as grandparents); first frame the giant stone face beside a hamlet with one grey head.",
  "caption": "why is the statue getting younger 🗿",
  "upload": {
   "title": "nobody in my village gets old. except the statue 🗿 #minecraft #shorts",
@@ -19,7 +19,7 @@
  "logline": "In a hamlet where everyone gives a giant stone statue one year on their birthday so nobody gets old, the statue loses a wrinkle every morning; the kid follows Mom before sunrise and sees a wrinkle slide off the stone onto her face: she is taking her years back to grow old with Dad.",
  "question": "why is the statue getting younger?",
  "premise": "Stonefold, a hamlet on the High Meadow: everyone gives the giant stone face one year on their birthday, and nobody gets old. Only Dad has grey hair: he never gave a year. Now the statue loses one wrinkle every morning (seven this week), Mom slips out before sunrise every day, and today Mom has a grey hair she hides under her hat.",
- "twist": "Mom is taking her years back from the statue, one every morning, so she can grow old next to Dad. Said by the kid over the picture: a wrinkle slides off the stone onto Mom's face; then 'Mom was taking her years back, so she could get old with Dad.'",
+ "twist": "Mom is taking her years back from the statue, one every morning, so she can grow old next to Dad. The kid says what she sees: 'a wrinkle slid off the stone, onto HER face'; then Dad is already waiting on the statue's bench, and the sting: 'Nobody gets old in my village. Except Mom. And Dad.'",
  "family": "secret_kindness",
  "key_color": "#C9C2B8",
  "mood": [
@@ -28,8 +28,8 @@
  ],
  "mood_note": "a light mystery (the kid's bright puzzle), warm and a little tearful on the reveal; never scary",
  "payoff": "wrinkle",
- "payoff_note": "`wrinkle`: the stunt mark in S10 when Mom's skin takes the second grey streak, on L10's FACE (the hit and the picture change). L11 (the reveal SAID) and L12 (the one beat, echoing L01) play over S11; the Short ends 1.0 s after L12.",
- "punch_note": "hook L01, the climax L09, the reveal L11",
+ "payoff_note": "`wrinkle`: the stunt mark in S10 when Mom's skin takes the brow line and second streak, on L10's FACE (the hit and the picture change; L10 is the reveal SAID: what the kid sees). L11 (the one beat, echoing L01) plays over S11; the Short ends 1.0 s after L11.",
+ "punch_note": "hook L01, the climax L09, the reveal L10",
  "look": {
   "time": 1000,
   "fog": false,
@@ -57,7 +57,7 @@
    "ref": "narrator",
    "color": "#FFFFFF",
    "plain_say": true,
-   "on_screen": "the kid (about 9), a player, `spare_boy` skin (docs/world/canon.md Original skins: a spare; move it up to this character), never named, no name tag; POV in S06-S11, seen in S05. Voice: cast `narrator` (Leda, Pip's recipe)."
+   "on_screen": "the kid (about 9), a player, `spare_boy` skin (docs/world/canon.md Original skins: a spare; move it up to this character), never named, no name tag; POV in S06-S11 (no held item), seen in S05. Voice: cast `narrator` (Leda, Pip's recipe)."
   },
   "Dad": {
    "role": "character",
@@ -68,7 +68,7 @@
    "on_screen": "player actor, NEW SKIN NEEDED `statue_dad`: a man in his forties, short grey hair, grey stubble, kind face; a rust-red flannel shirt, dark jeans. Not `grandpa_gullwick` (bald crown + full white beard reads as a grandpa, and it is The Walk's: one look per character, STANDARDS 7a). No name tag. One voiced line (L04), on screen.",
    "skin": "statue_dad (new)",
    "audition": {
-    "line": "L04 \"Just the RAIN, kiddo.\"",
+    "line": "L04 \"Just RAIN. Wears the stone SMOOTH.\"",
     "bracket": "[A warm dad in his forties, easy and teasing]",
     "candidates": [
      {
@@ -92,10 +92,10 @@
    "voice": "Vindemiatrix",
    "model": "gemini-3.8-flash-tts",
    "color": "#F2B8C6",
-   "on_screen": "player actor, NEW SKIN NEEDED `statue_mom` in three states: dark brown hair in a low ponytail (S05-S07); `statue_mom_1` one grey streak at the left temple (S08, S09 under the cap); `statue_mom_2` two streaks (S10 from FACE, S11). A sage-green dress, brown boots; a brown leather cap (dyed leather helmet) from S08 to S10. Not `grandma_island` (an old woman's look, The Walk's). No name tag. One voiced line (L07), on screen.",
+   "on_screen": "player actor, NEW SKIN NEEDED `statue_mom` in three states: dark brown hair in a low ponytail (S05-S07); `statue_mom_1` one grey streak from the left temple back through the ponytail (S08, S09 under the cap); `statue_mom_2` two streaks + a one-pixel dark brow line in the stone rows' colour (S10 from FACE, S11); the streaks run through the ponytail so they read from behind (S11). A sage-green dress, brown boots; a brown leather cap (dyed leather helmet) from S08 to S10. Not `grandma_island` (an old woman's look, The Walk's). No name tag. One voiced line (L07), on screen.",
    "skin": "statue_mom (new; 3 states)",
    "audition": {
-    "line": "L07 \"Morning WALK, sweetie!\"",
+    "line": "L07 \"Gotta keep my LEGS young!\"",
     "bracket": "[A young mom, breezy and quick, hiding a smile]",
     "candidates": [
      {
@@ -129,10 +129,9 @@
     "L08",
     "L09",
     "L10",
-    "L11",
-    "L12"
+    "L11"
    ],
-   "direction": "One continuous telling: a bright, curious kid with a mystery, quick and sure, never scared; the reveal (L11) slower, soft with wonder."
+   "direction": "One continuous telling: a bright, curious kid with a mystery, quick and sure, never scared; L10 slower, wide-eyed."
   },
   {
    "id": "rD",
@@ -236,14 +235,14 @@
   {
    "id": "L04",
    "who": "Dad",
-   "text": "Just the RAIN, / kiddo.",
-   "say": "Just the RAIN, kiddo.",
+   "text": "Just RAIN. / Wears the stone SMOOTH.",
+   "say": "Just RAIN. Wears the stone SMOOTH.",
    "shot": "S04",
    "look": {
     "what": "actor:Dad"
    },
    "direction": "easy and teasing, not looking up from his bread",
-   "note": "Dad's one line, on screen while he says it. Two-way clue 1: the S03 lapse has seven clear mornings, no rain."
+   "note": "Dad's one line (critic r1 should-fix: his own voice, and it answers 'why would rain do that?'), on screen. Two-way clue 1: the S03 lapse has seven clear mornings, no rain."
   },
   {
    "id": "L05",
@@ -269,8 +268,8 @@
   {
    "id": "L06",
    "who": "N",
-   "text": "And Mom sneaks out / before SUNRISE. / Every DAY.",
-   "say": "And Mom sneaks out before sunrise. Every day.",
+   "text": "And Mom goes on a WALK. / Every DAY.",
+   "say": "And Mom goes on a walk. Every day.",
    "shot": "S06",
    "shows": [
     {
@@ -282,21 +281,22 @@
    ],
    "look": {
     "what": "actor:Mom",
-    "word": "SUNRISE"
+    "word": "WALK"
    },
-   "direction": "a little conspiratorial, bright"
+   "direction": "a little conspiratorial, bright",
+   "note": "clue 3 (critic r1: no longer echoes L03's 'every MORNING'; S06 still shows her leaving at pre-dawn, unsaid)"
   },
   {
    "id": "L07",
    "who": "Mom",
-   "text": "Morning WALK, / sweetie!",
-   "say": "Morning WALK, sweetie!",
+   "text": "Gotta keep my LEGS / young!",
+   "say": "Gotta keep my LEGS young!",
    "shot": "S07",
    "look": {
     "what": "actor:Mom"
    },
-   "direction": "breezy, a little too quick, a smile in it",
-   "note": "Mom's one line, on screen at the door at sunrise. Clue 3 (where she goes) with its misreading in her own words."
+   "direction": "breezy and quick, a wink in it",
+   "note": "Mom's one line, on screen at the door at sunrise (critic r1: her own voice, not 'sweetie'). Two-way: she says the opposite of what she's doing."
   },
   {
    "id": "L08",
@@ -328,15 +328,15 @@
   {
    "id": "L09",
    "who": "N",
-   "text": "So before SUNRISE, / I followed her / with a FLOWER.",
-   "say": "So before sunrise, I followed her with a flower.",
+   "text": "So before SUNRISE, / I followed her. / Where does she even WALK?",
+   "say": "So before sunrise, I followed her. Where does she even walk?",
    "shot": "S09",
    "shows": [
     {
      "what": [
-      "poppy"
+      "actor:Mom"
      ],
-     "word": "FLOWER"
+     "word": "FOLLOWED"
     }
    ],
    "look": {
@@ -344,8 +344,8 @@
     "word": "FOLLOWED"
    },
    "punch": true,
-   "direction": "sneaky-proud, on a mission; whisper-bright, not hushed",
-   "note": "the climax: the narrator goes to look (agency: to cheer her up). The rule turns against itself in the next shot."
+   "direction": "sneaky-proud, bright, full voice; the question up and curious",
+   "note": "the climax: the narrator says she wants to know (critic r1 blocker) and goes to look"
   },
   {
    "id": "L10",
@@ -371,34 +371,12 @@
     "what": "actor:Mom",
     "word": "FACE"
    },
-   "direction": "slower, wide-eyed, saying exactly what she sees; FACE lands with the picture",
-   "note": "what she SEES (story_format 6): the trail runs stone -> Mom (S02's in reverse), the wrinkle row goes, a second grey streak comes onto Mom (skin swap) on FACE; payoff mark `wrinkle`"
+   "direction": "slower, wide-eyed, saying exactly what she sees; FACE lands with the close-up",
+   "note": "the reveal SAID (story_format 6, critic r1): the trail runs stone -> Mom (S02 reversed); she turns east on STONE; push to her face on FACE: a new dark brow line and a second grey streak (statue_mom_2); payoff mark `wrinkle`. The kid says what she sees; the viewer makes the jump to Dad in S11.",
+   "punch": true
   },
   {
    "id": "L11",
-   "who": "N",
-   "text": "Mom was taking / her years BACK, / so she could get old / with DAD.",
-   "say": "Mom was taking her years back, so she could get old with Dad.",
-   "shot": "S11",
-   "shows": [
-    {
-     "what": [
-      "actor:Dad",
-      "actor:Mom"
-     ],
-     "word": "DAD"
-    }
-   ],
-   "look": {
-    "what": "actor:Dad",
-    "word": "DAD"
-   },
-   "punch": true,
-   "direction": "the reveal, plain and soft with wonder, one breath; DAD warm",
-   "note": "the reveal SAID in one plain sentence, over Dad on the bench turning to Mom"
-  },
-  {
-   "id": "L12",
    "who": "N",
    "text": "NOBODY gets old / in my village. / Except MOM. / And DAD.",
    "say": "Nobody gets old in my village. Except Mom. And Dad.",
@@ -407,7 +385,7 @@
     "what": "actor:Mom"
    },
    "direction": "the sting, quiet and proud, a tiny smile; cut 1 s after DAD",
-   "note": "the one beat: echoes L01 ('nobody gets old, except the statue') and loops into it"
+   "note": "the one beat: echoes L01 ('nobody gets old, except the statue') and loops into it; said over Dad on the bench turning to Mom"
   }
  ],
  "shots": [
@@ -532,8 +510,8 @@
    ],
    "place": "stonefold",
    "size": "ws",
-   "camera": "kid POV low behind a cottage corner, the poppy in the kid's main hand at frame bottom-right",
-   "frame": "pre-dawn blue-grey; Mom in her cap walking across the meadow, away from camera, toward the dark statue (first time we see where she goes). Time 23200.",
+   "camera": "kid POV low behind a cottage corner, looking west",
+   "frame": "pre-dawn blue-grey; Mom in her cap walking across the meadow, away from camera, toward the dark statue (first time we see where she goes); the Cliff House framed out (statue's bulk covers it). Time 23200.",
    "look": {
     "time": 23200
    }
@@ -547,7 +525,7 @@
    "place": "stonefold",
    "size": "mcu",
    "camera": "kid POV from the corner of the nearest cottage, 6 blocks south-east of the plinth, a slight push in; the bench is out of frame left (S11 shows who is on it)",
-   "frame": "Mom's cap off, her hand on the stone (arm swing into the block); a sparkle trail runs FROM the stone TO Mom's face (S02 in reverse); one wrinkle row on the stone pops out; on FACE Mom's skin swaps to two grey streaks (statue_mom_2). Payoff mark `wrinkle` on the swap. Time 23600, first light behind the statue's shoulder.",
+   "frame": "Mom's cap off, her hand on the stone (arm swing into the block); a sparkle trail runs FROM the stone TO her head (S02 in reverse); one dark row on the stone becomes a calcite stripe; on STONE she turns east toward the camera (eased); push in to an MCU of her face on FACE as her skin swaps to statue_mom_2 (a one-pixel dark brow line in the stone rows' colour + a second grey streak). Payoff mark `wrinkle` on the swap. Time 23600, first light.",
    "look": {
     "time": 23600
    },
@@ -557,13 +535,12 @@
    "id": "S11",
    "line": "L11",
    "lines": [
-    "L11",
-    "L12"
+    "L11"
    ],
    "place": "stonefold",
    "size": "ws",
-   "camera": "kid POV from beside the plinth, 8 blocks behind the bench, looking east, still; the poppy at frame bottom-right",
-   "frame": "from behind: Dad already sitting on the bench, waiting; Mom sits down beside him; his short grey hair and her two grey streaks side by side against the sunrise; he takes her hand on DAD (L11). On the east skyline Larkfield's west roofs and bell, small and dark (pre-torch, day 3900): the easter egg, never named. Hold; cut 1.0 s after L12's DAD. Time 0.",
+   "camera": "kid POV from beside the plinth, 8 blocks behind the bench, looking east, still",
+   "frame": "from behind: Dad already sitting on the bench, waiting; Mom sits down beside him; his short grey hair and her grey streaks (run back through her ponytail so they read from behind) side by side against the sunrise; on DAD he turns his head to her (eased; no hand-hold pose exists). On the east skyline Larkfield's west roofs and bell, small and dark (pre-torch): the easter egg, never named. Hold; cut 1.0 s after L11's DAD. Time 0.",
    "look": {
     "time": 0
    }
@@ -598,16 +575,13 @@
     0,
     0
    ],
-   "note": "a giant stone face (head only), about 15 wide x 16 tall x 6 deep, stone, facing east; eyes of polished andesite, a broad nose; the wrinkles are 1-tall rows of cobbled deepslate across the brow and cheeks; a removed row leaves a pale smooth-stone stripe. Counts: 19 rows on day 3892 (S02's row was added on day ~3880); the lapse (S03) takes 7 (19 -> 12, days 3893-3899); S01 (day 3899) shows 12 rows + 7 pale stripes; S10 (dawn of day 3900) takes 1 more: 11 rows + 8 stripes. A plinth (2 tall) under the chin with candle cakes."
+   "note": "a giant stone face (head only), about 22 wide x 24 tall x 8 deep (critic r1: big enough to read at 300 px), stone, facing east; eyes of polished andesite, a broad nose; the wrinkles are 1-tall rows of cobbled deepslate across the brow and cheeks; a removed row leaves a CALCITE stripe (pale, reads against stone). Counts: 19 rows on day 3892 (S02's row was added on day ~3880); the lapse (S03) takes 7 (19 -> 12, days 3893-3899); S01 (day 3899) shows 12 rows + 7 stripes; S10 (dawn of day 3900) takes 1 more: 11 rows + 8 stripes. A plinth (2 tall) under the chin with candle cakes."
   },
   "bench": {
    "note": "two oak stairs side by side with sign arms, at the plinth's east foot"
   },
   "candle_cake": {
    "note": "cake with a lit candle on the plinth (S02), and older uneaten ones (S05)"
-  },
-  "poppy": {
-   "note": "the kid's flower, main hand, S09-S11"
   },
   "cap": {
    "note": "Mom's leather helmet dyed brown, S08-S10 (off in her hand at S10's touch)"
@@ -616,18 +590,18 @@
  "ending": {
   "after": "L10",
   "beats": [
-   "S10: the trail stone -> Mom, the wrinkle row goes, her skin swaps on FACE (mark `wrinkle`, the hit)",
-   "S11: L11 the reveal said over Dad and Mom on the bench",
-   "L12 the one beat, echoing L01; hold 1.0 s; cut"
+   "S10: the trail stone -> Mom, the row goes, she turns, the push to her face on FACE (mark `wrinkle`, the hit)",
+   "S11: L11 the one beat, echoing L01, over Dad on the bench turning to Mom",
+   "hold 1.0 s; cut"
   ],
-  "loop": "L12 'Nobody gets old in my village. Except Mom. And Dad.' runs into L01 'In my village, nobody gets old, except the statue.'"
+  "loop": "L11 'Nobody gets old in my village. Except Mom. And Dad.' runs into L01 'In my village, nobody gets old, except the statue.'"
  },
  "bible": "stories/statue_younger/bible.md",
  "beats": "stories/statue_younger/beats.md",
  "set": "stories/statue_younger/set.md",
  "shotlist": "stories/statue_younger/shots.md",
  "hotbar": [],
- "hotbar_note": "No HUD: POV shots hide the hotbar; the poppy shows in the kid's hand (S09-S11).",
+ "hotbar_note": "No HUD and no held item: POV shots hide the hotbar.",
  "engine": {
   "have": [
    "player actors with skins, held items, arm swing",
@@ -641,7 +615,8 @@
    "a particle trail between two points (head <-> stone) on a timed mark (S02 forward, S10 reverse)",
    "a block change on a timed mark mid-shot (the wrinkle row in S02 and S10)",
    "a 7-dawn lapse cut (S03): seven sunrise frames with a set change per cut",
-   "three new skins via scripts/make_story_skins.py: statue_dad, statue_mom (+_1, _2)"
+   "three new skins via scripts/make_story_skins.py: statue_dad, statue_mom (+_1, _2)",
+   "Dad turns his head to Mom while seated (eased head yaw on a sitting actor; no hand-hold pose in renderer/poses.js)"
   ]
  }
 }
