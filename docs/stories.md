@@ -443,6 +443,12 @@ STANDARDS.md in the same commit.
   the cuts need to be cleaner, we should do into a hole 1x1 and then come out of the sky? need cleaner"** The
   `mislabel` parkour uses sideways (left/right) double extensions, the classic bridge-out move, not blocks placed
   upward. The transition is one clean move: drop into a 1x1 hole, cut, come out of the sky.
+- **Owner, 2026-11-12: "We need to be optimizing our hook as well as the viewer satisfaction. They need to look at the
+  reel, and when they're done watching it, be like, I got something out of that. It can't be a no-op, bro. It
+  absolutely cannot be a no-op."** Every Short is judged on two things before anything else: the hook (r:r0f3da0) and
+  the takeaway. The takeaway test: in one sentence, what did the viewer get out of it (a laugh at a clear joke, a
+  "whoa" at a big result, a satisfying finish, a thing they didn't know)? If the honest answer is "nothing much", a
+  small result, or "it just ends", the Short is a no-op and does not ship: make the payoff bigger or drop it.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -717,6 +723,22 @@ STANDARDS.md in the same commit.
   blocky characters, the places), not the twist: the twist no longer has to be a vanilla mechanic. Premises can come
   straight from blocky-stories (the owner's Roblox-style channel) and the Roblox hits. Everything else holds: the
   format (docs/story_format.md), naivety, the casual viewer gets it, the shared world as background.
+- **Owner, 2026-11-12, asked "Should we do the likle 'in my world,... ' sort of intro or 'in my town'", then on the
+  lead's plan (In my village / In my world / My [family member]): "sure lets do this, for all of them".** Line 1 opens
+  with the genre's frame: "In my village..." (a local rule), "In my world..." (a rule for everyone), or "My twin / my
+  grandpa / my best friend..." (a family premise), then the impossible fact and the "why?". All 10 approved scripts
+  take it.
+- **Owner, 2026-11-12: "Do we need to say and nobody will tell me why?"** No: the opener makes the viewer ask why
+  without saying it. After the frame and the fact comes a short clause that makes it stranger ("...and not a single one
+  came out alive"; "Only MY window."), different every story; no stock "nobody will tell me why" tag.
+- **Owner, 2026-11-12: "I just heard a hook 'in the beginning, god was non binary' we need to make our hooks absurd".**
+  Line 1 is absurd: a sentence nobody expects to hear, said flatly, that makes you stop scrolling ("I live under an
+  old man's bed. With sixty-nine of my brothers."). Still true to the story, naive, and never a joke at a real group's
+  expense. The casual cold reader judges it first: "would you stop scrolling?"
+- **Owner, 2026-11-12, on the absurd hooks: "contraversial to a point".** A hook may be edgy and provocative inside the
+  story's world (kidnapping, robbing, a kid "in love" with a bell, a grandpa "dumped"), the kind that makes people
+  comment. It stops short of real-world flashpoints (religion, gender, politics, real people or groups), which risk the
+  channel and aren't needed: the shock comes from the story's own absurd fact.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

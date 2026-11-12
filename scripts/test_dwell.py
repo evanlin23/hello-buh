@@ -109,6 +109,15 @@ class Dwell(unittest.TestCase):
         self.assertEqual(F, [])
         self.assertLessEqual(s["worst_mid"]["dwell"], 0.75)
 
+    def test_a_card_counts_at_its_nth_occurrence(self):
+        # guess_sound: each round's answer card on 'lit' (the card's 5th field is the occurrence)
+        tl = [{"t": 1000, "event": "lit"}, {"t": 4000, "event": "place"}, {"t": 4050, "event": "lit"}, {"t": 8000, "event": "end_mark"}]
+        edit = {"cards": [["lit", "COW", 1.25, "green", 0], ["lit", "LLAMA", 1.25, "green", 1]]}
+        news = {(ev, n) for ev, off, why, h, n in DW.edit_marks(edit, nth=True)}
+        self.assertEqual(news, {("lit", 0), ("lit", 1)})
+        bts = DW.beats(rec(tl), Clock(), edit)
+        self.assertIn(4.05, [b["at"] for b in bts if b["name"] == "lit"])
+
 
 if __name__ == "__main__":
     unittest.main()
