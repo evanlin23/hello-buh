@@ -400,6 +400,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
 - **Format "cooked"**: the payoff plays an ominous, dread-building track on the drop (dark NCS or a low drone and
   hit), never an upbeat bed. Check: owner, review. r:rcefdcc
+- **The music plays from frame 0**: a track whose drop comes earlier than the drop event repeats a whole bar of its
+  build until the drop lands (edit.songLoop, scripts/add_song.py prints "song loop"); never silence then a late start
+  (edit.songLate is retired). Check: mixcheck (the final mix), review, owner. r:r43062d
 - **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
   gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
   picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
@@ -415,7 +418,11 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   publish's gate run it, on the game view): BLOCK a flat frame 0 (the middle half under 0.20 and the view under 0.35
   away from its main colour, with no mob in view in the recording) and nothing moving by 0.5 s; WARN a slow
   opening, no sound hit within 6 dB of the peak by 0.5 s, no caption on frame 0, a caption over 10 words, a still
-  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
+  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0 r:rf4a259
+  **The premise reads in the first second**, from the picture and the caption together: the subject big and centred,
+  the premise's first step happening on screen as the title states it; every later step reads on one watch (no act
+  that fights the title, no set dressing that raises an unanswered question, no change too small to see). If it can't
+  be made that clear, redesign the premise. Check: review (the cold read: say the premise after 1 s), owner. r:rf4a259
 - **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
   (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
 - **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action, and
@@ -451,7 +458,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (this narrows r:r24d99a: only the action itself, a falling block, a dying mob or a blast in progress, holds a cut).
   Check: the dwell check (scripts/dwell.py in pace: a result held over 1.0 s with nothing new WARN; the end over 0.9 s
   after the payoff's result WARN, over 1.2 s BLOCK; a text payoff keeps its 1.2-1.8 s), lib/settle.js (the `settle`
-  mark lands 0.3 s after the last blast), review, owner. r:r188b46
+  mark lands 0.3 s after the last blast), review, owner. r:r188b46 r:rb645c3 (a rating list: each result 0.5 s with its
+  card, then the cut)
 - **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap

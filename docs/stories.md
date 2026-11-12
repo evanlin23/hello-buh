@@ -469,6 +469,21 @@ STANDARDS.md in the same commit.
   must loop seamlessly (the last frame leads into the first); a build sits in a real world, not superflat, and is
   detailed; the music drop lands on the payoff's reveal, never before it; and something happens from the first
   frame (r:r0f3da0).
+- **Owner, 2026-11-12, Review Room notes: on nether_portal v3 at 11.0 s "need faster cuts".** The fast-cuts rule
+  (r:r188b46) applied to a rating list: each method's result (the portal lights, or doesn't) holds about 0.5 s with
+  its card, then a hard cut to the next method. No step back, no look at the swirl, no smoke clearing in between.
+- **Owner, 2026-11-12, Review Room notes: on villager_fired v2 at 1.2 s "too slow to start in the opening, also i dont
+  understand the premise of this short".** The opening rule (r:r0f3da0): something happens on frame 0. Also, the
+  premise reads in the first second from the picture and the caption together (the subject big and centred, the first
+  step of the premise happening on screen as the title states it), and every later step reads on one watch at full
+  speed: no act that fights the title (v2 fired the villager before giving him "every job"), no set dressing that raises
+  a question the Short doesn't answer (v2's TNT showed in the ground from frame 0), no change too small to see (his
+  robe 6 blocks away). If the premise can't be made that clear, redesign it.
+- **Owner, 2026-11-12, Review Room notes: on cooked_bedrock v3 at 1.0 s "why does the music start late?".** A Short's
+  music plays from frame 0. When a pinned track's drop comes earlier in the track than the drop event, the track
+  repeats a whole bar of its build until the drop lands on the event (edit.songLoop, scripts/add_song.py). It never
+  starts late after silence (the old edit.songLate). In the `cooked` format the ominous track (r:rcefdcc) plays from
+  the first frame, goes quiet on the black, and drops on the flood.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
