@@ -1,0 +1,202 @@
+{
+ "stunt": "logic_minecraft",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/logic_minecraft.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT logic_minecraft: 1 shots, scene 0.0-25.9 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-25.9  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 6 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.033,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: diamond_axe -> diamond_shovel"
+    },
+    {
+     "level": "WARN",
+     "out": 2.717,
+     "shot": 3,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: diamond_shovel -> diamond_pickaxe"
+    },
+    {
+     "level": "WARN",
+     "out": 3.5,
+     "shot": 4,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: diamond_pickaxe -> sponge"
+    },
+    {
+     "level": "WARN",
+     "out": 4.283,
+     "shot": 5,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: sponge -> carved_pumpkin"
+    },
+    {
+     "level": "WARN",
+     "out": 5.367,
+     "shot": 6,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: carved_pumpkin -> flint_and_steel"
+    },
+    {
+     "level": "WARN",
+     "out": 7.583,
+     "shot": 8,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: flint_and_steel -> glowstone"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "4 warning(s) over 8 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 2.717,
+     "shot": 3,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (no cast, median depth 3.5 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 4.283,
+     "shot": 5,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P3 without an establishing shot (no cast, median depth 6.7 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 5.367,
+     "shot": 6,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 42% of the frame is within 3 blocks (grass_block, water)"
+    },
+    {
+     "level": "WARN",
+     "out": 7.583,
+     "shot": 8,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P4 without an establishing shot (no cast, median depth 4.5 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "21 visible sound-making events (break 13, hit 2, place 4, primed 1, splash 1), 1 with a sound mark, 20 without (audio.py adds those for a story)",
+    "     1.30s  digging oak_log                    -> block.wood.hit                     3.2 blocks in view  ",
+    "     1.50s  broke oak_log                      -> block.wood.break                   3.2 blocks in view  ",
+    "     2.00s  digging oak_log                    -> block.wood.hit                     3.0 blocks in view  ",
+    "     2.20s  broke oak_log                      -> block.wood.break                   3.1 blocks in view  ",
+    "     6.35s  broke dirt                         -> block.grass.break                  4.2 blocks in view  ",
+    "     6.45s  sand broke                         -> block.sand.break                   4.0 blocks in view  ",
+    "     6.55s  sand broke                         -> block.sand.break                   4.1 blocks in view  ",
+    "     6.65s  sand broke                         -> block.sand.break                   4.4 blocks          ",
+    "     6.75s  sand broke                         -> block.sand.break                   4.9 blocks          ",
+    "     7.25s  placed sand                        -> block.sand.place                   6.5 blocks in view  ",
+    "     7.35s  placed sand                        -> block.sand.place                   5.7 blocks in view  ",
+    "     7.45s  placed sand                        -> block.sand.place                   5.1 blocks in view  ",
+    "     7.55s  placed sand                        -> block.sand.place                   4.5 blocks in view  ",
+    "     9.70s  broke ice                          -> block.glass.break                  3.2 blocks in view  ",
+    "    10.50s  self into the water                -> entity.player.splash               1.6 blocks          ",
+    "    16.35s  iron_block broke                   -> block.metal.break                  3.2 blocks in view  ",
+    "    16.35s  iron_block broke                   -> block.metal.break                  3.4 blocks in view  ",
+    "    16.35s  iron_block broke                   -> block.metal.break                  3.7 blocks in view  ",
+    "    16.35s  iron_block broke                   -> block.metal.break                  3.4 blocks in view  ",
+    "    19.85s  tnt broke                          -> block.stone.break                  3.7 blocks in view  ",
+    "ambience per shot: -0.25-4.85s day, 4.85-8.20s day, 8.20-11.50s day, 11.50-14.90s day, 14.90-18.40s day, 18.40-25.85s day, 25.85-31.85s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T04:16:02.531Z"
+}

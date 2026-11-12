@@ -1,0 +1,17 @@
+{
+ "name": "logic_minecraft",
+ "stunt": "logic_minecraft",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43153203104",
+ "source": "5d3df037",
+ "queued": "2026-11-12T04:11:54Z",
+ "finished": "2026-11-12T04:23:42Z",
+ "mp4": "renders/out/logic_minecraft.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
