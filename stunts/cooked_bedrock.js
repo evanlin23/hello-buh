@@ -37,6 +37,12 @@ async function build (ctx, H) {
   await c(`/setblock ${H.A(-1, 0, 1)} torch`)
   await c(`/setblock ${H.A(1, 0, -1)} torch`)
   await c(`/setblock ${H.A(-1, 2, -1)} light[level=11]`)
+  // full light in the player's own cells from the first frame (the feet cell lights the face under the crosshair): the
+  // dig is lit the same all the way down, so the grade never changes on screen (owner 2026-11-12 on v4: "the color
+  // grading changes while we are looking at the bedrock": v4 raised the light from 13 to 15 as the bedrock appeared,
+  // the warm torch-lit look turning grey mid-shot)
+  await c(`/setblock ${H.A(0, 0, 0)} light[level=15]`)
+  await c(`/setblock ${H.A(0, 1, 0)} light[level=15]`)
   // the vein: in the floor round the start, straight down the shaft, and in the shaft's walls
   for (const [x, y, z] of [[0, -1, 0], [1, -1, 0], [0, -1, -1], [-1, -1, 0], [0, -2, 0], [0, -3, 0], [1, -2, 0], [0, -2, 1], [-1, -3, 0], [0, -3, -1], [1, -4, 0], [-1, 0, -1]]) {
     await c(`/setblock ${H.A(x, y, z)} deepslate_diamond_ore`)
@@ -92,20 +98,18 @@ module.exports = makeStunt({
     for (const y of SHAFT) {
       const b = bot.blockAt(H.at(0, y, 0))
       await mine(b, effV(b))
+      // the dug cell gets the same full light at once (an invisible light block; the player falls into it): the next
+      // face under the crosshair is lit exactly like the last, so the light never shifts on screen (owner 2026-11-12)
+      H.cmd(`/setblock ${H.A(0, y, 0)} light[level=15]`, { mayFail: true })
       await fallTo(y)
-      // an invisible light block in the dug cell above the head: the shaft stays as lit as the room (the torches'
-      // light dies off a level a block, and the bedrock and its cracks read black at the bottom)
-      H.cmd(`/setblock ${H.A(0, y + 2, 0)} light[level=13]`, { mayFail: true })
       await bot.waitForTicks(8)   // a breath on each landing: three drops inside 1.5 s read as a glitch (owner check)
     }
     // 2. bedrock under the feet
     const bed = bot.blockAt(H.at(0, BEDROCK_Y, 0))
     if (!bed || bed.name !== 'bedrock') throw new Error(`cooked_bedrock: no bedrock under the feet (${bed && bed.name})`)
     ctx.mark('bedrock')
-    // full light on the bedrock's face (invisible light blocks in the player's own cells): on the dark bedrock the
-    // crack overlay (a darkening blend) only reads on a well-lit block (review r1: no cracks visible)
-    H.cmd(`/setblock ${H.A(0, BEDROCK_Y + 1, 0)} light[level=15]`, { mayFail: true })
-    H.cmd(`/setblock ${H.A(0, BEDROCK_Y + 2, 0)} light[level=15]`, { mayFail: true })
+    // (the bedrock's face is already at full light: the cell above it got its light block as it was dug; the crack
+    // overlay only reads on a well-lit block, review r1)
     await A.turnTo(H.at(0.5, BEDROCK_Y + 1, 0.5), { hold: 6 })
     // 3. mine it: it cracks like any block (the dig at an Efficiency V netherite pickaxe's pace for ~2 s), and at the
     //    end of the dig it breaks (the one staged thing: /setblock to air, the break's particles and sound)

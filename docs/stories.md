@@ -502,6 +502,12 @@ STANDARDS.md in the same commit.
   repeats a whole bar of its build until the drop lands on the event (edit.songLoop, scripts/add_song.py). It never
   starts late after silence (the old edit.songLate). In the `cooked` format the ominous track (r:rcefdcc) plays from
   the first frame, goes quiet on the black, and drops on the flood.
+- **Owner, 2026-11-12, Review Room notes: on cooked_bedrock v4 at 11.3 s "I think it falls ot black for too long. Also
+  the color grading changes while we are looking at the bedrock."** A fade to black before a reveal is a beat, not a
+  wait: about 0.3-0.5 s of full black, then the reveal (v4 held 1.2 s). And the light and the grade stay constant
+  inside a shot: no light level, tint or brightness change while the camera holds on the same subject, unless the
+  change is the event itself (a blast, a fade on the payoff). v4 raised the block light from 13 to 15 as the bedrock
+  appeared, so the warm torch-lit shaft turned grey mid-shot. Light a set at its final level from the first frame.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

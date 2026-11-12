@@ -408,6 +408,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **The music plays from frame 0**: a track whose drop comes earlier than the drop event repeats a whole bar of its
   build until the drop lands (edit.songLoop, scripts/add_song.py prints "song loop"); never silence then a late start
   (edit.songLate is retired). Check: mixcheck (the final mix), review, owner. r:r43062d
+- **A fade to black is a beat (about 0.3-0.5 s of full black), and the light and grade stay constant within a shot**: no
+  light level, tint or brightness change while the camera holds one subject, unless the change is the event; a set is
+  lit at its final level from the first frame (no light blocks added on camera). Check: review (mean brightness and
+  tint of the game view per 0.1 s across each shot), owner. r:rcf9d18
 - **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
   gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
   picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
