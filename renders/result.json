@@ -1,0 +1,17 @@
+{
+ "name": "ladder_clutch",
+ "stunt": "ladder_clutch",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43302756112",
+ "source": "92145ba5",
+ "queued": "2026-11-12T20:41:08Z",
+ "finished": "2026-11-12T20:46:00Z",
+ "mp4": "renders/out/ladder_clutch.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
