@@ -1,5 +1,7 @@
 # sorry_dear: beat sheet and clue map (r2, 2026-11-12)
 
+r4 opening (2026-11-12, STANDARDS 0t): line order A kept (critic r0t); the first 8 s re-shot to the hook frame study's 0t rules (shots.md).
+
 Brief: docs/pitches/batch4_script_briefs/sorry_dear.md (+ _common.md). Premise H of
 docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories
 `ep123-sorry-shrink`. The critic's fixes (…_critic.md, "H. Sorry, Dear"): line 1 as given; the stakes (a teacup);
@@ -21,8 +23,8 @@ I shrank an INCH. WORTH it.", bloop, he drops an inch. Cut.
 ## Beats (Pip's pace, ~3 words/s; 134 words, ~44-46 s)
 | t (s) | format beat | line | picture | clue planted |
 |---|---|---|---|---|
-| 0-4 | 1. the fact + why | L01 | tabletop eye level: the aunt beside a mug her own height | the rule (sorry = an inch); her size |
-| 4-8 | 1/2. escalate + the question | L02 | tilt from her old height mark above the door down to her, tiny | she has said it ~60 times (from 2+ blocks to half a block) |
+| 0-5.3 | 1. the fact + why | L01 | 0-1.5 the aunt's face beside a mug her own height, cut on SORRY; a stranger in the lane bows and drops an inch under a sign on INCH; the kid's face looming over her and the mug on MUG | the rule (sorry = an inch); her size |
+| 5.3-9 | 1/2. escalate + the question | L02 | locked off on the door and her old height mark: three jump cuts, her at the mark, bow, bloop; smaller, bow, bloop; now mug-sized on the table looking up | she has said it ~60 times (from 2+ blocks to half a block) |
 | 8-12 | 2. rule in action | L03 | the whole table: the kid deals, she bows | clue 1: she shrinks most on cards day |
 | 12-16 | 2. | L04 | her emerald pile, taller than her; his one emerald; the lever out the window (egg) | clue 2: she wins every game |
 | 16-21 | 2. | L05 | her cards fan out flat; she pats his huge fingertip | clue 3: the sorry comes WITH the winning hand, and a pat (comfort or condescension) |
@@ -43,7 +45,7 @@ gamer can guess it there; a casual viewer has the kid's reading ("she feels SO b
 | she shrinks most on Sundays | L03 / S03 | "CARDS day. She's EXTRA nice on cards day." | cards day is when she wins the most |
 | her emerald pile, taller than her; his one emerald | L04 / S04 | "Grown-ups are just LUCKY." | she wins every game: every win is a sorry, an inch |
 | "sorry, dear" every time she lays her cards down, with a pat on his hand | L05 / S05 | "She feels SO bad for me." (L06) | it's her gloat |
-| she used to be taller than the door (one mark, 2.2 up) | L02 / S02 | (the question: why won't she stop?) | about sixty wins: 2.2 blocks down to 0.54 is ~65 inches |
+| she used to be taller than the door (one mark, 2.2 up; S02 shows her past heights in jump cuts) | L02 / S02 | (the question: why won't she stop?) | about sixty wins: 2.2 blocks down to 0.54 is ~65 inches |
 | the stakes: one more inch, a teacup (big: ~0.5, she fits after one inch) | L07 / S07 | he must save her | she'd rather be a teacup than lose |
 
 **The reveal** (L11) says it in kid words: she wasn't sorry, she was showing off. The viewer makes the one jump: "sorry,

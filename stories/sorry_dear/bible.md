@@ -1,7 +1,7 @@
 # sorry_dear: continuity bible (r2, 2026-11-12)
 
 ## World
-- **Place:** Stillwater (canon), inside the neighbour's cottage (piece `neighbour`, spruce, (-236, 70, -1028),
+- **Place:** Stillwater (canon), inside the neighbour's cottage (and, in S01b only, the lane outside it) (piece `neighbour`, spruce, (-236, 70, -1028),
   facing east): the aunt's house. The card table stands by the north-east window; set.md has the plan.
 - **Day:** 2200, a sunny Sunday afternoon. After the Long Day (800-1100) and The Chunk Next Door (1800). Day only,
   so no Gary (nights). Grandpa (Stillwater) is gone since 1100 and is not mentioned.
@@ -25,12 +25,14 @@ the habit, told over this Sunday's game; L08 on is this Sunday.
 | prop | state | shots |
 |---|---|---|
 | card table | 2 x 1 spruce-slab top on fences, a white carpet cloth; by the NE window, its north edge in front of the inside door | all |
-| mug | white, red stripe, a handle; 0.54 tall (her start height); her side, west | S01, S03, S07, S11 |
+| mug | white, red stripe, a handle; 0.54 tall (her start height); her side, west | S01, S01c, S03, S07, S11 |
 | teacup | big, white, on a saucer, ~0.5 tall and wider than her; her side, east of her | S03, S07, S11 (soft in S10) |
 | emerald pile | a heap ~0.7 tall on her side (north half, east); + his one emerald in S11 | S03, S04, S09, S11 |
 | his emerald | one, on his side (south half) by his hand; dragged to her pile in S11 | S03, S04, S06, S11 |
 | cards (paper) | dealt flat S03; her fan appears flat on the beat (S05, S09: no kicking); his fan S06, S09, S12. Never lifted to a face | S03, S05, S06, S08, S09, S12 |
-| height mark | one spruce button on the wall 2.2 blocks above the floor, over the inside door | S02 |
+| height mark | one spruce button on the wall 2.2 blocks above the floor, over the inside door | S02 (locked off; her past heights ~1.22 and ~0.8 in jump cuts, then 0.3 now) |
+| lane sign | a hanging sign over the lane outside; the stranger's hat touches its bottom before her inch | S01b |
+| the stranger | a plains villager in the lane; bows, drops one inch (scale 1.0 -> 0.986) | S01b |
 | chair | a spruce stair, south side, the kid seated | S03, S06, S08, S09, S12 |
 | the lever (egg) | canon stamp, through the NE window | S04 |
 | hotbar (the kid's) | emerald, paper x52, cookie x12, milk bucket, sugar x9, flower pot, clock, egg x67, cake | never in a POV; consistent if seen |

@@ -2,10 +2,10 @@
  "name": "sorry_dear",
  "stunt": "story_sorry_dear",
  "version": 2,
- "revision": "r3 (2026-11-12): critic r2 APPROVE (7.9) with its condition (S06: no facial animation) and should-fixes (canon wording; S12 keeps her protest small); L12 'I shrank an INCH. WORTH it.' (a round-2 casual reader still thought the aunt shrinks at the end). r2 (2026-11-12): critic r1 REVISE + three cold reads (all guessed the gloat at midpoint 55-75 %, all unsure whether the kid shrinks at the end): L05 'pats my HAND' replaces 'smiles' (two-way: comfort or condescension; no smile until L10); L11 'She wasn't SORRY. She was SHOWING OFF.' (the critic withdrew 'WINNING': it restated L04); L09 'She laid hers down SO fast.'; L12 adds 'Worth the INCH.' (the kid's own shrink said); L03 trimmed; the teacup is big (~0.5, she fits after one inch, paid off in S11); no facial animation (a baked closed smile on sorry_aunt, body poses only); no kicked card fans (they appear on the beat); S12 a CU with his hair on the sill line. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
+ "revision": "r4 opening (2026-11-12, STANDARDS 0t, hook frame study docs/research/hook_frames_2026-11-12.md): line order A kept, 'In my village, every SORRY shrinks you an INCH. My aunt is the size of a MUG.' (SORRY ~1.4-1.6 s; the critic chose A over the study's mug-first B, the casual reader preferred B, so no swap); 0-8 s re-shot: S01 an MCU on the aunt beside the mug (face >= 1/4 width), cut on SORRY to S01b (a stranger in the lane bows and drops an inch under a hanging sign on INCH), S01c the kid's face looming over her and the mug (the stake), S02 three jump cuts of her shrinking past the door mark (the rule on her body every ~1.2 s; was the slow tilt); title CAPS SORRY. r3 (2026-11-12): critic r2 APPROVE (7.9) with its condition (S06: no facial animation) and should-fixes (canon wording; S12 keeps her protest small); L12 'I shrank an INCH. WORTH it.' (a round-2 casual reader still thought the aunt shrinks at the end). r2 (2026-11-12): critic r1 REVISE + three cold reads (all guessed the gloat at midpoint 55-75 %, all unsure whether the kid shrinks at the end): L05 'pats my HAND' replaces 'smiles' (two-way: comfort or condescension; no smile until L10); L11 'She wasn't SORRY. She was SHOWING OFF.' (the critic withdrew 'WINNING': it restated L04); L09 'She laid hers down SO fast.'; L12 adds 'Worth the INCH.' (the kid's own shrink said); L03 trimmed; the teacup is big (~0.5, she fits after one inch, paid off in S11); no facial animation (a baked closed smile on sorry_aunt, body poses only); no kicked card fans (they appear on the beat); S12 a CU with his hair on the sill line. r1 (2026-11-12): first script from the batch-4 brief (docs/pitches/batch4_script_briefs/sorry_dear.md + _common.md). Premise H of docs/pitches/batch4_blocky_adapted_2026-11-11.md (branch claude/batch4-blocky), from blocky-stories ep123-sorry-shrink. The critic's fixes applied: L01 is the critic's line ('every SORRY shrinks you an inch. My aunt is the size of a MUG.'), L02 asks the 'why won't she STOP' question; the stakes (L07 'One more INCH, and she'll fit in a TEACUP'); the kid's want, playing to WIN so she'd have nothing to be sorry for (L08), which produces the reveal (L09-L11: 'She wasn't SORRY. She was WINNING.'); the score is an emerald pile taller than her, never cards (L04, S04, S11); the sting as carded (L12, the kid wins the next hand and says 'Oh. Sorry, AUNTIE.', a tiny shrink, cut). Engine need: an entity scale in the renderer (she plays at 0.3).",
  "caption": "why won't my tiny aunt stop saying sorry ☕",
  "upload": {
-  "title": "in my village every sorry shrinks you an inch. my aunt is the size of a mug ☕ #minecraft #shorts",
+  "title": "in my village every SORRY shrinks you an inch. my aunt is the size of a mug ☕ #minecraft #shorts",
   "pinned": "Be honest: would YOU say sorry if you won?",
   "tags": [
    "minecraft story",
@@ -36,7 +36,7 @@
  "weather": "clear",
  "world": {
   "place": "stillwater (canon, docs/world/map.json): the neighbour's cottage (piece `neighbour`, spruce cottage at (-236, 70, -1028), facing east) is the aunt's house. The card table stands inside by the north-east window; the Long Day lever on its stone post (-214, 70, -1062) is out of that window, about 40 blocks north-north-east.",
-  "where": "inside the aunt's cottage only: the card table by the north-east window, and the inside door on the table's north side",
+  "where": "inside the aunt's cottage (the card table by the north-east window, and the inside door on the table's north side), plus one shot in the lane outside it (S01b, a stranger's sorry)",
   "day": 2200,
   "canon": "Day 2200: 1,100 days after the Long Day ended (1100) and 400 after The Chunk Next Door (1800); a sunny day, so no Gary (nights only). New: in Stillwater, every 'sorry' shrinks you an inch (a village rule; nobody grows back while they keep saying it). The kid's aunt (never named) lives in the neighbour's cottage; whether she is The Chunk Next Door's neighbour is never said. She was over two blocks tall once, now about half a block (0.3 scale) on day 2200, the kid an inch shorter after L12.",
   "easter_egg": "`long_day_lever` (canon cameo, always): the lever on its stone post, small and soft through the north-east window behind her in S04's background (1-3 s), never named."
@@ -163,8 +163,8 @@
      "word": "MUG"
     }
    ],
-   "direction": "flat and bright, plain fact, a little proud of how weird it is; a tiny beat before MUG",
-   "note": "hook (STANDARDS 0u/0v/0w): the genre opener 'In my village', the rule with a number (an inch), then the stranger clause (the mug); the picture shows her beside the mug, the same height, by 2 s. No stock why tag: L02 asks it. The mug and the teacup are new props (no item id), so `look` names them, not `shows`."
+   "direction": "flat and bright, plain fact, a little proud of how weird it is; no pause after 'village' (SORRY must start by 1.8 s on the take, or retake); a tiny beat before MUG",
+   "note": "hook (STANDARDS 0u/0v/0w; 0t, hook frame study 2026-11-12): the genre opener 'In my village', the rule with a number (an inch), then the stranger clause (the mug). 0t: the key word SORRY (the title's CAPS word) is word 5, about 1.4-1.6 s at Pip's pace; the first sentence is done by ~2.7 s, the line by ~5.3 s (over 0t's ~2.5 s; accepted). S01 cuts on SORRY. Line order A kept (critic r0t): the study's B ('My aunt is the size of a MUG.' first) puts the key word MUG at ~2.1-2.3 s and answers its own why within 3 s; the casual reader preferred B but the critic chose A, so the owner-reviewed order stays. The mug and the teacup are new props (no item id), so `look` names them, not `shows`."
   },
   {
    "id": "L02",
@@ -372,10 +372,55 @@
     "L01"
    ],
    "place": "card_table",
-   "size": "ms",
-   "camera": "on the tabletop at her eye level (lens ~0.4 above the cloth, 1.2 blocks out, south of her), a slow push in",
-   "frame": "frame 1: the aunt centred, big (her whole body ~60 % of frame height), already moving (a little wave and a sway), beside the white mug with a red stripe exactly her height (the comparison IS the hook); a few cards (paper) flat at her feet; the kid's huge burgundy sleeve soft at frame left; the north-east window soft behind. On MUG the push ends with her head level with the mug's rim.",
+   "size": "mcu",
+   "camera": "on the tabletop at her eye level (lens ~0.4 above the cloth, 0.55 blocks out, south of her), a slow push; holds 0-~1.5 s, cut on SORRY",
+   "frame": "frame 1 (STANDARDS 0t): the aunt's face and shoulders at least 1/4 of the game view's width, centred, already moving (a little wave and a sway), beside the white mug with a red stripe exactly her height (the comparison IS the hook); the north-east window soft behind.",
    "subject": "actor:Aunt",
+   "look": {
+    "time": 6000
+   },
+   "cut": {
+    "line": "L01",
+    "word": "SORRY",
+    "at_s": 1.5
+   }
+  },
+  {
+   "id": "S01b",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "lane",
+   "size": "mcu",
+   "camera": "in the lane outside the cottage, at a villager's eye height, 2 blocks out, still; cut in on SORRY (~1.5 s), holds through INCH (~1.2 s)",
+   "frame": "the rule on a stranger: a plains villager bumps another in the lane, bows (the film's 'sorry' pose: she bows in S03 too), and on INCH a soft 'bloop' and she drops an inch: her hat was touching the bottom of a hanging sign (a fixed line), and a clear gap opens under it (~19 px at 300 px, the S12 sill trick). Sunny, time 6000.",
+   "subject": "villager",
+   "cut": {
+    "line": "L01",
+    "word": "SORRY",
+    "at_s": 1.5
+   },
+   "look": {
+    "time": 6000
+   }
+  },
+  {
+   "id": "S01c",
+   "line": "L01",
+   "lines": [
+    "L01"
+   ],
+   "place": "card_table",
+   "size": "ms",
+   "camera": "over the tabletop from her side, low, looking up past her at the kid, still; cut in on 'My' (~2.8 s), holds to MUG",
+   "frame": "the stake on a face: the kid's big face looming over the table from the south, looking down at her fondly; the aunt and the mug side by side in the foreground, the same height, on MUG.",
+   "subject": "actor:N",
+   "cut": {
+    "line": "L01",
+    "word": "My",
+    "at_s": 2.8
+   },
    "look": {
     "time": 6000
    }
@@ -388,11 +433,16 @@
    ],
    "place": "inside_door",
    "size": "ws",
-   "camera": "starts on the spruce button high on the wall above the inside door (2.2 blocks up: her old height mark), a fast eased tilt down the door to the tabletop, which stands just in front of the door",
-   "frame": "the button mark above the door frame centred, then the door, then she is revealed at the bottom of the tilt on the table's north edge, tiny against the 2-block door behind her, looking up at her old mark. One mark only (no text).",
-   "subject": "block:spruce_button",
+   "camera": "locked off on the inside door with the button mark (2.2 blocks up) in frame, at the table's height, still; three hard jump cuts ~1.2 s apart on 'She used to be taller than the DOOR', then held through L02's question",
+   "frame": "the rule on her body every ~1.2 s (0t; replaces the slow tilt down the wall): (1) cut in on 'She' (~5.3 s): her on the floor in front of the door at scale ~1.22, head at the button; she bows, bloop; (2) ~6.5 s: at ~0.8, head well under the mark; she bows, bloop; (3) ~7.7 s, now: on the table's north edge, mug-sized, looking up at the mark, over 'So why won't she STOP saying it?'. The fixed door and mark make the scale read; one mark only (no text).",
+   "subject": "actor:Aunt",
    "look": {
     "time": 6000
+   },
+   "cut": {
+    "line": "L02",
+    "word": "She",
+    "at_s": 5.3
    }
   },
   {
@@ -576,6 +626,9 @@
   },
   "lever": {
    "note": "the Long Day lever (canon stamp `lever`, (-214, 70, -1062)), through the north-east window in S04 only"
+  },
+  "lane_sign": {
+   "note": "a hanging sign over the lane outside the cottage (S01b), the fixed line the stranger's hat touches before her inch"
   }
  },
  "ending": {
@@ -601,7 +654,8 @@
    "an entity scale in the renderer (the critic's estimate ~1-2 h: renderer/entities.js has no per-entity scale): the aunt at 0.3 (0.286 after L10) and the kid at 0.986 after L12, eased over 0.25 s; in-game the vanilla `minecraft:scale` attribute (1.20.5+) sets it, so the hitbox and the eye follow",
    "the mug and the teacup props (no vanilla mug or cup): block_display/item_display entities or two small custom models",
    "static item heaps: the emerald pile and the flat cards (paper) without the dropped-item bob and spin (item_display support, or a 'static' flag on dropped items)",
-   "her card fans appear flat on the beat (no kicking or hand-placing at 0.3 scale); a two-arm pat on the kid's fingertip (S05) and a climb onto the emerald heap (S11) as actor poses"
+   "her card fans appear flat on the beat (no kicking or hand-placing at 0.3 scale); a two-arm pat on the kid's fingertip (S05) and a climb onto the emerald heap (S11) as actor poses",
+   "S02's three jump-cut sizes of the aunt (scale ~1.22, ~0.8, 0.3) on the same locked-off frame, each with a bow and a bloop"
   ]
  }
 }

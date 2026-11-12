@@ -25,7 +25,8 @@ pulled back since 1100; Gary is a night stamp, so he is not built by day).
 |---|---|---|
 | every sorry shrinks you an inch (L01) | a story rule (0x: Minecraft is the look); shown twice: she dips on DEAR (S10), he dips on AUNTIE (S12) | the dips read on a 300 px still pair |
 | my aunt is the size of a mug (L01) | the mug prop is exactly her height (0.54) and stands beside her in S01 | S01 frame 1 |
-| she used to be taller than the door (L02) | the one height mark is 2.2 up over a 2-tall door | S02 still |
+| she used to be taller than the door (L02) | the one height mark is 2.2 up over a 2-tall door; S02's first jump cut has her head at it | S02 still |
+| every sorry shrinks you an inch (L01) | a stranger's hat leaves a hanging sign's bottom edge by a clear gap on INCH | S01b still |
 | cards day (L03) | paper cards dealt on the cloth | S03 |
 | we play for emeralds; her pile's taller than her (L04) | a ~0.7 emerald heap beside her 0.54; his one emerald | S04 still |
 | every time she lays her cards down she pats my hand and says sorry, dear (L05) | her fan flat at her feet; she pats his fingertip with both arms | S05 |
