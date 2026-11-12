@@ -25,7 +25,7 @@ the dressing skips the growing row's cells and the door spot; the easter egg is 
 ## The narration's claims (owner rule: the set matches every claim; check on stills from every shot angle)
 | line | claim | what the set must show | check |
 |---|---|---|---|
-| L01 | "In my village, six THOUSAND TORCHES" | 6,000-6,300 torches in the village box, the whole village in S01 | `sets.dress.torches` over a ~90 x 90 box (one per column) with the skip list; count logged here and in the recording log; S01 still |
+| L01 | "Someone LIT my whole VILLAGE... SIX THOUSAND TORCHES" | 6,000-6,300 torches in the village box, the whole village in S01 | `sets.dress.torches` over a ~90 x 90 box (one per column) with the skip list; count logged here and in the recording log; S01 still |
 | L02 | "FENCES" | a torch on every fence post in shot | S02 still |
 | L02 | "ROOFS" | a torch on every full block of the roof ridges in shot | S02 tilt, S01 |
 | L02 | "HAY bales" | a torch on every exposed hay top | S02, S03 bg |

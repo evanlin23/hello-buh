@@ -2,10 +2,10 @@
  "name": "six_thousand_torches",
  "stunt": "story_six_thousand_torches",
  "version": 2,
- "revision": "r3 (2026-11-11, the Roblox story format, docs/story_format.md, STANDARDS 0y/0z): L01 now says the fact AND the why ('I HAD to know WHY'); L03 loses its second 'why' ('One torch lights a whole HOUSE.') and L04 takes 'So' ('So something big must be coming!'); the reveal L14 is said over S14 and a new sting L15 'TOMORROW, I'll ask him WHY' echoes line 1 and loops. Before: r2 (2026-11-11): the r1 critic's must-fixes (the nightly walk home with his torch, not a torch left by the door; the L08 'one last night' line cut; L14 a quote with no sign-off comma; Jonah's skin and voice flagged for the owner), the r1 cold read (75% sure at the midpoint: the 'last night' line removed so the midpoint stays open), and STANDARDS 0a naivety (r:rb89776): every clue gets the kid's innocent misreading (a PARTY, PRESENTS, MOVING in with US, he FORGOT). r2b: 'So I'm NEVER in the DARK' moved from L06 to L13, the kid's happy read of the last torch (the r2 midpoint cold read was still 75% with it next to the 6,000). reviews/ has the table read",
+ "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'Someone LIT my whole village last night. With six THOUSAND TORCHES.' replaces the frame + why opener; r3 (2026-11-11, the Roblox story format, docs/story_format.md, STANDARDS 0y/0z): L01 now says the fact AND the why ('I HAD to know WHY'); L03 loses its second 'why' ('One torch lights a whole HOUSE.') and L04 takes 'So' ('So something big must be coming!'); the reveal L14 is said over S14 and a new sting L15 'TOMORROW, I'll ask him WHY' echoes line 1 and loops. Before: r2 (2026-11-11): the r1 critic's must-fixes (the nightly walk home with his torch, not a torch left by the door; the L08 'one last night' line cut; L14 a quote with no sign-off comma; Jonah's skin and voice flagged for the owner), the r1 cold read (75% sure at the midpoint: the 'last night' line removed so the midpoint stays open), and STANDARDS 0a naivety (r:rb89776): every clue gets the kid's innocent misreading (a PARTY, PRESENTS, MOVING in with US, he FORGOT). r2b: 'So I'm NEVER in the DARK' moved from L06 to L13, the kid's happy read of the last torch (the r2 midpoint cold read was still 75% with it next to the 6,000). reviews/ has the table read",
  "caption": "who put 6,000 torches on my village 🔥",
  "upload": {
-  "title": "6,000 torches appeared in my village overnight 🔥 #minecraft #shorts",
+  "title": "someone lit my whole village with 6,000 torches 🔥 #minecraft #shorts",
   "pinned": "What would YOU leave behind for your villager friend?",
   "tags": [
    "minecraft village",
@@ -169,8 +169,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "In my village, / six THOUSAND / TORCHES / appeared / OVERNIGHT. / I HAD / to know WHY.",
-   "say": "In my village, six thousand torches appeared overnight. I had to know WHY.",
+   "text": "Someone LIT / my whole VILLAGE / last NIGHT. / With six THOUSAND / TORCHES.",
+   "say": "Someone LIT my whole village last night. With six THOUSAND TORCHES.",
    "direction": "one breath, amazed and delighted, a lift on the number; then bright and determined on WHY, never scared",
    "shot": "S01",
    "beat": 1,
@@ -184,7 +184,8 @@
    "look": {
     "what": "block:torch",
     "word": "TORCHES"
-   }
+   },
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; flat and amazed, the number lands last"
   },
   {
    "id": "L02",
@@ -443,7 +444,7 @@
  },
  "ending": {
   "after": "L14",
-  "loop": "L15 'TOMORROW, I'll ask him WHY' echoes L01's 'I HAD to know WHY' (the question the kid never gets to ask; there is no tomorrow) and ends on L01's last word and loops ('...ask him WHY. / In my village, six thousand torches...'); cause and effect: the goodbye is why line 1's village has six thousand torches; 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
+  "loop": "L15 'TOMORROW, I'll ask him WHY.' runs into L01 'Someone LIT my whole village last night' (the question the kid never gets to ask; there is no tomorrow); 'SOMEONE' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going"
  },
  "shots": [
   {
