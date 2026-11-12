@@ -2,7 +2,8 @@
 // a three-block rocket, then a little survival rocket with fins (its nose built from a dirt pillar the
 // bot towers up and then digs away), then a 60-block launch complex rising as a time-lapse: the pad
 // and flame trench, the three rocket stages, the nose cone, the launch tower with its arms, fuel tanks
-// and a control building, and last the ignition - fire and smoke pouring out of the trench.
+// and a control building, and last the ignition - fire and smoke pouring out of the trench. At 60:00 it
+// launches: arms back, TNT at the trench mouth, and the whole rocket lifts off on a column of flame and smoke.
 const { makeStunt } = require('../lib/time_lapse')
 
 // 1 second: two white blocks and a red tip (the bot jumps for the tip)
@@ -125,13 +126,69 @@ function complex () {
   return [...out.values()]
 }
 
-module.exports = makeStunt({
+// the launch (owner r:r4607fa, 2026-11-12: the borderline Shorts get one bigger last beat; noop audit: "the 1-hour
+// rocket launches at 60:00"). After the 60:00 wide, a hard cut to a low angle off the pad's front left: the swing arms
+// pull back into the tower, TNT goes off at the flame trench's mouth (real blasts: the explosion packet only reaches a
+// player within 64 blocks, so the camera sits ~45 out) and the rocket lifts off - every block of it moved up by /clone
+// (masked move), slow then faster, a flame and a white smoke column left under it - with the camera tilting up after it
+const CAM = [-22, 8, 56]                    // local to the pad's centre (as big.angles); the small builds are off to the right
+const ROCKET = { x: 9, bottom: 2, top: 59 } // the rocket's box: x/z -9..9 (the fins), local block y 2..59 (the rod)
+const RISE = [1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]   // blocks a tick: ~45 up by the end
+async function launch (ctx, { C, view, cutTo }) {
+  const { bot } = ctx
+  bot.chat('/gamerule block_drops false')   // the blasts leave no loose items on the pad
+  const B = (x, y, z) => `${C.x + x} ${C.y + 1 + y} ${C.z + z}`   // local block -> world block coordinates
+  let look = [0, 28, 0], target = look.slice()
+  const steer = () => { look = look.map((v, i) => v + (target[i] - v) * 0.2); view(CAM, look) }
+  cutTo(CAM, look, 'launch, low front left'); ctx.mark('launch_cut')
+  bot.on('physicsTick', steer)
+  await bot.waitForTicks(2)
+  // the swing arms pull back into the tower, a column a tick from the rocket's side (pistons)
+  for (let x = 6; x <= 10; x++) {
+    for (const y of [31, 51]) bot.chat(`/fill ${B(x, y, -1)} ${B(x, y, 1)} air`)
+    if (x % 2 === 0) ctx.sound('block.piston.contract', 0.6, 0.8 + x * 0.03)
+    await bot.waitForTicks(1)
+  }
+  await bot.waitForTicks(2)
+  // ignition: TNT at the trench's mouth, the near end (block_drops off: no loose items)
+  ctx.mark('ignite')
+  for (const [x, z] of [[-3, 14], [3, 14], [-2, 19], [2, 19]]) bot.chat(`/summon tnt ${C.x + x + 0.5} ${C.y + 1 + 3} ${C.z + z + 0.5} {fuse:0}`)
+  ctx.sound('entity.firework_rocket.launch', 1, 0.5)
+  ctx.sound('entity.generic.explode', 1, 0.6)
+  ctx.mark('liftoff')
+  let base = ROCKET.bottom
+  const disc = (y0, y1, name) => {   // a radius-3 disc, local layers y0..y1 (clipped to the pad's top)
+    y0 = Math.max(ROCKET.bottom, y0); if (y1 < y0) return
+    bot.chat(`/fill ${B(-3, y0, -2)} ${B(3, y1, 2)} ${name}`)
+    bot.chat(`/fill ${B(-2, y0, -3)} ${B(2, y1, 3)} ${name}`)
+  }
+  for (let i = 0; i < RISE.length; i++) {
+    const d = RISE[i]
+    if (d) {
+      bot.chat(`/clone ${B(-ROCKET.x, base, -ROCKET.x)} ${B(ROCKET.x, base + ROCKET.top - ROCKET.bottom, ROCKET.x)} ${B(-ROCKET.x, base + d, -ROCKET.x)} masked move`)
+      base += d
+      // the exhaust under it: yellow flame, then orange, then clear sky between it and the pad (a white smoke column
+      // read as the rocket growing longer, a thin grey one as a pole it stood on)
+      disc(base - 4, base - 1, 'yellow_concrete')
+      disc(base - 12, base - 5, 'orange_concrete')
+      disc(base - 12 - d, base - 13, 'air')
+      if (i % 3 === 0) ctx.sound('entity.firework_rocket.launch', 0.8, 0.45 + i * 0.01)
+    }
+    target = [0, 28 + (base - ROCKET.bottom) * 0.45, 0]   // the camera tilts up after it, slower than it climbs: it rises through the frame
+    await bot.waitForTicks(1)
+  }
+  ctx.mark('launch_end')
+  bot.removeListener('physicsTick', steer)
+  return true
+}
+
+const stunt = makeStunt({
   name: 'lapse_rocket',
   biomeSearch: 'minecraft:badlands',
   caption: 'building a rocket in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   recordRadius: 200,
-  endAfter: 'big_done:0.5',
+  botTimeout: 300,   // set-up ~90 s + the three rounds ~95 s + the launch: the default 180 s killed an attempt in the 1-hour round
   // r:r188b46: after the last scaffold break (22.5 s on this take, mid_done 24.2) the round's end plays at x4 and the
   // cut to the 1-hour round comes 0.4 s into the 1:00 pull-back (was 1.2 s after the last break)
   cut2From: 'mid_done:0.4',
@@ -141,8 +198,10 @@ module.exports = makeStunt({
   small,
   mid: { blocks: mini(), w: 3, d: 3, towerY: 3, towerH: 3, towerSlot: 3, digSlot: 4, perTick: 2, speed: 3, backTicks: 12, tail: ['mid_done:-1.65', 4],
     slots: { white_concrete: 0, red_concrete: 1, blue_concrete: 2 } },
+  finale: launch,
   big: {
     blocks: complex(),
+    tail: 10,   // 0.5 s on the 60:00 wide, then the cut to the launch
     hold: 'white_concrete', slot: 0,
     // pad, stage 1, stage 2, stage 3, nose, tower, tanks + masts, the hall, ignition
     stageTicks: { 0: 150, 1: 190, 2: 150, 3: 130, 4: 120, 5: 170, 6: 200, 7: 170, 8: 90 },
@@ -162,3 +221,10 @@ module.exports = makeStunt({
     ]
   }
 })
+
+// the payoff is the launch now: the drop, a dip and an impact on liftoff (the TNT and the rocket going up); 60:00 keeps its
+// white flash and punch, and the Short ends 0.9 s into the climb (r:r188b46), the rocket ~45 blocks up and still going
+stunt.edit.dropAt = 'liftoff'
+stunt.edit.sfx = [['dip', 'liftoff', 0.4], ['gamedip', 'liftoff', 0.3], ['impact', 'liftoff', { gain: 1.4 }]]   // the game ducked 0.3 s before it (the arms' pistons): a 10 dB hit (pace)
+stunt.edit.endAfter = 'liftoff:0.9'
+module.exports = stunt
