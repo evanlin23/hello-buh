@@ -1,0 +1,17 @@
+{
+ "name": "story_light_sleeper",
+ "stunt": "story_light_sleeper",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43191010151",
+ "source": "0ee6751d",
+ "queued": "2026-11-12T09:23:11Z",
+ "finished": "2026-11-12T09:41:05Z",
+ "mp4": "renders/out/story_light_sleeper.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
