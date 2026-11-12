@@ -10,7 +10,8 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'boom', startAt: 'first:0', endAfter: 'found:0.9',   // r:r188b46: 0.9 s on the diamonds
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'found',   // the song's drop on the diamonds (on the blast, the music was at full level by the reveal: mixcheck); the blast keeps its own dip + impact
+    startAt: 'first:0', endAfter: 'found:0.9',   // r:r188b46: 0.9 s on the diamonds
     subs: [['found', 'wait... DIAMONDS?', 1.0]],
     sfx: [['air', 'start', 'boom', { gain: 0.5 }], ['heart', 'first', { gain: 1.6 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.4 }], ['dip', 'found', 0.5], ['impact', 'found', { gain: 1.6 }], ['ding', 'found', { gain: 1.4 }]] },   // (mixcheck: under the song the diamond hit needs the song dipped 0.5 s and a full impact; a game duck lowered the sfx cap)   // mixcheck: under the NCS bed the blast needs dip + impact
 
