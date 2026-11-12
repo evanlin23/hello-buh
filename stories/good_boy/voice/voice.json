@@ -390,17 +390,17 @@
   "L13": {
    "who": "Buh",
    "text": "I'll be right BACK.",
-   "dur": 1.47,
-   "onset": 0.3,
-   "end": 1.0,
+   "dur": 1.99,
+   "onset": 0.9,
+   "end": 1.56,
    "chunks": [
     [
-     0.3,
-     0.52
+     0.9,
+     1.1
     ],
     [
-     0.56,
-     1.0
+     1.16,
+     1.56
     ]
    ],
    "captions": [
@@ -414,7 +414,7 @@
    "beat": "L13",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "257698417c77"
+   "aligned_wav": "f9703fd328ff"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -521,7 +521,7 @@
     "L13"
    ],
    "file": "beat_L13.wav",
-   "dur": 1.47,
+   "dur": 1.99,
    "offsets": [
     0.0
    ],
@@ -535,5 +535,5 @@
    "rejected": []
   }
  },
- "total": 36.65
+ "total": 37.17
 }
