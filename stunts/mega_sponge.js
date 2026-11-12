@@ -75,7 +75,9 @@ module.exports = {
     // the music dips under the payoff hit and under the second boost of each run (mixcheck: under the NCS bed the
     // boosts alone left 3.1 s with nothing new)
     // (an impact on frame 0: a sound hit by 0.3 s, r:r0f3da0)
-    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'scale', 0.4], ['impact', 'scale', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 0.6 }], ['dip', 'swing', 0.25, { nth: 3 }]]
+    // (the game audio ducks too before the scale's hit and the run's second boost: under the NCS bed they rose only
+    // ~8 dB, mixcheck wants 10)
+    sfx: [['impact', 'start', { gain: 0.8 }], ['dip', 'thread', 0.4], ['impact', 'thread', { gain: 1.4 }], ['dip', 'scale', 0.4], ['gamedip', 'scale', 0.4], ['impact', 'scale', { gain: 1.4 }], ['dip', 'swing', 0.25, { nth: 1 }], ['gamedip', 'swing', 0.25, { nth: 1 }], ['impact', 'swing', { nth: 1, gain: 1.0 }], ['dip', 'swing', 0.25, { nth: 3 }]]
   },
 
   async setup (ctx) {
