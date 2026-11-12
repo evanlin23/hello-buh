@@ -18,77 +18,88 @@
     "title": "Montagem Toma",
     "artist": "X972, sk3tch01, MXZI",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "payoff",
+    "drop_on_event": "splash",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 8.02,
-    "song_start_s": 6.48
+    "drop_in_short_s": 14.15,
+    "song_start_s": 0.35
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.78,
+    "duration_s": 14.97,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 12615942,
-    "sha256": "fa52a39013f6060e2421fd95a50fb3d21de20f01fd5a8d6c0d076b66367e1c3b",
+    "bytes": 18259932,
+    "sha256": "a1637d0548a8011ecdf86ec7bfd52c85dd1b873af541196a1ed81b7308c46f79",
     "release": {
       "tag": "pkg-trap_free_diamonds",
-      "asset": "trap_free_diamonds.short.fa52a39013f6060e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short.fa52a39013f6060e.mp4",
-      "sha256": "fa52a39013f6060e2421fd95a50fb3d21de20f01fd5a8d6c0d076b66367e1c3b",
-      "bytes": 12615942
+      "asset": "trap_free_diamonds.short.a1637d0548a8011e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short.a1637d0548a8011e.mp4",
+      "sha256": "a1637d0548a8011ecdf86ec7bfd52c85dd1b873af541196a1ed81b7308c46f79",
+      "bytes": 18259932
     },
     "nosong_release": {
       "tag": "pkg-trap_free_diamonds",
-      "asset": "trap_free_diamonds.short_nosong.6eb21840d411e2af.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short_nosong.6eb21840d411e2af.mp4",
-      "sha256": "6eb21840d411e2af4b9d8ebbb9ee82dae1ffc50a9ee9162ad3f3311988ace895",
-      "bytes": 12611886
+      "asset": "trap_free_diamonds.short_nosong.3461541d6bb29029.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short_nosong.3461541d6bb29029.mp4",
+      "sha256": "3461541d6bb290295051bae56ab00d3d6cdadfcaa32339f561eadf80ae035a6f",
+      "bytes": 18246831
     }
   },
   "edit": {
     "caption": "trapping my friend with FREE DIAMONDS 💀",
     "red": "FREE DIAMONDS",
     "startAt": "go:-0.05",
-    "endAfter": "payoff:0.75",
-    "dropAt": "payoff",
+    "endAfter": "splash:0.8",
+    "dropAt": "splash",
     "chatScale": 5,
     "subs": [
       [
         "step",
-        "step 1: a hole",
+        "step 1: a DEEP hole",
         1.6,
         0
       ],
       [
         "step",
-        "step 2: a trapdoor on top",
+        "step 2: lava at the bottom",
         1.6,
         1
       ],
       [
         "step",
-        "step 3: a TRAPPED chest behind it",
+        "step 3: a trapdoor on top",
         1.6,
         2
       ],
       [
         "step",
-        "step 4: free diamonds",
+        "step 4: a TRAPPED chest behind it",
         1.6,
         3
       ],
       [
         "step",
-        "now hide",
+        "step 5: free diamonds",
         1.6,
         4
+      ],
+      [
+        "step",
+        "now hide",
+        1.6,
+        5
       ]
     ],
     "flash": [
       [
         "payoff",
+        0,
+        0.35
+      ],
+      [
+        "splash",
         0,
         0.35
       ]
@@ -98,6 +109,11 @@
         "payoff",
         0,
         1.06
+      ],
+      [
+        "splash",
+        0,
+        1.08
       ]
     ],
     "sfx": [
@@ -150,6 +166,14 @@
       ],
       [
         "pop",
+        "step",
+        {
+          "nth": 5,
+          "gain": 0.45
+        }
+      ],
+      [
+        "pop",
         "payoff:-0.4",
         {
           "gain": 1
@@ -157,15 +181,24 @@
       ],
       [
         "dip",
-        "payoff",
-        0.4
+        "splash",
+        0.5
+      ],
+      [
+        "gamedip",
+        "splash",
+        0.5
       ],
       [
         "impact",
-        "payoff",
+        "splash",
         {
           "gain": 1.4
         }
+      ],
+      [
+        "boom",
+        "splash"
       ]
     ],
     "hook": {
@@ -175,6 +208,11 @@
       "text": "he fell for it"
     },
     "speed": [
+      [
+        "deep_a:0.05",
+        "deep_b",
+        "cut"
+      ],
       [
         "hide_go:0.05",
         "hidden:0.05",
@@ -186,6 +224,13 @@
         "cut"
       ]
     ],
+    "zoom": [
+      [
+        "splash:-0.3",
+        "splash:0.9",
+        2.4
+      ]
+    ],
     "args": [
       "--caption",
       "trapping my friend with FREE DIAMONDS 💀",
@@ -194,23 +239,25 @@
       "--red",
       "FREE DIAMONDS",
       "--subs",
-      "[[\"step\",\"step 1: a hole\",1.6,0],[\"step\",\"step 2: a trapdoor on top\",1.6,1],[\"step\",\"step 3: a TRAPPED chest behind it\",1.6,2],[\"step\",\"step 4: free diamonds\",1.6,3],[\"step\",\"now hide\",1.6,4]]",
+      "[[\"step\",\"step 1: a DEEP hole\",1.6,0],[\"step\",\"step 2: lava at the bottom\",1.6,1],[\"step\",\"step 3: a trapdoor on top\",1.6,2],[\"step\",\"step 4: a TRAPPED chest behind it\",1.6,3],[\"step\",\"step 5: free diamonds\",1.6,4],[\"step\",\"now hide\",1.6,5]]",
       "--speed",
-      "[[\"hide_go:0.05\",\"hidden:0.05\",\"cut\"],[\"friend_close\",\"friend_there\",\"cut\"]]",
+      "[[\"deep_a:0.05\",\"deep_b\",\"cut\"],[\"hide_go:0.05\",\"hidden:0.05\",\"cut\"],[\"friend_close\",\"friend_there\",\"cut\"]]",
       "--punch",
-      "[[\"payoff\",0,1.06]]",
+      "[[\"payoff\",0,1.06],[\"splash\",0,1.08]]",
       "--hook",
       "{\"at\":\"payoff\",\"before\":0.45,\"after\":0.45,\"text\":\"he fell for it\"}",
+      "--zoom",
+      "[[\"splash:-0.3\",\"splash:0.9\",2.4]]",
       "--flash",
-      "[[\"payoff\",0,0.35]]",
+      "[[\"payoff\",0,0.35],[\"splash\",0,0.35]]",
       "--sfx",
-      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"payoff:-0.4\",{\"gain\":1}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
+      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":5,\"gain\":0.45}],[\"pop\",\"payoff:-0.4\",{\"gain\":1}],[\"dip\",\"splash\",0.5],[\"gamedip\",\"splash\",0.5],[\"impact\",\"splash\",{\"gain\":1.4}],[\"boom\",\"splash\"]]",
       "--chat_scale",
       "5",
       "--start_at",
       "go:-0.05",
       "--end_after",
-      "payoff:0.75"
+      "splash:0.8"
     ]
   },
   "recording": {
@@ -226,8 +273,8 @@
       "z": 16
     },
     "biome": "minecraft:plains",
-    "ticks": 282,
-    "seconds": 14.1,
+    "ticks": 703,
+    "seconds": 35.15,
     "deaths": 0,
     "events": [
       {
@@ -259,191 +306,527 @@
         "event": "dug"
       },
       {
-        "t": 1.35,
+        "t": 1.85,
         "event": "dig"
       },
       {
-        "t": 1.35,
+        "t": 1.85,
         "event": "swing"
       },
       {
-        "t": 1.45,
+        "t": 2,
         "event": "dig_end"
       },
       {
-        "t": 1.45,
+        "t": 2,
         "event": "dug"
       },
       {
-        "t": 1.75,
-        "event": "step"
+        "t": 2.75,
+        "event": "dig"
       },
       {
-        "t": 2.05,
-        "event": "place_on"
-      },
-      {
-        "t": 2.05,
+        "t": 2.75,
         "event": "swing"
       },
       {
-        "t": 2.05,
-        "event": "placed"
+        "t": 2.85,
+        "event": "dig_end"
       },
       {
-        "t": 2.6,
-        "event": "step"
+        "t": 2.85,
+        "event": "dug"
       },
       {
-        "t": 2.8,
-        "event": "place_on"
+        "t": 3.55,
+        "event": "dig"
       },
       {
-        "t": 2.8,
+        "t": 3.55,
         "event": "swing"
       },
       {
-        "t": 2.8,
-        "event": "placed"
+        "t": 3.6,
+        "event": "dig_end"
       },
       {
-        "t": 3.4,
-        "event": "step"
+        "t": 3.6,
+        "event": "dug"
       },
       {
-        "t": 3.8,
-        "event": "place_on"
+        "t": 3.75,
+        "event": "deep_a"
       },
       {
-        "t": 3.8,
-        "event": "swing"
+        "t": 4.45,
+        "event": "dig"
       },
       {
-        "t": 3.8,
-        "event": "placed"
-      },
-      {
-        "t": 4.55,
-        "event": "place_on"
-      },
-      {
-        "t": 4.55,
+        "t": 4.45,
         "event": "swing"
       },
       {
         "t": 4.55,
-        "event": "placed"
+        "event": "dig_end"
       },
       {
-        "t": 5.1,
-        "event": "step"
+        "t": 4.55,
+        "event": "dug"
       },
       {
-        "t": 5.1,
-        "event": "hide_go"
+        "t": 5.3,
+        "event": "dig"
       },
       {
-        "t": 7.85,
-        "event": "hidden"
+        "t": 5.3,
+        "event": "swing"
       },
       {
-        "t": 8.05,
-        "event": "syschat"
+        "t": 5.4,
+        "event": "dig_end"
       },
       {
-        "t": 8.05,
-        "event": "friend_walk"
+        "t": 5.4,
+        "event": "dug"
       },
       {
-        "t": 8.75,
-        "event": "syschat"
+        "t": 7.4,
+        "event": "dig"
       },
       {
-        "t": 8.75,
-        "event": "friend_says"
+        "t": 7.4,
+        "event": "swing"
       },
       {
-        "t": 10.1,
-        "event": "friend_close"
+        "t": 7.5,
+        "event": "dig_end"
+      },
+      {
+        "t": 7.5,
+        "event": "dug"
+      },
+      {
+        "t": 8.2,
+        "event": "dig"
+      },
+      {
+        "t": 8.2,
+        "event": "swing"
+      },
+      {
+        "t": 8.3,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.3,
+        "event": "dug"
+      },
+      {
+        "t": 9.05,
+        "event": "dig"
+      },
+      {
+        "t": 9.05,
+        "event": "swing"
+      },
+      {
+        "t": 9.35,
+        "event": "dig_end"
+      },
+      {
+        "t": 9.35,
+        "event": "dug"
+      },
+      {
+        "t": 10.05,
+        "event": "dig"
+      },
+      {
+        "t": 10.05,
+        "event": "swing"
+      },
+      {
+        "t": 10.3,
+        "event": "dig_end"
+      },
+      {
+        "t": 10.3,
+        "event": "dug"
       },
       {
         "t": 11,
-        "event": "friend_shuffle"
+        "event": "dig"
       },
       {
-        "t": 11.3,
-        "event": "friend_shuffle"
+        "t": 11,
+        "event": "swing"
       },
       {
-        "t": 11.3,
-        "event": "friend_there"
+        "t": 11.25,
+        "event": "dig_end"
       },
       {
-        "t": 11.7,
-        "event": "friend_open"
+        "t": 11.25,
+        "event": "dug"
       },
       {
-        "t": 11.7,
-        "event": "ent_swing"
+        "t": 12,
+        "event": "dig"
       },
       {
-        "t": 11.75,
-        "event": "block_action"
+        "t": 12,
+        "event": "swing"
       },
       {
-        "t": 11.8,
-        "event": "payoff"
+        "t": 12.3,
+        "event": "dig_end"
       },
       {
-        "t": 11.95,
-        "event": "block_action"
+        "t": 12.3,
+        "event": "dug"
       },
       {
-        "t": 12.1,
+        "t": 13,
+        "event": "dig"
+      },
+      {
+        "t": 13,
+        "event": "swing"
+      },
+      {
+        "t": 13.3,
+        "event": "dig_end"
+      },
+      {
+        "t": 13.3,
+        "event": "dug"
+      },
+      {
+        "t": 15.3,
+        "event": "dig"
+      },
+      {
+        "t": 15.3,
+        "event": "swing"
+      },
+      {
+        "t": 15.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 15.55,
+        "event": "dug"
+      },
+      {
+        "t": 16.25,
+        "event": "dig"
+      },
+      {
+        "t": 16.25,
+        "event": "swing"
+      },
+      {
+        "t": 16.5,
+        "event": "dig_end"
+      },
+      {
+        "t": 16.5,
+        "event": "dug"
+      },
+      {
+        "t": 17.2,
+        "event": "dig"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 17.45,
+        "event": "dug"
+      },
+      {
+        "t": 18.15,
+        "event": "dig"
+      },
+      {
+        "t": 18.15,
+        "event": "swing"
+      },
+      {
+        "t": 18.4,
+        "event": "dig_end"
+      },
+      {
+        "t": 18.4,
+        "event": "dug"
+      },
+      {
+        "t": 19.1,
+        "event": "dig"
+      },
+      {
+        "t": 19.1,
+        "event": "swing"
+      },
+      {
+        "t": 19.4,
+        "event": "dig_end"
+      },
+      {
+        "t": 19.4,
+        "event": "dug"
+      },
+      {
+        "t": 19.55,
+        "event": "deep_b"
+      },
+      {
+        "t": 20.4,
+        "event": "dig"
+      },
+      {
+        "t": 20.4,
+        "event": "swing"
+      },
+      {
+        "t": 20.65,
+        "event": "dig_end"
+      },
+      {
+        "t": 20.65,
+        "event": "dug"
+      },
+      {
+        "t": 20.9,
+        "event": "step"
+      },
+      {
+        "t": 21.15,
+        "event": "place_on"
+      },
+      {
+        "t": 21.15,
+        "event": "swing"
+      },
+      {
+        "t": 21.15,
+        "event": "placed"
+      },
+      {
+        "t": 21.95,
+        "event": "cut"
+      },
+      {
+        "t": 22.35,
+        "event": "place_on"
+      },
+      {
+        "t": 22.35,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "placed"
+      },
+      {
+        "t": 22.85,
+        "event": "step"
+      },
+      {
+        "t": 23.25,
+        "event": "place_on"
+      },
+      {
+        "t": 23.25,
+        "event": "swing"
+      },
+      {
+        "t": 23.25,
+        "event": "placed"
+      },
+      {
+        "t": 23.8,
+        "event": "step"
+      },
+      {
+        "t": 24,
+        "event": "place_on"
+      },
+      {
+        "t": 24,
+        "event": "swing"
+      },
+      {
+        "t": 24,
+        "event": "placed"
+      },
+      {
+        "t": 24.6,
+        "event": "step"
+      },
+      {
+        "t": 25,
+        "event": "place_on"
+      },
+      {
+        "t": 25,
+        "event": "swing"
+      },
+      {
+        "t": 25,
+        "event": "placed"
+      },
+      {
+        "t": 25.75,
+        "event": "place_on"
+      },
+      {
+        "t": 25.75,
+        "event": "swing"
+      },
+      {
+        "t": 25.75,
+        "event": "placed"
+      },
+      {
+        "t": 26.3,
+        "event": "step"
+      },
+      {
+        "t": 26.3,
+        "event": "hide_go"
+      },
+      {
+        "t": 29,
+        "event": "hidden"
+      },
+      {
+        "t": 29.2,
         "event": "syschat"
       },
       {
-        "t": 12.1,
+        "t": 29.2,
+        "event": "friend_walk"
+      },
+      {
+        "t": 29.9,
+        "event": "syschat"
+      },
+      {
+        "t": 29.9,
         "event": "friend_says"
       },
       {
-        "t": 12.1,
+        "t": 31.15,
+        "event": "friend_close"
+      },
+      {
+        "t": 32.05,
+        "event": "friend_shuffle"
+      },
+      {
+        "t": 32.35,
+        "event": "friend_shuffle"
+      },
+      {
+        "t": 32.35,
+        "event": "friend_there"
+      },
+      {
+        "t": 32.75,
+        "event": "friend_open"
+      },
+      {
+        "t": 32.75,
+        "event": "ent_swing"
+      },
+      {
+        "t": 32.8,
+        "event": "block_action"
+      },
+      {
+        "t": 32.85,
+        "event": "payoff"
+      },
+      {
+        "t": 33,
+        "event": "block_action"
+      },
+      {
+        "t": 33.25,
+        "event": "block_action"
+      },
+      {
+        "t": 33.35,
+        "event": "cut"
+      },
+      {
+        "t": 33.5,
+        "event": "block_action"
+      },
+      {
+        "t": 33.55,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 33.65,
+        "event": "splash"
+      },
+      {
+        "t": 33.65,
+        "event": "syschat"
+      },
+      {
+        "t": 33.65,
+        "event": "friend_says"
+      },
+      {
+        "t": 33.75,
+        "event": "block_action"
+      },
+      {
+        "t": 33.95,
         "event": "still"
       },
       {
-        "t": 12.2,
+        "t": 34,
         "event": "block_action"
       },
       {
-        "t": 12.45,
+        "t": 34.05,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 34.25,
         "event": "block_action"
       },
       {
-        "t": 12.7,
+        "t": 34.5,
         "event": "block_action"
       },
       {
-        "t": 12.95,
+        "t": 34.55,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 34.75,
         "event": "block_action"
       },
       {
-        "t": 13.15,
+        "t": 35,
         "event": "block_action"
       },
       {
-        "t": 13.4,
-        "event": "block_action"
+        "t": 35.05,
+        "event": "mob_hurt"
       },
       {
-        "t": 13.65,
-        "event": "block_action"
-      },
-      {
-        "t": 13.9,
-        "event": "block_action"
-      },
-      {
-        "t": 14.1,
+        "t": 35.15,
         "event": "end"
       }
     ]
@@ -451,10 +834,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "e053721c04393d675820e33ccc56f4914e2ceb15",
+    "commit": "ed9e18b09db35e333124f80acafb8b470226e0ef",
     "rendered": "local",
-    "rendered_at": "2026-11-12T00:24:44.452Z",
-    "head_at_publish": "e053721c04393d675820e33ccc56f4914e2ceb15",
+    "rendered_at": "2026-11-12T05:59:01.179Z",
+    "head_at_publish": "ed9e18b09db35e333124f80acafb8b470226e0ef",
     "stunt": "stunts/trap_free_diamonds.js",
     "source_snapshot": [
       "source/trap_free_diamonds.js",
@@ -468,22 +851,22 @@
     ]
   },
   "rebuild": [
-    "git checkout e053721c0439",
+    "git checkout ed9e18b09db3",
     "gunzip -c shorts/trap_free_diamonds/recording.json.gz > work/trap_free_diamonds.rec.json",
     "node render.js work/trap_free_diamonds.rec.json work/trap_free_diamonds.frames 60 1080 1011",
     "python3 audio.py work/trap_free_diamonds.rec.json work/trap_free_diamonds.wav",
-    "python3 edit.py --frames work/trap_free_diamonds.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/trap_free_diamonds.rec.json --audio work/trap_free_diamonds.wav --caption \"trapping my friend with FREE DIAMONDS 💀\" --self_name 56e --red \"FREE DIAMONDS\" --subs \"[[\\\"step\\\",\\\"step 1: a hole\\\",1.6,0],[\\\"step\\\",\\\"step 2: a trapdoor on top\\\",1.6,1],[\\\"step\\\",\\\"step 3: a TRAPPED chest behind it\\\",1.6,2],[\\\"step\\\",\\\"step 4: free diamonds\\\",1.6,3],[\\\"step\\\",\\\"now hide\\\",1.6,4]]\" --speed [[\"hide_go:0.05\",\"hidden:0.05\",\"cut\"],[\"friend_close\",\"friend_there\",\"cut\"]] --punch [[\"payoff\",0,1.06]] --hook \"{\\\"at\\\":\\\"payoff\\\",\\\"before\\\":0.45,\\\"after\\\":0.45,\\\"text\\\":\\\"he fell for it\\\"}\" --flash [[\"payoff\",0,0.35]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"payoff:-0.4\",{\"gain\":1}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:0.75 --out out/trap_free_diamonds.mp4"
+    "python3 edit.py --frames work/trap_free_diamonds.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/trap_free_diamonds.rec.json --audio work/trap_free_diamonds.wav --caption \"trapping my friend with FREE DIAMONDS 💀\" --self_name 56e --red \"FREE DIAMONDS\" --subs \"[[\\\"step\\\",\\\"step 1: a DEEP hole\\\",1.6,0],[\\\"step\\\",\\\"step 2: lava at the bottom\\\",1.6,1],[\\\"step\\\",\\\"step 3: a trapdoor on top\\\",1.6,2],[\\\"step\\\",\\\"step 4: a TRAPPED chest behind it\\\",1.6,3],[\\\"step\\\",\\\"step 5: free diamonds\\\",1.6,4],[\\\"step\\\",\\\"now hide\\\",1.6,5]]\" --speed [[\"deep_a:0.05\",\"deep_b\",\"cut\"],[\"hide_go:0.05\",\"hidden:0.05\",\"cut\"],[\"friend_close\",\"friend_there\",\"cut\"]] --punch [[\"payoff\",0,1.06],[\"splash\",0,1.08]] --hook \"{\\\"at\\\":\\\"payoff\\\",\\\"before\\\":0.45,\\\"after\\\":0.45,\\\"text\\\":\\\"he fell for it\\\"}\" --zoom [[\"splash:-0.3\",\"splash:0.9\",2.4]] --flash [[\"payoff\",0,0.35],[\"splash\",0,0.35]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":5,\"gain\":0.45}],[\"pop\",\"payoff:-0.4\",{\"gain\":1}],[\"dip\",\"splash\",0.5],[\"gamedip\",\"splash\",0.5],[\"impact\",\"splash\",{\"gain\":1.4}],[\"boom\",\"splash\"]] --chat_scale 5 --start_at go:-0.05 --end_after splash:0.8 --out out/trap_free_diamonds.mp4"
   ],
   "status": "ready",
-  "notes": "trap #1 re-cut: opens on Dylan at the bait as the floor goes (r:r0f3da0), fast cuts (r:r188b46); trapped chest powers the trapdoor he stands on, his own click; independent fix-check READY",
-  "published_at": "2026-11-12T00:26:46.307Z",
+  "notes": "trap #1 v3 (owner: 'go all the way down and then lava'): a 9-deep shaft dug on screen with lava poured at the bottom; Dylan's own click on the trapped chest opens the trapdoor and he falls 10 blocks into the lava, seen straight down the shaft; independent review READY",
+  "published_at": "2026-11-12T06:01:10.050Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T00:27:11+00:00",
+    "at": "2026-11-12T06:01:38+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 8.79 s vs the reviewed render 8.78 s"
+      "summary": "short.mp4 14.98 s vs the reviewed render 14.97 s"
     },
     "pace": {
       "ok": true,
@@ -495,7 +878,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T00:25:12.328Z",
+      "at": "2026-11-12T05:59:34.183Z",
       "report": "work/hb/trap_free_diamonds.check.json"
     },
     "key_sounds": "n/a"
