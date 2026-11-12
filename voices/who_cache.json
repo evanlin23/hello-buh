@@ -65,6 +65,21 @@
   "clip": "dog_hill/L10",
   "at": "2026-11-11T16:28:39Z"
  },
+ "46ca73f4de67": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 9,
+  "voice": "bright, warm, medium-pitch, raspy, animated",
+  "could_be_mistaken_for": "teenager",
+  "reversed": true,
+  "clip": "dog_hill/L15",
+  "at": "2026-11-12T08:22:50Z"
+ },
  "6cfc75c0f25f": {
   "model": "gemini-3.5-flash-lite",
   "sex": "woman",
@@ -155,6 +170,21 @@
   "reversed": true,
   "clip": "dog_hill/L15",
   "at": "2026-11-11T16:28:35Z"
+ },
+ "e5374ddf33da": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   40.0,
+   55.0
+  ],
+  "role": "father",
+  "confidence": 8,
+  "voice": "Resonant, warm, mature, medium-pitch, clear",
+  "could_be_mistaken_for": "grandfather",
+  "reversed": true,
+  "clip": "dog_hill/L17",
+  "at": "2026-11-12T08:22:55Z"
  },
  "f9703fd328ff": {
   "model": "gemini-3-flash-preview",
