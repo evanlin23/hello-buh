@@ -27,3 +27,10 @@ lucky_dig  6a6cbe726b07b07b  # 2026-11-11: owner pressed OK for YouTube in the R
 fakerun_any  273c81ca6ab16a62  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T21:18Z
 cooked_bedrock  827dda904eca429e  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T22:10Z (v2, EXECUTIONER; painting kept as is)
 sandart_tnt  f839e49288317528  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T22:11Z
+fakeworld_diamond  e3e2aaebc6ac2831  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+friend_new_world  af35a2c2b5d76a4e  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+interrupt_lamps  d218c1f9fcab1ad9  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+lava_crossing  9b848807d13ff0ac  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+mobpov_baby_zombie  590704a75c6a451b  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+quest_pyramid  eb69dc85d68735b1  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+which_door  2060e5056d50f933  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
