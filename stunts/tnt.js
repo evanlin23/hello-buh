@@ -41,7 +41,7 @@ module.exports = {
     const floor = await plateau(ctx, { x0: x - 44, x1: x + 44, z0: z + HZ - 40, z1: z + VZ + 14, above: 32, below: 22, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
     this.x = x; this.z = z; this.floor = floor
     this.hz = z + HZ; this.pz = z + PZ; this.vz = z + VZ
-    for (let y = floor - 22; y <= floor - 5; y += 6) await ctx.cmd(`/fill ${x - 44} ${y} ${z + HZ - 40} ${x + 44} ${Math.min(floor - 5, y + 5)} ${z + VZ + 14} stone`)
+    for (let y = floor - 22; y <= floor - 5; y += 3) await ctx.cmd(`/fill ${x - 44} ${y} ${z + HZ - 40} ${x + 44} ${Math.min(floor - 5, y + 2)} ${z + VZ + 14} stone`)
 
     // the hill: a dome with a gentle wobble, a grass top, 2 dirt under it, TNT in the core; a TNT bed under the hill
     // and the wall (4 deep) so the crater goes into the ground
