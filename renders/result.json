@@ -1,0 +1,17 @@
+{
+ "name": "friend_new_world",
+ "stunt": "friend_new_world",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43121634516",
+ "source": "fc29a465",
+ "queued": "2026-11-11T23:40:32Z",
+ "finished": "2026-11-12T00:04:32Z",
+ "mp4": "renders/out/friend_new_world.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
