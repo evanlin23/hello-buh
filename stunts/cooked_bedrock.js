@@ -54,7 +54,7 @@ module.exports = makeStunt({
   caption: 'why did everyone just join my world?',
   red: 'everyone',
   subs: [['bedrock', 'bedrock??', 1.0], ['crack', "wait it's breaking", 1.3]],
-  edit: { sfx: [['pop', 'go', { gain: 0.4 }], ['impact', 'dark']], endAfter: 'cooked:0.6' },   // r:r188b46: end 0.6 s after the last join (the format's default is 0.9)   // the break is a hit you hear under the music (review r1)
+  edit: { sfx: [['pop', 'go', { gain: 0.9 }], ['impact', 'dark']], endAfter: 'cooked:0.6' },   // r:r188b46: end 0.6 s after the last join (the format's default is 0.9)   // the break is a hit you hear under the music (review r1)
   // who comes for you: the game's makers first, then everything bigger; the punchline is the block itself (and the
   // other edition), last (kid-safe, no real person as the punchline, nothing a parent reads as an insult)
   joins: ['Notch', 'jeb_', 'Mojang', 'MojangLawyers', 'TheWarden', 'FBI', 'Pentagon', 'NASA', 'EnderDragon', 'Bedrock'],

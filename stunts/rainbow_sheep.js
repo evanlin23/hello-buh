@@ -1,7 +1,7 @@
 // "dyeing sheep until it's a rainbow 🌈": a fenced line of 8 white sheep (NoAI). The bot strafes along the line
 // using a dye on each (aimed by lib/act.js A.useOn; vanilla dyes the sheep), red to purple, and backs up to show the
-// rainbow. Then a "jeb_" name tag on the 8th: vanilla turns it into a colour-cycling sheep, held big in frame and sped
-// up so it runs through the colours. (The old all-jeb_ and shearing beats were cut: the Short ends on the tag.)
+// rainbow. Then the reward (no-op audit 2026-11-12, owner r:r4607fa: the jeb_ tag on one far sheep wasn't one): shears
+// back down the line, each sheep pops its wool in its colour, and it ends on the rainbow of wool on the grass.
 const COLORS = [
   { dye: 'red_dye', id: 14, sub: 'red' },
   { dye: 'orange_dye', id: 1, sub: 'orange' },
@@ -11,7 +11,7 @@ const COLORS = [
   { dye: 'blue_dye', id: 11, sub: 'blue' },
   { dye: 'purple_dye', id: 10, sub: 'purple' }
 ]
-const N = COLORS.length + 1          // the last one gets the name tag
+const N = COLORS.length
 const STEP = 2                       // blocks between sheep
 
 const { plateau } = require('../lib/plateau')
@@ -20,18 +20,12 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'jeb',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
     startAt: 'dye:-0.45',
-    // the short cut (lead 2026-11-11: as short as it reads): the seven dyes, the rainbow, then the jeb_ tag turns
-    // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)
-    endAfter: 'jeb:0.75',   // r:r188b46: 0.75 s into the jeb_ cycle (~5 colours at x8; was 1.0)
-    // the jeb_ sheep cycles a colour per 25 ticks (vanilla): held big and centred for 8 s after the tag, x8, so the last
-    // 0.9 s runs through ~6 colours; the tag is timed onto a bright run (review 2026-11-11: x3 over a back-off showed red,
-    // black, white; x5-6 covers 4-5 colours, which from most phases holds only 3 bright ones)
-    speed: [['jeb:0.1', 'jeb:7.6', 8]],
-    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i])],   // (no 'jeb_' sub: it sat on the jeb_ nameplate)
-    punch: [['jeb', 0, 1.06]],
-    sfx: [['air', 'start', 'jeb', { gain: 0.5 }], ['dip', 'jeb', 0.3], ['ding', 'jeb']]   // the gate: a sound hit on the jeb_ payoff over the song   // room tone from frame 1 (pace: the first sound was at 0.41 s)
+    endAfter: 'lastshear:1.25',   // r:r188b46: the last burst (red) is the payoff, then ~0.4 s into the look along the sheared rainbow
+    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['shears', 'now the best part', 1.2]],
+    punch: [['lastshear', 0, 1.06]],
+    sfx: [['air', 'start', 'pile', { gain: 0.5 }], ['dip', 'lastshear', 0.3], ['ding', 'lastshear']]   // a hit on the payoff over the song; room tone from frame 1
   },
 
   async setup (ctx) {
@@ -57,8 +51,7 @@ module.exports = {
     }
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 5')
     // everything it uses is in the hotbar from the start (items used to appear from nowhere mid-video)
-    await ctx.hotbar([...COLORS.map(c => c.dye), 'name_tag', 'shears'])
-    await ctx.cmd('/item replace entity @s hotbar.7 with name_tag[custom_name="jeb_"] 8')
+    await ctx.hotbar([...COLORS.map(c => c.dye), 'shears'])
     await bot.waitForTicks(4)
     await ctx.tpCheck(x0 + 0.5 - 1.2, floor + 1, z + 3.3, 200, 20)
     await ctx.cmd('/gamemode survival')
@@ -82,24 +75,23 @@ module.exports = {
       if (!s) { ctx.log('no sheep at', i); return false }
       // line up in front of it (strafe right), eyes on it
       const tx = x0 + i * STEP + 0.5
-      if (i === N - 1) { ctx.select(7); await bot.waitForTicks(2) } else ctx.select(i)
+      ctx.select(i)
       if (i > 0) {
-        bot.setControlState('right', true)
+        bot.setControlState('right', true)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
         const look = ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.7, z + 0.5), 380)
         // strafing follows the view, and the view is on the sheep (ahead-left), so it drifted away
         // from the row (out of reach by sheep 6): hold the row distance with forward/back
         const zt = z + 3.3
         while (bot.entity.position.x < tx - 1.0) {
-          bot.setControlState('forward', bot.entity.position.z > zt + 0.15)
-          bot.setControlState('back', bot.entity.position.z < zt - 0.15)
+          bot.setControlState('forward', bot.entity.position.z > zt + 0.15)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+          bot.setControlState('back', bot.entity.position.z < zt - 0.15)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
           await bot.waitForTicks(1)
         }
-        bot.setControlState('right', false); bot.setControlState('forward', false); bot.setControlState('back', false)
+        bot.setControlState('right', false); bot.setControlState('forward', false); bot.setControlState('back', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
         await look
       } else {
         await ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.7, z + 0.5), 300)
       }
-      if (i === N - 1) break                         // the name tag comes after the reveal
       // the crosshair on THIS sheep when the dye goes on (owner, r:rffba12: "we are not looking at the right sheep
       // when we dye"): the look above was aimed from where the strafe started, so settle it from where I stand now
       await A.useOn(s)                               // lib/act.js: acts only once the crosshair is on this sheep
@@ -118,7 +110,7 @@ module.exports = {
     }
     // back up and take in the rainbow (the last, white sheep at the end of the line)
     const mid = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 0.5)
-    bot.setControlState('back', true)   // straight back (the strafe left too took the line into a corner)
+    bot.setControlState('back', true)   // straight back (the strafe left too took the line into a corner)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
     let rev = false
     for (let t = 0; t < 16; t++) {                      // a short back-up: the rainbow stays big in frame
       await bot.waitForTicks(1)
@@ -128,55 +120,49 @@ module.exports = {
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       const gain = Math.min(0.4, 0.05 + t * 0.04)   // eased in: a flat 0.4 whipped the first ticks at 800 deg/s
       const step = Math.max(-0.17, Math.min(0.17, dy * gain))   // at most ~10 deg a tick (review: 245 deg/s, the cap is 240)
-      bot.look(bot.entity.yaw + step, bot.entity.pitch + (pitch - bot.entity.pitch) * gain, true)   // (0.25 left the line in a corner)
-      if (t === 18) bot.setControlState('left', false)
+      bot.look(bot.entity.yaw + step, bot.entity.pitch + (pitch - bot.entity.pitch) * gain, true)   // (0.25 left the line in a corner)   // motion-ok: the eased back-up look, capped at ~10 deg a tick
+      if (t === 18) bot.setControlState('left', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
     }
-    bot.setControlState('back', false); bot.setControlState('left', false)
+    bot.setControlState('back', false); bot.setControlState('left', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
     if (!rev) ctx.mark('reveal')
     await bot.waitForTicks(8)
-    // walk back to the white one and name it jeb_
-    const last = this.sheepAt(ctx, N - 1), lx = x0 + (N - 1) * STEP + 0.5
+    // the reward: shears back down the line (purple to red), each sheep pops its wool in its colour
     ctx.select(7)
-    const p = new ctx.Vec3(lx, floor + 1.7, z + 0.5)
-    const look = ctx.easeLookAt(p, 500)
-    bot.setControlState('forward', true)
-    for (let t = 0; t < 60 && bot.entity.position.distanceTo(new ctx.Vec3(lx, floor + 1, z + 0.5)) > 2.6; t++) {   // within 3 blocks: the jeb_ nameplate shows
-      await bot.waitForTicks(1)
-      if (t > 10) { const e = bot.entity.position, d = p.minus(e.offset(0, 1.62, 0)); let dy = Math.atan2(-d.x, -d.z) - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; bot.look(bot.entity.yaw + dy * 0.3, bot.entity.pitch + (Math.atan2(d.y, Math.hypot(d.x, d.z)) - bot.entity.pitch) * 0.3, true) }   // (a hard set snapped 238 deg/s)
+    const zt = z + 2.6
+    let first = true
+    for (let i = N - 1; i >= 0; i--) {
+      const sh = this.sheepAt(ctx, i)
+      if (!sh) { ctx.log('no sheep at', i); return false }
+      const tx = x0 + i * STEP + 0.5
+      const look = ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.4, z + 0.5), first ? 600 : 420)   // (450/300 ms touched 242-261 deg/s)
+      // stand a little right of it, at the row distance (strafe left along the line, forward/back to hold the row)
+      for (let t = 0; t < 60; t++) {
+        const e = bot.entity.position
+        const right = e.x > tx + 1.0, near = Math.abs(e.z - zt) < 0.2
+        if (!right && near) break
+        bot.setControlState('left', right)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+        bot.setControlState('forward', e.z > zt + 0.15)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+        bot.setControlState('back', e.z < zt - 0.15)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+        await bot.waitForTicks(1)
+      }
+      bot.setControlState('left', false); bot.setControlState('forward', false); bot.setControlState('back', false)   // motion-ok: a strafe/step along the sheep row on cleared flat grass (no obstacle: the row is fenced behind)
+      await look
+      if (first) { ctx.mark('shears'); first = false }
+      await A.useOn(sh)                              // lib/act.js: only with the crosshair on this sheep
+      ctx.mark('shear', { n: i })
+      if (i === 0) ctx.mark('lastshear')
+      await bot.waitForTicks(4)
     }
-    bot.setControlState('forward', false)
-    await look
-    // time the tag onto a bright run (renderer/entities.js sheepColor: colour (tick / 25 + id) % 16, the order
-    // white orange magenta light_blue yellow lime pink gray light_gray cyan purple blue brown green red black): the
-    // edit shows ticks tag+2 .. tag+146 (x8), ~5.8 colours from the phase there; starting on gray (7), blue (11) or
-    // brown (12) gives only 3 bright ones, so look back along the rainbow first until the phase is right
-    const BAD = new Set([7, 11, 12]), LAG = 4   // ticks from here to the tag landing (aim already on it)
-    const phase = (t) => (Math.floor((t + 2) / 25) + last.id) % 16
-    let g = 0
-    while (BAD.has(phase(ctx.tick + g + LAG)) || (g > 0 && g < 16)) g++
-    if (g > 0) {
-      ctx.mark('glance_line', { ticks: g })
-      const lineMid = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1.2, z + 0.5)
-      const half = Math.floor(g / 2)
-      await ctx.easeLookAt(lineMid, half * 50)
-      await ctx.easeLookAt(p, (g - half) * 50)
-    }
-    const tagAt = ctx.tick
-    await A.useOn(last)
-    ctx.mark('jeb', { id: last.id, phase: phase(ctx.tick), lag: ctx.tick - tagAt })
-    ctx.sound('entity.sheep.ambient', 1, 1.3)
-    ctx.log('jeb at tick', ctx.tick, 'id', last.id, 'phase', phase(ctx.tick), 'waited', g, 'lag', ctx.tick - tagAt)
-    // hold it big and centred while it cycles (no back-off: it shrank to frame right): a slow sway keeps the view alive
-    const q = new ctx.Vec3(lx, floor + 1.0, z + 0.5)
-    await ctx.easeLookAt(q, 250)
-    const base = bot.entity.yaw
-    for (let t = 0; t < 165; t++) {   // 8.25 s: past the x8 span (jeb:7.6)
-      const e = bot.entity.position, d = q.minus(e.offset(0, 1.62, 0))
-      const pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
-      bot.look(base + Math.sin(t / 40) * 0.05, pitch, true)
-      await bot.waitForTicks(1)
-    }
-    ctx.log('jeb name', JSON.stringify(last.metadata && last.metadata[2]))
+    // the payoff shot: from the red end, close, eyes along the line: the last wool still in the air in front, the sheared
+    // rainbow and its wool receding (backed off to the middle 7 blocks out, the wool read as specks: review of the take)
+    const pileAt = new ctx.Vec3(x0 + 3 * STEP + 0.5, floor + 0.8, z + 1.0)
+    await ctx.easeLookAt(pileAt, 700)
+    await bot.waitForTicks(2)
+    const wool = Object.values(bot.entities).filter(e => e.name === 'item').length
+    ctx.log('wool items on the ground:', wool)
+    if (wool < N) return false
+    ctx.mark('pile')
+    await bot.waitForTicks(30)
     return true
   }
 }

@@ -41,6 +41,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    setup, backstory or who's-who); 30-45 s and loopable; something for viewers to answer or argue; prefer a rule with a
    number or mark, a person changed overnight, warm twists; dark sets, monsters and sad losses carry a higher bar.
    Check: story-critic, owner, Studio (stop rate). r:rac1ae3 (the build list: r:rd25bba)
+0t. **The first 8 seconds** (hook frame study 2026-11-12, docs/research/hook_frames_2026-11-12.md): frame 1 is a
+   medium/close of a person or body the rule acts on (face >= 1/4 width), the odd thing visible and moving; the key
+   (title CAPS) word spoken by 1.8 s, line 1 done by ~2.5 s; shot 1 cuts on the key word; 2-4 s a stake on a face; 4-8 s
+   the rule on a new person every 1.2-1.6 s, no backstory/layout/object list/HUD POV/near-black; bright, cool-neutral.
+   Check: framing, pace, story-critic. r:rd25bba
 0v. **The hook is absurd** (owner: "we need to make our hooks absurd"): line 1 is a sentence nobody expects, said
    flatly, true to the story and naive, never a joke at a real group's expense; a casual reader would stop scrolling.
    Edgy inside the story's world is fine; no real-world flashpoints (religion, gender, politics, real groups). It parses on first hearing and carries tension (two casual readers). Check: cold reader (casual), story-critic. r:rb14c39 r:r4419c8 r:r581039
@@ -400,6 +405,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
 - **Format "cooked"**: the payoff plays an ominous, dread-building track on the drop (dark NCS or a low drone and
   hit), never an upbeat bed. Check: owner, review. r:rcefdcc
+- **The music plays from frame 0**: a track whose drop comes earlier than the drop event repeats a whole bar of its
+  build until the drop lands (edit.songLoop, scripts/add_song.py prints "song loop"); never silence then a late start
+  (edit.songLate is retired). Check: mixcheck (the final mix), review, owner. r:r43062d
 - **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
   gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
   picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
@@ -415,7 +423,11 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   publish's gate run it, on the game view): BLOCK a flat frame 0 (the middle half under 0.20 and the view under 0.35
   away from its main colour, with no mob in view in the recording) and nothing moving by 0.5 s; WARN a slow
   opening, no sound hit within 6 dB of the peak by 0.5 s, no caption on frame 0, a caption over 10 words, a still
-  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
+  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0 r:rf4a259
+  **The premise reads in the first second**, from the picture and the caption together: the subject big and centred,
+  the premise's first step happening on screen as the title states it; every later step reads on one watch (no act
+  that fights the title, no set dressing that raises an unanswered question, no change too small to see). If it can't
+  be made that clear, redesign the premise. Check: review (the cold read: say the premise after 1 s), owner. r:rf4a259
 - **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
   (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
 - **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action, and
@@ -451,7 +463,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (this narrows r:r24d99a: only the action itself, a falling block, a dying mob or a blast in progress, holds a cut).
   Check: the dwell check (scripts/dwell.py in pace: a result held over 1.0 s with nothing new WARN; the end over 0.9 s
   after the payoff's result WARN, over 1.2 s BLOCK; a text payoff keeps its 1.2-1.8 s), lib/settle.js (the `settle`
-  mark lands 0.3 s after the last blast), review, owner. r:r188b46
+  mark lands 0.3 s after the last blast), review, owner. r:r188b46 r:rb645c3 (a rating list: each result 0.5 s with its
+  card, then the cut)
 - **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
