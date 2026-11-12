@@ -2,7 +2,7 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "r8 (2026-11-12): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
   "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
@@ -17,10 +17,10 @@
   ]
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): built by lib/buhstories_upload.js; pinned = the question, without the 👇.",
- "logline": "A worker bee complains that the giant who keeps stealing her hive's honey plants a row of flowers every time; the flowers spread until she gets lost, and from straight above the meadow is a giant bee with her hive as its heart.",
- "question": "why does the giant plant more flowers every time he steals the honey?",
- "premise": "A lone beehive on the High Meadow. A giant (a player) has taken its honey 52 times: he lights a campfire under it so the bees stay calm, bottles the honey, then plants a row of flowers. The narrator, a worker bee, thinks he feels bad about stealing. He tells the bees they're his favorite; she's sure he means the honey. He only plants red around the hive (he thinks bees like red). The field keeps growing, the bees fly farther every day, and today she flew so far she couldn't see home.",
- "twist": "He isn't paying for the honey: he's drawing them. One row per bottle, 52 rows, the meadow is one huge bee seen from above, and the red ring around the hive is its heart. 'You're my FAVORITE' meant the bees. Cut on the top-down picture.",
+ "logline": "A worker bee asks why the giant who keeps stealing her hive's honey plants flowers every time; the flowers spread until she gets lost, she flies up to find home, and the meadow is a giant bee with her hive as its heart.",
+ "question": "why does the giant plant flowers every time he steals the honey?",
+ "premise": "A lone beehive on the High Meadow. A giant (a player) has taken its honey 52 times: he lights a campfire under it so the bees stay calm, bottles the honey, then plants a row of flowers. The narrator, a worker bee, thinks he feels bad about stealing. He tells the bees they're his favorite; she's sure he means the honey. He plants pink around the hive (so they can find home, she thinks). The field keeps growing, the bees fly farther every day, and today she flew so far she couldn't see home.",
+ "twist": "He isn't paying for the honey: he's drawing them. One row per bottle, 52 rows, the meadow is one huge bee seen from above, and the pink heart around the hive is its heart. 'You're my FAVORITE' meant the bees. Said by the bee over the top-down picture: 'all the flowers made one giant BEE, with HOME right in its HEART'.",
  "family": "secret_kindness",
  "key_color": "#FFD640",
  "mood": [
@@ -28,8 +28,8 @@
   "heroic"
  ],
  "payoff": "top",
- "payoff_note": "`top`: the stunt mark when the rising camera settles straight down over the whole bee (S10); the Short ends <= 1.0 s after (owner: cut right on the reveal). No line after L11.",
- "punch_note": "hook L01, turn L08 (she sets off to find the edge), the line into the reveal L11",
+ "payoff_note": "`top`: the stunt mark when the rising camera settles straight down over the whole bee (S10), by L11's BEE. L11 (the reveal) is said over it, L12 (the sting, echoing line 1's 52) over the hold; the Short ends 1.0 s after L12.",
+ "punch_note": "hook L01 (the fact + WHY), turn L08 ('I HAD to know WHY'), the reveal L11",
  "look": {
   "time": 3000,
   "fog": false,
@@ -109,7 +109,8 @@
     "L08",
     "L09",
     "L10",
-    "L11"
+    "L11",
+    "L12"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -129,8 +130,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "The GIANT / has stolen / our HONEY / FIFTY-TWO times. / And every TIME, / he PLANTS / more FLOWERS.",
-   "say": "The giant has stolen our honey fifty-two times. And every time, he plants more flowers.",
+   "text": "The GIANT / stole our HONEY / FIFTY-TWO times. / And every time, / he plants FLOWERS. / WHY?",
+   "say": "The giant stole our honey fifty-two times. And every time, he plants flowers. Why?",
    "shot": "S01",
    "shows": [
     {
@@ -147,13 +148,13 @@
     },
     {
      "what": [
-      "poppy"
+      "pink_petals"
      ],
      "word": "FLOWERS"
     }
    ],
    "punch": true,
-   "direction": "a bubbly complaint, like telling on him; one breath",
+   "direction": "a bubbly complaint, like telling on him; one breath, the WHY bright and baffled, up",
    "look": {
     "what": "actor:Giant",
     "word": "GIANT"
@@ -162,8 +163,8 @@
   {
    "id": "L02",
    "who": "N",
-   "text": "First, SMOKE. / We go all / SLEEPY / and NICE. / We HATE that.",
-   "say": "First, smoke. We go all sleepy and nice. We hate that.",
+   "text": "First, SMOKE. / Me and my SISTERS / go all SLEEPY. / We HATE that.",
+   "say": "First, smoke. Me and my sisters go all sleepy. We hate that.",
    "shot": "S02",
    "shows": [
     {
@@ -176,7 +177,7 @@
      "what": [
       "bee"
      ],
-     "word": "SLEEPY"
+     "word": "SISTERS"
     }
    ],
    "direction": "outraged and giggly at once",
@@ -256,16 +257,15 @@
   {
    "id": "L07",
    "who": "N",
-   "text": "He plants RED ones / around our DOOR, / so we can / find HOME. / Like we'd EVER / get LOST.",
-   "say": "He plants red ones around our door, so we can find home. Like we'd ever get lost.",
+   "text": "He plants PINK ones / around our DOOR, / so we can / find HOME. / Like we'd EVER / get LOST.",
+   "say": "He plants pink ones around our door, so we can find home. Like we'd ever get lost.",
    "shot": "S07",
    "shows": [
     {
      "what": [
-      "poppy",
-      "rose_bush"
+      "pink_petals"
      ],
-     "word": "RED"
+     "word": "PINK"
     },
     {
      "what": [
@@ -283,70 +283,82 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "But the flowers / never END now. / So TODAY, / I went to find / the EDGE.",
-   "say": "But the flowers never end now. So today, I went to find the edge.",
+   "text": "But now / the flowers / never END. / I HAD to know WHY. / So I went / to find / the EDGE.",
+   "say": "But now the flowers never end. I had to know why. So I went to find the edge.",
    "shot": "S08",
    "shows": [
     {
      "what": [
-      "dandelion",
-      "oxeye_daisy"
+      "wildflowers",
+      "lilac"
      ],
      "word": "FLOWERS"
     }
    ],
    "punch": true,
-   "direction": "determined and bright, off on an adventure",
+   "direction": "determined and bright, off on an adventure; 'I HAD to know WHY' is the viewer's question, said for them",
    "look": {
-    "what": "block:dandelion",
+    "what": "block:wildflowers",
     "word": "FLOWERS"
    }
   },
   {
    "id": "L09",
    "who": "N",
-   "text": "I flew / SO far, / I couldn't / see HOME.",
-   "say": "I flew so far, I couldn't see home.",
+   "text": "I flew / SO far, / I couldn't see HOME. / Or my SISTERS.",
+   "say": "I flew so far, I couldn't see home. Or my sisters.",
    "shot": "S09",
-   "direction": "surprised at herself, not scared",
+   "direction": "surprised at herself, a small wobble on SISTERS, still bright (never scared before the reveal)",
    "look": {
-    "what": "block:oxeye_daisy"
+    "what": "block:lilac"
    }
   },
   {
    "id": "L10",
    "who": "N",
-   "text": "And way out THERE, / the GIANT, / still PLANTING.",
-   "say": "And way out there, the giant, still planting.",
+   "text": "So I flew / UP, / UP, / UP, / to find them.",
+   "say": "So I flew up, up, up, to find them.",
    "shot": "S10",
-   "shows": [
-    {
-     "what": [
-      "player"
-     ],
-     "word": "GIANT"
-    },
-    {
-     "what": [
-      "dandelion"
-     ],
-     "word": "PLANTING"
-    }
-   ],
-   "direction": "a fond huff",
+   "direction": "brave and bouncy, each UP higher; the crane lifts on the first UP",
    "look": {
-    "what": "actor:Giant",
-    "word": "GIANT"
+    "what": "block:lilac"
    }
   },
   {
    "id": "L11",
    "who": "N",
-   "text": "So I'm gonna / go TELL him / we have ENOUGH.",
-   "say": "So I'm gonna go tell him we have enough.",
+   "text": "And ALL the flowers / made one / giant BEE. / With HOME / right in its HEART.",
+   "say": "And all the flowers made one giant bee. With home right in its heart.",
    "shot": "S10",
    "punch": true,
-   "direction": "bossy and fond, the last word up",
+   "direction": "the reveal, plain and amazed, slower: she says what she sees; BEE lands as the camera settles",
+   "look": {
+    "what": "block:beehive",
+    "word": "HOME"
+   },
+   "shows": [
+    {
+     "what": [
+      "podzol",
+      "wildflowers"
+     ],
+     "word": "BEE"
+    },
+    {
+     "what": [
+      "pink_petals"
+     ],
+     "word": "HEART"
+    }
+   ]
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "text": "Fifty-two BOTTLES. / Fifty-two ROWS.",
+   "say": "Fifty-two bottles. Fifty-two rows.",
+   "shot": "S10",
+   "direction": "the sting, soft and wondering, counting; echoes line 1's FIFTY-TWO; cut ~1 s after ROWS",
    "look": {
     "what": "actor:Giant"
    }
@@ -362,7 +374,7 @@
    "place": "hive",
    "size": "ws",
    "camera": "bee pov hovering 4 blocks out from the hive's front face, eye at the hive's middle; a slow drift (bee hover bob)",
-   "frame": "frame 1: the giant centred, big (a WS at 4 blocks: ~35 % of frame height), his glass bottle held to the dripping hive, already moving (0.0 s); behind him the flowers run yellow and white to the horizon (the picture asks the question too). On 'FLOWERS' he turns and places one poppy at the heart's edge, under his crosshair (the heart's last red: the red L07 names; the 52 rows are the yellow/white ones, S03). The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky (time 3000).",
+   "frame": "frame 1: the giant centred, big (a WS at 4 blocks: ~35 % of frame height), his glass bottle held to the dripping hive, already moving (0.0 s); behind him the flowers run yellow and purple to the horizon (the picture asks the question too). On 'FLOWERS' he turns and places one pink petal cover at the heart's edge, under his crosshair (the heart's last pink: the pink L07 names; the 52 rows are the yellow/lilac ones, S03). The bottle is NOT filled yet (that's L03's CLINK). Bright morning sky (time 3000).",
    "look": {
     "time": 3000
    }
@@ -376,7 +388,7 @@
    "place": "hive",
    "size": "ms",
    "camera": "low, 3 blocks south-east of the hive, 1 block up, still; then a slow push",
-   "frame": "the hive on its post over the pit campfire, smoke rising past its face (vanilla calms bees within 5 below); three bees drifting slowly around it; the giant's bottle hand at frame edge; the red ring around the post.",
+   "frame": "the hive on its post over the pit campfire, smoke rising past its face (vanilla calms bees within 5 below); three bees (her sisters) drifting slowly around it; the giant's bottle hand at frame edge; the pink-petal heart around the post, its rose-bush rim.",
    "look": {
     "time": 3000
    }
@@ -390,7 +402,7 @@
    "place": "hive_edge",
    "size": "full",
    "camera": "cut 1: bee pov on the bottle as it fills on 'CLINK' at the hive; cut 2 (on 'ROW'): side-on FULL at the head's crown, the field's north edge (no long walk)",
-   "frame": "'CLINK': the glass bottle fills to a honey bottle (he moves it to his offhand); 'ROW': at the crown he places dandelions one per block along the row, each under his crosshair, fast; behind him the plateau rim and open meadow (not yet flowers).",
+   "frame": "'CLINK': the glass bottle fills to a honey bottle (he moves it to his offhand); 'ROW': at the crown he places wildflowers (flat covers) one per block along the row, each under his crosshair, fast; behind him the plateau rim and open meadow (not yet flowers).",
    "look": {
     "time": 3000
    }
@@ -404,7 +416,7 @@
    "place": "hive_edge",
    "size": "ws",
    "camera": "wide from 10 blocks off, eye height",
-   "frame": "the giant crouched at the end of his row on the crown, placing a dandelion; the field behind him, the meadow rim beyond.",
+   "frame": "the giant crouched at the end of his row on the crown, placing a wildflower cover; the field behind him, the meadow rim beyond.",
    "look": {
     "time": 3000
    }
@@ -446,7 +458,7 @@
    "place": "hive",
    "size": "ws",
    "camera": "high-ish orbit 8 blocks out, 5 up, around the hive (one smooth quarter turn)",
-   "frame": "the ring of red around the hive: rose bushes and poppies, the campfire pit and post at its middle; outside the red, yellow in every direction (no shape readable at this height); the orbit ends facing east, with Larkfield's west roofs small on the skyline 50-75 blocks away (the easter egg, never named).",
+   "frame": "the pink heart around the hive: a flat bed of pink petals with a 2-tall rose-bush rim, the campfire pit and post at its middle; outside it, yellow wildflowers in every direction (no shape readable at this height); the orbit ends facing east, with Larkfield's west roofs small on the skyline 50-75 blocks away (the easter egg, never named).",
    "look": {
     "time": 3000
    }
@@ -460,7 +472,7 @@
    "place": "wing",
    "size": "ews",
    "camera": "bee pov flying fast and low (1.5 blocks up) west over the field, the camera ahead of her: she's off to find the edge",
-   "frame": "dandelions, then a dark podzol stripe flashing under, then white (the wing); flowers to the horizon ahead.",
+   "frame": "yellow wildflowers, then a bare podzol stripe flashing under, then the purple of the lilac wing; flowers to the horizon ahead.",
    "look": {
     "time": 3000
    }
@@ -474,7 +486,7 @@
    "place": "wing",
    "size": "ws",
    "camera": "bee pov hovering on the left wingtip, a slow eased look from north through east to south (never west, where the picture ends)",
-   "frame": "white flowers every way she looks; the hive is hidden (it sits low over a pit campfire inside the 2-tall rose-bush ring, behind the meadow's rise); live gate: a still from this eye shows no hive and no smoke.",
+   "frame": "2-tall lilac every way she looks; the hive is hidden (it sits low over a pit campfire inside the heart's 2-tall rose-bush rim, behind the meadow's rise and the lilac); live gate: a still from this eye shows no hive and no smoke.",
    "look": {
     "time": 3000
    }
@@ -484,12 +496,13 @@
    "line": "L10",
    "lines": [
     "L10",
-    "L11"
+    "L11",
+    "L12"
    ],
    "place": "bee_picture",
    "size": "ews",
-   "camera": "bee pov: she spots the giant far off at the head's crown (north-east), the view narrowing to fov ~28 so he reads (not a speck), and flies at him; on 'TELL' the camera (fov easing back to 70 inside the same move, no snap) lifts off her straight up, tilting to straight down (or ~75 deg if the test still reads better), rising to ~90 blocks over the hive at a fast smooth ease, settling within ~1 s of 'ENOUGH'",
-   "frame": "the reveal: from straight above, the meadow is one huge bee, head north: dandelion body, three bare podzol stripes, white wings 61 wide (fit: 9:16 at vfov 70 from 90 up is ~71 wide), two podzol antennae; where its heart would be, a red heart of rose bushes and poppies with the tiny hive in it. The giant is a speck at the crown of the head, planting the last row (row 52); our bee a yellow dot flying toward him. Payoff mark `top` when the camera settles; cut 1.0 s after. No line.",
+   "camera": "bee pov at the left wingtip: on the first 'UP' the camera lifts with her and keeps going (crane: from 'pov', to O + (0, 90, 0), yaw 0, pitch -90, fov 70, tilt 0.6), a fast smooth ease, settling straight down by 'BEE' in L11; she falls behind as a yellow dot",
+   "frame": "the reveal: from straight above, the meadow is one huge bee, head north, drawn in what reads from above (camera_world flower_readability): a wildflower body inside a bare podzol outline, three podzol stripes, lilac wings 61 wide outlined in podzol, podzol eyes and antennae; where its heart would be, a pink-petal heart with the tiny hive in it. The giant is a speck at the crown of the head, planting the last row (row 52); our bee a yellow dot below the lens. L11 is said over the settled picture; L12 over the hold; payoff mark `top` on the settle; cut 1.0 s after L12.",
    "look": {
     "time": 3000
    },
@@ -514,21 +527,21 @@
    "note": "lit, open, in a 1-deep pit: 2 below the hive (vanilla: within 5 below)"
   },
   "heart": {
-   "note": "rose bushes (2 tall) and poppies, a heart 11 wide x 10 deep around the post, its point south"
+   "note": "pink_petals (flat, reads from above), a heart 11 wide x 10 deep around the post, its point south, with a 1-wide 2-tall rose-bush rim (hides the hive from the wings)"
   },
   "bee_picture": {
    "note": "52 rows (z), head north; set.md has the plan"
   },
   "giant": {
-   "note": "player actor, kai skin; main hand: glass bottle (S01-S03), then dandelions; honey bottle in the offhand from S03; hotbar (all 9): glass bottles, dandelions x64, poppies, oxeye daisies, rose bushes, campfire, milk bucket, 67 eggs, cake"
+   "note": "player actor, kai skin; main hand: glass bottle (S01-S03), then wildflowers; honey bottle in the offhand from S03; hotbar (all 9): glass bottles, wildflowers x64, pink petals, lilac, rose bushes, campfire, milk bucket, 67 eggs, cake"
   }
  },
  "ending": {
-  "after": "L11",
+  "after": "L12",
   "beats": [
-   "S10: the camera rises off the bee to straight above: the bee picture; mark `top`; cut 1.0 s after. No line."
+   "S10: on L10's first UP the camera rises off the bee to straight above; settled by L11's BEE (the reveal said over the picture); L12 the sting over the hold; mark `top` on the settle; cut 1.0 s after L12."
   ],
-  "loop": "cause and effect: the reveal answers line 1's 'he plants MORE flowers'"
+  "loop": "L12 'Fifty-two BOTTLES. Fifty-two ROWS.' reframes line 1's 'stole our honey FIFTY-TWO times'"
  },
  "bible": "stories/honey_thief/bible.md",
  "beats": "stories/honey_thief/beats.md",
