@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "twist",
     "drop_in_song_s": 13.0,
-    "drop_in_short_s": 10.4,
-    "song_start_s": 2.6
+    "drop_in_short_s": 10.35,
+    "song_start_s": 2.65
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 15.45,
+    "duration_s": 15.5,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 12813885,
-    "sha256": "1711cb4d05e7405e099c2dc25dbc5e91dd358bdafb9a5161c3d042a0cb903e3b",
+    "bytes": 12874681,
+    "sha256": "f48a7c39cfacca9de19d5dceb33e676b4470228111c5804e6f9ca8f6f5dfa58c",
     "release": {
       "tag": "pkg-underdog_heal",
-      "asset": "underdog_heal.short.1711cb4d05e7405e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.1711cb4d05e7405e.mp4",
-      "sha256": "1711cb4d05e7405e099c2dc25dbc5e91dd358bdafb9a5161c3d042a0cb903e3b",
-      "bytes": 12813885
+      "asset": "underdog_heal.short.f48a7c39cfacca9d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short.f48a7c39cfacca9d.mp4",
+      "sha256": "f48a7c39cfacca9de19d5dceb33e676b4470228111c5804e6f9ca8f6f5dfa58c",
+      "bytes": 12874681
     },
     "nosong_release": {
       "tag": "pkg-underdog_heal",
-      "asset": "underdog_heal.short_nosong.adae0e5d334d2103.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short_nosong.adae0e5d334d2103.mp4",
-      "sha256": "adae0e5d334d21038298cf2962d76c1fbf9a2556b13de8c0d59b9e69994f71c0",
-      "bytes": 12762681
+      "asset": "underdog_heal.short_nosong.e842e7a748175cc3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-underdog_heal/underdog_heal.short_nosong.e842e7a748175cc3.mp4",
+      "sha256": "e842e7a748175cc39bc506b9a6eda6271fd68fff8f7b8ac464f9c5669841c60e",
+      "bytes": 12832406
     }
   },
   "edit": {
@@ -52,63 +52,63 @@
     "red": "every",
     "song": null,
     "ncsMood": "sad",
-    "startAt": "beat_wolf:-0.05",
-    "endAfter": "settle:1.0",
+    "startAt": "beat_wolf:0",
+    "endAfter": "melted:1.6",
     "dropAt": "twist",
     "cards": [
       [
         "beat_wolf",
         "WOLF + STEAK",
-        1.15,
+        0.85,
         "white",
         0,
         null,
         {
-          "y": 0.16
+          "y": 0.76
         }
       ],
       [
         "beat_cat",
         "CAT + FISH",
-        1.15,
+        0.85,
         "white",
         0,
         null,
         {
-          "y": 0.16
+          "y": 0.76
         }
       ],
       [
         "beat_horse",
         "HORSE + HAY BALE",
-        1.15,
+        0.85,
         "white",
         0,
         null,
         {
-          "y": 0.16
+          "y": 0.76
         }
       ],
       [
         "beat_golem",
         "IRON GOLEM + IRON",
-        1.15,
+        0.85,
         "yellow",
         0,
         null,
         {
-          "y": 0.16
+          "y": 0.76
         }
       ],
       [
         "beat_zombie",
         "ZOMBIE VILLAGER",
-        0.9,
+        0.85,
         "orange",
         0,
         null,
         {
-          "y": 0.12,
+          "y": 0.76,
           "size": 84
         }
       ],
@@ -120,7 +120,7 @@
         0,
         null,
         {
-          "y": 0.12,
+          "y": 0.76,
           "size": 84
         }
       ],
@@ -132,19 +132,30 @@
         0,
         null,
         {
-          "y": 0.12,
+          "y": 0.76,
           "size": 84
         }
       ],
       [
         "twist",
         "...but who heals HIM?",
-        2.6,
+        2,
         "yellow",
         0,
         null,
         {
-          "y": 0.16
+          "y": 0.76
+        }
+      ],
+      [
+        "melted",
+        "NOBODY.",
+        1.8,
+        "red",
+        0,
+        null,
+        {
+          "y": 0.9
         }
       ]
     ],
@@ -152,10 +163,10 @@
       [
         "later_zombie",
         "5 minutes later...",
-        1
+        0.6
       ]
     ],
-    "subsY": 0.8,
+    "subsY": 0.62,
     "punch": [
       "twist",
       "melted"
@@ -238,7 +249,14 @@
       [
         "dip",
         "melted",
-        0.4
+        0.5
+      ],
+      [
+        "impact",
+        "melted",
+        {
+          "gain": 0.6
+        }
       ],
       [
         "heart",
@@ -256,19 +274,19 @@
       "--red",
       "every",
       "--subs",
-      "[[\"later_zombie\",\"5 minutes later...\",1]]",
+      "[[\"later_zombie\",\"5 minutes later...\",0.6]]",
       "--subs_y",
-      "0.8",
+      "0.62",
       "--punch",
       "[\"twist\",\"melted\"]",
       "--cards",
-      "[[\"beat_wolf\",\"WOLF + STEAK\",1.15,\"white\",0,null,{\"y\":0.16}],[\"beat_cat\",\"CAT + FISH\",1.15,\"white\",0,null,{\"y\":0.16}],[\"beat_horse\",\"HORSE + HAY BALE\",1.15,\"white\",0,null,{\"y\":0.16}],[\"beat_golem\",\"IRON GOLEM + IRON\",1.15,\"yellow\",0,null,{\"y\":0.16}],[\"beat_zombie\",\"ZOMBIE VILLAGER\",0.9,\"orange\",0,null,{\"y\":0.12,\"size\":84}],[\"throw_zombie\",\"+ WEAKNESS\",0.9,\"white\",0,null,{\"y\":0.12,\"size\":84}],[\"applesel_zombie\",\"+ GOLDEN APPLE\",1.1,\"yellow\",0,null,{\"y\":0.12,\"size\":84}],[\"twist\",\"...but who heals HIM?\",2.6,\"yellow\",0,null,{\"y\":0.16}]]",
+      "[[\"beat_wolf\",\"WOLF + STEAK\",0.85,\"white\",0,null,{\"y\":0.76}],[\"beat_cat\",\"CAT + FISH\",0.85,\"white\",0,null,{\"y\":0.76}],[\"beat_horse\",\"HORSE + HAY BALE\",0.85,\"white\",0,null,{\"y\":0.76}],[\"beat_golem\",\"IRON GOLEM + IRON\",0.85,\"yellow\",0,null,{\"y\":0.76}],[\"beat_zombie\",\"ZOMBIE VILLAGER\",0.85,\"orange\",0,null,{\"y\":0.76,\"size\":84}],[\"throw_zombie\",\"+ WEAKNESS\",0.9,\"white\",0,null,{\"y\":0.76,\"size\":84}],[\"applesel_zombie\",\"+ GOLDEN APPLE\",1.1,\"yellow\",0,null,{\"y\":0.76,\"size\":84}],[\"twist\",\"...but who heals HIM?\",2,\"yellow\",0,null,{\"y\":0.76}],[\"melted\",\"NOBODY.\",1.8,\"red\",0,null,{\"y\":0.9}]]",
       "--sfx",
-      "[[\"pop\",\"beat_wolf\",{\"gain\":1.3}],[\"pop\",\"beat_cat\",{\"gain\":0.7}],[\"pop\",\"beat_horse\",{\"gain\":0.7}],[\"pop\",\"beat_golem\",{\"gain\":0.7}],[\"pop\",\"beat_zombie\",{\"gain\":0.7}],[\"ding\",\"fixed_wolf\",{\"gain\":0.8}],[\"ding\",\"fixed_cat\",{\"gain\":0.8}],[\"ding\",\"fixed_horse\",{\"gain\":0.8}],[\"ding\",\"fixed_golem\",{\"gain\":0.8}],[\"ding\",\"fixed_zombie\",{\"gain\":0.8}],[\"scratch\",\"twist\"],[\"dip\",\"melted\",0.4],[\"heart\",\"melted\",{\"gain\":1}]]",
+      "[[\"pop\",\"beat_wolf\",{\"gain\":1.3}],[\"pop\",\"beat_cat\",{\"gain\":0.7}],[\"pop\",\"beat_horse\",{\"gain\":0.7}],[\"pop\",\"beat_golem\",{\"gain\":0.7}],[\"pop\",\"beat_zombie\",{\"gain\":0.7}],[\"ding\",\"fixed_wolf\",{\"gain\":0.8}],[\"ding\",\"fixed_cat\",{\"gain\":0.8}],[\"ding\",\"fixed_horse\",{\"gain\":0.8}],[\"ding\",\"fixed_golem\",{\"gain\":0.8}],[\"ding\",\"fixed_zombie\",{\"gain\":0.8}],[\"scratch\",\"twist\"],[\"dip\",\"melted\",0.5],[\"impact\",\"melted\",{\"gain\":0.6}],[\"heart\",\"melted\",{\"gain\":1}]]",
       "--start_at",
-      "beat_wolf:-0.05",
+      "beat_wolf:0",
       "--end_after",
-      "settle:1.0"
+      "melted:1.6"
     ]
   },
   "recording": {
@@ -513,10 +531,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "b1319d9bc2a17e2277ca22dd35bd44620430d3e8",
+    "commit": "b21fa1f281cbfab77f9c36ba554072ba8c6154a0",
     "rendered": "local",
-    "rendered_at": "2026-11-12T00:59:35.208Z",
-    "head_at_publish": "b1319d9bc2a17e2277ca22dd35bd44620430d3e8",
+    "rendered_at": "2026-11-12T04:46:48.155Z",
+    "head_at_publish": "e6d5e1f3d6a7d587b563ebf74b04dc689fdb762f",
     "stunt": "stunts/underdog_heal.js",
     "source_snapshot": [
       "source/underdog_heal.js",
@@ -528,34 +546,34 @@
     ]
   },
   "rebuild": [
-    "git checkout b1319d9bc2a1",
+    "git checkout b21fa1f281cb",
     "gunzip -c shorts/underdog_heal/recording.json.gz > work/underdog_heal.rec.json",
     "node render.js work/underdog_heal.rec.json work/underdog_heal.frames 60 1080 1011",
     "python3 audio.py work/underdog_heal.rec.json work/underdog_heal.wav",
-    "python3 edit.py --frames work/underdog_heal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/underdog_heal.rec.json --audio work/underdog_heal.wav --caption \"you can heal every mob in Minecraft...\" --self_name 56e --red every --subs \"[[\\\"later_zombie\\\",\\\"5 minutes later...\\\",1]]\" --subs_y 0.8 --punch [\"twist\",\"melted\"] --cards \"[[\\\"beat_wolf\\\",\\\"WOLF + STEAK\\\",1.15,\\\"white\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_cat\\\",\\\"CAT + FISH\\\",1.15,\\\"white\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_horse\\\",\\\"HORSE + HAY BALE\\\",1.15,\\\"white\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_golem\\\",\\\"IRON GOLEM + IRON\\\",1.15,\\\"yellow\\\",0,null,{\\\"y\\\":0.16}],[\\\"beat_zombie\\\",\\\"ZOMBIE VILLAGER\\\",0.9,\\\"orange\\\",0,null,{\\\"y\\\":0.12,\\\"size\\\":84}],[\\\"throw_zombie\\\",\\\"+ WEAKNESS\\\",0.9,\\\"white\\\",0,null,{\\\"y\\\":0.12,\\\"size\\\":84}],[\\\"applesel_zombie\\\",\\\"+ GOLDEN APPLE\\\",1.1,\\\"yellow\\\",0,null,{\\\"y\\\":0.12,\\\"size\\\":84}],[\\\"twist\\\",\\\"...but who heals HIM?\\\",2.6,\\\"yellow\\\",0,null,{\\\"y\\\":0.16}]]\" --sfx [[\"pop\",\"beat_wolf\",{\"gain\":1.3}],[\"pop\",\"beat_cat\",{\"gain\":0.7}],[\"pop\",\"beat_horse\",{\"gain\":0.7}],[\"pop\",\"beat_golem\",{\"gain\":0.7}],[\"pop\",\"beat_zombie\",{\"gain\":0.7}],[\"ding\",\"fixed_wolf\",{\"gain\":0.8}],[\"ding\",\"fixed_cat\",{\"gain\":0.8}],[\"ding\",\"fixed_horse\",{\"gain\":0.8}],[\"ding\",\"fixed_golem\",{\"gain\":0.8}],[\"ding\",\"fixed_zombie\",{\"gain\":0.8}],[\"scratch\",\"twist\"],[\"dip\",\"melted\",0.4],[\"heart\",\"melted\",{\"gain\":1}]] --start_at beat_wolf:-0.05 --end_after settle:1.0 --out out/underdog_heal.mp4"
+    "python3 edit.py --frames work/underdog_heal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/underdog_heal.rec.json --audio work/underdog_heal.wav --caption \"you can heal every mob in Minecraft...\" --self_name 56e --red every --subs \"[[\\\"later_zombie\\\",\\\"5 minutes later...\\\",0.6]]\" --subs_y 0.62 --punch [\"twist\",\"melted\"] --cards \"[[\\\"beat_wolf\\\",\\\"WOLF + STEAK\\\",0.85,\\\"white\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_cat\\\",\\\"CAT + FISH\\\",0.85,\\\"white\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_horse\\\",\\\"HORSE + HAY BALE\\\",0.85,\\\"white\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_golem\\\",\\\"IRON GOLEM + IRON\\\",0.85,\\\"yellow\\\",0,null,{\\\"y\\\":0.76}],[\\\"beat_zombie\\\",\\\"ZOMBIE VILLAGER\\\",0.85,\\\"orange\\\",0,null,{\\\"y\\\":0.76,\\\"size\\\":84}],[\\\"throw_zombie\\\",\\\"+ WEAKNESS\\\",0.9,\\\"white\\\",0,null,{\\\"y\\\":0.76,\\\"size\\\":84}],[\\\"applesel_zombie\\\",\\\"+ GOLDEN APPLE\\\",1.1,\\\"yellow\\\",0,null,{\\\"y\\\":0.76,\\\"size\\\":84}],[\\\"twist\\\",\\\"...but who heals HIM?\\\",2,\\\"yellow\\\",0,null,{\\\"y\\\":0.76}],[\\\"melted\\\",\\\"NOBODY.\\\",1.8,\\\"red\\\",0,null,{\\\"y\\\":0.9}]]\" --sfx [[\"pop\",\"beat_wolf\",{\"gain\":1.3}],[\"pop\",\"beat_cat\",{\"gain\":0.7}],[\"pop\",\"beat_horse\",{\"gain\":0.7}],[\"pop\",\"beat_golem\",{\"gain\":0.7}],[\"pop\",\"beat_zombie\",{\"gain\":0.7}],[\"ding\",\"fixed_wolf\",{\"gain\":0.8}],[\"ding\",\"fixed_cat\",{\"gain\":0.8}],[\"ding\",\"fixed_horse\",{\"gain\":0.8}],[\"ding\",\"fixed_golem\",{\"gain\":0.8}],[\"ding\",\"fixed_zombie\",{\"gain\":0.8}],[\"scratch\",\"twist\"],[\"dip\",\"melted\",0.5],[\"impact\",\"melted\",{\"gain\":0.6}],[\"heart\",\"melted\",{\"gain\":1}]] --start_at beat_wolf:0 --end_after melted:1.6 --out out/underdog_heal.mp4"
   ],
   "status": "ready",
-  "notes": "underdog ep 1, owner notes applied: overhead HUD hearts on every mob filling as it's healed (r:r337da9), cuts 0.35 s after each heal, end 0.6 s after the snow golem is gone (r:r188b46), wolf + card on frame 0; independent fix-checks READY; pace 0/0, mixcheck OK (true-peak WARN, mastering)",
-  "published_at": "2026-11-12T01:02:38.987Z",
+  "notes": "underdog ep 1 (owner notes + no-op audit): overhead HUD hearts filling on every heal (r:r337da9), fast cuts (r:r188b46), the snow golem's hearts drain to 0 under 'who heals HIM?' and a red 'NOBODY.' + sting land on the last heart (r:r4607fa); independent fix-checks READY with takeaway; pace 0 blockers, mixcheck OK",
+  "published_at": "2026-11-12T04:49:05.912Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:02:57+00:00",
+    "at": "2026-11-12T04:49:22+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 15.47 s vs the reviewed render 15.45 s"
+      "summary": "short.mp4 15.51 s vs the reviewed render 15.50 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 0,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T00:59:48.274Z",
+      "at": "2026-11-12T04:46:59.471Z",
       "report": "work/hb/underdog_heal.check.json"
     },
     "key_sounds": "n/a"
