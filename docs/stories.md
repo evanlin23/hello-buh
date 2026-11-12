@@ -462,6 +462,11 @@ STANDARDS.md in the same commit.
   happy and satisfied."** No Short ships unless an independent reviewer's takeaway says it makes sense and pays off.
   No-ops are redone or dropped; borderline Shorts get one bigger, clearer last beat. The audit and every fix:
   docs/noop_audit_2026-11-12.md.
+- **Owner, 2026-11-12, on fortune v3 (at 2.8 s): "we should look at the block we are breaking. and i think the moving
+  around was fine...", "like we should keep looking at the shower." and "And we should end faster, right after the
+  shower explodes in emeralds".** The crosshair stays on the block while it breaks (r:r52f94c, r:rffba12); after a
+  burst the camera follows the drops where they fly, never back off them; the walk between ores stays; the Short ends
+  0.5-0.8 s after the payoff's burst, no hold or counter beats after it (r:r188b46).
 - **Owner, 2026-11-12, Review Room notes:** on mislabel_grandma "wtf is this parkour. the double extension is like
   you jump, place 2 blocks, and then land etc (without the blocks, the jump would hav ebeen impopssile)", "we should
   move our camera... like the art should be vertical, and we look at it tracking it as we fall", "we should have the
