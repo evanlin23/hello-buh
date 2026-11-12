@@ -208,6 +208,9 @@ module.exports = {
       return false
     }
     const land = async () => {
+      // the fall starts a tick or two after the break: at the break the bot still reads onGround (an aim taken
+      // "after land()" was taken from 4 blocks up: the spawner look ended at pitch -63, review 2026-11-12)
+      for (let w = 0; w < 10 && bot.entity.onGround && !ctx.died; w++) await bot.waitForTicks(1)
       for (let w = 0; w < 60 && !bot.entity.onGround && !ctx.died; w++) await bot.waitForTicks(1)
       ctx.sound('entity.player.small_fall', 1); ctx.sound('entity.generic.hurt', 0.7)
     }
@@ -225,15 +228,19 @@ module.exports = {
     const DOWN = -Math.PI / 2 + 0.02
     const looks = async (list) => { for (const [yaw, pitch, ms] of list) { await ease(yaw, pitch, ms); await rest() } }
 
+    await ctx.cmd('/kill @e[type=!player]', { mayFail: true })   // no surface animals: a far cow's sparse updates read as teleporting (rec_check cast BLOCK)
     ctx.mark('dig0')
-    await ease(0, DOWN, 250)
+    // every look-down ends at yaw pi, where A.dig aims at the block underfoot: ending elsewhere, its turn rolled the
+    // picture 75-90 deg round the crosshair at pitch -89 (review 2026-11-12, five times)
+    const YD = Math.PI
+    await ease(YD, DOWN, 250)
     // 0 -> 1: the cave
     if (!await digDown(1)) return false
     // r:r188b46 (fast cuts): one look per layer, straight at what it shows, a short rest, back to digging (two looks
     // and a pan held each layer 2.3-3.5 s after the reveal: pace dwell)
     const lift1 = ease(-1.9, -0.25, 900)                              // the lava trickle, ores and glow lichen
     await land(); ctx.sound('ambient.cave', 1); await lift1; await rest()
-    await ease(-1.9, DOWN, 400)
+    await ease(YD, DOWN, 400)
     ctx.mark('dig1')
     // 1 -> 2: the mineshaft
     if (!await digDown(2)) return false
@@ -241,20 +248,21 @@ module.exports = {
     bot.chat(`/summon chest_minecart ${this.minecart.x} ${this.minecart.y} ${this.minecart.z}`)
     const lift2 = ease(-Math.PI / 2, -0.15, 900)                      // along the corridor: the minecart
     await land(); await lift2; await rest()
-    await ease(-Math.PI / 2, DOWN, 400)
+    await ease(YD, DOWN, 400)
     ctx.mark('dig2')
     // 2 -> 3: the dungeon
     if (!await digDown(3)) return false
-    const lift3 = easeAt(new Vec3(x + 3.5, F - 23.5, z + 1.5), 700)   // the spawner, its zombie spinning inside
-    await land(); ctx.mark('spawner'); await lift3; await rest()
-    await ease(bot.entity.yaw, DOWN, 400)
+    // aimed from the floor, after the landing (aimed mid-fall from 4 blocks up it ended at pitch -64 and the spawner sat
+    // above the frame: review 2026-11-12)
+    await land(); ctx.mark('spawner'); await easeAt(new Vec3(x + 3.5, F - 23.5, z + 1.5), 700); await rest()   // the spawner, its zombie spinning inside
+    await ease(YD, DOWN, 400)
     ctx.mark('dig3')
     // 3 -> 4: the geode
     if (!await digDown(4)) return false
-    const lift5 = easeAt(new Vec3(this.geode.x + 2.5, this.geode.y - 1, this.geode.z - 1.5), 700)   // amethyst all round
-    await land(); ctx.sound('block.amethyst_block.chime', 1); await lift5
+    await land(); ctx.sound('block.amethyst_block.chime', 1)
+    await easeAt(new Vec3(this.geode.x + 2.5, this.geode.y - 1, this.geode.z - 1.5), 700)   // amethyst all round (aimed from the floor, as the spawner)
     ctx.sound('block.amethyst_block.chime', 0.8, 1.2); await rest()
-    await ease(bot.entity.yaw, DOWN, 450)
+    await ease(YD, DOWN, 450)
     ctx.mark('dig4')
     // 4 -> 5: the lava cavern
     if (!await digDown(5)) return false
