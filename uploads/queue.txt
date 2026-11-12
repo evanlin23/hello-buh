@@ -21,6 +21,13 @@ underdog_heal  # first: owner OK 2026-11-12 (fixed)
 mislabel_grandma  # first: owner OK 2026-11-12 (fixed)
 nether_portal  # first: owner OK 2026-11-12 (fixed)
 race_grass_mycelium  # first: owner OK 2026-11-12 (fixed)
+fortune  # first: owner OK 2026-11-12 (fixed)
+villager_fired  # first: owner OK 2026-11-12 (fixed)
+cells_lab  # first: owner OK 2026-11-12 (fixed)
+fakerun_any  # first: owner OK 2026-11-12 (fixed)
+creeper_art  # first: owner OK 2026-11-12 (fixed)
+villager_crowd  # first: owner OK 2026-11-12 (fixed)
+hack_banner_door  # first: owner OK 2026-11-12 (fixed)
 ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
@@ -31,7 +38,6 @@ hide_seek
 spot_wrong_2
 guess_sound_2
 worse_lava
-villager_fired
 spot_wrong_3
 end_portal_job
 guess_sound_3
@@ -42,25 +48,19 @@ ladder_clutch
 noob_pro_hacker
 lava_cast
 worse_tnt
-fortune
 boat_clutch
 speed_build
-villager_crowd
-creeper_art
 sand_tower
 water_vs_lava
 rainbow_sheep
 desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-hack_banner_door   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 interrupt_lamps   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 creeper
-cells_lab   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 herobrine_bridge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-fakerun_any   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cooked_bedrock   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cave_reveal
