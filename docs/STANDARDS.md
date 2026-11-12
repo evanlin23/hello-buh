@@ -1,6 +1,6 @@
 # Story standards: the current checklist
 
-Updated: 2026-11-11
+Updated: 2026-11-12
 
 Every rule a story Short must meet **today**, once, by stage, with its number and the check that enforces it. The
 newest owner decision wins; superseded rules are listed at the end and must not be applied. The dated history (the
@@ -36,11 +36,17 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0w. **The genre opener**: line 1 starts "In my village...", "In my world..." or "My [twin/grandpa/friend]...", then the
+   impossible fact and its "why?". Check: story-critic. r:rd2f8e4
 0y. **The Roblox story format, in Minecraft** (docs/story_format.md): the impossible fact AND its "why?" said in line 1
    (by 3 s); 3-5 quick two-way clues; the narrator as the one who wants to know; someone loved at stake; the rule
    turned against itself; the reveal SAID in one plain sentence (the naive narrator says what they see), never wordless;
    one beat, cut within ~1 s; the last line echoes line 1. Check: story-critic (blockers), cold readers (casual and
    gamer). r:rc8538b
+0x. **A crazy Roblox-story premise** (owner: "more roblox style... in my town, nobody... my twin... it doesnt
+   necessarily need to be minefrcaft themed"): the premise is a strange rule or impossible fact about people, a family
+   or a town; Minecraft is the look, not the twist, which need not be a game mechanic (when one is used it is still
+   shown and true). Check: owner, story-critic. r:r12f9ac
 0z. **A casual viewer gets it** (a friend on Gold for the Portal: "im confsued bro"): the table read's cold readers
    include a casual player watching once; the twist lands for them in one step from the picture, with no unshown name
    or mechanic; if they can't say it in one sentence, the script goes back. Check: cold reader (casual), story-critic. r:rac4476
@@ -406,6 +412,10 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
 - **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action.
   Check: owner, review. r:r7ef6ec
+- **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
+  ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
+- **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
+  one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or

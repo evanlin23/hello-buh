@@ -433,6 +433,16 @@ STANDARDS.md in the same commit.
   pad them".** A Short is as long as its beats need. There is no minimum length for a stunt (the 30 s rule of
   2026-11-06 is retired). Padding is the blocker instead: a beat added or stretched only to reach a length, a beat
   that could be cut without losing anything, or dwell after a result (r:r188b46).
+- **Owner, 2026-11-11, Review Room notes: on tnt (9.5 s) "This needs to be longer, this is low-key a no op reel. Every
+  one we make must give the viewer satisfaction"; on logic_minecraft "We spend too long looking at the fire after the
+  TNT"; on tnt_1000 "Need faster cuts generally between shots.."** Every Short must pay the viewer off with a real,
+  satisfying result: big enough to be worth the watch, never a setup with a small or quick fizzle ("no-op"). Short is
+  fine (r:r064ca4), but a Short whose payoff doesn't land needs a bigger payoff, not padding. The two cut notes are
+  r:r188b46.
+- **Owner, 2026-11-12, on mislabel_grandma v2: "Need to be like left right doubel extensions not this going up. Also
+  the cuts need to be cleaner, we should do into a hole 1x1 and then come out of the sky? need cleaner"** The
+  `mislabel` parkour uses sideways (left/right) double extensions, the classic bridge-out move, not blocks placed
+  upward. The transition is one clean move: drop into a 1x1 hole, cut, come out of the sky.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
@@ -700,6 +710,18 @@ STANDARDS.md in the same commit.
   loved at stake, the rule turned against itself, the reveal SAID in one plain sentence (the naive narrator says what
   they see), one beat, cut, the last line echoing line 1. All 10 approved scripts are rewritten to it, one session
   each, and come back to the owner.
+- **Owner, 2026-11-12: "What i want is more roblox style. Like the premise. Like in my town, nobody etc. Or in my
+  world. Or my twin etc. its a crazy premise. it doesnt necessarily need to be minefrcaft themed yk?"** The premise is
+  a crazy Roblox-story premise ("In my town, nobody...", "In my world...", "My twin...", "This man adopted 10 kids
+  and..."): a strange rule or impossible fact about people, families, towns. Minecraft is the look (the world, the
+  blocky characters, the places), not the twist: the twist no longer has to be a vanilla mechanic. Premises can come
+  straight from blocky-stories (the owner's Roblox-style channel) and the Roblox hits. Everything else holds: the
+  format (docs/story_format.md), naivety, the casual viewer gets it, the shared world as background.
+- **Owner, 2026-11-12, asked "Should we do the likle 'in my world,... ' sort of intro or 'in my town'", then on the
+  lead's plan (In my village / In my world / My [family member]): "sure lets do this, for all of them".** Line 1 opens
+  with the genre's frame: "In my village..." (a local rule), "In my world..." (a rule for everyone), or "My twin / my
+  grandpa / my best friend..." (a family premise), then the impossible fact and the "why?". All 10 approved scripts
+  take it.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
