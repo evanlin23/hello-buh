@@ -739,6 +739,10 @@ STANDARDS.md in the same commit.
   story's world (kidnapping, robbing, a kid "in love" with a bell, a grandpa "dumped"), the kind that makes people
   comment. It stops short of real-world flashpoints (religion, gender, politics, real people or groups), which risk the
   channel and aren't needed: the shock comes from the story's own absurd fact.
+- **Owner, 2026-11-12, relaying a friend on the absurd hooks: "my friend said he didnt like the wall, and didnt knwo
+  waht the grandpa one".** An absurd hook must still parse on first hearing (The Walk's "got DUMPED. Now he breaks
+  LECTERNS" didn't) and carry tension (The Wall's "forty blocks high, still growing" had none). Each hook is gated by
+  two fresh casual readers: understood instantly, a clear question, would keep watching.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
