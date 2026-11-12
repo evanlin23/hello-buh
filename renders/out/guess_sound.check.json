@@ -1,0 +1,136 @@
+{
+ "stunt": "guess_sound",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/guess_sound.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT guess_sound: 1 shots, scene 0.0-35.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-35.1  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 18.167,
+     "shot": 4,
+     "line": null,
+     "kind": "vanish",
+     "msg": "enderman #359 vanishes in the middle of the frame 5.50 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 7 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 16.417,
+     "tick": 347,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 184 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 28.117,
+     "tick": 581,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 185 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "16 visible sound-making events (place 6, voice 10), 6 with a sound mark, 10 without (audio.py adds those for a story)",
+    "     5.20s  cow idle voice                     -> entity.cow.ambient                 3.1 blocks in view  ",
+    "    10.75s  cow idle voice                     -> entity.cow.ambient                14.9 blocks          ",
+    "    12.35s  llama idle voice                   -> entity.llama.ambient               4.0 blocks in view  ",
+    "    15.25s  enderman idle voice                -> entity.enderman.ambient           14.9 blocks          ",
+    "    16.75s  llama idle voice                   -> entity.llama.ambient              13.7 blocks in view  ",
+    "    19.65s  polar_bear idle voice              -> entity.polar_bear.ambient         14.9 blocks          ",
+    "    21.55s  warden idle voice                  -> entity.warden.ambient             13.7 blocks          ",
+    "    27.55s  parrot idle voice                  -> entity.parrot.ambient             14.3 blocks          ",
+    "    33.85s  warden idle voice                  -> entity.warden.ambient             14.9 blocks          ",
+    "    35.60s  parrot idle voice                  -> entity.parrot.ambient              3.0 blocks in view  ",
+    "ambience per shot: -0.25-6.85s indoor_day, 6.85-13.00s indoor_day, 13.00-19.10s indoor_day, 19.10-25.05s indoor_day, 25.05-31.30s indoor_day, 31.30-38.65s indoor_day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T20:44:55.257Z"
+}
