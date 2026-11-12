@@ -454,6 +454,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Shorts get one bigger last beat (docs/noop_audit_2026-11-12.md). Check: review, owner. r:r4607fa
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
+- **Labour steps play as a time-lapse**: a long dig (a trap's shaft) or any build step that is only labour is one
+  steady sped-up move with a live counter (edit `tally`), never seconds of bare walls; no jump cuts inside it
+  (r:r200cfe), turns at <= 220 / x deg/s while sped up (K.turnLimit, r:r38374d). Check: review, owner. r:rc6f193
 - **Owner notes 2026-11-12 (general)**: a double extension is a mid-air clutch (jump an impossible gap, place 2
   blocks under you mid-air, land); list items show number + name together for the whole item; a looping Short loops
   seamlessly; builds sit in a real world (no superflat) with detail; the music drop lands on the reveal, never

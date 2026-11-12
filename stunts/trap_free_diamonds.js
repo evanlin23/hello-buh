@@ -46,7 +46,7 @@ module.exports = makeStunt({
   edit: {
     // fast cuts (owner r:r188b46): the middle of the dig, the walk into hiding, his coast + shuffle onto the trapdoor,
     // and my walk to the edge; every edge sits on a rest (rec_check whip)
-    speed: [['go', 'lapse_end', LAPSE], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close', 'friend_there', 'cut']],
+    speed: [['go', 'lapse_end', LAPSE], ['hide_go:0.05', 'hidden:0.05', 'cut'], ['friend_close:0.15', 'friend_there', 'cut']],
     tally: { event: 'depth', label: 'blocks deep', done: 'lava_in' },
     // the last beat: straight down the shaft at him in the lava (owner: "all the way down and then lava"); a hit on it
     endAfter: 'splash:0.8',
@@ -136,7 +136,7 @@ module.exports = makeStunt({
     F.join()
     const watch = () => { const p = F.pos(); T.K.base = T.K.aim(Object.assign(new ctx.Vec3((p.x + T.O.x + 0.5) / 2, T.O.y + 1.6, (p.z + T.O.z + 0.5) / 2), { exact: true })) }
     let said = false, close = false   // close: his walk ends, the coast and the shuffle onto the mark start (cut out)
-    await F.walk([[0.5, 3.5], [0.5, 0.6]], { tol: 0.08, during: (k) => { watch(); if (k === 14 && !said) { said = true; F.say('yo FREE DIAMONDS??') } if (k < 0 && !close) { close = true; ctx.mark('friend_close') } } })
+    await F.walk([[0.5, 3.5], [0.5, 0.6]], { tol: 0.08, during: (k) => { if (k >= 0) watch();   /* the follow stops when his walk does: the coast cut lands on a still view (whip) */ if (k === 14 && !said) { said = true; F.say('yo FREE DIAMONDS??') } if (k < 0 && !close) { close = true; ctx.mark('friend_close') } } })
     ctx.mark('friend_there')
     // on the trapdoor: he looks down at the chest and opens it
     await F.lookAt(0.5, 1.4, -0.6, 8)
