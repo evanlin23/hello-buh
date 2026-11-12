@@ -1,0 +1,200 @@
+{
+ "stunt": "cave_reveal",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/cave_reveal.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT cave_reveal: 1 shots, scene 0.0-25.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-25.1  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "5 warning(s) over 6 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 0,
+     "kind": "tight",
+     "msg": "camera against the set: 89% of the frame is within 3 blocks (stone, lava)"
+    },
+    {
+     "level": "WARN",
+     "out": 0.967,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (stone)"
+    },
+    {
+     "level": "WARN",
+     "out": 3.75,
+     "shot": 3,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (stone)"
+    },
+    {
+     "level": "WARN",
+     "out": 6.967,
+     "shot": 4,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (mossy_cobblestone, cobblestone)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.617,
+     "shot": 5,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 100% of the frame is within 3 blocks (amethyst_block)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 4 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 1.5,
+     "tick": 150,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 4.333,
+     "tick": 245,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 7.717,
+     "tick": 350,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 12.1,
+     "tick": 497,
+     "line": null,
+     "msg": "start-stop stutter: the camera drops in 3 steps within 1.5 s (fall, stop, fall: digging down a block at a time): reads as a glitch. Owner: \"looks like it's glitching a bunch\": one smooth move, or cut between"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "     9.30s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "    11.55s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    12.10s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    12.10s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    12.60s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    12.65s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    13.15s  digging mossy_cobblestone          -> block.moss.hit                     2.1 blocks in view  ",
+    "    13.15s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    14.10s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    16.45s  digging mossy_cobblestone          -> block.moss.hit                     2.1 blocks in view  ",
+    "    17.10s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    17.10s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    17.65s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    18.15s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    18.55s  digging amethyst_block             -> block.amethyst_block.hit           2.1 blocks in view  ",
+    "    18.55s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    19.30s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    22.35s  digging amethyst_block             -> block.amethyst_block.hit           2.1 blocks in view  ",
+    "    22.90s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    23.30s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    23.80s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    23.80s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    24.35s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    24.90s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    25.35s  digging stone                      -> block.stone.hit                    2.1 blocks in view  ",
+    "    25.40s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    25.90s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    27.70s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "ambience per shot: -0.25-32.55s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:06:41.438Z"
+}
