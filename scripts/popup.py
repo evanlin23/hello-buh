@@ -15,7 +15,7 @@ edit.popup: a list of entries (lib/fakemod.js builds them; every time is a timel
                                      slot (ALLOW / DENY ...), RESULT_EVENT lands it on the result
    "y": 0.5,                         the panel's centre as a fraction of the game view (default 0.5: centred like a
                                      modal, owner r:r7ef6ec; lib/fakemod.js frames the mob under it)
-   "scale": 3}                       GUI scale (default 3: 666 x 249 px, the game font 24 px tall)
+   "scale": 4}                       GUI scale (default 4: 888 x 332 px, the game font 32 px tall; owner r:rb35549)
 
 `frame_key(windows, t)` gives a hashable state for the overlay track (scripts/retention.py fx_concat caches one PNG per
 state) and `frame_img(key)` draws it. Times are Short seconds (the timeline already warped, minus the start).
@@ -27,7 +27,8 @@ import zipfile
 from PIL import Image, ImageDraw
 
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
-SCALE = 3                                # default GUI scale: the panel 666 px wide, centred, the mob framed under it
+SCALE = 4                                # default GUI scale: the panel 888 px wide (most of the view), centred, readable on a
+                                         # phone (owner r:rb35549); the mob framed under it
 S = SCALE
 PANEL_W = 222                            # GUI px (888 px of the 1080)
 PAD = 8
