@@ -35,3 +35,13 @@ Verdict: REVISE (light: two one-line must-fixes; average 8.0, nothing under 7). 
 1. A casual viewer will ask why Mom never came back to say she was fine. Answer it in the picture: S11 shows no boats at Fernbank's dock except the two that just arrived (villagers can't row), or L09 → "None of them came BACK. They DID love it there."
 2. The r2 should-fix still stands: why are three villagers at the dock's foot at bedtime? Put their door under the lantern.
 3. Fix the word count in the beats.md header.
+
+## r5.1 re-check (2026-11-12)
+
+Verdict: APPROVE (average 8.1). Hook 8, Twist 9, Fairness 9, nothing under 7.
+
+- Must-fix 1 is done. L01 is now 14 words and fits one breath. It states the fact and asks the question ("WHERE did they GO?"). Delivery goes to 8.
+- Must-fix 2 is done. L04 now ends "in ONE WINDOW" and S04b cuts on WINDOW, so L08's "the lady from the WINDOW" is planted. Fairness goes to 9.
+- The should-fixes are done: S11's door and lantern, no boats at the dock, and the 120-word count. 120 words is about 40 s plus the hold, which is within the range.
+- There are no regressions. The name is never spoken, the out-of-context read is clean, and L09 still echoes L01.
+- Watch item, not a fix: the casual cold reader's midpoint guess was 65 % right, near the "too obvious" edge, and the WINDOW plant adds to that. Mystery goes to 7. Keep L06's "HIMSELF" misread bright and sure, so it pulls the guess away.
