@@ -2,7 +2,7 @@
  "name": "wall_grows",
  "stunt": "story_wall_grows",
  "version": 2,
- "revision": "r2 (2026-11-11): the critic's r1 must-fixes (L01 split, S04 still dirt, S09 at the ladder foot, S12 long lens, the dirt/brick heights, Tomas in S07), the hall run deep, and STANDARDS 0a naivety: every clue has the kid's innocent misreading; the brown-plant beat moved after the midpoint (r2 cold reader read the pillar at 45 %); continuity r1's must-fixes (S01 split into S01/S01b, the dirt/brick geometry, the farm ring closed with the rail inside, S04 sky-only hole, S12 stub dropped, looks and props); see reviews/",
+ "revision": "r3 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/wall_grows.md): line 1 says the fact AND the why; Tomas too tired one morning (someone loved at stake, L13); the kid climbs FOR him with his brick (L14: the rule turned); the reveal SAID in one plain sentence over the picture (L15: a man standing on the brown plant, a hundred of us in tiny boxes behind him); one beat (L16: he looks up and puts down ONE more, echoing L02); cut. Earlier: r2 (2026-11-11): the critic's r1 must-fixes (L01 split, S04 still dirt, S09 at the ladder foot, S12 long lens, the dirt/brick heights, Tomas in S07), the hall run deep, and STANDARDS 0a naivety: every clue has the kid's innocent misreading; the brown-plant beat moved after the midpoint (r2 cold reader read the pillar at 45 %); continuity r1's must-fixes (S01 split into S01/S01b, the dirt/brick geometry, the farm ring closed with the rail inside, S04 sky-only hole, S12 stub dropped, looks and props); see reviews/",
  "caption": "why is our village wall 40 blocks high 🧱",
  "upload": {
   "title": "the wall around my village is 40 blocks high 🧱 #minecraft #shorts",
@@ -16,11 +16,11 @@
   ]
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\": the upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste wall_grows prints it). pinned = the question, without the 👇",
- "logline": "A villager kid lives behind a 40-block wall that old Tomas raises every morning, and climbs it to see what's out there.",
+ "logline": "A villager kid lives behind a 40-block wall that old Tomas raises every morning; the morning Tomas is too tired, the kid climbs it for him.",
  "question": "why tf is the village wall forty blocks high with no gate?",
  "premise": "A village sits inside a stone-brick wall 40 blocks high with no gate. Every dawn a little dirt pokes over the rim from outside, and old Tomas, the mason, climbs up and builds one block higher above it. A block of the wall once vanished; Tomas patched it by noon. Tomas is the only one who has been outside: he came in an old minecart before the wall, and he hides when the kids push it. He says there's nothing out there 'we want to trade with'.",
  "family": "viewer_is_the_threat",
- "twist": "The thing outside is a player. The dirt is his pillar (he towers up every morning to look in), the vanished block is the one he mined to peek, the minecart is how players move villagers, and outside the wall is his trading hall: a hundred villagers, each boxed in a one-block cell. The kid reads every clue innocently (a brown plant, blocks that vanish, Tomas good at hide and seek) and climbs to see a monster; he finds 'another village' where everybody gets their own room, and the one person not in a room looks up. The wall was never for monsters; it's for us.",
+ "twist": "The thing outside is a player. The brown 'plant' is his dirt pillar (he towers up every morning to look in; Tomas builds one higher to stay above it), the vanished block is the one he mined to peek, the minecart is how players move villagers, and outside the wall is his trading hall: a hundred villagers, each boxed in a one-block cell. One morning Tomas is too tired to climb, so the kid goes up for him and SAYS what he sees: a man standing on the brown plant, a hundred of us behind him, each in a tiny box. The man looks up and puts down one more. The wall was never for monsters; it's a race to stay hidden from him.",
  "key_color": "#FFD640",
  "mood": [
   "eerie",
@@ -59,7 +59,7 @@
    "role": "character",
    "silent": true,
    "name": "the player",
-   "on_screen": "a player actor, default Steve skin, dirt in his main hand; S12 only (and his dirt in S04); never speaks, never named"
+   "on_screen": "a player actor, default Steve skin, dirt in his main hand; S11 (standing on top of his half-built dirt pillar, 12 below the rim) and S12 (looks up, places one more dirt under himself); his pillar's top in S05; never speaks, never named"
   }
  },
  "requests": [
@@ -81,7 +81,8 @@
     "L11",
     "L13",
     "L14",
-    "L15"
+    "L15",
+    "L16"
    ],
    "direction": "One continuous telling, start to finish: hit only the CAPITALISED words, keep the rest level and quick, no dramatic pauses."
   },
@@ -122,17 +123,22 @@
    "note": "the cart's rattle on 'PUSH', the door shutting on 'HIDES'"
   },
   {
-   "under": "S12",
+   "under": "S09b",
    "sound": "none",
-   "note": "the payoff hit on 'UP' (clean impact, docs/audio.md), then cut"
+   "note": "quiet room, Tomas's slow breath only if the mix has one; no music swell"
+  },
+  {
+   "under": "S12",
+   "sound": "block.gravel.place",
+   "note": "the dirt's place sound on 'ONE' (block.gravel.place is dirt's place sound), the payoff hit on 'UP' (clean impact, docs/audio.md); cut about 1 s after 'MORE'"
   }
  ],
  "lines": [
   {
    "id": "L01",
    "who": "N",
-   "text": "The WALL / around my village / is FORTY blocks high.",
-   "say": "The wall around my village is forty blocks HIGH.",
+   "text": "The WALL / around my village / is FORTY blocks high. / And nobody will tell me WHY.",
+   "say": "The wall around my village is forty blocks high. And nobody will tell me WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -141,7 +147,7 @@
     }
    ],
    "punch": true,
-   "note": "one bright breath, proud, like it's the biggest thing in the world",
+   "note": "one bright breath on the fact, then the question, curious, not scared: the viewer's why, said out loud (docs/story_format.md beat 1)",
    "look": {
     "what": "prop:wall",
     "word": "WALL"
@@ -361,57 +367,102 @@
   {
    "id": "L13",
    "who": "N",
-   "text": "So before the SUN came up, / I climbed his LADDER. / I wanted to SEE / a real MONSTER!",
-   "say": "So before the sun came up, I climbed his ladder. I wanted to see a real MONSTER!",
-   "shot": "S10",
+   "text": "But THIS morning, / old Tomas / was too TIRED / to get up.",
+   "say": "But this morning, old Tomas was too tired to get UP.",
+   "shot": "S09b",
    "shows": [
     {
-     "what": "ladder",
-     "word": "LADDER"
+     "what": "villager",
+     "word": "Tomas"
+    },
+    {
+     "what": "bed",
+     "word": "TIRED"
     }
    ],
-   "punch": true,
-   "note": "sneaky and thrilled, speeding up as he climbs; excited, never scared",
+   "note": "soft, worried for him the way a kid is for a grandpa; not scared of anything else",
    "look": {
-    "what": "prop:ladder",
-    "word": "LADDER"
+    "what": "Tomas",
+    "word": "Tomas"
    }
   },
   {
    "id": "L14",
    "who": "N",
-   "text": "Outside was / ANOTHER village! / A HUNDRED of us! / EVERYBODY gets / their own ROOM!",
-   "say": "Outside was another VILLAGE! A hundred of US! Everybody gets their own ROOM!",
-   "shot": "S11",
+   "text": "So I took his BRICK / and climbed up FOR him. / Maybe I'd see / a real MONSTER!",
+   "say": "So I took his brick and climbed up for him. Maybe I'd see a real MONSTER!",
+   "shot": "S10",
    "shows": [
     {
-     "what": "villager",
-     "word": "HUNDRED"
+     "what": "stone_bricks",
+     "word": "BRICK"
+    },
+    {
+     "what": "ladder",
+     "word": "climbed"
     }
    ],
-   "note": "pure delight, the happiest he's been; he thinks it's wonderful",
+   "punch": true,
+   "note": "brave for Tomas, then thrilled, speeding up as he climbs; excited, never scared",
    "look": {
-    "what": "prop:hall",
-    "word": "HUNDRED"
+    "what": "prop:ladder",
+    "word": "climbed"
    }
   },
   {
    "id": "L15",
    "who": "N",
-   "text": "Then SOMEONE / not in a ROOM / looked UP.",
-   "say": "Then someone not in a room looked UP.",
+   "text": "A MAN / was standing on the brown PLANT, / and behind him / were a HUNDRED of us, / each in a tiny BOX.",
+   "say": "A man was standing on the brown plant, and behind him were a hundred of us, each in a tiny BOX.",
+   "shot": "S11",
+   "shows": [
+    {
+     "what": "player",
+     "word": "MAN"
+    },
+    {
+     "what": "dirt",
+     "word": "PLANT"
+    },
+    {
+     "what": "villager",
+     "word": "HUNDRED"
+    }
+   ],
+   "punch": true,
+   "note": "THE REVEAL (docs/story_format.md beat 6): one plain sentence, what the kid SEES, still bright and curious, not afraid; the viewer makes the one jump (the plant was him; the boxes are for us)",
+   "look": [
+    {
+     "what": "Player",
+     "word": "MAN"
+    },
+    {
+     "what": "prop:hall",
+     "word": "HUNDRED"
+    }
+   ]
+  },
+  {
+   "id": "L16",
+   "who": "N",
+   "text": "He looked UP at me, / and put down / ONE more.",
+   "say": "He looked up at me, and put down one MORE.",
    "shot": "S12",
    "shows": [
     {
      "what": "player",
-     "word": "SOMEONE"
+     "word": "He"
+    },
+    {
+     "what": "dirt",
+     "word": "ONE"
     }
    ],
    "punch": true,
-   "note": "still bright and curious, a new person to meet; full voice to the end",
+   "note": "the one beat after the reveal: level, bright, a new person; echoes L02's 'ONE more' (the race the wall is for); cut about 1 s after 'MORE'",
    "look": {
     "what": "Player",
-    "word": "SOMEONE"
+    "word": "He"
    }
   }
  ],
@@ -538,12 +589,24 @@
    }
   },
   {
-   "id": "S10",
+   "id": "S09b",
    "line": "L13",
+   "place": "village",
+   "size": "full",
+   "camera": "at: inside Tomas's house (-12, -20), a baby villager's eye height at the foot of his bed, a slow push in",
+   "frame": "fg: the bed's foot (red wool); subject: Tomas (mason) lying in his bed, eyes shut, still, centred; his stone brick on the floor beside the bed; bg: the window, the sky just turning pale (the brown thing is out of sight). Before dawn (23000).",
+   "subject": "Tomas",
+   "look": {
+    "time": 23000
+   }
+  },
+  {
+   "id": "S10",
+   "line": "L14",
    "place": "wall",
    "size": "wide",
    "camera": "at: off the wall's inner face, 8 blocks out, a crane rising with the climber",
-   "frame": "fg: nothing (air); subject: the narrator (baby villager) at the ladder's foot, still on the bottom rungs, a lantern beside the ladder; he starts climbing on 'climbed' and the crane rises with him; one hidden cut in the crane around rung 20 (a time jump, the sky lighter); on 'MONSTER' he reaches the rim; bg: the dark roofs, a few lanterns. Before dawn (23000).",
+   "frame": "fg: nothing (air); subject: the narrator (baby villager) at the ladder's foot with Tomas's stone brick in hand (on 'BRICK'), still on the bottom rungs, a lantern beside the ladder; he starts climbing on 'climbed' and the crane rises with him; one hidden cut in the crane around rung 20 (a time jump, the sky lighter); on 'MONSTER' he reaches the rim; bg: the dark roofs, a few lanterns. Before dawn (23000).",
    "subject": "the narrator",
    "look": {
     "time": 23000
@@ -551,23 +614,23 @@
   },
   {
    "id": "S11",
-   "line": "L14",
+   "line": "L15",
    "place": "outside",
    "size": "ews",
-   "camera": "at: just behind the narrator's head on the rim, then over him, looking down and out at the hall 15 blocks beyond the wall's foot; a slow tilt down",
-   "frame": "fg: the narrator's head and the rim's edge; subject: the trading hall below, its south end 13 blocks north of the wall's outer foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells along its length, a villager in every cell with a workstation in front, a grid of faces through the glass on 'HUNDRED'; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); lanterns hung inside under the glass so the cells read at dawn; bg: rolling snowy hills, spruce and a frozen stream north of the hall to the fog. Dawn (23500).",
-   "subject": "the trading hall",
+   "camera": "at: just behind the narrator's head on the rim at x -9, looking north and down the wall's outer face; a slow tilt down from the player to the hall",
+   "frame": "fg: the narrator's head and the rim's edge; subject on 'MAN': the player (Steve skin) standing on top of today's dirt pillar flush against the outer face at (-10, z -34), its top at y0+28 (12 blocks below the rim), a plain brown dirt column from the ground up to his feet, dirt in his hand, facing the wall, centred; on 'HUNDRED' the tilt carries past him to the trading hall below, its south end 13 blocks north of the wall's outer foot, running away from the wall 12 wide and 52 deep: a glass roof, four rows of 25 one-block cells, a villager in every cell with a workstation in front, a grid of faces through the glass; the old rail line runs from the wall's outer foot to the hall (the other half of S07's rail); lanterns inside under the glass so the cells read at dawn; bg: rolling snowy hills, spruce and a frozen stream to the fog. Dawn (23500).",
+   "subject": "the player",
    "look": {
     "time": 23500
    }
   },
   {
    "id": "S12",
-   "line": "L15",
+   "line": "L16",
    "place": "outside",
    "size": "ms",
-   "camera": "at: the narrator's eye on the rim, about 39 blocks above and 12.5 blocks out from the hall door (looking ~72 degrees down), a very long lens (FOV 5), still",
-   "frame": "subject: the player (Steve skin) seen from high above, framed on his face and shoulders with the dirt block in his hand in frame; on 'UP' he turns his face up to the lens, the face about 14% of the frame width; the cut lands on the look; bg: the hall's door and glass front edge. Dawn (23500).",
+   "camera": "at: the narrator's eye on the rim at x -10, straight down the outer face to the pillar's top 12 blocks below, a long lens (FOV 20), still",
+   "frame": "subject: the player (Steve skin) on top of his dirt pillar, framed head and shoulders from above, the dirt column falling away below him against the stone face, centred; on 'UP' he turns his face up to the lens; on 'ONE' he jumps and places a dirt block under himself (the pillar one higher, the place sound); CUT about 1 s after 'MORE'; bg: the ground far below, the hall's glass edge at the frame's top. Dawn (23500).",
    "subject": "the player",
    "look": {
     "time": 23500
@@ -600,7 +663,7 @@
    67
   ]
  ],
- "hotbar_note": "The player's bar (the only player). No POV shot, so it shows only as the dirt in his hand in S12 (slot 1 selected). The story's tools first (dirt for the pillar, a minecart and rails for moving villagers, emeralds, a name tag, torches, a lead), then the ridiculous ones: a milk bucket and 67 eggs (owner).",
+ "hotbar_note": "The player's bar (the only player). No POV shot, so it shows only as the dirt in his hand in S11-S12 (slot 1 selected). The story's tools first (dirt for the pillar, a minecart and rails for moving villagers, emeralds, a name tag, torches, a lead), then the ridiculous ones: a milk bucket and 67 eggs (owner).",
  "bible": "stories/wall_grows/bible.md",
  "set": "stories/wall_grows/set.md",
  "beats": "stories/wall_grows/beats.md",
