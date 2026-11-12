@@ -1,0 +1,17 @@
+{
+ "name": "half_heart",
+ "stunt": "half_heart",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43121615946",
+ "source": "1b20797a",
+ "queued": "2026-11-11T23:40:23Z",
+ "finished": "2026-11-12T00:04:47Z",
+ "mp4": "renders/out/half_heart.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

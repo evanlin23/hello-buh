@@ -1,0 +1,161 @@
+{
+ "stunt": "half_heart",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/half_heart.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "3 raw motion / own-clock call(s): use the K. primitives",
+   "hits": [
+    {
+     "line": 82,
+     "col": 7,
+     "text": "bot.setControlState('right', steerOn && dx > 0.06); bot.setControlState('left', steerOn && dx < -0.06)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    },
+    {
+     "line": 90,
+     "col": 15,
+     "text": "bot.chat('/tp @s ~ ~ ~ 180 20')",
+     "what": "a raw /tp of the player",
+     "use": "K.cut / K.cutTo (a cut the renderer snaps, arriving already aimed)"
+    },
+    {
+     "line": 92,
+     "col": 5,
+     "text": "bot.setControlState('forward', true)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ]
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "player: the old 'HelloBuh' bot is drawn as 56e (lib/legacy_player.js; HB_LEGACY_NAME=0 keeps it)",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT half_heart: 1 shots, scene 0.0-14.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-14.7  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 3.95,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: bucket -> cobblestone"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 2 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 3.95,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 56% of the frame is within 3 blocks (water, short_grass)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 13.45,
+     "tick": 290,
+     "line": null,
+     "msg": "the player walks into something and stops dead for 2.00 s (4.0 blocks/s -> 0): reads as stuck. Owner: \"when we walk out we keep getting stuck on the door\": open it first, path around it, or cut before contact"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "11 visible sound-making events (break 3, splash 1, step 4, swim 3), 0 with a sound mark, 11 without (audio.py adds those for a story)",
+    "     3.30s  self into the water                -> entity.player.splash               1.6 blocks in view  ",
+    "     4.10s  cat step on snow                   -> block.snow.step                   13.3 blocks in view  ",
+    "     4.60s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "     4.80s  cat step on grass_block            -> block.grass.step                  12.6 blocks          ",
+    "     5.40s  cat step on grass_block            -> block.grass.step                  13.0 blocks          ",
+    "     5.50s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "     6.00s  cat step on grass_block            -> block.grass.step                  14.3 blocks          ",
+    "     6.10s  self swimming                      -> entity.player.swim                 1.6 blocks          ",
+    "     7.50s  spruce_leaves broke                -> block.grass.break                  9.2 blocks          ",
+    "     8.20s  spruce_leaves broke                -> block.grass.break                  9.6 blocks          ",
+    "    10.90s  birch_leaves broke                 -> block.grass.break                 10.6 blocks          ",
+    "ambience per shot: -0.20-5.00s day, 5.00-16.60s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-11T23:45:29.932Z"
+}
