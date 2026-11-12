@@ -218,7 +218,7 @@
     "beats": [
       "S16: upturned faces ring the frame, the general's dark head in the moonlit shaft; 'SEVENTY.'; +0.4 s the lid goes back on, black; cut 1.0 s after the word. No line after it."
     ],
-    "loop": "'Seventy.' runs straight into line 1, 'Our general keeps SEVENTY of us under his bed.' S16 and S01 are the same room in the same light."
+    "loop": "'Seventy.' runs straight into line 1, 'In my house, SEVENTY of us live under the general's bed.' S16 and S01 are the same room in the same light."
   },
   "bible": "stories/seventy_below/bible.md",
   "beats": "stories/seventy_below/beats.md",
@@ -228,8 +228,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "Our general keeps SEVENTY of us / under his BED. / And I don't know WHY.",
-      "say": "Our general keeps seventy of us under his bed. And I don't know why.",
+      "text": "In my house, / SEVENTY of us live / under the general's BED. / And I don't know WHY.",
+      "say": "In my house, seventy of us live under the general's bed. And I don't know why.",
       "shot": "S01",
       "punch": true,
       "shows": [

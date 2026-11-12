@@ -16,7 +16,7 @@ near him or the village.
 
 | # | t (s) | line | picture | clue it plants | the narrator's innocent reading (on the line) |
 |---|---|---|---|---|---|
-| 1 | 0.0 | L01 Our general keeps SEVENTY of us under his BED. And I don't know WHY. | the baby zombie in the moonlit square, the room of faces behind it | the fact and the why, said; the number 70; they're kept | an army waiting |
+| 1 | 0.0 | L01 In my house, SEVENTY of us live under the general's BED. And I don't know WHY. | the baby zombie in the moonlit square, the room of faces behind it | the fact and the why, said; the number 70; they're kept | an army waiting |
 | 2 | 4.5 | L02 I'm the LITTLEST SOLDIER. He never takes us to FIGHT. I think he's SAVING us for something BIG. | the baby among adult legs | (who's talking); an army that never fights | saved for a big battle |
 | 3 | 7.0 | L03 Our GENERAL SLEEPS right ABOVE us. | his legs to the bed; the floor: we're above the room | near his bed (32 blocks; the bed check) | he guards us |
 | 4 | 9.0 | L04 He never goes FAR. I think he'd MISS us. | his legs on the bench, crossbow; the grass lid in the foreground | he must stay within 32 blocks | he loves us |

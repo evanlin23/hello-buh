@@ -19,7 +19,7 @@ looks the same as in Thirty-One Raids and Red Sheep (the hole is invisible from 
 ## What the narration claims (check each on stills from every shot angle before recording)
 | claim | line | check |
 |---|---|---|
-| our general keeps seventy of us under his bed | L01 | S01: dozens of zombies by 'BED'; S07/S16: count 70 in the room (the baby is one); dark beyond the moonlit square |
+| seventy of us live under the general's bed | L01 | S01: dozens of zombies by 'BED'; S07/S16: count 70 in the room (the baby is one); dark beyond the moonlit square |
 | I'm the littlest soldier; he never takes us to fight | L02 | S02: the baby zombie full-figure, adults cut at the chest by the frame top |
 | our general sleeps right above us | L03 | S03: his waist-down (zuri), the red bed; the plank floor: the room is below |
 | he never goes far | L04 | S04: waist-down on the bench in his own yard, crossbow in hand; the lid in the lower-left third |
