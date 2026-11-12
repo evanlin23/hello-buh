@@ -3,9 +3,9 @@
   "L01": {
    "who": "N",
    "text": "The nitwit in my village has said hmm four thousand and ninety-six times.",
-   "dur": 5.395,
+   "dur": 5.265,
    "onset": 0.32,
-   "end": 4.96,
+   "end": 4.82,
    "chunks": [
     [
      0.32,
@@ -17,11 +17,11 @@
     ],
     [
      1.78,
-     2.56
+     2.54
     ],
     [
-     2.9,
-     4.96
+     2.76,
+     4.82
     ]
    ],
    "captions": [
@@ -38,7 +38,7 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "29dc16f74884"
+   "aligned_wav": "e0e7d00ec619"
   },
   "L02": {
    "who": "N",
@@ -70,7 +70,7 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 5.395,
+   "offset": 5.265,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "9b1a61a32c7c"
@@ -110,10 +110,10 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 7.253,
+   "offset": 7.122,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "10065541c910"
+   "aligned_wav": "1dfca5bdd253"
   },
   "L04": {
    "who": "N",
@@ -150,7 +150,7 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 9.725,
+   "offset": 9.595,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "e31ed2144f14"
@@ -158,7 +158,7 @@
   "L05": {
    "who": "N",
    "text": "In the wheat. A creeper walked in and boom.",
-   "dur": 3.175,
+   "dur": 3.17,
    "onset": 0.24,
    "end": 2.64,
    "chunks": [
@@ -190,20 +190,20 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 12.85,
+   "offset": 12.72,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "2cf965a942f1"
+   "aligned_wav": "39fd819f2b89"
   },
   "L06": {
    "who": "N",
    "text": "By the well. The water turned to lava.",
-   "dur": 2.65,
-   "onset": 0.18,
+   "dur": 2.655,
+   "onset": 0.2,
    "end": 2.28,
    "chunks": [
     [
-     0.18,
+     0.2,
      0.7
     ],
     [
@@ -211,7 +211,7 @@
      1.48
     ],
     [
-     1.52,
+     1.54,
      1.82
     ],
     [
@@ -230,15 +230,15 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 16.025,
+   "offset": 15.89,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4c650f3b3928"
+   "aligned_wav": "200bdbf5c25e"
   },
   "L07": {
    "who": "N",
    "text": "On my roof. The next day, it rained anvils.",
-   "dur": 3.357,
+   "dur": 3.353,
    "onset": 0.26,
    "end": 2.78,
    "chunks": [
@@ -270,29 +270,29 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 18.675,
+   "offset": 18.545,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "8dc7468b09cf"
+   "aligned_wav": "4a7941911f6c"
   },
   "L08": {
    "who": "N",
    "text": "The other villagers walk away when he comes.",
-   "dur": 2.88,
+   "dur": 2.885,
    "onset": 0.24,
    "end": 2.44,
    "chunks": [
     [
      0.24,
-     0.62
+     0.64
     ],
     [
      0.68,
      1.12
     ],
     [
-     1.38,
-     1.8
+     1.4,
+     1.82
     ],
     [
      1.88,
@@ -310,10 +310,10 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 22.032,
+   "offset": 21.898,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "0e4d36eba739"
+   "aligned_wav": "132b0ffc017e"
   },
   "L09": {
    "who": "N",
@@ -345,7 +345,7 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 24.913,
+   "offset": 24.782,
    "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "a9bf9385e1d4"
   },
@@ -728,17 +728,17 @@
     "L09"
    ],
    "file": "beat_L01.wav",
-   "dur": 27.4,
+   "dur": 27.27,
    "offsets": [
     0.0,
-    5.395,
-    7.253,
-    9.725,
-    12.85,
-    16.025,
-    18.675,
-    22.032,
-    24.913
+    5.265,
+    7.122,
+    9.595,
+    12.72,
+    15.89,
+    18.545,
+    21.898,
+    24.782
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 1,
@@ -830,5 +830,5 @@
    ]
   }
  },
- "total": 60.65
+ "total": 60.52
 }
