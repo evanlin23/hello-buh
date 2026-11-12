@@ -4,7 +4,7 @@
   "caption": "building a house in 1 second vs 1 minute vs 1 hour 💀",
   "youtube": {
     "title": "building a house in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
-    "description": "building a house in 1 second vs 1 minute vs 1 hour 💀\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "building a house in 1 second vs 1 minute vs 1 hour 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "mortals_funk_remix.mp3",
-    "title": "Mortals Funk Remix",
-    "artist": "Warriyo, LXNGVX",
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "big_done",
-    "drop_in_song_s": 113.75,
-    "drop_in_short_s": 29.65,
-    "song_start_s": 84.1
+    "drop_in_song_s": 36.75,
+    "drop_in_short_s": 29.57,
+    "song_start_s": 7.18
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.15,
+    "duration_s": 30.07,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 69458179,
-    "sha256": "c3a7f2782275483f7530f206ed7a83227c20bd5ca5af23eaab720452ea3579be",
+    "bytes": 69303124,
+    "sha256": "e9d88bbfcb9313ccc8616a6d2ffe8adc9f4510867d7549a4d04973456c5da6d5",
     "release": {
       "tag": "pkg-lapse_house",
-      "asset": "lapse_house.short.c3a7f2782275483f.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_house/lapse_house.short.c3a7f2782275483f.mp4",
-      "sha256": "c3a7f2782275483f7530f206ed7a83227c20bd5ca5af23eaab720452ea3579be",
-      "bytes": 69458179
+      "asset": "lapse_house.short.e9d88bbfcb9313cc.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_house/lapse_house.short.e9d88bbfcb9313cc.mp4",
+      "sha256": "e9d88bbfcb9313ccc8616a6d2ffe8adc9f4510867d7549a4d04973456c5da6d5",
+      "bytes": 69303124
     },
     "nosong_release": {
       "tag": "pkg-lapse_house",
-      "asset": "lapse_house.short_nosong.fc2de0df41d9bdb2.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_house/lapse_house.short_nosong.fc2de0df41d9bdb2.mp4",
-      "sha256": "fc2de0df41d9bdb22cef0719454ecc0a0b2381aacef7f8a30016314130b1c4a6",
-      "bytes": 69419400
+      "asset": "lapse_house.short_nosong.414a50272300ed8d.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-lapse_house/lapse_house.short_nosong.414a50272300ed8d.mp4",
+      "sha256": "414a50272300ed8d3177f86382992f5ee1e1363c1771bfc174d5c42b879e8f3c",
+      "bytes": 69263247
     }
   },
   "edit": {
@@ -52,7 +52,7 @@
     "red": "hour",
     "song": null,
     "dropAt": "big_done",
-    "startAt": "small_start:-0.1",
+    "startAt": "small_start:0.1",
     "endAfter": "big_done:0.5",
     "speed": [
       [
@@ -62,11 +62,11 @@
       ],
       [
         "mid_start",
-        "roof_start",
+        "roof_start:0.35",
         3
       ],
       [
-        "roof_start",
+        "roof_start:0.35",
         "roof_end",
         "cut"
       ],
@@ -224,10 +224,12 @@
     "args": [
       "--caption",
       "building a house in 1 second vs 1 minute vs 1 hour 💀",
+      "--self_name",
+      "56e",
       "--red",
       "hour",
       "--speed",
-      "[[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start\",3],[\"roof_start\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]]",
+      "[[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start:0.35\",3],[\"roof_start:0.35\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]]",
       "--clock",
       "[[\"small_start\",\"small_done\",1,\"1 SECOND\"],[\"mid_start\",\"mid_done\",60,\"1 MINUTE\"],[\"big_start\",\"big_done\",3600,\"1 HOUR\"]]",
       "--punch",
@@ -237,7 +239,7 @@
       "--sfx",
       "[[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]]",
       "--start_at",
-      "small_start:-0.1",
+      "small_start:0.1",
       "--end_after",
       "big_done:0.5"
     ]
@@ -10887,12 +10889,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/lapse_house",
-    "commit": "9b27f7711cf1ea9c7e4f6102475fd61b2ff5de92",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43072990472",
-    "rendered_at": "2026-11-11T18:15:06.810Z",
-    "head_at_publish": "6acbcf5810c53f09e483af07d3ee96849fa7b17d",
+    "branch": "main",
+    "commit": "bbdeaff5316f2aa2a720f2169c452365f60d8638",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T01:36:41.628Z",
+    "head_at_publish": "bbdeaff5316f2aa2a720f2169c452365f60d8638",
     "stunt": "stunts/lapse_house.js",
     "source_snapshot": [
       "source/lapse_house.js",
@@ -10903,22 +10904,22 @@
     ]
   },
   "rebuild": [
-    "git checkout 9b27f7711cf1",
+    "git checkout bbdeaff5316f",
     "gunzip -c shorts/lapse_house/recording.json.gz > work/lapse_house.rec.json",
     "node render.js work/lapse_house.rec.json work/lapse_house.frames 60 1080 1011",
     "python3 audio.py work/lapse_house.rec.json work/lapse_house.wav",
-    "python3 edit.py --frames work/lapse_house.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_house.rec.json --audio work/lapse_house.wav --caption \"building a house in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start\",3],[\"roof_start\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_house.mp4"
+    "python3 edit.py --frames work/lapse_house.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_house.rec.json --audio work/lapse_house.wav --caption \"building a house in 1 second vs 1 minute vs 1 hour 💀\" --self_name 56e --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"roof_start:0.35\",3],[\"roof_start:0.35\",\"roof_end\",\"cut\"],[\"roof_end\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:6.6\",\"cut\"],[\"big_start:6.6\",\"big_start:12\",3],[\"big_start:12\",\"big_start:12.6\",\"cut\"],[\"big_start:12.6\",\"big_start:18\",3],[\"big_start:18\",\"big_start:18.6\",\"cut\"],[\"big_start:18.6\",\"big_start:24\",3],[\"big_start:24\",\"big_start:24.6\",\"cut\"],[\"big_start:24.6\",\"big_start:30\",3],[\"big_start:30\",\"big_start:30.6\",\"cut\"],[\"big_start:30.6\",\"big_start:36\",3],[\"big_start:36\",\"big_start:36.6\",\"cut\"],[\"big_start:36.6\",\"big_start:42\",3],[\"big_start:42\",\"big_start:42.6\",\"cut\"],[\"big_start:42.6\",\"big_start:48\",3],[\"big_start:48\",\"big_start:48.6\",\"cut\"],[\"big_start:48.6\",\"big_start:54\",3],[\"big_start:54\",\"big_start:54.6\",\"cut\"],[\"big_start:54.6\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:0.1 --end_after big_done:0.5 --out out/lapse_house.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 lapse worker: owner r:r66efa4 ('more angles when we're showing the last thing'; the 1-minute round's turns 'too slow'): the x3 1-minute round turns fast between placements (no 220/speed cap; the whip check allows a lapse's marked build span; crosshair on every placement, r:rffba12; longest gap 0.7 s, r:r478786); the 1-hour mansion from 8 clearly different steady angles joined by hard cuts (down on the pool, low front, side, high front over the garden, high wide; showcase: low right, high back corner, hero wide through the gates), each a slow straight move (r:r200cfe per angle); jump cuts added, flash + impact on 60:00. Recorded as 56e. check/pace/mixcheck OK; independent review round 1 NOT READY (a stalled close facade angle), fixed, round 2 READY. Nitpicks: finished cottage seen ~0.55 s, 1:00 hold ~0.6 s",
-  "published_at": "2026-11-11T18:21:19.706Z",
+  "notes": "action_cuts (r:r52f94c): the roof cut after the last wall block's swing; opening (r:r0f3da0): starts on the first blocks going up; fix-check READY r1",
+  "published_at": "2026-11-12T01:39:46.794Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T18:21:58+00:00",
+    "at": "2026-11-12T01:40:23+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.16 s vs the reviewed render 30.15 s"
+      "summary": "short.mp4 30.08 s vs the reviewed render 30.07 s"
     },
     "pace": {
       "ok": true,
@@ -10930,8 +10931,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T17:57:40.449Z",
-      "report": "out/lapse_house.check.json"
+      "at": "2026-11-12T01:37:06.868Z",
+      "report": "work/hb/lapse_house.check.json"
     },
     "key_sounds": "n/a"
   }

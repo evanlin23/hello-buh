@@ -42,7 +42,7 @@ const SOUND = (n) => /dirt|grass/.test(n) ? 'block.gravel.place' : /glass/.test(
 // subject: {
 //   name, caption, red,
 //   small: { blocks: [[x,y,z,name]] (local, z=0 front row), slots: {name: slot} },
-//   mid:   { blocks, w, d, slots, perTick (ticks per block) },
+//   mid:   { blocks, w, d, slots, perTick (ticks per block), roofFrom (where a roof span starts: default roof_start) },
 //   big:   { blocks: [[x,y,z,name,stage]] (local to the centre, y from the ground; y < 0 digs in),
 //            hold (block the bot places for real) and slot, stageTicks ({stage: ticks}, built in
 //            stage order), keys (camera keys [tick of the build, camera, look-at]),
@@ -62,12 +62,12 @@ function makeStunt (S) {
       // the payoff is the big build completing (60:00 and the drop): the camera's pull-back lands on
       // it, and the Short ends 0.8 s later with the camera still moving (the song's drop gets a moment
       // before the fade-out)
-      startAt: 'small_start:-0.1', endAfter: S.endAfter || 'big_done:0.8',
+      startAt: S.startAt || 'small_start:-0.1', endAfter: S.endAfter || 'big_done:0.8',
       // a roof put on from inside plays faster (mid.roofSpeed), or is cut out ('cut'): the camera is under a
       // dark ceiling there, turning to a new block every frame (it strobed at 6x, lapse_house)
       speed: [['cut1_a', 'cut1_b', 'cut']].concat(S.mid.roofY !== undefined
-        ? [['mid_start', 'roof_start', S.mid.speed || 2], ['roof_start', 'roof_end', S.mid.roofSpeed || 8], ['roof_end', 'mid_done', S.mid.speed || 2]]
-        : midSpeed(S.mid), [['cut2_a', 'cut2_b', 'cut']], bigSpeed(S.bigCuts)),
+        ? [['mid_start', S.mid.roofFrom || 'roof_start', S.mid.speed || 2], [S.mid.roofFrom || 'roof_start', 'roof_end', S.mid.roofSpeed || 8], ['roof_end', 'mid_done', S.mid.speed || 2]]
+        : midSpeed(S.mid), [[S.cut2From || 'cut2_a', 'cut2_b', 'cut']], bigSpeed(S.bigCuts)),
       clock: [['small_start', 'small_done', 1, '1 SECOND'], ['mid_start', 'mid_done', 60, '1 MINUTE'], ['big_start', 'big_done', 3600, '1 HOUR']],
       // the payoff (60:00) gets a white flash + a zoom punch and a song dip + impact: pace wants a picture change and a hit on it (the drop alone didn't count in the packaged mix) (lapse_statue, lapse_rocket)
       ...(S.payoffFlash ? { flash: [['big_done', 0, 0.5]], punch: [['big_done', 0, 1.08]], sfx: [['dip', 'big_done', 0.3], ['impact', 'big_done']] } : {})
@@ -690,12 +690,19 @@ function midWalks (md) {
 function midSpeed (md) {
   const sp = md.speed || 2
   const n = md.walkSpeed ? midWalks(md) : 0
-  if (!n) return [['mid_start', 'mid_done', sp]]
+  if (!n) return midTail([['mid_start', 'mid_done', sp]], md)
   const out = []
   let a = 'mid_start'
   for (let i = 1; i <= n; i++) { out.push([a, `mid_walk${i}_a`, sp], [`mid_walk${i}_a`, `mid_walk${i}_b`, md.walkSpeed]); a = `mid_walk${i}_b` }
   out.push([a, 'mid_done', sp])
-  return out
+  return midTail(out, md)
+}
+// md.tail = [FROM, FACTOR]: the end of the 1-minute round from FROM (e.g. 'mid_done:-1.65', after the last scaffold
+// break) plays at FACTOR (r:r188b46: nothing new happens there; lapse_rocket held 1.2 s after its last break)
+function midTail (spans, md) {
+  if (!md.tail) return spans
+  const last = spans[spans.length - 1]
+  return spans.slice(0, -1).concat([[last[0], md.tail[0], last[2]], [md.tail[0], 'mid_done', md.tail[1]]])
 }
 
 // S.bigCuts = [EVERY, GAP, UPTO]: jump cuts through the 1-hour round, one every EVERY scene seconds dropping GAP
