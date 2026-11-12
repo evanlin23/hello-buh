@@ -3,25 +3,25 @@
   "L01": {
    "who": "N",
    "text": "The nitwit in my village has said hmm four thousand and ninety-six times.",
-   "dur": 4.133,
-   "onset": 0.3,
-   "end": 3.78,
+   "dur": 5.395,
+   "onset": 0.32,
+   "end": 4.96,
    "chunks": [
     [
-     0.3,
-     0.8
+     0.32,
+     0.94
     ],
     [
-     0.86,
-     1.5
+     1.02,
+     1.66
     ],
     [
-     1.56,
-     2.16
+     1.78,
+     2.56
     ],
     [
-     2.44,
-     3.78
+     2.9,
+     4.96
     ]
    ],
    "captions": [
@@ -38,26 +38,26 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "09af19d53d15"
+   "aligned_wav": "29dc16f74884"
   },
   "L02": {
    "who": "N",
    "text": "Today, he said my name.",
-   "dur": 1.68,
-   "onset": 0.1,
-   "end": 1.3,
+   "dur": 1.857,
+   "onset": 0.18,
+   "end": 1.58,
    "chunks": [
     [
-     0.1,
-     0.3
+     0.18,
+     0.46
     ],
     [
-     0.6,
-     0.84
+     0.76,
+     1.06
     ],
     [
-     0.9,
-     1.3
+     1.12,
+     1.58
     ]
    ],
    "captions": [
@@ -70,33 +70,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 4.133,
+   "offset": 5.395,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "1cd5b0a3f0a0"
+   "aligned_wav": "9b1a61a32c7c"
   },
   "L03": {
    "who": "N",
    "text": "He's always standing somewhere weird.",
-   "dur": 1.923,
-   "onset": 0.08,
-   "end": 1.74,
+   "dur": 2.473,
+   "onset": 0.24,
+   "end": 1.98,
    "chunks": [
     [
-     0.08,
-     0.62
+     0.24,
+     0.78
     ],
     [
-     0.605,
-     1.04
+     0.73,
+     1.2
     ],
     [
-     1.12,
-     1.4
+     1.235,
+     1.56
     ],
     [
-     1.5,
-     1.74
+     1.66,
+     1.98
     ]
    ],
    "captions": [
@@ -110,33 +110,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 5.812,
+   "offset": 7.253,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "fe5424467666"
+   "aligned_wav": "10065541c910"
   },
   "L04": {
    "who": "N",
    "text": "Under a tree. That night, lightning split it.",
-   "dur": 3.005,
-   "onset": 0.54,
-   "end": 2.58,
+   "dur": 3.125,
+   "onset": 0.2,
+   "end": 2.8,
    "chunks": [
     [
-     0.54,
-     1.02
+     0.2,
+     0.82
     ],
     [
-     1.46,
-     1.8
+     1.34,
+     1.72
     ],
     [
-     1.96,
-     2.24
+     1.92,
+     2.22
     ],
     [
-     2.23,
-     2.58
+     2.24,
+     2.8
     ]
    ],
    "captions": [
@@ -150,33 +150,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 7.735,
+   "offset": 9.725,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "b562366807f5"
+   "aligned_wav": "e31ed2144f14"
   },
   "L05": {
    "who": "N",
    "text": "In the wheat. A creeper walked in and boom.",
-   "dur": 2.853,
-   "onset": 0.28,
-   "end": 2.3,
+   "dur": 3.175,
+   "onset": 0.24,
+   "end": 2.64,
    "chunks": [
     [
-     0.28,
-     0.62
+     0.24,
+     0.74
     ],
     [
-     1.06,
-     1.38
+     1.2,
+     1.62
     ],
     [
-     1.42,
-     1.76
+     1.68,
+     2.06
     ],
     [
-     1.92,
-     2.3
+     2.16,
+     2.64
     ]
    ],
    "captions": [
@@ -190,33 +190,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 10.74,
+   "offset": 12.85,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "983f0a3e8625"
+   "aligned_wav": "2cf965a942f1"
   },
   "L06": {
    "who": "N",
    "text": "By the well. The water turned to lava.",
-   "dur": 2.308,
-   "onset": 0.2,
-   "end": 1.92,
+   "dur": 2.65,
+   "onset": 0.18,
+   "end": 2.28,
    "chunks": [
     [
-     0.2,
-     0.58
+     0.18,
+     0.7
     ],
     [
-     0.92,
-     1.26
+     1.14,
+     1.48
     ],
     [
-     1.3,
-     1.54
+     1.52,
+     1.82
     ],
     [
-     1.58,
-     1.92
+     1.88,
+     2.28
     ]
    ],
    "captions": [
@@ -230,33 +230,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 13.592,
+   "offset": 16.025,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "44a7beb800a4"
+   "aligned_wav": "4c650f3b3928"
   },
   "L07": {
    "who": "N",
    "text": "On my roof. The next day, it rained anvils.",
-   "dur": 3.075,
-   "onset": 0.2,
-   "end": 2.62,
+   "dur": 3.357,
+   "onset": 0.26,
+   "end": 2.78,
    "chunks": [
     [
-     0.2,
-     0.62
+     0.26,
+     0.76
     ],
     [
-     1.04,
-     1.46
+     1.22,
+     1.72
     ],
     [
-     1.64,
-     1.96
+     1.9,
+     2.2
     ],
     [
-     2.22,
-     2.62
+     2.4,
+     2.78
     ]
    ],
    "captions": [
@@ -270,33 +270,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 15.9,
+   "offset": 18.675,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "f1628061543e"
+   "aligned_wav": "8dc7468b09cf"
   },
   "L08": {
    "who": "N",
    "text": "The other villagers walk away when he comes.",
-   "dur": 2.135,
-   "onset": 0.2,
-   "end": 1.84,
+   "dur": 2.88,
+   "onset": 0.24,
+   "end": 2.44,
    "chunks": [
     [
-     0.2,
-     0.5
+     0.24,
+     0.62
     ],
     [
-     0.54,
-     0.88
+     0.68,
+     1.12
     ],
     [
-     0.96,
-     1.3
+     1.38,
+     1.8
     ],
     [
-     1.36,
-     1.84
+     1.88,
+     2.44
     ]
    ],
    "captions": [
@@ -310,29 +310,29 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 18.975,
+   "offset": 22.032,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "74369563470e"
+   "aligned_wav": "0e4d36eba739"
   },
   "L09": {
    "who": "N",
    "text": "Even the iron golem goes around him.",
-   "dur": 2.312,
-   "onset": 0.18,
-   "end": 1.8,
+   "dur": 2.487,
+   "onset": 0.28,
+   "end": 2.2,
    "chunks": [
     [
-     0.18,
-     0.46
+     0.28,
+     0.6
     ],
     [
-     0.6,
-     1.14
+     0.74,
+     1.4
     ],
     [
-     1.2,
-     1.8
+     1.48,
+     2.2
     ]
    ],
    "captions": [
@@ -345,25 +345,24 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
-   "offset": 21.11,
-   "gap": 0,
+   "offset": 24.913,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "aa81dfc0c5bc"
+   "aligned_wav": "a9bf9385e1d4"
   },
   "L10": {
    "who": "N",
    "text": "So one night, I followed him.",
-   "dur": 1.82,
-   "onset": 0.125,
-   "end": 1.44,
+   "dur": 2.88,
+   "onset": 0.31,
+   "end": 2.26,
    "chunks": [
     [
-     0.125,
-     0.64
+     0.31,
+     1.04
     ],
     [
-     0.72,
-     1.44
+     1.52,
+     2.26
     ]
    ],
    "captions": [
@@ -374,34 +373,34 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 23.422,
+   "beat": "L10",
+   "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "2fdbf1ea7f5f"
+   "aligned_wav": "37a64d7baace"
   },
   "L11": {
    "who": "N",
    "text": "Past the last torch was another village.",
-   "dur": 1.933,
-   "onset": 0.14,
-   "end": 1.68,
+   "dur": 2.953,
+   "onset": 0.16,
+   "end": 2.52,
    "chunks": [
     [
-     0.14,
-     0.48
+     0.16,
+     0.58
     ],
     [
-     0.52,
-     0.96
+     0.64,
+     1.2
     ],
     [
-     1.02,
-     1.4
+     1.54,
+     2.12
     ],
     [
-     1.42,
-     1.68
+     2.2,
+     2.52
     ]
    ],
    "captions": [
@@ -414,30 +413,30 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 25.242,
+   "beat": "L10",
+   "offset": 2.88,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "eabe63dc5f15"
+   "aligned_wav": "bf7d53cc31b3"
   },
   "L12": {
    "who": "N",
    "text": "my village. burned. empty.",
-   "dur": 2.605,
-   "onset": 0.24,
-   "end": 2.16,
+   "dur": 3.493,
+   "onset": 0.22,
+   "end": 2.9,
    "chunks": [
     [
-     0.24,
-     0.74
+     0.22,
+     0.8
     ],
     [
-     1.08,
-     1.4
+     1.58,
+     2.0
     ],
     [
-     1.88,
-     2.16
+     2.56,
+     2.9
     ]
    ],
    "captions": [
@@ -449,34 +448,34 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 27.175,
+   "beat": "L10",
+   "offset": 5.832,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "422380001395"
+   "aligned_wav": "2af21087a2b1"
   },
   "L13": {
    "who": "N",
    "text": "The tree. The wheat. The well. All gone.",
-   "dur": 3.027,
-   "onset": 0.08,
-   "end": 2.58,
+   "dur": 4.445,
+   "onset": 0.3,
+   "end": 4.1,
    "chunks": [
     [
-     0.08,
-     0.44
+     0.3,
+     0.84
     ],
     [
-     0.76,
-     1.06
+     1.36,
+     1.82
     ],
     [
-     1.38,
-     1.68
+     2.32,
+     2.74
     ],
     [
-     2.16,
-     2.58
+     3.64,
+     4.1
     ]
    ],
    "captions": [
@@ -489,34 +488,33 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 29.78,
-   "gap": 0,
+   "beat": "L10",
+   "offset": 9.325,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4a8ed332332d"
+   "aligned_wav": "00a033414d9f"
   },
   "L14": {
    "who": "N",
    "text": "He's not from here. His world already ended.",
-   "dur": 2.967,
-   "onset": 0.2,
-   "end": 2.68,
+   "dur": 3.828,
+   "onset": 0.24,
+   "end": 3.34,
    "chunks": [
     [
-     0.2,
-     0.56
+     0.24,
+     0.68
     ],
     [
-     0.68,
-     1.12
+     0.76,
+     1.24
     ],
     [
-     1.44,
-     1.88
+     1.74,
+     2.26
     ],
     [
-     2.0,
-     2.68
+     2.44,
+     3.34
     ]
    ],
    "captions": [
@@ -529,30 +527,30 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 32.807,
+   "beat": "L14",
+   "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "6b0e17bbb3eb"
+   "aligned_wav": "b8431dc33a20"
   },
   "L15": {
    "who": "N",
    "text": "They sent him back to warn us.",
-   "dur": 1.985,
-   "onset": 0.08,
-   "end": 1.62,
+   "dur": 2.325,
+   "onset": 0.2,
+   "end": 1.66,
    "chunks": [
     [
-     0.08,
-     0.54
+     0.2,
+     0.74
     ],
     [
-     0.64,
-     0.8
+     0.82,
+     0.94
     ],
     [
-     0.98,
-     1.62
+     1.0,
+     1.66
     ]
    ],
    "captions": [
@@ -564,30 +562,30 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 35.775,
+   "beat": "L14",
+   "offset": 3.828,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "1d1d48c1a6c0"
+   "aligned_wav": "a9303cd96f3c"
   },
   "L16": {
    "who": "N",
    "text": "But a nitwit can only say one word.",
-   "dur": 2.905,
-   "onset": 0.16,
-   "end": 2.36,
+   "dur": 3.178,
+   "onset": 0.3,
+   "end": 2.5,
    "chunks": [
     [
-     0.16,
-     0.82
+     0.3,
+     0.98
     ],
     [
-     0.9,
-     1.4
+     1.06,
+     1.52
     ],
     [
-     1.44,
-     2.36
+     1.525,
+     2.5
     ]
    ],
    "captions": [
@@ -599,34 +597,34 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 37.76,
+   "beat": "L14",
+   "offset": 6.152,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "c152f94f6772"
+   "aligned_wav": "6113916717bd"
   },
   "L17": {
    "who": "N",
    "text": "And today, he's standing right next to me.",
-   "dur": 2.268,
-   "onset": 0.12,
-   "end": 2.0,
+   "dur": 3.473,
+   "onset": 0.34,
+   "end": 2.92,
    "chunks": [
     [
-     0.12,
-     0.44
+     0.34,
+     0.74
     ],
     [
-     0.94,
-     1.42
+     1.44,
+     2.02
     ],
     [
-     1.48,
-     1.84
+     2.14,
+     2.66
     ],
     [
-     1.86,
-     2.0
+     2.72,
+     2.92
     ]
    ],
    "captions": [
@@ -639,34 +637,34 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 40.665,
+   "beat": "L14",
+   "offset": 9.33,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "1d0bc001669c"
+   "aligned_wav": "bdea761d2bfc"
   },
   "L18": {
    "who": "N",
    "text": "He said my name. Then the date of the end.",
-   "dur": 2.772,
-   "onset": 0.24,
-   "end": 2.5,
+   "dur": 4.027,
+   "onset": 0.3,
+   "end": 3.54,
    "chunks": [
     [
-     0.24,
-     0.52
+     0.3,
+     0.68
     ],
     [
-     0.58,
-     0.9
+     0.76,
+     1.22
     ],
     [
-     1.32,
-     2.02
+     2.06,
+     2.92
     ],
     [
-     2.08,
-     2.5
+     3.02,
+     3.54
     ]
    ],
    "captions": [
@@ -679,10 +677,10 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L01",
-   "offset": 42.932,
+   "beat": "L14",
+   "offset": 12.803,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "8fe3be90bc1b"
+   "aligned_wav": "0567c0723993"
   },
   "L19": {
    "who": "N",
@@ -727,64 +725,79 @@
     "L06",
     "L07",
     "L08",
-    "L09",
+    "L09"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 27.4,
+   "offsets": [
+    0.0,
+    5.395,
+    7.253,
+    9.725,
+    12.85,
+    16.025,
+    18.675,
+    22.032,
+    24.913
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  },
+  "L10": {
+   "lines": [
     "L10",
     "L11",
     "L12",
-    "L13",
+    "L13"
+   ],
+   "file": "beat_L10.wav",
+   "dur": 13.77,
+   "offsets": [
+    0.0,
+    2.88,
+    5.832,
+    9.325
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  },
+  "L14": {
+   "lines": [
     "L14",
     "L15",
     "L16",
     "L17",
     "L18"
    ],
-   "file": "beat_L01.wav",
-   "dur": 45.705,
+   "file": "beat_L14.wav",
+   "dur": 16.83,
    "offsets": [
     0.0,
-    4.133,
-    5.812,
-    7.735,
-    10.74,
-    13.592,
-    15.9,
-    18.975,
-    21.11,
-    23.422,
-    25.242,
-    27.175,
-    29.78,
-    32.807,
-    35.775,
-    37.76,
-    40.665,
-    42.932
+    3.828,
+    6.152,
+    9.33,
+    12.803
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "try": 3,
-   "tries": 3,
-   "fixes": [
-    "one continuous take, no pauses between sentences",
-    "no audible breaths"
-   ],
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
    "ok": true,
    "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.38 s pause inside line 1 (limit 0.2 s, the opening)",
-      "1.20 s pause between lines 2-3 (limit 0.95 s)"
-     ]
-    },
-    {
-     "try": 2,
-     "why": [
-      "an audible breath (0.16 s)"
-     ]
-    }
-   ]
+   "rejected": []
   },
   "L19": {
    "lines": [
@@ -817,5 +830,5 @@
    ]
   }
  },
- "total": 47.86
+ "total": 60.65
 }

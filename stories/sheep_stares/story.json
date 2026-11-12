@@ -118,35 +118,35 @@
   {
    "id": "L12",
    "who": "N",
-   "beat": "b",
+   "beat": "c",
    "text": "So today / I got / CURIOUS.",
    "say": "So today I got CURIOUS."
   },
   {
    "id": "L13",
    "who": "N",
-   "beat": "b",
+   "beat": "c",
    "text": "And for / the FIRST time / in 412 days, / he LOOKED / at ME.",
    "say": "And for the first time in four hundred and twelve days, he looked at ME."
   },
   {
    "id": "L14",
    "who": "N",
-   "beat": "b",
+   "beat": "c",
    "text": "I broke / the BLOCK.",
    "say": "I broke the BLOCK."
   },
   {
    "id": "L15",
    "who": "N",
-   "beat": "b",
+   "beat": "d",
    "text": "There's / a HOLE / under it. / It goes / STRAIGHT down.",
    "say": "There's a HOLE under it. It goes STRAIGHT down."
   },
   {
    "id": "L16",
    "who": "N",
-   "beat": "b",
+   "beat": "d",
    "text": "Who digs / STRAIGHT / DOWN?",
    "say": "Who digs straight DOWN?",
    "note": "the last line: baffled, not a punchline"
@@ -182,14 +182,36 @@
    "voice": "Leda",
    "lines": [
     "L10",
-    "L11",
+    "L11"
+   ],
+   "direction": "[A bubbly nine-year-old kid, honestly puzzled, a real question at the end, loud and clear; full voice, never whispery or soft]"
+  },
+  {
+   "id": "r_c",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
     "L12",
     "L13",
-    "L14",
+    "L14"
+   ],
+   "direction": "[A bubbly nine-year-old kid getting curious, quick and bright, loud and clear; full voice, never whispery or soft]"
+  },
+  {
+   "id": "r_d",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
     "L15",
     "L16"
    ],
-   "direction": "[A bubbly nine-year-old kid, honestly puzzled, real questions, then baffled, loud and clear; full voice, never whispery, breathy or soft]"
+   "direction": "[A nine-year-old kid staring down a hole, baffled, loud and clear; full voice, never whispery or soft]"
   }
  ],
  "hotbar_note": "no tools anywhere (L08: 'No TOOLS'): torches (the line from his door), bread, wheat and blue dye for the sheep, string; two milk buckets, a cake and eggs are the ridiculous ones"
