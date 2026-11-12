@@ -25,11 +25,11 @@ module.exports = {
     // at x2 (the blasts keep going on screen: no cut while it goes off, r:r24d99a), a second reaction and two booms ride
     // the escalation, and the NCS drop, a dip, a game dip and an impact land on the crater (the payoff, the after).
     caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'crater', startAt: 'lit:-1.2', endAfter: 'crater:0.7',   // settle-ok: the crater cut comes after the chain's last blast (perform waits 1 s with no blast); r:r188b46 ends 0.7 s into the crater
-    speed: [['fuse_a', 'fuse_b', 'cut'], ['hill:1.6', 'rim_a', 2], ['rim_a', 'rim_b', 'cut']],   // most of the fuse; the chain's middle; to the crater's rim
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['hill:1.6', 'rim_a', 2.6], ['rim_a', 'rim_b', 'cut']],   // most of the fuse; the chain's middle; to the crater's rim
     // (sfx/subs/flash offsets count in OUTPUT seconds: the warped timeline; r1's hill:7.2 boom rang through the crater's dip)
     subs: [['hill', 'wait... THE HILL??', 1.6, 0], ['hill:2.0', 'IT KEEPS GOING', 1.5, 0]],
-    sfx: [['impact', 'start', { gain: 1.2 }], ['pop', 'start', { gain: 1.0 }], ['riser', 'fuse_b', 'boom'], ['boom', 'boom'], ['boom', 'hill', { gain: 1.0 }],
-      ['boom', 'hill:1.6', { gain: 0.9 }], ['boom', 'hill:3.2', { gain: 0.9 }],
+    sfx: [['impact', 'start', { gain: 1.2 }], ['pop', 'start', { gain: 1.0 }], ['riser', 'fuse_b', 'boom'], ['boom', 'boom'], ['boom', 'hill', { gain: 0.85 }], ['riser', 'hill:2.2', 'crater:-0.5'],
+      ['boom', 'hill:1.6', { gain: 0.9 }], ['boom', 'hill:3.0', { gain: 0.8 }],
       ['dip', 'crater', 0.45], ['gamedip', 'crater', 0.45], ['impact', 'crater', { gain: 1.4 }]],
     flash: [['boom', 0, 0.4], ['hill', 0, 0.5], ['hill:2.0', 0, 0.3], ['crater', 0, 0.4]],
     shake: [['boom', 0, 8], ['hill', 0, 14], ['hill:2.0', 0, 10]], punch: [['crater', 0, 1.08]]
