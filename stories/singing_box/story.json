@@ -2,16 +2,16 @@
  "name": "singing_box",
  "stunt": "story_singing_box",
  "version": 2,
- "revision": "r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
+ "revision": "r4 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, docs/rewrite_briefs/singing_box.md): L01 says the fact AND the why ('And I don't know WHY'); five two-way clues (she runs before the drop; the hole by the lava she never goes near; 'when it SINGS, I fly them right to it'; 'they're GONE'; 'I never see him in the DAY'); someone loved at stake ('Tomorrow, I QUIT'); the allay goes to look ('to see where they GO'); the reveal SAID in one plain sentence over S13b (L16: the grumpy man next door, playing the box, wearing every diamond it ever found); one beat (his 'Thirty-TWO.', echoing L01's THIRTY-ONE), cut. Premise, twist, place, days, cast and voices unchanged; 'every allay knows' and 'too BIG to throw' cut. Table read in reviews/r4-*.md. r3 (2026-11-11): r3 critic approve + its L15 should-fix (too BIG to throw, so it flies through); r3 continuity's two fixes (S10b for L12; L09's look); r2 continuity's A and B (the hole, pool and room moved east to x -276; S03/S11 shot from 5-6 blocks off the face, S04/S12 wide from 12) and its should-fixes; cold-read fixes (reviews/r3-coldread.md): the r2 neighbor ('Find anything down there TODAY?' / 'He is so NICE!') read at 65% and 60%, so his line is the grumpy one again (v1's 25%), now caused (her booms; he claims to sleep by day) and misread (L12 she's not loud, the boom blocks are); L07 'when I bring it DIAMONDS, it SINGS' (the allay has the order backwards; the picture shows the note first); L13 back to 'the biggest one YET'. Voices: Zephyr first for her, Umbriel first for him (r2 critic). r2: the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
  "caption": "where do her diamonds go 💎",
- "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, sure the box is just hungry, while she climbs out empty-handed every night; today it flies diamond 32, the biggest find yet, through the hole and finds the neighbor in diamond armour tapping the box.",
+ "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, while she climbs out empty-handed every night and says tomorrow she quits; today it follows the biggest one yet through the hole to see where they go, and finds the grumpy man next door playing the box in her diamonds.",
  "question": "why has she never had more than one diamond?",
- "premise": "A miner under Torch Hill gives her allay her only diamond so it collects more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, right by the lava she never goes near. The box sings whenever the allay comes close, and the diamonds vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. It's empty.' The neighbor shouts from his window that some of us are trying to sleep; the allay sticks up for her.",
+ "premise": "A miner under Torch Hill gives her allay her only diamond so it finds more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, by the lava she never goes near. Whenever the box sings the allay flies its finds right to it, and they vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. Tomorrow, I quit.' The grumpy man next door shouts that some of us are trying to sleep; the allay never sees him in the day.",
  "twist": "The note block isn't hers. The neighbor dug a secret room beside her tunnel and plays his note block behind the hole every few seconds. Vanilla: an allay that hears a note block played within 16 blocks delivers its items there instead of to its player, for 30 s, and each note resets it. So her allay has delivered all 31 diamonds to him, and he wears them (diamond chestplate, leggings, boots, pickaxe and sword: 24 of them; his helmet off so his face reads). Diamond 32 lands at his feet as he taps. Cut on the tap.",
  "key_color": "#4AEDD9",
  "mood": "funny",
  "payoff": "tap",
- "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13b; diamond 32 lands right after and the Short ends 0.8 s after it lands. No line after L15; the picture is the reveal (STANDARDS 0, 3).",
+ "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13b, on 'PLAYING' in L16; diamond 32 lands at his feet on 'FOUND'; he says L17 'Thirty-TWO.' looking down at it; the Short ends 0.8 s after L17 (STANDARDS 0y: the reveal SAID, one beat, cut).",
  "look": {
   "note": "surface shots: day one 1489 at 1000, the night before 1499 at dusk 12600; the mine is underground (torch light and the lava's glow)"
  },
@@ -46,9 +46,9 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#9FE3A0",
    "skin": "new skin needed",
-   "on_screen": "a player, a NEW original skin (lead 2026-11-11: noor and efe clash with other planned characters; commissioned at build; not Steve), iron pickaxe; S02, S03, S06, S09 (says L10 there), S10 (her shoulder in fg), S11. Never named.",
+   "on_screen": "a player, a NEW original skin (lead 2026-11-11: noor and efe clash with other planned characters; commissioned at build; not Steve), iron pickaxe; S02, S03, S06, S09 (says L10 there: 'Nothing AGAIN. Tomorrow, I QUIT.'), S10 (her shoulder in fg), S11. Never named.",
    "audition": {
-    "line": "L10 \"Nothing AGAIN. It's EMPTY.\"",
+    "line": "L10 \"Nothing AGAIN. Tomorrow, I QUIT.\"",
     "bracket": "[A tired young woman, flat and worn out, full voice]",
     "candidates": [
      {
@@ -71,7 +71,7 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#7FB2FF",
    "skin": "new skin needed",
-   "on_screen": "a player, a NEW original skin (commissioned at build; distinct from hers and from Steve; the same in S10 and S13b), plain clothes and no armour in S10 (at his window, says L11); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin. Never named.",
+   "on_screen": "a player, a NEW original skin (commissioned at build; distinct from hers and from Steve; the same in S10 and S13b), plain clothes and no armour in S10 (at his window, says L11); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin; says L17 'Thirty-TWO.' quietly, looking down at diamond 32. Never named.",
    "audition": {
     "line": "L11 \"Some of us are trying to SLEEP!\"",
     "bracket": "[A grumpy grown man, loud and annoyed, shouting from a window]",
@@ -108,7 +108,8 @@
     "L12",
     "L13",
     "L14",
-    "L15"
+    "L15",
+    "L16"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -133,6 +134,17 @@
     "L11"
    ],
    "direction": "[A grumpy grown man, loud and annoyed, shouting from a window]"
+  },
+  {
+   "id": "rB2",
+   "speakers": [
+    "Neighbor"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "lines": [
+    "L17"
+   ],
+   "direction": "[A grown man, quiet and pleased with himself, counting under his breath]"
   }
  ],
  "sfx": [
@@ -159,12 +171,12 @@
   {
    "under": "S07",
    "sound": "block.note_block.harp",
-   "note": "two notes: one just before the allay enters (the true order), one on 'SINGS'; if ./hb owner flags the first as early, move it into the last second of S06"
+   "note": "two notes: one just before the allay enters, on 'SINGS' (the box sings FIRST, then the allay comes); one more as it arrives"
   },
   {
    "under": "S10",
    "sound": "block.wooden_trapdoor.open",
-   "note": "his shutter bangs open before L11 (S10), slams on 'BOOM' in L12 (S10b)"
+   "note": "his shutter bangs open before L11 (S10), slams on 'DOOR' in L12 (S10b)"
   },
   {
    "under": "S12",
@@ -179,15 +191,15 @@
   {
    "under": "S13b",
    "sound": "block.note_block.harp",
-   "note": "the tap on the `tap` mark: the payoff hit (dirt under the note block: harp)"
+   "note": "the tap on the `tap` mark ('PLAYING' in L16): the note sounds (dirt under the note block: harp)"
   }
  ],
  "lines": [
   {
    "id": "L01",
    "who": "N",
-   "text": "I've found her / THIRTY-ONE diamonds. / She's never had / more than ONE.",
-   "say": "I've found her thirty-one diamonds. She's never had more than ONE.",
+   "text": "I've found her / THIRTY-ONE diamonds. / She's never had / more than ONE. / And I don't know WHY.",
+   "say": "I've found her thirty-one diamonds. She's never had more than one. And I don't know WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -214,13 +226,13 @@
     }
    ],
    "punch": true,
-   "direction": "amazed and proud, one quick bright breath"
+   "direction": "amazed, then truly puzzled on the last sentence, one quick bright breath"
   },
   {
    "id": "L02",
    "who": "N",
-   "text": "I'm her ALLAY. / She gave me / her one diamond / to HOLD, / so I know / what to LOOK for.",
-   "say": "I'm her allay. She gave me her one diamond to hold, so I know what to LOOK for.",
+   "text": "I'm her ALLAY. / She gave me / her ONE diamond, / to find MORE.",
+   "say": "I'm her allay. She gave me her one diamond, to find MORE.",
    "shot": "S02",
    "shows": [
     {
@@ -233,7 +245,7 @@
      "what": [
       "diamond"
      ],
-     "word": "HOLD"
+     "word": "ONE"
     }
    ],
    "look": [
@@ -243,16 +255,16 @@
     },
     {
      "what": "Her",
-     "word": "HOLD"
+     "word": "ONE"
     }
    ],
-   "direction": "chirpy, explaining her job"
+   "direction": "chirpy, explaining its job"
   },
   {
    "id": "L03",
    "who": "N",
-   "text": "Then she lights / the BOOM blocks / and RUNS.",
-   "say": "Then she lights the boom blocks and RUNS.",
+   "text": "She lights / the BOOM blocks, / and RUNS.",
+   "say": "She lights the boom blocks, and RUNS.",
    "shot": "S03",
    "shows": [
     {
@@ -277,24 +289,20 @@
   {
    "id": "L04",
    "who": "N",
-   "text": "BOOM! / And DIAMONDS / go bouncing / EVERYWHERE.",
-   "say": "Boom! And diamonds go bouncing EVERYWHERE.",
+   "text": "BOOM! / Diamonds EVERYWHERE!",
+   "say": "Boom! Diamonds EVERYWHERE!",
    "shot": "S04",
    "shows": [
     {
      "what": [
       "diamond"
      ],
-     "word": "DIAMONDS"
+     "word": "EVERYWHERE"
     }
    ],
    "look": [
     {
      "what": "item:diamond",
-     "word": "DIAMONDS"
-    },
-    {
-     "what": "entity:allay",
      "word": "EVERYWHERE"
     }
    ],
@@ -303,8 +311,8 @@
   {
    "id": "L05",
    "who": "N",
-   "text": "So I catch / them ALL, / and fly them / to the singing BOX. / Every allay knows / that's where / your finds GO.",
-   "say": "So I catch them all, and fly them to the singing box. Every allay knows that's where your finds GO.",
+   "text": "I catch them ALL, / for the singing BOX / in the wall.",
+   "say": "I catch them all, for the singing box in the WALL.",
    "shot": "S05",
    "shows": [
     {
@@ -330,36 +338,36 @@
      "word": "BOX"
     }
    ],
-   "direction": "busy and proud, matter-of-fact on the last sentence"
+   "direction": "busy and proud"
   },
   {
    "id": "L06",
    "who": "N",
-   "text": "It lives / in a little hole / in the WALL, / right by the glowy / orange WATER. / She says / never go NEAR that.",
-   "say": "It lives in a little hole in the wall, right by the glowy orange water. She says never go NEAR that.",
+   "text": "It's by the glowy / orange WATER. / She never goes / NEAR it.",
+   "say": "It's by the glowy orange water. She never goes NEAR it.",
    "shot": "S06",
    "shows": [
-    {
-     "what": [
-      "note_block"
-     ],
-     "word": "WALL"
-    },
     {
      "what": [
       "lava"
      ],
      "word": "WATER"
+    },
+    {
+     "what": [
+      "note_block"
+     ],
+     "word": "NEAR"
     }
    ],
    "look": [
     {
-     "what": "block:note_block",
-     "word": "WALL"
-    },
-    {
      "what": "block:lava",
      "word": "WATER"
+    },
+    {
+     "what": "block:note_block",
+     "word": "NEAR"
     }
    ],
    "direction": "cheerful tour guide, repeating her rule like a good student"
@@ -367,31 +375,31 @@
   {
    "id": "L07",
    "who": "N",
-   "text": "And when I bring it / DIAMONDS, / it SINGS! / It's SO happy / to see me!",
-   "say": "And when I bring it diamonds, it sings! It's so happy to SEE me!",
+   "text": "When it SINGS, / I fly them / RIGHT to it. / It LOVES me!",
+   "say": "When it sings, I fly them right to it. It LOVES me!",
    "shot": "S07",
    "shows": [
-    {
-     "what": [
-      "diamond"
-     ],
-     "word": "DIAMONDS"
-    },
     {
      "what": [
       "note_block"
      ],
      "word": "SINGS"
+    },
+    {
+     "what": [
+      "diamond"
+     ],
+     "word": "RIGHT"
     }
    ],
    "look": [
     {
-     "what": "entity:allay",
-     "word": "DIAMONDS"
-    },
-    {
      "what": "block:note_block",
      "word": "SINGS"
+    },
+    {
+     "what": "entity:allay",
+     "word": "RIGHT"
     }
    ],
    "direction": "flattered, a little giggle"
@@ -399,8 +407,8 @@
   {
    "id": "L08",
    "who": "N",
-   "text": "I drop them / right ON it. / And when I look BACK, / they're GONE. / It must be / so HUNGRY.",
-   "say": "I drop them right on it. And when I look back, they're gone. It must be so HUNGRY.",
+   "text": "I drop them ON it, / and they're GONE. / It must be / so HUNGRY.",
+   "say": "I drop them on it, and they're gone. It must be so HUNGRY.",
    "shot": "S08",
    "shows": [
     {
@@ -431,15 +439,15 @@
   {
    "id": "L09",
    "who": "N",
-   "text": "Every NIGHT, / she climbs out / of the mine / with EMPTY hands.",
-   "say": "Every night, she climbs out of the mine with EMPTY hands.",
+   "text": "But every NIGHT, / she climbs out / with EMPTY hands.",
+   "say": "But every night, she climbs out with EMPTY hands.",
    "shot": "S09",
    "shows": [
     {
      "what": [
       "ladder"
      ],
-     "word": "MINE"
+     "word": "NIGHT"
     }
    ],
    "look": [
@@ -457,13 +465,13 @@
   {
    "id": "L10",
    "who": "Her",
-   "text": "Nothing AGAIN. / It's EMPTY.",
-   "say": "Nothing again. It's EMPTY.",
+   "text": "Nothing AGAIN. / Tomorrow, I QUIT.",
+   "say": "Nothing again. Tomorrow, I QUIT.",
    "shot": "S09",
    "look": [
     {
      "what": "Her",
-     "word": "EMPTY"
+     "word": "QUIT"
     }
    ]
   },
@@ -483,76 +491,76 @@
   {
    "id": "L12",
    "who": "N",
-   "text": "She's not / that LOUD. / The BOOM blocks are.",
-   "say": "She's not that loud. The boom blocks ARE.",
+   "text": "That's the grumpy man / next DOOR. / I never see him / in the DAY.",
+   "say": "That's the grumpy man next door. I never see him in the DAY.",
    "shot": "S10b",
    "look": [
     {
-     "what": "Her",
-     "word": "LOUD"
+     "what": "Neighbor",
+     "word": "DOOR"
     },
     {
      "what": "entity:allay",
-     "word": "BOOM"
+     "word": "DAY"
     }
    ],
-   "direction": "loyal, sticking up for her, a little huffy"
+   "direction": "matter-of-fact, a little shrug, then straight on"
   },
   {
    "id": "L13",
    "who": "N",
-   "text": "She looks / so TIRED. / So today, / I'm finding her / the BIGGEST one YET.",
-   "say": "She looks so tired. So today, I'm finding her the biggest one YET.",
+   "text": "She CAN'T quit! / So today, / she lit THREE.",
+   "say": "She can't quit! So today, she lit THREE.",
    "shot": "S11",
    "shows": [
     {
      "what": [
       "tnt"
      ],
-     "word": "TODAY"
+     "word": "THREE"
     }
    ],
    "look": [
     {
      "what": "Her",
-     "word": "TIRED"
+     "word": "CAN'T"
     },
     {
      "what": "block:tnt",
-     "word": "BIGGEST"
+     "word": "THREE"
     }
    ],
    "punch": true,
-   "direction": "determined and sweet, a little promise"
+   "direction": "worried for her, then determined"
   },
   {
    "id": "L14",
    "who": "N",
-   "text": "BOOM! / Diamond / THIRTY-TWO!",
-   "say": "Boom! Diamond thirty-two!",
+   "text": "BOOM! / The BIGGEST one / YET!",
+   "say": "Boom! The biggest one YET!",
    "shot": "S12",
    "shows": [
     {
      "what": [
       "diamond"
      ],
-     "word": "THIRTY-TWO"
+     "word": "BIGGEST"
     }
    ],
    "look": [
     {
      "what": "item:diamond",
-     "word": "THIRTY-TWO"
+     "word": "BIGGEST"
     }
    ],
    "punch": true,
-   "direction": "thrilled, the biggest yet"
+   "direction": "thrilled"
   },
   {
    "id": "L15",
    "who": "N",
-   "text": "And the box SANG! / This one's too BIG / to throw, / so I flew it / right through / the HOLE.",
-   "say": "And the box sang! This one's too big to throw, so I flew it right through the HOLE.",
+   "text": "The box SANG, / so I flew it / through the HOLE, / to see / where they GO.",
+   "say": "The box sang, so I flew it through the hole, to see where they GO.",
    "shot": "S13a",
    "shows": [
     {
@@ -565,7 +573,7 @@
      "what": [
       "diamond"
      ],
-     "word": "BIG"
+     "word": "HOLE"
     }
    ],
    "look": [
@@ -579,7 +587,57 @@
     }
    ],
    "punch": true,
-   "direction": "happy, flying, the last word bright; it runs into the picture"
+   "direction": "curious and brave, running straight into the next line"
+  },
+  {
+   "id": "L16",
+   "who": "N",
+   "text": "And there was / the grumpy man / next DOOR, / PLAYING the box, / wearing every diamond / I ever FOUND.",
+   "say": "And there was the grumpy man next door, playing the box, wearing every diamond I ever FOUND.",
+   "shot": "S13b",
+   "shows": [
+    {
+     "what": [
+      "note_block"
+     ],
+     "word": "PLAYING"
+    },
+    {
+     "what": [
+      "diamond_chestplate"
+     ],
+     "word": "FOUND"
+    }
+   ],
+   "look": [
+    {
+     "what": "Neighbor",
+     "word": "DOOR"
+    },
+    {
+     "what": "block:note_block",
+     "word": "PLAYING"
+    },
+    {
+     "what": "Neighbor",
+     "word": "FOUND"
+    }
+   ],
+   "punch": true,
+   "direction": "surprised and plain, just saying what it sees; no gasp, no sadness, the last word bright"
+  },
+  {
+   "id": "L17",
+   "who": "Neighbor",
+   "text": "Thirty-TWO.",
+   "say": "Thirty-TWO.",
+   "shot": "S13b",
+   "look": [
+    {
+     "what": "Neighbor",
+     "word": "TWO"
+    }
+   ]
   }
  ],
  "shots": [
@@ -601,7 +659,7 @@
    "time": "1489 day 1000",
    "camera": "12-15 blocks downslope south-east of the cottages, looking north-west uphill toward Torch Hill's torch, still",
    "subject": "Her",
-   "frame": "day one (11 days before): she steps out of her door (birch and cobble; her new skin, iron pickaxe) and hands her one diamond to the allay on 'HOLD'; it takes it and floats, the diamond in its hands. bg: his spruce cottage beyond hers, the torch on the slope above."
+   "frame": "day one (11 days before): she steps out of her door (birch and cobble; her new skin, iron pickaxe) and hands her one diamond to the allay on 'ONE'; it takes it and floats, the diamond in its hands. bg: his spruce cottage beyond hers, the torch on the slope above."
   },
   {
    "id": "S03",
@@ -631,7 +689,7 @@
    "time": "any day, 1499 or before (underground)",
    "camera": "follow cam on the allay as it gathers the two items, then turns toward the north wall",
    "subject": "allay",
-   "frame": "the allay zips to the two diamonds, each pulled into it (vanilla pickup); on 'BOX' it turns up toward the hole over the lava, the note block's top edge in it."
+   "frame": "the allay zips to the two diamonds, each pulled into it (vanilla pickup) on 'ALL'; on 'BOX' it turns up toward the hole over the lava, the note block's top edge in it."
   },
   {
    "id": "S06",
@@ -641,7 +699,7 @@
    "time": "any day, 1499 or before (underground)",
    "camera": "high at the ladder end, looking east down the tunnel, still",
    "subject": "block:note_block",
-   "frame": "the whole tunnel (22 long, 5 wide, 5 tall): she stands small on the south side at x -286 in the low foreground, far from the lava; the lava pool along the north wall at frame left, mid-frame (x -279..-274, ~8-13 ahead), and above it, 4 up, the small dark hole with the note block's top edge; the face far centre. The hole is where she never goes."
+   "frame": "the whole tunnel (22 long, 5 wide, 5 tall): she stands small on the south side at x -286 in the low foreground, far from the lava; the lava pool along the north wall at frame left, mid-frame (x -279..-274, ~8-13 ahead), and above it, 4 up, the small dark hole with the note block's top edge; the face far centre. On 'NEAR' the camera holds on her, small and far from the hole: the hole is where she never goes."
   },
   {
    "id": "S07",
@@ -651,7 +709,7 @@
    "time": "any day, 1499 or before (underground)",
    "camera": "close on the hole from the tunnel side at its height, the allay entering frame right",
    "subject": "block:note_block",
-   "frame": "the hole centred, camera ~20 deg above it looking down so the note block's top reads (check at 300 px), black air above; a note particle rises from it FIRST, then the allay floats into frame with the diamonds on 'DIAMONDS'; on 'SINGS' another note. Lava glow from below. Nothing on the other side reads."
+   "frame": "the hole centred, camera ~20 deg above it looking down so the note block's top reads (check at 300 px), black air above; on 'SINGS' a note particle rises from it FIRST, then the allay floats into frame with the diamonds on 'RIGHT'; on 'LOVES' another note. Lava glow from below. Nothing on the other side reads."
   },
   {
    "id": "S08",
@@ -661,7 +719,7 @@
    "time": "any day, 1499 or before (underground)",
    "camera": "beside the hole, ~20 deg above it looking down, then a jump cut",
    "subject": "allay",
-   "frame": "the allay throws the two diamonds onto the note block's top, just inside the hole, on 'ON'; jump cut on 'BACK' (a few seconds later): the top is bare. The pickup never shows."
+   "frame": "the allay throws the two diamonds onto the note block's top, just inside the hole, on 'ON'; jump cut on 'GONE' (a few seconds later): the top is bare. The pickup never shows."
   },
   {
    "id": "S09",
@@ -675,7 +733,7 @@
    "time": "1499 dusk 12600",
    "camera": "ground level about 5 blocks north-west of the shaft mouth, looking south-east (~140 deg), still",
    "subject": "Her",
-   "frame": "on 'climbs' she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, both hands empty (main hand empty: the pickaxe in her hotbar, not held), stands and says L10 to herself; the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
+   "frame": "on 'climbs' she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, both hands empty (main hand empty: the pickaxe in her hotbar, not held), stands and says L10 to herself ('Tomorrow, I QUIT': she sounds done, not angry); the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
   },
   {
    "id": "S10",
@@ -688,7 +746,7 @@
    "time": "1499 dusk 12600",
    "camera": "over her shoulder north-east to his cottage window (his cottage 4-5 blocks away), still",
    "subject": "Neighbor",
-   "frame": "the neighbor (his new skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms all day; he says he sleeps by day); her shoulder and head in frame-right fg. His face is the face of S13b."
+   "frame": "the neighbor (his new skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms are his cue by day; at night he is home); her shoulder and head in frame-right fg. His face is the face of S13b."
   },
   {
    "id": "S10b",
@@ -698,7 +756,7 @@
    "time": "1499 dusk 12600",
    "camera": "from her south-west, the same side of the line as S10, still",
    "subject": "allay",
-   "frame": "she stands right of centre, main hand empty; the allay at her head, centred, the diamond in its hands; on 'BOOM' his shutter slams in the background left."
+   "frame": "she stands right of centre, main hand empty; the allay at her head, centred, the diamond in its hands; his lit window in the background left; on 'DOOR' his shutter slams."
   },
   {
    "id": "S11",
@@ -708,7 +766,7 @@
    "time": "1500 (underground)",
    "camera": "5-6 blocks from the face on the south side looking east, a slow push",
    "subject": "Her",
-   "frame": "today: she places THREE TNT at the face (the crater from the last blast); the allay hovers beside her, the diamond in its hands. She lights them and runs back west past camera at frame right, the allay after her."
+   "frame": "today: she places THREE TNT at the face (the crater from the last blast) on 'THREE'; the allay hovers beside her, the diamond in its hands. She lights them and runs back west past camera at frame right, the allay after her."
   },
   {
    "id": "S12",
@@ -718,7 +776,7 @@
    "time": "1500 (underground)",
    "camera": "still, 12 blocks from the face looking east, the lava pool in the left foreground",
    "subject": "item:diamond",
-   "frame": "a big triple blast on 'BOOM'; exactly one diamond item arcs high and the allay catches it in the air on 'THIRTY-TWO'."
+   "frame": "a big triple blast on 'BOOM'; exactly one diamond item arcs high and the allay catches it in the air on 'BIGGEST'."
   },
   {
    "id": "S13a",
@@ -728,26 +786,29 @@
    "time": "1500 (underground)",
    "camera": "follow cam behind the allay up to the hole; on 'HOLE' it passes through and the camera follows to the hole's mouth",
    "subject": "allay",
-   "frame": "on 'SANG' a note rises from the hole; on 'BIG' the allay hugs diamond 32 to itself; it flies to the hole and through, over the note block, on 'HOLE'."
+   "frame": "on 'SANG' a note rises from the hole; the allay flies diamond 32 to the hole and through it, over the note block, on 'HOLE'; the camera follows to the hole's mouth on 'GO'."
   },
   {
    "id": "S13b",
-   "line": null,
-   "lines": [],
+   "line": "L16",
+   "lines": [
+    "L16",
+    "L17"
+   ],
    "place": "secret_room",
    "size": "ws",
    "time": "1500 (underground)",
    "camera": "from the room's north wall looking south at the hole, still",
    "subject": "Neighbor",
-   "frame": "THE REVEAL, no line: a hidden torch-lit room (7x7), his ladder up in the south-west corner. The neighbor, no helmet (his face matches S10), diamond chestplate, leggings and boots, a diamond pickaxe in his main hand and a diamond sword in his off hand, stands beside the note block (to the side, out of the hole's sightline). The allay floats in through the hole; he taps the note block (mark `tap`, the note sounds) and the allay drops diamond 32 at his feet. Cut 0.8 s after the diamond lands."
+   "frame": "THE REVEAL, said: a hidden torch-lit room (7x7), his ladder up in the south-west corner. On 'And there was' the allay floats in through the hole; the neighbor, no helmet (his face matches S10), diamond chestplate, leggings and boots, a diamond pickaxe in his main hand and a diamond sword in his off hand, stands beside the note block (out of the hole's sightline), readable and centred by 'DOOR'. He taps the note block on 'PLAYING' (mark `tap`, the note sounds); the allay drops diamond 32 at his feet on 'FOUND'. He looks down at it and says L17 'Thirty-TWO.', quiet. Cut 0.8 s after L17."
   }
  ],
  "ending": {
-  "after": "L15",
+  "after": "L16",
   "beats": [
-   "S13b: through the hole, the neighbor in full diamond armour taps the note block; diamond 32 lands at his feet; cut 0.8 s after diamond 32 lands. No line."
+   "S13b: L17, the neighbor, quiet, looking down at diamond 32 at his feet: 'Thirty-TWO.' Cut 0.8 s after the word."
   ],
-  "loop": "an ironic restart: L15 flies through the hole with diamond 32, and L01 counts the thirty-one it has already delivered"
+  "loop": "L17's THIRTY-TWO runs into L01's THIRTY-ONE: he has been counting her diamonds the whole time"
  },
  "bible": "stories/singing_box/bible.md",
  "beats": "stories/singing_box/beats.md",
