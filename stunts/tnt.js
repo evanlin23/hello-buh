@@ -18,6 +18,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
   recordRadius: 128,
+  botTimeout: 600,
   edit: {
     caption: 'POV: you lit 75 TNT 💀', red: '75', dropAt: 'boom', startAt: 'lit:-1.2', endAfter: 'crater:0.7',   // settle-ok: the crater cut comes after the chain's last blast (perform waits out every primed TNT); r:r188b46 ends 0.7 s into the crater
     speed: [['fuse_a', 'fuse_b', 'cut'], ['rim_a', 'rim_b', 'cut']],   // most of the fuse; the chain's end to the crater's rim
@@ -30,6 +31,19 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
+    // a retry runs in the same world: build 600 blocks away from the last attempt's set (tnt_1000's pattern: the old
+    // hill raised the next plateau). Attempts are counted per world (run.sh makes a fresh one).
+    const fs = require('fs'), path = require('path')
+    const cf = path.join(__dirname, '..', 'work', 'tnt.attempt.json')
+    let mt = 0; try { mt = fs.statSync(path.join(__dirname, '..', 'work', 'server', 'world')).ino } catch (e) {}
+    let n = 0; try { const c = JSON.parse(fs.readFileSync(cf, 'utf8')); if (c.mt === mt) n = c.n + 1 } catch (e) {}
+    try { fs.writeFileSync(cf, JSON.stringify({ mt, n })) } catch (e) {}
+    if (n > 0) {
+      const p0 = bot.entity.position
+      await ctx.cmd(`/tp @s ${Math.floor(p0.x) + 600 * n} 200 ${Math.floor(p0.z)}`)
+      await bot.waitForTicks(40)
+      await ctx.locateBiome(this.biome)
+    }
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
@@ -43,28 +57,31 @@ module.exports = {
     this.hz = z + HZ; this.pz = z + PZ; this.vz = z + VZ
     for (let y = floor - 22; y <= floor - 5; y += 3) await ctx.cmd(`/fill ${x - 44} ${y} ${z + HZ - 40} ${x + 44} ${Math.min(floor - 5, y + 2)} ${z + VZ + 14} stone`)
 
-    // the hill: a dome with a gentle wobble, a grass top, 2 dirt under it, TNT in the core; a TNT bed under the hill
-    // and the wall (4 deep) so the crater goes into the ground
+    // the hill: a dome built in layers of row fills (one command a row, ~500 in all: per-column fills ran past the
+    // bot's timeout), grass on the outside (a natural hill's sides), a TNT dome 2 in from the skin, and a TNT bed
+    // under the hill and the wall (4 deep) so the crater goes into the ground
     const hz = this.hz
-    const height = (dx, dz) => {
-      const r = Math.hypot(dx, dz) / HR
-      if (r > 1) return 0
-      if (r < 0.28) return HH                                     // a flat top for the house
-      return Math.round(HH * Math.sqrt(1 - r * r) + 0.8 * Math.sin(dx * 0.7) * Math.cos(dz * 0.6) * (1 - r))
-    }
-    let tnt = 0
-    for (let dx = -HR; dx <= HR; dx++) {
-      for (let dz = -HR; dz <= HR; dz++) {
-        const h = height(dx, dz)
-        const X = x + dx, Z = hz + dz
-        const r = Math.hypot(dx, dz) / HR
-        if (r <= 0.85) { await ctx.cmd(`/fill ${X} ${floor - 4} ${Z} ${X} ${floor - 1} ${Z} tnt`); tnt += 4 }
-        if (h <= 0) continue
-        if (h >= 4) { await ctx.cmd(`/fill ${X} ${floor} ${Z} ${X} ${floor + h - 3} ${Z} tnt`); tnt += h - 2 }
-        await ctx.cmd(`/fill ${X} ${floor + Math.max(1, h - 2)} ${Z} ${X} ${floor + h - 1} ${Z} dirt`)
-        await ctx.cmd(`/setblock ${X} ${floor + h} ${Z} grass_block`)
+    const disc = async (y0, y1, rad, block) => {
+      const ri = Math.floor(rad)
+      for (let dz = -ri; dz <= ri; dz++) {
+        const w = Math.floor(Math.sqrt(rad * rad - dz * dz))
+        await ctx.cmd(`/fill ${x - w} ${y0} ${hz + dz} ${x + w} ${y1} ${hz + dz} ${block}`)
       }
     }
+    const height = (dx, dz) => { const r = Math.hypot(dx, dz) / HR; return r > 1 ? 0 : (r < 0.28 ? HH : Math.round(HH * Math.sqrt(1 - r * r))) }
+    let tnt = 0
+    await disc(floor - 4, floor - 1, HR * 0.85, 'tnt')
+    for (let k = 1; k <= HH; k++) {
+      const rad = HR * Math.sqrt(Math.max(0, 1 - Math.pow((k - 0.5) / HH, 2)))
+      await disc(floor + k, floor + k, Math.max(3.4, rad), 'grass_block')
+    }
+    for (let k = 0; k <= HH - 2; k++) {
+      const rad = (HR - 2) * Math.sqrt(Math.max(0, 1 - Math.pow((k + 0.5) / (HH - 2), 2)))
+      if (rad < 1) break
+      await disc(floor + k, floor + k, rad, 'tnt')
+      tnt += Math.round(Math.PI * rad * rad)
+    }
+    tnt += Math.round(Math.PI * Math.pow(HR * 0.85, 2) * 4)
     // the bed under the wall and between it and the hill (the wall's blast reaches the hill's core through the skin)
     await ctx.cmd(`/fill ${x - 3} ${floor - 3} ${this.pz - 3} ${x + 3} ${floor - 1} ${hz + HR - 2} tnt`)
     ctx.log('hill TNT', tnt)
