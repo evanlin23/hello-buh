@@ -200,15 +200,15 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "I found her / THIRTY-ONE diamonds. / She hasn't gotten / a single ONE. / And I don't know WHY.",
-   "say": "I found her thirty-one diamonds. She hasn't gotten a single one. And I don't know WHY.",
+   "text": "My best FRIEND / has never kept / a single DIAMOND. / I've found her / THIRTY-ONE. / And I don't know WHY.",
+   "say": "My best friend has never kept a single diamond. I've found her thirty-one. And I don't know WHY.",
    "shot": "S01",
    "shows": [
     {
      "what": [
       "diamond"
      ],
-     "word": "DIAMONDS"
+     "word": "DIAMOND"
     },
     {
      "what": [
@@ -220,7 +220,7 @@
    "look": [
     {
      "what": "entity:allay",
-     "word": "DIAMONDS"
+     "word": "DIAMOND"
     },
     {
      "what": "block:note_block",
