@@ -41,9 +41,9 @@ module.exports = {
     // the fall starts (cut before the death), then the dig from the top
     hook: { at: 'l5', before: 0.0, after: 0.9, text: 'how it ends 💀' },
     subs: [
-      ['dig0', 'just digging down...', 3], ['l1', 'oh, a cave', 2.2], ['dig1', 'keep going', 2],
-      ['l2', 'a mineshaft??', 2.4], ['dig2', 'keep going...', 2], ['l3', 'a DUNGEON', 2.2], ['dig3', 'one more...', 1.8],
-      ['l4', 'a GEODE?!', 2.4], ['dig4', 'just one more', 1.8], ['l5', 'oh no', 3]
+      ['dig0', 'just digging down...', 2.2], ['l1', 'oh, a cave', 1.6], ['dig1', 'keep going', 1.4],
+      ['l2', 'a mineshaft??', 1.6], ['dig2', 'keep going...', 1.4], ['l3', 'a DUNGEON', 1.6], ['dig3', 'one more...', 1.4],
+      ['l4', 'a GEODE?!', 1.6], ['dig4', 'just one more', 1.4], ['l5', 'oh no', 3]
     ],
     // the burn sped up (6 s of one shot in the lava: pace), and a hit on the death (pace: no sound hit on the payoff;
     // the lava's burning keeps the game track busy, so the impact doesn't flatten the rest)
@@ -229,36 +229,31 @@ module.exports = {
     await ease(0, DOWN, 250)
     // 0 -> 1: the cave
     if (!await digDown(1)) return false
-    const lift1 = ease(-0.6, -0.35, 900)
-    await land(); await lift1; await rest()
-    ctx.sound('ambient.cave', 1)
-    await looks([[-1.9, -0.25, 800]])                               // the lava trickle, ores and glow lichen
+    // r:r188b46 (fast cuts): one look per layer, straight at what it shows, a short rest, back to digging (two looks
+    // and a pan held each layer 2.3-3.5 s after the reveal: pace dwell)
+    const lift1 = ease(-1.9, -0.25, 900)                              // the lava trickle, ores and glow lichen
+    await land(); ctx.sound('ambient.cave', 1); await lift1; await rest()
     await ease(-1.9, DOWN, 400)
     ctx.mark('dig1')
     // 1 -> 2: the mineshaft
     if (!await digDown(2)) return false
-    const lift2 = ease(Math.PI / 2, -0.15, 800)                       // down the corridor (west)
-    await land(); await lift2; await rest()
     ctx.mark('minecart')
     bot.chat(`/summon chest_minecart ${this.minecart.x} ${this.minecart.y} ${this.minecart.z}`)
-    await looks([[-Math.PI / 2, -0.15, 1000]])                     // along the other way: the minecart
+    const lift2 = ease(-Math.PI / 2, -0.15, 900)                      // along the corridor: the minecart
+    await land(); await lift2; await rest()
     await ease(-Math.PI / 2, DOWN, 400)
     ctx.mark('dig2')
     // 2 -> 3: the dungeon
     if (!await digDown(3)) return false
     const lift3 = easeAt(new Vec3(x + 3.5, F - 23.5, z + 1.5), 700)   // the spawner, its zombie spinning inside
-    await land(); await lift3; await rest()
-    ctx.mark('spawner')
-    await easeAt(new Vec3(x - 1.5, F - 23.5, z - 2.5), 900); await rest()   // ...and a chest in the corner
+    await land(); ctx.mark('spawner'); await lift3; await rest()
     await ease(bot.entity.yaw, DOWN, 400)
     ctx.mark('dig3')
     // 3 -> 4: the geode
     if (!await digDown(4)) return false
     const lift5 = easeAt(new Vec3(this.geode.x + 2.5, this.geode.y - 1, this.geode.z - 1.5), 700)   // amethyst all round
-    await land(); await lift5; await rest()
-    ctx.sound('block.amethyst_block.chime', 1)
-    await looks([[bot.entity.yaw + 1.6, -0.35, 1100]])            // the whole hollow
-    ctx.sound('block.amethyst_block.chime', 0.8, 1.2)
+    await land(); ctx.sound('block.amethyst_block.chime', 1); await lift5
+    ctx.sound('block.amethyst_block.chime', 0.8, 1.2); await rest()
     await ease(bot.entity.yaw, DOWN, 450)
     ctx.mark('dig4')
     // 4 -> 5: the lava cavern
