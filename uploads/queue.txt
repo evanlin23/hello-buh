@@ -14,6 +14,9 @@ mega_lapse_fountain  # first: owner OK 2026-11-12 (strong / fixed)
 half_heart  # first: owner OK 2026-11-12 (strong / fixed)
 inside_library  # first: owner OK 2026-11-12 (strong / fixed)
 fakemod_permission  # first: owner OK 2026-11-12 (strong / fixed)
+logic_minecraft  # first: owner OK 2026-11-12 (fixed)
+love_cherry_heart  # first: owner OK 2026-11-12 (fixed)
+stages_friends  # first: owner OK 2026-11-12 (fixed)
 ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
@@ -53,16 +56,13 @@ mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1
 creeper
 nether_portal
 cells_lab   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-love_cherry_heart   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 herobrine_bridge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 fakerun_any   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cooked_bedrock   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-logic_minecraft   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cave_reveal
-stages_friends   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 trap_free_diamonds   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 underdog_heal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 lava_crossing

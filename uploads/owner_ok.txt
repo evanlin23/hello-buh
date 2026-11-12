@@ -7,7 +7,6 @@ ladder_clutch  e710068cc121edef  # 2026-11-11: owner pressed 'OK for YouTube' on
 lapse_rocket  90232e1e32bbde83  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 lapse_statue  f16d41ecce372ba3  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 looks_wrong  416d9b9d1ef28212  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
-love_cherry_heart  08c2cfce0cddcec8  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 midas_touch  ba89270c834b403e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 nether_portal  32fd52325840850f  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 one_in_a_million  5df9f64bf48c09b5  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
@@ -30,3 +29,6 @@ inside_library  afd020dcb719d1ca  # 2026-11-12: owner pressed OK for YouTube in 
 mega_lapse_fountain  07d5ae1f880e9f2a  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
 tnt  adea555f2b9215d3  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
 tnt_1000  b9dbc555bb04ac05  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+logic_minecraft  1127162452f6f698  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
+love_cherry_heart  e836026726dbd44f  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
+stages_friends  2d2325d6d4099956  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
