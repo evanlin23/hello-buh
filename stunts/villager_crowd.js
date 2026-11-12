@@ -264,18 +264,18 @@ module.exports = {
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
       // a slow look along them as every head turns up (no still hold on the reveal)
-      const look = ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
-      // the sting (owner r:r4607fa, no-op audit: "end with a sting: they all step in"): half a second in, every
-      // villager, the 200 and the crowd behind, takes one step in toward the pillar, all at once (4 ticks of 0.25,
-      // level: 'rotated ~ 0' keeps the step on the ground, not up at your eyes), and a chorus of "hrmm"s
-      await bot.waitForTicks(10)
+      await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
+      // the sting (owner r:r4607fa, no-op audit: "end with a sting: they all step in"): the look comes to rest, then
+      // every villager, the 200 and the crowd behind, lurches 2 blocks in toward the pillar, all at once (6 ticks of
+      // 0.33, level: 'rotated ~ 0' keeps the step on the ground), and a chorus of "hrmm"s. Against a still camera (a
+      // 1-block step under the pan barely read: stills r1)
+      await bot.waitForTicks(3)
       ctx.mark('step_in')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
-      for (let k = 0; k < 4; k++) {
-        bot.chat(`/execute as @e[type=villager] at @s facing entity ${bot.username} feet rotated ~ 0 run tp @s ^ ^ ^0.25`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
+      for (let k = 0; k < 6; k++) {
+        bot.chat(`/execute as @e[type=villager] at @s facing entity ${bot.username} feet rotated ~ 0 run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
         await bot.waitForTicks(1)
       }
-      await look
       await bot.waitForTicks(16)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
     }
