@@ -26,8 +26,10 @@ module.exports = {
   // read as a label and broke the 10-word cap; the count-up is in the subs)
   caption: 'why are they ALL staring at me 💀',
   edit: {
-    subsY: 0.15, caption: 'why are they ALL staring at me 💀', red: 'ALL', dropAt: 'behind',
-    startAt: 'beat:-0.05', endAfter: 'behind:0.7',   // fast end (owner r:r188b46): 0.7 s after every head snaps round
+    subsY: 0.15, caption: 'why are they ALL staring at me 💀', red: 'ALL', dropAt: 'step_in',
+    // the payoff is the sting: every villager steps in at once ('step_in', 0.5 s after the crowd behind snaps round);
+    // fast end (owner r:r188b46): 0.7 s after it
+    startAt: 'beat:-0.05', endAfter: 'step_in:0.7',
     // the short cut (lead 2026-11-11: as short as it reads, ~8-20 s): 1, 10, 100, 200 and the crowd behind; the 5,
     // 20 (emerald) and 50 crowds are recorded but cut out whole
     speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5], ['pillar', 'overhead', 3],
@@ -35,14 +37,14 @@ module.exports = {
       // heads turn plays x2.2 (the heads still follow it; no cut inside the sidestep)
       ['cut6a:-1.9', 'cut6a', 2.2], ['pillar:-2.2', 'pillar:-0.35', 2.2]],   // (the 200's span stops before the look down: x2.2 made it a 1220 deg/s whip)   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
     subs: [...[0, 2, 5, 6].map(i => ['beat', CROWDS[i].sub, 1.6, i]), ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]],
-    punch: [['behind', 0, 1.08]], flash: [['behind', 0, 0.5]],
-    zoom: [['overhead', 'behind:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead
+    punch: [['behind', 0, 1.08], ['step_in', 0, 1.1]], flash: [['behind', 0, 0.5]],
+    zoom: [['overhead', 'step_in:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead
       // the payoff: every head snaps round (pace: a picture change on it; the punch alone didn't register)
     // room tone from frame 1 (the first sound was at 0.8 s); a pop on the look over the 200, so the hook (which opens
     // on it) has a hit on frame 0 (pace: none by 0.5 s)
     // and the payoff cuts through the NCS bed: the song dips 0.4 s before every head snaps round, then an impact
     // (mixcheck: no hit within 0.3 s of 'behind' on the final mix once the hook moved the song)
-    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.27', { gain: 1.4 }], ['whoosh', 'beat'], ['dip', 'behind', 0.4], ['impact', 'behind', { gain: 1.4 }]],
+    sfx: [['air', 'start', 'behind', { gain: 0.5 }], ['pop', 'overhead:0.27', { gain: 1.4 }], ['whoosh', 'beat'], ['dip', 'step_in', 0.4], ['impact', 'step_in', { gain: 1.4 }]],
     // the opening (owner r:r0f3da0): frame 0 is the mass of 200 staring villagers, not the one. The look over the 200
     // from the pillar (moving, the crowd filling the frame) flashes first, then the count-up from 1
     // (fix-check r1: it starts 0.25 s into the look, on a full frame of crowd, not the pillar's log; the text on one
@@ -236,7 +238,7 @@ module.exports = {
         const y0 = Math.round(bot.entity.position.y)
         bot.setControlState('jump', true)
         for (let t = 0; t < 14 && bot.entity.position.y < y0 + 1.05; t++) await bot.waitForTicks(1)
-        bot._client.write('block_place', { hand: 0, location: { x: fx, y: y0 - 1, z: fz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+        bot._client.write('block_place', { hand: 0, location: { x: fx, y: y0 - 1, z: fz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: pillaring, the eyes already straight down on the block under the feet (easeLook -1.45 above)
         bot.swingArm(); ctx.sound('block.wood.place', 1)
         bot.setControlState('jump', false)
         for (let t = 0; t < 14 && !bot.entity.onGround; t++) await bot.waitForTicks(1)
@@ -262,7 +264,19 @@ module.exports = {
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
       // a slow look along them as every head turns up (no still hold on the reveal)
-      await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
+      const look = ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
+      // the sting (owner r:r4607fa, no-op audit: "end with a sting: they all step in"): half a second in, every
+      // villager, the 200 and the crowd behind, takes one step in toward the pillar, all at once (4 ticks of 0.25,
+      // level: 'rotated ~ 0' keeps the step on the ground, not up at your eyes), and a chorus of "hrmm"s
+      await bot.waitForTicks(10)
+      ctx.mark('step_in')
+      for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
+      for (let k = 0; k < 4; k++) {
+        bot.chat(`/execute as @e[type=villager] at @s facing entity ${bot.username} feet rotated ~ 0 run tp @s ^ ^ ^0.25`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
+        await bot.waitForTicks(1)
+      }
+      await look
+      await bot.waitForTicks(16)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
     }
     bot.removeListener('physicsTick', track); bot.removeListener('physicsTick', aimTick)
