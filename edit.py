@@ -1667,9 +1667,21 @@ def subtitle_png(text, path, yfrac=0.42):
     y = BAND + int(GAME_H * yfrac) - len(lines) * 36
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0)); gd = ImageDraw.Draw(glow)
     for i, ln in enumerate(lines):
-        tw = d.textlength(ln, font=font)
-        gd.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
-        d.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(190, 255, 170, 255), stroke_width=4, stroke_fill=(10, 40, 10, 255))   # dark edge: readable on pale sky
+        tw = d.textlength(ln.replace("*", ""), font=font)
+        if "*" not in ln:
+            gd.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
+            d.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(190, 255, 170, 255), stroke_width=4, stroke_fill=(10, 40, 10, 255))   # dark edge: readable on pale sky
+            continue
+        # a *word* in the line is red (red glow, dark-red edge), the rest the usual green (psycho's 'night *light*')
+        x = (W - tw) / 2
+        for j, w_ in enumerate(ln.split(" ")):
+            red = w_.startswith("*") and w_.endswith("*") and len(w_) > 2
+            w_ = (w_.strip("*") if red else w_) + (" " if j < len(ln.split(" ")) - 1 else "")
+            gd.text((x, y + i * 84), w_, font=font, fill=(255, 60, 60, 255) if red else (60, 255, 60, 255), stroke_width=6,
+                    stroke_fill=(255, 60, 60, 255) if red else (60, 255, 60, 255))
+            d.text((x, y + i * 84), w_, font=font, fill=(255, 90, 80, 255) if red else (190, 255, 170, 255), stroke_width=4,
+                   stroke_fill=(50, 5, 5, 255) if red else (10, 40, 10, 255))
+            x += d.textlength(w_, font=font)
     glow = glow.filter(ImageFilter.GaussianBlur(10))
     out = Image.new("RGBA", (W, H), (0, 0, 0, 0)); out.alpha_composite(glow); out.alpha_composite(img)
     out.save(path)
@@ -1866,7 +1878,7 @@ def main():
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
     ap.add_argument("--captions", help='JSON list of [EVENT[:OFFSET_S], TEXT]: the top band\'s caption switches to TEXT at EVENT (a numbered list: "1. ...", "2. ..."); --caption shows before the first')
-    ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
+    ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles (a *word* is drawn red)')
     ap.add_argument("--subs_y", type=float, default=0.42, help="subtitle height as a fraction of the game view (0.15 = top third; default 0.42, mid view)")
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
     ap.add_argument("--timeline")
