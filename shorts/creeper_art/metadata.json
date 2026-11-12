@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 39.75,
-    "drop_in_short_s": 33.6,
-    "song_start_s": 6.15
+    "drop_in_short_s": 32.75,
+    "song_start_s": 7.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 34.5,
+    "duration_s": 33.45,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 40714402,
-    "sha256": "68f0d6e4655f53a4f7b600cc86559b26f6b066272dea5633f0f97d9450235405",
+    "bytes": 39464507,
+    "sha256": "8018ac27ce931f3ef871338b26b9ac81480f7d9996bfa8db32adc90732cd0e56",
     "release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short.68f0d6e4655f53a4.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.68f0d6e4655f53a4.mp4",
-      "sha256": "68f0d6e4655f53a4f7b600cc86559b26f6b066272dea5633f0f97d9450235405",
-      "bytes": 40714402
+      "asset": "creeper_art.short.8018ac27ce931f3e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.8018ac27ce931f3e.mp4",
+      "sha256": "8018ac27ce931f3ef871338b26b9ac81480f7d9996bfa8db32adc90732cd0e56",
+      "bytes": 39464507
     },
     "nosong_release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short_nosong.61d140111a877d50.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.61d140111a877d50.mp4",
-      "sha256": "61d140111a877d50654a9dcd706c262c3856e3503cfdb1fb61df2e56deb41db1",
-      "bytes": 40681317
+      "asset": "creeper_art.short_nosong.cba57d7117599b75.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.cba57d7117599b75.mp4",
+      "sha256": "cba57d7117599b754d240661088148232c85f78a684ef033159cddf467641e68",
+      "bytes": 39438495
     }
   },
   "edit": {
@@ -73,11 +73,13 @@
     ],
     "caption": "rate my pixel art 1-10 😭",
     "dropAt": "complete",
-    "startAt": "stage:-0.1",
-    "endAfter": "complete:0.9",
+    "startAt": "stage:0.75",
+    "endAfter": "complete:0.7",
     "args": [
       "--caption",
       "rate my pixel art 1-10 😭",
+      "--self_name",
+      "56e",
       "--punch",
       "[[\"complete\",0,1.12]]",
       "--flash",
@@ -85,9 +87,9 @@
       "--sfx",
       "[[\"impact\",\"complete\",{\"gain\":0.8}]]",
       "--start_at",
-      "stage:-0.1",
+      "stage:0.75",
       "--end_after",
-      "complete:0.9"
+      "complete:0.7"
     ]
   },
   "recording": {
@@ -852,10 +854,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
+    "commit": "ec8ab70b2df105888176afc747e682f7620d4590",
     "rendered": "local",
-    "rendered_at": "2026-11-11T12:53:33.349Z",
-    "head_at_publish": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
+    "rendered_at": "2026-11-12T01:43:48.044Z",
+    "head_at_publish": "ec8ab70b2df105888176afc747e682f7620d4590",
     "stunt": "stunts/creeper_art.js",
     "source_snapshot": [
       "source/creeper_art.js",
@@ -866,34 +868,34 @@
     ]
   },
   "rebuild": [
-    "git checkout f3bfd331b0fc",
+    "git checkout ec8ab70b2df1",
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
-    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.1 --end_after complete:0.9 --out out/creeper_art.mp4"
+    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --self_name 56e --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:0.75 --end_after complete:0.7 --out out/creeper_art.mp4"
   ],
   "status": "ready",
-  "notes": "re-take for the owner's note (r:r650840: the walk back on the last build stopped halfway into the earlier wall; now ~2.5 blocks short, beside its edge) and aim (r:rffba12: 1/189 placements over 6 deg); independent review READY (0 blockers). Nitpick: the huge build is 22 s in one shot (x1.5 in the middle would tighten it).",
-  "published_at": "2026-11-11T12:54:31.126Z",
+  "notes": "opening r:r0f3da0 (frame 0 = the face's eyes and mouth); end 0.7 s after the last block; review READY r1",
+  "published_at": "2026-11-12T01:47:11.494Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:55:08+00:00",
+    "at": "2026-11-12T01:47:49+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 34.52 s vs the reviewed render 34.50 s"
+      "summary": "short.mp4 33.45 s vs the reviewed render 33.45 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 3,
+      "warnings": 4,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:53:50.491Z",
+      "at": "2026-11-12T01:44:08.694Z",
       "report": "work/hb/creeper_art.check.json"
     },
     "key_sounds": "n/a"
