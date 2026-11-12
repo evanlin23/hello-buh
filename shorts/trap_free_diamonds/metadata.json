@@ -20,38 +20,38 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "payoff",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 11.2,
-    "song_start_s": 3.3
+    "drop_in_short_s": 8.02,
+    "song_start_s": 6.48
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 12.2,
+    "duration_s": 8.78,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20722676,
-    "sha256": "8a8eec90a34ee9c3419c3f0e8022726d9378c70a8e687f64f2c13140504b22f4",
+    "bytes": 12615942,
+    "sha256": "fa52a39013f6060e2421fd95a50fb3d21de20f01fd5a8d6c0d076b66367e1c3b",
     "release": {
       "tag": "pkg-trap_free_diamonds",
-      "asset": "trap_free_diamonds.short.8a8eec90a34ee9c3.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short.8a8eec90a34ee9c3.mp4",
-      "sha256": "8a8eec90a34ee9c3419c3f0e8022726d9378c70a8e687f64f2c13140504b22f4",
-      "bytes": 20722676
+      "asset": "trap_free_diamonds.short.fa52a39013f6060e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short.fa52a39013f6060e.mp4",
+      "sha256": "fa52a39013f6060e2421fd95a50fb3d21de20f01fd5a8d6c0d076b66367e1c3b",
+      "bytes": 12615942
     },
     "nosong_release": {
       "tag": "pkg-trap_free_diamonds",
-      "asset": "trap_free_diamonds.short_nosong.288c771399b95c11.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short_nosong.288c771399b95c11.mp4",
-      "sha256": "288c771399b95c1189863c9789078a39edaebcd993294769ee8d016018774136",
-      "bytes": 20666250
+      "asset": "trap_free_diamonds.short_nosong.6eb21840d411e2af.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-trap_free_diamonds/trap_free_diamonds.short_nosong.6eb21840d411e2af.mp4",
+      "sha256": "6eb21840d411e2af4b9d8ebbb9ee82dae1ffc50a9ee9162ad3f3311988ace895",
+      "bytes": 12611886
     }
   },
   "edit": {
     "caption": "trapping my friend with FREE DIAMONDS 💀",
     "red": "FREE DIAMONDS",
     "startAt": "go:-0.05",
-    "endAfter": "payoff:1",
+    "endAfter": "payoff:0.75",
     "dropAt": "payoff",
     "chatScale": 5,
     "subs": [
@@ -149,6 +149,13 @@
         }
       ],
       [
+        "pop",
+        "payoff:-0.4",
+        {
+          "gain": 1
+        }
+      ],
+      [
         "dip",
         "payoff",
         0.4
@@ -161,6 +168,24 @@
         }
       ]
     ],
+    "hook": {
+      "at": "payoff",
+      "before": 0.45,
+      "after": 0.45,
+      "text": "he fell for it"
+    },
+    "speed": [
+      [
+        "hide_go:0.05",
+        "hidden:0.05",
+        "cut"
+      ],
+      [
+        "friend_close",
+        "friend_there",
+        "cut"
+      ]
+    ],
     "args": [
       "--caption",
       "trapping my friend with FREE DIAMONDS 💀",
@@ -170,18 +195,22 @@
       "FREE DIAMONDS",
       "--subs",
       "[[\"step\",\"step 1: a hole\",1.6,0],[\"step\",\"step 2: a trapdoor on top\",1.6,1],[\"step\",\"step 3: a TRAPPED chest behind it\",1.6,2],[\"step\",\"step 4: free diamonds\",1.6,3],[\"step\",\"now hide\",1.6,4]]",
+      "--speed",
+      "[[\"hide_go:0.05\",\"hidden:0.05\",\"cut\"],[\"friend_close\",\"friend_there\",\"cut\"]]",
       "--punch",
       "[[\"payoff\",0,1.06]]",
+      "--hook",
+      "{\"at\":\"payoff\",\"before\":0.45,\"after\":0.45,\"text\":\"he fell for it\"}",
       "--flash",
       "[[\"payoff\",0,0.35]]",
       "--sfx",
-      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
+      "[[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"payoff:-0.4\",{\"gain\":1}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
       "--chat_scale",
       "5",
       "--start_at",
       "go:-0.05",
       "--end_after",
-      "payoff:1"
+      "payoff:0.75"
     ]
   },
   "recording": {
@@ -197,8 +226,8 @@
       "z": 16
     },
     "biome": "minecraft:plains",
-    "ticks": 283,
-    "seconds": 14.15,
+    "ticks": 282,
+    "seconds": 14.1,
     "deaths": 0,
     "events": [
       {
@@ -222,27 +251,27 @@
         "event": "swing"
       },
       {
-        "t": 1.05,
+        "t": 1.1,
         "event": "dig_end"
       },
       {
-        "t": 1.05,
+        "t": 1.1,
         "event": "dug"
       },
       {
-        "t": 1.3,
+        "t": 1.35,
         "event": "dig"
       },
       {
-        "t": 1.3,
+        "t": 1.35,
         "event": "swing"
       },
       {
-        "t": 1.35,
+        "t": 1.45,
         "event": "dig_end"
       },
       {
-        "t": 1.35,
+        "t": 1.45,
         "event": "dug"
       },
       {
@@ -262,68 +291,80 @@
         "event": "placed"
       },
       {
+        "t": 2.6,
+        "event": "step"
+      },
+      {
         "t": 2.8,
-        "event": "step"
-      },
-      {
-        "t": 3,
         "event": "place_on"
       },
       {
-        "t": 3,
+        "t": 2.8,
         "event": "swing"
       },
       {
-        "t": 3,
+        "t": 2.8,
         "event": "placed"
       },
       {
-        "t": 3.9,
+        "t": 3.4,
         "event": "step"
       },
       {
-        "t": 4.3,
+        "t": 3.8,
         "event": "place_on"
       },
       {
-        "t": 4.3,
+        "t": 3.8,
         "event": "swing"
       },
       {
-        "t": 4.3,
+        "t": 3.8,
         "event": "placed"
       },
       {
-        "t": 5.05,
+        "t": 4.55,
         "event": "place_on"
       },
       {
-        "t": 5.05,
+        "t": 4.55,
         "event": "swing"
       },
       {
-        "t": 5.05,
+        "t": 4.55,
         "event": "placed"
       },
       {
-        "t": 5.75,
+        "t": 5.1,
         "event": "step"
       },
       {
-        "t": 8.1,
+        "t": 5.1,
+        "event": "hide_go"
+      },
+      {
+        "t": 7.85,
+        "event": "hidden"
+      },
+      {
+        "t": 8.05,
         "event": "syschat"
       },
       {
-        "t": 8.1,
+        "t": 8.05,
         "event": "friend_walk"
       },
       {
-        "t": 8.8,
+        "t": 8.75,
         "event": "syschat"
       },
       {
-        "t": 8.8,
+        "t": 8.75,
         "event": "friend_says"
+      },
+      {
+        "t": 10.1,
+        "event": "friend_close"
       },
       {
         "t": 11,
@@ -334,6 +375,10 @@
         "event": "friend_shuffle"
       },
       {
+        "t": 11.3,
+        "event": "friend_there"
+      },
+      {
         "t": 11.7,
         "event": "friend_open"
       },
@@ -342,63 +387,63 @@
         "event": "ent_swing"
       },
       {
-        "t": 11.8,
+        "t": 11.75,
         "event": "block_action"
       },
       {
-        "t": 11.9,
+        "t": 11.8,
         "event": "payoff"
       },
       {
-        "t": 12,
+        "t": 11.95,
         "event": "block_action"
       },
       {
-        "t": 12.15,
+        "t": 12.1,
         "event": "syschat"
       },
       {
-        "t": 12.15,
+        "t": 12.1,
         "event": "friend_says"
       },
       {
-        "t": 12.15,
+        "t": 12.1,
         "event": "still"
       },
       {
-        "t": 12.25,
+        "t": 12.2,
         "event": "block_action"
       },
       {
-        "t": 12.5,
+        "t": 12.45,
         "event": "block_action"
       },
       {
-        "t": 12.75,
+        "t": 12.7,
         "event": "block_action"
       },
       {
-        "t": 13,
+        "t": 12.95,
         "event": "block_action"
       },
       {
-        "t": 13.25,
+        "t": 13.15,
         "event": "block_action"
       },
       {
-        "t": 13.5,
+        "t": 13.4,
         "event": "block_action"
       },
       {
-        "t": 13.75,
+        "t": 13.65,
         "event": "block_action"
       },
       {
-        "t": 14,
+        "t": 13.9,
         "event": "block_action"
       },
       {
-        "t": 14.15,
+        "t": 14.1,
         "event": "end"
       }
     ]
@@ -406,10 +451,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "11ad2083b8a3463783af413beb499a2c9e6775d1",
+    "commit": "e053721c04393d675820e33ccc56f4914e2ceb15",
     "rendered": "local",
-    "rendered_at": "2026-11-11T22:22:54.831Z",
-    "head_at_publish": "11ad2083b8a3463783af413beb499a2c9e6775d1",
+    "rendered_at": "2026-11-12T00:24:44.452Z",
+    "head_at_publish": "e053721c04393d675820e33ccc56f4914e2ceb15",
     "stunt": "stunts/trap_free_diamonds.js",
     "source_snapshot": [
       "source/trap_free_diamonds.js",
@@ -418,38 +463,39 @@
       "source/motion.js",
       "source/sight.js",
       "source/movie.js",
-      "source/story.js"
+      "source/story.js",
+      "source/boats.js"
     ]
   },
   "rebuild": [
-    "git checkout 11ad2083b8a3",
+    "git checkout e053721c0439",
     "gunzip -c shorts/trap_free_diamonds/recording.json.gz > work/trap_free_diamonds.rec.json",
     "node render.js work/trap_free_diamonds.rec.json work/trap_free_diamonds.frames 60 1080 1011",
     "python3 audio.py work/trap_free_diamonds.rec.json work/trap_free_diamonds.wav",
-    "python3 edit.py --frames work/trap_free_diamonds.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/trap_free_diamonds.rec.json --audio work/trap_free_diamonds.wav --caption \"trapping my friend with FREE DIAMONDS 💀\" --self_name 56e --red \"FREE DIAMONDS\" --subs \"[[\\\"step\\\",\\\"step 1: a hole\\\",1.6,0],[\\\"step\\\",\\\"step 2: a trapdoor on top\\\",1.6,1],[\\\"step\\\",\\\"step 3: a TRAPPED chest behind it\\\",1.6,2],[\\\"step\\\",\\\"step 4: free diamonds\\\",1.6,3],[\\\"step\\\",\\\"now hide\\\",1.6,4]]\" --punch [[\"payoff\",0,1.06]] --flash [[\"payoff\",0,0.35]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:1 --out out/trap_free_diamonds.mp4"
+    "python3 edit.py --frames work/trap_free_diamonds.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/trap_free_diamonds.rec.json --audio work/trap_free_diamonds.wav --caption \"trapping my friend with FREE DIAMONDS 💀\" --self_name 56e --red \"FREE DIAMONDS\" --subs \"[[\\\"step\\\",\\\"step 1: a hole\\\",1.6,0],[\\\"step\\\",\\\"step 2: a trapdoor on top\\\",1.6,1],[\\\"step\\\",\\\"step 3: a TRAPPED chest behind it\\\",1.6,2],[\\\"step\\\",\\\"step 4: free diamonds\\\",1.6,3],[\\\"step\\\",\\\"now hide\\\",1.6,4]]\" --speed [[\"hide_go:0.05\",\"hidden:0.05\",\"cut\"],[\"friend_close\",\"friend_there\",\"cut\"]] --punch [[\"payoff\",0,1.06]] --hook \"{\\\"at\\\":\\\"payoff\\\",\\\"before\\\":0.45,\\\"after\\\":0.45,\\\"text\\\":\\\"he fell for it\\\"}\" --flash [[\"payoff\",0,0.35]] --sfx [[\"pop\",\"go\",{\"gain\":0.5}],[\"pop\",\"step\",{\"nth\":0,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":1,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":2,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":3,\"gain\":0.45}],[\"pop\",\"step\",{\"nth\":4,\"gain\":0.45}],[\"pop\",\"payoff:-0.4\",{\"gain\":1}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --chat_scale 5 --start_at go:-0.05 --end_after payoff:0.75 --out out/trap_free_diamonds.mp4"
   ],
   "status": "ready",
-  "notes": "trap #1: trapped chest powers the block under it, opening the top-half trapdoor Dylan stands on; 2-block drop, his own click; independent review READY r2 (r1: emoji glyph boxes fixed)",
-  "published_at": "2026-11-11T22:24:26.775Z",
+  "notes": "trap #1 re-cut: opens on Dylan at the bait as the floor goes (r:r0f3da0), fast cuts (r:r188b46); trapped chest powers the trapdoor he stands on, his own click; independent fix-check READY",
+  "published_at": "2026-11-12T00:26:46.307Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T22:24:52+00:00",
+    "at": "2026-11-12T00:27:11+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 12.20 s vs the reviewed render 12.20 s"
+      "summary": "short.mp4 8.79 s vs the reviewed render 8.78 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T22:23:08.980Z",
+      "at": "2026-11-12T00:25:12.328Z",
       "report": "work/hb/trap_free_diamonds.check.json"
     },
     "key_sounds": "n/a"

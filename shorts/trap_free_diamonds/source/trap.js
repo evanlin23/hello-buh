@@ -40,7 +40,7 @@ const FRIEND_TURN = 12 * Math.PI / 180   // rad a tick: a head turn at 240 deg/s
 const WALK_COAST = 0.26                  // blocks a walk coasts after the forward key is let go (0.216 b/t, friction 0.546)
 
 // the shared edit. steps: the build subs; chat: [mark, nth] lines are marks (friend.say / join), so nothing here
-function trapEdit ({ caption, red, steps = [], payoffSub = null, endHold = 1.0, extra = {} }) {
+function trapEdit ({ caption, red, steps = [], payoffSub = null, endHold = 1.0, hookText = 'he fell for it', hookBefore = 0.45, extra = {} }) {
   // subs draw text only (no Twemoji, unlike the caption): an emoji in a step renders as a NO GLYPH box (review round 1)
   const bad = steps.find(t => /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(t))
   if (bad) throw new Error(`trap: no emoji in step subs (they render as a NO GLYPH box): "${bad}"`)
@@ -48,15 +48,19 @@ function trapEdit ({ caption, red, steps = [], payoffSub = null, endHold = 1.0, 
   if (payoffSub) subs.push(['payoff', payoffSub, 1.2, 0])
   const sfx = [['pop', 'go', { gain: 0.5 }]]   // a sound by 0.3 s (pace's audio hook)
   for (let i = 0; i < steps.length; i++) sfx.push(['pop', 'step', { nth: i, gain: 0.45 }])
+  sfx.push(['pop', `payoff:${-(hookBefore - 0.05)}`, { gain: 1.0 }])   // the opening flash-forward starts hookBefore s before the payoff: a sound by 0.3 s there too (pace hook)
   sfx.push(['dip', 'payoff', 0.4], ['impact', 'payoff', { gain: 1.4 }])   // mixcheck: a real hit on the final mix, not only the bed's drop
   const e = {
     caption, red, startAt: 'go:-0.05', endAfter: `payoff:${endHold}`, dropAt: 'payoff', chatScale: 5,   // settle-ok: the payoff is a player dropping 2 blocks into a pit (landed ~0.45 s later); no blocks or debris move
-    subs, flash: [['payoff', 0, 0.35]], punch: [['payoff', 0, 1.06]], sfx
+    subs, flash: [['payoff', 0, 0.35]], punch: [['payoff', 0, 1.06]], sfx,
+    // the opening (owner r:r0f3da0: frame 0 shows the subject, never the bare pad): a flash-forward of the friend at the
+    // bait as the floor goes, with a reaction line, then the build from step 1 (retention.hook_prepend; plain text)
+    hook: { at: 'payoff', before: hookBefore, after: 0.45, text: hookText }   // short: the friend at the bait, the floor going; it must not reach back past an edit cut (a jump cut 0.5 s before the payoff stuttered at 0.22 s), one line so it sits above his head
   }
   return { ...e, ...extra, ...(extra.sfx ? { sfx: [...sfx, ...extra.sfx] } : {}), ...(extra.subs ? { subs: [...subs, ...extra.subs] } : {}) }
 }
 
-// ep: { name, caption, red, steps, payoffSub, friend: { name, skin }, pad (half width, 9), set(ctx, T), hotbar,
+// ep: { name, caption, red, steps, payoffSub, hookText (the opening's reaction line), friend: { name, skin }, pad (half width, 9), set(ctx, T), hotbar,
 // select, start: [x, y, z, yawDeg, pitchDeg], park: [x, y, z, yawDeg] (where the friend waits for his entrance: a spot
 // the camera never sees before he joins), perform(ctx, T) -> ok, time, biome, edit (extra) }
 function makeStunt (ep) {
@@ -72,7 +76,7 @@ function makeStunt (ep) {
     cast: { [FRIEND]: ep.friend.skin || 'kai' },
     playerNames: true,             // vanilla draws another player's name over his head
     recordRadius: ep.recordRadius ?? 40,
-    edit: trapEdit({ caption: ep.caption, red: ep.red, steps: ep.steps, payoffSub: ep.payoffSub, endHold: ep.endHold, extra: ep.edit || {} }),
+    edit: trapEdit({ caption: ep.caption, red: ep.red, steps: ep.steps, payoffSub: ep.payoffSub, endHold: ep.endHold, hookText: ep.hookText, hookBefore: ep.hookBefore, extra: ep.edit || {} }),
 
     async setup (ctx) {
       const { bot } = ctx
