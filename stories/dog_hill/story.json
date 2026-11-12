@@ -168,8 +168,8 @@
   {
    "id": "L15",
    "who": "Buh",
-   "text": "Hey BUDDY! / Sorry, got BUSY.",
-   "say": "Hey BUDDY! SORRY, got busy.",
+   "text": "Hey, BUDDY! / I just WANTED / to SEE you again.",
+   "say": "Hey, BUDDY! I just wanted to SEE you again.",
    "beat": 4,
    "shot": "S12"
   },
@@ -184,8 +184,8 @@
   {
    "id": "L17",
    "who": "Buh",
-   "text": "Sit, BOY. / Be right BACK.",
-   "say": "Sit, BOY. Be right BACK.",
+   "text": "But I gotta GO already. / Sit, BOY. / Be right BACK.",
+   "say": "But I gotta GO already. Sit, BOY. Be right BACK.",
    "beat": 6,
    "shot": "S13"
   }

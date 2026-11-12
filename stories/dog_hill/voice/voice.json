@@ -41,9 +41,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 0.0,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "cb608cc69a94"
+   "aligned_wav": "cb608cc69a94",
+   "gap": 0
   },
   "L02": {
    "who": "N",
@@ -81,9 +81,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 3.217,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "dfad31fddfae"
+   "aligned_wav": "dfad31fddfae",
+   "gap": 0
   },
   "L03": {
    "who": "N",
@@ -116,9 +116,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 7.412,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "af36434357e2"
+   "aligned_wav": "af36434357e2",
+   "gap": 0
   },
   "L04": {
    "who": "N",
@@ -156,9 +156,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 10.057,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "fc0033fca84a"
+   "aligned_wav": "fc0033fca84a",
+   "gap": 0
   },
   "L05": {
    "who": "N",
@@ -196,9 +196,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 13.56,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "9b289827d61d"
+   "aligned_wav": "9b289827d61d",
+   "gap": 0
   },
   "L06": {
    "who": "N",
@@ -241,9 +241,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 17.117,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "4cc5540566f1"
+   "aligned_wav": "4cc5540566f1",
+   "gap": 0
   },
   "L07": {
    "who": "N",
@@ -286,9 +286,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 21.95,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "c5e14635ccf3"
+   "aligned_wav": "c5e14635ccf3",
+   "gap": 0
   },
   "L08": {
    "who": "N",
@@ -321,9 +321,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 26.387,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "5e3eef16ec0b"
+   "aligned_wav": "5e3eef16ec0b",
+   "gap": 0
   },
   "L09": {
    "who": "N",
@@ -404,9 +404,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 0.0,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "0da3e0b56a94"
+   "aligned_wav": "0da3e0b56a94",
+   "gap": 0
   },
   "L12": {
    "who": "N",
@@ -444,9 +444,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 2.155,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "106624021770"
+   "aligned_wav": "106624021770",
+   "gap": 0
   },
   "L13": {
    "who": "N",
@@ -474,9 +474,9 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L11",
    "offset": 5.872,
-   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "55c8f2477c74"
+   "aligned_wav": "55c8f2477c74",
+   "gap": 0
   },
   "L14": {
    "who": "N",
@@ -514,23 +514,28 @@
   },
   "L15": {
    "who": "Buh",
-   "text": "Hey BUDDY! SORRY, got busy.",
-   "dur": 2.755,
-   "onset": 0.24,
-   "end": 2.4,
+   "text": "Hey, BUDDY! I just wanted to SEE you again.",
+   "dur": 2.93,
+   "onset": 0.12,
+   "end": 2.56,
    "chunks": [
     [
-     0.24,
-     0.72
+     0.12,
+     0.7
     ],
     [
-     1.275,
-     2.4
+     1.4,
+     1.86
+    ],
+    [
+     1.9,
+     2.56
     ]
    ],
    "captions": [
-    "Hey BUDDY!",
-    "Sorry, got BUSY."
+    "Hey, BUDDY!",
+    "I just WANTED",
+    "to SEE you again."
    ],
    "with": [
     "Buh"
@@ -539,7 +544,7 @@
    "beat": "L15",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "dc8f880426bf"
+   "aligned_wav": "46ca73f4de67"
   },
   "L16": {
    "who": "N",
@@ -567,21 +572,26 @@
   },
   "L17": {
    "who": "Buh",
-   "text": "Sit, BOY. Be right BACK.",
-   "dur": 1.475,
-   "onset": 0.07,
-   "end": 1.1,
+   "text": "But I gotta GO already. Sit, BOY. Be right BACK.",
+   "dur": 3.875,
+   "onset": 0.28,
+   "end": 3.52,
    "chunks": [
     [
-     0.07,
-     0.46
+     0.28,
+     1.44
     ],
     [
-     0.7,
-     1.1
+     1.93,
+     2.32
+    ],
+    [
+     2.86,
+     3.52
     ]
    ],
    "captions": [
+    "But I gotta GO already.",
     "Sit, BOY.",
     "Be right BACK."
    ],
@@ -592,7 +602,7 @@
    "beat": "L17",
    "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "80c419674c6d"
+   "aligned_wav": "e5374ddf33da"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -710,7 +720,7 @@
     "L15"
    ],
    "file": "beat_L15.wav",
-   "dur": 2.755,
+   "dur": 2.93,
    "offsets": [
     0.0
    ],
@@ -730,7 +740,7 @@
     "L17"
    ],
    "file": "beat_L17.wav",
-   "dur": 1.475,
+   "dur": 3.875,
    "offsets": [
     0.0
    ],
@@ -743,8 +753,8 @@
    "cut": "aligned",
    "rejected": [],
    "take": "L15",
-   "take_at": 2.755
+   "take_at": 2.93
   }
  },
- "total": 52.15
+ "total": 54.73
 }

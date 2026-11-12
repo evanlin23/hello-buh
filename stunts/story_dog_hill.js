@@ -63,7 +63,7 @@ module.exports = {
     reveal: { subject: ['self'], path: [[0, 0.4, 2.8, -6.8], [4, 0.5, 2.7, -6.4]], look: [2.0, 1.8, 0.5], fov: 46 },
     // L13-L14: side on, the reunion; the sit wider (F10)
     reunion: { subject: ['actor:dog', 'self'], path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
-    sit: { subject: ['actor:dog'], path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
+    sit: { subject: ['actor:dog'], path: [[0, 14, 2.6, 4.0], [6.5, 14.78, 2.73, 4.52]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
     end: { subject: ['actor:dog'], path: [[0, -3, 10, -4.6], [1.6, -7.5, 15, -6.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // rising into the opening's frame: the dog alone above the village (the loop)
   },
@@ -341,7 +341,7 @@ module.exports = {
       pip.yaw = -90 + 4 * Math.sin(k / 6)
     })
     ctx.mark('hush_end')
-    // ---- L14: a guy just appeared on the PATCH (the reveal); L15: Buh, in his own voice, "Hey BUDDY! Sorry, got BUSY."
+    // ---- L14: a guy just appeared on the PATCH (the reveal); L15: Buh, in his own voice, "Hey, BUDDY! I just wanted to SEE you again."
     // on the reunion: he crouches, the dog runs to him
     await cut('reveal')
     await line('L14', (k) => { pip.yaw = lerp(-90, -80, k / 20) })
@@ -352,11 +352,11 @@ module.exports = {
       Object.assign(dog, { x: lerp(0.5, 2.4, u), y: 1 + hop, z: 0.5 + (k > 12 ? 0.25 * Math.sin((k - 12) / 5) : 0), yaw: -90 })
       if (at1('bark', k >= 6)) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
     })
-    // ---- L16: "Then he SAID:"; L17: Buh, "Sit, BOY." (the dog sits on BOY) "Be right BACK." He logs out after BACK (the payoff)
+    // ---- L16: "Then he SAID:"; L17: Buh, "But I gotta GO already." (owner 2026-11-11: why he can't stay) "Sit, BOY." (the dog sits on BOY) "Be right BACK." He logs out after BACK (the payoff)
     await cut('sit'); dogIdle = true   // (standing by Buh he looks about too: the wide holds 2 s)
     await line('L16', (k) => { if (at1('unsneak', k >= 3)) bot.setControlState('sneak', false) })
     await line('L17', (k, at) => {
-      if (at1('sit', k >= Math.max(2, at(1) - 4))) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90, pitch: 0 }); sitDog(true); bot.swingArm('right'); dogIdle = true }
+      if (at1('sit', k >= Math.max(2, at(2) - 4))) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90, pitch: 0 }); sitDog(true); bot.swingArm('right'); dogIdle = true }
     })
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
