@@ -17,7 +17,7 @@ L01's "four hundred".
 
 | t (s) | beat | picture | line | clue |
 |---|---|---|---|---|
-| 0-5 | fact + why | an ingot drops into frame, the baby catches it (the dropper off-frame) | L01 gold falls from the sky, just for me, four hundred so far, I don't know WHY | 1, 2 |
+| 0-5 | fact + why | an ingot drops into frame, the baby catches it (the dropper off-frame) | L01 in my world, gold falls from the sky, four hundred so far, I don't know WHY | 1, 2 |
 | 5-8 | false lead | the grown-ups by the portal staring up at it | L02 they stare, they're jealous | (are they after its gold?) |
 | 8-12 | the want | the bastion over the lava lake | L03 saving up, for when I'm big | 3 |
 | 12-16 | how it got here | two days ago: the player tosses an ingot by a hole, the baby grabs it, drops in | L04 a guy threw the first one, I beat everyone down the hole | 4 |
@@ -42,7 +42,7 @@ of trading, so he got nothing." Fans' second layer: baby piglins never grow up, 
 
 | # | clue | planted | the baby's misreading (its words) | after the twist |
 |---|---|---|---|---|
-| 1 | gold from above, on a clock (shown, never said: L13 lands on the dropper's click) | L01, S01, L13 | "falls from the sky, just for me" | a dropper feeding a barter farm |
+| 1 | gold from above, on a clock (shown, never said: L13 lands on the dropper's click) | L01, S01, L13 | "falls from the sky" | a dropper feeding a barter farm |
 | 2 | it keeps every one | L01, L13 | "four hundred so far" | babies take gold and never barter |
 | 3 | "for when I'm big" | L03 | its plan | baby piglins never grow up (for fans) |
 | 4 | the thrown ingot, the hole | L04, S04 | "threw the first one", "I beat everyone down the hole" | the player's lure and his farm's catch hole |

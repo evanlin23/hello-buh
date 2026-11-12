@@ -5,7 +5,7 @@
  "revision": "r4 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the player is the baby's 'biggest fan' and he gets sad (someone loved at stake); the baby goes to look (L11); the reveal is SAID (L12, one sentence over the L-frame: 'All the gold he sent was up here, with ME.'; S10's empty chest screen has already shown the box); one beat (L13 'Four hundred and ONE.', echoing line 1's four hundred), cut. The moat (old L07/S07) is cut to keep 4 clues and the length tight. See reviews/table_read_r4.md (critic r4 revise -> r5 approve; L08 'I'd NEVER' after).",
  "caption": "why does gold keep falling on this baby piglin 🪙",
  "upload": {
-  "title": "gold falls from the sky just for me and i don't know why 🐷 #minecraft #shorts",
+  "title": "gold falls from the sky and i don't know why 🐷 #minecraft #shorts",
   "pinned": "How long until he figures it out? Wrong answers only",
   "tags": [
    "minecraft piglin",
@@ -125,8 +125,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Gold falls / from the SKY, / just for ME. / Four HUNDRED so far. / And I don't know WHY.",
-   "say": "Gold falls from the sky, just for me. Four hundred so far. And I don't know WHY.",
+   "text": "In my world, / gold falls / from the SKY. / Four HUNDRED so far. / And I don't know WHY.",
+   "say": "In my world, gold falls from the sky. Four hundred so far. And I don't know WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -139,7 +139,7 @@
      "what": [
       "piglin"
      ],
-     "word": "ME"
+     "word": "WORLD"
     }
    ],
    "punch": true,
@@ -377,7 +377,7 @@
   "beats": [
    "S11: L13 'Four hundred and ONE.' as the dropper clicks and the next ingot lands in the baby's arms (`drop`). Cut 1.0 s after. No other line."
   ],
-  "loop": "L13 'Four hundred and ONE.' (an ingot falling on the baby) runs into L01 'Gold falls from the SKY, just for ME. Four HUNDRED so far.'"
+  "loop": "L13 'Four hundred and ONE.' (an ingot falling on the baby) runs into L01 'In my world, gold falls from the SKY. Four HUNDRED so far.'"
  },
  "beats": "stories/saving_up_bastion/beats.md",
  "set": "stories/saving_up_bastion/set.md",
