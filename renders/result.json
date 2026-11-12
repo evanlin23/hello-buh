@@ -1,0 +1,17 @@
+{
+ "name": "villager_fired",
+ "stunt": "villager_fired",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43162221486",
+ "source": "9c97af80",
+ "queued": "2026-11-12T05:33:53Z",
+ "finished": "2026-11-12T05:40:30Z",
+ "mp4": "renders/out/villager_fired.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

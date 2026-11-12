@@ -1,0 +1,148 @@
+{
+ "stunt": "villager_fired",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/villager_fired.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "1 raw motion / own-clock call(s): use the K. primitives; WARN a blast / fall in the stunt, and the Short ends on 'gone:0.65', not once it settles: endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end",
+   "hits": [
+    {
+     "line": 186,
+     "col": 5,
+     "text": "bot.setControlState('back', true); await bot.waitForTicks(14); bot.setControlState('back', false)",
+     "what": "raw movement keys",
+     "use": "K.walkTo(points) (path-checked, looks ahead) or K.go(on)"
+    }
+   ],
+   "settle": {
+    "what": "a blast / fall in the stunt, and the Short ends on 'gone:0.65', not once it settles",
+    "use": "endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end"
+   }
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT villager_fired: 1 shots, scene 0.0-18.3 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-18.3  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 12.617,
+     "shot": 2,
+     "line": null,
+     "kind": "vanish",
+     "msg": "villager (mason) #340 vanishes in the middle of the frame 2.48 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 2 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    16.60s  TNT lit                            -> entity.tnt.primed                  9.2 blocks in view  ",
+    "    16.60s  TNT lit                            -> entity.tnt.primed                  8.2 blocks in view  ",
+    "    17.25s  villager hit                       -> entity.villager.hurt               8.7 blocks in view  ",
+    "    17.25s  villager died                      -> entity.villager.death              8.7 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 10.2 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 11.2 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 11.3 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 11.2 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 10.4 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 10.6 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 11.5 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 10.6 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                  9.7 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 11.5 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 10.2 blocks in view  ",
+    "    17.25s  TNT lit                            -> entity.tnt.primed                 11.3 blocks in view  ",
+    "    17.35s  villager hit                       -> entity.villager.hurt              14.2 blocks in view  ",
+    "    17.35s  villager hit                       -> entity.villager.hurt              15.2 blocks in view  ",
+    "    17.35s  villager hit                       -> entity.villager.hurt              14.9 blocks in view  ",
+    "    17.50s  villager hit                       -> entity.villager.hurt              15.8 blocks in view  ",
+    "    17.55s  villager hit                       -> entity.villager.hurt              15.8 blocks in view  ",
+    "    17.85s  villager idle voice                -> entity.villager.ambient           15.7 blocks in view  ",
+    "    18.00s  villager hit                       -> entity.villager.hurt              15.2 blocks in view  ",
+    "    18.00s  villager hit                       -> entity.villager.hurt              14.9 blocks in view  ",
+    "    18.50s  villager hit                       -> entity.villager.hurt              15.2 blocks in view  ",
+    "    18.50s  villager hit                       -> entity.villager.hurt              14.9 blocks in view  ",
+    "    19.70s  villager idle voice                -> entity.villager.ambient           14.2 blocks in view  ",
+    "    21.65s  villager idle voice                -> entity.villager.ambient           14.9 blocks in view  ",
+    "ambience per shot: -0.25-22.85s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:35:00.375Z"
+}

@@ -1,0 +1,13 @@
+villager_fired: CHECK OK
+ok   motion lint: 1 raw motion / own-clock call(s): use the K. primitives; WARN a blast / fall in the stunt, and the Short ends on 'gone:0.65', not once it settles: endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end
+ok   rec_check: no blockers
+ok   lint: clean
+ok   continuity: 0 problem(s), 1 warning(s), 0 note(s)
+ok   framing: 0 warning(s) over 2 shots
+ok   owner: 0 blocker(s), 0 warning(s)
+ok   cuts: 0 blocker(s), 0 warning(s) over 0 cuts
+ok   caption sync: skipped (not a story)
+ok   voice contrast: skipped (not a story)
+ok   on-screen sound: every visible action has its sound
+ok   pace: skipped: no rendered Short yet (runs after ./hb render --fetch)
+ok   audible sound: skipped: no fresh rendered Short (the levels are rec_check's)
