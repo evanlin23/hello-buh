@@ -20,39 +20,39 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "placed",
     "drop_in_song_s": 3.0,
-    "drop_in_short_s": 2.3,
-    "song_start_s": 0.7
+    "drop_in_short_s": 2.0,
+    "song_start_s": 1.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 15.4,
+    "duration_s": 14.7,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 29648816,
-    "sha256": "dd6df8493ef2a426b66e0574075dfacf030900d598a3ce1a28728009d10488e8",
+    "bytes": 28864661,
+    "sha256": "adc314afcbec6b574033403c70542e2f78a81f3eb059a11f49838b332efa73c2",
     "release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short.dd6df8493ef2a426.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.dd6df8493ef2a426.mp4",
-      "sha256": "dd6df8493ef2a426b66e0574075dfacf030900d598a3ce1a28728009d10488e8",
-      "bytes": 29648816
+      "asset": "half_heart.short.adc314afcbec6b57.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.adc314afcbec6b57.mp4",
+      "sha256": "adc314afcbec6b574033403c70542e2f78a81f3eb059a11f49838b332efa73c2",
+      "bytes": 28864661
     },
     "nosong_release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short_nosong.58961e0df6db7653.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.58961e0df6db7653.mp4",
-      "sha256": "58961e0df6db7653e2c8fb4fa2228a4e7bbeae55924787e97e5a2e1968f0554d",
-      "bytes": 29562946
+      "asset": "half_heart.short_nosong.e1c86ee9bcb76d47.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.e1c86ee9bcb76d47.mp4",
+      "sha256": "e1c86ee9bcb76d47e819491f8d3ce21e945e21fa2d8edc73eee5ec98c906b12c",
+      "bytes": 28788967
     }
   },
   "edit": {
     "caption": "POV: you're on half a heart 💀",
     "red": "half",
     "dropAt": "placed",
-    "startAt": "jump:-0.5",
-    "endAfter": "death:1.6",
+    "startAt": "jump:-0.2",
+    "endAfter": "death:1.2",
     "deathScreen": true,
     "sfx": [
       [
@@ -146,9 +146,9 @@
       "--death_screen",
       "death",
       "--start_at",
-      "jump:-0.5",
+      "jump:-0.2",
       "--end_after",
-      "death:1.6"
+      "death:1.2"
     ]
   },
   "recording": {
@@ -345,12 +345,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/56e-half_heart",
-    "commit": "e4a6d4f4111f48ec0693abc36afde51931125cc6",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43091404989",
-    "rendered_at": "2026-11-11T20:05:20.119Z",
-    "head_at_publish": "304dc3369c27e12bb9da99376536c9430838e419",
+    "branch": "main",
+    "commit": "bbdeaff5316f2aa2a720f2169c452365f60d8638",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T01:41:08.916Z",
+    "head_at_publish": "bbdeaff5316f2aa2a720f2169c452365f60d8638",
     "stunt": "stunts/half_heart.js",
     "source_snapshot": [
       "source/half_heart.js",
@@ -361,35 +360,35 @@
     ]
   },
   "rebuild": [
-    "git checkout e4a6d4f4111f",
+    "git checkout bbdeaff5316f",
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --self_name 56e --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --self_name 56e --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}],[\"pop\",\"sound\",{\"nth\":12,\"gain\":0.6}],[\"ding\",\"sound\",{\"nth\":14}],[\"pop\",\"sound\",{\"nth\":16,\"gain\":0.6}],[\"dip\",\"death\",0.3],[\"impact\",\"death\"]] --death_screen death --start_at jump:-0.2 --end_after death:1.2 --out out/half_heart.mp4"
   ],
   "status": "ready",
-  "notes": "re-render (r:r52f94c): the player is 56e (death screen), picture otherwise unchanged; independent fix-check READY",
-  "published_at": "2026-11-11T21:06:55.715Z",
+  "notes": "opening r:r0f3da0 (frame 0 = the drop with the half heart); end 1.2 s after the death; review READY r1",
+  "published_at": "2026-11-12T01:42:37.223Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T21:07:20+00:00",
+    "at": "2026-11-12T01:43:01+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 15.40 s vs the reviewed render 15.40 s"
+      "summary": "short.mp4 14.72 s vs the reviewed render 14.70 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 4,
+      "warnings": 7,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T19:55:17.145Z",
-      "report": "out/half_heart.check.json"
+      "at": "2026-11-12T01:41:25.336Z",
+      "report": "work/hb/half_heart.check.json"
     },
     "key_sounds": "n/a"
   }
