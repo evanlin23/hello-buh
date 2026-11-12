@@ -29,7 +29,6 @@ const DX = 102.5, DZ = -513.5, HILL = 39
 module.exports = {
   name: 'story_good_boy',
   hideBoxes: [[-6, 60, -6, 6, 64, 6]],   // the cast's waiting room (barrier floor F+60, stone roof F+64) is not drawn: its roof read as a black square in the dusk sky
-  near: [VX, VZ],
   caption: CAPTION,
   channel: 'buhstories',   // the Buh Stories channel: the title band's key word in Buh gold (main 9cb8fbef), packaged for buhstories
   time: GOLD,
@@ -49,6 +48,7 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     const X = VX, Z = VZ
+    await ctx.cmd(`/tp @s ${X} 200 ${Z}`); await bot.waitForTicks(20)   // to the set before anything loads (what `near` did, minus its /locate: ./hb world check)
     // the set's origin height is the cottage pad's: the natural ground where the yard goes (all shots are relative to it)
     // pinned at 70 (the pad's grass): groundAt read 70 on the pilot's runs and 69 on a later world, and every shot
     // (Dog Hill's too: HILL = 109 - F) is relative to it; the pad is built at F whatever the natural ground
