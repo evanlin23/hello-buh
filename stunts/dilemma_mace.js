@@ -27,19 +27,24 @@ const H = 37          // pillar height = fall distance (blocks)
 const DOG = [0.5, -3.1]
 // the frozen fall: beat i plays `ticks` of the recording at `factor` speed (lib/dilemma.js); ~12.6 s on screen
 const BEATS = [
-  { shot: 'dog', ticks: 6, factor: 0.12 },    // 2.5 s: the dog sitting below, head up at you (r1: the dog first, by 0.5 s)
-  { shot: 'face', ticks: 6, factor: 0.12 },   // 2.5 s: you, the mace in your hand, the pillar rushing past
+  { shot: 'dog', ticks: 5, factor: 0.12 },    // 2.1 s: the dog sitting below, head up at you
+  { shot: 'face', ticks: 5, factor: 0.12 },   // 2.1 s: you, the mace in your hand, the pillar rushing past
   { shot: 'top', ticks: 4, factor: 0.1 },     // 2.0 s: over your shoulder, the ground and the dog coming up
-  { shot: 'wide', ticks: 5, factor: 0.1 },    // 2.5 s: the whole pillar, you nearly down, the dog at its foot
-  { shot: 'pov', ticks: 4, factor: 0.07 }     // up to 2.9 s: your eyes, the dog in the crosshair; ends a tick before touchdown
+  { shot: 'wide', ticks: 4, factor: 0.1 },    // 2.0 s: the whole pillar, you nearly down, the dog at its foot
+  { shot: 'pov', ticks: 3, factor: 0.07 }     // up to 2.1 s: your eyes, the dog in the crosshair; ends a tick before touchdown
 ]
-const START_TICKS = 9   // real-speed falling before the freeze (the hook: the drop reads in the first second)
+// real-speed falling before the freeze (the hook). No-op audit (r:r4607fa, r:r0f3da0): frame 0 shows the stakes, the
+// dog AND the mace: the POV crash-zooms onto the dog 34 blocks below (stunt.fovZoom: the hand keeps its own camera, so
+// the mace stays in hand at full size) under the first choice card; a wide POV made the dog a speck under a ring
+const START_TICKS = 12
 
 module.exports = {
   name: 'dilemma_mace',
   biome: 'minecraft:plains',
   time: 6000,
   renderDistance: 10, recordRadius: 96,
+  // the opening's zoom: x9 (70 -> ~9 deg) from 0.25 s before the drop (frame 0 already ~x6.6, the last of the crash-zoom by 0.15 s) to the cut
+  fovZoom: [['drop:-0.25', 'beat0', 9]],
   selfArmor: ['diamond_boots', 'iron_leggings', 'iron_chestplate', 'iron_helmet'],
   selfArmorGlint: [true, false, false, false],   // only the boots are enchanted (Feather Falling IV)
   shots: {
@@ -63,14 +68,17 @@ module.exports = {
     red: 'hardcore',
     colors: 'dog=yellow',
     start: 'drop:0',   // (render 1 opened 0.25 s early on the pillar's top block, which hid the dog)
-    choices: [['HIT THE DOG = LIVE', 'green'], ["DON'T = HARDCORE OVER", 'red']],   // (on the dog, then on you)
+    // on frame 0 (the zoomed POV on the dog, the mace in hand) through the dog's beat, then on you
+    choices: [['HIT THE DOG = LIVE', 'green', 'drop', 2.6], ["DON'T = HARDCORE OVER", 'red']],
     land: 'land',
     reveal: 'reveal',
     card: ['FEATHER FALLING IV', 'blue'],
     endAfter: 1.5,
     hardcore: true,
     armor: 16,   // iron helmet 2 + chestplate 6 + leggings 5 + diamond boots 3
-    extra: { ring: [['drop:0.05', 0.38, 0.5, 0.5, 70]] }   // the dog under the crosshair until the cut to it (r1: it circled the helmet)
+    // the hearts crash on the landing (no-op audit: "hearts visibly dropping"): a ring on the HUD's heart row while
+    // they blink down to 1.5; the reveal's camera keeps the HUD on (F5-style), so the 1.5 hearts stay in view
+    extra: { ring: [['land:0.05', 0.75, 0.365, 0.885, 135]] }
   }),
 
   async setup (ctx) {
@@ -137,10 +145,11 @@ module.exports = {
     }
     ctx.mark('land', { above: +(bot.entity.position.y - (F + 1)).toFixed(2) })
     ctx.log('landed at', bot.entity.position, 'dog at', dog)
-    await bot.waitForTicks(12)   // the hearts drop on the HUD
+    await bot.waitForTicks(15)   // the hearts drop on the HUD (ringed in the edit)
     ctx.log('health after the fall', bot.health)
     ctx.mark('reveal')
     M.shot(ctx, 'boots')
+    ctx.mark('f1_off'); ctx._f1 = false   // the HUD stays on over the twist: the 1.5 hearts next to the shining boots
     await ctx.easeLookAt(dog, 600)
     await bot.waitForTicks(30)
     return !ctx.died && bot.health > 0 && bot.health < 10   // (alive and hurt; saturation regen can add a heart or two by now)
