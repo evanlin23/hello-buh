@@ -128,14 +128,15 @@ module.exports = makeStunt({
       const z = bot.entity.position.z - F.O.z
       if (z < 0.95 && bot.entity.onGround && !entered) bot.setControlState('jump', true)   // motion-ok: the hop onto the base
       else bot.setControlState('jump', false)   // motion-ok
-      if (z < -0.25 && !entered) { entered = true; ctx.mark('enter'); bot.setControlState('forward', false) }   // motion-ok
+      if (z < 0.15) bot.setControlState('forward', false)   // motion-ok: let go at the portal: it coasts into the swirl
+      if (z < -0.1 && !entered) { entered = true; ctx.mark('enter') }   // the eye at the portal's plane: purple fills the view
       if (entered && k > 0) break
       await bot.waitForTicks(1)
     }
     bot.setControlState('forward', false); bot.setControlState('jump', false)   // motion-ok
     await look
     if (!entered) { ctx.log('faketrick: never reached the portal'); return false }
-    await F.hold(8)   // in the swirl
+    await F.hold(1)   // in the swirl (8 ticks walked it out the far side onto the plains: stills r1)
     // ...and out of the return portal into a GOLD nether: everything gold, piglins losing their minds over it
     F.stop()
     ctx.mark('cut')
