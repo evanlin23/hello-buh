@@ -1,7 +1,14 @@
 # @HelloBuh posting order (scripts/youtube_upload.py takes the next 3 not uploaded yet each morning).
 # Rules (owner): never the same format twice in a row, at most 1 pixel-art per 3. Check: python3 scripts/check_queue.py
 # After this list runs out, any other "ready" Short on the videos branch goes up, still keeping the mix.
-ai_thin_ice   # first: owner, 2026-11-09
+fakeworld_diamond  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+friend_new_world  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+mobpov_baby_zombie  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+which_door  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+lucky_dig  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+one_in_a_million  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+lapse_statue  # first: strong in the no-op audit 2026-11-12 (r:r8d6af1), owner OK
+ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
 lapse_house
@@ -9,9 +16,7 @@ chain_reaction
 story_respawn_tax
 hide_seek
 spot_wrong_2
-one_in_a_million
 guess_sound_2
-lapse_statue
 worse_lava
 villager_fired
 tnt_1000
@@ -22,7 +27,6 @@ lapse_rocket
 worse_sky
 it_rains
 ladder_clutch
-which_door
 noob_pro_hacker
 lava_cast
 worse_tnt
@@ -35,38 +39,34 @@ creeper_art
 sand_tower
 water_vs_lava
 rainbow_sheep
-desire_town   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-inside_library   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-dilemma_mace   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-race_grass_mycelium   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-mislabel_grandma   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-hack_banner_door   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-interrupt_lamps   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-mega_sponge   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+inside_library   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+race_grass_mycelium   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+mislabel_grandma   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+hack_banner_door   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+interrupt_lamps   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 creeper
 nether_portal
-cells_lab   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
-love_cherry_heart   # first: owner's new format (love); uploads only after the owner's OK (r:r7ec7d3)
-faketrick_gold_portal   # first: owner's new format (faketrick); uploads only after the owner's OK (r:r7ec7d3)
-psycho_lava_mansion   # first: owner's new format (psycho), OK'd 2026-11-11
-herobrine_bridge   # first: owner's new format (herobrine); uploads only after the owner's OK
-lucky_dig   # first: owner's new format (lucky); uploads only after the owner's OK
-mega_lapse_fountain  # first
-fakerun_any  # first
-cooked_bedrock  # first
-sandart_tnt  # first
-logic_minecraft  # first
+cells_lab   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+love_cherry_heart   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+herobrine_bridge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+mega_lapse_fountain   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+fakerun_any   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+cooked_bedrock   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+logic_minecraft   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cave_reveal
 half_heart
-stages_friends  # first
-trap_free_diamonds  # first
-fakemod_permission  # first
-underdog_heal  # first
+stages_friends   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+trap_free_diamonds   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+fakemod_permission   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+underdog_heal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 lava_crossing
-fakeworld_diamond  # first
-mobpov_baby_zombie  # first
-friend_new_world  # first
-quest_pyramid  # first
-dropper_rainbow  # first
-pickaxe_race  # first
-mega_lapse_fox  # first
+quest_pyramid   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+dropper_rainbow   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+pickaxe_race   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
+mega_lapse_fox   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
