@@ -1,0 +1,162 @@
+{
+ "stunt": "lapse_rocket",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/lapse_rocket.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean; WARN a blast / fall in the stunt, and the Short ends on the recording's end, not once it settles: endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end",
+   "hits": [],
+   "settle": {
+    "what": "a blast / fall in the stunt, and the Short ends on the recording's end, not once it settles",
+    "use": "endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end"
+   }
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT lapse_rocket: 1 shots, scene 0.0-95.8 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-95.8  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 2 warning(s), 3 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.3,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: red_concrete -> white_concrete"
+    },
+    {
+     "level": "WARN",
+     "out": 8.4,
+     "shot": 3,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: diamond_shovel -> white_concrete"
+    },
+    {
+     "level": "NOTE",
+     "out": 8.4,
+     "shot": 3,
+     "line": null,
+     "kind": "blocks",
+     "msg": "34 block(s) in view changed during the cut (e.g. black_concrete at -3606 63 -3263): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 10.4,
+     "shot": 4,
+     "line": null,
+     "kind": "blocks",
+     "msg": "46 block(s) in view changed during the cut (e.g. light_gray_concrete, yellow_concrete at -3614 65 -3280): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 19.4,
+     "shot": 9,
+     "line": null,
+     "kind": "blocks",
+     "msg": "63 block(s) in view changed during the cut (e.g. white_concrete, air, red_concrete at -3606 116 -3280): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 15 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 0.1,
+     "tick": 20,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 153 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": [
+    "8 fast turn(s) inside the time-lapse's sped-up build (up to 961 deg/s on screen): allowed, owner r:r66efa4 (\"it's okay to have like a really fast movement here\")"
+   ]
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "39 visible sound-making events (break 3, pickup 3, place 33), 33 with a sound mark, 6 without (audio.py adds those for a story)",
+    "    21.70s  broke dirt                         -> block.grass.break                  2.0 blocks in view  ",
+    "    22.00s  broke dirt                         -> block.grass.break                  2.0 blocks in view  ",
+    "    22.15s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    22.35s  broke dirt                         -> block.grass.break                  2.0 blocks in view  ",
+    "    22.50s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  ",
+    "    22.80s  picked up an item                  -> entity.item.pickup                 1.6 blocks          ",
+    "ambience per shot: -0.20-2.20s day, 2.20-25.05s day, 25.05-44.70s day, 44.70-56.70s day, 56.70-64.65s day, 64.65-68.70s day, 68.70-80.70s day, 80.70-89.90s day, 89.90-95.55s day, 95.55-99.20s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T21:12:20.355Z"
+}

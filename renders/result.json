@@ -1,0 +1,17 @@
+{
+ "name": "lapse_rocket",
+ "stunt": "lapse_rocket",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43307777354",
+ "source": "8eb97d4",
+ "queued": "2026-11-12T21:11:27Z",
+ "finished": "2026-11-12T21:26:43Z",
+ "mp4": "renders/out/lapse_rocket.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
