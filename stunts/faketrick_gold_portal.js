@@ -62,7 +62,7 @@ module.exports = makeStunt({
     // hook: the walk up to the lit gold portal (moving from frame 0)
     endAfter: 'gold_world:0.9', dropAt: 'gold_world', hook: { at: 'walk', before: 0, after: 0.9, text: 'how is this working?? 😳' },
     flash: [['payoff', 0, 0.45], ['cut', 0, 0.35]],
-    subs: [['gold_world', 'a GOLD nether?? 😱', 1.0, 0]] },
+    subs: [['gold_world', 'a GOLD nether??', 1.0, 0]] },   // (no emoji in subs: the sub font draws them as boxes)
   start: [0.5, 4, 2.4, 180, 45],
 
   async build (ctx, F) {
