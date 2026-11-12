@@ -37,7 +37,7 @@ function upscale (art, k) {
   return out
 }
 
-function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks', biome = 'minecraft:plains' }) {
+function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks', biome = 'minecraft:plains', site = null }) {
   const chars = Object.keys(palette)
   return {
     name,
@@ -65,9 +65,12 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
       const sp = bot.entity.position.floored()
       const g = ctx.findLand(sp.x, sp.z)
       if (!g) throw new Error('no dry land near spawn')
-      const { x, z } = g, floor = g.y
-      this.x = x; this.z = z; this.floor = floor
+      const { x, z } = g
       await ctx.defaultRules()
+      // site(ctx, x, z) -> floor: an opt-in set (e.g. lib/plateau: a small levelled patch in real terrain, owner
+      // r:r489883 "not superflat"); without it, the big flat clearing below
+      const floor = site ? await site(ctx, x, z) : g.y
+      this.x = x; this.z = z; this.floor = floor
       // the bot stands on open ground and every picture sits on the ground (a mound's edge hid the
       // bottom rows of the big one: worker QA); the final reveal walks backwards across the field
       const RISE = 0
@@ -77,6 +80,7 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
       // the big wall at 56), cleared in pieces under the 32768-block /fill cap
       const R = 112   // 80 still showed a sliced hillside behind the big wall (worker QA)
       const maxH = Math.max(...stages.map(st => st.art.length))
+      if (!site) {
       await ctx.cmd(`/kill @e[type=!player,x=${x},y=${floor},z=${z},distance=..${R + 30}]`)   // a polar bear buried by the floor fill suffocated off-screen (worker QA)
       const fillBig = async (x0, y0, z0, x1, y1, z1, block) => {
         const per = Math.max(1, Math.floor(32768 / ((y1 - y0 + 1) * (z1 - z0 + 1))))
@@ -90,6 +94,7 @@ function pixelArt ({ name, stages, palette, caption, edit, wall = 'stone_bricks'
       for (let y0 = floor + 1; y0 <= floor + maxH + 24; y0 += 8) await fillBig(x - R, y0, z - R, x + R, y0 + 7, z + R, 'air')
       await fillBig(x - R, floor, z - R, x + R, floor, z + R, 'grass_block')
       await fillBig(x - R, floor - 2, z - R, x + R, floor - 1, z + R, 'dirt')
+      }
       const eyeY = floor + RISE + 1 + 1.62
       // the walls: stage k faces the bot from DIRS[k], at a distance that frames it
       this.walls = []

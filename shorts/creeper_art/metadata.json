@@ -4,7 +4,7 @@
   "caption": "rate my pixel art 1-10 😭",
   "youtube": {
     "title": "rate my pixel art 1-10 😭 #minecraft #shorts",
-    "description": "rate my pixel art 1-10 😭\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "rate my pixel art 1-10 😭\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "industry_kiss.mp3",
-    "title": "INDUSTRY KISS",
-    "artist": "DIPIENS, HRXSTAL",
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "complete",
-    "drop_in_song_s": 39.75,
-    "drop_in_short_s": 32.75,
-    "song_start_s": 7.0
+    "drop_on_event": "boom",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 6.15,
+    "song_start_s": 10.35
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 33.45,
+    "duration_s": 6.95,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 39464507,
-    "sha256": "8018ac27ce931f3ef871338b26b9ac81480f7d9996bfa8db32adc90732cd0e56",
+    "bytes": 10647993,
+    "sha256": "272b23a5166f0a95aeb9f3a58b8a0dcf7d66bbd9a150fc370e52ce9a133b2a7e",
     "release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short.8018ac27ce931f3e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.8018ac27ce931f3e.mp4",
-      "sha256": "8018ac27ce931f3ef871338b26b9ac81480f7d9996bfa8db32adc90732cd0e56",
-      "bytes": 39464507
+      "asset": "creeper_art.short.272b23a5166f0a95.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short.272b23a5166f0a95.mp4",
+      "sha256": "272b23a5166f0a95aeb9f3a58b8a0dcf7d66bbd9a150fc370e52ce9a133b2a7e",
+      "bytes": 10647993
     },
     "nosong_release": {
       "tag": "pkg-creeper_art",
-      "asset": "creeper_art.short_nosong.cba57d7117599b75.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.cba57d7117599b75.mp4",
-      "sha256": "cba57d7117599b754d240661088148232c85f78a684ef033159cddf467641e68",
-      "bytes": 39438495
+      "asset": "creeper_art.short_nosong.aec42ec36517dea6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-creeper_art/creeper_art.short_nosong.aec42ec36517dea6.mp4",
+      "sha256": "aec42ec36517dea6088182cf7ee295fdf34c8727cae738f9d787ea17769620b1",
+      "bytes": 10646722
     }
   },
   "edit": {
@@ -52,44 +52,95 @@
       [
         "complete",
         0,
-        1.12
+        1.08
+      ],
+      [
+        "boom",
+        0,
+        1.14
       ]
     ],
     "sfx": [
       [
+        "air",
+        "start",
+        "boom",
+        {
+          "gain": 0.35
+        }
+      ],
+      [
         "impact",
         "complete",
         {
-          "gain": 0.8
+          "gain": 0.6
+        }
+      ],
+      [
+        "dip",
+        "boom",
+        0.4
+      ],
+      [
+        "impact",
+        "boom",
+        {
+          "gain": 1.4
         }
       ]
     ],
     "flash": [
       [
-        "complete",
+        "boom",
         0,
-        0.45
+        0.5
+      ]
+    ],
+    "speed": [
+      [
+        "build0:0.1",
+        "built0:-0.4",
+        2
+      ],
+      [
+        "complete:0.4",
+        "hiss",
+        2
       ]
     ],
     "caption": "rate my pixel art 1-10 😭",
-    "dropAt": "complete",
-    "startAt": "stage:0.75",
-    "endAfter": "complete:0.7",
+    "dropAt": "boom",
+    "startAt": "build0:0.9",
+    "endAfter": "clear:0.8",
+    "subs": [
+      [
+        "hiss",
+        "wait...",
+        1.3
+      ]
+    ],
+    "subsY": 0.12,
     "args": [
       "--caption",
       "rate my pixel art 1-10 😭",
       "--self_name",
       "56e",
+      "--subs",
+      "[[\"hiss\",\"wait...\",1.3]]",
+      "--subs_y",
+      "0.12",
+      "--speed",
+      "[[\"build0:0.1\",\"built0:-0.4\",2],[\"complete:0.4\",\"hiss\",2]]",
       "--punch",
-      "[[\"complete\",0,1.12]]",
+      "[[\"complete\",0,1.08],[\"boom\",0,1.14]]",
       "--flash",
-      "[[\"complete\",0,0.45]]",
+      "[[\"boom\",0,0.5]]",
       "--sfx",
-      "[[\"impact\",\"complete\",{\"gain\":0.8}]]",
+      "[[\"air\",\"start\",\"boom\",{\"gain\":0.35}],[\"impact\",\"complete\",{\"gain\":0.6}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.4}]]",
       "--start_at",
-      "stage:0.75",
+      "build0:0.9",
       "--end_after",
-      "complete:0.7"
+      "clear:0.8"
     ]
   },
   "recording": {
@@ -100,41 +151,49 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 358,
-      "y": 69,
-      "z": -43
+      "x": 382,
+      "y": 75,
+      "z": -46
     },
     "biome": "minecraft:plains",
-    "ticks": 850,
-    "seconds": 42.5,
+    "ticks": 317,
+    "seconds": 15.85,
     "deaths": 0,
     "events": [
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "stage"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "build0"
       },
       {
-        "t": 0.95,
+        "t": 0.9,
         "event": "swing"
       },
       {
-        "t": 1.2,
+        "t": 1.05,
         "event": "swing"
       },
       {
-        "t": 1.45,
+        "t": 1.25,
         "event": "swing"
       },
       {
-        "t": 1.7,
+        "t": 1.4,
+        "event": "swing"
+      },
+      {
+        "t": 1.6,
+        "event": "swing"
+      },
+      {
+        "t": 1.75,
         "event": "swing"
       },
       {
@@ -142,43 +201,51 @@
         "event": "swing"
       },
       {
-        "t": 2.2,
+        "t": 2.15,
         "event": "swing"
       },
       {
-        "t": 2.4,
+        "t": 2.35,
         "event": "swing"
       },
       {
-        "t": 2.55,
+        "t": 2.5,
         "event": "swing"
       },
       {
-        "t": 2.8,
+        "t": 2.75,
         "event": "swing"
       },
       {
         "t": 2.9,
-        "event": "built0"
+        "event": "swing"
       },
       {
-        "t": 2.9,
-        "event": "reveal"
+        "t": 3.05,
+        "event": "swing"
       },
       {
-        "t": 3.95,
-        "event": "stage"
+        "t": 3.25,
+        "event": "swing"
       },
       {
-        "t": 3.95,
-        "event": "build1"
+        "t": 3.45,
+        "event": "swing"
+      },
+      {
+        "t": 3.7,
+        "event": "swing"
+      },
+      {
+        "t": 3.85,
+        "event": "swing"
       },
       {
         "t": 4.05,
         "event": "swing"
       },
       {
-        "t": 4.2,
+        "t": 4.25,
         "event": "swing"
       },
       {
@@ -186,23 +253,19 @@
         "event": "swing"
       },
       {
-        "t": 4.6,
+        "t": 4.65,
         "event": "swing"
       },
       {
-        "t": 4.75,
+        "t": 4.8,
         "event": "swing"
       },
       {
-        "t": 4.95,
+        "t": 5.05,
         "event": "swing"
       },
       {
-        "t": 5.15,
-        "event": "swing"
-      },
-      {
-        "t": 5.35,
+        "t": 5.25,
         "event": "swing"
       },
       {
@@ -214,15 +277,19 @@
         "event": "swing"
       },
       {
-        "t": 5.95,
+        "t": 5.85,
         "event": "swing"
       },
       {
-        "t": 6.15,
+        "t": 6.1,
         "event": "swing"
       },
       {
-        "t": 6.3,
+        "t": 6.25,
+        "event": "swing"
+      },
+      {
+        "t": 6.4,
         "event": "swing"
       },
       {
@@ -242,19 +309,11 @@
         "event": "swing"
       },
       {
-        "t": 7.15,
+        "t": 7.2,
         "event": "swing"
       },
       {
-        "t": 7.3,
-        "event": "swing"
-      },
-      {
-        "t": 7.45,
-        "event": "swing"
-      },
-      {
-        "t": 7.65,
+        "t": 7.55,
         "event": "swing"
       },
       {
@@ -262,591 +321,39 @@
         "event": "swing"
       },
       {
-        "t": 8,
-        "event": "swing"
+        "t": 7.9,
+        "event": "built0"
       },
       {
-        "t": 8.2,
-        "event": "swing"
-      },
-      {
-        "t": 8.4,
-        "event": "swing"
-      },
-      {
-        "t": 8.65,
-        "event": "swing"
-      },
-      {
-        "t": 8.85,
-        "event": "swing"
-      },
-      {
-        "t": 9.05,
-        "event": "swing"
-      },
-      {
-        "t": 9.2,
-        "event": "swing"
-      },
-      {
-        "t": 9.35,
-        "event": "swing"
-      },
-      {
-        "t": 9.5,
-        "event": "swing"
-      },
-      {
-        "t": 9.65,
-        "event": "swing"
-      },
-      {
-        "t": 9.85,
-        "event": "swing"
-      },
-      {
-        "t": 10.05,
-        "event": "swing"
-      },
-      {
-        "t": 10.25,
-        "event": "swing"
-      },
-      {
-        "t": 10.6,
-        "event": "swing"
-      },
-      {
-        "t": 10.8,
-        "event": "swing"
-      },
-      {
-        "t": 10.9,
-        "event": "built1"
-      },
-      {
-        "t": 10.9,
-        "event": "reveal"
-      },
-      {
-        "t": 12,
-        "event": "stage"
-      },
-      {
-        "t": 12,
-        "event": "build2"
-      },
-      {
-        "t": 12.15,
-        "event": "swing"
-      },
-      {
-        "t": 12.3,
-        "event": "swing"
-      },
-      {
-        "t": 12.45,
-        "event": "swing"
-      },
-      {
-        "t": 12.65,
-        "event": "swing"
-      },
-      {
-        "t": 12.8,
-        "event": "swing"
-      },
-      {
-        "t": 12.95,
-        "event": "swing"
-      },
-      {
-        "t": 13.15,
-        "event": "swing"
-      },
-      {
-        "t": 13.3,
-        "event": "swing"
-      },
-      {
-        "t": 13.45,
-        "event": "swing"
-      },
-      {
-        "t": 13.6,
-        "event": "swing"
-      },
-      {
-        "t": 13.75,
-        "event": "swing"
-      },
-      {
-        "t": 13.9,
-        "event": "swing"
-      },
-      {
-        "t": 14.05,
-        "event": "swing"
-      },
-      {
-        "t": 14.25,
-        "event": "swing"
-      },
-      {
-        "t": 14.4,
-        "event": "swing"
-      },
-      {
-        "t": 14.55,
-        "event": "swing"
-      },
-      {
-        "t": 14.7,
-        "event": "swing"
-      },
-      {
-        "t": 14.85,
-        "event": "swing"
-      },
-      {
-        "t": 15.05,
-        "event": "swing"
-      },
-      {
-        "t": 15.2,
-        "event": "swing"
-      },
-      {
-        "t": 15.35,
-        "event": "swing"
-      },
-      {
-        "t": 15.5,
-        "event": "swing"
-      },
-      {
-        "t": 15.65,
-        "event": "swing"
-      },
-      {
-        "t": 15.8,
-        "event": "swing"
-      },
-      {
-        "t": 15.95,
-        "event": "swing"
-      },
-      {
-        "t": 16.15,
-        "event": "swing"
-      },
-      {
-        "t": 16.35,
-        "event": "swing"
-      },
-      {
-        "t": 16.5,
-        "event": "swing"
-      },
-      {
-        "t": 16.65,
-        "event": "swing"
-      },
-      {
-        "t": 16.8,
-        "event": "swing"
-      },
-      {
-        "t": 17.1,
-        "event": "swing"
-      },
-      {
-        "t": 17.25,
-        "event": "swing"
-      },
-      {
-        "t": 17.6,
-        "event": "swing"
-      },
-      {
-        "t": 17.75,
-        "event": "swing"
-      },
-      {
-        "t": 17.9,
-        "event": "swing"
-      },
-      {
-        "t": 18.1,
-        "event": "swing"
-      },
-      {
-        "t": 18.25,
-        "event": "swing"
-      },
-      {
-        "t": 18.4,
-        "event": "swing"
-      },
-      {
-        "t": 18.55,
-        "event": "swing"
-      },
-      {
-        "t": 18.7,
-        "event": "swing"
-      },
-      {
-        "t": 18.85,
-        "event": "swing"
-      },
-      {
-        "t": 19.05,
-        "event": "swing"
-      },
-      {
-        "t": 19.2,
-        "event": "swing"
-      },
-      {
-        "t": 19.4,
-        "event": "swing"
-      },
-      {
-        "t": 19.55,
-        "event": "swing"
-      },
-      {
-        "t": 19.8,
-        "event": "swing"
-      },
-      {
-        "t": 19.95,
-        "event": "swing"
-      },
-      {
-        "t": 20.1,
-        "event": "swing"
-      },
-      {
-        "t": 20.35,
-        "event": "swing"
-      },
-      {
-        "t": 20.55,
-        "event": "swing"
-      },
-      {
-        "t": 20.7,
-        "event": "swing"
-      },
-      {
-        "t": 20.85,
-        "event": "swing"
-      },
-      {
-        "t": 21,
-        "event": "swing"
-      },
-      {
-        "t": 21.2,
-        "event": "swing"
-      },
-      {
-        "t": 21.35,
-        "event": "swing"
-      },
-      {
-        "t": 21.5,
-        "event": "swing"
-      },
-      {
-        "t": 21.65,
-        "event": "backup"
-      },
-      {
-        "t": 21.75,
-        "event": "swing"
-      },
-      {
-        "t": 21.9,
-        "event": "swing"
-      },
-      {
-        "t": 22.15,
-        "event": "swing"
-      },
-      {
-        "t": 22.3,
-        "event": "swing"
-      },
-      {
-        "t": 22.45,
-        "event": "swing"
-      },
-      {
-        "t": 22.65,
-        "event": "swing"
-      },
-      {
-        "t": 22.8,
-        "event": "swing"
-      },
-      {
-        "t": 23,
-        "event": "swing"
-      },
-      {
-        "t": 23.2,
-        "event": "swing"
-      },
-      {
-        "t": 23.35,
-        "event": "swing"
-      },
-      {
-        "t": 23.5,
-        "event": "swing"
-      },
-      {
-        "t": 23.7,
-        "event": "swing"
-      },
-      {
-        "t": 23.85,
-        "event": "swing"
-      },
-      {
-        "t": 24,
-        "event": "swing"
-      },
-      {
-        "t": 24.2,
-        "event": "swing"
-      },
-      {
-        "t": 24.35,
-        "event": "swing"
-      },
-      {
-        "t": 24.55,
-        "event": "swing"
-      },
-      {
-        "t": 24.7,
-        "event": "swing"
-      },
-      {
-        "t": 24.95,
-        "event": "swing"
-      },
-      {
-        "t": 25.15,
-        "event": "swing"
-      },
-      {
-        "t": 25.3,
-        "event": "swing"
-      },
-      {
-        "t": 25.7,
-        "event": "swing"
-      },
-      {
-        "t": 25.9,
-        "event": "swing"
-      },
-      {
-        "t": 26.05,
-        "event": "swing"
-      },
-      {
-        "t": 26.25,
-        "event": "swing"
-      },
-      {
-        "t": 26.4,
-        "event": "swing"
-      },
-      {
-        "t": 26.6,
-        "event": "swing"
-      },
-      {
-        "t": 26.95,
-        "event": "swing"
-      },
-      {
-        "t": 27.1,
-        "event": "swing"
-      },
-      {
-        "t": 27.4,
-        "event": "swing"
-      },
-      {
-        "t": 27.55,
-        "event": "swing"
-      },
-      {
-        "t": 27.7,
-        "event": "swing"
-      },
-      {
-        "t": 27.9,
-        "event": "swing"
-      },
-      {
-        "t": 28.1,
-        "event": "swing"
-      },
-      {
-        "t": 28.25,
-        "event": "swing"
-      },
-      {
-        "t": 28.4,
-        "event": "swing"
-      },
-      {
-        "t": 28.6,
-        "event": "swing"
-      },
-      {
-        "t": 28.75,
-        "event": "swing"
-      },
-      {
-        "t": 28.9,
-        "event": "swing"
-      },
-      {
-        "t": 29.1,
-        "event": "swing"
-      },
-      {
-        "t": 29.3,
-        "event": "swing"
-      },
-      {
-        "t": 29.5,
-        "event": "swing"
-      },
-      {
-        "t": 29.65,
-        "event": "swing"
-      },
-      {
-        "t": 29.8,
-        "event": "swing"
-      },
-      {
-        "t": 29.95,
-        "event": "swing"
-      },
-      {
-        "t": 30.1,
-        "event": "swing"
-      },
-      {
-        "t": 30.3,
-        "event": "swing"
-      },
-      {
-        "t": 30.5,
-        "event": "swing"
-      },
-      {
-        "t": 30.65,
-        "event": "swing"
-      },
-      {
-        "t": 30.85,
-        "event": "swing"
-      },
-      {
-        "t": 31.15,
-        "event": "swing"
-      },
-      {
-        "t": 31.3,
-        "event": "swing"
-      },
-      {
-        "t": 31.5,
-        "event": "swing"
-      },
-      {
-        "t": 31.65,
-        "event": "swing"
-      },
-      {
-        "t": 31.8,
-        "event": "swing"
-      },
-      {
-        "t": 32,
-        "event": "swing"
-      },
-      {
-        "t": 32.15,
-        "event": "swing"
-      },
-      {
-        "t": 32.3,
-        "event": "swing"
-      },
-      {
-        "t": 32.5,
-        "event": "swing"
-      },
-      {
-        "t": 32.65,
-        "event": "swing"
-      },
-      {
-        "t": 32.95,
-        "event": "swing"
-      },
-      {
-        "t": 33.1,
-        "event": "swing"
-      },
-      {
-        "t": 33.25,
-        "event": "swing"
-      },
-      {
-        "t": 33.4,
-        "event": "swing"
-      },
-      {
-        "t": 33.7,
-        "event": "swing"
-      },
-      {
-        "t": 33.85,
-        "event": "swing"
-      },
-      {
-        "t": 34.05,
-        "event": "swing"
-      },
-      {
-        "t": 34.2,
-        "event": "swing"
-      },
-      {
-        "t": 34.3,
-        "event": "built2"
-      },
-      {
-        "t": 34.3,
+        "t": 7.9,
         "event": "complete"
       },
       {
-        "t": 42.5,
+        "t": 10.75,
+        "event": "hiss"
+      },
+      {
+        "t": 10.75,
+        "event": "motion_start"
+      },
+      {
+        "t": 12.35,
+        "event": "boom"
+      },
+      {
+        "t": 12.35,
+        "event": "clear"
+      },
+      {
+        "t": 12.6,
+        "event": "motion_settled"
+      },
+      {
+        "t": 12.6,
+        "event": "settle"
+      },
+      {
+        "t": 15.85,
         "event": "end"
       }
     ]
@@ -854,36 +361,37 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "commit": "dbd91292d898d726d3170b3ce3c797b870aa14fa",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:43:48.044Z",
-    "head_at_publish": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "rendered_at": "2026-11-12T06:06:18.376Z",
+    "head_at_publish": "45458d2edc8ec9ad5a96315cc2663e4b204752cc",
     "stunt": "stunts/creeper_art.js",
     "source_snapshot": [
       "source/creeper_art.js",
       "source/pixel_art.js",
       "source/sight.js",
       "source/act.js",
-      "source/motion.js"
+      "source/motion.js",
+      "source/plateau.js"
     ]
   },
   "rebuild": [
-    "git checkout ec8ab70b2df1",
+    "git checkout dbd91292d898",
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
-    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --self_name 56e --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:0.75 --end_after complete:0.7 --out out/creeper_art.mp4"
+    "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 😭\" --self_name 56e --subs [[\"hiss\",\"wait...\",1.3]] --subs_y 0.12 --speed [[\"build0:0.1\",\"built0:-0.4\",2],[\"complete:0.4\",\"hiss\",2]] --punch [[\"complete\",0,1.08],[\"boom\",0,1.14]] --flash [[\"boom\",0,0.5]] --sfx [[\"air\",\"start\",\"boom\",{\"gain\":0.35}],[\"impact\",\"complete\",{\"gain\":0.6}],[\"dip\",\"boom\",0.4],[\"impact\",\"boom\",{\"gain\":1.4}]] --start_at build0:0.9 --end_after clear:0.8 --out out/creeper_art.mp4"
   ],
   "status": "ready",
-  "notes": "opening r:r0f3da0 (frame 0 = the face's eyes and mouth); end 0.7 s after the last block; review READY r1",
-  "published_at": "2026-11-12T01:47:11.494Z",
+  "notes": "no-op fix (r:r4607fa): 7 s; the pixel-art creeper face hisses (a real primed-TNT fuse) and blows itself off the wall; built on real terrain (not superflat, r:r489883); fix-check READY r3",
+  "published_at": "2026-11-12T06:07:46.574Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:47:49+00:00",
+    "at": "2026-11-12T06:08:10+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 33.45 s vs the reviewed render 33.45 s"
+      "summary": "short.mp4 6.95 s vs the reviewed render 6.95 s"
     },
     "pace": {
       "ok": true,
@@ -895,7 +403,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:44:08.694Z",
+      "at": "2026-11-12T06:06:36.433Z",
       "report": "work/hb/creeper_art.check.json"
     },
     "key_sounds": "n/a"
