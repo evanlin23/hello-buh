@@ -2,10 +2,10 @@
   "name": "seventy_below",
   "stunt": "story_seventy_below",
   "version": 2,
-  "revision": "r4.1 (2026-11-12): critic r4 must-fixes: L15 'When we're SEVENTY, no monster comes NEAR the general, but at sixty-NINE there was ROOM for one.' (the reason, not only the pattern; pays off L07 'FULL'); L01 shortened to 13 words ('Our general keeps SEVENTY of us under his BED. And I don't know WHY.'); L05 drops 'Like a real ARMY.'; L13 'at the general's WINDOW'; L09 'So he opened the HOLE in the MORNING.' (casual reader read 'he came' as him coming down). r4 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the fact and the why ('Our general keeps SEVENTY of us in the DARK under his BED. And I don't know WHY.'); L02 two-way clue (never takes us to fight); L07 'Always SEVENTY'; L13 the spider climbs to the general's WINDOW (the loved one at stake); L15 is the spoken reveal ('Since we CAME, no monster has ever come NEAR the general, except the ONE night we were sixty-NINE.'); L16 'Seventy.' is the one beat, cut. Shots unchanged (same L/S mapping). r3.1 (2026-11-11): critic r3 APPROVE (7.9); continuity r3: S15 lens to (-2056.5, 86, -435) so the flock is in frame, S08 waist-down, the general stands at the hole's north edge head down 90 so his head hangs over the shaft (S05, S06, S12, S16), S05/S16 lens in the hole's column with the cell kept clear, S04 lid in frame, S07 lens raised, the baby in the cell under the hole (S01, S02). r3 (2026-11-11): critic r2 must-fixes (L08 the sleepy night gives the daylight opening a cause; L07 'the world's all FULL of us'; L03 'right ABOVE us'; L14 'a new SOLDIER'; bedtime after the count) and continuity r2 (hole moved to (-2057, -492), room cameras re-placed, near-vertical lenses up the shaft for S05/S16 and inside it for S06/S12, S04/S14 lenses out of the grass, bed to (-2058, 73, -500), waist-down framing, checkable `shows` ids, the narrator HEARS the spider (L13, L15), counts before bed at 13200, S15 lens over the flock); renumbered L01-L16 / S01-S16. r2 (2026-11-11): cold read r1 (60 % at the midpoint, partly, a little surprised): L07 'No monsters. Just us.' cut (it winked: the reader heard 'we are the monsters'), L08 'one MORNING he OPENED it' -> 'one DAY he came EARLY' (morning gave away the sun), L12 adds 'The FIRST one ever.' (the spider's link to the count), the easter egg moves to S14. r1 (2026-11-11): first script from the batch-3 round-3 brief (docs/pitches/batch3_script_briefs/seventy_below.md) with the round-3 must-fixes applied: un-named zombies, the room within 32 blocks of the bed and 8 below it, Grandpa never named or shown above the knees, no Gary. Line 1 changed from the pitch's (see bible.md 'Changes from the pitch').",
+  "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'I live under an old man's BED. With sixty-nine of my BROTHERS.' replaces the frame + why opener; r4.1 (2026-11-12): critic r4 must-fixes: L15 'When we're SEVENTY, no monster comes NEAR the general, but at sixty-NINE there was ROOM for one.' (the reason, not only the pattern; pays off L07 'FULL'); L01 shortened to 13 words ('Our general keeps SEVENTY of us under his BED. And I don't know WHY.'); L05 drops 'Like a real ARMY.'; L13 'at the general's WINDOW'; L09 'So he opened the HOLE in the MORNING.' (casual reader read 'he came' as him coming down). r4 (2026-11-11): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 says the fact and the why ('Our general keeps SEVENTY of us in the DARK under his BED. And I don't know WHY.'); L02 two-way clue (never takes us to fight); L07 'Always SEVENTY'; L13 the spider climbs to the general's WINDOW (the loved one at stake); L15 is the spoken reveal ('Since we CAME, no monster has ever come NEAR the general, except the ONE night we were sixty-NINE.'); L16 'Seventy.' is the one beat, cut. Shots unchanged (same L/S mapping). r3.1 (2026-11-11): critic r3 APPROVE (7.9); continuity r3: S15 lens to (-2056.5, 86, -435) so the flock is in frame, S08 waist-down, the general stands at the hole's north edge head down 90 so his head hangs over the shaft (S05, S06, S12, S16), S05/S16 lens in the hole's column with the cell kept clear, S04 lid in frame, S07 lens raised, the baby in the cell under the hole (S01, S02). r3 (2026-11-11): critic r2 must-fixes (L08 the sleepy night gives the daylight opening a cause; L07 'the world's all FULL of us'; L03 'right ABOVE us'; L14 'a new SOLDIER'; bedtime after the count) and continuity r2 (hole moved to (-2057, -492), room cameras re-placed, near-vertical lenses up the shaft for S05/S16 and inside it for S06/S12, S04/S14 lenses out of the grass, bed to (-2058, 73, -500), waist-down framing, checkable `shows` ids, the narrator HEARS the spider (L13, L15), counts before bed at 13200, S15 lens over the flock); renumbered L01-L16 / S01-S16. r2 (2026-11-11): cold read r1 (60 % at the midpoint, partly, a little surprised): L07 'No monsters. Just us.' cut (it winked: the reader heard 'we are the monsters'), L08 'one MORNING he OPENED it' -> 'one DAY he came EARLY' (morning gave away the sun), L12 adds 'The FIRST one ever.' (the spider's link to the count), the easter egg moves to S14. r1 (2026-11-11): first script from the batch-3 round-3 brief (docs/pitches/batch3_script_briefs/seventy_below.md) with the round-3 must-fixes applied: un-named zombies, the room within 32 blocks of the bed and 8 below it, Grandpa never named or shown above the knees, no Gary. Line 1 changed from the pitch's (see bible.md 'Changes from the pitch').",
   "caption": "why are 70 zombies waiting under his bed 🧟",
   "upload": {
-    "title": "seventy of us wait in the dark under his bed 🧟 #minecraft #shorts",
+    "title": "i live under an old man's bed. with 69 of my brothers 🧟 #minecraft #shorts",
     "pinned": "Would YOU sleep on top of seventy zombies?",
     "tags": [
       "minecraft zombie",
@@ -218,7 +218,7 @@
     "beats": [
       "S16: upturned faces ring the frame, the general's dark head in the moonlit shaft; 'SEVENTY.'; +0.4 s the lid goes back on, black; cut 1.0 s after the word. No line after it."
     ],
-    "loop": "'Seventy.' runs straight into line 1, 'In my house, SEVENTY of us live under the general's bed.' S16 and S01 are the same room in the same light."
+    "loop": "'Seventy.' runs straight into line 1, 'I live under an old man's BED. With sixty-nine of my BROTHERS.' (sixty-nine and me: seventy). S16 and S01 are the same room in the same light."
   },
   "bible": "stories/seventy_below/bible.md",
   "beats": "stories/seventy_below/beats.md",
@@ -228,8 +228,8 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "In my house, / SEVENTY of us live / under the general's BED. / And I don't know WHY.",
-      "say": "In my house, seventy of us live under the general's bed. And I don't know why.",
+      "text": "I LIVE / under an old man's BED. / With SIXTY-NINE / of my BROTHERS.",
+      "say": "I live under an old man's BED. With sixty-nine of my BROTHERS.",
       "shot": "S01",
       "punch": true,
       "shows": [
@@ -237,7 +237,7 @@
           "what": [
             "zombie"
           ],
-          "word": "SEVENTY"
+          "word": "BROTHERS"
         },
         {
           "what": [
@@ -249,9 +249,9 @@
       ],
       "look": {
         "what": "entity:zombie",
-        "word": "SEVENTY"
+        "word": "BROTHERS"
       },
-      "note": "hook (story_format beat 1): the impossible, countable fact AND the why, said by 3 s; proud and bright, then a genuinely curious 'why' (the kid wants to know, never scared)"
+      "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; proud and bright; sixty-nine brothers + me = seventy (L06, L16)"
     },
     {
       "id": "L02",

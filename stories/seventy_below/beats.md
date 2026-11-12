@@ -16,7 +16,7 @@ near him or the village.
 
 | # | t (s) | line | picture | clue it plants | the narrator's innocent reading (on the line) |
 |---|---|---|---|---|---|
-| 1 | 0.0 | L01 In my house, SEVENTY of us live under the general's BED. And I don't know WHY. | the baby zombie in the moonlit square, the room of faces behind it | the fact and the why, said; the number 70; they're kept | an army waiting |
+| 1 | 0.0 | L01 I live under an old man's BED. With SIXTY-NINE of my BROTHERS. | the baby zombie in the moonlit square, the room of faces behind it | the fact and the why, said; the number 70; they're kept | an army waiting |
 | 2 | 4.5 | L02 I'm the LITTLEST SOLDIER. He never takes us to FIGHT. I think he's SAVING us for something BIG. | the baby among adult legs | (who's talking); an army that never fights | saved for a big battle |
 | 3 | 7.0 | L03 Our GENERAL SLEEPS right ABOVE us. | his legs to the bed; the floor: we're above the room | near his bed (32 blocks; the bed check) | he guards us |
 | 4 | 9.0 | L04 He never goes FAR. I think he'd MISS us. | his legs on the bench, crossbow; the grass lid in the foreground | he must stay within 32 blocks | he loves us |
@@ -43,7 +43,7 @@ makes the one jump: he keeps them there so no monster can come. L16's "Seventy."
 | clue | planted (line, shot) | how the narrator misreads it | what it means after the twist |
 |---|---|---|---|
 | exactly seventy | L01 S01, L06 S06, L16 S16 | an army's strength | Java's hostile mob cap is 70 per player |
-| kept in the dark under his bed (and the kid doesn't know why) | L01 S01 | an army waiting | kept where they never burn and never leave |
+| kept in the dark under his bed | L01 S01 | an army waiting | kept where they never burn and never leave |
 | he sleeps right above them | L03 S03 | guarding them | within 32 blocks or they despawn; 8 below the bed so he can still sleep |
 | he never goes far | L04 S04 | he'd miss them | if he's more than 32 blocks away they start despawning |
 | the grass lid in the yard | S04 (picture only) | (not said) | the hole is disguised as ordinary grass |
