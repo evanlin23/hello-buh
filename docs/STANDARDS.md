@@ -287,7 +287,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
 - **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
   **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
-- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: floor 8 s (lead decision 2026-11-11: the 25 s floor is the narration floor). Check: pace (length).
+- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: no fixed minimum, never padded (owner 2026-11-12: "no fixed minimum, just don't pad them"; the 30 s minimum is retired). Check: pace (length), review (padding). r:r064ca4
 
 ## 9. Review
 - An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
