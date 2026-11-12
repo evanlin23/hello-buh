@@ -174,7 +174,7 @@ async function launch (ctx, { C, view, cutTo }) {
       disc(base - 12 - d, base - 13, 'air')
       if (i % 3 === 0) ctx.sound('entity.firework_rocket.launch', 0.8, 0.45 + i * 0.01)
     }
-    target = [0, 28 + (base - ROCKET.bottom) * 0.45, 0]   // the camera tilts up after it, slower than it climbs: it rises through the frame
+    target = [0, 28 + (base - ROCKET.bottom) * 0.8, 0]   // the camera tilts up after it, a little slower than it climbs: it rises in the frame, the pad drops out below, the nose stays under the 60:00 clock
     await bot.waitForTicks(1)
   }
   ctx.mark('launch_end')
