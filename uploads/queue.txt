@@ -28,10 +28,14 @@ fakerun_any  # first: owner OK 2026-11-12 (fixed)
 creeper_art  # first: owner OK 2026-11-12 (fixed)
 villager_crowd  # first: owner OK 2026-11-12 (fixed)
 hack_banner_door  # first: owner OK 2026-11-12 (fixed)
+cave_reveal  # first: owner OK 2026-11-12 (fixed)
+lapse_house  # first: owner OK 2026-11-12 (fixed)
+herobrine_bridge  # first: owner OK 2026-11-12 (fixed)
+boat_clutch  # first: owner OK 2026-11-12 (fixed)
+cooked_bedrock  # first: owner OK 2026-11-12 (fixed)
 ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
-lapse_house
 chain_reaction
 story_respawn_tax
 hide_seek
@@ -48,7 +52,6 @@ ladder_clutch
 noob_pro_hacker
 lava_cast
 worse_tnt
-boat_clutch
 speed_build
 sand_tower
 water_vs_lava
@@ -60,10 +63,7 @@ mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1
 creeper
 faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-herobrine_bridge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-cooked_bedrock   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-cave_reveal
 trap_free_diamonds   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 lava_crossing
 quest_pyramid   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
