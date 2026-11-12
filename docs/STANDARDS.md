@@ -486,6 +486,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
 - **No cut mid-action; the view lands centred on what it turns to; cuts never read as getting stuck; a title promises past the obvious end; dropped items right way up; 56e on every re-render too.** Check: cuts (mid-action cut), aim (turn target), review. r:r52f94c
+- **A fix keeps what made the Short work** (no-op fix notes): interrupt shows the build and ~3 interruptions before the
+  player deals with the mob; quest names each stage on screen, has more stages and ends as the player steps into the
+  reward room; a pickaxe ranking keeps every tier, fast, before the finale. Check: review, owner. r:rf557af
 - **Watch the block break and the drops fly**: the crosshair stays on a block through its break; after a burst of drops
   the camera follows them where they fly (never back off them); a burst payoff ends 0.5-0.8 s after the burst, with no
   hold or counter beats after it (fortune v3 notes). Check: aim (on-target per action), dwell (the end after the

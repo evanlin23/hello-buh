@@ -462,6 +462,14 @@ STANDARDS.md in the same commit.
   happy and satisfied."** No Short ships unless an independent reviewer's takeaway says it makes sense and pays off.
   No-ops are redone or dropped; borderline Shorts get one bigger, clearer last beat. The audit and every fix:
   docs/noop_audit_2026-11-12.md.
+- **Owner, 2026-11-12, Review Room notes on the no-op fixes: interrupt_lamps (at 14.3 s) "We need to spend longe
+  rbuilding, we need to have the skeleton hit us at least like 3 times or something"; quest_pyramid (at 0 s) "this can
+  be longer. also we need text indications for like tunnel etc. and we should hav emore steps." and "also end sooner as
+  soon as you walk into the room."; pickaxe_race (at 11.6 s) "we should still have the other pickaxes.."** A fix keeps
+  what made the Short work: interrupt shows more of the build and the mob interrupts it about 3 times before the player
+  deals with it; quest has more stages, each named on screen as it starts ("the tunnel", "the lava"...), runs longer,
+  and ends as the player steps into the reward room; pickaxe ranking keeps the full ladder of tools (wood to netherite),
+  fast, before its finale. Length follows the content (r:r064ca4): longer is fine when each beat is new.
 - **Owner, 2026-11-12, on fortune v3 (at 2.8 s): "we should look at the block we are breaking. and i think the moving
   around was fine...", "like we should keep looking at the shower." and "And we should end faster, right after the
   shower explodes in emeralds".** The crosshair stays on the block while it breaks (r:r52f94c, r:rffba12); after a
