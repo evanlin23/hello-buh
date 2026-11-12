@@ -35,7 +35,7 @@ module.exports = {
     speed: [['cut1a', 'cut2b', 'cut'], ['cut3a', 'cut5b', 'cut'], ['cut6a', 'cut6b', 'cut'], ['overhead', 'back', 1.5], ['pillar', 'overhead', 3],
       // fast cuts (owner r:r188b46; pace: 2.4 s and 2.2 s with nothing new): the sidestep after the 100's and the 200's
       // heads turn plays x2.2 (the heads still follow it; no cut inside the sidestep)
-      ['cut6a:-1.9', 'cut6a', 2.2], ['pillar:-2.2', 'pillar:-0.35', 2.2]],   // (the 200's span stops before the look down: x2.2 made it a 1220 deg/s whip)   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
+      ['cut6a:-1.9', 'cut6a', 2.2], ['step_sent', 'step_in:-0.05', 'cut'], ['pillar:-2.2', 'pillar:-0.35', 2.2]],   // (the 200's span stops before the look down: x2.2 made it a 1220 deg/s whip)   // the pan over the 200 a bit quicker (pace: 2.5 s with nothing new); the look down while pillaring x3 (review r1: 3 s of grass)
     subs: [...[0, 2, 5, 6].map(i => ['beat', CROWDS[i].sub, 1.6, i]), ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]],
     punch: [['behind', 0, 1.08], ['step_in', 0, 1.1]], flash: [['behind', 0, 0.5]],
     zoom: [['overhead', 'step_in:1.0', 1.3]],   // review r1: the pan and the payoff read as a flat plain to the horizon; the crowd fills the frame instead
@@ -281,8 +281,7 @@ module.exports = {
       // 0.33, level: facing the pillar's x/z at each one's own height), and a chorus of "hrmm"s. Against a still camera (a
       // 1-block step under the pan barely read: stills r1)
       await bot.waitForTicks(3)
-      ctx.mark('step_in')
-      for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
+      ctx.mark('step_sent')
       // (toward the pillar's foot)
       const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
       const vill = Object.values(bot.entities).filter(e => e.name === 'villager' && e.position.z > bot.entity.position.z).sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
@@ -294,8 +293,13 @@ module.exports = {
         const dx = +px - v.x, dz = +pz - v.z, d = Math.hypot(dx, dz) || 1
         bot.chat(`/data merge entity @e[tag=${v.tag},limit=1] {Motion:[${(dx / d * 0.75).toFixed(3)}d,0.32d,${(dz / d * 0.75).toFixed(3)}d]}`)   // motion-ok: the crowd (extras) lurches in as one
       }
-      await bot.waitForTicks(6)
-      await bot.waitForTicks(3)
+      // the server falls seconds behind here (a packed crowd), and the bot's ticks are its own: wait for the push to
+      // land, and put the mark there. The edit cuts step_sent -> step_in (a still camera, a still crowd: no visible cut)
+      let moved = false
+      for (let w = 0; w < 200 && !moved; w++) { await bot.waitForTicks(1); moved = !!(probe && p0 && probe.position.distanceTo(p0) > 0.05) }
+      ctx.mark('step_in')
+      for (let v = 0; v < 6; v++) ctx.sound('entity.villager.no', 1.2, 0.6 + v * 0.08)
+      await bot.waitForTicks(8)
       ctx.log('step_in:', B.length, 'stepped;', vill.length, 'in view; the nearest moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
       await bot.waitForTicks(12)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
