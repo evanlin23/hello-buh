@@ -13,14 +13,14 @@
 | two days ago (day ~4998) | S04 | farm new, old hopper, no sign, chest empty |
 | between (days 4998-5000) | S05, S06, S07 | the player tries his fixes: S06 the new hopper, S07 the sign |
 | any time (the adults) | S08 | the shelf by the portal |
-| now (day 5000) | S01, S02, S03, S09, S10, S11 | new hopper and sign there; the baby holding an ingot; the player out of gold (S09) |
+| now (day 5000) | S01, S01b, S02, S02b, S03, S03b, S09, S10, S11 | new hopper and sign there; the baby holding an ingot; the player out of gold (S09) |
 
 The Nether has no time of day: crimson fog and lava light in every shot.
 
 ## Cast and costume
 | who | look | in shots | holds |
 |---|---|---|---|
-| the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S02 (back of head), S03 (silhouette), S04, S06, S07 (small, in the window), S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
+| the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S01b (small, in the window), S02 (back of head), S02b, S03 (profile), S03b (small, in the window), S04, S06, S07 (small, in the window), S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
 | the player | the original `barter_player` skin (orange beanie, black beard), iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07 (back, walking to the portal), S09, S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), nothing (S07, S09, S10); the sneak pose on the roof (S09) and at the chest (S11) |
 | adult piglins | vanilla adults, gold swords | S02, S04, S08 | one admires an ingot and drops gravel (S08) |
 | the helmet piglin (easter egg) | adult, `golden_helmet[trim={pattern:"sentry",material:"lapis"}]` (Gold for the Portal's item) | S02 only, frame left, mid-ground | a gold sword |
@@ -33,11 +33,11 @@ The Nether has no time of day: crimson fog and lava light in every shot.
 | chest (base room) | closed until S10; open while the player is at it (S10, S11); EMPTY (S10's screen) |
 | sign (on the shelf below the window, facing west to the piglins) | from S07 on: PLEASE / WORK |
 | portal | lit, always |
-| bastion | across the lake (S03) |
+| bastion | across the lake (S03b) |
 
 ## Positions and screen direction
 - The window faces **west**, down to the shelf and the portal; the lake and the bastion are beyond, west-south-west.
-- From inside (S02, S03) the shelf and the bastion are ahead of the baby; from outside (S01) the baby faces the camera,
+- From inside (S02, S03) the shelf and the bastion are ahead of the baby; from outside (S01, S01b, S02b) the baby faces the camera,
   west.
 - The cutaway (S06, S11) is the column's south face: west is screen left, the baby's block screen right of the hopper.
 

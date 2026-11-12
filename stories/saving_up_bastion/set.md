@@ -23,18 +23,18 @@ view (an engine/world gap, see the report).
   - the **catch hole**: a 1 x 1 hole on the cliff ledge, trapdoor-edged, chuting down into the cell's hopper side
     (how the baby got in);
   - the **sign** (from S07's day): an oak sign standing on the shelf below the window, facing west to the piglins at the portal: PLEASE / WORK;
-- **The bastion remnant** across the lava lake (S03): blackstone, a few gold blocks, big on the skyline.
+- **The bastion remnant** across the lava lake (S03b): blackstone, a few gold blocks, big on the skyline.
 - **The cutaway** (S06, S11): the column's south wall hidden for the camera (a cinematic cutaway). Engine: per-shot
   hidden blocks (see the report).
 
 ## The narration's claims (they must hold in every shot)
 | claim | line | holds |
 |---|---|---|
-| gold falls on it (every 6.05 s, never said) | L01, L13 | the dropper fires on a 6.05 s clock in every cell shot (S01, S02, S06, S11) |
+| gold falls on it (every 6.05 s, never said) | L01, L13 | the dropper fires on a 6.05 s clock in every cell shot (S01, S02, S03, S06, S11), timed so S01's ingot is falling on frame 1 and the next lands on 'Four' (S03); the dropper stays out of frame from inside the cell |
 | it falls from above | L01 | an ingot drops into S01 from the top of frame |
 | four hundred gold (four hundred and one in L13) | L03, L13 | not countable on screen (a piglin's inventory is hidden); 400 at 6.05 s = 40 min of loaded farm over 2 days; at most 512 fit (8 slots) |
 | the grown-ups stare | L02 | S02: several adults look up at the window |
-| a whole bastion | L03 | on screen in S03 |
+| a whole bastion | L03 | on screen in S03b |
 | a guy threw the first one, a hole | L04 | S04: the toss and the catch hole |
 | a new bowl (the hopper) | L06 | S06: the new hopper pops in beside the baby; shiny in S11 |
 | a note | L07 | readable in S07 |
