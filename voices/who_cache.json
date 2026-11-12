@@ -65,6 +65,21 @@
   "clip": "dog_hill/L10",
   "at": "2026-11-11T16:28:39Z"
  },
+ "4605bad641ae": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 3,
+  "voice": "Deep, resonant, clear, masculine, steady",
+  "could_be_mistaken_for": "teenager",
+  "reversed": true,
+  "clip": "light_sleeper/L15",
+  "at": "2026-11-12T08:17:20Z"
+ },
  "6cfc75c0f25f": {
   "model": "gemini-3.5-flash-lite",
   "sex": "woman",
@@ -109,6 +124,21 @@
   "reversed": true,
   "clip": "good_boy/L11",
   "at": "2026-11-11T16:28:52Z"
+ },
+ "9f16200b0848": {
+  "model": "gemini-3-flash-preview",
+  "sex": "man",
+  "age": [
+   25.0,
+   40.0
+  ],
+  "role": "young man",
+  "confidence": 9,
+  "voice": "Deep, raspy, low-pitched, resonant, fast",
+  "could_be_mistaken_for": "father",
+  "reversed": true,
+  "clip": "light_sleeper/L05",
+  "at": "2026-11-12T08:17:16Z"
  },
  "_about": "scripts/who.py: the blind listener's answer per take, keyed by the wav's sha1[:12] (':fwd' = played forwards); scripts/voice_contrast.py reads it so ./hb check never asks twice about the same take",
  "bab01e9c7d89": {
