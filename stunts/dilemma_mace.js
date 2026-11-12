@@ -43,8 +43,10 @@ module.exports = {
   biome: 'minecraft:plains',
   time: 6000,
   renderDistance: 10, recordRadius: 96,
-  // the opening's zoom: x13 (70 -> ~6 deg) from 0.25 s before the drop (frame 0 already ~x9, the last of the crash-zoom by 0.15 s) to the cut
-  fovZoom: [['drop:-0.25', 'beat0', 13]],
+  // the opening (owner 2026-11-12 on v2 at 0.7 s: "need to open further up, so its clear we are falling"): frame 0 is
+  // the unzoomed POV straight down the 37-block pillar, the field far below and the blocks rushing past, the fall's wind
+  // from the first frame; then from 0.2 s the crash-zoom (x13, 70 -> ~6 deg) onto the dog with the first choice card
+  fovZoom: [['drop:0.2', 'beat0', 13]],
   selfArmor: ['diamond_boots', 'iron_leggings', 'iron_chestplate', 'iron_helmet'],
   selfArmorGlint: [true, false, false, false],   // only the boots are enchanted (Feather Falling IV)
   shots: {
@@ -70,7 +72,7 @@ module.exports = {
     start: 'drop:0',   // (render 1 opened 0.25 s early on the pillar's top block, which hid the dog)
     // on frame 0 (the zoomed POV on the dog, the mace in hand) through the dog's beat, then on you
     // (high in the view: at the default 0.36 it covered the dog's head in both shots)
-    choices: [['HIT THE DOG = LIVE', 'green', 'drop', 2.6, { y: 0.17 }], ["DON'T = HARDCORE OVER", 'red', 'beat1', 2.08, { y: 0.21, size: 112 }]],   // (beat 1's 2.08 s; high: it sat on your face; review r1: at the default size it wrapped to 3 lines under the caption band)
+    choices: [['HIT THE DOG = LIVE', 'green', 'drop:0.2', 2.4, { y: 0.17 }], ["DON'T = HARDCORE OVER", 'red', 'beat1', 2.08, { y: 0.21, size: 112 }]],   // (beat 1's 2.08 s; high: it sat on your face; review r1: at the default size it wrapped to 3 lines under the caption band)
     openHit: 0.9,   // a hit on frame 0 with the card (pace: the whoosh alone was 7.9 dB under the peak)
     land: 'land',
     reveal: 'reveal',
