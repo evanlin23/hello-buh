@@ -642,7 +642,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         if on:
             t0, t1, text, color, tilt, cy_frac, size = on[-1]
             fade = min(1.0, (t1 - t) / 0.12)
-            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1), cy_frac, size)
+            cc = (text, color, tilt, round(_pop(t - t0), 3), round(fade, 1), cy_frac, size)   # 3 decimals: at 2 the pop's turn gave two identical frames over a still view (qa dup, fakemod_permission v3 13.38 s)
         fk = None
         for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
             if t0 <= t + 1e-6 < hold - 1e-6:
