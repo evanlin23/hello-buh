@@ -47,6 +47,13 @@ adds songs.
   the drop on the payoff, a 0.4 s dip + an impact (edit.py caps the edit sfx at +4 dB of the game track's loudness, so an
   impact can no longer drag a quiet game track ~28 dB down as on mislabel_grandma), a picture or caption beat in any quiet
   stretch; re-run ./hb check after. (lessons 2026-11-11)
+- **The music sits under the game, steady** (owner 2026-11-12 on desire_town: "the music jumps too much, can we jsut have
+  it sit underneath the sound effects but still there"): add_song masters the game + sfx first (to -12.5 LUFS, the gain
+  capped so the limiter takes <= 3 dB off its peaks: scripts/loud.py tame_gain), lays the song under it at its fixed
+  offset, then only limits the peaks (no makeup gain: the old -10 LUFS master added ~+13 dB to a sparse game track and
+  took it back on every hit, so the bed pumped ~11 dB). A peaky Short now comes out quieter than -10 LUFS. mixcheck
+  BLOCKs a master whose gain varies > 3 dB (p5-p95) or music < 3 dB under the block sounds (scripts/mix_pump.py). Lower
+  a loud bed with edit.songGain (dB); a gentle dip is ['dip', mark, 0.4, {depth: 0.5}] (-6 dB, not -24).
 - Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
   anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
 

@@ -9,7 +9,8 @@ Short READY; it changes nothing in the videos branch.
 
 It copies every package's metadata.json (so pick_ncs picks the same track publish would) into a scratch videos dir,
 adds this Short's render as short_nosong.mp4 and work/<name>.rec.json as its recording, runs add_song.main(--ncs)
-there, then `./hb pace <name> --video <mix>` exactly as gates.py stamps it. Exit 1 on any pace BLOCK. Fix: land the drop on the payoff (edit.dropAt),
+there, then `./hb pace <name> --video <mix>` exactly as gates.py stamps it, and scripts/mix_pump.py (the master's gain
+steady within 3 dB, the music >= 3 dB under the game sounds). Exit 1 on any BLOCK. Fix: land the drop on the payoff (edit.dropAt),
 a song dip at the payoff mark (edit.sfx ['dip', mark, 0.4]) plus ['impact', mark, {gain: 1.4}] (edit.py's
 cap_sfx_share keeps the sfx within +4 dB of the game track's loudness: on a quiet stunt an uncapped impact dominated the
 track's loudness normalisation and pushed everything else ~28 dB down, mislabel_grandma 2026-11-11), no riser over the dip. Always re-run ./hb check on the no-song render after an sfx change.
@@ -73,7 +74,8 @@ def main() -> int:
         (d / "recording.json.gz").write_bytes(gzip.compress(rec.read_bytes()))
         mix = d / "short.mp4"   # beside short_nosong.mp4, as gates.py runs it: pace then measures the key sounds too
         add_song.VID = tmp
-        add_song.main(n, a.song, str(mix), ncs=not a.song)
+        pre = d / "premaster.mp4"
+        add_song.main(n, a.song, str(mix), ncs=not a.song, pre_out=str(pre))
         if not mix.exists():
             print(f"mixcheck: add_song made no mix (no song for this Short?): pace on the render itself")
             mix = src
@@ -89,6 +91,11 @@ def main() -> int:
             print(f"mixcheck {n}: COULD NOT RUN pace on the final mix (exit {r.returncode}): fix the setup (npm ci), then run again")
             return 2
         blocked = verdict.group(1) == "FAIL" or int(verdict.group(2)) > 0
+        if mix != src:   # the bed pumping and the music over the game (scripts/mix_pump.py, owner 2026-11-12 on desire_town)
+            import mix_pump
+            lines, pb = mix_pump.check(mix, pre if pre.exists() else None, src)
+            print("\n".join(lines))
+            blocked = blocked or pb
         print(f"mixcheck {n}: {'BLOCKED on the final mix (fix before calling it READY)' if blocked else 'OK on the final mix'}")
         if a.keep:
             keep = ROOT / "work" / f"{n}.mixcheck.mp4"

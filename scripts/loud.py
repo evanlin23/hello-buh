@@ -58,3 +58,37 @@ def master(path, target, limit_db=-1.0):
             ceil -= over + 0.1
         gain += miss
     os.replace(tmp, path)
+
+
+# The stunt mix (scripts/add_song.py, 2026-11-12): master the game + sfx first, then lay the song under it at a fixed
+# level. A sparse, peaky game track (a few block sounds and hits over silence) needed ~+13 dB of makeup gain to reach
+# -10 LUFS, and the limiter then took ~12 dB back on every hit: with the song in the mix, the bed PUMPED ~11 dB on
+# every block placement (desire_town, owner 2026-11-12: "the music jumps too much"). So the game's gain is capped where
+# its true peak would need more than MAX_REDUCTION dB of limiting, the song follows the game at a fixed offset, and the
+# finished mix only gets a true-peak limiter (no makeup gain).
+MAX_REDUCTION = 3.0
+
+
+def tame_gain(path, target, limit_db=-1.0, max_reduction=MAX_REDUCTION, ss=0.0, dur=None):
+    """The static gain (dB) for a stem: toward `target` LUFS, but at most enough to put its true peak `max_reduction`
+    dB over `limit_db` (so the limiter never takes more than that off its loudest moment)."""
+    return min(target - measure(path, ss, dur), limit_db + max_reduction - true_peak(path))
+
+
+def limit_peaks(path, limit_db=-1.0):
+    """master() without the makeup gain: a true-peak limiter at `limit_db` dBTP (the ceiling corrected for the AAC
+    encode's overshoot), the loudness left as mixed."""
+    if true_peak(path) <= limit_db:
+        return
+    ceil = limit_db - 0.5
+    tmp = str(path) + ".lim.mp4"
+    for _ in range(4):
+        lim = 10 ** (ceil / 20)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(path), "-map", "0:v?", "-map", "0:a", "-c:v", "copy",
+                        "-af", f"aresample=192000,alimiter=limit={lim:.4f}:level=false:attack=1:release=50,aresample=48000",
+                        "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", tmp], check=True)
+        over = true_peak(tmp) - limit_db
+        if over <= 0:
+            break
+        ceil -= over + 0.1
+    os.replace(tmp, path)

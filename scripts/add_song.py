@@ -13,6 +13,9 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 VID = ROOT.parent / "hb-videos"
 NCS = {t["file"]: t for t in json.loads((ROOT / "music" / "ncs.json").read_text())} if (ROOT / "music" / "ncs.json").exists() else {}
+GAME_LUFS = -12.5  # the game + sfx stem's target in the stunt mix (with the bed about 1 dB under it the sum lands near the
+                   # old -10 LUFS master); capped by loud.tame_gain so the limiter takes at most 3 dB off its peaks
+LEGACY_MASTER = bool(__import__("os").environ.get("HB_LEGACY_MASTER"))   # the pre-2026-11-12 mix (audits of old packages)
 BED_LUFS = -16.0   # the stunt NCS bed, under the game at -15 (owner 2026-11-11, "fix all i think": was -13, too loud; STANDARDS 7 r:r662041)
 SONGS = {"misery.mp3": ("misery.", "pupsies"), "payphone.mp3": ("Payphone", "Radio Top Singers"), "funk_abnormal.mp3": ("FUNK ABNORMAL (ULTRA SLOWED)", "")}
 
@@ -116,7 +119,7 @@ def story_score(name, d, meta, stunt, rec, tl, start, src, out_override=None):
     print(name, f"score in -> {out}")
 
 
-def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=False):
+def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=False, pre_out=None):
     d = VID / "shorts" / name
     meta = json.loads((d / "metadata.json").read_text())
     stunt = json.loads(subprocess.run(["node", "-e", f"console.log(JSON.stringify(require('./stunts/{name}').edit||{{}}))"], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
@@ -207,8 +210,22 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         # have it sit underneath the sound effects but still there")
         bed = BED_LUFS + float(stunt.get("songGain") or 0)
         lat = f",adelay={int(round(late * 1000))}:all=1" if late else ""
-        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, bed, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
-                 f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
+        limit = -2.0 if keys else -1.0   # (ducked under the key sounds: the limit lower)
+        if LEGACY_MASTER:
+            game_gain, song_lufs = loud.static(src, -15), bed
+        else:
+            # the game + sfx stem mastered first (a static gain, capped so its peaks need <= 3 dB of limiting), the song
+            # at its fixed offset under it (bed - (-15) dB, as before), and later only a peak limiter: no makeup gain
+            # that the limiter takes back on every hit (the bed pumped ~11 dB on desire_town)
+            stem = pathlib.Path(str(out) + ".game.wav")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vn", "-af", f"{loud.static(src, -15)},aresample=48000",
+                            "-c:a", "pcm_f32le", str(stem)], check=True)
+            g = loud.tame_gain(stem, GAME_LUFS, limit)
+            stem.unlink()
+            game_gain, song_lufs = f"{loud.static(src, -15)},volume={g:.2f}dB", bed + g
+            print(name, f"mix: game + sfx {g:+.1f} dB over -15 LUFS (to {GAME_LUFS} LUFS, <= {loud.MAX_REDUCTION:.0f} dB of limiting), the song at {song_lufs:.1f} LUFS")
+        graph = (f"[1:a]atrim=0:{dur - late:.3f},asetpts=PTS-STARTPTS,{loud.static(ROOT / song, song_lufs, song_start, dur - late)},afade=t=in:d=0.08{lat}{duck},afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+                 f"[0:a]{game_gain},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
     if stunt.get("story"):   # single-pass loudnorm lands short: correct the story master to -14 LUFS exactly
@@ -216,7 +233,13 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         import story_track
         story_track.master_gain(out, -14.0)
     else:
-        loud.master(out, -10.0, -2.0 if keys else -1.0)   # (ducked under the key sounds, the master lifts the game: limit lower)
+        if pre_out:   # (mixcheck's pump check: the mix before its master)
+            import shutil
+            shutil.copy(out, pre_out)
+        if LEGACY_MASTER:
+            loud.master(out, -10.0, limit)
+        else:
+            loud.limit_peaks(out, limit)
         if keys:   # the gate (BLOCK): each key sound >= KEY_MIN_DB over the music (owner 2026-11-11, guess_sound: "super loud music")
             rows, bad = key_sounds.check(out, src, keys, kstop)
             if rows:   # (no clip before the drop, e.g. dropAt on the last mark: nothing to measure; race 2026-11-11 crashed here)
