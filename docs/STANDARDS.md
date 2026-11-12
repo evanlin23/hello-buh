@@ -417,6 +417,9 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner, review. r:r7ef6ec
 - **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
   ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
+  The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a
+  satisfying finish, something new); "nothing much" / a small result / "it just ends" is a no-op and a BLOCKER.
+  Check: review (short-review takeaway line), owner. r:r8d6af1
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never

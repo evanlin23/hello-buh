@@ -443,6 +443,12 @@ STANDARDS.md in the same commit.
   the cuts need to be cleaner, we should do into a hole 1x1 and then come out of the sky? need cleaner"** The
   `mislabel` parkour uses sideways (left/right) double extensions, the classic bridge-out move, not blocks placed
   upward. The transition is one clean move: drop into a 1x1 hole, cut, come out of the sky.
+- **Owner, 2026-11-12: "We need to be optimizing our hook as well as the viewer satisfaction. They need to look at the
+  reel, and when they're done watching it, be like, I got something out of that. It can't be a no-op, bro. It
+  absolutely cannot be a no-op."** Every Short is judged on two things before anything else: the hook (r:r0f3da0) and
+  the takeaway. The takeaway test: in one sentence, what did the viewer get out of it (a laugh at a clear joke, a
+  "whoa" at a big result, a satisfying finish, a thing they didn't know)? If the honest answer is "nothing much", a
+  small result, or "it just ends", the Short is a no-op and does not ship: make the payoff bigger or drop it.
 - **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
   they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
   fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**

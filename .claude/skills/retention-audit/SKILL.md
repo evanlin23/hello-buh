@@ -77,6 +77,10 @@ change of shot.
   the whole way (a timer, a counter, a growing threat).
 - Each beat has its own mini hook -> payoff, and the beats escalate toward the final payoff.
 
+**5b. The takeaway (owner 2026-11-12, r:r8d6af1: "when they're done watching it, be like, I got something out of
+that. It can't be a no-op").** One sentence: what did the viewer get? A laugh, a "whoa", a satisfying finish,
+something new. "Nothing much" / a small result / "it just ends" = FAIL (a no-op); the fix is a bigger payoff.
+
 **6. Re-watch value.** One line: why would someone watch it twice or send it to a friend? (The
 ridiculous scale, the twist, the close call.) If you can't name it, the concept needs work. Say so;
 it's not something the renderer can fix.
