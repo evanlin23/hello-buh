@@ -420,6 +420,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a
   satisfying finish, something new); "nothing much" / a small result / "it just ends" is a no-op and a BLOCKER.
   Check: review (short-review takeaway line), owner. r:r8d6af1
+  Nothing ships unless it makes sense and leaves the viewer satisfied: no-ops are redone or dropped, borderline
+  Shorts get one bigger last beat (docs/noop_audit_2026-11-12.md). Check: review, owner. r:r4607fa
 - **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
   one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
