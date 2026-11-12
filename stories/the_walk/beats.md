@@ -10,7 +10,7 @@ Grandma standing in it. Cut.
 ## The format (docs/story_format.md, r6)
 | format beat | here |
 |---|---|
-| 1. fact + why, by 3 s | L01 "My grandpa got DUMPED. Now he breaks LECTERNS. THREE HUNDRED so far." over the lectern popping |
+| 1. fact + why, by 3 s | L01 "My GRANDPA is going to WALK across the OCEAN. To get his girlfriend BACK." over the lectern popping |
 | 2. 3-5 quick two-way clues | "Not THAT one." (L03); the light every night (L04); no boat, ten years (L05); "Come back when the sea FREEZES." / "Mom says it NEVER freezes here." (L07-L08) |
 | 3. the kid wants to know | every clue gets the kid's own answer (hates her, scared of the dark, stubborn) |
 | 4. someone loved at stake | Grandma, alone on the island ten years (L04, S04) |
@@ -29,10 +29,10 @@ Grandma standing in it. Cut.
 ## Beat sheet (about 115 words, ~40 s at Pip's pace)
 | beat | line | picture | plants / the kid's misreading |
 |---|---|---|---|
-| **the question** (punch) | L01 N "My grandpa got DUMPED. Now he breaks LECTERNS. THREE HUNDRED so far." | S01 the lectern cracks, pops, is placed again; the tally wall | why? |
+| **the question** (punch) | L01 N "My GRANDPA is going to WALK across the OCEAN. To get his girlfriend BACK." | S01 the lectern cracks, pops, is placed again; the tally wall | how? and what has a lectern to do with it? |
 | clue 1 | L02 N "The librarian holds up a BOOK. He reads it." | S02 the glinting book, its name never shown | he's after one book |
 | | L03 Grandpa "Not THAT one." | S03 | there is a "that one" |
-| misread 1 | L03b N "And breaks it AGAIN. I think he just HATES that LIBRARIAN." | S03, the break on AGAIN | the kid: a grudge |
+| misread 1 | L03b N "And breaks her LECTERN. Three HUNDRED times now. I think he just HATES that LIBRARIAN." | S03, the pop on LECTERN | the kid: a grudge |
 | stakes, clue 2 | L04 N "Grandma lives on that ISLAND. Her light's on every NIGHT. I think she's scared of the DARK." | S04 long lens: Grandma in her lit window | the kid: a night light (it's left on for him) |
 | clue 3 | L05 N "He won't take a BOAT. Ten YEARS. He's SO stubborn." | S05 the empty boat; Grandpa walks past it | the kid: stubborn |
 | clue 4 | L06 N "When she LEFT, she told him:" / L07 Grandma "Come BACK when the SEA FREEZES." | S06-S07 flashback | the condition, in her voice |

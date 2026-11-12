@@ -13,7 +13,7 @@
     an anvil inside, an open door facing the bay;
   - Grandma's cottage on the island: one 3-wide x 2-high glass-pane window facing the dock, its sill at floor level so Grandma shows head to toe, lanterns behind it so
     it reads lit at dusk and dawn; a second oak boat on its beach (hers).
-- **S01's timelapse:** the lectern cracking on frame 0, popping on BROKEN, placed again by LECTERN, one more break and place by TIMES (`K.dig` and place, crosshair on the block),
+- **S01's timelapse:** the lectern cracking on frame 0, popping on WALK, placed again by OCEAN, one more break and place by BACK (`K.dig` and place, crosshair on the block),
   the librarian losing and regaining her job each time (the vanilla outfit change).
 - **S12 needs Frost Walker on a moving player actor:**
   `/item replace entity <actor> armor.feet with leather_boots[enchantments={frost_walker:2}]`. Vanilla forms frosted
@@ -23,7 +23,8 @@
 ## Claims (the narration and the picture must agree, checked on stills from every shot angle)
 | line | claim | the set must show |
 |---|---|---|
-| L01 | got dumped; now he breaks lecterns, three hundred so far (the same one) | one lectern, in one spot; the tally wall reads as hundreds of marks (about 300) |
+| L01 | Grandpa is going to walk across the ocean (said, not shown: the sea is first seen in S04) | the lectern broken and placed in frame from frame 0 (the picture's question) |
+| L03b | three hundred times (the same lectern) | one lectern, in one spot; the tally wall reads as hundreds of marks (about 300) |
 | L02 | the librarian holds up a book | the villager holding a glinting enchanted book, in frame |
 | L03b | he just hates that librarian | (a misreading: nothing to build) the librarian in frame, jobless |
 | L04 | Grandma lives on that island; her light's on every night | the island across open water, 92 blocks; the window lit; Grandma's figure in it, readable at phone size (FOV 11 in S04) |

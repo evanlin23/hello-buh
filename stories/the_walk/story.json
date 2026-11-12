@@ -2,7 +2,7 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'My grandpa got DUMPED. Now he breaks LECTERNS. Three HUNDRED so far.' replaces the frame + why opener; r6 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the reveal is spoken (L10: the boots, the dock, the sea froze); L11 echoes line 1 ('Three hundred lecterns. For a walk.'); kept the owner's choices: 'Come back when the sea FREEZES.' / 'Mom says it NEVER freezes here.', three hundred, Grandma = grandma_island. r5: the owner's audit; r5.1 Grandma cast.",
+  "revision": "hook r2 (2026-11-12, owner's friend: 'didnt know what the grandpa one [was]'): L01 'My grandpa is going to WALK across the ocean. To get his girlfriend BACK.' (two fresh casual readers: both stop, both understood on first hearing; reviews/opener.md); L03b now plants the count ('Three HUNDRED times now') so L11 still echoes it. Earlier: hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'My grandpa got DUMPED. Now he breaks LECTERNS. Three HUNDRED so far.' replaces the frame + why opener; r6 (2026-11-12): rewritten to the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): line 1 says the fact AND the why; the reveal is spoken (L10: the boots, the dock, the sea froze); L11 echoes line 1 ('Three hundred lecterns. For a walk.'); kept the owner's choices: 'Come back when the sea FREEZES.' / 'Mom says it NEVER freezes here.', three hundred, Grandma = grandma_island. r5: the owner's audit; r5.1 Grandma cast.",
   "caption": "grandpa broke the same lectern 300 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three hundred times, rerolling her book; ten years ago Grandma rowed to the island across the bay and told him to come back when the sea freezes, and the sea there never freezes, until this morning's book is Frost Walker II.",
   "question": "why tf has grandpa broken the same lectern 300 times?",
@@ -115,22 +115,16 @@
     {
       "id": "L01",
       "who": "N",
-      "text": "My GRANDPA / got DUMPED. / Now he breaks LECTERNS. / Three HUNDRED so far.",
-      "say": "My grandpa got DUMPED. Now he breaks LECTERNS. Three HUNDRED so far.",
+      "text": "My GRANDPA / is going to WALK / across the OCEAN. / To get his girlfriend BACK.",
+      "say": "My grandpa is going to WALK across the ocean. To get his girlfriend BACK.",
       "shot": "S01",
       "punch": true,
-      "shows": [
-        {
-          "what": "lectern",
-          "word": "LECTERN"
-        }
-      ],
       "look": {
         "what": "Grandpa",
         "word": "GRANDPA"
       },
-      "direction": "amazed and fed up, one quick breath; the number lands, then WHY is a real question the kid wants answered",
-      "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; flat, a kid reporting family gossip; the viewer joins 'dumped' and 'lecterns'"
+      "direction": "flat and matter-of-fact, a kid passing on family news they don't quite believe; WALK and BACK land, no laugh",
+      "note": "hook (STANDARDS 0v; r2 after the owner's friend didn't get 'dumped -> lecterns'): one clear, absurd goal said flat, the kid repeating what Grandpa says (she thinks it's stubbornness, L05); 'girlfriend' is the kid's word for Grandma; the HOW stays hidden (readers guessed a bridge); L11 'For a WALK' answers it. The lectern pops in frame from frame 0 (S01), so the picture asks the second question: what has a lectern to do with it?"
     },
     {
       "id": "L02",
@@ -168,13 +162,13 @@
     {
       "id": "L03b",
       "who": "N",
-      "text": "And BREAKS it / AGAIN. / I think he just / HATES / that LIBRARIAN.",
-      "say": "And breaks it again. I think he just hates that librarian.",
+      "text": "And breaks her LECTERN. / Three HUNDRED times now. / I think he just / HATES / that LIBRARIAN.",
+      "say": "And breaks her lectern. Three hundred times now. I think he just hates that librarian.",
       "shot": "S03",
       "shows": [
         {
           "what": "lectern",
-          "word": "BREAKS"
+          "word": "LECTERN"
         },
         {
           "what": "villager",
@@ -186,7 +180,7 @@
         "word": "LIBRARIAN"
       },
       "direction": "giggly, totally sure of it",
-      "note": "clue 1 (Not THAT one, 300 breaks) and its misreading: a grudge (0a)"
+      "note": "clue 1 (Not THAT one, 300 breaks) and its misreading: a grudge (0a); plants the count L11 echoes now that line 1 no longer says it (hook r2)"
     },
     {
       "id": "L04",
@@ -349,7 +343,7 @@
         "word": "WALK"
       },
       "direction": "a tiny amazed laugh, the kid's understatement; WALK soft",
-      "note": "the one beat after the reveal; echoes line 1 (three hundred, lecterns) and names the title; cut 1.0 s after WALK"
+      "note": "the one beat after the reveal; echoes line 1 ('WALK', and L03b's three hundred lecterns) and names the title; cut 1.0 s after WALK"
     }
   ],
   "shots": [
@@ -359,7 +353,7 @@
       "place": "library_hut",
       "size": "wide",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-1, 0, 1.2); the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
-      "camera": "at: (5, 2.4, 6.5) from the room's front corner, about 9 blocks back, looking at (-0.5, 1.2, 0), FOV 70, slow push. Frame 0: Grandpa mid-swing, the lectern cracking (block-break animation); it pops on BROKEN, the librarian's outfit pops off (job lost); placed again by LECTERN (she's a librarian again); one more break and place by TIMES",
+      "camera": "at: (5, 2.4, 6.5) from the room's front corner, about 9 blocks back, looking at (-0.5, 1.2, 0), FOV 70, slow push. Frame 0: Grandpa mid-swing, the lectern cracking (block-break animation); it pops on WALK, the librarian's outfit pops off (job lost); placed again by OCEAN (she's a librarian again); one more break and place by BACK",
       "frame": "subject: Grandpa and the lectern, middle third, the librarian beside it; bg: the back wall covered in oak signs of tally marks (about 60 signs: three hundred as a picture). Day 6000.",
       "look": {
         "time": 6000,
@@ -384,8 +378,8 @@
       "place": "library_hut",
       "size": "full",
       "coords": "hut-local: (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) behind it facing +z; Grandpa at (-1, 0, 1.2); the kid at (1, 0, 1.2); the back wall (tally signs) at z -3; the door at (0, 0, 6) facing the bay",
-      "camera": "at: (0, 1.6, 6.5) in the doorway looking back at Grandpa (-1, 1, 1.2), about 6.9 blocks, still; holds L03 and L03b. On BREAKS he swings, the lectern cracks and pops on AGAIN, the librarian's outfit pops off",
-      "frame": "subject: Grandpa head to toe, axe in hand, unimpressed; the lectern at his side, then its item at his feet; the librarian at frame right (jobless after AGAIN); bg: the tally wall. Day 6000.",
+      "camera": "at: (0, 1.6, 6.5) in the doorway looking back at Grandpa (-1, 1, 1.2), about 6.9 blocks, still; holds L03 and L03b. On BREAKS he swings, the lectern cracks and pops on LECTERN, the librarian's outfit pops off",
+      "frame": "subject: Grandpa head to toe, axe in hand, unimpressed; the lectern at his side, then its item at his feet; the librarian at frame right (jobless after LECTERN); bg: the tally wall. Day 6000.",
       "look": {
         "time": 6000
       }
@@ -532,13 +526,13 @@
       "S12: L10, the reveal said over the picture: boots, the step off the dock, the sea freezing under each step toward Grandma's lit window",
       "L11 'Three hundred lecterns. For a walk.' over his walk; cut 1.0 s after WALK"
     ],
-    "loop": "L11 'Three hundred lecterns. For a WALK.' echoes line 1 (three hundred, lecterns) and answers what lecterns have to do with getting dumped"
+    "loop": "L11 'Three hundred lecterns. For a WALK.' answers line 1 ('going to WALK across the ocean'): the lecterns were how"
   },
   "bible": "stories/the_walk/bible.md",
   "set": "stories/the_walk/set.md",
   "shotlist": "stories/the_walk/shots.md",
   "upload": {
-    "title": "my grandpa got dumped. now he breaks lecterns 📚 #minecraft #shorts",
+    "title": "my grandpa is going to walk across the ocean 🌊 #minecraft #shorts",
     "pinned": "Three hundred lecterns. Would YOU have waited that long for her?",
     "tags": [
       "minecraft grandpa",
