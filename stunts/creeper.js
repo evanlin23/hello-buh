@@ -1,15 +1,18 @@
 // "POV: you hear tssss 💀": frame 0 is a look back over the shoulder at a creeper walking up across the field
 // (r:r0f3da0: the opening shows the subject); the bot turns back to its little wall, keeps building, glances
-// again (much closer), and when it's close the hiss starts, the bot spins round to see it swelling right
-// there... and it goes off. Death screen: "56e was blown up by Creeper". A real mob with its own AI.
+// and when it's close the hiss starts, the bot spins round to see it swelling right there... and it goes off. The twist
+// (no-op audit 2026-11-12, owner r:r4607fa: "planks in a field, a creeper walks up, you die"): I survive it (netherite
+// armour with Blast Protection IV, the armour bar on the HUD from frame 0; the hearts take the hit), and its crater
+// has blown open a vein of diamond ore right under where I was building: the creeper did the mining. A real mob with
+// its own AI, a real blast (the ore is set 2-3 blocks down before the take).
 const { plateau } = require('../lib/plateau')
 module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'death', startAt: 'first:0', deathScreen: true, endAfter: 'death:1.2',   // r:r188b46: the end lands 1.2 s after the blast (the death message's reading time, lead) (the death screen is up; smoke no longer holds the end). Was settle:0.1 (2.2 s after the blast). Was settle:0.6: owner 2026-11-11 (r:r52f94c) "we can cut a little earlier"; still after the debris rests (r:r24d99a)
-    sfx: [['air', 'start', 'death', { gain: 0.5 }], ['heart', 'first', { gain: 1.6 }], ['dip', 'hurt', 0.4], ['impact', 'hurt', { gain: 1.4 }]] },   // mixcheck r2: under the NCS bed the blast wasn't a hit: dip + impact on it   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
-  expectDeath: true,
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'boom', startAt: 'first:0', endAfter: 'found:0.9',   // r:r188b46: 0.9 s on the diamonds
+    subs: [['found', 'wait... DIAMONDS?', 1.0]],
+    sfx: [['air', 'start', 'boom', { gain: 0.5 }], ['heart', 'first', { gain: 1.6 }], ['dip', 'boom', 0.4], ['impact', 'boom', { gain: 1.4 }], ['ding', 'found']] },   // mixcheck: under the NCS bed the blast needs dip + impact
 
   async setup (ctx) {
     const { bot } = ctx
@@ -38,8 +41,17 @@ module.exports = {
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/gamerule keep_inventory true')
     await ctx.cmd('/gamerule block_drops false')   // the blast's plank and dirt drops fell into the crater for 2.2 s: the end sat 3.2 s after the blast (settle)   // no hotbar spray on death: the sword, bread and torches flew 2.2 s and held the end 3.2 s after the blast (settle)
-    await ctx.cmd('/difficulty hard')   // full hearts (vanilla start) + the step back: on normal the blast left 3 hearts; hard kills, as the old 1.5-heart start did
+    await ctx.cmd('/difficulty hard')
+    // the vein the blast opens: 2-3 blocks under the strip south of the wall where the creeper ends up swelling
+    for (const [dx, dz, dy] of [[-1, 3, -2], [0, 4, -2], [1, 4, -3], [0, 5, -2], [-1, 5, -3], [1, 3, -2], [2, 5, -2], [-2, 4, -2], [0, 3, -3]]) {
+      await ctx.cmd(`/setblock ${x + dx} ${floor + dy} ${z + dz} diamond_ore`)
+    }
     await ctx.hotbar([['oak_planks', 64], 'diamond_sword', ['bread', 16], ['torch', 32]])
+    // the armour I survive it in (after ctx.hotbar, which clears the inventory: put on before it, it was gone and the blast
+    // killed me) (Blast Protection IV on every piece: a point-blank creeper on hard leaves a few hearts)
+    for (const [slot, item] of [['head', 'netherite_helmet'], ['chest', 'netherite_chestplate'], ['legs', 'netherite_leggings'], ['feet', 'netherite_boots']]) {
+      await ctx.cmd(`/item replace entity @s armor.${slot} with ${item}[enchantments={blast_protection:4}]`)
+    }
     await ctx.tpCheck(x + 0.5, floor + 1, z + 6.5, 0, 4)        // 6 blocks south of the wall (the walk back keeps it over the 8 s floor now the end is 0.8 s after the blast), facing south, where the creeper comes from (frame 0: it's in view)
     await ctx.cmd('/effect give @s instant_health 1 10 true')   // full hearts (the last render started on 1.5 hearts)
     await ctx.cmd('/gamemode survival')
@@ -109,9 +121,25 @@ module.exports = {
     if (c) await A.aimAt(c.position.offset(0, 0.9, 0), { strict: false, max: 22 })   // a point (a swelling creeper stands still): aimed at the entity, the blast mid-turn threw 'gone'   // spin round: oh no (governed, <=220 deg/s: the 300 ms ease whipped at 777 deg/s; the 30-tick fuse leaves ~0.4 s of it swelling in frame)
     // eyes on it as it swells (no step back: with the hiss caught early the step put me out of reach, 1 heart left on hard)
     // (9 ticks back: the blast left 4 hearts even on hard)
-    for (let i = 0; i < 4; i++) { await bot.waitForTicks(1); const cc = mine(); if (cc) bot.lookAt(cc.position.offset(0, 0.9, 0), true) }   // motion-ok: eyes held on the swelling creeper (it stands still: a fraction of a degree a tick)
-    for (let i = 0; i < 60 && !ctx.died; i++) await bot.waitForTicks(1)
-    await bot.waitForTicks(50)                                  // the death screen
-    return ctx.died
+    let at = c ? c.position.clone() : null
+    for (let i = 0; i < 4; i++) { await bot.waitForTicks(1); const cc = mine(); if (cc) { at = cc.position.clone(); bot.lookAt(cc.position.offset(0, 0.9, 0), true) } }   // motion-ok: eyes held on the swelling creeper (it stands still: a fraction of a degree a tick)
+    // the blast: the tick the creeper is gone
+    for (let i = 0; i < 80 && mine() && !ctx.died; i++) { await bot.waitForTicks(1); const cc = mine(); if (cc) at = cc.position.clone() }
+    if (ctx.died) { ctx.log('died in the blast'); return false }
+    ctx.mark('boom')
+    await bot.waitForTicks(8)   // the smoke clears off the crater
+    // down into the crater: the vein it opened
+    const ores = []
+    for (let dx = -4; dx <= 4; dx++) for (let dz = -4; dz <= 4; dz++) for (let dy = -4; dy <= 0; dy++) {
+      const p = at.floored().offset(dx, dy, dz), b = bot.blockAt(p)
+      if (b && b.name === 'diamond_ore') { const up = bot.blockAt(p.offset(0, 1, 0)); if (up && /air/.test(up.name)) ores.push(p) }
+    }
+    ctx.log('diamond ore showing in the crater:', ores.length)
+    if (ores.length < 2) return false
+    const mid = ores.reduce((a, p) => a.plus(p), new Vec3(0, 0, 0)).scaled(1 / ores.length).offset(0.5, 0.8, 0.5)
+    await A.aimAt(mid, { strict: false, max: 24 })
+    ctx.mark('found')
+    await bot.waitForTicks(30)
+    return true
   }
 }
