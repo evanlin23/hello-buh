@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "all_jobs",
     "drop_in_song_s": 39.75,
-    "drop_in_short_s": 18.8,
-    "song_start_s": 20.95
+    "drop_in_short_s": 17.8,
+    "song_start_s": 21.95
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 34.34,
+    "duration_s": 31.59,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 56940283,
-    "sha256": "ac9c6fb47e9dd85ed8e12ed0bb9d7b08af58d79ea59f193aa4df658463289507",
+    "bytes": 52640219,
+    "sha256": "dda5919149918a5a3afbf901e8df4e4d26be2bb8b1bbd25290581e96050d3cce",
     "release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short.ac9c6fb47e9dd85e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.ac9c6fb47e9dd85e.mp4",
-      "sha256": "ac9c6fb47e9dd85ed8e12ed0bb9d7b08af58d79ea59f193aa4df658463289507",
-      "bytes": 56940283
+      "asset": "villager_fired.short.dda5919149918a5a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.dda5919149918a5a.mp4",
+      "sha256": "dda5919149918a5a3afbf901e8df4e4d26be2bb8b1bbd25290581e96050d3cce",
+      "bytes": 52640219
     },
     "nosong_release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short_nosong.2e9bf7cbb22a52d4.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.2e9bf7cbb22a52d4.mp4",
-      "sha256": "2e9bf7cbb22a52d4a65b7e4a2ae7decfa65e94b2a661d8d6e0b4306cb1c43f37",
-      "bytes": 56743101
+      "asset": "villager_fired.short_nosong.d9e3b4cfaf63f8a5.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.d9e3b4cfaf63f8a5.mp4",
+      "sha256": "d9e3b4cfaf63f8a54e4644992e92547dccf6f95916262231d327aea19daece23",
+      "bytes": 52457840
     }
   },
   "edit": {
@@ -52,7 +52,7 @@
     "red": "every",
     "dropAt": "all_jobs",
     "startAt": "beat:-0.05",
-    "endAfter": "settle:0.6",
+    "endAfter": "gone:0.65",
     "subs": [
       [
         "hire",
@@ -191,6 +191,21 @@
         "all_jobs:0.3",
         "faster",
         1.4
+      ],
+      [
+        "beat:3.3",
+        "beat:4.3",
+        1.4
+      ],
+      [
+        "beat:4.45",
+        "beat:5.7",
+        1.4
+      ],
+      [
+        "beat:6.8",
+        "beat:8.05",
+        1.4
       ]
     ],
     "flash": [
@@ -247,12 +262,14 @@
     "args": [
       "--caption",
       "I gave the villager every job 💀",
+      "--self_name",
+      "56e",
       "--red",
       "every",
       "--subs",
       "[[\"hire\",\"job 1: librarian\",1.6,0],[\"fire\",\"fired\",1.2,0],[\"hire\",\"job 2: farmer\",1.4,1],[\"fire\",\"fired again\",1.2,1],[\"hire\",\"job 3: fisherman\",1.2,2],[\"fire\",\"FIRED AGAIN\",1.2,2],[\"every\",\"fine. EVERY job\",1.6,0],[\"job\",\"job 4: armorer\",1.1,3],[\"job\",\"job 5: butcher\",1,4],[\"job\",\"job 6: cartographer\",1,5],[\"job\",\"job 7: cleric\",0.9,6],[\"job\",\"job 8: fletcher\",0.9,7],[\"job\",\"jobs 9, 10, 11...\",1.4,8],[\"job\",\"13 JOBS\",1.4,12],[\"all_jobs\",\"all 13 at once\",2.8,0],[\"faster\",\"FASTER\",1.2,0],[\"crowd\",\"the rest of the village: 0 jobs\",2.2,0],[\"tnt\",\"one problem...\",1.6,0],[\"lit\",\"he is about to get FIRED\",2.2,0],[\"ring_boom\",\"fired from 13 jobs at once\",1.5,0],[\"gone\",\"permanently\",1.5,0]]",
       "--speed",
-      "[[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4]]",
+      "[[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4],[\"beat:3.3\",\"beat:4.3\",1.4],[\"beat:4.45\",\"beat:5.7\",1.4],[\"beat:6.8\",\"beat:8.05\",1.4]]",
       "--punch",
       "[[\"mob_death:0.6\",0,1.3]]",
       "--flash",
@@ -262,7 +279,7 @@
       "--start_at",
       "beat:-0.05",
       "--end_after",
-      "settle:0.6"
+      "gone:0.65"
     ]
   },
   "recording": {
@@ -2222,12 +2239,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/villager_fired",
-    "commit": "d8626a4a966d96123d4e3e2e892b8158f1194e9a",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43073860349",
-    "rendered_at": "2026-11-11T18:15:09.082Z",
-    "head_at_publish": "885440e1470ecdef9043ddac2b77c382fc9efaa7",
+    "branch": "main",
+    "commit": "8a6b7137215d6e119b909ca948a89df4b56e40bc",
+    "rendered": "local",
+    "rendered_at": "2026-11-12T00:47:33.316Z",
+    "head_at_publish": "8a6b7137215d6e119b909ca948a89df4b56e40bc",
     "stunt": "stunts/villager_fired.js",
     "source_snapshot": [
       "source/villager_fired.js",
@@ -2235,26 +2251,27 @@
       "source/story.js",
       "source/motion.js",
       "source/sight.js",
-      "source/act.js"
+      "source/act.js",
+      "source/boats.js"
     ]
   },
   "rebuild": [
-    "git checkout d8626a4a966d",
+    "git checkout 8a6b7137215d",
     "gunzip -c shorts/villager_fired/recording.json.gz > work/villager_fired.rec.json",
     "node render.js work/villager_fired.rec.json work/villager_fired.frames 60 1080 1011",
     "python3 audio.py work/villager_fired.rec.json work/villager_fired.wav",
-    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"ring_boom\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"gone\\\",\\\"permanently\\\",1.5,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4]] --punch [[\"mob_death:0.6\",0,1.3]] --flash [[\"mob_death\",0,0.6],[\"mob_death:0.6\",0,0.9],[\"gone\",0,0.4]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"mob_death:0.6\",0.4],[\"gamedip\",\"mob_death:0.6\",0.35],[\"impact\",\"mob_death:0.6\",{\"gain\":1.3}],[\"pop\",\"gone\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/villager_fired.mp4"
+    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --self_name 56e --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"ring_boom\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"gone\\\",\\\"permanently\\\",1.5,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4],[\"beat:3.3\",\"beat:4.3\",1.4],[\"beat:4.45\",\"beat:5.7\",1.4],[\"beat:6.8\",\"beat:8.05\",1.4]] --punch [[\"mob_death:0.6\",0,1.3]] --flash [[\"mob_death\",0,0.6],[\"mob_death:0.6\",0,0.9],[\"gone\",0,0.4]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"mob_death:0.6\",0.4],[\"gamedip\",\"mob_death:0.6\",0.35],[\"impact\",\"mob_death:0.6\",{\"gain\":1.3}],[\"pop\",\"gone\"]] --start_at beat:-0.05 --end_after gone:0.65 --out out/villager_fired.mp4"
   ],
   "status": "ready",
-  "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +23.3 dB; picture unchanged; audio fix-check READY",
-  "published_at": "2026-11-11T18:39:54.779Z",
+  "notes": "fast cuts r:r188b46: the end 0.6 s after his death (was 2.35 s); the hire/fire waits x1.4; fix-check READY",
+  "published_at": "2026-11-12T00:49:31.346Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T18:40:37+00:00",
+    "at": "2026-11-12T00:50:02+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 34.35 s vs the reviewed render 34.34 s"
+      "summary": "short.mp4 31.59 s vs the reviewed render 31.59 s"
     },
     "pace": {
       "ok": true,
@@ -2266,7 +2283,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T18:23:45.724Z",
+      "at": "2026-11-12T00:47:51.159Z",
       "report": "work/hb/villager_fired.check.json"
     },
     "key_sounds": "n/a"
