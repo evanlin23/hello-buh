@@ -4,10 +4,15 @@
 // sound, the look held on each frame until its eye shows). Then it backs out over the south frame and
 // puts the 12th eye in from outside: the portal opens in front of it (the server builds the
 // end_portal blocks). A jump cut to the next ring, and again, faster each time: seven rings (from the
-// fifth, the hop out is cut too). Eyes stack to 16, so it runs through six stacks. It ends looking
-// down the row: empty rings on into the fog. The job never ends.
+// fifth, the hop out is cut too). Eyes stack to 16, so it runs through six stacks. Then the next empty
+// ring, and the camera cranes up off his head: a sea of empty rings out to the horizon (every patch of
+// level grass for ~150 blocks round, set up from one template ring) - IT NEVER ENDS (owner r:r4607fa,
+// 2026-11-12: the borderline Shorts get one bigger last beat; noop audit: "end on a sea of portal rings to the horizon").
 const RINGS = 12   // 7 to fill, 5 more waiting
 const { openSpots, clearPlants } = require('./_site')
+const M = require('../lib/movie')
+const PLANT = /^(short_grass|tall_grass|fern|large_fern|dandelion|poppy|bush|leaf_litter|wildflowers|firefly_bush|pink_petals|sweet_berry_bush)$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of/
+const SEA = 150   // the sea of empty rings: every 8 blocks (a fixed grid: a retry lands on the same cells) within SEA of the set's middle
 // each shift faster: the turn to the next frame (ms), then the look held on it while the eye goes in
 // (ticks: the eye shows once the server's update is back, 2-3 ticks after the click)
 // in whole ticks (easeLook rounds ms to ticks, at least 1: 110/90/75 all played the same): with the look
@@ -23,16 +28,27 @@ module.exports = {
   botTimeout: 480,   // the site search and set-up alone take 1-2 min: the default 180 s killed every attempt
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: your job is filling end portals',
+  recordRadius: 200, renderDistance: 10,   // the sea out to the fog
+  // the ending: a crane up and back off his head (facing north, at the spare ring) to ~30 up: the empty rings to the horizon
+  // the way with the most rings (north, east, south or west: perform picks it), the crane backing off the other way
+  shots: {
+    sea_n: { crane: { from: 'pov', to: { of: 'self', offset: [0, 30, 26] }, yaw: 0, pitch: -30, fov: 70, secs: 2.6 } },
+    sea_e: { crane: { from: 'pov', to: { of: 'self', offset: [-26, 30, 0] }, yaw: -90, pitch: -30, fov: 70, secs: 2.6 } },
+    sea_s: { crane: { from: 'pov', to: { of: 'self', offset: [0, 30, -26] }, yaw: 180, pitch: -30, fov: 70, secs: 2.6 } },
+    sea_w: { crane: { from: 'pov', to: { of: 'self', offset: [26, 30, 0] }, yaw: 90, pitch: -30, fov: 70, secs: 2.6 } }
+  },
   edit: {
-    caption: 'POV: your job is filling end portals', red: 'job', song: null, dropAt: 'portal', startAt: 'start:0', endAfter: 'outro:1.4',
+    caption: 'POV: your job is filling end portals', red: 'job', song: null, dropAt: 'portal', startAt: 'start:0', endAfter: 'sea:1.4',
     // the song drops out 0.4 s before the outro card and an impact lands the cut to the next empty ring (pace: no sound hit
     // on the payoff). The 2026-11-11 package also drops the game 18 dB over those 0.4 s (the portal's hum covered the hit);
     // edit.py has no game dip yet
     // (since 2026-11-11 in the edit itself: 'gamedip' ducks the game over the same 0.4 s, and a louder impact)
-    sfx: [['dip', 'outro', 0.4], ['gamedip', 'outro', 0.4], ['impact', 'outro', { gain: 1.4 }]],
+    // (the hit and the card moved to 'sea', 1.2 s into the crane, as the sea of rings comes into view)
+    sfx: [['dip', 'sea', 0.4], ['gamedip', 'sea', 0.4], ['impact', 'sea', { gain: 1.4 }]],
     subsY: 0.15,   // up in the sky, off the frames being filled
     subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
-    cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']],
+    cards: [['sea', 'IT NEVER ENDS 💀', 1.4, 'red']],
+    punch: [['sea', 0, 1.08]], flash: [['sea', 0, 0.4]],   // a zoom punch and a white flash on the reveal: the picture changes on the hit (pace)
     // the speedrun timer (owner request, 2026-11-07) times one portal (owner r:r32b983, 2026-11-11: "the timer should reset
     // every single time like we start a new ender portal"): 0:00.00 on each ring, green with "n/7" when its portal opens,
     // then red and running from 0 on the spare ring ("8/∞"). Built in the edit (edit.py split_timer), so ./hb check's lint
@@ -48,7 +64,12 @@ module.exports = {
     // no cleared box: each ring on its own patch of the natural ground (within a block of level, the
     // ring's 5x5 then levelled: at most a one-block step), nothing overhead
     // a retry respawns wherever the last attempt ended (once underground): back to the biome first
-    await ctx.locateBiome(this.biome)
+    // the middle of the Green (docs/world/world_map.jpg): the seed's widest grass plain, room for the sea of rings
+    // (the nearest plains to spawn was a strip between a lake and woods: 44 rings fitted). END_PORTAL_AT="x,z" moves it
+    const [AX, AZ] = (process.env.END_PORTAL_AT || '-430,-780').split(',').map(Number)
+    await ctx.cmd(`/tp @s ${AX} 200 ${AZ}`)
+    await bot.waitForTicks(40)
+    await ctx.waitChunks({ x0: AX - 112, z0: AZ - 112, x1: AX + 112, z1: AZ + 112 }, 90000)
     const g = ctx.findLand(bot.entity.position.x | 0, bot.entity.position.z | 0)
     if (!g) throw new Error('no dry land')
     await ctx.defaultRules()
@@ -109,6 +130,7 @@ module.exports = {
       }
     }
     const S0 = this.spots[0]
+    await this.sea(ctx)
     const n = this.spots.length, mx = Math.round(this.spots.reduce((a, S) => a + S.x, 0) / n), mz = Math.round(this.spots.reduce((a, S) => a + S.z, 0) / n)
     await ctx.hotbar([...[16, 16, 16, 16, 16, 16].map(n => ['ender_eye', n]), 'iron_pickaxe', ['bread', 7]])   // 84 eyes used, a stack still in hand at the end   // 7 rings x 12 eyes = 84: eyes stack to 16
     await ctx.cmd('/gamemode survival')
@@ -116,6 +138,77 @@ module.exports = {
     await ctx.tpCheck(S0.x + 2.5, S0.floor + 1, S0.z + 2.5, 26.6, 39)   // facing the first frame
     ctx.select(0)
     return { x: mx, y: S0.floor, z: mz }   // the rings' middle: the harness records the world around it
+  },
+
+  // the sea: an empty ring on every level patch of grass on an 8-block grid within SEA of the rings' middle, away from
+  // the job's rings, cloned from one template ring under the ground (dirt, grass, the frames facing in: as the job's
+  // rings) onto the ground, levelled, only where its whole 5x5 is grass within a block of level with nothing over it:
+  // never on water, a roof, a slope or under a tree
+  async sea (ctx) {
+    const { bot, Vec3 } = ctx
+    const n = this.spots.length
+    const mx = Math.round(this.spots.reduce((a, S) => a + S.x, 0) / n), mz = Math.round(this.spots.reduce((a, S) => a + S.z, 0) / n)
+    await ctx.cmd('/gamerule block_drops false')   // the tall grass a ring lands on breaks: no loose seeds
+    for (const [z0, z1] of [[mz - SEA - 8, mz], [mz + 1, mz + SEA + 8]]) await ctx.cmd(`/forceload add ${mx - SEA - 8} ${z0} ${mx + SEA + 8} ${z1}`)
+    await bot.waitForTicks(60)
+    // the template, deep under the middle (in loaded deepslate, out of every shot)
+    const T = { x: mx, y: -58, z: mz }
+    // (two of dirt, the grass, the frames' layer and two of air: the clone levels ground within 2 blocks)
+    await ctx.cmd(`/fill ${T.x} ${T.y} ${T.z} ${T.x + 4} ${T.y + 1} ${T.z + 4} dirt`)
+    await ctx.cmd(`/fill ${T.x} ${T.y + 2} ${T.z} ${T.x + 4} ${T.y + 2} ${T.z + 4} grass_block`)
+    await ctx.cmd(`/fill ${T.x} ${T.y + 3} ${T.z} ${T.x + 4} ${T.y + 5} ${T.z + 4} air`)
+    const y = T.y + 3
+    await ctx.cmd(`/fill ${T.x + 1} ${y} ${T.z} ${T.x + 3} ${y} ${T.z} end_portal_frame[facing=south,eye=false]`)
+    await ctx.cmd(`/fill ${T.x + 1} ${y} ${T.z + 4} ${T.x + 3} ${y} ${T.z + 4} end_portal_frame[facing=north,eye=false]`)
+    await ctx.cmd(`/fill ${T.x} ${y} ${T.z + 1} ${T.x} ${y} ${T.z + 3} end_portal_frame[facing=east,eye=false]`)
+    await ctx.cmd(`/fill ${T.x + 4} ${y} ${T.z + 1} ${T.x + 4} ${y} ${T.z + 3} end_portal_frame[facing=west,eye=false]`)
+    // away from the job's rings and the ground in front of them where he stands (each ring's 5x5 from S.x, S.z)
+    const clear = (cx, cz) => this.spots.every(S => cx + 2 < S.x - 3 || cx - 2 > S.x + 7 || cz + 2 < S.z - 3 || cz - 2 > S.z + 10)
+    const G = 8, cells = []
+    for (let cx = Math.ceil((mx - SEA) / G) * G; cx <= mx + SEA; cx += G) {
+      for (let cz = Math.ceil((mz - SEA) / G) * G; cz <= mz + SEA; cz += G) if (Math.hypot(cx - mx, cz - mz) <= SEA && clear(cx, cz)) cells.push([cx, cz])
+    }
+    // the ground read from the bot's own world (a chat command is capped at 256 characters: /execute with the checks
+    // didn't fit): from over the middle, every cell within the view distance is loaded
+    await ctx.cmd('/gamemode creative')   // (survival again before the start)
+    await ctx.cmd(`/tp @s ${mx} 140 ${mz}`)
+    await ctx.waitChunks({ x0: mx - 120, z0: mz - 120, x1: mx + 120, z1: mz + 120 }, 90000).catch(e => ctx.log('sea chunks:', e.message))
+    await bot.waitForTicks(20)
+    const ground = (x, z) => {   // the top block under plants, logs and leaves, or null (unloaded)
+      for (let yy = 130; yy > 40; yy--) {
+        const b = bot.blockAt(new Vec3(x, yy, z))
+        if (!b) return null
+        if (/^(air|cave_air)$/.test(b.name) || PLANT.test(b.name) || /_leaves$|_log$/.test(b.name)) continue
+        return b
+      }
+      return null
+    }
+    let placed = 0
+    this.seaRings = []
+    for (let i = 0; i < cells.length; i++) {
+      if (i % 40 === 0) await bot.waitForTicks(1)
+      const [cx, cz] = cells[i]
+      const c = ground(cx, cz)
+      if (!c || c.name !== 'grass_block') continue
+      const Y = c.position.y
+      let ok = true
+      for (let dx = -2; dx <= 2 && ok; dx++) {
+        for (let dz = -2; dz <= 2 && ok; dz++) {
+          const g = ground(cx + dx, cz + dz)
+          if (!g || !/^(grass_block|dirt)$/.test(g.name) || Math.abs(g.position.y - Y) > 2) { ok = false; break }   // within 2 blocks of level (the clone levels it)
+          for (let k = 3; k <= 6; k++) { const a = bot.blockAt(new Vec3(cx + dx, Y + k, cz + dz)); if (!a || !(/^(air|cave_air)$/.test(a.name) || PLANT.test(a.name))) { ok = false; break } }   // nothing over it: no tree
+        }
+      }
+      if (!ok) continue
+      bot.chat(`/clone ${T.x} ${T.y} ${T.z} ${T.x + 4} ${T.y + 5} ${T.z + 4} ${cx - 2} ${Y - 2} ${cz - 2}`)
+      this.seaRings.push([cx, cz])
+      if (++placed % 4 === 0) await bot.waitForTicks(1)
+    }
+    await bot.waitForTicks(20)
+    await ctx.cmd(`/fill ${T.x} ${T.y} ${T.z} ${T.x + 4} ${T.y + 5} ${T.z + 4} deepslate`)
+    await ctx.cmd('/kill @e[type=item]', { mayFail: true })
+    await ctx.cmd('/forceload remove all')
+    ctx.log('sea:', placed, 'rings of', cells.length, 'cells round', mx, mz)
   },
 
   // ring frames in fill order: round the ring clockwise from the south-west, ending on the
@@ -168,7 +261,7 @@ module.exports = {
       ctx.sound('block.end_portal_frame.fill')
       ctx.mark('place', { x: fx, y: fy, z: fz, eye: true })   // vanilla timing: the eye shows 1 tick after the use
       bot.swingArm()   // the swing on the click, the eye a tick later
-      bot._client.write('block_place', { hand: 0, location: { x: fx, y: fy, z: fz }, direction: 1, cursorX: 0.5, cursorY: 0.8125, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+      bot._client.write('block_place', { hand: 0, location: { x: fx, y: fy, z: fz }, direction: 1, cursorX: 0.5, cursorY: 0.8125, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: aimed: the look lands exactly on this frame (bot.lookAt above, held a tick) before the click; the aim check measures it
 
       if (wait) await bot.waitForTicks(wait)
       if (used % 16 === 0) ctx.select(used / 16)   // the stack ran out (its last eye has shown): onto the next
@@ -228,14 +321,34 @@ module.exports = {
       for (let k = 0; k < 10 && !bot.entity.onGround; k++) await bot.waitForTicks(1)
       ctx.mark('outroB')
       ctx.mark('outro')
-      await ctx.easeLookAt(new Vec3(sp.x + 1.5, sp.floor + 1.5, sp.z + 2.5), 700)
-      await ctx.easeLookAt(new Vec3(sp.x + 3.5, sp.floor + 1.5, sp.z + 1.5), 1300)
+      // a beat on the next empty ring (the next shift), then the crane up off his head: the sea of empty rings
+      await ctx.easeLookAt(new Vec3(sp.x + 2.5, sp.floor + 1.5, sp.z + 2.5), 300)
+      await bot.waitForTicks(4)
+      // the crane faces the way with the most rings 30-150 blocks out (the frame's field: +-35 deg round it)
+      const way = [['sea_n', 0, -1], ['sea_e', 1, 0], ['sea_s', 0, 1], ['sea_w', -1, 0]].map(([nm, ux, uz]) => {
+        const n = (this.seaRings || []).filter(([cx, cz]) => {
+          const dx = cx - (sp.x + 2), dz = cz - (sp.z + 2), along = dx * ux + dz * uz, d = Math.hypot(dx, dz)
+          return d >= 20 && d <= 150 && along > d * Math.cos(35 * Math.PI / 180)
+        }).length
+        return [nm, n]
+      }).sort((a, b) => b[1] - a[1])
+      ctx.log('crane ways', JSON.stringify(way))
+      M.shot(ctx, way[0][0])
+      // and under the crane he hops into it: the next shift starts
+      const into = goTo(sp.x + 2.5, sp.z + 2.5, new Vec3(sp.x + 2.5, sp.floor + 1, sp.z + 0.5), true, 0.2)
+      await bot.waitForTicks(24)
+      ctx.mark('sea')   // high enough that the rings read to the horizon: the card and the hit
+      await into
+      await bot.waitForTicks(40)
     } else {   // no spare: across the filled ones
       ctx.mark('outro')
       const here = bot.entity.position
       const others = this.spots.slice(0, N - 1).map(S => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)).sort((a, b) => b.distanceTo(here) - a.distanceTo(here))
       await ctx.easeLookAt(others[others.length - 1], 700)
-      await ctx.easeLookAt(others[0], 1300)
+      M.shot(ctx, 'sea_n')
+      await bot.waitForTicks(24)
+      ctx.mark('sea')
+      await bot.waitForTicks(40)
     }
     bot.removeListener('blockUpdate', onBlock)
     return !ctx.died

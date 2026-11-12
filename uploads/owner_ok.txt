@@ -1,0 +1,42 @@
+# The owner's OK per Short, bound to the exact cut they watched (scripts/owner_ok.py; youtube_upload.py)
+ai_dirk_willems  0db9021130eae667  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+heart_art  cb6e43568cc09dae  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+ladder_clutch  e710068cc121edef  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+lapse_rocket  90232e1e32bbde83  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+lapse_statue  f16d41ecce372ba3  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+looks_wrong  416d9b9d1ef28212  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+midas_touch  ba89270c834b403e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+one_in_a_million  5df9f64bf48c09b5  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+skull_art  90fb02c533792bde  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+sword_art  371a726d38ca931c  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
+psycho_lava_mansion  14b70bd2fadc1cc0  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:44 UTC
+lucky_dig  6a6cbe726b07b07b  # 2026-11-11: owner pressed OK for YouTube in the Review Room 2026-11-11T20:12Z
+fakeworld_diamond  e3e2aaebc6ac2831  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+friend_new_world  af35a2c2b5d76a4e  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+mobpov_baby_zombie  590704a75c6a451b  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+which_door  2060e5056d50f933  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
+half_heart  adc314afcbec6b57  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+inside_library  afd020dcb719d1ca  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+mega_lapse_fountain  07d5ae1f880e9f2a  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+tnt  adea555f2b9215d3  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+tnt_1000  b9dbc555bb04ac05  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
+logic_minecraft  1127162452f6f698  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
+love_cherry_heart  e836026726dbd44f  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
+stages_friends  2d2325d6d4099956  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
+underdog_heal  f48a7c39cfacca9d  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+mislabel_grandma  506c2a0b9b5dccad  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+race_grass_mycelium  e6c33aacb6ff28da  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+nether_portal  ca01773e839f959f  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+fakemod_permission  e328dfbb2e452dfe  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+cells_lab  6fcef8652fe0311a  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+creeper_art  272b23a5166f0a95  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+fakerun_any  d3470607308c506e  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+fortune  5ac3c857f5ef0bef  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+hack_banner_door  5131787cb44d429c  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+villager_crowd  65ddd7b4d88ae695  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+villager_fired  baa103404df94de8  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:21-06:24 UTC
+lapse_house  e2277d1acf6bfeda  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:26-06:45 UTC
+cave_reveal  45f28f31693464e5  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:26-06:45 UTC
+herobrine_bridge  f0f2d86a3a111946  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:26-06:45 UTC
+cooked_bedrock  05c5539b36ffa8b4  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:26-06:45 UTC
+boat_clutch  a7a5f2346dbe8ae2  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 06:26-06:45 UTC

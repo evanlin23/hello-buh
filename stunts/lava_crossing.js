@@ -17,6 +17,10 @@ module.exports = {
   edit: {
     caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
     onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:0.4', endAfter: 'death:1.15',
+    // the opening (owner r:r0f3da0): a 1.2 s flash of the walk into the lava (the 0/10 everyone waits for) comes first.
+    // The bridge is back (owner 2026-11-12 at 2.4 s: "huh? no brdige?": the cut that started on the water bucket left
+    // 'bridging: 6/10' on screen with no bridge): it is built and crossed, fast (x2.5 placing, x3 the walk across)
+    hook: { at: 'in_lava', before: 0.35, after: 0.85, text: 'wait for the last one 💀' },
     subs: [
       ['beat', 'bridging...', 9, 0], ['crossed', 'bridging: 6/10', 9, 0],
       ['beat', 'water bucket...', 9, 1], ['crossed', 'water bucket: 9/10', 9, 1],
@@ -27,8 +31,9 @@ module.exports = {
     // pace: sound by 0.3 s (a whoosh into the first beat), a pop on each rating, a song dip + impact on the death
     sfx: [['whoosh', 'beat:0.4'], ['pop', 'place_on', { nth: 0, gain: 0.5 }], ['pop', 'crossed', { nth: 0 }], ['pop', 'crossed', { nth: 1 }], ['pop', 'crossed', { nth: 2 }],
       ['dip', 'death', 0.3], ['impact', 'death']],
-    // the sneak along the finished bridge to the bank (nothing new: review nitpick) at 2x
-    speed: [['bridged', 'crossed', 2]]
+    // (the look down before the first block and the turn after the last play at 1x: sped up they were 550-680 deg/s
+    // whips on screen)
+    speed: [['beat:0.4', 'place_on:-0.35', 2], ['place_on:0.05', 'bridged:-0.05', 2.5], ['bridged:0.4', 'crossed', 3]]
   },
   expectDeath: true,
 

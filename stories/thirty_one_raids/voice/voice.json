@@ -1,0 +1,573 @@
+{
+ "lines": {
+  "L01": {
+   "who": "N",
+   "text": "Thirty-one raids, every one started the night Grandpa came home.",
+   "dur": 3.558,
+   "onset": 0.32,
+   "end": 3.22,
+   "chunks": [
+    [
+     0.32,
+     1.08
+    ],
+    [
+     1.38,
+     1.76
+    ],
+    [
+     1.81,
+     2.44
+    ],
+    [
+     2.48,
+     3.22
+    ]
+   ],
+   "captions": [
+    "THIRTY-ONE raids,",
+    "EVERY one",
+    "started the NIGHT",
+    "Grandpa came HOME."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "64a45be4d46d"
+  },
+  "L02": {
+   "who": "N",
+   "text": "Raid one, raid twelve, raid thirty-one. He won every one.",
+   "dur": 3.683,
+   "onset": 0.06,
+   "end": 3.44,
+   "chunks": [
+    [
+     0.06,
+     0.54
+    ],
+    [
+     0.64,
+     1.18
+    ],
+    [
+     1.28,
+     1.94
+    ],
+    [
+     2.34,
+     2.64
+    ],
+    [
+     2.92,
+     3.44
+    ]
+   ],
+   "captions": [
+    "Raid ONE,",
+    "raid TWELVE,",
+    "raid THIRTY-ONE.",
+    "He WON",
+    "every ONE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 3.558,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "40e7c0e975f5"
+  },
+  "L03": {
+   "who": "N",
+   "text": "He says they follow him. They know who beats them.",
+   "dur": 2.877,
+   "onset": 0.14,
+   "end": 2.56,
+   "chunks": [
+    [
+     0.14,
+     0.44
+    ],
+    [
+     0.5,
+     1.18
+    ],
+    [
+     1.42,
+     1.84
+    ],
+    [
+     1.98,
+     2.56
+    ]
+   ],
+   "captions": [
+    "He SAYS",
+    "they FOLLOW him.",
+    "They KNOW",
+    "who BEATS them."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 7.24,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "82ece4b8d194"
+  },
+  "L04": {
+   "who": "N",
+   "text": "So the villagers throw him bread.",
+   "dur": 1.802,
+   "onset": 0.11,
+   "end": 1.44,
+   "chunks": [
+    [
+     0.11,
+     0.76
+    ],
+    [
+     0.8,
+     1.44
+    ]
+   ],
+   "captions": [
+    "So the VILLAGERS",
+    "throw him BREAD."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 10.117,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "e57517e137ca"
+  },
+  "L05": {
+   "who": "N",
+   "text": "Since Grandma died, he's always alone. But raid nights? Everyone cheers for him.",
+   "dur": 4.978,
+   "onset": 0.105,
+   "end": 4.64,
+   "chunks": [
+    [
+     0.105,
+     1.0
+    ],
+    [
+     1.16,
+     2.18
+    ],
+    [
+     2.58,
+     3.26
+    ],
+    [
+     3.66,
+     4.32
+    ],
+    [
+     4.36,
+     4.64
+    ]
+   ],
+   "captions": [
+    "Since GRANDMA died,",
+    "he's always ALONE.",
+    "But RAID nights?",
+    "EVERYONE cheers",
+    "for HIM."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 11.92,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "a842f404f919"
+  },
+  "L06": {
+   "who": "N",
+   "text": "Every week, he hunts at the tower. He brings back ominous bottles. Ominous means lucky, I think. He calls them his luck.",
+   "dur": 7.165,
+   "onset": 0.28,
+   "end": 6.82,
+   "chunks": [
+    [
+     0.28,
+     0.66
+    ],
+    [
+     0.9,
+     1.26
+    ],
+    [
+     1.36,
+     1.82
+    ],
+    [
+     2.12,
+     2.66
+    ],
+    [
+     2.94,
+     3.58
+    ],
+    [
+     4.12,
+     4.64
+    ],
+    [
+     4.8,
+     5.48
+    ],
+    [
+     5.88,
+     6.34
+    ],
+    [
+     6.46,
+     6.82
+    ]
+   ],
+   "captions": [
+    "Every WEEK,",
+    "he HUNTS",
+    "at the TOWER.",
+    "He brings BACK",
+    "OMINOUS bottles.",
+    "OMINOUS means",
+    "LUCKY, I think.",
+    "He CALLS them",
+    "his LUCK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "b11323c37fa4"
+  },
+  "L07": {
+   "who": "N",
+   "text": "He drinks one at the gate. Then he says:",
+   "dur": 2.425,
+   "onset": 0.18,
+   "end": 2.16,
+   "chunks": [
+    [
+     0.18,
+     0.64
+    ],
+    [
+     0.68,
+     1.06
+    ],
+    [
+     1.52,
+     2.16
+    ]
+   ],
+   "captions": [
+    "He DRINKS one",
+    "at the GATE.",
+    "Then he SAYS:"
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 7.164,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "ac24e02b6008"
+  },
+  "L08": {
+   "who": "Grandpa",
+   "text": "Lock the door, kid, they're coming.",
+   "dur": 3.65,
+   "onset": 0.24,
+   "end": 3.14,
+   "chunks": [
+    [
+     0.24,
+     0.96
+    ],
+    [
+     1.18,
+     3.14
+    ]
+   ],
+   "captions": [
+    "Lock the DOOR,",
+    "kid. They're COMING."
+   ],
+   "with": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L08",
+   "offset": 0.0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "bab01e9c7d89",
+   "head_cut": {
+    "s": 1.0,
+    "why": "lead 2026-11-11: the slice starts at the quiet point 240 ms before 'Lock' (a non-script grunt at 0.25-0.6 s of the take)"
+   }
+  },
+  "L09": {
+   "who": "N",
+   "text": "Then a horn goes off. And Grandpa smiles. He must love the raids.",
+   "dur": 4.495,
+   "onset": 0.22,
+   "end": 4.06,
+   "chunks": [
+    [
+     0.22,
+     0.88
+    ],
+    [
+     0.94,
+     1.32
+    ],
+    [
+     1.74,
+     2.6
+    ],
+    [
+     3.06,
+     3.62
+    ],
+    [
+     3.68,
+     4.06
+    ]
+   ],
+   "captions": [
+    "Then a HORN",
+    "goes OFF.",
+    "And Grandpa SMILES.",
+    "He must LOVE",
+    "the RAIDS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L09",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "3d1da2166516"
+  },
+  "L10": {
+   "who": "N",
+   "text": "Tonight he came home too tired to fight.",
+   "dur": 2.405,
+   "onset": 0.26,
+   "end": 2.06,
+   "chunks": [
+    [
+     0.26,
+     0.94
+    ],
+    [
+     1.0,
+     1.68
+    ],
+    [
+     1.72,
+     2.06
+    ]
+   ],
+   "captions": [
+    "Tonight he CAME",
+    "home too TIRED",
+    "to FIGHT."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L09",
+   "offset": 4.495,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "4f58bc4741a6"
+  },
+  "L11": {
+   "who": "N",
+   "text": "So I drank his luck. Somebody had to fight.",
+   "dur": 3.223,
+   "onset": 0.09,
+   "end": 3.02,
+   "chunks": [
+    [
+     0.09,
+     1.12
+    ],
+    [
+     1.2,
+     1.52
+    ],
+    [
+     2.045,
+     2.62
+    ],
+    [
+     2.66,
+     3.02
+    ]
+   ],
+   "captions": [
+    "So I DRANK",
+    "his LUCK.",
+    "SOMEBODY had",
+    "to FIGHT."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L09",
+   "offset": 6.9,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "6bfc97f1960e"
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts",
+  "Grandpa": "gemini-3.8-flash-tts"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 16.898,
+   "offsets": [
+    0.0,
+    3.558,
+    7.24,
+    10.117,
+    11.92
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L01",
+   "take_at": 0.0
+  },
+  "L06": {
+   "lines": [
+    "L06",
+    "L07"
+   ],
+   "file": "beat_L06.wav",
+   "dur": 9.59,
+   "offsets": [
+    0.0,
+    7.164
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L01",
+   "take_at": 16.898
+  },
+  "L09": {
+   "lines": [
+    "L09",
+    "L10",
+    "L11"
+   ],
+   "file": "beat_L09.wav",
+   "dur": 10.123,
+   "offsets": [
+    0.0,
+    4.495,
+    6.9
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": [],
+   "take": "L01",
+   "take_at": 26.488
+  },
+  "L08": {
+   "lines": [
+    "L08"
+   ],
+   "file": "beat_L08.wav",
+   "dur": 3.65,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.78 s whispered or dropped far under the take"
+     ]
+    }
+   ],
+   "gate_before_head_cut": [
+    {
+     "kind": "whisper",
+     "at": 0.0,
+     "len": 0.78,
+     "why": "0.78 s whispered or dropped far under the take"
+    }
+   ],
+   "regated": "2026-11-11: re-gated after the head cut (take_gate.gate, Grandpa's limits): pass"
+  }
+ },
+ "total": 41.26
+}

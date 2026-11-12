@@ -36,8 +36,8 @@ Checks (ranked by how often reviews flagged them):
                hitting another block first
   5d. aim     the crosshair on every action (r:rffba12, scripts/owner_checks.py + lib/aim.js): a place, break, block or
                entity use (dye, shear, name tag) over 15 deg off its target or off-screen, or over 10% of them past 6 deg
-  5e. settle  no hard cut or end while falling blocks, explosion debris or a dying mob still move in view
-               (r:r24d99a, scripts/owner_checks.py)
+  5e. settle  no hard cut or end while falling blocks or a dying mob still move in view (or a blast goes off at the
+               end); smoke, particles and drifting debris never hold a cut (r:r24d99a, r:r188b46, scripts/owner_checks.py)
   6-9. the owner's notes (2026-11-10), from `./hb owner` (lib/hb/owner.js; --no-owner skips them):
      flat      a story shot whose visible world is mostly a flat cleared plain (and the set's footprint and relief)
      subject   a line names a subject (lines[].look, or TORCH / MOM / LIBRARIAN...) and the camera isn't on it
@@ -382,6 +382,11 @@ def main():
         if r_["problems"]:
             o_ = out_t(r_["a"])
             R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["a"]), lapse_cuts.message(r_), near(r_["a"] * 20))
+    # no edit cut in the middle of a dig, place or use (owner r:r52f94c, pickaxe_race; scripts/action_cuts.py)
+    import action_cuts
+    for r_ in action_cuts.action_cuts(warp.spans if warp else [], tl):
+        o_ = out_t(r_["at"])
+        R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["at"]), action_cuts.message(r_), near(r_["at"] * 20))
     # F1 windows (HUD hidden, render.js/edit.py): a cinematic drone camera, not a player
     f1, f1_on = [], None
     for e in tl:
@@ -588,9 +593,9 @@ def main():
     # "Motion by construction") and the screen with its items is what's on screen, so it is not a held pause
     win = None
     for e in tl:
-        if e["event"] == "container" and win is None:
+        if e["event"] in ("container", "merchant") and win is None:
             win = e["t"] / 50
-        elif e["event"] == "container_close" and win is not None:
+        elif e["event"] in ("container_close", "merchant_close") and win is not None:
             active.update(range(int(win), int(e["t"] / 50) + 2))
             win = None
     if win is not None:
@@ -626,7 +631,7 @@ def main():
         if key_ not in ("speed", "slowmo", "freeze", "startAt", "endAfter", "dropAt", "sfx", "replay", "song", "caption", "red", "colors", "story"):
             walk(v)
     for e in tl:
-        if e["event"] in ("line", "meter", "death"):
+        if e["event"] in ("line", "meter", "death", "syschat", "chat"):   # (a new chat line is new on screen: the cooked flood)
             overlay.add(out_t(e["t"] / 1000))
     story_dir = a.story_dir or ed.get("story")
     caps_note = ""
@@ -793,6 +798,8 @@ def main():
         name = row[2]
         if name in NOT_MOBS or name.endswith(("minecart", "boat", "raft", "_arrow")):
             continue
+        if isinstance(row[9] if len(row) > 9 else None, dict) and row[9].get("ride") is not None:
+            continue   # a rider: its boat or cart moves it (harness extra.ride), not its legs
         tracks.setdefault(row[1], []).append(row)
     flagged = set()
     for eid, rows in tracks.items():
@@ -848,9 +855,9 @@ def main():
         if stunt_hud(a.stunt, a.stunt_file) is not False:
             conts, c_on = [], None
             for e in tl:
-                if e["event"] == "container" and c_on is None:
+                if e["event"] in ("container", "merchant") and c_on is None:
                     c_on = e["t"] / 50
-                elif e["event"] == "container_close" and c_on is not None:
+                elif e["event"] in ("container_close", "merchant_close") and c_on is not None:
                     conts.append((c_on, e["t"] / 50)); c_on = None
             if c_on is not None:
                 conts.append((c_on, 1e9))
@@ -885,10 +892,11 @@ def main():
         for lvl, tick, msg in aim_res["findings"]:
             add(lvl, "aim", min(n - 1, max(0, int(round(out_t(tick / 20) * FPS)) - k0)), msg, tick=tick)
 
-    # ---------------------------------------------------------------- 5e. let the payoff settle (r:r24d99a)
-    # the last frames before every hard cut and the end: falling blocks / debris / a death still moving in view
+    # ---------------------------------------------------------------- 5e. let the action finish (r:r24d99a, r:r188b46)
+    # the last frames before every hard cut and the end: a falling block or a death still moving in view (smoke,
+    # particles and drifting debris never hold a cut: r:r188b46)
     tracks = OC.debris_tracks(rec)
-    tracks_end = OC.debris_tracks(rec, puffs=True)   # the end also waits out the rendered smoke and debris (which_door)
+    tracks_end = OC.debris_tracks(rec, puffs=True)   # the end also never lands on a blast going off (its first 0.3 s)
     cam_at = lambda k: cam.at(min(len(P) - 1, k))
     settle_res = {"tracks": len(tracks_end), "ok": True, "findings": []}
     if tracks_end:
@@ -911,9 +919,7 @@ def main():
             msg = (f"settle: the Short {what} while {OC.describe(mv)} still move{'s' if len(mv) == 1 else ''} in view ({when}): "
                    + ("end after it (endAfter on a mark after the settle, +1.0 s at most)" if kind == "end" else "cut after it lands")
                    + " (owner: let the last pillar of sand all fall before we end/cut; STANDARDS r:r24d99a)")
-            # only the rendered smoke left (PUFF_TICKS is an estimate): a WARN here; pace measures the finished mp4's last
-            # 0.6 s and blocks when the picture still moves
-            lvl = "WARN" if kind == "end" and all(t["kind"] == "puff" for t in mv) else "BLOCK"
+            lvl = "BLOCK"
             settle_res["findings"].append((lvl, k_out, msg))
             add(lvl, "settle", j, msg, tick=k_out)
         settle_res["ok"] = not any(lvl == "BLOCK" for lvl, _, _ in settle_res["findings"])

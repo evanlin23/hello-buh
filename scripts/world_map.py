@@ -156,6 +156,8 @@ def main():
     labels = []
     skip = V.get("detail_in")   # an area drawn in its own map: dots only here, the labels live there
     for key, p in M.get("places", {}).items():
+        if str(p.get("dimension") or "overworld").replace("minecraft:", "") != "overworld":
+            continue   # a Nether / End place: its x, z are another dimension's
         x, z = p["at"][0], p["at"][-1]
         if not inside(x, z):
             continue

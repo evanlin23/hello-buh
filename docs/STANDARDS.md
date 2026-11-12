@@ -1,6 +1,6 @@
 # Story standards: the current checklist
 
-Updated: 2026-11-11
+Updated: 2026-11-12
 
 Every rule a story Short must meet **today**, once, by stage, with its number and the check that enforces it. The
 newest owner decision wins; superseded rules are listed at the end and must not be applied. The dated history (the
@@ -35,7 +35,39 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    cut within ~1 s of the reveal; nothing that doesn't move the question (length itself is not a target: ~50 s at
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
-   cold reader, review. r:ra807e9 r:r8de735
+   cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
+0u. **Built for the stop rate** (Buhtown's Studio data: >= 81% viewed = 10k+ views, < 80% = under 2.6k): the first
+   frame and the title are one strange, checkable fact stated plainly (no warning titles); seconds 4-8 escalate (no
+   setup, backstory or who's-who); 30-45 s and loopable; something for viewers to answer or argue; prefer a rule with a
+   number or mark, a person changed overnight, warm twists; dark sets, monsters and sad losses carry a higher bar.
+   Check: story-critic, owner, Studio (stop rate). r:rac1ae3 (the build list: r:rd25bba; Sorry Dear and Statue approved, r:r434f6f)
+0t. **The first 8 seconds** (hook frame study 2026-11-12, docs/research/hook_frames_2026-11-12.md): frame 1 is a
+   medium/close of a person or body the rule acts on (face >= 1/4 width), the odd thing visible and moving; the key
+   (title CAPS) word spoken by 1.8 s, line 1 done by ~2.5 s; shot 1 cuts on the key word; 2-4 s a stake on a face; 4-8 s
+   the rule on a new person every 1.2-1.6 s, no backstory/layout/object list/HUD POV/near-black; bright, cool-neutral.
+   Check: framing, pace, story-critic. r:rd25bba
+0v. **The hook is absurd** (owner: "we need to make our hooks absurd"): line 1 is a sentence nobody expects, said
+   flatly, true to the story and naive, never a joke at a real group's expense; a casual reader would stop scrolling.
+   Edgy inside the story's world is fine; no real-world flashpoints (religion, gender, politics, real groups). It parses on first hearing and carries tension (two casual readers). Check: cold reader (casual), story-critic. r:rb14c39 r:r4419c8 r:r581039
+0w. **The genre opener**: line 1 starts "In my village...", "In my world..." or "My [twin/grandpa/friend]...", then the
+   impossible fact and a short clause that makes it stranger; the viewer asks "why?", the line doesn't say it (no stock "nobody will tell me why"). Check: story-critic. r:rd2f8e4 r:r208f5c
+0y. **The Roblox story format, in Minecraft** (docs/story_format.md): the impossible fact AND its "why?" said in line 1
+   (by 3 s); 3-5 quick two-way clues; the narrator as the one who wants to know; someone loved at stake; the rule
+   turned against itself; the reveal SAID in one plain sentence (the naive narrator says what they see), never wordless;
+   one beat, cut within ~1 s; the last line echoes line 1. Check: story-critic (blockers), cold readers (casual and
+   gamer). r:rc8538b
+0x. **A crazy Roblox-story premise** (owner: "more roblox style... in my town, nobody... my twin... it doesnt
+   necessarily need to be minefrcaft themed"): the premise is a strange rule or impossible fact about people, a family
+   or a town; Minecraft is the look, not the twist, which need not be a game mechanic (when one is used it is still
+   shown and true). Check: owner, story-critic. r:r12f9ac
+0z. **A casual viewer gets it** (a friend on Gold for the Portal: "im confsued bro"): the table read's cold readers
+   include a casual player watching once; the twist lands for them in one step from the picture, with no unshown name
+   or mechanic; if they can't say it in one sentence, the script goes back. Check: cold reader (casual), story-critic. r:rac4476
+0a. **Mystery through naivety** (owner: "We need to have that sense of mystery. And naivety"): the kid narrator
+   trusts what they see and explains every clue the wrong, innocent way, in their own words; the viewer sees past it.
+   The kid never hints, foreshadows, sounds afraid before the reveal or explains the twist. Every clue in the clue map
+   has its innocent misreading on a line. Check: story-critic (blocker if a clue has no misreading or the kid knows too
+   much), cold reader. r:rb89776
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
@@ -109,9 +141,14 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
-   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
+   (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line, on the model the story will use (r:rdf844d). Check: review
    (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
-   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
+   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb; Saltmouth's Mom Kore, r:rd8f6ce; the island Grandma Callirrhoe, r:r83d791)
+7a. **Every character is tracked** (owner: "we need to keep track of our characters"): every speaking or recurring
+   character is a row in docs/world/canon.md "Recurring characters" (who, look/skin, cast id + voice, stories) before
+   their lines are voiced; a new voice is auditioned against Pip and picked by the owner; one voice is never shared by
+   two characters a viewer could confuse (canon conflict 11: one voice per grandpa). Check: owner, story-continuity
+   (canon). r:rd9437c
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -159,6 +196,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+5a. **Connected by the same place** (owner: "the hill and the place the dog was left was the same place"): each new
+   story is set at, or in sight of, a place an earlier story built (the same spot, the same build, what was left
+   there), or leaves something later stories show; named in its map.json entry and its pitch. Check: story-critic
+   (canon line), owner. r:r24e765
 5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
@@ -265,7 +306,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
 - **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
   **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
-- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: floor 8 s (lead decision 2026-11-11: the 25 s floor is the narration floor). Check: pace (length).
+- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: no fixed minimum, never padded (owner 2026-11-12: "no fixed minimum, just don't pad them"; the 30 s minimum is retired). Check: pace (length), review (padding). r:r064ca4
 
 ## 9. Review
 - An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
@@ -297,7 +338,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
-  on. Check: owner. r:r77977b
+  on. New stories are made by hand in owner-audited stages: premise shortlist (owner picks), then one session per
+  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f r:rd2d42e. Premises: diverge by lens first, cold-read gate, then the checks and the critic; the owner sees a top 8 plus wild cards. r:rbf6467 r:rfc2828 (Honey Thief's giant is Jonah, r:r1a3843; Bastion approved, r:r7c6526; Pulled Away, Singing Box approved, r:r9a1a75; Seventy Below approved, r:rbb90ac)
 - **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
   swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
   Check: owner. r:r1f2a80
@@ -308,7 +350,12 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
   caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
   reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
-  escalating to the full reveal. r:r4449f0
+  escalating to the full reveal. r:r4449f0 Ridiculously big: the build dwarfs a real landscape, shown from high up
+  for scale, ending on a close pass beside the tiny player. r:rf8524b A ticking count of blocks used is a good
+  overlay. r:rce78c5 Depth and detail (layers, overhangs, varied heights and materials, never flat tiers), in a
+  real generated world, never superflat. Check: owner, review. r:r13865d Build it, then zoom out: a fast
+  time-lapse of the build going up, one big zoom out to its scale, then the end; never a long fly-round of a finished
+  build. Check: owner, review. r:rb5f36a
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
 - **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
@@ -318,7 +365,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "logic"**: rapid real vanilla quirks, each set up and paid off in seconds, one caption. Check: owner,
   minecraft-audit (every quirk must be true vanilla). r:r40f7c7
 - **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
-  mods and menus. Check: owner. r:rd551de
+  mods and menus (the popup is edit.popup, scripts/popup.py; the stunt side is lib/fakemod.js: the asking mob waits
+  with NoAI, what follows is vanilla). Check: owner. r:rd551de
 - **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
   vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
 - **Format "cells"**: a walk past glass cells, each a mob stuck in an endless vanilla-built loop, a deadpan caption.
@@ -357,17 +405,88 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   Check: owner. r:rc40696
 - **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
   track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Format "cooked"**: the payoff plays an ominous, dread-building track on the drop (dark NCS or a low drone and
+  hit), never an upbeat bed. Check: owner, review. r:rcefdcc
+- **The music plays from frame 0**: a track whose drop comes earlier than the drop event repeats a whole bar of its
+  build until the drop lands (edit.songLoop, scripts/add_song.py prints "song loop"); never silence then a late start
+  (edit.songLate is retired). Check: mixcheck (the final mix), review, owner. r:r43062d
+- **A fade to black is a beat (about 0.3-0.5 s of full black), and the light and grade stay constant within a shot**: no
+  light level, tint or brightness change while the camera holds one subject, unless the change is the event; a set is
+  lit at its final level from the first frame (no light blocks added on camera). Check: review (mean brightness and
+  tint of the game view per 0.1 s across each shot), owner. r:rcf9d18
+- **Format "sandart"**: a HUGE picture of concrete powder (or sand/gravel) dropped from above that builds itself by
+  gravity; close in the falling blocks, then pull up to the whole picture; no cut or end while blocks fall; our own
+  picture, no other creator's name or overlay. Check: owner, the settle check. r:r718ec5
+- **Format "dropper"**: a HUGE first-person dropper with an attempt counter, quick fails cut before the death puff,
+  a true-vanilla clean landing as the payoff. Check: owner, minecraft-audit (the landing), the settle check. r:r304cb5
+  The shaft is a fancy build, never a plain tube: patterned walls, lit glass rings, trimmed obstacles with lit hole
+  rims, lanterns, pillars, a crowned rim, a decorated pool; every decoration flown in scripts/dropper_sim.js first.
+  Check: owner, review. r:r8fad06
+  Each fail shows the whole death (hearts empty, the death tilt, "You died!"), then the cut. Check: review. r:rddac31
+- **Format "fakeworld"**: a world where everything is one wrong block, played as normal survival; the one ordinary
+  block found is treated as treasure; generated from our own block swap. Check: owner. r:r62f46d
+- **Format "trap"**: an irresistible bait, how it works, then the friend (a second bot, never the owner's name) walks
+  into it; the trap really works in vanilla. Check: owner, minecraft-audit (the trap). r:refc733
+- **The opening (frame 0 to 1.5 s)**: frame 0 shows the Short's subject (the mob, trap, TNT, build or the payoff's
+  setup), in motion by 0.5 s; never an empty field, plain grass, a bare wall or a still room. The caption reads as a
+  person reacting, not a label. Check: the opening check (scripts/opening.py in `./hb pace`, so check, review and
+  publish's gate run it, on the game view): BLOCK a flat frame 0 (the middle half under 0.20 and the view under 0.35
+  away from its main colour, with no mob in view in the recording) and nothing moving by 0.5 s; WARN a slow
+  opening, no sound hit within 6 dB of the peak by 0.5 s, no caption on frame 0, a caption over 10 words, a still
+  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0 r:rf4a259
+  **The premise reads in the first second**, from the picture and the caption together: the subject big and centred,
+  the premise's first step happening on screen as the title states it; every later step reads on one watch (no act
+  that fights the title, no set dressing that raises an unanswered question, no change too small to see). If it can't
+  be made that clear, redesign the premise. Check: review (the cold read: say the premise after 1 s), owner. r:rf4a259
+- **Format "underdog" (healing)**: each hurt mob shows its real health above its head as a row of Minecraft hearts
+  (full, half, empty), filling as it's healed. Check: owner, review. r:r337da9
+- **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action, and
+  is big: most of the view's width at a GUI scale that reads on a phone, with the ALLOW/DENY result big as its own
+  beat. Check: owner, review. r:r7ef6ec r:rb35549
+- **Format "fakemod", DENY**: a denied mob is eaten: the player picks the mob itself up bare-handed and eats it bite by
+  bite (lib/interrupt.js pickupEat), not its drop. Check: owner, review. r:r535ba1
+- **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
+  ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
+  The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a
+  satisfying finish, something new); "nothing much" / a small result / "it just ends" is a no-op and a BLOCKER.
+  Check: review (short-review takeaway line), owner. r:r8d6af1
+  Nothing ships unless it makes sense and leaves the viewer satisfied: no-ops are redone or dropped, borderline
+  Shorts get one bigger last beat (docs/noop_audit_2026-11-12.md). Check: review, owner. r:r4607fa
+- **Every call is heard, nothing covers the payoff's own sound**: a guess-the-sound round's call plays in full and
+  clearly (the cut never starts after a round's first call; no sfx on a call; the song ducks under each); a tease of the
+  answer is blurred (edit hook.blur); no low 'impact' boom on a payoff whose own sound IS the joke (a short pop; the
+  song ducked through it, its drop after: dropAt 'EVENT:OFFSET'). Check: mixcheck, review, owner. r:rfe4f62
+- **A method that is named is shown**: every method a list names and rates is on screen (built and crossed, sped up if
+  long), never cut while its sub stays up. Check: review, owner. r:r32a80c
+- **Format "mislabel"**: the parkour uses sideways (left/right) double extensions, not upward blocks; the transition is
+  one clean move: into a 1x1 hole, cut, out of the sky. Check: owner, review. r:re392f9
+- **Labour steps play as a time-lapse**: a long dig (a trap's shaft) or any build step that is only labour is one
+  steady sped-up move with a live counter (edit `tally`), never seconds of bare walls; no jump cuts inside it
+  (r:r200cfe), turns at <= 220 / x deg/s while sped up (K.turnLimit, r:r38374d). Check: review, owner. r:rc6f193
+- **Owner notes 2026-11-12 (general)**: a double extension is a mid-air clutch (jump an impossible gap, place 2
+  blocks under you mid-air, land); list items show number + name together for the whole item; a looping Short loops
+  seamlessly; builds sit in a real world (no superflat) with detail; the music drop lands on the reveal, never
+  before it. Check: review, owner. r:r489883
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
   mob; fast is fine, off-aim reads as hacking. Check: the aim check (scripts/owner_checks.py + lib/aim.js, in
   rec_check (`./hb check`) and pace (gates v3): BLOCK an action over 15 deg off its target or off-screen, or over 10%
   of them past 6 deg; the numbers are in `./hb review`), review. r:rffba12
-- **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
-  end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
-  Check: the settle check (scripts/owner_checks.py: falling blocks, explosion debris, a dying mob in view on the last
-  frames before a hard cut or the end: BLOCK in rec_check; pace counts the 1 s tail from the settle and BLOCKs an end
-  before it, gates v3). r:r24d99a
+- **Let the payoff settle**: no cut or end while falling blocks or a dying mob are still moving (or a blast is going
+  off); the end limit counts from when that action is over. Smoke, particles and drifting debris don't count (narrowed
+  by r:r188b46). Owner notes become automatic checks, not only review notes.
+  Check: the settle check (scripts/owner_checks.py: falling blocks, a dying mob in view, a blast's first 0.3 s at the
+  end, on the last frames before a hard cut or the end: BLOCK in rec_check; pace counts the tail from the settle and
+  BLOCKs an end before it, gates v3). r:r24d99a
+- **Fast cuts after each action**: cut about 0.3-0.6 s after an action's result reads and go straight to the next
+  beat; the end lands about 0.5-0.8 s after the payoff's result. Smoke, particles and drifting debris never hold a cut
+  (this narrows r:r24d99a: only the action itself, a falling block, a dying mob or a blast in progress, holds a cut).
+  Check: the dwell check (scripts/dwell.py in pace: a result held over 1.0 s with nothing new WARN; the end over 0.9 s
+  after the payoff's result WARN, over 1.2 s BLOCK; a text payoff keeps its 1.2-1.8 s), lib/settle.js (the `settle`
+  mark lands 0.3 s after the last blast), review, owner. r:r188b46 r:rb645c3 (a rating list: each result 0.5 s with its
+  card, then the cut)
+- **Nothing goes to YouTube without the owner's OK for that exact cut**: uploads/owner_ok.txt binds the OK to the video's sha256 (scripts/owner_ok.py); the uploader skips anything else; ready Shorts wait on the review artifact. Check: the uploader (scripts/test_owner_ok.py). r:r7ec7d3
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **Clutch look-down flick allowed**: a clutch Short's single quick look-down at the landing may exceed the whip cap
   (the genre's look); every other turn keeps the followable-camera rule. Check: review; the whip check lets one
@@ -382,6 +501,14 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
+- **No cut mid-action; the view lands centred on what it turns to; cuts never read as getting stuck; a title promises past the obvious end; dropped items right way up; 56e on every re-render too.** Check: cuts (mid-action cut), aim (turn target), review. r:r52f94c
+- **A fix keeps what made the Short work** (no-op fix notes): interrupt shows the build and ~3 interruptions before the
+  player deals with the mob; quest names each stage on screen, has more stages and ends as the player steps into the
+  reward room; a pickaxe ranking keeps every tier, fast, before the finale. Check: review, owner. r:rf557af
+- **Watch the block break and the drops fly**: the crosshair stays on a block through its break; after a burst of drops
+  the camera follows them where they fly (never back off them); a burst payoff ends 0.5-0.8 s after the burst, with no
+  hold or counter beats after it (fortune v3 notes). Check: aim (on-target per action), dwell (the end after the
+  payoff), review, owner. r:ra8d5da
 - **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b Regular (wide) arms, the slim art widened. r:ra3e80a
 - **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
   Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those

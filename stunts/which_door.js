@@ -40,6 +40,9 @@ module.exports = R.makeStunt({
     speed: [['lava_a', 'lava_a:0.55', 2.5], ['lava_a:0.55', 'lava_a:1.85', 'cut'], ['lava_a:1.85', 'lava_dead', 2.5]],
     // pace: a hit on the payoff (the last death): the song dips 0.3 s before it, then an impact
     // and a whoosh + pop on the opening card and a pop on every card/counter (the hook: game sound starts with quiet steps)
-    sfx: [['whoosh', 'intro'], ['pops'], ['dip', 'last_death', 0.3], ['impact', 'last_death']]
+    sfx: [['whoosh', 'intro'], ['pops'], ['dip', 'last_death', 0.3], ['impact', 'last_death'],
+      // the payoff pace times (big_blast): with audio.py's vanilla clamp (5530388b) the blasts before it sit ~28 dB higher
+      // and flattened its hit in the NCS mix, so the song and the game duck 0.35 s before it (as pickaxe_race's lastboom)
+      ['dip', 'big_blast', 0.35], ['gamedip', 'big_blast', 0.35]]
   }
 })

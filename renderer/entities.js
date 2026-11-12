@@ -2,7 +2,7 @@
 // by prismarine-viewer, MIT) built into three.js bone groups, textured with the client jar's
 // own entity textures. Unlit like Minecraft: per-face fixed shading x light at the entity.
 import * as THREE from 'three'
-import { nameTagTexture } from '/blockentities.js'
+import { nameTagTexture, heartsTexture } from '/blockentities.js'
 import { applyPoses } from '/poses.js'
 import { isSlimLayout, slimToWide, opaqueBase } from '/skin_layout.js'
 
@@ -46,6 +46,29 @@ async function texture (layers) {
   const c = document.createElement('canvas'); c.width = imgs[0].width; c.height = imgs[0].height
   const g = c.getContext('2d')
   for (const i of imgs) g.drawImage(i, 0, 0, c.width, c.height)
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
+  t.colorSpace = THREE.NoColorSpace
+  const out = { tex: t, w: c.width, h: c.height }
+  texCache.set(key, out)
+  return out
+}
+
+// The eyes of the jar's wide skins (the face is u 8..15, v 8..15; both eyes are on row 12: steve's white + iris at
+// u 9-10 and iris + white at u 13-14) painted pure white: the base texture, or (glow) a layer with only those pixels,
+// drawn full bright over it like EnderEyesLayer so they read in any light. -> { tex, w, h }
+export const WHITE_EYE_PX = [[9, 12], [10, 12], [13, 12], [14, 12]]
+export async function whiteEyesTexture (skin, glow = false) {
+  const key = `white_eyes|${skin}|${glow}`
+  if (texCache.has(key)) return texCache.get(key)
+  const im = await img(`/assets/env/entity/player/wide/${skin}.png`)
+  if (!im) { texCache.set(key, null); return null }
+  const c = document.createElement('canvas'); c.width = im.width; c.height = im.height
+  const g = c.getContext('2d')
+  if (!glow) g.drawImage(im, 0, 0)
+  const k = im.width / 64
+  g.fillStyle = '#ffffff'
+  for (const [u, v] of WHITE_EYE_PX) g.fillRect(u * k, v * k, k, k)
   const t = new THREE.CanvasTexture(c)
   t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
   t.colorSpace = THREE.NoColorSpace
@@ -242,6 +265,15 @@ function look (name, extra, regs, engine = 0) {
     if (extra && extra.collar !== undefined && extra.collar !== null) layers.push(`entity/wolf/wolf_collar#${(DYE[extra.collar] ?? DYE[14]).toString(16).padStart(6, '0')}`)
     return { model: 'wolf', layers }
   }
+  // an iron golem's cracks (IronGolemCrackinessLayer, Crackiness.byFraction(health / 100): under 0.25 high, 0.5 medium,
+  // 0.75 low); extra.hp only when hurt (lib/harness.js), so it heals back to the plain texture
+  if (name === 'iron_golem' && extra && Number.isFinite(extra.hp)) {
+    const f = extra.hp / 100, c = f < 0.25 ? 'high' : f < 0.5 ? 'medium' : f < 0.75 ? 'low' : null
+    return { model: name, layers: ['entity/iron_golem/iron_golem', ...(c ? [`entity/iron_golem/iron_golem_crackiness_${c}`] : [])] }
+  }
+  // IllagerModel's crossed arms (engine 2+, so older recordings stay as published): offsetAndRotation(0, 3, -1, -0.75, 0, 0),
+  // the converted bone's pivot sits 1 px higher and 1 px back. Shown only while not casting (entities.js update)
+  if (name === 'evoker' && engine >= 2 && MODELS && MODELS.evoker) return { model: 'evoker', layers: ['entity/illager/evoker'], rest: { arms: [0.75, 0, 0] }, move: { arms: [0, -1, -1] } }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
   // mobs that share another's model (scripts/mob_audit.js), drawn from recordings made from 2026-11-10 on (engine 2;
@@ -618,7 +650,8 @@ function poseWolf (r, s, walkPos, walkSpeed, tick = 0) {
   // extra.tail: the tail's angle (rad) when a scene sets it. Vanilla lowers a tamed wolf's tail with its health
   // ((0.55 - (20 - hp) * 0.02) pi): Good Boy's opening holds it low, a sad dog watching him go (held high toward a camera
   // behind it, it read as a 'long flat head')
-  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? 0.55 * Math.PI : Math.PI / 5
+  // (extra.hp, recorded when hurt: Wolf.getTailAngle, (0.55 - (40 - hp) / 40 * 0.4) pi for a tamed wolf's max health 40)
+  const tail = Number.isFinite(x.tail) ? x.tail : x.tame ? (0.55 - (Number.isFinite(x.hp) ? (40 - Math.min(40, x.hp)) / 40 * 0.4 : 0)) * Math.PI : Math.PI / 5
   // extra.wag: a happy wag (fast side to side), whatever the walk does
   B.tail.rotation.set(tail, x.angry ? 0 : x.wag ? Math.sin(tick * 1.6) * 0.7 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
   if (x.sitting) {
@@ -818,6 +851,14 @@ function poseBaby (r, name) {
   h.position.copy(h.userData.babyPos); h.scale.setScalar(h.userData.babyScale)
 }
 
+// Mob poses (docs/engine_features.md "Mob poses"): the per-frame keys render.js adds; a change of any of them
+// must not rebuild the model
+const MOB_POSE_KEYS = new Set(['aim', 'bow', 'bowT', 'aggressive', 'usingItem', 'spell', 'spellT', 'admire'])
+// a Java ModelPart rotation (xRot, yRot, zRot: Rz Ry Rx) onto a converted (Bedrock, y-up) bone: the y flip turns
+// x and z the other way and keeps y; three.js 'ZYX' is the same Rz Ry Rx order
+function javaRot (bone, x, y, z) { bone.rotation.order = 'ZYX'; bone.rotation.set(-x, y, -z) }
+function restRot (bone) { if (bone.rotation.order !== 'XYZ') bone.rotation.order = 'XYZ' }
+
 function B_isBlock (n) { return n === 'falling_block' || n === 'moving_block' || n === 'item_frame' || n === 'glow_item_frame' }
 
 export class EntityLayer {
@@ -827,14 +868,25 @@ export class EntityLayer {
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
     // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
-    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' || MOB_POSE_KEYS.has(k) ? undefined : v)
     if (ek === '{}' || ek === undefined) ek = 'null'
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
-    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
+    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.hearts) this.scene.remove(cur.hearts); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
     let obj = null, bones = {}, mat = null, woolMat = null, underMat = null
-    if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
+    if ((name === 'block_display' || name === 'item_display') && extra && extra.disp) {
+      // display entities (DisplayRenderer; render.js sends extra.disp and the transformation as s.dispM): a block from
+      // its corner (BlockDisplay: renderSingleBlock, 0..1), an item centred and turned 180 about y (ItemDisplayRenderer)
+      // under its display context. Only recordings with the harness's extra.display (2026-11-12 on) have extra.disp
+      obj = new THREE.Group(); obj.matrixAutoUpdate = false; bones = { display: true }
+      if (extra.disp.kind === 'block' && this.blockModels.has(extra.disp.state)) {
+        const bm = this.blockModels.get(extra.disp.state), m = new THREE.Mesh(bm.geo, bm.mat.clone()); obj.add(m); mat = m.material
+      } else if (extra.disp.kind === 'item' && this.itemFactory) {
+        const it = await this.itemFactory(extra.disp.held)
+        if (it) { const w = new THREE.Group(); w.rotation.y = Math.PI; w.add(it.obj); obj.add(w); mat = it.mat }
+      }
+    } else if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
       obj = new THREE.Group(); obj.add(m); mat = m.material
@@ -864,6 +916,15 @@ export class EntityLayer {
         // fails the depth test and the floor shows (vanilla RenderType.waterMask)
         if (bones.waterPatch) for (const m of bones.waterPatch.children) if (m.isMesh) { m.material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); m.renderOrder = 0.5 }
         poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
+      }
+    } else if (name === 'leash_knot') {
+      // LeashKnotModel (32x32): one 6x8x6 cube; LeashKnotRenderer: scale(-1, -1, 1), so it hangs 0..0.5 above the
+      // entity's position (LeashFenceKnotEntity: the fence post's centre, 0.375 up)
+      const t = await texture(['entity/lead_knot'])
+      if (t) {
+        const b = buildPlayer(t, [['knot', null, [0, 0, 0], [[[-3, -8, -3], [6, 8, 6], [0, 0], 0]]]], 1); obj = b.root; bones = b.bones; mat = b.mat
+        obj.children[0].matrix.makeScale(-1, -1, 1).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
+        bones.knot = true
       }
     } else if (name === 'spider' || name === 'cave_spider') {
       // SpiderEyesLayer: the eyes full bright (RenderType.eyes); CaveSpiderRenderer scales by 0.7
@@ -951,11 +1012,15 @@ export class EntityLayer {
         bones = { orb: true }
       }
     } else if (name === 'player' || name === 'mannequin') {   // (a Mannequin is the player model: movie extras)
-      const skin = (extra && extra.skin) || 'steve'
+      let skin = (extra && extra.skin) || 'steve'
+      // '<jar skin>+white_eyes' (the herobrine format, lib/herobrine.js): the jar's own skin with its eyes painted white
+      // in memory and lit full bright; no third-party skin file
+      const whiteEyes = skin.endsWith('+white_eyes')
+      if (whiteEyes) skin = skin.slice(0, -'+white_eyes'.length)
       const real = skin.startsWith('real/')
-      const t = real ? await skinTexture(skin, extra.model || 'auto', !!extra.slim) : await texture([`entity/player/wide/${skin}`])
+      const t = whiteEyes ? await whiteEyesTexture(skin) : real ? await skinTexture(skin, extra.model || 'auto', !!extra.slim) : await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
-      const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
+      const glow = whiteEyes ? await whiteEyesTexture(skin, true) : skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
       // a real skin (render.js: skin 'real/<name>', lib/skins.js): its own slim or wide arms; the hat, jacket,
       // sleeves and pants overlays are PLAYER_PARTS' grown cubes, cut out by the skin's alpha like vanilla
       if (t) { const b = buildPlayer(t, real ? (t.slim ? PLAYER_PARTS_SLIM : undefined) : (extra && extra.slim ? PLAYER_PARTS_SLIM : undefined), undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
@@ -983,8 +1048,9 @@ export class EntityLayer {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
         // the entity textures load unflipped (the models' UVs run top-down), so a sprite showed the item upside down;
-        // ThrownItemRenderer draws it upright (motion fixes only: older Shorts stay as published)
-        if (this.motionFixes) obj.scale.y *= -1
+        // ThrownItemRenderer draws it upright
+        // (every recording since r:r52f94c "dropped items right way up": a re-render of an older one too)
+        obj.scale.y *= -1
       }
     } else {
       const l = look(name, extra, this.regs, this.engine)
@@ -993,6 +1059,7 @@ export class EntityLayer {
       if (geo && t) {
         const b = build(geo, t, l.extra); obj = b.root; bones = b.bones; mat = b.mat
         for (const [bn, r] of Object.entries(l.rest || {})) if (bones[bn]) { bones[bn].rotation.set(...r); bones[bn].userData.rest = bones[bn].rotation.clone() }
+        for (const [bn, d] of Object.entries(l.move || {})) if (bones[bn]) { bones[bn].position.add(new THREE.Vector3(...d)); bones[bn].userData.restPos = bones[bn].position.clone() }
         if (extra && extra.armor) await addMobArmor(geo, bones, extra.armor, extra.trims)
         if (name === 'sheep' && extra && (extra.jeb || extra.color)) {
           // SheepWoolUndercoatLayer (1.21.5+): a dyed or jeb_ sheep's body gets the undercoat over
@@ -1051,6 +1118,12 @@ export class EntityLayer {
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      if (r.bones.display) {   // a display entity: T(position) x orientation x transformation (lib/kit_extras.js displayMatrix)
+        r.obj.matrix.makeTranslation(s.x, s.y, s.z)
+        if (s.dispM) r.obj.matrix.multiply(new THREE.Matrix4().fromArray(s.dispM))
+        r.obj.matrixWorldNeedsUpdate = true
+        continue
+      }
       if (r.bones.armorMats && !(s.name === 'player' || s.name === 'mannequin')) for (const m of r.bones.armorMats) m.color.setRGB(...LL)
       // zombifying outside the Nether (Piglin/Hoglin.isConverting -> LivingEntityRenderer.isShaking): the whole body
       // turns by cos(age x 3.25) x PI x 0.4 degrees every frame (a staged pose mark { converting: true })
@@ -1060,7 +1133,9 @@ export class EntityLayer {
       if (r.bones.flashMat) r.bones.flashMat.color.setRGB(...LL)
       // on fire (EntityRenderDispatcher.renderFlame): fire_0 / fire_1 layers facing the camera, scale
       // 1.4 x width, each 1 x 1.4 of that, 0.45 higher and 0.9 x smaller than the last, up the height
-      if (s.extra && s.extra.fire && !s.player) {
+      // (players too: EntityRenderDispatcher.renderFlame runs for every burning entity; stages_friends review r1: the
+      // narrator burned in lava with no flames)
+      if (s.extra && s.extra.fire) {
         if (!r.fire) {
           r.fire = new THREE.Group(); r.fireMats = []
           const strips = [await texture(['anim/fire_0']), await texture(['anim/fire_1'])]
@@ -1125,6 +1200,27 @@ export class EntityLayer {
           if (s.nameDim !== undefined) r.tag.material.opacity = s.nameDim ? 0.6 : 1   // a crouching player's plate (stunt.playerNames)
         }
       }
+      // overhead hearts (render.js sets hearts [hp, mhp] / heartsY for stunt.healthHearts): screen-aligned like the
+      // nameplate, 0.02 blocks a sprite pixel (10 hearts ~1.6 blocks), rebuilt when the health changes
+      if (s.hearts || r.hearts) {
+        const hk = s.hearts ? s.hearts.join('/') : null
+        if (hk && r.heartsKey !== hk) {
+          if (r.hearts) { this.scene.remove(r.hearts); r.hearts.material.map?.dispose(); r.hearts.material.dispose() }
+          r.hearts = null; r.heartsKey = hk
+          const ht = await heartsTexture(s.hearts[0], s.hearts[1])
+          if (ht) {
+            // (over everything, like a HUD element: the mob's own head or a post never hides it)
+            r.hearts = new THREE.Sprite(new THREE.SpriteMaterial({ map: ht.tex, transparent: true, depthWrite: false, depthTest: false, fog: false }))
+            r.hearts.userData.w = ht.w; r.hearts.userData.h = ht.h; r.hearts.center.set(0.5, 0); r.hearts.renderOrder = 4
+            this.scene.add(r.hearts)
+          }
+        }
+        if (r.hearts) {
+          r.hearts.visible = !!s.hearts
+          r.hearts.position.set(s.x, s.y + (s.heartsY || 2.2), s.z)
+          const k = 0.02 * (s.heartsScale || 1); r.hearts.scale.set(r.hearts.userData.w * k, r.hearts.userData.h * k, 1)
+        }
+      }
       if (r.underMat) r.underMat.color.setRGB(...sheepColor(s, tick).map((v, i) => v * LL[i]))
       if ((s.name === 'item_frame' || s.name === 'glow_item_frame') && r.bones.inner) {
         // ItemFrameRenderer: back to the block centre (+dir * 0.46875), Rx(xRot) Ry(180 - yRot); the item
@@ -1152,6 +1248,13 @@ export class EntityLayer {
       }
       if (s.name === 'player' || s.name === 'mannequin') {
         posePlayer(r, s)
+        // the minecraft:scale attribute (LivingEntityRenderer: poseStack.scale(state.scale) about the feet, so every
+        // pose offset, the crouch's drop and the held items scale with it); render.js sets s.entScale, unset = 1
+        if (s.entScale !== undefined || r.scaled) {
+          const k = s.entScale ?? 1, by = s.y + (r.yOff || 0)
+          r.obj.position.set(s.x + (r.obj.position.x - s.x) * k, by + (r.obj.position.y - by) * k, s.z + (r.obj.position.z - s.z) * k)
+          r.obj.scale.setScalar(k); r.scaled = k !== 1
+        }
         if (r.bones.armorMats) for (const m of r.bones.armorMats) m.color.setRGB(...LL)
         // the held item (ItemInHandLayer), built by the page (block models / extruded sprites)
         const held = s.player && s.player.held, hk = held ? held.key : null
@@ -1196,6 +1299,8 @@ export class EntityLayer {
         if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
         if (r.mat?.userData.white) r.mat.userData.white.value = 0
       }
+      if (s.mobScale !== undefined && s.mobScale !== 1) r.obj.scale.multiplyScalar(Math.max(0.001, s.mobScale))   // render.js mob_scale marks
+      if (s.entScale !== undefined && s.entScale !== 1) r.obj.scale.multiplyScalar(s.entScale)   // the minecraft:scale attribute (render.js)
       if (s.extra && s.extra.baby && !B_isBlock(s.name)) poseBaby(r, s.name)
       // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
       // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so
@@ -1204,7 +1309,7 @@ export class EntityLayer {
         const dt = tick - r.last.t
         if (dt > 0) {
           const per = Math.hypot(s.x - r.last.x, s.z - r.last.z) / dt
-          const target = s.swell !== undefined ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation)
+          const target = s.swell !== undefined || (s.mobScale !== undefined && s.mobScale < 1) || (s.extra && s.extra.ride) ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation); a held (scaled-down) mob isn't walking; a rider doesn't walk (harness extra.ride)
           r.amt = (r.amt || 0) + (target - (r.amt || 0)) * Math.min(1, 0.4 * dt)
           r.walk += (r.amt || 0) * dt
         }
@@ -1224,6 +1329,7 @@ export class EntityLayer {
         poseBoatPaddle(B.leftPaddle, r.row[0], false); poseBoatPaddle(B.rightPaddle, r.row[1], true)
         continue
       }
+      if (B.knot) continue
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
       if (B.wolf) { poseWolf(r, s, r.walk, r.amt || 0, tick); continue }
       if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }
@@ -1235,8 +1341,34 @@ export class EntityLayer {
         B.right_wing.rotation.set(0.436, -(-0.611 + f1), 0)
         B.left_wing.rotation.set(0.436, -(0.611 - f1), 0)
         const ab = Math.sin(age * 9 * Math.PI / 180) * 0.1
-        if (B.right_arm) B.right_arm.rotation.set(0.3, 0, 0.35 + ab)
-        if (B.left_arm) B.left_arm.rotation.set(0.3, 0, -0.35 - ab)
+        const mh = s.mobHeld
+        if (!mh) {
+          if (B.right_arm) { restRot(B.right_arm); B.right_arm.rotation.set(0.3, 0, 0.35 + ab) }
+          if (B.left_arm) { restRot(B.left_arm); B.left_arm.rotation.set(0.3, 0, -0.35 - ab) }
+        } else {
+          // AllayModel.setupAnim holding an item (getHoldingItemAnimationProgress 1, hovering): both arms reach forward
+          // (xRot -60 deg), spread round the item (yRot +-16 deg, zRot +-25 deg)
+          if (B.right_arm) javaRot(B.right_arm, -1.0471976, 0.27925268, 0.43633232)
+          if (B.left_arm) javaRot(B.left_arm, -1.0471976, -0.27925268, -0.43633232)
+        }
+        // the held item (AllayRenderer's ItemInHandLayer through AllayModel.translateToHand: the body, T(0, 1/16, 3/16),
+        // Rx(right_arm xRot), S(0.7), T(1/16, 0, 0); then the layer's Rx(-90) Ry(180) T(1/16, 0.125, -0.625), the
+        // item's third-person right-hand display), Java's y-down flipped to the bone's y-up, in pixels
+        const mk = mh ? mh.key : null
+        if (r.heldKey !== mk && B.body) {
+          if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
+          if (!r.heldGrp) {
+            r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
+            r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(0, 0.0625, 0.1875))
+              .multiply(new THREE.Matrix4().makeRotationX(-1.0471976)).multiply(new THREE.Matrix4().makeScale(0.7, 0.7, 0.7)).multiply(new THREE.Matrix4().makeTranslation(0.0625, 0, 0))
+              .multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
+            B.body.add(r.heldGrp)
+          }
+          r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
+          if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
+          r.heldKey = mk
+        }
+        if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
         if (B.head) { let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; B.head.rotation.set(s.pitch || 0, -dy, 0) }
         continue
       }
@@ -1252,6 +1384,8 @@ export class EntityLayer {
       }
       // SlimeRenderer.scale: 0.999 x size (metadata), drawn from the size-1 model
       if ((s.name === 'slime' || s.name === 'magma_cube') && s.extra && s.extra.size) r.obj.scale.setScalar(0.999 * s.extra.size)
+      // a mob pose last frame (mob poses below): its bones back to their rest turn before the walk swing
+      if (r.posed) { for (const b of r.posed) { restRot(b); b.rotation.set(b.userData.rest.x, b.userData.rest.y, b.userData.rest.z) } r.posed = null }
       // bipeds: legs opposite, arms against the legs. Quadrupeds (QuadrupedModel: creeper, pig):
       // leg0/leg1 hind right/left, leg2/leg3 front right/left; diagonal pairs move together.
       if (!B.leg4) for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1], ['leg2', -1], ['leg3', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
@@ -1267,6 +1401,38 @@ export class EntityLayer {
         // VillagerModel.setupAnim while unhappy (a refused trade): the head shakes no, zRot 0.3 sin(0.45 age), xRot 0.4
         // (staged: ctx.mark('pose', { ids, shake: true }), any mob with a head)
         if (s.extra && s.extra.shake) { B.head.rotation.z = B.head.userData.rest.z + 0.3 * Math.sin(0.45 * (tick || 0)); B.head.rotation.x = B.head.userData.rest.x + 0.4 }
+      }
+      // Mob poses (docs/engine_features.md "Mob poses"); keys render.js adds only for recordings that ask for them
+      const X = s.extra || {}
+      const jhx = -(s.pitch || 0), jhy = B.head ? B.head.rotation.y - B.head.userData.rest.y : 0   // Java head xRot / yRot
+      const mage = tick + (s.id % 97) * 3
+      // a skeleton aiming its bow (SkeletonModel: aggressive with a bow -> HumanoidModel.ArmPose.BOW_AND_ARROW on the
+      // main arm, which sets both: right yRot -0.1 + head, left 0.1 + head + 0.4, both xRot -PI/2 + head xRot), then
+      // AnimationUtils.bobModelPart (zRot +-(cos(age 0.09) 0.05 + 0.05), xRot +-sin(age 0.067) 0.05)
+      if (X.aim && B.rightArm && B.leftArm) {
+        const bz = Math.cos(mage * 0.09) * 0.05 + 0.05, bx = Math.sin(mage * 0.067) * 0.05
+        javaRot(B.rightArm, -Math.PI / 2 + jhx + bx, -0.1 + jhy, bz)
+        javaRot(B.leftArm, -Math.PI / 2 + jhx - bx, 0.1 + jhy + 0.4, -bz)
+        r.posed = [B.rightArm, B.leftArm]
+      }
+      // an evoker: IllagerModel draws its crossed arms OR the free ones (arms.visible = armPose == CROSSED), never both;
+      // casting a spell (IllagerArmPose.SPELLCASTING) raises the free arms: zRot +-135 deg, xRot cos(age 0.6662) 0.25
+      if (s.name === 'evoker' && B.arms && B.rightArm && B.leftArm && (this.engine >= 2 || X.spell)) {
+        const cast = !!X.spell
+        B.arms.visible = !cast; B.rightArm.visible = cast; B.leftArm.visible = cast
+        if (cast) {
+          const w = Math.cos(mage * 0.6662) * 0.25
+          javaRot(B.rightArm, w, 0, 2.3561945); javaRot(B.leftArm, w, 0, -2.3561945)
+          r.posed = [B.rightArm, B.leftArm]
+        }
+      }
+      // a piglin admiring the loved item in its off hand (PiglinModel.setupAnim, PiglinArmPose.ADMIRING_ITEM): head
+      // xRot 0.5 yRot 0 (down to the item), the left arm yRot 0.5 xRot -0.9 (the item held up to the face)
+      const pla = B.leftArm || (s.name === 'piglin' ? B.leftarm : null)
+      if (X.admire && pla && B.head) {
+        javaRot(pla, -0.9, 0.5, 0)
+        B.head.rotation.set(B.head.userData.rest.x - 0.5, B.head.userData.rest.y, B.head.userData.rest.z)
+        r.posed = [pla]
       }
       // a polar bear rearing up (PolarBear.DATA_STANDING_ID; clientSideStandAnimation moves 1 a tick
       // toward 6). PolarBearModel: the body tips back by f x 0.35 pi about the hips, the front legs reach
@@ -1306,24 +1472,28 @@ export class EntityLayer {
       }
       // a mob's off-hand item (ItemInHandLayer, the left arm: T(-1/16, 0.125, -0.625))
       const mo = s.mobOff, mok = mo ? mo.key : null
-      if (r.offKey !== mok && B.leftArm) {
+      // the piglin family's converted bones are lower case (so are the pillager's: its crossbow was never drawn, and
+      // published Shorts show pillagers without it, so it stays that way here)
+      const PIG = /^(piglin|piglin_brute|zombified_piglin)$/.test(s.name)
+      const LA = B.leftArm || (PIG ? B.leftarm : null), RA = B.rightArm || (PIG ? B.rightarm : null)
+      if (r.offKey !== mok && LA) {
         if (r.offObj) r.offGrp.remove(r.offObj.obj)
         if (!r.offGrp) {
           r.offGrp = new THREE.Group(); r.offGrp.matrixAutoUpdate = false
           r.offGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(-1 / 16, 0.125, -0.625))
-          B.leftArm.add(r.offGrp)
+          LA.add(r.offGrp)
         }
         r.offObj = mok && this.itemFactory ? await this.itemFactory(mo) : null
         if (r.offObj) r.offGrp.add(r.offObj.obj)
         r.offKey = mok
       }
       if (r.offObj && r.offObj.mat) r.offObj.mat.color.setRGB(...LL)
-      if (r.heldKey !== mk && B.rightArm) {
+      if (r.heldKey !== mk && RA) {
         if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
         if (!r.heldGrp) {
           r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
           r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
-          B.rightArm.add(r.heldGrp)
+          RA.add(r.heldGrp)
         }
         r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
         if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
@@ -1331,6 +1501,6 @@ export class EntityLayer {
       }
       if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
     }
-    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
+    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.hearts) this.scene.remove(r.hearts); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
   }
 }

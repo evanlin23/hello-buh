@@ -161,7 +161,8 @@ function run (h) {
   // cuts that land on the same framing
   for (let k = 1; k < report.length; k++) {
     const a = list.find(s => s.name === report[k - 1].name && s.t0 === report[k - 1].t0), b = list.find(s => s.name === report[k].name && s.t0 === report[k].t0)
-    if (!a || !b || a.spec.pov || b.spec.pov) continue
+    // (a crane is no cut: it carries the view before it on and eases out of it, render.js craneCam)
+    if (!a || !b || a.spec.pov || b.spec.pov || b.spec.crane) continue
     const ca = camAtShot(a, b.t0 - 1), cb = camAtShot(b, b.t0)
     if (!ca || !cb) continue
     const fa = basis(ca.yaw, ca.pitch).f, fb = basis(cb.yaw, cb.pitch).f
@@ -209,6 +210,9 @@ function run (h) {
     const a = parseAt(s[0]), b = parseAt(s[1])
     if (a !== null && b !== null && b > a) GUI.push([a + 1, b - 1])
   }
+  // edit.still (format cooked, lib/cooked.js): from its dark mark the game view is covered (black, then the meme photo
+  // the chat floods over): what the player does under it isn't on screen
+  if (ed.still) { const a = markT(String(ed.still.dark || ed.still.at).split(':')[0]); if (a !== null) GUI.push([a, Infinity]) }
   // the hold after the payoff (edit.endAfter's event to the end) is pace's to judge (its payoff tail: <= 1.0 s, 1.8 s
   // for a text payoff); a time-lapse ends on a finished picture that no longer changes
   const payoffT = ed.endAfter ? markT(String(ed.endAfter).split(':')[0]) : null

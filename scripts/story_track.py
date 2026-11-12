@@ -220,8 +220,11 @@ def _rgba(h):
 def caption_events(story_dir, timeline, start, dur, who=False):
     """[(t0, t1, text)] in seconds of the Short: each chunk from its first word until the next chunk starts.
     A line's first chunk appears on its cut (the line's mark), and its last chunk holds until the next line's cut
-    (0.3 s past its last word only when the next line is over 1.2 s away)."""
+    (0.3 s past its last word only when the next line is over 1.2 s away; a line's story.json "caption_clear": S ends
+    it S s past its last word whatever the gap: a hold the picture has to be seen in, thirty_one_raids' L08 before the
+    raid horn, where the held "kid. They're COMING." covered Grandpa's turn and its drop read as a snap)."""
     story, voice = _lines(story_dir)
+    clear = {l["id"]: float(l["caption_clear"]) for l in story["lines"] if l.get("caption_clear") is not None}
     marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
     # a line's words are timed from where its audio starts: its mark, or its place in a continuous take (voice_starts)
     vs, _ = voice_starts(voice, marks)
@@ -234,7 +237,7 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             t0 = t + max(0.0, min(a, v.get("onset") or 0.0)) if i == 0 else t + a   # first chunk on the speech, not the lead silence
             # the last chunk holds to the next line's cut (the caption changes on the cut frame; dropping it 0.3 s after
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
-            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
+            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (min(nxt, t + b + clear[lid]) if lid in clear else nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text, lid))
     # owner 2026-11-10 (later, on the reference Roblox Short): "the captions can be 2-3 words thats fine": the 2-3 word
     # chunks (the script's " / " splits, one CAPS key word each) are the default again; story.json "captions": "word"
@@ -388,6 +391,55 @@ def frame_of(t):
     return int(math.floor(t * FPS + 1e-6))
 
 
+ONSCREEN = "__onscreen__"   # the lid of a non-spoken caption chunk
+
+
+def onscreen_events(timeline, start, dur):
+    """[(t0, t1, text, ONSCREEN, caption_y)] in seconds of the Short: the non-spoken caption chunks, from the stunt's
+    `onscreen` marks ({ text, hold?, caption_y? }: K.onscreen(text), lib/story.js; The Walk's "Frost Walker II" over the
+    merchant screen). Each shows from its mark's frame (no lead: it belongs to the picture, not to a word) for `hold`
+    seconds, or with no hold until the next picture cut or line mark (1.5 s at most then)."""
+    cuts = _cut_times(timeline, start)
+    lines = sorted(e["t"] / 1000 - start for e in timeline if e["event"] == "line")
+    out = []
+    for e in timeline:
+        if e["event"] != "onscreen" or not str(e.get("text") or "").strip():
+            continue
+        t0 = e["t"] / 1000 - start
+        if e.get("hold") is not None:
+            t1 = t0 + float(e["hold"])
+        else:
+            nxt = [c for c in cuts + lines if c > t0 + 1 / FPS]
+            t1 = min(nxt + [t0 + 1.5])
+        t0, t1 = max(0.0, t0), min(dur, t1)
+        if t1 > t0:
+            out.append((t0, t1, str(e["text"]).strip(), ONSCREEN, e.get("caption_y")))
+    return out
+
+
+def with_onscreen(ev, ons):
+    """The spoken caption events with the non-spoken chunks laid in: a spoken caption overlapping one is cut back to
+    its start (or starts after its end): the on-screen words own their window."""
+    if not ons:
+        return ev
+    out = []
+    for e in ev:
+        pieces = [(e[0], e[1])]
+        for o in ons:
+            nxt = []
+            for a, b in pieces:
+                if b <= o[0] or a >= o[1]:
+                    nxt.append((a, b))
+                    continue
+                if a < o[0]:
+                    nxt.append((a, o[0]))
+                if b > o[1]:
+                    nxt.append((o[1], b))
+            pieces = nxt
+        out += [(a, b, *e[2:]) for a, b in pieces if b - a > 1e-6]
+    return sorted(out + [o[:4] for o in ons], key=lambda e: e[0])
+
+
 def caption_concat(story_dir, timeline, start, dur, tmp):
     """Write the caption PNGs and an ffconcat list (durations in whole 60 fps frames) into tmp."""
     story, _ = _lines(story_dir)
@@ -403,15 +455,24 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     # a line's own caption height (story.json line "caption_y": a fraction of the game view, default 0.70), for a
     # shot whose subject sits on the caption line (Dog on the Hill L14: "A GUY just APPEARED" over Buh's body)
     cy_of = {ln["id"]: BAND + int(GAME_H * float(ln["caption_y"])) for ln in story.get("lines", []) if ln.get("caption_y") is not None}
-    for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
+    # non-spoken caption chunks (`onscreen` marks): every word in the key colour, no bar (nobody is talking)
+    ons = onscreen_events(timeline, start, dur)
+    for o in ons:
+        if o[4] is not None:
+            cy_of[(ONSCREEN, o[0])] = BAND + int(GAME_H * float(o[4]))
+    for k, (t0, t1, text, lid) in enumerate(with_onscreen(caption_events(story_dir, timeline, start, dur, who=True), ons)):
         f0, f1 = frame_of(t0), frame_of(t1)
         if f0 > frame:
             runs.append((blank, f0 - frame))
         f0 = max(f0, frame)
-        col, is_char, tag = spk.get(lid, ((255, 255, 255, 255), False, None))
-        # with characters in the story, a narrator's key word can't be in a colour (it would read as a character
-        # talking, one word at a time): white with a bar in the key colour. v1 stories: unchanged.
-        base = caption_image(text, key, col, is_char or cast_v, tag, None if is_char else key)   # the tag over every word of a character's first line
+        if lid == ONSCREEN:
+            lid = (ONSCREEN, t0)
+            base = caption_image(text, key, key)
+        else:
+            col, is_char, tag = spk.get(lid, ((255, 255, 255, 255), False, None))
+            # with characters in the story, a narrator's key word can't be in a colour (it would read as a character
+            # talking, one word at a time): white with a bar in the key colour. v1 stories: unchanged.
+            base = caption_image(text, key, col, is_char or cast_v, tag, None if is_char else key)   # the tag over every word of a character's first line
         for j in range(f1 - f0):
             s = POP[j] if j < len(POP) else 1.0
             if j >= len(POP):

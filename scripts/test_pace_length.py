@@ -1,4 +1,5 @@
-"""scripts/pace.py length floor: 25 s for a story (the narration floor), 8 s for an unnarrated stunt (lead 2026-11-11)."""
+"""scripts/pace.py length floor: 25 s for a story (the narration floor); no minimum for an unnarrated stunt
+(owner 2026-11-12: "no fixed minimum, just don't pad them")."""
 import pathlib
 import sys
 import unittest
@@ -11,10 +12,8 @@ class LengthFloor(unittest.TestCase):
     def test_story_keeps_the_narration_floor(self):
         self.assertEqual(pace.length_floor(True), 25.0)
 
-    def test_stunt_floor_is_8_s(self):
-        self.assertEqual(pace.length_floor(False), 8.0)
-        self.assertLess(pace.length_floor(False), 11.1)   # rainbow_sheep passes
-        self.assertGreater(pace.length_floor(False), 5.5)  # a 5 s single beat still blocks
+    def test_stunt_has_no_minimum(self):
+        self.assertEqual(pace.length_floor(False), 0.0)
 
 
 if __name__ == "__main__":

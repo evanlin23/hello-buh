@@ -7,6 +7,9 @@ const stuntMod = require(`../stunts/${process.argv[2]}`)
 const e = { ...(stuntMod.edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }
 const out = []
 if (e.caption) out.push('--caption', process.env.CAPTION || e.caption)
+// the old 'HelloBuh' bot's name in the recording's texts (death screen, chat, feedback) drawn as 56e on a HelloBuh
+// stunt (lib/legacy_player.js; edit.py applies it only when the recording has no user or user 'HelloBuh')
+{ const L = require('../lib/legacy_player'); if (process.env.HB_LEGACY_NAME !== '0' && !L.isStory(process.argv[2], stuntMod)) out.push('--self_name', L.SELF) }
 if (e.red) out.push('--red', e.red)
 // the key word's colour: a Buh Stories Short is Buh gold #FFD640 (docs/brand.md "Buh Stories channel"), keyed on the
 // stunt's (or its edit block's) channel: 'buhstories' only, never on edit.story, since HelloBuh has story_* Shorts too
@@ -69,11 +72,15 @@ if (e.countdowns) out.push('--countdowns', JSON.stringify(e.countdowns))   // li
 if (e.ring) out.push('--ring', JSON.stringify(e.ring))
 if (e.tags) out.push('--tags', JSON.stringify(e.tags))
 if (e.chat) out.push('--chat', JSON.stringify(e.chat))
+if (e.still) out.push('--still', JSON.stringify(e.still))   // the view goes dark, then a meme picture (format cooked: lib/cooked.js, lib/memes.json)
+if (e.popup) out.push('--popup', JSON.stringify(e.popup))   // the fake mod's permission popups (format fakemod: scripts/popup.py, lib/fakemod.js)
 if (e.score) out.push('--score', JSON.stringify(e.score))   // a live two-sided score bar (format race: lib/race.js)
 if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
+if (e.keySounds && e.story) out.push('--key_sounds', JSON.stringify(e.keySounds))   // a story's mix ducks its score under these marks' sounds (scripts/story_audio.py; stunts: add_song.py at publish)
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
 if (e.fallen) out.push('--fallen', JSON.stringify(e.fallen))
+if (e.tally) out.push('--tally', JSON.stringify(e.tally))   // a live "blocks used" total (format mega: lib/mega_lapse.js)
 if (e.replay) out.push('--replay', JSON.stringify(e.replay))   // needs scripts/render_replay.py first
 if (e.loop) out.push('--loop', JSON.stringify(e.loop))
 if (e.sfx) out.push('--sfx', JSON.stringify(e.sfx))       // sound effects (scripts/sfx.py)

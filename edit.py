@@ -816,6 +816,34 @@ def death_message(jar, comp):
 _lang = None
 
 
+LEGACY_NAME = "HelloBuh"   # the bot's name before it became 56e (lib/legacy_player.js: the same rule in JS)
+
+
+def legacy_rename(v, to, frm=LEGACY_NAME):
+    """Every string in v with the old bot name replaced (keys unchanged)."""
+    if isinstance(v, str):
+        return v.replace(frm, to)
+    if isinstance(v, list):
+        return [legacy_rename(x, to, frm) for x in v]
+    if isinstance(v, dict):
+        return {k: legacy_rename(x, to, frm) for k, x in v.items()}
+    return v
+
+
+def apply_self_name(rec, to):
+    """--self_name: a recording of the old 'HelloBuh' bot (no user, or user 'HelloBuh') drawn as `to` in every text
+    the edit draws from it (death screen, chat, command feedback). Returns the renamed recording, or None when it
+    doesn't apply (another user: a story's Buh, an actor)."""
+    if not to or (rec.get("user") not in (None, "", LEGACY_NAME)):
+        return None
+    out = dict(rec)
+    out["timeline"] = legacy_rename(rec.get("timeline") or [], to)
+    if LEGACY_NAME in json.dumps(rec.get("entities") or []):
+        out["entities"] = legacy_rename(rec["entities"], to)
+    out["user"] = to
+    return out
+
+
 def death_screen_png(jar, path, cause=None, active=True):
     """Vanilla DeathScreen at GUI scale 3, laid out on the 16:9 window the game area crops:
     red gradient, "You Died!" at 2x (y 30), the death message (y 85), the score (y 100), and the
@@ -874,6 +902,48 @@ def container_windows(timeline):
     return [w for w in out if w[1] > w[0]]
 
 
+def bossbar_windows(timeline):
+    """[(t0, t1, state)] from `bossbar` marks ({title, progress 0..1, color, overlay}: a boss bar the stunt stages, e.g.
+    the raid bar the server would show; each mark is a new state) to `bossbar_off` (or a death, or the end)."""
+    out, cur = [], None
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == "bossbar":
+            st = (str(e.get("title", "")), round(max(0.0, min(1.0, float(e.get("progress", 1)))), 3), e.get("color", "red"), e.get("overlay", "progress"))
+            if cur:
+                out.append((cur[0], t, cur[1]))
+            cur = (t, st)
+        elif e["event"] in ("bossbar_off", "death") and cur:
+            out.append((cur[0], t, cur[1])); cur = None
+    if cur:
+        out.append((cur[0], 1e9, cur[1]))
+    return [w for w in out if w[1] > w[0]]
+
+
+def bossbar_png(jar, state, path):
+    """BossHealthOverlay as vanilla draws one bar: 182 x 5 GUI px, centred, 12 px from the top of the game view; the
+    colour's background, the overlay's notches (notched_6/10/12/20; `progress` = none), then the progress part cut to
+    the bar's fill; the title centred 9 px above it in white with its shadow. The raid's bar is red, notched_10, "Raid"."""
+    title, prog, color, overlay = state
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    x0, y0 = W // 2 - 91 * GUI, BAND + 12 * GUI
+    def part(name, frac):
+        sp = sprite(jar, f"gui/sprites/boss_bar/{name}")
+        w = int(round(sp.width * frac))
+        if w > 0:
+            img.alpha_composite(big(sp.crop((0, 0, w, sp.height))), (x0, y0))
+    part(f"{color}_background", 1.0)
+    if overlay != "progress":
+        part(f"{overlay}_background", 1.0)
+    if prog > 0:
+        part(f"{color}_progress", prog)
+        if overlay != "progress":
+            part(f"{overlay}_progress", prog)
+    if title:
+        draw_text(img, jar, title, W // 2, y0 - 9 * GUI, center=True)
+    img.save(path)
+
+
 def syschat_windows(timeline, hold=10.0):
     """[(t0, t1, ((text, rgba), ...))] from `syschat` marks and story `chat` marks ({text, color}: chat lines the stunt or the harness
     recorded, e.g. '<Jonah> see you tomorrow' and the yellow 'Jonah left the game') and `syschat_clear` marks. A
@@ -924,6 +994,56 @@ def syschat_png(jar, lines, path, align="left", y_frac=0.70):
     img.save(path)
 
 
+def still_windows(spec, tl_ev, start):
+    """edit.still (format cooked, r:r5ee125 / r:r12cb71): the game view goes dark at `dark`, then a meme picture fills it
+    from `at` to the end, with an optional punch (a hard push-in) at `punch: [EVENT, SCALE]`. Times are marks (EVENT or
+    EVENT:OFFSET) in the timeline. -> [(t0, t1, kind)] in video time, kind 'dark' | 'still' | 'punch'."""
+    def tm(s):
+        if s is None:
+            return None
+        ev, _, off = str(s).partition(":")
+        return tl_ev[ev] + float(off or 0) - start if ev in tl_ev else None
+    at = tm(spec.get("at"))
+    if at is None:
+        print(f"WARNING edit.still: no '{spec.get('at')}' mark in the timeline: no still")
+        return []
+    dark = tm(spec.get("dark"))
+    pun = spec.get("punch")
+    pt = tm(pun[0]) if pun else None
+    out = []
+    if dark is not None and dark < at:
+        out.append((dark, at, "dark"))
+    if pt is not None and pt > at:
+        out += [(at, pt, "still"), (pt, 1e6, "punch")]
+    else:
+        out.append((at, 1e6, "still"))
+    return out
+
+
+def still_png(src, path, scale=1.0, dim=0.0, focus=(0.5, 0.5)):
+    """The picture cover-fitted to the game view (1080x1011 between the bands), scaled by `scale` (a punch), cropped
+    about `focus` (fractions across/down the picture: a portrait's face), darkened by `dim` (0..1) so the chat over it
+    reads; the bands stay transparent."""
+    im = Image.open(src).convert("RGB")
+    k = max(W / im.width, GAME_H / im.height) * scale
+    im = im.resize((max(W, round(im.width * k)), max(GAME_H, round(im.height * k))), Image.LANCZOS)
+    fx, fy = focus
+    x0 = min(im.width - W, max(0, round(im.width * fx - W / 2)))
+    y0 = min(im.height - GAME_H, max(0, round(im.height * fy - GAME_H / 2)))
+    im = im.crop((x0, y0, x0 + W, y0 + GAME_H))
+    if dim:
+        im = Image.blend(im, Image.new("RGB", im.size, (0, 0, 0)), dim)
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    out.paste(im, (0, BAND))
+    out.save(path)
+
+
+def dark_png(path):
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    out.paste(Image.new("RGBA", (W, GAME_H), (0, 0, 0, 255)), (0, BAND))
+    out.save(path)
+
+
 def container_png(jar, state, path):
     """ContainerScreen as the player sees it on opening a chest, barrel or shulker box (the vanilla client: the
     dark gradient over the world, gui/container/generic_54 cut to the rows, or shulker_box, the title and
@@ -970,6 +1090,240 @@ def container_png(jar, state, path):
         if it[1] and it[1] > 1:
             draw_text(img, jar, str(it[1]), ix + 17 * GUI, iy + 9 * GUI, align_right=True)
     img.save(path)
+
+
+MERCHANT_LEVELS = ["Novice", "Apprentice", "Journeyman", "Expert", "Master"]   # merchant.level.1..5
+XP_THRESHOLDS = [0, 10, 70, 150, 250]                                          # VillagerData.NEXT_LEVEL_XP_THRESHOLDS
+
+
+def _rgba_hex(h, default=(255, 255, 255, 255)):
+    try:
+        return tuple(int(str(h)[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
+    except (ValueError, IndexError):
+        return default
+
+
+def nine_slice(src, w, h, border, stretch_inner=False):
+    """A GUI sprite with nine_slice scaling (its .mcmeta) drawn at w x h GUI px: corners as they are, the edges and the
+    middle tiled (GuiGraphics.blitNineSlicedSprite), or the middle stretched with stretch_inner."""
+    sw, sh, b = src.width, src.height, border
+    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+
+    def tile(box, x0, y0, tw, th, stretch=False):
+        if tw <= 0 or th <= 0:
+            return
+        piece = src.crop(box)
+        if stretch:
+            out.alpha_composite(piece.resize((tw, th), Image.NEAREST), (x0, y0))
+            return
+        for yy in range(0, th, piece.height):
+            for xx in range(0, tw, piece.width):
+                out.alpha_composite(piece.crop((0, 0, min(piece.width, tw - xx), min(piece.height, th - yy))), (x0 + xx, y0 + yy))
+    tile((0, 0, b, b), 0, 0, b, b)
+    tile((sw - b, 0, sw, b), w - b, 0, b, b)
+    tile((0, sh - b, b, sh), 0, h - b, b, b)
+    tile((sw - b, sh - b, sw, sh), w - b, h - b, b, b)
+    tile((b, 0, sw - b, b), b, 0, w - 2 * b, b)
+    tile((b, sh - b, sw - b, sh), b, h - b, w - 2 * b, b)
+    tile((0, b, b, sh - b), 0, b, b, h - 2 * b)
+    tile((sw - b, b, sw, sh - b), w - b, b, b, h - 2 * b)
+    tile((b, b, sw - b, sh - b), b, b, w - 2 * b, h - 2 * b, stretch_inner)
+    return out
+
+
+def draw_tooltip(img, jar, lines, mx, my, x0=0, y0=None):
+    """An item tooltip (GuiGraphics.renderTooltip, 1.21.11) for the cursor at (mx, my) GUI px of the screen whose
+    top left is (x0, y0) px: DefaultTooltipPositioner (+12, -12, flipped left of the cursor when it would leave the
+    screen), TooltipRenderUtil's tooltip/background and tooltip/frame nine-slices round the text (3 px padding + 9),
+    the first line 2 px further from the rest, every line 10 px, with the font's shadow. lines: [[text, '#RRGGBB']]."""
+    lines = [ln for ln in lines or [] if ln and ln[0]]
+    if not lines:
+        return
+    y0 = BAND if y0 is None else y0
+    sw, sh = W // GUI, GAME_H // GUI
+    tw = max(text_width(jar, t) for t, _ in lines)
+    th = (-2 if len(lines) == 1 else 0) + 10 * len(lines)
+    x, y = mx + 12, my - 12
+    if x + tw > sw:
+        x = max(x - 24 - tw, 4)
+    if y + th + 3 > sh:
+        y = sh - th - 3
+    bx, by, bw, bh = x - 12, y - 12, tw + 24, th + 24
+    for name, border, stretch in (("background", 9, False), ("frame", 10, True)):
+        img.alpha_composite(big(nine_slice(sprite(jar, f"gui/sprites/tooltip/{name}"), bw, bh, border, stretch)), (x0 + bx * GUI, y0 + by * GUI))
+    ly = y
+    for i, (text, col) in enumerate(lines):
+        draw_text(img, jar, text, x0 + x * GUI, y0 + ly * GUI, color=_rgba_hex(col))
+        ly += 10 + (2 if i == 0 else 0)
+
+
+def merchant_title(state):
+    """MerchantScreen's title: the trader's name (entity.minecraft.villager.librarian -> Librarian), with ' - Novice'
+    ... ' - Master' for a villager (MerchantMenu.showProgressBar) at levels 1-5."""
+    t = str(state.get("title") or "")
+    if t.startswith("entity.minecraft."):
+        t = " ".join(w.capitalize() for w in t.rsplit(".", 1)[-1].split("_"))
+    lv = int(state.get("level") or 0)
+    if state.get("regular", True) and 1 <= lv <= 5:
+        t = f"{t} - {MERCHANT_LEVELS[lv - 1]}"
+    return t
+
+
+MERCHANT_SLOTS = [(136, 37), (162, 37), (220, 37)] + [(108 + (i % 9) * 18, 84 + (i // 9) * 18) for i in range(27)] + [(108 + i * 18, 142) for i in range(9)]
+
+
+def leather_icon(jar, name):
+    """A leather armour piece's icon at GUI scale: layer0 tinted with the dye's default colour (the item definition's
+    minecraft:dye tint, -6265536 = 0xA06540: undyed leather) under the untinted _overlay. None for anything else.
+    (Only the merchant screen uses it: the HUD and chest screens draw as published.)"""
+    if not re.fullmatch(r"leather_(helmet|chestplate|leggings|boots|horse_armor)", name or ""):
+        return None
+    base = sprite(jar, f"item/{name}")
+    r, g, b, a = base.split()
+    tint = (0xA0, 0x65, 0x40)
+    rgb = [ch.point(lambda v, k=k: v * k // 255) for ch, k in zip((r, g, b), tint)]
+    out = Image.merge("RGBA", (*rgb, a))
+    if f"assets/minecraft/textures/item/{name}_overlay.png" in JAR_NAMES():
+        out.alpha_composite(sprite(jar, f"item/{name}_overlay"))
+    return big(out)
+
+
+def merchant_png(jar, state, path, hover=None, tick=0):
+    """MerchantScreen (the villager trade screen, 1.21.11) as the player sees it: the dark gradient over the world,
+    gui/container/villager.png (276 x 166 of 512 x 256), the trader's title and level, "Trades" and "Inventory" in
+    0x404040, the experience bar (a villager below Master), up to 7 offer buttons with their prices (a discount struck
+    through), arrows and results (enchanted ones glinting), the scroller, the payment and result slots and the
+    player's inventory (MerchantMenu slot positions), centred on the game area at the GUI scale. hover: the slot
+    under the cursor ('result', 'a', 'b', 'trade:N' or a window slot number): its highlight (1.21.6+ slot_highlight
+    sprites) and its tooltip (the harness's lines, or the mark's own `tooltip`)."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    top, bot = (0x10, 0x10, 0x10, 0xC0), (0x10, 0x10, 0x10, 0xD0)   # Screen.renderTransparentBackground
+    grad = Image.new("RGBA", (1, GAME_H))
+    for y in range(GAME_H):
+        f = y / (GAME_H - 1)
+        grad.putpixel((0, y), tuple(int(top[i] + (bot[i] - top[i]) * f) for i in range(4)))
+    img.alpha_composite(grad.resize((W, GAME_H)), (0, BAND))
+    IW, IH = 276, 166
+    if IW * GUI > W or IH * GUI > GAME_H:   # a guiScale too big for this screen: the largest that fits
+        with gui_scale(min(W // IW, GAME_H // IH)):
+            return merchant_png(jar, state, path, hover, tick)
+    left, topp = (W // GUI - IW) // 2, (GAME_H // GUI - IH) // 2
+    ox, oy = left * GUI, BAND + topp * GUI
+    at = lambda x, y: (ox + x * GUI, oy + y * GUI)
+    spr = lambda n: sprite(jar, f"gui/sprites/container/villager/{n}")
+    img.alpha_composite(big(sprite(jar, "gui/container/villager").crop((0, 0, IW, IH))), at(0, 0))
+    grey = (0x40, 0x40, 0x40, 255)
+    title = merchant_title(state)
+    draw_text(img, jar, title, *at(49 + IW // 2 - text_width(jar, title) // 2, 6), color=grey, shadow_on=False)
+    draw_text(img, jar, "Trades", *at(5 - text_width(jar, "Trades") // 2 + 48, 6), color=grey, shadow_on=False)
+    draw_text(img, jar, "Inventory", *at(107, IH - 94), color=grey, shadow_on=False)
+    offers = state.get("offers") or []
+    sel = state.get("selected")
+    slots = state.get("slots") or []
+    # MerchantScreen.renderProgressBar
+    lv, xp = int(state.get("level") or 0), int(state.get("xp") or 0)
+    if state.get("regular", True) and 1 <= lv < 5:
+        img.alpha_composite(big(spr("experience_bar_background")), at(136, 16))
+        lo, hi = XP_THRESHOLDS[lv - 1], XP_THRESHOLDS[lv]
+        if xp >= lo:
+            f = 102.0 / (hi - lo)
+            cur = min(int(math.floor(f * (xp - lo))), 102)
+            if cur > 0:
+                img.alpha_composite(big(spr("experience_bar_current").crop((0, 0, cur, 5))), at(136, 16))
+            fut = int(offers[sel].get("xp") or 0) if sel is not None and sel < len(offers) and len(slots) > 2 and slots[2] else 0
+            if fut > 0:
+                k = min(int(math.floor(fut * f)), 102 - cur)
+                if k > 0:
+                    img.alpha_composite(big(spr("experience_bar_result").crop((cur, 0, cur + k, 5))), at(136 + cur, 16))
+
+    def icon_of(it):
+        if not it:
+            return None
+        ic = big(potion_icon(jar, it[0], tint_of(it))) if tint_of(it) is not None else leather_icon(jar, it[0]) or item_icon(jar, it[0])
+        if ic is not None and ((len(it) > 2 and it[2]) or it[0] in GLINT_ITEMS):
+            ic = glint_icon(jar, ic, tick)
+        return ic
+
+    def put(it, x, y, count_text=None):
+        ic = icon_of(it)
+        if ic is not None:
+            img.alpha_composite(ic, at(x, y))
+        n = count_text if count_text is not None else (str(it[1]) if it and it[1] and it[1] > 1 else None)
+        if n:
+            ix, iy = at(x, y)
+            draw_text(img, jar, n, ix + 17 * GUI, iy + 9 * GUI, align_right=True)
+    # the offer list: buttons (TradeOfferButton, 88 x 20 widget/button), then each offer's items
+    btn, btn_hi = sprite(jar, "gui/sprites/widget/button"), sprite(jar, "gui/sprites/widget/button_highlighted")
+    for n in range(min(7, len(offers))):
+        img.alpha_composite(big(nine_slice(btn_hi if hover == f"trade:{n}" else btn, 88, 20, 3)), at(5, 18 + 20 * n))
+    img.alpha_composite(big(spr("scroller" if len(offers) > 7 else "scroller_disabled")), at(94, 18))
+    for n, o in enumerate(offers[:7]):
+        y = 19 + 20 * n
+        a, base = o.get("a"), o.get("aBase")
+        if a:
+            if base and base != a[1]:   # renderAndDecorateCostA: the base price struck through, the real one beside it
+                put([a[0], base], 10, y, "1" if base == 1 else None)
+                put(a, 24, y, "1" if a[1] == 1 else None)
+                img.alpha_composite(big(spr("discount_strikethrough")), at(17, y + 12))
+            else:
+                put(a, 10, y)
+        if o.get("b"):
+            put(o["b"], 40, y)
+        img.alpha_composite(big(spr("trade_arrow_out_of_stock" if o.get("outOfStock") else "trade_arrow")), at(60, y + 3))
+        if o.get("out"):
+            put(o["out"], 73, y)
+    if sel is not None and sel < len(offers) and offers[sel].get("outOfStock"):
+        img.alpha_composite(big(sprite(jar, "gui/sprites/container/villager/out_of_stock")), at(83 + 99, 35))
+    hs = {"a": 0, "b": 1, "result": 2}.get(hover, hover) if not str(hover).startswith("trade:") else None
+    hs = hs if isinstance(hs, int) and 0 <= hs < len(MERCHANT_SLOTS) else None
+    if hs is not None:
+        sx, sy = MERCHANT_SLOTS[hs]
+        img.alpha_composite(big(sprite(jar, "gui/sprites/container/slot_highlight_back")), at(sx - 4, sy - 4))
+    for it, (sx, sy) in zip(slots, MERCHANT_SLOTS):
+        if it:
+            put(it, sx, sy)
+    if hs is not None:
+        sx, sy = MERCHANT_SLOTS[hs]
+        img.alpha_composite(big(sprite(jar, "gui/sprites/container/slot_highlight_front")), at(sx - 4, sy - 4))
+    # the tooltip of what's under the cursor (the cursor itself isn't drawn: a screenshot has none)
+    tip, mxy = state.get("tooltip"), None
+    if hs is not None:
+        sx, sy = MERCHANT_SLOTS[hs]
+        mxy = (left + sx + 8, topp + sy + 8)
+        if tip is None:
+            tips = state.get("tips") or []
+            tip = tips[hs] if hs < len(tips) and slots[hs:hs + 1] and slots[hs] else None
+    elif str(hover).startswith("trade:"):
+        n = int(str(hover).split(":")[1])
+        mxy = (left + 73 + 8, topp + 19 + 20 * n + 8)
+        if tip is None and n < len(offers):
+            tip = offers[n].get("tip")
+    if mxy and tip:
+        draw_tooltip(img, jar, tip, *mxy)
+    img.save(path)
+
+
+def merchant_windows(timeline):
+    """[(t_open, t_close, state, hover, tooltip)] in seconds from the harness's `merchant` marks (the trade screen:
+    on open and every slot change) to `merchant_close` (or a death, or the end), split at the stunt's `gui_hover`
+    marks ({ slot, tooltip? }: K.hover; the hover ends with the window)."""
+    out, cur, hov = [], None, (None, None)
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == "merchant":
+            if cur:
+                out.append((cur[0], t, cur[1], *hov))
+            cur = (t, e)
+        elif e["event"] == "gui_hover":
+            if cur:
+                out.append((cur[0], t, cur[1], *hov))
+                cur = (t, cur[1])
+            hov = (e.get("slot"), e.get("tooltip"))
+        elif e["event"] in ("merchant_close", "death") and cur:
+            out.append((cur[0], t, cur[1], *hov)); cur = None; hov = (None, None)
+    if cur:
+        out.append((cur[0], 1e9, cur[1], *hov))
+    return [w for w in out if w[1] > w[0]]
 
 
 def _solve8(src, dst):
@@ -1082,13 +1436,20 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
     for c in json.loads(spec):
         a, b, target = c[0], c[1], float(c[2])
         down = len(c) > 4 and c[4] == "down"
+        # an options dict anywhere after the label: {"hide": EVENT} takes the clock off screen from that event on (lapse_rocket:
+        # the 1-hour clock covered the launching rocket's nose; 60:00 has read on the wide before the cut)
+        opts = next((x for x in c[4:] if isinstance(x, dict)), {})
         k = used.get(a, 0); used[a] = k + 1
         ta = [e["t"] / 1000 for e in timeline if e["event"] == a] if timeline else ([tl_ev[a]] if a in tl_ev else [])
         tb = [e["t"] / 1000 for e in timeline if e["event"] == b] if timeline else ([tl_ev[b]] if b in tl_ev else [])
         if len(ta) > k:
             te = next((x for x in tb if x > ta[k] + 1e-6), None)
             if te is not None:
-                clocks.append((ta[k] - start, te - start, target, c[3] if len(c) > 3 else "", down))
+                th = None
+                if opts.get("hide"):
+                    hs = [e["t"] / 1000 for e in timeline if e["event"] == opts["hide"]] if timeline else ([tl_ev[opts["hide"]]] if opts["hide"] in tl_ev else [])
+                    th = next((x - start for x in hs if x > ta[k] + 1e-6), None)
+                clocks.append((ta[k] - start, te - start, target, c[3] if len(c) > 3 and isinstance(c[3], str) else "", down, th))
     if not clocks:
         return None
     clocks.sort()
@@ -1104,7 +1465,7 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
         if not cur:
             key = None
         else:
-            t0, t1, target, label, down = cur[-1]
+            t0, t1, target, label, down, th = cur[-1]
             done = t >= t1 - 1e-6
             lag = 1.5 / fps            # the first frame after a cut can land mid-tick: it still reads 0:00
             v = target * min(1.0, max(0.0, (t - t0 - lag) / max(1e-6, t1 - t0 - lag)))
@@ -1114,6 +1475,8 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=Non
                 pop = 1.0 + 0.22 * max(0.0, 1 - k) if k < 1 else 1.0
             txt = (clock_fmt(0.0, target, False) if done else clock_fmt(target - v, target, False)) if down else clock_fmt(v, target, done)
             key = (txt, label, done, round(pop, 2), down)
+            if th is not None and t >= th - 1e-6:
+                key = None   # hidden from its hide event on
         if key not in cache:
             path = outdir / f"clock{len(cache)}.png"
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -1142,13 +1505,15 @@ SPLIT_POS = (24, 479)      # the split timer's strip: top-left of the game area 
 
 def split_timer(spec, timeline, start, dur, outdir, fps=60):
     """edit.splits: a speedrun timer that times ONE attempt (owner r:r32b983, end_portal_job: "the timer should reset
-    every single time like we start a new ender portal"). spec {reset, split, of, endless}: the timer starts at 0:00.00 on
+    every single time like we start a new ender portal"). spec {reset, split, of, endless, hide}: the timer starts at 0:00.00 on
     every `reset` mark and runs in output time, freezes green on the next `split` mark (that attempt's time) with "n/of",
     holds until the next reset and starts again from 0; from the `endless` mark (optional) it starts from 0 once more,
-    red, "n/∞", and never stops. Returns (an image-sequence pattern of SW x SH strips, one per output frame, x, y)."""
+    red, "n/∞", and never stops; from the `hide` mark (optional) it is gone. Returns (an image-sequence pattern of SW x SH strips, one per output frame, x, y)."""
     sp = json.loads(spec) if isinstance(spec, str) else spec
     ev = lambda name: sorted(e["t"] / 1000 - start for e in timeline if e["event"] == name) if name else []
     resets, splits_, endless = ev(sp["reset"]), ev(sp.get("split")), ev(sp.get("endless"))
+    hide = ev(sp.get("hide"))                    # optional: the strip goes away from this mark (pickaxe_race's TNT finale
+    hide_at = hide[0] if hide else math.inf      # is no attempt: a frozen last split read as TNT's time, review 2026-11-11)
     runs = []                                    # (t0, t1 or None, n, endless)
     for i, a in enumerate(resets):
         nxt = resets[i + 1] if i + 1 < len(resets) else math.inf
@@ -1189,7 +1554,9 @@ def split_timer(spec, timeline, start, dur, outdir, fps=60):
     for i in range(int(math.ceil(dur * fps)) + 1):
         t = i / fps
         cur = [r for r in runs if r[0] <= t + 1e-6]
-        if not cur:                              # before the first attempt: 0:00.00, waiting
+        if t >= hide_at - 1e-6:
+            key = ("", None, "", None)
+        elif not cur:                              # before the first attempt: 0:00.00, waiting
             key = (fmt(0), WHITE, "", WHITE)
         else:
             a, b, n, endl = cur[-1]
@@ -1201,7 +1568,7 @@ def split_timer(spec, timeline, start, dur, outdir, fps=60):
                 key = (fmt(t - a), WHITE, f"{n - 1}/{of}" if n > 1 else "", GREEN)
         if key not in cache:
             path = outdir / f"split{len(cache)}.png"
-            strip(*key).save(path)
+            (Image.new("RGBA", (SW, SH), (0, 0, 0, 0)) if key[1] is None else strip(*key)).save(path)
             cache[key] = path
         (seq / f"s{i:05d}.png").hardlink_to(cache[key])
     return seq / "s%05d.png", SPLIT_POS
@@ -1309,9 +1676,21 @@ def subtitle_png(text, path, yfrac=0.42):
     y = BAND + int(GAME_H * yfrac) - len(lines) * 36
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0)); gd = ImageDraw.Draw(glow)
     for i, ln in enumerate(lines):
-        tw = d.textlength(ln, font=font)
-        gd.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
-        d.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(190, 255, 170, 255), stroke_width=4, stroke_fill=(10, 40, 10, 255))   # dark edge: readable on pale sky
+        tw = d.textlength(ln.replace("*", ""), font=font)
+        if "*" not in ln:
+            gd.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
+            d.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(190, 255, 170, 255), stroke_width=4, stroke_fill=(10, 40, 10, 255))   # dark edge: readable on pale sky
+            continue
+        # a *word* in the line is red (red glow, dark-red edge), the rest the usual green (psycho's 'night *light*')
+        x = (W - tw) / 2
+        for j, w_ in enumerate(ln.split(" ")):
+            red = w_.startswith("*") and w_.endswith("*") and len(w_) > 2
+            w_ = (w_.strip("*") if red else w_) + (" " if j < len(ln.split(" ")) - 1 else "")
+            gd.text((x, y + i * 84), w_, font=font, fill=(255, 60, 60, 255) if red else (60, 255, 60, 255), stroke_width=6,
+                    stroke_fill=(255, 60, 60, 255) if red else (60, 255, 60, 255))
+            d.text((x, y + i * 84), w_, font=font, fill=(255, 90, 80, 255) if red else (190, 255, 170, 255), stroke_width=4,
+                   stroke_fill=(50, 5, 5, 255) if red else (10, 40, 10, 255))
+            x += d.textlength(w_, font=font)
     glow = glow.filter(ImageFilter.GaussianBlur(10))
     out = Image.new("RGBA", (W, H), (0, 0, 0, 0)); out.alpha_composite(glow); out.alpha_composite(img)
     out.save(path)
@@ -1365,6 +1744,55 @@ def cut_times(args):
     return [w.out(a) - args.start for a, b, f in (w.spans if w else []) if f == math.inf]
 
 
+SFX_SHARE_DB = 4.0   # the edit's sfx may lift the game track's integrated loudness by at most this much (busy
+#                      tracks measured +1.2 to +3.3 dB: tnt, tnt_1000, villager_fired; a quiet one + an impact +10 dB)
+
+
+def cap_share(game, fx, measure, share_db=SFX_SHARE_DB):
+    """The gain (<= 1) for the sfx track `fx` so that game + gain * fx measures at most `share_db` dB louder than the game
+    alone (measure: a stereo float array -> LUFS). Every later level (the -18 / -15 stem gains, the master) is an
+    integrated loudness of the premixed track: an impact much louder than a quiet game track sets it, and the whole
+    game went ~28 dB down to make room for one boom (mislabel_grandma, 2026-11-11). Busy tracks are left alone."""
+    base = measure(game)
+    n = min(len(game), len(fx))
+
+    def lift(k):
+        x = game.copy()
+        x[:n] += fx[:n] * k
+        return measure(x) - base
+    if base <= -69 or lift(1.0) <= share_db:
+        return 1.0
+    lo, hi = 0.0, 1.0   # bisect the sfx gain: lift(lo) <= share_db < lift(hi)
+    for _ in range(12):
+        mid = (lo + hi) / 2
+        if lift(mid) <= share_db:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def cap_sfx_share(game_wav, sfx_wav, out_wav, share_db=SFX_SHARE_DB):
+    """game_wav + sfx_wav -> out_wav with the sfx turned down by cap_share (prints when it does)."""
+    import numpy as np
+    import loud
+    import sfx
+    game, fx = sfx.read_audio(game_wav), sfx.read_audio(sfx_wav)
+
+    def measure(x):
+        sfx.write_wav(pathlib.Path(out_wav), x)
+        return loud.measure(out_wav)
+    k = cap_share(game, fx, measure, share_db)
+    if k < 1.0:
+        print(f"sfx: turned down {20 * math.log10(max(k, 1e-6)):.1f} dB so the game track keeps its level (at most +{share_db:g} dB from the sfx)")
+    n = max(len(game), len(fx))
+    mix = np.zeros((n, 2), np.float32)
+    mix[:len(game)] += game
+    mix[:len(fx)] += fx * k
+    sfx.write_wav(pathlib.Path(out_wav), mix)
+    return k
+
+
 def premix_sfx(args, dur, tmp):
     """edit.sfx (scripts/sfx.py) premixed into the game audio, in Short time -> (audio path, its start offset)."""
     import loud
@@ -1374,9 +1802,10 @@ def premix_sfx(args, dur, tmp):
     sfx_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
     track = sfx.build_track(args.sfx, sfx_tl, args.start, dur, tmp / "sfx.wav", args.cards, args.counter)
     if track and args.audio:
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
-                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)}{sfx.duck_filter(sfx.game_dips(args.sfx, sfx_tl, args.start), 0.03)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
-                        "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-filter_complex",
+                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)}{sfx.duck_filter(sfx.game_dips(args.sfx, sfx_tl, args.start), 0.03)},aresample={sfx.SR},aformat=channel_layouts=stereo[g]",
+                        "-map", "[g]", "-c:a", "pcm_f32le", "-ar", str(sfx.SR), str(tmp / "game_stem.wav")], check=True)
+        cap_sfx_share(tmp / "game_stem.wav", track, tmp / "game_sfx.wav")
         return str(tmp / "game_sfx.wav"), 0.0
     if track:
         return str(track), 0.0
@@ -1396,7 +1825,8 @@ def story_sound(args, narration, audio, audio_ss, story_tl, dur, tmp):
     name = "story_" + pathlib.Path(args.story).name
     wav = story_audio.mix_story(narration, audio, audio_ss, args.story, story_tl, args.start, dur, tmp / "story_mix.wav",
                                 song=args.song, song_start=args.song_start, stunt_sfx=args.sfx, end_after=args.end_after,
-                                name=name, rec=rec, stems=os.environ.get("HB_STEMS") or None)
+                                name=name, rec=rec, stems=os.environ.get("HB_STEMS") or None,
+                                key_marks=json.loads(args.key_sounds) if getattr(args, "key_sounds", None) else None)
     meta = json.loads(pathlib.Path(str(wav) + ".json").read_text())
     # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
     # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
@@ -1452,12 +1882,12 @@ def main():
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
-    ap.add_argument("--splits", help='JSON {reset, split, of, endless}: a speedrun timer reset to 0 at every attempt (edit.splits)')
+    ap.add_argument("--splits", help='JSON {reset, split, of, endless, hide}: a speedrun timer reset to 0 at every attempt (edit.splits)')
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
     ap.add_argument("--captions", help='JSON list of [EVENT[:OFFSET_S], TEXT]: the top band\'s caption switches to TEXT at EVENT (a numbered list: "1. ...", "2. ..."); --caption shows before the first')
-    ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
+    ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles (a *word* is drawn red)')
     ap.add_argument("--subs_y", type=float, default=0.42, help="subtitle height as a fraction of the game view (0.15 = top third; default 0.42, mid view)")
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
     ap.add_argument("--timeline")
@@ -1477,10 +1907,14 @@ def main():
     ap.add_argument("--ring", help='JSON list of [EVENT[:off], SECONDS, X_FRAC?, Y_FRAC?, RADIUS_PX?] red highlight rings')
     ap.add_argument("--tags", help='JSON list of [START, END|null, TEXT, COLOR, NTH?] persistent role labels')
     ap.add_argument("--score", help='JSON {"event": "score", "a": [LABEL, COLOR], "b": [LABEL, COLOR]}: a live two-sided score bar from the marks\' a/b shares (format race)')
+    ap.add_argument("--still", help='JSON {"at": EVENT, "dark": EVENT?, "meme": KEY, "punch": [EVENT, SCALE]?, "dim": 0..1?, "fade": S?}: the view goes dark, then a meme picture (lib/memes.json) fills it (format cooked)')
     ap.add_argument("--chat", help='JSON list of [EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?] vanilla chat input typed up to EVENT (Enter)')
+    ap.add_argument("--popup", help='JSON list of {at: [OPEN, CLICK, CLOSE], mob, text, buttons, pick, hover?, done?, roll?} fake mod permission popups (scripts/popup.py, format fakemod)')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
+    ap.add_argument("--key_sounds", help='JSON list of marks (edit.keySounds): a story\'s score ducks under each one\'s sound (scripts/story_audio.py)')
     ap.add_argument("--freeze", help='JSON list of [EVENT, SECONDS, TEXT?, COLOR?] freeze frames with a stamped text')
+    ap.add_argument("--tally", help='JSON {"event": "blocks", "label": "blocks used", "done": EVENT}: a live running total from the marks\' n (format mega)')
     ap.add_argument("--fallen", help='JSON list of [EVENT_A, EVENT_B, LABEL?] live "blocks fallen" counters (from the poses)')
     ap.add_argument("--sfx", help='JSON list of [KIND, EVENT, (EVENT2), {opts}] sound effects (scripts/sfx.py)')
     ap.add_argument("--replay", help='JSON {"at": EVENT, ...}: append work/<name>.replay (scripts/render_replay.py) after the payoff')
@@ -1499,11 +1933,21 @@ def main():
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--audio_only", metavar="MP4", help="re-edit only a story's sound onto this finished mp4's picture (stream copy; hb render --reuse locally)")
     ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
+    ap.add_argument("--self_name", help="draw the old 'HelloBuh' bot of a recording with no user as this name in every text (death screen, chat, feedback): HelloBuh stunts re-rendered as 56e (scripts/edit_args.js, lib/legacy_player.js)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     HUD_STYLE.update(hardcore=args.hardcore, armor=args.armor)
     if args.preview:
         os.environ["HB_PREVIEW"] = "1"
+    if args.self_name and args.timeline:
+        renamed = apply_self_name(json.loads(pathlib.Path(args.timeline).read_text()), args.self_name)
+        if renamed is not None:
+            fd, tp = tempfile.mkstemp(prefix="hb_self_", suffix=".rec.json")
+            with os.fdopen(fd, "w") as fh:
+                json.dump(renamed, fh)
+            args.timeline = tp
+            __import__("atexit").register(lambda: os.path.exists(tp) and os.unlink(tp))
+            print(f"player: the old {LEGACY_NAME} bot is drawn as {args.self_name} in the recording's texts")
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
     frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
@@ -1720,8 +2164,15 @@ def main():
     if args.subs and args.timeline:
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
         sub_starts = []
+        def sub_ts(ev_):   # 'EVENT' or 'EVENT:OFFSET_S' (as captions, flash and punch take it; tnt's 'hill:2.0' was skipped silently)
+            name, _, off = str(ev_).rpartition(":") if ":" in str(ev_) else (str(ev_), "", "0")
+            try:
+                off = float(off)
+            except ValueError:
+                name, off = str(ev_), 0.0
+            return [e["t"] / 1000 + off for e in all_ev if e["event"] == name]
         for sub in json.loads(args.subs):
-            tts = [e["t"] / 1000 for e in all_ev if e["event"] == sub[0]]
+            tts = sub_ts(sub[0])
             nth_ = sub[3] if len(sub) > 3 else 0
             if len(tts) > nth_:
                 t_ = tts[nth_] - args.start
@@ -1733,8 +2184,9 @@ def main():
             ev_name, text = sub[0], sub[1]
             dur_s = sub[2] if len(sub) > 2 else 1.8
             nth = sub[3] if len(sub) > 3 else 0                 # which occurrence of the event
-            ts = [e["t"] / 1000 for e in all_ev if e["event"] == ev_name]
+            ts = sub_ts(ev_name)
             if len(ts) <= nth:
+                print(f"WARNING subs: no {ev_name!r} mark (#{nth}), {text!r} skipped")
                 continue
             t0 = ts[nth] - args.start
             for c in cut_times(args):
@@ -1783,6 +2235,25 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
+    # edit.still (format cooked): the view goes dark, then the meme picture over the game and the HUD (the chat comes after,
+    # on top of it); fetched at render from lib/memes.json's logged URL (scripts/meme_cache.py), never committed
+    if args.still and args.timeline:
+        spec = json.loads(args.still)
+        import meme_cache
+        src = meme_cache.path(spec.get("meme", "war_soldier"))
+        focus = spec.get("focus") or meme_cache.entry(spec.get("meme", "war_soldier")).get("focus") or (0.5, 0.5)
+        fade = float(spec.get("fade", 0.2))
+        for k, (a, b, kind) in enumerate(still_windows(spec, _tl, args.start)):
+            png = tmp / f"still{k}.png"
+            if kind == "dark":
+                dark_png(png)
+            else:
+                still_png(src, png, scale=float(spec["punch"][1]) if kind == "punch" else 1.0, dim=float(spec.get("dim", 0.0)), focus=focus)
+            inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(png)]
+            fx = f",fade=t=in:st={max(0, a):.4f}:d={fade:.3f}:alpha=1" if kind == "dark" and fade > 0 else ""
+            graph.append(f"[{n_in}:v]format=rgba{fx}[stv{k}]")
+            graph.append(f"[{last}][stv{k}]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sto{k}]")
+            last, n_in = f"sto{k}", n_in + 1
     # an opened chest, barrel or shulker box: the container screen over the game (harness `container` marks)
     if args.timeline:
         cwins = container_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
@@ -1797,6 +2268,35 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"cont{ci}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[ct{ci}]")
                     last, n_in = f"ct{ci}", n_in + 1
+    # boss bars (`bossbar` marks): a staged raid bar ("Raid", red, notched_10) at the top of the game view
+    if args.timeline:
+        bwins = bossbar_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+        if bwins:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                made = {}
+                for bi, (a_, b_, st) in enumerate(bwins):
+                    a, b = a_ - args.start, min(b_ - args.start, 1e6)
+                    if b <= 0 or b <= a:
+                        continue
+                    if st not in made:
+                        made[st] = tmp / f"boss{len(made)}.png"; bossbar_png(jar, st, made[st])
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(made[st])]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[bb{bi}]")
+                    last, n_in = f"bb{bi}", n_in + 1
+    # a villager's trade screen (harness `merchant` marks; K.trade / K.hover): MerchantScreen and the hovered tooltip
+    if args.timeline:
+        mwins = merchant_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+        if mwins:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                for mi, (a_, b_, st, hov, tipo) in enumerate(mwins):
+                    a, b = a_ - args.start, min(b_ - args.start, 1e6)
+                    if b <= 0 or b <= a:
+                        continue
+                    with gui_scale(args.gui_scale):
+                        merchant_png(jar, {**st, **({"tooltip": tipo} if tipo else {})}, tmp / f"merch{mi}.png", hover=hov, tick=int(st["t"] / 50))
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"merch{mi}.png")]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[mc{mi}]")
+                    last, n_in = f"mc{mi}", n_in + 1
     # chat lines (`syschat` marks): '<Jonah> see you tomorrow', 'Jonah left the game' in yellow
     if args.timeline:
         swins = syschat_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
@@ -1811,9 +2311,9 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"chat{si}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sc{si}]")
                     last, n_in = f"sc{si}", n_in + 1
-    if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat or args.score) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
+    if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat or args.score or args.tally or args.popup) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
-                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat, score=args.score,
+                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat, score=args.score, tally=args.tally, popup=args.popup,
                                   hide=[(death_start(a_, args), b_ - args.start) for a_, b_ in death_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.death_screen)]
                                   if args.death_screen else [], cuts=cut_times(args))
         if lst:
