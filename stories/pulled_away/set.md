@@ -23,10 +23,10 @@
 ## Claims (the narration and the picture must agree, checked on stills from every shot angle)
 | line | claim | the set must show |
 |---|---|---|
-| L01 | a player has taken villagers away in his boat | the boat on grass with the kid in it, the Hollow's cottages behind, the man ahead with the lead (gap: the lead must draw) |
+| L01 | a player took thirty-nine of us in his boat | the boat on grass with the kid in it, the Hollow's cottages behind, the man ahead with the lead (gap: the lead must draw) |
 | L02 | I got in myself; number forty | the kid sitting in the boat, the man glancing back |
 | L03 | he took Mom, and Uncle; they must love it there | each in a boat behind the man, in its flashback shot, while named; on LOVE the two cottages shut and dark (S08) |
-| L04 | (flashback) across the water, the old empty village; one light on | open water; Fernbank dark but exactly one lit window (the librarian's upstairs west window), her figure in it (S04b) |
+| L04 | (flashback) across the water, the old empty village; a light on in one window | open water; Fernbank dark but exactly one lit window (the librarian's upstairs west window), her figure in it (S04b) |
 | L07 | we crossed the water; when it got dark, we bumped into the old empty village | two boats on the water, his rowing, hers following on the lead (S09); the bow knocks the dock post (S10); then S11's lit houses contradict "empty" |
-| L08 | Mom, my uncle, the lady from the window; every house full | Mom, the librarian, Uncle, the only villagers near the dock's foot, all three readable at phone size; every house within 30 blocks lit, about 40 villagers readable up the path |
+| L08 | Mom, my uncle, the lady from the window; every house full | Mom, the librarian, Uncle, the only villagers near the dock's foot, all three readable at phone size, by their cottage door under the lantern; no boats at the dock but the two that just came in; every house within 30 blocks lit, about 40 villagers readable up the path |
 | L09 | none of them came back | (S11 held) |
