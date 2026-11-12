@@ -45,7 +45,7 @@ const quirks = [
   },
   {
     key: 'sand',
-    dwell: 1.1,                                               // the pillar lands (a falling block holds a cut)
+    dwell: 1.5,                                               // the pillar lands and thuds, then the cut (a falling block holds a cut; 1.1 cut it mid-fall)
     label: 'sand: falls',
     slot: SLOT.shovel,
     start: { z: 1.5, pitch: 4 },
