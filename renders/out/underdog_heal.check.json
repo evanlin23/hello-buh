@@ -1,0 +1,146 @@
+{
+ "stunt": "underdog_heal",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/underdog_heal.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT underdog_heal: 1 shots, scene 0.0-15.5 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-15.5  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 3 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 5.7,
+     "shot": 5,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager (farmer) #26729 appears in the middle of the frame 3.95 s into the shot (3.5 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 5.7,
+     "shot": 5,
+     "line": null,
+     "kind": "vanish",
+     "msg": "zombie_villager (farmer) #26606 vanishes in the middle of the frame 3.95 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 10.05,
+     "shot": 6,
+     "line": null,
+     "kind": "vanish",
+     "msg": "snow_golem #26607 vanishes in the middle of the frame 4.80 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "2 warning(s) over 6 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1,
+     "shot": 2,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 37% of the frame is within 3 blocks (sand, cactus)"
+    },
+    {
+     "level": "WARN",
+     "out": 5.7,
+     "shot": 5,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (MS medium on zombie_villager (farmer), median depth 4.2 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "9 visible sound-making events (death 1, hurt 4, voice 4), 5 with a sound mark, 4 without (audio.py adds those for a story)",
+    "     0.55s  cat idle voice                     -> entity.cat.ambient                12.4 blocks          ",
+    "     3.65s  wolf idle voice                    -> entity.wolf.ambient               12.2 blocks          ",
+    "     9.90s  zombie_villager idle voice         -> entity.zombie_villager.ambient     3.5 blocks in view  ",
+    "    15.50s  snow_golem idle voice              -> entity.snow_golem.ambient          3.5 blocks in view  ",
+    "ambience per shot: -0.25-0.85s day, 0.85-2.40s day, 2.40-3.90s day, 3.90-5.20s day, 5.20-7.10s day, 7.10-11.45s day, 11.45-18.25s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T04:34:59.646Z"
+}
