@@ -169,7 +169,14 @@ def package_clock(name, edit):
         k, off = edit["startAt"].rsplit(":", 1)
         if k in ev:
             start = max(0.0, ev[k] + float(off))
-    drop = ev[edit["dropAt"]] - start + hook_len(edit) if edit.get("dropAt") in ev else None
+    da, doff = edit.get("dropAt"), 0.0
+    if da and da not in ev and ":" in str(da):   # 'EVENT:OFFSET_S' (as add_song)
+        k_, _, o_ = str(da).rpartition(":")
+        try:
+            da, doff = k_, float(o_)
+        except ValueError:
+            pass
+    drop = ev[da] + doff - start + hook_len(edit) if da in ev else None
     return tl, start, hook_len(edit), drop
 
 

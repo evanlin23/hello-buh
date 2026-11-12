@@ -802,6 +802,10 @@ def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption
     zoom = f"1+0.08*t/{d:.3f}"                 # a slow push-in, so the flash never sits still
     push = (f"scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
             f"crop={W}:{GAME_H},format=rgba")
+    # "blur": a soft blur over the clip (not the text), so a tease of the answer doesn't give it away (owner on
+    # guess_sound's parrot tease, 2026-11-12: "we should blur the parrot at the start slightly")
+    if float(h.get("blur", 0) or 0) > 0:
+        push += f",gblur=sigma={float(h['blur']):.2f}"
     if frames and caption:
         # -t on the clip's inputs: read only the hook's frames (decoding the whole sequence while the
         # main video queued behind the concat took 5+ GB and many minutes)

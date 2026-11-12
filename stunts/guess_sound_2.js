@@ -14,7 +14,7 @@ module.exports = guessSound({
   // 1.0 s flash of the last room lit, the parrot doing its ghast impression (no label: the twist stays for the end)
   // the twist's hit on the final mix (mixcheck with the song: no sound hit within 0.3 s of the payoff): the song and the
   // game dip, then an impact, as pt 1
-  edit: { startAt: 'cd3:-0.02', hook: { at: 'final_reveal', before: 0, after: 1.0, text: 'the last one is IMPOSSIBLE 😭' },
+  edit: { startAt: 'cd3:-0.02', hook: { at: 'final_reveal', before: 0, after: 1.0, blur: 7, text: 'the last one is IMPOSSIBLE 😭' },   // blurred (owner 2026-11-12 at 10.1 s: "should blur the starting")
     sfx: [['dip', 'final_reveal', 0.4], ['gamedip', 'final_reveal', 0.35], ['impact', 'final_reveal', { gain: 1.4 }]] },
   rounds: [
     { mob: 'pig', room: 'farm', sound: 'entity.pig.ambient', label: 'EASY', answer: 'PIG', react: 'call', leanTicks: 5, lookY: 0.8 },

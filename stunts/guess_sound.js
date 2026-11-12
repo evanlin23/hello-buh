@@ -14,10 +14,16 @@ module.exports = guessSound({
   // parrot's hiss filled the 0.3 s before it) dip, then an impact
   // and a pop with the round counter on frame 0 (pace: silent until 0.71 s)
   // the opening (owner on guess_sound at 0 s: "nothing really happens this first bit, people will scroll"; r:r0f3da0,
-  // r:r4607fa): a 1.0 s flash of the twist first, the last room lit, the parrot doing its creeper hiss (no label: the
-  // twist stays for the end), then the first round from its countdown, the cow's call already playing (as pt 2)
-  edit: { startAt: 'cd3:-0.02', hook: { at: 'final_reveal', before: 0, after: 1.0, text: 'the last one is IMPOSSIBLE 😭' },
-    sfx: [['pop', 'cd3', { gain: 0.7 }], ['dip', 'final_reveal', 0.4], ['gamedip', 'final_reveal', 0.35], ['impact', 'final_reveal', { gain: 1.4 }]] },
+  // r:r4607fa): a 1.0 s flash of the twist first, the last room lit, the parrot doing its creeper hiss, BLURRED (owner
+  // 2026-11-12: "we should blur the parrot at hte start slightly": a tease, not the answer), then the first round from
+  // the cow's first call (owner: "kinda hard to hear the moo at the start": a start on the countdown cut the first moo,
+  // and a pop sat on the second; the song ducks under every call, keySounds 'hear')
+  // the end (owner: "is the warden sound overlapping the parrot sound? I couldnt hear the parrot"): the 'impact' is a
+  // 1.1 s low boom (110 -> 40 Hz) that buried the parrot's hiss 0.3 s after the reveal, with the song's drop on top. Now
+  // a short pop is the hit, the song stays ducked through the hiss and drops after it
+  edit: { startAt: 'hear:-0.1', hook: { at: 'final_reveal', before: 0, after: 1.0, blur: 7, text: 'the last one is IMPOSSIBLE 😭' },
+    dropAt: 'final_reveal:0.8',
+    sfx: [['dip', 'final_reveal:0.8', 1.2], ['gamedip', 'final_reveal', 0.35], ['pop', 'final_reveal', { gain: 1.6 }]] },
   rounds: [
     { mob: 'cow', room: 'barn', sound: 'entity.cow.ambient', label: 'EASY', answer: 'COW', react: 'moo', leanTicks: 6, lookY: 1.2 },
     { mob: 'llama', room: 'savanna', sound: 'entity.llama.ambient', label: 'MEDIUM', answer: 'LLAMA', react: 'call', reactSound: 'entity.llama.angry', lean: 0, back: 4, lookY: 1.7, color: 'gold' },
