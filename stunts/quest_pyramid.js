@@ -40,7 +40,7 @@ const Q = makeQuest({
     ['stage', 'LEVEL 1: the tunnel', 1.1, 0],
     ['stage', 'LEVEL 2: the lava', 1.1, 1],
     ['stage', 'LEVEL 3: the arrow trap', 1.2, 2],
-    ['stage', 'LEVEL 4: even deeper', 1.1, 3],
+    ['stage', 'LEVEL 4: deeper tunnel', 1.1, 3],
     ['stage', 'LEVEL 5: harder lava', 1.1, 4],
     ['stage', 'LEVEL 6: the secret wall', 1.2, 5],
     ['press2', 'the eye was a button', 1.0]
@@ -55,7 +55,7 @@ const Q = makeQuest({
     speed: [['stage0', 'mine_s0:-0.15', 1.6], ['dug_s0:0.1', 'stage1:-0.1', 1.6], ['made_it_s1:0.1', 'stage2:-0.1', 1.6],
       ['safe:0.1', 'mine_s3:-0.15', 1.6], ['dug_s3:0.1', 'stage4:-0.1', 1.6], ['made_it_s4:0.1', 'face:-0.1', 1.6], ['walk2', 'reveal:-0.3', 1.5]],
     // (an impact on frame 0 and on the terracotta's break: the opening's sound hit, r:r0f3da0)
-    sfx: [['impact', 'go:0.02', { gain: 1.4 }], ['impact', 'dug', { gain: 1.4 }], ['whoosh', 'drop', { gain: 0.35 }],
+    sfx: [['impact', 'go:0.02', { gain: 1.4 }], ['impact', 'dug', { gain: 1.0 }], ['whoosh', 'drop', { gain: 0.35 }],
       ['whoosh', 'reveal:-0.15', { gain: 0.6 }], ['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.4 }]],
     flash: [['reveal', 0, 0.35]]
   }
