@@ -258,20 +258,20 @@ module.exports = L.makeLapse({
     ring: { path: [[0, 30, 18, 36], [2.2, 23, 17, 40]], lookPath: [[0, 0, 6, 0], [2.2, 0, 6, 0]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[16, 25, 7]] },
     // 3. high, sliding round: the houses fill the ring outside the wall
     houses: { path: [[0, -44, 36, 30], [2.2, -50, 33, 16]], lookPath: [[0, 0, 3, 0], [2.2, 0, 3, 0]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[-20, 8, 14]] },
-    // 4. outside on the real hillside, low: the terrace's arcade rises across the town, the forest round it
-    face: { path: [[0, 30, 22, 112], [2.2, 42, 24, 106]], lookPath: [[0, 6, 8, 40], [2.2, 10, 9, 40]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[0, 15.5, 75]] },
-    // 5. high over the south-east corner: the garden town spreading over the terrace
-    town: { path: [[0, 94, 56, 94], [1.8, 88, 52, 100]], lookPath: [[0, 30, 10, 30], [1.8, 28, 10, 32]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[46, 18, 46]] },
-    // 6. high over the west side: the second terrace, the corner and gate towers rise in view
-    far: { path: [[0, -124, 58, -20], [2.0, -120, 62, -36]], lookPath: [[0, -56, 22, -48], [2.0, -56, 24, -50]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[-73, 57, -73]] },
+    // 4. outside over the woods to the east: the terrace's arcade rises out of the trees across the town
+    face: { path: [[0, 112, 22, -30], [2.2, 106, 24, -42]], lookPath: [[0, 40, 6, -4], [2.2, 40, 7, -10]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[75, 15.5, -20]] },   // (east, over the real woods: the south side is a snowy biome edge and a village)
+    // 5. high over the east side: the garden town and the ledge gardens fill in between the terraces
+    town: { path: [[0, 100, 64, -34], [1.5, 96, 62, -22]], lookPath: [[0, 44, 12, -24], [1.5, 44, 12, -18]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[57, 30, -20]] },   // (between the east gate and corner towers: from the corner, its tower filled the frame)
+    // 6. low over the water at the north-west corner: the second terrace and the corner tower rise
+    far: { path: [[0, -20, 30, -124], [3.3, -36, 33, -120]], lookPath: [[0, -48, 24, -50], [3.3, -50, 26, -50]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[-73, 57, -73]] },   // (the north-west corner over the water, low: tier 1's top edge-on, not a lawn)
     // 7. skimming low over the north terraces: the top town fills in, the ledge gardens below
     roofs: { path: [[0, -30, 44, -100], [1.5, -10, 44, -100]], lookPath: [[0, -10, 26, -50], [1.5, 10, 26, -50]], fov: 64, dof: false, drift: 0.4, scenery: true, subject: [[0, 34, -57]] },
     // 8. from the plaza, 56e and the fountain in front: the great towers rise behind the walls
     giants: { path: [[0, -9.5, 5, -9.5], [1.5, -8.5, 4.6, -8.5]], lookPath: [[0, 24, 18, 24], [1.5, 24, 21, 24]], fov: 72, dof: false, drift: 0.3, scenery: true, subject: [[0, 4.5, 0]] },
     // 9. far out over the forest and the river: the whole city against the hills, the great towers topping out
     scale: { path: [[0, 150, 40, -118], [1.5, 142, 42, -130]], lookPath: [[0, 0, 36, 0], [1.5, 0, 38, 0]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: [[73, 57, -73]] },
-    // 10. the reveal: the whole city from high on its south axis, the forest and hills round it (1x: the drift after)
-    reveal: { path: [[0, 0, 112, 128], [1.5, 0, 107, 121]], lookPath: [[0, 0, 10, -2], [1.5, 0, 10, -2]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] },   // (under the clouds: at 130 up the frame was in them, a white haze)
+    // 10. the reveal: the whole city from high on its north axis (1x: the drift after)
+    reveal: { path: [[0, 0, 112, -128], [1.5, 0, 107, -121]], lookPath: [[0, 0, 10, 2], [1.5, 0, 10, 2]], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] },   // (from the north, the water in front; under the clouds)
     // 11. the close pass: low beside 56e and the fountain, sliding past, the towers over them (1x)
     pass: { path: [[0, -8.5, 2.2, 0.5], [2.0, -8.2, 2.3, 3.0]], lookPath: [[0, 10, 12, -2], [2.0, 10, 13, -1]], fov: 70, dof: false, drift: 0.3, scenery: true, subject: [[-4, 2.5, 2]] }   // (between two lamp posts, clear of both: r1)
   }
