@@ -153,7 +153,8 @@ function pose (ctx, who, names, params = {}) {
 function poseOff (ctx, who) { ctx.mark('pose_off', { ids: idsOf(ctx, who) }) }
 // Renderer-side head turns (render.js LOOK_AT): `who` (actors, or entity ids for mobs) turn their heads to `at` (an
 // actor's name, an entity id, or [dx, dy, dz] from the set origin) until M.headOff. No server moves: works on no-AI mobs.
-function headTo (ctx, who, at) { ctx.mark('look_at', { ids: idsOf(ctx, who), at }) }
+// o.secs: the turn's ease (default 0.4 s = 8 ticks, in and back out): a slow, deliberate head turn (Statue S11)
+function headTo (ctx, who, at, o = {}) { ctx.mark('look_at', { ids: idsOf(ctx, who), at, ...(o.secs ? { ticks: Math.max(1, Math.round(o.secs * 20)) } : {}) }) }
 function headOff (ctx, who) { ctx.mark('look_at_off', { ids: idsOf(ctx, who) }) }
 function idsOf (ctx, who) {
   return [].concat(who).map(w => {
@@ -188,7 +189,8 @@ function who2 (ctx, name) {
   const b = ctx.actors && ctx.actors[name]
   return b ? { self: false, bot: b } : null
 }
-async function headTo (w, p, ms) {
+// (say's own head turn: named turnHeadTo, so it no longer shadows the exported renderer-side M.headTo above)
+async function turnHeadTo (w, p, ms) {
   if (w.self) { const e = w.bot.entity.position.offset(0, 1.62, 0), d = p.minus(e); await w.bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true); return }
   await lookAt(w.bot, p, ms)
 }
@@ -204,7 +206,7 @@ async function say (ctx, who, text, { to = null, gesture = 'auto', hold = 0 } = 
   // the speaker: toward the first listener, a nod in the middle, a gesture on a question or an exclamation
   if (sp) {
     jobs.push((async () => {
-      if (listeners[0]) await headTo(sp, eye(listeners[0]), 250)
+      if (listeners[0]) await turnHeadTo(sp, eye(listeners[0]), 250)
       await sleep(Math.max(0, ms * 0.35 - 250))
       const y = sp.bot.entity.yaw, p = sp.bot.entity.pitch
       for (const dp of [0.12, 0.22, 0.25, 0.15, 0.05, 0]) { await sp.bot.look(y, p + dp, true); await sleep(70) }
