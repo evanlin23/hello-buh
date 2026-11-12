@@ -41,6 +41,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    setup, backstory or who's-who); 30-45 s and loopable; something for viewers to answer or argue; prefer a rule with a
    number or mark, a person changed overnight, warm twists; dark sets, monsters and sad losses carry a higher bar.
    Check: story-critic, owner, Studio (stop rate). r:rac1ae3 (the build list: r:rd25bba)
+0t. **The first 8 seconds** (hook frame study 2026-11-12, docs/research/hook_frames_2026-11-12.md): frame 1 is a
+   medium/close of a person or body the rule acts on (face >= 1/4 width), the odd thing visible and moving; the key
+   (title CAPS) word spoken by 1.8 s, line 1 done by ~2.5 s; shot 1 cuts on the key word; 2-4 s a stake on a face; 4-8 s
+   the rule on a new person every 1.2-1.6 s, no backstory/layout/object list/HUD POV/near-black; bright, cool-neutral.
+   Check: framing, pace, story-critic. r:rd25bba
 0v. **The hook is absurd** (owner: "we need to make our hooks absurd"): line 1 is a sentence nobody expects, said
    flatly, true to the story and naive, never a joke at a real group's expense; a casual reader would stop scrolling.
    Edgy inside the story's world is fine; no real-world flashpoints (religion, gender, politics, real groups). It parses on first hearing and carries tension (two casual readers). Check: cold reader (casual), story-critic. r:rb14c39 r:r4419c8 r:r581039

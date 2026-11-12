@@ -797,6 +797,13 @@ STANDARDS.md in the same commit.
   Dropped: The Bell in the Window, Seventy Below, Red Sheep (monster reveals, dark sets). The four built stories stay.
   Also: "can we also check what was going on the screen for the ones with good hooks vs bad hooks and see how we can
   improve?" A frame study of Buhtown's high vs low stop-rate openings sets the opening-shot rules.
+  The study (docs/research/hook_frames_2026-11-12.md on claude/hook-frame-study; 22 Buhtown Shorts, leads only):
+  frame 1 is a person or body the rule acts on (face >= 1/4 of the width), never a prop still life (prop openers
+  averaged 62.8% viewed, none over 75%; the rest 75.7%); the strange fact is a person doubled, split or replaced, or a
+  person acting wrong; the key word (the title's CAPS word) is spoken by 1.8 s and line 1 ends by about 2.5 s; shot 1
+  cuts on the key word to line 1's second half; 2-4 s a personal stake on a face; 4-8 s the rule at work on a new
+  person every 1.2-1.6 s (no backstory, layout, who's who, object list, HUD POV, near-black); a cool or neutral bright
+  grade. Our game view is 53% of the frame under a title band: Buhtown is full-bleed 9:16. A/B it.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
