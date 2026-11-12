@@ -1,0 +1,114 @@
+{
+ "stunt": "creeper",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/creeper.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT creeper: 1 shots, scene 0.0-5.7 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-5.7   pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "vanish",
+     "msg": "creeper #307 vanishes in the middle of the frame 3.60 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 1 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "5 visible sound-making events (break 1, hit 2, step 2), 0 with a sound mark, 5 without (audio.py adds those for a story)",
+    "     3.05s  creeper step on deepslate          -> block.deepslate.step               5.4 blocks          ",
+    "     3.25s  digging deepslate                  -> block.deepslate.hit                2.0 blocks in view  ",
+    "     3.45s  digging deepslate                  -> block.deepslate.hit                2.0 blocks in view  ",
+    "     3.65s  creeper step on deepslate          -> block.deepslate.step               3.8 blocks          ",
+    "     3.65s  broke deepslate                    -> block.deepslate.break              2.0 blocks in view  ",
+    "ambience per shot: -0.25-10.00s cave",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:57:01.453Z"
+}
