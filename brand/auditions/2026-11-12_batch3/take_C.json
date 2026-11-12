@@ -1,0 +1,7 @@
+{
+ "letter": "C",
+ "voice": "Algieba",
+ "model": "gemini-3.8-flash-tts",
+ "prompt": "[A man in his thirties, plain and steady, normal volume]\n\nSomeone's been alone a long time.",
+ "line": "Someone's been alone a long time."
+}

@@ -1,0 +1,7 @@
+{
+ "letter": "B",
+ "voice": "Sadachbia",
+ "model": "gemini-3.8-flash-tts",
+ "prompt": "[A friendly teenage boy, bright and goofy]\n\nYou're my favorite, little guy.",
+ "line": "You're my favorite, little guy."
+}

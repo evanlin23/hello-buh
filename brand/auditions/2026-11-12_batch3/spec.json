@@ -1,0 +1,18 @@
+[
+ {"letter": "REF", "title": "Pip (narrator)", "sub": "Leda, gemini-3.8-flash-lite-tts: the voice every character must stand apart from",
+  "text": "Not for rain, not for thunder, not for creepers, not even zombies.",
+  "stats": ["f0 215 Hz (14 dog_hill lines)", "bar 0.836 (Pip's own lines, p10)"],
+  "audio": "brand/auditions/2026-11-12_batch3/ref/pip_dog_hill_L02.mp3"},
+ {"letter": "A", "title": "Jonah A: Zubenelgenubi", "sub": "The Honey Thief L05, gemini-3.8-flash-tts, [A friendly teenage boy, bright and goofy]",
+  "text": "You're my favorite, little guy.",
+  "stats": ["f0 151 Hz, 6.1 st under Pip", "sim to Pip 0.528 (bar 0.836)", "listener: man 25-35 (backwards), man 25-40 (forwards)"],
+  "audio": "brand/auditions/2026-11-12_batch3/A_jonah_Zubenelgenubi_gemini-3.8-flash-tts.mp3"},
+ {"letter": "B", "title": "Jonah B: Sadachbia", "sub": "The Honey Thief L05, gemini-3.8-flash-tts, [A friendly teenage boy, bright and goofy]",
+  "text": "You're my favorite, little guy.",
+  "stats": ["f0 216 Hz, 0.1 st from Pip", "sim to Pip 0.564 (bar 0.836)", "listener: man 20-35 (backwards), man 25-40 (forwards)"],
+  "audio": "brand/auditions/2026-11-12_batch3/B_jonah_Sadachbia_gemini-3.8-flash-tts.mp3"},
+ {"letter": "C", "title": "Pulled Away man C: Algieba", "sub": "Pulled Away L05, gemini-3.8-flash-tts, [A man in his thirties, plain and steady, normal volume]",
+  "text": "Someone's been alone a long time.",
+  "stats": ["f0 103 Hz, 12.7 st under Pip", "sim to Pip 0.555 (bar 0.836)", "listener: man 30-50 (backwards), man 45-60 (forwards)"],
+  "audio": "brand/auditions/2026-11-12_batch3/C_man_Algieba_gemini-3.8-flash-tts.mp3"}
+]
