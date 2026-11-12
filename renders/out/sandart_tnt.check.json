@@ -1,0 +1,740 @@
+{
+ "stunt": "sandart_tnt",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/sandart_tnt.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  1 camera shot(s), 20.4s: POV checks skipped there; run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/sandart_tnt.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT sandart_tnt: 1 shots, scene 0.0-13.3 s (scene seconds from edit.startAt, before slow motion)",
+    "  pour           0.0-13.3  path   (no subject: add subject: [...] to check its framing)",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 0 note(s)",
+   "findings": []
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 1 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 29 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 271,
+     "out": 12.8,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 272,
+     "out": 12.85,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 273,
+     "out": 12.9,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 274,
+     "out": 12.95,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 275,
+     "out": 13,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 276,
+     "out": 13.05,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 277,
+     "out": 13.1,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 278,
+     "out": 13.15,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 279,
+     "out": 13.2,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 280,
+     "out": 13.25,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 281,
+     "out": 13.3,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 282,
+     "out": 13.35,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 283,
+     "out": 13.4,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 284,
+     "out": 13.45,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 285,
+     "out": 13.5,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 286,
+     "out": 13.55,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 287,
+     "out": 13.6,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 288,
+     "out": 13.65,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 289,
+     "out": 13.7,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 290,
+     "out": 13.75,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 291,
+     "out": 13.8,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 292,
+     "out": 13.85,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 293,
+     "out": 13.9,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 294,
+     "out": 13.95,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 295,
+     "out": 14,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 296,
+     "out": 14.05,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 297,
+     "out": 14.1,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 298,
+     "out": 14.15,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    },
+    {
+     "tick": 299,
+     "out": 14.2,
+     "line": null,
+     "from": "pour",
+     "to": "pour",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": true
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "21 visible sound-making events (primed 21), 21 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-21.15s cave",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T07:13:39.664Z"
+}

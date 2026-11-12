@@ -1,0 +1,17 @@
+{
+ "name": "sandart_tnt",
+ "stunt": "sandart_tnt",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43173563335",
+ "source": "48fb8dc",
+ "queued": "2026-11-12T07:12:30Z",
+ "finished": "2026-11-12T07:21:09Z",
+ "mp4": "renders/out/sandart_tnt.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
