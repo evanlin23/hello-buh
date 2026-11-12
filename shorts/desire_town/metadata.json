@@ -4,7 +4,7 @@
   "caption": "the town REALLY hates this shortcut 💀",
   "youtube": {
     "title": "the town REALLY hates this shortcut 💀 #minecraft #shorts",
-    "description": "the town REALLY hates this shortcut 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "the town REALLY hates this shortcut 💀\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,14 +14,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "x2.mp3",
-    "title": "X2",
-    "artist": "MUPP",
+    "file": "intranet_crush.mp3",
+    "title": "Intranet Crush",
+    "artist": "hiræth, Willix",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "walker",
-    "drop_in_song_s": 14.5,
-    "drop_in_short_s": 13.65,
-    "song_start_s": 0.85
+    "drop_on_event": "start",
+    "drop_in_song_s": 3.0,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 3.0
   },
   "video": {
     "file": "short.mp4",
@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15635283,
-    "sha256": "f010aeced39674b9d12ae72b5d1f6c96ebbf089c8e2ffb89f46bc5821bb70cc2",
+    "bytes": 15649792,
+    "sha256": "da5722cc3d850243aa123ef0aec58dd09a5e557297d05f07d8e64a36e3dd11df",
     "release": {
       "tag": "pkg-desire_town",
-      "asset": "desire_town.short.f010aeced39674b9.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.f010aeced39674b9.mp4",
-      "sha256": "f010aeced39674b9d12ae72b5d1f6c96ebbf089c8e2ffb89f46bc5821bb70cc2",
-      "bytes": 15635283
+      "asset": "desire_town.short.da5722cc3d850243.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.da5722cc3d850243.mp4",
+      "sha256": "da5722cc3d850243aa123ef0aec58dd09a5e557297d05f07d8e64a36e3dd11df",
+      "bytes": 15649792
     },
     "nosong_release": {
       "tag": "pkg-desire_town",
-      "asset": "desire_town.short_nosong.27821bd9f766e079.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short_nosong.27821bd9f766e079.mp4",
-      "sha256": "27821bd9f766e07970729e92a9f49e702d292e73915dd4f41a647779d76c0671",
-      "bytes": 15612166
+      "asset": "desire_town.short_nosong.8de554c026b0636a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short_nosong.8de554c026b0636a.mp4",
+      "sha256": "8de554c026b0636a2f5ef216ea86cb00a515d0f3f17c7b3bea9ea70ea3df49d4",
+      "bytes": 15625652
     }
   },
   "edit": {
@@ -53,7 +53,7 @@
     "song": null,
     "startAt": "start:0",
     "endAfter": "home:0.3",
-    "dropAt": "walker",
+    "dropAt": "start",
     "keySounds": [
       "obstacle",
       "break"
@@ -208,7 +208,10 @@
       [
         "dip",
         "walker",
-        0.4
+        0.4,
+        {
+          "depth": 0.5
+        }
       ],
       [
         "impact",
@@ -224,7 +227,10 @@
       [
         "dip",
         "home",
-        0.4
+        0.4,
+        {
+          "depth": 0.5
+        }
       ],
       [
         "impact",
@@ -252,6 +258,7 @@
         1.8
       ]
     ],
+    "songGain": -6,
     "args": [
       "--caption",
       "the town REALLY hates this shortcut 💀",
@@ -268,7 +275,7 @@
       "--flash",
       "[[\"home\",0,0.3]]",
       "--sfx",
-      "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]]",
+      "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4,{\"depth\":0.5}],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4,{\"depth\":0.5}],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]]",
       "--start_at",
       "start:0",
       "--end_after",
@@ -461,10 +468,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "873f4bbecb3c60a41195e643a4271fa9f201e20f",
+    "commit": "ad52990eef1d12cf7c9944bc8bd17d6e28e569f9",
     "rendered": "local",
-    "rendered_at": "2026-11-12T08:16:39.679Z",
-    "head_at_publish": "873f4bbecb3c60a41195e643a4271fa9f201e20f",
+    "rendered_at": "2026-11-12T21:40:25.796Z",
+    "head_at_publish": "ad52990eef1d12cf7c9944bc8bd17d6e28e569f9",
     "stunt": "stunts/desire_town.js",
     "source_snapshot": [
       "source/desire_town.js",
@@ -477,18 +484,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 873f4bbecb3c",
+    "git checkout ad52990eef1d",
     "gunzip -c shorts/desire_town/recording.json.gz > work/desire_town.rec.json",
     "node render.js work/desire_town.rec.json work/desire_town.frames 60 1080 1011",
     "python3 audio.py work/desire_town.rec.json work/desire_town.wav",
-    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --self_name 56e --red REALLY --speed [[\"walker:0.5\",\"home:-0.3\",1.8]] --punch [\"flood\",\"final\",\"walker\",\"home\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}],[\\\"walker\\\",\\\"IT WAS HIM 💀\\\",1.2,\\\"yellow\\\",0,null,{\\\"y\\\":0.84}],[\\\"road\\\",\\\"NOT EVEN LAVA 💀\\\",1,\\\"orange\\\",0,null,{\\\"y\\\":0.9,\\\"size\\\":84}]]\" --flash [[\"home\",0,0.3]] --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]] --start_at start:0 --end_after home:0.3 --out out/desire_town.mp4"
+    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --self_name 56e --red REALLY --speed [[\"walker:0.5\",\"home:-0.3\",1.8]] --punch [\"flood\",\"final\",\"walker\",\"home\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}],[\\\"walker\\\",\\\"IT WAS HIM 💀\\\",1.2,\\\"yellow\\\",0,null,{\\\"y\\\":0.84}],[\\\"road\\\",\\\"NOT EVEN LAVA 💀\\\",1,\\\"orange\\\",0,null,{\\\"y\\\":0.9,\\\"size\\\":84}]]\" --flash [[\"home\",0,0.3]] --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"impact\",\"final\",{\"gain\":0.9}],[\"ding\",\"final\"],[\"whoosh\",\"out\"],[\"dip\",\"walker\",0.4,{\"depth\":0.5}],[\"impact\",\"walker\",{\"gain\":1.4}],[\"boom\",\"walker\"],[\"dip\",\"home\",0.4,{\"depth\":0.5}],[\"impact\",\"home\",{\"gain\":1.4}],[\"ding\",\"home\"]] --start_at start:0 --end_after home:0.3 --out out/desire_town.mp4"
   ],
   "status": "ready",
-  "notes": "no-op fix (r:r4607fa): the shortcut that survived every obstacle was 56e all along; a side chase cam as he sprints it across the lava into house S; 16.6 s; independent review READY r2",
-  "published_at": "2026-11-12T08:19:35.850Z",
+  "notes": "owner note 2026-11-12 (16.6 s, 'the music jumps too much'): the song sits steady under the sfx on the new mix path (pump 2.3 dB, under +5.8 dB); the payoff hits from the sfx",
+  "published_at": "2026-11-12T21:42:19.139Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T08:20:02+00:00",
+    "at": "2026-11-12T21:42:37+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -497,14 +504,14 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T08:17:17.868Z",
+      "at": "2026-11-12T21:40:49.558Z",
       "report": "work/hb/desire_town.check.json"
     },
     "key_sounds": {
@@ -513,7 +520,7 @@
         "obstacle",
         "break"
       ],
-      "summary": "key sounds over the music: worst +12.6 dB over 15 clips (need >= 8 dB)"
+      "summary": "not measured (no short_nosong.mp4 beside the video)"
     }
   }
 }

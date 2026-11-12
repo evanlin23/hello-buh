@@ -22,8 +22,14 @@ module.exports = makeStunt({
   walker: {
     sprint: true, wait: 0, card: 'IT WAS HIM 💀', endHold: 0.3,   // (he goes in under the eave ~0.3 s after the doorstep)
     cards: [['road', 'NOT EVEN LAVA 💀', 1.0, 'orange', 0, null, { y: 0.9, size: 84 }]],
-    speed: [['walker:0.5', 'home:-0.3', 1.8]]
+    speed: [['walker:0.5', 'home:-0.3', 1.8]],
+    dipDepth: 0.5   // the song dips only -6 dB under the hits (below)
   },
+  // the music (owner 2026-11-12, at 16.6 s: "the music jumps too much, can we jsut have it sit underneath the sound
+  // effects but still there"): the bed 6 dB under the usual NCS level, the song from its drop on (no build-to-drop
+  // jump mid-Short), and only gentle -6 dB dips under the reveal and doorstep hits (they were -24 dB holes the song
+  // jumped back out of); the hits come from the sfx (impact, boom, ding)
+  edit: { songGain: -6, dropAt: 'start' },
   rounds: [
     { id: 'fence', card: 'FENCE', c: [-5, -5], slot: 'N', shape: SHAPES.fence(9, 'dark_oak_fence', 2), sound: [['block.wood.place', 1, 1], ['block.wood.place', 1, 0.8]] },
     { id: 'bush', card: 'BUSHES', c: [5, 5], slot: 'S', shape: SHAPES.blob(3, 3, LEAVES), sound: [['block.azalea_leaves.place', 1, 1], ['block.grass.place', 1, 0.8]] },
