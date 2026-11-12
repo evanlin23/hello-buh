@@ -48,10 +48,10 @@ module.exports = {
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
       ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
-      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
+      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['impact', 'beat', { gain: 1.0 }], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['gamedip', 'lastboom', 0.4], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
       // gamedip: the chain's previous blast 0.54 s before the last (+ the limiter) flattened its hit in the NCS mix (pace)
       // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
-        // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
+        // an impact on the first tier card at 0.05 s (pace opening: a pop was 20 dB under the peak, r:r0f3da0)
       punch: [['boom', 0, 1.12], ['boom:1.3', 0, 1.06], ['boom:2.76', 0, 1.06]], shake: [['boom', 0, 10], ['boom:1.3', 0, 6], ['boom:2.76', 0, 6]],
       // (boom:1.3 / boom:2.76: the chain's 3rd and 5th blasts in output seconds of this take, 1.75x: a 3.6 s stretch of
       // same-looking booms under the song had no new event, pace dead BLOCK (the punches alone don't register); a card on

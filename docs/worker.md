@@ -37,10 +37,10 @@ adds songs.
   fails the attempt ("SETUP FAILED", exit 6, run.sh retries), except benign ones (/kill with nothing to kill, a /setblock
   to the same block); a command that may fail on purpose: `ctx.cmd(c, { mayFail: true })` (or `allowSetupErrors: true`
   on the stunt, `ALLOW_SETUP_ERRORS=1`).
-- **30 s minimum** (owner rule, 2026-11-06), reached with MORE escalating beats, never by stretching
-  one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
+- **No fixed minimum length** (owner, 2026-11-12: "no fixed minimum, just don't pad them"; the 30 s rule of
+  2026-11-06 is retired). Never pad: no beat added or stretched to reach a length. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
   Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
-  as soon as the payoff comes" / "I would prefer like 30 seconds at least".
+  as soon as the payoff comes".
 - **Gate the final mix, not the no-song render**: `./hb mixcheck <name>` builds the exact NCS mix publish makes and
   runs the publish gate's `./hb pace` on it (`./hb review` runs it too, as a blocker). Under the music, game sounds
   stop counting as hits: a payoff with no hit and a stretch carried only by game sounds both BLOCK at publish. Fixes:
