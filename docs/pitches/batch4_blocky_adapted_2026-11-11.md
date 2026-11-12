@@ -40,7 +40,66 @@ Mid-run brief change (the lead, from the owner, main 18bc037c / e9c00513):
   round-2 readers read the two men as a secret couple (75 % and 60 %). Blocky's own rule on ep38 ("reads like they are
   not a straight couple even though it should be") applies, so it is dropped.
 
-CRITIC_TABLE
+## The critic (story-critic, pitch mode) and the ranking
+
+The critic scored the 9 survivors as written on the cards, against the format's blockers. Its full notes are in
+`batch4_blocky_adapted_2026-11-11_critic.md`, and the raw cold-read log is in `..._coldreads.md`. The fixes are
+below. Premise test order: image / rule broken / question / countable /
+answer changes the picture.
+
+**Only 2 of the 9 develop. 3 park, and 4 are killed.** The gate showed the readers couldn't call these; the critic
+found what the gate can't see: originality against our own pitches, the owner's do-not-remake list, and "why?".
+
+| rank | card | source | line 1 (as fixed) | premise /10 | twist | orig | build | fit | verdict |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | A The Statue Gets Younger | ep99 | "In my village, nobody gets old except the statue. And it's getting YOUNGER." | 8 (1/2/2/1/2) | 8 | 7 | 7 | 8 | **develop** |
+| 2 | H Sorry, Dear | ep123 | "In my village, every SORRY shrinks you an inch. My aunt is the size of a MUG. So why won't she STOP saying it?" | 9 (2/2/1/2/2) | 7 | 7 | 6 | 6 | **develop after fixes** |
+| 3 | C My Brother's Bell | ep49 | "In my village, your bell rings before every mistake. My brother's rings ALL DAY. Mine has NEVER rung." | 7 (1/1/2/1/2) | 6 | 7 | 5 | 6 | park: re-gate |
+| 4 | E Every Door but His | ep125 | "In my village, every door is locked at night. Grandpa's has stood OPEN for ninety nights." | 6 (1/1/2/0/2) | 6 | 6 | 6 | 6 | park: re-gate |
+| 5 | I Mm. Lovely. | ep117 | as on the card | 9 (2/2/2/2/1) | 5 | 4 | 6 | 5 | park (low) |
+| 6 | G My Compass Points Home | ep36 | as on the card | 7 (1/2/2/0/2) | 5 | 4 | 7 | 5 | kill |
+| 7 | D Never Face the Wall | ep122 | as on the card | 6 (1/1/2/0/2) | 5 | 5 | 9 | 5 | kill |
+| 8 | B The Bell Under the Village | ep98 | as on the card | 9 (1/2/2/2/2) | 4 | 3 | 6 | 5 | kill |
+| - | F My Birthday, Five Times | ep94 | as on the card | 7 (1/2/2/2/0) | 4 | 1 | 7 | 2 | kill (owner's do-not-remake list) |
+
+**The critic's fixes:**
+- **A (develop).**
+  - Line 1 was 31 words with no number. Use the line above, then line 2: "One wrinkle a day. Nobody will tell me why."
+  - Add a climax: the kid follows Mom before sunrise. The reveal plays over her hand on the statue as a wrinkle moves
+    onto her face. The viewer sees it, not only hears it.
+  - Clue 4 must sound bright, not scared: "I think she's embarrassed."
+  - Mom and Dad must be player actors with grey-hair skins, because villagers have no hair.
+  - Bar: the first frame is the giant stone face beside a hamlet with one grey head, readable with the sound off by 2 s.
+- **H (develop after fixes).**
+  - Line 1 answered itself. Use the line above.
+  - Add stakes: "one more inch and she fits in a TEACUP".
+  - Add a want: the kid plays to WIN, to save her. She grins, "Oh, sorry, dear", and shrinks. The kid's own try
+    produces the reveal: "She wasn't sorry. She was WINNING."
+  - Show the score as an emerald pile, because cards can't be read on a phone.
+  - A 0.3-scale actor is a new renderer feature (about 1-2 h; `entities.js` has no entity scale).
+- **C (park).**
+  - Drop the clapper and its second invented rule. The brothers swapped bells as babies: "He'd been wearing MY bell.
+    Since I was a baby." The viewer sees the reveal picture (his collar wearing the kid's bell) before the line says it.
+  - Replace creek clue 2 with a decoy and make the bells cowbell-sized, then gate it again with two fresh readers.
+- **E (park).**
+  - It fails "why?": if every door is locked, the kid can't get out, and the mud by the bed contradicts Grandpa leading
+    him in. The hero is also asleep, so he never acts.
+  - New line 1 as above. The kid ties a string from his door handle to his bed to catch the intruder, and wakes on
+    Grandpa's porch with it round his own ankle. Gate it again.
+- **I (park, low).** Nobody loved is at stake (the secret is a pie). The engine is close to blocky's published lie
+  tags, and the twist is an old couple's-white-lie anecdote. Revisit only with a glow that costs something on screen.
+- **G (kill).** Jack Sparrow's compass plus "home is a person". Our own Spawn Room pitch already says "Compasses point
+  HOME, kid", and the casual reader called the ending arbitrary.
+- **D (kill).** No impossible fact and no number. The reveal adds a rule never shown, and "something sat down behind
+  me" makes the kid sound afraid before the reveal (0a).
+- **B (kill).** "Nobody rings the bell" repeats The Bell in the Window's reveal (claude/script-bell-window), and "the
+  thing under the village" is Light Sleeper's. Keep the image of 13 cellar stairs, then 26, for a different twist.
+- **F (kill).** The repeating birthday is on the owner's list of example stories we never remake (story_craft section
+  1). Its line 1 also states a world rule that the reveal says is false.
+
+**Top 8, for the lead:** A, H develop; C, E go back through the gate with the critic's rewrites; I, G, D, B are listed
+for completeness, with the critic's kill or low-park verdicts. The honest count of build-ready premises from this batch
+is **two**.
 
 ## The survivors
 
