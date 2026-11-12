@@ -1,0 +1,344 @@
+{
+ "stunt": "mega_lapse_fountain",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/mega_lapse_fountain.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  11 camera shot(s), 36.1s: POV checks skipped there (4 held); run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/mega_lapse_fountain.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT mega_lapse_fountain: 11 shots, scene 0.0-35.4 s (scene seconds from edit.startAt, before slow motion)",
+    "  close          0.0-2.4   path   0,4.5,0 100% seen, 11% tall",
+    "  ring           2.4-6.8   path   16,25,7 95% seen, 5% tall",
+    "  houses         6.8-11.2  path   -20,8,14 100% seen, 4% tall",
+    "  face          11.2-15.6  path   75,15.5,-20 100% seen, 4% tall",
+    "  far           15.6-22.2  path   -73,57,-73 100% seen, 3% tall",
+    "  town          22.2-25.2  path   57,30,-20 100% seen, 3% tall",
+    "  roofs         25.2-28.0  path   0,34,-57 100% seen, 3% tall",
+    "  giants        28.0-31.0  path   0,4.5,0 100% seen, 10% tall",
+    "  scale         31.0-34.0  path   73,57,-73 100% seen, 2% tall",
+    "  reveal        34.0-34.6  path   0,5.5,0 100% seen, 1% tall",
+    "  pass          34.6-35.4  path   -4,2.5,2 100% seen, 33% tall",
+    "NOTES (2)",
+    "  - 6.6 s  ring: 16,25,7: hidden behind blocks",
+    "  - 34.0 s  reveal: only 0.6 s: too short to read",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 0 warning(s), 1 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 1.2,
+     "shot": 2,
+     "line": null,
+     "kind": "blocks",
+     "msg": "93 block(s) in view changed during the cut (e.g. stone_bricks at 382 71 -50): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 11 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 10 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 63,
+     "out": 2.4,
+     "line": null,
+     "from": "close",
+     "to": "ring",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 151,
+     "out": 6.8,
+     "line": null,
+     "from": "ring",
+     "to": "houses",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 239,
+     "out": 11.2,
+     "line": null,
+     "from": "houses",
+     "to": "face",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 327,
+     "out": 15.6,
+     "line": null,
+     "from": "face",
+     "to": "far",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 459,
+     "out": 22.2,
+     "line": null,
+     "from": "far",
+     "to": "town",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 519,
+     "out": 25.2,
+     "line": null,
+     "from": "town",
+     "to": "roofs",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 575,
+     "out": 28,
+     "line": null,
+     "from": "roofs",
+     "to": "giants",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 635,
+     "out": 31,
+     "line": null,
+     "from": "giants",
+     "to": "scale",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 695,
+     "out": 34,
+     "line": null,
+     "from": "scale",
+     "to": "reveal",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 707,
+     "out": 34.6,
+     "line": null,
+     "from": "reveal",
+     "to": "pass",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "0 visible sound-making events (), 0 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.25-36.85s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T01:04:51.805Z"
+}

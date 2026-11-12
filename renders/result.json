@@ -1,0 +1,17 @@
+{
+ "name": "mega_lapse_fountain",
+ "stunt": "mega_lapse_fountain",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43131826712",
+ "source": "6321fbc5",
+ "queued": "2026-11-12T01:03:42Z",
+ "finished": "2026-11-12T01:22:29Z",
+ "mp4": "renders/out/mega_lapse_fountain.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
