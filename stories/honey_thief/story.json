@@ -2,10 +2,10 @@
  "name": "honey_thief",
  "stunt": "story_honey_thief",
  "version": 2,
- "revision": "r8 (2026-11-12): critic r3 APPROVE (7.6) + its should-fixes (L01 drops 'And'; S01 places no flower; S10 smoke marks home; footprint = set.md's; easter egg S07; 2-wide podzol outline is the plan); casual and gamer cold reads both get it (reviews/cold_reads.md). the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
+ "revision": "hook (2026-11-12, STANDARDS 0v, owner 'make our hooks absurd'): L01 'A GIANT has robbed my family FIFTY-TWO times. And he plants us FLOWERS.' replaces the frame + why opener; r8 (2026-11-12): critic r3 APPROVE (7.6) + its should-fixes (L01 drops 'And'; S01 places no flower; S10 smoke marks home; footprint = set.md's; easter egg S07; 2-wide podzol outline is the plan); casual and gamer cold reads both get it (reviews/cold_reads.md). the Roblox story format (docs/story_format.md, STANDARDS 0y/0z; brief docs/rewrite_briefs/honey_thief.md): L01 ends on 'WHY?'; L02 introduces her sisters (on screen); L08 'I HAD to know WHY'; L09 her sisters at stake; L10 she flies UP to find them (the climax); L11 the reveal SAID ('And ALL the flowers made one giant BEE. With HOME right in its HEART.'); L12 the sting echoes line 1 ('Fifty-two BOTTLES. Fifty-two ROWS.'), cut 1 s after. Old L10/L11 (the giant still planting; 'tell him we have ENOUGH') cut. Build note: the bee is drawn in what reads from above (camera_world flower_readability): wildflowers body, podzol outline/stripes, lilac wings, a pink_petals heart (L07 'RED' -> 'PINK'). r7 (2026-11-11): owner audit: approved; \"giant can be jonah. no name tag\": the Giant uses Torches' Jonah cast entry (friend/Fenrir placeholder, voice from the Jonah audition), name tag hidden (engine need). r6 (2026-11-11): US English: 'round' -> 'around' (L07 and the notes; owner flag via the lead). r5 (2026-11-11): critic r2 APPROVE (7.6) with a build condition (the top-down readability gate); its two should-fixes noted in S01/S10. r4 (2026-11-11): continuity r1: harvest in order (the fill on CLINK, S03), S01 places a poppy (the heart's edge), S08 flies west and the easter egg moves to S07's orbit end, sizes WS/MS/FULL/WS/MCU/CU, S10 fov ~28 when she finds him, S09 looks north-east-south, S03 cuts to the crown, the giant is a teenage boy as in Torches, the hotbar into props.giant. r3 (2026-11-11): critic r1 must-fixes: agency (L08 she goes to find the edge, L11 she's going to tell him; L10 drops 'just flowers, every way', which S09 shows); L05 'little GUY' (out-of-context read), bright and goofy; S10 camera at ~90 up so the 61-wide wings fit; top-down readability gate (set.md); row 52 is the head's crown (a full flower row); S01 frame 1 shows the field to the horizon; L02 trimmed; the lift starts on TELL. r2 (2026-11-11): cold read r1 guessed 'a heart shape from above' at 45 % off L07 ('only red round our home, he thinks we like red'); L07 now misreads the red as a marker so they can find home ('Like we'd EVER get LOST'), which also sets up L09. r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/honey_thief.md; premise: docs/pitches/batch3_round2_2026-11-11.md #4 / D12 on claude/batch3-round2). The critic's fix: a reason for the bee shape (L05 'You're my FAVORITE', misread as the honey in L06: he is drawing them), and 'One bottle, one ROW' (L03) so the 52 bottles are the bee's 52 rows.",
  "caption": "why does he plant flowers every time he steals 🐝",
  "upload": {
-  "title": "the giant has stolen our honey 52 times 🐝 #minecraft #shorts",
+  "title": "a giant has robbed my family 52 times 🐝 #minecraft #shorts",
   "pinned": "What would YOU plant for your bees?",
   "tags": [
    "minecraft bee",
@@ -130,8 +130,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "In my world, / a GIANT / steals our honey, / and plants FLOWERS. / Fifty-two TIMES. / WHY?",
-   "say": "In my world, a giant steals our honey, and plants flowers. Fifty-two times. Why?",
+   "text": "A GIANT / has ROBBED my family / FIFTY-TWO times. / And he plants us FLOWERS.",
+   "say": "A GIANT has robbed my family FIFTY-TWO times. And he plants us FLOWERS.",
    "shot": "S01",
    "shows": [
     {
@@ -144,7 +144,7 @@
      "what": [
       "beehive"
      ],
-     "word": "HONEY"
+     "word": "ROBBED"
     },
     {
      "what": [
@@ -159,7 +159,8 @@
    "look": {
     "what": "actor:Giant",
     "word": "GIANT"
-   }
+   },
+   "note": "hook (STANDARDS 0v, owner 2026-11-12 \"make our hooks absurd\"): said flat, as plain fact, the narrator believes it; no stock why tag; a bit indignant on ROBBED, then baffled on FLOWERS"
   },
   {
    "id": "L02",
@@ -542,7 +543,7 @@
   "beats": [
    "S10: on L10's first UP the camera rises off the bee to straight above; settled by L11's BEE (the reveal said over the picture); L12 the sting over the hold; mark `top` on the settle; cut 1.0 s after L12."
   ],
-  "loop": "L12 'Fifty-two BOTTLES. Fifty-two ROWS.' reframes line 1's 'Fifty-two TIMES'"
+  "loop": "L12 'Fifty-two BOTTLES. Fifty-two ROWS.' reframes line 1's 'FIFTY-TWO times'"
  },
  "bible": "stories/honey_thief/bible.md",
  "beats": "stories/honey_thief/beats.md",
