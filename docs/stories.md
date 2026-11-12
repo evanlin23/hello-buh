@@ -823,6 +823,9 @@ STANDARDS.md in the same commit.
   stained-glass neon rings and windows, obstacles with trims and glowing hole rims, a glass layer, lanterns on chains,
   freestanding pillars to fall past, a crowned rim and a decorated pool (lib/dropper.js blueprint). Every decoration that
   could touch a fall is flown first in scripts/dropper_sim.js, which builds the same world.
+- **Owner, 2026-11-12, on dropper_rainbow v2 at 3.8 s (the fail cut 0.35 s after the hit, hearts empty, still alive on
+  screen): "we should die when we lose all life?"** A dropper fail shows the whole death: the hit, the hearts empty,
+  the death tilt and vanilla's "You died!" screen, then the cut (before the poof); never cut away mid-death.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
