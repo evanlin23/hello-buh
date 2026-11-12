@@ -20,7 +20,7 @@
  "family": "narrator_is_the_problem",
  "logline": "A baby piglin catches a gold ingot that falls from the sky, four hundred so far, and doesn't know why; it's saving them for a bastion of its own and loves the guy up there who keeps sending gifts. When he gets sad, it looks down to find out why: his box is empty, and all the gold he sent is up here with it. It's stuck in his barter farm, and babies never barter.",
  "question": "why tf does gold keep falling on this baby piglin?",
- "premise": "In the Nether by the Portal Cottage's portal, a player (efe skin) built a barter farm: a dropper drops one gold ingot every six seconds onto a one-piglin cell, the piglin barters, the hoppers carry the barters to a chest. A baby piglin chased an ingot down the farm's catch hole and landed in the cell. It thinks the cell is its room, the gold is a gift from a generous stranger, and it is saving up for a bastion of its own, for when it's big.",
+ "premise": "In the Nether by the Portal Cottage's portal, a player (the original `barter_player` skin) built a barter farm: a dropper drops one gold ingot every six seconds onto a one-piglin cell, the piglin barters, the hoppers carry the barters to a chest. A baby piglin chased an ingot down the farm's catch hole and landed in the cell. It thinks the cell is its room, the gold is a gift from a generous stranger, and it is saving up for a bastion of its own, for when it's big.",
  "twist": "The baby is the jam in the player's barter farm. Babies take gold and never barter (they keep it), so the farm has made nothing: every fix the player tried (a new hopper, a PLEASE WORK sign) the baby read as a present. The reveal is SAID over the picture: the baby looks down and says what it sees, 'His box was EMPTY. And all the gold he sent was up here, with ME.' (the farm's output chest open and empty under the hopper line, the slumped player at it, the baby above hugging gold); the dropper clicks out another: 'Four hundred and ONE.' Fans' second layer: baby piglins never grow up, so 'for when I'm big' never comes.",
  "key_color": "#F2C14E",
  "mood": "funny",
@@ -34,7 +34,7 @@
  "world": {
   "place": "portal_cottage_nether (new, claimed on this branch; the lead merges claims): the Nether side of the Portal Cottage's cellar portal, about (-16, 80, -118) in Nether coordinates (the cellar portal / 8). A netherrack shelf over a lava lake under a netherrack cliff; the portal that formed when Grandpa walked through (day ~175) on the shelf; the player's barter tower built against the cliff about 10 blocks east; a bastion remnant across the lake (unsurveyed: the build places it with /place structure if the seed has none in the footprint).",
   "day": 5000,
-  "canon": "Not Buh's story; nobody from the Portal Cottage appears. The player is a new, nameless player (efe skin, conflict 18). He finished the farm on day ~4998; the baby was its first catch, so the chest has never had anything in it. The piglins crowd this shelf because a gold ingot comes out of the portal every night (Grandma's, Gold for the Portal): that is why he built here. Never said. The baby never grows up (vanilla).",
+  "canon": "Not Buh's story; nobody from the Portal Cottage appears. The player is a new, nameless player (`barter_player` skin, conflict 18). He finished the farm on day ~4998; the baby was its first catch, so the chest has never had anything in it. The piglins crowd this shelf because a gold ingot comes out of the portal every night (Grandma's, Gold for the Portal): that is why he built here. Never said. The baby never grows up (vanilla).",
   "easter_egg": "helmet_piglin: among the adults in S04 (frame left, mid-ground), an adult piglin in a gold helmet with a blue (lapis) trim: Grandpa's helmet from Gold for the Portal (it wears it from day ~175; Gold's day 9300 is still to come). Never named, never centred."
  },
  "voice": {
@@ -60,7 +60,7 @@
    "voice": "Umbriel",
    "model": "gemini-3.8-flash-tts",
    "profile": "[A tired man in his twenties, flat and fed up, full volume]",
-   "on_screen": "a player, default `efe` skin (not Steve: Steve reads as Buh), iron chestplate and leggings with GOLD boots (so the adults leave him alone, vanilla; not a gold helmet: that's the easter egg's tell), no name tag; seen in S04-S07, S09, S10, S11; one line (L10), on screen while he says it.",
+   "on_screen": "a player, the original `barter_player` skin (orange beanie, black beard, black hoodie; not Steve: Steve reads as Buh), iron chestplate and leggings with GOLD boots (so the adults leave him alone, vanilla; not a gold helmet: that's the easter egg's tell), no name tag; seen in S04-S07, S09, S10, S11; one line (L10), on screen while he says it.",
    "note": "NEW character (STANDARDS 7a, docs/world/canon.md Planned characters). Voice candidates, both unused by any character in voices/cast.json or canon.md: Umbriel (easy-going male) and Zubenelgenubi (casual male). Audition both against Pip on L10; the owner picks. No TTS requested (quota booked)."
   }
  },
@@ -415,7 +415,7 @@
    "place": "ledge",
    "size": "wide",
    "camera": "low on the ledge above the tower's roof, tracking (two days ago: no sign, the hopper the old one)",
-   "frame": "the PLAYER (efe skin, iron chest and legs, GOLD boots) on the ledge tosses one ingot beside the catch hole to lure an adult; two adults and the baby run for it; the baby beats the adults to it, grabs it, and drops with it into the 1x1 catch hole (trapdoor-edged) that chutes into the cell. The player has already turned to the bridge."
+   "frame": "the PLAYER (`barter_player` skin, iron chest and legs, GOLD boots) on the ledge tosses one ingot beside the catch hole to lure an adult; two adults and the baby run for it; the baby beats the adults to it, grabs it, and drops with it into the 1x1 catch hole (trapdoor-edged) that chutes into the cell. The player has already turned to the bridge."
   },
   {
    "id": "S05",
@@ -431,7 +431,7 @@
    "place": "cutaway",
    "size": "wide",
    "camera": "the tower's cutaway (south wall hidden), the whole column from the dropper to the base room, side on",
-   "frame": "the baby on its block in the 1x2 cell; beside it the hopper slot: the player, in the base room under it, breaks the old hopper (its slot, not the baby's block) and a NEW hopper pops in, shiny; the baby leans over it, delighted."
+   "frame": "the baby on its block in the 1x2 cell; beside it the hopper slot: the player, in the base room under it, breaks the old hopper (its slot, not the baby's block) and places a NEW hopper in its slot (placed under the crosshair, owner rule), shiny; the baby leans over it, delighted."
   },
   {
    "id": "S07",
@@ -447,7 +447,7 @@
    "place": "shelf",
    "size": "wide",
    "camera": "outside on the shelf at piglin height, slow drift right",
-   "frame": "an adult piglin holds an ingot up (admiring), then tosses out GRAVEL on 'GRAVEL'; the others mill by the portal."
+   "frame": "an adult piglin holds an ingot up (admiring), then tosses out a little pile of GRAVEL (one barter's 8-16, vanilla) on 'GRAVEL'; the others mill by the portal."
   },
   {
    "id": "S09",
