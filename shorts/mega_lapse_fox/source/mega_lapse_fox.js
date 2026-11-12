@@ -3,14 +3,15 @@
 // reacts to "a small fox statue"; a drone time-lapse builds a sleeping fox 177 blocks long and 62 high in a clearing of
 // a real taiga forest, a "blocks used" total ticking in the corner. It opens on the head already 16 blocks up and
 // rising over tiny 56e, then the paws and the snout, the body and the curled tail, each from its own drone angle, the
-// spruce forest round it for scale. On the cut to the high reveal the ears, the closed eyes and the nose land (flash,
-// punch, an impact; the total turns gold), and the last shot is a close, low pass behind the tiny player, the fox's
-// face towering over him as it snores (the NCS drop, "SMALL").
+// spruce forest round it for scale. On the cut to the high reveal the ears, the closed eyes and the nose land (the
+// cut waits until they are in: owner 2026-11-12 "the beat drops before the ears appear"), with the NCS drop, a flash,
+// a punch, an impact, the total gone gold and "SMALL"; it ends there (owner 2026-11-12 on v2: "I think we can spend
+// longer creating it. ANd we dont ened the second cut at the end.").
 // Our own design: a sleeping fox (not a grass block, not a golem, not a nether boss); lib/mega_lapse.js does the work.
 //
-// Beats (Short seconds, ~12.2 s): 0 low behind 56e, the head rising over him | 1.6 the paws and the snout, from the
-// front | 3.8 the body, high from behind | 6.6 the tail, over the forest | 8.8 the reveal: the face lands, high over
-// the forest | 10.6 the close pass behind 56e (a snore, the drop, "SMALL") | end 1.6 s later.
+// Beats (Short seconds, ~13.3 s): 0 low behind 56e, the head rising over him | 2.25 the paws and the snout, from the
+// front | 5.15 the body, high from behind | 8.95 the tail, over the forest | 12.05 the reveal: the face lands, high over
+// the forest (the drop, "SMALL") | end 1.2 s later.
 const L = require('../lib/mega_lapse')
 
 const OR = 'orange_wool', WH = 'white_wool', BK = 'black_wool'
@@ -51,7 +52,7 @@ function inTail (x, y, z) {
 
 // 1. the front legs and paws: orange forelegs from the chest, black paws with toes, either side of the snout
 function paws () {
-  return vox('paws', 16, [-106, -38, 1, 11, -32, 32], (x, y, z) => {
+  return vox('paws', 26, [-106, -38, 1, 11, -32, 32], (x, y, z) => {
     const az = Math.abs(z)
     if (az < 18 || az > 31) return null
     if (x <= -92) return (y <= 7 && (x > -105 || (az % 4) !== 1)) ? BK : null   // toes: a notch every 4
@@ -61,12 +62,12 @@ function paws () {
 
 // 2. the snout: white, rounded, resting on the ground between the paws
 function snout () {
-  return vox('snout', 22, [-114, -86, 1, 17, -17, 17], (x, y, z) => inSnout(x, y, z) ? WH : null, (y) => 20 + y)
+  return vox('snout', 32, [-114, -86, 1, 17, -17, 17], (x, y, z) => inSnout(x, y, z) ? WH : null, (y) => 20 + y)
 }
 
 // 3. the head: orange, a white face and cheeks, cheek tufts flaring out, a brow over the eyes, a darker crown
 function head () {
-  return vox('head', 44, [-92, -36, 1, 45, -40, 40], (x, y, z) => {
+  return vox('head', 70, [-92, -36, 1, 45, -40, 40], (x, y, z) => {
     const az = Math.abs(z)
     if (inHead(x, y, z)) {
       if (y >= 37 && az < 9) return DK                             // the crown
@@ -84,7 +85,7 @@ function head () {
 // 4. the body: a long rounded loaf, the haunch bulging on the north side with its black paw, a white chest, a darker
 // spine with tufts of fur standing up along it
 function body () {
-  return vox('body', 48, [-44, 52, 1, 46, -38, 26], (x, y, z) => {
+  return vox('body', 76, [-44, 52, 1, 46, -38, 26], (x, y, z) => {
     const inB = inBody(x, y, z), inH = inHaunch(x, y, z)
     if (inB || inH) {
       if (x < -28 && y <= 22 && Math.abs(z) > 14) return WH         // the chest
@@ -102,7 +103,7 @@ function body () {
 
 // 5. the tail: a fat brush curled round the south side to the paws, darker rings along it, a white ragged tip
 function tail () {
-  return vox('tail', 38, [-96, 64, 1, 33, 4, 60], (x, y, z) => {
+  return vox('tail', 62, [-96, 64, 1, 33, 4, 60], (x, y, z) => {
     if (!inTail(x, y, z)) return null
     if (x < -64 + ((y + z) % 3)) return WH
     if (x <= 40 && ((x + 400) % 26) < 3) return DK                  // the rings
@@ -189,39 +190,31 @@ module.exports = L.makeLapse({
   dress: dress(),
   // the head first: the Short opens on it already 16 blocks up and rising behind 56e (openAt, r:r0f3da0)
   stages: [head(), paws(), snout(), body(), tail(), face()],
-  openAt: 0.8,
+  openAt: 1.25,
   perTick: 60,
   angles: [['head', 'rise'], ['paws', 'front'], ['body', 'back'], ['tail', 'forest']],
-  payoff: { stage: 'face', shot: 'reveal', hold: 16,   // (r:r188b46: cut ~0.6 s after the face reads)
-    sound: 'block.beacon.activate' },
-  // the close pass beside the tiny player, the face towering over him; the fox snores (a vanilla sleeping fox's sound)
-  outro: [{
-    shot: 'pass', mark: 'pass', ticks: 30,
-    async at (ctx) { ctx.sound('entity.fox.sleep', 1, 0.55); ctx.sound('entity.fox.sleep', 0.8, 0.5) }
-  }],
-  endAfter: 0.8,                         // r:r188b46: end 0.5-0.8 s after the payoff ("SMALL" is one word)
+  // the Short ends on the reveal (owner 2026-11-12 on v2: "I think we can spend longer creating it. ANd we dont ened
+  // the second cut at the end."): the time-lapse runs ~12 s, no close pass after the reveal
+  payoff: { stage: 'face', shot: 'reveal', hold: 40, sound: 'block.beacon.activate' },
+  endAfter: 1.2,                         // a one-word card's reading time (pace: text payoff 1.2-1.8 s)
   edit: {
-    // the payoff's hit on the final mix (mixcheck): the drop on the reveal with a dip and an impact; on the pass a
-    // second dip and impact under the snore (the snore alone is no hit: pace r1), and the punchline card
-    sfx: [['dip', 'reveal', 0.3], ['dip', 'pass', 0.4], ['gamedip', 'pass', 0.5], ['boom', 'pass', { gain: 1.4 }], ['impact', 'open', { gain: 1.0 }]],   // (mixcheck r2-4: the reveal's own impact rang on into the pass, so the reveal keeps only its flash, punch and the
-    // game's beacon, and the game ducks before the pass too; a hit on frame 0: r:r0f3da0)
-    dropAt: 'reveal',                    // the NCS drop on the ears landing (owner 2026-11-12: "the beat drops before the ears
-    //                                      appear"; the pass keeps its own dip and boom)
-    cards: [['pass', 'SMALL', 0.8, 'yellow', 0, null, { y: 0.24 }]]
+    // the payoff's hit on the final mix (mixcheck): the NCS drop on the ears landing after a dip, an impact on it
+    // (owner 2026-11-12: "the beat drops before the ears appear"); a hit on frame 0 (r:r0f3da0)
+    sfx: [['dip', 'reveal', 0.3], ['impact', 'reveal', { gain: 1.3 }], ['impact', 'open', { gain: 1.0 }]],
+    dropAt: 'reveal',
+    cards: [['reveal', 'SMALL', 1.2, 'yellow', 0, null, { y: 0.86 }]]   // low, over the forest: the fox stays clear
   },
   shots: {
     // (every point in the fox's own coordinates; 56e stands at (-140, 1, 0), facing east up at the snout)
     // 1. low behind 56e: the head, already 16 blocks up at frame 0, rises over him, the drone easing up with it
-    rise: { path: [cam(0, P(-152, 2.8, 7)), cam(2.5, P(-156, 5, 9))], lookPath: [cam(0, P(-70, 14, 0)), cam(2.5, P(-68, 22, 0))], fov: 70, dof: false, drift: 0.4, scenery: true, subject: [P(-140, 1.8, 0), P(-90, 10, 0)] },
+    rise: { path: [cam(0, P(-152, 2.8, 7)), cam(3.5, P(-158, 6, 10))], lookPath: [cam(0, P(-70, 14, 0)), cam(3.5, P(-68, 24, 0))], fov: 70, dof: false, drift: 0.4, scenery: true, subject: [P(-140, 1.8, 0), P(-90, 10, 0)] },
     // 2. out in front and to the north: the paws and the snout rise in front of the finished head, 56e a speck
-    front: { path: [cam(0, P(-150, 28, -64)), cam(2.5, P(-156, 34, -68))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.5, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-94, 34, -10)] },
+    front: { path: [cam(0, P(-150, 28, -64)), cam(2.9, P(-157, 35, -69))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.9, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-94, 34, -10)] },
     // 3. high behind it, the forest round the clearing: the long body fills in behind the head
-    back: { path: [cam(0, P(120, 74, -86)), cam(2.8, P(112, 78, -96))], lookPath: [cam(0, P(-14, 14, 0)), cam(2.8, P(-18, 14, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(10, 41, 0)] },
+    back: { path: [cam(0, P(120, 74, -86)), cam(3.8, P(108, 80, -100))], lookPath: [cam(0, P(-14, 14, 0)), cam(3.8, P(-19, 14, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(10, 41, 0)] },
     // 4. over the spruces on the south side: the tail curls round across the frame
-    forest: { path: [cam(0, P(30, 46, 160)), cam(2.2, P(14, 48, 162))], lookPath: [cam(0, P(-12, 12, 36)), cam(2.2, P(-20, 12, 36))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-10, 16, 63)] },
+    forest: { path: [cam(0, P(30, 46, 160)), cam(3.1, P(10, 49, 163))], lookPath: [cam(0, P(-12, 12, 36)), cam(3.1, P(-22, 12, 36))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-10, 16, 63)] },
     // 5. the reveal: high to the south-west over the forest (under the clouds), the whole fox and the taiga, a slow push
-    reveal: { path: [cam(0, P(-150, 104, 104)), cam(1.8, P(-143, 99, 98))], lookPath: [cam(0, P(-30, 12, 8)), cam(1.8, P(-30, 12, 8))], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [P(-30, 41, 0)] },
-    // 6. the close pass: low behind 56e, sliding from his left to his right, the fox's whole face towering over him
-    pass: { path: [cam(0, P(-147, 2.6, -3)), cam(2.0, P(-147, 2.8, 4))], lookPath: [cam(0, P(-100, 20, -1)), cam(2.0, P(-100, 20, 1))], fov: 74, dof: false, drift: 0.2, scenery: true, subject: [P(-140, 1.8, 0), P(-89, 30, -10)] }
+    reveal: { path: [cam(0, P(-150, 104, 104)), cam(1.8, P(-143, 99, 98))], lookPath: [cam(0, P(-30, 12, 8)), cam(1.8, P(-30, 12, 8))], fov: 62, dof: false, drift: 0.3, scenery: true, subject: [P(-30, 41, 0)] }
   }
 })

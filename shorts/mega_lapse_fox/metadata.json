@@ -4,7 +4,7 @@
   "caption": "bro asked for a small fox statue 😭",
   "youtube": {
     "title": "bro asked for a small fox statue 😭 #minecraft #shorts",
-    "description": "bro asked for a small fox statue 😭\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "bro asked for a small fox statue 😭\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -14,37 +14,37 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "ayuda.mp3",
-    "title": "AYUDA",
-    "artist": "MXRCVRY",
+    "file": "mortals_funk_remix.mp3",
+    "title": "Mortals Funk Remix",
+    "artist": "Warriyo, LXNGVX",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal",
-    "drop_in_song_s": 9.0,
-    "drop_in_short_s": 7.65,
-    "song_start_s": 1.35
+    "drop_in_song_s": 113.75,
+    "drop_in_short_s": 12.07,
+    "song_start_s": 101.67
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 9.25,
+    "duration_s": 13.28,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 21762709,
-    "sha256": "b2c7caf99151fefe95c2b03a40b6660fb9bb304f794aa6b0e47e68b89c9489d1",
+    "bytes": 30217591,
+    "sha256": "561b67a09839451a5487c622f1982c3f9c24a5dd4c5e8e938dd6e449045139cf",
     "release": {
       "tag": "pkg-mega_lapse_fox",
-      "asset": "mega_lapse_fox.short.b2c7caf99151fefe.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.b2c7caf99151fefe.mp4",
-      "sha256": "b2c7caf99151fefe95c2b03a40b6660fb9bb304f794aa6b0e47e68b89c9489d1",
-      "bytes": 21762709
+      "asset": "mega_lapse_fox.short.561b67a09839451a.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short.561b67a09839451a.mp4",
+      "sha256": "561b67a09839451a5487c622f1982c3f9c24a5dd4c5e8e938dd6e449045139cf",
+      "bytes": 30217591
     },
     "nosong_release": {
       "tag": "pkg-mega_lapse_fox",
-      "asset": "mega_lapse_fox.short_nosong.a0c5df59d428d610.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short_nosong.a0c5df59d428d610.mp4",
-      "sha256": "a0c5df59d428d610bd5cfc7d45c6c48b4b60dbf7578a72355ecc54f2dec5b9d5",
-      "bytes": 21757400
+      "asset": "mega_lapse_fox.short_nosong.0b9bd738b98771a3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mega_lapse_fox/mega_lapse_fox.short_nosong.0b9bd738b98771a3.mp4",
+      "sha256": "0b9bd738b98771a34a651bcaa3f909a8f519d35a8319287f9c32815a5c515a1c",
+      "bytes": 30206386
     }
   },
   "edit": {
@@ -52,7 +52,7 @@
     "red": "small",
     "dropAt": "reveal",
     "startAt": "open:0",
-    "endAfter": "pass:0.8",
+    "endAfter": "reveal:1.2",
     "tally": {
       "event": "blocks",
       "label": "blocks used",
@@ -86,20 +86,10 @@
         0.3
       ],
       [
-        "dip",
-        "pass",
-        0.4
-      ],
-      [
-        "gamedip",
-        "pass",
-        0.5
-      ],
-      [
-        "boom",
-        "pass",
+        "impact",
+        "reveal",
         {
-          "gain": 1.4
+          "gain": 1.3
         }
       ],
       [
@@ -112,14 +102,14 @@
     ],
     "cards": [
       [
-        "pass",
+        "reveal",
         "SMALL",
-        0.8,
+        1.2,
         "yellow",
         0,
         null,
         {
-          "y": 0.24
+          "y": 0.86
         }
       ]
     ],
@@ -135,17 +125,17 @@
       "--punch",
       "[[\"reveal\",0,1.08]]",
       "--cards",
-      "[[\"pass\",\"SMALL\",0.8,\"yellow\",0,null,{\"y\":0.24}]]",
+      "[[\"reveal\",\"SMALL\",1.2,\"yellow\",0,null,{\"y\":0.86}]]",
       "--flash",
       "[[\"reveal\",0,0.5]]",
       "--tally",
       "{\"event\":\"blocks\",\"label\":\"blocks used\",\"done\":\"reveal\"}",
       "--sfx",
-      "[[\"dip\",\"reveal\",0.3],[\"dip\",\"pass\",0.4],[\"gamedip\",\"pass\",0.5],[\"boom\",\"pass\",{\"gain\":1.4}],[\"impact\",\"open\",{\"gain\":1}]]",
+      "[[\"dip\",\"reveal\",0.3],[\"impact\",\"reveal\",{\"gain\":1.3}],[\"impact\",\"open\",{\"gain\":1}]]",
       "--start_at",
       "open:0",
       "--end_after",
-      "pass:0.8"
+      "reveal:1.2"
     ]
   },
   "recording": {
@@ -156,13 +146,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 538,
-      "y": 71,
-      "z": -117
+      "x": 515,
+      "y": 70,
+      "z": -138
     },
     "biome": "minecraft:taiga",
-    "ticks": 566,
-    "seconds": 28.3,
+    "ticks": 752,
+    "seconds": 37.6,
     "deaths": 0,
     "events": [
       {
@@ -194,11 +184,7 @@
         "event": "blocks"
       },
       {
-        "t": 1,
-        "event": "blocks"
-      },
-      {
-        "t": 1.1,
+        "t": 1.05,
         "event": "blocks"
       },
       {
@@ -206,11 +192,7 @@
         "event": "blocks"
       },
       {
-        "t": 1.3,
-        "event": "blocks"
-      },
-      {
-        "t": 1.4,
+        "t": 1.35,
         "event": "blocks"
       },
       {
@@ -218,11 +200,7 @@
         "event": "blocks"
       },
       {
-        "t": 1.6,
-        "event": "blocks"
-      },
-      {
-        "t": 1.7,
+        "t": 1.65,
         "event": "blocks"
       },
       {
@@ -230,31 +208,15 @@
         "event": "blocks"
       },
       {
-        "t": 1.9,
+        "t": 1.95,
         "event": "blocks"
       },
       {
-        "t": 2,
-        "event": "blocks"
-      },
-      {
-        "t": 2.1,
-        "event": "blocks"
-      },
-      {
-        "t": 2.2,
+        "t": 2.15,
         "event": "blocks"
       },
       {
         "t": 2.3,
-        "event": "blocks"
-      },
-      {
-        "t": 2.35,
-        "event": "open"
-      },
-      {
-        "t": 2.4,
         "event": "blocks"
       },
       {
@@ -266,11 +228,7 @@
         "event": "blocks"
       },
       {
-        "t": 2.7,
-        "event": "blocks"
-      },
-      {
-        "t": 2.8,
+        "t": 2.75,
         "event": "blocks"
       },
       {
@@ -282,19 +240,15 @@
         "event": "blocks"
       },
       {
-        "t": 3.15,
+        "t": 3.2,
         "event": "blocks"
       },
       {
         "t": 3.25,
-        "event": "blocks"
+        "event": "open"
       },
       {
         "t": 3.35,
-        "event": "blocks"
-      },
-      {
-        "t": 3.45,
         "event": "blocks"
       },
       {
@@ -302,11 +256,7 @@
         "event": "blocks"
       },
       {
-        "t": 3.65,
-        "event": "blocks"
-      },
-      {
-        "t": 3.75,
+        "t": 3.7,
         "event": "blocks"
       },
       {
@@ -314,11 +264,7 @@
         "event": "blocks"
       },
       {
-        "t": 3.95,
-        "event": "blocks"
-      },
-      {
-        "t": 4.05,
+        "t": 4,
         "event": "blocks"
       },
       {
@@ -326,11 +272,7 @@
         "event": "blocks"
       },
       {
-        "t": 4.25,
-        "event": "blocks"
-      },
-      {
-        "t": 4.35,
+        "t": 4.3,
         "event": "blocks"
       },
       {
@@ -338,11 +280,7 @@
         "event": "blocks"
       },
       {
-        "t": 4.55,
-        "event": "blocks"
-      },
-      {
-        "t": 4.65,
+        "t": 4.6,
         "event": "blocks"
       },
       {
@@ -350,75 +288,59 @@
         "event": "blocks"
       },
       {
-        "t": 4.85,
-        "event": "blocks"
-      },
-      {
         "t": 4.95,
         "event": "blocks"
       },
       {
-        "t": 5.05,
+        "t": 5.1,
         "event": "blocks"
       },
       {
-        "t": 5.15,
-        "event": "shot"
-      },
-      {
-        "t": 5.15,
-        "event": "angle"
-      },
-      {
-        "t": 5.15,
+        "t": 5.25,
         "event": "blocks"
       },
       {
-        "t": 5.3,
+        "t": 5.4,
         "event": "blocks"
       },
       {
-        "t": 5.45,
+        "t": 5.55,
         "event": "blocks"
       },
       {
-        "t": 5.6,
+        "t": 5.7,
         "event": "blocks"
       },
       {
-        "t": 5.75,
+        "t": 5.85,
         "event": "blocks"
       },
       {
-        "t": 5.95,
+        "t": 6,
         "event": "blocks"
       },
       {
-        "t": 6.1,
+        "t": 6.15,
         "event": "blocks"
       },
       {
-        "t": 6.25,
+        "t": 6.35,
         "event": "blocks"
       },
       {
-        "t": 6.4,
+        "t": 6.5,
         "event": "blocks"
       },
       {
-        "t": 6.55,
+        "t": 6.65,
         "event": "blocks"
       },
       {
-        "t": 6.75,
+        "t": 6.8,
         "event": "blocks"
       },
       {
-        "t": 6.85,
-        "event": "blocks"
-      },
-      {
-        "t": 7,
+        "t": 6.95,
         "event": "blocks"
       },
       {
@@ -430,23 +352,23 @@
         "event": "blocks"
       },
       {
-        "t": 7.35,
+        "t": 7.45,
         "event": "blocks"
       },
       {
-        "t": 7.5,
+        "t": 7.55,
         "event": "blocks"
       },
       {
-        "t": 7.65,
-        "event": "blocks"
+        "t": 7.8,
+        "event": "shot"
       },
       {
-        "t": 7.75,
-        "event": "blocks"
+        "t": 7.8,
+        "event": "angle"
       },
       {
-        "t": 7.9,
+        "t": 7.8,
         "event": "blocks"
       },
       {
@@ -454,39 +376,15 @@
         "event": "blocks"
       },
       {
-        "t": 8.15,
+        "t": 8.25,
         "event": "blocks"
       },
       {
-        "t": 8.3,
+        "t": 8.5,
         "event": "blocks"
       },
       {
-        "t": 8.4,
-        "event": "blocks"
-      },
-      {
-        "t": 8.55,
-        "event": "blocks"
-      },
-      {
-        "t": 8.65,
-        "event": "blocks"
-      },
-      {
-        "t": 8.8,
-        "event": "blocks"
-      },
-      {
-        "t": 8.95,
-        "event": "shot"
-      },
-      {
-        "t": 8.95,
-        "event": "angle"
-      },
-      {
-        "t": 8.95,
+        "t": 8.75,
         "event": "blocks"
       },
       {
@@ -494,19 +392,7 @@
         "event": "blocks"
       },
       {
-        "t": 9.15,
-        "event": "blocks"
-      },
-      {
-        "t": 9.25,
-        "event": "blocks"
-      },
-      {
-        "t": 9.35,
-        "event": "blocks"
-      },
-      {
-        "t": 9.45,
+        "t": 9.3,
         "event": "blocks"
       },
       {
@@ -514,63 +400,31 @@
         "event": "blocks"
       },
       {
-        "t": 9.65,
-        "event": "blocks"
-      },
-      {
         "t": 9.8,
         "event": "blocks"
       },
       {
-        "t": 9.9,
+        "t": 10.05,
         "event": "blocks"
       },
       {
-        "t": 10,
+        "t": 10.35,
         "event": "blocks"
       },
       {
-        "t": 10.1,
+        "t": 10.5,
         "event": "blocks"
       },
       {
-        "t": 10.2,
+        "t": 10.7,
         "event": "blocks"
       },
       {
-        "t": 10.3,
+        "t": 10.9,
         "event": "blocks"
       },
       {
-        "t": 10.4,
-        "event": "blocks"
-      },
-      {
-        "t": 10.55,
-        "event": "blocks"
-      },
-      {
-        "t": 10.65,
-        "event": "blocks"
-      },
-      {
-        "t": 10.75,
-        "event": "blocks"
-      },
-      {
-        "t": 10.85,
-        "event": "blocks"
-      },
-      {
-        "t": 10.95,
-        "event": "blocks"
-      },
-      {
-        "t": 11.05,
-        "event": "blocks"
-      },
-      {
-        "t": 11.15,
+        "t": 11.1,
         "event": "blocks"
       },
       {
@@ -578,27 +432,15 @@
         "event": "blocks"
       },
       {
-        "t": 11.4,
+        "t": 11.45,
         "event": "blocks"
       },
       {
-        "t": 11.5,
+        "t": 11.65,
         "event": "blocks"
       },
       {
-        "t": 11.6,
-        "event": "blocks"
-      },
-      {
-        "t": 11.7,
-        "event": "blocks"
-      },
-      {
-        "t": 11.8,
-        "event": "blocks"
-      },
-      {
-        "t": 11.9,
+        "t": 11.85,
         "event": "blocks"
       },
       {
@@ -606,27 +448,15 @@
         "event": "blocks"
       },
       {
-        "t": 12.15,
+        "t": 12.2,
         "event": "blocks"
       },
       {
-        "t": 12.25,
+        "t": 12.4,
         "event": "blocks"
       },
       {
-        "t": 12.35,
-        "event": "blocks"
-      },
-      {
-        "t": 12.45,
-        "event": "blocks"
-      },
-      {
-        "t": 12.55,
-        "event": "blocks"
-      },
-      {
-        "t": 12.65,
+        "t": 12.6,
         "event": "blocks"
       },
       {
@@ -634,47 +464,31 @@
         "event": "blocks"
       },
       {
-        "t": 12.9,
+        "t": 12.95,
         "event": "blocks"
       },
       {
-        "t": 13,
+        "t": 13.15,
         "event": "blocks"
       },
       {
-        "t": 13.1,
+        "t": 13.35,
         "event": "blocks"
       },
       {
-        "t": 13.2,
-        "event": "blocks"
-      },
-      {
-        "t": 13.3,
-        "event": "blocks"
-      },
-      {
-        "t": 13.4,
-        "event": "blocks"
-      },
-      {
-        "t": 13.5,
-        "event": "blocks"
-      },
-      {
-        "t": 13.6,
-        "event": "blocks"
-      },
-      {
-        "t": 13.75,
+        "t": 13.55,
         "event": "shot"
       },
       {
-        "t": 13.75,
+        "t": 13.55,
         "event": "angle"
       },
       {
-        "t": 13.75,
+        "t": 13.55,
+        "event": "blocks"
+      },
+      {
+        "t": 13.7,
         "event": "blocks"
       },
       {
@@ -682,11 +496,7 @@
         "event": "blocks"
       },
       {
-        "t": 13.95,
-        "event": "blocks"
-      },
-      {
-        "t": 14.1,
+        "t": 14.05,
         "event": "blocks"
       },
       {
@@ -694,11 +504,7 @@
         "event": "blocks"
       },
       {
-        "t": 14.3,
-        "event": "blocks"
-      },
-      {
-        "t": 14.45,
+        "t": 14.35,
         "event": "blocks"
       },
       {
@@ -710,10 +516,6 @@
         "event": "blocks"
       },
       {
-        "t": 14.8,
-        "event": "blocks"
-      },
-      {
         "t": 14.9,
         "event": "blocks"
       },
@@ -722,11 +524,7 @@
         "event": "blocks"
       },
       {
-        "t": 15.15,
-        "event": "blocks"
-      },
-      {
-        "t": 15.25,
+        "t": 15.2,
         "event": "blocks"
       },
       {
@@ -734,39 +532,27 @@
         "event": "blocks"
       },
       {
-        "t": 15.5,
+        "t": 15.55,
         "event": "blocks"
       },
       {
-        "t": 15.65,
+        "t": 15.7,
         "event": "blocks"
       },
       {
-        "t": 15.75,
+        "t": 15.9,
         "event": "blocks"
       },
       {
-        "t": 15.85,
+        "t": 16.05,
         "event": "blocks"
       },
       {
-        "t": 16,
+        "t": 16.25,
         "event": "blocks"
       },
       {
-        "t": 16.1,
-        "event": "blocks"
-      },
-      {
-        "t": 16.2,
-        "event": "blocks"
-      },
-      {
-        "t": 16.35,
-        "event": "blocks"
-      },
-      {
-        "t": 16.45,
+        "t": 16.4,
         "event": "blocks"
       },
       {
@@ -774,15 +560,11 @@
         "event": "blocks"
       },
       {
-        "t": 16.7,
+        "t": 16.75,
         "event": "blocks"
       },
       {
-        "t": 16.8,
-        "event": "blocks"
-      },
-      {
-        "t": 16.95,
+        "t": 16.9,
         "event": "blocks"
       },
       {
@@ -790,11 +572,7 @@
         "event": "blocks"
       },
       {
-        "t": 17.15,
-        "event": "blocks"
-      },
-      {
-        "t": 17.3,
+        "t": 17.25,
         "event": "blocks"
       },
       {
@@ -802,47 +580,255 @@
         "event": "blocks"
       },
       {
-        "t": 17.65,
-        "event": "shot"
-      },
-      {
-        "t": 17.65,
-        "event": "angle"
-      },
-      {
-        "t": 17.65,
-        "event": "reveal"
-      },
-      {
-        "t": 17.65,
+        "t": 17.6,
         "event": "blocks"
       },
       {
-        "t": 17.65,
-        "event": "build_done"
-      },
-      {
-        "t": 17.65,
+        "t": 17.75,
         "event": "blocks"
       },
       {
-        "t": 18.45,
-        "event": "shot"
+        "t": 17.9,
+        "event": "blocks"
       },
       {
-        "t": 18.45,
-        "event": "angle"
+        "t": 18.1,
+        "event": "blocks"
       },
       {
-        "t": 18.45,
-        "event": "pass"
+        "t": 18.25,
+        "event": "blocks"
+      },
+      {
+        "t": 18.4,
+        "event": "blocks"
+      },
+      {
+        "t": 18.6,
+        "event": "blocks"
+      },
+      {
+        "t": 18.75,
+        "event": "blocks"
+      },
+      {
+        "t": 18.95,
+        "event": "blocks"
+      },
+      {
+        "t": 19.1,
+        "event": "blocks"
+      },
+      {
+        "t": 19.25,
+        "event": "blocks"
+      },
+      {
+        "t": 19.45,
+        "event": "blocks"
+      },
+      {
+        "t": 19.6,
+        "event": "blocks"
+      },
+      {
+        "t": 19.75,
+        "event": "blocks"
       },
       {
         "t": 19.95,
+        "event": "blocks"
+      },
+      {
+        "t": 20.1,
+        "event": "blocks"
+      },
+      {
+        "t": 20.3,
+        "event": "blocks"
+      },
+      {
+        "t": 20.45,
+        "event": "blocks"
+      },
+      {
+        "t": 20.6,
+        "event": "blocks"
+      },
+      {
+        "t": 20.8,
+        "event": "blocks"
+      },
+      {
+        "t": 20.95,
+        "event": "blocks"
+      },
+      {
+        "t": 21.15,
+        "event": "shot"
+      },
+      {
+        "t": 21.15,
+        "event": "angle"
+      },
+      {
+        "t": 21.15,
+        "event": "blocks"
+      },
+      {
+        "t": 21.3,
+        "event": "blocks"
+      },
+      {
+        "t": 21.5,
+        "event": "blocks"
+      },
+      {
+        "t": 21.7,
+        "event": "blocks"
+      },
+      {
+        "t": 21.9,
+        "event": "blocks"
+      },
+      {
+        "t": 22.1,
+        "event": "blocks"
+      },
+      {
+        "t": 22.3,
+        "event": "blocks"
+      },
+      {
+        "t": 22.5,
+        "event": "blocks"
+      },
+      {
+        "t": 22.7,
+        "event": "blocks"
+      },
+      {
+        "t": 22.85,
+        "event": "blocks"
+      },
+      {
+        "t": 23.05,
+        "event": "blocks"
+      },
+      {
+        "t": 23.3,
+        "event": "blocks"
+      },
+      {
+        "t": 23.45,
+        "event": "blocks"
+      },
+      {
+        "t": 23.65,
+        "event": "blocks"
+      },
+      {
+        "t": 23.85,
+        "event": "blocks"
+      },
+      {
+        "t": 24.05,
+        "event": "blocks"
+      },
+      {
+        "t": 24.25,
+        "event": "blocks"
+      },
+      {
+        "t": 24.4,
+        "event": "blocks"
+      },
+      {
+        "t": 24.6,
+        "event": "blocks"
+      },
+      {
+        "t": 24.8,
+        "event": "blocks"
+      },
+      {
+        "t": 25,
+        "event": "blocks"
+      },
+      {
+        "t": 25.2,
+        "event": "blocks"
+      },
+      {
+        "t": 25.4,
+        "event": "blocks"
+      },
+      {
+        "t": 25.6,
+        "event": "blocks"
+      },
+      {
+        "t": 25.8,
+        "event": "blocks"
+      },
+      {
+        "t": 25.95,
+        "event": "blocks"
+      },
+      {
+        "t": 26.15,
+        "event": "blocks"
+      },
+      {
+        "t": 26.35,
+        "event": "blocks"
+      },
+      {
+        "t": 26.55,
+        "event": "blocks"
+      },
+      {
+        "t": 26.75,
+        "event": "blocks"
+      },
+      {
+        "t": 26.95,
+        "event": "blocks"
+      },
+      {
+        "t": 27.15,
+        "event": "blocks"
+      },
+      {
+        "t": 27.4,
+        "event": "shot"
+      },
+      {
+        "t": 27.4,
+        "event": "angle"
+      },
+      {
+        "t": 27.4,
+        "event": "reveal"
+      },
+      {
+        "t": 27.4,
+        "event": "blocks"
+      },
+      {
+        "t": 27.4,
+        "event": "build_done"
+      },
+      {
+        "t": 27.4,
+        "event": "blocks"
+      },
+      {
+        "t": 29.4,
         "event": "end"
       },
       {
-        "t": 28.3,
+        "t": 37.6,
         "event": "end"
       }
     ]
@@ -850,10 +836,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "518efb4c428ece0bbebc8e98b78e4d12014122fe",
+    "commit": "f162afe86b8ea664c7f82538f94a6044650188b8",
     "rendered": "local",
-    "rendered_at": "2026-11-12T05:05:35.223Z",
-    "head_at_publish": "a137178e722a0e2ad937e28e9a5fb2b7c45daf06",
+    "rendered_at": "2026-11-12T06:50:23.152Z",
+    "head_at_publish": "e97a1ab267d7ed9ecb3c87c9a5466f77cdd816df",
     "stunt": "stunts/mega_lapse_fox.js",
     "source_snapshot": [
       "source/mega_lapse_fox.js",
@@ -863,22 +849,22 @@
     ]
   },
   "rebuild": [
-    "git checkout 518efb4c428e",
+    "git checkout f162afe86b8e",
     "gunzip -c shorts/mega_lapse_fox/recording.json.gz > work/mega_lapse_fox.rec.json",
     "node render.js work/mega_lapse_fox.rec.json work/mega_lapse_fox.frames 60 1080 1011",
     "python3 audio.py work/mega_lapse_fox.rec.json work/mega_lapse_fox.wav",
-    "python3 edit.py --frames work/mega_lapse_fox.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_lapse_fox.rec.json --audio work/mega_lapse_fox.wav --caption \"bro asked for a small fox statue 😭\" --self_name 56e --red small --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --cards [[\"pass\",\"SMALL\",0.8,\"yellow\",0,null,{\"y\":0.24}]] --flash [[\"reveal\",0,0.5]] --tally \"{\\\"event\\\":\\\"blocks\\\",\\\"label\\\":\\\"blocks used\\\",\\\"done\\\":\\\"reveal\\\"}\" --sfx [[\"dip\",\"reveal\",0.3],[\"dip\",\"pass\",0.4],[\"gamedip\",\"pass\",0.5],[\"boom\",\"pass\",{\"gain\":1.4}],[\"impact\",\"open\",{\"gain\":1}]] --start_at open:0 --end_after pass:0.8 --out out/mega_lapse_fox.mp4"
+    "python3 edit.py --frames work/mega_lapse_fox.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_lapse_fox.rec.json --audio work/mega_lapse_fox.wav --caption \"bro asked for a small fox statue 😭\" --self_name 56e --red small --speed [[\"build_start\",\"reveal\",2]] --punch [[\"reveal\",0,1.08]] --cards [[\"reveal\",\"SMALL\",1.2,\"yellow\",0,null,{\"y\":0.86}]] --flash [[\"reveal\",0,0.5]] --tally \"{\\\"event\\\":\\\"blocks\\\",\\\"label\\\":\\\"blocks used\\\",\\\"done\\\":\\\"reveal\\\"}\" --sfx [[\"dip\",\"reveal\",0.3],[\"impact\",\"reveal\",{\"gain\":1.3}],[\"impact\",\"open\",{\"gain\":1}]] --start_at open:0 --end_after reveal:1.2 --out out/mega_lapse_fox.mp4"
   ],
   "status": "ready",
-  "notes": "owner note 'the beat drops before the ears appear': payoff fills land before the reveal cut (lib/mega_lapse.js, re-record take 7), NCS drop on the reveal; check/pace/mixcheck OK",
-  "published_at": "2026-11-12T05:08:19.543Z",
+  "notes": "mega_lapse_fox v3: owner 2026-11-12 notes applied (a ~12 s time-lapse ending on the reveal, no close pass; drop on the ears landing); 381,185-block sleeping fox in a real taiga; review round 2 READY (independent subagent); nit: ears flash 2 frames before the reveal cut",
+  "published_at": "2026-11-12T06:53:45.046Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:08:48+00:00",
+    "at": "2026-11-12T06:54:24+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 9.26 s vs the reviewed render 9.25 s"
+      "summary": "short.mp4 13.29 s vs the reviewed render 13.28 s"
     },
     "pace": {
       "ok": true,
@@ -890,7 +876,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:06:19.748Z",
+      "at": "2026-11-12T06:51:22.315Z",
       "report": "work/hb/mega_lapse_fox.check.json"
     },
     "key_sounds": "n/a"
