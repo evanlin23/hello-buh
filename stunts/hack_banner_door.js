@@ -156,7 +156,7 @@ module.exports = makeStunt({
   // on the first banner; a pop as he commits to the middle banner, inside the 2.2 s library sweep)
   edit: { sfx: [['impact', 'go', { gain: 0.7 }], ['impact', 'reveal', { nth: 0, gain: 0.8 }], ['pop', 'deeper', { gain: 0.45 }],
     ['pop', 'nope_try', { gain: 0.5 }], ['whoosh', 'payoff', { gain: 0.6 }]],
-    // the pull-back plays 1.2 s; the end lands 0.85 s into it, the camera easing out over the hall (the payoff is
+    // the pull-back plays 1.0 s, tilting down onto the treasure as it goes; the end lands 0.85 s in, the camera easing out (the payoff is
     // the move itself: the scale reads as it pulls away; pace: 0.5-0.8 s after the result, WARN over 0.9)
     endAfter: 'payoff:0.85',
     // r:r188b46 (no-op audit: trim rooms 2-5): the straight walks sped up mark to mark, no turn inside a span (whip
@@ -165,7 +165,7 @@ module.exports = makeStunt({
   // the payoff camera (local frame - the start (6.5, 1, 5.3)): from 2.5 blocks in front of the player's face on the
   // balcony (57.3, -6.4, 1.5) back and up to the hall's far end (105, -4.2, 1.5), tilting down onto the treasure below the cliff
   shots: {
-    pull: { path: [[0, 53.3, -7.4, -3.8], [1.2, 98.5, -5.2, -3.8]], lookPath: [[0, 50.8, -7.5, -3.8], [1.2, 55.5, -29, -3.8]], fov: 72, dof: false, drift: 0, subject: ['self'] }
+    pull: { path: [[0, 53.3, -7.4, -3.8], [1.0, 98.5, -5.2, -3.8]], lookPath: [[0, 50.8, -7.5, -3.8], [1.0, 55.5, -29, -3.8]], fov: 72, dof: false, drift: 0, subject: ['self'] }
   },
   wall,
   pieces: { under },
