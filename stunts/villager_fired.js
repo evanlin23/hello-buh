@@ -24,14 +24,14 @@ const DIST = 5          // player to villager (blocks, north): close enough that
 const STONEY = /furnace|smoker|brewing|grindstone|cauldron|stonecutter/
 
 // the 13 job sites: a horseshoe open toward the camera, none in front of him (a block there hid his robe). Back row
-// first, outer column first, so each spot's top face is in sight when its block goes down (lib/act.js aims at it). At
+// first (each spot's top face is in sight when its block goes down: lib/act.js aims at it and throws if not). At
 // 5 blocks back every spot is within ~31 deg of him: he stays in frame while each one goes down.
-const SPOTS = [[-3, -2], [3, -2], [-2, -2], [2, -2], [-1, -2], [1, -2], [-3, -1], [3, -1], [-2, -1], [2, -1], [-3, 0], [-2, 0], [2, 0]]
+// The first one goes right behind him (an ~8 deg turn: the first robe changes 0.3 s in; v3's first take turned 45 deg).
+// Then one side, then the other (back to front in each column), so the view sweeps once instead of swinging side to
+// side on every job (two view jerks in the first take).
+const SPOTS = [[-1, -2], [1, -2], [2, -2], [3, -2], [3, -1], [2, -1], [2, 0], [-2, -2], [-3, -2], [-3, -1], [-2, -1], [-3, 0], [-2, 0]]
 const N = JOBS.length
 const jobSub = (i) => `job ${i + 1}/${N}: ${JOBS[i][1]}`
-// the payoff (pace's): the ring's LAST blast, by its number among this take's 'blast' marks (0 = my TNT). Re-check
-// after a re-record: ./hb describe villager_fired blast#N, and the death ('gone') against it
-const LAST_BLAST = 13
 
 module.exports = {
   name: 'villager_fired',
@@ -39,8 +39,9 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
-    // frame 0: the crosshair landing on job 1's spot, the lectern down and his robe changing 0.2 s in (r:r0f3da0)
-    startAt: 'aim0:-0.05', endAfter: 'gone:0.65',   // r:r188b46: 0.65 s after his death reads
+    // frame 0: the crosshair landing on job 1's spot (right behind him), the lectern down and his robe changing 0.3 s in
+    // (r:r0f3da0)
+    startAt: 'job:-0.3', endAfter: 'gone:0.65',   // r:r188b46: 0.65 s after his death reads
     subs: [
       ...JOBS.map((j, i) => ['job', jobSub(i), i < 3 ? 0.9 : i < 8 ? 0.6 : 0.45, i]),
       ['all_jobs', 'ALL 13 AT ONCE', 1.6, 0],
@@ -51,11 +52,10 @@ module.exports = {
       ['gone', 'permanently', 1.5, 0]   // (the subtitle font has no emoji: it drew a box)
     ],
     speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],
-    // a pop on frame 0; on the payoff (the ring's last blast, pace's payoff) a flash, punch, song dip + impact; a pop
-    // on his death puff (LAST_BLAST: this take's number for the last blast)
-    flash: [['mob_death', 0, 0.6], ['blast', LAST_BLAST, 0.9], ['gone', 0, 0.4]], punch: [['blast', LAST_BLAST, 1.3]],
-    sfx: [['pop', 'aim0', { gain: 0.9 }], ['dip', 'blast', 0.4, { nth: LAST_BLAST }], ['gamedip', 'blast', 0.35, { nth: LAST_BLAST }],
-      ['impact', 'blast', { gain: 1.3, nth: LAST_BLAST }], ['pop', 'gone']]
+    // a pop on frame 0; on the payoff ('gone': his death puff ends as the ring's last blasts go off; pace's payoff, the
+    // endAfter event) a flash, punch, song dip + impact (a number for the ring's last blast changed with every take)
+    flash: [['mob_death', 0, 0.6], ['gone', 0, 0.9]], punch: [['gone', 0, 1.3]],
+    sfx: [['pop', 'job', { gain: 0.9 }], ['dip', 'gone', 0.4], ['gamedip', 'gone', 0.35], ['impact', 'gone', { gain: 1.3 }]]
   },
 
   async setup (ctx) {
@@ -137,11 +137,11 @@ module.exports = {
       await place(i)
       ctx.mark('job', { n: i, job: JOBS[i][1] })
       // the first three: a look at him so the new robe reads (the eyes on the spot keep him in frame after)
-      if (i < 3) await ctx.easeLookAt(head.offset(this.spots[i][0] < x ? -0.4 : 0.4, 0, 0), 250)
+      if (i < 3) await A.turnTo(head.offset(this.spots[i][0] < x ? -0.4 : 0.4, 0, 0), { tol: 0.03, max: 20 })
       await bot.waitForTicks(i < 3 ? 6 : i < 8 ? 3 : 1)
     }
     // all 13 at once: the outfit cycles faster and faster
-    await ctx.easeLookAt(head.offset(0, -0.2, 0), 250)
+    await A.turnTo(head.offset(0, 0.2, 0), { tol: 0.03, max: 20 })   // governed (an eased 250 ms look jerked at 169 deg/s)
     ctx.mark('all_jobs')
     let gap = 5, ft = 0
     for (let k = 0; k < 40; k++) {
