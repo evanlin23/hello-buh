@@ -45,10 +45,10 @@ module.exports = {
     // whole 3 s of it uncut was a span with nothing new, pace); the rest of the floor after it plays fast (x2: the
     // build is the setup, seconds of it), never cut mid-place
     speed: [['intr_walk', 'intr_deal:-0.1', 1.5], ['intr_back:0.1', 'intr_resume:-0.1', 1.3], ['intr_resume', 'lever', 2]],   // (the walk over x1.5: 4 s from the hit to the grab, pace dwell)
-    punch: [['floor_lit', 0, 1.08]], flash: [['floor_lit', 0, 0.4]],   // the payoff's picture change: the whole floor lit, with the drop
+    punch: [['floor_lit', 0, 1.08]], flash: [['floor_lit', 0, 0.2]],   // the payoff's picture change: the whole floor lit, with the drop
     keySounds: ['intr_hit', 'intr_deal', 'intr_bite', 'intr_gone'],   // the hit, the grab, every bite, the last one: over the music
     // room tone from frame 1; the music dips before the lights and an impact lands on them (mixcheck: the payoff hit over the NCS bed)
-    sfx: [['air', 'start', 'floor_lit', { gain: 0.5 }], ['impact', 'hook', { gain: 0.8 }], ['impact', 'lit', { gain: 0.9 }], ['dip', 'floor_lit', 0.4], ['impact', 'floor_lit', { gain: 1.4 }]]   // + a hit on frame 0's lamp (the opening's sound, r:r0f3da0) and on the cut overhead
+    sfx: [['air', 'start', 'floor_lit', { gain: 0.5 }], ['impact', 'hook', { gain: 1.2 }], ['impact', 'lit', { gain: 0.9 }], ['dip', 'floor_lit', 0.4], ['impact', 'floor_lit', { gain: 1.4 }]]   // + a hit on frame 0's lamp (the opening's sound, r:r0f3da0) and on the cut overhead
   },
 
   async setup (ctx) {
