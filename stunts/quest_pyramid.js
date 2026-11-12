@@ -32,12 +32,13 @@ const Q = makeQuest({
   ],
   edit: {
     endAfter: 'payoff:0.7',
-    dropAt: 'reveal',
+    dropAt: 'payoff',   // the drop on the chest (mixcheck: the payoff hit over the NCS bed); the reveal gets its own impact
     // the walks between the actions at 1.5x (the yaw stays on the course axis: no turn to whip), never inside a dig,
     // a press or a jump (r:r52f94c); the payoff is the vault opening up round him, then the chest
     speed: [['open:0.15', 'mine:-0.15', 1.6], ['dug_through:0.1', 'stage1:-0.1', 1.6], ['made_it:0.1', 'face:-0.1', 1.6]],
-    sfx: [['pop', 'go', { gain: 0.45 }], ['whoosh', 'drop', { gain: 0.35 }],
-      ['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['impact', 'payoff', { gain: 0.9 }]],
+    // (an impact on the terracotta's break: the opening's sound hit, r:r0f3da0)
+    sfx: [['pop', 'go', { gain: 0.45 }], ['impact', 'dug', { gain: 1.6 }], ['whoosh', 'drop', { gain: 0.35 }],
+      ['impact', 'reveal', { gain: 1.2 }], ['dip', 'payoff', 0.4], ['impact', 'payoff', { gain: 1.4 }]],
     flash: [['reveal', 0, 0.35]]
   }
 })
