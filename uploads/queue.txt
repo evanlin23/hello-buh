@@ -17,6 +17,10 @@ fakemod_permission  # first: owner OK 2026-11-12 (strong / fixed)
 logic_minecraft  # first: owner OK 2026-11-12 (fixed)
 love_cherry_heart  # first: owner OK 2026-11-12 (fixed)
 stages_friends  # first: owner OK 2026-11-12 (fixed)
+underdog_heal  # first: owner OK 2026-11-12 (fixed)
+mislabel_grandma  # first: owner OK 2026-11-12 (fixed)
+nether_portal  # first: owner OK 2026-11-12 (fixed)
+race_grass_mycelium  # first: owner OK 2026-11-12 (fixed)
 ai_thin_ice   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 clutch_harder
 guess_sound
@@ -48,13 +52,10 @@ water_vs_lava
 rainbow_sheep
 desire_town   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 dilemma_mace   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-race_grass_mycelium   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-mislabel_grandma   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 hack_banner_door   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 interrupt_lamps   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 mega_sponge   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 creeper
-nether_portal
 cells_lab   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 faketrick_gold_portal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 psycho_lava_mansion   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
@@ -64,7 +65,6 @@ cooked_bedrock   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6
 sandart_tnt   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 cave_reveal
 trap_free_diamonds   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
-underdog_heal   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 lava_crossing
 quest_pyramid   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)
 dropper_rainbow   # (unpinned 2026-11-12: being fixed per the no-op audit, r:r8d6af1)

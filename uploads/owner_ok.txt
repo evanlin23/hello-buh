@@ -8,7 +8,6 @@ lapse_rocket  90232e1e32bbde83  # 2026-11-11: owner pressed 'OK for YouTube' on 
 lapse_statue  f16d41ecce372ba3  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 looks_wrong  416d9b9d1ef28212  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 midas_touch  ba89270c834b403e  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
-nether_portal  32fd52325840850f  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 one_in_a_million  5df9f64bf48c09b5  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 rainbow_sheep  07a2c2a88884a166  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
 skull_art  90fb02c533792bde  # 2026-11-11: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 19:15-19:36 UTC
@@ -23,7 +22,6 @@ fakeworld_diamond  e3e2aaebc6ac2831  # 2026-11-12: owner pressed OK for YouTube 
 friend_new_world  af35a2c2b5d76a4e  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
 mobpov_baby_zombie  590704a75c6a451b  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
 which_door  2060e5056d50f933  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-11/12 (22:52-00:10 UTC), sha matched
-fakemod_permission  0157c5e5591178ec  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
 half_heart  adc314afcbec6b57  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
 inside_library  afd020dcb719d1ca  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
 mega_lapse_fountain  07d5ae1f880e9f2a  # 2026-11-12: owner pressed OK for YouTube in the Review Room 2026-11-12 (00:30-04:21 UTC), sha matched
@@ -32,3 +30,8 @@ tnt_1000  b9dbc555bb04ac05  # 2026-11-12: owner pressed OK for YouTube in the Re
 logic_minecraft  1127162452f6f698  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
 love_cherry_heart  e836026726dbd44f  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
 stages_friends  2d2325d6d4099956  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 04:31-04:33 UTC
+underdog_heal  f48a7c39cfacca9d  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+mislabel_grandma  506c2a0b9b5dccad  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+race_grass_mycelium  e6c33aacb6ff28da  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+nether_portal  ca01773e839f959f  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
+fakemod_permission  e328dfbb2e452dfe  # 2026-11-12: 2026-11-12: owner pressed 'OK for YouTube' on this cut in the HelloBuh Review Room, 05:27-05:51 UTC
