@@ -281,6 +281,8 @@ module.exports = {
       const px = bot.entity.position.x.toFixed(2), pz = bot.entity.position.z.toFixed(2)
       const vill = Object.values(bot.entities).filter(e => e.name === 'villager' && e.position.z > bot.entity.position.z).sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
       const probe = vill[0], p0 = probe && probe.position.clone()
+      const fb = (m) => { if (/Teleport|Modified|Unknown|Incorrect|No entity|found|data/i.test(m)) ctx.log('step_in feedback:', m.slice(0, 120)) }
+      bot.chat('/gamerule send_command_feedback true'); bot.on('messagestr', fb)
       for (let k = 0; k < 6; k++) {
         bot.chat(`/execute as @e[type=villager,tag=behind] at @s facing ${px} ~ ${pz} run tp @s ^ ^ ^0.33`)   // motion-ok: the crowd (300 extras, not a cast member) steps in as one
         // NoAI mobs' moves reach the client only on the tracker's 3-tick beat: a metadata change each tick flushes them
@@ -290,6 +292,7 @@ module.exports = {
         await bot.waitForTicks(1)
       }
       await bot.waitForTicks(3)
+      bot.removeListener('messagestr', fb); bot.chat('/gamerule send_command_feedback false')
       ctx.log('step_in:', vill.length, 'villagers; the nearest moved', probe && p0 ? probe.position.distanceTo(p0).toFixed(2) : '?', 'blocks')
       await bot.waitForTicks(12)   // footage for the end (0.7 s after the step) and the settle
       ctx.mark('face_off')
