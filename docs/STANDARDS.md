@@ -433,6 +433,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format "fakemod"**: the permission popup sits centred in the game view, like a real modal over the action, and
   is big: most of the view's width at a GUI scale that reads on a phone, with the ALLOW/DENY result big as its own
   beat. Check: owner, review. r:r7ef6ec r:rb35549
+- **Format "fakemod", DENY**: a denied mob is eaten: the player picks the mob itself up bare-handed and eats it bite by
+  bite (lib/interrupt.js pickupEat), not its drop. Check: owner, review. r:r535ba1
 - **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
   ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb
   The takeaway test: the reviewer writes in one sentence what the viewer got out of it (a laugh, a "whoa", a

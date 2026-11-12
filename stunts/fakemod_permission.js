@@ -1,16 +1,19 @@
 // Fake mod 1, "mobs ask for permission" (format fakemod, docs/formats.md; STANDARDS r:rd551de). A survival field at
 // sunset. Every hostile mob that comes for you stops dead and a popup asks you first (lib/fakemod.js, the overlay is
 // scripts/popup.py: our own Minecraft-style GUI):
-//   1. a zombie walks up: "A Zombie is asking for permission to attack you." Deny: it stands there, frozen. You kill it.
-//   2. a skeleton with a bow: "...permission to shoot you." The cursor nearly hits Allow, then Deny. Frozen, killed.
+//   1. a zombie walks up: "A Zombie is asking for permission to attack you." Deny: it stands there, frozen. You pick it
+//      up and eat it (owner 2026-11-12: "you eat the mob"; lib/interrupt.js pickupEat).
+//   2. a skeleton with a bow: "...permission to shoot you." The cursor nearly hits Allow, then Deny. Frozen, eaten.
 //   3. you turn round and a creeper is right behind you: "...permission to explode." The cursor goes for Deny... then
 //      clicks Roll. ALLOW / DENY / ALLOW ... it lands on ALLOW. It lights, swells and goes off. Death screen.
 // The mechanics are vanilla: the "mod" only sets NoAI while it waits for an answer (a mob with NoAI stands still), and
-// Allow on the creeper sets its `ignited` flag (flint and steel's effect: the 30-tick fuse). The kills are netherite
-// sword jump crits at the attack cooldown (8 x 1.5 = 12 damage: 2 hits on 20 health, the zombie's 2 armour too). Hard
-// difficulty: a creeper going off ~3 blocks away kills a full-health player.
+// Allow on the creeper sets its `ignited` flag (flint and steel's effect: the 30-tick fuse). Eating a mob is the
+// fake mod's licence (the owner's gag), shown with vanilla's eating rhythm and sounds. Hard difficulty: a creeper going
+// off ~3 blocks away kills a full-health player.
 const { plateau } = require('../lib/plateau')
 const FM = require('../lib/fakemod')
+const I = require('../lib/interrupt')
+const { storyKit } = require('../lib/story')
 
 const CAPTION = 'why is every mob asking me for permission 💀'   // a reaction, not a label (r:r0f3da0)
 
@@ -78,6 +81,7 @@ module.exports = {
     const { x, z, floor } = this
     const A = require('../lib/act')(ctx)
     const F = floor + 1
+    const K = storyKit(ctx, I.NO_LINES, { X: x, Z: z, F: floor })   // the kit lib/interrupt's pickupEat moves the eaten mob with
     const ent = (tag) => Object.values(bot.entities).find(e => e.__fm === tag)
     const grab = async (tag, type) => {   // the entity I just summoned (the newest of its type)
       for (let i = 0; i < 10; i++) {
@@ -89,23 +93,18 @@ module.exports = {
     }
     const dist = (e) => e.position.distanceTo(bot.entity.position)
     const burning = (e) => e && e.metadata && typeof e.metadata[0] === 'number' && (e.metadata[0] & 1)
-    const kill = async (e, n = 4) => {
-      const hp = () => (e.metadata && typeof e.metadata[9] === 'number') ? e.metadata[9] : 20   // LivingEntity health
-      // step in to sword reach first (vanilla 3 blocks: a hit from 4 would read as a reach hack)
-      if (dist(e) > 2.7) {
+    // DENY... and you eat it (owner, 2026-11-12: "i think it wouild be funny if we deny and then pick them up and eat
+    // them" / "no i meant like you eat the mob"): step in close, pick it up bare-handed and eat it bite by bite
+    // (lib/interrupt.js pickupEat: it shrinks into a handful, crunches, crumbs, a burp, gone)
+    const eat = async (e, mob, tag, crumbs) => {
+      if (dist(e) > 1.9) {
         bot.setControlState('forward', true)   // motion-ok: a step straight at the frozen mob, the view on it (A.view)
-        for (let i = 0; i < 30 && dist(e) > 2.5; i++) { A.view(e.position.offset(0, 1.2, 0)); await bot.waitForTicks(1) }
+        for (let i = 0; i < 40 && dist(e) > 1.7; i++) { A.view(K.face(e)); await bot.waitForTicks(1) }
         bot.setControlState('forward', false)   // motion-ok: the step's end
       }
-      for (let i = 0; i < n && e.isValid !== false && hp() > 0; i++) {
-        // a jump crit (vanilla: falling, not on the ground: x1.5 and the crit stars): jump, hit on the way down
-        bot.setControlState('jump', true); await bot.waitForTicks(1); bot.setControlState('jump', false)   // motion-ok: one jump, the view stays on the mob (A.view)
-        for (let j = 0; j < 12 && !(bot.entity.velocity.y < 0 && !bot.entity.onGround); j++) { A.view(e.position.offset(0, 1.2, 0)); await bot.waitForTicks(1) }
-        try { await A.hit(e, { delay: i === 0 ? 0 : 13, max: 30 }) } catch (err) { if (/is gone/.test(err.message)) break; throw err }   // the sword's cooldown (1.6 attacks/s): full-damage hits
-        ctx.sound('entity.player.attack.crit', 1, 1)
-        for (let j = 0; j < 8 && !bot.entity.onGround; j++) await bot.waitForTicks(1)
-      }
-      for (let i = 0; i < 30 && e.isValid !== false; i++) await bot.waitForTicks(1)
+      await K.aimAt(K.face(e))
+      await I.pickupEat(ctx, K, { mob, tag, ent: () => e, slot: 4, crumbs })   // slot 4: empty, the bare hand
+      ctx.select(0)
     }
 
     // 1. the zombie: walking at me from frame 0 (r:r0f3da0: the subject in motion by 0.5 s; the Short starts once it
@@ -124,8 +123,8 @@ module.exports = {
     for (let i = 0; i < 7 && dist(zb) > 3.4; i++) { A.view(FM.framePoint(ctx, zb)); await bot.waitForTicks(1) }   // framed under the centred popup; it opens by ~0.35 s (pace: a slow opening; the popup's pop-in and toast are the opener's motion and hit)
     ctx.log('zombie at', dist(zb).toFixed(2), 'burning', burning(zb))
     await FM.ask(ctx, { k: 1, tag: 'fm_zombie', hover: ['Deny'], entity: zb, A })
-    await kill(zb)
-    ctx.mark('zombie_dead', { gone: zb.isValid === false })
+    await eat(zb, 'zombie', 'fm_zombie', 'rotten_flesh')
+    ctx.mark('zombie_dead', { eaten: true })
     await bot.waitForTicks(3); ctx.mark('cut1a'); await bot.waitForTicks(3)   // the cut's edges on a still view (whip: an edit cut mid-turn snaps)
 
     // 2. the skeleton (cut to it, framed under the popup): it asks
@@ -133,7 +132,7 @@ module.exports = {
     ctx.mark('cut1b')
     ctx.log('skeleton at', dist(sk).toFixed(2), 'burning', burning(sk))
     await FM.ask(ctx, { k: 2, tag: 'fm_skel', hover: ['Allow', 'Deny'] })
-    // walk up to it and kill it (sprinting, the view on it)
+    // walk up to it (sprinting, the view on it): it gets eaten too
     bot.setControlState('sprint', true); bot.setControlState('forward', true)   // motion-ok: a straight sprint at the frozen skeleton, the view governed by A.view
     for (let i = 0; i < 40 && dist(sk) > 2.6; i++) { A.view(sk.position.offset(0, 1.4, 0)); await bot.waitForTicks(1) }
     bot.setControlState('forward', false); bot.setControlState('sprint', false)   // motion-ok: the sprint's end
@@ -143,8 +142,8 @@ module.exports = {
     const face = Math.atan2(-(bot.entity.position.x - behind.x), bot.entity.position.z - behind.z) * 180 / Math.PI   // MC yaw toward me: atan2(-dx, dz) (r1: the sign was flipped, it faced away)
     await ctx.cmd(`/summon creeper ${behind.x.toFixed(2)} ${F} ${behind.z.toFixed(2)} {Tags:["fm_creeper"],PersistenceRequired:1b,NoAI:1b,Rotation:[${face.toFixed(1)}f,0f]}`)
     const cr = await grab('fm_creeper', 'creeper')
-    await kill(sk)
-    ctx.mark('skeleton_dead', { gone: sk.isValid === false })
+    await eat(sk, 'skeleton', 'fm_skel', 'bone')
+    ctx.mark('skeleton_dead', { eaten: true })
     await bot.waitForTicks(3); ctx.mark('cut2a'); await bot.waitForTicks(3)   // the cut's edges on a still view (whip: an edit cut mid-turn snaps)
 
     // 3. cut to my left: the creeper, right there, waiting. It asks. Deny... no: Roll.
