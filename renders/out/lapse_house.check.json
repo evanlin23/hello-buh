@@ -1,0 +1,186 @@
+{
+ "stunt": "lapse_house",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/lapse_house.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "speed span roof_end..mid_done skipped (event missing or empty)"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT lapse_house: 1 shots, scene 0.0-112.0 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-112.0 pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 2 warning(s), 6 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 1.1,
+     "shot": 2,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: dirt -> oak_planks"
+    },
+    {
+     "level": "WARN",
+     "out": 6.733,
+     "shot": 4,
+     "line": null,
+     "kind": "held",
+     "msg": "held item changes across the cut: spruce_planks -> quartz_block"
+    },
+    {
+     "level": "NOTE",
+     "out": 6.733,
+     "shot": 4,
+     "line": null,
+     "kind": "blocks",
+     "msg": "10 block(s) in view changed during the cut (e.g. smooth_stone, air, water, smooth_quartz at 379 68 -87): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 8.733,
+     "shot": 5,
+     "line": null,
+     "kind": "blocks",
+     "msg": "203 block(s) in view changed during the cut (e.g. grass_block, quartz_block, polished_andesite at 365 68 -90): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 10.533,
+     "shot": 6,
+     "line": null,
+     "kind": "blocks",
+     "msg": "187 block(s) in view changed during the cut (e.g. quartz_block, polished_andesite, quartz_pillar at 362 74 -99): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 14.133,
+     "shot": 8,
+     "line": null,
+     "kind": "blocks",
+     "msg": "47 block(s) in view changed during the cut (e.g. quartz_pillar, glass at 406 70 -107): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 17.733,
+     "shot": 10,
+     "line": null,
+     "kind": "blocks",
+     "msg": "16 block(s) in view changed during the cut (e.g. deepslate_tiles at 400 81 -92): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 21.333,
+     "shot": 12,
+     "line": null,
+     "kind": "blocks",
+     "msg": "42 block(s) in view changed during the cut (e.g. quartz_block, polished_andesite at 361 90 -88): intended?"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 15 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 6.15,
+     "shot": 3,
+     "line": null,
+     "kind": "tight",
+     "msg": "camera against the set: 58% of the frame is within 3 blocks (glass, oak_planks)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 0.1,
+     "tick": 25,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 184 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": [
+    "3 fast turn(s) inside the time-lapse's sped-up build (up to 696 deg/s on screen): allowed, owner r:r66efa4 (\"it's okay to have like a really fast movement here\")"
+   ]
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "69 visible sound-making events (place 69), 69 with a sound mark, 0 without (audio.py adds those for a story)",
+    "ambience per shot: -0.20-2.25s day, 2.25-37.40s day, 37.40-45.05s day, 45.05-57.05s day, 57.05-69.05s day, 69.05-81.05s day, 81.05-93.05s day, 93.05-99.25s day, 99.25-105.25s day, 105.25-121.45s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T05:51:28.956Z"
+}
