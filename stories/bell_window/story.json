@@ -2,7 +2,7 @@
  "name": "bell_window",
  "stunt": "story_bell_window",
  "version": 2,
- "revision": "r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom recast `mom_saltmouth` (Kore, the owner's pick). r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
+ "revision": "r7 (2026-11-12): the Roblox story format (docs/story_format.md, STANDARDS 0y/0z): L01 adds the 'why?' ('And nobody will tell me WHY.'); L05 'Mom won't SAY why' (he wants to know); the reveal is now spoken, L11 over S08 ('He had a BOW. And this time, the bell wasn't in the WAY.'), cut 1.0 s after the draw on 'WAY'; the last line echoes line 1's bell. r6 (2026-11-11): owner-approved; the critic's L10 ('so he could SEE me wave HI'); Mom recast `mom_saltmouth` (Kore, the owner's pick). r5 (2026-11-11): cold read r2 (midpoint 60%): the feather moves after the pale guy, 'leaned' -> 'climbed' to match S07/S08. r4: STANDARDS 0a mystery through naivety: the kid misreads every clue cheerfully (the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade) and leans out to wave hi. Earlier, r3: the batch-2 audit's must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #3): new line 1 (window -> bell), the runaway echo moved to L02 as an effect; the window, bell and skeleton on one axis in one wide (S02, S08) with the bell on the arrow's line (set.md); Mom recast to `mom` (Pulcherrima); current format (r-cast, one_take, shows, punch, upload, family). Reviews in reviews/r3-*.md",
  "caption": "why does the bell ring when I open my window 🔔",
  "logline": "Every time a Saltmouth kid opens his bedroom window, the village bell outside rings and the whole village runs indoors; he's sure the bell likes him, and tonight he climbs out past it to wave hi to the pale guy on the cliff.",
  "question": "why does the bell ring every time he opens his window?",
@@ -64,7 +64,8 @@
     "L07",
     "L08",
     "L09",
-    "L10"
+    "L10",
+    "L11"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -84,8 +85,8 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "Every time / I open my WINDOW, / the village / BELL RINGS.",
-   "say": "Every time I open my window, the village bell RINGS.",
+   "text": "Every time / I open my WINDOW, / the village / BELL RINGS. / And nobody / will tell me / WHY.",
+   "say": "Every time I open my window, the village bell RINGS. And nobody will tell me WHY.",
    "shot": "S01",
    "shows": [
     {
@@ -102,7 +103,7 @@
     }
    ],
    "punch": true,
-   "direction": "delighted, like it's a magic trick; one quick breath",
+   "direction": "delighted, like it's a magic trick; then the WHY up, a kid who really wants to know",
    "look": {
     "what": "prop:bell",
     "word": "BELL"
@@ -111,8 +112,8 @@
   {
    "id": "L02",
    "who": "N",
-   "text": "And the WHOLE / village / runs INSIDE. / Everybody's / so SHY.",
-   "say": "And the whole village runs inside. Everybody's so SHY.",
+   "text": "The WHOLE / village / runs INSIDE. / Everybody's / so SHY.",
+   "say": "The whole village runs inside. Everybody's so SHY.",
    "shot": "S01",
    "shows": [
     {
@@ -170,8 +171,8 @@
   {
    "id": "L05",
    "who": "N",
-   "text": "Mom just SAYS:",
-   "say": "Mom just says:",
+   "text": "Mom won't SAY why. / She just goes:",
+   "say": "Mom won't say why. She just goes:",
    "shot": "S03",
    "shows": [
     {
@@ -184,7 +185,8 @@
    "look": {
     "what": "Mom",
     "word": "MOM"
-   }
+   },
+   "direction": "a little huff, she never tells him anything"
   },
   {
    "id": "L06",
@@ -273,8 +275,8 @@
   {
    "id": "L10",
    "who": "N",
-   "text": "So tonight / the bell RANG, / and I climbed out / PAST it / so he could SEE me / wave HI.",
-   "say": "So tonight the bell rang, and I climbed out past it so he could see me wave HI.",
+   "text": "So tonight / when it RANG, / I climbed out / PAST it / so he could SEE me / wave HI.",
+   "say": "So tonight when it rang, I climbed out past it so he could see me wave HI.",
    "shot": "S07",
    "shows": [
     {
@@ -289,6 +291,34 @@
    "look": {
     "what": "prop:bell",
     "word": "RANG"
+   }
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "He had a BOW. / And this time, / the bell / wasn't in / the WAY.",
+   "say": "He had a BOW. And this time, the bell wasn't in the WAY.",
+   "shot": "S08",
+   "shows": [
+    {
+     "what": [
+      "skeleton",
+      "bow"
+     ],
+     "word": "BOW"
+    },
+    {
+     "what": [
+      "bell"
+     ],
+     "word": "BELL"
+    }
+   ],
+   "punch": true,
+   "direction": "still bright on BOW (he just sees a bow), then slower and plainer on the last words, just noticing; no gasp, no fear, no explaining",
+   "look": {
+    "what": "entity:skeleton",
+    "word": "BOW"
    }
   }
  ],
@@ -396,14 +426,17 @@
   },
   {
    "id": "S08",
-   "line": null,
+   "line": "L11",
    "place": "cliff",
    "size": "wide",
-   "camera": "at: (0.6, 12.6, -15.5) behind the skeleton, over its left shoulder, looking down the axis at the window, FOV 30, still. The reveal, one shot, no line. Mark `draw` at full draw; cut 1.0 s after it",
-   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade, about 7.5 deg right of centre and 4.5 deg below it; mid the bell, swinging, centred, tonight's arrow stuck in its north face toward the camera (check a 300 px still before locking: the shaft must read, not a dot); the lit window behind it; the kid on the porch roof beside the bell at about 7.7 deg left, clear of it, waving up at us. The skeleton raises the bow and draws (the bow-draw arms). Cut. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
+   "camera": "at: (0.6, 12.6, -15.5) behind the skeleton, over its left shoulder, looking down the axis at the window, FOV 30, still. The reveal, one shot, under L11. The skeleton starts raising the bow on 'BOW'; mark `draw` at full draw on 'WAY'; cut 1.0 s after it",
+   "frame": "THE AXIS from the other end: fg the skeleton's skull and bow in the oak's shade, about 7.5 deg right of centre and 4.5 deg below it; mid the bell, swinging, centred, tonight's arrow stuck in its north face toward the camera (check a 300 px still before locking: the shaft must read, not a dot); the lit window behind it; the kid on the porch roof beside the bell at about 7.7 deg left, clear of it, waving up at us. On 'BOW' (L11) the skeleton raises the bow; on 'BELL' the bell, beside the kid, not between him and us; on 'WAY' full draw (the bow-draw arms). Cut 1.0 s after. bg: the dusky village, every door shut. Dusk 12600 (the skeleton readable at phone size, no lantern).",
    "look": {
     "time": 12600
-   }
+   },
+   "lines": [
+    "L11"
+   ]
   }
  ],
  "props": {
@@ -446,20 +479,28 @@
    ]
   },
   "village": {
-   "at": [0, 1, -5]
+   "at": [
+    0,
+    1,
+    -5
+   ]
   },
   "door": {
-   "at": [4, 4, 2],
+   "at": [
+    4,
+    4,
+    2
+   ],
    "note": "his bedroom door, east wall"
   }
  },
  "ending": {
-  "after": "L10",
+  "after": "L11",
   "beats": [
    "S07: the bell rings; he climbs out past it onto the porch roof and waves",
-   "S08: over the skeleton's shoulder down the axis: the bell with tonight's arrow in it, the kid clear of it; it draws; cut 1.0 s after the `draw` mark. No line."
+   "S08 under L11: over the skeleton's shoulder down the axis: the bell with tonight's arrow in it, the kid clear of it; it draws on 'WAY'; cut 1.0 s after the `draw` mark."
   ],
-  "loop": "cause and effect: why the bell rings when he opens his window (line 1)"
+  "loop": "L11 '...the bell wasn't in the WAY.' runs into L01 'Every time I open my WINDOW, the village BELL RINGS.': the bell rang because it was in the way"
  },
  "bible": "stories/bell_window/bible.md",
  "beats": "stories/bell_window/beats.md",
@@ -478,7 +519,7 @@
  },
  "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js). pinned = the question, without the 👇",
  "family": "guardian_mistaken",
- "payoff_note": "`draw`: the stunt mark when the skeleton raises its bow at full draw in S08; the Short ends <= 1.0 s after it (owner: cut right on the reveal). No line after L10.",
+ "payoff_note": "`draw`: the stunt mark when the skeleton reaches full draw in S08, on L11's 'WAY'; the Short ends <= 1.0 s after it. L11 is the spoken reveal (docs/story_format.md beat 6); nothing after it.",
  "one_take": [
   "N"
  ]

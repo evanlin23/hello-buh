@@ -27,7 +27,7 @@
 | C. day | L07 | S04 | 6000 |
 | D. day | L08 | S05 | 6000: the sun high, the oak's shade dark |
 | E. one night | L09 | S06 | 12600 (right after a ring; a jump cut a minute on: the arrow despawned) |
-| F. tonight | L10 + the reveal | S07, S08 | 12600 |
+| F. tonight | L10, L11 (the spoken reveal) | S07, S08 | 12600 |
 
 ## Cast
 | who | look | voice | shots |
@@ -55,5 +55,5 @@ The bank (the yard's corner) and the oak are north and high; the bell 3 blocks n
 
 ## Who knows what
 - **Mom** knows (L06). She never says why.
-- **The kid** never knows and is never afraid (STANDARDS 0a): the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade; he climbs out to wave hi. The Short ends on the draw.
-- **The viewer** can guess a skeleton at L08, and gets the bell-as-shield only in S08.
+- **The kid** never knows and is never afraid (STANDARDS 0a): the bell likes him, the villagers are shy, Mom fears a cold, the arrow is a feather, the skeleton is a pale guy who likes shade; he climbs out to wave hi. His one plain reveal line (L11) says only what he sees: the pale guy has a bow, and the bell isn't in the way; no fear, no explaining. The Short ends 1.0 s after the draw on 'WAY'.
+- **The viewer** can guess a skeleton at L08, and gets the bell-as-shield only in S08, under L11.
