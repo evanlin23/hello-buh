@@ -60,12 +60,10 @@ class Settle(unittest.TestCase):
         rec = self.rec(falling(7, 20, 60, z=6.0))
         self.assertFalse(OC.moving(OC.debris_tracks(rec), 40, OC.pose_cam(rec)))
 
-    def test_explosion_items_are_debris_while_flying(self):
+    def test_explosion_items_are_drifting_debris_and_never_hold_a_cut(self):   # r:r188b46
         rows = [[k, 9, "item", 0.5 + 0.3 * min(k - 30, 10), 65, -5, 0, 0, None, {"item": "dirt"}] for k in range(30, 80)]
         rec = self.rec(rows, [{"t": 30 * 50, "event": "particles", "type": "explosion", "x": 0, "y": 64, "z": -5}])
-        tr = OC.debris_tracks(rec)
-        self.assertEqual([t["kind"] for t in tr], ["debris"])
-        self.assertEqual(tr[0]["t1"], 40)
+        self.assertEqual(OC.debris_tracks(rec), [])
 
     def test_a_mob_death_moves_for_a_second(self):
         rows = [[k, 3, "zombie", 0.5, 64, -4, 0, 0, None, None] for k in range(0, 60)]
@@ -73,13 +71,15 @@ class Settle(unittest.TestCase):
         tr = OC.debris_tracks(rec)
         self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("death", 20, 40))
 
-    def test_the_end_also_waits_out_the_rendered_blast_smoke(self):   # which_door: debris past "You Died!"
+    def test_the_end_waits_out_the_blast_frame_but_not_its_smoke(self):   # r:r188b46 narrows r:r24d99a
         rec = self.rec([], [{"t": 30 * 50, "event": "particles", "type": "explosion", "x": 0.5, "y": 64, "z": -5}])
         self.assertEqual(OC.debris_tracks(rec), [])
         tr = OC.debris_tracks(rec, puffs=True)
-        self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("puff", 30, 30 + OC.PUFF_TICKS))
-        self.assertTrue(OC.moving(tr, 60, OC.pose_cam(rec)))
-        self.assertEqual(OC.settle_after(tr, 60, OC.pose_cam(rec)), 30 + OC.PUFF_TICKS + 1)
+        self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("puff", 30, 30 + OC.BLAST_TICKS))
+        self.assertTrue(OC.moving(tr, 32, OC.pose_cam(rec)))      # the blast going off holds the end
+        self.assertFalse(OC.moving(tr, 60, OC.pose_cam(rec)))     # 1.5 s later only its smoke moves: it doesn't
+        self.assertEqual(OC.settle_after(tr, 32, OC.pose_cam(rec)), 30 + OC.BLAST_TICKS + 1)
+        self.assertLess(OC.BLAST_TICKS, OC.SMOKE_TICKS)
 
 
 class PaceTailMotion(unittest.TestCase):

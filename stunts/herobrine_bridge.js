@@ -21,6 +21,7 @@ module.exports = makeStunt({
   pitch: 8,
   edit: {
     subsY: 0.12,    // up in the sky: at mid view the sub sat on his feet over the gap (independent review round 1)
+    endAfter: 'payoff:0.8',   // r:r188b46: 0.8 s after he leaves, the chat line still up (the format's default is 1.0)
     chatScale: 5,   // 'Herobrine left the game' is the punchline: readable on a phone
     sfx: [['gamedip', 'payoff', 0.4], ['impact', 'payoff', { gain: 1.4 }]] },   // the logout is silent in vanilla: an impact, with the cave ambience ducked under it (mixcheck)
   hisStart: { x: 0.5, y: 1, z: 4.6, yaw: 180, pitch: 4 },
