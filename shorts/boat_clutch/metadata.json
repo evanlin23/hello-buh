@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "final_place",
     "drop_in_song_s": 38.25,
-    "drop_in_short_s": 29.95,
-    "song_start_s": 8.3
+    "drop_in_short_s": 12.47,
+    "song_start_s": 25.78
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 30.87,
+    "duration_s": 13.28,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 71767692,
-    "sha256": "119286d00815e015d5f4cf6c4192c46130774a0d535c2256bdb6dbd7c221c830",
+    "bytes": 30671077,
+    "sha256": "a7a5f2346dbe8ae296a7fab8e769e553fae4dd8dfd2956f0bdcd6ffd456a4d49",
     "release": {
       "tag": "pkg-boat_clutch",
-      "asset": "boat_clutch.short.119286d00815e015.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.119286d00815e015.mp4",
-      "sha256": "119286d00815e015d5f4cf6c4192c46130774a0d535c2256bdb6dbd7c221c830",
-      "bytes": 71767692
+      "asset": "boat_clutch.short.a7a5f2346dbe8ae2.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short.a7a5f2346dbe8ae2.mp4",
+      "sha256": "a7a5f2346dbe8ae296a7fab8e769e553fae4dd8dfd2956f0bdcd6ffd456a4d49",
+      "bytes": 30671077
     },
     "nosong_release": {
       "tag": "pkg-boat_clutch",
-      "asset": "boat_clutch.short_nosong.8a35e3aca745a8db.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short_nosong.8a35e3aca745a8db.mp4",
-      "sha256": "8a35e3aca745a8dbd764b1e5d938cbbb8bf452b34a9890eea2e16090a5e67c13",
-      "bytes": 71723669
+      "asset": "boat_clutch.short_nosong.b8074d468d423722.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-boat_clutch/boat_clutch.short_nosong.b8074d468d423722.mp4",
+      "sha256": "b8074d468d423722f8d1e7686711bf0de567296711227f2e075f705a77bca940",
+      "bytes": 30657310
     }
   },
   "edit": {
@@ -53,49 +53,25 @@
     "song": null,
     "dropAt": "final_place",
     "startAt": "start:0",
-    "endAfter": "final:0.7",
+    "endAfter": "final:0.6",
     "subs": [
       [
         "jump",
-        "15 blocks",
-        2.261895003862225,
+        "20 blocks",
+        1.6,
         0
       ],
       [
         "jump",
-        "20 blocks",
-        2.4416407864998737,
+        "50 blocks... into cactus",
+        1.6,
         1
       ],
       [
         "jump",
-        "30 blocks",
-        2.743167672515498,
+        "79 blocks... into LAVA",
+        1.6,
         2
-      ],
-      [
-        "jump",
-        "40 blocks",
-        2.9973665961010276,
-        3
-      ],
-      [
-        "jump",
-        "50 blocks",
-        3.2213203435596425,
-        4
-      ],
-      [
-        "jump",
-        "64 blocks",
-        3.5,
-        5
-      ],
-      [
-        "jump",
-        "79 blocks",
-        3.7664583251946766,
-        6
       ]
     ],
     "speed": [
@@ -110,24 +86,14 @@
         "cut"
       ],
       [
-        "cut3a",
-        "cut3b",
-        "cut"
+        "fall1:0.8",
+        "catch1:-0.6",
+        2
       ],
       [
-        "cut4a",
-        "cut4b",
-        "cut"
-      ],
-      [
-        "cut5a",
-        "cut5b",
-        "cut"
-      ],
-      [
-        "cut6a",
-        "cut6b",
-        "cut"
+        "fall2:0.8",
+        "catch2:-1.0",
+        2
       ]
     ],
     "hook": {
@@ -144,7 +110,39 @@
         0.5
       ]
     ],
+    "punch": [
+      [
+        "final",
+        0,
+        1.08
+      ]
+    ],
+    "flash": [
+      [
+        "final",
+        0,
+        0.3
+      ]
+    ],
     "sfx": [
+      [
+        "file",
+        "landed",
+        "sfx/kenney/impact-sounds/impactWood_heavy_000.ogg",
+        0.7,
+        {
+          "nth": 0
+        }
+      ],
+      [
+        "file",
+        "landed",
+        "sfx/kenney/impact-sounds/impactWood_heavy_000.ogg",
+        0.7,
+        {
+          "nth": 1
+        }
+      ],
       [
         "air",
         "start",
@@ -177,19 +175,23 @@
       "--red",
       "boat",
       "--subs",
-      "[[\"jump\",\"15 blocks\",2.261895003862225,0],[\"jump\",\"20 blocks\",2.4416407864998737,1],[\"jump\",\"30 blocks\",2.743167672515498,2],[\"jump\",\"40 blocks\",2.9973665961010276,3],[\"jump\",\"50 blocks\",3.2213203435596425,4],[\"jump\",\"64 blocks\",3.5,5],[\"jump\",\"79 blocks\",3.7664583251946766,6]]",
+      "[[\"jump\",\"20 blocks\",1.6,0],[\"jump\",\"50 blocks... into cactus\",1.6,1],[\"jump\",\"79 blocks... into LAVA\",1.6,2]]",
       "--speed",
-      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]]",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fall1:0.8\",\"catch1:-0.6\",2],[\"fall2:0.8\",\"catch2:-1.0\",2]]",
       "--slowmo",
       "[[\"final_place\",0.15,0.3,0.5]]",
+      "--punch",
+      "[[\"final\",0,1.08]]",
       "--hook",
       "{\"at\":\"final_place\",\"before\":1.4,\"after\":-0.05,\"text\":\"79 blocks 💀\"}",
+      "--flash",
+      "[[\"final\",0,0.3]]",
       "--sfx",
-      "[[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]]",
+      "[[\"file\",\"landed\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.7,{\"nth\":0}],[\"file\",\"landed\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.7,{\"nth\":1}],[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]]",
       "--start_at",
       "start:0",
       "--end_after",
-      "final:0.7"
+      "final:0.6"
     ]
   },
   "recording": {
@@ -200,13 +202,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 396,
-      "y": 71,
+      "x": 388,
+      "y": 70,
       "z": -39
     },
     "biome": "minecraft:plains",
-    "ticks": 732,
-    "seconds": 36.6,
+    "ticks": 315,
+    "seconds": 15.75,
     "deaths": 0,
     "events": [
       {
@@ -222,279 +224,143 @@
         "event": "jump"
       },
       {
-        "t": 2.85,
+        "t": 1.55,
+        "event": "fall0"
+      },
+      {
+        "t": 3,
         "event": "placed"
       },
       {
-        "t": 2.85,
-        "event": "swing"
+        "t": 3,
+        "event": "catch0"
       },
       {
-        "t": 2.9,
-        "event": "mounted"
-      },
-      {
-        "t": 2.9,
+        "t": 3,
         "event": "swing"
       },
       {
         "t": 3,
+        "event": "mounted"
+      },
+      {
+        "t": 3,
+        "event": "swing"
+      },
+      {
+        "t": 3.1,
         "event": "landed"
       },
       {
-        "t": 4.35,
+        "t": 4.45,
         "event": "cut1a"
       },
       {
-        "t": 4.75,
+        "t": 4.85,
         "event": "cut"
       },
       {
-        "t": 5.1,
+        "t": 5.15,
         "event": "cut1b"
       },
       {
-        "t": 5.1,
+        "t": 5.15,
         "event": "top"
       },
       {
-        "t": 5.9,
+        "t": 5.95,
         "event": "jump"
       },
       {
-        "t": 7.35,
+        "t": 5.95,
+        "event": "fall1"
+      },
+      {
+        "t": 8.2,
         "event": "placed"
       },
       {
-        "t": 7.35,
+        "t": 8.2,
+        "event": "catch1"
+      },
+      {
+        "t": 8.2,
         "event": "swing"
       },
       {
-        "t": 7.35,
+        "t": 8.2,
         "event": "mounted"
       },
       {
-        "t": 7.35,
+        "t": 8.2,
         "event": "swing"
       },
       {
-        "t": 7.45,
+        "t": 8.3,
         "event": "landed"
       },
       {
-        "t": 8.8,
+        "t": 9.35,
+        "event": "seen1"
+      },
+      {
+        "t": 9.75,
         "event": "cut2a"
       },
       {
-        "t": 9.2,
+        "t": 10.15,
         "event": "cut"
       },
       {
-        "t": 9.5,
+        "t": 10.45,
         "event": "cut2b"
       },
       {
-        "t": 9.5,
+        "t": 10.45,
         "event": "top"
       },
       {
-        "t": 10.3,
+        "t": 11.25,
         "event": "jump"
       },
       {
-        "t": 12.05,
+        "t": 11.25,
+        "event": "fall2"
+      },
+      {
+        "t": 14.1,
         "event": "placed"
       },
       {
-        "t": 12.05,
-        "event": "swing"
+        "t": 14.1,
+        "event": "catch2"
       },
       {
-        "t": 12.05,
-        "event": "mounted"
-      },
-      {
-        "t": 12.05,
-        "event": "swing"
-      },
-      {
-        "t": 12.15,
-        "event": "landed"
-      },
-      {
-        "t": 13.5,
-        "event": "cut3a"
-      },
-      {
-        "t": 13.9,
-        "event": "cut"
-      },
-      {
-        "t": 14.2,
-        "event": "cut3b"
-      },
-      {
-        "t": 14.2,
-        "event": "top"
-      },
-      {
-        "t": 15.05,
-        "event": "jump"
-      },
-      {
-        "t": 17.05,
-        "event": "placed"
-      },
-      {
-        "t": 17.05,
-        "event": "swing"
-      },
-      {
-        "t": 17.05,
-        "event": "mounted"
-      },
-      {
-        "t": 17.05,
-        "event": "swing"
-      },
-      {
-        "t": 17.15,
-        "event": "landed"
-      },
-      {
-        "t": 18.5,
-        "event": "cut4a"
-      },
-      {
-        "t": 18.9,
-        "event": "cut"
-      },
-      {
-        "t": 19.2,
-        "event": "cut4b"
-      },
-      {
-        "t": 19.2,
-        "event": "top"
-      },
-      {
-        "t": 20,
-        "event": "jump"
-      },
-      {
-        "t": 22.25,
-        "event": "placed"
-      },
-      {
-        "t": 22.25,
-        "event": "swing"
-      },
-      {
-        "t": 22.25,
-        "event": "mounted"
-      },
-      {
-        "t": 22.25,
-        "event": "swing"
-      },
-      {
-        "t": 22.35,
-        "event": "landed"
-      },
-      {
-        "t": 23.7,
-        "event": "cut5a"
-      },
-      {
-        "t": 24.1,
-        "event": "cut"
-      },
-      {
-        "t": 24.4,
-        "event": "cut5b"
-      },
-      {
-        "t": 24.4,
-        "event": "top"
-      },
-      {
-        "t": 25.2,
-        "event": "jump"
-      },
-      {
-        "t": 27.75,
-        "event": "placed"
-      },
-      {
-        "t": 27.75,
-        "event": "swing"
-      },
-      {
-        "t": 27.75,
-        "event": "mounted"
-      },
-      {
-        "t": 27.75,
-        "event": "swing"
-      },
-      {
-        "t": 27.85,
-        "event": "landed"
-      },
-      {
-        "t": 29.2,
-        "event": "cut6a"
-      },
-      {
-        "t": 29.6,
-        "event": "cut"
-      },
-      {
-        "t": 29.9,
-        "event": "cut6b"
-      },
-      {
-        "t": 29.9,
-        "event": "top"
-      },
-      {
-        "t": 30.7,
-        "event": "jump"
-      },
-      {
-        "t": 33.55,
-        "event": "placed"
-      },
-      {
-        "t": 33.55,
+        "t": 14.1,
         "event": "final_place"
       },
       {
-        "t": 33.55,
+        "t": 14.1,
         "event": "swing"
       },
       {
-        "t": 33.55,
+        "t": 14.1,
         "event": "mounted"
       },
       {
-        "t": 33.55,
+        "t": 14.1,
         "event": "swing"
       },
       {
-        "t": 33.65,
+        "t": 14.2,
         "event": "landed"
       },
       {
-        "t": 33.65,
+        "t": 14.2,
         "event": "final"
       },
       {
-        "t": 34.3,
-        "event": "outro"
-      },
-      {
-        "t": 36.6,
+        "t": 15.75,
         "event": "end"
       }
     ]
@@ -502,10 +368,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "commit": "7af609f231364d7968b818c59fe396936b205a72",
     "rendered": "local",
-    "rendered_at": "2026-11-12T01:49:26.988Z",
-    "head_at_publish": "ec8ab70b2df105888176afc747e682f7620d4590",
+    "rendered_at": "2026-11-12T06:33:14.668Z",
+    "head_at_publish": "7af609f231364d7968b818c59fe396936b205a72",
     "stunt": "stunts/boat_clutch.js",
     "source_snapshot": [
       "source/boat_clutch.js",
@@ -513,34 +379,34 @@
     ]
   },
   "rebuild": [
-    "git checkout ec8ab70b2df1",
+    "git checkout 7af609f23136",
     "gunzip -c shorts/boat_clutch/recording.json.gz > work/boat_clutch.rec.json",
     "node render.js work/boat_clutch.rec.json work/boat_clutch.frames 60 1080 1011",
     "python3 audio.py work/boat_clutch.rec.json work/boat_clutch.wav",
-    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"bro thinks a boat will save him 💀\" --self_name 56e --red boat --subs \"[[\\\"jump\\\",\\\"15 blocks\\\",2.261895003862225,0],[\\\"jump\\\",\\\"20 blocks\\\",2.4416407864998737,1],[\\\"jump\\\",\\\"30 blocks\\\",2.743167672515498,2],[\\\"jump\\\",\\\"40 blocks\\\",2.9973665961010276,3],[\\\"jump\\\",\\\"50 blocks\\\",3.2213203435596425,4],[\\\"jump\\\",\\\"64 blocks\\\",3.5,5],[\\\"jump\\\",\\\"79 blocks\\\",3.7664583251946766,6]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks 💀\\\"}\" --sfx [[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]] --start_at start:0 --end_after final:0.7 --out out/boat_clutch.mp4"
+    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"bro thinks a boat will save him 💀\" --self_name 56e --red boat --subs \"[[\\\"jump\\\",\\\"20 blocks\\\",1.6,0],[\\\"jump\\\",\\\"50 blocks... into cactus\\\",1.6,1],[\\\"jump\\\",\\\"79 blocks... into LAVA\\\",1.6,2]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"fall1:0.8\",\"catch1:-0.6\",2],[\"fall2:0.8\",\"catch2:-1.0\",2]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --punch [[\"final\",0,1.08]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks 💀\\\"}\" --flash [[\"final\",0,0.3]] --sfx [[\"file\",\"landed\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.7,{\"nth\":0}],[\"file\",\"landed\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.7,{\"nth\":1}],[\"air\",\"start\",\"final\",{\"gain\":0.5}],[\"dip\",\"final\",0.35],[\"impact\",\"final\"],[\"file\",\"final\",\"sfx/kenney/impact-sounds/impactWood_heavy_000.ogg\",0.8]] --start_at start:0 --end_after final:0.6 --out out/boat_clutch.mp4"
   ],
   "status": "ready",
-  "notes": "reaction caption r:r0f3da0; wind bed from frame 0; end 0.7 s after the landing; review READY r1",
-  "published_at": "2026-11-12T01:52:51.154Z",
+  "notes": "no-op redo (r:r4607fa): 3 drops with stakes (20 grass, 50 cactus field, 79 onto a pad in a lava lake); each lands as a hit; ends 0.6 s after it; full review READY",
+  "published_at": "2026-11-12T06:35:47.758Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T01:53:36+00:00",
+    "at": "2026-11-12T06:36:21+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 30.87 s vs the reviewed render 30.87 s"
+      "summary": "short.mp4 13.29 s vs the reviewed render 13.28 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 0,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T01:50:09.901Z",
+      "at": "2026-11-12T06:33:58.114Z",
       "report": "work/hb/boat_clutch.check.json"
     },
     "key_sounds": "n/a"
