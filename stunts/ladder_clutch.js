@@ -21,7 +21,8 @@ module.exports = {
   edit: {
     caption: 'bro trusted ONE ladder with his life 😳', red: 'ladder', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'seen2:0.4',   // r:r188b46: the look round at the lava it just missed, then out
     // r:r0f3da0 pace: silent until 1.61 s (a walk-off and fall make little vanilla sound): a wind bed from frame 0
-    sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }]],   // (pace: no hit on the 80-block landing)
+    sfx: [['air', 'start', 'final', { gain: 0.5 }], ['dip', 'final', 0.4], ['impact', 'final', { gain: 1.4 }], ['impact', 'seen2', { gain: 0.8 }]],   // (pace: a hit on the landing, and on the look at the lava it missed, the payoff)
+    punch: [['seen2', 0, 1.08]],
     subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     // the teleports between walls cut out; the long falls' middles at x2 (the camera holds still looking down the wall)
     speed: [...WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']), ...WALLS.slice(1).map((_, i) => [`fall${i + 1}:0.9`, `catch${i + 1}:-0.6`, 2])],
