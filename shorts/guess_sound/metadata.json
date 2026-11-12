@@ -20,41 +20,41 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "final_reveal",
     "drop_in_song_s": 47.5,
-    "drop_in_short_s": 35.82,
-    "song_start_s": 11.68
+    "drop_in_short_s": 35.7,
+    "song_start_s": 11.8
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 37.05,
+    "duration_s": 36.12,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 20630611,
-    "sha256": "dc7798c35f6bb3124f900e44131e8b97891317d68523c2d29379584cc84be9bf",
+    "bytes": 19420732,
+    "sha256": "f39e4a7e78e997dbebd8d61e89cf37b48e3afac7878c0d6b856d7cc22f19c138",
     "release": {
       "tag": "pkg-guess_sound",
-      "asset": "guess_sound.short.dc7798c35f6bb312.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short.dc7798c35f6bb312.mp4",
-      "sha256": "dc7798c35f6bb3124f900e44131e8b97891317d68523c2d29379584cc84be9bf",
-      "bytes": 20630611
+      "asset": "guess_sound.short.f39e4a7e78e997db.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short.f39e4a7e78e997db.mp4",
+      "sha256": "f39e4a7e78e997dbebd8d61e89cf37b48e3afac7878c0d6b856d7cc22f19c138",
+      "bytes": 19420732
     },
     "nosong_release": {
       "tag": "pkg-guess_sound",
-      "asset": "guess_sound.short_nosong.f7018b0570e787a6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short_nosong.f7018b0570e787a6.mp4",
-      "sha256": "f7018b0570e787a610f33d3b8c95d9fef3b10d0f07e077cce82f2c95c7812c6f",
-      "bytes": 20335972
+      "asset": "guess_sound.short_nosong.d8a63363d4201490.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-guess_sound/guess_sound.short_nosong.d8a63363d4201490.mp4",
+      "sha256": "d8a63363d42014907fb8e8136c4bbfa88ff9846ebde4e19779c2ac0e7334b504",
+      "bytes": 19125388
     }
   },
   "edit": {
     "caption": "guess the mob from its sound 🔊",
     "red": "sound",
-    "dropAt": "final_reveal",
+    "dropAt": "final_reveal:0.8",
     "keySounds": [
       "hear"
     ],
-    "startAt": "cd3:-0.02",
+    "startAt": "cd2:-0.1",
     "endAfter": "final_reveal:1.2",
     "counter": {
       "at": [
@@ -230,20 +230,14 @@
       "at": "final_reveal",
       "before": 0,
       "after": 1,
+      "blur": 7,
       "text": "the last one is IMPOSSIBLE 😭"
     },
     "sfx": [
       [
-        "pop",
-        "cd3",
-        {
-          "gain": 0.7
-        }
-      ],
-      [
         "dip",
-        "final_reveal",
-        0.4
+        "final_reveal:0.8",
+        1.2
       ],
       [
         "gamedip",
@@ -251,10 +245,10 @@
         0.35
       ],
       [
-        "impact",
+        "pop",
         "final_reveal",
         {
-          "gain": 1.4
+          "gain": 1.6
         }
       ]
     ],
@@ -276,13 +270,13 @@
       "--cards",
       "[[\"lit\",\"COW\",1.25,\"green\",0,null],[\"lit\",\"LLAMA\",1.25,\"gold\",1,null],[\"lit\",\"POLAR BEAR\",1.25,\"white\",2,null],[\"lit\",\"ENDERMAN\",0.8,\"blue\",3,null],[\"lit\",\"WARDEN\",1.25,\"red\",4,null],[\"lit\",\"PARROT??\",1.5,\"red\",5,null]]",
       "--hook",
-      "{\"at\":\"final_reveal\",\"before\":0,\"after\":1,\"text\":\"the last one is IMPOSSIBLE 😭\"}",
+      "{\"at\":\"final_reveal\",\"before\":0,\"after\":1,\"blur\":7,\"text\":\"the last one is IMPOSSIBLE 😭\"}",
       "--countdowns",
       "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
       "--sfx",
-      "[[\"pop\",\"cd3\",{\"gain\":0.7}],[\"dip\",\"final_reveal\",0.4],[\"gamedip\",\"final_reveal\",0.35],[\"impact\",\"final_reveal\",{\"gain\":1.4}]]",
+      "[[\"dip\",\"final_reveal:0.8\",1.2],[\"gamedip\",\"final_reveal\",0.35],[\"pop\",\"final_reveal\",{\"gain\":1.6}]]",
       "--start_at",
-      "cd3:-0.02",
+      "cd2:-0.1",
       "--end_after",
       "final_reveal:1.2"
     ]
@@ -769,10 +763,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "0c87b6f9239b1ec96e0537fba3d7866ef89fb35e",
+    "commit": "67aeb992c79386112bf87ffbd28c1ef78f305109",
     "rendered": "local",
-    "rendered_at": "2026-11-12T05:15:25.027Z",
-    "head_at_publish": "515a051a4b022b25418ce9de2263d895b8318b75",
+    "rendered_at": "2026-11-12T07:15:49.228Z",
+    "head_at_publish": "1a1df6204a4cc327daf8d5dcb9182f8306f1cd38",
     "stunt": "stunts/guess_sound.js",
     "source_snapshot": [
       "source/guess_sound.js",
@@ -783,34 +777,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 0c87b6f9239b",
+    "git checkout 67aeb992c793",
     "gunzip -c shorts/guess_sound/recording.json.gz > work/guess_sound.rec.json",
     "node render.js work/guess_sound.rec.json work/guess_sound.frames 60 1080 1011",
     "python3 audio.py work/guess_sound.rec.json work/guess_sound.wav",
-    "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1,null],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2,null],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3,null],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4,null],[\\\"lit\\\",\\\"PARROT??\\\",1.5,\\\"red\\\",5,null]]\" --hook \"{\\\"at\\\":\\\"final_reveal\\\",\\\"before\\\":0,\\\"after\\\":1,\\\"text\\\":\\\"the last one is IMPOSSIBLE 😭\\\"}\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"pop\",\"cd3\",{\"gain\":0.7}],[\"dip\",\"final_reveal\",0.4],[\"gamedip\",\"final_reveal\",0.35],[\"impact\",\"final_reveal\",{\"gain\":1.4}]] --start_at cd3:-0.02 --end_after final_reveal:1.2 --out out/guess_sound.mp4"
+    "python3 edit.py --frames work/guess_sound.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound.rec.json --audio work/guess_sound.wav --caption \"guess the mob from its sound 🔊\" --self_name 56e --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy creepers\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"COW\\\",1.25,\\\"green\\\",0,null],[\\\"lit\\\",\\\"LLAMA\\\",1.25,\\\"gold\\\",1,null],[\\\"lit\\\",\\\"POLAR BEAR\\\",1.25,\\\"white\\\",2,null],[\\\"lit\\\",\\\"ENDERMAN\\\",0.8,\\\"blue\\\",3,null],[\\\"lit\\\",\\\"WARDEN\\\",1.25,\\\"red\\\",4,null],[\\\"lit\\\",\\\"PARROT??\\\",1.5,\\\"red\\\",5,null]]\" --hook \"{\\\"at\\\":\\\"final_reveal\\\",\\\"before\\\":0,\\\"after\\\":1,\\\"blur\\\":7,\\\"text\\\":\\\"the last one is IMPOSSIBLE 😭\\\"}\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --sfx [[\"dip\",\"final_reveal:0.8\",1.2],[\"gamedip\",\"final_reveal\",0.35],[\"pop\",\"final_reveal\",{\"gain\":1.6}]] --start_at cd2:-0.1 --end_after final_reveal:1.2 --out out/guess_sound.mp4"
   ],
   "status": "ready",
-  "notes": "owner note at 0 s fixed (r:r0f3da0/r:r4607fa): opens on a 1 s tease of the parrot with its creeper hiss, the first round from its countdown; end 1.2 s; READY r1",
-  "published_at": "2026-11-12T05:18:57.879Z",
+  "notes": "owner notes 2026-11-12: blurred tease, the moo clear, nothing over the parrot's hiss; fix-check READY",
+  "published_at": "2026-11-12T07:20:13.623Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-12T05:19:42+00:00",
+    "at": "2026-11-12T07:21:03+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 37.06 s vs the reviewed render 37.05 s"
+      "summary": "short.mp4 36.12 s vs the reviewed render 36.12 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 1,
+      "warnings": 2,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-12T05:16:11.923Z",
+      "at": "2026-11-12T07:17:01.940Z",
       "report": "work/hb/guess_sound.check.json"
     },
     "key_sounds": {
@@ -818,7 +812,7 @@
       "keys": [
         "hear"
       ],
-      "summary": "key sounds over the music: worst +10.6 dB over 11 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +13.5 dB over 11 clips (need >= 8 dB)"
     }
   }
 }
