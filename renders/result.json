@@ -1,0 +1,17 @@
+{
+ "name": "rainbow_sheep",
+ "stunt": "rainbow_sheep",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43168597531",
+ "source": "17c119e4",
+ "queued": "2026-11-12T06:30:14Z",
+ "finished": "2026-11-12T06:39:33Z",
+ "mp4": "renders/out/rainbow_sheep.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

@@ -1,0 +1,129 @@
+{
+ "stunt": "rainbow_sheep",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/rainbow_sheep.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT rainbow_sheep: 1 shots, scene 0.0-21.1 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-21.1  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 1 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "appear",
+     "msg": "sheep #335 appears in the middle of the frame 11.65 s into the shot (3.6 blocks)"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 2 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 0 cuts",
+   "findings": [],
+   "rows": []
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "20 visible sound-making events (voice 20), 0 with a sound mark, 20 without (audio.py adds those for a story)",
+    "     2.35s  sheep idle voice                   -> entity.sheep.ambient               8.0 blocks in view  ",
+    "     4.05s  sheep idle voice                   -> entity.sheep.ambient               3.1 blocks in view  ",
+    "     6.45s  sheep idle voice                   -> entity.sheep.ambient               6.1 blocks          ",
+    "     8.65s  sheep idle voice                   -> entity.sheep.ambient               6.7 blocks          ",
+    "    10.05s  sheep idle voice                   -> entity.sheep.ambient               6.8 blocks in view  ",
+    "    12.00s  sheep idle voice                   -> entity.sheep.ambient               4.0 blocks          ",
+    "    13.85s  sheep idle voice                   -> entity.sheep.ambient               6.6 blocks in view  ",
+    "    16.20s  sheep idle voice                   -> entity.sheep.ambient               4.3 blocks in view  ",
+    "    18.30s  sheep idle voice                   -> entity.sheep.ambient              11.8 blocks          ",
+    "    20.70s  sheep idle voice                   -> entity.sheep.ambient              11.9 blocks          ",
+    "    22.10s  sheep idle voice                   -> entity.sheep.ambient              10.9 blocks in view  ",
+    "    23.75s  sheep idle voice                   -> entity.sheep.ambient              11.1 blocks in view  ",
+    "    27.15s  sheep idle voice                   -> entity.sheep.ambient              11.0 blocks in view  ",
+    "    29.20s  sheep idle voice                   -> entity.sheep.ambient              11.1 blocks in view  ",
+    "    30.50s  sheep idle voice                   -> entity.sheep.ambient              11.5 blocks in view  ",
+    "    31.80s  sheep idle voice                   -> entity.sheep.ambient              11.7 blocks in view  ",
+    "    34.50s  sheep idle voice                   -> entity.sheep.ambient              12.5 blocks in view  ",
+    "    36.55s  sheep idle voice                   -> entity.sheep.ambient              11.0 blocks in view  ",
+    "    39.20s  sheep idle voice                   -> entity.sheep.ambient              12.3 blocks in view  ",
+    "    40.50s  sheep idle voice                   -> entity.sheep.ambient              11.1 blocks in view  ",
+    "ambience per shot: -0.25-41.90s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-12T06:32:47.441Z"
+}
