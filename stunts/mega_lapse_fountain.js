@@ -215,9 +215,10 @@ module.exports = L.makeLapse({
   }],
   endAfter: 0.8,                          // the end 0.8 s after the pass lands (r:r188b46: 0.5-0.8 s)
   edit: {
-    // the reveal's drop with a dip and an impact; the pass (the last beat, the payoff pace and mixcheck measure) its own dip
-    // and a loud impact (at 1.0 it rose only ~7 dB over the reveal's ringing beacon: pace wants 10)
-    sfx: [['dip', 'reveal', 0.4], ['impact', 'reveal', { gain: 1.3 }], ['dip', 'pass', 0.5], ['impact', 'pass', { gain: 1.8 }]],
+    // one hit, on the pass (the last beat, which pace and mixcheck measure): the bed dips under it, an impact, the NCS drop.
+    // The reveal keeps its flash, punch and the firework blast, without an edit hit: 0.6 s before the pass its impact
+    // and the music held the level at -6..-8 dB, and the pass's own hit couldn't rise over it (mixcheck)
+    sfx: [['dip', 'pass', 0.5], ['impact', 'pass', { gain: 1.8 }]],
     // the NCS drop on the pass, the last beat (mixcheck: dropped on the reveal, the bed was at full level 0.6 s later
     // and the pass's hit didn't stand out); no card: at 0.8 s it couldn't be read (r:r188b46 ends fast)
     dropAt: 'pass'
