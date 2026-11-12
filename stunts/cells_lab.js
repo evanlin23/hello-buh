@@ -27,7 +27,7 @@ module.exports = C.makeStunt({
     // a dip in the song and a hit (mixcheck), a short shake
     cards: [['selfland', 'CELL 5: YOU', 1.4, 'red']],
     // (an impact on frame 0, the walk's first step: the opening's sound hit, r:r0f3da0)
-    sfx: [['impact', 'open:0.12', { gain: 0.8 }], ['impact', 'selflaunch', { gain: 1.1 }], ['dip', 'selfland', 0.4], ['impact', 'selfland', { gain: 1.4 }]],
+    sfx: [['impact', 'open:0.35', { gain: 0.9 }], ['impact', 'selflaunch', { gain: 1.1 }], ['dip', 'selfland', 0.4], ['impact', 'selfland', { gain: 1.4 }]],
     flash: [['selflaunch', 0, 0.3], ['selfland', 0, 0.4]], punch: [['selfland', 0, 1.08]],
     shake: [['selflaunch', 0, 6], ['selfland', 0, 8]]
   }
