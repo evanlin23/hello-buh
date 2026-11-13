@@ -1,0 +1,16 @@
+story_sun_wont_set: CHECK OK
+ok   motion lint: clean
+ok   story hotbar: full (9 slots or 7+ filled, every id a real item)
+ok   voice stamp: recorded to the current voice (4d55a111f180)
+ok   script drift: story.json is the latest script
+ok   rec_check: no blockers
+ok   lint: clean
+ok   continuity: 0 problem(s), 10 warning(s), 0 note(s)
+ok   framing: 9 warning(s) over 15 shots
+ok   owner: 0 blocker(s), 14 warning(s)
+ok   cuts: 0 blocker(s), 1 warning(s) over 12 cuts
+ok   caption sync: OK: 0 blocker(s), 1 warning(s) (caption sync)
+ok   voice contrast: skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)
+ok   on-screen sound: every visible action has its sound
+ok   pace: skipped: no rendered Short yet (runs after ./hb render --fetch)
+ok   audible sound: skipped: no fresh rendered Short (the levels are rec_check's)

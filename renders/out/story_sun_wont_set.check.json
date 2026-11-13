@@ -1,0 +1,934 @@
+{
+ "stunt": "story_sun_wont_set",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_sun_wont_set.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (4d55a111f180)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "cut holds: 0 cast moves and 5 narrator moves held to their cut",
+    "motion fixes: 1 cast member moved with a cut land on it",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT story_sun_wont_set: 6 shots, scene 0.0-64.9 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-19.9  pov    ",
+    "  pov           19.9-29.4  pov    ",
+    "  pov           29.4-32.0  pov    ",
+    "  pov           32.0-50.1  pov    ",
+    "  pov           50.1-56.6  pov    ",
+    "  pov           56.6-64.9  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 10 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 29.35,
+     "shot": 9,
+     "line": "L09",
+     "kind": "position",
+     "msg": "villager (librarian) #354 is 13.6 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 32,
+     "shot": 10,
+     "line": "L10",
+     "kind": "position",
+     "msg": "villager (librarian) #354 is 14.9 blocks from where it was at the end of the last shot (seen there, unseen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 37.05,
+     "shot": 11,
+     "line": "L11",
+     "kind": "held",
+     "msg": "held item changes across the cut: white_bed -> bread"
+    },
+    {
+     "level": "WARN",
+     "out": 51.85,
+     "shot": 14,
+     "line": "L15",
+     "kind": "time",
+     "msg": "time-lapse inside the shot: 79 time steps 11041 -> 14200 (afternoon -> night) from 0.15 to 4.05 s into it: intended?"
+    },
+    {
+     "level": "WARN",
+     "out": 51.85,
+     "shot": 14,
+     "line": "L15",
+     "kind": "appear",
+     "msg": "zombie #361 appears in the middle of the frame 2.60 s into the shot (10.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 51.85,
+     "shot": 14,
+     "line": "L15",
+     "kind": "appear",
+     "msg": "zombie #365 appears in the middle of the frame 3.60 s into the shot (9.8 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 56.6,
+     "shot": 15,
+     "line": "L15",
+     "kind": "appear",
+     "msg": "phantom #372 appears in the middle of the frame 2.60 s into the shot (7.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 56.6,
+     "shot": 15,
+     "line": "L15",
+     "kind": "appear",
+     "msg": "phantom #367 appears in the middle of the frame 2.65 s into the shot (5.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 56.6,
+     "shot": 15,
+     "line": "L15",
+     "kind": "appear",
+     "msg": "phantom #368 appears in the middle of the frame 4.50 s into the shot (4.6 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 56.6,
+     "shot": 15,
+     "line": "L15",
+     "kind": "vanish",
+     "msg": "phantom #367 vanishes in the middle of the frame 6.80 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "9 warning(s) over 15 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": "L01",
+     "kind": "tight",
+     "msg": "tighter than planned: S01 is planned EWS extreme wide, the recording is FS full (zombie 25%)"
+    },
+    {
+     "level": "WARN",
+     "out": 3.35,
+     "shot": 2,
+     "line": "L02",
+     "kind": "tight",
+     "msg": "camera against the set: 42% of the frame is within 3 blocks (short_grass, oak_leaves)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.6,
+     "shot": 4,
+     "line": "L04",
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (FS full on villager (librarian), median depth 5 blocks): open EWS/WS, then cut in"
+    },
+    {
+     "level": "WARN",
+     "out": 19.85,
+     "shot": 6,
+     "line": "L07",
+     "kind": "tight",
+     "msg": "tighter than planned: S07 is planned WS wide, the recording is FS full (villager (mason) 29%)"
+    },
+    {
+     "level": "WARN",
+     "out": 26.1,
+     "shot": 8,
+     "line": "L09",
+     "kind": "tight",
+     "msg": "tighter than planned: S09 is planned WS wide, the recording is FS full (zombie 22%)"
+    },
+    {
+     "level": "WARN",
+     "out": 32,
+     "shot": 10,
+     "line": "L10",
+     "kind": "tight",
+     "msg": "camera against the set: 47% of the frame is within 3 blocks (spruce_planks, oak_stairs)"
+    },
+    {
+     "level": "WARN",
+     "out": 50.1,
+     "shot": 13,
+     "line": "L14",
+     "kind": "tight",
+     "msg": "camera against the set: 37% of the frame is within 3 blocks (short_grass, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 51.85,
+     "shot": 14,
+     "line": "L15",
+     "kind": "tight",
+     "msg": "tighter than planned: S14 is planned EWS extreme wide, the recording is WS wide (zombie 18%)"
+    },
+    {
+     "level": "WARN",
+     "out": 56.6,
+     "shot": 15,
+     "line": "L15",
+     "kind": "tight",
+     "msg": "tighter than planned: S14 is planned EWS extreme wide, the recording is WS wide (zombie 17%)"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 14 warning(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 91 x 74 blocks (ground y 68; its edge 32 blocks from the set's origin); built footprint 21 x 34; terrain relief around it sd 5.4 blocks",
+     "world": {
+      "level": 68,
+      "area": 1665,
+      "w": 91,
+      "d": 74,
+      "edge": 32,
+      "built": 133,
+      "footprint": {
+       "w": 21,
+       "d": 34,
+       "x0": 1,
+       "z0": -2
+      },
+      "relief": 5.4,
+      "outside": 2252
+     }
+    },
+    {
+     "level": "NOTE",
+     "check": "opening",
+     "out": 0,
+     "tick": 24,
+     "line": "L01",
+     "msg": "opening OK: zombie (L01 look) zombie #361: 49% across (middle third 33%-67%), 15% of the frame height on frame 1, 15% at most (readable from 8%), first 1.5 s; camera 0 blocks/s, turn 4.31 deg/s, push 0/s, subject 0.08 blocks/s, anything else in frame 4.02 blocks/s, 0 action(s)",
+     "opening": {
+      "subject": "zombie",
+      "src": "L01 look",
+      "n": 31,
+      "motion": {
+       "cam": 0,
+       "turn": 4.31,
+       "grow": 0,
+       "sub": 0.08,
+       "other": 4.02,
+       "actions": 0
+      },
+      "seen": 1,
+      "x": 0.49,
+      "h0": 0.149,
+      "hMax": 0.15,
+      "label": "zombie #361"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 26.95,
+     "tick": 562.6,
+     "line": "L09",
+     "low": 5.6,
+     "msg": "looking below \"zombie\": the first-person look lands a median 5.6 deg under zombie #361's eyes (~3.21 blocks at 33.0), its face 43% down. Aim at K.face(feet, type) (lib/story.js), not its chest, feet or a block's middle. Owner: \"it feels we are looking slightly too low\""
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 54.6,
+     "tick": 1116.4,
+     "line": "L15",
+     "low": 11.9,
+     "msg": "looking below \"zombie\": the first-person look lands a median 11.9 deg under zombie #366's eyes (~0.60 blocks at 2.8), its face 35% down. Aim at K.face(feet, type) (lib/story.js), not its chest, feet or a block's middle. Owner: \"it feels we are looking slightly too low\""
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 57.65,
+     "tick": 1177,
+     "line": "L16",
+     "msg": "the phantom (id 367) jumps 31.74 blocks in one tick just out of view, mid-shot: reads as a teleport. Owner: \"we can see the dog teleport\". Walk it (K.actor), move it inside K.cutShot so the shot mark waits for it, or K.warp it while it is off screen",
+     "jump": {
+      "id": 367,
+      "blocks": 31.74,
+      "when": "mid-shot",
+      "from": [
+       -214.5,
+       45,
+       -1059.5
+      ],
+      "to": [
+       -217,
+       76.5,
+       -1056.5
+      ]
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 57.65,
+     "tick": 1177,
+     "line": "L16",
+     "msg": "the phantom (id 368) jumps 32.70 blocks in one tick just out of view, mid-shot: reads as a teleport. Owner: \"we can see the dog teleport\". Walk it (K.actor), move it inside K.cutShot so the shot mark waits for it, or K.warp it while it is off screen",
+     "jump": {
+      "id": 368,
+      "blocks": 32.7,
+      "when": "mid-shot",
+      "from": [
+       -214.5,
+       45,
+       -1057.5
+      ],
+      "to": [
+       -218.75,
+       77.17,
+       -1053.47
+      ]
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 57.65,
+     "tick": 1177,
+     "line": "L16",
+     "msg": "the phantom (id 369) jumps 33.21 blocks in one tick just out of view, mid-shot: reads as a teleport. Owner: \"we can see the dog teleport\". Walk it (K.actor), move it inside K.cutShot so the shot mark waits for it, or K.warp it while it is off screen",
+     "jump": {
+      "id": 369,
+      "blocks": 33.21,
+      "when": "mid-shot",
+      "from": [
+       -214.5,
+       45,
+       -1055.5
+      ],
+      "to": [
+       -222.25,
+       77.23,
+       -1053.47
+      ]
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 57.65,
+     "tick": 1177,
+     "line": "L16",
+     "msg": "the phantom (id 370) jumps 33.14 blocks in one tick just out of view, mid-shot: reads as a teleport. Owner: \"we can see the dog teleport\". Walk it (K.actor), move it inside K.cutShot so the shot mark waits for it, or K.warp it while it is off screen",
+     "jump": {
+      "id": 370,
+      "blocks": 33.14,
+      "when": "mid-shot",
+      "from": [
+       -214.5,
+       45,
+       -1053.5
+      ],
+      "to": [
+       -224,
+       76.61,
+       -1056.5
+      ]
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 57.65,
+     "tick": 1177,
+     "line": "L16",
+     "msg": "the phantom (id 371) jumps 32.85 blocks in one tick just out of view, mid-shot: reads as a teleport. Owner: \"we can see the dog teleport\". Walk it (K.actor), move it inside K.cutShot so the shot mark waits for it, or K.warp it while it is off screen",
+     "jump": {
+      "id": 371,
+      "blocks": 32.85,
+      "when": "mid-shot",
+      "from": [
+       -214.5,
+       45,
+       -1051.5
+      ],
+      "to": [
+       -222.25,
+       75.89,
+       -1059.53
+      ]
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 57.65,
+     "tick": 1177,
+     "line": "L16",
+     "msg": "the phantom (id 372) jumps 32.61 blocks in one tick just out of view, mid-shot: reads as a teleport. Owner: \"we can see the dog teleport\". Walk it (K.actor), move it inside K.cutShot so the shot mark waits for it, or K.warp it while it is off screen",
+     "jump": {
+      "id": 372,
+      "blocks": 32.61,
+      "when": "mid-shot",
+      "from": [
+       -214.5,
+       45,
+       -1049.5
+      ],
+      "to": [
+       -218.75,
+       75.73,
+       -1059.53
+      ]
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 60.7,
+     "tick": 1238,
+     "line": "L16",
+     "msg": "the story kit refused a 2.67-block jump of ph0 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 60.7,
+     "tick": 1238,
+     "line": "L16",
+     "msg": "the story kit refused a 2.81-block jump of ph1 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 60.7,
+     "tick": 1238,
+     "line": "L16",
+     "msg": "the story kit refused a 2.48-block jump of ph2 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 60.7,
+     "tick": 1238,
+     "line": "L16",
+     "msg": "the story kit refused a 2.62-block jump of ph3 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 60.7,
+     "tick": 1238,
+     "line": "L16",
+     "msg": "the story kit refused a 2.83-block jump of ph4 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 60.7,
+     "tick": 1238,
+     "line": "L16",
+     "msg": "the story kit refused a 2.52-block jump of ph5 with no cut (walked it instead): move it with a cut, or K.warp it off screen"
+    }
+   ],
+   "notes": [
+    "L14: look \"prop:grandpa_door\" names nothing the checker knows (actor:NAME, an entity type, block:NAME, prop:ID, [dx,dy,dz])"
+   ]
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s) over 12 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 57.05,
+     "tick": 1156,
+     "line": "L15",
+     "msg": "pov -> pov: the eye goes from zombie (48% across, 30% down) to zombie (54%, 56%): a jump of 25% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    }
+   ],
+   "rows": [
+    {
+     "tick": 91,
+     "out": 3.8,
+     "line": "L01",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.44,
+      "y": 0.3,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.4,
+      "y": 0.5,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "dist": 0.185,
+     "timing": {
+      "next": "Nobody",
+      "lead": 0.195,
+      "prev": "DAYS.",
+      "sincePrev": 0.35,
+      "pause": 0.545,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.005
+    },
+    {
+     "tick": 164,
+     "out": 7.45,
+     "line": "L02",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.53,
+      "y": 0.49,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.45,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "dist": 0.054,
+     "timing": {
+      "next": "And",
+      "lead": 0.13,
+      "prev": "FENCE.",
+      "sincePrev": 0.435,
+      "pause": 0.565,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.01
+    },
+    {
+     "tick": 236,
+     "out": 11.05,
+     "line": "L03",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.43,
+      "y": 0.48,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.53,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.078,
+     "timing": {
+      "next": "Every",
+      "lead": 0.26,
+      "prev": "time.",
+      "sincePrev": 0.45,
+      "pause": 0.71,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.02
+    },
+    {
+     "tick": 421,
+     "out": 20.3,
+     "line": "L06",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.68,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.4,
+      "y": 0.49,
+      "what": "villager (mason)",
+      "kind": "cast"
+     },
+     "dist": 0.196,
+     "timing": {
+      "next": "Everyone",
+      "lead": 0.232,
+      "prev": "YET.",
+      "sincePrev": 0.4,
+      "pause": 0.632,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.028
+    },
+    {
+     "tick": 479,
+     "out": 23.2,
+     "line": "L07",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.4,
+      "y": 0.47,
+      "what": "villager (mason)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.103,
+     "timing": {
+      "next": "It's",
+      "lead": 0.295,
+      "prev": "NOT.",
+      "sincePrev": 0.388,
+      "pause": 0.683,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.005
+    },
+    {
+     "tick": 546,
+     "out": 26.55,
+     "line": "L08",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.57,
+      "y": 0.35,
+      "what": "villager (cleric)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.42,
+      "y": 0.46,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "dist": 0.182,
+     "timing": {
+      "next": "Because",
+      "lead": 0.462,
+      "prev": "it.",
+      "sincePrev": 0.375,
+      "pause": 0.837,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.018
+    },
+    {
+     "tick": 611,
+     "out": 29.8,
+     "line": "L09",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.49,
+      "y": 0.42,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.077,
+     "timing": {
+      "next": "And",
+      "lead": -0.048,
+      "prev": "OUT.",
+      "sincePrev": 0.648,
+      "pause": 0.6,
+      "inside": "And"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 664,
+     "out": 32.45,
+     "line": "L09",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.48,
+      "y": 0.48,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.025,
+     "timing": {
+      "next": "Me?",
+      "lead": 0.29,
+      "prev": "RUN.",
+      "sincePrev": 0.438,
+      "pause": 0.728,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.07
+    },
+    {
+     "tick": 765,
+     "out": 37.5,
+     "line": "L10",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.54,
+      "y": 0.5,
+      "what": "villager (librarian)",
+      "kind": "cast"
+     },
+     "dist": 0.037,
+     "timing": {
+      "next": "But",
+      "lead": 0.373,
+      "prev": "TIRED!",
+      "sincePrev": 0.4,
+      "pause": 0.773,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.013
+    },
+    {
+     "tick": 1026,
+     "out": 50.55,
+     "line": "L14",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "Then",
+      "lead": 0.042,
+      "prev": "HOME.",
+      "sincePrev": 0.518,
+      "pause": 0.56,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 1061,
+     "out": 52.3,
+     "line": "L14",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.52,
+      "y": 0.35,
+      "what": "villager (cleric)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.42,
+      "y": 0.44,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "dist": 0.132,
+     "timing": {
+      "next": "The",
+      "lead": 0.19,
+      "prev": "BACK.",
+      "sincePrev": 0.388,
+      "pause": 0.578,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.01
+    },
+    {
+     "tick": 1156,
+     "out": 57.05,
+     "line": "L15",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.48,
+      "y": 0.3,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.54,
+      "y": 0.56,
+      "what": "zombie",
+      "kind": "cast"
+     },
+     "dist": 0.25,
+     "timing": {
+      "next": "his",
+      "lead": 0,
+      "prev": "at",
+      "sincePrev": 0.06,
+      "pause": 0.06,
+      "inside": null
+     },
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 1 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "WARN  L09: the aligner starts the first word at 0.48 s, the sound starts at 0.22 s (+0.26 s): a breath or a hum before the word? listen",
+    "OK: 0 blocker(s), 1 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    55.85s  zombie step on grass_block         -> entity.zombie.step                 6.6 blocks in view  key word",
+    "    56.15s  zombie step on grass_block         -> entity.zombie.step                 6.2 blocks in view  ",
+    "    56.20s  zombie step on grass_block         -> entity.zombie.step                10.5 blocks in view  ",
+    "    56.25s  zombie step on grass_block         -> entity.zombie.step                 7.4 blocks in view  ",
+    "    56.40s  zombie step on grass_block         -> entity.zombie.step                 7.3 blocks in view  ",
+    "    56.45s  zombie step on grass_block         -> entity.zombie.step                10.9 blocks in view  key word",
+    "    56.45s  zombie step on oak_log             -> entity.zombie.step                 9.6 blocks in view  key word",
+    "    56.80s  zombie step on grass_block         -> entity.zombie.step                 4.8 blocks in view  key word",
+    "    56.85s  zombie idle voice                  -> entity.zombie.ambient              9.2 blocks in view  key word",
+    "    56.90s  zombie step on grass_block         -> entity.zombie.step                 4.4 blocks in view  key word",
+    "    57.00s  zombie step on grass_block         -> entity.zombie.step                 9.1 blocks in view  key word",
+    "    57.15s  zombie step on grass_block         -> entity.zombie.step                 5.8 blocks in view  key word",
+    "    57.40s  zombie step on grass_block         -> entity.zombie.step                 6.1 blocks in view  key word",
+    "    57.50s  zombie step on grass_block         -> entity.zombie.step                 8.0 blocks in view  key word",
+    "    57.55s  zombie step on grass_block         -> entity.zombie.step                 9.7 blocks in view  key word",
+    "    57.65s  zombie step on grass_block         -> entity.zombie.step                 2.8 blocks in view  key word",
+    "    58.05s  villager idle voice                -> entity.villager.ambient            7.0 blocks          key word",
+    "    59.25s  zombie idle voice                  -> entity.zombie.ambient             10.0 blocks in view  ",
+    "    61.30s  zombie idle voice                  -> entity.zombie.ambient              9.2 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 7.1 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 8.3 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 9.5 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 7.4 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 8.6 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 9.5 blocks          key word",
+    "    61.40s  zombie step on grass_block         -> entity.zombie.step                 7.1 blocks          key word",
+    "    62.65s  villager idle voice                -> entity.villager.ambient            2.7 blocks          ",
+    "    64.35s  phantom idle voice                 -> entity.phantom.ambient             5.3 blocks in view  ",
+    "ambience per shot: -0.25-0.75s day, 0.75-4.55s day, 4.55-8.20s day, 8.20-11.80s day, 11.80-17.75s day, 17.75-23.95s day, 23.95-27.30s day, 27.30-38.25s day, 38.25-45.55s day, 45.55-53.20s day, 57.10-65.25s night",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-13T08:26:16.119Z"
+}

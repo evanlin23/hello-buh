@@ -1,0 +1,17 @@
+{
+ "name": "story_sun_wont_set",
+ "stunt": "story_sun_wont_set",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43393094138",
+ "source": "d3b94d4f",
+ "queued": "2026-11-13T08:25:18Z",
+ "finished": "2026-11-13T08:43:57Z",
+ "mp4": "renders/out/story_sun_wont_set.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
