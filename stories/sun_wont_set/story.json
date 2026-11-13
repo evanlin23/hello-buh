@@ -36,7 +36,7 @@
   "place": "stillwater",
   "where": "Stillwater (docs/world/map.json): Grandpa's oak cottage on the west rise, the square with the Long Day lever on its stone post, Gary's cottage and field, the one tree east of the square",
   "day": 1100,
-  "canon": "Day 1100, the last day of the Long Day (800-1100). The lever goes back, the sun sets, the zombies under the one tree come out, the narrator (the Stillwater grandson) is slain by phantoms at Grandpa's door. Grandpa is in his bed. Gary the farmer is taken that night (not on screen). Changes canon: Grandpa is safe in bed (was 'already gone'); the narrator's killer is Phantom (was Zombie).",
+  "canon": "Day 1100, the last day of the Long Day (800-1100). The lever goes back, the sun sets, the zombies under the one tree come out, the narrator (the Stillwater kid, Grandpa's grandkid) is slain by phantoms at Grandpa's door. Grandpa is in his bed. Gary the farmer is taken that night (not on screen). Changes canon: Grandpa is safe in bed (was 'already gone'); the narrator's killer is Phantom (was Zombie).",
   "easter_egg": "none new on day 1100 (dog_on_hill is from 3400): the lever on its post is this story's own canon object"
  },
  "voice": {
@@ -47,7 +47,7 @@
   "N": {
    "role": "narrator",
    "ref": "narrator",
-   "name": "the Stillwater grandson",
+   "name": "the Stillwater kid (Pip, the channel narrator)",
    "color": "#FFFFFF",
    "on_screen": "POV (the hand and the hotbar), default Steve skin; seen from outside small in S01's end and S16-S17 (at Grandpa's door, back to us, sword out)"
   },

@@ -16,7 +16,7 @@
 ## Cast and costume
 | who | look | where |
 |---|---|---|
-| the kid (narrator, the Stillwater grandson) | player, default Steve skin, iron sword in S15-S17 (slot 1), POV hand | everywhere; death screen says HelloBuh (canon link 9) |
+| the kid (narrator, the Stillwater grandkid) | player, default Steve skin, iron sword in S15-S17 (slot 1), POV hand | everywhere; death screen says HelloBuh (canon link 9) |
 | Grandpa | plains villager, librarian outfit (no name tag), slow | at his door S05-S06, S11-S12; crossing the square S09; in his red bed S13 |
 | Gary (the farmer) | plains villager, farmer (straw hat) | his field S02 (alive: he is taken that night, off screen) |
 | villagers | 4 plains villagers (cleric, mason, shepherd, fletcher) | the square, faces up at the sun S07 |
