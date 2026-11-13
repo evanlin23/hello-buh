@@ -838,6 +838,12 @@ STANDARDS.md in the same commit.
   came out ~6.5 st lower and the blind listener heard a man. A voice is auditioned on the model the story will use, and
   the audition labels the model; a cast entry names its model. Light Sleeper's Mom is relocked to 3.1, the model the
   owner heard.
+- **Owner, 2026-11-13: "Pause on buh stories for now, buh connects has gotten a breakout".** Buh Stories is paused:
+  no new sessions, no voice or build work, no scheduled tasks (the Gold 48 h metrics reminder is disabled). Where it
+  stopped: Gold for the Portal live (upload #1); four cuts HELD awaiting the owner's OK by name (Light Sleeper
+  264c0a2b, Good Boy 3fbeafb8, Dog on the Hill 4edfc4c9, Thirty-One Raids 76cff97d; mp4s + paste blocks in
+  buhstories_upload/); five approved scripts (Pulled Away, The Honey Thief, Saving Up for a Bastion, The Statue Gets
+  Younger, Sorry, Dear) on claude/script-* branches; Jonah's voice audition (A Zubenelgenubi / B Sadachbia) unpicked.
 - **Owner, 2026-11-12, Review Room, on guess_sound: "Its kidna hard to hear the moo at the start. Also we should blur
   the parrot at hte start slightly i think?" (27.8 s) and "Er, is the warden sound overlapping the parrot sound? I
   couldnt hear the parrot" (36.8 s); on guess_sound_2: "should blur the starting" (10.1 s).** Every round's call is
