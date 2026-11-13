@@ -159,7 +159,7 @@ module.exports = {
     // L01-L02 (one take): the sheep, the block, 412 days, from behind his shoulder (the slope rising beyond); a creep
     // in. He doesn't eat / sleep (night) / blink (his face over the block)
     await cut(2.6, 6.4, P(0.3, 1.1, 0.4))
-    await line('L01', (k) => { ctl('sneak', true); ctl('forward', k < 30); ctl('left', k > 6 && k < 28); K.base = K.aim(P(0.3, 1.1, 0.4)); look(k) })
+    await line('L01', (k) => { ctl('sneak', true); ctl('forward', k < 52); ctl('left', k > 6 && k < 28); K.base = K.aim(P(0.3, 1.1, 0.4)); look(k) })   // the creep runs the whole line (lint: nobody moves)
     let c2 = 0
     await line('L02', async (k, at) => {
       if (c2 === 0 && k >= at.cut(2)) { c2 = 1; await cut(3.8, 4.6, FACE(), { time: 18000 }) }
@@ -209,7 +209,7 @@ module.exports = {
     await line('L06', (k, at) => {
       if (k === at(2) - 1) ctx.sound('entity.zombie.ambient', 0.45, 0.75)
       const lean = ease((k - at(2) + 2) / 7) - ease((k - at(4)) / 12)
-      ctl('sneak', true)
+      ctl('sneak', true); ctl('forward', k < 36)   // a slow creep toward the block (lint: nobody moves)
       K.base = K.aim(P(0.4, 0.8 + 0.3 * (1 - lean), 0.5)); look(k, lean > 0.5 ? Math.sin(k * 1.9) * 0.006 : 0)
     })
     K.stop()
@@ -227,9 +227,10 @@ module.exports = {
     // inside: the bed he woke up in (from the room's corner), then the bare room, then him, staring
     const IN = rel(this.inside), HE = rel(this.hearth)
     await K.cutTo(IN.x, IN.y + F, IN.z, P(bedP.x, bedP.y + 0.5, bedP.z))
-    let c8 = 0
+    let c8 = 0, t8 = 0
     await line('L08', async (k, at) => {
-      if (c8 === 0 && k >= at.cut(3)) { c8 = 1; await K.cutTo(IN.x, IN.y + F, IN.z, P(HE.x, HE.y + 1.2, HE.z)) }
+      if (c8 === 0 && k >= at.cut(3)) { c8 = 1; t8 = k; await K.cutTo(IN.x, IN.y + F, IN.z, P(HE.x, HE.y + 1.2, HE.z)) }
+      if (c8 === 1) K.base = K.aim(P(HE.x, HE.y + 1.2, HE.z + Math.min(1.6, (k - t8) * 0.05)))   // a slow pan across the bare room (lint: nobody moves)
       if (c8 === 1 && k >= at.cut(6)) { c8 = 2; await cut(2.3, 3.8, FACE()) }
       look(k)
     })
