@@ -76,7 +76,7 @@ module.exports = {
       }
     }
     // Grandpa's garden gate stands open (the porch shots look in through it)
-    { const g = this.gate.block; await c(`/setblock ${g[0]} ${g[1]} ${g[2]} oak_fence_gate[facing=east,open=true]`) }
+    { const q = this.gate; const g = q.block || [Math.floor(q.x), Math.floor(q.y), Math.floor(q.z)]; await c(`/setblock ${g[0]} ${g[1]} ${g[2]} oak_fence_gate[facing=east,open=true]`) }
     // the cast: all NoAI, moved only by the scenes
     const at = (dx, dz) => ({ x: dx, z: dz, y: gy(dx, dz) - F + 1 })
     const V = (p, yaw, prof, tags) => vil(p.x, p.z, yaw, prof, tags, { y: p.y })
@@ -285,9 +285,9 @@ module.exports = {
         if (i === 4) ctx.sound('entity.phantom.swoop', 1.5, 1)
       }
       K.base = K.aim(P(diver.x, diver.y + 0.2, diver.z))
-      if (i === 12) say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`)   // three passes of a phantom's bite (review: 12 a hit is more than vanilla's)
-      if (i === 20) say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`)
-      if (i === 28) { ctx.mark('third_hit'); say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
+      if (i === 12) say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`)   // 12 ticks apart (vanilla's 10-tick hurt immunity ate hits 8 apart); three passes of a phantom's bite (review: 12 a hit is more than vanilla's)
+      if (i === 24) say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`)
+      if (i === 36) { ctx.mark('third_hit'); say(`/damage @s 7 minecraft:mob_attack by @e[tag=ph0,limit=1]`) }
       look(i)
       await bot.waitForTicks(1)
     }
