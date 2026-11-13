@@ -457,20 +457,20 @@
   "L10": {
    "who": "N",
    "text": "The villagers call me the new one.",
-   "dur": 2.763,
-   "onset": 0.22,
+   "dur": 2.837,
+   "onset": 0.36,
    "end": 2.36,
    "chunks": [
     [
-     0.22,
-     0.86
+     0.36,
+     1.0
     ],
     [
-     0.96,
-     1.32
+     1.1,
+     1.46
     ],
     [
-     1.6,
+     1.54,
      2.36
     ]
    ],
@@ -487,38 +487,38 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "37462c8bcc19"
+   "aligned_wav": "8b9879f6bc26"
   },
   "L11": {
    "who": "N",
    "text": "They keep asking what happened to the old one. I say, who?",
-   "dur": 4.875,
-   "onset": 0.16,
-   "end": 4.46,
+   "dur": 4.412,
+   "onset": 0.12,
+   "end": 4.1,
    "chunks": [
     [
-     0.16,
-     0.48
+     0.12,
+     0.5
     ],
     [
-     0.62,
-     0.9
+     0.68,
+     0.96
     ],
     [
-     1.0,
-     1.5
+     1.02,
+     1.48
     ],
     [
-     1.56,
-     2.4
+     1.52,
+     2.38
     ],
     [
-     3.16,
-     3.46
+     2.98,
+     3.28
     ],
     [
-     4.02,
-     4.46
+     3.8,
+     4.1
     ]
    ],
    "captions": [
@@ -534,29 +534,28 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L10",
-   "offset": 2.763,
-   "gap": 0,
+   "offset": 2.837,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "a6821337bcd0"
+   "aligned_wav": "72336797849a"
   },
   "L12": {
    "who": "N",
    "text": "So today I got curious.",
-   "dur": 2.41,
-   "onset": 0.285,
-   "end": 1.84,
+   "dur": 2.57,
+   "onset": 0.24,
+   "end": 2.3,
    "chunks": [
     [
-     0.285,
-     1.04
+     0.24,
+     1.28
     ],
     [
-     1.14,
-     1.34
+     1.46,
+     1.7
     ],
     [
-     1.42,
-     1.84
+     1.78,
+     2.3
     ]
    ],
    "captions": [
@@ -568,38 +567,38 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L10",
-   "offset": 7.638,
+   "beat": "L12",
+   "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "df9c53ea5ca2"
+   "aligned_wav": "579dcf3e2865"
   },
   "L13": {
    "who": "N",
    "text": "And for the first time in four hundred and twelve days, he looked at me.",
-   "dur": 4.963,
-   "onset": 0.22,
-   "end": 4.44,
+   "dur": 4.537,
+   "onset": 0.08,
+   "end": 4.14,
    "chunks": [
     [
-     0.22,
-     0.48
+     0.08,
+     0.46
     ],
     [
-     0.54,
-     1.36
+     0.5,
+     1.26
     ],
     [
-     1.5,
-     3.16
+     1.38,
+     2.94
     ],
     [
-     3.62,
-     4.04
+     3.38,
+     3.78
     ],
     [
-     4.1,
-     4.44
+     3.84,
+     4.14
     ]
    ],
    "captions": [
@@ -613,26 +612,26 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L10",
-   "offset": 10.047,
+   "beat": "L12",
+   "offset": 2.57,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "9b7d97c78fa2"
+   "aligned_wav": "ec378897ff90"
   },
   "L14": {
    "who": "N",
    "text": "I broke the block.",
-   "dur": 1.655,
-   "onset": 0.5,
-   "end": 1.16,
+   "dur": 1.742,
+   "onset": 0.4,
+   "end": 1.34,
    "chunks": [
     [
-     0.5,
-     0.78
+     0.4,
+     0.84
     ],
     [
-     0.84,
-     1.16
+     0.92,
+     1.34
     ]
    ],
    "captions": [
@@ -643,38 +642,37 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L10",
-   "offset": 15.01,
-   "gap": 0,
+   "beat": "L12",
+   "offset": 7.107,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "ac45cf110634"
+   "aligned_wav": "97cff942ed5f"
   },
   "L15": {
    "who": "N",
    "text": "There's a hole under it. It goes straight down.",
-   "dur": 3.89,
-   "onset": 0.18,
-   "end": 3.48,
+   "dur": 3.882,
+   "onset": 0.36,
+   "end": 3.46,
    "chunks": [
     [
-     0.18,
-     0.38
+     0.36,
+     0.6
     ],
     [
-     0.44,
-     0.92
+     0.66,
+     1.1
     ],
     [
-     1.1,
-     1.46
+     1.22,
+     1.6
     ],
     [
-     2.14,
-     2.42
+     2.2,
+     2.46
     ],
     [
-     2.385,
-     3.48
+     2.425,
+     3.46
     ]
    ],
    "captions": [
@@ -688,30 +686,30 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L10",
-   "offset": 16.665,
+   "beat": "L15",
+   "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "895f5622cf0f"
+   "aligned_wav": "9cb1e15c0e06"
   },
   "L16": {
    "who": "N",
    "text": "Who digs straight down?",
-   "dur": 2.155,
-   "onset": 0.3,
-   "end": 1.9,
+   "dur": 2.087,
+   "onset": 0.38,
+   "end": 1.7,
    "chunks": [
     [
-     0.3,
-     0.9
+     0.38,
+     0.82
     ],
     [
-     0.89,
-     1.34
+     0.77,
+     1.16
     ],
     [
-     1.44,
-     1.9
+     1.24,
+     1.7
     ]
    ],
    "captions": [
@@ -723,10 +721,10 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "beat": "L10",
-   "offset": 20.555,
+   "beat": "L15",
+   "offset": 3.882,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "06ba3a372512"
+   "aligned_wav": "fc4f12fcf493"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
@@ -783,64 +781,74 @@
   "L10": {
    "lines": [
     "L10",
-    "L11",
+    "L11"
+   ],
+   "file": "beat_L10.wav",
+   "dur": 7.25,
+   "offsets": [
+    0.0,
+    2.837
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  },
+  "L12": {
+   "lines": [
     "L12",
     "L13",
-    "L14",
+    "L14"
+   ],
+   "file": "beat_L12.wav",
+   "dur": 8.85,
+   "offsets": [
+    0.0,
+    2.57,
+    7.107
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "aligned",
+   "rejected": []
+  },
+  "L15": {
+   "lines": [
     "L15",
     "L16"
    ],
-   "file": "beat_L10.wav",
-   "dur": 22.71,
+   "file": "beat_L15.wav",
+   "dur": 5.97,
    "offsets": [
     0.0,
-    2.763,
-    7.638,
-    10.047,
-    15.01,
-    16.665,
-    20.555
+    3.882
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 2,
    "tries": 2,
    "fixes": [
-    "one continuous take, no pauses between sentences",
-    "full voice throughout, never whispering"
+    "one continuous take, no pauses between sentences"
    ],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 14.48,
-     "len": 1.02,
-     "why": "1.02 s pause between lines 3-4 (limit 0.95 s)"
-    },
-    {
-     "kind": "whisper",
-     "at": 8.9,
-     "len": 0.54,
-     "why": "0.54 s whispered or dropped far under the take"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
    "rejected": [
     {
      "try": 1,
      "why": [
-      "1.12 s pause between lines 3-4 (limit 0.95 s)",
-      "0.56 s whispered or dropped far under the take"
-     ]
-    },
-    {
-     "try": 2,
-     "why": [
-      "1.02 s pause between lines 3-4 (limit 0.95 s)",
-      "0.54 s whispered or dropped far under the take"
+      "1.00 s pause inside line 1 (limit 0.95 s)"
      ]
     }
    ]
   }
  },
- "total": 60.42
+ "total": 60.28
 }
