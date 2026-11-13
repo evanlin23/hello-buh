@@ -196,21 +196,21 @@
   "L06": {
    "who": "N",
    "text": "And every day I tell him, not yet.",
-   "dur": 3.39,
-   "onset": 0.5,
-   "end": 3.04,
+   "dur": 3.172,
+   "onset": 0.38,
+   "end": 2.8,
    "chunks": [
     [
-     0.5,
-     1.26
+     0.38,
+     1.2
     ],
     [
-     1.56,
-     2.08
+     1.4,
+     1.86
     ],
     [
-     2.54,
-     3.04
+     2.14,
+     2.8
     ]
    ],
    "captions": [
@@ -226,26 +226,26 @@
    "offset": 0.0,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "8ee6833792a8"
+   "aligned_wav": "d0aaf986f074"
   },
   "L07": {
    "who": "N",
    "text": "Everyone thinks it's a curse. It's not.",
-   "dur": 3.195,
-   "onset": 0.52,
-   "end": 2.82,
+   "dur": 2.922,
+   "onset": 0.26,
+   "end": 2.54,
    "chunks": [
     [
-     0.52,
-     1.14
+     0.26,
+     0.9
     ],
     [
-     1.22,
-     1.78
+     0.96,
+     1.44
     ],
     [
-     2.36,
-     2.82
+     1.9,
+     2.54
     ]
    ],
    "captions": [
@@ -258,29 +258,29 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 3.39,
+   "offset": 3.172,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "b8a96b1f3466"
+   "aligned_wav": "180c0bc0f53a"
   },
   "L08": {
    "who": "N",
    "text": "It's a lever. And I pulled it.",
-   "dur": 3.143,
-   "onset": 0.34,
-   "end": 2.56,
+   "dur": 3.337,
+   "onset": 0.3,
+   "end": 2.98,
    "chunks": [
     [
-     0.34,
-     1.3
+     0.3,
+     1.28
     ],
     [
-     1.66,
-     1.92
+     1.88,
+     2.22
     ],
     [
-     2.12,
-     2.56
+     2.46,
+     2.98
     ]
    ],
    "captions": [
@@ -293,37 +293,37 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 6.585,
+   "offset": 6.095,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "8f9979ba528f"
+   "aligned_wav": "126946e5222b"
   },
   "L09": {
    "who": "N",
    "text": "Because at night, zombies come out. And Grandpa is way too slow to run.",
-   "dur": 5.652,
-   "onset": 0.12,
-   "end": 5.28,
+   "dur": 5.848,
+   "onset": 0.48,
+   "end": 5.48,
    "chunks": [
     [
-     0.12,
-     1.0
+     0.48,
+     1.3
     ],
     [
-     1.6,
-     2.4
+     1.7,
+     2.62
     ],
     [
-     3.0,
-     3.56
+     3.22,
+     3.76
     ],
     [
-     3.8,
-     4.84
+     4.02,
+     5.0
     ],
     [
-     4.9,
-     5.28
+     5.06,
+     5.48
     ]
    ],
    "captions": [
@@ -338,33 +338,33 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 9.727,
+   "offset": 9.432,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "c1ab0e8c263a"
+   "aligned_wav": "230972d7242d"
   },
   "L10": {
    "who": "N",
    "text": "Me? I haven't slept in three hundred days either. I'm not even tired!",
-   "dur": 5.378,
-   "onset": 0.32,
-   "end": 4.84,
+   "dur": 5.133,
+   "onset": 0.36,
+   "end": 4.72,
    "chunks": [
     [
-     0.32,
-     1.98
+     0.36,
+     1.94
     ],
     [
-     2.02,
-     2.76
+     2.0,
+     2.8
     ],
     [
-     2.82,
-     3.02
+     2.88,
+     3.08
     ],
     [
-     3.82,
-     4.84
+     3.56,
+     4.72
     ]
    ],
    "captions": [
@@ -378,25 +378,25 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 15.38,
+   "offset": 15.28,
    "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "f01bacf9e746"
+   "aligned_wav": "13b326f7e58d"
   },
   "L11": {
    "who": "N",
    "text": "But today, Grandpa said,",
-   "dur": 2.272,
-   "onset": 0.14,
-   "end": 1.94,
+   "dur": 2.638,
+   "onset": 0.36,
+   "end": 2.4,
    "chunks": [
     [
-     0.14,
-     0.64
+     0.36,
+     0.94
     ],
     [
-     1.16,
-     1.94
+     1.62,
+     2.4
     ]
    ],
    "captions": [
@@ -408,9 +408,9 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L06",
-   "offset": 20.758,
+   "offset": 20.413,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "0daca663a6aa"
+   "aligned_wav": "62a92ae9b5b6"
   },
   "L12": {
    "who": "Grandpa",
@@ -698,23 +698,32 @@
     "L11"
    ],
    "file": "beat_L06.wav",
-   "dur": 23.03,
+   "dur": 23.05,
    "offsets": [
     0.0,
-    3.39,
-    6.585,
-    9.727,
-    15.38,
-    20.758
+    3.172,
+    6.095,
+    9.432,
+    15.28,
+    20.413
    ],
    "model": "gemini-3.8-flash-lite-tts",
-   "try": 1,
-   "tries": 1,
-   "fixes": [],
+   "try": 2,
+   "tries": 2,
+   "fixes": [
+    "full voice throughout, never whispering"
+   ],
    "ok": true,
    "gate": [],
    "cut": "aligned",
-   "rejected": []
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.51 s whispered or dropped far under the take"
+     ]
+    }
+   ]
   },
   "L13": {
    "lines": [
@@ -741,5 +750,5 @@
    "rejected": []
   }
  },
- "total": 63.39
+ "total": 63.41
 }
