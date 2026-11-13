@@ -31,7 +31,7 @@ module.exports = {
   renderDistance: 12, recordRadius: 128,
   look: { mood: 'bright', rolloff: 0.8 },
   shots: { pov: { pov: true } },   // first-person; K.cutShot('pov') places the cast with the cut
-  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.6', deathScreen: true, punchStress: true, zoom: [['slain:0.10', 'slain:1.9', 1.07]] },   // settle-ok: a fall and a sword hit, nothing left moving; the death screen holds
+  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.8', deathScreen: true, punchStress: true, zoom: [['slain:0.10', 'slain:1.8', 1.07]] },   // settle-ok: a fall and a sword hit, nothing left moving; the death screen holds
   expectDeath: true,
   botTimeout: 600,
   chunkStops (set) { return [[0, 0], [25, 15], [20, -25], [-20, -20]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
@@ -58,6 +58,8 @@ module.exports = {
     await c(`/setblock ${A(0, 0, 0)} coarse_dirt`)                                  // THE block (grass never spreads to it)
     await c(`/setblock ${A(-1, -DEPTH + 2, -2)} wall_torch[facing=east]`)
     await c(`/setblock ${A(1, -DEPTH + 2, -3)} wall_torch[facing=west]`)
+    // light on the zombie and his sword (panel 2026-11-13: 'the hole is extremely dark'); light blocks are invisible
+    for (const [lx, ly, lz] of [[0, -DEPTH + 3, -2], [0, -DEPTH + 3, -4], [-1, -DEPTH + 3, 0]]) await c(`/setblock ${A(lx, ly, lz)} light[level=15]`)
     await c(`/setblock ${A(-1, -DEPTH + 1, -4)} furnace[facing=south,lit=true]`)
     await c(`/setblock ${A(1, -DEPTH + 1, -4)} crafting_table`)
     await c(`/setblock ${A(0, -DEPTH + 2, -5)} diamond_ore`)
@@ -200,7 +202,7 @@ module.exports = {
     // L05: a block of gold on top; he stared through it
     say(`/setblock ${X} ${F + 1} ${Z} gold_block`)
     await cutP(-1.6, 5.2, FACE(), () => WL.forEach(w => { w.y = 50 }))
-    await line('L05', (k, at) => { ctl('sneak', true); K.base = K.aim(k < at(4) ? P(0.5, 1.6, 0.5) : FACE()); look(k) })
+    await line('L05', (k, at) => { ctl('sneak', true); K.base = K.aim(k < at(4) ? P(0.5, 1.6 + Math.min(0.6, k * 0.02), 0.5) : FACE()); look(k) })   // the eye rises over the gold (lint: nobody moves)
     K.stop()
 
     // L06: at night the block groans
@@ -219,6 +221,7 @@ module.exports = {
     await cut(-3.0, -2.6, P(0.4, 1.2, 1.6), { time: 6000 })
     await line('L07', async (k, at) => {
       if (!c7 && k >= at.cut(5)) { c7 = true; t7 = k; await cut(-1.4, 4.6, FACE()) }
+      if (!c7) K.base = K.aim(P(0.4 - Math.min(1.5, k * 0.05), 1.2, 1.6))   // a slow pan across him and the torch line (lint: nobody moves)
       if (c7) { const f = FACE(); K.base = K.aim(P(f.x - 0.8 + Math.min(0.8, (k - t7) * 0.04), f.y, f.z)) }   // a slow pan onto his face (lint: nobody moves; no sneak: the eye height jumped at the cuts)
       look(k)
     })
@@ -231,7 +234,7 @@ module.exports = {
     let c8 = 0, t8 = 0
     await line('L08', async (k, at) => {
       if (c8 === 0 && k >= at.cut(3)) { c8 = 1; t8 = k; await K.cutTo(IN.x, IN.y + F, IN.z, P(HE.x, HE.y + 1.2, HE.z)) }
-      if (c8 === 0) K.base = K.aim(P(bedP.x, bedP.y + 0.5 + Math.min(0.5, k * 0.012), bedP.z))   // the eye lifts off the bed (lint: nobody moves)
+      if (c8 === 0) K.base = K.aim(P(bedP.x, bedP.y + 0.5 + Math.min(2.2, k * 0.025), bedP.z))   // the eye lifts off the bed (lint: nobody moves)
       if (c8 === 1) K.base = K.aim(P(HE.x, HE.y + 1.2, HE.z + Math.min(1.6, (k - t8) * 0.05)))   // a slow pan across the bare room (lint: nobody moves)
       if (c8 === 1 && k >= at.cut(6)) { c8 = 2; await cut(2.3, 3.8, FACE()) }
       look(k)
@@ -276,7 +279,7 @@ module.exports = {
     from = null
     await line('L13', (k, at) => {
       ctl('sneak', true)
-      from = from || { ...K.base }; K.turnTo(from, FACE(), k / 34)   // a slower turn: it fills the line (lint: nobody moves)
+      from = from || { ...K.base }; K.turnTo(from, FACE(), k / 60)   // a slower turn: it fills the line (lint: nobody moves)
       if (k === at(3) - 3) { watch = true; ctx.sound('entity.sheep.ambient', 1, 1) }
       look(k)
     })
