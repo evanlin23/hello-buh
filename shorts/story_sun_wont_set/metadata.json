@@ -1,9 +1,10 @@
 {
   "name": "story_sun_wont_set",
-  "caption": "the sun hasn't set in 300 days \ud83d\udc80",
+  "channel": "hellobuh",
+  "caption": "the sun hasn't set in 300 days 💀",
   "youtube": {
-    "title": "the sun hasn't set in 300 days \ud83d\udc80 #minecraft #shorts",
-    "description": "the sun hasn't set in 300 days \ud83d\udc80\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the sun hasn't set in 300 days 💀 #minecraft #shorts",
+    "description": "the sun hasn't set in 300 days 💀\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,77 +14,66 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "montagem_toma.mp3",
-    "title": "Montagem Toma",
-    "artist": "X972, sk3tch01, MXZI",
-    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": null,
-    "drop_in_song_s": 14.5,
-    "drop_in_short_s": 0.0,
-    "song_start_s": 13.5
+    "file": "songs/score/darkest_child.ogg",
+    "title": "Darkest Child",
+    "artist": "Kevin MacLeod",
+    "tracks": [
+      "darkest_child"
+    ],
+    "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
+    "mood": [
+      "eerie",
+      "tense"
+    ],
+    "payoff_in_short_s": 62.5,
+    "mix": "scripts/story_audio.py (docs/audio.md)",
+    "mixed_in": "edit"
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 39.4,
+    "duration_s": 64,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 41644075,
-    "sha256": "8b1581505b0e6e3f9e253a987b09c3a643bcd14ea6463c5a409f3c47cd9dff2c",
+    "bytes": 77672620,
+    "sha256": "8c655964646300d48bca5e4f8fa30602f081febeeb0651f56b013f608dc5ad76",
     "release": {
       "tag": "pkg-story_sun_wont_set",
-      "asset": "story_sun_wont_set.short.8b1581505b0e6e3f.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_sun_wont_set/story_sun_wont_set.short.8b1581505b0e6e3f.mp4",
-      "sha256": "8b1581505b0e6e3f9e253a987b09c3a643bcd14ea6463c5a409f3c47cd9dff2c",
-      "bytes": 41644075
+      "asset": "story_sun_wont_set.short.8c655964646300d4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_sun_wont_set/story_sun_wont_set.short.8c655964646300d4.mp4",
+      "sha256": "8c655964646300d48bca5e4f8fa30602f081febeeb0651f56b013f608dc5ad76",
+      "bytes": 77672620
     },
     "nosong_release": {
       "tag": "pkg-story_sun_wont_set",
-      "asset": "story_sun_wont_set.short_nosong.817287e1f3195168.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_sun_wont_set/story_sun_wont_set.short_nosong.817287e1f3195168.mp4",
-      "sha256": "817287e1f3195168c8e293fbae0bbde3d8d96ff0097416e9fed5fa03cf01fa17",
-      "bytes": 41547596
+      "asset": "story_sun_wont_set.short_nosong.8c655964646300d4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_sun_wont_set/story_sun_wont_set.short_nosong.8c655964646300d4.mp4",
+      "sha256": "8c655964646300d48bca5e4f8fa30602f081febeeb0651f56b013f608dc5ad76",
+      "bytes": 77672620
     }
   },
   "edit": {
-    "caption": "the sun hasn't set in 300 days \ud83d\udc80",
+    "caption": "the sun hasn't set in 300 days 💀",
     "red": "sun",
     "story": "stories/sun_wont_set",
     "startAt": "line:0",
-    "endAfter": "death:1.3",
+    "endAfter": "death:2.4",
+    "deathScreen": true,
+    "punchStress": true,
     "zoom": [
       [
         "death:0.1",
-        "death:1.3",
-        1.04
-      ],
-      [
-        "death:0.45",
-        "death:1.3",
+        "death:2.4",
         1.05
-      ],
-      [
-        "death:0.9",
-        "death:1.7",
-        1.16
       ]
     ],
-    "deathScreen": true,
     "sfx": [
-      [
-        "riser",
-        "lever",
-        "dusk",
-        {
-          "gain": 0.5
-        }
-      ],
       [
         "impact",
         "dusk",
         {
-          "gain": 0.6
+          "gain": 0.5
         }
       ],
       [
@@ -96,21 +86,25 @@
     ],
     "args": [
       "--caption",
-      "the sun hasn't set in 300 days \ud83d\udc80",
+      "the sun hasn't set in 300 days 💀",
       "--red",
       "sun",
+      "--punch_stress",
+      "[[\"L01\",2.7,0.07],[\"L08\",2.46,0.07],[\"L16\",2.265,0.07]]",
       "--zoom",
-      "[[\"death:0.1\",\"death:1.3\",1.04],[\"death:0.45\",\"death:1.3\",1.05],[\"death:0.9\",\"death:1.7\",1.16]]",
+      "[[\"death:0.1\",\"death:2.4\",1.05]]",
       "--sfx",
-      "[[\"riser\",\"lever\",\"dusk\",{\"gain\":0.5}],[\"impact\",\"dusk\",{\"gain\":0.6}],[\"impact\",\"death\",{\"gain\":0.6}]]",
+      "[[\"impact\",\"dusk\",{\"gain\":0.5}],[\"impact\",\"death\",{\"gain\":0.6}]]",
       "--death_screen",
       "death",
+      "--chat_align",
+      "center",
       "--story",
       "stories/sun_wont_set",
       "--start_at",
       "line:0",
       "--end_after",
-      "death:1.3"
+      "death:2.4"
     ]
   },
   "recording": {
@@ -121,51 +115,50 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 378,
-      "y": 69,
-      "z": -56
+      "x": -215,
+      "y": 68,
+      "z": -1060
     },
-    "biome": "minecraft:plains",
-    "ticks": 839,
-    "seconds": 41.95,
+    "ticks": 1305,
+    "seconds": 65.25,
     "deaths": 1,
     "death_message": {
       "with": [
         {
           "click_event": {
             "action": "suggest_command",
-            "command": "/tell HelloBuh "
+            "command": "/tell 56e "
           },
-          "insertion": "HelloBuh",
-          "text": "HelloBuh",
+          "insertion": "56e",
+          "text": "56e",
           "hover_event": {
-            "name": "HelloBuh",
+            "name": "56e",
             "action": "show_entity",
             "id": "minecraft:player",
             "uuid": [
-              -1688406928,
-              1483093035,
-              -1563762988,
-              2064141885
+              -1501766631,
+              -1382728230,
+              -1353399714,
+              429653331
             ]
           }
         },
         {
-          "insertion": "a107697b-8aeb-450d-9f8c-109f6bc30efe",
+          "insertion": "7b10e1d5-e4de-42ea-a865-ebe25f0a59ad",
           "hover_event": {
             "name": {
-              "translate": "entity.minecraft.zombie"
+              "translate": "entity.minecraft.phantom"
             },
             "action": "show_entity",
-            "id": "minecraft:zombie",
+            "id": "minecraft:phantom",
             "uuid": [
-              -1593349765,
-              -1964292851,
-              -1618210657,
-              1807945470
+              2064703957,
+              -455195926,
+              -1469715486,
+              1594513837
             ]
           },
-          "translate": "entity.minecraft.zombie"
+          "translate": "entity.minecraft.phantom"
         }
       ],
       "translate": "death.attack.mob"
@@ -180,262 +173,769 @@
         "event": "cut"
       },
       {
-        "t": 1.3,
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.8,
+        "event": "actor"
+      },
+      {
+        "t": 0.85,
+        "event": "actor"
+      },
+      {
+        "t": 0.85,
+        "event": "actor"
+      },
+      {
+        "t": 1.2,
         "event": "line"
       },
       {
-        "t": 3.95,
+        "t": 4.55,
         "event": "cut"
       },
       {
-        "t": 4,
+        "t": 4.65,
         "event": "line"
       },
       {
-        "t": 7.05,
+        "t": 8.2,
         "event": "cut"
       },
       {
-        "t": 7.1,
+        "t": 8.3,
         "event": "line"
       },
       {
-        "t": 9,
+        "t": 11.8,
         "event": "cut"
       },
       {
-        "t": 9.05,
+        "t": 11.9,
         "event": "line"
       },
       {
-        "t": 11.15,
-        "event": "cut"
-      },
-      {
-        "t": 11.2,
+        "t": 14.5,
         "event": "line"
       },
       {
-        "t": 14,
+        "t": 17.75,
         "event": "cut"
       },
       {
-        "t": 14.05,
+        "t": 17.85,
         "event": "line"
       },
       {
-        "t": 16.45,
-        "event": "cut"
+        "t": 21,
+        "event": "cut_moves"
       },
       {
-        "t": 16.5,
+        "t": 21,
+        "event": "teleport_ok"
+      },
+      {
+        "t": 21.05,
+        "event": "shot"
+      },
+      {
+        "t": 21.1,
         "event": "line"
       },
       {
-        "t": 17.9,
+        "t": 23.95,
+        "event": "cut"
+      },
+      {
+        "t": 24.05,
         "event": "line"
       },
       {
-        "t": 19.8,
+        "t": 27.3,
         "event": "cut"
       },
       {
-        "t": 19.85,
+        "t": 27.4,
         "event": "line"
       },
       {
-        "t": 22.35,
-        "event": "cut"
+        "t": 30.5,
+        "event": "cut_moves"
       },
       {
-        "t": 22.4,
-        "event": "line"
+        "t": 30.5,
+        "event": "teleport_ok"
       },
       {
-        "t": 23.85,
-        "event": "cut"
-      },
-      {
-        "t": 25.45,
-        "event": "cut"
-      },
-      {
-        "t": 25.5,
-        "event": "line"
-      },
-      {
-        "t": 26.9,
-        "event": "cut"
-      },
-      {
-        "t": 28.85,
-        "event": "cut"
-      },
-      {
-        "t": 28.9,
-        "event": "line"
-      },
-      {
-        "t": 31.4,
-        "event": "cut"
-      },
-      {
-        "t": 31.45,
-        "event": "lever"
-      },
-      {
-        "t": 31.45,
-        "event": "line"
-      },
-      {
-        "t": 32.05,
-        "event": "swing"
-      },
-      {
-        "t": 32.85,
-        "event": "cut"
-      },
-      {
-        "t": 32.9,
-        "event": "line"
-      },
-      {
-        "t": 32.9,
-        "event": "time"
-      },
-      {
-        "t": 32.95,
-        "event": "time"
-      },
-      {
-        "t": 33,
-        "event": "time"
-      },
-      {
-        "t": 33.05,
-        "event": "time"
-      },
-      {
-        "t": 33.1,
-        "event": "time"
+        "t": 30.55,
+        "event": "shot"
       },
       {
         "t": 33.15,
-        "event": "time"
+        "event": "cut_moves"
+      },
+      {
+        "t": 33.15,
+        "event": "teleport_ok"
       },
       {
         "t": 33.2,
-        "event": "time"
+        "event": "shot"
       },
       {
         "t": 33.25,
-        "event": "time"
+        "event": "line"
       },
       {
-        "t": 33.3,
-        "event": "time"
-      },
-      {
-        "t": 33.35,
-        "event": "time"
-      },
-      {
-        "t": 33.4,
-        "event": "time"
-      },
-      {
-        "t": 33.45,
-        "event": "time"
-      },
-      {
-        "t": 33.5,
-        "event": "time"
-      },
-      {
-        "t": 33.8,
+        "t": 38.25,
         "event": "cut"
       },
       {
-        "t": 33.85,
+        "t": 38.35,
+        "event": "line"
+      },
+      {
+        "t": 40.9,
+        "event": "line"
+      },
+      {
+        "t": 45.55,
+        "event": "cut"
+      },
+      {
+        "t": 45.65,
+        "event": "line"
+      },
+      {
+        "t": 48.85,
+        "event": "line"
+      },
+      {
+        "t": 51.25,
+        "event": "cut_moves"
+      },
+      {
+        "t": 51.25,
+        "event": "teleport_ok"
+      },
+      {
+        "t": 51.3,
+        "event": "shot"
+      },
+      {
+        "t": 53.05,
+        "event": "cut"
+      },
+      {
+        "t": 53.15,
+        "event": "line"
+      },
+      {
+        "t": 53.2,
+        "event": "time"
+      },
+      {
+        "t": 53.25,
+        "event": "time"
+      },
+      {
+        "t": 53.3,
+        "event": "time"
+      },
+      {
+        "t": 53.35,
+        "event": "time"
+      },
+      {
+        "t": 53.4,
+        "event": "time"
+      },
+      {
+        "t": 53.45,
+        "event": "time"
+      },
+      {
+        "t": 53.5,
+        "event": "time"
+      },
+      {
+        "t": 53.5,
+        "event": "swing"
+      },
+      {
+        "t": 53.5,
+        "event": "lever"
+      },
+      {
+        "t": 53.55,
+        "event": "time"
+      },
+      {
+        "t": 53.6,
+        "event": "time"
+      },
+      {
+        "t": 53.65,
+        "event": "time"
+      },
+      {
+        "t": 53.7,
+        "event": "time"
+      },
+      {
+        "t": 53.75,
+        "event": "time"
+      },
+      {
+        "t": 53.8,
+        "event": "time"
+      },
+      {
+        "t": 53.85,
+        "event": "time"
+      },
+      {
+        "t": 53.9,
+        "event": "time"
+      },
+      {
+        "t": 53.95,
+        "event": "time"
+      },
+      {
+        "t": 54,
+        "event": "time"
+      },
+      {
+        "t": 54.05,
+        "event": "time"
+      },
+      {
+        "t": 54.1,
+        "event": "time"
+      },
+      {
+        "t": 54.15,
+        "event": "time"
+      },
+      {
+        "t": 54.2,
+        "event": "time"
+      },
+      {
+        "t": 54.25,
+        "event": "time"
+      },
+      {
+        "t": 54.3,
+        "event": "time"
+      },
+      {
+        "t": 54.35,
+        "event": "time"
+      },
+      {
+        "t": 54.4,
+        "event": "time"
+      },
+      {
+        "t": 54.45,
+        "event": "time"
+      },
+      {
+        "t": 54.5,
+        "event": "time"
+      },
+      {
+        "t": 54.55,
+        "event": "time"
+      },
+      {
+        "t": 54.6,
+        "event": "time"
+      },
+      {
+        "t": 54.65,
+        "event": "time"
+      },
+      {
+        "t": 54.7,
+        "event": "time"
+      },
+      {
+        "t": 54.75,
+        "event": "time"
+      },
+      {
+        "t": 54.8,
+        "event": "time"
+      },
+      {
+        "t": 54.8,
         "event": "dusk"
       },
       {
-        "t": 35.15,
-        "event": "cut"
+        "t": 54.85,
+        "event": "time"
       },
       {
-        "t": 35.2,
+        "t": 54.9,
+        "event": "time"
+      },
+      {
+        "t": 54.95,
+        "event": "time"
+      },
+      {
+        "t": 55,
+        "event": "time"
+      },
+      {
+        "t": 55.05,
+        "event": "time"
+      },
+      {
+        "t": 55.1,
+        "event": "time"
+      },
+      {
+        "t": 55.15,
+        "event": "time"
+      },
+      {
+        "t": 55.2,
+        "event": "time"
+      },
+      {
+        "t": 55.25,
+        "event": "time"
+      },
+      {
+        "t": 55.3,
+        "event": "time"
+      },
+      {
+        "t": 55.35,
+        "event": "time"
+      },
+      {
+        "t": 55.4,
+        "event": "time"
+      },
+      {
+        "t": 55.45,
+        "event": "time"
+      },
+      {
+        "t": 55.5,
+        "event": "time"
+      },
+      {
+        "t": 55.55,
+        "event": "time"
+      },
+      {
+        "t": 55.6,
+        "event": "time"
+      },
+      {
+        "t": 55.65,
+        "event": "time"
+      },
+      {
+        "t": 55.7,
+        "event": "time"
+      },
+      {
+        "t": 55.75,
+        "event": "time"
+      },
+      {
+        "t": 55.8,
+        "event": "time"
+      },
+      {
+        "t": 55.85,
+        "event": "time"
+      },
+      {
+        "t": 55.9,
+        "event": "time"
+      },
+      {
+        "t": 55.95,
+        "event": "time"
+      },
+      {
+        "t": 56,
+        "event": "time"
+      },
+      {
+        "t": 56.05,
+        "event": "time"
+      },
+      {
+        "t": 56.1,
+        "event": "time"
+      },
+      {
+        "t": 56.15,
+        "event": "time"
+      },
+      {
+        "t": 56.2,
+        "event": "time"
+      },
+      {
+        "t": 56.25,
+        "event": "time"
+      },
+      {
+        "t": 56.3,
+        "event": "time"
+      },
+      {
+        "t": 56.35,
+        "event": "time"
+      },
+      {
+        "t": 56.4,
+        "event": "time"
+      },
+      {
+        "t": 56.45,
+        "event": "time"
+      },
+      {
+        "t": 56.5,
+        "event": "time"
+      },
+      {
+        "t": 56.55,
+        "event": "time"
+      },
+      {
+        "t": 56.6,
+        "event": "time"
+      },
+      {
+        "t": 56.65,
+        "event": "time"
+      },
+      {
+        "t": 56.7,
+        "event": "time"
+      },
+      {
+        "t": 56.75,
+        "event": "time"
+      },
+      {
+        "t": 56.8,
+        "event": "time"
+      },
+      {
+        "t": 56.85,
+        "event": "time"
+      },
+      {
+        "t": 56.9,
+        "event": "time"
+      },
+      {
+        "t": 56.95,
+        "event": "time"
+      },
+      {
+        "t": 57,
+        "event": "time"
+      },
+      {
+        "t": 57.05,
+        "event": "time"
+      },
+      {
+        "t": 57.1,
+        "event": "time"
+      },
+      {
+        "t": 57.75,
+        "event": "cut_moves"
+      },
+      {
+        "t": 57.75,
+        "event": "teleport_ok"
+      },
+      {
+        "t": 57.8,
+        "event": "shot"
+      },
+      {
+        "t": 58.8,
         "event": "line"
       },
       {
-        "t": 37.2,
+        "t": 61.9,
+        "event": "motion_warn"
+      },
+      {
+        "t": 61.9,
+        "event": "motion_warn"
+      },
+      {
+        "t": 61.9,
+        "event": "motion_warn"
+      },
+      {
+        "t": 61.9,
+        "event": "motion_warn"
+      },
+      {
+        "t": 61.9,
+        "event": "motion_warn"
+      },
+      {
+        "t": 61.9,
+        "event": "motion_warn"
+      },
+      {
+        "t": 62.45,
         "event": "hurt",
         "type": "mob_attack"
       },
       {
-        "t": 37.7,
-        "event": "line"
-      },
-      {
-        "t": 37.75,
+        "t": 63.05,
         "event": "hurt",
         "type": "mob_attack"
       },
       {
-        "t": 38.3,
+        "t": 63.65,
+        "event": "third_hit"
+      },
+      {
+        "t": 63.65,
         "event": "hurt",
         "type": "mob_attack"
       },
       {
-        "t": 38.85,
-        "event": "hurt",
-        "type": "mob_attack"
+        "t": 63.65,
+        "event": "vel"
       },
       {
-        "t": 39.4,
-        "event": "hurt",
-        "type": "mob_attack"
+        "t": 63.65,
+        "event": "vel"
       },
       {
-        "t": 39.4,
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.65,
+        "event": "vel"
+      },
+      {
+        "t": 63.7,
         "event": "death"
       },
       {
-        "t": 39.45,
-        "event": "slain"
+        "t": 63.7,
+        "event": "motion_start"
       },
       {
-        "t": 41.75,
+        "t": 63.85,
+        "event": "vel"
+      },
+      {
+        "t": 63.95,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.5,
+        "event": "vel"
+      },
+      {
+        "t": 64.7,
+        "event": "motion_settled"
+      },
+      {
+        "t": 64.7,
+        "event": "settle"
+      },
+      {
+        "t": 65.25,
         "event": "story_end"
       },
       {
-        "t": 41.95,
+        "t": 65.25,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "14c7f69659cb6b7cc6cc77f72ec9cd7c42fcfc58",
-    "rendered_at": "2026-11-09T22:41:18.372Z",
-    "head_at_publish": "12265ebfb3f46568781b321abee216217a992118",
+    "branch": "render/story_sun_wont_set",
+    "commit": "5272bb7b92e0b0be736319fbb3e8793bbdb60632",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43393094138",
+    "rendered_at": "2026-11-13T08:44:45.996Z",
+    "head_at_publish": "a56ed2665cbdf5ddf2f330fef5419e83460f97ca",
     "stunt": "stunts/story_sun_wont_set.js",
     "source_snapshot": [
       "source/story_sun_wont_set.js",
-      "source/story.js"
+      "source/world.js",
+      "source/story.js",
+      "source/motion.js",
+      "source/sight.js",
+      "source/act.js",
+      "source/boats.js",
+      "source/kit_extras.js"
     ]
   },
   "rebuild": [
-    "git checkout 14c7f69659cb",
+    "git checkout 5272bb7b92e0",
     "gunzip -c shorts/story_sun_wont_set/recording.json.gz > work/story_sun_wont_set.rec.json",
     "node render.js work/story_sun_wont_set.rec.json work/story_sun_wont_set.frames 60 1080 1011",
     "python3 audio.py work/story_sun_wont_set.rec.json work/story_sun_wont_set.wav",
-    "python3 edit.py --frames work/story_sun_wont_set.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sun_wont_set.rec.json --audio work/story_sun_wont_set.wav --caption \"the sun hasn't set in 300 days \ud83d\udc80\" --red sun --zoom [[\"death:0.1\",\"death:1.3\",1.04],[\"death:0.45\",\"death:1.3\",1.05],[\"death:0.9\",\"death:1.7\",1.16]] --sfx [[\"riser\",\"lever\",\"dusk\",{\"gain\":0.5}],[\"impact\",\"dusk\",{\"gain\":0.6}],[\"impact\",\"death\",{\"gain\":0.6}]] --death_screen death --story stories/sun_wont_set --start_at line:0 --end_after death:1.3 --out out/story_sun_wont_set.mp4"
+    "python3 edit.py --frames work/story_sun_wont_set.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sun_wont_set.rec.json --audio work/story_sun_wont_set.wav --caption \"the sun hasn't set in 300 days 💀\" --red sun --punch_stress [[\"L01\",2.7,0.07],[\"L08\",2.46,0.07],[\"L16\",2.265,0.07]] --zoom [[\"death:0.1\",\"death:2.4\",1.05]] --sfx [[\"impact\",\"dusk\",{\"gain\":0.5}],[\"impact\",\"death\",{\"gain\":0.6}]] --death_screen death --chat_align center --story stories/sun_wont_set --start_at line:0 --end_after death:2.4 --out out/story_sun_wont_set.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "story #10 (the sun won't set): frame review ready (nitpicks), retention ready, Minecraft audit ready; clouds off (engine: dusk clouds fogged orange/grey by view direction); knockback applied in the stunt (mineflayer drops entity_velocity on 1.21.11)",
-  "published_at": "2026-11-09T22:59:23.906Z",
-  "channel": "hellobuh",
-  "needs_fix": "owner's open Review Room notes (2026-11-10): delivery, superflat, plot (why?)"
+  "status": "held",
+  "notes": "HELD for owner OK. Owner notes: @23.5 lever line has room (0.6 s beat, own shot) + real Stillwater terrain; @31.3 plot rewritten (Grandpa is the slow one, he tells the kid to sleep); @39.5 new phantoms ending, voice re-taken. Grandpa = Rasalgethi (audition in stories/sun_wont_set/audition). Review r2 READY (a23ed270ed3ef6396).",
+  "published_at": "2026-11-13T09:07:17.169Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-13T09:07:38+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 64.00 s vs the reviewed render 64.00 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 6,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-13T08:26:16.119Z",
+      "report": "out/story_sun_wont_set.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
