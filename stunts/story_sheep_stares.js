@@ -159,7 +159,7 @@ module.exports = {
     // L01-L02 (one take): the sheep, the block, 412 days, from behind his shoulder (the slope rising beyond); a creep
     // in. He doesn't eat / sleep (night) / blink (his face over the block)
     await cut(2.6, 6.4, P(0.3, 1.1, 0.4))
-    await line('L01', (k) => { ctl('sneak', true); ctl('forward', k < 52); ctl('left', k > 6 && k < 28); K.base = K.aim(P(0.3, 1.1, 0.4)); look(k) })   // the creep runs the whole line (lint: nobody moves)
+    await line('L01', (k) => { ctl('sneak', true); ctl('forward', k < 52); ctl('left', k > 6 && k < 28); K.base = K.aim(P(0.3 + Math.max(0, k - 28) * 0.025, 1.1 + Math.max(0, k - 28) * 0.01, 0.4)); look(k) })   // the creep, then a slow drift onto his face, runs the whole line (lint: nobody moves)
     let c2 = 0
     await line('L02', async (k, at) => {
       if (c2 === 0 && k >= at.cut(2)) { c2 = 1; await cut(3.8, 4.6, FACE(), { time: 18000 }) }
@@ -210,15 +210,16 @@ module.exports = {
       if (k === at(2) - 1) ctx.sound('entity.zombie.ambient', 0.45, 0.75)
       const lean = ease((k - at(2) + 2) / 7) - ease((k - at(4)) / 12)
       ctl('sneak', true); ctl('forward', k < 36)   // a slow creep toward the block (lint: nobody moves)
-      K.base = K.aim(P(0.4, 0.8 + 0.3 * (1 - lean), 0.5)); look(k, lean > 0.5 ? Math.sin(k * 1.9) * 0.006 : 0)
+      K.base = K.aim(P(0.4 + k * 0.012, 0.8 + 0.3 * (1 - lean), 0.5)); look(k, lean > 0.5 ? Math.sin(k * 1.9) * 0.006 : 0)
     })
     K.stop()
 
     // L07: I don't remember getting a sheep, or dyeing him blue (from the north-west: him, the block, the torches)
-    let c7 = false
+    let c7 = false, t7 = 0
     await cut(-3.0, -2.6, P(0.4, 1.2, 1.6), { time: 6000 })
     await line('L07', async (k, at) => {
-      if (!c7 && k >= at.cut(5)) { c7 = true; await cut(-1.4, 4.6, FACE()) }
+      if (!c7 && k >= at.cut(5)) { c7 = true; t7 = k; await cut(-1.4, 4.6, FACE()) }
+      if (c7) { const f = FACE(); K.base = K.aim(P(f.x - 0.8 + Math.min(0.8, (k - t7) * 0.04), f.y, f.z)) }   // a slow pan onto his face (lint: nobody moves; no sneak: the eye height jumped at the cuts)
       look(k)
     })
 
@@ -230,6 +231,7 @@ module.exports = {
     let c8 = 0, t8 = 0
     await line('L08', async (k, at) => {
       if (c8 === 0 && k >= at.cut(3)) { c8 = 1; t8 = k; await K.cutTo(IN.x, IN.y + F, IN.z, P(HE.x, HE.y + 1.2, HE.z)) }
+      if (c8 === 0) K.base = K.aim(P(bedP.x, bedP.y + 0.5 + Math.min(0.5, k * 0.012), bedP.z))   // the eye lifts off the bed (lint: nobody moves)
       if (c8 === 1) K.base = K.aim(P(HE.x, HE.y + 1.2, HE.z + Math.min(1.6, (k - t8) * 0.05)))   // a slow pan across the bare room (lint: nobody moves)
       if (c8 === 1 && k >= at.cut(6)) { c8 = 2; await cut(2.3, 3.8, FACE()) }
       look(k)
@@ -262,13 +264,19 @@ module.exports = {
 
     // L12: so today I got curious (up the torch line to the block)
     await cut(5.5, 0.5, P(0.5, 1.2, 0.5))   // from the east, straight at it (the slope behind, the sheep to the left)
-    await line('L12', (k) => { ctl('forward', me().x > X + 2.6); K.base = K.aim(P(0.5, 1.2, 0.5)); look(k) })
+    let lx12 = null, st12 = 0
+    await line('L12', (k) => {
+      const go = me().x > X + 2.6
+      st12 = go && lx12 !== null && Math.abs(me().x - lx12) < 0.01 ? st12 + 1 : 0; lx12 = me().x
+      ctl('forward', go); ctl('jump', go && st12 >= 2)   // a step up on the way (2026-11-13: stuck at x 5.3 behind a 1-block rise)
+      K.base = K.aim(P(0.5, 1.2 - Math.min(0.3, k * 0.006), 0.5)); look(k)   // and the eye settles down onto the block
+    })
     K.stop()
     // L13: for the first time in 412 days, he looked at me
     from = null
     await line('L13', (k, at) => {
       ctl('sneak', true)
-      from = from || { ...K.base }; K.turnTo(from, FACE(), k / 16)
+      from = from || { ...K.base }; K.turnTo(from, FACE(), k / 34)   // a slower turn: it fills the line (lint: nobody moves)
       if (k === at(3) - 3) { watch = true; ctx.sound('entity.sheep.ambient', 1, 1) }
       look(k)
     })
@@ -276,7 +284,7 @@ module.exports = {
     let broke = false
     await line('L14', (k) => {
       ctl('sneak', true)
-      if (k === 1) K.dig(new ctx.Vec3(X, F, Z)).then(() => { broke = true; ctx.mark('broke') }).catch((e) => ctx.log('dig', e.message))
+      if (k === 1) K.dig(bot.blockAt(new ctx.Vec3(X, F, Z))).then(() => { broke = true; ctx.mark('broke') }).catch((e) => ctx.log('dig', e.message))
       look(k)
     })
     const HOLE = P(0.5, -0.4, 0.45)
@@ -291,11 +299,12 @@ module.exports = {
     })
     // L16: who digs straight down? (he looks back at the sheep, then down; steps in)
     let fell = false
+    const overHole = () => Math.hypot(me().x - (X + 0.5), me().z - (Z + 0.5)) < 0.3 || me().y < F - 0.5   // over the 1x1 shaft (2026-11-13: 'y < F + 0.6' was true on the ground itself)
     await line('L16', (k, at) => {
       const stepIn = at(2) + 1
       if (k === 1) ctx.sound('entity.sheep.ambient', 1, 1.1)
-      ctl('sneak', k < stepIn); ctl('forward', k >= stepIn && me().y > F + 0.6)
-      if (me().y < F + 0.6) fell = true
+      ctl('sneak', k < stepIn); ctl('forward', k >= stepIn && !overHole())
+      if (me().y < F - 0.5) fell = true
       if (k === 0 || k === 7) from = { ...K.base }
       if (k < 7) K.turnTo(from, FACE(), (k + 1) / 6)
       else if (k < stepIn) K.turnTo(from, HOLE, (k - 6) / 6)
@@ -304,7 +313,7 @@ module.exports = {
     })
     ctx.log('broke', broke, 'fell', fell, 'y', me().y - F)
     // the fall: 15 blocks, about a second, eyes down the shaft
-    for (let i = 0; i < 60 && !(bot.entity.onGround && me().y < F - DEPTH + 3); i++) { ctl('forward', me().y > F + 0.6); look(i); await bot.waitForTicks(1) }
+    for (let i = 0; i < 60 && !(bot.entity.onGround && me().y < F - DEPTH + 3); i++) { ctl('forward', !overHole()); look(i); await bot.waitForTicks(1) }
     K.stop()
     ctx.mark('land')
     ctx.log('landed y', me().y - F, 'health', bot.health)
