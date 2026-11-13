@@ -1,0 +1,835 @@
+{
+ "stunt": "story_sheep_stares",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/story_sheep_stares.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "story hotbar",
+   "exit": 0,
+   "summary": "full (9 slots or 7+ filled, every id a real item)",
+   "findings": []
+  },
+  {
+   "name": "voice stamp",
+   "exit": 0,
+   "summary": "recorded to the current voice (fbc3d0aa7c0b)"
+  },
+  {
+   "name": "script drift",
+   "exit": 0,
+   "summary": "story.json is the latest script",
+   "warnings": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "cut holds: 0 cast moves and 4 narrator moves held to their cut",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT story_sheep_stares: 5 shots, scene 0.0-62.0 s (scene seconds from edit.startAt, before slow motion)",
+    "  (pov)          0.0-9.1   pov    ",
+    "  pov            9.1-10.6  pov    ",
+    "  pov           10.6-11.7  pov    ",
+    "  pov           11.7-14.9  pov    ",
+    "  pov           14.9-62.0  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 5 warning(s), 5 note(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "out": 5.9,
+     "shot": 2,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 6000 (noon) -> 18000 (midnight) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 7.15,
+     "shot": 3,
+     "line": "L02",
+     "kind": "time",
+     "msg": "time cut 18000 (midnight) -> 6000 (noon) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 10.55,
+     "shot": 5,
+     "line": "L03",
+     "kind": "position",
+     "msg": "sheep #375 is 5.0 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 11.65,
+     "shot": 6,
+     "line": "L04",
+     "kind": "position",
+     "msg": "wolf #377 is 5.6 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 11.65,
+     "shot": 6,
+     "line": "L04",
+     "kind": "position",
+     "msg": "wolf #379 is 6.0 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "WARN",
+     "out": 11.65,
+     "shot": 6,
+     "line": "L04",
+     "kind": "position",
+     "msg": "wolf #378 is 7.6 blocks from where it was at the end of the last shot (unseen there, seen here): a continuity jump unless the story skips time"
+    },
+    {
+     "level": "NOTE",
+     "out": 18.25,
+     "shot": 8,
+     "line": "L06",
+     "kind": "time",
+     "msg": "time cut 6000 (noon) -> 18000 (midnight) at the same place (on its time mark)"
+    },
+    {
+     "level": "NOTE",
+     "out": 18.25,
+     "shot": 8,
+     "line": "L06",
+     "kind": "blocks",
+     "msg": "1 block(s) in view changed during the cut (e.g. air at -268 71 -664): intended?"
+    },
+    {
+     "level": "NOTE",
+     "out": 21.7,
+     "shot": 9,
+     "line": "L07",
+     "kind": "time",
+     "msg": "time cut 18000 (midnight) -> 6000 (noon) at the same place (on its time mark)"
+    },
+    {
+     "level": "WARN",
+     "out": 44,
+     "shot": 16,
+     "line": "L12",
+     "kind": "vanish",
+     "msg": "zombie #385 vanishes in the middle of the frame 17.10 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "10 warning(s) over 16 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": "L01",
+     "kind": "tight",
+     "msg": "too tight (CU close-up): sheep #375 fills 90% of the frame height, 1.3 blocks away. Owner: \"stuff might be too zoomed in at times\"; close-ups are for reveals only (docs/story_craft.md 8): pull back to 8-12 blocks for a wide"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 3,
+     "line": "L02",
+     "kind": "tight",
+     "msg": "camera against the set: 47% of the frame is within 3 blocks (grass_block, short_grass)"
+    },
+    {
+     "level": "WARN",
+     "out": 14.95,
+     "shot": 7,
+     "line": "L05",
+     "kind": "tight",
+     "msg": "camera against the set: 42% of the frame is within 3 blocks (grass_block, short_grass)"
+    },
+    {
+     "level": "WARN",
+     "out": 21.7,
+     "shot": 9,
+     "line": "L07",
+     "kind": "tight",
+     "msg": "camera against the set: 36% of the frame is within 3 blocks (short_grass, grass_block)"
+    },
+    {
+     "level": "WARN",
+     "out": 24.25,
+     "shot": 10,
+     "line": "L07",
+     "kind": "tight",
+     "msg": "camera against the set: 42% of the frame is within 3 blocks (grass_block, short_grass)"
+    },
+    {
+     "level": "WARN",
+     "out": 25.65,
+     "shot": 11,
+     "line": "L08",
+     "kind": "tight",
+     "msg": "camera against the set: 43% of the frame is within 3 blocks (birch_planks, oak_planks)"
+    },
+    {
+     "level": "WARN",
+     "out": 28.85,
+     "shot": 12,
+     "line": "L08",
+     "kind": "tight",
+     "msg": "camera against the set: 44% of the frame is within 3 blocks (birch_planks, brown_carpet)"
+    },
+    {
+     "level": "WARN",
+     "out": 31.6,
+     "shot": 13,
+     "line": "L08",
+     "kind": "tight",
+     "msg": "camera against the set: 43% of the frame is within 3 blocks (grass_block, short_grass)"
+    },
+    {
+     "level": "WARN",
+     "out": 36.9,
+     "shot": 15,
+     "line": "L10",
+     "kind": "tight",
+     "msg": "camera against the set: 37% of the frame is within 3 blocks (short_grass, tall_grass)"
+    },
+    {
+     "level": "WARN",
+     "out": 36.9,
+     "shot": 15,
+     "line": "L10",
+     "kind": "establish",
+     "msg": "opens place P2 without an establishing shot (FS full on villager (mason), median depth 3.2 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 6 warning(s)",
+   "findings": [
+    {
+     "level": "NOTE",
+     "check": "flat",
+     "out": null,
+     "tick": null,
+     "line": null,
+     "msg": "the set stands on a flat cleared plain 33 x 54 blocks (ground y 70; its edge 2 blocks from the set's origin); built footprint nothing built; terrain relief around it sd 20.2 blocks",
+     "world": {
+      "level": 70,
+      "area": 545,
+      "w": 33,
+      "d": 54,
+      "edge": 2,
+      "built": 0,
+      "footprint": null,
+      "relief": 20.2,
+      "outside": 2348
+     }
+    },
+    {
+     "level": "NOTE",
+     "check": "opening",
+     "out": 0,
+     "tick": 17,
+     "line": "L01",
+     "msg": "opening OK: sheep (L01 \"SHEEP\") sheep #375: 52% across (middle third 33%-67%), 21% of the frame height on frame 1, 36% at most (readable from 8%), first 1.5 s; camera 1.48 blocks/s, turn 9.32 deg/s, push 0.3/s, subject 0.08 blocks/s, anything else in frame 0.08 blocks/s, 0 action(s)",
+     "opening": {
+      "subject": "sheep",
+      "src": "L01 \"SHEEP\"",
+      "n": 31,
+      "motion": {
+       "cam": 1.48,
+       "turn": 9.32,
+       "grow": 0.3,
+       "sub": 0.08,
+       "other": 0.08,
+       "actions": 0
+      },
+      "seen": 1,
+      "x": 0.52,
+      "h0": 0.211,
+      "hMax": 0.364,
+      "label": "sheep #375"
+     }
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 0.65,
+     "tick": 29.6,
+     "line": "L01",
+     "msg": "\"SHEEP\" sits too low: sheep #375's face 67% down the frame, in the caption band (captions at 70%: eyes on the upper third, nothing important below 62%)"
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 0.65,
+     "tick": 29.6,
+     "line": "L01",
+     "msg": "the line names \"SHEEP\" but the camera is on it only 49% of 4.3 s: sheep #375 is off centre (its face at 33% across, 67% down, 19 deg from the aim) (inferred from the words: set lines[].look to make it exact and a blocker, or look: false). Owner: \"talking about X while looking elsewhere\""
+    },
+    {
+     "level": "WARN",
+     "check": "flat",
+     "out": 5.9,
+     "tick": 135,
+     "line": "L02",
+     "msg": "mostly flat ground (5/5 moments): flat ground fills 39% of the frame (42% of the world in view; hills/trees/water 29%, the set 25%, sky 3%) at 6.95 s; the plain is 33 x 54, the set's footprint -, relief around it sd 20.2"
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 23.85,
+     "tick": 494,
+     "line": "L07",
+     "msg": "the line names \"sheep\" but the camera is on it only 37% of 1.9 s: sheep #375 is out of frame (121% across, 88% down) (inferred from the words: set lines[].look to make it exact and a blocker, or look: false). Owner: \"talking about X while looking elsewhere\""
+    },
+    {
+     "level": "WARN",
+     "check": "subject",
+     "out": 35.55,
+     "tick": 727.6,
+     "line": "L09",
+     "msg": "the line names \"TORCHES\", \"door\" but the camera is on them only 0% of 1.5 s: torch at -256 70 -657 is hidden behind stripped_dark_oak_log 7.2 blocks out; dark_oak_door at -244 69 -647 is off centre (it at 30% across, 69% down, 22 deg from the aim) (inferred from the words: set lines[].look to make it exact and a blocker, or look: false). Owner: \"talking about X while looking elsewhere\""
+    },
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 56.9,
+     "tick": 1155,
+     "line": "L16",
+     "msg": "the view jerks: its turn speed jumps 141 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 1 warning(s) over 14 cuts",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "cuts",
+     "out": 18.35,
+     "tick": 382,
+     "line": "L05",
+     "msg": "pov -> pov: the eye goes from sheep (61% across, 54% down) to sheep (34%, 52%): a jump of 27% of the frame (fine <= 15%). Put the new shot's subject where the last one was: the renderer's eyeTrace does it for camera shots (name the shot's subject: subject: ['actor:NAME'] / ['entity:wolf'] / [dx, dy, dz]; eyeTrace: false only for a deliberate jump; a first-person cut: aim K.cut where the last shot's subject was). Owner: \"i keep noticing them\""
+    }
+   ],
+   "rows": [
+    {
+     "tick": 135,
+     "out": 6,
+     "line": "L02",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.54,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.48,
+      "y": 0.47,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.071,
+     "timing": {
+      "next": "He",
+      "lead": 0.095,
+      "prev": "EAT.",
+      "sincePrev": 0.225,
+      "pause": 0.32,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 160,
+     "out": 7.25,
+     "line": "L02",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.49,
+      "y": 0.48,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.44,
+      "y": 0.46,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.057,
+     "timing": {
+      "next": "He",
+      "lead": 0.085,
+      "prev": "SLEEP.",
+      "sincePrev": 0.375,
+      "pause": 0.46,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 198,
+     "out": 9.15,
+     "line": "L02",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.33,
+      "y": 0.5,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.45,
+      "y": 0.44,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.135,
+     "timing": {
+      "next": "I",
+      "lead": 0.215,
+      "prev": "BLINK.",
+      "sincePrev": 0.595,
+      "pause": 0.81,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.025
+    },
+    {
+     "tick": 228,
+     "out": 10.65,
+     "line": "L03",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.46,
+      "y": 0.46,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.056,
+     "timing": {
+      "next": "He",
+      "lead": -0.025,
+      "prev": "RIVER.",
+      "sincePrev": 0.325,
+      "pause": 0.3,
+      "inside": "He"
+     },
+     "optOut": false
+    },
+    {
+     "tick": 250,
+     "out": 11.75,
+     "line": "L03",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "WOLVES",
+      "lead": 0.163,
+      "prev": "BACK.",
+      "sincePrev": 0.405,
+      "pause": 0.568,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.097
+    },
+    {
+     "tick": 316,
+     "out": 15.05,
+     "line": "L04",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.55,
+      "y": 0.46,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.063,
+     "timing": {
+      "next": "I",
+      "lead": 0.202,
+      "prev": "LEFT.",
+      "sincePrev": 0.557,
+      "pause": 0.759,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.038
+    },
+    {
+     "tick": 382,
+     "out": 18.35,
+     "line": "L05",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.61,
+      "y": 0.54,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.34,
+      "y": 0.52,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.266,
+     "timing": {
+      "next": "Sometimes",
+      "lead": 0.167,
+      "prev": "it.",
+      "sincePrev": 0.518,
+      "pause": 0.685,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.003
+    },
+    {
+     "tick": 451,
+     "out": 21.8,
+     "line": "L06",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.49,
+      "y": 0.49,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.014,
+     "timing": {
+      "next": "Honestly,",
+      "lead": 0.21,
+      "prev": "that.",
+      "sincePrev": 0.453,
+      "pause": 0.663,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.01
+    },
+    {
+     "tick": 502,
+     "out": 24.35,
+     "line": "L07",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.44,
+      "y": 0.49,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.62,
+      "y": 0.51,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.183,
+     "timing": {
+      "next": "Or",
+      "lead": 0,
+      "prev": "sheep.",
+      "sincePrev": 0.48,
+      "pause": 0.48,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 530,
+     "out": 25.75,
+     "line": "L07",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": {
+      "next": "I",
+      "lead": 0.247,
+      "prev": "BLUE.",
+      "sincePrev": 0.44,
+      "pause": 0.687,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.013
+    },
+    {
+     "tick": 649,
+     "out": 31.7,
+     "line": "L08",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.42,
+      "y": 0.45,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "dist": 0.094,
+     "timing": {
+      "next": "already",
+      "lead": 0.017,
+      "prev": "HIM,",
+      "sincePrev": 0.463,
+      "pause": 0.48,
+      "inside": null
+     },
+     "optOut": false
+    },
+    {
+     "tick": 675,
+     "out": 33,
+     "line": "L08",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.34,
+      "y": 0.47,
+      "what": "sheep",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.161,
+     "timing": {
+      "next": "The",
+      "lead": 0.185,
+      "prev": "STARING.",
+      "sincePrev": 0.423,
+      "pause": 0.608,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": 0.015
+    },
+    {
+     "tick": 755,
+     "out": 37,
+     "line": "L09",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.56,
+      "y": 0.52,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "dist": 0.062,
+     "timing": {
+      "next": "The",
+      "lead": 0.46,
+      "prev": "BLOCK.",
+      "sincePrev": 0.035,
+      "pause": 0.495,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    },
+    {
+     "tick": 897,
+     "out": 44.1,
+     "line": "L11",
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.53,
+      "what": "villager (farmer)",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.025,
+     "timing": {
+      "next": "So",
+      "lead": 0.34,
+      "prev": "WHO?",
+      "sincePrev": 0.063,
+      "pause": 0.403,
+      "inside": null
+     },
+     "optOut": false,
+     "lineDrift": -0.1
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "OK: 0 blocker(s), 1 warning(s) (caption sync)",
+   "ran": true,
+   "blocks": 0,
+   "lines": [
+    "WARN  L14: the aligner starts the first word at 0.40 s, the sound starts at 0.24 s (+0.16 s): a breath or a hum before the word? listen",
+    "OK: 0 blocker(s), 1 warning(s) (caption sync)"
+   ]
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped: no TTS venv (/home/runner/.hb-tts/bin/python; ./hb doctor)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    19.10s  gold_block broke                   -> block.metal.break                  3.9 blocks in view  ",
+    "    22.50s  zombie idle voice                  -> entity.zombie.ambient             15.4 blocks          ",
+    "    25.35s  sheep idle voice                   -> entity.sheep.ambient               3.3 blocks in view  ",
+    "    28.60s  villager idle voice                -> entity.villager.ambient           14.2 blocks          key word",
+    "    30.45s  villager idle voice                -> entity.villager.ambient           15.3 blocks          ",
+    "    35.10s  villager idle voice                -> entity.villager.ambient            7.8 blocks          ",
+    "    36.40s  villager idle voice                -> entity.villager.ambient            7.2 blocks          key word",
+    "    39.70s  villager idle voice                -> entity.villager.ambient            4.1 blocks in view  key word",
+    "    40.65s  villager step on grass_block       -> block.grass.step                   4.5 blocks in view  ",
+    "    40.65s  villager step on grass_block       -> block.grass.step                   6.2 blocks in view  ",
+    "    40.65s  villager step on grass_block       -> block.grass.step                   3.5 blocks in view  ",
+    "    40.65s  villager step on grass_block       -> block.grass.step                   5.5 blocks in view  ",
+    "    40.65s  villager step on grass_block       -> block.grass.step                   3.9 blocks in view  ",
+    "    42.45s  villager idle voice                -> entity.villager.ambient            5.1 blocks in view  key word",
+    "    42.75s  villager step on grass_block       -> block.grass.step                   5.4 blocks in view  key word",
+    "    43.70s  villager idle voice                -> entity.villager.ambient            9.0 blocks in view  ",
+    "    47.25s  sheep idle voice                   -> entity.sheep.ambient               3.4 blocks in view  key word",
+    "    49.90s  zombie idle voice                  -> entity.zombie.ambient             15.2 blocks          key word",
+    "    52.70s  digging coarse_dirt                -> block.grass.hit                    2.6 blocks in view  ",
+    "    52.90s  digging coarse_dirt                -> block.grass.hit                    2.6 blocks in view  ",
+    "    53.10s  sheep idle voice                   -> entity.sheep.ambient               3.2 blocks in view  key word",
+    "    53.10s  digging coarse_dirt                -> block.grass.hit                    2.6 blocks in view  key word",
+    "    53.20s  broke coarse_dirt                  -> block.grass.break                  2.6 blocks in view  key word",
+    "    54.55s  picked up an item                  -> entity.item.pickup                 1.6 blocks in view  key word",
+    "    55.05s  zombie idle voice                  -> entity.zombie.ambient             15.0 blocks in view  ",
+    "    58.65s  sheep idle voice                   -> entity.sheep.ambient               2.3 blocks          key word",
+    "    60.90s  zombie step on stone               -> entity.zombie.step                 2.3 blocks          ",
+    "    61.10s  zombie idle voice                  -> entity.zombie.ambient              1.5 blocks          ",
+    "ambience per shot: -0.25-0.75s day, 0.75-6.75s day, 6.75-8.00s night, 8.00-19.10s day, 19.10-22.55s night, 22.55-25.10s day, 25.10-26.50s day, 26.50-29.70s indoor_day, 29.70-32.45s indoor_day, 32.45-33.75s day, 33.75-37.75s day, 37.75-44.85s day, 44.85-63.55s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-13T09:28:51.404Z"
+}

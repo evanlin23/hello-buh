@@ -1,0 +1,17 @@
+{
+ "name": "story_sheep_stares",
+ "stunt": "story_sheep_stares",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43401543274",
+ "source": "4d378d31",
+ "queued": "2026-11-13T09:27:54Z",
+ "finished": "2026-11-13T09:48:37Z",
+ "mp4": "renders/out/story_sheep_stares.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
