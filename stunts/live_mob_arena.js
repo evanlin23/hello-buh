@@ -47,7 +47,7 @@ module.exports = {
   edit: {
     caption: 'the MOB ARENA picks the next fighter 💀', red: 'MOB ARENA',
     startAt: 'live_on:0', endAfter: 'ko2:1.0',
-    speed: [['skip_a', 'skip_b', 'cut']],
+    speed: [['skip_a', 'skip_b', 'cut'], ['ko2:-21.5', 'ko2:-3', 3]],   // (take 3: the ravager alone held out 22 s after its guard fell: that stretch x3 in the sample)
     cards: [['fight1', 'FIGHT!', 0.8, 'yellow'], ['ko1', 'K.O. 💀', 1.0, 'red'], ['skip_a', 'SKIPPING TO THE FINAL BOSS...', 1.4, 'yellow'],
       ['fight2', 'FIGHT 1000 💀', 1.0, 'red'], ['ko2', 'K.O. 💀', 1.2, 'red']],
     sfx: [['riser', 'live_on', 'fight1'], ['impact', 'fight1', { gain: 1.1 }], ['impact', 'ko1', { gain: 1.3 }], ['whoosh', 'skip_a'], ['whoosh', 'skip_b'],
@@ -154,12 +154,15 @@ module.exports = {
         if (++murmur % 31 === 0) ctx.sound('entity.villager.ambient', 0.25, 0.8 + (murmur % 5) * 0.1)
       }
     }
-    const cheer = async () => {   // the crowd on a KO: cheers, happy villagers, fireworks over the stands
+    const cheer = async () => {   // the crowd on a KO: cheers, happy villagers, fireworks over the stands; the view goes up to them
+      const look = A.turnTo(center.offset(-10, 6, -4), { max: 30 })
       for (let i = 0; i < 6; i++) ctx.sound('entity.villager.celebrate', 0.7, 0.85 + i * 0.07)
       ctx.sound('entity.firework_rocket.launch', 1, 1); ctx.sound('entity.villager.yes', 0.8, 1)
       for (const e of Object.values(bot.entities).filter(e => e.name === 'villager').slice(0, 24)) ctx.particles('happy', e.position.offset(0, 2.2, 0), { count: 6 })
       await bot.waitForTicks(14)
       ctx.sound('entity.firework_rocket.large_blast', 1, 1); ctx.sound('entity.firework_rocket.twinkle', 0.8, 1)
+      await look
+      await A.turnTo(center.offset(-11, 6, 6), { max: 40 })
     }
     // a summon by the arena's mod: a puff and a spell where each appears (vanilla mobs, grown by the scale attribute)
     const summon = async (groups, name) => {
@@ -181,7 +184,8 @@ module.exports = {
       updateBars()
     }
     // the camera while the arena rolls: a slow pan along the packed stands and back to where the fight will be
-    const pan = async (rolling) => {
+    const pan = async (rolling, still = 0) => {
+      await bot.waitForTicks(still)
       const spots = [center.offset(-9, 5, -9), center.offset(-12, 6, 0), center.offset(-9, 5, 9), center.offset(-4, 1, 0)]
       let k = 0, done = false
       rolling.then(() => { done = true })
@@ -226,7 +230,7 @@ module.exports = {
     await team(2)
     const roll1 = L.roll(ctx, POOL, { name: 'HUSK ARMY + GIANT', icon: 'husk_spawn_egg' })
     await pan(roll1)
-    ctx.sound('event.raid.horn', 1, 1); ctx.sound('block.bell.use', 1, 1)
+    ctx.vanillaSound('event.raid.horn'); ctx.sound('block.bell.use', 1, 1)
     ctx.mark('fight1')
     await summon([{ type: 'husk', n: 8, hp: 20, r: 5.5, spread: 2.2 }, { type: 'husk', n: 1, scale: 3, hp: 60, dmg: 5, r: 7, spread: 0 }], 'HUSK ARMY')
     L.rollEnd(ctx)
@@ -236,7 +240,6 @@ module.exports = {
     ctx.mark('ko1', { winner: won1 ? 'golems' : 'husks' })
     L.big(ctx, won1 ? '960 / 1000 WINS' : '959 / 1000 WINS')
     await cheer()
-    await follow(24)
     // 2. the roll for fight 961 ... skip
     L.target(ctx, 'THE MOB ARENA PICKS THE NEXT FIGHT...', null, 'MOB ARENA')
     L.stat(ctx, 'FIGHT 961', '?')
@@ -247,14 +250,14 @@ module.exports = {
     await ctx.cmd('/kill @e[type=item]', { mayFail: true })
     foes = []; L.rollEnd(ctx)
     await team(3)
-    await bot.waitForTicks(20)
+    await A.turnTo(center.offset(-4, 1, 0), { max: 40, hold: 10 })   // already on the floor when the cut lands (take 2: a whip after it)
     ctx.mark('skip_b')
     // 3. fight 1000: the final boss and its guard
     L.big(ctx, '999 / 1000 WINS')
     L.target(ctx, 'THE MOB ARENA PICKS THE LAST FIGHT...', null, 'LAST FIGHT')
     L.stat(ctx, 'FIGHT 1000', 'THE FINAL BOSS')
-    await pan(L.roll(ctx, POOL.concat([{ name: 'WARDEN', icon: 'warden_spawn_egg' }]), { name: 'TITAN RAVAGER', icon: 'ravager_spawn_egg' }))
-    ctx.sound('event.raid.horn', 1, 1); ctx.sound('block.bell.use', 1, 1)
+    await pan(L.roll(ctx, POOL.concat([{ name: 'WARDEN', icon: 'warden_spawn_egg' }]), { name: 'TITAN RAVAGER', icon: 'ravager_spawn_egg' }), 8)
+    ctx.vanillaSound('event.raid.horn'); ctx.sound('block.bell.use', 1, 1)
     ctx.mark('fight2')
     await summon([{ type: 'ravager', n: 1, scale: 2, hp: 160, dmg: 12, r: 6, spread: 0 },
       { type: 'vindicator', n: 4, hp: 24, r: 4.5, spread: 2.0, extra: ',HandItems:[{id:"minecraft:iron_axe",count:1},{}]' }], 'TITAN RAVAGER + 4')
