@@ -256,10 +256,10 @@ class Painter:
         elif st.get("big"):   # plain text ("6 / 40 WINS")
             self.big(img, st["big"], 180, WHITE, max_s=20)
         y0 = BAND + GAME_H + 22
-        if st.get("hp"):   # the fighters' bars instead of the counter: left the champion, right the challenger
+        if st.get("hp") and not st.get("roll"):   # the fighters' bars (hidden while the arena picks the next fight)
             self.bars(img, dict(st["hp"]), y0)
             y0 += 120
-        cnt = st["count"] if not st.get("hp") else None
+        cnt = st["count"] if not st.get("hp") and not st.get("roll") else None
         name = st.get("clabel") or self.conf.get("counter", "")
         if cnt is not None:   # the counter row
             num = f"{cnt:,}" + (f" / {st['goal']:,}" if st.get("goal") else "")
