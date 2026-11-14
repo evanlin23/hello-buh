@@ -11,4 +11,4 @@ OK on that exact thing. Never push `main` 13:15-13:50 UTC.
 
 | Item | Status | PR | Next |
 |---|---|---|---|
-| vertical long-form / live (owner 2026-11-14) | assigned on #7 | none | research, 2-3 formats with 1-min samples, pipeline plan |
+| vertical long-form / live (owner 2026-11-14) | research done (`docs/research/livestream.md`); samples rendering on Actions; plan in `docs/livestream.md` | claude/lf-livestream | owner picks a format + session shape; then the session planner and the streaming VM |

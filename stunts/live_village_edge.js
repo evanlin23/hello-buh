@@ -36,7 +36,8 @@ module.exports = {
   edit: {
     caption: 'the village explodes at 100% 💀', red: '100%',
     // this take (2026-11-14): blast_end came 0.75 s in (the blast's block changes arrive in bursts up to 1.7 s apart while
-    // the server lags under ~5,000 TNT); its last block went 0.15 s before the recording's end mark, so it ends there
+    // the server lags under ~5,000 TNT; the block watcher misses them); its last block went 0.35 s before the recording's
+    // end mark, so it ends there
     startAt: 'live_on:0', endAfter: 'end:-0.1',
     speed: [['tp_a', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 2.5], ['fuse_a', 'fuse_b', 'cut'], ['boom:3', 'end:-2', 2]],
     cards: [['full', 'ALMOST... 💀', 0.9, 'red'], ['bigger', 'WAIT... BIGGER 💀', 1.5, 'yellow'], ['creepers', 'ONE MORE THING...', 1.3, 'green']],
@@ -80,6 +81,8 @@ module.exports = {
     await L.bulk(ctx, L.fills(pre, 'tnt'))
     await ctx.cmd('/kill @e[type=item]', { mayFail: true })
     await ctx.cmd('/attribute @s minecraft:explosion_knockback_resistance base set 1', { mayFail: true })
+    // easy, so the blast can reach 56e (flung TNT landed by it, 28 blocks out, on take 4): no damage, no fire
+    for (const e of ['resistance', 'fire_resistance']) await ctx.cmd(`/effect give @s ${e} infinite 4 true`)
     // the stands: on the TNT beside the trench (a column's top is one up once its TNT is down)
     for (const col of cols) col.top = tk.has(key(col.x, col.z)) ? col.y : col.y + 1
     const C = require('../lib/live_crew')(ctx, null, { cols })
