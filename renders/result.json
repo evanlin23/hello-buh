@@ -1,0 +1,17 @@
+{
+ "name": "live_village_edge",
+ "stunt": "live_village_edge",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43570514672",
+ "source": "20b6b50",
+ "queued": "2026-11-14T07:18:52Z",
+ "finished": "2026-11-14T07:33:07Z",
+ "mp4": "renders/out/live_village_edge.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

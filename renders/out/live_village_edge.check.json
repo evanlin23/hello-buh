@@ -1,0 +1,329 @@
+{
+ "stunt": "live_village_edge",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/live_village_edge.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean; WARN a blast / fall in the stunt, and the Short ends on 'end:-0.1', not once it settles: endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end",
+   "hits": [],
+   "settle": {
+    "what": "a blast / fall in the stunt, and the Short ends on 'end:-0.1', not once it settles",
+    "use": "endAfter: 'settle:0.5' (the harness's settle mark, soon after the last blast frame, fall or death: lib/settle.js), or // settle-ok: <reason> for a reviewed end"
+   }
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  2 camera shot(s), 31.3s: POV checks skipped there; run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/live_village_edge.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT live_village_edge: 4 shots, scene 0.0-55.2 s (scene seconds from edit.startAt, before slow motion)",
+    "  pov            0.0-18.8  pov    ",
+    "  lapse         18.8-40.3  orbit  (no subject: add subject: [...] to check its framing)",
+    "  pov           40.3-45.5  pov    ",
+    "  boom          45.5-55.2  orbit  (no subject: add subject: [...] to check its framing)",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 7 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "appear",
+     "msg": "cow #127 appears in the middle of the frame 1.05 s into the shot (16.2 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #120 appears in the middle of the frame 1.95 s into the shot (8.3 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "appear",
+     "msg": "cat #118 appears in the middle of the frame 3.95 s into the shot (16.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "appear",
+     "msg": "pig #126 appears in the middle of the frame 6.90 s into the shot (20.9 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "appear",
+     "msg": "villager #114 appears in the middle of the frame 11.60 s into the shot (7.1 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 25.5,
+     "shot": 3,
+     "line": null,
+     "kind": "appear",
+     "msg": "creeper #652 appears in the middle of the frame 1.55 s into the shot (3.7 blocks)"
+    },
+    {
+     "level": "WARN",
+     "out": 25.5,
+     "shot": 3,
+     "line": null,
+     "kind": "appear",
+     "msg": "creeper #653 appears in the middle of the frame 2.10 s into the shot (4.2 blocks)"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "1 warning(s) over 4 shots",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 25.5,
+     "shot": 3,
+     "line": null,
+     "kind": "establish",
+     "msg": "opens place P3 without an establishing shot (no cast, median depth 4 blocks): open EWS/WS, then cut in"
+    }
+   ]
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 2 warning(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "check": "glitch",
+     "out": 9.1,
+     "tick": 198,
+     "line": null,
+     "msg": "the view jerks: its turn speed jumps 147 deg/s in one tick (a hand on a mouse: under 240 deg/s, eased in and out). Owner: \"the head jerking around\": aim with K.aimAt / K.turnTo / K.place / K.dig (the kit's governor eases every turn); no raw bot.look"
+    },
+    {
+     "level": "WARN",
+     "check": "whip",
+     "out": 12.7,
+     "tick": 270,
+     "line": null,
+     "msg": "the view swings 70 deg then 71 deg with 0.20 s at rest between (want 0.3 s on something to read it, r:r38374d)"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 5 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 376,
+     "out": 18,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 391,
+     "out": 18.75,
+     "line": null,
+     "from": "pov",
+     "to": "lapse",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 821,
+     "out": 40.25,
+     "line": null,
+     "from": "lapse",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 908,
+     "out": 44.6,
+     "line": null,
+     "from": "pov",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 926,
+     "out": 45.5,
+     "line": null,
+     "from": "pov",
+     "to": "boom",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "38 visible sound-making events (break 1, death 3, hurt 3, place 10, primed 1, splash 1, step 13, voice 6), 11 with a sound mark, 27 without (audio.py adds those for a story)",
+    "     1.65s  villager step on tnt               -> block.stone.step                   3.6 blocks          ",
+    "     2.00s  villager step on tnt               -> block.stone.step                   9.6 blocks          ",
+    "     2.60s  villager step on tnt               -> block.stone.step                   8.4 blocks in view  ",
+    "     2.95s  cow idle voice                     -> entity.cow.ambient                11.0 blocks in view  ",
+    "     3.50s  villager step on tnt               -> block.stone.step                   7.0 blocks in view  ",
+    "     4.10s  villager step on tnt               -> block.stone.step                   5.8 blocks in view  ",
+    "     4.30s  pig idle voice                     -> entity.pig.ambient                15.6 blocks          ",
+    "     4.70s  villager step on tnt               -> block.stone.step                   5.0 blocks in view  ",
+    "     5.55s  villager step on grass_block       -> block.grass.step                   3.5 blocks          ",
+    "     5.75s  cat step on tnt                    -> block.stone.step                  14.0 blocks in view  ",
+    "     6.35s  cat step on tnt                    -> block.stone.step                  13.2 blocks in view  ",
+    "     7.10s  cat step on tnt                    -> block.stone.step                  13.6 blocks          ",
+    "     7.15s  villager idle voice                -> entity.villager.ambient            4.7 blocks in view  ",
+    "     7.35s  cow step on grass_block            -> entity.cow.step                   14.8 blocks in view  ",
+    "     7.70s  cat step on tnt                    -> block.stone.step                  14.6 blocks          ",
+    "     8.10s  cow into the water                 -> entity.generic.splash             15.9 blocks          ",
+    "     9.65s  cat step on tnt                    -> block.stone.step                  15.1 blocks in view  ",
+    "     9.80s  cat idle voice                     -> entity.cat.ambient                15.4 blocks in view  ",
+    "    13.70s  villager idle voice                -> entity.villager.ambient            7.1 blocks          ",
+    "    17.80s  iron_golem hit                     -> entity.iron_golem.hurt            12.8 blocks in view  ",
+    "    17.80s  iron_golem died                    -> entity.iron_golem.death           12.8 blocks in view  ",
+    "    17.80s  villager hit                       -> entity.villager.hurt               6.7 blocks          ",
+    "    17.80s  villager died                      -> entity.villager.death              6.7 blocks          ",
+    "    17.80s  villager hit                       -> entity.villager.hurt               7.4 blocks          ",
+    "    17.80s  villager died                      -> entity.villager.death              7.4 blocks          ",
+    "    18.50s  villager idle voice                -> entity.villager.ambient            7.1 blocks          ",
+    "    44.80s  tnt broke                          -> block.stone.break                  1.8 blocks in view  ",
+    "ambience per shot: -0.20-18.80s day, 18.80-45.40s day, 45.40-56.10s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-14T07:20:53.367Z"
+}
