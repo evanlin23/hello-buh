@@ -80,7 +80,8 @@ round on a TNT finale is the research's #3 ("escalating siege").
 
 | sample | render branch @ sha | length |
 |---|---|---|
-| gauntlet (the pick) | `claude/lf-livestream-render-live_golem_gauntlet` @ 9755782 | 29 s |
+| **THE MOB ARENA** (the format, v2) | `claude/lf-livestream-render-live_mob_arena` @ 63d7ac2: `live_mob_arena_music.mp4` (with music; the credit in `live_mob_arena_music.txt`) and `live_mob_arena.mp4` (Actions run 43574589934, no music) | 55 s |
+| gauntlet (v1 of the pick) | `claude/lf-livestream-render-live_golem_gauntlet` @ 9755782 | 29 s |
 | the edge | `claude/lf-livestream-render-live_village_edge` @ 58f731d | 36 s |
 | rounds | `claude/lf-livestream-render-live_village_tnt` @ 521cf68 (take 1; its overlay still had the hours line, since removed) | 66 s |
 

@@ -11,4 +11,4 @@ OK on that exact thing. Never push `main` 13:15-13:50 UTC.
 
 | Item | Status | PR | Next |
 |---|---|---|---|
-| vertical long-form / live (owner 2026-11-14) | research, 3 samples and plan done (`docs/livestream.md`); owner picked the mob fight (r:r73847d) | [#8](https://github.com/evanlin23/hello-buh/pull/8) | gauntlet v2 (ringside cams, HP bars, VS cards, a varied ladder); session planner; owner-only steps for streaming |
+| vertical long-form / live (owner 2026-11-14) | research + plan done; owner picked the mob fight (r:r73847d), then THE MOB ARENA (r:r33b0c9): sample `live_mob_arena` with music | [#8](https://github.com/evanlin23/hello-buh/pull/8) | owner OK on the arena sample; the session planner (hundreds of seeded fights, the series count); owner-only steps (live on @HelloBuh, Streamlabs) for the first stream |
