@@ -83,6 +83,7 @@ def frame_states(stunt, rec, conf, fps, n):
     nm, nt = marks("live_count")
     sm, st = marks("live_stat")
     gm, gt = marks("live_goal")
+    bm, bt = marks("live_big")
     if not cm:
         sys.exit("live_overlay: the recording has no `live` clock marks (lib/live.js L.clock)")
     stream = conf.get("stream", 8 * 3600)
@@ -98,12 +99,15 @@ def frame_states(stunt, rec, conf, fps, n):
         target = (tg["label"], tg.get("red", ""), tg["at"]) if tg else (conf.get("title", ""), conf.get("red", ""), stream)
         j = bisect.bisect_right(nt, tick) - 1
         cnt = nm[j].get("n") if j >= 0 else None
+        clabel = next((nm[i].get("label") for i in range(j, -1, -1) if nm[i].get("label")), None) if j >= 0 else None
         step = (nm[j]["n"] - nm[j - 1]["n"]) if j >= 1 and nm[j].get("n") is not None and nm[j - 1].get("n") is not None else 0
         since = (tick - nt[j]) / 20 if j >= 0 else 99
         sv = last(sm, st, tick)
         gv = last(gm, gt, tick)
-        prev = {"clock": clock, "stream": stream, "target": target, "count": cnt, "step": step, "since": since,
-                "stat": (sv["label"], sv["value"]) if sv else None, "goal": gv["of"] if gv else None}
+        bv = last(bm, bt, tick)
+        prev = {"clock": clock, "rate": c.get("rate", 1), "stream": stream, "target": target, "count": cnt, "step": step, "since": since,
+                "stat": (sv["label"], sv["value"]) if sv else None, "goal": gv["of"] if gv else None,
+                "big": bv["text"] if bv else None, "clabel": clabel}
         out.append(prev)
     first = next((x for x in out if x), None)
     return [x or first for x in out]
@@ -111,13 +115,22 @@ def frame_states(stunt, rec, conf, fps, n):
 
 def state_key(st):
     label, red, at = st["target"]
+    if skipping(st):
+        return ("skip", label, red, st["count"], st["stat"])
     left = at - st["clock"] if at is not None else None
     flash = round((math.ceil(left) - left) * 20) if left is not None and 0 < left <= 60.5 else 0
     fin = ms(st["stream"] - st["clock"]) if at is not None and at < st["stream"] else None
     pop = (st["step"], round(st["since"] * 20)) if 0 < st["step"] <= 9 and st["since"] < 0.5 else None
     pct = goal_pct(st)
     gflash = round(st["since"] * 20) % 10 if pct is not None and pct >= 100 else 0
-    return (label, red, ms(left) if left is not None else None, flash, fin, st["count"], pop, st["stat"], st.get("goal"), pct, gflash)
+    return (label, red, ms(left) if left is not None else None, flash, fin, st["count"], pop, st["stat"], st.get("goal"), pct, gflash,
+            st.get("big"), st.get("clabel"))
+
+
+def skipping(st):
+    """A time-lapse (the clock running faster than live): no clock at all, the big line says so. Owner 2026-11-14 ("are
+    people gonna wait 2 hours... really?"): the screen never shows an hours-long wait."""
+    return st.get("rate", 1) > 1.5
 
 
 def goal_pct(st):
@@ -175,7 +188,9 @@ class Painter:
         label, red, at = st["target"]
         img = self.top(label, red).copy()
         clock, stream = st["clock"], st["stream"]
-        if at is not None:   # the countdown to the current target
+        if skipping(st):
+            self.big(img, "SKIPPING >>", 180, (255, 200, 70, 255), max_s=14)
+        elif at is not None:   # the countdown to the current target
             left = at - clock
             col = WHITE
             if left <= 60.5:   # the last minute: red, a white flash on each new second; 0:00 once due
@@ -187,9 +202,11 @@ class Painter:
             pct = goal_pct(st)
             col = WHITE if pct < 100 else (RED if int(st["since"] * 4) % 2 == 0 else WHITE)
             self.big(img, f"{pct}%", 180, col, max_s=22)
+        elif st.get("big"):   # plain text ("6 / 40 WINS")
+            self.big(img, st["big"], 180, WHITE, max_s=20)
         y0 = BAND + GAME_H + 22
         cnt = st["count"]
-        name = self.conf.get("counter", "")
+        name = st.get("clabel") or self.conf.get("counter", "")
         if cnt is not None:   # the counter row
             num = f"{cnt:,}" + (f" / {st['goal']:,}" if st.get("goal") else "")
             S2 = 8

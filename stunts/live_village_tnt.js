@@ -25,7 +25,8 @@ const LAPSE = 480       // ticks of the time-lapse (24 s recorded, x4 in the edi
 module.exports = {
   name: 'live_village_tnt',
   // the bands (scripts/live_overlay.py): the stream's length, the counter, the long countdown's name
-  live: { stream: L.STREAM_S, counter: 'TNT', icon: 'tnt', final: 'WHOLE VILLAGE' },
+  // (no `final` line: owner 2026-11-14, "are people gonna wait 2 hours... really?": nothing on screen counts in hours)
+  live: { stream: L.STREAM_S, counter: 'TNT', icon: 'tnt' },
   time: 6000,
   renderDistance: 10,
   botTimeout: 1500,

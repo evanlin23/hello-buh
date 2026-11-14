@@ -35,8 +35,10 @@ module.exports = {
   },
   edit: {
     caption: 'the village explodes at 100% 💀', red: '100%',
-    startAt: 'live_on:0', endAfter: 'blast_end:-1',
-    speed: [['tp_a', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse_a', 'fuse_b', 'cut'], ['boom:4', 'blast_end:-3', 2]],
+    // this take (2026-11-14): blast_end came 0.75 s in (the blast's block changes arrive in bursts up to 1.7 s apart while
+    // the server lags under ~5,000 TNT); its last block went 0.15 s before the recording's end mark, so it ends there
+    startAt: 'live_on:0', endAfter: 'end:-0.1',
+    speed: [['tp_a', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 2.5], ['fuse_a', 'fuse_b', 'cut'], ['boom:3', 'end:-2', 2]],
     cards: [['full', 'ALMOST... 💀', 0.9, 'red'], ['bigger', 'WAIT... BIGGER 💀', 1.5, 'yellow'], ['creepers', 'ONE MORE THING...', 1.3, 'green']],
     sfx: [['riser', 'full:-2', 'full'], ['scratch', 'bigger'], ['whoosh', 'lapse_a'], ['whoosh', 'lapse_b'], ['riser', 'lit:-3', 'lit'],
       ['boom', 'boom'], ['impact', 'boom', { gain: 1.3 }]],
@@ -84,6 +86,7 @@ module.exports = {
     Object.assign(this, { ctx, c, cols, trench, tk, pre, total1: cols.length, C })
     const s = C.standFor(trench, 0, 10, { x: c.x + 0.5, z: c.z + 0.5 }, 1.6, tk)
     if (!s) throw new Error('no stand beside the trench')
+    s.y = cols.find(col => col.x === Math.floor(s.x) && col.z === Math.floor(s.z)).y + 1   // on the TNT (the bot's world may lag the fills)
     this.village = await C.anchor('village', c.x + 0.5, c.y + 2, c.z + 0.5)
     await ctx.hotbar([['tnt', 64], 'flint_and_steel', ['creeper_spawn_egg', 3], ['tnt', 64], ['bread', 16]])
     await ctx.tpCheck(s.x, s.y, s.z, s.yaw, 35)
@@ -98,8 +101,9 @@ module.exports = {
     const { c, cols, trench, tk } = this
     const A = require('../lib/act')(ctx)
     const C = require('../lib/live_crew')(ctx, A, { cols })
-    let booms = 0, lastBoom = -99, armed = false
-    bot._client.on('explosion', () => { booms++; lastBoom = ctx.tick; if (armed && booms >= 1 && !this.boomed) { this.boomed = true; ctx.mark('boom') } })
+    let booms = 0, armed = false
+    const W = C.watchBlast(c, R)   // the blast's progress from the blocks (lib/live_crew.js)
+    bot._client.on('explosion', () => { booms++; if (armed && !this.boomed) { this.boomed = true; ctx.mark('boom') } })
     let n = this.pre.length
     const total1 = this.total1
 
@@ -114,8 +118,8 @@ module.exports = {
     // 1. the last gap, toward the village (the trench from the edge in); a second pass for any passed over
     const mid = { x: c.x + 0.5, z: c.z + 0.5 }   // each stand just outside the next cells: working in toward the village
     const onPlace = () => { n++; L.count(ctx, n) }
-    let r = await C.lay(trench, { from: 0, until: ctx.tick + 19 * 20, center: mid, win: 10, onPlace, skip: tk })
-    if (r.skipped.length) r = await C.lay(r.skipped, { from: 0, until: ctx.tick + 5 * 20, center: mid, win: 10, onPlace, skip: tk })
+    let r = await C.lay(trench, { from: 0, until: ctx.tick + 19 * 20, center: mid, win: 10, onPlace })
+    if (r.skipped.length) r = await C.lay(r.skipped, { from: 0, until: ctx.tick + 5 * 20, center: mid, win: 10, onPlace })
     ctx.log(`trench: ${n} of ${total1}`)
     // whatever is still open (out of reach on this take) goes down off camera in the cut to the drone below
 
@@ -188,7 +192,7 @@ module.exports = {
     }
     await bot.waitForTicks(10)
     ctx.select(1)
-    armed = true
+    armed = true; W.armed = true
     const lit = C.lightable(cols.map(col => ({ x: col.x, y: col.y + 1, z: col.z })), 3.6)
     try { if (!lit) throw new Error('nothing in reach'); await A.use(lit, { sound: 'item.flintandsteel.use' }) } catch (e) { ctx.log('light', e.message); await ctx.cmd(`/summon tnt ${st.x + 0.5} ${st.y + 3} ${st.z + 0.5}`) }
     ctx.sound('entity.tnt.primed', 1)
@@ -196,15 +200,21 @@ module.exports = {
     const t0 = ctx.tick
     await bot.waitForTicks(12)
     ctx.mark('fuse_a')
-    M.shot(ctx, 'boom')
-    await ctx.cmd('/kill @e[type=creeper]', { mayFail: true })   // inside the fuse's cut (never on screen): the blast would fling them
+    // inside the fuse's cut (never on screen): 56e out of the blast first (a POV cut, so the camera goes with it), the
+    // creepers gone (the blast would fling them), then the drone
     const away = C.awayStand({ x: st.x + 0.5, y: st.y, z: st.z + 0.5, yaw }, c)
-    await ctx.cmd(`/tp @s ${away.x} ${away.y} ${away.z} ${away.yaw.toFixed(1)} 0`)   // motion-ok: on the cut to the blast drone
-    while (ctx.tick - t0 < 70 && !this.boomed) await bot.waitForTicks(1)
+    await ctx.cmd(`/tp @s ${away.x} ${away.y} ${away.z} ${away.yaw.toFixed(1)} 0`)   // motion-ok: inside the fuse's cut, before the drone
+    await ctx.cmd('/kill @e[type=creeper]', { mayFail: true })
+    await bot.waitForTicks(4)
+    M.shot(ctx, 'boom')
+    while (ctx.tick - t0 < 70 && !this.boomed && W.first === null) await bot.waitForTicks(1)
     ctx.mark('fuse_b')
-    for (let k = 0; k < 2400 && (!this.boomed || ctx.tick - lastBoom < 30); k++) await bot.waitForTicks(1)
-    ctx.mark('blast_end')   // 1.5 s after the last explosion (the harness's settle can wait on stale entities)
-    ctx.log('booms', booms, 'TNT', n, 'creepers', placed)
+    for (let k = 0; k < 120 && !this.boomed && W.first === null; k++) await bot.waitForTicks(1)
+    if (!this.boomed) { this.boomed = true; ctx.mark('boom') }
+    // until no block has gone for 1.5 s (the blocks are the truth: packets stop at range)
+    for (let k = 0; k < 2400 && ctx.tick - W.last < 60; k++) await bot.waitForTicks(1)
+    ctx.mark('blast_end')   // 3 s after the last block went (they come in bursts while the server lags)
+    ctx.log('booms', booms, 'TNT', n, 'TNT gone', W.tntGone, 'creepers', placed)
     return !!this.boomed
   },
 
