@@ -37,7 +37,7 @@ module.exports = {
     caption: 'the village explodes at 100% 💀', red: '100%',
     startAt: 'live_on:0', endAfter: 'blast_end:-1',
     speed: [['tp_a', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse_a', 'fuse_b', 'cut'], ['boom:4', 'blast_end:-3', 2]],
-    cards: [['full', '100% 💀', 0.9, 'red'], ['bigger', 'WAIT... BIGGER 💀', 1.5, 'yellow'], ['creepers', 'ONE MORE THING...', 1.3, 'green']],
+    cards: [['full', 'ALMOST... 💀', 0.9, 'red'], ['bigger', 'WAIT... BIGGER 💀', 1.5, 'yellow'], ['creepers', 'ONE MORE THING...', 1.3, 'green']],
     sfx: [['riser', 'full:-2', 'full'], ['scratch', 'bigger'], ['whoosh', 'lapse_a'], ['whoosh', 'lapse_b'], ['riser', 'lit:-3', 'lit'],
       ['boom', 'boom'], ['impact', 'boom', { gain: 1.3 }]],
     flash: [['boom', 0, 0.5]], shake: [['boom', 0, 14]], punch: [['full', 0, 1.05], ['boom', 0, 1.1]]
