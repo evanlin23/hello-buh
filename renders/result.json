@@ -1,0 +1,17 @@
+{
+ "name": "live_golem_gauntlet",
+ "stunt": "live_golem_gauntlet",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43570706775",
+ "source": "79506ee",
+ "queued": "2026-11-14T07:21:14Z",
+ "finished": "2026-11-14T07:30:23Z",
+ "mp4": "renders/out/live_golem_gauntlet.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}

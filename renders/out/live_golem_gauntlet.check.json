@@ -1,0 +1,351 @@
+{
+ "stunt": "live_golem_gauntlet",
+ "rec": "/home/runner/work/hello-buh/hello-buh/work/live_golem_gauntlet.rec.json",
+ "steps": [
+  {
+   "name": "motion lint",
+   "exit": 0,
+   "summary": "clean",
+   "hits": []
+  },
+  {
+   "name": "rec_check",
+   "exit": 0,
+   "summary": "no blockers",
+   "skipped": [
+    "  terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped",
+    "  2 camera shot(s), 10.1s: POV checks skipped there; run LINT=1 node render.js /home/runner/work/hello-buh/hello-buh/work/live_golem_gauntlet.rec.json for the cameras"
+   ],
+   "blocks": 1
+  },
+  {
+   "name": "lint",
+   "exit": 0,
+   "summary": "clean",
+   "lines": [
+    "motion fixes: 1 cast member moved with a cut land on it",
+    "skin: the player is 56e's own skin (arms: wide)",
+    "LINT live_golem_gauntlet: 5 shots, scene 0.0-33.3 s (scene seconds from edit.startAt, before slow motion)",
+    "  pov            0.0-7.2   pov    ",
+    "  arena          7.2-12.2  orbit  (no subject: add subject: [...] to check its framing)",
+    "  pov           12.2-24.6  pov    ",
+    "  final         24.6-29.6  orbit  (no subject: add subject: [...] to check its framing)",
+    "  pov           29.6-33.3  pov    ",
+    "verdict: clean"
+   ],
+   "findings": [],
+   "ran": true
+  },
+  {
+   "name": "continuity",
+   "exit": 0,
+   "summary": "0 problem(s), 16 warning(s), 0 note(s)",
+   "findings": [
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #388 glides 1.5 blocks in one tick in view at 3.25 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #388 glides 1.4 blocks in one tick in view at 3.80 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #389 glides 1.3 blocks in one tick in view at 4.10 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #389 glides 1.8 blocks in one tick in view at 4.90 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #389 glides 1.6 blocks in one tick in view at 5.20 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #389 glides 1.4 blocks in one tick in view at 5.80 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "vanish",
+     "msg": "husk #389 vanishes in the middle of the frame 5.90 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #388 glides 1.8 blocks in one tick in view at 6.20 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 0,
+     "shot": 1,
+     "line": null,
+     "kind": "vanish",
+     "msg": "husk #388 vanishes in the middle of the frame 6.95 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 2,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #390 glides 1.6 blocks in one tick in view at 0.80 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 2,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #390 glides 1.8 blocks in one tick in view at 1.70 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 2,
+     "line": null,
+     "kind": "vanish",
+     "msg": "husk #390 vanishes in the middle of the frame 2.45 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 2,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #391 glides 1.6 blocks in one tick in view at 2.80 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 2,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #391 glides 1.4 blocks in one tick in view at 3.40 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 7.15,
+     "shot": 2,
+     "line": null,
+     "kind": "pop",
+     "msg": "husk #391 glides 1.3 blocks in one tick in view at 4.20 s into the shot"
+    },
+    {
+     "level": "WARN",
+     "out": 25.433,
+     "shot": 6,
+     "line": null,
+     "kind": "vanish",
+     "msg": "ravager #426 vanishes in the middle of the frame 2.45 s into the shot"
+    }
+   ]
+  },
+  {
+   "name": "framing",
+   "exit": 0,
+   "summary": "0 warning(s) over 6 shots",
+   "findings": []
+  },
+  {
+   "name": "owner",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s)",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "name": "cuts",
+   "exit": 0,
+   "summary": "0 blocker(s), 0 warning(s) over 4 cuts",
+   "findings": [],
+   "rows": [
+    {
+     "tick": 159,
+     "out": 7.15,
+     "line": null,
+     "from": "pov",
+     "to": "arena",
+     "before": {
+      "x": 0.56,
+      "y": 0.43,
+      "what": "iron_golem",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.087,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 260,
+     "out": 12.2,
+     "line": null,
+     "from": "arena",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "iron_golem",
+      "kind": "cast"
+     },
+     "dist": 0.003,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 507,
+     "out": 24.55,
+     "line": null,
+     "from": "pov",
+     "to": "final",
+     "before": {
+      "x": 0.54,
+      "y": 0.45,
+      "what": "iron_golem",
+      "kind": "cast"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "dist": 0.061,
+     "timing": null,
+     "optOut": false
+    },
+    {
+     "tick": 607,
+     "out": 29.55,
+     "line": null,
+     "from": "final",
+     "to": "pov",
+     "before": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "the aim",
+      "kind": "aim"
+     },
+     "after": {
+      "x": 0.5,
+      "y": 0.5,
+      "what": "iron_golem",
+      "kind": "cast"
+     },
+     "dist": 0,
+     "timing": null,
+     "optOut": false
+    }
+   ]
+  },
+  {
+   "name": "caption sync",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "voice contrast",
+   "exit": 0,
+   "summary": "skipped (not a story)",
+   "ran": false
+  },
+  {
+   "name": "on-screen sound",
+   "exit": 0,
+   "summary": "every visible action has its sound",
+   "lines": [
+    "    23.60s  iron_golem step on polished_andesite -> entity.iron_golem.step             7.7 blocks in view  ",
+    "    23.65s  ravager step on smooth_sandstone   -> entity.ravager.step               14.9 blocks in view  ",
+    "    23.95s  ravager step on smooth_sandstone   -> entity.ravager.step               13.6 blocks in view  ",
+    "    24.20s  ravager step on smooth_sandstone   -> entity.ravager.step               12.2 blocks in view  ",
+    "    24.45s  iron_golem step on smooth_sandstone -> entity.iron_golem.step             7.7 blocks in view  ",
+    "    24.50s  ravager step on smooth_sandstone   -> entity.ravager.step               11.0 blocks in view  ",
+    "    24.80s  ravager step on smooth_sandstone   -> entity.ravager.step                9.8 blocks in view  ",
+    "    24.80s  iron_golem hit                     -> entity.iron_golem.hurt             8.3 blocks in view  ",
+    "    24.85s  ravager hit                        -> entity.ravager.hurt                9.8 blocks in view  ",
+    "    25.05s  iron_golem step on smooth_sandstone -> entity.iron_golem.step             8.7 blocks in view  ",
+    "    25.85s  ravager hit                        -> entity.ravager.hurt               10.2 blocks in view  ",
+    "    26.15s  ravager step on smooth_sandstone   -> entity.ravager.step               10.4 blocks in view  ",
+    "    26.25s  iron_golem hit                     -> entity.iron_golem.hurt             8.9 blocks in view  ",
+    "    26.60s  ravager idle voice                 -> entity.ravager.ambient            10.0 blocks in view  ",
+    "    26.85s  ravager hit                        -> entity.ravager.hurt               10.5 blocks in view  ",
+    "    27.65s  iron_golem step on smooth_sandstone -> entity.iron_golem.step             9.2 blocks in view  ",
+    "    27.75s  iron_golem hit                     -> entity.iron_golem.hurt             9.2 blocks in view  ",
+    "    27.90s  ravager hit                        -> entity.ravager.hurt               10.9 blocks in view  ",
+    "    28.90s  ravager hit                        -> entity.ravager.hurt               11.1 blocks in view  ",
+    "    28.95s  ravager step on smooth_sandstone   -> entity.ravager.step               11.1 blocks in view  ",
+    "    29.20s  iron_golem hit                     -> entity.iron_golem.hurt             9.5 blocks in view  ",
+    "    29.90s  ravager hit                        -> entity.ravager.hurt               11.0 blocks in view  ",
+    "    30.65s  iron_golem hit                     -> entity.iron_golem.hurt             9.4 blocks in view  ",
+    "    30.90s  ravager hit                        -> entity.ravager.hurt               11.0 blocks in view  ",
+    "    31.10s  iron_golem step on smooth_sandstone -> entity.iron_golem.step             9.6 blocks in view  ",
+    "    31.55s  ravager step on smooth_sandstone   -> entity.ravager.step               11.2 blocks in view  ",
+    "    31.90s  ravager hit                        -> entity.ravager.hurt               11.0 blocks in view  ",
+    "    31.90s  ravager died                       -> entity.ravager.death              11.0 blocks in view  ",
+    "ambience per shot: -0.20-37.15s day",
+    "0 visible action(s) that stay silent after the fills"
+   ]
+  },
+  {
+   "name": "pace",
+   "exit": 0,
+   "summary": "skipped: no rendered Short yet (runs after ./hb render --fetch)",
+   "ran": false
+  },
+  {
+   "name": "audible sound",
+   "exit": 0,
+   "summary": "skipped: no fresh rendered Short (the levels are rec_check's)",
+   "ran": false
+  }
+ ],
+ "ok": true,
+ "blockers": 0,
+ "failed": [],
+ "broken": [],
+ "label": "CHECK OK",
+ "when": "2026-11-14T07:22:03.033Z"
+}
