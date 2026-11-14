@@ -18,6 +18,31 @@ bars for both sides, a VS card between fights, a varied ladder (husks, vindicato
 witches, slimes, magma cubes...), then the session planner (a run of fights per round, rendered in parallel) and, once
 the owner has done the owner-only steps below, the streaming VM.
 
+## THE MOB ARENA (the format, v2: `stunts/live_mob_arena.js`)
+Owner, 2026-11-14, on the first gauntlet: "much fancier (arena, music, sound design), and have fake mobs too, maybe a
+mod?"; "why is it only 40? ... 960/1000 ... the fights should be interesting and close too, we cna engineer that with
+more enemies or more iron golems"; "should be hundreds right so people can watch forever and not get bored?"
+- **The arena:** a colosseum on a levelled plains field: a patterned sandstone floor, a 3-high wall with a barred gate
+  north and south (blue and red banners), four tiers of stands packed with villagers (every trade) facing in, lanterns
+  and campfires round the top. 56e sits in the front row (invisible to the mobs, so they fight each other).
+- **The "mod" is ours, on screen only:** the arena's roulette in the top band rolls the next fight (names and spawn eggs
+  spinning, slowing, landing), summons arrive in a puff with a spell sound, the two teams' health bars sit in the bottom
+  band. The server stays vanilla: "modded" mobs are vanilla mobs grown or shrunk with the `minecraft:scale` attribute
+  (a GIANT HUSK 3x, a TITAN RAVAGER 2x), with their health and damage set by attributes.
+- **Close fights by design:** both sides are teams (1-4 golems against a mixed group), sized so the bars end close;
+  each side's total health is its bar. The pool is vanilla mobs that fight golems on their own: husks, vindicators,
+  pillagers, evokers (vexes), ravagers, zoglins, hoglins, piglin brutes, witches, spiders, slimes, magma cubes, wither
+  skeletons. (A summoned warden never engaged; a lone boss can stall: the sample's ravager held out 22 s alone, so a
+  boss always comes with a guard and a tuned health.)
+- **Hundreds of fights, every one different:** at ~1 fight a minute (a KO every 15-90 s plus the roll), an 8 h stream
+  is ~400-500 fights. Each fight is drawn from the pool by the session's seed: the mobs, the team sizes, giants and
+  minis, the champion side; each stream its own arena look, time of day and weather. The count on screen ("960 / 1000
+  WINS") is the series' real running total across streams (the session plan carries it), so "almost at the end" is
+  true; at 1000 a new series starts (a new champion).
+- **Sound:** the game's own: the raid horn and the bell for a fight, the summon spells, the crowd's murmur, cheers and
+  fireworks on a KO, note-block ticks while the roulette spins; impacts and risers on the beats. **Music:** an NCS track
+  under everything at one steady level (`scripts/live_music.py`: -21 LUFS bed, the mix at -14), credited.
+
 ## What the research changed (short version)
 - **The winners are real lives of 40 min to 1.5 h, 2-6 a day, not one 12 h block** (ItzPyr0_XD 1.49M views on a
   1:37 TNT-village live and ~3.6K subs in ~1.5 days; Tutu Gaming 64K-1.2M a live after 139-870 on its Roblox lives).
