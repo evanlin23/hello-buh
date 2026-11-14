@@ -1,103 +1,106 @@
 {
- "updated": "2026-11-13",
- "mean": 13.42,
+ "updated": "2026-11-14",
+ "mean": 11.8,
  "family": {
-  "lapse": 7.54,
-  "story": 23.87,
-  "spot": 16.62,
-  "clutch": 7.5,
-  "guess": 7.54,
-  "ai": 6.47,
-  "chain_reaction": 9.1,
-  "hide_seek": 13.42,
-  "fakeworld": 13.42,
-  "friend": 13.42,
-  "mobpov": 13.42
+  "lapse": 7.1,
+  "story": 17.96,
+  "spot": 16.34,
+  "clutch": 6.92,
+  "guess": 6.62,
+  "ai": 5.16,
+  "chain_reaction": 8.69,
+  "hide_seek": 6.23,
+  "fakeworld": 11.8,
+  "friend": 11.8,
+  "mobpov": 11.8,
+  "race": 11.8
  },
  "rate_per_1k": {
-  "lapse": 0.847,
-  "story": 2.523,
-  "spot": 1.825,
-  "clutch": 0.872,
-  "guess": 1.259,
-  "ai": 1.016,
-  "chain_reaction": 1.386,
-  "hide_seek": 1.653,
-  "fakeworld": 1.653,
-  "friend": 1.653,
-  "mobpov": 1.653
+  "lapse": 0.79,
+  "story": 2.272,
+  "spot": 1.705,
+  "clutch": 0.821,
+  "guess": 1.152,
+  "ai": 0.798,
+  "chain_reaction": 1.331,
+  "hide_seek": 1.057,
+  "fakeworld": 1.534,
+  "friend": 1.534,
+  "mobpov": 1.534,
+  "race": 1.534
  },
- "mean_rate_per_1k": 1.653,
+ "mean_rate_per_1k": 1.534,
  "reach": {
-  "lapse": 8901,
-  "story": 9462,
-  "spot": 9107,
-  "clutch": 8599,
-  "guess": 5988,
-  "ai": 6365,
-  "chain_reaction": 6566,
-  "hide_seek": 8115,
-  "fakeworld": 8115,
-  "friend": 8115,
-  "mobpov": 8115
+  "lapse": 8980,
+  "story": 7906,
+  "spot": 9585,
+  "clutch": 8431,
+  "guess": 5748,
+  "ai": 6467,
+  "chain_reaction": 6532,
+  "hide_seek": 5894,
+  "fakeworld": 7690,
+  "friend": 7690,
+  "mobpov": 7690,
+  "race": 7690
  },
- "mean_reach": 8115,
+ "mean_reach": 7690,
  "family_totals": {
   "lapse": {
-   "views": 19373,
+   "views": 20540,
    "subs": 14,
    "shorts": 2,
-   "settled_views": 19373,
+   "settled_views": 20540,
    "settled": 2
   },
   "story": {
-   "views": 31077,
-   "subs": 81,
+   "views": 39964,
+   "subs": 93,
    "shorts": 5,
-   "settled_views": 31077,
-   "settled": 3
+   "settled_views": 39964,
+   "settled": 5
   },
   "spot": {
-   "views": 29305,
-   "subs": 54,
+   "views": 32543,
+   "subs": 56,
    "shorts": 3,
-   "settled_views": 29305,
+   "settled_views": 32543,
    "settled": 3
   },
   "clutch": {
-   "views": 9565,
+   "views": 9911,
    "subs": 6,
    "shorts": 1,
-   "settled_views": 9565,
+   "settled_views": 9911,
    "settled": 1
   },
   "guess": {
-   "views": 1734,
+   "views": 1862,
    "subs": 1,
    "shorts": 1,
-   "settled_views": 1734,
+   "settled_views": 1862,
    "settled": 1
   },
   "ai": {
-   "views": 2865,
+   "views": 4020,
    "subs": 1,
-   "shorts": 1,
-   "settled_views": 2865,
+   "shorts": 2,
+   "settled_views": 4020,
    "settled": 1
   },
   "chain_reaction": {
-   "views": 3466,
-   "subs": 4,
+   "views": 4214,
+   "subs": 5,
    "shorts": 1,
-   "settled_views": 3466,
+   "settled_views": 4214,
    "settled": 1
   },
   "hide_seek": {
-   "views": 0,
-   "subs": 0,
+   "views": 2301,
+   "subs": 1,
    "shorts": 1,
-   "settled_views": 0,
-   "settled": 0
+   "settled_views": 2301,
+   "settled": 1
   },
   "fakeworld": {
    "views": 0,
@@ -119,6 +122,13 @@
    "shorts": 1,
    "settled_views": 0,
    "settled": 0
+  },
+  "race": {
+   "views": 0,
+   "subs": 0,
+   "shorts": 1,
+   "settled_views": 0,
+   "settled": 0
   }
  },
  "videos": {
@@ -127,135 +137,135 @@
    "views": 16176,
    "subs": 13,
    "settled": true,
-   "avg_pct": 81.11,
+   "avg_pct": 81.09,
    "viewed_pct": 79.4,
-   "stayed": 0.5473541048466865
+   "stayed": 0.5478486646884273
   },
   "story_runaway": {
    "family": "story",
-   "views": 24972,
-   "subs": 71,
+   "views": 25228,
+   "subs": 72,
    "settled": true,
-   "avg_pct": 93.33,
+   "avg_pct": 93.22,
    "viewed_pct": 80.0,
-   "stayed": 0.5569838218805062
+   "stayed": 0.5574361820199778
   },
   "spot_wrong": {
    "family": "spot",
-   "views": 25699,
+   "views": 25846,
    "subs": 52,
    "settled": true,
-   "avg_pct": 89.45,
+   "avg_pct": 89.42,
    "viewed_pct": 73.7,
-   "stayed": 0.5272578699560294
+   "stayed": 0.5269674224251335
   },
   "clutch_harder": {
    "family": "clutch",
-   "views": 9565,
+   "views": 9911,
    "subs": 6,
    "settled": true,
-   "avg_pct": 84.27,
+   "avg_pct": 84.28,
    "viewed_pct": 81.0,
-   "stayed": 0.5725039205436487
+   "stayed": 0.5722934113611139
   },
   "guess_sound": {
    "family": "guess",
-   "views": 1734,
+   "views": 1862,
    "subs": 1,
    "settled": true,
-   "avg_pct": 60.58,
+   "avg_pct": 60.22,
    "viewed_pct": 59.3,
-   "stayed": 0.5841983852364475
+   "stayed": 0.5843179377013964
   },
   "lapse_house": {
    "family": "lapse",
-   "views": 3197,
+   "views": 4364,
    "subs": 1,
    "settled": true,
-   "avg_pct": 95.31,
+   "avg_pct": 91.67,
    "viewed_pct": 70.3,
-   "stayed": 0.5799186737566469
+   "stayed": 0.576993583868011
   },
   "ai_thin_ice": {
    "family": "ai",
-   "views": 2865,
+   "views": 4020,
    "subs": 1,
    "settled": true,
-   "avg_pct": 85.68,
+   "avg_pct": 82.84,
    "viewed_pct": 60.9,
-   "stayed": 0.5378708551483421
+   "stayed": 0.5435323383084577
   },
   "chain_reaction": {
    "family": "chain_reaction",
-   "views": 3466,
-   "subs": 4,
+   "views": 4214,
+   "subs": 5,
    "settled": true,
-   "avg_pct": 86.79,
+   "avg_pct": 86.49,
    "viewed_pct": 59.3,
-   "stayed": 0.5291402192729371
+   "stayed": 0.536782154722354
   },
   "story_respawn_tax": {
    "family": "story",
-   "views": 3587,
-   "subs": 6,
+   "views": 5935,
+   "subs": 9,
    "settled": true,
-   "avg_pct": 77.25,
+   "avg_pct": 81.29,
    "viewed_pct": 77.5,
-   "stayed": 0.5865625871201561
+   "stayed": 0.57893850042123
   },
   "spot_wrong_2": {
    "family": "spot",
-   "views": 2245,
-   "subs": 1,
+   "views": 4290,
+   "subs": 3,
    "settled": true,
-   "avg_pct": 78.84,
+   "avg_pct": 80.81,
    "viewed_pct": 58.5,
-   "stayed": 0.511358574610245
+   "stayed": 0.517016317016317
   },
   "story_torch": {
    "family": "story",
-   "views": 2518,
-   "subs": 4,
+   "views": 3339,
+   "subs": 5,
    "settled": true,
-   "avg_pct": 71.88,
+   "avg_pct": 72.89,
    "viewed_pct": 76.5,
-   "stayed": 0.630659253375695
+   "stayed": 0.6316262353998203
   },
   "spot_wrong_3": {
    "family": "spot",
-   "views": 1361,
+   "views": 2407,
    "subs": 1,
    "settled": true,
-   "avg_pct": 95.66,
+   "avg_pct": 98.26,
    "viewed_pct": 56.4,
-   "stayed": 0.4819985304922851
+   "stayed": 0.48358953053593684
   },
   "story_respawn_voice": {
    "family": "story",
-   "views": 0,
-   "subs": 0,
-   "settled": false,
-   "avg_pct": null,
+   "views": 3844,
+   "subs": 3,
+   "settled": true,
+   "avg_pct": 94.87,
    "viewed_pct": null,
-   "stayed": null
+   "stayed": 0.7099375650364204
   },
   "hide_seek": {
    "family": "hide_seek",
-   "views": 0,
-   "subs": 0,
-   "settled": false,
-   "avg_pct": null,
+   "views": 2301,
+   "subs": 1,
+   "settled": true,
+   "avg_pct": 64.27,
    "viewed_pct": null,
-   "stayed": null
+   "stayed": 0.5697522816166884
   },
   "story_chunk_next_door": {
    "family": "story",
-   "views": 0,
-   "subs": 0,
-   "settled": false,
-   "avg_pct": null,
+   "views": 1618,
+   "subs": 4,
+   "settled": true,
+   "avg_pct": 61.61,
    "viewed_pct": null,
-   "stayed": null
+   "stayed": 0.5710754017305315
   },
   "fakeworld_diamond": {
    "family": "fakeworld",
@@ -277,6 +287,24 @@
   },
   "mobpov_baby_zombie": {
    "family": "mobpov",
+   "views": 0,
+   "subs": 0,
+   "settled": false,
+   "avg_pct": null,
+   "viewed_pct": null,
+   "stayed": null
+  },
+  "race_grass_mycelium": {
+   "family": "race",
+   "views": 0,
+   "subs": 0,
+   "settled": false,
+   "avg_pct": null,
+   "viewed_pct": null,
+   "stayed": null
+  },
+  "ai_dirk_willems": {
+   "family": "ai",
    "views": 0,
    "subs": 0,
    "settled": false,
