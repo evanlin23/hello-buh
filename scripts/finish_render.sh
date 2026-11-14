@@ -16,3 +16,8 @@ if node -e "const e=require('./stunts/'+process.argv[1]).edit||{};process.exit(e
 mapfile -t EDIT_ARGS < <(node scripts/edit_args.js "$STUNT")
 python3 edit.py --frames "work/$NAME.frames/f%05d.png" --fps "$FPS" --out_fps "$FPS" \
   --timeline "$REC" --audio "work/$NAME.wav" "${EDIT_ARGS[@]}" --out "out/$NAME.mp4"
+# the live formats only (stunts/live_*.js with a `live` block; a Short has none, so this never runs for one): the
+# countdown and counter bands (scripts/live_overlay.py, docs/livestream.md)
+if node -e "process.exit(require('./stunts/'+process.argv[1]).live?0:1)" "$STUNT"; then
+  python3 scripts/live_overlay.py "$STUNT" --video "out/$NAME.mp4" --rec "$REC"
+fi
