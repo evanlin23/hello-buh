@@ -42,6 +42,12 @@ class OwnerOk(unittest.TestCase):
         self.yu.OWNER_OK.write_text("desire_town  1111111111111111  # older cut\n")
         self.assertIn("another cut", self.yu.owner_ok("desire_town", self.meta))
 
+    def test_second_ok_line_for_a_remix_passes(self):
+        # owner 2026-11-12 "re mix only the sound, keep existing OKs" (r:r6ae905): the re-mixed cut gets a second line
+        self.yu.OWNER_OK.write_text("desire_town  1111111111111111  # old cut\n"
+                                    "desire_town  abcdef0123456789  # sound-only re-mix of OK'd cut 1111111111111111\n")
+        self.assertEqual(self.yu.owner_ok("desire_town", self.meta), "")
+
     def test_short_prefix_or_no_release_blocks(self):
         self.yu.OWNER_OK.write_text("desire_town  abc  # too short\n")
         self.assertNotEqual(self.yu.owner_ok("desire_town", self.meta), "")

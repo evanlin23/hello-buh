@@ -79,12 +79,15 @@ def owner_ok(name: str, meta: dict) -> str:
     sha = ((meta.get("video") or {}).get("release") or {}).get("sha256", "")
     if not OWNER_OK.exists():
         return "no owner OK (uploads/owner_ok.txt missing)"
+    other = ""                         # a Short can have several OK lines (e.g. a sound-only re-mix, r:r6ae905): any match counts
     for line in OWNER_OK.read_text().splitlines():
         parts = line.split("#")[0].split()
         if len(parts) >= 2 and parts[0] == name:
             if sha and len(parts[1]) >= 12 and sha.startswith(parts[1]):
                 return ""
-            return f"the owner OK'd another cut ({parts[1][:12]}), not this one ({sha[:12] or 'no release'})"
+            other = parts[1]
+    if other:
+        return f"the owner OK'd another cut ({other[:12]}), not this one ({sha[:12] or 'no release'})"
     return "no owner OK yet (scripts/owner_ok.py add " + name + " once the owner says OK)"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
 PER_DAY = int(env("YT_PER_DAY", "3") or 3)
