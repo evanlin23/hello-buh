@@ -116,6 +116,13 @@ enabled on @HelloBuh (phone verification, then up to 24 h), and a new OAuth refr
 **Simpler first step, no server:** upload one session as a public VOD (vertical, up to 12 h). It gets no Shorts-feed
 live discovery (vertical long VODs do poorly), so it only tests the content.
 
+**First real stream, the simple way (the owner has used Streamlabs before).** Streamlabs Desktop (OBS-based) on the
+owner's PC streams a pre-rendered session file: Settings > Video, canvas 1080x1920 (or "Dual Output" for a horizontal
+and a vertical leg at once: the horizontal one carries the live ads); a Media Source with the session mp4 (loop off,
+"restart when active" off); Go Live to YouTube. The owner's PC stays on for the stream's length; the stream key
+stays in Streamlabs (never in chat or the repo). [#2] makes the session file (rounds concatenated, music bed via
+`scripts/live_music.py`, the description with the NCS credit); nothing goes live without the owner's OK on it.
+
 **Honesty rules for every stream.** Every countdown or goal on screen really pays off (no reset timers, no "explodes in
 1 minute" titles on a 3 h stream); the description says it is an automated, pre-rendered stream; no "1 sub = 1 TNT"
 promise unless subs really trigger something (possible later: the streaming VM polls the sub count with the Data API

@@ -84,6 +84,8 @@ def frame_states(stunt, rec, conf, fps, n):
     sm, st = marks("live_stat")
     gm, gt = marks("live_goal")
     bm, bt = marks("live_big")
+    rm, rt = marks("live_roll")
+    hm, ht = marks("live_hp")
     if not cm:
         sys.exit("live_overlay: the recording has no `live` clock marks (lib/live.js L.clock)")
     stream = conf.get("stream", 8 * 3600)
@@ -105,9 +107,19 @@ def frame_states(stunt, rec, conf, fps, n):
         sv = last(sm, st, tick)
         gv = last(gm, gt, tick)
         bv = last(bm, bt, tick)
+        rv = last(rm, rt, tick)
+        hps = {}
+        for i in range(bisect.bisect_right(ht, tick) - 1, -1, -1):   # the latest bar of each side
+            sd = hm[i]["side"]
+            if sd not in hps:
+                hps[sd] = (hm[i]["name"], hm[i]["hp"], hm[i]["max"])
+            if len(hps) == 2:
+                break
         prev = {"clock": clock, "rate": c.get("rate", 1), "stream": stream, "target": target, "count": cnt, "step": step, "since": since,
                 "stat": (sv["label"], sv["value"]) if sv else None, "goal": gv["of"] if gv else None,
-                "big": bv["text"] if bv else None, "clabel": clabel}
+                "big": bv["text"] if bv else None, "clabel": clabel,
+                "roll": (rv["name"], rv.get("icon"), bool(rv.get("done")), (tick - rt[bisect.bisect_right(rt, tick) - 1]) / 20) if rv and rv.get("name") else None,
+                "hp": tuple(sorted(hps.items())) or None}
         out.append(prev)
     first = next((x for x in out if x), None)
     return [x or first for x in out]
@@ -123,8 +135,10 @@ def state_key(st):
     pop = (st["step"], round(st["since"] * 20)) if 0 < st["step"] <= 9 and st["since"] < 0.5 else None
     pct = goal_pct(st)
     gflash = round(st["since"] * 20) % 10 if pct is not None and pct >= 100 else 0
+    rl = st.get("roll")
+    rk = (rl[0], rl[1], rl[2], min(8, int(rl[3] * 20))) if rl else None
     return (label, red, ms(left) if left is not None else None, flash, fin, st["count"], pop, st["stat"], st.get("goal"), pct, gflash,
-            st.get("big"), st.get("clabel"))
+            st.get("big"), st.get("clabel"), rk, st.get("hp"))
 
 
 def skipping(st):
@@ -177,6 +191,36 @@ class Painter:
         self.tops[(label, red)] = img
         return img
 
+    def egg(self, name):
+        """A spawn egg's icon (the HUD's own sprites), 2x the HUD size; None when there is none."""
+        if not name:
+            return None
+        if not hasattr(self, "_eggs"):
+            self._eggs = {}
+        if name not in self._eggs:
+            try:
+                ic = E.item_icon(self.jar, name)
+                self._eggs[name] = ic.resize((ic.width * 2, ic.height * 2), Image.NEAREST) if ic else None
+            except Exception:
+                self._eggs[name] = None
+        return self._eggs[name]
+
+    def bars(self, img, sides, y):
+        """Two boss-bar style health bars: the name over each, the bar, the number; VS between them."""
+        d = ImageDraw.Draw(img)
+        for side, (x0, col) in (("left", (60, (90, 220, 90, 255))), ("right", (W // 2 + 40, (230, 60, 50, 255)))):
+            if side not in sides:
+                continue
+            name, v, mx = sides[side]
+            w = W // 2 - 100
+            E.draw_text(img, self.jar, name, x0, y, scale=4, color=WHITE)
+            by = y + 44
+            d.rectangle((x0 - 4, by - 4, x0 + w + 4, by + 30), fill=(0, 0, 0, 255), outline=(90, 90, 90, 255), width=4)
+            if mx > 0 and v > 0:
+                d.rectangle((x0, by, x0 + int(w * min(1, v / mx)), by + 26), fill=col)
+            E.draw_text(img, self.jar, f"{v}", x0 + w, by + 40, scale=4, color=GREY, align_right=True)
+        E.draw_text(img, self.jar, "VS", W // 2, y + 40, scale=6, color=(255, 200, 70, 255), center=True)
+
     def big(self, img, txt, y, col, max_w=920, max_s=24):
         tw = E.text_width(self.jar, txt)
         S = max(8, min(max_s, max_w // max(1, tw)))
@@ -202,10 +246,20 @@ class Painter:
             pct = goal_pct(st)
             col = WHITE if pct < 100 else (RED if int(st["since"] * 4) % 2 == 0 else WHITE)
             self.big(img, f"{pct}%", 180, col, max_s=22)
+        elif st.get("roll"):   # the fake mod's roulette: the name spinning (yellow), then landed (red, a pop)
+            name, icon, done, since = st["roll"]
+            col = (255, 220, 60, 255) if not done else RED
+            ic = self.egg(icon)
+            if ic is not None:
+                img.alpha_composite(ic, (60, 185))
+            self.big(img, name, 180 + (0 if not done or since > 0.15 else -6), col, max_w=760 if ic is not None else 920, max_s=17)
         elif st.get("big"):   # plain text ("6 / 40 WINS")
             self.big(img, st["big"], 180, WHITE, max_s=20)
         y0 = BAND + GAME_H + 22
-        cnt = st["count"]
+        if st.get("hp"):   # the fighters' bars instead of the counter: left the champion, right the challenger
+            self.bars(img, dict(st["hp"]), y0)
+            y0 += 120
+        cnt = st["count"] if not st.get("hp") else None
         name = st.get("clabel") or self.conf.get("counter", "")
         if cnt is not None:   # the counter row
             num = f"{cnt:,}" + (f" / {st['goal']:,}" if st.get("goal") else "")
