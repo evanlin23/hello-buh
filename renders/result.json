@@ -1,0 +1,17 @@
+{
+ "name": "live_mob_arena",
+ "stunt": "live_mob_arena",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43574589934",
+ "source": "d7514b8",
+ "queued": "2026-11-14T08:11:08Z",
+ "finished": "2026-11-14T08:17:52Z",
+ "mp4": "renders/out/live_mob_arena.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
