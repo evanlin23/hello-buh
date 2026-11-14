@@ -5,7 +5,8 @@ stream overnight, built like the "the village is going to explode soon" TNT vide
 first drafts: "we need to make it seem like the tnt is always 'just about to explode' so they wait"; "maybe we dont need
 a count down? ... we do that thing where we edge it a little and keep them on as long as possible. like build out to the
 edge, put creepers, etc."; "we dont necessarily need to do TNT it could be like a fake mod like mob fights, or whatever is
-going viral right now". Run by [#2] (`docs/second-team.md`, issue #7). **Nothing streams or uploads without the owner's
+going viral right now"; "are people gonna wait 2 hours... really?" (no: see "How long people wait"; nothing on screen
+counts in hours). Run by [#2] (`docs/second-team.md`, issue #7). **Nothing streams or uploads without the owner's
 OK on that exact stream or video.** Research: `docs/research/livestream.md` (sources, quotes, numbers).
 
 ## What the research changed (short version)
@@ -16,7 +17,8 @@ OK on that exact stream or video.** Research: `docs/research/livestream.md` (sou
   village every few minutes).
 - **How long people wait:** no published number. From the observed concurrents and views, a Shorts-feed viewer stays
   seconds to about 2 minutes. So a real payoff has to come every ~3-5 minutes at most, and the screen must show it is
-  near. Fake or resetting countdowns got channels exposed and removed (May 2026).
+  near. Nobody watches the whole stream: its length is for the stream of new viewers the Shorts feed keeps swiping in,
+  each of whom lands minutes from a payoff. Fake or resetting countdowns got channels exposed and removed (May 2026).
 - **Money:** vertical lives get **no live ads in the Shorts feed** (Google's table: live pre/mid-rolls horizontal
   only). Ads need the dual stream (a horizontal leg on a second key) or come from the archived replay. Only a **public
   archived** live counts toward YPP hours; a stream over **12 h may not archive at all**. The YPP bar for new channels
@@ -34,7 +36,7 @@ live slice, a skip (a time-lapse or a card), the payoff. A real stream never ski
 | # | format | what the viewer sees on arrival | the payoff, and how often | sample (stunt) |
 |---|---|---|---|---|
 | 1 | **Rounds: "THIS HOUSE EXPLODES IN 0:26"** | first person packing the current target (a house, the farm, the church...) with TNT; the big line is that round's clock, never more than a few minutes (nothing counts in hours: r:r045b80) | a real blast every 3-5 min at 0:00; "NEXT: THE FARM 2:30" straight after; the whole village at the end of the hour; a new village every hour | `live_village_tnt` |
-| 2 | **The edge, no clock: "THE VILLAGE EXPLODES AT 100%"** (the owner's idea) | first person closing the last gap in a TNT field round the village; the big line is the goal, 99%; the flint and steel comes out... "WAIT... BIGGER": the goal grows (one more layer, out to the edge, creepers on it), shown honestly | the round really blows when the bigger goal is met, every ~5-10 min; never a fake or reset number | `live_village_edge` |
+| 2 | **The edge, no clock: "THE VILLAGE EXPLODES AT 100%"** (the owner's idea) | first person closing the last gap in a TNT field round the village; the big line is the goal, 99%; the flint and steel comes out... "WAIT... BIGGER": the goal grows (one more layer, out to the edge, creepers on it), shown honestly | the round really blows when the bigger goal is met, every ~3-5 min; never a fake or reset number | `live_village_edge` |
 | 3 | **Gauntlet: "CAN THE IRON GOLEM BEAT EVERY MOB?"** (beyond TNT) | a vanilla arena from the wall: the champion vs the current opponents; "6 / 40 WINS", HUSKS LEFT counting down | a KO every 15-90 s (the sample: four husks in ~12 s); "NEXT: ???" then the reveal; a final boss at the end of the run (the sample: a ravager; a warden, tried first, never engaged); a new champion and ladder each run | `live_golem_gauntlet` |
 
 All three keep the winners' layout (one bold line with a red word and a big live number in the top band, the bottom

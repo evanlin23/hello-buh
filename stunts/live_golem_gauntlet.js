@@ -32,7 +32,7 @@ module.exports = {
     caption: 'can the iron golem beat EVERY MOB? 💀', red: 'EVERY MOB',
     startAt: 'live_on:0', endAfter: 'ko2:0.9',
     speed: [['skip_a', 'skip_b:1.4', 'cut']],   // (past the turn to the boss and its frozen beat: the fight starts as the cut lands)
-    cards: [['ko1', 'WIN ✓', 0.9, 'green'], ['next', 'NEXT: ???', 1.0, 'white'], ['reveal', '???', 0.8, 'yellow'],
+    cards: [['ko1', 'WIN ✅', 0.9, 'green'], ['next', 'NEXT: ???', 1.0, 'white'], ['reveal', '???', 0.8, 'yellow'],
       ['skip_b', 'FINAL BOSS 💀', 1.3, 'red'], ['ko2', 'K.O. 💀', 1.2, 'red']],
     sfx: [['impact', 'ko1', { gain: 1.1 }], ['whoosh', 'next'], ['pop', 'reveal'], ['whoosh', 'skip_b'], ['riser', 'skip_b:2', 'ko2'], ['impact', 'ko2', { gain: 1.3 }]],
     flash: [['ko2', 0, 0.4]], punch: [['ko1', 0, 1.05], ['ko2', 0, 1.1]]
