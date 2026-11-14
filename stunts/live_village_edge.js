@@ -35,8 +35,8 @@ module.exports = {
   },
   edit: {
     caption: 'the village explodes at 100% 💀', red: '100%',
-    startAt: 'live_on:0', endAfter: 'settle:0.5',
-    speed: [['tp_a', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse_a', 'fuse_b', 'cut'], ['boom:4', 'settle:-3', 2]],
+    startAt: 'live_on:0', endAfter: 'blast_end:-1',
+    speed: [['tp_a', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse_a', 'fuse_b', 'cut'], ['boom:4', 'blast_end:-3', 2]],
     cards: [['full', '100% 💀', 0.9, 'red'], ['bigger', 'WAIT... BIGGER 💀', 1.5, 'yellow'], ['creepers', 'ONE MORE THING...', 1.3, 'green']],
     sfx: [['riser', 'full:-2', 'full'], ['scratch', 'bigger'], ['whoosh', 'lapse_a'], ['whoosh', 'lapse_b'], ['riser', 'lit:-3', 'lit'],
       ['boom', 'boom'], ['impact', 'boom', { gain: 1.3 }]],
@@ -203,6 +203,7 @@ module.exports = {
     while (ctx.tick - t0 < 70 && !this.boomed) await bot.waitForTicks(1)
     ctx.mark('fuse_b')
     for (let k = 0; k < 2400 && (!this.boomed || ctx.tick - lastBoom < 30); k++) await bot.waitForTicks(1)
+    ctx.mark('blast_end')   // 1.5 s after the last explosion (the harness's settle can wait on stale entities)
     ctx.log('booms', booms, 'TNT', n, 'creepers', placed)
     return !!this.boomed
   },

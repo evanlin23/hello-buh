@@ -43,11 +43,13 @@ module.exports = {
   },
   edit: {
     caption: 'this village explodes in 8 HOURS 💀', red: '8 HOURS',
-    // the blast runs ~19 s; two stale entities kept the harness's settle waiting long after: end on the blast itself
-    startAt: 'live_on:0', endAfter: 'boom2:19.5',
+    // the blast runs ~19 s. This take (2026-11-14) has no blast_end mark and two stale entities held the harness's
+    // settle 33 s past the last explosion (settleWait was 600), so it ends on settle:-33, 0.5 s after the last one;
+    // a new take ends on blast_end (perform marks it 1.5 s after the last explosion): endAfter 'blast_end:-1'
+    startAt: 'live_on:0', endAfter: 'settle:-33',
     // most of each fuse; the house's crater after 2.5 s of the NEXT countdown; the lapse x4; the final blast's middle x2
     // (the chain keeps going on screen, r:r24d99a: no cut while it goes off)
-    speed: [['fuse1_a', 'fuse1_b', 'cut'], ['after1:2.5', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse2_a', 'fuse2_b', 'cut'], ['boom2:4', 'boom2:17', 2]],
+    speed: [['fuse1_a', 'fuse1_b', 'cut'], ['after1:2.5', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse2_a', 'fuse2_b', 'cut'], ['boom2:4', 'settle:-36', 2]],
     cards: [['lapse_a', 'SKIPPING TO THE FINAL ROUND...', 1.6, 'yellow']],
     sfx: [['riser', 'lit1:-3.5', 'lit1'], ['boom', 'boom1'], ['impact', 'boom1', { gain: 1.2 }], ['whoosh', 'lapse_a'], ['whoosh', 'lapse_b'],
       ['riser', 'lit2:-4', 'lit2'], ['boom', 'boom2'], ['impact', 'boom2', { gain: 1.3 }]],
@@ -308,6 +310,7 @@ module.exports = {
     while (ctx.tick - lit2 < 70 && phase < 4) await bot.waitForTicks(1)
     ctx.mark('fuse2_b')
     for (let k = 0; k < 2400 && (phase < 4 || ctx.tick - lastBoom < 30); k++) await bot.waitForTicks(1)
+    ctx.mark('blast_end')   // 1.5 s after the last explosion
     ctx.log('booms', booms, 'carpet', n)
     return phase === 4
   },
