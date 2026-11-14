@@ -44,13 +44,13 @@ module.exports = {
   },
   edit: {
     caption: 'this village explodes in 8 HOURS 💀', red: '8 HOURS',
-    // the blast runs ~19 s. This take (2026-11-14) has no blast_end mark and two stale entities held the harness's
-    // settle 33 s past the last explosion (settleWait was 600), so it ends on settle:-33, 0.5 s after the last one;
-    // a new take ends on blast_end (perform marks it 1.5 s after the last explosion): endAfter 'blast_end:-1'
-    startAt: 'live_on:0', endAfter: 'settle:-33',
+    // the blast runs ~20 s; neither the explosion packets nor the harness's settle find its end reliably (the server lags
+    // under ~4,500 TNT and its block changes come in bursts), so the end is anchored on the take's recording end, set
+    // from the take's last block change (TAKE below)
+    startAt: 'live_on:0', endAfter: 'end:-8',
     // most of each fuse; the house's crater after 2.5 s of the NEXT countdown; the lapse x4; the final blast's middle x2
     // (the chain keeps going on screen, r:r24d99a: no cut while it goes off)
-    speed: [['fuse1_a', 'fuse1_b', 'cut'], ['after1:2.5', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse2_a', 'fuse2_b', 'cut'], ['boom2:4', 'settle:-36', 2]],
+    speed: [['fuse1_a', 'fuse1_b', 'cut'], ['after1:2.5', 'lapse_a', 'cut'], ['lapse_a', 'lapse_b', 4], ['fuse2_a', 'fuse2_b', 'cut'], ['boom2:4', 'end:-11', 2]],
     cards: [['lapse_a', 'SKIPPING TO THE FINAL ROUND...', 1.6, 'yellow']],
     sfx: [['riser', 'lit1:-3.5', 'lit1'], ['boom', 'boom1'], ['impact', 'boom1', { gain: 1.2 }], ['whoosh', 'lapse_a'], ['whoosh', 'lapse_b'],
       ['riser', 'lit2:-4', 'lit2'], ['boom', 'boom2'], ['impact', 'boom2', { gain: 1.3 }]],
@@ -155,59 +155,11 @@ module.exports = {
     })
     let clock0 = ROUND_AT - OPEN, tick0 = ctx.tick
     const now = () => clock0 + (ctx.tick - tick0) / 20
-    let n = H.cells.length + this.pre, i = this.pre
+    let n = H.cells.length + this.pre
 
-    // a clear straight line to a stand for the body (0.6 wide, 1.8 tall) on the same level (owner check "stuck on the block")
-    const clear = (to) => {
-      const p = bot.entity.position, Ln = Math.hypot(to.x - p.x, to.z - p.z)
-      if (Math.abs(to.y - p.y) > 0.6 || Ln < 0.8) return false
-      const ux = (to.x - p.x) / Ln, uz = (to.z - p.z) / Ln
-      for (let d = 0.3; d <= Ln + 0.4; d += 0.25) {
-        for (const w of [-0.38, 0, 0.38]) {
-          const x = p.x + ux * d - uz * w, z = p.z + uz * d + ux * w
-          for (const dy of [0, 1]) { const b = bot.blockAt(new Vec3(Math.floor(x), Math.floor(p.y + 0.01) + dy, Math.floor(z))); if (!b || b.boundingBox === 'block') return false }
-          const under = bot.blockAt(new Vec3(Math.floor(x), Math.floor(p.y + 0.01) - 1, Math.floor(z)))
-          if (!under || under.boundingBox !== 'block') return false
-        }
-      }
-      return true
-    }
-    const walk = async (to) => {
-      if (!to) return false
-      const goal = new Vec3(to.x, to.y, to.z)
-      await A.turnTo(goal.offset(0, 1.2, 0), { max: 30 })
-      bot.setControlState('forward', true)   // motion-ok: a short walk on a checked clear line, looking where it goes
-      for (let k = 0; k < 70; k++) {
-        const p = bot.entity.position
-        if (Math.hypot(p.x - goal.x, p.z - goal.z) < 0.6) break
-        await A.view(goal.offset(0, 1.2, 0))
-        await bot.waitForTicks(1)
-      }
-      bot.setControlState('forward', false)   // motion-ok: the walk's end
-      await bot.waitForTicks(3)
-      return true
-    }
-    // lay the ring's last cells until `end`: each a real aimed place (lib/act.js); out of reach: walk on round the house
-    const lay = async (end) => {
-      while (ctx.tick < end - 20 && i < ring.length) {
-        const win = ring.slice(i, i + 12); i += win.length
-        for (const p of win) {
-          if (ctx.tick >= end) break
-          const eye = bot.entity.position.offset(0, 1.62, 0)
-          if (eye.distanceTo(new Vec3(p.x + 0.5, p.y + 0.5, p.z + 0.5)) > 4.4) continue
-          try { await A.place(new Vec3(p.x, p.y, p.z), { max: 30 }) } catch (e) { continue }
-          await bot.waitForTicks(2)
-          const b = bot.blockAt(new Vec3(p.x, p.y, p.z))
-          if (b && b.name === 'tnt') { n++; L.count(ctx, n) }
-        }
-        if (ctx.tick < end - 40 && i < ring.length) {
-          let s = null
-          for (const out of [2.4, 1.6, 3.2]) { const t = this.standFor(ring, i, 12, hc, out); if (t && clear(t)) { s = t; break } }
-          if (!s) break
-          await walk(s)
-        }
-      }
-    }
+    // the hands (lib/live_crew.js): aimed places, walks on checked lines with 1-block steps, stands that reach the most
+    const C = require('../lib/live_crew')(ctx, A, { cols: this.cols })
+    const onPlace = () => { n++; L.count(ctx, n) }
     // a placed ring TNT within reach to light
     const lightable = () => {
       const eye = bot.entity.position.offset(0, 1.62, 0)
@@ -229,7 +181,18 @@ module.exports = {
     L.count(ctx, n)
     ctx.mark('live_on')
     const tLit = tick0 + OPEN * 20
-    await lay(tLit - 7 * 20)
+    // the ring's last cells, then a second layer on the whole ring ("putting on the last few layers"): 56e is busy
+    // right up to the flint and steel (take 1 ran out of reachable cells 3 s in and stared at the wall for 20 s)
+    // take 2 still walked into houses and fences: the wall goes UP instead, every ring column in reach stacked to 4 high,
+    // row by row from the bottom (no walking needed), then the rest of the ring if a clear walk opens
+    const eye = bot.entity.position.offset(0, 1.62, 0)
+    const reach = (q) => eye.distanceTo(new Vec3(q.x + 0.5, q.y + 0.5, q.z + 0.5)) <= 4.3 && Math.hypot(q.x + 0.5 - eye.x, q.z + 0.5 - eye.z) >= 1.3
+    const stack = []
+    for (let k = 0; k < 4; k++) for (const q of ring) { const c2 = { x: q.x, y: q.y + k, z: q.z, a: q.a }; if (reach(c2)) stack.push(c2) }
+    const isTnt = (q) => { const b = bot.blockAt(new Vec3(q.x, q.y, q.z)); return b && b.name === 'tnt' }
+    let r = await C.lay(stack.filter(q => !isTnt(q)), { from: 0, until: tLit - 7 * 20, center: hc, win: 40, onPlace })
+    if (ctx.tick < tLit - 10 * 20) r = await C.lay(ring.slice(this.pre).filter(q => !isTnt(q)), { from: 0, until: tLit - 7 * 20, center: hc, win: 10, onPlace })
+    ctx.log(`the house round: ${n} TNT`)
     const house = new Vec3(hc.x, H.y + 1.5, hc.z)
     await A.turnTo(house, { max: 40, hold: 6 })
     ctx.select(1)
@@ -259,6 +222,10 @@ module.exports = {
     // 3. "skipping to the final round": the whole village carpeted under the drone, the clock racing to T-10 s
     // inside the edit's cut (after1:2.5 -> lapse_a, never on screen): the plan for the world as it is now (the crater),
     // the iron golems out (the blast flings them: the glitch check reads that as a teleport), 56e to the edge
+    // first the camera to the ground (a POV shot, never on screen): the check counts anything in view of the camera as
+    // seen, the edit's cut included, so the mobs go while it looks down
+    M.shot(ctx, 'pov')
+    await A.turnTo({ yaw: bot.entity.yaw, pitch: -Math.PI / 2 + 0.05 }, { max: 30 })
     this.cols = L.carpetColumns(ctx, c, R, LAYERS)
     const plan = L.carpetPlan(this.cols, LAYERS)
     const edge = this.edgeStand(plan)

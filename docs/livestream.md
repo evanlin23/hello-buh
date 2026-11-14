@@ -9,6 +9,15 @@ going viral right now"; "are people gonna wait 2 hours... really?" (no: see "How
 counts in hours). Run by [#2] (`docs/second-team.md`, issue #7). **Nothing streams or uploads without the owner's
 OK on that exact stream or video.** Research: `docs/research/livestream.md` (sources, quotes, numbers).
 
+## Decision (owner, 2026-11-14, r:r73847d): the mob fight
+After the three samples: "Can we jsut do the mob fight thing?" The live format is the **gauntlet**: a champion (the iron
+golem) against a ladder of vanilla mobs it fights on its own, a KO every 15-90 s, "NEXT: ???" between fights, a final
+boss at the end of each run, a new champion and ladder each run. The TNT formats stop (their samples stay below as the
+record). Next for the gauntlet, from its sample: closer ringside cameras (the mobs read small from the wall), health
+bars for both sides, a VS card between fights, a varied ladder (husks, vindicators, pillagers, ravagers, spiders,
+witches, slimes, magma cubes...), then the session planner (a run of fights per round, rendered in parallel) and, once
+the owner has done the owner-only steps below, the streaming VM.
+
 ## What the research changed (short version)
 - **The winners are real lives of 40 min to 1.5 h, 2-6 a day, not one 12 h block** (ItzPyr0_XD 1.49M views on a
   1:37 TNT-village live and ~3.6K subs in ~1.5 days; Tutu Gaming 64K-1.2M a live after 139-870 on its Roblox lives).
@@ -42,7 +51,13 @@ live slice, a skip (a time-lapse or a card), the payoff. A real stream never ski
 All three keep the winners' layout (one bold line with a red word and a big live number in the top band, the bottom
 quarter clear for the Shorts player) and fit a 1-3 h session of rounds. Formats can mix: a gauntlet that ends each
 round on a TNT finale is the research's #3 ("escalating siege").
-SAMPLES_LIST
+**The samples** (each on its render branch as `renders/out/<stunt>.mp4`, 1080x1920, 60 fps):
+
+| sample | render branch @ sha | length |
+|---|---|---|
+| gauntlet (the pick) | `claude/lf-livestream-render-live_golem_gauntlet` @ 9755782 | 29 s |
+| the edge | `claude/lf-livestream-render-live_village_edge` @ 58f731d | 36 s |
+| rounds | `claude/lf-livestream-render-live_village_tnt` @ 521cf68 (take 1; its overlay still had the hours line, since removed) | 66 s |
 
 ## How a sample is made (and how a stream chunk will be)
 A live format is an ordinary stunt (`stunts/live_<name>.js`) with a `live` block, recorded and rendered like a Short;
@@ -64,7 +79,7 @@ only the overlay is new:
   `lib/live*` and the overlay requires the new modules.
 - **Render** on Actions like a Short: `RENDER_BRANCH=claude/lf-<topic>-render-<stunt> ./hb render <stunt>`.
 
-## The pipeline for a real stream ($0) — a plan; the streaming side waits for the owner's pick
+## The pipeline for a real stream ($0) — a plan; the streaming side waits for the owner-only steps
 **Shape.** A session is 1-3 h of 3-5 min rounds (the research's recommendation), run 2-4 times a day; an overnight
 8-12 h session is the same thing longer, cut into broadcasts under 11 h 45 m so each archives. Every round is one
 self-contained recording (its own village, seed and target), so rounds record and render in parallel and the session
@@ -107,7 +122,7 @@ promise unless subs really trigger something (possible later: the streaming VM p
 and splices a pre-rendered bonus blast between rounds).
 
 ## Open questions for the owner
-1. Which format(s) (the table above), and the session shape: 1-3 h lives a few times a day (what the winners do) or
-   the overnight 8-12 h block?
+1. Picked: the mob fight (r:r73847d). Still open: the session shape, 1-3 h lives a few times a day (what the winners
+   do) or the overnight 8-12 h block?
 2. Vertical only (Shorts-feed reach, no live ads) or the dual stream (ads on the horizontal leg; ~1.7x render)?
 3. The Oracle account and the live-scope OAuth token (both owner-only steps), when a format is picked.
