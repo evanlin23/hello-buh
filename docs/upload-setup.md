@@ -3,7 +3,7 @@
 Uploads stay **off** until every step is done. The `upload-short` workflow checks for all of them and otherwise
 prints "uploads are off" and does nothing.
 
-What it does once on: every morning the next 3 Shorts from `uploads/queue.txt` go up **private**, each with a
+What it does once on: every morning the next 4 Shorts from `uploads/queue.txt` go up **private**, each with a
 scheduled publish at a random time in its own slice of 9:00-21:00 Central (9-13, 13-17, 17-21); YouTube makes
 them public on its own. When the queue runs out it
 takes any other "ready" Short, still keeping the mix (no format twice in a row, at most 1 pixel-art per 3). Every
@@ -29,7 +29,7 @@ screen, and a Web OAuth client (buh-explains reuses it too). Use the same Client
 ## 3. GitHub: evanlin23/hello-buh → Settings → Secrets and variables → Actions
 - **Secrets:** `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN`. Never paste these into a chat or a commit.
 - **Variables:** `YT_CHANNEL_ID` = the UC... id (the upload refuses any other channel), `YT_ENABLED` = `true`.
-  Optional: `YT_PER_DAY` (default 3) to change how many a day.
+  Optional: `YT_PER_DAY` (default 4) to change how many a day.
 - Actions → General → Workflow permissions: **Read and write**.
 - Test: Actions → upload-short → Run workflow → mode `dry-run`. It prints the next Short and its publish time.
 
@@ -55,7 +55,7 @@ schedule stays as a backup; a second run on the same day does nothing).
 ## Safeguards against looking like a bot (owner, 2026-11-08)
 - **No clockwork.** The daily run starts 0-40 min late at random. Each Short publishes at a random minute in its
   own slice of 9:00-21:00 Central, at least 90 min from the next. The 3 uploads in a run are 4-12 min apart.
-- **Fixed daily cap** (`YT_PER_DAY`, default 3), counting hand uploads, so no bursts.
+- **Fixed daily cap** (`YT_PER_DAY`, default 4), counting hand uploads, so no bursts.
 - **No repeats.** A title already on the channel is refused (series parts have their own titles). Nothing is
   ever deleted or re-uploaded.
 - **No same format twice in a row**, at most 1 pixel-art per 3 (`scripts/check_queue.py`).

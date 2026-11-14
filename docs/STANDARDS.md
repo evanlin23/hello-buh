@@ -1,6 +1,6 @@
 # Story standards: the current checklist
 
-Updated: 2026-11-13
+Updated: 2026-11-14
 
 Every rule a story Short must meet **today**, once, by stage, with its number and the check that enforces it. The
 newest owner decision wins; superseded rules are listed at the end and must not be applied. The dated history (the
@@ -446,6 +446,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   beat. Check: owner, review. r:r7ef6ec r:rb35549
 - **Format "fakemod", DENY**: a denied mob is eaten: the player picks the mob itself up bare-handed and eats it bite by
   bite (lib/interrupt.js pickupEat), not its drop. Check: owner, review. r:r535ba1
+- **Uploads: 4 a day on @HelloBuh** (YT_PER_DAY default 4), each one only with the owner's OK on that exact cut (any matching owner_ok.txt line). Check: youtube_upload.py, test_owner_ok. r:r275583
 - **Steady music, and sound-only re-mixes keep the OK**: the song sits steady under the game and sfx (the stunt mix masters the game first). mixcheck BLOCKs pumping over 3 dB, or block sounds less than 3 dB over the music. A re-mix that changes only the audio (video stream bit-identical) carries the owner's OK on the old cut over to the new sha. Check: mixcheck, owner_ok.txt note. r:r6ae905
 - **Every Short satisfies**: the payoff is a real, satisfying result worth the watch, never a setup that fizzles
   ("no-op"). If it doesn't land, make the payoff bigger; never pad. Check: review, owner. r:re197bb

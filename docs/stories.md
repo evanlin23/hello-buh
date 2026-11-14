@@ -429,6 +429,7 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, on fakemod_permission: "Also, for the fake mod thing, I think the pop-up should be in the middle
   of the screen rather than at the top."** In the `fakemod` format, the permission popup sits centred in the game view
   (like a real modal dialog over the action), not at the top.
+- **Owner, 2026-11-14: "we should scale to 4 for tomorrow and forever after that".** @HelloBuh uploads 4 Shorts a day (YT_PER_DAY default 4), one publish in each quarter of 9:00-21:00 Central.
 - **Owner, 2026-11-12, after the music-pumping audit (79 of 83 published packages fail the new steady-music mix), choosing between re-mixing and re-OKing: "re mix only the sound, keep existing OKs".** Every not-yet-uploaded package is re-mixed on the new stunt mix path (game + sfx mastered first, the song steady under it). The picture must stay bit-identical, verified on the video stream. An owner OK on the old cut carries over to the sound-only re-mix: owner_ok.txt gets the new sha with a note naming the old one. Anything that changes the picture still needs a new OK. Uploaded videos are never re-uploaded.
 - **Owner, 2026-11-12, on the bigger fakemod popup take (a bigger creeper popup plus an ALLOW card): "bigger popup is
   prolly better lowkey".** In the `fakemod` format the permission popup is big: it fills most of the game view's width,

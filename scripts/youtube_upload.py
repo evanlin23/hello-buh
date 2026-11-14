@@ -90,7 +90,8 @@ def owner_ok(name: str, meta: dict) -> str:
         return f"the owner OK'd another cut ({other[:12]}), not this one ({sha[:12] or 'no release'})"
     return "no owner OK yet (scripts/owner_ok.py add " + name + " once the owner says OK)"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
-PER_DAY = int(env("YT_PER_DAY", "3") or 3)
+_DEF_PER_DAY = "4" if CHANNEL == "hellobuh" else "3"   # owner 2026-11-14 (r:r275583): HelloBuh 4 a day "for tomorrow and forever after that"
+PER_DAY = int(env("YT_PER_DAY", _DEF_PER_DAY) or _DEF_PER_DAY)
 WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
 TZ = "America/Chicago"
 
